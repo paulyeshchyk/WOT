@@ -58,6 +58,9 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[WOTLoginService requestQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 
         dispatch_sync(dispatch_get_main_queue(), ^{
+    
+            [WOTLoginService clearCookiesForURL:[NSURL URLWithString:@"https://api.worldoftanks.ru"]];
+            [WOTLoginService clearCache];
             
             if (callback) {
                 
@@ -78,6 +81,20 @@
     return _requestQueue;
 }
 
++ (void)clearCookiesForURL:(NSURL *)url {
+    
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *cookies = [cookieStorage cookiesForURL:url];
+    for (NSHTTPCookie *cookie in cookies) {
+        NSLog(@"Deleting cookie for domain: %@", [cookie domain]);
+        [cookieStorage deleteCookie:cookie];
+    }
+}
+
++ (void)clearCache {
+    
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+}
 
 - (void)start {
     

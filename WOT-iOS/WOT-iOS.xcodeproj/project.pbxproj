@@ -169,6 +169,7 @@
 		1DD646651B1C640C00B0EC76 /* services */ = {
 			isa = PBXGroup;
 			children = (
+				1DD646911B1DB89600B0EC76 /* TankList */,
 				1DD6466A1B1C700400B0EC76 /* Login */,
 				1DD646661B1C641C00B0EC76 /* WOTConstants.h */,
 			);
@@ -231,6 +232,13 @@
 				1DD646901B1D9BAD00B0EC76 /* WOTErrorCodes.h */,
 			);
 			path = core;
+			sourceTree = "<group>";
+		};
+		1DD646911B1DB89600B0EC76 /* TankList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TankList;
 			sourceTree = "<group>";
 		};
 		73D1069022E23097C59EE24A /* Frameworks */ = {

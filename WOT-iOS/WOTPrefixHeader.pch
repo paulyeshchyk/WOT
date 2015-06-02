@@ -10,4 +10,5 @@
 #define WOT_iOS_WOTPrefixHeader_pch
 
 #import "NSManagedObject+CoreDataOperations.h"
+#import <UIKit+AFNetworking.h>
 #endif
