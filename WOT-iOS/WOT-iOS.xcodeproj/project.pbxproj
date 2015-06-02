@@ -62,6 +62,7 @@
 		1DD6467E1B1C990800B0EC76 /* WOTPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPrefixHeader.pch; sourceTree = "<group>"; };
 		1DD6467F1B1C99C600B0EC76 /* UserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSession.h; sourceTree = "<group>"; };
 		1DD646801B1C99C600B0EC76 /* UserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSession.m; sourceTree = "<group>"; };
+		1DD646881B1D991A00B0EC76 /* WOT_iOS_MAIN.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS_MAIN.xcdatamodel; sourceTree = "<group>"; };
 		75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		95194089742F312E67004937 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BCD5CD3F245D125334EBB9C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -488,6 +489,7 @@
 			baseConfigurationReference = 75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOTPrefixHeader.pch";
 				INFOPLIST_FILE = "WOT-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -500,6 +502,7 @@
 			baseConfigurationReference = 95194089742F312E67004937 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOTPrefixHeader.pch";
 				INFOPLIST_FILE = "WOT-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -577,6 +580,7 @@
 		1DD6463D1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				1DD646881B1D991A00B0EC76 /* WOT_iOS_MAIN.xcdatamodel */,
 				1DD6463E1B1C616A00B0EC76 /* WOT_iOS.xcdatamodel */,
 			);
 			currentVersion = 1DD6463E1B1C616A00B0EC76 /* WOT_iOS.xcdatamodel */;

@@ -20,16 +20,17 @@
     
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setTranslucent:NO];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Relogin" style:UIBarButtonItemStylePlain target:self action:@selector(reloginAction:)];
+    self.navigationItem.rightBarButtonItem = cancelButton;
     [self relogin];
 }
 
-- (IBAction)logout:(id)sender {
+- (IBAction)reloginAction:(id)sender {
     
-    [WOTLoginViewController logoutWithCallback:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self relogin];
-        });
+    [WOTLoginViewController logoutWithCallback:^(NSError *error){
+
+        [self relogin];
     }];
 }
 
@@ -39,12 +40,9 @@
     if (![WOTLoginViewController currentSession]) {
         
         WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:@"WOTLoginViewController" bundle:nil];
-        [loginController setCallback:^(NSString *status, NSString *nickname, NSString *access_token, NSString *account_id, NSNumber *expires_at) {
+        [loginController setCallback:^(NSError *error, NSString *nickname, NSString *access_token, NSString *account_id, NSNumber *expires_at) {
             
-            if ([status isEqualToString:@"ok"]) {
-                
-                [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
-            }
+            [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
             
         }];
         [self.navigationController presentViewController:loginController animated:YES completion:NULL];

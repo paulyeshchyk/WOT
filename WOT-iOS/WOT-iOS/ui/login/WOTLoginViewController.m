@@ -32,12 +32,12 @@
 
     UserSession *currentSession = [self currentSession];
     
-    [WOTLoginService logoutWithAppID:@ApplicationID accessToken:currentSession.access_token callback:^{
+    [WOTLoginService logoutWithAppID:@ApplicationID accessToken:currentSession.access_token callback:^(NSError *error){
         
         [WOTLoginViewController deleteSessions];
         if (callback){
             
-            callback();
+            callback(error);
         }
     }];
     
@@ -60,6 +60,8 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
     NSURLRequest *request = [webView request];
+    
+
     if ([[request.URL absoluteString] containsString:@ApplicationRedirectURI]) {
         
         NSURLComponents *components = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
@@ -70,12 +72,31 @@
         NSURLQueryItem *account_id = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",@"account_id"]] lastObject];
         NSURLQueryItem *expires_at = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",@"expires_at"]] lastObject];
 
-        [self prolongSessionBy:@([expires_at.value integerValue]) forNickname:nickname.value accoundId:account_id.value accessToken:access_token.value];
-        
-        if (self.callback) {
-            
-            self.callback(status.value, nickname.value, access_token.value, account_id.value, @([expires_at.value integerValue]));
+        NSError *error = nil;
+        if ([status.value isEqual:@"error"]) {
+
+            NSURLQueryItem *errorMessage = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",@"message"]] lastObject];
+            NSURLQueryItem *errorCode = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",@"code"]] lastObject];
+
+            error = [NSError errorWithDomain:@"WOTLOGIN" code:[errorCode.value integerValue] userInfo:@{@"message":errorMessage}];
         }
+        
+        if (error) {
+            
+            if (self.callback) {
+                
+                self.callback(error, nickname.value, access_token.value, account_id.value, @([expires_at.value integerValue]));
+            }
+        } else {
+            
+            [self prolongSessionBy:@([expires_at.value integerValue]) forNickname:nickname.value accoundId:account_id.value accessToken:access_token.value];
+            
+            if (self.callback) {
+                
+                self.callback(error, nickname.value, access_token.value, account_id.value, @([expires_at.value integerValue]));
+            }
+        }
+    } else {
     }
     
 }

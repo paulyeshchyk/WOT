@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "UserSession.h"
 
-typedef void(^WOTLoginCallback)(NSString *status, NSString *userID, NSString *access_token, NSString *account_id, NSNumber *expires_at);
-typedef void(^WOTLogout)(void);
+typedef void(^WOTLoginCallback)(NSError *error, NSString *userID, NSString *access_token, NSString *account_id, NSNumber *expires_at);
+typedef void(^WOTLogout)(NSError *error);
 
 
 @interface WOTLoginViewController : UIViewController
-
 
 @property (nonatomic, copy)WOTLoginCallback callback;
 

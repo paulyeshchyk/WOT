@@ -5,10 +5,9 @@
         <attribute name="accound_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currentSession" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="expires_at" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="isCurrent" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="UserSession" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="UserSession" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

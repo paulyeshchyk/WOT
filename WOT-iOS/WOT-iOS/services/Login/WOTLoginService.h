@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef void(^LoginCallback)(NSString *redirectURLPath);
-typedef void(^LogoutCallback)(void);
+typedef void(^LogoutCallback)(NSError *error);
 
 @interface WOTLoginService : NSObject
 

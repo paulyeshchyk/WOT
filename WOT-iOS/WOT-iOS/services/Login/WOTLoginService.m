@@ -34,6 +34,17 @@
 
 + (void)logoutWithAppID:(NSString *)appID accessToken:(NSString *)access_token callback:(LogoutCallback)callback {
     
+    if (!access_token) {
+        
+        NSLog(@"access_token is empty");
+        
+        if (callback) {
+            
+            callback([NSError errorWithDomain:@"WOTLOGIN" code:1 userInfo:nil]);
+        }
+        return;
+    }
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.worldoftanks.ru/wot/auth/logout/"]];
     [request setHTTPMethod:@"POST"];
     
@@ -46,10 +57,13 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:[WOTLoginService requestQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 
-        if (callback) {
-            callback();
-        }
-    
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            if (callback) {
+                
+                callback(connectionError);
+            }
+        });
     }];
 }
 
@@ -73,10 +87,13 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[WOTLoginService requestQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 
         id location = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL][@"data"][@"location"];
-        if (self.callback) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
             
-            self.callback(location);
-        }
+            if (self.callback) {
+                
+                self.callback(location);
+            }
+        });
     }];
 }
 
