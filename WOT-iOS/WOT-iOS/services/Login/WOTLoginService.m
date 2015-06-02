@@ -8,6 +8,8 @@
 
 #import "WOTLoginService.h"
 #import "WOTConstants.h"
+#import "WOTError.h"
+#import "WOTErrorCodes.h"
 
 @interface WOTLoginService ()
 
@@ -36,11 +38,9 @@
     
     if (!access_token) {
         
-        NSLog(@"access_token is empty");
-        
         if (callback) {
             
-            callback([NSError errorWithDomain:@"WOTLOGIN" code:1 userInfo:nil]);
+            callback([WOTError loginErrorWithCode:WOT_ERROR_CODE_ACCESS_TOKEN_NOT_DEFINED userInfo:nil]);
         }
         return;
     }

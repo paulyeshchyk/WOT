@@ -41,6 +41,10 @@
         
         WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:@"WOTLoginViewController" bundle:nil];
         [loginController setCallback:^(NSError *error, NSString *nickname, NSString *access_token, NSString *account_id, NSNumber *expires_at) {
+
+            if (error) {
+                NSLog(@"Login error:%@",error.localizedDescription);
+            }
             
             [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
             

@@ -22,6 +22,7 @@
 		1DD646761B1C958000B0EC76 /* WOTCoreDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646751B1C958000B0EC76 /* WOTCoreDataProvider.m */; };
 		1DD6467A1B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646791B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.m */; };
 		1DD646811B1C99C600B0EC76 /* UserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646801B1C99C600B0EC76 /* UserSession.m */; };
+		1DD6468F1B1D9A8200B0EC76 /* WOTError.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6468E1B1D9A8200B0EC76 /* WOTError.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,9 @@
 		1DD6467F1B1C99C600B0EC76 /* UserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSession.h; sourceTree = "<group>"; };
 		1DD646801B1C99C600B0EC76 /* UserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSession.m; sourceTree = "<group>"; };
 		1DD646881B1D991A00B0EC76 /* WOT_iOS_MAIN.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS_MAIN.xcdatamodel; sourceTree = "<group>"; };
+		1DD6468D1B1D9A8200B0EC76 /* WOTError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTError.h; sourceTree = "<group>"; };
+		1DD6468E1B1D9A8200B0EC76 /* WOTError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTError.m; sourceTree = "<group>"; };
+		1DD646901B1D9BAD00B0EC76 /* WOTErrorCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTErrorCodes.h; sourceTree = "<group>"; };
 		75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		95194089742F312E67004937 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BCD5CD3F245D125334EBB9C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +116,7 @@
 		1DD646351B1C616A00B0EC76 /* WOT-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				1DD6468C1B1D9A7000B0EC76 /* core */,
 				1DD646731B1C956E00B0EC76 /* coreData */,
 				1DD646651B1C640C00B0EC76 /* services */,
 				1DD6465F1B1C619500B0EC76 /* ui */,
@@ -216,6 +221,16 @@
 				1DD646801B1C99C600B0EC76 /* UserSession.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		1DD6468C1B1D9A7000B0EC76 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				1DD6468D1B1D9A8200B0EC76 /* WOTError.h */,
+				1DD6468E1B1D9A8200B0EC76 /* WOTError.m */,
+				1DD646901B1D9BAD00B0EC76 /* WOTErrorCodes.h */,
+			);
+			path = core;
 			sourceTree = "<group>";
 		};
 		73D1069022E23097C59EE24A /* Frameworks */ = {
@@ -374,6 +389,7 @@
 				1DD646761B1C958000B0EC76 /* WOTCoreDataProvider.m in Sources */,
 				1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */,
 				1DD646711B1C866900B0EC76 /* WOTLoginViewController.m in Sources */,
+				1DD6468F1B1D9A8200B0EC76 /* WOTError.m in Sources */,
 				1DD6466D1B1C701B00B0EC76 /* WOTLoginService.m in Sources */,
 				1DD646391B1C616A00B0EC76 /* main.m in Sources */,
 				1DD646631B1C61BF00B0EC76 /* WOTRootViewController.m in Sources */,

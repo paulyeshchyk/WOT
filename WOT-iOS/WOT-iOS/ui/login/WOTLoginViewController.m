@@ -10,6 +10,8 @@
 #import "WOTConstants.h"
 #import "WOTLoginService.h"
 #import "WOTCoreDataProvider.h"
+#import "WOTError.h"
+#import "WOTErrorCodes.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate>
 
@@ -34,14 +36,18 @@
     
     [WOTLoginService logoutWithAppID:@ApplicationID accessToken:currentSession.access_token callback:^(NSError *error){
         
+        if (error) {
+            
+            NSLog(@"Login error: %@", error.localizedDescription);
+            
+        }
+        
         [WOTLoginViewController deleteSessions];
         if (callback){
             
             callback(error);
         }
     }];
-    
-    
 }
 
 - (void)viewDidLoad {
@@ -60,7 +66,6 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
     NSURLRequest *request = [webView request];
-    
 
     if ([[request.URL absoluteString] containsString:@ApplicationRedirectURI]) {
         
@@ -77,8 +82,7 @@
 
             NSURLQueryItem *errorMessage = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",@"message"]] lastObject];
             NSURLQueryItem *errorCode = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",@"code"]] lastObject];
-
-            error = [NSError errorWithDomain:@"WOTLOGIN" code:[errorCode.value integerValue] userInfo:@{@"message":errorMessage}];
+            error = [WOTError loginErrorWithCode:WOT_ERROR_CODE_ENDPOINT_ERROR userInfo:@{@"message":errorMessage,@"code":errorCode.value}];
         }
         
         if (error) {
@@ -96,7 +100,6 @@
                 self.callback(error, nickname.value, access_token.value, account_id.value, @([expires_at.value integerValue]));
             }
         }
-    } else {
     }
     
 }
