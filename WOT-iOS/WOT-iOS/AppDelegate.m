@@ -8,10 +8,11 @@
 
 #import "AppDelegate.h"
 #import "WOTRootViewController.h"
-#import "WOTCoreDataProvider.h"
+#import "WOTRequestExecutor+Registration.h"
+#import "WOTDrawerViewController.h"
 
 @interface AppDelegate ()
-
+@property (nonatomic, strong) WOTDrawerViewController *wotDrawerViewController;
 @end
 
 @implementation AppDelegate
@@ -19,11 +20,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    WOTRootViewController *wotRootViewController = [[WOTRootViewController alloc] initWithNibName:@"WOTRootViewController" bundle:nil];
-    UINavigationController *rootNavigationController = [[UINavigationController alloc] initWithRootViewController:wotRootViewController];
+    
+    [WOTRequestExecutor registerRequests];
+    
+//    WOTRootViewController *wotRootViewController = [[WOTRootViewController alloc] initWithNibName:@"WOTRootViewController" bundle:nil];
+    self.wotDrawerViewController = [[WOTDrawerViewController alloc] initWithMenu];
+//    UINavigationController *rootNavigationController = [[UINavigationController alloc] initWithRootViewController:wotRootViewController];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = rootNavigationController;
+    self.window.rootViewController = self.wotDrawerViewController;
     [self.window makeKeyAndVisible];
     
     
@@ -52,7 +57,7 @@
 
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [[WOTCoreDataProvider sharedInstance] saveContext];
+//    [[WOTCoreDataProvider sharedInstance] saveContext];
 }
 
 

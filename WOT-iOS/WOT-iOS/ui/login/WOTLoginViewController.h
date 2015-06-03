@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserSession.h"
 
 typedef void(^WOTLoginCallback)(NSError *error, NSString *userID, NSString *access_token, NSString *account_id, NSNumber *expires_at);
 typedef void(^WOTLogout)(NSError *error);
@@ -15,9 +14,8 @@ typedef void(^WOTLogout)(NSError *error);
 
 @interface WOTLoginViewController : UIViewController
 
-@property (nonatomic, copy)WOTLoginCallback callback;
-
-+ (UserSession *)currentSession;
-+ (void)logoutWithCallback:(WOTLogout)callback;
+@property (nonatomic, copy) WOTLoginCallback callback;
+@property (nonatomic, strong) NSURLRequest *request;
+@property (nonatomic, copy) NSString *redirectUrlPath;
 
 @end

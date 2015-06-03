@@ -9,6 +9,12 @@
 #ifndef WOT_iOS_WOTPrefixHeader_pch
 #define WOT_iOS_WOTPrefixHeader_pch
 
+#import "NSString+WOTValue.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import <UIKit+AFNetworking.h>
+
+#import "WOTCoreDataProvider.h"
+#import "WOTConstants.h"
+
+
 #endif

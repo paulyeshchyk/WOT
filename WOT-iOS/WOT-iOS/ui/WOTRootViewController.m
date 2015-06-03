@@ -9,6 +9,8 @@
 #import "WOTRootViewController.h"
 #import "WOTLoginViewController.h"
 
+#import "WOTRequestExecutor+Registration.h"
+
 
 @interface WOTRootViewController () <NSURLConnectionDelegate, NSURLConnectionDataDelegate, UIWebViewDelegate>
 
@@ -20,37 +22,13 @@
     
     [super viewDidLoad];
     
-    [self.navigationController.navigationBar setTranslucent:NO];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Relogin" style:UIBarButtonItemStylePlain target:self action:@selector(reloginAction:)];
-    self.navigationItem.rightBarButtonItem = cancelButton;
-    [self relogin];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLoginId args:nil];
+    
 }
 
-- (IBAction)reloginAction:(id)sender {
+- (IBAction)logout:(id)sender {
     
-    [WOTLoginViewController logoutWithCallback:^(NSError *error){
-
-        [self relogin];
-    }];
-}
-
-
-- (void)relogin {
-    
-    if (![WOTLoginViewController currentSession]) {
-        
-        WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:@"WOTLoginViewController" bundle:nil];
-        [loginController setCallback:^(NSError *error, NSString *nickname, NSString *access_token, NSString *account_id, NSNumber *expires_at) {
-
-            if (error) {
-                NSLog(@"Login error:%@",error.localizedDescription);
-            }
-            
-            [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
-            
-        }];
-        [self.navigationController presentViewController:loginController animated:YES completion:NULL];
-    }
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLogoutId args:nil];
 }
 
 @end

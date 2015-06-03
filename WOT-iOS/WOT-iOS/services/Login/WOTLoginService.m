@@ -49,7 +49,7 @@
     [request setHTTPMethod:@"POST"];
     
     NSError *serializatoinError;
-    NSData *httpBodyData = [NSJSONSerialization dataWithJSONObject:@{@"application_id":appID,@"access_token":access_token}
+    NSData *httpBodyData = [NSJSONSerialization dataWithJSONObject:@{@WOT_APPLICATION_ID:appID,@WOT_ACCESS_TOKEN:access_token}
                                                            options:NSJSONWritingPrettyPrinted
                                                              error:&serializatoinError];
     [request setHTTPBody:httpBodyData];
