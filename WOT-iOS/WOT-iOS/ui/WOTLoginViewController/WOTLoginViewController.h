@@ -18,4 +18,6 @@ typedef void(^WOTLogout)(NSError *error);
 @property (nonatomic, strong) NSURLRequest *request;
 @property (nonatomic, copy) NSString *redirectUrlPath;
 
+- (void)reloadData;
+
 @end

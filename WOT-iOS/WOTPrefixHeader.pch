@@ -10,11 +10,16 @@
 #define WOT_iOS_WOTPrefixHeader_pch
 
 #import "NSString+WOTValue.h"
+#import "NSBundle+LanguageBundle.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import <UIKit+AFNetworking.h>
 
+#import "UIBarButtonItem+EventBlock.h"
+
+
 #import "WOTCoreDataProvider.h"
 #import "WOTConstants.h"
+#import "Strings.h"
 
 
 #endif

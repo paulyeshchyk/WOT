@@ -24,15 +24,15 @@
     
 
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    result[@WOT_APPLICATION_ID] = [NSString valueOrSpaceString:self.applicationID];
-    result[@WOT_NOFOLLOW] = [NSString valueOrSpaceString:self.noFollow];
-    result[@WOT_REDIRECT_URI] = [NSString valueOrSpaceString:self.redirectURL];
+    result[WOT_KEY_APPLICATION_ID] = [NSString valueOrSpaceString:self.applicationID];
+    result[WOT_KEY_NOFOLLOW] = [NSString valueOrSpaceString:self.noFollow];
+    result[WOT_KEY_REDIRECT_URI] = [NSString valueOrSpaceString:self.redirectURL];
     return result;
 }
 
 - (NSString *)applicationID {
     
-    return @"e3a1e0889ff9c76fa503177f351b853c";
+    return WOT_VALUE_APPLICATION_ID_RU;
 }
 
 - (NSString *)redirectURL {
@@ -47,7 +47,7 @@
 
 - (NSDictionary *)userInfo {
     
-    return @{@WOT_REDIRECT_URI:self.redirectURL};
+    return @{WOT_KEY_REDIRECT_URI:self.redirectURL};
 }
 
 - (NSData *)httpBodyData {

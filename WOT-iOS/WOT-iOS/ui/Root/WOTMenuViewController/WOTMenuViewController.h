@@ -6,10 +6,8 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WOTMenuProtocol.h"
 
-@interface WOTMenuViewController : UIViewController
-
-@property (nonatomic, readonly) NSString *selectedMenuItemClass;
+@interface WOTMenuViewController : UIViewController <WOTMenuProtocol>
 
 @end

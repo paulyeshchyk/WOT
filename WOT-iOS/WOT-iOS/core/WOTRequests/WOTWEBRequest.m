@@ -28,7 +28,14 @@ static NSString *urlEncode(id object) {
 
 + (NSString *)language {
     
-    return @"ru";
+    NSString *language = [[NSUserDefaults standardUserDefaults] stringForKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
+    if ([language length] == 0){
+        
+        return WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU;
+    } else {
+        
+        return language;
+    }
 }
 
 + (NSOperationQueue *)requestQueue {
@@ -111,10 +118,10 @@ static NSString *urlEncode(id object) {
             }
         } else {
 #warning make validator
-            id status = jsonData[@WOT_STATUS];
-            if ([status isEqualToString:@WOT_ERROR]) {
+            id status = jsonData[WOT_KEY_STATUS];
+            if ([status isEqualToString:WOT_KEY_ERROR]) {
                 
-                NSError *error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[@WOT_ERROR]];
+                NSError *error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[WOT_KEY_ERROR]];
                 if (self.errorCallback) {
                     
                     self.errorCallback(error);

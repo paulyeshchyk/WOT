@@ -7,7 +7,7 @@
 //
 
 #import "WOTWEBRequestLogout.h"
-#import "UserSession.h"
+#import "WOTSessionDataProvider.h"
 
 @implementation WOTWEBRequestLogout
 
@@ -37,19 +37,17 @@
 
 - (NSDictionary *)query {
     
-    return @{@WOT_APPLICATION_ID:[NSString valueOrSpaceString:self.applicationID], @WOT_ACCESS_TOKEN:[NSString valueOrSpaceString:self.access_token]};
+    return @{WOT_KEY_APPLICATION_ID:[NSString valueOrSpaceString:self.applicationID], WOT_KEY_ACCESS_TOKEN:[NSString valueOrSpaceString:self.access_token]};
 }
 
 - (NSString *)applicationID {
     
-    return @"e3a1e0889ff9c76fa503177f351b853c";
+    return WOT_VALUE_APPLICATION_ID_RU;
 }
 
 - (NSString *)access_token {
     
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
-    UserSession *session = [UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includingSubentities:NO];
-    return session.access_token;
+    return [WOTSessionDataProvider currentAccessToken];
 }
 
 - (NSData *)httpBodyData {

@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  WOT-iOS
+
+  Created by Pavel Yeshchyk on 6/4/15.
+  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+*/
+
+
+WOT_IMAGE_MENU_ICON = "wotShowMenuButtoniPhone";
+WOT_STRING_PROFILE = "Profile";
+WOT_STRING_TANKOPEDIA = "Tankopedia";
+WOT_STRING_PLAYERS = "Players";
+WOT_STRING_BACK = "baCK";
+WOT_STRING_LOGIN = "logIN";
+WOT_STRING_SELECT_LANGUAGE = "SELECT lang";

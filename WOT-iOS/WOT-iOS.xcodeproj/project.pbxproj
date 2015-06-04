@@ -13,15 +13,6 @@
 		1DD6463F1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463D1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld */; };
 		1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646461B1C616A00B0EC76 /* Images.xcassets */; };
 		1DD646561B1C616A00B0EC76 /* WOT_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646551B1C616A00B0EC76 /* WOT_iOSTests.m */; };
-		1DD646631B1C61BF00B0EC76 /* WOTRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646611B1C61BF00B0EC76 /* WOTRootViewController.m */; };
-		1DD646641B1C61BF00B0EC76 /* WOTRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646621B1C61BF00B0EC76 /* WOTRootViewController.xib */; };
-		1DD646691B1C68ED00B0EC76 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646681B1C68ED00B0EC76 /* Podfile */; };
-		1DD6466D1B1C701B00B0EC76 /* WOTLoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6466C1B1C701B00B0EC76 /* WOTLoginService.m */; };
-		1DD646711B1C866900B0EC76 /* WOTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6466F1B1C866900B0EC76 /* WOTLoginViewController.m */; };
-		1DD646721B1C866900B0EC76 /* WOTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646701B1C866900B0EC76 /* WOTLoginViewController.xib */; };
-		1DD646761B1C958000B0EC76 /* WOTCoreDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646751B1C958000B0EC76 /* WOTCoreDataProvider.m */; };
-		1DD6467A1B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646791B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.m */; };
-		1DD646811B1C99C600B0EC76 /* UserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646801B1C99C600B0EC76 /* UserSession.m */; };
 		1DD6468F1B1D9A8200B0EC76 /* WOTError.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6468E1B1D9A8200B0EC76 /* WOTError.m */; };
 		1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6469F1B1DC42100B0EC76 /* NSString+WOTValue.m */; };
 		1DD646A51B1DCCC400B0EC76 /* WOTWEBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646A21B1DCCC400B0EC76 /* WOTWEBRequest.m */; };
@@ -36,9 +27,30 @@
 		1DD646C81B1F371700B0EC76 /* WOTMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646C61B1F371700B0EC76 /* WOTMenuViewController.xib */; };
 		1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646CB1B1F378100B0EC76 /* WOTTankListViewController.m */; };
 		1DD646CE1B1F378100B0EC76 /* WOTTankListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646CC1B1F378100B0EC76 /* WOTTankListViewController.xib */; };
-		1DD646D51B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646D21B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone.png */; };
-		1DD646D61B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646D31B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@2x.png */; };
-		1DD646D71B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646D41B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@3x.png */; };
+		1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646DA1B20533E00B0EC76 /* WOTMenuTableViewCell.m */; };
+		1DD646DD1B20533E00B0EC76 /* WOTMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646DB1B20533E00B0EC76 /* WOTMenuTableViewCell.xib */; };
+		1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646E11B205BE400B0EC76 /* WOTProfileViewController.m */; };
+		1DD646E41B205BF500B0EC76 /* WOTProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646E31B205BF500B0EC76 /* WOTProfileViewController.xib */; };
+		1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646E71B205D9300B0EC76 /* WOTPlayersListViewController.m */; };
+		1DD646EA1B205D9300B0EC76 /* WOTPlayersListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646E81B205D9300B0EC76 /* WOTPlayersListViewController.xib */; };
+		1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646ED1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m */; };
+		1DD646F81B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646F21B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m */; };
+		1DD646F91B20700000B0EC76 /* UserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646F51B20700000B0EC76 /* UserSession.m */; };
+		1DD646FA1B20700000B0EC76 /* WOTCoreDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646F71B20700000B0EC76 /* WOTCoreDataProvider.m */; };
+		1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646FD1B20717800B0EC76 /* WOTLoginViewController.m */; };
+		1DD647001B20717800B0EC76 /* WOTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646FE1B20717800B0EC76 /* WOTLoginViewController.xib */; };
+		1DD647031B20721400B0EC76 /* WOTSessionDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647021B20721300B0EC76 /* WOTSessionDataProvider.m */; };
+		1DD647071B2081E900B0EC76 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647061B2081E900B0EC76 /* NSBundle+LanguageBundle.m */; };
+		1DD647091B20841300B0EC76 /* wotShowMenuButtoniPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6470B1B20841300B0EC76 /* wotShowMenuButtoniPhone.png */; };
+		1DD6470C1B20841600B0EC76 /* wotShowMenuButtoniPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6470E1B20841600B0EC76 /* wotShowMenuButtoniPhone@2x.png */; };
+		1DD6470F1B20841900B0EC76 /* wotShowMenuButtoniPhone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD647111B20841900B0EC76 /* wotShowMenuButtoniPhone@3x.png */; };
+		1DD6471A1B2084FF00B0EC76 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1DD647191B2084FF00B0EC76 /* podfile */; };
+		1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6471F1B20855400B0EC76 /* Localizable.strings */; };
+		1DD647251B20975300B0EC76 /* WOTLanguageDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647241B20975300B0EC76 /* WOTLanguageDatasource.m */; };
+		1DD6472A1B2099C800B0EC76 /* WOTLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647281B2099C800B0EC76 /* WOTLanguageSelectorViewController.m */; };
+		1DD6472B1B2099C800B0EC76 /* WOTLanguageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD647291B2099C800B0EC76 /* WOTLanguageSelectorViewController.xib */; };
+		1DD647301B209B2400B0EC76 /* WOTLanguageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6472E1B209B2400B0EC76 /* WOTLanguageTableViewCell.m */; };
+		1DD647311B209B2400B0EC76 /* WOTLanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6472F1B209B2400B0EC76 /* WOTLanguageTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,23 +74,8 @@
 		1DD6464F1B1C616A00B0EC76 /* WOT-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WOT-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD646541B1C616A00B0EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DD646551B1C616A00B0EC76 /* WOT_iOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOT_iOSTests.m; sourceTree = "<group>"; };
-		1DD646601B1C61BF00B0EC76 /* WOTRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRootViewController.h; sourceTree = "<group>"; };
-		1DD646611B1C61BF00B0EC76 /* WOTRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRootViewController.m; sourceTree = "<group>"; };
-		1DD646621B1C61BF00B0EC76 /* WOTRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTRootViewController.xib; sourceTree = "<group>"; };
 		1DD646661B1C641C00B0EC76 /* WOTConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTConstants.h; sourceTree = "<group>"; };
-		1DD646681B1C68ED00B0EC76 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		1DD6466B1B1C701B00B0EC76 /* WOTLoginService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLoginService.h; sourceTree = "<group>"; };
-		1DD6466C1B1C701B00B0EC76 /* WOTLoginService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLoginService.m; sourceTree = "<group>"; };
-		1DD6466E1B1C866900B0EC76 /* WOTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLoginViewController.h; sourceTree = "<group>"; };
-		1DD6466F1B1C866900B0EC76 /* WOTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLoginViewController.m; sourceTree = "<group>"; };
-		1DD646701B1C866900B0EC76 /* WOTLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLoginViewController.xib; sourceTree = "<group>"; };
-		1DD646741B1C958000B0EC76 /* WOTCoreDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTCoreDataProvider.h; sourceTree = "<group>"; };
-		1DD646751B1C958000B0EC76 /* WOTCoreDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTCoreDataProvider.m; sourceTree = "<group>"; };
-		1DD646781B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataOperations.h"; sourceTree = "<group>"; };
-		1DD646791B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreDataOperations.m"; sourceTree = "<group>"; };
 		1DD6467E1B1C990800B0EC76 /* WOTPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPrefixHeader.pch; sourceTree = "<group>"; };
-		1DD6467F1B1C99C600B0EC76 /* UserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSession.h; sourceTree = "<group>"; };
-		1DD646801B1C99C600B0EC76 /* UserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSession.m; sourceTree = "<group>"; };
 		1DD646881B1D991A00B0EC76 /* WOT_iOS_MAIN.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS_MAIN.xcdatamodel; sourceTree = "<group>"; };
 		1DD6468D1B1D9A8200B0EC76 /* WOTError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTError.h; sourceTree = "<group>"; };
 		1DD6468E1B1D9A8200B0EC76 /* WOTError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTError.m; sourceTree = "<group>"; };
@@ -107,9 +104,48 @@
 		1DD646CA1B1F378100B0EC76 /* WOTTankListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListViewController.h; sourceTree = "<group>"; };
 		1DD646CB1B1F378100B0EC76 /* WOTTankListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListViewController.m; sourceTree = "<group>"; };
 		1DD646CC1B1F378100B0EC76 /* WOTTankListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListViewController.xib; sourceTree = "<group>"; };
-		1DD646D21B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wotShowMenuButtoniPhone.png; sourceTree = "<group>"; };
-		1DD646D31B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wotShowMenuButtoniPhone@2x.png"; sourceTree = "<group>"; };
-		1DD646D41B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wotShowMenuButtoniPhone@3x.png"; sourceTree = "<group>"; };
+		1DD646D91B20533E00B0EC76 /* WOTMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMenuTableViewCell.h; sourceTree = "<group>"; };
+		1DD646DA1B20533E00B0EC76 /* WOTMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMenuTableViewCell.m; sourceTree = "<group>"; };
+		1DD646DB1B20533E00B0EC76 /* WOTMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTMenuTableViewCell.xib; sourceTree = "<group>"; };
+		1DD646DE1B20552500B0EC76 /* WOTMenuProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMenuProtocol.h; sourceTree = "<group>"; };
+		1DD646E01B205BE400B0EC76 /* WOTProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProfileViewController.h; sourceTree = "<group>"; };
+		1DD646E11B205BE400B0EC76 /* WOTProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProfileViewController.m; sourceTree = "<group>"; };
+		1DD646E31B205BF500B0EC76 /* WOTProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTProfileViewController.xib; sourceTree = "<group>"; };
+		1DD646E61B205D9300B0EC76 /* WOTPlayersListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPlayersListViewController.h; sourceTree = "<group>"; };
+		1DD646E71B205D9300B0EC76 /* WOTPlayersListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTPlayersListViewController.m; sourceTree = "<group>"; };
+		1DD646E81B205D9300B0EC76 /* WOTPlayersListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTPlayersListViewController.xib; sourceTree = "<group>"; };
+		1DD646EC1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+EventBlock.h"; sourceTree = "<group>"; };
+		1DD646ED1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+EventBlock.m"; sourceTree = "<group>"; };
+		1DD646F11B20700000B0EC76 /* NSManagedObject+CoreDataOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataOperations.h"; sourceTree = "<group>"; };
+		1DD646F21B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreDataOperations.m"; sourceTree = "<group>"; };
+		1DD646F41B20700000B0EC76 /* UserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSession.h; sourceTree = "<group>"; };
+		1DD646F51B20700000B0EC76 /* UserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSession.m; sourceTree = "<group>"; };
+		1DD646F61B20700000B0EC76 /* WOTCoreDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTCoreDataProvider.h; sourceTree = "<group>"; };
+		1DD646F71B20700000B0EC76 /* WOTCoreDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTCoreDataProvider.m; sourceTree = "<group>"; };
+		1DD646FC1B20717800B0EC76 /* WOTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLoginViewController.h; sourceTree = "<group>"; };
+		1DD646FD1B20717800B0EC76 /* WOTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLoginViewController.m; sourceTree = "<group>"; };
+		1DD646FE1B20717800B0EC76 /* WOTLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLoginViewController.xib; sourceTree = "<group>"; };
+		1DD647011B20721300B0EC76 /* WOTSessionDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionDataProvider.h; sourceTree = "<group>"; };
+		1DD647021B20721300B0EC76 /* WOTSessionDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionDataProvider.m; sourceTree = "<group>"; };
+		1DD647051B2081E900B0EC76 /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
+		1DD647061B2081E900B0EC76 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
+		1DD647081B20823400B0EC76 /* Strings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Strings.h; sourceTree = "<group>"; };
+		1DD6470A1B20841300B0EC76 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = en.lproj/wotShowMenuButtoniPhone.png; sourceTree = "<group>"; };
+		1DD6470D1B20841600B0EC76 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/wotShowMenuButtoniPhone@2x.png"; sourceTree = "<group>"; };
+		1DD647101B20841900B0EC76 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/wotShowMenuButtoniPhone@3x.png"; sourceTree = "<group>"; };
+		1DD647121B20842E00B0EC76 /* ru */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ru; path = ru.lproj/wotShowMenuButtoniPhone.png; sourceTree = "<group>"; };
+		1DD647131B20842E00B0EC76 /* ru */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ru; path = "ru.lproj/wotShowMenuButtoniPhone@2x.png"; sourceTree = "<group>"; };
+		1DD647141B20842E00B0EC76 /* ru */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ru; path = "ru.lproj/wotShowMenuButtoniPhone@3x.png"; sourceTree = "<group>"; };
+		1DD647191B2084FF00B0EC76 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = "<group>"; };
+		1DD6471E1B20855400B0EC76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1DD647231B20975300B0EC76 /* WOTLanguageDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLanguageDatasource.h; sourceTree = "<group>"; };
+		1DD647241B20975300B0EC76 /* WOTLanguageDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageDatasource.m; sourceTree = "<group>"; };
+		1DD647271B2099C800B0EC76 /* WOTLanguageSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLanguageSelectorViewController.h; sourceTree = "<group>"; };
+		1DD647281B2099C800B0EC76 /* WOTLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageSelectorViewController.m; sourceTree = "<group>"; };
+		1DD647291B2099C800B0EC76 /* WOTLanguageSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLanguageSelectorViewController.xib; sourceTree = "<group>"; };
+		1DD6472D1B209B2400B0EC76 /* WOTLanguageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLanguageTableViewCell.h; sourceTree = "<group>"; };
+		1DD6472E1B209B2400B0EC76 /* WOTLanguageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageTableViewCell.m; sourceTree = "<group>"; };
+		1DD6472F1B209B2400B0EC76 /* WOTLanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLanguageTableViewCell.xib; sourceTree = "<group>"; };
 		75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		95194089742F312E67004937 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BCD5CD3F245D125334EBB9C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,8 +173,8 @@
 		1DD6462A1B1C616A00B0EC76 = {
 			isa = PBXGroup;
 			children = (
+				1DD647191B2084FF00B0EC76 /* podfile */,
 				1DD6467E1B1C990800B0EC76 /* WOTPrefixHeader.pch */,
-				1DD646681B1C68ED00B0EC76 /* Podfile */,
 				1DD646351B1C616A00B0EC76 /* WOT-iOS */,
 				1DD646521B1C616A00B0EC76 /* WOT-iOSTests */,
 				1DD646341B1C616A00B0EC76 /* Products */,
@@ -146,6 +182,7 @@
 				73D1069022E23097C59EE24A /* Frameworks */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		1DD646341B1C616A00B0EC76 /* Products */ = {
 			isa = PBXGroup;
@@ -161,7 +198,6 @@
 			children = (
 				1DD646CF1B1F4C9D00B0EC76 /* resources */,
 				1DD6468C1B1D9A7000B0EC76 /* core */,
-				1DD646731B1C956E00B0EC76 /* coreData */,
 				1DD646651B1C640C00B0EC76 /* services */,
 				1DD6465F1B1C619500B0EC76 /* ui */,
 				1DD6463A1B1C616A00B0EC76 /* AppDelegate.h */,
@@ -202,12 +238,12 @@
 		1DD6465F1B1C619500B0EC76 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				1DD646C91B1F377300B0EC76 /* WOTTankListViewController */,
 				1DD646BE1B1F36FB00B0EC76 /* Root */,
-				1DD646671B1C687700B0EC76 /* login */,
-				1DD646601B1C61BF00B0EC76 /* WOTRootViewController.h */,
-				1DD646611B1C61BF00B0EC76 /* WOTRootViewController.m */,
-				1DD646621B1C61BF00B0EC76 /* WOTRootViewController.xib */,
+				1DD646FB1B20717800B0EC76 /* WOTLoginViewController */,
+				1DD647261B2099AA00B0EC76 /* WOTLanguageSelectorViewController */,
+				1DD646E51B205D7B00B0EC76 /* WOTPlayersListViewController */,
+				1DD646DF1B205BC300B0EC76 /* WOTProfileViewController */,
+				1DD646C91B1F377300B0EC76 /* WOTTankListViewController */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -216,64 +252,17 @@
 			isa = PBXGroup;
 			children = (
 				1DD646911B1DB89600B0EC76 /* TankList */,
-				1DD6466A1B1C700400B0EC76 /* Login */,
 				1DD646661B1C641C00B0EC76 /* WOTConstants.h */,
 			);
 			path = services;
-			sourceTree = "<group>";
-		};
-		1DD646671B1C687700B0EC76 /* login */ = {
-			isa = PBXGroup;
-			children = (
-				1DD6466E1B1C866900B0EC76 /* WOTLoginViewController.h */,
-				1DD6466F1B1C866900B0EC76 /* WOTLoginViewController.m */,
-				1DD646701B1C866900B0EC76 /* WOTLoginViewController.xib */,
-			);
-			path = login;
-			sourceTree = "<group>";
-		};
-		1DD6466A1B1C700400B0EC76 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				1DD6466B1B1C701B00B0EC76 /* WOTLoginService.h */,
-				1DD6466C1B1C701B00B0EC76 /* WOTLoginService.m */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		1DD646731B1C956E00B0EC76 /* coreData */ = {
-			isa = PBXGroup;
-			children = (
-				1DD6467B1B1C972000B0EC76 /* Model */,
-				1DD646771B1C96CC00B0EC76 /* Categories */,
-				1DD646741B1C958000B0EC76 /* WOTCoreDataProvider.h */,
-				1DD646751B1C958000B0EC76 /* WOTCoreDataProvider.m */,
-			);
-			path = coreData;
-			sourceTree = "<group>";
-		};
-		1DD646771B1C96CC00B0EC76 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				1DD646781B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.h */,
-				1DD646791B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.m */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
-		1DD6467B1B1C972000B0EC76 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				1DD6467F1B1C99C600B0EC76 /* UserSession.h */,
-				1DD646801B1C99C600B0EC76 /* UserSession.m */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		1DD6468C1B1D9A7000B0EC76 /* core */ = {
 			isa = PBXGroup;
 			children = (
 				1DD6469C1B1DC42100B0EC76 /* Categories */,
+				1DD646EF1B20700000B0EC76 /* model */,
+				1DD647211B20973800B0EC76 /* CustomDatasources */,
 				1DD646981B1DC30D00B0EC76 /* WOTRequests */,
 				1DD6468D1B1D9A8200B0EC76 /* WOTError.h */,
 				1DD6468E1B1D9A8200B0EC76 /* WOTError.m */,
@@ -308,6 +297,8 @@
 		1DD6469C1B1DC42100B0EC76 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				1DD647041B2081E900B0EC76 /* NSBundle */,
+				1DD646EB1B206B0C00B0EC76 /* UIBarButtonItem */,
 				1DD6469D1B1DC42100B0EC76 /* NSString */,
 			);
 			path = Categories;
@@ -356,9 +347,11 @@
 		1DD646C21B1F36FB00B0EC76 /* WOTMenuViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1DD646D81B20532100B0EC76 /* cells */,
 				1DD646C41B1F371700B0EC76 /* WOTMenuViewController.h */,
 				1DD646C51B1F371700B0EC76 /* WOTMenuViewController.m */,
 				1DD646C61B1F371700B0EC76 /* WOTMenuViewController.xib */,
+				1DD646DE1B20552500B0EC76 /* WOTMenuProtocol.h */,
 			);
 			path = WOTMenuViewController;
 			sourceTree = "<group>";
@@ -377,6 +370,8 @@
 			isa = PBXGroup;
 			children = (
 				1DD646D01B1F4C9D00B0EC76 /* images */,
+				1DD647081B20823400B0EC76 /* Strings.h */,
+				1DD6471F1B20855400B0EC76 /* Localizable.strings */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -392,11 +387,138 @@
 		1DD646D11B1F4C9D00B0EC76 /* mmdrawer */ = {
 			isa = PBXGroup;
 			children = (
-				1DD646D21B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone.png */,
-				1DD646D31B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@2x.png */,
-				1DD646D41B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@3x.png */,
+				1DD6470B1B20841300B0EC76 /* wotShowMenuButtoniPhone.png */,
+				1DD6470E1B20841600B0EC76 /* wotShowMenuButtoniPhone@2x.png */,
+				1DD647111B20841900B0EC76 /* wotShowMenuButtoniPhone@3x.png */,
 			);
 			path = mmdrawer;
+			sourceTree = "<group>";
+		};
+		1DD646D81B20532100B0EC76 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				1DD646D91B20533E00B0EC76 /* WOTMenuTableViewCell.h */,
+				1DD646DA1B20533E00B0EC76 /* WOTMenuTableViewCell.m */,
+				1DD646DB1B20533E00B0EC76 /* WOTMenuTableViewCell.xib */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
+		1DD646DF1B205BC300B0EC76 /* WOTProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1DD646E01B205BE400B0EC76 /* WOTProfileViewController.h */,
+				1DD646E11B205BE400B0EC76 /* WOTProfileViewController.m */,
+				1DD646E31B205BF500B0EC76 /* WOTProfileViewController.xib */,
+			);
+			path = WOTProfileViewController;
+			sourceTree = "<group>";
+		};
+		1DD646E51B205D7B00B0EC76 /* WOTPlayersListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1DD646E61B205D9300B0EC76 /* WOTPlayersListViewController.h */,
+				1DD646E71B205D9300B0EC76 /* WOTPlayersListViewController.m */,
+				1DD646E81B205D9300B0EC76 /* WOTPlayersListViewController.xib */,
+			);
+			path = WOTPlayersListViewController;
+			sourceTree = "<group>";
+		};
+		1DD646EB1B206B0C00B0EC76 /* UIBarButtonItem */ = {
+			isa = PBXGroup;
+			children = (
+				1DD646EC1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.h */,
+				1DD646ED1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m */,
+			);
+			path = UIBarButtonItem;
+			sourceTree = "<group>";
+		};
+		1DD646EF1B20700000B0EC76 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				1DD646F01B20700000B0EC76 /* Categories */,
+				1DD646F31B20700000B0EC76 /* entities */,
+				1DD646F61B20700000B0EC76 /* WOTCoreDataProvider.h */,
+				1DD646F71B20700000B0EC76 /* WOTCoreDataProvider.m */,
+				1DD647011B20721300B0EC76 /* WOTSessionDataProvider.h */,
+				1DD647021B20721300B0EC76 /* WOTSessionDataProvider.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		1DD646F01B20700000B0EC76 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				1DD646F11B20700000B0EC76 /* NSManagedObject+CoreDataOperations.h */,
+				1DD646F21B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		1DD646F31B20700000B0EC76 /* entities */ = {
+			isa = PBXGroup;
+			children = (
+				1DD646F41B20700000B0EC76 /* UserSession.h */,
+				1DD646F51B20700000B0EC76 /* UserSession.m */,
+			);
+			path = entities;
+			sourceTree = "<group>";
+		};
+		1DD646FB1B20717800B0EC76 /* WOTLoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1DD646FC1B20717800B0EC76 /* WOTLoginViewController.h */,
+				1DD646FD1B20717800B0EC76 /* WOTLoginViewController.m */,
+				1DD646FE1B20717800B0EC76 /* WOTLoginViewController.xib */,
+			);
+			path = WOTLoginViewController;
+			sourceTree = "<group>";
+		};
+		1DD647041B2081E900B0EC76 /* NSBundle */ = {
+			isa = PBXGroup;
+			children = (
+				1DD647051B2081E900B0EC76 /* NSBundle+LanguageBundle.h */,
+				1DD647061B2081E900B0EC76 /* NSBundle+LanguageBundle.m */,
+			);
+			path = NSBundle;
+			sourceTree = "<group>";
+		};
+		1DD647211B20973800B0EC76 /* CustomDatasources */ = {
+			isa = PBXGroup;
+			children = (
+				1DD647221B20973800B0EC76 /* Languages */,
+			);
+			path = CustomDatasources;
+			sourceTree = "<group>";
+		};
+		1DD647221B20973800B0EC76 /* Languages */ = {
+			isa = PBXGroup;
+			children = (
+				1DD647231B20975300B0EC76 /* WOTLanguageDatasource.h */,
+				1DD647241B20975300B0EC76 /* WOTLanguageDatasource.m */,
+			);
+			path = Languages;
+			sourceTree = "<group>";
+		};
+		1DD647261B2099AA00B0EC76 /* WOTLanguageSelectorViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1DD6472C1B209B0C00B0EC76 /* cells */,
+				1DD647271B2099C800B0EC76 /* WOTLanguageSelectorViewController.h */,
+				1DD647281B2099C800B0EC76 /* WOTLanguageSelectorViewController.m */,
+				1DD647291B2099C800B0EC76 /* WOTLanguageSelectorViewController.xib */,
+			);
+			path = WOTLanguageSelectorViewController;
+			sourceTree = "<group>";
+		};
+		1DD6472C1B209B0C00B0EC76 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				1DD6472D1B209B2400B0EC76 /* WOTLanguageTableViewCell.h */,
+				1DD6472E1B209B2400B0EC76 /* WOTLanguageTableViewCell.m */,
+				1DD6472F1B209B2400B0EC76 /* WOTLanguageTableViewCell.xib */,
+			);
+			path = cells;
 			sourceTree = "<group>";
 		};
 		73D1069022E23097C59EE24A /* Frameworks */ = {
@@ -480,7 +602,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				ru,
 			);
 			mainGroup = 1DD6462A1B1C616A00B0EC76;
 			productRefGroup = 1DD646341B1C616A00B0EC76 /* Products */;
@@ -498,15 +620,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DD646691B1C68ED00B0EC76 /* Podfile in Resources */,
+				1DD647311B209B2400B0EC76 /* WOTLanguageTableViewCell.xib in Resources */,
+				1DD6472B1B2099C800B0EC76 /* WOTLanguageSelectorViewController.xib in Resources */,
+				1DD6471A1B2084FF00B0EC76 /* podfile in Resources */,
+				1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */,
+				1DD646E41B205BF500B0EC76 /* WOTProfileViewController.xib in Resources */,
+				1DD647001B20717800B0EC76 /* WOTLoginViewController.xib in Resources */,
 				1DD646C81B1F371700B0EC76 /* WOTMenuViewController.xib in Resources */,
-				1DD646D61B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@2x.png in Resources */,
-				1DD646721B1C866900B0EC76 /* WOTLoginViewController.xib in Resources */,
+				1DD6470C1B20841600B0EC76 /* wotShowMenuButtoniPhone@2x.png in Resources */,
+				1DD646EA1B205D9300B0EC76 /* WOTPlayersListViewController.xib in Resources */,
 				1DD646CE1B1F378100B0EC76 /* WOTTankListViewController.xib in Resources */,
 				1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */,
-				1DD646D51B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone.png in Resources */,
-				1DD646D71B1F4C9D00B0EC76 /* wotShowMenuButtoniPhone@3x.png in Resources */,
-				1DD646641B1C61BF00B0EC76 /* WOTRootViewController.xib in Resources */,
+				1DD647091B20841300B0EC76 /* wotShowMenuButtoniPhone.png in Resources */,
+				1DD646DD1B20533E00B0EC76 /* WOTMenuTableViewCell.xib in Resources */,
+				1DD6470F1B20841900B0EC76 /* wotShowMenuButtoniPhone@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,26 +684,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DD646761B1C958000B0EC76 /* WOTCoreDataProvider.m in Sources */,
+				1DD646F81B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */,
 				1DD646B61B1DF00B00B0EC76 /* WOTSaveSessionRequest.m in Sources */,
+				1DD647071B2081E900B0EC76 /* NSBundle+LanguageBundle.m in Sources */,
 				1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */,
-				1DD646711B1C866900B0EC76 /* WOTLoginViewController.m in Sources */,
 				1DD6468F1B1D9A8200B0EC76 /* WOTError.m in Sources */,
+				1DD646FA1B20700000B0EC76 /* WOTCoreDataProvider.m in Sources */,
+				1DD647301B209B2400B0EC76 /* WOTLanguageTableViewCell.m in Sources */,
 				1DD646AA1B1DCD6700B0EC76 /* WOTWEBRequestLogin.m in Sources */,
+				1DD6472A1B2099C800B0EC76 /* WOTLanguageSelectorViewController.m in Sources */,
+				1DD647031B20721400B0EC76 /* WOTSessionDataProvider.m in Sources */,
+				1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */,
+				1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */,
 				1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */,
 				1DD646B01B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.m in Sources */,
 				1DD646A51B1DCCC400B0EC76 /* WOTWEBRequest.m in Sources */,
 				1DD646B91B1F0B2900B0EC76 /* WOTWEBRequestLogout.m in Sources */,
-				1DD6466D1B1C701B00B0EC76 /* WOTLoginService.m in Sources */,
 				1DD646391B1C616A00B0EC76 /* main.m in Sources */,
+				1DD647251B20975300B0EC76 /* WOTLanguageDatasource.m in Sources */,
 				1DD646B31B1DEF1300B0EC76 /* WOTRequest.m in Sources */,
-				1DD646631B1C61BF00B0EC76 /* WOTRootViewController.m in Sources */,
-				1DD6467A1B1C96FD00B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */,
-				1DD646811B1C99C600B0EC76 /* UserSession.m in Sources */,
+				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
 				1DD646C71B1F371700B0EC76 /* WOTMenuViewController.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1DD6463F1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld in Sources */,
+				1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */,
 				1DD646C31B1F36FB00B0EC76 /* WOTDrawerViewController.m in Sources */,
+				1DD646F91B20700000B0EC76 /* UserSession.m in Sources */,
+				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
 				1DD646AD1B1DCDCE00B0EC76 /* WOTRequestExecutor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,6 +732,44 @@
 			targetProxy = 1DD646501B1C616A00B0EC76 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1DD6470B1B20841300B0EC76 /* wotShowMenuButtoniPhone.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DD6470A1B20841300B0EC76 /* en */,
+				1DD647121B20842E00B0EC76 /* ru */,
+			);
+			name = wotShowMenuButtoniPhone.png;
+			sourceTree = "<group>";
+		};
+		1DD6470E1B20841600B0EC76 /* wotShowMenuButtoniPhone@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DD6470D1B20841600B0EC76 /* en */,
+				1DD647131B20842E00B0EC76 /* ru */,
+			);
+			name = "wotShowMenuButtoniPhone@2x.png";
+			sourceTree = "<group>";
+		};
+		1DD647111B20841900B0EC76 /* wotShowMenuButtoniPhone@3x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DD647101B20841900B0EC76 /* en */,
+				1DD647141B20842E00B0EC76 /* ru */,
+			);
+			name = "wotShowMenuButtoniPhone@3x.png";
+			sourceTree = "<group>";
+		};
+		1DD6471F1B20855400B0EC76 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DD6471E1B20855400B0EC76 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DD646571B1C616A00B0EC76 /* Debug */ = {

@@ -39,33 +39,40 @@ NSInteger const WOTRequestLogoutId = 3;
         NSString *location = json[@"data"][@"location"];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
 
-        UINavigationController *navigationController = (UINavigationController *)[[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
-        WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:@"WOTLoginViewController" bundle:nil];
-        loginController.request = request;
-        loginController.redirectUrlPath = json[@WOT_REDIRECT_URI];
-        [loginController setCallback:^(NSError *error, NSString *userID, NSString *access_token, NSString *account_id, NSNumber *expires_at){
-            
-            NSMutableDictionary *args =[[NSMutableDictionary alloc] init];
-            if (error) args[@"error"]=error;
-            if (userID) args[@"userId"]=userID;
-            if (access_token) args[@"access_token"]=access_token;
-            if (account_id) args[@"account_id"]=account_id;
-            if (expires_at) args[@"expires_at"]=expires_at;
+        UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+        UIViewController *presentedViewController = [[rootViewController.presentedViewController childViewControllers] firstObject];
+        if ([presentedViewController isKindOfClass:[WOTLoginViewController class]]){
 
-            [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestSaveSessionId args:args];
+            WOTLoginViewController *loginController = (WOTLoginViewController *)presentedViewController;
+            loginController.request = request;
+            [loginController reloadData];
             
-            [navigationController dismissViewControllerAnimated:YES completion:NULL];
-        }];
-        [navigationController presentViewController:loginController animated:YES completion:NULL];
+        } else {
+        
+        
+            WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:@"WOTLoginViewController" bundle:nil];
+            loginController.request = request;
+            loginController.redirectUrlPath = json[WOT_KEY_REDIRECT_URI];
+            [loginController setCallback:^(NSError *error, NSString *userID, NSString *access_token, NSString *account_id, NSNumber *expires_at){
+                
+                NSMutableDictionary *args =[[NSMutableDictionary alloc] init];
+                if (error) args[@"error"]=error;
+                if (userID) args[@"userId"]=userID;
+                if (access_token) args[@"access_token"]=access_token;
+                if (account_id) args[@"account_id"]=account_id;
+                if (expires_at) args[@"expires_at"]=expires_at;
+
+                [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestSaveSessionId args:args];
+                
+                [rootViewController dismissViewControllerAnimated:YES completion:NULL];
+            }];
+            
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+            
+            [rootViewController presentViewController:nav animated:YES completion:NULL];
+        }
         
     } forRequestId:WOTRequestLoginId];
-
-    /**
-     * Save Sassion
-     **/
-    
-    [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTSaveSessionRequest class] forRequestId:WOTRequestSaveSessionId];
-
     
     /**
      * Logout
@@ -83,6 +90,13 @@ NSInteger const WOTRequestLogoutId = 3;
         [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLoginId args:nil];
         
     } forRequestId:WOTRequestLogoutId];
+    
+    /**
+     * Save Sassion
+     **/
+    
+    [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTSaveSessionRequest class] forRequestId:WOTRequestSaveSessionId];
+    
 }
 
 

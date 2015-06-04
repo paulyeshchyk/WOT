@@ -16,10 +16,10 @@
 
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
     UserSession *session = [UserSession insertNewObjectInManagedObjectContext:context];
-    session.nickname = args[@WOT_USER_ID];
-    session.access_token = args[@WOT_ACCESS_TOKEN];
-    session.accound_id = args[@WOT_ACCOUNT_ID];
-    session.expires_at = args[@WOT_EXPIRES_AT];
+    session.nickname = args[WOT_KEY_USER_ID];
+    session.access_token = args[WOT_KEY_ACCESS_TOKEN];
+    session.accound_id = args[WOT_KEY_ACCOUNT_ID];
+    session.expires_at = args[WOT_KEY_EXPIRES_AT];
     NSError *error = nil;
     [context save:&error];
 

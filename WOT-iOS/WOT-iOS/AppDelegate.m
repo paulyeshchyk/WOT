@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "WOTRootViewController.h"
 #import "WOTRequestExecutor+Registration.h"
 #import "WOTDrawerViewController.h"
 
@@ -23,10 +22,7 @@
     
     [WOTRequestExecutor registerRequests];
     
-//    WOTRootViewController *wotRootViewController = [[WOTRootViewController alloc] initWithNibName:@"WOTRootViewController" bundle:nil];
     self.wotDrawerViewController = [[WOTDrawerViewController alloc] initWithMenu];
-//    UINavigationController *rootNavigationController = [[UINavigationController alloc] initWithRootViewController:wotRootViewController];
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.wotDrawerViewController;
     [self.window makeKeyAndVisible];
