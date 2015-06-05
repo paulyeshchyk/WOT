@@ -80,8 +80,15 @@ static NSString *urlEncode(id object) {
     return [NSURL URLWithString:urlPath];
 }
 
+- (NSString *)applicationID {
+    
+    return WOT_VALUE_APPLICATION_ID_RU;
+}
+
 - (void)executeWithArgs:(NSDictionary *)args{
     
+    
+    [super executeWithArgs:args];
     
     NSURL *url = self.url;
     NSData *bodyData = self.httpBodyData;

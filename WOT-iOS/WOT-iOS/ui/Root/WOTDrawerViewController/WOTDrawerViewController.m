@@ -34,8 +34,7 @@
     
     UINavigationController *centerNavigationController = [[UINavigationController alloc] initWithRootViewController:centerViewController];
     [[centerNavigationController navigationBar] setTranslucent:NO];
-    [[centerNavigationController navigationBar] setBarStyle:UIBarStyleBlack];
-    [[centerNavigationController navigationBar] setOpaque:YES];
+    [[centerNavigationController navigationBar] setDarkStyle];
     
     
     UIImage *image = [UIImage imageNamed:@"wotShowMenuButtoniPhone.png"];
@@ -44,11 +43,7 @@
     return centerNavigationController;
 }
 
-
 - (void)dealloc {
-    
-    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:@"LoginLanguage"];
-    
     self.menu.delegate = nil;
 }
 
@@ -80,21 +75,16 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:WOT_USERDEFAULTS_LOGIN_LANGUAGE options:NSKeyValueObservingOptionNew context:NULL];
-    
-}
+    [[UIApplication sharedApplication] setStatusBarStyle:(UIStatusBarStyleLightContent)];
+[self setNeedsStatusBarAppearanceUpdate];
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-//    NSString *language = [change[NSKeyValueChangeNewKey] stringValue];
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLoginId args:nil];
-    
 }
-
 #pragma mark - WOTMenuDelegate
 - (NSString *)currentUserName {
-    
-    return [WOTSessionDataProvider currentUserName];
+
+    NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:[WOTSessionDataProvider expirationTime]];
+    NSString *result = [NSString stringWithFormat:@"%@-%@",expirationDate,[WOTSessionDataProvider currentUserName]];
+    return result;
 }
 
 - (void)menu:(id<WOTMenuProtocol>)menu didSelectControllerClass:(NSString *)controllerClass  title:(NSString *)title image:(UIImage *)image{

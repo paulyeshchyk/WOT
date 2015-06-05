@@ -16,4 +16,6 @@
 
 + (void)removeObjectsByPredicate:(NSPredicate *)predicate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
++ (instancetype)findOrCreateObjectWithPredicate:(NSPredicate *)predicate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+
 @end

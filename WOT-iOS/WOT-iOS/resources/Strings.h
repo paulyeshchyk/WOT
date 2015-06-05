@@ -28,6 +28,7 @@
 #define WOT_KEY_CODE @"code"
 #define WOT_KEY_APPLICATION_ID @"application_id"
 #define WOT_KEY_NOFOLLOW @"nofollow"
+#define WOT_KEY_FIELDS @"fields"
 #define WOT_KEY_REDIRECT_URI @"redirect_uri"
 
 

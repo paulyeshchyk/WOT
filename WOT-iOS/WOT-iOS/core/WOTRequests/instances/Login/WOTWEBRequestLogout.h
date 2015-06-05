@@ -10,7 +10,6 @@
 
 @interface WOTWEBRequestLogout : WOTWEBRequest
 
-@property (nonatomic, readonly) NSString *applicationID;
 @property (nonatomic, readonly) NSString *access_token;
 
 @end

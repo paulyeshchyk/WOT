@@ -24,5 +24,7 @@
 - (NSString *)queryIntoString ;
 
 
+@property (nonatomic, readonly) NSString *applicationID;
+
 
 @end

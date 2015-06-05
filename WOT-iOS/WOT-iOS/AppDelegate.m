@@ -19,7 +19,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    
     [WOTRequestExecutor registerRequests];
     
     self.wotDrawerViewController = [[WOTDrawerViewController alloc] initWithMenu];

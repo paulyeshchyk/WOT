@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14C109" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Tanks" representedClassName="Tanks" syncable="YES">
+        <attribute name="contour_image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image_small" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="is_premium" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name_i18n" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nation_i18n" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="short_name_i18n" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tank_id" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type_i18n" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="UserSession" representedClassName="UserSession" syncable="YES">
         <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accound_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,5 +25,6 @@
     </entity>
     <elements>
         <element name="UserSession" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Tanks" positionX="-54" positionY="36" width="128" height="240"/>
     </elements>
 </model>

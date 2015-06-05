@@ -8,9 +8,16 @@
 
 #import "WOTRequest.h"
 
+@interface WOTRequest ()
+
+@property (nonatomic, readwrite)NSDictionary *args;
+@end
+
 @implementation WOTRequest
 
 - (void)executeWithArgs:(NSDictionary *)args {
+    
+    self.args = [args copy];
     
 }
 

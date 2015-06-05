@@ -11,10 +11,12 @@
 
 #import "NSString+WOTValue.h"
 #import "NSBundle+LanguageBundle.h"
+#import "UINavigationBar+WOT.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import <UIKit+AFNetworking.h>
 
 #import "UIBarButtonItem+EventBlock.h"
+#import "NSManagedObject+FillProperties.h"
 
 
 #import "WOTCoreDataProvider.h"

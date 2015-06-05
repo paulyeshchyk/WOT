@@ -17,5 +17,6 @@
 + (void)logout;
 + (void)login;
 + (BOOL)sessionHasBeenExpired;
++ (NSTimeInterval)expirationTime;
 
 @end

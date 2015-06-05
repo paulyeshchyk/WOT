@@ -15,6 +15,7 @@ typedef void(^WOTRequestJSONCallback)(NSDictionary *json);
 
 @property (nonatomic, copy)WOTRequestErrorCallback errorCallback;
 @property (nonatomic, copy)WOTRequestJSONCallback jsonCallback;
+@property (nonatomic, readonly)NSDictionary *args;
 
 - (void)executeWithArgs:(NSDictionary *)args;
 

@@ -12,7 +12,7 @@
 #import "WOTCoreDataProvider.h"
 #import "WOTError.h"
 #import "WOTErrorCodes.h"
-
+#import "WOTRequestExecutor+Registration.h"
 #import "WOTLanguageSelectorViewController.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
@@ -28,7 +28,7 @@
     [super viewDidLoad];
     
     
-    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setDarkStyle];
     
     UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_BACK) eventBlock:^(id sender) {
         
@@ -103,6 +103,8 @@
     if (language) {
         
         [[NSUserDefaults standardUserDefaults] setObject:language forKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLoginId args:nil];
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];

@@ -36,6 +36,16 @@
     }
 }
 
++ (instancetype)findOrCreateObjectWithPredicate:(NSPredicate *)predicate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    
+    NSManagedObject *result = [self singleObjectWithPredicate:predicate inManagedObjectContext:managedObjectContext includingSubentities:NO];
+    if (!result){
+        
+        result = [self insertNewObjectInManagedObjectContext:managedObjectContext];
+    }
+    return result;
+}
+
 + (instancetype)insertNewObjectInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     
     return [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass(self) inManagedObjectContext:managedObjectContext];

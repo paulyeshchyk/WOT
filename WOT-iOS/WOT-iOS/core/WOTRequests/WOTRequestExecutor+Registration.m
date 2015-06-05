@@ -12,12 +12,16 @@
 #import "WOTWEBRequestLogout.h"
 
 #import "WOTLoginViewController.h"
+#import "WOTClearSessionRequest.h"
+#import "WOTWEBRequestTanks.h"
+#import "Tanks.h"
 
 
 NSInteger const WOTRequestLoginId = 1;
 NSInteger const WOTRequestSaveSessionId = 2;
 NSInteger const WOTRequestLogoutId = 3;
-
+NSInteger const WOTRequestClearSessionId = 4;
+NSInteger const WOTWEBRequestTanksId = 5;
 
 @implementation WOTRequestExecutor (Registration)
 
@@ -34,6 +38,7 @@ NSInteger const WOTRequestLogoutId = 3;
         [[[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo description] delegate:nil cancelButtonTitle:@"DISMISS" otherButtonTitles:nil] show];
         
     } forRequestId:WOTRequestLoginId];
+    
     [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
         
         NSString *location = json[@"data"][@"location"];
@@ -86,7 +91,7 @@ NSInteger const WOTRequestLogoutId = 3;
     } forRequestId:WOTRequestLogoutId];
     [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
         
-        
+        [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestClearSessionId args:nil];
         [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLoginId args:nil];
         
     } forRequestId:WOTRequestLogoutId];
@@ -96,6 +101,48 @@ NSInteger const WOTRequestLogoutId = 3;
      **/
     
     [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTSaveSessionRequest class] forRequestId:WOTRequestSaveSessionId];
+
+    /**
+     * Clear Sassion
+     **/
+    
+    [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTClearSessionRequest class] forRequestId:WOTRequestClearSessionId];
+
+    
+    
+    /**
+     * Tanks
+     **/
+    
+    [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTWEBRequestTanks class] forRequestId:WOTWEBRequestTanksId];
+    [[WOTRequestExecutor sharedInstance] registerRequestErrorCallback:^(NSError *error) {
+        NSLog(@"%@",error.localizedDescription);
+    } forRequestId:WOTWEBRequestTanksId];
+    [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
+        
+        NSDictionary *tanksDictionary = json[@"data"];
+
+        NSArray *tanksArray = [tanksDictionary allKeys];
+        
+        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
+        for (NSString *key in tanksArray) {
+        
+            NSDictionary *tankJSON = tanksDictionary[key];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tank_id == %@",tankJSON[@"tank_id"]];
+            Tanks *tank = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [tank fillPropertiesFromDictioary:tankJSON];
+            
+            
+        }
+        
+        if ([context hasChanges]) {
+            
+            NSError *error = nil;
+            [context save:&error];
+        }
+
+    } forRequestId:WOTWEBRequestTanksId];
     
 }
 

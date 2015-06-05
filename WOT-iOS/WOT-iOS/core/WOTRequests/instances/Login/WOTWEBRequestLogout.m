@@ -40,16 +40,6 @@
     return @{WOT_KEY_APPLICATION_ID:[NSString valueOrSpaceString:self.applicationID], WOT_KEY_ACCESS_TOKEN:[NSString valueOrSpaceString:self.access_token]};
 }
 
-- (NSString *)applicationID {
-    
-    return WOT_VALUE_APPLICATION_ID_RU;
-}
-
-- (NSString *)access_token {
-    
-    return [WOTSessionDataProvider currentAccessToken];
-}
-
 - (NSData *)httpBodyData {
     
     NSString * query = [self queryIntoString];
@@ -58,11 +48,20 @@
 }
 
 - (void)executeWithArgs:(NSDictionary *)args {
+    
+    [super executeWithArgs:args];
 
     [WOTWEBRequestLogout clearCache];
     [WOTWEBRequestLogout clearCookies];
 
     [super executeWithArgs:args];
 }
+
+- (NSString *)access_token {
+    
+    return [WOTSessionDataProvider currentAccessToken];
+}
+
+
 
 @end

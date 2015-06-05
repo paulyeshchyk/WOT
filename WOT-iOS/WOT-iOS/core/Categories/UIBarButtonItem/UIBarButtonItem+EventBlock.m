@@ -18,7 +18,7 @@
     [backButton bk_addEventHandler:eventBlock forControlEvents:UIControlEventTouchUpInside];
     [backButton setTitle:text forState:UIControlStateNormal];
     [backButton sizeToFit];
-    [backButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+//    [backButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     return backButtonItem;
 }

@@ -16,12 +16,9 @@
 		1DD6468F1B1D9A8200B0EC76 /* WOTError.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6468E1B1D9A8200B0EC76 /* WOTError.m */; };
 		1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6469F1B1DC42100B0EC76 /* NSString+WOTValue.m */; };
 		1DD646A51B1DCCC400B0EC76 /* WOTWEBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646A21B1DCCC400B0EC76 /* WOTWEBRequest.m */; };
-		1DD646AA1B1DCD6700B0EC76 /* WOTWEBRequestLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646A91B1DCD6700B0EC76 /* WOTWEBRequestLogin.m */; };
 		1DD646AD1B1DCDCE00B0EC76 /* WOTRequestExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646AC1B1DCDCE00B0EC76 /* WOTRequestExecutor.m */; };
 		1DD646B01B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646AF1B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.m */; };
 		1DD646B31B1DEF1300B0EC76 /* WOTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646B21B1DEF1300B0EC76 /* WOTRequest.m */; };
-		1DD646B61B1DF00B00B0EC76 /* WOTSaveSessionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646B51B1DF00B00B0EC76 /* WOTSaveSessionRequest.m */; };
-		1DD646B91B1F0B2900B0EC76 /* WOTWEBRequestLogout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646B81B1F0B2900B0EC76 /* WOTWEBRequestLogout.m */; };
 		1DD646C31B1F36FB00B0EC76 /* WOTDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646C11B1F36FB00B0EC76 /* WOTDrawerViewController.m */; };
 		1DD646C71B1F371700B0EC76 /* WOTMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646C51B1F371700B0EC76 /* WOTMenuViewController.m */; };
 		1DD646C81B1F371700B0EC76 /* WOTMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646C61B1F371700B0EC76 /* WOTMenuViewController.xib */; };
@@ -51,6 +48,15 @@
 		1DD6472B1B2099C800B0EC76 /* WOTLanguageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD647291B2099C800B0EC76 /* WOTLanguageSelectorViewController.xib */; };
 		1DD647301B209B2400B0EC76 /* WOTLanguageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6472E1B209B2400B0EC76 /* WOTLanguageTableViewCell.m */; };
 		1DD647311B209B2400B0EC76 /* WOTLanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6472F1B209B2400B0EC76 /* WOTLanguageTableViewCell.xib */; };
+		1DD6473A1B21ADFB00B0EC76 /* WOTWEBRequestLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647341B21ADFB00B0EC76 /* WOTWEBRequestLogin.m */; };
+		1DD6473B1B21ADFB00B0EC76 /* WOTWEBRequestLogout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647361B21ADFB00B0EC76 /* WOTWEBRequestLogout.m */; };
+		1DD6473C1B21ADFB00B0EC76 /* WOTSaveSessionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647391B21ADFB00B0EC76 /* WOTSaveSessionRequest.m */; };
+		1DD647421B21AE3F00B0EC76 /* WOTClearSessionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647411B21AE3F00B0EC76 /* WOTClearSessionRequest.m */; };
+		1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647451B21C57900B0EC76 /* UINavigationBar+WOT.m */; };
+		1DD647491B21D4E100B0EC76 /* Tanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647481B21D4E100B0EC76 /* Tanks.m */; };
+		1DD6474D1B21D54000B0EC76 /* WOTWEBRequestTanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6474C1B21D54000B0EC76 /* WOTWEBRequestTanks.m */; };
+		1DD647531B21E6F300B0EC76 /* NSManagedObject+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647521B21E6F300B0EC76 /* NSManagedObject+FillProperties.m */; };
+		1DD647561B21E74C00B0EC76 /* Tanks+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647551B21E74C00B0EC76 /* Tanks+FillProperties.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,18 +90,12 @@
 		1DD6469F1B1DC42100B0EC76 /* NSString+WOTValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WOTValue.m"; sourceTree = "<group>"; };
 		1DD646A11B1DCCC400B0EC76 /* WOTWEBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequest.h; sourceTree = "<group>"; };
 		1DD646A21B1DCCC400B0EC76 /* WOTWEBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequest.m; sourceTree = "<group>"; };
-		1DD646A81B1DCD6700B0EC76 /* WOTWEBRequestLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestLogin.h; sourceTree = "<group>"; };
-		1DD646A91B1DCD6700B0EC76 /* WOTWEBRequestLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestLogin.m; sourceTree = "<group>"; };
 		1DD646AB1B1DCDCE00B0EC76 /* WOTRequestExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRequestExecutor.h; sourceTree = "<group>"; };
 		1DD646AC1B1DCDCE00B0EC76 /* WOTRequestExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRequestExecutor.m; sourceTree = "<group>"; };
 		1DD646AE1B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTRequestExecutor+Registration.h"; sourceTree = "<group>"; };
 		1DD646AF1B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTRequestExecutor+Registration.m"; sourceTree = "<group>"; };
 		1DD646B11B1DEF1300B0EC76 /* WOTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRequest.h; sourceTree = "<group>"; };
 		1DD646B21B1DEF1300B0EC76 /* WOTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRequest.m; sourceTree = "<group>"; };
-		1DD646B41B1DF00B00B0EC76 /* WOTSaveSessionRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSaveSessionRequest.h; sourceTree = "<group>"; };
-		1DD646B51B1DF00B00B0EC76 /* WOTSaveSessionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSaveSessionRequest.m; sourceTree = "<group>"; };
-		1DD646B71B1F0B2900B0EC76 /* WOTWEBRequestLogout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestLogout.h; sourceTree = "<group>"; };
-		1DD646B81B1F0B2900B0EC76 /* WOTWEBRequestLogout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestLogout.m; sourceTree = "<group>"; };
 		1DD646C01B1F36FB00B0EC76 /* WOTDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDrawerViewController.h; sourceTree = "<group>"; };
 		1DD646C11B1F36FB00B0EC76 /* WOTDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTDrawerViewController.m; sourceTree = "<group>"; };
 		1DD646C41B1F371700B0EC76 /* WOTMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMenuViewController.h; sourceTree = "<group>"; };
@@ -146,6 +146,24 @@
 		1DD6472D1B209B2400B0EC76 /* WOTLanguageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLanguageTableViewCell.h; sourceTree = "<group>"; };
 		1DD6472E1B209B2400B0EC76 /* WOTLanguageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageTableViewCell.m; sourceTree = "<group>"; };
 		1DD6472F1B209B2400B0EC76 /* WOTLanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLanguageTableViewCell.xib; sourceTree = "<group>"; };
+		1DD647331B21ADFB00B0EC76 /* WOTWEBRequestLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestLogin.h; sourceTree = "<group>"; };
+		1DD647341B21ADFB00B0EC76 /* WOTWEBRequestLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestLogin.m; sourceTree = "<group>"; };
+		1DD647351B21ADFB00B0EC76 /* WOTWEBRequestLogout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestLogout.h; sourceTree = "<group>"; };
+		1DD647361B21ADFB00B0EC76 /* WOTWEBRequestLogout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestLogout.m; sourceTree = "<group>"; };
+		1DD647381B21ADFB00B0EC76 /* WOTSaveSessionRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSaveSessionRequest.h; sourceTree = "<group>"; };
+		1DD647391B21ADFB00B0EC76 /* WOTSaveSessionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSaveSessionRequest.m; sourceTree = "<group>"; };
+		1DD647401B21AE3F00B0EC76 /* WOTClearSessionRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTClearSessionRequest.h; sourceTree = "<group>"; };
+		1DD647411B21AE3F00B0EC76 /* WOTClearSessionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTClearSessionRequest.m; sourceTree = "<group>"; };
+		1DD647441B21C57900B0EC76 /* UINavigationBar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+WOT.h"; sourceTree = "<group>"; };
+		1DD647451B21C57900B0EC76 /* UINavigationBar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+WOT.m"; sourceTree = "<group>"; };
+		1DD647471B21D4E000B0EC76 /* Tanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tanks.h; sourceTree = "<group>"; };
+		1DD647481B21D4E100B0EC76 /* Tanks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tanks.m; sourceTree = "<group>"; };
+		1DD6474B1B21D54000B0EC76 /* WOTWEBRequestTanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestTanks.h; sourceTree = "<group>"; };
+		1DD6474C1B21D54000B0EC76 /* WOTWEBRequestTanks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestTanks.m; sourceTree = "<group>"; };
+		1DD647511B21E6F300B0EC76 /* NSManagedObject+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FillProperties.h"; sourceTree = "<group>"; };
+		1DD647521B21E6F300B0EC76 /* NSManagedObject+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FillProperties.m"; sourceTree = "<group>"; };
+		1DD647541B21E74C00B0EC76 /* Tanks+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tanks+FillProperties.h"; sourceTree = "<group>"; };
+		1DD647551B21E74C00B0EC76 /* Tanks+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tanks+FillProperties.m"; sourceTree = "<group>"; };
 		75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		95194089742F312E67004937 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BCD5CD3F245D125334EBB9C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -282,14 +300,14 @@
 			isa = PBXGroup;
 			children = (
 				1DD646A71B1DCD6700B0EC76 /* instances */,
+				1DD646B11B1DEF1300B0EC76 /* WOTRequest.h */,
+				1DD646B21B1DEF1300B0EC76 /* WOTRequest.m */,
 				1DD646A11B1DCCC400B0EC76 /* WOTWEBRequest.h */,
 				1DD646A21B1DCCC400B0EC76 /* WOTWEBRequest.m */,
 				1DD646AB1B1DCDCE00B0EC76 /* WOTRequestExecutor.h */,
 				1DD646AC1B1DCDCE00B0EC76 /* WOTRequestExecutor.m */,
 				1DD646AE1B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.h */,
 				1DD646AF1B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.m */,
-				1DD646B11B1DEF1300B0EC76 /* WOTRequest.h */,
-				1DD646B21B1DEF1300B0EC76 /* WOTRequest.m */,
 			);
 			path = WOTRequests;
 			sourceTree = "<group>";
@@ -297,6 +315,7 @@
 		1DD6469C1B1DC42100B0EC76 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				1DD647431B21C56700B0EC76 /* UIBar */,
 				1DD647041B2081E900B0EC76 /* NSBundle */,
 				1DD646EB1B206B0C00B0EC76 /* UIBarButtonItem */,
 				1DD6469D1B1DC42100B0EC76 /* NSString */,
@@ -316,12 +335,9 @@
 		1DD646A71B1DCD6700B0EC76 /* instances */ = {
 			isa = PBXGroup;
 			children = (
-				1DD646A81B1DCD6700B0EC76 /* WOTWEBRequestLogin.h */,
-				1DD646A91B1DCD6700B0EC76 /* WOTWEBRequestLogin.m */,
-				1DD646B41B1DF00B00B0EC76 /* WOTSaveSessionRequest.h */,
-				1DD646B51B1DF00B00B0EC76 /* WOTSaveSessionRequest.m */,
-				1DD646B71B1F0B2900B0EC76 /* WOTWEBRequestLogout.h */,
-				1DD646B81B1F0B2900B0EC76 /* WOTWEBRequestLogout.m */,
+				1DD6474A1B21D51300B0EC76 /* Tanks */,
+				1DD647321B21ADFB00B0EC76 /* Login */,
+				1DD647371B21ADFB00B0EC76 /* Session */,
 			);
 			path = instances;
 			sourceTree = "<group>";
@@ -451,6 +467,10 @@
 			children = (
 				1DD646F11B20700000B0EC76 /* NSManagedObject+CoreDataOperations.h */,
 				1DD646F21B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m */,
+				1DD647511B21E6F300B0EC76 /* NSManagedObject+FillProperties.h */,
+				1DD647521B21E6F300B0EC76 /* NSManagedObject+FillProperties.m */,
+				1DD647541B21E74C00B0EC76 /* Tanks+FillProperties.h */,
+				1DD647551B21E74C00B0EC76 /* Tanks+FillProperties.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -458,6 +478,8 @@
 		1DD646F31B20700000B0EC76 /* entities */ = {
 			isa = PBXGroup;
 			children = (
+				1DD647471B21D4E000B0EC76 /* Tanks.h */,
+				1DD647481B21D4E100B0EC76 /* Tanks.m */,
 				1DD646F41B20700000B0EC76 /* UserSession.h */,
 				1DD646F51B20700000B0EC76 /* UserSession.m */,
 			);
@@ -519,6 +541,46 @@
 				1DD6472F1B209B2400B0EC76 /* WOTLanguageTableViewCell.xib */,
 			);
 			path = cells;
+			sourceTree = "<group>";
+		};
+		1DD647321B21ADFB00B0EC76 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1DD647331B21ADFB00B0EC76 /* WOTWEBRequestLogin.h */,
+				1DD647341B21ADFB00B0EC76 /* WOTWEBRequestLogin.m */,
+				1DD647351B21ADFB00B0EC76 /* WOTWEBRequestLogout.h */,
+				1DD647361B21ADFB00B0EC76 /* WOTWEBRequestLogout.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1DD647371B21ADFB00B0EC76 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				1DD647381B21ADFB00B0EC76 /* WOTSaveSessionRequest.h */,
+				1DD647391B21ADFB00B0EC76 /* WOTSaveSessionRequest.m */,
+				1DD647401B21AE3F00B0EC76 /* WOTClearSessionRequest.h */,
+				1DD647411B21AE3F00B0EC76 /* WOTClearSessionRequest.m */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		1DD647431B21C56700B0EC76 /* UIBar */ = {
+			isa = PBXGroup;
+			children = (
+				1DD647441B21C57900B0EC76 /* UINavigationBar+WOT.h */,
+				1DD647451B21C57900B0EC76 /* UINavigationBar+WOT.m */,
+			);
+			path = UIBar;
+			sourceTree = "<group>";
+		};
+		1DD6474A1B21D51300B0EC76 /* Tanks */ = {
+			isa = PBXGroup;
+			children = (
+				1DD6474B1B21D54000B0EC76 /* WOTWEBRequestTanks.h */,
+				1DD6474C1B21D54000B0EC76 /* WOTWEBRequestTanks.m */,
+			);
+			path = Tanks;
 			sourceTree = "<group>";
 		};
 		73D1069022E23097C59EE24A /* Frameworks */ = {
@@ -684,34 +746,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DD6473B1B21ADFB00B0EC76 /* WOTWEBRequestLogout.m in Sources */,
 				1DD646F81B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */,
-				1DD646B61B1DF00B00B0EC76 /* WOTSaveSessionRequest.m in Sources */,
 				1DD647071B2081E900B0EC76 /* NSBundle+LanguageBundle.m in Sources */,
 				1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */,
 				1DD6468F1B1D9A8200B0EC76 /* WOTError.m in Sources */,
 				1DD646FA1B20700000B0EC76 /* WOTCoreDataProvider.m in Sources */,
 				1DD647301B209B2400B0EC76 /* WOTLanguageTableViewCell.m in Sources */,
-				1DD646AA1B1DCD6700B0EC76 /* WOTWEBRequestLogin.m in Sources */,
 				1DD6472A1B2099C800B0EC76 /* WOTLanguageSelectorViewController.m in Sources */,
 				1DD647031B20721400B0EC76 /* WOTSessionDataProvider.m in Sources */,
+				1DD647491B21D4E100B0EC76 /* Tanks.m in Sources */,
 				1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */,
 				1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */,
 				1DD646B01B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.m in Sources */,
 				1DD646A51B1DCCC400B0EC76 /* WOTWEBRequest.m in Sources */,
-				1DD646B91B1F0B2900B0EC76 /* WOTWEBRequestLogout.m in Sources */,
 				1DD646391B1C616A00B0EC76 /* main.m in Sources */,
 				1DD647251B20975300B0EC76 /* WOTLanguageDatasource.m in Sources */,
+				1DD647561B21E74C00B0EC76 /* Tanks+FillProperties.m in Sources */,
+				1DD6474D1B21D54000B0EC76 /* WOTWEBRequestTanks.m in Sources */,
+				1DD6473A1B21ADFB00B0EC76 /* WOTWEBRequestLogin.m in Sources */,
 				1DD646B31B1DEF1300B0EC76 /* WOTRequest.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
 				1DD646C71B1F371700B0EC76 /* WOTMenuViewController.m in Sources */,
+				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1DD6463F1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld in Sources */,
+				1DD647531B21E6F300B0EC76 /* NSManagedObject+FillProperties.m in Sources */,
 				1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */,
 				1DD646C31B1F36FB00B0EC76 /* WOTDrawerViewController.m in Sources */,
+				1DD6473C1B21ADFB00B0EC76 /* WOTSaveSessionRequest.m in Sources */,
 				1DD646F91B20700000B0EC76 /* UserSession.m in Sources */,
 				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
 				1DD646AD1B1DCDCE00B0EC76 /* WOTRequestExecutor.m in Sources */,
+				1DD647421B21AE3F00B0EC76 /* WOTClearSessionRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

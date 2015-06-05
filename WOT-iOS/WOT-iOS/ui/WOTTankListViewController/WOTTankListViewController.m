@@ -7,31 +7,40 @@
 //
 
 #import "WOTTankListViewController.h"
+#import "WOTRequestExecutor+Registration.h"
 
-@interface WOTTankListViewController ()
+#import "Tanks.h"
+
+@interface WOTTankListViewController () <NSFetchedResultsControllerDelegate>
+
+@property (nonatomic, strong)NSFetchedResultsController *fetchedResultController;
 
 @end
 
 @implementation WOTTankListViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    
+    NSError *error = nil;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"tank_id" ascending:YES]]];
+    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
+    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+    self.fetchedResultController.delegate = self;
+    [self.fetchedResultController performFetch:&error];
+    
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTWEBRequestTanksId args:@{WOT_KEY_FIELDS:@"tank_id,image,name"}];
+    
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

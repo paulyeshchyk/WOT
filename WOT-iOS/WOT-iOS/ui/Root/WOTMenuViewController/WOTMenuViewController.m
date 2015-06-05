@@ -8,14 +8,16 @@
 
 #import "WOTMenuViewController.h"
 #import "WOTMenuTableViewCell.h"
+#import "UserSession.h"
 
-@interface WOTMenuViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface WOTMenuViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, weak)IBOutlet UITableView *tableView;
 @property (nonatomic, strong)NSArray *availableViewControllers;
 @property (nonatomic, strong)NSArray *availableTitles;
 @property (nonatomic, strong)NSArray *availableImages;
 @property (nonatomic, assign)NSInteger selectedIndex;
+@property (nonatomic, strong)NSFetchedResultsController *fetchedResultController;
 
 @end
 
@@ -55,8 +57,17 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+    
+    NSError *error = nil;
+    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([UserSession class])];
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"expires_at" ascending:NO]]];
+    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+    self.fetchedResultController.delegate = self;
+    [self.fetchedResultController performFetch:&error];
 
-
+    [self.navigationController.navigationBar setDarkStyle];
+    
     [self redrawNavigationBar];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMenuTableViewCell" bundle:nil] forCellReuseIdentifier:@"WOTMenuTableViewCell"];
@@ -93,15 +104,18 @@
 #pragma mark - private
 - (void)redrawNavigationBar {
     
-    [self.navigationController.navigationBar setTranslucent:NO];
-    
-    
-    UIImage *image = [UIImage imageNamed:@"wotShowMenuButtoniPhone.png"];
+    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_MENU_ICON)];
     UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:self.delegate.currentUserName eventBlock:^(id sender) {
         
         [self.delegate loginPressedOnMenu:self];
     }];
     [self.navigationItem setLeftBarButtonItems:@[backButtonItem]];
+}
+
+#pragma mark - NSFetchedResultControllerDelegate
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+
+    [self redrawNavigationBar];
 }
 
 @end

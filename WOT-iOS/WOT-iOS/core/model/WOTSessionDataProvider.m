@@ -27,6 +27,13 @@
     return session.nickname;
 }
 
++ (NSTimeInterval)expirationTime {
+    
+    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
+    UserSession *session = [UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includingSubentities:NO];
+    return [session.expires_at integerValue];
+}
+
 + (void)logout {
     
     [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLogoutId args:nil];
