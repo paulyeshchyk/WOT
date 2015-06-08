@@ -7,19 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WOTMenuItem.h"
 
-@interface WOTMenuDatasource : NSObject
+@class WOTMenuDatasource;
+
+
+@protocol WOTMenuDatasourceDelegate <NSObject>
+
+@required
+- (void)hasUpdatedData:(WOTMenuDatasource *)datasource;
 
 @end
 
-@interface WOTMenuItem : NSObject
+@interface WOTMenuDatasource : NSObject
 
-@property (nonatomic, strong)Class controllerClass;
-@property (nonatomic, copy) NSString *controllerTitle;
-@property (nonatomic, copy) UIImage *icon;
-@property (nonatomic, assign) BOOL userDependence;
+@property (nonatomic, assign)id<WOTMenuDatasourceDelegate> delegate;
 
-- (id)initWithClass:(Class)class title:(NSString *)title image:(UIImage *)image userDependence:(BOOL)userDependence;
+- (WOTMenuItem *)objectAtIndex:(NSInteger)index;
+- (NSInteger)objectsCount;
+- (void)rebuild;
+
 
 @end
 

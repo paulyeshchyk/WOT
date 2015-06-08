@@ -12,7 +12,7 @@
 
 - (void)setDarkStyle {
     
-    [self setBarTintColor:[UIColor colorWithRed:85.0f/255.0f green:85.0f/255.0f blue:85.0f/255.0f alpha:1.0f]];
+    [self setBarTintColor:[UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f]];
     
     UIColor *textColor = [UIColor whiteColor];
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:

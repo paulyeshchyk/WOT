@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		16D9AD7AD2E65533FABAD902 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD5CD3F245D125334EBB9C4 /* libPods.a */; };
 		1D4C920B1B25A59C00E320B5 /* WOTMenuDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C920A1B25A59C00E320B5 /* WOTMenuDatasource.m */; };
+		1D4C920E1B25ABD300E320B5 /* WOTMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C920D1B25ABD300E320B5 /* WOTMenuItem.m */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
 		1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */; };
 		1DD6463F1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463D1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld */; };
@@ -73,6 +74,8 @@
 /* Begin PBXFileReference section */
 		1D4C92091B25A59C00E320B5 /* WOTMenuDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMenuDatasource.h; sourceTree = "<group>"; };
 		1D4C920A1B25A59C00E320B5 /* WOTMenuDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMenuDatasource.m; sourceTree = "<group>"; };
+		1D4C920C1B25ABD300E320B5 /* WOTMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMenuItem.h; sourceTree = "<group>"; };
+		1D4C920D1B25ABD300E320B5 /* WOTMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMenuItem.m; sourceTree = "<group>"; };
 		1DD646331B1C616A00B0EC76 /* WOT-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WOT-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD646371B1C616A00B0EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DD646381B1C616A00B0EC76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -195,6 +198,8 @@
 			children = (
 				1D4C92091B25A59C00E320B5 /* WOTMenuDatasource.h */,
 				1D4C920A1B25A59C00E320B5 /* WOTMenuDatasource.m */,
+				1D4C920C1B25ABD300E320B5 /* WOTMenuItem.h */,
+				1D4C920D1B25ABD300E320B5 /* WOTMenuItem.m */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -767,6 +772,7 @@
 				1DD647301B209B2400B0EC76 /* WOTLanguageTableViewCell.m in Sources */,
 				1DD6472A1B2099C800B0EC76 /* WOTLanguageSelectorViewController.m in Sources */,
 				1DD647031B20721400B0EC76 /* WOTSessionDataProvider.m in Sources */,
+				1D4C920E1B25ABD300E320B5 /* WOTMenuItem.m in Sources */,
 				1DD647491B21D4E100B0EC76 /* Tanks.m in Sources */,
 				1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */,

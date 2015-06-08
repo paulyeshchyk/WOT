@@ -53,8 +53,7 @@ NSInteger const WOTWEBRequestTanksListId = 5;
             [loginController reloadData];
             
         } else {
-        
-        
+
             WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:NSStringFromClass([WOTLoginViewController class]) bundle:nil];
             loginController.request = request;
             loginController.redirectUrlPath = json[WOT_KEY_REDIRECT_URI];
@@ -65,7 +64,7 @@ NSInteger const WOTWEBRequestTanksListId = 5;
                 if (userID) args[WOT_KEY_USER_ID]=userID;
                 if (access_token) args[WOT_KEY_ACCESS_TOKEN]=access_token;
                 if (account_id) args[WOT_KEY_ACCOUNT_ID]=account_id;
-                if (expires_at) args[WOT_KEY_EXPIRES_AT]=expires_at;
+                if (expires_at) args[WOT_KEY_EXPIRES_AT]=expires_at;//@([[NSDate date] timeIntervalSince1970] + 60.0f*0.25f);//
 
                 [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestSaveSessionId args:args];
                 
