@@ -9,6 +9,8 @@
 #import "WOTTankListViewController.h"
 #import "WOTRequestExecutor+Registration.h"
 
+#import "WOTTankListCompoundViewController.h"
+
 #import "Tanks.h"
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
@@ -22,9 +24,6 @@
 @property (nonatomic, readonly)NSString *groupByField;
 @property (nonatomic, readonly)NSArray *fieldsToFetch;
 
-@property (nonatomic, assign) BOOL testSortDirection;
-
-
 @end
 
 @implementation WOTTankListViewController
@@ -33,10 +32,25 @@
     
     [super viewDidLoad];
     
-    self.testSortDirection = YES;
-    
+    UIBarButtonItem *settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
+        
+        
+        WOTTankListCompoundViewController *vc = [[WOTTankListCompoundViewController alloc] initWithNibName:@"WOTTankListCompoundViewController" bundle:nil];
+        vc.cancelBlock = ^(){
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        };
+        vc.applyBlock = ^(){
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        };
+//        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+////        [self.navigationController presentViewController:nav animated:YES completion:NULL];
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    [self.navigationItem setRightBarButtonItems:@[settingsItem]];
+
     [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanksList args:@{WOT_KEY_FIELDS:[self.fieldsToFetch componentsJoinedByString:@","]}];
-    
 
     [self invalidateFetchedResultController];
 
@@ -63,12 +77,10 @@
     return [sectionInfo numberOfObjects];
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     WOTTankListCollectionViewCell *result = (WOTTankListCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewCell class]) forIndexPath:indexPath];
 
-    
     Tanks *tank = (Tanks *)[self.fetchedResultController objectAtIndexPath:indexPath];
     result.image = [tank image];
     return result;
@@ -89,9 +101,7 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    self.testSortDirection = !self.testSortDirection;
-
-    [self invalidateFetchedResultController];
+//    [self invalidateFetchedResultController];
 }
 
 #pragma mark - private
@@ -115,12 +125,12 @@
 
 - (NSArray *)sortDescriptors {
     
-    return @[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TYPE ascending:self.testSortDirection],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_LEVEL ascending:YES]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TYPE ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_LEVEL ascending:YES]];
 }
 
 - (NSString *)groupByField {
-    
-    return WOT_KEY_NATION_I18N;
+    return nil;
+//    return WOT_KEY_NATION_I18N;
 }
 
 - (NSArray *)fieldsToFetch {

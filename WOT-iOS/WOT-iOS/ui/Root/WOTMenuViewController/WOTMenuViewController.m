@@ -121,7 +121,7 @@
 
     [self.navigationController.navigationBar setDarkStyle];
 
-    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_MENU_ICON)];
+    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_USER)];
     UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
         
         [self.delegate loginPressedOnMenu:self];

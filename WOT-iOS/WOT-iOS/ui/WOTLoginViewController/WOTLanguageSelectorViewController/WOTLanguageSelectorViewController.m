@@ -22,12 +22,13 @@
     [super viewDidLoad];
     
 
-    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_BACK) eventBlock:^(id sender) {
+    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
         
         [self.delegate didSelectLanguage:nil appId:nil];
     }];
 
     [self.navigationItem setLeftBarButtonItems:@[backItem]];
+    [self.navigationController.navigationBar setDarkStyle];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTLanguageTableViewCell" bundle:nil] forCellReuseIdentifier:@"WOTLanguageTableViewCell"];
 
