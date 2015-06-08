@@ -11,7 +11,7 @@
 @protocol WOTMenuDelegate;
 @protocol WOTMenuProtocol <NSObject>
 
-@property (nonatomic, readonly) NSString *selectedMenuItemClass;
+@property (nonatomic, readonly) Class selectedMenuItemClass;
 @property (nonatomic, readonly) NSString *selectedMenuItemTitle;
 @property (nonatomic, readonly) UIImage *selectedMenuItemImage;
 @property (nonatomic, assign) id<WOTMenuDelegate> delegate;
@@ -24,7 +24,7 @@
 
 @property (nonatomic, readonly)NSString *currentUserName;
 
-- (void)menu:(id<WOTMenuProtocol>)menu didSelectControllerClass:(NSString *)controllerClass title:(NSString *)title image:(UIImage *)image;
+- (void)menu:(id<WOTMenuProtocol>)menu didSelectControllerClass:(Class )controllerClass title:(NSString *)title image:(UIImage *)image;
 - (void)loginPressedOnMenu:(id<WOTMenuProtocol>)menu;
 
 @end

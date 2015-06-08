@@ -20,7 +20,6 @@
 
 
 #import "WOTCoreDataProvider.h"
-#import "WOTConstants.h"
 #import "Strings.h"
 
 

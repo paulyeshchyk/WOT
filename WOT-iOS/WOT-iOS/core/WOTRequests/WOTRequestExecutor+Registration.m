@@ -15,19 +15,19 @@
 #import "WOTClearSessionRequest.h"
 #import "WOTWEBRequestTanks.h"
 #import "Tanks.h"
+#import "WOTSessionDataProvider.h"
 
 
 NSInteger const WOTRequestLoginId = 1;
 NSInteger const WOTRequestSaveSessionId = 2;
 NSInteger const WOTRequestLogoutId = 3;
 NSInteger const WOTRequestClearSessionId = 4;
-NSInteger const WOTWEBRequestTanksId = 5;
+NSInteger const WOTWEBRequestTanksListId = 5;
 
 @implementation WOTRequestExecutor (Registration)
 
 + (void)registerRequests {
-    
-    
+
     /**
      * Login
      **/
@@ -41,7 +41,7 @@ NSInteger const WOTWEBRequestTanksId = 5;
     
     [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
         
-        NSString *location = json[@"data"][@"location"];
+        NSString *location = json[WOT_KEY_DATA][WOT_KEY_LOCATION];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
 
         UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
@@ -55,17 +55,17 @@ NSInteger const WOTWEBRequestTanksId = 5;
         } else {
         
         
-            WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:@"WOTLoginViewController" bundle:nil];
+            WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:NSStringFromClass([WOTLoginViewController class]) bundle:nil];
             loginController.request = request;
             loginController.redirectUrlPath = json[WOT_KEY_REDIRECT_URI];
             [loginController setCallback:^(NSError *error, NSString *userID, NSString *access_token, NSString *account_id, NSNumber *expires_at){
                 
                 NSMutableDictionary *args =[[NSMutableDictionary alloc] init];
-                if (error) args[@"error"]=error;
-                if (userID) args[@"userId"]=userID;
-                if (access_token) args[@"access_token"]=access_token;
-                if (account_id) args[@"account_id"]=account_id;
-                if (expires_at) args[@"expires_at"]=expires_at;
+                if (error) args[WOT_KEY_ERROR]=error;
+                if (userID) args[WOT_KEY_USER_ID]=userID;
+                if (access_token) args[WOT_KEY_ACCESS_TOKEN]=access_token;
+                if (account_id) args[WOT_KEY_ACCOUNT_ID]=account_id;
+                if (expires_at) args[WOT_KEY_EXPIRES_AT]=expires_at;
 
                 [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestSaveSessionId args:args];
                 
@@ -91,6 +91,7 @@ NSInteger const WOTWEBRequestTanksId = 5;
     } forRequestId:WOTRequestLogoutId];
     [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:WOT_NOTIFICATION_LOGOUT object:nil userInfo:nil];
         [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestClearSessionId args:nil];
         [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLoginId args:nil];
         
@@ -99,41 +100,44 @@ NSInteger const WOTWEBRequestTanksId = 5;
     /**
      * Save Sassion
      **/
-    
     [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTSaveSessionRequest class] forRequestId:WOTRequestSaveSessionId];
+    [[WOTRequestExecutor sharedInstance] registerRequestErrorCallback:^(NSError *error) {
+        
+        [[WOTSessionDataProvider sharedInstance] invalidateTimer];
+        
+    } forRequestId:WOTRequestSaveSessionId];
+    [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
+        
+        [[WOTSessionDataProvider sharedInstance] invalidateTimer];
+    } forRequestId:WOTRequestSaveSessionId];
 
     /**
      * Clear Sassion
      **/
-    
     [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTClearSessionRequest class] forRequestId:WOTRequestClearSessionId];
 
-    
     
     /**
      * Tanks
      **/
-    
-    [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTWEBRequestTanks class] forRequestId:WOTWEBRequestTanksId];
+    [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTWEBRequestTanks class] forRequestId:WOTWEBRequestTanksListId];
     [[WOTRequestExecutor sharedInstance] registerRequestErrorCallback:^(NSError *error) {
         NSLog(@"%@",error.localizedDescription);
-    } forRequestId:WOTWEBRequestTanksId];
+    } forRequestId:WOTWEBRequestTanksListId];
     [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
         
-        NSDictionary *tanksDictionary = json[@"data"];
+        NSDictionary *tanksDictionary = json[WOT_KEY_DATA];
 
         NSArray *tanksArray = [tanksDictionary allKeys];
         
-        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
+        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
         for (NSString *key in tanksArray) {
         
             NSDictionary *tankJSON = tanksDictionary[key];
             
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tank_id == %@",tankJSON[@"tank_id"]];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ == %@",WOT_KEY_TANK_ID,tankJSON[WOT_KEY_TANK_ID]];
             Tanks *tank = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
             [tank fillPropertiesFromDictioary:tankJSON];
-            
-            
         }
         
         if ([context hasChanges]) {
@@ -142,7 +146,7 @@ NSInteger const WOTWEBRequestTanksId = 5;
             [context save:&error];
         }
 
-    } forRequestId:WOTWEBRequestTanksId];
+    } forRequestId:WOTWEBRequestTanksListId];
     
 }
 

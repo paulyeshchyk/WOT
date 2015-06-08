@@ -17,15 +17,15 @@
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 
 @property (nonatomic, strong) UIViewController<WOTMenuProtocol>* menu;
-@property (nonatomic, copy)NSString *visibleViewControllerClass;
+@property (nonatomic, copy)Class visibleViewControllerClass;
 
 @end
 
 @implementation WOTDrawerViewController
 
-+ (UIViewController *)centerViewControllerForClassName:(NSString *)className title:(NSString *)title image:(UIImage *)image{
++ (UIViewController *)centerViewControllerForClassName:(Class )class title:(NSString *)title image:(UIImage *)image{
     
-    UIViewController *centerViewController = [[NSClassFromString(className) alloc] initWithNibName:className bundle:nil];
+    UIViewController *centerViewController = [[class alloc] initWithNibName:NSStringFromClass(class) bundle:nil];
     [centerViewController setTitle:title];
     return centerViewController;
 }
@@ -33,23 +33,23 @@
 + (UINavigationController *)navigationControllerWithMenuButtonForViewController:(UIViewController *)centerViewController eventHandler:(EventHandlerBlock)eventHandlerBlock{
     
     UINavigationController *centerNavigationController = [[UINavigationController alloc] initWithRootViewController:centerViewController];
-    [[centerNavigationController navigationBar] setTranslucent:NO];
     [[centerNavigationController navigationBar] setDarkStyle];
     
     
-    UIImage *image = [UIImage imageNamed:@"wotShowMenuButtoniPhone.png"];
+    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_MENU_ICON)];
     UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:eventHandlerBlock];
     [centerViewController.navigationItem setLeftBarButtonItems:@[backButtonItem]];
     return centerNavigationController;
 }
 
 - (void)dealloc {
+    
     self.menu.delegate = nil;
 }
 
 - (id)initWithMenu {
     
-    WOTMenuViewController *menuViewController = [[WOTMenuViewController alloc] initWithNibName:@"WOTMenuViewController" bundle:nil];
+    WOTMenuViewController *menuViewController = [[WOTMenuViewController alloc] initWithNibName:NSStringFromClass([WOTMenuViewController class]) bundle:nil];
     UINavigationController *leftNavigationController = [[UINavigationController alloc] initWithRootViewController:menuViewController];
     
     UIViewController *centerViewController = [WOTDrawerViewController centerViewControllerForClassName:menuViewController.selectedMenuItemClass title:menuViewController.selectedMenuItemTitle image:menuViewController.selectedMenuItemImage];
@@ -75,21 +75,34 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [[UIApplication sharedApplication] setStatusBarStyle:(UIStatusBarStyleLightContent)];
-[self setNeedsStatusBarAppearanceUpdate];
 
+    [[WOTSessionDataProvider sharedInstance] invalidateTimer];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onLogout:) name:WOT_NOTIFICATION_LOGOUT object:nil];
 }
+
 #pragma mark - WOTMenuDelegate
 - (NSString *)currentUserName {
 
-    NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:[WOTSessionDataProvider expirationTime]];
-    NSString *result = [NSString stringWithFormat:@"%@-%@",expirationDate,[WOTSessionDataProvider currentUserName]];
-    return result;
+    BOOL sessionHasBeenExpired = [WOTSessionDataProvider sessionHasBeenExpired];
+    if (sessionHasBeenExpired) {
+        
+        return WOTString(WOT_STRING_ANONYMOUS_USER);
+    }
+    
+    NSString *userName = [WOTSessionDataProvider currentUserName];
+    if (!userName) {
+        
+        return WOTString(WOT_STRING_ANONYMOUS_USER);
+    }
+    
+    return userName;
 }
 
-- (void)menu:(id<WOTMenuProtocol>)menu didSelectControllerClass:(NSString *)controllerClass  title:(NSString *)title image:(UIImage *)image{
+- (void)menu:(id<WOTMenuProtocol>)menu didSelectControllerClass:(Class )controllerClass  title:(NSString *)title image:(UIImage *)image{
     
-    if (![self.visibleViewControllerClass isEqualToString:controllerClass]) {
+    NSCAssert(controllerClass != nil, @"menuitem class is not defined");
+    
+    if (![controllerClass isSubclassOfClass:self.visibleViewControllerClass]) {
     
         self.visibleViewControllerClass = controllerClass;
         UIViewController *centerViewController = [WOTDrawerViewController centerViewControllerForClassName:controllerClass title:title image:image];
@@ -111,5 +124,10 @@
 }
 
 #pragma mark - private
+
+- (void)onLogout:(NSNotification *)notification {
+    
+    [self closeDrawerAnimated:YES completion:NULL];
+}
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "WOTLoginViewController.h"
-#import "WOTConstants.h"
 
 #import "WOTCoreDataProvider.h"
 #import "WOTError.h"

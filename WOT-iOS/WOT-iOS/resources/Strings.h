@@ -24,11 +24,14 @@
 #define WOT_KEY_ACCOUNT_ID @"account_id"
 #define WOT_KEY_EXPIRES_AT @"expires_at"
 #define WOT_KEY_USER_ID @"userId"
+#define WOT_KEY_DATA @"data"
+#define WOT_KEY_LOCATION @"location"
 #define WOT_KEY_MESSAGE @"message"
 #define WOT_KEY_CODE @"code"
 #define WOT_KEY_APPLICATION_ID @"application_id"
 #define WOT_KEY_NOFOLLOW @"nofollow"
 #define WOT_KEY_FIELDS @"fields"
+#define WOT_KEY_TANK_ID @"tank_id"
 #define WOT_KEY_REDIRECT_URI @"redirect_uri"
 
 
@@ -39,8 +42,11 @@
 #define WOT_STRING_BACK @"WOT_STRING_BACK"
 #define WOT_STRING_LOGIN @"WOT_STRING_LOGIN"
 #define WOT_STRING_SELECT_LANGUAGE @"WOT_STRING_SELECT_LANGUAGE"
+#define WOT_STRING_ANONYMOUS_USER @"WOT_STRING_ANONYMOUS_USER"
 
 #define WOT_USERDEFAULTS_LOGIN_LANGUAGE @"LoginLanguage"
 #define WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU @"ru"
 #define WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU @"eu"
+
+#define WOT_NOTIFICATION_LOGOUT @"WOT_NOTIFICATION_LOGOUT"
 #endif

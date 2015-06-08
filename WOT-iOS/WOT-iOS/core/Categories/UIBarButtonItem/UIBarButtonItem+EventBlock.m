@@ -17,8 +17,8 @@
     [backButton setExclusiveTouch:YES];
     [backButton bk_addEventHandler:eventBlock forControlEvents:UIControlEventTouchUpInside];
     [backButton setTitle:text forState:UIControlStateNormal];
+    [backButton.titleLabel setLineBreakMode:(NSLineBreakByTruncatingTail)];
     [backButton sizeToFit];
-//    [backButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     return backButtonItem;
 }

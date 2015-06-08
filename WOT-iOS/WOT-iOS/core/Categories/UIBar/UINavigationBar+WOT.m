@@ -18,6 +18,7 @@
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                textColor,NSForegroundColorAttributeName,
                                                nil];
+    [self setTranslucent:NO];
     [self setTitleTextAttributes:navbarTitleTextAttributes];
     [self setTintColor:textColor];
     [self setOpaque:YES];

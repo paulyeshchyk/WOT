@@ -11,7 +11,8 @@
 
 @interface WOTCoreDataProvider ()
 
-@property (nonatomic, strong, readwrite)NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong, readwrite) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong, readwrite) NSManagedObjectContext *workManagedObjectContext;
 
 @end
 
@@ -42,7 +43,25 @@
     return instance;
 }
 
-
+- (NSManagedObjectContext *)workManagedObjectContext {
+    
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        
+        [context setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+        [context setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+        
+        context.undoManager = nil;
+        self.workManagedObjectContext = context;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(workContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
+    });
+    
+    return _workManagedObjectContext;
+}
 
 - (NSManagedObjectContext *)managedObjectContext {
     
@@ -141,6 +160,47 @@
 #pragma mark -
 - (void)mainContextDidSave:(NSNotification *)notification {
     
+    [self.workManagedObjectContext performBlock:^{
+        
+        [self mergeChanges:notification toContext:self.workManagedObjectContext];
+    }];
+}
+
+- (void)workContextDidSave:(NSNotification *)notification {
+    
+    [self.managedObjectContext performBlockAndWait:^{
+        
+        [self mergeChanges:notification toContext:self.managedObjectContext];
+    }];
+}
+
+- (void)mergeChanges:(NSNotification *)notification toContext:(NSManagedObjectContext *)context {
+    
+    NSArray* updatedObjects = [notification.userInfo valueForKey:NSUpdatedObjectsKey];
+    
+    NSMutableSet *updatedObjectsInCurrentContext = [NSMutableSet new];
+    
+    for (NSManagedObject* obj in updatedObjects) {
+        NSManagedObject* object = [context objectWithID:obj.objectID];
+        [object willAccessValueForKey:nil];
+        [updatedObjectsInCurrentContext addObject:object];
+    }
+    
+    [context mergeChangesFromContextDidSaveNotification:notification];
+    
+    [updatedObjectsInCurrentContext addObjectsFromArray:[context.updatedObjects allObjects]];
+    
+    [updatedObjectsInCurrentContext enumerateObjectsUsingBlock:^(NSManagedObject *obj, BOOL *stop) {
+        
+        [context refreshObject:obj mergeChanges:YES];
+    }];
+    
+    if ([context hasChanges]) {
+        [context save:nil];
+    } else {
+        
+        [context processPendingChanges];
+    }
 }
 
 @end

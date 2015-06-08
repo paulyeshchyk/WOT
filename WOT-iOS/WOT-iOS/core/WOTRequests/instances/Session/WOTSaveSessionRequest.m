@@ -14,17 +14,14 @@
 
 - (void)executeWithArgs:(NSDictionary *)args {
 
-    
     [super executeWithArgs:args];
-    NSDate *date = [NSDate date];
-    
-    
+
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
     UserSession *session = [UserSession insertNewObjectInManagedObjectContext:context];
     session.nickname = args[WOT_KEY_USER_ID];
     session.access_token = args[WOT_KEY_ACCESS_TOKEN];
     session.accound_id = args[WOT_KEY_ACCOUNT_ID];
-    session.expires_at = @([date timeIntervalSince1970]+60 * 2);//args[WOT_KEY_EXPIRES_AT];
+    session.expires_at = args[WOT_KEY_EXPIRES_AT];
     NSError *error = nil;
     [context save:&error];
 

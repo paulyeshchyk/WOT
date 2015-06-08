@@ -12,7 +12,7 @@ extern NSInteger const WOTRequestLoginId;
 extern NSInteger const WOTRequestSaveSessionId;
 extern NSInteger const WOTRequestLogoutId;
 extern NSInteger const WOTRequestClearSessionId;
-extern NSInteger const WOTWEBRequestTanksId;
+extern NSInteger const WOTWEBRequestTanksListId;
 
 @interface WOTRequestExecutor (Registration)
 

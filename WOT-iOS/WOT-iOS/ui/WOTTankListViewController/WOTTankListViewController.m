@@ -33,7 +33,7 @@
     self.fetchedResultController.delegate = self;
     [self.fetchedResultController performFetch:&error];
     
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTWEBRequestTanksId args:@{WOT_KEY_FIELDS:@"tank_id,image,name"}];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTWEBRequestTanksListId args:@{WOT_KEY_FIELDS:@"tank_id,image,name"}];
     
 
 }

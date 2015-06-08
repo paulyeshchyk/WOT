@@ -17,6 +17,9 @@
 + (void)logout;
 + (void)login;
 + (BOOL)sessionHasBeenExpired;
-+ (NSTimeInterval)expirationTime;
+
++ (WOTSessionDataProvider *)sharedInstance;
+
+- (void)invalidateTimer;
 
 @end
