@@ -8,11 +8,13 @@
 
 #import "WOTRequestExecutor.h"
 
-extern NSInteger const WOTRequestLoginId;
-extern NSInteger const WOTRequestSaveSessionId;
-extern NSInteger const WOTRequestLogoutId;
-extern NSInteger const WOTRequestClearSessionId;
-extern NSInteger const WOTWEBRequestTanksListId;
+typedef NS_ENUM(NSInteger, WOTRequestId) {
+    WOTRequestIdLogin = 0,
+    WOTRequestIdSaveSession,
+    WOTRequestIdLogout,
+    WOTRequestIdClearSession,
+    WOTRequestIdTanksList
+};
 
 @interface WOTRequestExecutor (Registration)
 

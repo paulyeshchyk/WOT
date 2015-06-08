@@ -31,8 +31,31 @@
 #define WOT_KEY_APPLICATION_ID @"application_id"
 #define WOT_KEY_NOFOLLOW @"nofollow"
 #define WOT_KEY_FIELDS @"fields"
-#define WOT_KEY_TANK_ID @"tank_id"
 #define WOT_KEY_REDIRECT_URI @"redirect_uri"
+
+#define WOT_KEY_TANK_ID @"tank_id"
+#define WOT_KEY_NAME @"name"
+#define WOT_KEY_IMAGE @"image"
+
+
+#define WOT_KEY_CONTOUR_IMAGE @"contour_image"
+#define WOT_KEY_IMAGE_SMALL @"image_small"
+#define WOT_KEY_IS_PREMIUM @"is_premium"
+#define WOT_KEY_LEVEL @"level"
+#define WOT_KEY_NAME_I18N @"name_i18n"
+#define WOT_KEY_NATION @"nation"
+#define WOT_KEY_NATION_I18N @"nation_i18n"
+#define WOT_KEY_SHORT_NAME_I18N @"short_name_i18n"
+#define WOT_KEY_TYPE @"type"
+#define WOT_KEY_TYPE_I18N @"type_i18n"
+
+
+
+
+
+
+
+
 
 
 #define WOT_IMAGE_MENU_ICON @"WOT_IMAGE_MENU_ICON"

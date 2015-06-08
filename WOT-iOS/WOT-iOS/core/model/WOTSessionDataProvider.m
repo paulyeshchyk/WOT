@@ -43,12 +43,12 @@
 
 + (void)logout {
     
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLogoutId args:nil];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdLogout args:nil];
 }
 
 + (void)login {
 
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestLoginId args:nil];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdLogin args:nil];
 }
 
 + (void)switchUser {

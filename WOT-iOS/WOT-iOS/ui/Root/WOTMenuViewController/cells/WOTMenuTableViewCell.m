@@ -17,6 +17,16 @@
 
 @implementation WOTMenuTableViewCell
 
+- (void)awakeFromNib {
+    
+    [super awakeFromNib];
+    
+//    UIView *selectedBackgroundView = [[UIView alloc] init];
+//    [selectedBackgroundView setOpaque:NO];
+//    selectedBackgroundView.backgroundColor = [UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f];
+//    [self setSelectedBackgroundView:selectedBackgroundView];
+}
+
 - (void)setCellImage:(UIImage *)cellImage {
 
     if ([cellImage isKindOfClass:[UIImage class]]) {

@@ -65,6 +65,9 @@
 
     [super viewDidLoad];
     
+    self.tableView.backgroundColor = [UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f];
+    self.view.backgroundColor = [UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f];
+    
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTMenuTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTMenuTableViewCell class])];
 
     [self redrawNavigationBar];
