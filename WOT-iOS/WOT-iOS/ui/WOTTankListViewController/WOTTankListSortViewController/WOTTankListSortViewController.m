@@ -8,6 +8,7 @@
 
 #import "WOTTankListSortViewController.h"
 #import "WOTTankListSettingTableViewCell.h"
+#import "WOTTankListSettingAddNewTableViewCell.h"
 #import "WOTTankListSettingViewController.h"
 #import "WOTTankListSortHeaderView.h"
 #import "WOTTankListSettingsDatasource.h"
@@ -47,11 +48,14 @@
         [(UIButton *)sender setTitle:!self.tableView.editing?WOTString(WOT_STRING_EDIT):WOTString(WOT_STRING_PREVIEW) forState:UIControlStateNormal];
         [(UIButton *)sender sizeToFit];
         [self.backItem setEnabled:!self.tableView.editing];
+        [self.tableView reloadData];
     }];
     [self.navigationItem setRightBarButtonItems:@[applyItem]];
     [self.navigationController.navigationBar setDarkStyle];
     
+
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSettingTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankListSettingTableViewCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSettingAddNewTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankListSettingAddNewTableViewCell class])];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSortHeaderView class]) bundle:nil] forHeaderFooterViewReuseIdentifier:NSStringFromClass([WOTTankListSortHeaderView class])];
 
     
@@ -67,16 +71,25 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [[WOTTankListSettingsDatasource sharedInstance] objectsCountForSection:section];
+    NSInteger additionalRow = tableView.isEditing?0:1;
+    return additionalRow + [[WOTTankListSettingsDatasource sharedInstance] objectsCountForSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    ListSetting *obj = (ListSetting *)[[WOTTankListSettingsDatasource sharedInstance] objectAtIndexPath:indexPath];
+    NSInteger objsCount = [[WOTTankListSettingsDatasource sharedInstance] objectsCountForSection:indexPath.section];
+    if (indexPath.row >= objsCount) {
+        
+        WOTTankListSettingAddNewTableViewCell *result = (WOTTankListSettingAddNewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingAddNewTableViewCell class]) forIndexPath:indexPath];
+        return result;
+    } else {
+        
+        ListSetting *obj = (ListSetting *)[[WOTTankListSettingsDatasource sharedInstance] objectAtIndexPath:indexPath];
 
-    WOTTankListSettingTableViewCell *result = (WOTTankListSettingTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingTableViewCell class]) forIndexPath:indexPath];
-    [result setSetting:obj];
-    return result;
+        WOTTankListSettingTableViewCell *result = (WOTTankListSettingTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingTableViewCell class]) forIndexPath:indexPath];
+        [result setSetting:obj];
+        return result;
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -90,7 +103,8 @@
 #pragma mark - UITableViewDelegate
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    return YES;
+    NSInteger objsCount = [[WOTTankListSettingsDatasource sharedInstance] objectsCountForSection:indexPath.section];
+    return (indexPath.row <objsCount);
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {

@@ -44,6 +44,8 @@
 		1D4C926E1B270BF400E320B5 /* WOTTankListSettingsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C926D1B270BF400E320B5 /* WOTTankListSettingsDatasource.m */; };
 		1DA1D72E1B2997B000C5C2FB /* ListSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D72D1B2997B000C5C2FB /* ListSetting.m */; };
 		1DA1D7311B29989F00C5C2FB /* WOTDatasources.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7301B29989F00C5C2FB /* WOTDatasources.m */; };
+		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
+		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
 		1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */; };
 		1DD6463F1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463D1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld */; };
@@ -150,6 +152,9 @@
 		1DA1D72D1B2997B000C5C2FB /* ListSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSetting.m; sourceTree = "<group>"; };
 		1DA1D72F1B29989F00C5C2FB /* WOTDatasources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDatasources.h; sourceTree = "<group>"; };
 		1DA1D7301B29989F00C5C2FB /* WOTDatasources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTDatasources.m; sourceTree = "<group>"; };
+		1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingAddNewTableViewCell.h; sourceTree = "<group>"; };
+		1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingAddNewTableViewCell.m; sourceTree = "<group>"; };
+		1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingAddNewTableViewCell.xib; sourceTree = "<group>"; };
 		1DD646331B1C616A00B0EC76 /* WOT-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WOT-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD646371B1C616A00B0EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DD646381B1C616A00B0EC76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -357,6 +362,9 @@
 				1D4C92661B2709D800E320B5 /* WOTTankListSortHeaderView.h */,
 				1D4C92671B2709D800E320B5 /* WOTTankListSortHeaderView.m */,
 				1D4C92691B2709E400E320B5 /* WOTTankListSortHeaderView.xib */,
+				1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */,
+				1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */,
+				1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -855,6 +863,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D4C92421B25EBE400E320B5 /* WOTiPadMenuGear@2x.png in Resources */,
+				1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */,
 				1D4C92571B25F27200E320B5 /* WOTLanguageTableViewCell.xib in Resources */,
 				1D4C926A1B2709E400E320B5 /* WOTTankListSortHeaderView.xib in Resources */,
 				1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */,
@@ -962,6 +971,7 @@
 				1DD647251B20975300B0EC76 /* WOTLanguageDatasource.m in Sources */,
 				1DD647561B21E74C00B0EC76 /* Tanks+FillProperties.m in Sources */,
 				1DD6474D1B21D54000B0EC76 /* WOTWEBRequestTanks.m in Sources */,
+				1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */,
 				1DD6473A1B21ADFB00B0EC76 /* WOTWEBRequestLogin.m in Sources */,
 				1DA1D72E1B2997B000C5C2FB /* ListSetting.m in Sources */,
 				1DD646B31B1DEF1300B0EC76 /* WOTRequest.m in Sources */,
