@@ -12,10 +12,10 @@
 
 @interface ListSetting : NSManagedObject
 
-@property (nonatomic, retain) NSString * key;
 @property (nonatomic, retain) NSNumber * ascending;
-@property (nonatomic, retain) NSString * type;
+@property (nonatomic, retain) NSString * key;
 @property (nonatomic, retain) NSNumber * orderBy;
+@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * values;
 
 @end

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		16D9AD7AD2E65533FABAD902 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD5CD3F245D125334EBB9C4 /* libPods.a */; };
-		1D0115E31B2968D600059808 /* ListSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0115E21B2968D600059808 /* ListSetting.m */; };
 		1D4C920B1B25A59C00E320B5 /* WOTMenuDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C920A1B25A59C00E320B5 /* WOTMenuDatasource.m */; };
 		1D4C920E1B25ABD300E320B5 /* WOTMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C920D1B25ABD300E320B5 /* WOTMenuItem.m */; };
 		1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92121B25B71000E320B5 /* WOTTankListCollectionViewCell.m */; };
@@ -43,6 +42,8 @@
 		1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92671B2709D800E320B5 /* WOTTankListSortHeaderView.m */; };
 		1D4C926A1B2709E400E320B5 /* WOTTankListSortHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92691B2709E400E320B5 /* WOTTankListSortHeaderView.xib */; };
 		1D4C926E1B270BF400E320B5 /* WOTTankListSettingsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C926D1B270BF400E320B5 /* WOTTankListSettingsDatasource.m */; };
+		1DA1D72E1B2997B000C5C2FB /* ListSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D72D1B2997B000C5C2FB /* ListSetting.m */; };
+		1DA1D7311B29989F00C5C2FB /* WOTDatasources.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7301B29989F00C5C2FB /* WOTDatasources.m */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
 		1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */; };
 		1DD6463F1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463D1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld */; };
@@ -98,8 +99,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D0115E11B2968D600059808 /* ListSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListSetting.h; sourceTree = "<group>"; };
-		1D0115E21B2968D600059808 /* ListSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSetting.m; sourceTree = "<group>"; };
 		1D4C92091B25A59C00E320B5 /* WOTMenuDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMenuDatasource.h; sourceTree = "<group>"; };
 		1D4C920A1B25A59C00E320B5 /* WOTMenuDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMenuDatasource.m; sourceTree = "<group>"; };
 		1D4C920C1B25ABD300E320B5 /* WOTMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMenuItem.h; sourceTree = "<group>"; };
@@ -147,6 +146,10 @@
 		1D4C92691B2709E400E320B5 /* WOTTankListSortHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSortHeaderView.xib; sourceTree = "<group>"; };
 		1D4C926C1B270BF400E320B5 /* WOTTankListSettingsDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsDatasource.h; sourceTree = "<group>"; };
 		1D4C926D1B270BF400E320B5 /* WOTTankListSettingsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingsDatasource.m; sourceTree = "<group>"; };
+		1DA1D72C1B2997B000C5C2FB /* ListSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListSetting.h; sourceTree = "<group>"; };
+		1DA1D72D1B2997B000C5C2FB /* ListSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSetting.m; sourceTree = "<group>"; };
+		1DA1D72F1B29989F00C5C2FB /* WOTDatasources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDatasources.h; sourceTree = "<group>"; };
+		1DA1D7301B29989F00C5C2FB /* WOTDatasources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTDatasources.m; sourceTree = "<group>"; };
 		1DD646331B1C616A00B0EC76 /* WOT-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WOT-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD646371B1C616A00B0EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DD646381B1C616A00B0EC76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -662,8 +665,8 @@
 		1DD646F31B20700000B0EC76 /* entities */ = {
 			isa = PBXGroup;
 			children = (
-				1D0115E11B2968D600059808 /* ListSetting.h */,
-				1D0115E21B2968D600059808 /* ListSetting.m */,
+				1DA1D72C1B2997B000C5C2FB /* ListSetting.h */,
+				1DA1D72D1B2997B000C5C2FB /* ListSetting.m */,
 				1DD647471B21D4E000B0EC76 /* Tanks.h */,
 				1DD647481B21D4E100B0EC76 /* Tanks.m */,
 				1DD646F41B20700000B0EC76 /* UserSession.h */,
@@ -697,6 +700,8 @@
 			children = (
 				1D4C92081B25A55500E320B5 /* Menu */,
 				1DD647221B20973800B0EC76 /* Languages */,
+				1DA1D72F1B29989F00C5C2FB /* WOTDatasources.h */,
+				1DA1D7301B29989F00C5C2FB /* WOTDatasources.m */,
 			);
 			path = CustomDatasources;
 			sourceTree = "<group>";
@@ -931,6 +936,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DD6473B1B21ADFB00B0EC76 /* WOTWEBRequestLogout.m in Sources */,
+				1DA1D7311B29989F00C5C2FB /* WOTDatasources.m in Sources */,
 				1DD646F81B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */,
 				1DD647071B2081E900B0EC76 /* NSBundle+LanguageBundle.m in Sources */,
 				1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */,
@@ -957,7 +963,7 @@
 				1DD647561B21E74C00B0EC76 /* Tanks+FillProperties.m in Sources */,
 				1DD6474D1B21D54000B0EC76 /* WOTWEBRequestTanks.m in Sources */,
 				1DD6473A1B21ADFB00B0EC76 /* WOTWEBRequestLogin.m in Sources */,
-				1D0115E31B2968D600059808 /* ListSetting.m in Sources */,
+				1DA1D72E1B2997B000C5C2FB /* ListSetting.m in Sources */,
 				1DD646B31B1DEF1300B0EC76 /* WOTRequest.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
 				1DD646C71B1F371700B0EC76 /* WOTMenuViewController.m in Sources */,

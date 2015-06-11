@@ -31,8 +31,8 @@
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="ListSetting" positionX="-45" positionY="117" width="128" height="120"/>
         <element name="Tanks" positionX="-54" positionY="36" width="128" height="240"/>
         <element name="UserSession" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="ListSetting" positionX="-45" positionY="117" width="128" height="120"/>
     </elements>
 </model>

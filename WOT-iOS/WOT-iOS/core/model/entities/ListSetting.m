@@ -11,10 +11,10 @@
 
 @implementation ListSetting
 
-@dynamic key;
 @dynamic ascending;
-@dynamic type;
+@dynamic key;
 @dynamic orderBy;
+@dynamic type;
 @dynamic values;
 
 @end

@@ -35,8 +35,11 @@
 
 @interface WOTTankListSettingsDatasource () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) NSArray *availableFields;
+//@property (nonatomic, strong) NSArray *availableFields;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
+@property (nonatomic, readonly)NSManagedObjectContext *context;
+@property (nonatomic, strong) NSPointerArray *listeners;
+
 
 @end
 
@@ -65,40 +68,25 @@
     
     self = [super init];
     if (self){
+
+//        self.availableFields = @[[[WOTTankListSettingField alloc] initWithKey:WOT_KEY_NATION_I18N value:WOTString(WOT_STRING_NATION_I18N)],
+//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_IS_PREMIUM value:WOTString(WOT_STRING_IS_PREMIUM)],
+//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_LEVEL value:WOTString(WOT_STRING_LEVEL)],
+//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_NAME_I18N value:WOTString(WOT_STRING_NAME_I18N)],
+//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_SHORT_NAME_I18N value:WOTString(WOT_NAME_SHORT_NAME_I18N)],
+//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_TYPE_I18N value:WOTString(WOT_STRING_TYPE_I18N)]
+//                                 ];
+//        
+
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:self.context];
+        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TYPE ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
         
-
-        self.availableFields = @[[[WOTTankListSettingField alloc] initWithKey:WOT_KEY_NATION_I18N value:WOTString(WOT_STRING_NATION_I18N)],
-                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_IS_PREMIUM value:WOTString(WOT_STRING_IS_PREMIUM)],
-                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_LEVEL value:WOTString(WOT_STRING_LEVEL)],
-                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_NAME_I18N value:WOTString(WOT_STRING_NAME_I18N)],
-                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_SHORT_NAME_I18N value:WOTString(WOT_NAME_SHORT_NAME_I18N)],
-                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_TYPE_I18N value:WOTString(WOT_STRING_TYPE_I18N)]
-                                 ];
-        
-        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-        NSError *error = nil;
-
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([ListSetting class])];
-        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
-        self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-        [self.fetchedResultController performFetch:&error];
-        
-        if ([self.fetchedResultController.fetchedObjects count] == 0) {
-            
-            NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-
-            [self context:context createSortSettingForKey:WOT_KEY_NATION_I18N ascending:NO orderBy:0];
-            [self context:context createSortSettingForKey:WOT_KEY_TYPE ascending:YES orderBy:1];
-            [self context:context createSortSettingForKey:WOT_KEY_LEVEL ascending:YES orderBy:2];
-
-            
-            [self context:context createGroupBySettingForKey:WOT_KEY_LEVEL];
-            
-            [self context:context createFilterBySettingForKey:WOT_KEY_LEVEL value:@"2"];
-            [self context:context createFilterBySettingForKey:WOT_KEY_LEVEL value:@"7"];
-
-        }
+        self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:WOT_KEY_TYPE cacheName:nil];
         self.fetchedResultController.delegate = self;
+
+        NSError *error = nil;
+        [self.fetchedResultController performFetch:&error];
         
     }
     return self;
@@ -106,59 +94,85 @@
 
 - (NSArray *)availableSections {
     
-    return @[@"Filter",@"Group",@"Sort"];
+    return @[WOT_KEY_SETTING_TYPE_SORT,WOT_KEY_SETTING_TYPE_GROUP,WOT_KEY_SETTING_TYPE_FILTER];
 }
 
-- (NSArray *)objectsForSection:(NSInteger)section {
+- (NSInteger)sectionsCount {
     
+    return [self.availableSections count];
+}
 
-    NSArray *result = nil;
-    
-    switch (section) {
-        case 0:{
-            
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_FILTER];
-            return [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
-            break;
-        }
-        case 1:{
+- (NSString *)sectionNameAtIndex:(NSInteger)index {
 
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
-            return [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
-            break;
-        }
-        case 2:{
-            
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_SORT];
-            return [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
-            break;
-        }
-        default:
-            break;
-    }
+    return [self availableSections][index];
+}
+
+- (id<NSFetchedResultsSectionInfo>)sectionInfoAtIndex:(NSInteger)index {
     
+    id sectionName = self.availableSections[index];
+    NSArray *filteredSections = [[self.fetchedResultController sections] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@",sectionName]];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [filteredSections lastObject];
+    return sectionInfo;
+}
+
+- (NSInteger)objectsCountForSection:(NSInteger)section {
+
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:section];
+    return [sectionInfo numberOfObjects];
+}
+
+- (id)objectAtIndexPath:(NSIndexPath *)indexPath {
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:indexPath.section];
+    id result = [sectionInfo objects][indexPath.row];
     return result;
 }
 
+- (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+
+    [self.context performBlock:^{
+
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:indexPath.section];
+        NSMutableArray *objectsAtSection = [[sectionInfo objects] mutableCopy];
+        
+        
+        ListSetting *setting =  [objectsAtSection objectAtIndex:indexPath.row];
+        [objectsAtSection removeObjectAtIndex:indexPath.row];
+        [objectsAtSection insertObject:setting atIndex:newIndexPath.row];
+
+        [objectsAtSection enumerateObjectsUsingBlock:^(ListSetting *setting, NSUInteger idx, BOOL *stop) {
+           
+            setting.orderBy = @(idx);
+        }];
+
+    
+        if ([self.context hasChanges]) {
+            
+            NSError *error = nil;
+            [self.context save:&error];
+        }
+    
+    }];
+}
+
+- (NSManagedObjectContext *)context {
+    
+    return [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
+}
+
 - (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath {
-    
-    switch (indexPath.section) {
-        case 0: {
-//            [self remove]
-            break;
-        }
-        case 1: {
+
+    [self.context performBlock:^{
+
+        NSManagedObject *obj = [self objectAtIndexPath:indexPath];
+
+        [self.context deleteObject:obj];
+        if ([self.context hasChanges]) {
             
-            break;
+            NSError *error = nil;
+            [self.context save:&error];
         }
-        case 2: {
-            
-            break;
-        }
-        default:
-            break;
-    }
-    
+    }];
 }
 
 - (void)save {
@@ -173,20 +187,17 @@
     
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
-    
-    
+
     NSMutableArray *predicates = [[NSMutableArray alloc] init];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_FILTER];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
 
-    
     for (ListSetting *setting in objects) {
         
         id value = [self filteredValue:setting.values forKey:setting.key];
         [predicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",setting.key,value]];
     }
-    
 
     return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
 }
@@ -194,9 +205,7 @@
 - (NSString *)groupBy {
     
     NSError *error = nil;
-
     [self.fetchedResultController performFetch:&error];
-
 
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@" %K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
@@ -217,6 +226,7 @@
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
 
     for (ListSetting *setting in objects) {
+        
         [result addObject:[NSSortDescriptor sortDescriptorWithKey:setting.key ascending:[setting.ascending boolValue]]];
     }
 
@@ -225,12 +235,41 @@
 
 
 #pragma mark - NSFetchedResultsControllerDelegate
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     
 }
 
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    
+//    [controller performFetch:nil];
+    
+    [[self.listeners allObjects] enumerateObjectsUsingBlock:^(id<WOTTankListSettingsDatasourceListener> observer, NSUInteger idx, BOOL *stop) {
+        
+        [observer didChangeContent];
+    }];
+    [self.listeners compact];
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+
+    [[self.listeners allObjects] enumerateObjectsUsingBlock:^(id<WOTTankListSettingsDatasourceListener> observer, NSUInteger idx, BOOL *stop) {
+        
+        [observer willChangeContent];
+    }];
+    [self.listeners compact];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    [[self.listeners allObjects] enumerateObjectsUsingBlock:^(id<WOTTankListSettingsDatasourceListener> observer, NSUInteger idx, BOOL *stop) {
+        
+        [observer didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+    }];
+    [self.listeners compact];
+}
+
 #pragma mark - private
-- (ListSetting *)context:(NSManagedObjectContext *)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy{
++ (id)context:(NSManagedObjectContext *)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy{
 
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_SORT];
@@ -250,7 +289,7 @@
     return setting;
 }
 
-- (ListSetting *)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key{
++ (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
@@ -271,7 +310,7 @@
     return setting;
 }
 
-- (ListSetting *)context:(NSManagedObjectContext *)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value{
++ (id)context:(NSManagedObjectContext *)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_FILTER];
@@ -309,6 +348,37 @@
     }
     return result;
     
+}
+
+- (void)registerListener:(id<WOTTankListSettingsDatasourceListener>)listener {
+
+    if (!listener) {
+    
+        return;
+    }
+    if (!self.listeners) {
+        
+        self.listeners = [[NSPointerArray alloc] init];
+    }
+    
+    [self.listeners addPointer:(__bridge void *)listener];
+}
+
+- (void)unregisterListener:(id<WOTTankListSettingsDatasourceListener>)listener {
+
+    if (!listener) {
+    
+        return;
+    }
+    
+    [self.listeners compact];
+    
+    NSInteger index = [[self.listeners allObjects] indexOfObject:listener];
+    
+    if (index != NSNotFound) {
+        
+        [self.listeners removePointerAtIndex:index];
+    }
 }
 
 @end

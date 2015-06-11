@@ -9,9 +9,12 @@
 #import "AppDelegate.h"
 #import "WOTRequestExecutor+Registration.h"
 #import "WOTDrawerViewController.h"
+#import "WOTDatasources.h"
 
 @interface AppDelegate ()
+
 @property (nonatomic, strong) WOTDrawerViewController *wotDrawerViewController;
+
 @end
 
 @implementation AppDelegate
@@ -20,6 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     [WOTRequestExecutor registerRequests];
+    [WOTDatasources registerDefaultData];
     
     self.wotDrawerViewController = [[WOTDrawerViewController alloc] initWithMenu];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

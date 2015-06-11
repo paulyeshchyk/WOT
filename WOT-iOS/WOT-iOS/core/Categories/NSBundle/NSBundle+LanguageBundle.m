@@ -38,7 +38,7 @@ static NSBundle *_langBundle = nil;
 
 // / Returns the english string associated to the passed key.
 + (NSString *)englishStringForKey:(NSString *)key {
-    return [[NSBundle englishLanguageBundle] localizedStringForKey:key value:key table:nil];
+    return [[NSBundle englishLanguageBundle] localizedStringForKey:[key uppercaseString] value:key table:nil];
 }
 
 + (BOOL)setLanguageBundleWithPath:(NSString *)path {

@@ -20,7 +20,7 @@
 - (void)setText:(NSString *)text {
 
     _text = [text copy];
-    [self.label setText:text];
+    [self.label setText:WOTString(text)];
 }
 
 @end
