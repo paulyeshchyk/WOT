@@ -16,7 +16,7 @@
     [super executeWithArgs:args];
     
     NSError *error = nil;
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
+    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
     [UserSession removeObjectsByPredicate:nil inManagedObjectContext:context];
     [context save:&error];
     

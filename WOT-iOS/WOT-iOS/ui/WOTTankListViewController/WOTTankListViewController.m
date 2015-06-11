@@ -9,11 +9,12 @@
 #import "WOTTankListViewController.h"
 #import "WOTRequestExecutor+Registration.h"
 
-#import "WOTTankListCompoundViewController.h"
+#import "WOTTankListSortViewController.h"
 
 #import "Tanks.h"
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
+#import "WOTTankListSettingsDatasource.h"
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -21,6 +22,7 @@
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic, readonly)NSArray *sortDescriptors;
+@property (nonatomic, readonly)NSPredicate *filterBy;
 @property (nonatomic, readonly)NSString *groupByField;
 @property (nonatomic, readonly)NSArray *fieldsToFetch;
 
@@ -35,7 +37,7 @@
     UIBarButtonItem *settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
         
         
-        WOTTankListCompoundViewController *vc = [[WOTTankListCompoundViewController alloc] initWithNibName:@"WOTTankListCompoundViewController" bundle:nil];
+        WOTTankListSortViewController *vc = [[WOTTankListSortViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSortViewController class]) bundle:nil];
         vc.cancelBlock = ^(){
             
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -106,13 +108,14 @@
 
 #pragma mark - private
 - (void)invalidateFetchedResultController {
-    
+
     self.fetchedResultController.delegate = nil;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
     [fetchRequest setSortDescriptors:self.sortDescriptors];
+    [fetchRequest setPredicate:self.filterBy];
     
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
+    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
     self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:self.groupByField cacheName:nil];
     self.fetchedResultController.delegate = self;
     
@@ -123,14 +126,21 @@
     
 }
 
-- (NSArray *)sortDescriptors {
+- (NSPredicate *)filterBy {
     
-    return @[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TYPE ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_LEVEL ascending:YES]];
+    return [WOTTankListSettingsDatasource sharedInstance].filterBy;
+}
+
+- (NSArray *)sortDescriptors {
+    NSMutableArray *result = [[NSMutableArray alloc] initWithArray:[WOTTankListSettingsDatasource sharedInstance].sortBy];
+    [result addObject:[NSSortDescriptor sortDescriptorWithKey:@"tank_id" ascending:YES]];
+
+    return result;
 }
 
 - (NSString *)groupByField {
-    return nil;
-//    return WOT_KEY_NATION_I18N;
+    
+    return [WOTTankListSettingsDatasource sharedInstance].groupBy;
 }
 
 - (NSArray *)fieldsToFetch {

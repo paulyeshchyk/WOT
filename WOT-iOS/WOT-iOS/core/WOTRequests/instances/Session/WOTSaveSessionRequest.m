@@ -16,7 +16,7 @@
 
     [super executeWithArgs:args];
 
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] managedObjectContext];
+    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
     UserSession *session = [UserSession insertNewObjectInManagedObjectContext:context];
     session.nickname = args[WOT_KEY_USER_ID];
     session.access_token = args[WOT_KEY_ACCESS_TOKEN];

@@ -63,7 +63,7 @@
     return _workManagedObjectContext;
 }
 
-- (NSManagedObjectContext *)managedObjectContext {
+- (NSManagedObjectContext *)mainManagedObjectContext {
     
     static dispatch_once_t onceToken;
     
@@ -159,7 +159,7 @@
 
 #pragma mark -
 - (void)mainContextDidSave:(NSNotification *)notification {
-    
+
     [self.workManagedObjectContext performBlock:^{
         
         [self mergeChanges:notification toContext:self.workManagedObjectContext];
