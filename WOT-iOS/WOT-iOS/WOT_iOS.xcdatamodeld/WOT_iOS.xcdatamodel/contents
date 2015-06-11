@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14C109" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ListSetting" representedClassName="ListSetting" syncable="YES">
+        <attribute name="ascending" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderBy" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="values" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Tanks" representedClassName="Tanks" syncable="YES">
         <attribute name="contour_image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -24,7 +31,8 @@
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="UserSession" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="Tanks" positionX="-54" positionY="36" width="128" height="240"/>
+        <element name="UserSession" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="ListSetting" positionX="-45" positionY="117" width="128" height="120"/>
     </elements>
 </model>

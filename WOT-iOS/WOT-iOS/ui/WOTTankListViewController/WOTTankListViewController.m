@@ -42,12 +42,6 @@
             
             [self.navigationController popToRootViewControllerAnimated:YES];
         };
-        vc.applyBlock = ^(){
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        };
-//        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-////        [self.navigationController presentViewController:nav animated:YES completion:NULL];
         [self.navigationController pushViewController:vc animated:YES];
     }];
     [self.navigationItem setRightBarButtonItems:@[settingsItem]];

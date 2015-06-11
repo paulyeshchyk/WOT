@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "ListSetting.h"
+#import "ListSetting.h"
 
 @interface WOTTankListSettingTableViewCell : UITableViewCell
 
-//@property (nonatomic, weak) ListSetting *setting;
+@property (nonatomic, weak) ListSetting *setting;
 
 @end

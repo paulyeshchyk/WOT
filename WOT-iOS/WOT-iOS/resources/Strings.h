@@ -32,6 +32,7 @@
 #define WOT_KEY_NOFOLLOW @"nofollow"
 #define WOT_KEY_FIELDS @"fields"
 #define WOT_KEY_REDIRECT_URI @"redirect_uri"
+#define WOT_KEY_ORDERBY @"orderBy"
 
 #define WOT_KEY_TANK_ID @"tank_id"
 #define WOT_KEY_NAME @"name"
@@ -48,6 +49,8 @@
 #define WOT_KEY_SHORT_NAME_I18N @"short_name_i18n"
 #define WOT_KEY_TYPE @"type"
 #define WOT_KEY_TYPE_I18N @"type_i18n"
+#define WOT_KEY_KEY @"key"
+#define WOT_KEY_VALUES @"values"
 
 
 #define WOT_KEY_SETTING_TYPE @"WOT_KEY_SETTING_TYPE"
@@ -80,6 +83,7 @@
 #define WOT_STRING_BACK @"WOT_STRING_BACK"
 #define WOT_STRING_CANCEL @"WOT_STRING_CANCEL"
 #define WOT_STRING_APPLY @"WOT_STRING_APPLY"
+#define WOT_STRING_EDIT @"WOT_STRING_EDIT"
 #define WOT_STRING_COMPOUND @"WOT_STRING_COMPOUND"
 #define WOT_STRING_LOGIN @"WOT_STRING_LOGIN"
 #define WOT_STRING_SELECT_LANGUAGE @"WOT_STRING_SELECT_LANGUAGE"

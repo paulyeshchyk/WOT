@@ -25,11 +25,11 @@
 
     // Configure the view for the selected state
 }
-//
-//- (void)setSetting:(ListSetting *)setting {
-//    _setting = setting;
-//    [self.keyLabel setText:setting.key];
-//    [self.valueLabel setText:setting.value];
-//}
+
+- (void)setSetting:(ListSetting *)setting {
+    _setting = setting;
+    [self.keyLabel setText:setting.key];
+    [self.valueLabel setText:setting.values];
+}
 
 @end

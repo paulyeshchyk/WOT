@@ -26,7 +26,7 @@
     }];
     [self.navigationItem setLeftBarButtonItems:@[backItem]];
     
-    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
+    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_EDIT) eventBlock:^(id sender) {
         if (self.applyBlock){
             self.applyBlock();
         }

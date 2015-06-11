@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,27 +13,39 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qme-kh-XEh">
-                        <rect key="frame" x="50" y="0.0" width="270" height="43"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fif-0E-HVS">
-                        <rect key="frame" x="8" y="8" width="42" height="27"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="igv-ol-Z1W">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qme-kh-XEh">
+                                <rect key="frame" x="60" y="0.0" width="252" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fif-0E-HVS">
+                                <rect key="frame" x="8" y="0.0" width="44" height="43"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Qme-kh-XEh" secondAttribute="bottom" id="20T-6t-Epv"/>
+                            <constraint firstItem="Fif-0E-HVS" firstAttribute="leading" secondItem="igv-ol-Z1W" secondAttribute="leading" constant="8" id="5J3-yB-aKx"/>
+                            <constraint firstItem="Qme-kh-XEh" firstAttribute="top" secondItem="igv-ol-Z1W" secondAttribute="top" id="Az4-LF-rNr"/>
+                            <constraint firstAttribute="trailing" secondItem="Qme-kh-XEh" secondAttribute="trailing" constant="8" id="F7y-58-puF"/>
+                            <constraint firstAttribute="bottom" secondItem="Fif-0E-HVS" secondAttribute="bottom" id="RMf-fc-35p"/>
+                            <constraint firstItem="Fif-0E-HVS" firstAttribute="top" secondItem="igv-ol-Z1W" secondAttribute="top" id="S5f-2W-2jB"/>
+                            <constraint firstItem="Qme-kh-XEh" firstAttribute="leading" secondItem="Fif-0E-HVS" secondAttribute="trailing" constant="8" id="vBr-6T-Bbx"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Fif-0E-HVS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="BKW-Vz-ksH"/>
-                    <constraint firstItem="Qme-kh-XEh" firstAttribute="leading" secondItem="Fif-0E-HVS" secondAttribute="trailing" id="D7m-bs-aBb"/>
-                    <constraint firstItem="Fif-0E-HVS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="SQ7-Kf-fg7"/>
-                    <constraint firstAttribute="trailing" secondItem="Qme-kh-XEh" secondAttribute="trailing" id="egF-gQ-eMM"/>
-                    <constraint firstAttribute="bottom" secondItem="Qme-kh-XEh" secondAttribute="bottom" id="k4c-RB-S12"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Fif-0E-HVS" secondAttribute="bottom" id="ukO-MT-ryB"/>
-                    <constraint firstItem="Qme-kh-XEh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="vJK-pa-XXm"/>
+                    <constraint firstAttribute="bottom" secondItem="igv-ol-Z1W" secondAttribute="bottom" id="2pI-7O-M3n"/>
+                    <constraint firstItem="igv-ol-Z1W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="3q6-7A-M0Y"/>
+                    <constraint firstAttribute="trailing" secondItem="igv-ol-Z1W" secondAttribute="trailing" id="w6x-tO-oR1"/>
+                    <constraint firstItem="igv-ol-Z1W" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="xVL-Ef-Eht"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

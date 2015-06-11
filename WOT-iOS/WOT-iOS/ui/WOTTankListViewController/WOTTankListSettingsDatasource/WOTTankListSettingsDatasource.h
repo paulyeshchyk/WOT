@@ -20,6 +20,8 @@
 
 + (WOTTankListSettingsDatasource *)sharedInstance;
 
+- (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath;
+
 - (void)save;
 - (void)rollback;
 
