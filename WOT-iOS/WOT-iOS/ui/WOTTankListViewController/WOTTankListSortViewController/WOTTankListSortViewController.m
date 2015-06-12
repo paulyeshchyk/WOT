@@ -9,15 +9,19 @@
 #import "WOTTankListSortViewController.h"
 #import "WOTTankListSettingTableViewCell.h"
 #import "WOTTankListSettingAddNewTableViewCell.h"
-#import "WOTTankListSettingViewController.h"
+#import "WOTTankListSettingNameChooserViewController.h"
+#import "WOTTankListSettingValueChangerViewController.h"
 #import "WOTTankListSortHeaderView.h"
-#import "WOTTankListSettingsDatasource.h"
 #import "ListSetting.h"
+#import "WOTTankListSettingsDatasource+TableView.h"
+#import "WOTTankListSettingsDatasource+AvailableFields.h"
 
 @interface WOTTankListSortViewController () <UITableViewDataSource, UITableViewDelegate, WOTTankListSettingsDatasourceListener>
 
 @property (nonatomic, weak)IBOutlet UITableView *tableView;
 @property (nonatomic, weak)UIBarButtonItem *backItem;
+
+@property (nonatomic, weak)id<WOTTableViewDatasourceProtocol> tableviewDatasource;
 
 @end
 
@@ -25,8 +29,10 @@
 
 - (void)dealloc {
     
+    [self.tableviewDatasource rollback];
     [[WOTTankListSettingsDatasource sharedInstance] unregisterListener:self];
 }
+
 
 - (void)viewDidLoad {
 
@@ -63,28 +69,38 @@
     
 }
 
+- (id<WOTTableViewDatasourceProtocol>)tableviewDatasource {
+    
+    return [WOTTankListSettingsDatasource sharedInstance];
+}
+
+- (id<WOTTankListSettingsAvailableFieldsProtocol>)availableFieldsDatasource {
+    
+    return [WOTTankListSettingsDatasource sharedInstance];
+}
+
 #pragma mark - UITableViewDatasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return [WOTTankListSettingsDatasource sharedInstance].sectionsCount;
+    return [self.tableviewDatasource.availableSections count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     NSInteger additionalRow = tableView.isEditing?0:1;
-    return additionalRow + [[WOTTankListSettingsDatasource sharedInstance] objectsCountForSection:section];
+    return additionalRow + [self.tableviewDatasource objectsCountForSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSInteger objsCount = [[WOTTankListSettingsDatasource sharedInstance] objectsCountForSection:indexPath.section];
+    NSInteger objsCount = [self.tableviewDatasource objectsCountForSection:indexPath.section];
     if (indexPath.row >= objsCount) {
         
         WOTTankListSettingAddNewTableViewCell *result = (WOTTankListSettingAddNewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingAddNewTableViewCell class]) forIndexPath:indexPath];
         return result;
     } else {
         
-        ListSetting *obj = (ListSetting *)[[WOTTankListSettingsDatasource sharedInstance] objectAtIndexPath:indexPath];
+        ListSetting *obj = (ListSetting *)[self.tableviewDatasource objectAtIndexPath:indexPath];
 
         WOTTankListSettingTableViewCell *result = (WOTTankListSettingTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingTableViewCell class]) forIndexPath:indexPath];
         [result setSetting:obj];
@@ -95,7 +111,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     WOTTankListSortHeaderView *header = (WOTTankListSortHeaderView *)[tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([WOTTankListSortHeaderView class])];
-    NSString *sectionName = [[WOTTankListSettingsDatasource sharedInstance] sectionNameAtIndex:section];
+    NSString *sectionName = [self.tableviewDatasource sectionNameAtIndex:section];
     [header setText:sectionName];
     return header;
 }
@@ -103,13 +119,13 @@
 #pragma mark - UITableViewDelegate
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSInteger objsCount = [[WOTTankListSettingsDatasource sharedInstance] objectsCountForSection:indexPath.section];
+    NSInteger objsCount = [self.tableviewDatasource objectsCountForSection:indexPath.section];
     return (indexPath.row <objsCount);
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
 
-    [[WOTTankListSettingsDatasource sharedInstance] moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
+    [self.tableviewDatasource moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
@@ -121,7 +137,7 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        [[WOTTankListSettingsDatasource sharedInstance] removeObjectAtIndexPath:indexPath];
+        [self.tableviewDatasource removeObjectAtIndexPath:indexPath];
     }
 }
 
@@ -134,17 +150,42 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    WOTTankListSettingViewController *vc = [[WOTTankListSettingViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingViewController class]) bundle:nil];
+    WOTTankListSettingViewController *vc = nil;
+    WOTTankListSettingType settingType = [self.tableviewDatasource settingTypeForSectionAtIndex:indexPath.section];
+
+    switch (settingType) {
+        case WOTTankListSettingTypeNameSelector: {
+            
+            vc = [[WOTTankListSettingNameChooserViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingNameChooserViewController class]) bundle:nil];
+            break;
+        }
+        case WOTTankListSettingTypeValueChanger :{
+            
+            vc = [[WOTTankListSettingValueChangerViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingValueChangerViewController class]) bundle:nil];
+        }
+        default: {
+            
+            break;
+        }
+    }
+
+    vc.availableFieldsDatasource = self.availableFieldsDatasource;
+    vc.tableViewDatasource = self.tableviewDatasource;
+    vc.sectionName = self.tableviewDatasource.availableSections[indexPath.section];
+    vc.setting = [self.tableviewDatasource objectAtIndexPath:indexPath];
+    
     vc.cancelBlock = ^(){
         
-        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+        [self.tableviewDatasource rollback];
+        [self.navigationController popViewControllerAnimated:YES];
     };
     vc.applyBlock = ^(){
-        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+
+        [self.tableviewDatasource save];
+        [self.navigationController popViewControllerAnimated:YES];
     };
 
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self.navigationController presentViewController:nav animated:YES completion:NULL];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

@@ -15,8 +15,8 @@
 		1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92181B25B92500E320B5 /* WOTTankListFlowLayout.m */; };
 		1D4C921D1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C921B1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.m */; };
 		1D4C921E1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C921C1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib */; };
-		1D4C922F1B25E44400E320B5 /* WOTTankListSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C922D1B25E44400E320B5 /* WOTTankListSettingViewController.m */; };
-		1D4C92301B25E44400E320B5 /* WOTTankListSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C922E1B25E44400E320B5 /* WOTTankListSettingViewController.xib */; };
+		1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C922D1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m */; };
+		1D4C92301B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C922E1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib */; };
 		1D4C92341B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92311B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png */; };
 		1D4C92351B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92321B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png */; };
 		1D4C92361B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92331B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png */; };
@@ -46,6 +46,14 @@
 		1DA1D7311B29989F00C5C2FB /* WOTDatasources.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7301B29989F00C5C2FB /* WOTDatasources.m */; };
 		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
 		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
+		1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7381B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m */; };
+		1DA1D73D1B2AF48B00C5C2FB /* WOTTankListSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D73C1B2AF48B00C5C2FB /* WOTTankListSettingViewController.m */; };
+		1DA1D7401B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D73F1B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.m */; };
+		1DA1D7421B2AF7D300C5C2FB /* WOTTankListSettingValueChangerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7411B2AF7D300C5C2FB /* WOTTankListSettingValueChangerViewController.xib */; };
+		1DA1D7471B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7451B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.m */; };
+		1DA1D7481B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7461B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib */; };
+		1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74A1B2B005F00C5C2FB /* WOTTankListSettingField.m */; };
+		1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
 		1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */; };
 		1DD6463F1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463D1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld */; };
@@ -88,6 +96,10 @@
 		1DD6474D1B21D54000B0EC76 /* WOTWEBRequestTanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6474C1B21D54000B0EC76 /* WOTWEBRequestTanks.m */; };
 		1DD647531B21E6F300B0EC76 /* NSManagedObject+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647521B21E6F300B0EC76 /* NSManagedObject+FillProperties.m */; };
 		1DD647561B21E74C00B0EC76 /* Tanks+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647551B21E74C00B0EC76 /* Tanks+FillProperties.m */; };
+		1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */; };
+		1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */; };
+		1DE319AE1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */; };
+		1DE319AF1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,9 +126,9 @@
 		1D4C921A1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListCollectionViewHeader.h; sourceTree = "<group>"; };
 		1D4C921B1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListCollectionViewHeader.m; sourceTree = "<group>"; };
 		1D4C921C1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListCollectionViewHeader.xib; sourceTree = "<group>"; };
-		1D4C922C1B25E44400E320B5 /* WOTTankListSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingViewController.h; sourceTree = "<group>"; };
-		1D4C922D1B25E44400E320B5 /* WOTTankListSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingViewController.m; sourceTree = "<group>"; };
-		1D4C922E1B25E44400E320B5 /* WOTTankListSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingViewController.xib; sourceTree = "<group>"; };
+		1D4C922C1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingNameChooserViewController.h; sourceTree = "<group>"; };
+		1D4C922D1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingNameChooserViewController.m; sourceTree = "<group>"; };
+		1D4C922E1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingNameChooserViewController.xib; sourceTree = "<group>"; };
 		1D4C92311B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wotShowMenuButtoniPhone.png; sourceTree = "<group>"; };
 		1D4C92321B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wotShowMenuButtoniPhone@2x.png"; sourceTree = "<group>"; };
 		1D4C92331B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wotShowMenuButtoniPhone@3x.png"; sourceTree = "<group>"; };
@@ -155,6 +167,22 @@
 		1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingAddNewTableViewCell.h; sourceTree = "<group>"; };
 		1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingAddNewTableViewCell.m; sourceTree = "<group>"; };
 		1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingAddNewTableViewCell.xib; sourceTree = "<group>"; };
+		1DA1D7371B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankListSettingsDatasource+TableView.h"; sourceTree = "<group>"; };
+		1DA1D7381B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankListSettingsDatasource+TableView.m"; sourceTree = "<group>"; };
+		1DA1D73A1B2AE9DB00C5C2FB /* WOTTableViewDatasourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTableViewDatasourceProtocol.h; sourceTree = "<group>"; };
+		1DA1D73B1B2AF48B00C5C2FB /* WOTTankListSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingViewController.h; sourceTree = "<group>"; };
+		1DA1D73C1B2AF48B00C5C2FB /* WOTTankListSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingViewController.m; sourceTree = "<group>"; };
+		1DA1D73E1B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingValueChangerViewController.h; sourceTree = "<group>"; };
+		1DA1D73F1B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingValueChangerViewController.m; sourceTree = "<group>"; };
+		1DA1D7411B2AF7D300C5C2FB /* WOTTankListSettingValueChangerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingValueChangerViewController.xib; sourceTree = "<group>"; };
+		1DA1D7441B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingNameTableViewCell.h; sourceTree = "<group>"; };
+		1DA1D7451B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingNameTableViewCell.m; sourceTree = "<group>"; };
+		1DA1D7461B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingNameTableViewCell.xib; sourceTree = "<group>"; };
+		1DA1D7491B2B005F00C5C2FB /* WOTTankListSettingField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingField.h; sourceTree = "<group>"; };
+		1DA1D74A1B2B005F00C5C2FB /* WOTTankListSettingField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingField.m; sourceTree = "<group>"; };
+		1DA1D74C1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankListSettingsDatasource+AvailableFields.h"; sourceTree = "<group>"; };
+		1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankListSettingsDatasource+AvailableFields.m"; sourceTree = "<group>"; };
+		1DA1D74F1B2B017C00C5C2FB /* WOTTankListSettingsAvailableFieldsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsAvailableFieldsProtocol.h; sourceTree = "<group>"; };
 		1DD646331B1C616A00B0EC76 /* WOT-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WOT-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD646371B1C616A00B0EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DD646381B1C616A00B0EC76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -236,6 +264,10 @@
 		1DD647521B21E6F300B0EC76 /* NSManagedObject+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FillProperties.m"; sourceTree = "<group>"; };
 		1DD647541B21E74C00B0EC76 /* Tanks+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tanks+FillProperties.h"; sourceTree = "<group>"; };
 		1DD647551B21E74C00B0EC76 /* Tanks+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tanks+FillProperties.m"; sourceTree = "<group>"; };
+		1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark.png"; sourceTree = "<group>"; };
+		1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark@2x.png"; sourceTree = "<group>"; };
+		1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray.png"; sourceTree = "<group>"; };
+		1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray@2x.png"; sourceTree = "<group>"; };
 		75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		95194089742F312E67004937 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BCD5CD3F245D125334EBB9C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -296,9 +328,15 @@
 		1D4C922B1B25E43200E320B5 /* WOTTankListSettingViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1D4C922C1B25E44400E320B5 /* WOTTankListSettingViewController.h */,
-				1D4C922D1B25E44400E320B5 /* WOTTankListSettingViewController.m */,
-				1D4C922E1B25E44400E320B5 /* WOTTankListSettingViewController.xib */,
+				1DA1D7431B2AFD4A00C5C2FB /* cells */,
+				1DA1D73B1B2AF48B00C5C2FB /* WOTTankListSettingViewController.h */,
+				1DA1D73C1B2AF48B00C5C2FB /* WOTTankListSettingViewController.m */,
+				1D4C922C1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.h */,
+				1D4C922D1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m */,
+				1D4C922E1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib */,
+				1DA1D73E1B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.h */,
+				1DA1D73F1B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.m */,
+				1DA1D7411B2AF7D300C5C2FB /* WOTTankListSettingValueChangerViewController.xib */,
 			);
 			path = WOTTankListSettingViewController;
 			sourceTree = "<group>";
@@ -306,6 +344,10 @@
 		1D4C92371B25EB1000E320B5 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */,
+				1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */,
+				1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */,
+				1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */,
 				1D4C924A1B25EF2E00E320B5 /* WOTGlobe.png */,
 				1D4C924B1B25EF2E00E320B5 /* WOTGlobe@2x.png */,
 				1D4C92441B25ED0900E320B5 /* WOTLoggedInUser.png */,
@@ -372,10 +414,28 @@
 		1D4C926B1B270BE700E320B5 /* WOTTankListSettingsDatasource */ = {
 			isa = PBXGroup;
 			children = (
+				1DA1D74F1B2B017C00C5C2FB /* WOTTankListSettingsAvailableFieldsProtocol.h */,
+				1DA1D73A1B2AE9DB00C5C2FB /* WOTTableViewDatasourceProtocol.h */,
 				1D4C926C1B270BF400E320B5 /* WOTTankListSettingsDatasource.h */,
 				1D4C926D1B270BF400E320B5 /* WOTTankListSettingsDatasource.m */,
+				1DA1D7371B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.h */,
+				1DA1D7381B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m */,
+				1DA1D7491B2B005F00C5C2FB /* WOTTankListSettingField.h */,
+				1DA1D74A1B2B005F00C5C2FB /* WOTTankListSettingField.m */,
+				1DA1D74C1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.h */,
+				1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */,
 			);
 			path = WOTTankListSettingsDatasource;
+			sourceTree = "<group>";
+		};
+		1DA1D7431B2AFD4A00C5C2FB /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				1DA1D7441B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.h */,
+				1DA1D7451B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.m */,
+				1DA1D7461B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib */,
+			);
+			path = cells;
 			sourceTree = "<group>";
 		};
 		1DD6462A1B1C616A00B0EC76 = {
@@ -868,6 +928,7 @@
 				1D4C926A1B2709E400E320B5 /* WOTTankListSortHeaderView.xib in Resources */,
 				1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */,
 				1D4C92361B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png in Resources */,
+				1DA1D7481B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib in Resources */,
 				1D4C92411B25EBE400E320B5 /* WOTiPadMenuGear.png in Resources */,
 				1DD6471A1B2084FF00B0EC76 /* podfile in Resources */,
 				1D4C923C1B25EB1000E320B5 /* WOTBackIconGray@2x.png in Resources */,
@@ -875,9 +936,11 @@
 				1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */,
 				1D4C92631B27085600E320B5 /* WOTTankListSettingTableViewCell.xib in Resources */,
 				1DD646E41B205BF500B0EC76 /* WOTProfileViewController.xib in Resources */,
-				1D4C92301B25E44400E320B5 /* WOTTankListSettingViewController.xib in Resources */,
+				1D4C92301B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib in Resources */,
 				1D4C924D1B25EF2E00E320B5 /* WOTGlobe@2x.png in Resources */,
+				1DA1D7421B2AF7D300C5C2FB /* WOTTankListSettingValueChangerViewController.xib in Resources */,
 				1DD647001B20717800B0EC76 /* WOTLoginViewController.xib in Resources */,
+				1DE319AE1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png in Resources */,
 				1D4C92491B25ED0900E320B5 /* WOTLoggedInUser@3x.png in Resources */,
 				1D4C92351B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png in Resources */,
 				1D4C92431B25EBE400E320B5 /* WOTiPadMenuGear@3x.png in Resources */,
@@ -886,11 +949,14 @@
 				1D4C92591B25F27200E320B5 /* WOTLanguageSelectorViewController.xib in Resources */,
 				1DD646EA1B205D9300B0EC76 /* WOTPlayersListViewController.xib in Resources */,
 				1DD646CE1B1F378100B0EC76 /* WOTTankListViewController.xib in Resources */,
+				1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */,
 				1D4C923B1B25EB1000E320B5 /* WOTBackIconGray.png in Resources */,
+				1DE319AF1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png in Resources */,
 				1D4C924C1B25EF2E00E320B5 /* WOTGlobe.png in Resources */,
 				1D4C92471B25ED0900E320B5 /* WOTLoggedInUser.png in Resources */,
 				1D4C92341B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png in Resources */,
 				1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */,
+				1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */,
 				1D4C923D1B25EB1000E320B5 /* WOTBackIconGray@3x.png in Resources */,
 				1D4C92481B25ED0900E320B5 /* WOTLoggedInUser@2x.png in Resources */,
 				1DD646DD1B20533E00B0EC76 /* WOTMenuTableViewCell.xib in Resources */,
@@ -954,13 +1020,16 @@
 				1DD646FA1B20700000B0EC76 /* WOTCoreDataProvider.m in Sources */,
 				1D4C92641B27085600E320B5 /* WOTTankListSortViewController.m in Sources */,
 				1D4C920B1B25A59C00E320B5 /* WOTMenuDatasource.m in Sources */,
-				1D4C922F1B25E44400E320B5 /* WOTTankListSettingViewController.m in Sources */,
+				1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				1DD647031B20721400B0EC76 /* WOTSessionDataProvider.m in Sources */,
 				1D4C920E1B25ABD300E320B5 /* WOTMenuItem.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
 				1D4C92561B25F27200E320B5 /* WOTLanguageTableViewCell.m in Sources */,
 				1DD647491B21D4E100B0EC76 /* Tanks.m in Sources */,
 				1D4C926E1B270BF400E320B5 /* WOTTankListSettingsDatasource.m in Sources */,
+				1DA1D7401B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.m in Sources */,
+				1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */,
+				1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */,
 				1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */,
 				1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */,
@@ -973,13 +1042,16 @@
 				1DD6474D1B21D54000B0EC76 /* WOTWEBRequestTanks.m in Sources */,
 				1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */,
 				1DD6473A1B21ADFB00B0EC76 /* WOTWEBRequestLogin.m in Sources */,
+				1DA1D73D1B2AF48B00C5C2FB /* WOTTankListSettingViewController.m in Sources */,
 				1DA1D72E1B2997B000C5C2FB /* ListSetting.m in Sources */,
 				1DD646B31B1DEF1300B0EC76 /* WOTRequest.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
 				1DD646C71B1F371700B0EC76 /* WOTMenuViewController.m in Sources */,
 				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,
+				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */,
+				1DA1D7471B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.m in Sources */,
 				1DD6463F1B1C616A00B0EC76 /* WOT_iOS.xcdatamodeld in Sources */,
 				1DD647531B21E6F300B0EC76 /* NSManagedObject+FillProperties.m in Sources */,
 				1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */,

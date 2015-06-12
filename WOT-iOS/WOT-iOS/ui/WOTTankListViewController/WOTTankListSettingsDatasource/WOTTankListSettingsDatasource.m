@@ -9,37 +9,10 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "ListSetting.h"
 
-@interface WOTTankListSettingField : NSObject
-
-@property (nonatomic, copy) NSString *key;
-@property (nonatomic, copy) NSString *value;
-
-- (id)initWithKey:(NSString *)key value:(NSString *)value;
-
-@end
-
-@implementation WOTTankListSettingField
-
-- (id)initWithKey:(NSString *)key value:(NSString *)value{
-    
-    self = [super init];
-    if (self){
-        
-        self.key = key;
-        self.value = value;
-    }
-    return self;
-}
-
-@end
-
 @interface WOTTankListSettingsDatasource () <NSFetchedResultsControllerDelegate>
 
-//@property (nonatomic, strong) NSArray *availableFields;
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, readonly)NSManagedObjectContext *context;
+@property (nonatomic, strong, readwrite) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, strong) NSPointerArray *listeners;
-
 
 @end
 
@@ -69,15 +42,6 @@
     self = [super init];
     if (self){
 
-//        self.availableFields = @[[[WOTTankListSettingField alloc] initWithKey:WOT_KEY_NATION_I18N value:WOTString(WOT_STRING_NATION_I18N)],
-//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_IS_PREMIUM value:WOTString(WOT_STRING_IS_PREMIUM)],
-//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_LEVEL value:WOTString(WOT_STRING_LEVEL)],
-//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_NAME_I18N value:WOTString(WOT_STRING_NAME_I18N)],
-//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_SHORT_NAME_I18N value:WOTString(WOT_NAME_SHORT_NAME_I18N)],
-//                                 [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_TYPE_I18N value:WOTString(WOT_STRING_TYPE_I18N)]
-//                                 ];
-//        
-
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:self.context];
         [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TYPE ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
@@ -92,95 +56,9 @@
     return self;
 }
 
-- (NSArray *)availableSections {
-    
-    return @[WOT_KEY_SETTING_TYPE_SORT,WOT_KEY_SETTING_TYPE_GROUP,WOT_KEY_SETTING_TYPE_FILTER];
-}
-
-- (NSInteger)sectionsCount {
-    
-    return [self.availableSections count];
-}
-
-- (NSString *)sectionNameAtIndex:(NSInteger)index {
-
-    return [self availableSections][index];
-}
-
-- (id<NSFetchedResultsSectionInfo>)sectionInfoAtIndex:(NSInteger)index {
-    
-    id sectionName = self.availableSections[index];
-    NSArray *filteredSections = [[self.fetchedResultController sections] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@",sectionName]];
-    id <NSFetchedResultsSectionInfo> sectionInfo = [filteredSections lastObject];
-    return sectionInfo;
-}
-
-- (NSInteger)objectsCountForSection:(NSInteger)section {
-
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:section];
-    return [sectionInfo numberOfObjects];
-}
-
-- (id)objectAtIndexPath:(NSIndexPath *)indexPath {
-    
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:indexPath.section];
-    id result = [sectionInfo objects][indexPath.row];
-    return result;
-}
-
-- (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
-
-    [self.context performBlock:^{
-
-        id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:indexPath.section];
-        NSMutableArray *objectsAtSection = [[sectionInfo objects] mutableCopy];
-        
-        
-        ListSetting *setting =  [objectsAtSection objectAtIndex:indexPath.row];
-        [objectsAtSection removeObjectAtIndex:indexPath.row];
-        [objectsAtSection insertObject:setting atIndex:newIndexPath.row];
-
-        [objectsAtSection enumerateObjectsUsingBlock:^(ListSetting *setting, NSUInteger idx, BOOL *stop) {
-           
-            setting.orderBy = @(idx);
-        }];
-
-    
-        if ([self.context hasChanges]) {
-            
-            NSError *error = nil;
-            [self.context save:&error];
-        }
-    
-    }];
-}
-
 - (NSManagedObjectContext *)context {
     
     return [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-}
-
-- (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath {
-
-    [self.context performBlock:^{
-
-        NSManagedObject *obj = [self objectAtIndexPath:indexPath];
-
-        [self.context deleteObject:obj];
-        if ([self.context hasChanges]) {
-            
-            NSError *error = nil;
-            [self.context save:&error];
-        }
-    }];
-}
-
-- (void)save {
-    
-}
-
-- (void)rollback {
-    
 }
 
 - (NSCompoundPredicate *)filterBy {
@@ -233,6 +111,52 @@
     return [result copy];
 }
 
+- (id)keyForSetting:(id)setting {
+
+    if (![setting isKindOfClass:[ListSetting class]]) {
+
+        return nil;
+    }
+    return [(ListSetting *)setting key];
+}
+
+- (void)setting:(id)setting setOrderIndex:(NSInteger)orderIndex {
+
+    if ([setting isKindOfClass:[ListSetting class]]) {
+        
+        ListSetting *listSetting = (ListSetting *)setting;
+        [listSetting setOrderBy:@(orderIndex)];
+    }
+}
+
+- (void)setting:(id)setting setType:(NSString *)type {
+    
+    if ([setting isKindOfClass:[ListSetting class]]) {
+        
+        ListSetting *listSetting = (ListSetting *)setting;
+        [listSetting setType:type];
+    }
+}
+
+- (void)setting:(id)setting setValues:(NSString *)values {
+
+    if ([setting isKindOfClass:[ListSetting class]]) {
+        
+        ListSetting *listSetting = (ListSetting *)setting;
+        [listSetting setValues:values];
+    }
+}
+
+- (void)setting:(id)setting setKey:(NSString *)key {
+    
+    if ([setting isKindOfClass:[ListSetting class]]) {
+        
+        ListSetting *listSetting = (ListSetting *)setting;
+        [listSetting setKey:key];
+    }
+}
+
+
 
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
@@ -269,7 +193,7 @@
 }
 
 #pragma mark - private
-+ (id)context:(NSManagedObjectContext *)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy{
++ (id)context:(NSManagedObjectContext *)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_SORT];
@@ -281,15 +205,14 @@
     setting.type = WOT_KEY_SETTING_TYPE_SORT;
     setting.orderBy = @(orderBy);
 
-    if ([context hasChanges]){
+    if (callback) {
         
-        NSError *error = nil;
-        [context save:&error];
+        callback(context,setting);
     }
     return setting;
 }
 
-+ (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key{
++ (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
@@ -299,18 +222,17 @@
     setting.key = key;
     setting.ascending = @(NO);
     setting.type = WOT_KEY_SETTING_TYPE_GROUP;
-    setting.orderBy = @(0);
+    setting.orderBy = @(orderBy);
 
-    if ([context hasChanges]){
-        
-        NSError *error = nil;
-        [context save:&error];
-    }
     
+    if (callback) {
+        
+        callback(context,setting);
+    }
     return setting;
 }
 
-+ (id)context:(NSManagedObjectContext *)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value{
++ (id)context:(NSManagedObjectContext *)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_FILTER];
@@ -323,12 +245,19 @@
     setting.type = WOT_KEY_SETTING_TYPE_FILTER;
     setting.orderBy = @(0);
     setting.values = value;
+
     
-    if ([context hasChanges]){
+    if (callback) {
         
-        NSError *error = nil;
-        [context save:&error];
+        callback(context,setting);
     }
+    
+//
+//    if ([context hasChanges]){
+//        
+//        NSError *error = nil;
+//        [context save:&error];
+//    }
     
     return setting;
 }
