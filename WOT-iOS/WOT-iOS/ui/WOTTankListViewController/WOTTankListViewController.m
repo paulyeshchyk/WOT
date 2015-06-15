@@ -85,6 +85,9 @@
 
     Tanks *tank = (Tanks *)[self.fetchedResultController objectAtIndexPath:indexPath];
     result.image = [tank image];
+    result.tankName = tank.name_i18n;
+    result.tankType = tank.type;
+    result.level = [tank.level integerValue];
     return result;
 }
 

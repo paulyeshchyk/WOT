@@ -10,7 +10,9 @@
 
 @interface WOTTankListCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, copy) NSString *tankType;
 @property (nonatomic, copy) NSString *tankName;
 @property (nonatomic, copy) NSString *image;
+@property (nonatomic, assign) NSInteger level;
 
 @end

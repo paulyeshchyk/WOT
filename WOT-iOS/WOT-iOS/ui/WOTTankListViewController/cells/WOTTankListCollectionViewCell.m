@@ -7,10 +7,13 @@
 //
 
 #import "WOTTankListCollectionViewCell.h"
+#import "RomanNumber.h"
 
 @interface WOTTankListCollectionViewCell()
 
 @property (nonatomic, weak)IBOutlet UILabel *tankNameLabel;
+@property (nonatomic, weak)IBOutlet UIImageView *tankTypeContainer;
+@property (nonatomic, weak)IBOutlet UILabel *tankLevelLabel;
 @property (nonatomic, weak)IBOutlet UIImageView *image_container;
 
 @end
@@ -18,13 +21,23 @@
 @implementation WOTTankListCollectionViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    
+    [super awakeFromNib];
+    self.image_container.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.image_container.layer.borderWidth = 1.0f;
 }
 
 - (void)setTankName:(NSString *)tankName {
-    _tankName = [tankName copy];
     
+    _tankName = [tankName copy];
     self.tankNameLabel.text = _tankName;
+}
+
+- (void)setTankType:(NSString *)tankType {
+    
+    _tankType = [tankType copy];
+    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",tankType]];
+    self.tankTypeContainer.image = image;
 }
 
 - (void)setImage:(NSString *)image {
@@ -33,6 +46,12 @@
     [self.image_container sd_setImageWithURL:[NSURL URLWithString:_image] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
     }];
+}
+
+- (void)setLevel:(NSInteger)level {
+    
+    _level = level;
+    self.tankLevelLabel.text = [[[RomanNumber alloc] init] arabicToRoman:@(level)];
 }
 
 @end

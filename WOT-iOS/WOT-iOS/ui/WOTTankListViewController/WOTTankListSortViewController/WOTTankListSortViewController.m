@@ -142,7 +142,7 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSInteger objsCount = [self.tableviewDatasource objectsCountForSection:indexPath.section];
-    return (indexPath.row <objsCount);
+    return (indexPath.row < objsCount);
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
