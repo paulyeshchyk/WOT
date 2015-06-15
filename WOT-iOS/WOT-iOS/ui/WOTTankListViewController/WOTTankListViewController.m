@@ -15,6 +15,7 @@
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
 #import "WOTTankListSettingsDatasource.h"
+#import "WOTTankDetailViewController.h"
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -106,7 +107,16 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-//    [self invalidateFetchedResultController];
+    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_BACK)];
+    UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender){
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
+    WOTTankDetailViewController *detail = [[WOTTankDetailViewController alloc] initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];
+    detail.tank = [self.fetchedResultController objectAtIndexPath:indexPath];
+
+    [detail.navigationItem setLeftBarButtonItem:backButtonItem];
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 #pragma mark - private
