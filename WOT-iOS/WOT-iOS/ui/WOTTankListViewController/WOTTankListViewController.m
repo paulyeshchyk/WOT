@@ -42,8 +42,14 @@
             
             [self.navigationController popToRootViewControllerAnimated:YES];
         };
+        vc.commitBlock = ^(){
+            
+            [self invalidateFetchedResultController];
+        };
+        
         [self.navigationController pushViewController:vc animated:YES];
     }];
+    
     [self.navigationItem setRightBarButtonItems:@[settingsItem]];
 
     [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanksList args:@{WOT_KEY_FIELDS:[self.fieldsToFetch componentsJoinedByString:@","]}];
@@ -116,8 +122,7 @@
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
     [self.collectionView reloadData];
-    
-    
+
 }
 
 - (NSPredicate *)filterBy {
@@ -126,8 +131,9 @@
 }
 
 - (NSArray *)sortDescriptors {
+    
     NSMutableArray *result = [[NSMutableArray alloc] initWithArray:[WOTTankListSettingsDatasource sharedInstance].sortBy];
-    [result addObject:[NSSortDescriptor sortDescriptorWithKey:@"tank_id" ascending:YES]];
+    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
 
     return result;
 }

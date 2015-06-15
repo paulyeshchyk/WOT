@@ -17,7 +17,7 @@ typedef void (^WOTTankListSettingApplyBlock) ();
 @property (nonatomic, copy) WOTTankListSettingCancelBlock cancelBlock;
 @property (nonatomic, copy) WOTTankListSettingApplyBlock applyBlock;
 @property (nonatomic, weak) id <WOTTableViewDatasourceProtocol> tableViewDatasource;
-@property (nonatomic, weak) id<WOTTankListSettingsAvailableFieldsProtocol> availableFieldsDatasource;
+@property (nonatomic, weak) id<WOTTankListSettingsAvailableFieldsProtocol> staticFieldsDatasource;
 @property (nonatomic, copy) NSString *sectionName;
 @property (nonatomic, weak) id setting;
 

@@ -13,9 +13,12 @@
 - (WOTTankListSettingType)settingTypeForSectionAtIndex:(NSInteger)section {
     
     switch (section) {
-        case 0:
-        case 1: {
+        case 0: {
             return WOTTankListSettingTypeNameSelector;
+            break;
+        }
+        case 1: {
+            return WOTTankListSettingTypeGroupSelector;
             break;
         }
         case 2:{
@@ -31,7 +34,7 @@
     return WOTTankListSettingTypeNameSelector;
 }
 
-- (id)updateSetting:(id)setting  byType:(id)type byValue:(id)value filterValue:(id)filterValue callback:(WOTTankListSettingUpateCallback)callback {
+- (void)updateSetting:(id)setting  byType:(id)type byValue:(id)value filterValue:(id)filterValue  ascending:(BOOL)ascending callback:(WOTTankListSettingUpateCallback)callback {
     
     id updatedSetting = setting;
     
@@ -41,7 +44,7 @@
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
-            updatedSetting = [WOTTankListSettingsDatasource context:self.context createSortSettingForKey:value ascending:NO orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
+            updatedSetting = [WOTTankListSettingsDatasource context:self.context createSortSettingForKey:value ascending:ascending orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
 
                 if (callback) {
                     
@@ -52,7 +55,7 @@
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
-            updatedSetting = [WOTTankListSettingsDatasource context:self.context createGroupBySettingForKey:value orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
+            updatedSetting = [WOTTankListSettingsDatasource context:self.context createGroupBySettingForKey:value ascending:ascending orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
                 
                 if (callback) {
                     
@@ -75,14 +78,12 @@
         
         [[WOTTankListSettingsDatasource sharedInstance] setting:updatedSetting setKey:value];
         [[WOTTankListSettingsDatasource sharedInstance] setting:updatedSetting setValues:filterValue];
+        [[WOTTankListSettingsDatasource sharedInstance] setting:updatedSetting setAscending:ascending];
         if (callback) {
             
             callback(updatedSetting);
         }
     }
-
-    return updatedSetting;
-    
 }
 
 - (NSArray *)availableSections {

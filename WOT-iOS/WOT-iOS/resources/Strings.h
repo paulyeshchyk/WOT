@@ -71,6 +71,8 @@
 #define WOT_IMAGE_USER @"WOTLoggedInUser.png"
 #define WOT_IMAGE_GEAR @"WOTiPadMenuGear.png"
 #define WOT_IMAGE_BACK @"WOTBackIconGray.png"
+#define WOT_IMAGE_UP @"WOTArrowUp.png"
+#define WOT_IMAGE_DOWN @"WOTArrowDown.png"
 #define WOT_IMAGE_CHECKMARK_DARK @"WOTSelector-checkmark-dark.png"
 #define WOT_IMAGE_CHECKMARK_GRAY @"WOTSelector-checkmark-gray.png"
 

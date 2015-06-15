@@ -13,5 +13,6 @@ typedef void (^WOTTankListCompoundApplyBlock) ();
 @interface WOTTankListSortViewController : UIViewController
 
 @property (nonatomic, copy) WOTTankListCompoundCancelBlock cancelBlock;
+@property (nonatomic, copy) WOTTankListCompoundApplyBlock commitBlock;
 
 @end

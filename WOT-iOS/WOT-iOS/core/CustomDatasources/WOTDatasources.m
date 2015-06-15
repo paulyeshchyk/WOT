@@ -35,7 +35,7 @@
         [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOT_KEY_LEVEL ascending:YES orderBy:2 callback:NULL];
         
         
-        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOT_KEY_LEVEL orderBy:0 callback:NULL];
+        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOT_KEY_LEVEL ascending:NO orderBy:0 callback:NULL];
         
         [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOT_KEY_LEVEL value:@"2" callback:NULL];
         [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOT_KEY_LEVEL value:@"7" callback:NULL];

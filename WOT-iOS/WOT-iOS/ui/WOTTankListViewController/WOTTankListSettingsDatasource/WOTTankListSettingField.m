@@ -10,13 +10,14 @@
 
 @implementation WOTTankListSettingField
 
-- (id)initWithKey:(NSString *)key value:(NSString *)value{
+- (id)initWithKey:(NSString *)key value:(NSString *)value ascending:(BOOL)ascending{
     
     self = [super init];
     if (self){
         
         self.key = key;
         self.value = value;
+        self.ascending = ascending;
     }
     return self;
 }

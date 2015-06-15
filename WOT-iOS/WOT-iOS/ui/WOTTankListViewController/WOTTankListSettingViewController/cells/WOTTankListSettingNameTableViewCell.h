@@ -12,6 +12,6 @@
 
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, copy) NSString *key;
-@property (nonatomic, assign)BOOL marked;
+@property (nonatomic, assign)BOOL busy;
 
 @end

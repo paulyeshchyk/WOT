@@ -34,7 +34,7 @@
     
     id key = [self.tableViewDatasource keyForSetting:self.setting];
     __block NSInteger index =  -1;
-    [self.availableFieldsDatasource.availableFields enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self.staticFieldsDatasource.allFields enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
         if ([[obj key] isEqualToString:key]) {
             
@@ -58,19 +58,16 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [self.availableFieldsDatasource.availableFields count];
+    return [self.staticFieldsDatasource.allFields count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    WOTTankListSettingField *field = self.availableFieldsDatasource.availableFields[indexPath.row];
+    WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
     
     WOTTankListSettingNameTableViewCell *cell = (WOTTankListSettingNameTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingNameTableViewCell class]) forIndexPath:indexPath];
     [cell setText:WOTString(field.key)];
     [cell setKey:field.key];
-//    id key = [self.tableViewDatasource keyForSetting:self.setting];
-//    cell.selected = [field.key isEqualToString:key];
-    
     return cell;
 }
 
@@ -83,10 +80,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    WOTTankListSettingField *field = self.availableFieldsDatasource.availableFields[indexPath.row];
-    self.setting = [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text callback:^(id setting) {
+    WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
+    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text ascending:NO callback:^(id setting) {
         
         self.setting = setting;
+        [self.textField setText:nil];
     }];
 }
 
@@ -96,10 +94,16 @@
 
     [textField resignFirstResponder];
     
-    WOTTankListSettingField *field = self.availableFieldsDatasource.availableFields[[self.tableView.indexPathForSelectedRow row]];
-    self.setting = [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text callback:^(id setting) {
+    WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[[self.tableView.indexPathForSelectedRow row]];
+    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text  ascending:NO callback:^(id setting) {
         
         self.setting = setting;
     }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    return YES;
 }
 @end

@@ -11,8 +11,10 @@
 typedef NS_ENUM(NSInteger, WOTTankListSettingType) {
     WOTTankListSettingTypeUnknown = 0,
     WOTTankListSettingTypeNameSelector,
+    WOTTankListSettingTypeGroupSelector,
     WOTTankListSettingTypeValueChanger
 };
+
 typedef void(^WOTTankListSettingUpateCallback)(id setting);
 @protocol WOTTableViewDatasourceProtocol <NSObject>
 
@@ -27,7 +29,7 @@ typedef void(^WOTTankListSettingUpateCallback)(id setting);
 - (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath;
 
 - (WOTTankListSettingType)settingTypeForSectionAtIndex:(NSInteger)section;
-- (id)updateSetting:(id)setting byType:(id)type byValue:(id)value filterValue:(id)filterValue callback:(WOTTankListSettingUpateCallback)callback;
+- (void)updateSetting:(id)setting byType:(id)type byValue:(id)value filterValue:(id)filterValue ascending:(BOOL)ascending callback:(WOTTankListSettingUpateCallback)callback;
 - (id)keyForSetting:(id)setting;
 
 - (void)save;

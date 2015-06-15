@@ -118,7 +118,6 @@
     } forRequestId:WOTRequestIdTanksList];
     [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
 
-        return;
         NSDictionary *tanksDictionary = json[WOT_KEY_DATA];
 
         NSArray *tanksArray = [tanksDictionary allKeys];

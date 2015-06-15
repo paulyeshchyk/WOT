@@ -77,7 +77,13 @@
         [predicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",setting.key,value]];
     }
 
-    return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+    if ([predicates count] == 0) {
+        
+        return nil;
+    } else {
+    
+        return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+    }
 }
 
 - (NSString *)groupBy {
@@ -135,6 +141,15 @@
         
         ListSetting *listSetting = (ListSetting *)setting;
         [listSetting setType:type];
+    }
+}
+
+- (void)setting:(id)setting setAscending:(BOOL)ascending {
+    
+    if ([setting isKindOfClass:[ListSetting class]]) {
+        
+        ListSetting *listSetting = (ListSetting *)setting;
+        [listSetting setAscending:@(ascending)];
     }
 }
 
@@ -212,7 +227,7 @@
     return setting;
 }
 
-+ (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
++ (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
@@ -220,7 +235,7 @@
 
     ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate inManagedObjectContext:context];
     setting.key = key;
-    setting.ascending = @(NO);
+    setting.ascending = @(ascending);
     setting.type = WOT_KEY_SETTING_TYPE_GROUP;
     setting.orderBy = @(orderBy);
 
@@ -251,14 +266,7 @@
         
         callback(context,setting);
     }
-    
-//
-//    if ([context hasChanges]){
-//        
-//        NSError *error = nil;
-//        [context save:&error];
-//    }
-    
+
     return setting;
 }
 

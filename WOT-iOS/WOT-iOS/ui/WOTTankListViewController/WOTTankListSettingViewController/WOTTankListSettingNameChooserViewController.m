@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankListSettingNameChooserViewController.h"
-#import "WOTTankListSettingNameTableViewCell.h"
+#import "WOTTankListSettingSortTableViewCell.h"
 #import "WOTTankListSettingField.h"
 
 @interface WOTTankListSettingNameChooserViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -18,11 +18,22 @@
 
 @implementation WOTTankListSettingNameChooserViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+
+    if (self){
+    
+        self.hasSorting = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
 
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSettingNameTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankListSettingNameTableViewCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSettingSortTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankListSettingSortTableViewCell class])];
     
 }
 
@@ -30,41 +41,76 @@
 
     [super viewWillAppear:animated];
 
+}
+
+#pragma mark - private
+- (NSInteger)indexForSetting:(id)setting {
+
+    __block NSInteger result = -1;
+
     id key = [self.tableViewDatasource keyForSetting:self.setting];
-    __block NSInteger index =  -1;
-    [self.availableFieldsDatasource.availableFields enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self.staticFieldsDatasource.allFields enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
         if ([[obj key] isEqualToString:key]) {
             
-            index = idx;
+            result = idx;
             *stop = YES;
         }
     }];
     
-    if (index >= 0) {
-        
-        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-    }
+    
+    return result;
 }
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return [self.availableFieldsDatasource.availableFields count];
+    return [self.staticFieldsDatasource.allFields count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    WOTTankListSettingField *field = self.availableFieldsDatasource.availableFields[indexPath.row];
+    WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
     
-    WOTTankListSettingNameTableViewCell *cell = (WOTTankListSettingNameTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingNameTableViewCell class]) forIndexPath:indexPath];
+    WOTTankListSettingSortTableViewCell *cell = (WOTTankListSettingSortTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingSortTableViewCell class]) forIndexPath:indexPath];
+    [cell setHasSorting:self.hasSorting];
     [cell setText:WOTString(field.key)];
     [cell setKey:field.key];
+    [cell setBusy:[self.staticFieldsDatasource isFieldBusy:field]];
+    [cell setSortClick:^(BOOL ascending){
+        
+        WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
+        [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:ascending callback:^(id setting) {
+            
+//            self.setting = setting;
+            
+            [tableView beginUpdates];
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [tableView endUpdates];
+        }];
+
+        
+    }];
+    
+    NSNumber *ascending = [self.setting performSelector:@selector(ascending)];
+    [cell setAscending:[ascending boolValue]];
+    
+//    if (index >= 0) {
+//
+//        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+//    }
+    
     return cell;
 }
 
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSInteger index =  [self indexForSetting:self.setting];
+    cell.selected = (index == indexPath.row);
+}
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -73,10 +119,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
  
     
-    WOTTankListSettingField *field = self.availableFieldsDatasource.availableFields[indexPath.row];
-    self.setting = [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil callback:^(id setting) {
+    WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
+    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:field.ascending callback:^(id setting) {
         
         self.setting = setting;
+        [tableView reloadData];
     }];
 }
 

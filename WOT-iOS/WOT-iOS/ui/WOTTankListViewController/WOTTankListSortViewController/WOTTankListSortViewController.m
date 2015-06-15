@@ -74,7 +74,7 @@
     return [WOTTankListSettingsDatasource sharedInstance];
 }
 
-- (id<WOTTankListSettingsAvailableFieldsProtocol>)availableFieldsDatasource {
+- (id<WOTTankListSettingsAvailableFieldsProtocol>)staticFieldsDatasource {
     
     return [WOTTankListSettingsDatasource sharedInstance];
 }
@@ -87,8 +87,30 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    NSInteger additionalRow = tableView.isEditing?0:1;
-    return additionalRow + [self.tableviewDatasource objectsCountForSection:section];
+    NSInteger additionalRow = 0;
+    NSInteger objectsCount = [self.tableviewDatasource objectsCountForSection:section];
+
+    switch (section) {
+//        case 0:{
+//            
+//            break;
+//        }
+        case 1:{
+
+            additionalRow = tableView.isEditing?0:((objectsCount == 0)?1:0);
+            break;
+        }
+//        case 2:{
+//            
+//            break;
+//        }
+        default: {
+            
+            additionalRow = tableView.isEditing?0:1;
+            break;
+        }
+    }
+    return additionalRow + objectsCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -154,14 +176,23 @@
     WOTTankListSettingType settingType = [self.tableviewDatasource settingTypeForSectionAtIndex:indexPath.section];
 
     switch (settingType) {
+            
         case WOTTankListSettingTypeNameSelector: {
             
             vc = [[WOTTankListSettingNameChooserViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingNameChooserViewController class]) bundle:nil];
+            [(WOTTankListSettingNameChooserViewController *)vc setHasSorting:YES];
+            break;
+        }
+        case WOTTankListSettingTypeGroupSelector :{
+            
+            vc = [[WOTTankListSettingNameChooserViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingNameChooserViewController class]) bundle:nil];
+            [(WOTTankListSettingNameChooserViewController *)vc setHasSorting:NO];
             break;
         }
         case WOTTankListSettingTypeValueChanger :{
             
             vc = [[WOTTankListSettingValueChangerViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingValueChangerViewController class]) bundle:nil];
+            break;
         }
         default: {
             
@@ -169,7 +200,7 @@
         }
     }
 
-    vc.availableFieldsDatasource = self.availableFieldsDatasource;
+    vc.staticFieldsDatasource = self.staticFieldsDatasource;
     vc.tableViewDatasource = self.tableviewDatasource;
     vc.sectionName = self.tableviewDatasource.availableSections[indexPath.section];
     vc.setting = [self.tableviewDatasource objectAtIndexPath:indexPath];
@@ -182,6 +213,11 @@
     vc.applyBlock = ^(){
 
         [self.tableviewDatasource save];
+
+        if (self.commitBlock) {
+            self.commitBlock();
+        }
+        
         [self.navigationController popViewControllerAnimated:YES];
     };
 
@@ -209,6 +245,8 @@
     
 //    [self.tableView endUpdates];
     [self.tableView reloadData];
+    
+    
 }
 
 @end

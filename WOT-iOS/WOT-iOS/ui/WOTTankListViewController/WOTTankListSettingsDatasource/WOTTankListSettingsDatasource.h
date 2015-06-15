@@ -33,13 +33,14 @@ typedef void(^WOTTankListSettingsDatasourceCallback)(void);
 + (WOTTankListSettingsDatasource *)sharedInstance;
 
 + (id)context:(NSManagedObjectContext *)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback;
-+ (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback;
++ (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback;
 + (id)context:(NSManagedObjectContext *)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback;
 
 - (void)registerListener:(id<WOTTankListSettingsDatasourceListener>)listener;
 - (void)unregisterListener:(id<WOTTankListSettingsDatasourceListener>)listener;
 - (void)setting:(id)setting setOrderIndex:(NSInteger)orderIndex;
 - (void)setting:(id)setting setType:(NSString *)type;
+- (void)setting:(id)setting setAscending:(BOOL)ascending;
 - (void)setting:(id)setting setKey:(NSString *)key;
 - (void)setting:(id)setting setValues:(NSString *)values;
 - (id)keyForSetting:(id)setting;

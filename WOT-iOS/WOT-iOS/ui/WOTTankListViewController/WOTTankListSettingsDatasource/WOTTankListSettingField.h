@@ -12,7 +12,8 @@
 
 @property (nonatomic, copy) NSString *key;
 @property (nonatomic, copy) NSString *value;
+@property (nonatomic, assign)BOOL ascending;
 
-- (id)initWithKey:(NSString *)key value:(NSString *)value;
+- (id)initWithKey:(NSString *)key value:(NSString *)value ascending:(BOOL)ascending;
 
 @end

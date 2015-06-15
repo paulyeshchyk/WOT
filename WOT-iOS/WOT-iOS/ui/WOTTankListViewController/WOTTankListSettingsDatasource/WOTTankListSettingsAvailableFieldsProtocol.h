@@ -10,6 +10,8 @@
 
 @protocol WOTTankListSettingsAvailableFieldsProtocol <NSObject>
 
-@property (nonatomic, readonly)NSArray *availableFields;
+@property (nonatomic, readonly)NSArray *allFields;
+
+- (BOOL)isFieldBusy:(id)field;
 
 @end

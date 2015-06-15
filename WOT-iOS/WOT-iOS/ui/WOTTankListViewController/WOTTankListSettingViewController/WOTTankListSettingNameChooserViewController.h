@@ -10,4 +10,6 @@
 
 @interface WOTTankListSettingNameChooserViewController : WOTTankListSettingViewController
 
+@property (nonatomic, assign)BOOL hasSorting;
+
 @end
