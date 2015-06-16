@@ -7,12 +7,12 @@
 //
 
 #import "WOTTankDetailViewController.h"
-#import "WOTRoseDiagramViewController.h"
+#import "WOTRadarViewController.h"
 
 @interface WOTTankDetailViewController ()
 
 @property (nonatomic, weak)IBOutlet UIView *roseContainer;
-@property (nonatomic, strong)WOTRoseDiagramViewController *roseDiagramController;
+@property (nonatomic, strong)WOTRadarViewController *roseDiagramController;
 
 @end
 
@@ -28,7 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         
-        self.roseDiagramController = [[WOTRoseDiagramViewController alloc] initWithNibName:NSStringFromClass([WOTRoseDiagramViewController class]) bundle:nil];
+        self.roseDiagramController = [[WOTRadarViewController alloc] initWithNibName:NSStringFromClass([WOTRadarViewController class]) bundle:nil];
         [self addChildViewController:self.roseDiagramController];
     }
     return self;

@@ -1,5 +1,5 @@
 //
-//  WOTRoseDiagramViewController.h
+//  WOTRadarViewController.h
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 6/15/15.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WOTRoseDiagramViewController : UIViewController
+//#import <Charts/Charts.h>
+
+@interface WOTRadarViewController : UIViewController
 
 @end
