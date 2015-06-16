@@ -42,7 +42,7 @@
 - (void)initRadarData {
     
     self.parties = @[
-                         @"Party A", @"Party B", @"Party C", @"Party D", @"Party E", @"Party F",
+                         @"SPG", @"TD", @"Heavy", @"Middle", @"Light", @"Party F",
                          @"Party G", @"Party H", @"Party I", @"Party J", @"Party K", @"Party L",
                          @"Party M", @"Party N", @"Party O", @"Party P", @"Party Q", @"Party R",
                          @"Party S", @"Party T", @"Party U", @"Party V", @"Party W", @"Party X",
@@ -92,15 +92,21 @@
 - (void)setData
 {
     double mult = 10.f;
-    int count = 9;
+    int count = 5;
     
     NSMutableArray *yVals1 = [[NSMutableArray alloc] init];
     NSMutableArray *yVals2 = [[NSMutableArray alloc] init];
+    NSMutableArray *yVals3 = [[NSMutableArray alloc] init];
+    NSMutableArray *yVals4 = [[NSMutableArray alloc] init];
+    NSMutableArray *yVals5 = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < count; i++)
     {
         [yVals1 addObject:[[ChartDataEntry alloc] initWithValue:(arc4random_uniform(mult) + mult / 2) xIndex:i]];
         [yVals2 addObject:[[ChartDataEntry alloc] initWithValue:(arc4random_uniform(mult) + mult / 2) xIndex:i]];
+        [yVals3 addObject:[[ChartDataEntry alloc] initWithValue:(arc4random_uniform(mult) + mult / 2) xIndex:i]];
+        [yVals4 addObject:[[ChartDataEntry alloc] initWithValue:(arc4random_uniform(mult) + mult / 2) xIndex:i]];
+        [yVals5 addObject:[[ChartDataEntry alloc] initWithValue:(arc4random_uniform(mult) + mult / 2) xIndex:i]];
     }
     
     NSMutableArray *xVals = [[NSMutableArray alloc] init];
@@ -110,17 +116,32 @@
         [xVals addObject:self.parties[i % self.parties.count]];
     }
     
+    RadarChartDataSet *set5 = [[RadarChartDataSet alloc] initWithYVals:yVals5 label:@"Set 5"];
+    [set5 setColor:ChartColorTemplates.vordiplom[0]];
+    set5.drawFilledEnabled = YES;
+    set5.lineWidth = 2.0;
+    
+    RadarChartDataSet *set4 = [[RadarChartDataSet alloc] initWithYVals:yVals4 label:@"Set 4"];
+    [set4 setColor:ChartColorTemplates.vordiplom[4]];
+    set4.drawFilledEnabled = YES;
+    set4.lineWidth = 2.0;
+    
     RadarChartDataSet *set1 = [[RadarChartDataSet alloc] initWithYVals:yVals1 label:@"Set 1"];
-    [set1 setColor:ChartColorTemplates.vordiplom[0]];
+    [set1 setColor:ChartColorTemplates.vordiplom[1]];
     set1.drawFilledEnabled = YES;
     set1.lineWidth = 2.0;
     
     RadarChartDataSet *set2 = [[RadarChartDataSet alloc] initWithYVals:yVals2 label:@"Set 2"];
-    [set2 setColor:ChartColorTemplates.vordiplom[4]];
+    [set2 setColor:ChartColorTemplates.vordiplom[2]];
     set2.drawFilledEnabled = YES;
     set2.lineWidth = 2.0;
+
+    RadarChartDataSet *set3 = [[RadarChartDataSet alloc] initWithYVals:yVals3 label:@"Set 3"];
+    [set3 setColor:ChartColorTemplates.vordiplom[3]];
+    set3.drawFilledEnabled = YES;
+    set3.lineWidth = 2.0;
     
-    RadarChartData *data = [[RadarChartData alloc] initWithXVals:xVals dataSets:@[set1, set2]];
+    RadarChartData *data = [[RadarChartData alloc] initWithXVals:xVals dataSets:@[set1, set2, set3, set4, set5]];
     [data setValueFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:8.f]];
     [data setDrawValues:NO];
     
