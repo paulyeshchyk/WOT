@@ -92,7 +92,7 @@
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@" %K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
     NSArray * result = [objects valueForKeyPath:@"key"];
     if ([result count] == 0) {

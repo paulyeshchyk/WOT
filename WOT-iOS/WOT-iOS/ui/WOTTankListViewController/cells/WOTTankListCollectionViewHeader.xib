@@ -10,11 +10,18 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulc-my-O5Y">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.38039215686274508" green="0.38039215686274508" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="JAq-Ns-MIo"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="viC-Bl-CVa">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                    <rect key="frame" x="0.0" y="1" width="320" height="48"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fR-Fp-mbg">
-                            <rect key="frame" x="8" y="0.0" width="312" height="50"/>
+                            <rect key="frame" x="8" y="0.0" width="312" height="48"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -28,12 +35,25 @@
                         <constraint firstItem="4fR-Fp-mbg" firstAttribute="top" secondItem="viC-Bl-CVa" secondAttribute="top" id="pkm-UU-Jg4"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OPi-HN-RSW">
+                    <rect key="frame" x="0.0" y="49" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.25490196078431371" green="0.25490196078431371" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="FJm-H0-cAs"/>
+                    </constraints>
+                </view>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="viC-Bl-CVa" secondAttribute="bottom" id="8lE-GS-2uF"/>
-                <constraint firstItem="viC-Bl-CVa" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="Gf1-lE-5QB"/>
-                <constraint firstItem="viC-Bl-CVa" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="oIf-xH-c1W"/>
-                <constraint firstAttribute="trailing" secondItem="viC-Bl-CVa" secondAttribute="trailing" id="x3B-Xr-eZL"/>
+                <constraint firstItem="viC-Bl-CVa" firstAttribute="top" secondItem="ulc-my-O5Y" secondAttribute="bottom" id="FZX-9G-uwn"/>
+                <constraint firstAttribute="bottom" secondItem="OPi-HN-RSW" secondAttribute="bottom" id="HvM-Lo-4MJ"/>
+                <constraint firstAttribute="trailing" secondItem="OPi-HN-RSW" secondAttribute="trailing" id="QTa-EO-POm"/>
+                <constraint firstItem="ulc-my-O5Y" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="RdR-og-eUs"/>
+                <constraint firstItem="OPi-HN-RSW" firstAttribute="top" secondItem="viC-Bl-CVa" secondAttribute="bottom" id="Rm7-Sl-Fn2"/>
+                <constraint firstAttribute="trailing" secondItem="viC-Bl-CVa" secondAttribute="trailing" id="Z9C-B9-bvY"/>
+                <constraint firstItem="viC-Bl-CVa" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="aAO-xo-Gqo"/>
+                <constraint firstItem="OPi-HN-RSW" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="hNd-gW-KFA"/>
+                <constraint firstItem="ulc-my-O5Y" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="j9j-5e-8zA"/>
+                <constraint firstAttribute="trailing" secondItem="ulc-my-O5Y" secondAttribute="trailing" id="tkM-kx-vT1"/>
             </constraints>
             <connections>
                 <outlet property="sectionNameLabel" destination="4fR-Fp-mbg" id="CBP-0U-BrK"/>

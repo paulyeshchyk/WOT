@@ -99,7 +99,18 @@
                                                                           withReuseIdentifier:reuseIdentifier
                                                                                  forIndexPath:indexPath];
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultController sections] objectAtIndex:indexPath.section];
-    [(WOTTankListCollectionViewHeader*)result setSectionName:sectionInfo.name];
+
+    NSString *title = nil;
+    if (([self.fetchedResultController.sectionNameKeyPath length] != 0) &&([sectionInfo.name length] != 0)) {
+        
+        title = [NSString stringWithFormat:@"%@: %@",WOTString(self.fetchedResultController.sectionNameKeyPath), sectionInfo.name];
+    } else {
+        
+        title = sectionInfo.name;
+        
+    }
+    
+    [(WOTTankListCollectionViewHeader*)result setSectionName:title];
     return result;
 
 }
