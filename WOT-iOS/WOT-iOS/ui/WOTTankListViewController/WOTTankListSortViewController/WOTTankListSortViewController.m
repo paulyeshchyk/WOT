@@ -48,10 +48,10 @@
     }];
     [self.navigationItem setLeftBarButtonItems:@[self.backItem]];
 
-    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_EDIT) eventBlock:^(id sender) {
+    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_REORDER) eventBlock:^(id sender) {
         
         [self.tableView setEditing:!self.tableView.editing];
-        [(UIButton *)sender setTitle:!self.tableView.editing?WOTString(WOT_STRING_EDIT):WOTString(WOT_STRING_PREVIEW) forState:UIControlStateNormal];
+        [(UIButton *)sender setTitle:!self.tableView.editing?WOTString(WOT_STRING_REORDER):WOTString(WOT_STRING_PREVIEW) forState:UIControlStateNormal];
         [(UIButton *)sender sizeToFit];
         [self.backItem setEnabled:!self.tableView.editing];
         [self.tableView reloadData];

@@ -18,6 +18,7 @@ WOT_STRING_ANONYMOUS_USER = "Anonymous user";
 WOT_STRING_COMPOUND = "Compound";
 WOT_STRING_APPLY = "Apply";
 WOT_STRING_EDIT = "Edit";
+WOT_STRING_REORDER = "Reorder";
 WOT_STRING_CANCEL = "Cancel";
 WOT_STRING_GROUP_AND_SORT = "Group and sort";
 WOT_KEY_SETTING_TYPE_GROUP = "Groupping";

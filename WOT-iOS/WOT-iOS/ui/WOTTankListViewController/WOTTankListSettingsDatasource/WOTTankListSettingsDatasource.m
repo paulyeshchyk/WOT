@@ -172,16 +172,12 @@
     }
 }
 
-
-
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    
-//    [controller performFetch:nil];
     
     [[self.listeners allObjects] enumerateObjectsUsingBlock:^(id<WOTTankListSettingsDatasourceListener> observer, NSUInteger idx, BOOL *stop) {
         
