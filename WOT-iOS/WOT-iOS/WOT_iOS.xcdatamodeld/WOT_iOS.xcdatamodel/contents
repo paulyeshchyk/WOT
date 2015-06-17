@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="1.0" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="ListSetting" representedClassName="ListSetting" syncable="YES">
         <attribute name="ascending" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
@@ -31,8 +31,8 @@
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ListSetting" positionX="-63" positionY="-18" width="128" height="120"/>
-        <element name="Tanks" positionX="-54" positionY="-9" width="128" height="240"/>
-        <element name="UserSession" positionX="-36" positionY="9" width="128" height="135"/>
+        <element name="ListSetting" positionX="-36" positionY="9" width="128" height="120"/>
+        <element name="Tanks" positionX="0" positionY="45" width="128" height="240"/>
+        <element name="UserSession" positionX="27" positionY="72" width="128" height="135"/>
     </elements>
 </model>
