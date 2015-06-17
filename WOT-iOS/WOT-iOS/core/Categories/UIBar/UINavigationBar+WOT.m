@@ -14,7 +14,7 @@
     
     [self setBarTintColor:[UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f]];
     
-    UIColor *textColor = [UIColor whiteColor];
+    UIColor *textColor = [UIColor lightGrayColor];
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                textColor,NSForegroundColorAttributeName,
                                                nil];

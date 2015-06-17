@@ -18,10 +18,11 @@
 @implementation WOTTankListSettingTableViewCell
 
 - (void)awakeFromNib {
+
     [super awakeFromNib];
     
     UIView *selectedBackgoundView = [[UIView alloc] init];
-    selectedBackgoundView.backgroundColor = [UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f];
+    selectedBackgoundView.backgroundColor = [UIColor colorWithRed:37.0f/255.0f green:37.0f/255.0f blue:40.0f/255.0f alpha:1.0f];
     self.selectedBackgroundView = selectedBackgoundView;
 }
 

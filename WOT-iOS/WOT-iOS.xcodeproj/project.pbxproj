@@ -607,12 +607,12 @@
 		1D4C925B1B27085600E320B5 /* cells */ = {
 			isa = PBXGroup;
 			children = (
-				1D4C925C1B27085600E320B5 /* WOTTankListSettingTableViewCell.h */,
-				1D4C925D1B27085600E320B5 /* WOTTankListSettingTableViewCell.m */,
-				1D4C925E1B27085600E320B5 /* WOTTankListSettingTableViewCell.xib */,
 				1D4C92661B2709D800E320B5 /* WOTTankListSortHeaderView.h */,
 				1D4C92671B2709D800E320B5 /* WOTTankListSortHeaderView.m */,
 				1D4C92691B2709E400E320B5 /* WOTTankListSortHeaderView.xib */,
+				1D4C925C1B27085600E320B5 /* WOTTankListSettingTableViewCell.h */,
+				1D4C925D1B27085600E320B5 /* WOTTankListSettingTableViewCell.m */,
+				1D4C925E1B27085600E320B5 /* WOTTankListSettingTableViewCell.xib */,
 				1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */,
 				1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */,
 				1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */,
