@@ -8,6 +8,7 @@
 
 #import "WOTTankDetailViewController.h"
 #import "WOTRadarViewController.h"
+#import "Tanks.h"
 
 @interface WOTTankDetailViewController ()
 
@@ -40,6 +41,11 @@
     
     [self.roseContainer addSubview:self.roseDiagramController.view];
     [self.roseDiagramController.view addStretchingConstraints];
+    
+    
+    Tanks *tank = self.tank;
+    self.title = [tank name_i18n];
+    
 }
 
 @end

@@ -1,28 +1,24 @@
 //
-//  Tanks.m
+//  Tankradios.m
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 6/17/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "Tanks.h"
+#import "Tankradios.h"
 
 
-@implementation Tanks
+@implementation Tankradios
 
-@dynamic contour_image;
-@dynamic image;
-@dynamic image_small;
-@dynamic is_premium;
+@dynamic distance;
 @dynamic level;
+@dynamic module_id;
 @dynamic name;
 @dynamic name_i18n;
 @dynamic nation;
 @dynamic nation_i18n;
-@dynamic short_name_i18n;
-@dynamic tank_id;
-@dynamic type;
-@dynamic type_i18n;
+@dynamic price_credit;
+@dynamic price_gold;
 
 @end

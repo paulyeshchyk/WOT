@@ -49,7 +49,7 @@
     ChartYAxis *yAxis = self.radarView.yAxis;
     yAxis.labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.f];
     yAxis.labelCount = 5;
-    yAxis.startAtZeroEnabled = YES;
+    yAxis.startAtZeroEnabled = NO;
     
     ChartLegend *l = self.radarView.legend;
     l.position = ChartLegendPositionRightOfChart;

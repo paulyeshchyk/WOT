@@ -95,8 +95,14 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@" %K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
     NSArray * result = [objects valueForKeyPath:@"key"];
+    if ([result count] == 0) {
+        
+        return nil;
+    } else {
+        
+        return [result componentsJoinedByString:@","];
+    }
     
-    return [result componentsJoinedByString:@","];
 }
 
 - (NSArray *)sortBy {

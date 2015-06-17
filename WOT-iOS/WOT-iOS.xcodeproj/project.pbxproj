@@ -42,7 +42,6 @@
 		1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92671B2709D800E320B5 /* WOTTankListSortHeaderView.m */; };
 		1D4C926A1B2709E400E320B5 /* WOTTankListSortHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92691B2709E400E320B5 /* WOTTankListSortHeaderView.xib */; };
 		1D4C926E1B270BF400E320B5 /* WOTTankListSettingsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C926D1B270BF400E320B5 /* WOTTankListSettingsDatasource.m */; };
-		1DA1D72E1B2997B000C5C2FB /* ListSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D72D1B2997B000C5C2FB /* ListSetting.m */; };
 		1DA1D7311B29989F00C5C2FB /* WOTDatasources.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7301B29989F00C5C2FB /* WOTDatasources.m */; };
 		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
 		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
@@ -153,6 +152,14 @@
 		1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */; };
 		1DCC80E41B315CBE005FF193 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80E21B315CBE005FF193 /* WOT_iOS.xcdatamodeld */; };
 		1DCC80E81B315D6D005FF193 /* WOTRadarSampleMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80E71B315D6D005FF193 /* WOTRadarSampleMetric.m */; };
+		1DCC80EB1B31B12A005FF193 /* UserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80EA1B31B12A005FF193 /* UserSession.m */; };
+		1DCC80EE1B31B12B005FF193 /* Tankturrets.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80ED1B31B12B005FF193 /* Tankturrets.m */; };
+		1DCC80F11B31B12B005FF193 /* Tankguns.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80F01B31B12B005FF193 /* Tankguns.m */; };
+		1DCC80F41B31B12B005FF193 /* Tankchassis.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80F31B31B12B005FF193 /* Tankchassis.m */; };
+		1DCC80F71B31B12B005FF193 /* Tankradios.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80F61B31B12B005FF193 /* Tankradios.m */; };
+		1DCC80FA1B31B12B005FF193 /* Tankengines.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80F91B31B12B005FF193 /* Tankengines.m */; };
+		1DCC80FD1B31B12C005FF193 /* Tanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80FC1B31B12C005FF193 /* Tanks.m */; };
+		1DCC81001B31B12C005FF193 /* ListSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80FF1B31B12C005FF193 /* ListSetting.m */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
 		1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */; };
 		1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646461B1C616A00B0EC76 /* Images.xcassets */; };
@@ -176,7 +183,6 @@
 		1DD646EA1B205D9300B0EC76 /* WOTPlayersListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646E81B205D9300B0EC76 /* WOTPlayersListViewController.xib */; };
 		1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646ED1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m */; };
 		1DD646F81B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646F21B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m */; };
-		1DD646F91B20700000B0EC76 /* UserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646F51B20700000B0EC76 /* UserSession.m */; };
 		1DD646FA1B20700000B0EC76 /* WOTCoreDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646F71B20700000B0EC76 /* WOTCoreDataProvider.m */; };
 		1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646FD1B20717800B0EC76 /* WOTLoginViewController.m */; };
 		1DD647001B20717800B0EC76 /* WOTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646FE1B20717800B0EC76 /* WOTLoginViewController.xib */; };
@@ -190,7 +196,6 @@
 		1DD6473C1B21ADFB00B0EC76 /* WOTSaveSessionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647391B21ADFB00B0EC76 /* WOTSaveSessionRequest.m */; };
 		1DD647421B21AE3F00B0EC76 /* WOTClearSessionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647411B21AE3F00B0EC76 /* WOTClearSessionRequest.m */; };
 		1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647451B21C57900B0EC76 /* UINavigationBar+WOT.m */; };
-		1DD647491B21D4E100B0EC76 /* Tanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647481B21D4E100B0EC76 /* Tanks.m */; };
 		1DD6474D1B21D54000B0EC76 /* WOTWEBRequestTanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6474C1B21D54000B0EC76 /* WOTWEBRequestTanks.m */; };
 		1DD647531B21E6F300B0EC76 /* NSManagedObject+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647521B21E6F300B0EC76 /* NSManagedObject+FillProperties.m */; };
 		1DD647561B21E74C00B0EC76 /* Tanks+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647551B21E74C00B0EC76 /* Tanks+FillProperties.m */; };
@@ -258,8 +263,6 @@
 		1D4C92691B2709E400E320B5 /* WOTTankListSortHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSortHeaderView.xib; sourceTree = "<group>"; };
 		1D4C926C1B270BF400E320B5 /* WOTTankListSettingsDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsDatasource.h; sourceTree = "<group>"; };
 		1D4C926D1B270BF400E320B5 /* WOTTankListSettingsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingsDatasource.m; sourceTree = "<group>"; };
-		1DA1D72C1B2997B000C5C2FB /* ListSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListSetting.h; sourceTree = "<group>"; };
-		1DA1D72D1B2997B000C5C2FB /* ListSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSetting.m; sourceTree = "<group>"; };
 		1DA1D72F1B29989F00C5C2FB /* WOTDatasources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDatasources.h; sourceTree = "<group>"; };
 		1DA1D7301B29989F00C5C2FB /* WOTDatasources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTDatasources.m; sourceTree = "<group>"; };
 		1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingAddNewTableViewCell.h; sourceTree = "<group>"; };
@@ -388,6 +391,22 @@
 		1DCC80E31B315CBE005FF193 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
 		1DCC80E61B315D6D005FF193 /* WOTRadarSampleMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadarSampleMetric.h; sourceTree = "<group>"; };
 		1DCC80E71B315D6D005FF193 /* WOTRadarSampleMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRadarSampleMetric.m; sourceTree = "<group>"; };
+		1DCC80E91B31B12A005FF193 /* UserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSession.h; sourceTree = "<group>"; };
+		1DCC80EA1B31B12A005FF193 /* UserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSession.m; sourceTree = "<group>"; };
+		1DCC80EC1B31B12B005FF193 /* Tankturrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tankturrets.h; sourceTree = "<group>"; };
+		1DCC80ED1B31B12B005FF193 /* Tankturrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tankturrets.m; sourceTree = "<group>"; };
+		1DCC80EF1B31B12B005FF193 /* Tankguns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tankguns.h; sourceTree = "<group>"; };
+		1DCC80F01B31B12B005FF193 /* Tankguns.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tankguns.m; sourceTree = "<group>"; };
+		1DCC80F21B31B12B005FF193 /* Tankchassis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tankchassis.h; sourceTree = "<group>"; };
+		1DCC80F31B31B12B005FF193 /* Tankchassis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tankchassis.m; sourceTree = "<group>"; };
+		1DCC80F51B31B12B005FF193 /* Tankradios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tankradios.h; sourceTree = "<group>"; };
+		1DCC80F61B31B12B005FF193 /* Tankradios.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tankradios.m; sourceTree = "<group>"; };
+		1DCC80F81B31B12B005FF193 /* Tankengines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tankengines.h; sourceTree = "<group>"; };
+		1DCC80F91B31B12B005FF193 /* Tankengines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tankengines.m; sourceTree = "<group>"; };
+		1DCC80FB1B31B12C005FF193 /* Tanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tanks.h; sourceTree = "<group>"; };
+		1DCC80FC1B31B12C005FF193 /* Tanks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tanks.m; sourceTree = "<group>"; };
+		1DCC80FE1B31B12C005FF193 /* ListSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListSetting.h; sourceTree = "<group>"; };
+		1DCC80FF1B31B12C005FF193 /* ListSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSetting.m; sourceTree = "<group>"; };
 		1DD646331B1C616A00B0EC76 /* WOT-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WOT-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD646371B1C616A00B0EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DD646381B1C616A00B0EC76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -433,8 +452,6 @@
 		1DD646ED1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+EventBlock.m"; sourceTree = "<group>"; };
 		1DD646F11B20700000B0EC76 /* NSManagedObject+CoreDataOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataOperations.h"; sourceTree = "<group>"; };
 		1DD646F21B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreDataOperations.m"; sourceTree = "<group>"; };
-		1DD646F41B20700000B0EC76 /* UserSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSession.h; sourceTree = "<group>"; };
-		1DD646F51B20700000B0EC76 /* UserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSession.m; sourceTree = "<group>"; };
 		1DD646F61B20700000B0EC76 /* WOTCoreDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTCoreDataProvider.h; sourceTree = "<group>"; };
 		1DD646F71B20700000B0EC76 /* WOTCoreDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTCoreDataProvider.m; sourceTree = "<group>"; };
 		1DD646FC1B20717800B0EC76 /* WOTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLoginViewController.h; sourceTree = "<group>"; };
@@ -459,8 +476,6 @@
 		1DD647411B21AE3F00B0EC76 /* WOTClearSessionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTClearSessionRequest.m; sourceTree = "<group>"; };
 		1DD647441B21C57900B0EC76 /* UINavigationBar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+WOT.h"; sourceTree = "<group>"; };
 		1DD647451B21C57900B0EC76 /* UINavigationBar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+WOT.m"; sourceTree = "<group>"; };
-		1DD647471B21D4E000B0EC76 /* Tanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tanks.h; sourceTree = "<group>"; };
-		1DD647481B21D4E100B0EC76 /* Tanks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tanks.m; sourceTree = "<group>"; };
 		1DD6474B1B21D54000B0EC76 /* WOTWEBRequestTanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestTanks.h; sourceTree = "<group>"; };
 		1DD6474C1B21D54000B0EC76 /* WOTWEBRequestTanks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestTanks.m; sourceTree = "<group>"; };
 		1DD647511B21E6F300B0EC76 /* NSManagedObject+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FillProperties.h"; sourceTree = "<group>"; };
@@ -1187,12 +1202,22 @@
 		1DD646F31B20700000B0EC76 /* entities */ = {
 			isa = PBXGroup;
 			children = (
-				1DA1D72C1B2997B000C5C2FB /* ListSetting.h */,
-				1DA1D72D1B2997B000C5C2FB /* ListSetting.m */,
-				1DD647471B21D4E000B0EC76 /* Tanks.h */,
-				1DD647481B21D4E100B0EC76 /* Tanks.m */,
-				1DD646F41B20700000B0EC76 /* UserSession.h */,
-				1DD646F51B20700000B0EC76 /* UserSession.m */,
+				1DCC80FE1B31B12C005FF193 /* ListSetting.h */,
+				1DCC80FF1B31B12C005FF193 /* ListSetting.m */,
+				1DCC80FB1B31B12C005FF193 /* Tanks.h */,
+				1DCC80FC1B31B12C005FF193 /* Tanks.m */,
+				1DCC80F81B31B12B005FF193 /* Tankengines.h */,
+				1DCC80F91B31B12B005FF193 /* Tankengines.m */,
+				1DCC80F51B31B12B005FF193 /* Tankradios.h */,
+				1DCC80F61B31B12B005FF193 /* Tankradios.m */,
+				1DCC80F21B31B12B005FF193 /* Tankchassis.h */,
+				1DCC80F31B31B12B005FF193 /* Tankchassis.m */,
+				1DCC80EF1B31B12B005FF193 /* Tankguns.h */,
+				1DCC80F01B31B12B005FF193 /* Tankguns.m */,
+				1DCC80EC1B31B12B005FF193 /* Tankturrets.h */,
+				1DCC80ED1B31B12B005FF193 /* Tankturrets.m */,
+				1DCC80E91B31B12A005FF193 /* UserSession.h */,
+				1DCC80EA1B31B12A005FF193 /* UserSession.m */,
 			);
 			path = entities;
 			sourceTree = "<group>";
@@ -1509,6 +1534,7 @@
 				1D4C920B1B25A59C00E320B5 /* WOTMenuDatasource.m in Sources */,
 				1DCC80BB1B3036A4005FF193 /* ChartXAxisRendererRadarChart.swift in Sources */,
 				1DCC809E1B3036A4005FF193 /* BubbleChartDataSet.swift in Sources */,
+				1DCC80F11B31B12B005FF193 /* Tankguns.m in Sources */,
 				1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				1DCC808D1B3036A4005FF193 /* PieRadarChartViewBase.swift in Sources */,
 				1DCC80C61B3036A4005FF193 /* ChartFillFormatter.swift in Sources */,
@@ -1526,7 +1552,6 @@
 				1DCC80A81B3036A4005FF193 /* LineRadarChartDataSet.swift in Sources */,
 				1DCC80951B3036A4005FF193 /* ChartXAxis.swift in Sources */,
 				1DCC80CC1B3036A4005FF193 /* ChartViewPortHandler.swift in Sources */,
-				1DD647491B21D4E100B0EC76 /* Tanks.m in Sources */,
 				1DCC80C31B3036A4005FF193 /* RadarChartRenderer.swift in Sources */,
 				1DCC80C71B3036A4005FF193 /* ChartHighlight.swift in Sources */,
 				1DCC80B91B3036A4005FF193 /* ChartXAxisRendererBarChart.swift in Sources */,
@@ -1543,12 +1568,14 @@
 				1DCC80A11B3036A4005FF193 /* CandleChartDataSet.swift in Sources */,
 				1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */,
+				1DCC80FA1B31B12B005FF193 /* Tankengines.m in Sources */,
 				1DCC80831B3036A4005FF193 /* ChartAnimator.swift in Sources */,
 				1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */,
 				1DCC80C81B3036A4005FF193 /* ChartSelInfo.swift in Sources */,
 				1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */,
 				1DCC80961B3036A4005FF193 /* ChartYAxis.swift in Sources */,
 				1DCC80BC1B3036A4005FF193 /* ChartYAxisRenderer.swift in Sources */,
+				1DCC80F71B31B12B005FF193 /* Tankradios.m in Sources */,
 				1DD646B01B1DD10F00B0EC76 /* WOTRequestExecutor+Registration.m in Sources */,
 				1DCC80B61B3036A4005FF193 /* ChartLegendRenderer.swift in Sources */,
 				1DCC80A41B3036A4005FF193 /* ChartDataSet.swift in Sources */,
@@ -1571,7 +1598,6 @@
 				1DCC808E1B3036A4005FF193 /* RadarChartView.swift in Sources */,
 				1DA1D73D1B2AF48B00C5C2FB /* WOTTankListSettingViewController.m in Sources */,
 				1DCC80BA1B3036A4005FF193 /* ChartXAxisRendererHorizontalBarChart.swift in Sources */,
-				1DA1D72E1B2997B000C5C2FB /* ListSetting.m in Sources */,
 				1DCC80B21B3036A4005FF193 /* BubbleChartRenderer.swift in Sources */,
 				1DD646B31B1DEF1300B0EC76 /* WOTRequest.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
@@ -1586,6 +1612,7 @@
 				1DCC80BE1B3036A4005FF193 /* ChartYAxisRendererRadarChart.swift in Sources */,
 				1DA1D7471B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.m in Sources */,
 				1DCC808C1B3036A4005FF193 /* PieChartView.swift in Sources */,
+				1DCC80F41B31B12B005FF193 /* Tankchassis.m in Sources */,
 				1DCC80CB1B3036A4005FF193 /* ChartUtils.swift in Sources */,
 				1DCC80901B3036A4005FF193 /* ChartAxisBase.swift in Sources */,
 				1DD647531B21E6F300B0EC76 /* NSManagedObject+FillProperties.m in Sources */,
@@ -1594,12 +1621,13 @@
 				1DCC80C21B3036A4005FF193 /* PieChartRenderer.swift in Sources */,
 				1D4C92621B27085600E320B5 /* WOTTankListSettingTableViewCell.m in Sources */,
 				1DCC80911B3036A4005FF193 /* ChartComponentBase.swift in Sources */,
+				1DCC81001B31B12C005FF193 /* ListSetting.m in Sources */,
+				1DCC80EB1B31B12A005FF193 /* UserSession.m in Sources */,
 				1DCC80B31B3036A4005FF193 /* CandleStickChartRenderer.swift in Sources */,
 				1DCC80AF1B3036A4005FF193 /* ChartDataApproximatorFilter.swift in Sources */,
 				1DCC80B71B3036A4005FF193 /* ChartRendererBase.swift in Sources */,
 				1DD646C31B1F36FB00B0EC76 /* WOTDrawerViewController.m in Sources */,
 				1DD6473C1B21ADFB00B0EC76 /* WOTSaveSessionRequest.m in Sources */,
-				1DD646F91B20700000B0EC76 /* UserSession.m in Sources */,
 				1DCC80DB1B306227005FF193 /* BalloonMarker.swift in Sources */,
 				1DCC80A51B3036A4005FF193 /* CombinedChartData.swift in Sources */,
 				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
@@ -1608,12 +1636,14 @@
 				1DCC80891B3036A4005FF193 /* CombinedChartView.swift in Sources */,
 				1DD646AD1B1DCDCE00B0EC76 /* WOTRequestExecutor.m in Sources */,
 				1D4C92581B25F27200E320B5 /* WOTLanguageSelectorViewController.m in Sources */,
+				1DCC80FD1B31B12C005FF193 /* Tanks.m in Sources */,
 				1DCC80E41B315CBE005FF193 /* WOT_iOS.xcdatamodeld in Sources */,
 				1DD647421B21AE3F00B0EC76 /* WOTClearSessionRequest.m in Sources */,
 				1DCC80B01B3036A4005FF193 /* ChartDataBaseFilter.swift in Sources */,
 				1DCC80AA1B3036A4005FF193 /* PieChartDataSet.swift in Sources */,
 				1DCC80C51B3036A4005FF193 /* ChartColorTemplates.swift in Sources */,
 				1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */,
+				1DCC80EE1B31B12B005FF193 /* Tankturrets.m in Sources */,
 				1DCC808A1B3036A4005FF193 /* HorizontalBarChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

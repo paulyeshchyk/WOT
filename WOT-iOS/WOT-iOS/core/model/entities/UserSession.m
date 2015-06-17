@@ -2,7 +2,7 @@
 //  UserSession.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/2/15.
+//  Created by Pavel Yeshchyk on 6/17/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
@@ -15,6 +15,7 @@
 @dynamic accound_id;
 @dynamic currentSession;
 @dynamic expires_at;
+@dynamic isCurrent;
 @dynamic nickname;
 
 @end
