@@ -20,6 +20,7 @@ typedef void (^WOTTankListSettingApplyBlock) ();
 @property (nonatomic, weak) id<WOTTankListSettingsAvailableFieldsProtocol> staticFieldsDatasource;
 @property (nonatomic, copy) NSString *sectionName;
 @property (nonatomic, weak) id setting;
+@property (nonatomic, assign)BOOL canApply;
 
 
 @end

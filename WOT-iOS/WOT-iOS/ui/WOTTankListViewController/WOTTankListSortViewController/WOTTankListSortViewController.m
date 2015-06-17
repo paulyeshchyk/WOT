@@ -181,17 +181,20 @@
             
             vc = [[WOTTankListSettingNameChooserViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingNameChooserViewController class]) bundle:nil];
             [(WOTTankListSettingNameChooserViewController *)vc setHasSorting:YES];
+            vc.title = [WOTString(WOT_STRING_CHANGE_SORTING) capitalizedString];
             break;
         }
         case WOTTankListSettingTypeGroupSelector :{
             
             vc = [[WOTTankListSettingNameChooserViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingNameChooserViewController class]) bundle:nil];
             [(WOTTankListSettingNameChooserViewController *)vc setHasSorting:NO];
+            vc.title = [WOTString(WOT_STRING_CHANGE_GROUP) capitalizedString];
             break;
         }
         case WOTTankListSettingTypeValueChanger :{
             
             vc = [[WOTTankListSettingValueChangerViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingValueChangerViewController class]) bundle:nil];
+            vc.title = [WOTString(WOT_STRING_CHANGE_FILTER) capitalizedString];
             break;
         }
         default: {

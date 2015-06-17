@@ -81,9 +81,7 @@
         
         WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
         [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:ascending callback:^(id setting) {
-            
-//            self.setting = setting;
-            
+
             [tableView beginUpdates];
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             [tableView endUpdates];
@@ -94,12 +92,6 @@
     
     NSNumber *ascending = [self.setting performSelector:@selector(ascending)];
     [cell setAscending:[ascending boolValue]];
-    
-//    if (index >= 0) {
-//
-//        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-//    }
-    
     return cell;
 }
 

@@ -62,7 +62,7 @@
 }
 
 - (NSCompoundPredicate *)filterBy {
-    
+
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
 
@@ -82,6 +82,7 @@
         return nil;
     } else {
     
+#warning think about or / and predicates
         return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
     }
 }

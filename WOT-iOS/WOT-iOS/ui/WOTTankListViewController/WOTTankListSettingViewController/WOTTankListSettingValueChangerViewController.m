@@ -24,6 +24,9 @@
     
     [super viewDidLoad];
     
+    self.canApply = NO;
+    
+    [self.textField setEnabled:(self.setting!= nil)];
     [self.textField setText:[(ListSetting *)self.setting values]];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSettingNameTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankListSettingNameTableViewCell class])];
 }
@@ -53,6 +56,12 @@
     
     [super viewWillDisappear:animated];
     [self.textField resignFirstResponder];
+}
+
+- (void)setSetting:(id)setting {
+    
+    [super setSetting:setting];
+    [self.textField setEnabled:(self.setting != nil)];
 }
 
 #pragma mark - UITableViewDataSource
@@ -85,6 +94,7 @@
         
         self.setting = setting;
         [self.textField setText:nil];
+        self.canApply = NO;
     }];
 }
 
@@ -98,6 +108,7 @@
     [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text  ascending:NO callback:^(id setting) {
         
         self.setting = setting;
+        self.canApply = ([[self.textField text] length] != 0);
     }];
 }
 

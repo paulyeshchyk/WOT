@@ -7,30 +7,92 @@
 //
 
 #import "WOTTankListSettingViewController.h"
+#import "WOTTankListSettingsDatasource.h"
+
+@interface WOTTankListSettingViewController () <WOTTankListSettingsDatasourceListener>
+
+@property (nonatomic, weak)UIBarButtonItem *backItem;
+@property (nonatomic, strong)UIBarButtonItem *applyItem;
+
+@end
 
 @implementation WOTTankListSettingViewController
+
+- (void)dealloc {
+    
+    [[WOTTankListSettingsDatasource sharedInstance] unregisterListener:self];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self){
+        
+        self.setting = nil;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
 
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_BACK)];
-    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
+    self.backItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
+
         if (self.cancelBlock){
+            
             self.cancelBlock();
         }
         
     }];
-    [self.navigationItem setLeftBarButtonItems:@[backItem]];
+    [self.navigationItem setLeftBarButtonItems:@[self.backItem]];
     
-    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
+    self.applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
+
         if (self.applyBlock){
+            
             self.applyBlock();
         }
         
     }];
-    [self.navigationItem setRightBarButtonItems:@[applyItem]];
+    
+    [[WOTTankListSettingsDatasource sharedInstance] registerListener:self];
+
+    [self.navigationItem setRightBarButtonItems:[self backItemsArray]];
     [self.navigationController.navigationBar setDarkStyle];
+    
+}
+
+- (NSArray *)backItemsArray {
+    
+    return @[self.applyItem];
+}
+
+- (void)setCanApply:(BOOL)canApply {
+    
+    _canApply = canApply;
+    if (_canApply) {
+
+        [self.navigationItem setRightBarButtonItems:[self backItemsArray]];
+    } else {
+        
+        [self.navigationItem setRightBarButtonItems:nil];
+    }
+}
+
+
+#pragma mark - WOTTankListSettingsDatasourceListener
+- (void)willChangeContent {
+    
+}
+
+- (void)didChangeContent {
+    
+}
+
+- (void)didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
     
 }
 

@@ -16,6 +16,14 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zoV-DO-fsj">
+                    <rect key="frame" x="0.0" y="48" width="320" height="520"/>
+                    <color key="backgroundColor" red="0.10588235294117647" green="0.10588235294117647" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="5hO-n3-lOp"/>
+                        <outlet property="delegate" destination="-1" id="RnU-Zz-TzA"/>
+                    </connections>
+                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lHj-lr-UJX">
                     <rect key="frame" x="0.0" y="1" width="320" height="46"/>
                     <subviews>
@@ -49,14 +57,6 @@
                         <constraint firstItem="F1c-Ph-xUK" firstAttribute="centerY" secondItem="Uuj-Zb-Csj" secondAttribute="centerY" id="mIq-rL-Kwy"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zoV-DO-fsj">
-                    <rect key="frame" x="0.0" y="48" width="320" height="520"/>
-                    <color key="backgroundColor" red="0.10588235294117647" green="0.10588235294117647" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="5hO-n3-lOp"/>
-                        <outlet property="delegate" destination="-1" id="RnU-Zz-TzA"/>
-                    </connections>
-                </tableView>
             </subviews>
             <color key="backgroundColor" red="0.38039215686274508" green="0.38039215686274508" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>

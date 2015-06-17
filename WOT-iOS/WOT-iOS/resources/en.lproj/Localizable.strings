@@ -25,6 +25,11 @@ WOT_KEY_SETTING_TYPE_SORT = "Sorting";
 WOT_KEY_SETTING_TYPE_FILTER ="Filter";
 WOT_STRING_PREVIEW = "Preview";
 
+WOT_STRING_CHANGE_SORTING = "Change sorting";
+WOT_STRING_CHANGE_GROUP   = "Change groupping";
+WOT_STRING_CHANGE_FILTER  = "Change filter";
+
+
 TANK_ID         ="id";
 NAME            = "name";
 IMAGE           = "Image";
