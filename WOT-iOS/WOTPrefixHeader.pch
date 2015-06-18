@@ -11,6 +11,7 @@
 
 #import "UIImageView+WebCache.h"
 #import "NSString+WOTValue.h"
+#import "UIImage+Resize.h"
 #import "NSBundle+LanguageBundle.h"
 #import "UINavigationBar+WOT.h"
 #import "NSManagedObject+CoreDataOperations.h"

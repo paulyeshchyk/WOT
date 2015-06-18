@@ -25,7 +25,6 @@
 @property (nonatomic, readonly)NSArray *sortDescriptors;
 @property (nonatomic, readonly)NSPredicate *filterBy;
 @property (nonatomic, readonly)NSString *groupByField;
-@property (nonatomic, readonly)NSArray *fieldsToFetch;
 
 @end
 
@@ -53,7 +52,7 @@
     
     [self.navigationItem setRightBarButtonItems:@[settingsItem]];
 
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanksList args:@{WOT_KEY_FIELDS:[self.fieldsToFetch componentsJoinedByString:@","]}];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanksList args:@{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]}];
 
     [self invalidateFetchedResultController];
 
@@ -165,11 +164,6 @@
 - (NSString *)groupByField {
     
     return [WOTTankListSettingsDatasource sharedInstance].groupBy;
-}
-
-- (NSArray *)fieldsToFetch {
-    
-    return @[WOT_KEY_TANK_ID,WOT_KEY_NAME,WOT_KEY_IMAGE,WOT_KEY_CONTOUR_IMAGE,WOT_KEY_IMAGE_SMALL,WOT_KEY_IS_PREMIUM,WOT_KEY_LEVEL,WOT_KEY_NAME_I18N,WOT_KEY_NATION,WOT_KEY_NATION_I18N,WOT_KEY_SHORT_NAME_I18N,WOT_KEY_TYPE,WOT_KEY_TYPE_I18N ];
 }
 
 @end

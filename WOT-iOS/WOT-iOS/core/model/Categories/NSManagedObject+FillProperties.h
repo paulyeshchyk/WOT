@@ -12,4 +12,6 @@
 
 - (void)fillPropertiesFromDictioary:(NSDictionary *)dictionary;
 
++ (NSArray *)availableFields;
+
 @end

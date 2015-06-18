@@ -28,13 +28,13 @@
     
     
     [self.navigationController.navigationBar setDarkStyle];
-    
+    UIImage *globe = [UIImage imageWithImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GLOBE)] scaledToSize:CGSizeMake(32.0f,32.0f)];
     UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
         
         [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
     }];
     
-    UIBarButtonItem *languageItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GLOBE)] text:nil eventBlock:^(id sender) {
+    UIBarButtonItem *languageItem = [UIBarButtonItem barButtonItemForImage:globe text:nil eventBlock:^(id sender) {
         
         WOTLanguageSelectorViewController *vc = [[WOTLanguageSelectorViewController alloc] initWithNibName:@"WOTLanguageSelectorViewController" bundle:nil];
         vc.delegate = self;

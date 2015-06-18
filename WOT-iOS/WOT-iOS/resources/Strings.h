@@ -49,6 +49,13 @@
 #define WOT_KEY_TYPE_I18N @"type_i18n"
 #define WOT_KEY_KEY @"key"
 #define WOT_KEY_VALUES @"values"
+#define WOT_KEY_PRICE_GOLD @"price_gold"
+#define WOT_KEY_WEIGHT @"weight"
+#define WOT_KEY_POWER @"power"
+#define WOT_KEY_PRICE_XP @"price_xp"
+#define WOT_KEY_PRICE_CREDIT @"price_credit"
+#define WOT_KEY_FIRE_STARTING_CHANCE @"fire_starting_chance"
+#define WOT_KEY_MODULE_ID @"module_id"
 
 
 #define WOT_KEY_SETTING_TYPE @"WOT_KEY_SETTING_TYPE"

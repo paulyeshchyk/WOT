@@ -12,7 +12,13 @@
 
 - (void)fillPropertiesFromDictioary:(NSDictionary *)jSON {
 
-    NSCAssert(NO, @"should be overrided");
+    NSCAssert(NO, @"should be overriden");
+}
+
++ (NSArray *)availableFields {
+    
+    NSCAssert(NO, @"should be overriden");
+    return nil;
 }
 
 @end

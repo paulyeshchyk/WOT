@@ -14,7 +14,9 @@
 #import "WOTLoginViewController.h"
 #import "WOTClearSessionRequest.h"
 #import "WOTWEBRequestTanks.h"
+#import "WOTWEBRequestTankEngines.h"
 #import "Tanks.h"
+#import "Tankengines.h"
 #import "WOTSessionDataProvider.h"
 
 @implementation WOTRequestExecutor (Registration)
@@ -110,7 +112,7 @@
 
     
     /**
-     * Tanks
+     * Tanks.Tanks
      **/
     [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTWEBRequestTanks class] forRequestId:WOTRequestIdTanksList];
     [[WOTRequestExecutor sharedInstance] registerRequestErrorCallback:^(NSError *error) {
@@ -139,6 +141,39 @@
         }
 
     } forRequestId:WOTRequestIdTanksList];
+
+    
+    
+    /**
+     * Tanks.Engines
+     **/
+    [[WOTRequestExecutor sharedInstance] registerRequestClass:[WOTWEBRequestTankEngines class] forRequestId:WOTRequestIdTankEnginesList];
+    [[WOTRequestExecutor sharedInstance] registerRequestErrorCallback:^(NSError *error) {
+        NSLog(@"%@",error.localizedDescription);
+    } forRequestId:WOTRequestIdTanksList];
+    [[WOTRequestExecutor sharedInstance] registerRequestJSONCallback:^(NSDictionary *json) {
+        
+        NSDictionary *tankEnginessDictionary = json[WOT_KEY_DATA];
+        
+        NSArray *tankEnginesArray = [tankEnginessDictionary allKeys];
+        
+        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
+        for (NSString *key in tankEnginesArray) {
+            
+            NSDictionary *tankEngineJSON = tankEnginessDictionary[key];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankEngineJSON[WOT_KEY_MODULE_ID]];
+            Tankengines *tankEngines = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [tankEngines fillPropertiesFromDictioary:tankEngineJSON];
+        }
+        
+        if ([context hasChanges]) {
+            
+            NSError *error = nil;
+            [context save:&error];
+        }
+        
+    } forRequestId:WOTRequestIdTankEnginesList];
     
 }
 
