@@ -44,7 +44,6 @@
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
         
-//        [self.delegate loginPressedOnMenu:self];
     }];
     [self.navigationItem setRightBarButtonItems:@[backButtonItem]];
 

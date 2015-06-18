@@ -10,19 +10,13 @@
 
 @implementation WOTWEBRequest
 
-static NSString *toString(id object) {
-    
-    return [NSString stringWithFormat: @"%@", object];
-}
+static NSString *urlEncode(NSString *string) {
 
-static NSString *urlEncode(id object) {
-    
-    NSString *string = toString(object);
-
-    CFStringRef escapeChars = (CFStringRef)@"%;/?¿:@&=$+,[]#!'()*<> \"\n";
-    
-    NSString *encodedString = (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge_retained CFStringRef) string, NULL, escapeChars, kCFStringEncodingUTF8);
-    
+    NSString *encodedString = (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes( NULL,
+                                                                                                     (CFStringRef) string,
+                                                                                                     NULL,
+                                                                                                     CFSTR("%;/?¿:@&=$+,[]#!'()*<> \"\n"),
+                                                                                                     kCFStringEncodingUTF8);
     return encodedString;
 }
 
