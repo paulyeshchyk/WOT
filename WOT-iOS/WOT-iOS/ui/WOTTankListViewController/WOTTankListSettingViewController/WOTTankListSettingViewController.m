@@ -11,7 +11,7 @@
 
 @interface WOTTankListSettingViewController () <WOTTankListSettingsDatasourceListener>
 
-@property (nonatomic, weak)UIBarButtonItem *backItem;
+@property (nonatomic, strong)UIBarButtonItem *backItem;
 @property (nonatomic, strong)UIBarButtonItem *applyItem;
 
 @end

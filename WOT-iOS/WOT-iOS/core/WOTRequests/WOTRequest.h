@@ -8,14 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^WOTRequestErrorCallback)(NSError *error);
-typedef void(^WOTRequestJSONCallback)(NSDictionary *json);
+typedef void(^WOTRequestCallback)(id data, NSError *error);
 
 @interface WOTRequest : NSObject
 
-@property (nonatomic, copy)WOTRequestErrorCallback errorCallback;
-@property (nonatomic, copy)WOTRequestJSONCallback jsonCallback;
-@property (nonatomic, readonly)NSDictionary *args;
+@property (nonatomic, copy) WOTRequestCallback callback;
+@property (nonatomic, readonly) NSDictionary *args;
 
 - (void)executeWithArgs:(NSDictionary *)args;
 

@@ -20,18 +20,9 @@
     [UserSession removeObjectsByPredicate:nil inManagedObjectContext:context];
     [context save:&error];
     
-    if (error){
+    if (self.callback) {
         
-        if (self.errorCallback){
-            
-            self.errorCallback(error);
-        }
-    } else {
-        
-        if (self.jsonCallback) {
-            
-            self.jsonCallback(nil);
-        }
+        self.callback(nil, error);
     }
 }
 

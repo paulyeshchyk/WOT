@@ -25,18 +25,9 @@
     NSError *error = nil;
     [context save:&error];
 
-    if (error) {
-
-        if (self.errorCallback) {
-            
-            self.errorCallback(error);
-        }
-    } else {
+    if (self.callback) {
         
-        if (self.jsonCallback) {
-            
-            self.jsonCallback(nil);
-        }
+        self.callback(nil, error);
     }
     
 }

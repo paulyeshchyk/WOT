@@ -14,9 +14,8 @@
 + (WOTRequestExecutor *)sharedInstance;
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass;
-- (void)requestId:(NSInteger)requestId registerDataProvider:(id<WOTDataProviderProtocol>)dataProvider;
-- (void)requestId:(NSInteger)requestId registerRequestErrorCallback:(WOTRequestErrorCallback)callback;
-- (void)requestId:(NSInteger)requestId registerRequestJSONCallback:(WOTRequestJSONCallback)callback;
+- (void)requestId:(NSInteger)requestId registerDataProviderClass:(Class)dataProviderClass;
+- (void)requestId:(NSInteger)requestId registerRequestCallback:(WOTRequestCallback)callback;
 - (void)executeRequestById:(NSInteger)requestId args:(NSDictionary *)args;
 
 @end

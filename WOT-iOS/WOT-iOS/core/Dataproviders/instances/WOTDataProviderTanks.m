@@ -15,7 +15,13 @@
     
 }
 
-- (void)parseData:(id)data {
+- (void)parseData:(id)data error:(NSError *)error {
+    
+    if (error) {
+        
+        NSLog(@"%@",error.localizedDescription);
+        return;
+    }
     
     NSDictionary *tanksDictionary = data[WOT_KEY_DATA];
     
@@ -36,14 +42,6 @@
         NSError *error = nil;
         [context save:&error];
     }
-    
-    
-    
-}
-
-- (void)parseError:(NSError *)error {
-    
-    NSLog(@"%@",error.localizedDescription);
 }
 
 @end

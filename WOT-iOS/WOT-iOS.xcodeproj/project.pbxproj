@@ -163,7 +163,6 @@
 		1DCC811C1B32AF0F005FF193 /* UserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC811B1B32AF0F005FF193 /* UserSession.m */; };
 		1DCC811F1B32AF0F005FF193 /* Tankengines.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC811E1B32AF0F005FF193 /* Tankengines.m */; };
 		1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC81221B32B83B005FF193 /* UIImage+Resize.m */; };
-		1DCC81271B32F600005FF193 /* WOTDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC81261B32F600005FF193 /* WOTDataProvider.m */; };
 		1DCC812C1B32F827005FF193 /* WOTDataProviderTanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC812B1B32F827005FF193 /* WOTDataProviderTanks.m */; };
 		1DCC812F1B32F9A9005FF193 /* WOTDataProviderTankEngines.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC812E1B32F9A9005FF193 /* WOTDataProviderTankEngines.m */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
@@ -419,8 +418,6 @@
 		1DCC811E1B32AF0F005FF193 /* Tankengines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tankengines.m; sourceTree = "<group>"; };
 		1DCC81211B32B83B005FF193 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		1DCC81221B32B83B005FF193 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		1DCC81251B32F600005FF193 /* WOTDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDataProvider.h; sourceTree = "<group>"; };
-		1DCC81261B32F600005FF193 /* WOTDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTDataProvider.m; sourceTree = "<group>"; };
 		1DCC81281B32F697005FF193 /* WOTDataProviderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDataProviderProtocol.h; sourceTree = "<group>"; };
 		1DCC812A1B32F827005FF193 /* WOTDataProviderTanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDataProviderTanks.h; sourceTree = "<group>"; };
 		1DCC812B1B32F827005FF193 /* WOTDataProviderTanks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTDataProviderTanks.m; sourceTree = "<group>"; };
@@ -943,8 +940,6 @@
 			isa = PBXGroup;
 			children = (
 				1DCC81291B32F812005FF193 /* instances */,
-				1DCC81251B32F600005FF193 /* WOTDataProvider.h */,
-				1DCC81261B32F600005FF193 /* WOTDataProvider.m */,
 				1DCC81281B32F697005FF193 /* WOTDataProviderProtocol.h */,
 			);
 			path = Dataproviders;
@@ -1680,7 +1675,6 @@
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */,
 				1DCC80BE1B3036A4005FF193 /* ChartYAxisRendererRadarChart.swift in Sources */,
-				1DCC81271B32F600005FF193 /* WOTDataProvider.m in Sources */,
 				1DA1D7471B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.m in Sources */,
 				1DCC808C1B3036A4005FF193 /* PieChartView.swift in Sources */,
 				1DCC80CB1B3036A4005FF193 /* ChartUtils.swift in Sources */,

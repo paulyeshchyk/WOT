@@ -11,8 +11,7 @@
 @interface WOTRequestExecutor()
 
 @property (nonatomic, strong) NSMutableDictionary *registeredRequests;
-@property (nonatomic, strong) NSMutableDictionary *registeredRequestErrorCallbacks;
-@property (nonatomic, strong) NSMutableDictionary *registeredRequestJSONCallbacks;
+@property (nonatomic, strong) NSMutableDictionary *registeredRequestCallbacks;
 @property (nonatomic, strong) NSMutableDictionary *registeredDataProviders;
 
 @end
@@ -35,8 +34,7 @@
     
     [self.registeredRequests removeAllObjects];
     [self.registeredDataProviders removeAllObjects];
-    [self.registeredRequestErrorCallbacks removeAllObjects];
-    [self.registeredRequestJSONCallbacks removeAllObjects];
+    [self.registeredRequestCallbacks removeAllObjects];
 }
 
 - (id)init {
@@ -45,8 +43,7 @@
     if (self){
         
         self.registeredRequests = [[NSMutableDictionary alloc] init];
-        self.registeredRequestErrorCallbacks = [[NSMutableDictionary alloc] init];
-        self.registeredRequestJSONCallbacks = [[NSMutableDictionary alloc] init];
+        self.registeredRequestCallbacks = [[NSMutableDictionary alloc] init];
         self.registeredDataProviders = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -57,116 +54,84 @@
     [self.registeredRequests setObject:requestClass forKey:@(requestId)];
 }
 
-- (void)requestId:(NSInteger)requestId registerRequestErrorCallback:(WOTRequestErrorCallback)callback {
+- (void)requestId:(NSInteger)requestId registerRequestCallback:(WOTRequestCallback)callback {
     
-    NSMutableSet *callbacks = [self.registeredRequestErrorCallbacks[@(requestId)] mutableCopy];
+    NSMutableSet *callbacks = [self.registeredRequestCallbacks[@(requestId)] mutableCopy];
     if (!callbacks){
         
         callbacks = [[NSMutableSet alloc] init];
     }
     [callbacks addObject:callback];
-    self.registeredRequestErrorCallbacks[@(requestId)] = callbacks;
+    self.registeredRequestCallbacks[@(requestId)] = callbacks;
 }
 
-
-- (void)requestId:(NSInteger)requestId registerRequestJSONCallback:(WOTRequestJSONCallback)callback {
+- (void)requestId:(NSInteger)requestId registerDataProviderClass:(Class)dataProviderClass {
     
-    NSMutableSet *callbacks = [self.registeredRequestJSONCallbacks[@(requestId)] mutableCopy];
-    if (!callbacks){
-        
-        callbacks = [[NSMutableSet alloc] init];
-    }
-    [callbacks addObject:callback];
-    self.registeredRequestJSONCallbacks[@(requestId)] = callbacks;
-}
-
-- (void)requestId:(NSInteger)requestId registerDataProvider:(id<WOTDataProviderProtocol>)dataProvider {
-    
-    NSPointerArray *providers = self.registeredDataProviders[@(requestId)];
+    NSMutableSet *providers = self.registeredDataProviders[@(requestId)];
     if (!providers) {
         
-        providers = [[NSPointerArray alloc] init];
+        providers = [[NSMutableSet alloc] init];
     }
-    [providers addPointer:(__bridge void*)dataProvider];
+    [providers addObject:dataProviderClass];
     self.registeredDataProviders[@(requestId)] = providers;
     
 }
 
-- (void)unregisterDataProvider:(id<WOTDataProviderProtocol>)dataProvider forRequestId:(NSInteger)requestId {
+- (void)unregisterDataProviderClass:(Class)dataProviderClass forRequestId:(NSInteger)requestId {
 
-    NSPointerArray *providers = self.registeredDataProviders[@(requestId)];
-    [providers compact];
-    
-    NSInteger index = [[providers allObjects] indexOfObject:dataProvider];
-
-    if (index != NSNotFound) {
-        
-        [providers removePointerAtIndex:index];
-    }
-
+    NSMutableArray *providers = self.registeredDataProviders[@(requestId)];
+    [providers removeObject:dataProviderClass];
     self.registeredDataProviders[@(requestId)] = providers;
     
 }
 
 - (void)executeRequestById:(NSInteger)requestId  args:(NSDictionary *)args{
-    
-    
+
     Class RegisteredRequestClass = self.registeredRequests[@(requestId)];
     
-    if ([[RegisteredRequestClass class] isSubclassOfClass:[WOTRequest class]]) {
+    if (!([[RegisteredRequestClass class] isSubclassOfClass:[WOTRequest class]])) {
     
-        WOTRequest *request = [[RegisteredRequestClass alloc] init];
-        [request setErrorCallback:^(NSError *error){
-            
-            dispatch_queue_t queue = dispatch_get_main_queue();
-            dispatch_async(queue, ^{
-                
-                //callbacks
-                [self.registeredRequestErrorCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestErrorCallback obj, NSUInteger idx, BOOL *stop) {
-                    
-                    obj(error);
-                }];
-
-                //providers
-                NSPointerArray *dataProviders = self.registeredDataProviders[@(requestId)];
-                [dataProviders compact];
-                for (id<WOTDataProviderProtocol> dataProvider in dataProviders) {
-                    
-                    [dataProvider parseError:error];
-                }
-            });
-        }];
-        
-        [request setJsonCallback:^(NSDictionary *json){
-            
-            dispatch_queue_t queue = dispatch_get_main_queue();
-            dispatch_async(queue, ^{
-
-                //callbacks
-                [self.registeredRequestJSONCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestJSONCallback obj, NSUInteger idx, BOOL *stop) {
-                    
-                    obj(json);
-                }];
-
-                //providers
-                NSPointerArray *dataProviders = self.registeredDataProviders[@(requestId)];
-                [dataProviders compact];
-                for (id<WOTDataProviderProtocol> dataProvider in dataProviders) {
-                    
-                    [dataProvider parseData:json];
-                }
-                
-            });
-        }];
-        
-        /**
-         *
-         **/
-        [request executeWithArgs:args];
-    } else {
-        
         NSLog(@"Request %ld is not registered",(long)requestId);
+        return;
     }
+    
+    WOTRequest *request = [[RegisteredRequestClass alloc] init];
+    [request setCallback:^(id data, NSError *error){
+
+        //callbacks
+        [self.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
+            
+            dispatch_queue_t queue = dispatch_get_main_queue();
+            dispatch_async(queue, ^{
+                
+                obj(data, error);
+            });
+        }];
+
+        //providers
+        NSSet *dataProviders = self.registeredDataProviders[@(requestId)];
+        
+        [dataProviders enumerateObjectsUsingBlock:^(Class class, BOOL *stop) {
+            
+            if (!([class conformsToProtocol:@protocol(WOTDataProviderProtocol) ])) {
+                
+                NSLog(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTDataProviderProtocol)));
+            } else {
+            
+                dispatch_queue_t queue = dispatch_get_main_queue();
+                dispatch_async(queue, ^{
+                    
+                    id<WOTDataProviderProtocol> provider = [[class alloc] init];
+                    [provider parseData:data error:error];
+                });
+            }
+        }];
+    }];
+    /**
+     *
+     **/
+    [request executeWithArgs:args];
+   
 }
 
 @end

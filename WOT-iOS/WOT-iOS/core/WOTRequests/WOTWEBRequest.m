@@ -103,9 +103,9 @@ static NSString *urlEncode(NSString *string) {
     
     if (connectionError) {
         
-        if (self.errorCallback) {
+        if (self.callback) {
             
-            self.errorCallback(connectionError);
+            self.callback(nil, connectionError);
         }
     } else {
         
@@ -113,9 +113,9 @@ static NSString *urlEncode(NSString *string) {
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializationError];
         if (serializationError) {
             
-            if (self.errorCallback) {
+            if (self.callback) {
                 
-                self.errorCallback(serializationError);
+                self.callback(nil, serializationError);
             }
         } else {
 #warning make validator
@@ -123,26 +123,27 @@ static NSString *urlEncode(NSString *string) {
             if ([status isEqualToString:WOT_KEY_ERROR]) {
                 
                 NSError *error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[WOT_KEY_ERROR]];
-                if (self.errorCallback) {
+                if (self.callback) {
                     
-                    self.errorCallback(error);
+                    self.callback(nil, error);
                 }
                 
             } else {
                 
-                if (self.jsonCallback) {
+
+                NSMutableDictionary *result = nil;
+                if (jsonData) {
                     
-                    NSMutableDictionary *result = nil;
-                    if (jsonData) {
-                        
-                        result = [NSMutableDictionary dictionaryWithDictionary:jsonData];
-                    } else {
-                        
-                        result = [[NSMutableDictionary alloc] init];
-                    }
+                    result = [NSMutableDictionary dictionaryWithDictionary:jsonData];
+                } else {
                     
-                    [result addEntriesFromDictionary:self.userInfo];
-                    self.jsonCallback(result);
+                    result = [[NSMutableDictionary alloc] init];
+                }
+                
+                [result addEntriesFromDictionary:self.userInfo];
+                if (self.callback) {
+                    
+                    self.callback(result, nil);
                 }
             }
         }

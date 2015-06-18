@@ -10,7 +10,6 @@
 
 @protocol WOTDataProviderProtocol <NSObject>
 
-- (void)parseData:(id)data;
-- (void)parseError:(NSError *)error;
+- (void)parseData:(id)data error:(NSError *)error;
 
 @end

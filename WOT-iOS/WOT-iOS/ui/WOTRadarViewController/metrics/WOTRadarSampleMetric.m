@@ -52,7 +52,7 @@
 - (void)setData
 {
     double mult = 10.f;
-    int count = self.parties.count;
+    NSInteger count = self.parties.count;
     
     NSMutableArray *yVals1 = [[NSMutableArray alloc] init];
     NSMutableArray *yVals2 = [[NSMutableArray alloc] init];

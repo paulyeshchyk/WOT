@@ -19,7 +19,7 @@
 @interface WOTTankListSortViewController () <UITableViewDataSource, UITableViewDelegate, WOTTankListSettingsDatasourceListener>
 
 @property (nonatomic, weak)IBOutlet UITableView *tableView;
-@property (nonatomic, weak)UIBarButtonItem *backItem;
+@property (nonatomic, strong)UIBarButtonItem *backItem;
 
 @property (nonatomic, weak)id<WOTTableViewDatasourceProtocol> tableviewDatasource;
 
@@ -40,7 +40,7 @@
 
     self.title = WOTString(WOT_STRING_GROUP_AND_SORT);
     
-    self.backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
+    self.backItem =  [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
        
         if (self.cancelBlock){
             self.cancelBlock();
@@ -58,13 +58,11 @@
     }];
     [self.navigationItem setRightBarButtonItems:@[applyItem]];
     [self.navigationController.navigationBar setDarkStyle];
-    
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSettingTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankListSettingTableViewCell class])];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSettingAddNewTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankListSettingAddNewTableViewCell class])];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListSortHeaderView class]) bundle:nil] forHeaderFooterViewReuseIdentifier:NSStringFromClass([WOTTankListSortHeaderView class])];
 
-    
     [[WOTTankListSettingsDatasource sharedInstance] registerListener:self];
     
 }
