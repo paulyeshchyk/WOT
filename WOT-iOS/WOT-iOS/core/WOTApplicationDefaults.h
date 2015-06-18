@@ -1,5 +1,5 @@
 //
-//  WOTDataProviderProtocol.h
+//  WOTApplicationDefaults.h
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 6/18/15.
@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol WOTDataProviderProtocol <NSObject>
+@interface WOTApplicationDefaults : NSObject
 
-- (void)parseData:(id)data error:(NSError *)error;
++ (void)registerDefaultSettings;
++ (void)registerRequests;
 
 @end

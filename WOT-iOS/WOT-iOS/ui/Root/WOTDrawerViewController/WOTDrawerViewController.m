@@ -11,8 +11,8 @@
 #import "MMDrawerVisualState.h"
 
 #import "WOTMenuProtocol.h"
-#import "WOTRequestExecutor+Registration.h"
-#import "WOTSessionDataProvider.h"
+
+#import "WOTSessionManager.h"
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 
@@ -76,20 +76,20 @@
     
     [super viewDidLoad];
 
-    [[WOTSessionDataProvider sharedInstance] invalidateTimer];
+    [[WOTSessionManager sharedInstance] invalidateTimer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onLogout:) name:WOT_NOTIFICATION_LOGOUT object:nil];
 }
 
 #pragma mark - WOTMenuDelegate
 - (NSString *)currentUserName {
 
-    BOOL sessionHasBeenExpired = [WOTSessionDataProvider sessionHasBeenExpired];
+    BOOL sessionHasBeenExpired = [WOTSessionManager sessionHasBeenExpired];
     if (sessionHasBeenExpired) {
         
         return WOTString(WOT_STRING_ANONYMOUS_USER);
     }
     
-    NSString *userName = [WOTSessionDataProvider currentUserName];
+    NSString *userName = [WOTSessionManager currentUserName];
     if (!userName) {
         
         return WOTString(WOT_STRING_ANONYMOUS_USER);
@@ -120,7 +120,7 @@
  
     [self closeDrawerAnimated:YES completion:NULL];
     
-    [WOTSessionDataProvider switchUser];
+    [WOTSessionManager switchUser];
 }
 
 #pragma mark - private

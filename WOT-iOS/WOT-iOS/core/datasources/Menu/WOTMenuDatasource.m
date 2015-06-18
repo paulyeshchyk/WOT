@@ -8,7 +8,7 @@
 
 #import "WOTMenuDatasource.h"
 #import "UserSession.h"
-#import "WOTSessionDataProvider.h"
+#import "WOTSessionManager.h"
 
 #import "WOTProfileViewController.h"
 #import "WOTTankListViewController.h"
@@ -56,7 +56,7 @@
 
 - (void)rebuild {
     
-    BOOL sessionHasBeenExpired = [WOTSessionDataProvider  sessionHasBeenExpired];
+    BOOL sessionHasBeenExpired = [WOTSessionManager  sessionHasBeenExpired];
     if(sessionHasBeenExpired) {
         
         NSPredicate *predicate = nil;

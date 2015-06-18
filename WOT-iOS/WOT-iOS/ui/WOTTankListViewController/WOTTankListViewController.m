@@ -7,8 +7,8 @@
 //
 
 #import "WOTTankListViewController.h"
-#import "WOTRequestExecutor+Registration.h"
 
+#import "WOTRequestExecutor.h"
 #import "WOTTankListSortViewController.h"
 
 #import "Tanks.h"

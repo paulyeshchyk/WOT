@@ -7,7 +7,7 @@
 //
 
 #import "WOTWEBRequestLogout.h"
-#import "WOTSessionDataProvider.h"
+#import "WOTSessionManager.h"
 
 @implementation WOTWEBRequestLogout
 
@@ -59,7 +59,7 @@
 
 - (NSString *)access_token {
     
-    return [WOTSessionDataProvider currentAccessToken];
+    return [WOTSessionManager currentAccessToken];
 }
 
 

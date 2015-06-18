@@ -1,24 +1,25 @@
 //
-//  WOTSessionDataProvider.m
+//  WOTSessionManager.m
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 6/4/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTSessionDataProvider.h"
+#import "WOTSessionManager.h"
 #import "WOTCoreDataProvider.h"
 #import "UserSession.h"
-#import "WOTRequestExecutor+Registration.h"
+#import "WOTRequestExecutor.h"
+
 #import "NSTimer+BlocksKit.h"
 
-@interface WOTSessionDataProvider ()
+@interface WOTSessionManager ()
 
 @property (nonatomic, strong)NSTimer *timer;
 
 @end
 
-@implementation WOTSessionDataProvider
+@implementation WOTSessionManager
 
 + (id)currentAccessToken {
 
@@ -73,7 +74,7 @@
 
 
 
-+ (WOTSessionDataProvider *)sharedInstance {
++ (WOTSessionManager *)sharedInstance {
     
     static dispatch_once_t once;
     static id instance;
@@ -112,19 +113,19 @@
 #pragma mark - private
 - (void)updateTimer {
     
-    if ([WOTSessionDataProvider sessionHasBeenExpired]) {
+    if ([WOTSessionManager sessionHasBeenExpired]) {
         
         [self.timer invalidate];
         self.timer = nil;
         return;
     }
     
-    NSTimeInterval expirationTime = [WOTSessionDataProvider expirationTime];
+    NSTimeInterval expirationTime = [WOTSessionManager expirationTime];
     NSTimeInterval interval = expirationTime - [[NSDate date] timeIntervalSince1970];
 
     self.timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
         
-        [WOTSessionDataProvider logout];
+        [WOTSessionManager logout];
     } repeats:NO];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 

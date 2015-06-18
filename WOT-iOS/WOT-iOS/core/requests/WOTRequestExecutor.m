@@ -7,12 +7,13 @@
 //
 
 #import "WOTRequestExecutor.h"
+#import "WOTWebResponseAdapter.h"
 
 @interface WOTRequestExecutor()
 
 @property (nonatomic, strong) NSMutableDictionary *registeredRequests;
 @property (nonatomic, strong) NSMutableDictionary *registeredRequestCallbacks;
-@property (nonatomic, strong) NSMutableDictionary *registeredDataProviders;
+@property (nonatomic, strong) NSMutableDictionary *registeredDataAdapters;
 
 @end
 
@@ -33,7 +34,7 @@
 - (void)dealloc {
     
     [self.registeredRequests removeAllObjects];
-    [self.registeredDataProviders removeAllObjects];
+    [self.registeredDataAdapters removeAllObjects];
     [self.registeredRequestCallbacks removeAllObjects];
 }
 
@@ -44,7 +45,7 @@
         
         self.registeredRequests = [[NSMutableDictionary alloc] init];
         self.registeredRequestCallbacks = [[NSMutableDictionary alloc] init];
-        self.registeredDataProviders = [[NSMutableDictionary alloc] init];
+        self.registeredDataAdapters = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -65,23 +66,23 @@
     self.registeredRequestCallbacks[@(requestId)] = callbacks;
 }
 
-- (void)requestId:(NSInteger)requestId registerDataProviderClass:(Class)dataProviderClass {
+- (void)requestId:(NSInteger)requestId registerDataAdapterClass:(Class)dataProviderClass {
     
-    NSMutableSet *providers = self.registeredDataProviders[@(requestId)];
+    NSMutableSet *providers = self.registeredDataAdapters[@(requestId)];
     if (!providers) {
         
         providers = [[NSMutableSet alloc] init];
     }
     [providers addObject:dataProviderClass];
-    self.registeredDataProviders[@(requestId)] = providers;
+    self.registeredDataAdapters[@(requestId)] = providers;
     
 }
 
 - (void)unregisterDataProviderClass:(Class)dataProviderClass forRequestId:(NSInteger)requestId {
 
-    NSMutableArray *providers = self.registeredDataProviders[@(requestId)];
+    NSMutableArray *providers = self.registeredDataAdapters[@(requestId)];
     [providers removeObject:dataProviderClass];
-    self.registeredDataProviders[@(requestId)] = providers;
+    self.registeredDataAdapters[@(requestId)] = providers;
     
 }
 
@@ -108,21 +109,21 @@
             });
         }];
 
-        //providers
-        NSSet *dataProviders = self.registeredDataProviders[@(requestId)];
+        //dataAdapters
+        NSSet *dataAdapters = self.registeredDataAdapters[@(requestId)];
         
-        [dataProviders enumerateObjectsUsingBlock:^(Class class, BOOL *stop) {
+        [dataAdapters enumerateObjectsUsingBlock:^(Class class, BOOL *stop) {
             
-            if (!([class conformsToProtocol:@protocol(WOTDataProviderProtocol) ])) {
+            if (!([class conformsToProtocol:@protocol(WOTWebResponseAdapter) ])) {
                 
-                NSLog(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTDataProviderProtocol)));
+                NSLog(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
             } else {
             
                 dispatch_queue_t queue = dispatch_get_main_queue();
                 dispatch_async(queue, ^{
                     
-                    id<WOTDataProviderProtocol> provider = [[class alloc] init];
-                    [provider parseData:data error:error];
+                    id<WOTWebResponseAdapter> adapter = [[class alloc] init];
+                    [adapter parseData:data error:error];
                 });
             }
         }];

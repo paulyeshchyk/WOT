@@ -24,6 +24,10 @@
 
 #import "WOTCoreDataProvider.h"
 #import "Strings.h"
+
 #import "WOTMacro.h"
+#import "WOTEnums.h"
+#import "WOTError.h"
+#import "WOTErrorCodes.h"
 
 #endif

@@ -1,5 +1,5 @@
 //
-//  WOTSessionDataProvider.h
+//  WOTSessionManager.h
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 6/4/15.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WOTSessionDataProvider : NSObject
+@interface WOTSessionManager : NSObject
 
 + (id)currentAccessToken;
 + (NSString *)currentUserName;
@@ -18,7 +18,7 @@
 + (void)login;
 + (BOOL)sessionHasBeenExpired;
 
-+ (WOTSessionDataProvider *)sharedInstance;
++ (WOTSessionManager *)sharedInstance;
 
 - (void)invalidateTimer;
 

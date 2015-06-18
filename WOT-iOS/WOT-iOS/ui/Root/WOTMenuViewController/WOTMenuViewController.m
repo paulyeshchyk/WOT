@@ -10,7 +10,7 @@
 #import "WOTMenuTableViewCell.h"
 #import "UserSession.h"
 
-#import "WOTSessionDataProvider.h"
+#import "WOTSessionManager.h"
 #import "WOTMenuDatasource.h"
 
 @interface WOTMenuViewController () <UITableViewDataSource, UITableViewDelegate, WOTMenuDatasourceDelegate>

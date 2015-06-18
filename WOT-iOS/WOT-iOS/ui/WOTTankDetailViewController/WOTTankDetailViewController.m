@@ -10,7 +10,8 @@
 #import "WOTRadarViewController.h"
 #import "Tanks.h"
 #import "Tankengines.h"
-#import "WOTRequestExecutor+Registration.h"
+
+#import "WOTRequestExecutor.h"
 
 @interface WOTTankDetailViewController ()
 

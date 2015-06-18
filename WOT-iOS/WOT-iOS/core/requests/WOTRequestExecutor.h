@@ -7,14 +7,13 @@
 //
 
 #import "WOTRequest.h"
-#import "WOTDataProviderProtocol.h"
 
 @interface WOTRequestExecutor : NSObject
 
 + (WOTRequestExecutor *)sharedInstance;
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass;
-- (void)requestId:(NSInteger)requestId registerDataProviderClass:(Class)dataProviderClass;
+- (void)requestId:(NSInteger)requestId registerDataAdapterClass:(Class)dataProviderClass;
 - (void)requestId:(NSInteger)requestId registerRequestCallback:(WOTRequestCallback)callback;
 - (void)executeRequestById:(NSInteger)requestId args:(NSDictionary *)args;
 

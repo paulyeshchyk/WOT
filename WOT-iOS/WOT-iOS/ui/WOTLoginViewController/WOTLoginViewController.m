@@ -8,10 +8,7 @@
 
 #import "WOTLoginViewController.h"
 
-#import "WOTCoreDataProvider.h"
-#import "WOTError.h"
-#import "WOTErrorCodes.h"
-#import "WOTRequestExecutor+Registration.h"
+#import "WOTRequestExecutor.h"
 #import "WOTLanguageSelectorViewController.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
@@ -28,6 +25,7 @@
     
     
     [self.navigationController.navigationBar setDarkStyle];
+    
     UIImage *globe = [UIImage imageWithImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GLOBE)] scaledToSize:CGSizeMake(32.0f,32.0f)];
     UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
         
