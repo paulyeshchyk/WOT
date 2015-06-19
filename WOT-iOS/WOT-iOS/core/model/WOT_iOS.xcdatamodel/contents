@@ -29,6 +29,7 @@
         <attribute name="power" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_credit" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="engines" inverseEntity="Vehicles" syncable="YES"/>
     </entity>
     <entity name="Tankguns" representedClassName="Tankguns" syncable="YES">
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
@@ -89,14 +90,30 @@
         <attribute name="isCurrent" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Vehicles" representedClassName="Vehicles" syncable="YES">
+        <attribute name="is_gift" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="is_premium" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price_credit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="price_gold" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="prices_xp" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="short_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tank_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="tier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="engines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankengines" inverseName="vehicles" inverseEntity="Tankengines" syncable="YES"/>
+    </entity>
     <elements>
         <element name="ListSetting" positionX="-36" positionY="9" width="128" height="120"/>
-        <element name="Tanks" positionX="0" positionY="45" width="128" height="240"/>
-        <element name="UserSession" positionX="27" positionY="72" width="128" height="135"/>
-        <element name="Tankengines" positionX="54" positionY="180" width="128" height="180"/>
-        <element name="Tankturrets" positionX="9" positionY="162" width="128" height="225"/>
-        <element name="Tankradios" positionX="18" positionY="171" width="128" height="180"/>
         <element name="Tankchassis" positionX="27" positionY="180" width="128" height="195"/>
+        <element name="Tankengines" positionX="54" positionY="180" width="128" height="195"/>
         <element name="Tankguns" positionX="36" positionY="189" width="128" height="180"/>
+        <element name="Tankradios" positionX="18" positionY="171" width="128" height="180"/>
+        <element name="Tanks" positionX="0" positionY="45" width="128" height="240"/>
+        <element name="Tankturrets" positionX="9" positionY="162" width="128" height="225"/>
+        <element name="UserSession" positionX="27" positionY="72" width="128" height="135"/>
+        <element name="Vehicles" positionX="9" positionY="162" width="128" height="240"/>
     </elements>
 </model>

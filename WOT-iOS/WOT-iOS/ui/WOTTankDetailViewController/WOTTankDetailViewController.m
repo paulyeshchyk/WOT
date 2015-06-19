@@ -10,6 +10,7 @@
 #import "WOTRadarViewController.h"
 #import "Tanks.h"
 #import "Tankengines.h"
+#import "Vehicles.h"
 
 #import "WOTRequestExecutor.h"
 
@@ -55,7 +56,10 @@
     Tanks *tank = self.tank;
     self.title = [tank name_i18n];
 
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankEnginesList args:@{WOT_KEY_FIELDS:[[Tankengines availableFields] componentsJoinedByString:@","]}];
+    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+    [args setObject:[tank.tank_id stringValue] forKey:WOT_KEY_TANK_ID];
+    [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args];
 }
 
 @end

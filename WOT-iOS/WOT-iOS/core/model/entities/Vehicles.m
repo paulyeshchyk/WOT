@@ -1,25 +1,29 @@
 //
-//  Tankengines.m
+//  Vehicles.m
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 6/19/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
+#import "Vehicles.h"
 #import "Tankengines.h"
 
 
-@implementation Tankengines
+@implementation Vehicles
 
-@dynamic fire_starting_chance;
-@dynamic level;
-@dynamic module_id;
+@dynamic is_gift;
+@dynamic is_premium;
 @dynamic name;
-@dynamic name_i18n;
 @dynamic nation;
-@dynamic power;
 @dynamic price_credit;
 @dynamic price_gold;
-@dynamic vehicles;
+@dynamic prices_xp;
+@dynamic short_name;
+@dynamic tag;
+@dynamic tank_id;
+@dynamic tier;
+@dynamic type;
+@dynamic engines;
 
 @end

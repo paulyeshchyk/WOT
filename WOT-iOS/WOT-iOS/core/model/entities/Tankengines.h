@@ -2,13 +2,14 @@
 //  Tankengines.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/18/15.
+//  Created by Pavel Yeshchyk on 6/19/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class NSManagedObject;
 
 @interface Tankengines : NSManagedObject
 
@@ -21,5 +22,14 @@
 @property (nonatomic, retain) NSNumber * power;
 @property (nonatomic, retain) NSNumber * price_credit;
 @property (nonatomic, retain) NSNumber * price_gold;
+@property (nonatomic, retain) NSSet *vehicles;
+@end
+
+@interface Tankengines (CoreDataGeneratedAccessors)
+
+- (void)addVehiclesObject:(NSManagedObject *)value;
+- (void)removeVehiclesObject:(NSManagedObject *)value;
+- (void)addVehicles:(NSSet *)values;
+- (void)removeVehicles:(NSSet *)values;
 
 @end

@@ -127,9 +127,7 @@ static NSString *urlEncode(NSString *string) {
                     
                     self.callback(nil, error);
                 }
-                
             } else {
-                
 
                 NSMutableDictionary *result = nil;
                 if (jsonData) {

@@ -24,6 +24,8 @@
 #import "WOTWEBRequestTanks.h"
 #import "WOTWEBRequestTankEngines.h"
 #import "WOTWebResponseAdapterEngines.h"
+#import "WOTWEBRequestTankVehicles.h"
+#import "WOTWebResponseAdapterVehicles.h"
 
 @implementation WOTApplicationDefaults
 
@@ -118,6 +120,14 @@
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEnginesList registerRequestClass:[WOTWEBRequestTankEngines class]];
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEnginesList registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
+    
+    
+    /**
+     * Tanks.Vehicles
+     **/
+    
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
     
 }
 
