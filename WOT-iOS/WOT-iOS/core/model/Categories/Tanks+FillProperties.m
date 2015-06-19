@@ -10,7 +10,7 @@
 
 @implementation Tanks (FillProperties)
 
-- (void)fillPropertiesFromDictioary:(NSDictionary *)jSON {
+- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
     
     self.tank_id = jSON[WOT_KEY_TANK_ID];
     self.name = jSON[WOT_KEY_NAME];

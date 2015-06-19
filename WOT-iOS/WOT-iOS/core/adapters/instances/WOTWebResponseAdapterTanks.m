@@ -30,7 +30,7 @@
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TANK_ID,tankJSON[WOT_KEY_TANK_ID]];
         Tanks *tank = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [tank fillPropertiesFromDictioary:tankJSON];
+        [tank fillPropertiesFromDictionary:tankJSON];
     }
     
     if ([context hasChanges]) {

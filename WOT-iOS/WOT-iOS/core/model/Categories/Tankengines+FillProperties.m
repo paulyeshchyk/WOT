@@ -10,7 +10,7 @@
 
 @implementation Tankengines (FillProperties)
 
-- (void)fillPropertiesFromDictioary:(NSDictionary *)jSON {
+- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
     
     self.module_id = jSON[WOT_KEY_MODULE_ID];
     self.name = jSON[WOT_KEY_NAME];

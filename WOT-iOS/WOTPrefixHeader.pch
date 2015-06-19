@@ -22,6 +22,8 @@
 #import "NSManagedObject+FillProperties.h"
 
 
+#import "WOTWebResponseLink.h"
+
 #import "WOTCoreDataProvider.h"
 #import "Strings.h"
 

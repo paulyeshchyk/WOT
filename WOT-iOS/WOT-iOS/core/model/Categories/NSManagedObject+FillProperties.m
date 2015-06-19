@@ -10,12 +10,18 @@
 
 @implementation NSManagedObject (FillProperties)
 
-- (void)fillPropertiesFromDictioary:(NSDictionary *)jSON {
+- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
 
     NSCAssert(NO, @"should be overriden");
 }
 
 + (NSArray *)availableFields {
+    
+    NSCAssert(NO, @"should be overriden");
+    return nil;
+}
+
++ (NSArray *)availableLinks {
     
     NSCAssert(NO, @"should be overriden");
     return nil;

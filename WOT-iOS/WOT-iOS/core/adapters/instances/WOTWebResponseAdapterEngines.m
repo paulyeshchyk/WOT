@@ -34,7 +34,7 @@
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankEngineJSON[WOT_KEY_MODULE_ID]];
         Tankengines *tankEngines = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [tankEngines fillPropertiesFromDictioary:tankEngineJSON];
+        [tankEngines fillPropertiesFromDictionary:tankEngineJSON];
     }
     
     if ([context hasChanges]) {

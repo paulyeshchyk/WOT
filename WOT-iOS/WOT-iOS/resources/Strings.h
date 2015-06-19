@@ -46,6 +46,7 @@
 #define WOT_KEY_NATION_I18N @"nation_i18n"
 #define WOT_KEY_SHORT_NAME_I18N @"short_name_i18n"
 #define WOT_KEY_TYPE @"type"
+#define WOT_KEY_ENGINES @"engines"
 #define WOT_KEY_TYPE_I18N @"type_i18n"
 #define WOT_KEY_KEY @"key"
 #define WOT_KEY_VALUES @"values"

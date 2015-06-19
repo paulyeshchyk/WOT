@@ -118,7 +118,7 @@
 
         
         [[NSFileManager defaultManager] removeItemAtPath:[storeURL absoluteString] error:NULL];
-        NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES};
+        NSDictionary *options = @{NSIgnorePersistentStoreVersioningOption:@YES, NSInferMappingModelAutomaticallyOption:@YES};
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
             
             // Report any error we got.

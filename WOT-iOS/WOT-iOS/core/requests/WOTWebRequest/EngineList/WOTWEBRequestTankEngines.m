@@ -15,6 +15,7 @@
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     result[WOT_KEY_APPLICATION_ID] = [NSString valueOrSpaceString:self.applicationID];
     result[WOT_KEY_FIELDS] = [NSString valueOrSpaceString:self.args[WOT_KEY_FIELDS]];
+    result[WOT_KEY_MODULE_ID] = [NSString valueOrSpaceString:self.args[WOT_KEY_MODULE_ID]];
     return result;
 }
 

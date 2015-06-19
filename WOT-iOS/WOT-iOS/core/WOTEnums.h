@@ -14,8 +14,8 @@ typedef NS_ENUM(NSInteger, WOTRequestId) {
     WOTRequestIdSaveSession,
     WOTRequestIdLogout,
     WOTRequestIdClearSession,
-    WOTRequestIdTanksList,
-    WOTRequestIdTankEnginesList,
+    WOTRequestIdTanks,
+    WOTRequestIdTankEngines,
     WOTRequestIdTankVehicles
 };
 

@@ -52,7 +52,7 @@
     
     [self.navigationItem setRightBarButtonItems:@[settingsItem]];
 
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanksList args:@{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]}];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanks args:@{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]}];
 
     [self invalidateFetchedResultController];
 
@@ -123,7 +123,8 @@
     }];
     
     WOTTankDetailViewController *detail = [[WOTTankDetailViewController alloc] initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];
-    detail.tank = [self.fetchedResultController objectAtIndexPath:indexPath];
+    Tanks *tank = [self.fetchedResultController objectAtIndexPath:indexPath];
+    detail.tankId = tank.tank_id;
 
     [detail.navigationItem setLeftBarButtonItem:backButtonItem];
     [self.navigationController pushViewController:detail animated:YES];

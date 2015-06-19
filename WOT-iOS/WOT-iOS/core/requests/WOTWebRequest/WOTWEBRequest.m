@@ -122,6 +122,7 @@ static NSString *urlEncode(NSString *string) {
             id status = jsonData[WOT_KEY_STATUS];
             if ([status isEqualToString:WOT_KEY_ERROR]) {
                 
+                NSCAssert(NO, @"be sure that error was handled");
                 NSError *error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[WOT_KEY_ERROR]];
                 if (self.callback) {
                     

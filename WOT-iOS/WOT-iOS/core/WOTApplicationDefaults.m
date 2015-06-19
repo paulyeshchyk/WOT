@@ -111,15 +111,15 @@
     /**
      * Tanks.Tanks
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanksList registerDataAdapterClass:[WOTWebResponseAdapterTanks class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanksList registerRequestClass:[WOTWEBRequestTanks class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerDataAdapterClass:[WOTWebResponseAdapterTanks class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestClass:[WOTWEBRequestTanks class]];
     
     
     /**
      * Tanks.Engines
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEnginesList registerRequestClass:[WOTWEBRequestTankEngines class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEnginesList registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
     
     
     /**
