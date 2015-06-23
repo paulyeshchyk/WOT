@@ -13,16 +13,16 @@
 
 @interface Tankchassis : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * level;
+@property (nonatomic, retain) NSDecimalNumber * level;
 @property (nonatomic, retain) NSNumber * max_load;
-@property (nonatomic, retain) NSNumber * module_id;
+@property (nonatomic, retain) NSDecimalNumber * module_id;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * name_i18n;
 @property (nonatomic, retain) NSString * nation;
 @property (nonatomic, retain) NSString * nation_i18n;
-@property (nonatomic, retain) NSNumber * price_credit;
-@property (nonatomic, retain) NSNumber * price_gold;
-@property (nonatomic, retain) NSNumber * rotation_speed;
+@property (nonatomic, retain) NSDecimalNumber * price_credit;
+@property (nonatomic, retain) NSDecimalNumber * price_gold;
+@property (nonatomic, retain) NSDecimalNumber * rotation_speed;
 @property (nonatomic, retain) NSSet *vehicles;
 @end
 

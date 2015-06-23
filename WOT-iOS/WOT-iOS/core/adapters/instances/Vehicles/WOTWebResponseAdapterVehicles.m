@@ -85,19 +85,12 @@
         NSError *error = nil;
         [context save:&error];
     }
-    
 
     for(NSNumber *requestId in requests) {
     
         id args = requests[requestId];
         [[WOTRequestExecutor sharedInstance] executeRequestById:[requestId integerValue] args:args];
     }
-    
-    
-    
 }
-
-
-
 
 @end

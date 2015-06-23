@@ -8,6 +8,7 @@
 
 #import "Vehicles+FillProperties.h"
 #import "Tankengines.h"
+#import "Tankchassis.h"
 #import "Tanks.h"
 
 @implementation Vehicles (FillProperties)
@@ -32,7 +33,7 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOT_KEY_NAME,WOT_KEY_NATION,WOT_KEY_PRICE_CREDIT, WOT_KEY_PRICE_GOLD, WOT_KEY_SHORT_NAME, WOT_KEY_TAG, WOT_KEY_TIER, WOT_KEY_TYPE, WOT_LINKKEY_ENGINES, WOT_KEY_PRICES_XP, WOT_KEY_IS_GIFT, WOT_KEY_TANK_ID];
+    return @[WOT_KEY_NAME,WOT_KEY_NATION,WOT_KEY_PRICE_CREDIT, WOT_KEY_PRICE_GOLD, WOT_KEY_SHORT_NAME, WOT_KEY_TAG, WOT_KEY_TIER, WOT_KEY_TYPE, WOT_LINKKEY_ENGINES, WOT_LINKKEY_SUSPENSIONS, WOT_KEY_PRICES_XP, WOT_KEY_IS_GIFT, WOT_KEY_TANK_ID];
 }
 
 
@@ -52,22 +53,23 @@
                                                          }
                                        ];
 
+    WOTWebResponseLink *chassisLink = [WOTWebResponseLink linkWithClass:[Tankchassis class]
+                                                              requestId:WOTRequestIdTankChassis
+                                                    argFieldNameToFetch:WOT_KEY_FIELDS
+                                                  argFieldValuesToFetch:[Tankchassis availableFields]
+                                                   argFieldNameToFilter:WOT_KEY_MODULE_ID
+                                                            jsonKeyName:WOT_LINKKEY_SUSPENSIONS
+                                                         coredataIdName:WOT_KEY_MODULE_ID
+                                                         linkItemsBlock:^(id entity, NSSet *items){
+                                                             
+                                                             Vehicles *vehicles = (Vehicles *)entity;
+                                                             [vehicles addSuspensions:items];
+                                                         }
+                                       ];
     
-//    WOTWebResponseLink *tanksLink = [WOTWebResponseLink linkWithClass:[Tanks class]
-//                                                            requestId:WOTRequestIdTanks
-//                                                  argFieldNameToFetch:WOT_KEY_FIELDS
-//                                                argFieldValuesToFetch:[Tanks availableFields]
-//                                                 argFieldNameToFilter:WOT_KEY_MODULE_ID
-//                                                          jsonKeyName:nil
-//                                                       coredataIdName:WOT_KEY_TANK_ID
-//                                                       linkItemsBlock:^(id entity, NSSet *items){
-//                                                           
-//                                                           Tanks *tanks = (Tanks *)entity;
-//                                                           [tanks setVehicles:[items anyObject]];
-//                                                       }
-//                                       ];
     
-    return @[/*tanksLink, */enginesLink];
+    
+    return @[enginesLink, chassisLink];
 }
 
 @end

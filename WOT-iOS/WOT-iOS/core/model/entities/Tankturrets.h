@@ -13,18 +13,18 @@
 
 @interface Tankturrets : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * armor_board;
-@property (nonatomic, retain) NSNumber * armor_fedd;
-@property (nonatomic, retain) NSNumber * armor_forehead;
-@property (nonatomic, retain) NSNumber * circular_vision_radius;
-@property (nonatomic, retain) NSNumber * level;
-@property (nonatomic, retain) NSNumber * module_id;
+@property (nonatomic, retain) NSDecimalNumber * armor_board;
+@property (nonatomic, retain) NSDecimalNumber * armor_fedd;
+@property (nonatomic, retain) NSDecimalNumber * armor_forehead;
+@property (nonatomic, retain) NSDecimalNumber * circular_vision_radius;
+@property (nonatomic, retain) NSDecimalNumber * level;
+@property (nonatomic, retain) NSDecimalNumber * module_id;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * name_i18n;
 @property (nonatomic, retain) NSString * nation;
-@property (nonatomic, retain) NSNumber * price_credit;
-@property (nonatomic, retain) NSNumber * price_gold;
-@property (nonatomic, retain) NSNumber * rotation_speed;
+@property (nonatomic, retain) NSDecimalNumber * price_credit;
+@property (nonatomic, retain) NSDecimalNumber * price_gold;
+@property (nonatomic, retain) NSDecimalNumber * rotation_speed;
 @property (nonatomic, retain) NSSet *vehicles;
 @end
 

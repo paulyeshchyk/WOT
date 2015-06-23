@@ -98,7 +98,7 @@
     
     WOTRequest *request = [[RegisteredRequestClass alloc] init];
     [request setCallback:^(id data, NSError *error){
-
+        
         //callbacks
         [self.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
             

@@ -114,29 +114,13 @@
      * Clear Sassion
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdClearSession registerRequestClass:[WOTClearSessionRequest class]];
-    
-    
+
     /**
      * Tanks.Tanks
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerDataAdapterClass:[WOTWebResponseAdapterTanks class]];
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestClass:[WOTWEBRequestTanks class]];
-    
-    
-    /**
-     * Tanks.Engines
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
-    
-    
-    /**
-     * Tanks.Vehicles
-     **/
-    
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
-    
+
     /**
      * Tanks.Chassis
      **/
@@ -160,6 +144,20 @@
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWebRequestTankRadios class]];
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
+    
+    /**
+     * Tanks.Engines
+     **/
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
+
+    /**
+     * Tanks.Vehicles
+     **/
+    
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
+    
 }
 
 

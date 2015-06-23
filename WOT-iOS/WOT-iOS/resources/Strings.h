@@ -60,7 +60,10 @@
 #define WOT_KEY_PRICE_CREDIT @"price_credit"
 #define WOT_KEY_FIRE_STARTING_CHANCE @"fire_starting_chance"
 #define WOT_KEY_MODULE_ID @"module_id"
+#define WOT_LINKKEY_SUSPENSIONS @"suspensions"
 #define WOT_LINKKEY_ENGINES @"engines"
+#define WOT_KEY_MAX_LOAD @"max_load"
+#define WOT_KEY_ROTATION_SPEED @"rotation_speed"
 
 
 #define WOT_KEY_SETTING_TYPE @"WOT_KEY_SETTING_TYPE"

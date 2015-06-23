@@ -29,7 +29,13 @@
                                                       ],
                                          @"query": WOT_LINKKEY_ENGINES
                                    };
-        self.fields = @{@"engines":enginesSection};
+        NSDictionary *chassisSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ROTATION_SPEED]
+                                                      ],
+                                         @"query": WOT_LINKKEY_SUSPENSIONS
+                                         };
+        self.fields = @{@"engines":enginesSection,@"chassis":chassisSection};
         
     }
     return self;

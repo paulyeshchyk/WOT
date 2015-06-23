@@ -21,8 +21,8 @@
 @property (nonatomic, retain) NSNumber * price_gold;
 @property (nonatomic, retain) NSString * short_name;
 @property (nonatomic, retain) NSString * tag;
-@property (nonatomic, retain) NSNumber * tank_id;
-@property (nonatomic, retain) NSNumber * tier;
+@property (nonatomic, retain) NSDecimalNumber * tank_id;
+@property (nonatomic, retain) NSDecimalNumber * tier;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSSet *engines;
 @property (nonatomic, retain) Tanks *tanks;

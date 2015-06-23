@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * image;
 @property (nonatomic, retain) NSString * image_small;
 @property (nonatomic, retain) NSNumber * is_premium;
-@property (nonatomic, retain) NSNumber * level;
+@property (nonatomic, retain) NSDecimalNumber * level;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * name_i18n;
 @property (nonatomic, retain) NSString * nation;
