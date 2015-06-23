@@ -19,6 +19,10 @@
 #import "WOTWebResponseAdapterTanks.h"
 #import "WOTSaveSessionRequest.h"
 #import "WOTClearSessionRequest.h"
+#import "WOTWebRequestTankChassis.h"
+#import "WOTWebRequestTankTurrets.h"
+#import "WOTWebRequestTankGuns.h"
+#import "WOTWebRequestTankRadios.h"
 
 #import "WOTSessionManager.h"
 #import "WOTWEBRequestTanks.h"
@@ -26,6 +30,10 @@
 #import "WOTWebResponseAdapterEngines.h"
 #import "WOTWEBRequestTankVehicles.h"
 #import "WOTWebResponseAdapterVehicles.h"
+#import "WOTWebResponseAdapterChassis.h"
+#import "WOTWebResponseAdapterTurrets.h"
+#import "WOTWebResponseAdapterGuns.h"
+#import "WOTWebResponseAdapterRadios.h"
 
 @implementation WOTApplicationDefaults
 
@@ -129,6 +137,29 @@
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
     
+    /**
+     * Tanks.Chassis
+     **/
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerRequestClass:[WOTWebRequestTankChassis class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerDataAdapterClass:[WOTWebResponseAdapterChassis class]];
+    
+    /**
+     * Tanks.Turrets
+     **/
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerRequestClass:[WOTWebRequestTankTurrets class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerDataAdapterClass:[WOTWebResponseAdapterTurrets class]];
+    
+    /**
+     * Tanks.Guns
+     **/
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerRequestClass:[WOTWebRequestTankGuns class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerDataAdapterClass:[WOTWebResponseAdapterGuns class]];
+    
+    /**
+     * Tanks.Radios
+     **/
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWebRequestTankRadios class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
 }
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "WOTWebResponseAdapterVehicles.h"
+#import "Tanks.h"
 #import "Vehicles.h"
 #import "Tankengines.h"
 #import "NSManagedObject+CoreDataOperations.h"
@@ -35,6 +36,13 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TAG,jSON[WOT_KEY_TAG]];
         Vehicles *vehicle = [Vehicles findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
         [vehicle fillPropertiesFromDictionary:jSON];
+        
+
+#warning should be refactored
+        
+        NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TANK_ID, @([key integerValue])];
+        Tanks *tank = [Tanks findOrCreateObjectWithPredicate:tanksPredicate inManagedObjectContext:context];
+        [tank setVehicles:vehicle];
 
         for (WOTWebResponseLink *wotWebResponseLink in availableLinks) {
             
@@ -42,6 +50,14 @@
             if ([clazz isSubclassOfClass:[NSManagedObject class]]) {
 
                 NSMutableSet *linkedObjects = [[NSMutableSet alloc] init];
+                
+                /*
+                 jSonLinks is familiar to 
+                     jSonLink =     (
+                         3429,
+                         3685
+                     );
+                 */
                 
                 NSArray *jSonLinks = jSON[wotWebResponseLink.jsonKeyName];
                 for (NSString *jSONLinkId in jSonLinks) {

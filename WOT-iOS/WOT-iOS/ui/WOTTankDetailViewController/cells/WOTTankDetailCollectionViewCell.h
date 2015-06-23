@@ -10,4 +10,10 @@
 
 @interface WOTTankDetailCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, weak)id fetchedObject;
+@property (nonatomic, copy)NSArray *fields;
+
++ (CGSize)sizeFitSize:(CGSize)size forFetchedObject:(id)fetchedObject andFields:(NSArray *)fields;
+- (void)invalidate;
+
 @end

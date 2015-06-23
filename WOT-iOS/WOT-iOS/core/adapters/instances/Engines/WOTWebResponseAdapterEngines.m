@@ -11,10 +11,6 @@
 
 @implementation WOTWebResponseAdapterEngines
 
-- (void)dealloc {
-    
-}
-
 - (void)parseData:(id)data error:(NSError *)error {
     
     if (error) {

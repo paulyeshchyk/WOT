@@ -2,13 +2,14 @@
 //  Tanks.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/19/15.
+//  Created by Pavel Yeshchyk on 6/23/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Vehicles;
 
 @interface Tanks : NSManagedObject
 
@@ -25,5 +26,6 @@
 @property (nonatomic, retain) NSDecimalNumber * tank_id;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * type_i18n;
+@property (nonatomic, retain) Vehicles *vehicles;
 
 @end
