@@ -58,23 +58,35 @@
                          3685
                      );
                  */
-                
-                NSArray *jSonLinks = jSON[wotWebResponseLink.jsonKeyName];
-                for (NSString *jSONLinkId in jSonLinks) {
-                    
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",wotWebResponseLink.coredataIdName,jSONLinkId];
-                    NSManagedObject *objToLink = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-                    [objToLink setValue:jSONLinkId forKey:wotWebResponseLink.coredataIdName];
-                    [linkedObjects addObject:objToLink];
-                }
-                
-                NSDictionary *args = [wotWebResponseLink requestArgsForAvailableIds:jSonLinks];
-                
-                [requests setObject:args forKey:@(wotWebResponseLink.wotWebRequestId)];
 
-                if (wotWebResponseLink.linkItemsBlock) {
+                if (wotWebResponseLink.jsonKeyName) {
                     
-                    wotWebResponseLink.linkItemsBlock(vehicle, linkedObjects);
+                    NSArray *jSonLinks = jSON[wotWebResponseLink.jsonKeyName];
+                    
+                    /*
+                     * hasLinkedObjects can be FALSE,
+                     * i.e. vehicle has no turrets (ISU-152)
+                     */
+                    BOOL hasLinkedObjects = ([jSonLinks count] > 0);
+                    if (hasLinkedObjects) {
+                        
+                        for (NSString *jSONLinkId in jSonLinks) {
+                            
+                            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",wotWebResponseLink.coredataIdName,jSONLinkId];
+                            NSManagedObject *objToLink = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                            [objToLink setValue:jSONLinkId forKey:wotWebResponseLink.coredataIdName];
+                            [linkedObjects addObject:objToLink];
+                        }
+                        
+                        NSDictionary *args = [wotWebResponseLink requestArgsForAvailableIds:jSonLinks];
+                        
+                        [requests setObject:args forKey:@(wotWebResponseLink.wotWebRequestId)];
+
+                        if (wotWebResponseLink.linkItemsBlock) {
+                            
+                            wotWebResponseLink.linkItemsBlock(vehicle, linkedObjects);
+                        }
+                    }
                 }
             }
         }

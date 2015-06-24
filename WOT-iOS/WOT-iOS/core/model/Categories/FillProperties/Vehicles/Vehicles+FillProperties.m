@@ -9,6 +9,9 @@
 #import "Vehicles+FillProperties.h"
 #import "Tankengines.h"
 #import "Tankchassis.h"
+#import "Tankradios.h"
+#import "Tankguns.h"
+#import "Tankturrets.h"
 #import "Tanks.h"
 
 @implementation Vehicles (FillProperties)
@@ -33,7 +36,7 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOT_KEY_NAME,WOT_KEY_NATION,WOT_KEY_PRICE_CREDIT, WOT_KEY_PRICE_GOLD, WOT_KEY_SHORT_NAME, WOT_KEY_TAG, WOT_KEY_TIER, WOT_KEY_TYPE, WOT_LINKKEY_ENGINES, WOT_LINKKEY_SUSPENSIONS, WOT_KEY_PRICES_XP, WOT_KEY_IS_GIFT, WOT_KEY_TANK_ID];
+    return @[WOT_KEY_NAME,WOT_KEY_NATION,WOT_KEY_PRICE_CREDIT, WOT_KEY_PRICE_GOLD, WOT_KEY_SHORT_NAME, WOT_KEY_TAG, WOT_KEY_TIER, WOT_KEY_TYPE, WOT_LINKKEY_ENGINES, WOT_LINKKEY_SUSPENSIONS, WOT_LINKKEY_RADIOS, WOT_LINKKEY_GUNS, WOT_LINKKEY_TURRETS, WOT_KEY_PRICES_XP, WOT_KEY_IS_GIFT, WOT_KEY_TANK_ID];
 }
 
 
@@ -67,9 +70,46 @@
                                                          }
                                        ];
     
+    WOTWebResponseLink *radiosLink = [WOTWebResponseLink linkWithClass:[Tankradios class]
+                                                             requestId:WOTRequestIdTankRadios
+                                                   argFieldNameToFetch:WOT_KEY_FIELDS
+                                                 argFieldValuesToFetch:[Tankradios availableFields]
+                                                  argFieldNameToFilter:WOT_KEY_MODULE_ID
+                                                           jsonKeyName:WOT_LINKKEY_RADIOS
+                                                        coredataIdName:WOT_KEY_MODULE_ID
+                                                        linkItemsBlock:^(id entity, NSSet *items){
+                                                             Vehicles *vehicles = (Vehicles *)entity;
+                                                             [vehicles addRadios:items];
+                                                        }
+                                       ];
+    
+    WOTWebResponseLink *gunsLink = [WOTWebResponseLink linkWithClass:[Tankguns class]
+                                                           requestId:WOTRequestIdTankGuns
+                                                 argFieldNameToFetch:WOT_KEY_FIELDS
+                                               argFieldValuesToFetch:[Tankguns availableFields]
+                                                argFieldNameToFilter:WOT_KEY_MODULE_ID
+                                                         jsonKeyName:WOT_LINKKEY_GUNS
+                                                      coredataIdName:WOT_KEY_MODULE_ID
+                                                      linkItemsBlock:^(id entity, NSSet *items){
+                                                          Vehicles *vehicles = (Vehicles *)entity;
+                                                          [vehicles addGuns:items];
+                                                        }
+                                      ];
     
     
-    return @[enginesLink, chassisLink];
+    WOTWebResponseLink *turretsLink = [WOTWebResponseLink linkWithClass:[Tankturrets class]
+                                                              requestId:WOTRequestIdTankTurrets
+                                                    argFieldNameToFetch:WOT_KEY_FIELDS
+                                                  argFieldValuesToFetch:[Tankturrets availableFields]
+                                                   argFieldNameToFilter:WOT_KEY_MODULE_ID
+                                                            jsonKeyName:WOT_LINKKEY_TURRETS
+                                                         coredataIdName:WOT_KEY_MODULE_ID
+                                                         linkItemsBlock:^(id entity, NSSet *items){
+                                                             Vehicles *vehicles = (Vehicles *)entity;
+                                                             [vehicles addTurrets:items];
+                                                      }
+                                    ];
+    return @[enginesLink, chassisLink, radiosLink, gunsLink, turretsLink];
 }
 
 @end

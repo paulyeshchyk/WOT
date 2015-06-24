@@ -7,6 +7,7 @@
 //
 
 #import "WOTWebResponseAdapterGuns.h"
+#import "Tankguns.h"
 
 @implementation WOTWebResponseAdapterGuns
 
@@ -16,6 +17,26 @@
         
         NSLog(@"%@",error.localizedDescription);
         return;
+    }
+    
+    NSDictionary *tankGunsDictionary = data[WOT_KEY_DATA];
+    
+    NSArray *tankGunsArray = [tankGunsDictionary allKeys];
+    
+    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
+    for (NSString *key in tankGunsArray) {
+        
+        NSDictionary *tankGunsJSON = tankGunsDictionary[key];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankGunsJSON[WOT_KEY_MODULE_ID]];
+        Tankguns *tankGuns = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+        [tankGuns fillPropertiesFromDictionary:tankGunsJSON];
+    }
+    
+    if ([context hasChanges]) {
+        
+        NSError *error = nil;
+        [context save:&error];
     }
 }
 

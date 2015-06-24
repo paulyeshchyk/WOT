@@ -7,6 +7,7 @@
 //
 
 #import "WOTWebResponseAdapterRadios.h"
+#import "Tankradios.h"
 
 @implementation WOTWebResponseAdapterRadios
 
@@ -16,6 +17,25 @@
         
         NSLog(@"%@",error.localizedDescription);
         return;
+    }
+    NSDictionary *tankRadiosDictionary = data[WOT_KEY_DATA];
+    
+    NSArray *tankRadiosArray = [tankRadiosDictionary allKeys];
+    
+    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
+    for (NSString *key in tankRadiosArray) {
+        
+        NSDictionary *tankRadiosJSON = tankRadiosDictionary[key];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankRadiosJSON[WOT_KEY_MODULE_ID]];
+        Tankradios *tankradios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+        [tankradios fillPropertiesFromDictionary:tankRadiosJSON];
+    }
+    
+    if ([context hasChanges]) {
+        
+        NSError *error = nil;
+        [context save:&error];
     }
 }
 

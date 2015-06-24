@@ -35,7 +35,30 @@
                                                       ],
                                          @"query": WOT_LINKKEY_SUSPENSIONS
                                          };
-        self.fields = @{@"engines":enginesSection,@"chassis":chassisSection};
+        NSDictionary *radiosSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
+                                                     [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT],
+                                                     [WOTTankDetailField fieldWithFieldPath:WOT_KEY_DISTANCE]
+                                                     ],
+                                         @"query": WOT_LINKKEY_RADIOS
+                                         };
+        NSDictionary *gunsSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
+                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT],
+                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_LEVEL],
+                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_RATE]
+                                                   ],
+                                      @"query": WOT_LINKKEY_GUNS
+                                        };
+        NSDictionary *turretsSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_BOARD],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_FEDD],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_FOREHEAD],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_LEVEL],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_CIRCULAR_VISION_RADIUS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ROTATION_SPEED]
+                                                      ],
+                                      @"query": WOT_LINKKEY_TURRETS
+                                      };
+        self.fields = @{@"engines":enginesSection,@"chassis":chassisSection,@"radios":radiosSection,@"guns":gunsSection,@"turrets":turretsSection};
         
     }
     return self;

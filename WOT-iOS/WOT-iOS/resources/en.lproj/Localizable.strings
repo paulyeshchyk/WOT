@@ -7,31 +7,31 @@
 */
 
 
-WOT_IMAGE_MENU_ICON = "wotShowMenuButtoniPhone";
-WOT_STRING_PROFILE = "Profile";
-WOT_STRING_TANKOPEDIA = "Tankopedia";
-WOT_STRING_PLAYERS = "Players";
-WOT_STRING_BACK = "Back";
-WOT_STRING_LOGIN = "Login";
-WOT_STRING_SELECT_LANGUAGE = "SELECT lang";
-WOT_STRING_ANONYMOUS_USER = "Anonymous user";
-WOT_STRING_COMPOUND = "Compound";
-WOT_STRING_APPLY = "Apply";
-WOT_STRING_EDIT = "Edit";
-WOT_STRING_REORDER = "Reorder";
-WOT_STRING_CANCEL = "Cancel";
-WOT_STRING_GROUP_AND_SORT = "Group and sort";
-WOT_KEY_SETTING_TYPE_GROUP = "Groupping";
-WOT_KEY_SETTING_TYPE_SORT = "Sorting";
-WOT_KEY_SETTING_TYPE_FILTER ="Filter";
-WOT_STRING_PREVIEW = "Preview";
+WOT_IMAGE_MENU_ICON         = "wotShowMenuButtoniPhone";
+WOT_STRING_PROFILE          = "Profile";
+WOT_STRING_TANKOPEDIA       = "Tankopedia";
+WOT_STRING_PLAYERS          = "Players";
+WOT_STRING_BACK             = "Back";
+WOT_STRING_LOGIN            = "Login";
+WOT_STRING_SELECT_LANGUAGE  = "SELECT lang";
+WOT_STRING_ANONYMOUS_USER   = "Anonymous user";
+WOT_STRING_COMPOUND         = "Compound";
+WOT_STRING_APPLY            = "Apply";
+WOT_STRING_EDIT             = "Edit";
+WOT_STRING_REORDER          = "Reorder";
+WOT_STRING_CANCEL           = "Cancel";
+WOT_STRING_GROUP_AND_SORT   = "Group and sort";
+WOT_KEY_SETTING_TYPE_GROUP  = "Groupping";
+WOT_KEY_SETTING_TYPE_SORT   = "Sorting";
+WOT_KEY_SETTING_TYPE_FILTER = "Filter";
+WOT_STRING_PREVIEW          = "Preview";
 
 WOT_STRING_CHANGE_SORTING = "Change sorting";
 WOT_STRING_CHANGE_GROUP   = "Change groupping";
 WOT_STRING_CHANGE_FILTER  = "Change filter";
 
 
-TANK_ID         ="id";
+TANK_ID         = "id";
 NAME            = "name";
 IMAGE           = "Image";
 IS_PREMIUM      = "Is premium";
