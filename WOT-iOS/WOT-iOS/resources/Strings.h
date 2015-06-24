@@ -102,6 +102,9 @@
 #define WOT_IMAGE_DOWN @"WOTArrowDown.png"
 #define WOT_IMAGE_CHECKMARK_DARK @"WOTSelector-checkmark-dark.png"
 #define WOT_IMAGE_CHECKMARK_GRAY @"WOTSelector-checkmark-gray.png"
+#define WOT_IMAGE_DATA_FLOW_CHART @"Data-Flow-Chart-icon.png"
+#define WOT_IMAGE_DATA_LIST @"Data-List-icon.png"
+#define WOT_IMAGE_MESSAGING_CATEGORIZE @"Messaging-Categorize-icon.png"
 
 #define WOT_IMAGE_MENU_ICON @"WOT_IMAGE_MENU_ICON"
 

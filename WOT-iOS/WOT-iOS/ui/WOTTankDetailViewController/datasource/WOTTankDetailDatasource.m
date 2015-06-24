@@ -22,43 +22,43 @@
     self = [super init];
     if (self){
         
-        NSDictionary *enginesSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_POWER],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_FIRE_STARTING_CHANCE]
+        NSDictionary *enginesSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_ENGINES],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_POWER query:WOT_LINKKEY_ENGINES],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_ENGINES],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_FIRE_STARTING_CHANCE query:WOT_LINKKEY_ENGINES]
                                                       ],
                                          @"query": WOT_LINKKEY_ENGINES
                                    };
-        NSDictionary *chassisSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ROTATION_SPEED]
+        NSDictionary *chassisSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_SUSPENSIONS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_SUSPENSIONS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ROTATION_SPEED query:WOT_LINKKEY_SUSPENSIONS]
                                                       ],
                                          @"query": WOT_LINKKEY_SUSPENSIONS
                                          };
-        NSDictionary *radiosSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
-                                                     [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT],
-                                                     [WOTTankDetailField fieldWithFieldPath:WOT_KEY_DISTANCE]
+        NSDictionary *radiosSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_RADIOS],
+                                                     [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_RADIOS],
+                                                     [WOTTankDetailField fieldWithFieldPath:WOT_KEY_DISTANCE query:WOT_LINKKEY_RADIOS]
                                                      ],
                                          @"query": WOT_LINKKEY_RADIOS
                                          };
-        NSDictionary *gunsSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
-                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT],
-                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_LEVEL],
-                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_RATE]
+        NSDictionary *gunsSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_GUNS],
+                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_GUNS],
+                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_GUNS],
+                                                   [WOTTankDetailField fieldWithFieldPath:WOT_KEY_RATE query:WOT_LINKKEY_GUNS]
                                                    ],
                                       @"query": WOT_LINKKEY_GUNS
                                         };
-        NSDictionary *turretsSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_BOARD],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_FEDD],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_FOREHEAD],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_LEVEL],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_CIRCULAR_VISION_RADIUS],
-                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ROTATION_SPEED]
+        NSDictionary *turretsSection = @{@"metrics":@[[WOTTankDetailField fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_TURRETS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_BOARD query:WOT_LINKKEY_TURRETS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_FEDD query:WOT_LINKKEY_TURRETS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ARMOR_FOREHEAD query:WOT_LINKKEY_TURRETS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_TURRETS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_CIRCULAR_VISION_RADIUS query:WOT_LINKKEY_TURRETS],
+                                                      [WOTTankDetailField fieldWithFieldPath:WOT_KEY_ROTATION_SPEED query:WOT_LINKKEY_TURRETS]
                                                       ],
                                       @"query": WOT_LINKKEY_TURRETS
                                       };
-        self.fields = @{@"engines":enginesSection,@"chassis":chassisSection,@"radios":radiosSection,@"guns":gunsSection,@"turrets":turretsSection};
+        self.fields = @{@"guns":gunsSection,@"turrets":turretsSection,@"engines":enginesSection,@"chassis":chassisSection,@"radios":radiosSection};
         
     }
     return self;

@@ -161,9 +161,12 @@
     WOTTankDetailCollectionViewCell *result =(WOTTankDetailCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class]) forIndexPath:indexPath];
 
     NSString *query = [self.datasource queryAtSection:indexPath.section];
-    id filteredObjects = [[[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject] allObjects];
 
     NSArray * fields = [self.datasource fieldsInSecton:indexPath.section];
+
+    id filteredObjects = [[[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject] allObjects];
+    
+    
     result.fetchedObject = filteredObjects[indexPath.row];
     result.fields = fields;
     [result invalidate];

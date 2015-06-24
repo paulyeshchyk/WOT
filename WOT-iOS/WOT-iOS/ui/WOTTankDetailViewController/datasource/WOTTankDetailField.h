@@ -12,9 +12,12 @@
 
 @property (nonatomic, copy)NSString *fieldPath;
 @property (nonatomic, copy)NSString *fieldDescriotion;
+@property (nonatomic, copy)NSString *query;
+
 
 + (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath;
-+ (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath fieldDescription:(NSString *)fieldDescription;
++ (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath query:(NSString *)query;
++ (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath query:(NSString *)query fieldDescription:(NSString *)fieldDescription;
 
 @end
 

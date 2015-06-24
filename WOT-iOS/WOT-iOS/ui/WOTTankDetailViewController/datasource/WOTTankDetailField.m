@@ -14,13 +14,19 @@
 
 + (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath{
     
-    return [self fieldWithFieldPath:fieldPath fieldDescription:nil];
+    return [self fieldWithFieldPath:fieldPath query:nil fieldDescription:nil];
 }
 
-+ (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath fieldDescription:(NSString *)fieldDescription {
++ (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath query:(NSString *)query {
+    
+    return [self fieldWithFieldPath:fieldPath query:query fieldDescription:nil];
+}
+
++ (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath query:(NSString *)query fieldDescription:(NSString *)fieldDescription {
     
     WOTTankDetailField *result = [[WOTTankDetailField alloc] init];
     result.fieldPath = fieldPath;
+    result.query = query;
     result.fieldDescriotion = fieldDescription;
     return result;
 }

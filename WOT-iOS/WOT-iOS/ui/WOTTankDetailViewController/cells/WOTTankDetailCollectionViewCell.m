@@ -25,7 +25,6 @@ static const NSInteger RowHeight = 22.0f;
     return CGSizeMake(size.width, RowHeight*fields.count);
 }
 
-
 - (void)awakeFromNib {
 
     [super awakeFromNib];
@@ -33,7 +32,6 @@ static const NSInteger RowHeight = 22.0f;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankDetailTableViewCell class])];
     [self.tableView setEstimatedRowHeight:RowHeight];
 }
-
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -56,7 +54,6 @@ static const NSInteger RowHeight = 22.0f;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     return RowHeight;
-    
 }
 
 - (void)invalidate {
