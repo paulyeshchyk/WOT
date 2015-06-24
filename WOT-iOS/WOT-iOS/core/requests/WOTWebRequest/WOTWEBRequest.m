@@ -93,7 +93,7 @@ static NSString *urlEncode(NSString *string) {
     [request setHTTPMethod:self.method];
     [NSURLConnection sendAsynchronousRequest:request queue:[WOTWEBRequest requestQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
-        NSLog(@"webrequest-end:%@",[self.url absoluteString]);
+//        NSLog(@"webrequest-end:%@",[self.url absoluteString]);
         [self parseResponse:response data:data error:connectionError];
     }];
 
