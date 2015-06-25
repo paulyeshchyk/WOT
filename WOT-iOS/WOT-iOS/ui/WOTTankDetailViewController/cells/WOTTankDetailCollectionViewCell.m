@@ -46,7 +46,7 @@ static const NSInteger RowHeight = 22.0f;
     WOTTankDetailField *field = self.fields[indexPath.row];
     result.nameLabel.text = WOTString(field.fieldDescriotion?field.fieldDescriotion:field.fieldPath);
 
-    id value = [self.fetchedObject valueForKeyPath:field.fieldPath];
+    id value = [field evaluateWithObject:self.fetchedObject];
     result.valueLabel.text = [value description];
     return result;
 }

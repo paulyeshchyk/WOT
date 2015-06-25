@@ -50,6 +50,9 @@
 		1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92671B2709D800E320B5 /* WOTTankListSortHeaderView.m */; };
 		1D4C926A1B2709E400E320B5 /* WOTTankListSortHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92691B2709E400E320B5 /* WOTTankListSortHeaderView.xib */; };
 		1D4C926E1B270BF400E320B5 /* WOTTankListSettingsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C926D1B270BF400E320B5 /* WOTTankListSettingsDatasource.m */; };
+		1D90694F1B3C1E3D00237852 /* WOTTankDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90694E1B3C1E3D00237852 /* WOTTankDetailSection.m */; };
+		1D9069581B3C227F00237852 /* WOTTankDetailField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9069551B3C227F00237852 /* WOTTankDetailField.m */; };
+		1D9069591B3C227F00237852 /* WOTTankDetailFieldKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9069571B3C227F00237852 /* WOTTankDetailFieldKVO.m */; };
 		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
 		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
 		1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7381B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m */; };
@@ -99,7 +102,6 @@
 		1DC07B801B3AB778002FAA72 /* Tankturrets+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B761B3AB778002FAA72 /* Tankturrets+FillProperties.m */; };
 		1DC07B811B3AB778002FAA72 /* Vehicles+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B791B3AB778002FAA72 /* Vehicles+FillProperties.m */; };
 		1DC07B871B3ABB2E002FAA72 /* WOTTankDetailDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B841B3ABB2E002FAA72 /* WOTTankDetailDatasource.m */; };
-		1DC07B881B3ABB2E002FAA72 /* WOTTankDetailField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B861B3ABB2E002FAA72 /* WOTTankDetailField.m */; };
 		1DC07B931B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B8B1B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.m */; };
 		1DC07B941B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B8C1B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.xib */; };
 		1DC07B951B3AF434002FAA72 /* WOTTankDetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B8E1B3AF434002FAA72 /* WOTTankDetailCollectionViewCell.m */; };
@@ -320,6 +322,12 @@
 		1D4C92691B2709E400E320B5 /* WOTTankListSortHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSortHeaderView.xib; sourceTree = "<group>"; };
 		1D4C926C1B270BF400E320B5 /* WOTTankListSettingsDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsDatasource.h; sourceTree = "<group>"; };
 		1D4C926D1B270BF400E320B5 /* WOTTankListSettingsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingsDatasource.m; sourceTree = "<group>"; };
+		1D90694D1B3C1E3D00237852 /* WOTTankDetailSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailSection.h; sourceTree = "<group>"; };
+		1D90694E1B3C1E3D00237852 /* WOTTankDetailSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailSection.m; sourceTree = "<group>"; };
+		1D9069541B3C227F00237852 /* WOTTankDetailField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailField.h; sourceTree = "<group>"; };
+		1D9069551B3C227F00237852 /* WOTTankDetailField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailField.m; sourceTree = "<group>"; };
+		1D9069561B3C227F00237852 /* WOTTankDetailFieldKVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailFieldKVO.h; sourceTree = "<group>"; };
+		1D9069571B3C227F00237852 /* WOTTankDetailFieldKVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailFieldKVO.m; sourceTree = "<group>"; };
 		1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingAddNewTableViewCell.h; sourceTree = "<group>"; };
 		1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingAddNewTableViewCell.m; sourceTree = "<group>"; };
 		1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingAddNewTableViewCell.xib; sourceTree = "<group>"; };
@@ -417,8 +425,6 @@
 		1DC07B791B3AB778002FAA72 /* Vehicles+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Vehicles+FillProperties.m"; sourceTree = "<group>"; };
 		1DC07B831B3ABB2E002FAA72 /* WOTTankDetailDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailDatasource.h; sourceTree = "<group>"; };
 		1DC07B841B3ABB2E002FAA72 /* WOTTankDetailDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailDatasource.m; sourceTree = "<group>"; };
-		1DC07B851B3ABB2E002FAA72 /* WOTTankDetailField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailField.h; sourceTree = "<group>"; };
-		1DC07B861B3ABB2E002FAA72 /* WOTTankDetailField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailField.m; sourceTree = "<group>"; };
 		1DC07B8A1B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailCollectionReusableView.h; sourceTree = "<group>"; };
 		1DC07B8B1B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailCollectionReusableView.m; sourceTree = "<group>"; };
 		1DC07B8C1B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankDetailCollectionReusableView.xib; sourceTree = "<group>"; };
@@ -836,6 +842,17 @@
 			path = WOTTankListSettingsDatasource;
 			sourceTree = "<group>";
 		};
+		1D9069531B3C227F00237852 /* fields */ = {
+			isa = PBXGroup;
+			children = (
+				1D9069541B3C227F00237852 /* WOTTankDetailField.h */,
+				1D9069551B3C227F00237852 /* WOTTankDetailField.m */,
+				1D9069561B3C227F00237852 /* WOTTankDetailFieldKVO.h */,
+				1D9069571B3C227F00237852 /* WOTTankDetailFieldKVO.m */,
+			);
+			path = fields;
+			sourceTree = "<group>";
+		};
 		1DA1D7431B2AFD4A00C5C2FB /* cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -1115,10 +1132,11 @@
 		1DC07B821B3ABB2E002FAA72 /* datasource */ = {
 			isa = PBXGroup;
 			children = (
+				1D9069531B3C227F00237852 /* fields */,
 				1DC07B831B3ABB2E002FAA72 /* WOTTankDetailDatasource.h */,
 				1DC07B841B3ABB2E002FAA72 /* WOTTankDetailDatasource.m */,
-				1DC07B851B3ABB2E002FAA72 /* WOTTankDetailField.h */,
-				1DC07B861B3ABB2E002FAA72 /* WOTTankDetailField.m */,
+				1D90694D1B3C1E3D00237852 /* WOTTankDetailSection.h */,
+				1D90694E1B3C1E3D00237852 /* WOTTankDetailSection.m */,
 			);
 			path = datasource;
 			sourceTree = "<group>";
@@ -1969,7 +1987,6 @@
 				1DCC80B41B3036A4005FF193 /* ChartAxisRendererBase.swift in Sources */,
 				1DCC80BB1B3036A4005FF193 /* ChartXAxisRendererRadarChart.swift in Sources */,
 				1DCC809E1B3036A4005FF193 /* BubbleChartDataSet.swift in Sources */,
-				1DC07B881B3ABB2E002FAA72 /* WOTTankDetailField.m in Sources */,
 				1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				1DCC808D1B3036A4005FF193 /* PieRadarChartViewBase.swift in Sources */,
 				1DCC80C61B3036A4005FF193 /* ChartFillFormatter.swift in Sources */,
@@ -1982,6 +1999,7 @@
 				1DCC80AD1B3036A4005FF193 /* ScatterChartData.swift in Sources */,
 				1DCC80B81B3036A4005FF193 /* ChartXAxisRenderer.swift in Sources */,
 				1DCC7F421B2F0330005FF193 /* WOTTankDetailViewController.m in Sources */,
+				1D9069591B3C227F00237852 /* WOTTankDetailFieldKVO.m in Sources */,
 				1DCC7F321B2EE974005FF193 /* RomanNumber.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
 				1DCC80A61B3036A4005FF193 /* LineChartData.swift in Sources */,
@@ -2003,6 +2021,7 @@
 				1DCC80971B3036A4005FF193 /* BarChartData.swift in Sources */,
 				1DCC80A01B3036A4005FF193 /* CandleChartDataEntry.swift in Sources */,
 				1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */,
+				1D90694F1B3C1E3D00237852 /* WOTTankDetailSection.m in Sources */,
 				1DCC80941B3036A4005FF193 /* ChartMarker.swift in Sources */,
 				1DCC80921B3036A4005FF193 /* ChartLegend.swift in Sources */,
 				1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */,
@@ -2094,6 +2113,7 @@
 				1DC07B7C1B3AB778002FAA72 /* NSManagedObject+FillProperties.m in Sources */,
 				1DCC80AA1B3036A4005FF193 /* PieChartDataSet.swift in Sources */,
 				1DC07B7A1B3AB778002FAA72 /* Tankchassis+FillProperties.m in Sources */,
+				1D9069581B3C227F00237852 /* WOTTankDetailField.m in Sources */,
 				1DCC80C51B3036A4005FF193 /* ChartColorTemplates.swift in Sources */,
 				1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */,
 				1DCC808A1B3036A4005FF193 /* HorizontalBarChartView.swift in Sources */,

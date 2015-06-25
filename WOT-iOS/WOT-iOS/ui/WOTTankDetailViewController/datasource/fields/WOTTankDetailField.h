@@ -19,5 +19,7 @@
 + (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath query:(NSString *)query;
 + (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath query:(NSString *)query fieldDescription:(NSString *)fieldDescription;
 
+- (id)evaluateWithObject:(id)object;
+
 @end
 

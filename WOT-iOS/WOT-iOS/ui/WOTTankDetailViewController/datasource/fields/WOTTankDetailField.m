@@ -24,11 +24,17 @@
 
 + (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath query:(NSString *)query fieldDescription:(NSString *)fieldDescription {
     
-    WOTTankDetailField *result = [[WOTTankDetailField alloc] init];
+    WOTTankDetailField *result = [[self alloc] init];
     result.fieldPath = fieldPath;
     result.query = query;
     result.fieldDescriotion = fieldDescription;
     return result;
 }
 
+
+- (id)evaluateWithObject:(id)object {
+    
+    NSCAssert(NO, @"should be overriden");
+    return nil;
+}
 @end

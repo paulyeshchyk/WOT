@@ -162,7 +162,7 @@
 
     NSString *query = [self.datasource queryAtSection:indexPath.section];
 
-    NSArray * fields = [self.datasource fieldsInSecton:indexPath.section];
+    NSArray * fields = [self.datasource metricsInSecton:indexPath.section];
 
     id filteredObjects = [[[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject] allObjects];
     
@@ -184,7 +184,7 @@
     CGFloat separatorHeight = 1.0f;
     CGSize initialSize = CGSizeMake(320,32);
     
-    NSArray * fields = [self.datasource fieldsInSecton:indexPath.section];
+    NSArray * fields = [self.datasource metricsInSecton:indexPath.section];
     CGSize result = [WOTTankDetailCollectionViewCell sizeFitSize:initialSize forFetchedObject:nil andFields:fields];
     
     return CGSizeMake(result.width, result.height + separatorHeight);

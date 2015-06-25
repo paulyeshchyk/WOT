@@ -7,13 +7,14 @@
 //
 
 #import "WOTTankDetailField.h"
+#import "WOTTankDetailSection.h"
 
 @interface WOTTankDetailDatasource : NSObject
 
 - (NSInteger)numberOfSections;
 - (NSString *)sectionNameAtIndex:(NSInteger)section;
-- (NSArray *)fieldsInSecton:(NSInteger)section;
-- (WOTTankDetailField *)fieldAtIndexPath:(NSIndexPath *)indexPath;
+- (NSArray *)metricsInSecton:(NSInteger)section;
+- (WOTTankDetailField *)metricAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSString *)queryAtSection:(NSInteger)section;
 
