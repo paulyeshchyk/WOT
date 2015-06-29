@@ -145,7 +145,13 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
 
-    [self.tableviewDatasource moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
+    [self.tableviewDatasource moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath completionBlock:^{
+        
+        if (self.commitBlock){
+            
+            self.commitBlock();
+        }
+    }];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {

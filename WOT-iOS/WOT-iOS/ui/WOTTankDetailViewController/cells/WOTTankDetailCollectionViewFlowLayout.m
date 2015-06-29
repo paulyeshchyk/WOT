@@ -37,15 +37,16 @@
  * link:http://stackoverflow.com/a/13678922/973784
  */
 
-
+/*
 - (NSArray *) layoutAttributesForElementsInRect:(CGRect)rect {
     
-    NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
+    NSMutableArray *result = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
+    
     UICollectionView * const cv = self.collectionView;
     CGPoint const contentOffset = cv.contentOffset;
     
     NSMutableIndexSet *missingSections = [NSMutableIndexSet indexSet];
-    for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
+    for (UICollectionViewLayoutAttributes *layoutAttributes in result) {
         
         if (layoutAttributes.representedElementCategory == UICollectionElementCategoryCell) {
             
@@ -53,7 +54,7 @@
         }
     }
     
-    for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
+    for (UICollectionViewLayoutAttributes *layoutAttributes in result) {
         
         if ([layoutAttributes.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
             
@@ -67,11 +68,11 @@
         
         UICollectionViewLayoutAttributes *layoutAttributes = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath];
         
-        [answer addObject:layoutAttributes];
+        [result addObject:layoutAttributes];
         
     }];
     
-    for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
+    for (UICollectionViewLayoutAttributes *layoutAttributes in result) {
         
         if ([layoutAttributes.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
             
@@ -114,7 +115,7 @@
         
     }
     
-    return answer;
+    return result;
     
 }
 
@@ -123,5 +124,5 @@
     return YES;
     
 }
-
+*/
 @end

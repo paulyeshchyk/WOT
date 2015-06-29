@@ -16,6 +16,9 @@ typedef NS_ENUM(NSInteger, WOTTankListSettingType) {
 };
 
 typedef void(^WOTTankListSettingUpateCallback)(id setting);
+typedef void(^WOTTankListSettingMoveCompletionCallback)(void);
+
+
 @protocol WOTTableViewDatasourceProtocol <NSObject>
 
 @required
@@ -25,7 +28,7 @@ typedef void(^WOTTankListSettingUpateCallback)(id setting);
 - (NSString *)sectionNameAtIndex:(NSInteger)index;
 - (NSInteger)objectsCountForSection:(NSInteger)section;
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
-- (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
+- (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath completionBlock:(WOTTankListSettingMoveCompletionCallback)completionBlock;
 - (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath;
 
 - (WOTTankListSettingType)settingTypeForSectionAtIndex:(NSInteger)section;

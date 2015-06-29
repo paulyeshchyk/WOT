@@ -121,11 +121,10 @@
     } else {
         
         return nil;
-        
     }
 }
 
-- (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+- (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath completionBlock:(WOTTankListSettingMoveCompletionCallback)completionBlock{
     
     [self.context performBlock:^{
         
@@ -141,6 +140,20 @@
         }];
 
         [self save];
+        
+        if (completionBlock){
+            
+            if ([NSThread isMainThread]) {
+                
+                completionBlock();
+            } else {
+                
+                dispatch_sync(dispatch_get_main_queue(),^(){
+                    
+                    completionBlock();
+                });
+            }
+        }
     }];
 }
 
