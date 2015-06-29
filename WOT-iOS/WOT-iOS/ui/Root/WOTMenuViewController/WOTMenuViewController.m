@@ -65,8 +65,8 @@
 
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = [UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f];
-    self.view.backgroundColor = [UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f];
+    self.tableView.backgroundColor = WOT_COLOR_DARK_VIEW_BACKGROUND;
+    self.view.backgroundColor = WOT_COLOR_DARK_VIEW_BACKGROUND;
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTMenuTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTMenuTableViewCell class])];
 

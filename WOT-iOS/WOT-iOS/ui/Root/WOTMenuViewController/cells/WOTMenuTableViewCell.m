@@ -12,6 +12,8 @@
 
 @property (nonatomic, weak)IBOutlet UILabel *cellTitleLabel;
 @property (nonatomic, weak)IBOutlet UIImageView *cellImageView;
+@property (nonatomic, weak)IBOutlet UIView *bottomSeparatorView;
+@property (nonatomic, weak)IBOutlet UIView *customBackgroundView;
 
 @end
 
@@ -20,6 +22,9 @@
 - (void)awakeFromNib {
     
     [super awakeFromNib];
+    
+    self.bottomSeparatorView.backgroundColor = WOT_COLOR_BOTTOM_CELL_SEPARATOR;
+    self.customBackgroundView.backgroundColor = WOT_COLOR_CELL_BACKGROUND;
     
 //    UIView *selectedBackgroundView = [[UIView alloc] init];
 //    [selectedBackgroundView setOpaque:NO];

@@ -15,7 +15,7 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JtP-8F-dpg">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                            <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="QU9-Gs-Iys"/>
                             </constraints>
@@ -28,7 +28,7 @@
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gH-mb-2QD">
                             <rect key="frame" x="0.0" y="49" width="320" height="1"/>
-                            <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="hRg-rR-X7k"/>
                             </constraints>
@@ -56,6 +56,8 @@
                 <constraint firstAttribute="trailing" secondItem="8nk-3Z-myg" secondAttribute="trailing" id="rdi-em-Sdm"/>
             </constraints>
             <connections>
+                <outlet property="bottomSeparatorView" destination="6gH-mb-2QD" id="Rsx-Hj-EGI"/>
+                <outlet property="topSeparatorView" destination="JtP-8F-dpg" id="hnp-iI-APr"/>
                 <outlet property="viewLabelName" destination="rw3-04-wod" id="vyU-JJ-Sqm"/>
             </connections>
         </collectionReusableView>

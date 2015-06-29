@@ -9,13 +9,20 @@
 #import "WOTTankDetailCollectionReusableView.h"
 
 @interface WOTTankDetailCollectionReusableView ()
+
 @property (nonatomic, weak)IBOutlet UILabel *viewLabelName;
+@property (nonatomic, weak)IBOutlet UIView *topSeparatorView;
+@property (nonatomic, weak)IBOutlet UIView *bottomSeparatorView;
+
 @end
 
 @implementation WOTTankDetailCollectionReusableView
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
+    self.topSeparatorView.backgroundColor = WOT_COLOR_TOP_HEADER_SEPARATOR;
+    self.bottomSeparatorView.backgroundColor = WOT_COLOR_TOP_HEADER_SEPARATOR;
 }
 
 - (void)setViewName:(NSString *)viewName {

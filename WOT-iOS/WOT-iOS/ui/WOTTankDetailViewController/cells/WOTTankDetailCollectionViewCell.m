@@ -15,6 +15,7 @@ static const NSInteger RowHeight = 22.0f;
 @interface WOTTankDetailCollectionViewCell () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak)IBOutlet UITableView *tableView;
+@property (nonatomic, weak)IBOutlet UIView *bottomSeparatorView;
 
 @end
 
@@ -29,6 +30,7 @@ static const NSInteger RowHeight = 22.0f;
 
     [super awakeFromNib];
 
+    self.isLastInSection = NO;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankDetailTableViewCell class])];
     [self.tableView setEstimatedRowHeight:RowHeight];
 }
@@ -57,6 +59,8 @@ static const NSInteger RowHeight = 22.0f;
 }
 
 - (void)invalidate {
+    
+    self.bottomSeparatorView.backgroundColor = self.isLastInSection?[UIColor clearColor]:WOT_COLOR_BOTTOM_CELL_SEPARATOR;
     
     [self.tableView reloadData];
 }

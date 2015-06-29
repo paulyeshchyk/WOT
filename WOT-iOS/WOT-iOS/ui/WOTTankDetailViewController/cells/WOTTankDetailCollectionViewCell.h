@@ -12,6 +12,7 @@
 
 @property (nonatomic, weak)id fetchedObject;
 @property (nonatomic, copy)NSArray *fields;
+@property (nonatomic, assign)BOOL isLastInSection;
 
 + (CGSize)sizeFitSize:(CGSize)size forFetchedObject:(id)fetchedObject andFields:(NSArray *)fields;
 - (void)invalidate;

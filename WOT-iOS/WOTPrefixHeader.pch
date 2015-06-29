@@ -31,5 +31,6 @@
 #import "WOTEnums.h"
 #import "WOTError.h"
 #import "WOTErrorCodes.h"
+#import "WOTColors.h"
 
 #endif

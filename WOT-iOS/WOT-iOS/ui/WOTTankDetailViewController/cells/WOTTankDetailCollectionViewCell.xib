@@ -22,7 +22,7 @@
                     </tableView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zvM-lS-ppy">
                         <rect key="frame" x="0.0" y="335" width="361" height="1"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.25490196078431371" green="0.25490196078431371" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="abv-Fc-bkZ"/>
                         </constraints>
@@ -42,6 +42,7 @@
             </constraints>
             <size key="customSize" width="361" height="336"/>
             <connections>
+                <outlet property="bottomSeparatorView" destination="zvM-lS-ppy" id="GkQ-V0-cdp"/>
                 <outlet property="tableView" destination="f5A-up-7UM" id="0b6-13-QBm"/>
             </connections>
             <point key="canvasLocation" x="412.5" y="414"/>

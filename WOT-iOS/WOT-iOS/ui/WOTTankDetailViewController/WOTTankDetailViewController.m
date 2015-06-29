@@ -166,7 +166,7 @@
 
     id filteredObjects = [[[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject] allObjects];
     
-    
+    result.isLastInSection = (indexPath.row == ([self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1));
     result.fetchedObject = filteredObjects[indexPath.row];
     result.fields = fields;
     [result invalidate];
@@ -176,6 +176,7 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
