@@ -35,6 +35,12 @@ static const NSInteger RowHeight = 22.0f;
     [self.tableView setEstimatedRowHeight:RowHeight];
 }
 
+- (void)setHighlighted:(BOOL)highlighted {
+
+    [super setHighlighted:NO];
+    [self setNeedsDisplay];
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     

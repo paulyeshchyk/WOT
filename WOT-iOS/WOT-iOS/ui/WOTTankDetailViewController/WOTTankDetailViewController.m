@@ -16,6 +16,7 @@
 #import "WOTTankDetailCollectionViewCell.h"
 #import "WOTTankDetailCollectionReusableView.h"
 #import "WOTTankDetailDatasource.h"
+#import "WOTTankDetailCollectionViewFlowLayout.h"
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -183,12 +184,18 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     CGFloat separatorHeight = 1.0f;
-    CGSize initialSize = CGSizeMake(320,32);
+    CGSize initialSize = [(WOTTankDetailCollectionViewFlowLayout *)collectionViewLayout itemSize];
     
     NSArray * fields = [self.datasource metricsInSecton:indexPath.section];
     CGSize result = [WOTTankDetailCollectionViewCell sizeFitSize:initialSize forFetchedObject:nil andFields:fields];
     
     return CGSizeMake(result.width, result.height + separatorHeight);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    
+    CGSize initialSize = [(WOTTankDetailCollectionViewFlowLayout *)collectionViewLayout headerReferenceSize];
+    return initialSize;
 }
 
 #pragma mark -

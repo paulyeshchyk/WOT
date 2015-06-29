@@ -53,6 +53,7 @@
 		1D90694F1B3C1E3D00237852 /* WOTTankDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90694E1B3C1E3D00237852 /* WOTTankDetailSection.m */; };
 		1D9069581B3C227F00237852 /* WOTTankDetailField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9069551B3C227F00237852 /* WOTTankDetailField.m */; };
 		1D9069591B3C227F00237852 /* WOTTankDetailFieldKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9069571B3C227F00237852 /* WOTTankDetailFieldKVO.m */; };
+		1D90695D1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */; };
 		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
 		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
 		1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7381B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m */; };
@@ -329,6 +330,8 @@
 		1D9069561B3C227F00237852 /* WOTTankDetailFieldKVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailFieldKVO.h; sourceTree = "<group>"; };
 		1D9069571B3C227F00237852 /* WOTTankDetailFieldKVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailFieldKVO.m; sourceTree = "<group>"; };
 		1D90695A1B412D6B00237852 /* WOTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
+		1D90695B1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingAddNewTableViewCell.h; sourceTree = "<group>"; };
 		1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingAddNewTableViewCell.m; sourceTree = "<group>"; };
 		1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingAddNewTableViewCell.xib; sourceTree = "<group>"; };
@@ -1154,6 +1157,8 @@
 				1DC07B901B3AF434002FAA72 /* WOTTankDetailTableViewCell.h */,
 				1DC07B911B3AF434002FAA72 /* WOTTankDetailTableViewCell.m */,
 				1DC07B921B3AF434002FAA72 /* WOTTankDetailTableViewCell.xib */,
+				1D90695B1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.h */,
+				1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -2090,6 +2095,7 @@
 				1DCC808C1B3036A4005FF193 /* PieChartView.swift in Sources */,
 				1DCC80CB1B3036A4005FF193 /* ChartUtils.swift in Sources */,
 				1DCC80901B3036A4005FF193 /* ChartAxisBase.swift in Sources */,
+				1D90695D1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				1DCC80C41B3036A4005FF193 /* ScatterChartRenderer.swift in Sources */,
 				1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */,
 				1DC07B931B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.m in Sources */,
