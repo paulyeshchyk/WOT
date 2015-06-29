@@ -11,5 +11,7 @@
 @interface WOTTankDetailCollectionReusableView : UICollectionReusableView
 
 @property (nonatomic, copy) NSString *viewName;
+@property (nonatomic, assign)BOOL hasSubitems;
+
 
 @end

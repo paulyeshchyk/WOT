@@ -8,6 +8,8 @@
             <connections>
                 <outlet property="collectionView" destination="wqt-eG-e71" id="m63-pM-8Aw"/>
                 <outlet property="roseContainer" destination="HPg-Mh-5sD" id="IzW-D7-f1o"/>
+                <outlet property="roseDiagramHeightConstraint" destination="Zzl-EB-y4z" id="3fE-BK-xbL"/>
+                <outlet property="toolBar" destination="Pac-xP-RlC" id="51C-5E-d38"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,15 +18,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPg-Mh-5sD">
-                    <rect key="frame" x="0.0" y="368" width="320" height="200"/>
-                    <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="200" id="Zzl-EB-y4z"/>
-                    </constraints>
-                </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wqt-eG-e71">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="368"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="324"/>
                     <color key="backgroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="a1f-lY-FRn" customClass="WOTTankDetailCollectionViewFlowLayout">
                         <size key="itemSize" width="320" height="44"/>
@@ -37,16 +32,48 @@
                         <outlet property="delegate" destination="-1" id="624-eD-124"/>
                     </connections>
                 </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPg-Mh-5sD">
+                    <rect key="frame" x="0.0" y="324" width="320" height="200"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="Zzl-EB-y4z"/>
+                    </constraints>
+                </view>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pac-xP-RlC">
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="9lH-lI-Kf9"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem title="Item" id="Vfe-8N-bqG"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="wWO-rK-xYr"/>
+                        <barButtonItem style="plain" id="ItU-e0-LNE">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dM2-fK-m1I">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="rose">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onRoseDiagramButtonPressed:" destination="-1" eventType="touchUpInside" id="tog-5X-iP9"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="HPg-Mh-5sD" secondAttribute="bottom" id="KZw-tv-VCt"/>
+                <constraint firstAttribute="bottom" secondItem="Pac-xP-RlC" secondAttribute="bottom" id="75k-Z4-PzY"/>
+                <constraint firstItem="Pac-xP-RlC" firstAttribute="top" secondItem="HPg-Mh-5sD" secondAttribute="bottom" id="7Rc-0m-TDm"/>
+                <constraint firstItem="Pac-xP-RlC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9gB-vs-Ct4"/>
                 <constraint firstItem="HPg-Mh-5sD" firstAttribute="top" secondItem="wqt-eG-e71" secondAttribute="bottom" id="Qi3-2W-txm"/>
                 <constraint firstItem="HPg-Mh-5sD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="RPk-o8-Cwn"/>
                 <constraint firstAttribute="trailing" secondItem="wqt-eG-e71" secondAttribute="trailing" id="Rav-La-J6g"/>
                 <constraint firstAttribute="trailing" secondItem="HPg-Mh-5sD" secondAttribute="trailing" id="YQ3-DI-Sgy"/>
                 <constraint firstItem="wqt-eG-e71" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fEr-RS-nqk"/>
                 <constraint firstItem="wqt-eG-e71" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ohc-fK-u0y"/>
+                <constraint firstAttribute="trailing" secondItem="Pac-xP-RlC" secondAttribute="trailing" id="x3C-GD-nl3"/>
             </constraints>
             <point key="canvasLocation" x="526" y="371"/>
         </view>

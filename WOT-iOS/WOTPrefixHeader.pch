@@ -9,11 +9,13 @@
 #ifndef WOT_iOS_WOTPrefixHeader_pch
 #define WOT_iOS_WOTPrefixHeader_pch
 
+#import "UINavigationBar+WOT.h"
+#import "UIToolbar+WOT.h"
+
 #import "UIImageView+WebCache.h"
 #import "NSString+WOTValue.h"
 #import "UIImage+Resize.h"
 #import "NSBundle+LanguageBundle.h"
-#import "UINavigationBar+WOT.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import "UIView+StretchingConstraints.h"
 #import <UIKit+AFNetworking.h>

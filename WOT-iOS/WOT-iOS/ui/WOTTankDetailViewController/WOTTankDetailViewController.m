@@ -21,11 +21,14 @@
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) IBOutlet UIView *roseContainer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *roseDiagramHeightConstraint;
+@property (nonatomic, weak) IBOutlet UIToolbar *toolBar;
 @property (nonatomic, strong) WOTRadarViewController *roseDiagramController;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) WOTTankDetailDatasource *datasource;
 @property (nonatomic, strong) NSError *fetchError;
+@property (nonatomic, assign) BOOL isDiagramVisible;
 
 @end
 
@@ -55,6 +58,9 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+
+    self.roseDiagramHeightConstraint.constant = 0;
+    self.isDiagramVisible = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextObjectsDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     
@@ -64,12 +70,33 @@
     }];
     [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
 
+    [self.toolBar setDarkStyle];
+    
     [self.roseContainer addSubview:self.roseDiagramController.view];
     [self.roseDiagramController.view addStretchingConstraints];
     
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionReusableView class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class])];
 
+}
+
+- (IBAction)onRoseDiagramButtonPressed:(id)sender {
+ 
+    self.isDiagramVisible = !self.isDiagramVisible;
+    
+}
+
+- (void)setIsDiagramVisible:(BOOL)isDiagramVisible {
+
+    if (_isDiagramVisible != isDiagramVisible) {
+        
+        _isDiagramVisible = isDiagramVisible;
+        self.roseDiagramHeightConstraint.constant = _isDiagramVisible?200.0f:0.0f;
+        [UIView animateWithDuration:0.5f animations:^{
+            
+            [self.view layoutIfNeeded];
+        }];
+    }
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -139,6 +166,7 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     
     WOTTankDetailCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class]) forIndexPath:indexPath];
+    view.hasSubitems = ([self collectionView:collectionView numberOfItemsInSection:indexPath.section] > 0);
     [view setViewName:[self.datasource sectionNameAtIndex:indexPath.section]];
     return view;
 }

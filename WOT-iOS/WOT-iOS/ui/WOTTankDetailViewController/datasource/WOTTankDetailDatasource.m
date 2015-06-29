@@ -33,7 +33,8 @@
                                                                                                                                            [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_SUSPENSIONS],
                                                                                                                                            [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_ROTATION_SPEED query:WOT_LINKKEY_SUSPENSIONS]
                                                                                                                                            ]];
-        WOTTankDetailSection *guns = [[WOTTankDetailSection alloc] initWithTitle:@"Guns" query:WOT_LINKKEY_GUNS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_GUNS],
+        WOTTankDetailSection *guns = [[WOTTankDetailSection alloc] initWithTitle:@"Guns" query:WOT_LINKKEY_GUNS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME query:WOT_LINKKEY_GUNS],
+                                                                                                                          [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_GUNS],
                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_GUNS],
                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_GUNS],
                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_RATE query:WOT_LINKKEY_GUNS]
