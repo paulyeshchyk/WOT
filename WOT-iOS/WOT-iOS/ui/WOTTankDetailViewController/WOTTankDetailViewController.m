@@ -17,6 +17,7 @@
 #import "WOTTankDetailCollectionReusableView.h"
 #import "WOTTankDetailDatasource.h"
 #import "WOTTankDetailCollectionViewFlowLayout.h"
+#import "WOTTankConfigurationViewController.h"
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -67,6 +68,8 @@
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
         
+        WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
+        [self.navigationController pushViewController:configurationSelector animated:YES];
     }];
     [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
 
