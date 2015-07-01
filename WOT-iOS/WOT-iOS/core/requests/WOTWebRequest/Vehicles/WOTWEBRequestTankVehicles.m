@@ -24,4 +24,10 @@
     return @"wot/encyclopedia/vehicles/";
 }
 
+
+- (NSString *)method {
+    
+    return @"POST";
+}
+
 @end

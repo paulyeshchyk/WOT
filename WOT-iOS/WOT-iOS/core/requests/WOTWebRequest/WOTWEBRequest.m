@@ -61,6 +61,7 @@ static NSString *urlEncode(NSString *string) {
         urlPath = [NSString stringWithFormat:@"%@/%@",urlPath, self.path];
     }
     
+#warning implement bodydata for POST
     NSData *bodyData = self.httpBodyData;
     if (!bodyData) {
         

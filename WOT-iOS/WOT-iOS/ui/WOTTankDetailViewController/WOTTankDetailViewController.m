@@ -19,6 +19,8 @@
 #import "WOTTankDetailCollectionViewFlowLayout.h"
 #import "WOTTankConfigurationViewController.h"
 
+#import "WOTTankIdsDatasource.h"
+
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) IBOutlet UIView *roseContainer;
@@ -67,6 +69,17 @@
     
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
+
+        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:@[@(5),@(6),@(7),@(8),@(9)]nations:nil types:nil];
+        [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
+           
+            NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+            [args setObject:[tankId stringValue] forKey:WOT_KEY_TANK_ID];
+            [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
+            [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args];
+            
+        }];
+        NSLog(@"%@",ids);
         
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
         [self.navigationController pushViewController:configurationSelector animated:YES];

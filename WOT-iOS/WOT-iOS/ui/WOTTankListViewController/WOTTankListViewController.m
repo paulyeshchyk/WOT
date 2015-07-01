@@ -12,6 +12,7 @@
 #import "WOTTankListSortViewController.h"
 
 #import "Tanks.h"
+#import "Vehicles.h"
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
 #import "WOTTankListSettingsDatasource.h"
@@ -52,6 +53,18 @@
     
     [self.navigationItem setRightBarButtonItems:@[settingsItem]];
 
+#warning implement listener
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestCallback:^(id data, NSError *error) {
+        
+        if (!error) {
+            
+            NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+            [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
+            [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args];
+        }
+        
+    }];
+    
     [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanks args:@{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]}];
 
     [self invalidateFetchedResultController];
