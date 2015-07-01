@@ -57,6 +57,7 @@
 
     WOTNode *node020 = [[WOTNode alloc] initWithName:@"0.2.0" parent:node02];
     WOTNode *node021 = [[WOTNode alloc] initWithName:@"0.2.1" parent:node02];
+    
     [node02 addChild:node020];
     [node02 addChild:node021];
     
@@ -64,6 +65,9 @@
     [node020 addChild:node0210];
     
     [self.tree addNode:node0];
+    
+    
+    NSLog(@"%@",node0210.siblingIndexPath);
     
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {

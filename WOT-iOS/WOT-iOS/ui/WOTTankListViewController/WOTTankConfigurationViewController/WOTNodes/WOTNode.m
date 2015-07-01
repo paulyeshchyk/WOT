@@ -39,7 +39,8 @@
 
 - (NSIndexPath *)siblingIndexPath {
     
-    return [NSIndexPath indexPathForRow:[self.parent siblingIndexOfChild:self] inSection:self.level];
+    NSInteger row = [self.parent siblingIndexOfChild:self];
+    return [NSIndexPath indexPathForRow:row inSection:(self.level)];
 }
 
 - (NSInteger)indexOfChild:(WOTNode *)node {
@@ -49,7 +50,25 @@
 
 - (NSInteger)siblingIndexOfChild:(WOTNode *)node {
     
-    return [self indexOfChild:node];
+    NSInteger indexOfChild = [self indexOfChild:node];
+
+    NSInteger selfIndex = [self.parent indexOfChild:self];
+    
+    NSInteger siblingIndexOfNeighbourChild = [self.parent numberOfSiblingChildrenBeforeIndex:selfIndex atLevel:self.level];
+    return (indexOfChild + siblingIndexOfNeighbourChild);
+}
+
+- (NSInteger)numberOfSiblingChildrenBeforeIndex:(NSInteger)beforeIndex atLevel:(NSInteger)level {
+    
+    NSInteger result = 0;
+    for (int i=0;i<beforeIndex;i++) {
+        
+        WOTNode *node = [self.childList objectAtIndex:i];
+        result += [[node nodesAtLevel:level] count];
+    }
+    result += [self.parent numberOfSiblingChildrenBeforeIndex:beforeIndex atLevel:level];
+    
+    return result;
 }
 
 - (NSInteger)level {
