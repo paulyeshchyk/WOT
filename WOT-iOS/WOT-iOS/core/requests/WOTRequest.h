@@ -15,7 +15,7 @@ typedef void(^WOTRequestCallback)(id data, NSError *error);
 @property (nonatomic, copy) WOTRequestCallback callback;
 @property (nonatomic, readonly) NSDictionary *args;
 
-- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue;
+- (void)executeWithArgs:(NSDictionary *)args;
 - (void)cancel;
 
 @end

@@ -15,7 +15,7 @@
 
 @implementation WOTRequest
 
-- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue {
+- (void)executeWithArgs:(NSDictionary *)args {
     
     self.args = [args copy];
     

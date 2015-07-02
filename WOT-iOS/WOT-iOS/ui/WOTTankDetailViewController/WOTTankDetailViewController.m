@@ -32,14 +32,13 @@
 @property (nonatomic, strong) WOTTankDetailDatasource *datasource;
 @property (nonatomic, strong) NSError *fetchError;
 @property (nonatomic, assign) BOOL isDiagramVisible;
-@property (nonatomic, strong)NSOperationQueue *operationQueue;
+@property (nonatomic, strong)Vehicles *vehicle;
+
 @end
 
 @implementation WOTTankDetailViewController
 
 - (void)dealloc {
-    
-    [self.operationQueue cancelAllOperations];
     
     _fetchedResultController.delegate = nil;
     self.datasource = nil;
@@ -60,6 +59,21 @@
     return self;
 }
 
+- (NSArray *)availableTiersForTier:(NSNumber *)tier {
+    
+    NSInteger maxValue = MIN(10,[tier integerValue]+2);
+    NSInteger minValue = MAX(1,[tier integerValue]-2);
+  
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+
+    for (NSInteger i=minValue; i<=maxValue; i++) {
+        
+        [result addObject:@(i)];
+    }
+    return result;
+    
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -68,8 +82,6 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class])];
 
     
-    
-    self.operationQueue = [[NSOperationQueue alloc] init];
     
     self.roseDiagramHeightConstraint.constant = 0;
     self.isDiagramVisible = NO;
@@ -81,13 +93,15 @@
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
 
-        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:@[@(5),@(6),@(7),@(8),@(9)]nations:nil types:nil];
+        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:[self availableTiersForTier:self.vehicle.tier] nations:nil types:nil];
         [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
            
             NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
             [args setObject:[tankId stringValue] forKey:WOT_KEY_TANK_ID];
             [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-            [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args inQueue:weakSelf.operationQueue];
+
+            WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
+            [request executeWithArgs:args];
             
         }];
         NSLog(@"%@",ids);
@@ -102,8 +116,17 @@
     
     [self.roseContainer addSubview:self.roseDiagramController.view];
     [self.roseDiagramController.view addStretchingConstraints];
-    
+}
 
+- (void)setVehicle:(Vehicles *)vehicle {
+    
+    _vehicle = vehicle;
+    
+    self.title = vehicle.tanks.name_i18n;
+    
+    [self.collectionView reloadData];
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    
 }
 
 - (IBAction)onRoseDiagramButtonPressed:(id)sender {
@@ -133,7 +156,6 @@
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
         fetchRequest.predicate = predicate;
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
-        fetchRequest.returnsObjectsAsFaults = NO;
         
         _fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[WOTCoreDataProvider sharedInstance] mainManagedObjectContext] sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
@@ -148,6 +170,7 @@
 }
 
 - (void)setFetchError:(NSError *)fetchError {
+    
     _fetchError = fetchError;
 }
 
@@ -156,7 +179,9 @@
     NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
     [args setObject:[self.tankId stringValue] forKey:WOT_KEY_TANK_ID];
     [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args inQueue:self.operationQueue];
+
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
+    [request executeWithArgs:args];
 
     [self updateUI];
 }
@@ -167,12 +192,7 @@
     [self.fetchedResultController performFetch:&error];
     self.fetchError = error;
     
-    Vehicles *vehicles = [self.fetchedResultController.fetchedObjects lastObject];
-    self.title = vehicles.tanks.name_i18n;
-    
-    
-    [self.collectionView reloadData];
-    [self.collectionView.collectionViewLayout invalidateLayout];
+    self.vehicle = [self.fetchedResultController.fetchedObjects lastObject];
 }
 
 
@@ -221,8 +241,10 @@
 
     id filteredObjects = [[[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject] allObjects];
     
+    id faultedObject = filteredObjects[indexPath.row];
+    
     result.isLastInSection = (indexPath.row == ([self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1));
-    result.fetchedObject = filteredObjects[indexPath.row];
+    result.fetchedObject = faultedObject;
     result.fields = fields;
     [result invalidate];
     return result;

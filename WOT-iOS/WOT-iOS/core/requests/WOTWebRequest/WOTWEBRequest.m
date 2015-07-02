@@ -86,12 +86,10 @@ static NSString *urlEncode(NSString *string) {
     return WOT_VALUE_APPLICATION_ID_RU;
 }
 
-- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue{
+- (void)executeWithArgs:(NSDictionary *)args{
     
     
-    [super executeWithArgs:args inQueue:queue];
-    
-    NSOperationQueue *operationQueue = (queue == nil)?[WOTWEBRequest requestQueue]:queue;
+    [super executeWithArgs:args];
     
     NSLog(@"webrequest-start:%@",[self.url absoluteString]);
     NSURL *url = self.url;

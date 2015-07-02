@@ -101,7 +101,7 @@
         
         [[NSUserDefaults standardUserDefaults] setObject:language forKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdLogin args:nil inQueue:nil];
+        [[[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogin] executeWithArgs:nil];
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];

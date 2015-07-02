@@ -16,11 +16,6 @@
 @implementation WOTWebResponseAdapterVehicles
 
 - (void)parseData:(id)data error:(NSError *)error {
-    
-    [self parseData:data queue:nil error:error];
-}
-
-- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
 
     if (error) {
         
@@ -108,13 +103,18 @@
             [context save:&error];
         }
 
-        for(NSNumber *requestId in requests) {
-            
-            id args = requests[requestId];
-            id request = [[WOTRequestExecutor sharedInstance] executeRequestById:[requestId integerValue] args:args inQueue:queue];
-            NSLog(@"%@",[request description]);
-        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            for(NSNumber *requestId in requests) {
+                
+                id args = requests[requestId];
+                WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
+                [request executeWithArgs:args];
+                
+            }
     
+        });
     }];
 
 }

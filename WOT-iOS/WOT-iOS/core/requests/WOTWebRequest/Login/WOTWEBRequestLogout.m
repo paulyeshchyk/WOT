@@ -47,9 +47,9 @@
     return result;
 }
 
-- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue{
+- (void)executeWithArgs:(NSDictionary *)args{
     
-    [super executeWithArgs:args inQueue:queue];
+    [super executeWithArgs:args];
 
     [WOTWEBRequestLogout clearCache];
     [WOTWEBRequestLogout clearCookies];

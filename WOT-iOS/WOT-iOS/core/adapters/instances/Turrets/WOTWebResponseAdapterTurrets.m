@@ -12,11 +12,6 @@
 @implementation WOTWebResponseAdapterTurrets
 
 - (void)parseData:(id)data error:(NSError *)error {
-
-    [self parseData:data queue:nil error:error];
-}
-
-- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
     
     if (error) {
         

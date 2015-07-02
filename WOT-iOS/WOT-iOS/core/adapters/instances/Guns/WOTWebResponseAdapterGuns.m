@@ -10,7 +10,8 @@
 #import "Tankguns.h"
 
 @implementation WOTWebResponseAdapterGuns
-- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
+
+- (void)parseData:(id)data error:(NSError *)error {
 
     
     if (error) {
@@ -42,11 +43,5 @@
         }
     }];
 }
-
-- (void)parseData:(id)data error:(NSError *)error {
-    
-    [self parseData:data queue:nil error:error];
-}
-
 
 @end

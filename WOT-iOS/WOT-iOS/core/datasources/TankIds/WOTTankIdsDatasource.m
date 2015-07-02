@@ -8,7 +8,7 @@
 
 #import "WOTTankIdsDatasource.h"
 #import "WOTCoreDataPredicates.h"
-#import "Vehicles.h"
+#import "Tanks.h"
 
 @implementation WOTTankIdsDatasource
 
@@ -16,7 +16,7 @@
 + (NSArray *)fetchForTiers:(NSArray *)tiers nations:(NSArray *)nations types:(NSArray *)types {
     
     NSPredicate *predicate = [WOTCoreDataPredicates tankIdsByTiers:tiers nations:nations tankTypes:types];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
     [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]]];
     [request setPredicate:predicate];
     [request setPropertiesToFetch:@[WOT_KEY_TANK_ID]];

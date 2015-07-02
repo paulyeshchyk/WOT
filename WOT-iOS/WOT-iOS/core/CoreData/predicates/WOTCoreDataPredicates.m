@@ -19,7 +19,7 @@
     NSMutableArray *subPredicates = [[NSMutableArray alloc] init];
     [tiers enumerateObjectsUsingBlock:^(NSNumber *tier, NSUInteger idx, BOOL *stop) {
        
-        [subPredicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TIER, tier]];
+        [subPredicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_LEVEL, tier]];
         
     }];
 

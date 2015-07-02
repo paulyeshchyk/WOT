@@ -86,7 +86,7 @@
     
 }
 
-- (id)executeRequestById:(NSInteger)requestId args:(NSDictionary *)args inQueue:(NSOperationQueue *)queue {
+- (WOTRequest *)requestById:(NSInteger)requestId {
     
     Class RegisteredRequestClass = self.registeredRequests[@(requestId)];
     
@@ -116,21 +116,13 @@
             } else {
                 
                 id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-                [adapter parseData:data queue:queue error:nil];
+                [adapter parseData:data error:nil];
             }
         }];
     }];
-    /**
-     *
-     **/
-    [request executeWithArgs:args inQueue:queue];
+    
     return request;
 }
 
-- (void)executeRequestById:(NSInteger)requestId  args:(NSDictionary *)args{
-    
-    [self executeRequestById:requestId args:args inQueue:nil];
-   
-}
 
 @end
