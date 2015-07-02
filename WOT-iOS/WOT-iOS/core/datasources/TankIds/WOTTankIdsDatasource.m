@@ -15,16 +15,18 @@
 
 + (NSArray *)fetchForTiers:(NSArray *)tiers nations:(NSArray *)nations types:(NSArray *)types {
     
-    NSError *error = nil;
     NSPredicate *predicate = [WOTCoreDataPredicates tankIdsByTiers:tiers nations:nations tankTypes:types];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
     [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]]];
     [request setPredicate:predicate];
     [request setPropertiesToFetch:@[WOT_KEY_TANK_ID]];
     [request setResultType:NSDictionaryResultType];
+
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[WOTCoreDataProvider sharedInstance].mainManagedObjectContext sectionNameKeyPath:nil cacheName:nil];
-    
+
+    NSError *error = nil;
     [fetchedResultsController performFetch:&error];
+
     NSArray *objs = [fetchedResultsController fetchedObjects];
     
     NSMutableArray *result = [[NSMutableArray alloc] init];

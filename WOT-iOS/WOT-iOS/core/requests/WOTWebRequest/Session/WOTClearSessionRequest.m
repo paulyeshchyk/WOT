@@ -11,19 +11,23 @@
 
 @implementation WOTClearSessionRequest
 
-- (void)executeWithArgs:(NSDictionary *)args {
+- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue{
 
-    [super executeWithArgs:args];
+    [super executeWithArgs:args inQueue:queue];
     
-    NSError *error = nil;
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-    [UserSession removeObjectsByPredicate:nil inManagedObjectContext:context];
-    [context save:&error];
-    
-    if (self.callback) {
+    [context performBlock:^{
         
-        self.callback(nil, error);
-    }
+        [UserSession removeObjectsByPredicate:nil inManagedObjectContext:context];
+
+        NSError *error = nil;
+        [context save:&error];
+        
+        if (self.callback) {
+            
+            self.callback(nil, error);
+        }
+    }];
 }
 
 @end

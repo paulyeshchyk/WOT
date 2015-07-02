@@ -15,10 +15,15 @@
 
 @implementation WOTRequest
 
-- (void)executeWithArgs:(NSDictionary *)args {
+- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue {
     
     self.args = [args copy];
     
+}
+
+- (void)cancel {
+    
+    NSCAssert(NO, @"should be overriden");
 }
 
 @end

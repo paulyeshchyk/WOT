@@ -10,8 +10,8 @@
 #import "Tankguns.h"
 
 @implementation WOTWebResponseAdapterGuns
+- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
 
-- (void)parseData:(id)data error:(NSError *)error {
     
     if (error) {
         
@@ -24,20 +24,28 @@
     NSArray *tankGunsArray = [tankGunsDictionary allKeys];
     
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
-    for (NSString *key in tankGunsArray) {
+    [context performBlock:^{
         
-        NSDictionary *tankGunsJSON = tankGunsDictionary[key];
+        for (NSString *key in tankGunsArray) {
+            
+            NSDictionary *tankGunsJSON = tankGunsDictionary[key];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankGunsJSON[WOT_KEY_MODULE_ID]];
+            Tankguns *tankGuns = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [tankGuns fillPropertiesFromDictionary:tankGunsJSON];
+        }
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankGunsJSON[WOT_KEY_MODULE_ID]];
-        Tankguns *tankGuns = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [tankGuns fillPropertiesFromDictionary:tankGunsJSON];
-    }
+        if ([context hasChanges]) {
+            
+            NSError *error = nil;
+            [context save:&error];
+        }
+    }];
+}
+
+- (void)parseData:(id)data error:(NSError *)error {
     
-    if ([context hasChanges]) {
-        
-        NSError *error = nil;
-        [context save:&error];
-    }
+    [self parseData:data queue:nil error:error];
 }
 
 

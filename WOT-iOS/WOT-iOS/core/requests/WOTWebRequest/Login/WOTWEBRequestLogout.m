@@ -47,14 +47,13 @@
     return result;
 }
 
-- (void)executeWithArgs:(NSDictionary *)args {
+- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue{
     
-    [super executeWithArgs:args];
+    [super executeWithArgs:args inQueue:queue];
 
     [WOTWEBRequestLogout clearCache];
     [WOTWEBRequestLogout clearCookies];
 
-    [super executeWithArgs:args];
 }
 
 - (NSString *)access_token {

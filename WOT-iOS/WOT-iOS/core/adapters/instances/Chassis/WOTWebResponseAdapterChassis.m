@@ -11,8 +11,8 @@
 
 @implementation WOTWebResponseAdapterChassis
 
-- (void)parseData:(id)data error:(NSError *)error {
-    
+- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
+
     if (error) {
         
         NSLog(@"%@",error.localizedDescription);
@@ -38,6 +38,11 @@
         NSError *error = nil;
         [context save:&error];
     }
+}
+
+- (void)parseData:(id)data error:(NSError *)error {
+    
+    [self parseData:data queue:nil error:error];
 }
 
 @end

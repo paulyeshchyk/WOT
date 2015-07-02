@@ -26,14 +26,22 @@
 @property (nonatomic, readonly)NSArray *sortDescriptors;
 @property (nonatomic, readonly)NSPredicate *filterBy;
 @property (nonatomic, readonly)NSString *groupByField;
+@property (nonatomic, strong)NSOperationQueue *queue;
 
 @end
 
 @implementation WOTTankListViewController
 
+- (void)dealloc {
+    
+    [self.queue cancelAllOperations];
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.queue = [[NSOperationQueue alloc] init];
     
     UIBarButtonItem *settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
         
@@ -60,12 +68,12 @@
             
             NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
             [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-            [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args];
+            [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args inQueue:self.queue];
         }
         
     }];
     
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanks args:@{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]}];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTanks args:@{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]} inQueue:self.queue];
 
     [self invalidateFetchedResultController];
 

@@ -32,12 +32,14 @@
 @property (nonatomic, strong) WOTTankDetailDatasource *datasource;
 @property (nonatomic, strong) NSError *fetchError;
 @property (nonatomic, assign) BOOL isDiagramVisible;
-
+@property (nonatomic, strong)NSOperationQueue *operationQueue;
 @end
 
 @implementation WOTTankDetailViewController
 
 - (void)dealloc {
+    
+    [self.operationQueue cancelAllOperations];
     
     _fetchedResultController.delegate = nil;
     self.datasource = nil;
@@ -62,8 +64,17 @@
     
     [super viewDidLoad];
 
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionReusableView class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class])];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class])];
+
+    
+    
+    self.operationQueue = [[NSOperationQueue alloc] init];
+    
     self.roseDiagramHeightConstraint.constant = 0;
     self.isDiagramVisible = NO;
+    
+    __weak typeof(self)weakSelf = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextObjectsDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     
@@ -76,14 +87,15 @@
             NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
             [args setObject:[tankId stringValue] forKey:WOT_KEY_TANK_ID];
             [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-            [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args];
+            [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args inQueue:weakSelf.operationQueue];
             
         }];
         NSLog(@"%@",ids);
         
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
-        [self.navigationController pushViewController:configurationSelector animated:YES];
+        [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
     }];
+
     [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
 
     [self.toolBar setDarkStyle];
@@ -91,8 +103,6 @@
     [self.roseContainer addSubview:self.roseDiagramController.view];
     [self.roseDiagramController.view addStretchingConstraints];
     
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionReusableView class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class])];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class])];
 
 }
 
@@ -146,7 +156,7 @@
     NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
     [args setObject:[self.tankId stringValue] forKey:WOT_KEY_TANK_ID];
     [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args];
+    [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdTankVehicles args:args inQueue:self.operationQueue];
 
     [self updateUI];
 }

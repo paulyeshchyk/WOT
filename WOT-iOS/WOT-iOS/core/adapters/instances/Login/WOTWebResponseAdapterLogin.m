@@ -12,7 +12,7 @@
 
 @implementation WOTWebResponseAdapterLogin
 
-- (void)parseData:(id)data error:(NSError *)error {
+- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
     
     if (error){
         
@@ -44,7 +44,7 @@
                 if (account_id) args[WOT_KEY_ACCOUNT_ID]=account_id;
                 if (expires_at) args[WOT_KEY_EXPIRES_AT]=expires_at;//@([[NSDate date] timeIntervalSince1970] + 60.0f*0.25f);//
                 
-                [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdSaveSession args:args];
+                [[WOTRequestExecutor sharedInstance] executeRequestById:WOTRequestIdSaveSession args:args inQueue:nil];
                 
                 [rootViewController dismissViewControllerAnimated:YES completion:NULL];
             }];
@@ -54,6 +54,11 @@
             [rootViewController presentViewController:nav animated:YES completion:NULL];
         }
     }
+}
+
+- (void)parseData:(id)data error:(NSError *)error {
+
+    [self parseData:data queue:nil error:error];
 }
 
 @end

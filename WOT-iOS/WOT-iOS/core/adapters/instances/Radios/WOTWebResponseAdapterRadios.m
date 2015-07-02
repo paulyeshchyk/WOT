@@ -11,8 +11,8 @@
 
 @implementation WOTWebResponseAdapterRadios
 
-- (void)parseData:(id)data error:(NSError *)error {
-    
+- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
+   
     if (error) {
         
         NSLog(@"%@",error.localizedDescription);
@@ -23,21 +23,30 @@
     NSArray *tankRadiosArray = [tankRadiosDictionary allKeys];
     
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
-    for (NSString *key in tankRadiosArray) {
+    [context performBlock:^{
         
-        NSDictionary *tankRadiosJSON = tankRadiosDictionary[key];
+        for (NSString *key in tankRadiosArray) {
+            
+            NSDictionary *tankRadiosJSON = tankRadiosDictionary[key];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankRadiosJSON[WOT_KEY_MODULE_ID]];
+            Tankradios *tankradios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [tankradios fillPropertiesFromDictionary:tankRadiosJSON];
+        }
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankRadiosJSON[WOT_KEY_MODULE_ID]];
-        Tankradios *tankradios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [tankradios fillPropertiesFromDictionary:tankRadiosJSON];
-    }
-    
-    if ([context hasChanges]) {
-        
-        NSError *error = nil;
-        [context save:&error];
-    }
+        if ([context hasChanges]) {
+            
+            NSError *error = nil;
+            [context save:&error];
+        }
+    }];
 }
+
+- (void)parseData:(id)data error:(NSError *)error {
+    
+    [self parseData:data queue:nil error:error];
+}
+
 
 
 @end

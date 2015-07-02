@@ -86,14 +86,14 @@
     
 }
 
-- (void)executeRequestById:(NSInteger)requestId  args:(NSDictionary *)args{
-
+- (id)executeRequestById:(NSInteger)requestId args:(NSDictionary *)args inQueue:(NSOperationQueue *)queue {
+    
     Class RegisteredRequestClass = self.registeredRequests[@(requestId)];
     
     if (!([[RegisteredRequestClass class] isSubclassOfClass:[WOTRequest class]])) {
-    
+        
         NSLog(@"Request %ld is not registered",(long)requestId);
-        return;
+        return nil;
     }
     
     WOTRequest *request = [[RegisteredRequestClass alloc] init];
@@ -102,13 +102,9 @@
         //callbacks
         [self.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
             
-            dispatch_queue_t queue = dispatch_get_main_queue();
-            dispatch_async(queue, ^{
-                
-                obj(data, error);
-            });
+            obj(data, error);
         }];
-
+        
         //dataAdapters
         NSSet *dataAdapters = self.registeredDataAdapters[@(requestId)];
         
@@ -118,20 +114,22 @@
                 
                 NSLog(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
             } else {
-            
-                dispatch_queue_t queue = dispatch_get_main_queue();
-                dispatch_async(queue, ^{
-                    
-                    id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-                    [adapter parseData:data error:error];
-                });
+                
+                id<WOTWebResponseAdapter> adapter = [[class alloc] init];
+                [adapter parseData:data queue:queue error:nil];
             }
         }];
     }];
     /**
      *
      **/
-    [request executeWithArgs:args];
+    [request executeWithArgs:args inQueue:queue];
+    return request;
+}
+
+- (void)executeRequestById:(NSInteger)requestId  args:(NSDictionary *)args{
+    
+    [self executeRequestById:requestId args:args inQueue:nil];
    
 }
 

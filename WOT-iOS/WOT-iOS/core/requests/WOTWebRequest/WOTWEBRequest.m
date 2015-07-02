@@ -8,6 +8,12 @@
 
 #import "WOTWEBRequest.h"
 
+@interface WOTWEBRequest () <NSURLConnectionDataDelegate>
+
+@property (nonatomic, strong) NSURLConnection *connection;
+
+@end
+
 @implementation WOTWEBRequest
 
 static NSString *urlEncode(NSString *string) {
@@ -80,24 +86,29 @@ static NSString *urlEncode(NSString *string) {
     return WOT_VALUE_APPLICATION_ID_RU;
 }
 
-- (void)executeWithArgs:(NSDictionary *)args{
+- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue{
     
     
-    [super executeWithArgs:args];
+    [super executeWithArgs:args inQueue:queue];
+    
+    NSOperationQueue *operationQueue = (queue == nil)?[WOTWEBRequest requestQueue]:queue;
     
     NSLog(@"webrequest-start:%@",[self.url absoluteString]);
     NSURL *url = self.url;
     NSData *bodyData = self.httpBodyData;
-
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPBody:bodyData];
     [request setHTTPMethod:self.method];
-    [NSURLConnection sendAsynchronousRequest:request queue:[WOTWEBRequest requestQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
-//        NSLog(@"webrequest-end:%@",[self.url absoluteString]);
-        [self parseResponse:response data:data error:connectionError];
-    }];
+    
+    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self.connection start];
+    
+}
 
+- (void)cancel {
+    
+    [self.connection cancel];
 }
 
 #pragma mark -
@@ -162,5 +173,22 @@ static NSString *urlEncode(NSString *string) {
     }
     return [queryArgs componentsJoinedByString:@"&"];
 }
+
+#pragma mark - NSURLConnectionDataDelegate
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    
+    //        NSLog(@"webrequest-end:%@",[self.url absoluteString]);
+    [self parseResponse:nil data:data error:nil];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    
+    [self parseResponse:nil data:nil error:error];
+}
+
 
 @end

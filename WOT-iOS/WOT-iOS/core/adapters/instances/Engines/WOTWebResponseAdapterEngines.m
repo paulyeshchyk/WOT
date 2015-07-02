@@ -10,8 +10,7 @@
 #import "Tankengines.h"
 
 @implementation WOTWebResponseAdapterEngines
-
-- (void)parseData:(id)data error:(NSError *)error {
+- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
     
     if (error) {
         
@@ -24,20 +23,28 @@
     NSArray *tankEnginesArray = [tankEnginessDictionary allKeys];
     
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
-    for (NSString *key in tankEnginesArray) {
+    [context performBlock:^{
         
-        NSDictionary *tankEngineJSON = tankEnginessDictionary[key];
+        for (NSString *key in tankEnginesArray) {
+            
+            NSDictionary *tankEngineJSON = tankEnginessDictionary[key];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankEngineJSON[WOT_KEY_MODULE_ID]];
+            Tankengines *tankEngines = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [tankEngines fillPropertiesFromDictionary:tankEngineJSON];
+        }
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankEngineJSON[WOT_KEY_MODULE_ID]];
-        Tankengines *tankEngines = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [tankEngines fillPropertiesFromDictionary:tankEngineJSON];
-    }
+        if ([context hasChanges]) {
+            
+            NSError *error = nil;
+            [context save:&error];
+        }
+    }];
+}
+
+- (void)parseData:(id)data error:(NSError *)error {
     
-    if ([context hasChanges]) {
-        
-        NSError *error = nil;
-        [context save:&error];
-    }
+    [self parseData:data queue:nil error:error];
 }
 
 @end

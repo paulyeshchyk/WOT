@@ -10,6 +10,8 @@
 
 @protocol WOTWebResponseAdapter <NSObject>
 
-- (void)parseData:(id)data error:(NSError *)error;
+@required
+//- (void)parseData:(id)data error:(NSError *)error;
+- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error;
 
 @end

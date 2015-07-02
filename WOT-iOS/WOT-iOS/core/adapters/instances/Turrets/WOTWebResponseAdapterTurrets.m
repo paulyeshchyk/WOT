@@ -12,6 +12,11 @@
 @implementation WOTWebResponseAdapterTurrets
 
 - (void)parseData:(id)data error:(NSError *)error {
+
+    [self parseData:data queue:nil error:error];
+}
+
+- (void)parseData:(id)data queue:(NSOperationQueue *)queue error:(NSError *)error {
     
     if (error) {
         
@@ -24,20 +29,23 @@
     NSArray *tankTurretsArray = [tankTurretsDictionary allKeys];
     
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
-    for (NSString *key in tankTurretsArray) {
+    [context performBlock:^{
         
-        NSDictionary *tankTurretsJSON = tankTurretsDictionary[key];
+        for (NSString *key in tankTurretsArray) {
+            
+            NSDictionary *tankTurretsJSON = tankTurretsDictionary[key];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankTurretsJSON[WOT_KEY_MODULE_ID]];
+            Tankturrets *tankturrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [tankturrets fillPropertiesFromDictionary:tankTurretsJSON];
+        }
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankTurretsJSON[WOT_KEY_MODULE_ID]];
-        Tankturrets *tankturrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [tankturrets fillPropertiesFromDictionary:tankTurretsJSON];
-    }
-    
-    if ([context hasChanges]) {
-        
-        NSError *error = nil;
-        [context save:&error];
-    }
+        if ([context hasChanges]) {
+            
+            NSError *error = nil;
+            [context save:&error];
+        }
+    }];
 }
 
 
