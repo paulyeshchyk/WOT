@@ -54,13 +54,13 @@
 }
 
 - (void)cancelRequestsByGroupId:(NSString *)groupId {
-
+    
     NSPointerArray *requests = self.grouppedRequests[groupId];
     if (requests){
-     
+        
         [requests compact];
-        for (NSInteger idx = ([requests count]-1);idx>=0;idx--) {
-
+        for (NSInteger idx = ([requests count]-1); idx>=0; idx--) {
+            
             WOTRequest *request = [requests pointerAtIndex:idx];
             [request cancel];
         }
@@ -68,10 +68,10 @@
 }
 
 - (void)removeRequest:(WOTRequest *)request {
-  
+    
     NSArray *groups = request.availableInGroups;
     [groups enumerateObjectsUsingBlock:^(id group, NSUInteger idx, BOOL *stop) {
-       
+        
         NSPointerArray *requests = self.grouppedRequests[group];
         [requests compact];
         
@@ -96,13 +96,18 @@
         requests = [[NSPointerArray alloc] init];
         self.grouppedRequests[groupId] = requests;
     }
-
+    
     NSUInteger index = [[requests allObjects] indexOfObject:request];
     if (index == NSNotFound) {
         
         [request addGroup:groupId];
         [requests addPointer:(__bridge void *)request];
     }
+}
+
+- (void)request:(WOTRequest *)request executeWithArgs:(NSDictionary *)args {
+
+    [request temp_executeWithArgs:args];
 }
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass {
@@ -130,15 +135,13 @@
     }
     [providers addObject:dataProviderClass];
     self.registeredDataAdapters[@(requestId)] = providers;
-    
 }
 
 - (void)unregisterDataProviderClass:(Class)dataProviderClass forRequestId:(NSInteger)requestId {
-
+    
     NSMutableArray *providers = self.registeredDataAdapters[@(requestId)];
     [providers removeObject:dataProviderClass];
     self.registeredDataAdapters[@(requestId)] = providers;
-    
 }
 
 - (WOTRequest *)requestById:(NSInteger)requestId {

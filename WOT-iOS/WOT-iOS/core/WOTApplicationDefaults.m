@@ -92,8 +92,11 @@
         } else {
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WOT_NOTIFICATION_LOGOUT object:nil userInfo:nil];
-            [[[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdClearSession] executeWithArgs:nil];
-            [[[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogin] executeWithArgs:nil];
+            WOTRequest *clearSessionRequest = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdClearSession];
+            [[WOTRequestExecutor sharedInstance] request:clearSessionRequest executeWithArgs:nil];
+            
+            WOTRequest *loginRequest = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogin];
+            [[WOTRequestExecutor sharedInstance] request:loginRequest executeWithArgs:nil];
         }
         
     }];

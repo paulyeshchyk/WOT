@@ -17,7 +17,7 @@
 
 @implementation WOTRequest
 
-- (void)executeWithArgs:(NSDictionary *)args{
+- (void)temp_executeWithArgs:(NSDictionary *)args{
     
     self.args = [args copy];
 }

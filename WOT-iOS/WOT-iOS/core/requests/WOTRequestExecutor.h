@@ -20,5 +20,6 @@
 - (void)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId;
 - (void)cancelRequestsByGroupId:(NSString *)groupId;
 - (void)removeRequest:(WOTRequest *)request;
+- (void)request:(WOTRequest *)request executeWithArgs:(NSDictionary *)args;
 
 @end

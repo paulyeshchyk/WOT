@@ -8,6 +8,7 @@
 
 #import "WOTWEBRequest.h"
 #import "WOTRequestExecutor.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
@@ -87,11 +88,10 @@ static NSString *urlEncode(NSString *string) {
     return WOT_VALUE_APPLICATION_ID_RU;
 }
 
-- (void)executeWithArgs:(NSDictionary *)args{
-    
-    
-    [super executeWithArgs:args];
-    
+- (void)temp_executeWithArgs:(NSDictionary *)args {
+
+    [super temp_executeWithArgs:args];
+
     NSLog(@"webrequest-start:%@-%@",self.availableInGroups, [self.url absoluteString]);
     NSURL *url = self.url;
     NSData *bodyData = self.httpBodyData;
@@ -126,7 +126,7 @@ static NSString *urlEncode(NSString *string) {
 
 #pragma mark -
 
-- (void)parseResponse:(NSURLResponse *)response data:( NSData *)data error:(NSError *)connectionError{
+- (void)parseData:(NSData *)data error:(NSError *)connectionError {
     
     if (connectionError) {
         
@@ -148,7 +148,7 @@ static NSString *urlEncode(NSString *string) {
                 [self finalizeWithData:nil error:error];
                 
             } else {
-
+                
                 NSMutableDictionary *result = nil;
                 if (jsonData) {
                     
@@ -180,7 +180,7 @@ static NSString *urlEncode(NSString *string) {
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
     NSLog(@"webrequest-received-data:%@",[self.url absoluteString]);
-    [self parseResponse:nil data:data error:nil];
+    [self parseData:data error:nil];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -192,7 +192,7 @@ static NSString *urlEncode(NSString *string) {
 
     NSLog(@"webrequest-failture:%@",[self.url absoluteString]);
     
-    [self parseResponse:nil data:nil error:error];
+    [self parseData:nil error:error];
 }
 
 @end

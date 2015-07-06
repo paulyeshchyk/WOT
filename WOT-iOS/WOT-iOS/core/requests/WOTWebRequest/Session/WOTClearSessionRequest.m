@@ -11,9 +11,9 @@
 
 @implementation WOTClearSessionRequest
 
-- (void)executeWithArgs:(NSDictionary *)args{
+- (void)temp_executeWithArgs:(NSDictionary *)args {
 
-    [super executeWithArgs:args];
+    [super temp_executeWithArgs:args];
     
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
     [context performBlock:^{

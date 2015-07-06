@@ -86,6 +86,10 @@
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
 
+        WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
+        [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
+        
+        
         NSArray *ids = [WOTTankIdsDatasource fetchForTiers:[weakSelf availableTiersForTier:weakSelf.vehicle.tier] nations:nil types:nil];
         [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
            
@@ -94,14 +98,11 @@
             [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
 
             WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
-            [request executeWithArgs:args];
-
             [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:weakSelf.requestsGroupId];
+            [[WOTRequestExecutor sharedInstance] request:request executeWithArgs:args];
             
         }];
         
-        WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
-        [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
     }];
 
     [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
@@ -153,8 +154,8 @@
     [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
-    [request executeWithArgs:args];
     [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:self.requestsGroupId];
+    [[WOTRequestExecutor sharedInstance] request:request executeWithArgs:args];
 
     [self updateUI];
 }
