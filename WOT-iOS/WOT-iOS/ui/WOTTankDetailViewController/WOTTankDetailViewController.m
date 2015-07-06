@@ -52,20 +52,6 @@
     return self;
 }
 
-- (NSArray *)availableTiersForTier:(NSNumber *)tier {
-    
-    NSInteger maxValue = MIN(10,[tier integerValue]+2);
-    NSInteger minValue = MAX(1,[tier integerValue]-2);
-  
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-
-    for (NSInteger i=minValue; i<=maxValue; i++) {
-        
-        [result addObject:@(i)];
-    }
-    return result;
-    
-}
 
 - (NSString *)requestsGroupId {
     
@@ -89,18 +75,12 @@
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
         [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
         
+        NSArray *tiers = [WOTTankIdsDatasource availableTiersForTier:weakSelf.vehicle.tier];
         
-        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:[weakSelf availableTiersForTier:weakSelf.vehicle.tier] nations:nil types:nil];
+        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
         [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
            
-            NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-            [args setObject:[tankId stringValue] forKey:WOT_KEY_TANK_ID];
-            [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-
-            WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
-            [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:weakSelf.requestsGroupId];
-            [[WOTRequestExecutor sharedInstance] request:request executeWithArgs:args];
-            
+            [weakSelf refetchTankID:[tankId stringValue]];
         }];
         
     }];
@@ -139,7 +119,8 @@
 - (void)setTankId:(NSString *)tankId {
     
     _tankId = [tankId copy];
-    [self refetch];
+    [self refetchTankID:[self.tankId stringValue]];
+    [self updateUI];
 }
 
 - (void)setFetchError:(NSError *)fetchError {
@@ -147,17 +128,15 @@
     _fetchError = fetchError;
 }
 
-- (void)refetch {
+- (void)refetchTankID:(NSString *)tankID {
 
     NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-    [args setObject:[self.tankId stringValue] forKey:WOT_KEY_TANK_ID];
+    [args setObject:tankID forKey:WOT_KEY_TANK_ID];
     [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
     [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:self.requestsGroupId];
-    [[WOTRequestExecutor sharedInstance] request:request executeWithArgs:args];
-
-    [self updateUI];
+    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
 }
 
 - (void)updateUI {

@@ -105,7 +105,7 @@
     }
 }
 
-- (void)request:(WOTRequest *)request executeWithArgs:(NSDictionary *)args {
+- (void)runRequest:(WOTRequest *)request withArgs:(NSDictionary *)args {
 
     [request temp_executeWithArgs:args];
 }

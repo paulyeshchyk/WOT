@@ -17,9 +17,10 @@
 - (void)requestId:(NSInteger)requestId registerRequestCallback:(WOTRequestCallback)callback;
 - (WOTRequest *)requestById:(NSInteger)requestId;
 
-- (void)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId;
+- (void)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId DEPRECATED_ATTRIBUTE;
+- (void)runRequest:(WOTRequest *)request withArgs:(NSDictionary *)args DEPRECATED_ATTRIBUTE;
+
 - (void)cancelRequestsByGroupId:(NSString *)groupId;
 - (void)removeRequest:(WOTRequest *)request;
-- (void)request:(WOTRequest *)request executeWithArgs:(NSDictionary *)args;
 
 @end

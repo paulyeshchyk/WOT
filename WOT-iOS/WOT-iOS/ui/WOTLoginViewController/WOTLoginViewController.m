@@ -103,7 +103,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
 
         WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogin];
-        [[WOTRequestExecutor sharedInstance] request:request executeWithArgs:nil];
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];

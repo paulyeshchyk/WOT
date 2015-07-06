@@ -68,7 +68,7 @@
             [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
             WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
             [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicles+"];
-            [[WOTRequestExecutor sharedInstance] request:request executeWithArgs:args];
+            [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
         } else {
             
             NSLog(@"request-fail:%@",error.localizedDescription);
@@ -79,7 +79,7 @@
     NSDictionary *args = @{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]};
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTanks];
     [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Tanks+"];
-    [[WOTRequestExecutor sharedInstance] request:request executeWithArgs:args];
+    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
 
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListCollectionViewHeader class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewHeader class])];

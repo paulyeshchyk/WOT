@@ -45,7 +45,7 @@
                 if (expires_at) args[WOT_KEY_EXPIRES_AT]=expires_at;//@([[NSDate date] timeIntervalSince1970] + 60.0f*0.25f);//
                 
                 WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdSaveSession];
-                [[WOTRequestExecutor sharedInstance] request:request executeWithArgs:args];
+                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
 
                 
                 [rootViewController dismissViewControllerAnimated:YES completion:NULL];

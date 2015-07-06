@@ -36,11 +36,23 @@
     }];
     
     return result;
+}
+
+
+
++ (NSArray *)availableTiersForTier:(NSNumber *)tier {
     
+    NSInteger maxValue = MIN(10,[tier integerValue]+2);
+    NSInteger minValue = MAX(1,[tier integerValue]-2);
     
+    NSMutableArray *result = [[NSMutableArray alloc] init];
     
-    
-    
+    for (NSInteger i=minValue; i<=maxValue; i++) {
+        
+        [result addObject:@(i)];
+    }
+    return result;
     
 }
+
 @end

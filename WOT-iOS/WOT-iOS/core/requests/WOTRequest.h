@@ -20,7 +20,7 @@ typedef void(^WOTRequestCallback)(id data, NSError *error);
 - (void)addGroup:(NSString *)group;
 - (void)removeGroup:(NSString *)group;
 
-- (void)temp_executeWithArgs:(NSDictionary *)args __attribute__((deprecated));
+- (void)temp_executeWithArgs:(NSDictionary *)args DEPRECATED_ATTRIBUTE;
 - (void)cancel;
 
 @end
