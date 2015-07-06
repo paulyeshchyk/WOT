@@ -7,6 +7,7 @@
 //
 
 #import "WOTWEBRequest.h"
+#import "WOTRequestExecutor.h"
 
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
@@ -91,7 +92,7 @@ static NSString *urlEncode(NSString *string) {
     
     [super executeWithArgs:args];
     
-    NSLog(@"webrequest-start:%@",[self.url absoluteString]);
+    NSLog(@"webrequest-start:%@-%@",self.availableInGroups, [self.url absoluteString]);
     NSURL *url = self.url;
     NSData *bodyData = self.httpBodyData;
     
@@ -107,7 +108,21 @@ static NSString *urlEncode(NSString *string) {
 - (void)cancel {
     
     [self.connection cancel];
+    
+    [[WOTRequestExecutor sharedInstance] removeRequest:self];
 }
+
+
+- (void)finalizeWithData:(id)data error:(NSError *)error {
+    
+    [[WOTRequestExecutor sharedInstance] removeRequest:self];
+    
+    if (self.callback) {
+        
+        self.callback(data, error);
+    }
+}
+
 
 #pragma mark -
 
@@ -115,20 +130,14 @@ static NSString *urlEncode(NSString *string) {
     
     if (connectionError) {
         
-        if (self.callback) {
-            
-            self.callback(nil, connectionError);
-        }
+        [self finalizeWithData:nil error:connectionError];
     } else {
         
         NSError *serializationError = nil;
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializationError];
         if (serializationError) {
             
-            if (self.callback) {
-                
-                self.callback(nil, serializationError);
-            }
+            [self finalizeWithData:nil error:serializationError];
         } else {
 #warning make validator
             id status = jsonData[WOT_KEY_STATUS];
@@ -136,10 +145,8 @@ static NSString *urlEncode(NSString *string) {
                 
                 NSCAssert(NO, @"be sure that error was handled:%@",jsonData[WOT_KEY_ERROR]);
                 NSError *error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[WOT_KEY_ERROR]];
-                if (self.callback) {
-                    
-                    self.callback(nil, error);
-                }
+                [self finalizeWithData:nil error:error];
+                
             } else {
 
                 NSMutableDictionary *result = nil;
@@ -152,10 +159,7 @@ static NSString *urlEncode(NSString *string) {
                 }
                 
                 [result addEntriesFromDictionary:self.userInfo];
-                if (self.callback) {
-                    
-                    self.callback(result, nil);
-                }
+                [self finalizeWithData:result error:nil];
             }
         }
     }
@@ -175,18 +179,20 @@ static NSString *urlEncode(NSString *string) {
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    //        NSLog(@"webrequest-end:%@",[self.url absoluteString]);
+    NSLog(@"webrequest-received-data:%@",[self.url absoluteString]);
     [self parseResponse:nil data:data error:nil];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
+    NSLog(@"webrequest-finished:%@",[self.url absoluteString]);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+
+    NSLog(@"webrequest-failture:%@",[self.url absoluteString]);
     
     [self parseResponse:nil data:nil error:error];
 }
-
 
 @end

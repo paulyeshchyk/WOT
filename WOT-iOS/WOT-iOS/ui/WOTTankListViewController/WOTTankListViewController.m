@@ -40,20 +40,21 @@
     
     [super viewDidLoad];
     
+    __weak typeof(self)weakSelf = self;
     UIBarButtonItem *settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
         
         
         WOTTankListSortViewController *vc = [[WOTTankListSortViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSortViewController class]) bundle:nil];
         vc.cancelBlock = ^(){
             
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
         };
         vc.commitBlock = ^(){
             
-            [self invalidateFetchedResultController];
+            [weakSelf invalidateFetchedResultController];
         };
         
-        [self.navigationController pushViewController:vc animated:YES];
+        [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
     
     [self.navigationItem setRightBarButtonItems:@[settingsItem]];
@@ -67,6 +68,10 @@
             [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
             WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
             [request executeWithArgs:args];
+            [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicles+"];
+        } else {
+            
+            NSLog(@"request-fail:%@",error.localizedDescription);
         }
         
     }];
@@ -74,18 +79,19 @@
     NSDictionary *args = @{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]};
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTanks];
     [request executeWithArgs:args];
-
-    [self invalidateFetchedResultController];
+    [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Tanks+"];
 
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankListCollectionViewHeader class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewHeader class])];
+    
+    [self invalidateFetchedResultController];
     
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     
-    [self.collectionView reloadData];
+    [self invalidateFetchedResultController];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -138,9 +144,11 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
+    __weak typeof(self)weakSelf = self;
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_BACK)];
     UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender){
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        [weakSelf.navigationController popViewControllerAnimated:YES];
     }];
     
     WOTTankDetailViewController *detail = [[WOTTankDetailViewController alloc] initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];

@@ -40,21 +40,23 @@
 
     self.title = WOTString(WOT_STRING_GROUP_AND_SORT);
     
+    __weak typeof(self)weakSelf = self;
     self.backItem =  [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
        
-        if (self.cancelBlock){
-            self.cancelBlock();
+        if (weakSelf.cancelBlock){
+            
+            weakSelf.cancelBlock();
         }
     }];
     [self.navigationItem setLeftBarButtonItems:@[self.backItem]];
 
     UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_REORDER) eventBlock:^(id sender) {
         
-        [self.tableView setEditing:!self.tableView.editing];
-        [(UIButton *)sender setTitle:!self.tableView.editing?WOTString(WOT_STRING_REORDER):WOTString(WOT_STRING_PREVIEW) forState:UIControlStateNormal];
+        [weakSelf.tableView setEditing:!weakSelf.tableView.editing];
+        [(UIButton *)sender setTitle:!weakSelf.tableView.editing?WOTString(WOT_STRING_REORDER):WOTString(WOT_STRING_PREVIEW) forState:UIControlStateNormal];
         [(UIButton *)sender sizeToFit];
-        [self.backItem setEnabled:!self.tableView.editing];
-        [self.tableView reloadData];
+        [weakSelf.backItem setEnabled:!weakSelf.tableView.editing];
+        [weakSelf.tableView reloadData];
     }];
     [self.navigationItem setRightBarButtonItems:@[applyItem]];
     [self.navigationController.navigationBar setDarkStyle];

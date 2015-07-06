@@ -11,7 +11,7 @@
 
 @implementation WOTClearSessionRequest
 
-- (void)executeWithArgs:(NSDictionary *)args {
+- (void)executeWithArgs:(NSDictionary *)args{
 
     [super executeWithArgs:args];
     

@@ -37,12 +37,13 @@
     
     [super viewDidLoad];
 
+    __weak typeof(self)weakSelf = self;
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_BACK)];
     self.backItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
 
-        if (self.cancelBlock){
+        if (weakSelf.cancelBlock){
             
-            self.cancelBlock();
+            weakSelf.cancelBlock();
         }
         
     }];
@@ -50,9 +51,9 @@
     
     self.applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
 
-        if (self.applyBlock){
+        if (weakSelf.applyBlock){
             
-            self.applyBlock();
+            weakSelf.applyBlock();
         }
         
     }];

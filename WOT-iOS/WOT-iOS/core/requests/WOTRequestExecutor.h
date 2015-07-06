@@ -17,4 +17,8 @@
 - (void)requestId:(NSInteger)requestId registerRequestCallback:(WOTRequestCallback)callback;
 - (WOTRequest *)requestById:(NSInteger)requestId;
 
+- (void)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId;
+- (void)cancelRequestsByGroupId:(NSString *)groupId;
+- (void)removeRequest:(WOTRequest *)request;
+
 @end

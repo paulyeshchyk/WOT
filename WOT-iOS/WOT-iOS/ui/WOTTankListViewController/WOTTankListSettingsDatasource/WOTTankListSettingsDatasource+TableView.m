@@ -44,7 +44,7 @@
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
-            updatedSetting = [WOTTankListSettingsDatasource context:self.context createSortSettingForKey:value ascending:ascending orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
+            [WOTTankListSettingsDatasource context:self.context createSortSettingForKey:value ascending:ascending orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
 
                 if (callback) {
                     
@@ -55,7 +55,7 @@
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
-            updatedSetting = [WOTTankListSettingsDatasource context:self.context createGroupBySettingForKey:value ascending:ascending orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
+            [WOTTankListSettingsDatasource context:self.context createGroupBySettingForKey:value ascending:ascending orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
                 
                 if (callback) {
                     
@@ -64,7 +64,7 @@
             }];
         } else if ([type isEqualToString:WOT_KEY_SETTING_TYPE_FILTER]) {
             
-            updatedSetting = [WOTTankListSettingsDatasource context:self.context createFilterBySettingForKey:value value:filterValue callback:^(NSManagedObjectContext *context, id createdObject) {
+            [WOTTankListSettingsDatasource context:self.context createFilterBySettingForKey:value value:filterValue callback:^(NSManagedObjectContext *context, id createdObject) {
                 
                 if (callback) {
                     

@@ -26,6 +26,11 @@ static const NSInteger RowHeight = 22.0f;
     return CGSizeMake(size.width, RowHeight*fields.count);
 }
 
+- (void)dealloc {
+    
+    self.fetchedObject = nil;
+}
+
 - (void)awakeFromNib {
 
     [super awakeFromNib];

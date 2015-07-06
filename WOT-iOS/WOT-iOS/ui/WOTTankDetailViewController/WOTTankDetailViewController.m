@@ -7,7 +7,6 @@
 //
 
 #import "WOTTankDetailViewController.h"
-#import "WOTRadarViewController.h"
 #import "Tanks.h"
 #import "Tankengines.h"
 #import "Vehicles.h"
@@ -23,16 +22,13 @@
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, weak) IBOutlet UIView *roseContainer;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *roseDiagramHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIToolbar *toolBar;
-@property (nonatomic, strong) WOTRadarViewController *roseDiagramController;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) WOTTankDetailDatasource *datasource;
 @property (nonatomic, strong) NSError *fetchError;
-@property (nonatomic, assign) BOOL isDiagramVisible;
 @property (nonatomic, strong)Vehicles *vehicle;
+@property (nonatomic, readonly)NSString *requestsGroupId;
 
 @end
 
@@ -40,10 +36,10 @@
 
 - (void)dealloc {
     
-    _fetchedResultController.delegate = nil;
-    self.datasource = nil;
-    [self.roseDiagramController removeFromParentViewController];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:self.requestsGroupId];
+    self.fetchedResultController.delegate = nil;
+    self.datasource = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -52,9 +48,6 @@
     if (self){
         
         self.datasource = [[WOTTankDetailDatasource alloc] init];
-        self.roseDiagramController = [[WOTRadarViewController alloc] initWithNibName:NSStringFromClass([WOTRadarViewController class]) bundle:nil];
-        [self addChildViewController:self.roseDiagramController];
-        
     }
     return self;
 }
@@ -74,6 +67,11 @@
     
 }
 
+- (NSString *)requestsGroupId {
+    
+    return [NSString stringWithFormat:@"vehicles:%@",self.tankId];
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -81,11 +79,6 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionReusableView class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class])];
 
-    
-    
-    self.roseDiagramHeightConstraint.constant = 0;
-    self.isDiagramVisible = NO;
-    
     __weak typeof(self)weakSelf = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextObjectsDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
@@ -93,7 +86,7 @@
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
 
-        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:[self availableTiersForTier:self.vehicle.tier] nations:nil types:nil];
+        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:[weakSelf availableTiersForTier:weakSelf.vehicle.tier] nations:nil types:nil];
         [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
            
             NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
@@ -102,9 +95,10 @@
 
             WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
             [request executeWithArgs:args];
+
+            [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:weakSelf.requestsGroupId];
             
         }];
-        NSLog(@"%@",ids);
         
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
         [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
@@ -113,9 +107,6 @@
     [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
 
     [self.toolBar setDarkStyle];
-    
-    [self.roseContainer addSubview:self.roseDiagramController.view];
-    [self.roseDiagramController.view addStretchingConstraints];
 }
 
 - (void)setVehicle:(Vehicles *)vehicle {
@@ -127,25 +118,6 @@
     [self.collectionView reloadData];
     [self.collectionView.collectionViewLayout invalidateLayout];
     
-}
-
-- (IBAction)onRoseDiagramButtonPressed:(id)sender {
- 
-    self.isDiagramVisible = !self.isDiagramVisible;
-    
-}
-
-- (void)setIsDiagramVisible:(BOOL)isDiagramVisible {
-
-    if (_isDiagramVisible != isDiagramVisible) {
-        
-        _isDiagramVisible = isDiagramVisible;
-        self.roseDiagramHeightConstraint.constant = _isDiagramVisible?200.0f:0.0f;
-        [UIView animateWithDuration:0.5f animations:^{
-            
-            [self.view layoutIfNeeded];
-        }];
-    }
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -182,6 +154,7 @@
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
     [request executeWithArgs:args];
+    [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:self.requestsGroupId];
 
     [self updateUI];
 }
@@ -305,7 +278,18 @@
     }
      
      */
-    
-    [self updateUI];
+
+    __weak typeof(self)weakSelf = self;
+    BOOL isMain = [NSThread isMainThread];
+    if (isMain) {
+        
+        [self updateUI];
+    } else {
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+
+            [weakSelf updateUI];
+        });
+    }
 }
 @end

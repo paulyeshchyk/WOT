@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSMutableDictionary *registeredRequestCallbacks;
 @property (nonatomic, strong) NSMutableDictionary *registeredDataAdapters;
 
+@property (nonatomic, strong) NSMutableDictionary *grouppedRequests;
+
 @end
 
 @implementation WOTRequestExecutor
@@ -46,8 +48,61 @@
         self.registeredRequests = [[NSMutableDictionary alloc] init];
         self.registeredRequestCallbacks = [[NSMutableDictionary alloc] init];
         self.registeredDataAdapters = [[NSMutableDictionary alloc] init];
+        self.grouppedRequests = [[NSMutableDictionary alloc] init];
     }
     return self;
+}
+
+- (void)cancelRequestsByGroupId:(NSString *)groupId {
+
+    NSPointerArray *requests = self.grouppedRequests[groupId];
+    if (requests){
+     
+        [requests compact];
+        for (NSInteger idx = ([requests count]-1);idx>=0;idx--) {
+
+            WOTRequest *request = [requests pointerAtIndex:idx];
+            [request cancel];
+        }
+    }
+}
+
+- (void)removeRequest:(WOTRequest *)request {
+  
+    NSArray *groups = request.availableInGroups;
+    [groups enumerateObjectsUsingBlock:^(id group, NSUInteger idx, BOOL *stop) {
+       
+        NSPointerArray *requests = self.grouppedRequests[group];
+        [requests compact];
+        
+        NSInteger requestIndex = [[requests allObjects] indexOfObject:request];
+        if (requestIndex != NSNotFound) {
+            
+            [requests removePointerAtIndex:requestIndex];
+        } else {
+            
+            NSLog(@"attempting to remove unknown request");
+        }
+    }];
+}
+
+- (void)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId {
+    
+    NSPointerArray *requests = self.grouppedRequests[groupId];
+    [requests compact];
+    
+    if (!requests){
+        
+        requests = [[NSPointerArray alloc] init];
+        self.grouppedRequests[groupId] = requests;
+    }
+
+    NSUInteger index = [[requests allObjects] indexOfObject:request];
+    if (index == NSNotFound) {
+        
+        [request addGroup:groupId];
+        [requests addPointer:(__bridge void *)request];
+    }
 }
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass {
@@ -96,17 +151,19 @@
         return nil;
     }
     
+    __weak typeof(self)weakSelf = self;
+    
     WOTRequest *request = [[RegisteredRequestClass alloc] init];
     [request setCallback:^(id data, NSError *error){
         
         //callbacks
-        [self.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
+        [weakSelf.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
             
             obj(data, error);
         }];
         
         //dataAdapters
-        NSSet *dataAdapters = self.registeredDataAdapters[@(requestId)];
+        NSSet *dataAdapters = weakSelf.registeredDataAdapters[@(requestId)];
         
         [dataAdapters enumerateObjectsUsingBlock:^(Class class, BOOL *stop) {
             
@@ -123,6 +180,5 @@
     
     return request;
 }
-
 
 @end

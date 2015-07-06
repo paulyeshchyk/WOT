@@ -89,12 +89,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    __weak typeof(self)weakSelf = self;
     WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
     [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text ascending:NO callback:^(id setting) {
         
-        self.setting = setting;
-        [self.textField setText:nil];
-        self.canApply = NO;
+        weakSelf.setting = setting;
+        [weakSelf.textField setText:nil];
+        weakSelf.canApply = NO;
     }];
 }
 
@@ -104,11 +105,12 @@
 
     [textField resignFirstResponder];
     
+    __weak typeof(self)weakSelf = self;
     WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[[self.tableView.indexPathForSelectedRow row]];
     [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text  ascending:NO callback:^(id setting) {
         
-        self.setting = setting;
-        self.canApply = ([[self.textField text] length] != 0);
+        weakSelf.setting = setting;
+        weakSelf.canApply = ([[weakSelf.textField text] length] != 0);
     }];
 }
 

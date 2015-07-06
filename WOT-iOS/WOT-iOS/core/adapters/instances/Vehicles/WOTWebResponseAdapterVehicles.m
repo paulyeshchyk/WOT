@@ -111,6 +111,8 @@
                 id args = requests[requestId];
                 WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
                 [request executeWithArgs:args];
+#warning check groupId
+                [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicle"];
                 
             }
     

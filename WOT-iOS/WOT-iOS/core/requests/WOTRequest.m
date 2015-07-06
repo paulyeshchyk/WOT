@@ -11,19 +11,47 @@
 @interface WOTRequest ()
 
 @property (nonatomic, readwrite)NSDictionary *args;
+@property (nonatomic, strong)NSMutableArray *groups;
+
 @end
 
 @implementation WOTRequest
 
-- (void)executeWithArgs:(NSDictionary *)args {
+- (void)executeWithArgs:(NSDictionary *)args{
     
     self.args = [args copy];
-    
 }
 
 - (void)cancel {
     
     NSCAssert(NO, @"should be overriden");
 }
+
+
+- (NSArray *)availableInGroups {
+ 
+    return self.groups;
+}
+
+- (void)addGroup:(NSString *)group {
+    
+    if (!self.groups) {
+        
+        self.groups = [[NSMutableArray alloc] init];
+    }
+    
+    [self.groups addObject:group];
+    
+}
+
+- (void)removeGroup:(NSString *)group {
+    
+    if (self.groups) {
+        
+        [self.groups removeObject:group];
+    }
+    
+}
+
 
 @end

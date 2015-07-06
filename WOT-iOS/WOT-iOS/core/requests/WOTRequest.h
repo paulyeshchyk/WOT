@@ -15,6 +15,11 @@ typedef void(^WOTRequestCallback)(id data, NSError *error);
 @property (nonatomic, copy) WOTRequestCallback callback;
 @property (nonatomic, readonly) NSDictionary *args;
 
+@property (nonatomic, readonly)NSArray *availableInGroups;
+
+- (void)addGroup:(NSString *)group;
+- (void)removeGroup:(NSString *)group;
+
 - (void)executeWithArgs:(NSDictionary *)args;
 - (void)cancel;
 

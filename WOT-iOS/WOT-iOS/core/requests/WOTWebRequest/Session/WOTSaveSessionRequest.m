@@ -12,7 +12,7 @@
 
 @implementation WOTSaveSessionRequest
 
-- (void)executeWithArgs:(NSDictionary *)args inQueue:(NSOperationQueue *)queue{
+- (void)executeWithArgs:(NSDictionary *)args{
 
     [super executeWithArgs:args];
 
