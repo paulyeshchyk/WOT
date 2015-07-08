@@ -12,6 +12,8 @@ typedef void(^EvaluateCompletionBlock)(NSDictionary *values);
 
 @interface WOTTankDetailField : NSObject
 
+@property (nonatomic, readonly) NSString *expressionName;
+
 - (void)evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock;
 
 @end

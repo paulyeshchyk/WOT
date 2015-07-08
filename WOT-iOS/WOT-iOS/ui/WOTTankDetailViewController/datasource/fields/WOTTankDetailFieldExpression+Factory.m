@@ -20,19 +20,21 @@
     averageDescription.expressionResultType = NSInteger64AttributeType;
     averageDescription.name = @"av";
 
-    NSExpressionDescription *description = [[NSExpressionDescription alloc] init];
-    description.expression = [NSExpression expressionForKeyPath:field];
-    description.expressionResultType = NSInteger64AttributeType;
-    description.name = @"this";
+    NSExpressionDescription *thisDescription = [[NSExpressionDescription alloc] init];
+    thisDescription.expression = [NSExpression expressionForKeyPath:field];
+    thisDescription.expressionResultType = NSInteger64AttributeType;
+    thisDescription.name = @"this";
+    thisDescription.userInfo = @{WOTTankDetailFieldExpressionUsedForSingleObject:@(YES)};
 
+    
     NSExpression *maxExpression = [NSExpression expressionForFunction:@"max:" arguments:@[path]];
     NSExpressionDescription *maxDescription = [[NSExpressionDescription alloc] init];
     maxDescription.expression = maxExpression;
     maxDescription.expressionResultType = NSInteger64AttributeType;
     maxDescription.name = @"max";
+
     
-    
-    WOTTankDetailFieldExpression *result = [WOTTankDetailFieldExpression fieldWithExpressionDescriptions:@[averageDescription,description,maxDescription] keyPaths:@[averageDescription.name,description.name,maxDescription.name]];
+    WOTTankDetailFieldExpression *result = [WOTTankDetailFieldExpression expressionName:field fieldWithExpressionDescriptions:@[averageDescription,thisDescription,maxDescription] keyPaths:@[averageDescription.name,thisDescription.name,maxDescription.name]];
     return result;
     
 }

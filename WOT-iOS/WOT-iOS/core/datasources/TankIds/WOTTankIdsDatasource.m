@@ -40,18 +40,22 @@
 
 
 
-+ (NSArray *)availableTiersForTier:(NSNumber *)tier {
++ (NSArray *)availableTiersForTiers:(NSArray *)tiers {
     
-    NSInteger maxValue = MIN(10,[tier integerValue]+2);
-    NSInteger minValue = MAX(1,[tier integerValue]-2);
+    NSMutableSet *result = [[NSMutableSet alloc] init];
+
+    [tiers enumerateObjectsUsingBlock:^(NSNumber *tier, NSUInteger idx, BOOL *stop) {
     
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    
-    for (NSInteger i=minValue; i<=maxValue; i++) {
+        NSInteger maxValue = MIN(10,[tier integerValue]+2);
+        NSInteger minValue = MAX(1,[tier integerValue]-2);
         
-        [result addObject:@(i)];
-    }
-    return result;
+        for (NSInteger i=minValue; i<=maxValue; i++) {
+            
+            [result addObject:@(i)];
+        }
+    }];
+    
+    return [result allObjects];
     
 }
 

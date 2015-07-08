@@ -65,12 +65,21 @@ static const NSInteger RowHeight = 22.0f;
         NSMutableArray *arr = [[NSMutableArray alloc] init];
         id name = [[values allKeys] componentsJoinedByString:@" / "];
         for (id key in [values allKeys]) {
+            
             [arr addObject:values[key]];
         }
         
-        result.nameLabel.text = WOTString(name);
+        if (field.expressionName.length != 0) {
+            
+            result.nameLabel.text = [NSString stringWithFormat:@"%@(%@)",field.expressionName, WOTString(name)];
+        } else {
+            
+            result.nameLabel.text = WOTString(name);
+        }
+        
         weak_result.valueLabel.text = [arr componentsJoinedByString:@" / "];
     }];
+    
     return result;
 }
 

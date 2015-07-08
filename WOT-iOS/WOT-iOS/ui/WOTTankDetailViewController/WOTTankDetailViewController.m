@@ -75,7 +75,7 @@
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
         [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
         
-        NSArray *tiers = [WOTTankIdsDatasource availableTiersForTier:weakSelf.vehicle.tier];
+        NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[weakSelf.vehicle.tier]];
         
         NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
         [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {

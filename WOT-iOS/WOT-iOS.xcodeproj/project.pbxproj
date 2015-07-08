@@ -66,6 +66,7 @@
 		1D90697F1B427F2200237852 /* WOTTankConfigurationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90697D1B427F2200237852 /* WOTTankConfigurationCollectionViewCell.m */; };
 		1D9069801B427F2200237852 /* WOTTankConfigurationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D90697E1B427F2200237852 /* WOTTankConfigurationCollectionViewCell.xib */; };
 		1D9069831B4280CA00237852 /* WOTTankConfigurationFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9069821B4280CA00237852 /* WOTTankConfigurationFlowLayout.m */; };
+		1D9F41A51B4D514500BE6D78 /* WOTTankDetailFieldExpressionGuns.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9F41A41B4D514500BE6D78 /* WOTTankDetailFieldExpressionGuns.m */; };
 		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
 		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
 		1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7381B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m */; };
@@ -366,6 +367,8 @@
 		1D90697E1B427F2200237852 /* WOTTankConfigurationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankConfigurationCollectionViewCell.xib; sourceTree = "<group>"; };
 		1D9069811B4280CA00237852 /* WOTTankConfigurationFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationFlowLayout.h; sourceTree = "<group>"; };
 		1D9069821B4280CA00237852 /* WOTTankConfigurationFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankConfigurationFlowLayout.m; sourceTree = "<group>"; };
+		1D9F41A31B4D514500BE6D78 /* WOTTankDetailFieldExpressionGuns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailFieldExpressionGuns.h; sourceTree = "<group>"; };
+		1D9F41A41B4D514500BE6D78 /* WOTTankDetailFieldExpressionGuns.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailFieldExpressionGuns.m; sourceTree = "<group>"; };
 		1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingAddNewTableViewCell.h; sourceTree = "<group>"; };
 		1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingAddNewTableViewCell.m; sourceTree = "<group>"; };
 		1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingAddNewTableViewCell.xib; sourceTree = "<group>"; };
@@ -903,6 +906,7 @@
 		1D9069531B3C227F00237852 /* fields */ = {
 			isa = PBXGroup;
 			children = (
+				1D9F41A21B4D512B00BE6D78 /* custom */,
 				1D9069541B3C227F00237852 /* WOTTankDetailField.h */,
 				1D9069551B3C227F00237852 /* WOTTankDetailField.m */,
 				1D9069561B3C227F00237852 /* WOTTankDetailFieldKVO.h */,
@@ -948,6 +952,15 @@
 				1D9069821B4280CA00237852 /* WOTTankConfigurationFlowLayout.m */,
 			);
 			path = cells;
+			sourceTree = "<group>";
+		};
+		1D9F41A21B4D512B00BE6D78 /* custom */ = {
+			isa = PBXGroup;
+			children = (
+				1D9F41A31B4D514500BE6D78 /* WOTTankDetailFieldExpressionGuns.h */,
+				1D9F41A41B4D514500BE6D78 /* WOTTankDetailFieldExpressionGuns.m */,
+			);
+			path = custom;
 			sourceTree = "<group>";
 		};
 		1DA1D7431B2AFD4A00C5C2FB /* cells */ = {
@@ -2229,6 +2242,7 @@
 				1DCC80AA1B3036A4005FF193 /* PieChartDataSet.swift in Sources */,
 				1DC07B7A1B3AB778002FAA72 /* Tankchassis+FillProperties.m in Sources */,
 				1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */,
+				1D9F41A51B4D514500BE6D78 /* WOTTankDetailFieldExpressionGuns.m in Sources */,
 				1D9069581B3C227F00237852 /* WOTTankDetailField.m in Sources */,
 				1DCC80C51B3036A4005FF193 /* ChartColorTemplates.swift in Sources */,
 				1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */,

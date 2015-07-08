@@ -11,6 +11,6 @@
 @interface WOTTankIdsDatasource : NSObject
 
 + (NSArray *)fetchForTiers:(NSArray *)tiers nations:(NSArray *)nations types:(NSArray *)types;
-+ (NSArray *)availableTiersForTier:(NSNumber *)tier;
++ (NSArray *)availableTiersForTiers:(NSArray *)tiers;
 
 @end
