@@ -57,10 +57,20 @@ static const NSInteger RowHeight = 22.0f;
     WOTTankDetailTableViewCell *result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankDetailTableViewCell class]) forIndexPath:indexPath];
 
     WOTTankDetailField *field = self.fields[indexPath.row];
-    result.nameLabel.text = WOTString(field.fieldDescriotion?field.fieldDescriotion:field.fieldPath);
 
-    id value = [field evaluateWithObject:self.fetchedObject];
-    result.valueLabel.text = [value description];
+    __weak typeof(result) weak_result = result;
+    [field evaluateWithObject:self.fetchedObject completionBlock:^(NSDictionary *values) {
+        
+        
+        NSMutableArray *arr = [[NSMutableArray alloc] init];
+        id name = [[values allKeys] componentsJoinedByString:@" / "];
+        for (id key in [values allKeys]) {
+            [arr addObject:values[key]];
+        }
+        
+        result.nameLabel.text = WOTString(name);
+        weak_result.valueLabel.text = [arr componentsJoinedByString:@" / "];
+    }];
     return result;
 }
 

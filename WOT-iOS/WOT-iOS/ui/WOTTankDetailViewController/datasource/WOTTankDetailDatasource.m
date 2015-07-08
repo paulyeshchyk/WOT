@@ -8,6 +8,7 @@
 
 #import "WOTTankDetailDatasource.h"
 #import "WOTTankDetailFieldKVO.h"
+#import "WOTTankDetailFieldExpression+Factory.h"
 
 @interface WOTTankDetailDatasource ()
 
@@ -37,7 +38,8 @@
                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_GUNS],
                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_GUNS],
                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_GUNS],
-                                                                                                                          [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_RATE query:WOT_LINKKEY_GUNS]
+                                                                                                                          [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_RATE query:WOT_LINKKEY_GUNS],
+                                                                                                                          [WOTTankDetailFieldExpression avarageThisMaxFieldExpressionForField:WOT_KEY_RATE]
                                                                                                                           ]];
         WOTTankDetailSection *turrets = [[WOTTankDetailSection alloc] initWithTitle:@"Turrets" query:WOT_LINKKEY_TURRETS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_TURRETS],
                                                                                                                                    [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_ARMOR_BOARD query:WOT_LINKKEY_TURRETS],
@@ -45,7 +47,8 @@
                                                                                                                                    [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_ARMOR_FOREHEAD query:WOT_LINKKEY_TURRETS],
                                                                                                                                    [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_TURRETS],
                                                                                                                                    [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_CIRCULAR_VISION_RADIUS query:WOT_LINKKEY_TURRETS],
-                                                                                                                                   [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_ROTATION_SPEED query:WOT_LINKKEY_TURRETS]
+                                                                                                                                   [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_ROTATION_SPEED query:WOT_LINKKEY_TURRETS],
+                                                                                                                                   [WOTTankDetailFieldExpression avarageThisMaxFieldExpressionForField:WOT_KEY_ROTATION_SPEED]
                                                                                                                                    ]];
 
         WOTTankDetailSection *radios = [[WOTTankDetailSection alloc] initWithTitle:@"Radios" query:WOT_LINKKEY_RADIOS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_RADIOS],

@@ -18,6 +18,8 @@
 		1D047B691B331DF000B5B696 /* WOTApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */; };
 		1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D047BB91B34095500B5B696 /* WOT_iOS.xcdatamodeld */; };
 		1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047BBD1B3419C000B5B696 /* WOTWebResponseLink.m */; };
+		1D1BDB8D1B4C0AAF00A3D264 /* WOTTankDetailFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1BDB8C1B4C0AAF00A3D264 /* WOTTankDetailFieldExpression.m */; };
+		1D1BDB901B4C0DB500A3D264 /* WOTTankDetailFieldExpression+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1BDB8F1B4C0DB500A3D264 /* WOTTankDetailFieldExpression+Factory.m */; };
 		1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92121B25B71000E320B5 /* WOTTankListCollectionViewCell.m */; };
 		1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92131B25B71000E320B5 /* WOTTankListCollectionViewCell.xib */; };
 		1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92181B25B92500E320B5 /* WOTTankListFlowLayout.m */; };
@@ -290,6 +292,10 @@
 		1D047BBA1B34095500B5B696 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
 		1D047BBC1B3419C000B5B696 /* WOTWebResponseLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseLink.h; sourceTree = "<group>"; };
 		1D047BBD1B3419C000B5B696 /* WOTWebResponseLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWebResponseLink.m; sourceTree = "<group>"; };
+		1D1BDB8B1B4C0AAF00A3D264 /* WOTTankDetailFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailFieldExpression.h; sourceTree = "<group>"; };
+		1D1BDB8C1B4C0AAF00A3D264 /* WOTTankDetailFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailFieldExpression.m; sourceTree = "<group>"; };
+		1D1BDB8E1B4C0DB500A3D264 /* WOTTankDetailFieldExpression+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankDetailFieldExpression+Factory.h"; sourceTree = "<group>"; };
+		1D1BDB8F1B4C0DB500A3D264 /* WOTTankDetailFieldExpression+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankDetailFieldExpression+Factory.m"; sourceTree = "<group>"; };
 		1D4C920F1B25B39800E320B5 /* WOTMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTMacro.h; sourceTree = "<group>"; };
 		1D4C92111B25B71000E320B5 /* WOTTankListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListCollectionViewCell.h; sourceTree = "<group>"; };
 		1D4C92121B25B71000E320B5 /* WOTTankListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListCollectionViewCell.m; sourceTree = "<group>"; };
@@ -901,6 +907,10 @@
 				1D9069551B3C227F00237852 /* WOTTankDetailField.m */,
 				1D9069561B3C227F00237852 /* WOTTankDetailFieldKVO.h */,
 				1D9069571B3C227F00237852 /* WOTTankDetailFieldKVO.m */,
+				1D1BDB8B1B4C0AAF00A3D264 /* WOTTankDetailFieldExpression.h */,
+				1D1BDB8C1B4C0AAF00A3D264 /* WOTTankDetailFieldExpression.m */,
+				1D1BDB8E1B4C0DB500A3D264 /* WOTTankDetailFieldExpression+Factory.h */,
+				1D1BDB8F1B4C0DB500A3D264 /* WOTTankDetailFieldExpression+Factory.m */,
 			);
 			path = fields;
 			sourceTree = "<group>";
@@ -2060,6 +2070,7 @@
 				1DC07B231B39B672002FAA72 /* Tankradios.m in Sources */,
 				1DCC80A91B3036A4005FF193 /* PieChartData.swift in Sources */,
 				1DCC809D1B3036A4005FF193 /* BubbleChartDataEntry.swift in Sources */,
+				1D1BDB901B4C0DB500A3D264 /* WOTTankDetailFieldExpression+Factory.m in Sources */,
 				1DC07AD31B39A049002FAA72 /* WOTWebResponseAdapterTurrets.m in Sources */,
 				1DCC80881B3036A4005FF193 /* ChartViewBase.swift in Sources */,
 				1DCC809F1B3036A4005FF193 /* CandleChartData.swift in Sources */,
@@ -2101,6 +2112,7 @@
 				1DCC7F321B2EE974005FF193 /* RomanNumber.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
 				1D5A8E401B43F34700A8261E /* WOTCoreDataPredicates.m in Sources */,
+				1D1BDB8D1B4C0AAF00A3D264 /* WOTTankDetailFieldExpression.m in Sources */,
 				1DCC80A61B3036A4005FF193 /* LineChartData.swift in Sources */,
 				1D4C92561B25F27200E320B5 /* WOTLanguageTableViewCell.m in Sources */,
 				1DCC80A81B3036A4005FF193 /* LineRadarChartDataSet.swift in Sources */,

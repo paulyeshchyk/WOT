@@ -10,4 +10,12 @@
 
 @interface WOTTankDetailFieldKVO : WOTTankDetailField
 
++ (WOTTankDetailField *)fieldWithFieldPath:(NSString *)fieldPath query:(NSString *)query;
+
+@property (nonatomic, copy)NSString *fieldPath;
+@property (nonatomic, copy)NSString *fieldDescriotion;
+@property (nonatomic, copy)NSString *query;
+
+
+
 @end
