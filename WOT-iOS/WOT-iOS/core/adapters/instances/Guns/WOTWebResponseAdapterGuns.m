@@ -20,21 +20,21 @@
         return;
     }
     
-    NSDictionary *tankGunsDictionary = data[WOT_KEY_DATA];
+    NSDictionary *tankGunsDictionary = [data[WOT_KEY_DATA] copy];
     
     NSArray *tankGunsArray = [tankGunsDictionary allKeys];
     
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
     [context performBlock:^{
         
-        for (NSString *key in tankGunsArray) {
+        [tankGunsArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
             
             NSDictionary *tankGunsJSON = tankGunsDictionary[key];
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankGunsJSON[WOT_KEY_MODULE_ID]];
             Tankguns *tankGuns = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
             [tankGuns fillPropertiesFromDictionary:tankGunsJSON];
-        }
+        }];
         
         if ([context hasChanges]) {
             

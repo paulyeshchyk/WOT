@@ -25,14 +25,14 @@
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
     [context performBlock:^{
         
-        for (NSString *key in tankRadiosArray) {
+        [tankRadiosArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
             
             NSDictionary *tankRadiosJSON = tankRadiosDictionary[key];
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankRadiosJSON[WOT_KEY_MODULE_ID]];
             Tankradios *tankradios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
             [tankradios fillPropertiesFromDictionary:tankRadiosJSON];
-        }
+        }];
         
         if ([context hasChanges]) {
             

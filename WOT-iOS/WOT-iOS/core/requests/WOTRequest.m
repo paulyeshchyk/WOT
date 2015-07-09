@@ -27,6 +27,19 @@
     NSCAssert(NO, @"should be overriden");
 }
 
+- (BOOL)isEqual:(id)object {
+
+    BOOL result = [NSStringFromClass([object class]) isEqualToString:NSStringFromClass([self class])];
+    
+    result &= ([object hash] == [self hash]);
+    
+    return result;
+}
+
+- (NSUInteger)hash {
+    
+    return [self.args hash];
+}
 
 - (NSArray *)availableInGroups {
  

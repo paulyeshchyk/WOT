@@ -25,6 +25,7 @@
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
+
 - (NSString *)method {
     
     return @"POST";

@@ -146,8 +146,11 @@
     [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
-    [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:self.requestsGroupId];
-    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:self.requestsGroupId];
+    if (canAdd) {
+        
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+    }
     
 }
 

@@ -10,6 +10,7 @@
 #import "Tankengines.h"
 
 @implementation WOTWebResponseAdapterEngines
+
 - (void)parseData:(id)data error:(NSError *)error {
     
     if (error) {
@@ -25,14 +26,15 @@
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
     [context performBlock:^{
         
-        for (NSString *key in tankEnginesArray) {
+        [tankEnginesArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
+            
             
             NSDictionary *tankEngineJSON = tankEnginessDictionary[key];
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankEngineJSON[WOT_KEY_MODULE_ID]];
             Tankengines *tankEngines = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
             [tankEngines fillPropertiesFromDictionary:tankEngineJSON];
-        }
+        }];
         
         if ([context hasChanges]) {
             

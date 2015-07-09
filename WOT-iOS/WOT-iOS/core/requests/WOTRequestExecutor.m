@@ -86,7 +86,7 @@
     }];
 }
 
-- (void)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId {
+- (BOOL)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId {
     
     NSPointerArray *requests = self.grouppedRequests[groupId];
     [requests compact];
@@ -97,12 +97,26 @@
         self.grouppedRequests[groupId] = requests;
     }
     
-    NSUInteger index = [[requests allObjects] indexOfObject:request];
-    if (index == NSNotFound) {
+    NSUInteger index = [[requests allObjects] indexOfObjectPassingTest:^BOOL(WOTRequest *req, NSUInteger idx, BOOL *stop) {
+        
+        BOOL isEqual = [req isEqual:request];
+        if (isEqual) {
+            
+            *stop = YES;
+        }
+        return isEqual;
+    }];
+    
+    BOOL canAdd = (index == NSNotFound);
+    if (canAdd) {
         
         [request addGroup:groupId];
         [requests addPointer:(__bridge void *)request];
+    } else {
+        
+        NSLog(@"request has not been added:%@",request.description);
     }
+    return canAdd;
 }
 
 - (void)runRequest:(WOTRequest *)request withArgs:(NSDictionary *)args {

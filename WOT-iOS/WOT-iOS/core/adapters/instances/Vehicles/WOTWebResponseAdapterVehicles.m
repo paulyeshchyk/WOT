@@ -104,20 +104,20 @@
         }
 
         
-        dispatch_async(dispatch_get_main_queue(), ^{
 
-            for(NSNumber *requestId in requests) {
-                
-                id args = requests[requestId];
-                WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
-                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+            [requests enumerateKeysAndObjectsUsingBlock:^(NSNumber *requestId, id obj, BOOL *stop) {
 
-#warning check groupId
-                [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicle"];
-                
-            }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    id args = requests[requestId];
+                    WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
+                    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+
+    #warning check groupId
+                    [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicle"];
+                    
+                });
+            }];
     
-        });
     }];
 
 }

@@ -26,14 +26,14 @@
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
     [context performBlock:^{
         
-        for (NSString *key in tankTurretsArray) {
+        [tankTurretsArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
             
             NSDictionary *tankTurretsJSON = tankTurretsDictionary[key];
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankTurretsJSON[WOT_KEY_MODULE_ID]];
             Tankturrets *tankturrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
             [tankturrets fillPropertiesFromDictionary:tankTurretsJSON];
-        }
+        }];
         
         if ([context hasChanges]) {
             
