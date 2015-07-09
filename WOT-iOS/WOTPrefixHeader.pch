@@ -18,6 +18,8 @@
 #import "NSBundle+LanguageBundle.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import "UIView+StretchingConstraints.h"
+#import "NSExpressionDescription+WOT.h"
+
 #import "UIKit+AFNetworking.h"
 
 #import "UIBarButtonItem+EventBlock.h"

@@ -17,5 +17,7 @@
 - (WOTTankDetailField *)metricAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSString *)queryAtSection:(NSInteger)section;
+- (void)addSection:(WOTTankDetailSection *)section;
+
 
 @end

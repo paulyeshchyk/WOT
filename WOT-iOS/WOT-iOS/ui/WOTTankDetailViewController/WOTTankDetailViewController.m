@@ -21,6 +21,7 @@
 #import "WOTTankIdsDatasource.h"
 
 #import "WOTRadarViewController.h"
+#import "WOTTankDetailSection+Factory.h"
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -50,6 +51,11 @@
     if (self){
         
         self.datasource = [[WOTTankDetailDatasource alloc] init];
+        [self.datasource addSection:[WOTTankDetailSection engineSection]];
+        [self.datasource addSection:[WOTTankDetailSection chassisSection]];
+        [self.datasource addSection:[WOTTankDetailSection turretsSection]];
+        [self.datasource addSection:[WOTTankDetailSection radiosSection]];
+        [self.datasource addSection:[WOTTankDetailSection gunsSection]];
     }
     return self;
 }
@@ -78,14 +84,6 @@
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
         [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
         
-        NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[weakSelf.vehicle.tier]];
-        
-        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
-        [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
-           
-            [weakSelf refetchTankID:[tankId stringValue]];
-        }];
-        
     }];
 
     [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
@@ -95,13 +93,21 @@
 
 - (void)setVehicle:(Vehicles *)vehicle {
     
-    _vehicle = vehicle;
+    if (_vehicle != vehicle){
+
+        _vehicle = vehicle;
+        
+        [self refetchPossibleTiersForTier:_vehicle.tier];
+    }
     
-    self.title = vehicle.tanks.name_i18n;
+}
+
+- (void)updateUI {
+    
+    self.title = self.vehicle.tanks.name_i18n;
     
     [self.collectionView reloadData];
     [self.collectionView.collectionViewLayout invalidateLayout];
-    
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -123,7 +129,9 @@
     
     _tankId = [tankId copy];
     [self refetchTankID:[self.tankId stringValue]];
-    [self updateUI];
+
+    
+    [self refetchCurrentVehicle];
 }
 
 - (void)setFetchError:(NSError *)fetchError {
@@ -140,9 +148,10 @@
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
     [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:self.requestsGroupId];
     [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+    
 }
 
-- (void)updateUI {
+- (void)refetchCurrentVehicle {
     
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
@@ -151,10 +160,22 @@
     self.vehicle = [self.fetchedResultController.fetchedObjects lastObject];
 }
 
+- (void)refetchPossibleTiersForTier:(NSNumber *)tier {
+    
+    NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[tier]];
+    
+    NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
+    [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
+        
+        [self refetchTankID:[tankId stringValue]];
+    }];
+}
+
 
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
  
+    self.vehicle = [self.fetchedResultController.fetchedObjects lastObject];
     [self updateUI];
 }
 
@@ -197,7 +218,7 @@
 
     id filteredObjects = [[[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject] allObjects];
     
-    id faultedObject = filteredObjects[indexPath.row];
+    NSManagedObject *faultedObject = filteredObjects[indexPath.row];
     
     result.isLastInSection = (indexPath.row == ([self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1));
     result.fetchedObject = faultedObject;

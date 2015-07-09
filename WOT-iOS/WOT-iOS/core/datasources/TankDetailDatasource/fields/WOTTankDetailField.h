@@ -12,7 +12,7 @@ typedef void(^EvaluateCompletionBlock)(NSDictionary *values);
 
 @interface WOTTankDetailField : NSObject
 
-@property (nonatomic, readonly) NSString *expressionName;
+@property (nonatomic, copy) NSString *expressionName;
 
 - (void)evaluateWithObject:(id)object completionBlock:(EvaluateCompletionBlock)completionBlock;
 

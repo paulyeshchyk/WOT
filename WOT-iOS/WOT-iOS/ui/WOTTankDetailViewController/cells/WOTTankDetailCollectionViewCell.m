@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankDetailCollectionViewCell.h"
-#import "WOTTankDetailTableViewCell.h"
+#import "WOTTankDetailTextTableViewCell.h"
 #import "WOTTankDetailField.h"
 
 static const NSInteger RowHeight = 22.0f;
@@ -35,8 +35,10 @@ static const NSInteger RowHeight = 22.0f;
 
     [super awakeFromNib];
 
+    self.fetchedObject = nil;
+
     self.isLastInSection = NO;
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankDetailTableViewCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailTextTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankDetailTextTableViewCell class])];
     [self.tableView setEstimatedRowHeight:RowHeight];
 }
 
@@ -54,32 +56,11 @@ static const NSInteger RowHeight = 22.0f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    WOTTankDetailTableViewCell *result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankDetailTableViewCell class]) forIndexPath:indexPath];
-
     WOTTankDetailField *field = self.fields[indexPath.row];
-
-    __weak typeof(result) weak_result = result;
-    [field evaluateWithObject:self.fetchedObject completionBlock:^(NSDictionary *values) {
-        
-        
-        NSMutableArray *arr = [[NSMutableArray alloc] init];
-        id name = [[values allKeys] componentsJoinedByString:@" / "];
-        for (id key in [values allKeys]) {
-            
-            [arr addObject:values[key]];
-        }
-        
-        if (field.expressionName.length != 0) {
-            
-            result.nameLabel.text = [NSString stringWithFormat:@"%@(%@)",field.expressionName, WOTString(name)];
-        } else {
-            
-            result.nameLabel.text = WOTString(name);
-        }
-        
-        weak_result.valueLabel.text = [arr componentsJoinedByString:@" / "];
-    }];
     
+    UITableViewCell<WOTTankDetailTableViewCellProtocol> *result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankDetailTextTableViewCell class]) forIndexPath:indexPath];
+    [result parseObject:self.fetchedObject withField:field];
+
     return result;
 }
 
