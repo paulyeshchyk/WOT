@@ -8,7 +8,7 @@
 
 #import "WOTWEBRequest.h"
 #import "WOTRequestExecutor.h"
-#import <AFNetworking/AFNetworking.h>
+
 
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 

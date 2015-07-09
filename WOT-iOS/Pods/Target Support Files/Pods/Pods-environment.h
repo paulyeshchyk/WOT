@@ -84,6 +84,12 @@
 #define COCOAPODS_VERSION_MINOR_BlocksKit_UIKit 2
 #define COCOAPODS_VERSION_PATCH_BlocksKit_UIKit 5
 
+// Charts
+#define COCOAPODS_POD_AVAILABLE_Charts
+#define COCOAPODS_VERSION_MAJOR_Charts 2
+#define COCOAPODS_VERSION_MINOR_Charts 1
+#define COCOAPODS_VERSION_PATCH_Charts 0
+
 // MMDrawerController
 #define COCOAPODS_POD_AVAILABLE_MMDrawerController
 #define COCOAPODS_VERSION_MAJOR_MMDrawerController 0

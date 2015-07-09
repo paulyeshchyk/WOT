@@ -12,6 +12,7 @@
 
 @interface WOTRadarViewController () <ChartViewDelegate>
 
+@property (nonatomic, strong)IBOutlet UIView *radarViewContainer;
 @property (nonatomic, strong)IBOutlet RadarChartView *radarView;
 @end
 
@@ -31,7 +32,9 @@
 
 - (void)initRadarData {
     
-    
+    self.radarView = [[RadarChartView alloc] init];
+    [self.radarViewContainer addSubview:self.radarView];
+    [self.radarView addStretchingConstraints];
     self.radarView.delegate = self;
     
     self.radarView.descriptionText = @"";

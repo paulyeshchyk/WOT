@@ -20,6 +20,8 @@
 
 #import "WOTTankIdsDatasource.h"
 
+#import "WOTRadarViewController.h"
+
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) IBOutlet UIToolbar *toolBar;
@@ -71,6 +73,7 @@
     
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
+
 
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
         [weakSelf.navigationController pushViewController:configurationSelector animated:YES];

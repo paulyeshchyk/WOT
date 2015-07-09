@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-//#import <Charts/Charts.h>
-
 @interface WOTRadarViewController : UIViewController
 
 @end

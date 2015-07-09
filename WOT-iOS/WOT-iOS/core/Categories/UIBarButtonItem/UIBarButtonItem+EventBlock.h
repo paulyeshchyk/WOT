@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <UIControl+BlocksKit.h>
+#import "UIControl+BlocksKit.h"
 
 typedef void(^EventHandlerBlock)(id sender);
 
