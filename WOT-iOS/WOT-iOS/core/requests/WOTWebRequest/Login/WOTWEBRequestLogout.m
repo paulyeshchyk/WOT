@@ -16,7 +16,7 @@
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray *cookies = [cookieStorage cookies];
     for (NSHTTPCookie *cookie in cookies) {
-//        NSLog(@"Deleting cookie for domain: %@", [cookie domain]);
+        debugLog(@"Deleting cookie for domain: %@", [cookie domain]);
         [cookieStorage deleteCookie:cookie];
     }
 }

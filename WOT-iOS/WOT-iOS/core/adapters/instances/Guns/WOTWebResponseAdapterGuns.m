@@ -13,10 +13,9 @@
 
 - (void)parseData:(id)data error:(NSError *)error {
 
-    
     if (error) {
         
-        NSLog(@"%@",error.localizedDescription);
+        debugLog(@"%@",error.localizedDescription);
         return;
     }
     

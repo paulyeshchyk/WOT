@@ -14,5 +14,6 @@
 
 + (NSArray *)availableFields;
 + (NSArray *)availableLinks;
++ (NSArray *)embeddedLinks;
 
 @end

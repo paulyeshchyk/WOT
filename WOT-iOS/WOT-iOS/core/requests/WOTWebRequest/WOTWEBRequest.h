@@ -19,8 +19,6 @@
 @property (nonatomic, readonly) NSData *httpBodyData;
 @property (nonatomic, readonly) NSURL *url;
 
-+ (NSString *)language;
-
 - (NSString *)queryIntoString ;
 
 

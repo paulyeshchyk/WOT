@@ -157,11 +157,55 @@
     /**
      * Tanks.Vehicles
      **/
-    
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
     
+    /**
+     * Tanks.Modules
+     **/
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestTankVehicles class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
 }
+
+
+static NSString *WOTWEBRequestDefaultLanguage;
+
++ (void)setLanguage:(NSString *)language {
+    
+    WOTWEBRequestDefaultLanguage = language;
+    if (language) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject:language forKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
+    } else {
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
+
++ (NSString *)language {
+    
+    if ([WOTWEBRequestDefaultLanguage length] == 0){
+        
+        NSString *language = [[NSUserDefaults standardUserDefaults] stringForKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
+        if ([language length] == 0){
+            
+            WOTWEBRequestDefaultLanguage =  WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU;
+        } else {
+            
+            WOTWEBRequestDefaultLanguage = language;
+        }
+    }
+    return WOTWEBRequestDefaultLanguage;
+}
+
+
++ (NSString *)host {
+    
+    return [NSString stringWithFormat:@"%@.%@",@"https://api.worldoftanks",[self language]];
+}
+
 
 
 @end

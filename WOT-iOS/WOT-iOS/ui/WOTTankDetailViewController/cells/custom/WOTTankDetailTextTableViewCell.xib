@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,29 +13,31 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSS-Eb-gjh">
-                        <rect key="frame" x="4" y="0.0" width="152" height="43"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.396078431372549" green="0.396078431372549" blue="0.396078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSS-Eb-gjh">
+                        <rect key="frame" x="8" y="0.0" width="312" height="11"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="11" id="qhE-Ib-TBV"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fx3-TM-ja2">
-                        <rect key="frame" x="164" y="0.0" width="152" height="43"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <rect key="frame" x="8" y="11" width="312" height="32"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
                         <color key="textColor" red="0.396078431372549" green="0.396078431372549" blue="0.396078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <color key="backgroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstItem="dSS-Eb-gjh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="6EV-Fw-Bct"/>
-                    <constraint firstAttribute="bottom" secondItem="fx3-TM-ja2" secondAttribute="bottom" id="6GX-4g-MT3"/>
-                    <constraint firstAttribute="bottom" secondItem="dSS-Eb-gjh" secondAttribute="bottom" id="F01-5J-J0K"/>
-                    <constraint firstItem="fx3-TM-ja2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="4" id="LTF-RR-LKU"/>
-                    <constraint firstItem="fx3-TM-ja2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="SWY-De-bM1"/>
-                    <constraint firstItem="dSS-Eb-gjh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="ZVk-xk-NKI"/>
-                    <constraint firstAttribute="centerX" secondItem="dSS-Eb-gjh" secondAttribute="trailing" constant="4" id="gNm-HR-AR7"/>
-                    <constraint firstAttribute="trailing" secondItem="fx3-TM-ja2" secondAttribute="trailing" constant="4" id="xxL-dJ-IRZ"/>
+                    <constraint firstAttribute="trailing" secondItem="dSS-Eb-gjh" secondAttribute="trailing" id="3LF-sR-5Vu"/>
+                    <constraint firstAttribute="trailing" secondItem="fx3-TM-ja2" secondAttribute="trailing" id="L2Y-D0-DHz"/>
+                    <constraint firstItem="dSS-Eb-gjh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="S13-Rv-qqJ"/>
+                    <constraint firstAttribute="bottom" secondItem="fx3-TM-ja2" secondAttribute="bottom" id="S8w-S0-GDe"/>
+                    <constraint firstItem="fx3-TM-ja2" firstAttribute="top" secondItem="dSS-Eb-gjh" secondAttribute="bottom" id="g8e-Xg-oNq"/>
+                    <constraint firstItem="dSS-Eb-gjh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ihQ-nX-CuP"/>
+                    <constraint firstItem="fx3-TM-ja2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="iyA-gJ-bRK"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

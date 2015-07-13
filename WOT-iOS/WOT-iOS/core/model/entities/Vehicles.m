@@ -2,11 +2,12 @@
 //  Vehicles.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/23/15.
+//  Created by Pavel Yeshchyk on 7/13/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import "Vehicles.h"
+#import "ModulesTree.h"
 #import "Tankchassis.h"
 #import "Tankengines.h"
 #import "Tankguns.h"
@@ -29,10 +30,11 @@
 @dynamic tier;
 @dynamic type;
 @dynamic engines;
-@dynamic tanks;
 @dynamic guns;
 @dynamic radios;
 @dynamic suspensions;
+@dynamic tanks;
 @dynamic turrets;
+@dynamic modulesTree;
 
 @end

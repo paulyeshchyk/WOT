@@ -8,9 +8,10 @@
 
 #import "WOTTankDetailCollectionViewCell.h"
 #import "WOTTankDetailTextTableViewCell.h"
+#import "WOTTankDetailProgressTableViewCell.h"
 #import "WOTTankDetailField.h"
 
-static const NSInteger RowHeight = 22.0f;
+static const NSInteger RowHeight = 44.0f;
 
 @interface WOTTankDetailCollectionViewCell () <UITableViewDataSource, UITableViewDelegate>
 
@@ -39,6 +40,7 @@ static const NSInteger RowHeight = 22.0f;
 
     self.isLastInSection = NO;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailTextTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankDetailTextTableViewCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailProgressTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WOTTankDetailProgressTableViewCell class])];
     [self.tableView setEstimatedRowHeight:RowHeight];
 }
 
@@ -57,10 +59,17 @@ static const NSInteger RowHeight = 22.0f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     WOTTankDetailField *field = self.fields[indexPath.row];
+    UITableViewCell<WOTTankDetailTableViewCellProtocol> *result = nil;
     
-    UITableViewCell<WOTTankDetailTableViewCellProtocol> *result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankDetailTextTableViewCell class]) forIndexPath:indexPath];
+    if ([field isKindOfClass:[NSClassFromString(@"WOTTankDetailFieldExpression") class]] ) {
+    
+        result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankDetailProgressTableViewCell class]) forIndexPath:indexPath];
+    } else {
+        
+        result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankDetailTextTableViewCell class]) forIndexPath:indexPath];
+    }
     [result parseObject:self.fetchedObject withField:field];
-
+    
     return result;
 }
 

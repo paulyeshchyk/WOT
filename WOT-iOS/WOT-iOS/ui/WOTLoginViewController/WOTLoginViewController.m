@@ -10,6 +10,7 @@
 
 #import "WOTRequestExecutor.h"
 #import "WOTLanguageSelectorViewController.h"
+#import "WOTWEBRequest.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 
@@ -98,9 +99,8 @@
 - (void)didSelectLanguage:(NSString *)language appId:(NSString *)appId {
     
     if (language) {
-        
-        [[NSUserDefaults standardUserDefaults] setObject:language forKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+
+        [WOTApplicationDefaults setLanguage:language];
 
         WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogin];
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];

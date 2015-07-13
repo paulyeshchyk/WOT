@@ -71,7 +71,7 @@
             [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
         } else {
             
-            NSLog(@"request-fail:%@",error.localizedDescription);
+            debugLog(@"request-fail:%@",error.localizedDescription);
         }
         
     }];

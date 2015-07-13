@@ -81,7 +81,7 @@
             [requests removePointerAtIndex:requestIndex];
         } else {
             
-            NSLog(@"attempting to remove unknown request");
+            debugLog(@"attempting to remove unknown request");
         }
     }];
 }
@@ -114,7 +114,7 @@
         [requests addPointer:(__bridge void *)request];
     } else {
         
-        NSLog(@"request has not been added:%@",request.description);
+        debugLog(@"request has not been added:%@",request.description);
     }
     return canAdd;
 }
@@ -164,7 +164,7 @@
     
     if (!([[RegisteredRequestClass class] isSubclassOfClass:[WOTRequest class]])) {
         
-        NSLog(@"Request %ld is not registered",(long)requestId);
+        debugLog(@"Request %ld is not registered",(long)requestId);
         return nil;
     }
     
@@ -186,7 +186,7 @@
             
             if (!([class conformsToProtocol:@protocol(WOTWebResponseAdapter) ])) {
                 
-                NSLog(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
+                debugLog(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
             } else {
                 
                 id<WOTWebResponseAdapter> adapter = [[class alloc] init];

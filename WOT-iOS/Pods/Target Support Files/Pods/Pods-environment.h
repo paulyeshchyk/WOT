@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 5
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 4
 
+// ASProgressPopUpView
+#define COCOAPODS_POD_AVAILABLE_ASProgressPopUpView
+#define COCOAPODS_VERSION_MAJOR_ASProgressPopUpView 0
+#define COCOAPODS_VERSION_MINOR_ASProgressPopUpView 8
+#define COCOAPODS_VERSION_PATCH_ASProgressPopUpView 0
+
 // BlocksKit
 #define COCOAPODS_POD_AVAILABLE_BlocksKit
 #define COCOAPODS_VERSION_MAJOR_BlocksKit 2
@@ -119,6 +125,18 @@
 #define COCOAPODS_VERSION_MAJOR_MMDrawerController_Subclass 0
 #define COCOAPODS_VERSION_MINOR_MMDrawerController_Subclass 6
 #define COCOAPODS_VERSION_PATCH_MMDrawerController_Subclass 0
+
+// NSLogger
+#define COCOAPODS_POD_AVAILABLE_NSLogger
+#define COCOAPODS_VERSION_MAJOR_NSLogger 1
+#define COCOAPODS_VERSION_MINOR_NSLogger 5
+#define COCOAPODS_VERSION_PATCH_NSLogger 1
+
+// NSLogger/Standard
+#define COCOAPODS_POD_AVAILABLE_NSLogger_Standard
+#define COCOAPODS_VERSION_MAJOR_NSLogger_Standard 1
+#define COCOAPODS_VERSION_MINOR_NSLogger_Standard 5
+#define COCOAPODS_VERSION_PATCH_NSLogger_Standard 1
 
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage

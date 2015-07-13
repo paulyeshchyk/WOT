@@ -15,7 +15,7 @@
 
     if (error) {
         
-        NSLog(@"%@",error.localizedDescription);
+        debugLog(@"%@",error.localizedDescription);
         return;
     }
     

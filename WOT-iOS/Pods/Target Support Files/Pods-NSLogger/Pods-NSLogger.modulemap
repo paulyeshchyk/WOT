@@ -1,0 +1,6 @@
+framework module NSLogger {
+  umbrella header "Pods-NSLogger-umbrella.h"
+
+  export *
+  module * { export * }
+}

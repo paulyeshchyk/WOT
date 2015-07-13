@@ -2,14 +2,14 @@
 //  Vehicles.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/23/15.
+//  Created by Pavel Yeshchyk on 7/13/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Tankchassis, Tankengines, Tankguns, Tankradios, Tanks, Tankturrets;
+@class ModulesTree, Tankchassis, Tankengines, Tankguns, Tankradios, Tanks, Tankturrets;
 
 @interface Vehicles : NSManagedObject
 
@@ -25,11 +25,12 @@
 @property (nonatomic, retain) NSDecimalNumber * tier;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSSet *engines;
-@property (nonatomic, retain) Tanks *tanks;
 @property (nonatomic, retain) NSSet *guns;
 @property (nonatomic, retain) NSSet *radios;
 @property (nonatomic, retain) NSSet *suspensions;
+@property (nonatomic, retain) Tanks *tanks;
 @property (nonatomic, retain) NSSet *turrets;
+@property (nonatomic, retain) NSSet *modulesTree;
 @end
 
 @interface Vehicles (CoreDataGeneratedAccessors)
@@ -58,5 +59,10 @@
 - (void)removeTurretsObject:(Tankturrets *)value;
 - (void)addTurrets:(NSSet *)values;
 - (void)removeTurrets:(NSSet *)values;
+
+- (void)addModulesTreeObject:(ModulesTree *)value;
+- (void)removeModulesTreeObject:(ModulesTree *)value;
+- (void)addModulesTree:(NSSet *)values;
+- (void)removeModulesTree:(NSSet *)values;
 
 @end

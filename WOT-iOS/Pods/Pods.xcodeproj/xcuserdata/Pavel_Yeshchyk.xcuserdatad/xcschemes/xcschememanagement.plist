@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-ASProgressPopUpView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-BlocksKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -20,6 +25,11 @@
 			<false/>
 		</dict>
 		<key>Pods-MMDrawerController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-NSLogger.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -37,32 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1FFDC74F83732FCF45FDB2B9</key>
+		<key>10DF15C3DDDF01E917687A66</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6D2483BB44B3E216B3707520</key>
+		<key>1699B56E0142CEE56B1BE4DF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7BA7FC2064AA422C22F8C9A7</key>
+		<key>3BA0EC9BCD82001A32291A01</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DAD673B4B5C0220533B4E819</key>
+		<key>4E762A220243748ACDB4D522</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EDED0A834432777C7D0BD13E</key>
+		<key>6BD6D3B127D2689D69416465</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F18A158BE91E1C16480C8A8E</key>
+		<key>929E262AF306C4AA21EDCA95</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E000C14481A6C494575A84DD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F2B564840D0E8C7DA374925B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

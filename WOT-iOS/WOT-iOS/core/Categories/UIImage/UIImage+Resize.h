@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UIImage (Resize)
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
++ (UIImage *)imageWithColor:(UIColor *)color
+               cornerRadius:(CGFloat)cornerRadius;
+
+- (UIImage *) imageWithMinimumSize:(CGSize)size;
 @end

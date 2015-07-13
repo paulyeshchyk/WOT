@@ -67,7 +67,7 @@
     [self.tree addNode:node0];
     
     
-    NSLog(@"%@",node0210.siblingIndexPath);
+    debugLog(@"%@",node0210.siblingIndexPath);
     
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {

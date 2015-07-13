@@ -13,4 +13,9 @@
 + (void)registerDefaultSettings;
 + (void)registerRequests;
 
++ (NSString *)language;
++ (void)setLanguage:(NSString *)language;
++ (NSString *)host;
+
+
 @end

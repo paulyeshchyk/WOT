@@ -2,7 +2,7 @@
 //  Tankengines.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/23/15.
+//  Created by Pavel Yeshchyk on 7/10/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
@@ -22,5 +22,6 @@
 @dynamic price_credit;
 @dynamic price_gold;
 @dynamic vehicles;
+@dynamic modulesTree;
 
 @end

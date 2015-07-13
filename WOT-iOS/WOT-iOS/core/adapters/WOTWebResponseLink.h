@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^WOTWebResponseLinkItemsBlock)(id entity, NSSet *items);
+typedef void(^WOTWebResponseLinkItemsBlock)(id entity, NSSet *items, id tag);
 
 @interface WOTWebResponseLink : NSObject
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WOTTankDetailField.h"
 
 @protocol WOTTankDetailTableViewCellProtocol <NSObject>
 

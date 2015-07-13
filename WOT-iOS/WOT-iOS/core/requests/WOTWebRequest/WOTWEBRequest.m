@@ -13,7 +13,7 @@
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection *connection;
-
+@property (nonatomic, assign) NSUInteger privateHash;
 @end
 
 @implementation WOTWEBRequest
@@ -28,18 +28,6 @@ static NSString *urlEncode(NSString *string) {
     return encodedString;
 }
 
-+ (NSString *)language {
-    
-    NSString *language = [[NSUserDefaults standardUserDefaults] stringForKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
-    if ([language length] == 0){
-        
-        return WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU;
-    } else {
-        
-        return language;
-    }
-}
-
 + (NSOperationQueue *)requestQueue {
 
     static NSOperationQueue *_requestQueue;
@@ -51,13 +39,23 @@ static NSString *urlEncode(NSString *string) {
     return _requestQueue;
 }
 
+- (id)init {
+    
+    self = [super init];
+    if (self){
+        
+        NSUInteger urlHash = [[self queryIntoString] hash];
+        NSUInteger argHash = [self.args hash];
+        
+        self.privateHash =  urlHash ^ argHash;
+    }
+    return self;
+}
+
 - (NSUInteger)hash {
 
-    NSUInteger urlHash = [self.url hash];
-    NSUInteger argHash = [self.args hash];
-    
-    return  urlHash ^ argHash;
-    
+
+    return self.privateHash;
 }
 
 - (NSString *)description {
@@ -72,7 +70,7 @@ static NSString *urlEncode(NSString *string) {
 
 - (NSString *)host {
     
-    return [NSString stringWithFormat:@"%@.%@",@"https://api.worldoftanks",[WOTWEBRequest language]];
+    return [WOTApplicationDefaults host];
 }
 
 - (NSURL *)url {
@@ -106,7 +104,7 @@ static NSString *urlEncode(NSString *string) {
 
     [super temp_executeWithArgs:args];
 
-//    NSLog(@"webrequest-start:%@-%@",self.availableInGroups, [self.url absoluteString]);
+    debugLog(@"webrequest-start%@-%@",self.availableInGroups, [self.url absoluteString]);
     NSURL *url = self.url;
     NSData *bodyData = self.httpBodyData;
     
@@ -193,18 +191,18 @@ static NSString *urlEncode(NSString *string) {
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-//    NSLog(@"webrequest-received-data:%@",[self.url absoluteString]);
+    debugLog(@"webrequest-received-data:%@",[self.url absoluteString]);
     [self parseData:data error:nil];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-//    NSLog(@"webrequest-finished:%@",[self.url absoluteString]);
+    debugLog(@"webrequest-finished:%@",[self.url absoluteString]);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 
-//    NSLog(@"webrequest-failture:%@",[self.url absoluteString]);
+    debugLog(@"webrequest-failture:%@",[self.url absoluteString]);
     
     [self parseData:nil error:error];
 }

@@ -15,7 +15,7 @@
    
     if (error) {
         
-        NSLog(@"%@",error.localizedDescription);
+        debugLog(@"%@",error.localizedDescription);
         return;
     }
     NSDictionary *tankRadiosDictionary = data[WOT_KEY_DATA];

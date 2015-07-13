@@ -2,14 +2,14 @@
 //  Tankchassis.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/23/15.
+//  Created by Pavel Yeshchyk on 7/10/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Vehicles;
+@class ModulesTree, Vehicles;
 
 @interface Tankchassis : NSManagedObject
 
@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSDecimalNumber * price_gold;
 @property (nonatomic, retain) NSDecimalNumber * rotation_speed;
 @property (nonatomic, retain) NSSet *vehicles;
+@property (nonatomic, retain) NSSet *modulesTree;
 @end
 
 @interface Tankchassis (CoreDataGeneratedAccessors)
@@ -32,5 +33,10 @@
 - (void)removeVehiclesObject:(Vehicles *)value;
 - (void)addVehicles:(NSSet *)values;
 - (void)removeVehicles:(NSSet *)values;
+
+- (void)addModulesTreeObject:(ModulesTree *)value;
+- (void)removeModulesTreeObject:(ModulesTree *)value;
+- (void)addModulesTree:(NSSet *)values;
+- (void)removeModulesTree:(NSSet *)values;
 
 @end

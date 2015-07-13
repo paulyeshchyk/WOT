@@ -27,4 +27,10 @@
     return nil;
 }
 
++ (NSArray *)embeddedLinks {
+    
+    NSCAssert(NO, @"should be overriden");
+    return nil;
+}
+
 @end
