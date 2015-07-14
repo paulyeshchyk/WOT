@@ -24,12 +24,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-MMDrawerController.xcscheme</key>
+		<key>Pods-EnrichedNSLog.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-NSLogger.xcscheme</key>
+		<key>Pods-MMDrawerController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -47,42 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>10DF15C3DDDF01E917687A66</key>
+		<key>06FAD4EA464D37EBD9140015</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1699B56E0142CEE56B1BE4DF</key>
+		<key>2631AC513A78C96DB27A5E5E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3BA0EC9BCD82001A32291A01</key>
+		<key>2784C1C59E1510C86A6235AC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4E762A220243748ACDB4D522</key>
+		<key>41EDB26C5A2B8E6CDDE0EC7A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6BD6D3B127D2689D69416465</key>
+		<key>48CF2977F1999FDED46F5EA9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>929E262AF306C4AA21EDCA95</key>
+		<key>5315A54E2EA99ECB25F3D02B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E000C14481A6C494575A84DD</key>
+		<key>65A72DEB1C0CDA308BF056BC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F2B564840D0E8C7DA374925B</key>
+		<key>DD034A1E443B0ED65621C4F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

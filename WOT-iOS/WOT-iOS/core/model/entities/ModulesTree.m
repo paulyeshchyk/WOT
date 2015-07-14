@@ -2,7 +2,7 @@
 //  ModulesTree.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/10/15.
+//  Created by Pavel Yeshchyk on 7/14/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
@@ -12,8 +12,8 @@
 #import "Tankengines.h"
 #import "Tankguns.h"
 #import "Tankradios.h"
+#import "Tanks.h"
 #import "Tankturrets.h"
-#import "Vehicles.h"
 
 
 @implementation ModulesTree
@@ -31,5 +31,6 @@
 @dynamic nextGuns;
 @dynamic nextRadios;
 @dynamic nextTurrets;
+@dynamic prevModules;
 
 @end

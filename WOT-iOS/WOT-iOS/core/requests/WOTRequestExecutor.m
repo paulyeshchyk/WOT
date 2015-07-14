@@ -81,7 +81,7 @@
             [requests removePointerAtIndex:requestIndex];
         } else {
             
-            debugLog(@"attempting to remove unknown request");
+            debugError(@"attempting to remove unknown request:%@",request);
         }
     }];
 }
@@ -164,7 +164,7 @@
     
     if (!([[RegisteredRequestClass class] isSubclassOfClass:[WOTRequest class]])) {
         
-        debugLog(@"Request %ld is not registered",(long)requestId);
+        debugError(@"Request %ld is not registered",(long)requestId);
         return nil;
     }
     
@@ -186,11 +186,18 @@
             
             if (!([class conformsToProtocol:@protocol(WOTWebResponseAdapter) ])) {
                 
-                debugLog(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
+                debugError(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
             } else {
                 
-                id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-                [adapter parseData:data error:nil];
+                if (![data isKindOfClass:[NSDictionary class]]) {
+                    
+                    debugError(@"invalid data is parsing");
+                    
+                } else {
+                
+                    id<WOTWebResponseAdapter> adapter = [[class alloc] init];
+                    [adapter parseData:data error:nil];
+                }
             }
         }];
     }];

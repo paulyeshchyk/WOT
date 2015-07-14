@@ -1,0 +1,6 @@
+framework module EnrichedNSLog {
+  umbrella header "Pods-EnrichedNSLog-umbrella.h"
+
+  export *
+  module * { export * }
+}

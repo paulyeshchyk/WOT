@@ -17,6 +17,7 @@
 #import "ModulesTree.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import "WOTRequestExecutor.h"
+#import "WOTWebResponseAdapterModulesTree.h"
 
 @implementation WOTWebResponseAdapterVehicles
 
@@ -25,7 +26,7 @@
     
     if (error) {
         
-        debugLog(@"%@",error.localizedDescription);
+        debugError(@"%@",error.localizedDescription);
         return;
     }
     
@@ -111,7 +112,7 @@
             NSDictionary *requestsForObjs = [self parseDictionaryLink:jSONLink
                                                    wotWebResponseLink:wotWebResponseLink
                                                               context:context
-                                                              vehicle:vehicle];
+                                                                 tank:tank];
             [result addEntriesFromDictionary:requestsForObjs];
         } else {
             
@@ -169,7 +170,7 @@
 #pragma mark - modules
 
 
-- (NSDictionary *)parseDictionaryLink:(NSDictionary *)jSON wotWebResponseLink:(WOTWebResponseLink *)wotWebResponseLink context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle{
+- (NSDictionary *)parseDictionaryLink:(NSDictionary *)jSON wotWebResponseLink:(WOTWebResponseLink *)wotWebResponseLink context:(NSManagedObjectContext *)context tank:(Tanks *)tank{
     
     NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
     
@@ -181,13 +182,13 @@
     }
     
     Class clazz = wotWebResponseLink.clazz;
-    [self parseModulesJSON:jSON clazz:clazz keys:keys coreDataIdName:wotWebResponseLink.coredataIdName context:context vehicle:vehicle];
+    [self parseModulesJSON:jSON clazz:clazz keys:keys coreDataIdName:wotWebResponseLink.coredataIdName context:context tank:tank];
     
     return requests;
 }
 
 
-- (void)parseModulesJSON:(NSDictionary *)jSON clazz:(Class)clazz keys:(NSArray *)keys coreDataIdName:(id)coreDataIdName context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle{
+- (void)parseModulesJSON:(NSDictionary *)jSON clazz:(Class)clazz keys:(NSArray *)keys coreDataIdName:(id)coreDataIdName context:(NSManagedObjectContext *)context tank:(Tanks *)tank{
     
     if (![NSArray hasDataInArray:keys]) {
 
@@ -200,7 +201,7 @@
         ModulesTree *returningModule = nil;
         NSString *key = [moduleId isKindOfClass:[NSNumber class]]?[moduleId stringValue]:moduleId;
         NSDictionary *data = jSON[key];
-        NSArray *nextModuleIDs = [self parentModule:nil addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:@([key integerValue]) clazz:clazz context:context  vehicle:vehicle returningModule:&returningModule];
+        NSArray *nextModuleIDs = [self parentModule:nil addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:@([key integerValue]) clazz:clazz context:context returningModule:&returningModule];
         if ([NSArray hasDataInArray:nextModuleIDs]) {
             
             NSArray *new = nil;
@@ -219,12 +220,11 @@
             [childrenModuleIDs setObject:new forKey:key];
         }
 
-        [vehicle addModulesTreeObject:returningModule];
+        [tank addModulesTreeObject:returningModule];
     }];
     
     NSMutableArray *nextChildren = [[NSMutableArray alloc] init];
     [[childrenModuleIDs allKeys] enumerateObjectsUsingBlock:^(NSString *parentKey, NSUInteger idx, BOOL *stop) {
-        
 
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,@([parentKey integerValue])];
         ModulesTree *parent = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
@@ -234,7 +234,7 @@
             
             ModulesTree *returningModule = nil;
             NSDictionary *data = jSON[[moduleID stringValue]];
-            NSArray *nextChild = [self parentModule:parent addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:moduleID clazz:clazz context:context vehicle:vehicle returningModule:&returningModule];
+            NSArray *nextChild = [self parentModule:parent addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:moduleID clazz:clazz context:context returningModule:&returningModule];
             if ([NSArray hasDataInArray:nextChild]) {
                 
                 [nextChildren addObjectsFromArray:nextChild];
@@ -242,13 +242,12 @@
         }];
     }];
     
-    [self parseModulesJSON:jSON clazz:clazz keys:nextChildren coreDataIdName:coreDataIdName context:context vehicle:vehicle];
+    [self parseModulesJSON:jSON clazz:clazz keys:nextChildren coreDataIdName:coreDataIdName context:context tank:tank];
 }
 
 
-- (NSArray *)parentModule:(ModulesTree *)parentModule addChildModuleFromJSON:(NSDictionary *)jSON coreDataIdName:(NSString *)coreDataIdName jSONLinkId:(id)jSONLinkId clazz:(Class)clazz context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle returningModule:(ModulesTree **)returningModule{
+- (NSArray *)parentModule:(ModulesTree *)parentModule addChildModuleFromJSON:(NSDictionary *)jSON coreDataIdName:(NSString *)coreDataIdName jSONLinkId:(id)jSONLinkId clazz:(Class)clazz context:(NSManagedObjectContext *)context returningModule:(ModulesTree **)returningModule{
     
-    debugLog(@"%@",jSON);
     [context performBlockAndWait:^{
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
@@ -257,6 +256,18 @@
         [moduleTree fillPropertiesFromDictionary:jSON];
         
         *returningModule = moduleTree;
+        
+        
+        NSArray *nextTanks = jSON[WOT_KEY_NEXT_TANKS];
+        if ([NSArray hasDataInArray:nextTanks]) {
+            
+            [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
+                
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TANK_ID,nextTankId];
+                Tanks *tanks = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                [moduleTree addNextTanksObject:tanks];
+            }];
+        }
         
         
         NSString *type = jSON[WOT_KEY_TYPE];

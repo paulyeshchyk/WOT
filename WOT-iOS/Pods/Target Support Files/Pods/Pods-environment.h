@@ -96,6 +96,12 @@
 #define COCOAPODS_VERSION_MINOR_Charts 1
 #define COCOAPODS_VERSION_PATCH_Charts 0
 
+// EnrichedNSLog
+#define COCOAPODS_POD_AVAILABLE_EnrichedNSLog
+#define COCOAPODS_VERSION_MAJOR_EnrichedNSLog 1
+#define COCOAPODS_VERSION_MINOR_EnrichedNSLog 0
+#define COCOAPODS_VERSION_PATCH_EnrichedNSLog 0
+
 // MMDrawerController
 #define COCOAPODS_POD_AVAILABLE_MMDrawerController
 #define COCOAPODS_VERSION_MAJOR_MMDrawerController 0
@@ -126,27 +132,15 @@
 #define COCOAPODS_VERSION_MINOR_MMDrawerController_Subclass 6
 #define COCOAPODS_VERSION_PATCH_MMDrawerController_Subclass 0
 
-// NSLogger
-#define COCOAPODS_POD_AVAILABLE_NSLogger
-#define COCOAPODS_VERSION_MAJOR_NSLogger 1
-#define COCOAPODS_VERSION_MINOR_NSLogger 5
-#define COCOAPODS_VERSION_PATCH_NSLogger 1
-
-// NSLogger/Standard
-#define COCOAPODS_POD_AVAILABLE_NSLogger_Standard
-#define COCOAPODS_VERSION_MAJOR_NSLogger_Standard 1
-#define COCOAPODS_VERSION_MINOR_NSLogger_Standard 5
-#define COCOAPODS_VERSION_PATCH_NSLogger_Standard 1
-
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
 #define COCOAPODS_VERSION_MAJOR_SDWebImage 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage 2
+#define COCOAPODS_VERSION_PATCH_SDWebImage 3
 
 // SDWebImage/Core
 #define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
 #define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 3
 

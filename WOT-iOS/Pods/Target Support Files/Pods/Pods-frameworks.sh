@@ -52,8 +52,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'ASProgressPopUpView.framework'
   install_framework 'BlocksKit.framework'
   install_framework 'Charts.framework'
+  install_framework 'EnrichedNSLog.framework'
   install_framework 'MMDrawerController.framework'
-  install_framework 'NSLogger.framework'
   install_framework 'SDWebImage.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -61,7 +61,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'ASProgressPopUpView.framework'
   install_framework 'BlocksKit.framework'
   install_framework 'Charts.framework'
+  install_framework 'EnrichedNSLog.framework'
   install_framework 'MMDrawerController.framework'
-  install_framework 'NSLogger.framework'
   install_framework 'SDWebImage.framework'
 fi

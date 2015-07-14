@@ -46,7 +46,7 @@
         
     }];
     
-    NSInteger hasChildrenDepth = 0;//([self.rootNodes count] == 0)?0:1;
+    NSInteger hasChildrenDepth = ([self.rootNodes count] == 0)?0:1;
     return result + hasChildrenDepth;
 }
 
@@ -89,10 +89,15 @@
             
             result = [node nodeAtSiblingIndexPath:indexPath];
             if (result) {
+                
                 *stop = YES;
             }
         }
     }];
+    if (result == nil) {
+        
+        debugLog(@"failed for %@",indexPath);
+    }
     return result;
 }
 

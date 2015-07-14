@@ -2,14 +2,14 @@
 //  ModulesTree.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/10/15.
+//  Created by Pavel Yeshchyk on 7/14/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ModulesTree, Tankchassis, Tankengines, Tankguns, Tankradios, Tankturrets, Vehicles;
+@class ModulesTree, Tankchassis, Tankengines, Tankguns, Tankradios, Tanks, Tankturrets;
 
 @interface ModulesTree : NSManagedObject
 
@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSSet *nextGuns;
 @property (nonatomic, retain) NSSet *nextRadios;
 @property (nonatomic, retain) NSSet *nextTurrets;
+@property (nonatomic, retain) ModulesTree *prevModules;
 @end
 
 @interface ModulesTree (CoreDataGeneratedAccessors)
@@ -35,8 +36,8 @@
 - (void)addNextModules:(NSSet *)values;
 - (void)removeNextModules:(NSSet *)values;
 
-- (void)addNextTanksObject:(Vehicles *)value;
-- (void)removeNextTanksObject:(Vehicles *)value;
+- (void)addNextTanksObject:(Tanks *)value;
+- (void)removeNextTanksObject:(Tanks *)value;
 - (void)addNextTanks:(NSSet *)values;
 - (void)removeNextTanks:(NSSet *)values;
 

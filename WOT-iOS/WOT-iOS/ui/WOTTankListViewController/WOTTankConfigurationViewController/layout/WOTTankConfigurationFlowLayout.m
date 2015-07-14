@@ -8,6 +8,8 @@
 
 #import "WOTTankConfigurationFlowLayout.h"
 
+#define DEFAULT_SIZE CGSizeMake(44.0f,44.0f)
+
 @implementation WOTTankConfigurationFlowLayout
 
 - (void)prepareLayout {
@@ -18,7 +20,7 @@
 
 - (CGSize)itemSize {
     
-    return CGSizeMake(44.0f, 44.0f);
+    return DEFAULT_SIZE;
 }
 
 - (CGSize)collectionViewContentSize {
@@ -41,9 +43,10 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    CGSize defSize = DEFAULT_SIZE;
     UICollectionViewLayoutAttributes* attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     attributes.size = self.itemSize;
-    attributes.center = CGPointMake(indexPath.row * 44.0f, indexPath.section * 44.0f);
+    attributes.center = CGPointMake(indexPath.row * defSize.width, indexPath.section * defSize.height);
     return attributes;
 }
 

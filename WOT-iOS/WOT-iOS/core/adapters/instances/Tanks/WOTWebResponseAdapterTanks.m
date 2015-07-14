@@ -15,7 +15,7 @@
     
     if (error) {
         
-        debugLog(@"%@",error.localizedDescription);
+        debugError(@"%@",error.localizedDescription);
         return;
     }
     

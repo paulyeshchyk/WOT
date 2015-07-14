@@ -15,7 +15,7 @@
 
     if (error) {
         
-        debugLog(@"%@",error.localizedDescription);
+        debugError(@"%@",error.localizedDescription);
         return;
     }
     
@@ -29,6 +29,11 @@
         [tankGunsArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
             
             NSDictionary *tankGunsJSON = tankGunsDictionary[key];
+            if (![tankGunsJSON isKindOfClass:[NSDictionary class]]) {
+                
+                debugError(@"error while parsing");
+                return;
+            }
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankGunsJSON[WOT_KEY_MODULE_ID]];
             Tankguns *tankGuns = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];

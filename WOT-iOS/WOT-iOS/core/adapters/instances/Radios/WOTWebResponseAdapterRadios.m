@@ -15,7 +15,7 @@
    
     if (error) {
         
-        debugLog(@"%@",error.localizedDescription);
+        debugError(@"%@",error.localizedDescription);
         return;
     }
     NSDictionary *tankRadiosDictionary = data[WOT_KEY_DATA];
@@ -28,6 +28,11 @@
         [tankRadiosArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
             
             NSDictionary *tankRadiosJSON = tankRadiosDictionary[key];
+            if (![tankRadiosJSON isKindOfClass:[NSDictionary class]]) {
+                
+                debugError(@"error while parsing");
+                return;
+            }
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankRadiosJSON[WOT_KEY_MODULE_ID]];
             Tankradios *tankradios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];

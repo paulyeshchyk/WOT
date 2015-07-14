@@ -71,7 +71,7 @@
             [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
         } else {
             
-            debugLog(@"request-fail:%@",error.localizedDescription);
+            debugError(@"request-fail:%@",error.localizedDescription);
         }
         
     }];

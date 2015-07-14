@@ -4,7 +4,7 @@ pod 'BlocksKit'
 pod 'MMDrawerController'
 pod 'SDWebImage'
 pod 'Charts', '2.1.0'
-pod 'NSLogger'
 pod 'ASProgressPopUpView'
+pod 'EnrichedNSLog', '~> 1.0'
 
 use_frameworks!

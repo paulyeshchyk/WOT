@@ -10,6 +10,7 @@
 #import "Tanks.h"
 #import "Tankengines.h"
 #import "Vehicles.h"
+#import "ModulesTree.h"
 
 #import "WOTRequestExecutor.h"
 #import "WOTTankDetailCollectionViewCell.h"
@@ -66,6 +67,37 @@
     return [NSString stringWithFormat:@"vehicles:%@",self.tankId];
 }
 
+- (NSString *)prevModuleNamesForModule:(ModulesTree *)moduleTree {
+    
+    NSString *result = nil;
+    NSString *name = moduleTree.name;
+    if (moduleTree.prevModules) {
+        
+        NSString *prevModule = [self prevModuleNamesForModule:moduleTree.prevModules];
+        result = [NSString stringWithFormat:@"%@ - %@",prevModule,name];
+    } else {
+        
+        result = [NSString stringWithFormat:@"%@",name];
+    }
+    return result;
+    
+}
+
+- (void)printModule:(ModulesTree *)module level:(NSInteger)level{
+
+    NSSet *next = module.nextModules;
+    if ([next count] == 0) {
+        
+        NSString *res = [self prevModuleNamesForModule:module];
+        debugLog(@"%@", res);
+    }
+    [next enumerateObjectsUsingBlock:^(ModulesTree *nextModule, BOOL *stop) {
+        
+        [self printModule:nextModule level:(level+1)];
+    }];
+    
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -80,7 +112,15 @@
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
 
-
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tank_id == %@",self.tankId];
+        Tanks *tanks = [Tanks singleObjectWithPredicate:predicate inManagedObjectContext:[[WOTCoreDataProvider sharedInstance] mainManagedObjectContext] includingSubentities:YES];
+        
+        [[tanks.modulesTree allObjects] enumerateObjectsUsingBlock:^(ModulesTree *module, NSUInteger idx, BOOL *stop) {
+            
+            [weakSelf printModule:module level:1];
+            
+        }];
+        
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
         [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
         

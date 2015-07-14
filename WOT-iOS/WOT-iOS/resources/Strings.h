@@ -82,6 +82,7 @@
 #define WOT_KEY_VALUES @"values"
 #define WOT_KEY_WEIGHT @"weight"
 #define WOT_KEY_NEXT_MODULES @"next_modules"
+#define WOT_KEY_NEXT_TANKS @"next_tanks"
 
 #define WOT_LINKKEY_MODULESTREE @"modules_tree"
 #define WOT_LINKKEY_ENGINES @"engines"

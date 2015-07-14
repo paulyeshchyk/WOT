@@ -60,7 +60,7 @@ static NSString *urlEncode(NSString *string) {
 
 - (NSString *)description {
     
-    return [self.url absoluteString];
+    return [NSString stringWithFormat:@"WOTWebRequest:%@",[self.url absoluteString]];
 }
 
 - (NSString *)method {
@@ -191,18 +191,18 @@ static NSString *urlEncode(NSString *string) {
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    debugLog(@"webrequest-received-data:%@",[self.url absoluteString]);
+    debugLog(@"webrequest-received-data:%@",self);
     [self parseData:data error:nil];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-    debugLog(@"webrequest-finished:%@",[self.url absoluteString]);
+    debugLog(@"webrequest-finished:%@",self);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 
-    debugLog(@"webrequest-failture:%@",[self.url absoluteString]);
+    debugError(@"webrequest-failture:%@",self);
     
     [self parseData:nil error:error];
 }
