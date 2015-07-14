@@ -11,6 +11,7 @@
 
 #import "UINavigationBar+WOT.h"
 #import "UIToolbar+WOT.h"
+#import "NSArray+WOT.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+WOTValue.h"
 #import "UIImage+Resize.h"

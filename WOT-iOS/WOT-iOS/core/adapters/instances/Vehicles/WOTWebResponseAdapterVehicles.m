@@ -97,25 +97,22 @@
             return result;
         }
         
-        id jSonLinks = jSON[wotWebResponseLink.jsonKeyName];
-        if ([jSonLinks isKindOfClass:[NSArray class]]) {
+        id jSONLink = jSON[wotWebResponseLink.jsonKeyName];
+        if ([jSONLink isKindOfClass:[NSArray class]]) {
             
-            NSDictionary *requestsForLinks  = [self parseArrayLinkIDs:jSonLinks
+            NSDictionary *requestsForLinks  = [self parseArrayLinkIDs:jSONLink
                                                    wotWebResponseLink:wotWebResponseLink
                                                               context:context
                                                               vehicle:vehicle];
             [result addEntriesFromDictionary:requestsForLinks];
             
-        } else if([jSonLinks isKindOfClass:[NSDictionary class]]) {
+        } else if([jSONLink isKindOfClass:[NSDictionary class]]) {
             
-#warning to be implemented
-            NSDictionary *requestsForObjs = [self parseDictionaryLink:jSonLinks
+            NSDictionary *requestsForObjs = [self parseDictionaryLink:jSONLink
                                                    wotWebResponseLink:wotWebResponseLink
                                                               context:context
                                                               vehicle:vehicle];
             [result addEntriesFromDictionary:requestsForObjs];
-            
-            
         } else {
             
         }
@@ -141,7 +138,7 @@
      * hasLinkedObjects can be FALSE,
      * i.e. vehicle has no turrets (ISU-152)
      */
-    BOOL hasLinkedObjects = ([arrayLinkIDs count] > 0);
+    BOOL hasLinkedObjects = ([NSArray hasDataInArray:arrayLinkIDs]);
     if (!hasLinkedObjects) {
         
         return requests;
@@ -172,107 +169,131 @@
 #pragma mark - modules
 
 
-- (NSDictionary *)parseDictionaryLink:(NSDictionary *)dictionaryLink wotWebResponseLink:(WOTWebResponseLink *)wotWebResponseLink context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle{
+- (NSDictionary *)parseDictionaryLink:(NSDictionary *)jSON wotWebResponseLink:(WOTWebResponseLink *)wotWebResponseLink context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle{
     
     NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
     
-    NSArray *keys = [dictionaryLink allKeys];
-    BOOL hasLinkedObjects = ([keys count] > 0);
+    NSArray *keys = [jSON allKeys];
+    BOOL hasLinkedObjects = ([NSArray hasDataInArray:keys]);
     if (!hasLinkedObjects) {
         
         return requests;
     }
     
     Class clazz = wotWebResponseLink.clazz;
-    [self parseModulesJSON:dictionaryLink clazz:clazz keys:keys coreDataIdName:wotWebResponseLink.coredataIdName context:context vehicle:vehicle];
+    [self parseModulesJSON:jSON clazz:clazz keys:keys coreDataIdName:wotWebResponseLink.coredataIdName context:context vehicle:vehicle];
     
     return requests;
 }
 
 
-- (void)parseModulesJSON:(NSDictionary *)json clazz:(Class)clazz keys:(NSArray *)keys coreDataIdName:(id)coreDataIdName context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle{
+- (void)parseModulesJSON:(NSDictionary *)jSON clazz:(Class)clazz keys:(NSArray *)keys coreDataIdName:(id)coreDataIdName context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle{
     
-    if (!(([keys isKindOfClass:[NSArray class]]) && ([keys count] > 0))) {
+    if (![NSArray hasDataInArray:keys]) {
 
         return;
     }
     
-    NSMutableArray *allModuleIDs = [[NSMutableArray alloc] init];
-    
+    NSMutableDictionary *childrenModuleIDs = [[NSMutableDictionary alloc] init];
     [keys enumerateObjectsUsingBlock:^(id moduleId, NSUInteger idx, BOOL *stop) {
         
         ModulesTree *returningModule = nil;
         NSString *key = [moduleId isKindOfClass:[NSNumber class]]?[moduleId stringValue]:moduleId;
-        NSDictionary *data = json[key];
-        NSArray *childModuleIDs = [self parentModule:nil addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:@([key integerValue]) clazz:clazz context:context  vehicle:vehicle returningModule:&returningModule];
-        if (([childModuleIDs isKindOfClass:[NSArray class]]) && ([childModuleIDs count] != 0)) {
+        NSDictionary *data = jSON[key];
+        NSArray *nextModuleIDs = [self parentModule:nil addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:@([key integerValue]) clazz:clazz context:context  vehicle:vehicle returningModule:&returningModule];
+        if ([NSArray hasDataInArray:nextModuleIDs]) {
             
-            [allModuleIDs addObjectsFromArray:childModuleIDs];
+            NSArray *new = nil;
+            NSArray *old = childrenModuleIDs[key];
+            if ([NSArray hasDataInArray:old]){
+                
+                new = [NSArray arrayWithArray:old];
+            } else {
+                
+                if ([NSArray hasDataInArray:nextModuleIDs]) {
+                    
+                    new = [NSArray arrayWithArray:nextModuleIDs];
+                }
+            }
+            
+            [childrenModuleIDs setObject:new forKey:key];
         }
-        
-        
+
         [vehicle addModulesTreeObject:returningModule];
     }];
     
     NSMutableArray *nextChildren = [[NSMutableArray alloc] init];
-    [allModuleIDs enumerateObjectsUsingBlock:^(NSNumber *moduleID, NSUInteger idx, BOOL *stop) {
+    [[childrenModuleIDs allKeys] enumerateObjectsUsingBlock:^(NSString *parentKey, NSUInteger idx, BOOL *stop) {
         
-        ModulesTree *returningModule = nil;
-        NSDictionary *data = json[[moduleID stringValue]];
-        NSArray *nextChild = [self parentModule:nil addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:moduleID clazz:clazz context:context vehicle:vehicle returningModule:&returningModule];
-        if (([nextChild isKindOfClass:[NSArray class]]) && ([nextChild count] != 0)) {
+
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,@([parentKey integerValue])];
+        ModulesTree *parent = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+        
+        NSArray *children = childrenModuleIDs[parentKey];
+        [children enumerateObjectsUsingBlock:^(NSNumber *moduleID, NSUInteger idx, BOOL *stop) {
             
-            [nextChildren addObjectsFromArray:nextChild];
-        }
+            ModulesTree *returningModule = nil;
+            NSDictionary *data = jSON[[moduleID stringValue]];
+            NSArray *nextChild = [self parentModule:parent addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:moduleID clazz:clazz context:context vehicle:vehicle returningModule:&returningModule];
+            if ([NSArray hasDataInArray:nextChild]) {
+                
+                [nextChildren addObjectsFromArray:nextChild];
+            }
+        }];
     }];
     
-    [self parseModulesJSON:json clazz:clazz keys:nextChildren coreDataIdName:coreDataIdName context:context vehicle:vehicle];
+    [self parseModulesJSON:jSON clazz:clazz keys:nextChildren coreDataIdName:coreDataIdName context:context vehicle:vehicle];
 }
 
 
-- (NSArray *)parentModule:(ModulesTree *)parentModule addChildModuleFromJSON:(NSDictionary *)data coreDataIdName:(NSString *)coreDataIdName jSONLinkId:(id)jSONLinkId clazz:(Class)clazz context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle returningModule:(ModulesTree **)returningModule{
+- (NSArray *)parentModule:(ModulesTree *)parentModule addChildModuleFromJSON:(NSDictionary *)jSON coreDataIdName:(NSString *)coreDataIdName jSONLinkId:(id)jSONLinkId clazz:(Class)clazz context:(NSManagedObjectContext *)context vehicle:(Vehicles *)vehicle returningModule:(ModulesTree **)returningModule{
     
-    debugLog(@"%@",data);
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
-    ModulesTree *objToLink = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-    [objToLink setValue:jSONLinkId forKey:coreDataIdName];
-    [objToLink fillPropertiesFromDictionary:data];
-    
-    *returningModule = objToLink;
-    
-    
-    NSString *type = data[WOT_KEY_TYPE];
-    if ([type isEqualToString:WOT_VALUE_VEHICLE_CHASSIS]) {
+    debugLog(@"%@",jSON);
+    [context performBlockAndWait:^{
         
-        Tankchassis *chassis = [Tankchassis findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [parentModule addNextChassisObject:chassis];
-    }
-    if ([type isEqualToString:WOT_VALUE_VEHICLE_GUN]) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
+        ModulesTree *moduleTree = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+        [moduleTree setValue:jSONLinkId forKey:coreDataIdName];
+        [moduleTree fillPropertiesFromDictionary:jSON];
         
-        Tankguns *gun = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [parentModule addNextGunsObject:gun];
-    }
-    if ([type isEqualToString:WOT_VALUE_VEHICLE_ENGINE]) {
-        
-        Tankengines *engine = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [parentModule addNextEnginesObject:engine];
-    };
-    if ([type isEqualToString:WOT_VALUE_VEHICLE_TURRET]) {
-        
-        Tankturrets *turrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [parentModule addNextTurretsObject:turrets];
-    };
-    if ([type isEqualToString:WOT_VALUE_VEHICLE_RADIO]) {
+        *returningModule = moduleTree;
         
         
-        Tankradios *radios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-        [parentModule addNextRadiosObject:radios];
-    };
+        NSString *type = jSON[WOT_KEY_TYPE];
+        if ([type isEqualToString:WOT_VALUE_VEHICLE_CHASSIS]) {
+            
+            Tankchassis *chassis = [Tankchassis findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [moduleTree addNextChassisObject:chassis];
+        }
+        if ([type isEqualToString:WOT_VALUE_VEHICLE_GUN]) {
+            
+            Tankguns *gun = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [moduleTree addNextGunsObject:gun];
+        }
+        if ([type isEqualToString:WOT_VALUE_VEHICLE_ENGINE]) {
+            
+            Tankengines *engine = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [moduleTree addNextEnginesObject:engine];
+        };
+        if ([type isEqualToString:WOT_VALUE_VEHICLE_TURRET]) {
+            
+            Tankturrets *turrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [moduleTree addNextTurretsObject:turrets];
+        };
+        if ([type isEqualToString:WOT_VALUE_VEHICLE_RADIO]) {
+            
+            
+            Tankradios *radios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            [moduleTree addNextRadiosObject:radios];
+        };
 
-//    [vehicle addRadiosObject:objToLink];
-    
-    return data[WOT_KEY_NEXT_MODULES];
+        if (parentModule) {
+            
+            [parentModule addNextModulesObject:moduleTree];
+        }
+        
+    }];
+    return jSON[WOT_KEY_NEXT_MODULES];
 }
 
 @end
