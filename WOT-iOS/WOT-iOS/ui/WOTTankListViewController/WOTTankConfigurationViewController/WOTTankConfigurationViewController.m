@@ -33,7 +33,6 @@
     if (self){
         
         self.tree = [[WOTTree alloc] init];
-        
     }
     return self;
 }
@@ -48,15 +47,22 @@
     }];
     [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
     
-    [self.flowLayout setDepth:^(){
+    [self.flowLayout setDepthCallback:^(){
         
         NSInteger result = self.tree.levels;
         return result;
     }];
 
-    [self.flowLayout setWidth:^(){
+    [self.flowLayout setWidthCallback:^(){
         
         NSInteger result = self.tree.endpointsCount;
+        return result;
+    }];
+
+    [self.flowLayout setLayoutSiblingChildrenCountCallback:^(NSIndexPath *indexPath){
+
+        WOTNode *node = [self.tree nodeAtIndexPath:indexPath];
+        NSInteger result = [self.tree childrenCountForSiblingNode:node];
         return result;
     }];
 

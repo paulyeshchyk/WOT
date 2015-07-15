@@ -19,18 +19,14 @@
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tank_id == %@",tankId];
     Tanks *tanks = [Tanks singleObjectWithPredicate:predicate inManagedObjectContext:[[WOTCoreDataProvider sharedInstance] mainManagedObjectContext] includingSubentities:YES];
+    WOTNode *root = [[WOTNode alloc] initWithName:tanks.name];
+    [tanks.modulesTree enumerateObjectsUsingBlock:^(ModulesTree *module, BOOL *stop) {
+
+        [self addNodeForModuleTree:module parentNode:root];
+    }];
     
-    WOTNode *root = [self testRoot];//[[WOTNode alloc] initWithName:tanks.name];
+//    WOTNode *root = [self testRoot];
     [self addNode:root];
-    
-//    [tanks.modulesTree enumerateObjectsUsingBlock:^(ModulesTree *module, BOOL *stop) {
-//        
-//        [self addNodeForModuleTree:module parentNode:root];
-//    }];
-    
-    NSInteger d = [self endPointsCountForNode:root];
-    debugLog(@"childrenCount:%d",d);
-    
     [self reindex];
 }
 

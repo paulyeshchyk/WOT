@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 typedef NSInteger(^LayoutDimensionBlock)(void);
+typedef NSInteger(^LayoutSiblingChildrenCount)(NSIndexPath *);
 
 @interface WOTTankConfigurationFlowLayout : UICollectionViewFlowLayout
 
-@property (nonatomic, copy) LayoutDimensionBlock depth;
-@property (nonatomic, copy) LayoutDimensionBlock width;
+@property (nonatomic, copy) LayoutDimensionBlock depthCallback;
+@property (nonatomic, copy) LayoutDimensionBlock widthCallback;
+@property (nonatomic, copy) LayoutSiblingChildrenCount layoutSiblingChildrenCountCallback;
 
 @end

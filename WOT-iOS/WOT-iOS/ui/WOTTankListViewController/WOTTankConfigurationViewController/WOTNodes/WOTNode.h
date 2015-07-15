@@ -12,6 +12,8 @@
 
 @property (nonatomic, copy)NSString *name;
 @property (nonatomic, readonly)NSArray *children;
+@property (nonatomic, weak)WOTNode *parent;
+
 
 - (id)initWithName:(NSString *)name;
 - (void)addChild:(WOTNode *)child;

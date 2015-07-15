@@ -137,4 +137,30 @@
     
 }
 
+- (NSInteger)childrenCountForSiblingNode:(WOTNode *)node {
+    
+    __block NSInteger result = 0;
+    WOTNode *parent = node.parent;
+    if (parent) {
+        
+        NSInteger indexOfNode = [parent.children indexOfObject:node];
+        for (int i=0;i<indexOfNode;i++) {
+            
+            WOTNode *child = parent.children[i];
+            result += [self endPointsCountForNode:child];
+        }
+
+        result += [self childrenCountForSiblingNode:parent];
+    }
+    
+    return result;
+}
+
+
+#pragma mark - parent
+- (WOTNode *)parentNodeForNode:(WOTNode *)node {
+    
+    return nil;
+}
+
 @end

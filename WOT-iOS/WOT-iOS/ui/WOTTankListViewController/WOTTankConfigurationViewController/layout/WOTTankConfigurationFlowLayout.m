@@ -26,15 +26,15 @@
 - (CGSize)collectionViewContentSize {
 
     NSInteger depth = 0;
-    if (self.depth) {
+    if (self.depthCallback) {
         
-        depth = self.depth();
+        depth = self.depthCallback();
     }
     
     NSInteger width = 0;
-    if (self.width) {
+    if (self.widthCallback) {
         
-        width = self.width();
+        width = self.widthCallback();
     }
     
     return CGSizeMake(width * self.itemSize.width,depth * self.itemSize.height);
@@ -59,6 +59,48 @@
  
     UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
     return attributes;
+}
+
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    
+    NSMutableArray* elementsInRect = [NSMutableArray array];
+    
+    //iterate over all cells in this collection
+    for(NSUInteger i = 0; i < [self.collectionView numberOfSections]; i++) {
+        
+        for(NSUInteger j = 0; j < [self.collectionView numberOfItemsInSection:i]; j++) {
+            
+            
+            CGFloat x = j*self.itemSize.width;
+            CGFloat y = i*self.itemSize.height;
+            
+            if (self.layoutSiblingChildrenCountCallback) {
+                
+                NSInteger layoutSiblingChildrenCount = self.layoutSiblingChildrenCountCallback([NSIndexPath indexPathForRow:j inSection:i]);
+                x = layoutSiblingChildrenCount * self.itemSize.width;
+            }
+            
+            //this is the cell at row j in section i
+            CGRect cellFrame = CGRectMake(x,
+                                          y,
+                                          self.itemSize.width,
+                                          self.itemSize.height);
+            
+            //see if the collection view needs this cell
+            if(CGRectIntersectsRect(cellFrame, rect)) {
+
+                //create the attributes object
+                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                UICollectionViewLayoutAttributes* attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+                
+                //set the frame for this attributes object
+                attr.frame = cellFrame;
+                [elementsInRect addObject:attr];
+            }
+        }
+    }
+    
+    return elementsInRect;
 }
 
 - (BOOL) shouldInvalidateLayoutForBoundsChange:(CGRect)newBound {

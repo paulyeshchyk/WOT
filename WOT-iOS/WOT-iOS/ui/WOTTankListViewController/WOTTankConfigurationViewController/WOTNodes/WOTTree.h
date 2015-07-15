@@ -18,6 +18,7 @@
 - (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)nodesCountAtSection:(NSInteger)sectionIndex;
 - (NSInteger)endPointsCountForNode:(WOTNode *)node;
+- (NSInteger)childrenCountForSiblingNode:(WOTNode *)node;
 
 - (void)addNode:(WOTNode *)node;
 - (void)removeNode:(WOTNode *)node;

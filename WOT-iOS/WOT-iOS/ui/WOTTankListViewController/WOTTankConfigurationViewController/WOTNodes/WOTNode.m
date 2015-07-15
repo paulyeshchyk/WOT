@@ -42,11 +42,13 @@
         
         self.childList = [[NSMutableOrderedSet alloc] init];
     }
+    child.parent = self;
     [self.childList addObject:child];
 }
 
 - (void)removeChild:(WOTNode *)child {
-    
+
+    child.parent = nil;
     [self.childList removeObject:child];
 }
 
