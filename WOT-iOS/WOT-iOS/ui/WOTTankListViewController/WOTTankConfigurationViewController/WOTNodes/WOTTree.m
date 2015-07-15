@@ -10,113 +10,131 @@
 
 @interface WOTTree ()
 
-@property (nonatomic, strong)NSMutableSet *rootNodes;
+@property (nonatomic, strong)NSMutableSet *rootNodes_;
+@property (nonatomic, strong)NSMutableDictionary *levelIndex;
 
 @end
 
 @implementation WOTTree
 
-- (void)addNode:(WOTNode *)node {
+- (void)dealloc {
     
-    if (!self.rootNodes) {
-        
-        self.rootNodes = [[NSMutableSet alloc] init];
-    }
-    
-    [self.rootNodes addObject:node];
+    [self.rootNodes_ removeAllObjects];
 }
 
+- (NSSet *)rootNodes {
+    
+    return self.rootNodes_;
+}
+
+- (void)addNode:(WOTNode *)node {
+    
+    if (!self.rootNodes_) {
+        
+        self.rootNodes_ = [[NSMutableSet alloc] init];
+    }
+    
+    [self.rootNodes_ addObject:node];
+    [self reindex];
+}
+
+- (void)removeAllNodes {
+    
+    [self.rootNodes_ removeAllObjects];
+    
+}
 - (void)removeNode:(WOTNode *)node {
     
-    [self.rootNodes removeObject:node];
+    [self.rootNodes_ removeObject:node];
+    [self reindex];
 }
 
 - (NSArray *)nodes {
     
-    return [self.rootNodes allObjects];
+    return [self.rootNodes_ allObjects];
 }
 
-- (NSInteger)depth {
+- (void)reindex {
     
-    __block NSInteger result = 0;
-    
-    [self.rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
+    [self.levelIndex removeAllObjects];
+    self.levelIndex = [[NSMutableDictionary alloc] init];
+    NSInteger level = 0;
+    for (int i=0;i<self.rootNodes.count;i++) {
         
-        result = MAX(result,node.depth);
-        
-    }];
+        WOTNode *node = [self.rootNodes allObjects][i];
+        [self reindexChildNode:node atLevel:level];
+    }
+}
+
+- (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSInteger hasChildrenDepth = ([self.rootNodes count] == 0)?0:1;
-    return result + hasChildrenDepth;
+    NSArray *section = self.levelIndex[@(indexPath.section)];
+    return section[indexPath.row];
+}
+
+- (NSInteger)nodesCountAtSection:(NSInteger)sectionIndex {
+    
+    NSArray *section = self.levelIndex[@(sectionIndex)];
+    return [section count];
+}
+
+- (void)reindexChildNode:(WOTNode *)node atLevel:(NSInteger)level{
+    
+    NSMutableArray *items = [NSMutableArray arrayWithArray:self.levelIndex[@(level)]];
+    [items addObject:node];
+    self.levelIndex[@(level)] = [items copy];
+
+    for (int i=0;i<node.children.count;i++) {
+        
+        WOTNode *childNode = node.children[i];
+        [self reindexChildNode:childNode atLevel:level+1];
+    }
+}
+
+- (NSInteger)levels {
+    
+    return [[self.levelIndex allKeys] count];
 }
 
 - (NSInteger)width {
     
     __block NSInteger result = 0;
-    
-    [self.rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
+    [[self.levelIndex allKeys] enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
         
-        result = MAX(result, node.width);
-        
-    }];
-    
-    
-    return result;
-}
-
-- (NSInteger)nodesCount {
-    
-    __block NSInteger result = [self.rootNodes count];
-    
-    [self.rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
-        
-        result += [node.allChildren count];
-        
+        id arr = self.levelIndex[key];
+        result = MAX(result,[arr count]);
     }];
     return result;
 }
 
-- (WOTNode *)nodeAtSiblingIndexPath:(NSIndexPath *)indexPath {
+- (NSInteger)endpointsCount {
 
-    __block WOTNode *result = nil;
-    [self.rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
-
-        if ([node.siblingIndexPath isEqual:indexPath]) {
-            
-            *stop = YES;
-            result = node;
-        } else {
-            
-            result = [node nodeAtSiblingIndexPath:indexPath];
-            if (result) {
-                
-                *stop = YES;
-            }
-        }
+    __block NSInteger result = 0;
+    [self.rootNodes_ enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
+    
+        result += [self endPointsCountForNode:node];
     }];
-    if (result == nil) {
+    return result;
+}
+
+- (NSInteger)endPointsCountForNode:(WOTNode *)node {
+
+    NSInteger cnt = [node.children count];
+
+    if (cnt == 0) {
         
-        debugLog(@"failed for %@",indexPath);
+        return 1;
     }
-    return result;
-}
-
-- (NSArray *)nodesAtLevel:(NSInteger)level {
-
-    __block NSMutableArray *result = [[NSMutableArray alloc] init];
-
-    [self.rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
-       
-        if (node.level == level) {
-            
-            [result addObject:node];
-        }// else {
-
-            [result addObjectsFromArray:[node nodesAtLevel:level]];
-//        }
-     
-    }];
     
-    return [result copy];
+    NSInteger result = 0;
+    for (int i=0;i<cnt;i++) {
+        
+        WOTNode *childNode = node.children[i];
+        result += [self endPointsCountForNode:childNode];
+    }
+    
+    return result;
+    
 }
+
 @end

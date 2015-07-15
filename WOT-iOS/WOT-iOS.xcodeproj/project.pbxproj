@@ -86,6 +86,8 @@
 		1D5A8E401B43F34700A8261E /* WOTCoreDataPredicates.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A8E3F1B43F34700A8261E /* WOTCoreDataPredicates.m */; };
 		1D5A8E441B4401FB00A8261E /* WOTTankIdsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */; };
 		1D672AE41B553FA800617E5C /* WOTTankConfigurationFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672AE31B553FA800617E5C /* WOTTankConfigurationFlowLayout.m */; };
+		1D672AED1B56767200617E5C /* WOTTree+Tanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672AEC1B56767200617E5C /* WOTTree+Tanks.m */; };
+		1D672AF01B5679FE00617E5C /* WOTNode+Tanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672AEF1B5679FE00617E5C /* WOTNode+Tanks.m */; };
 		1D90695D1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */; };
 		1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695F1B4161F300237852 /* UIToolbar+WOT.m */; };
 		1D9069651B41697300237852 /* WOTTankConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9069631B41697300237852 /* WOTTankConfigurationViewController.m */; };
@@ -351,6 +353,10 @@
 		1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankIdsDatasource.m; sourceTree = "<group>"; };
 		1D672AE21B553FA800617E5C /* WOTTankConfigurationFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationFlowLayout.h; sourceTree = "<group>"; };
 		1D672AE31B553FA800617E5C /* WOTTankConfigurationFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankConfigurationFlowLayout.m; sourceTree = "<group>"; };
+		1D672AEB1B56767200617E5C /* WOTTree+Tanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTree+Tanks.h"; sourceTree = "<group>"; };
+		1D672AEC1B56767200617E5C /* WOTTree+Tanks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTree+Tanks.m"; sourceTree = "<group>"; };
+		1D672AEE1B5679FE00617E5C /* WOTNode+Tanks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+Tanks.h"; sourceTree = "<group>"; };
+		1D672AEF1B5679FE00617E5C /* WOTNode+Tanks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+Tanks.m"; sourceTree = "<group>"; };
 		1D90695A1B412D6B00237852 /* WOTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
 		1D90695B1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailCollectionViewFlowLayout.m; sourceTree = "<group>"; };
@@ -959,6 +965,10 @@
 				1D9069761B417E4E00237852 /* WOTNode.m */,
 				1D9069781B417F6100237852 /* WOTTree.h */,
 				1D9069791B417F6100237852 /* WOTTree.m */,
+				1D672AEB1B56767200617E5C /* WOTTree+Tanks.h */,
+				1D672AEC1B56767200617E5C /* WOTTree+Tanks.m */,
+				1D672AEE1B5679FE00617E5C /* WOTNode+Tanks.h */,
+				1D672AEF1B5679FE00617E5C /* WOTNode+Tanks.m */,
 			);
 			path = WOTNodes;
 			sourceTree = "<group>";
@@ -1986,6 +1996,7 @@
 				1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */,
 				1DC07B5F1B3A9489002FAA72 /* WOTWebRequestTankTurrets.m in Sources */,
+				1D672AED1B56767200617E5C /* WOTTree+Tanks.m in Sources */,
 				1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */,
 				1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */,
 				1DC07B1A1B39B672002FAA72 /* ListSetting.m in Sources */,
@@ -2048,6 +2059,7 @@
 				1DC07B7C1B3AB778002FAA72 /* NSManagedObject+FillProperties.m in Sources */,
 				1DC07B7A1B3AB778002FAA72 /* Tankchassis+FillProperties.m in Sources */,
 				1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */,
+				1D672AF01B5679FE00617E5C /* WOTNode+Tanks.m in Sources */,
 				1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

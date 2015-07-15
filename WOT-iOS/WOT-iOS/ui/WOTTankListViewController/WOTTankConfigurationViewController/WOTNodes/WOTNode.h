@@ -12,19 +12,9 @@
 
 @property (nonatomic, copy)NSString *name;
 @property (nonatomic, readonly)NSArray *children;
-@property (nonatomic, readonly)NSArray *allChildren;
-@property (nonatomic, readonly)NSInteger depth;
-@property (nonatomic, readonly)NSInteger width;
-@property (nonatomic, readonly)NSInteger level;
-@property (nonatomic, readonly)NSIndexPath *siblingIndexPath;
 
-- (id)initWithName:(NSString *)name parent:(WOTNode *)parent;
-
-//- (void)addChildren:(NSSet *)children;
+- (id)initWithName:(NSString *)name;
 - (void)addChild:(WOTNode *)child;
 - (void)removeChild:(WOTNode *)child;
-- (NSArray *)nodesAtLevel:(NSInteger)level;
-- (WOTNode *)nodeAtSiblingIndexPath:(NSIndexPath *)indexPath;
-- (NSInteger)indexOfChild:(WOTNode *)node;
 
 @end

@@ -10,4 +10,6 @@
 
 @interface WOTTankConfigurationViewController : UIViewController
 
+@property (nonatomic, copy)NSNumber *tankId;
+
 @end

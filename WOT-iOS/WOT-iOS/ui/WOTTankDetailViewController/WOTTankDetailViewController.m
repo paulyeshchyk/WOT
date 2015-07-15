@@ -112,16 +112,8 @@
     UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
     UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
 
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tank_id == %@",self.tankId];
-        Tanks *tanks = [Tanks singleObjectWithPredicate:predicate inManagedObjectContext:[[WOTCoreDataProvider sharedInstance] mainManagedObjectContext] includingSubentities:YES];
-        
-        [[tanks.modulesTree allObjects] enumerateObjectsUsingBlock:^(ModulesTree *module, NSUInteger idx, BOOL *stop) {
-            
-            [weakSelf printModule:module level:1];
-            
-        }];
-        
         WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
+        configurationSelector.tankId = self.tankId;
         [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
         
     }];
