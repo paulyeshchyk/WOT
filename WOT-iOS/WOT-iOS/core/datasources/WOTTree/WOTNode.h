@@ -13,9 +13,10 @@
 @property (nonatomic, copy)NSString *name;
 @property (nonatomic, readonly)NSArray *children;
 @property (nonatomic, weak)WOTNode *parent;
-
+@property (nonatomic, readonly)UIImage *image;
 
 - (id)initWithName:(NSString *)name;
+- (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL;
 - (void)addChild:(WOTNode *)child;
 - (void)removeChild:(WOTNode *)child;
 

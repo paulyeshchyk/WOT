@@ -59,7 +59,7 @@
         return result;
     }];
 
-    [self.flowLayout setLayoutSiblingChildrenCountCallback:^(NSIndexPath *indexPath){
+    [self.flowLayout setLayoutPreviousSiblingNodeChildrenCountCallback:^(NSIndexPath *indexPath){
 
         WOTNode *node = [self.tree nodeAtIndexPath:indexPath];
         NSInteger result = [self.tree childrenCountForSiblingNode:node];
@@ -95,6 +95,7 @@
     WOTTankConfigurationCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) forIndexPath:indexPath];
     result.indexPath = indexPath;
     result.label.text = node.name;
+    result.imageView.image = node.image;
     
     
     return result;

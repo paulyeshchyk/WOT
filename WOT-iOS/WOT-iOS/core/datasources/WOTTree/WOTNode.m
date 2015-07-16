@@ -11,7 +11,7 @@
 @interface WOTNode ()
 
 @property (nonatomic, strong)NSMutableOrderedSet *childList;
-
+@property (nonatomic, copy)NSURL *imageURL;
 @end
 
 @implementation WOTNode
@@ -29,6 +29,22 @@
         self.name = name;
     }
     return self;
+}
+
+- (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL{
+    
+    self = [super init];
+    if (self){
+        
+        self.name = name;
+        self.imageURL = imageURL;
+    }
+    return self;
+}
+
+- (UIImage *)image {
+    
+    return [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imageURL]];
 }
 
 - (NSArray *)children {

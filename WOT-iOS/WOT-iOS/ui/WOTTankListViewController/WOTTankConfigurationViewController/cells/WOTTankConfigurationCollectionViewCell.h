@@ -14,5 +14,6 @@ typedef void(^NodeBlock)(NSIndexPath *indexPath);
 
 @property (nonatomic,copy)NSIndexPath *indexPath;
 @property (nonatomic,weak)IBOutlet UILabel *label;
+@property (nonatomic,weak)IBOutlet UIImageView *imageView;
 
 @end

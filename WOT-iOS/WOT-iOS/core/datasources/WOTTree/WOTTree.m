@@ -156,11 +156,4 @@
     return result;
 }
 
-
-#pragma mark - parent
-- (WOTNode *)parentNodeForNode:(WOTNode *)node {
-    
-    return nil;
-}
-
 @end

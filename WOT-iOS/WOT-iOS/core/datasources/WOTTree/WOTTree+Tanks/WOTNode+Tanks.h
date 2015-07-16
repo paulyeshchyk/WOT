@@ -7,9 +7,10 @@
 //
 
 #import "WOTNode.h"
+#import "ModulesTree.h"
 
 @interface WOTNode (Tanks)
 
-- (id)initWithModule:(id)module;
+- (id)initWithModuleTree:(ModulesTree *)module;
 
 @end

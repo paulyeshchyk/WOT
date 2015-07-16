@@ -47,7 +47,7 @@
         <attribute name="power" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ModulesTree" inverseName="nextEngines" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="nextEngines" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="engines" inverseEntity="Vehicles" syncable="YES"/>
     </entity>
     <entity name="Tankguns" representedClassName="Tankguns" syncable="YES">
@@ -60,7 +60,7 @@
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rate" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ModulesTree" inverseName="nextGuns" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="nextGuns" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="guns" inverseEntity="Vehicles" syncable="YES"/>
     </entity>
     <entity name="Tankradios" representedClassName="Tankradios" syncable="YES">
@@ -73,7 +73,7 @@
         <attribute name="nation_i18n" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ModulesTree" inverseName="nextRadios" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="nextRadios" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="radios" inverseEntity="Vehicles" syncable="YES"/>
     </entity>
     <entity name="Tanks" representedClassName="Tanks" syncable="YES">
@@ -106,7 +106,7 @@
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rotation_speed" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ModulesTree" inverseName="nextTurrets" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="nextTurrets" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="turrets" inverseEntity="Vehicles" syncable="YES"/>
     </entity>
     <entity name="UserSession" representedClassName="UserSession" syncable="YES">
@@ -138,14 +138,14 @@
     </entity>
     <elements>
         <element name="ListSetting" positionX="-342" positionY="-288" width="128" height="120"/>
+        <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="253"/>
         <element name="Tankchassis" positionX="-1305" positionY="-439" width="128" height="223"/>
-        <element name="Tankengines" positionX="-1305" positionY="575" width="128" height="208"/>
-        <element name="Tankguns" positionX="-1305" positionY="342" width="128" height="208"/>
-        <element name="Tankradios" positionX="-1305" positionY="-189" width="128" height="208"/>
+        <element name="Tankengines" positionX="-1305" positionY="575" width="128" height="210"/>
+        <element name="Tankguns" positionX="-1305" positionY="342" width="128" height="210"/>
+        <element name="Tankradios" positionX="-1305" positionY="-189" width="128" height="210"/>
         <element name="Tanks" positionX="-1359" positionY="801" width="128" height="268"/>
-        <element name="Tankturrets" positionX="-1305" positionY="54" width="128" height="253"/>
+        <element name="Tankturrets" positionX="-1305" positionY="54" width="128" height="255"/>
         <element name="UserSession" positionX="-117" positionY="-369" width="128" height="135"/>
         <element name="Vehicles" positionX="-675" positionY="-18" width="128" height="298"/>
-        <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="253"/>
     </elements>
 </model>

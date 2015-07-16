@@ -15,6 +15,6 @@ typedef NSInteger(^LayoutSiblingChildrenCount)(NSIndexPath *);
 
 @property (nonatomic, copy) LayoutDimensionBlock depthCallback;
 @property (nonatomic, copy) LayoutDimensionBlock widthCallback;
-@property (nonatomic, copy) LayoutSiblingChildrenCount layoutSiblingChildrenCountCallback;
+@property (nonatomic, copy) LayoutSiblingChildrenCount layoutPreviousSiblingNodeChildrenCountCallback;
 
 @end

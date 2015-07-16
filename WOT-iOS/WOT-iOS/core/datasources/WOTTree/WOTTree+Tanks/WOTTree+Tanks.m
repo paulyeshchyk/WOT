@@ -19,7 +19,7 @@
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tank_id == %@",tankId];
     Tanks *tanks = [Tanks singleObjectWithPredicate:predicate inManagedObjectContext:[[WOTCoreDataProvider sharedInstance] mainManagedObjectContext] includingSubentities:YES];
-    WOTNode *root = [[WOTNode alloc] initWithName:tanks.name];
+    WOTNode *root = [[WOTNode alloc] initWithName:tanks.name_i18n imageURL:[NSURL URLWithString:tanks.image]];
     [tanks.modulesTree enumerateObjectsUsingBlock:^(ModulesTree *module, BOOL *stop) {
 
         [self addNodeForModuleTree:module parentNode:root];
@@ -30,9 +30,9 @@
     [self reindex];
 }
 
-- (void)addNodeForModuleTree:(ModulesTree *)module parentNode:(WOTNode *)parentNode{
+- (void)addNodeForModuleTree:(ModulesTree *)moduleTree parentNode:(WOTNode *)parentNode{
 
-    WOTNode *node = [[WOTNode alloc] initWithModule:module];
+    WOTNode *node = [[WOTNode alloc] initWithModuleTree:moduleTree];
     if (parentNode == nil) {
         
         [self addNode:node];
@@ -41,7 +41,7 @@
         [parentNode addChild:node];
     }
  
-    [module.nextModules enumerateObjectsUsingBlock:^(ModulesTree *nextModule, BOOL *stop) {
+    [moduleTree.nextModules enumerateObjectsUsingBlock:^(ModulesTree *nextModule, BOOL *stop) {
        
         [self addNodeForModuleTree:nextModule parentNode:node];
     }];

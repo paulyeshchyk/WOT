@@ -8,7 +8,7 @@
 
 #import "WOTTankConfigurationFlowLayout.h"
 
-#define DEFAULT_SIZE CGSizeMake(44.0f,44.0f)
+#define DEFAULT_SIZE CGSizeMake(44.0f,88.0f)
 
 @implementation WOTTankConfigurationFlowLayout
 
@@ -66,17 +66,17 @@
     NSMutableArray* elementsInRect = [NSMutableArray array];
     
     //iterate over all cells in this collection
-    for(NSUInteger i = 0; i < [self.collectionView numberOfSections]; i++) {
+    for(NSUInteger section = 0; section < [self.collectionView numberOfSections]; section++) {
         
-        for(NSUInteger j = 0; j < [self.collectionView numberOfItemsInSection:i]; j++) {
+        for(NSUInteger row = 0; row < [self.collectionView numberOfItemsInSection:section]; row++) {
             
             
-            CGFloat x = j*self.itemSize.width;
-            CGFloat y = i*self.itemSize.height;
+            CGFloat x = row*self.itemSize.width;
+            CGFloat y = section*self.itemSize.height;
             
-            if (self.layoutSiblingChildrenCountCallback) {
+            if (self.layoutPreviousSiblingNodeChildrenCountCallback) {
                 
-                NSInteger layoutSiblingChildrenCount = self.layoutSiblingChildrenCountCallback([NSIndexPath indexPathForRow:j inSection:i]);
+                NSInteger layoutSiblingChildrenCount = self.layoutPreviousSiblingNodeChildrenCountCallback([NSIndexPath indexPathForRow:row inSection:section]);
                 x = layoutSiblingChildrenCount * self.itemSize.width;
             }
             
@@ -90,7 +90,7 @@
             if(CGRectIntersectsRect(cellFrame, rect)) {
 
                 //create the attributes object
-                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:section];
                 UICollectionViewLayoutAttributes* attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
                 
                 //set the frame for this attributes object
