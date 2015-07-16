@@ -74,7 +74,10 @@
 - (void)setTankId:(NSNumber *)value {
 
     _tankId = [value copy];
-    [self.tree setTankId:_tankId];
+    [self.tree setTankId:value];
+
+    //#import "WOTTree+Test.h"
+    //[self.tree setTestTankId:_tankId];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -95,7 +98,7 @@
     WOTTankConfigurationCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) forIndexPath:indexPath];
     result.indexPath = indexPath;
     result.label.text = node.name;
-    result.imageView.image = node.image;
+    [result.imageView sd_setImageWithURL:node.imageURL];
     
     
     return result;

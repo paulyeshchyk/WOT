@@ -11,7 +11,7 @@
 @interface WOTNode ()
 
 @property (nonatomic, strong)NSMutableOrderedSet *childList;
-@property (nonatomic, copy)NSURL *imageURL;
+@property (nonatomic, readwrite, strong)NSURL *imageURL;
 @end
 
 @implementation WOTNode
@@ -40,11 +40,6 @@
         self.imageURL = imageURL;
     }
     return self;
-}
-
-- (UIImage *)image {
-    
-    return [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imageURL]];
 }
 
 - (NSArray *)children {

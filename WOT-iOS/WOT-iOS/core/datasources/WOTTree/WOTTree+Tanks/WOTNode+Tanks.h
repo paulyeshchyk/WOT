@@ -11,6 +11,10 @@
 
 @interface WOTNode (Tanks)
 
+@property (nonatomic, strong)ModulesTree *moduleTree;
+
 - (id)initWithModuleTree:(ModulesTree *)module;
+- (void)setModuleTree:(ModulesTree *)moduleTree;
+- (ModulesTree *)moduleTree;
 
 @end

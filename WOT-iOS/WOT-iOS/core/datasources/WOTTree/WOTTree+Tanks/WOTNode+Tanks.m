@@ -9,6 +9,7 @@
 #import "WOTNode+Tanks.h"
 
 #import "ModulesTree+FillProperties.h"
+#import <objc/runtime.h>
 
 @implementation WOTNode (Tanks)
 
@@ -40,14 +41,24 @@
     WOTModuleType type = [module moduleType];
     NSURL *imageURL = [WOTNode imageURLForModuleType:type];
 
-    self = [self initWithName:module.name imageURL:imageURL];
-    if (self){
+    WOTNode *result =  [self initWithName:module.name imageURL:imageURL];
+    if (result){
         
+        [result setModuleTree:module];
     }
-    return self;
+    return result;
 }
 
 
+static const void *WOTModuleTree = &WOTModuleTree;
+- (void)setModuleTree:(ModulesTree *)moduleTree {
+    
+    objc_setAssociatedObject(self, WOTModuleTree, moduleTree, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
+- (ModulesTree *)moduleTree {
+
+    return objc_getAssociatedObject(self, WOTModuleTree);
+}
 
 @end
