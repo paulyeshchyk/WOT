@@ -41,6 +41,7 @@
 - (void)removeAllNodes {
     
     [self.rootNodes_ removeAllObjects];
+    [self reindex];
     
 }
 - (void)removeNode:(WOTNode *)node {
@@ -51,7 +52,13 @@
 
 - (NSArray *)nodes {
     
-    return [self.rootNodes_ allObjects];
+    if (self.nodeComparator) {
+        
+        return [[self.rootNodes_ allObjects] sortedArrayUsingComparator:self.nodeComparator];
+    } else {
+        
+        return [self.rootNodes_ allObjects];
+    }
 }
 
 - (void)reindex {
@@ -59,11 +66,12 @@
     [self.levelIndex removeAllObjects];
     self.levelIndex = [[NSMutableDictionary alloc] init];
     NSInteger level = 0;
-    for (int i=0;i<self.rootNodes.count;i++) {
+
+    NSArray *rootNodes = [self nodes:[self.rootNodes allObjects] sortedUsingComparator:self.nodeComparator];
+    [rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
         
-        WOTNode *node = [self.rootNodes allObjects][i];
         [self reindexChildNode:node atLevel:level];
-    }
+    }];
 }
 
 - (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
@@ -84,10 +92,21 @@
     [items addObject:node];
     self.levelIndex[@(level)] = [items copy];
 
-    for (int i=0;i<node.children.count;i++) {
+    NSArray *childNodes = [self nodes:node.children sortedUsingComparator:self.nodeComparator];
+    [childNodes enumerateObjectsUsingBlock:^(WOTNode *childNode, NSUInteger idx, BOOL *stop) {
         
-        WOTNode *childNode = node.children[i];
         [self reindexChildNode:childNode atLevel:level+1];
+    }];
+    
+}
+
+
+- (NSArray *)nodes:(NSArray *)nodes sortedUsingComparator:(WOTNodeComparator)comparator {
+
+    if (comparator) {
+        return [nodes sortedArrayUsingComparator:comparator];
+    } else {
+        return nodes;
     }
 }
 

@@ -76,6 +76,8 @@
             
             if (self.layoutPreviousSiblingNodeChildrenCountCallback) {
                 
+                //used with lines
+                //NSInteger layoutSiblingChildrenCount = row;
                 NSInteger layoutSiblingChildrenCount = self.layoutPreviousSiblingNodeChildrenCountCallback([NSIndexPath indexPathForRow:row inSection:section]);
                 x = layoutSiblingChildrenCount * self.itemSize.width;
             }
@@ -107,5 +109,23 @@
     
     return YES;
 }
+
+
+
+/*
+ see: https://goo.gl/zNUcS1
+ 
+    Has parent	Has child	Has next sibling	Has prev sibling    Binary  Dec
+ 1	0           1           0                   0                   0100	4
+ 2	1           1           1                   0                   1110	14
+ 3	0           1           1                   1                   0111	7
+ 4	0           1           0                   1                   0101	5
+ 5	1           1           0                   0                   1100	12
+ 6	1           0           0                   0                   1000	8
+ 7	0           0           1                   1                   0011	3
+ 8	0           0           0                   0                   0000	0
+
+ */
+
 
 @end

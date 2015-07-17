@@ -10,6 +10,6 @@
 
 @interface ModulesTree (PlainList)
 
-- (NSSet *)plainListForVehicle:(id)vehicle;
+- (NSSet *)plainListForVehicleId:(id)vehicleId;
 
 @end

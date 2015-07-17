@@ -11,24 +11,24 @@
 
 @implementation ModulesTree (PlainList)
 
-- (NSSet *)plainListForVehicle:(id)vehicle {
+- (NSSet *)plainListForVehicleId:(id)vehicleId {
 
     NSMutableSet *setOfModules = [[NSMutableSet alloc] init];
     [self.nextModules enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         
-        [self vehicle:vehicle setOfModules:setOfModules parseModule:obj];
+        [self vehicleId:vehicleId setOfModules:setOfModules parseModule:obj];
     }];
 
     return setOfModules;
 }
 
 
-- (BOOL)module:(ModulesTree *)module isTheSameTank:(id)vehicle {
+- (BOOL)module:(ModulesTree *)module isTheSameVehicleId:(id)vehicleId {
     
     __block BOOL isTheSameTank = NO;
     [module.nextTanks enumerateObjectsUsingBlock:^(Tanks *nextTank, BOOL *stop) {
         
-        isTheSameTank = ([nextTank.tank_id isEqual:vehicle]);
+        isTheSameTank = ([nextTank.tank_id isEqual:vehicleId]);
         if (isTheSameTank){
             
             *stop = YES;
@@ -38,21 +38,21 @@
     return isTheSameTank;
 }
 
-- (void)vehicle:(id)vehicle setOfModules:(NSMutableSet *)setOfModules parseModule:(ModulesTree *)module {
+- (void)vehicleId:(id)vehicleId setOfModules:(NSMutableSet *)setOfModules parseModule:(ModulesTree *)module {
     
     
-    if ([self module:module isTheSameTank:vehicle]) {
+    if ([self module:module isTheSameVehicleId:vehicleId]) {
     
         [setOfModules addObject:module];
     }
     
     [module.nextModules enumerateObjectsUsingBlock:^(ModulesTree *childModule, BOOL *stop) {
         
-        if ([self module:childModule isTheSameTank:vehicle]) {
+        if ([self module:childModule isTheSameVehicleId:vehicleId]) {
             
             [setOfModules addObject:childModule];
         }
-        [self vehicle:vehicle setOfModules:setOfModules parseModule:childModule];
+        [self vehicleId:vehicleId setOfModules:setOfModules parseModule:childModule];
     }];
 }
 

@@ -8,32 +8,36 @@
 
 #import "WOTNode+Tanks.h"
 
-#import "ModulesTree+FillProperties.h"
 #import <objc/runtime.h>
 
 @implementation WOTNode (Tanks)
 
 + (NSURL *)imageURLForModuleType:(WOTModuleType)type {
 
+    NSString *name = [self moduleTypeStringForModuleType:type];
+    return [[NSBundle mainBundle] URLForResource:name withExtension:@"png"];
+}
+
++ (NSString *)moduleTypeStringForModuleType:(WOTModuleType)moduleType {
+    
     NSString *name = nil;
-    if ((type & WOTModuleTypeChassis) == WOTModuleTypeChassis) {
+    if ((moduleType & WOTModuleTypeChassis) == WOTModuleTypeChassis) {
         
         name = @"WOTModuleTypeChassis";
-    } else if ((type & WOTModuleTypeEngine) == WOTModuleTypeEngine) {
+    } else if ((moduleType & WOTModuleTypeEngine) == WOTModuleTypeEngine) {
         
         name = @"WOTModuleTypeEngine";
-    } else if ((type & WOTModuleTypeGuns) == WOTModuleTypeGuns) {
+    } else if ((moduleType & WOTModuleTypeGuns) == WOTModuleTypeGuns) {
         
         name = @"WOTModuleTypeGuns";
-    } else if ((type & WOTModuleTypeRadios) == WOTModuleTypeRadios) {
+    } else if ((moduleType & WOTModuleTypeRadios) == WOTModuleTypeRadios) {
         
         name = @"WOTModuleTypeRadios";
-    } else if ((type & WOTModuleTypeTurrets) == WOTModuleTypeTurrets) {
+    } else if ((moduleType & WOTModuleTypeTurrets) == WOTModuleTypeTurrets) {
         
         name = @"WOTModuleTypeTurrets";
     }
-    NSURL *result = [[NSBundle mainBundle] URLForResource:name withExtension:@"png"];
-    return result;
+    return name;
 }
 
 - (id)initWithModuleTree:(ModulesTree *)module {
@@ -49,6 +53,15 @@
     return result;
 }
 
+- (WOTModuleType) moduleType {
+
+    return [self moduleTree].moduleType;
+}
+
+- (NSString *)moduleTypeString {
+    
+    return [WOTNode moduleTypeStringForModuleType:self.moduleType];
+}
 
 static const void *WOTModuleTree = &WOTModuleTree;
 - (void)setModuleTree:(ModulesTree *)moduleTree {

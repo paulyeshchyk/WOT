@@ -8,12 +8,15 @@
 
 #import "WOTNode.h"
 
+typedef NSComparisonResult(^WOTNodeComparator)(WOTNode *left, WOTNode *right);
+
 @interface WOTTree : NSObject
 
 @property (nonatomic, readonly)NSArray *nodes;
 @property (nonatomic, readonly)NSInteger levels;
 @property (nonatomic, readonly)NSInteger width;
 @property (nonatomic, readonly)NSInteger endpointsCount;
+@property (nonatomic, copy)WOTNodeComparator nodeComparator;
 
 - (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)nodesCountAtSection:(NSInteger)sectionIndex;

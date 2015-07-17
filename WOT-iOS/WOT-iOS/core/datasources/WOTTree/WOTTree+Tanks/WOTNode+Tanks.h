@@ -7,11 +7,13 @@
 //
 
 #import "WOTNode.h"
-#import "ModulesTree.h"
+#import "ModulesTree+FillProperties.h"
 
 @interface WOTNode (Tanks)
 
 @property (nonatomic, strong)ModulesTree *moduleTree;
+@property (nonatomic, readonly)WOTModuleType moduleType;
+@property (nonatomic, readonly)NSString *moduleTypeString;
 
 - (id)initWithModuleTree:(ModulesTree *)module;
 - (void)setModuleTree:(ModulesTree *)moduleTree;
