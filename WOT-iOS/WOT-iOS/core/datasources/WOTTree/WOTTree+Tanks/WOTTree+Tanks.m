@@ -40,14 +40,11 @@
     [tanks.modulesTree enumerateObjectsUsingBlock:^(ModulesTree *module, BOOL *stop) {
 
         WOTNode *node = [[WOTNode alloc] initWithModuleTree:module];
-        debugLog(@"tankId:%@; moduleId:%@; moduleType:%@; moduleName:%@",tankId,module.module_id,node.moduleTypeString,node.moduleTree.name);
 
-        
         plainList[module.module_id] = node;
         [[module plainListForVehicleId:tankId] enumerateObjectsUsingBlock:^(ModulesTree *childModule, BOOL *stop) {
 
             WOTNode *childNode = [[WOTNode alloc] initWithModuleTree:childModule];
-            debugLog(@"tankId:%@; moduleId:%@; moduleType:%@; moduleName:%@",tankId,module.module_id,node.moduleTypeString,node.moduleTree.name);
             plainList[childModule.module_id] = childNode;
         }];
     }];

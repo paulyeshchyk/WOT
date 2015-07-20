@@ -8,11 +8,14 @@
 
 #import "WOTTankConfigurationViewController.h"
 #import "WOTTree+Tanks.h"
-#import "WOTNode.h"
+#import "WOTNode+Tanks.h"
+#import "ModulesTree+UI.h"
 #import "WOTTankConfigurationCollectionViewCell.h"
 #import "WOTTankConfigurationFlowLayout.h"
 #import "WOTTankConfigurationItemViewController.h"
 #import "WYPopoverController.h"
+
+#import "WOTTankConfigurationModuleMapping+Factory.h"
 
 @interface WOTTankConfigurationViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -82,9 +85,6 @@
 
     _tankId = [value copy];
     [self.tree setTankId:value];
-
-    //#import "WOTTree+Test.h"
-    //[self.tree setTestTankId:_tankId];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -113,27 +113,52 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
-    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-    
-    if (IS_IPAD) {
-    
-        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:itemViewController];
-        [popover presentPopoverFromRect:attributes.frame inView:self.view permittedArrowDirections:(UIPopoverArrowDirectionAny) animated:YES];
-    } else {
-        
-        if (self.wypopoverController) {
-            
-            [self.wypopoverController dismissPopoverAnimated:YES];
-            self.wypopoverController.delegate = nil;
-            self.wypopoverController = nil;
-        }
 
-        self.wypopoverController = [[WYPopoverController alloc] initWithContentViewController:itemViewController];
+    WOTNode *node = [self.tree nodeAtIndexPath:indexPath];
+    ModulesTree *moduleTree = [node moduleTree];
+    
+    WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
+    itemViewController.moduleTree = moduleTree;
+    itemViewController.mapping = [self mappingForModuleType:moduleTree.type];
+    
+    if (self.wypopoverController) {
+        
+        [self.wypopoverController dismissPopoverAnimated:YES];
         self.wypopoverController.delegate = nil;
-        [self.wypopoverController presentPopoverFromRect:CGRectZero inView:self.view permittedArrowDirections:(WYPopoverArrowDirectionNone) animated:YES];
+        self.wypopoverController = nil;
     }
     
+    self.wypopoverController = [[WYPopoverController alloc] initWithContentViewController:itemViewController];
+    self.wypopoverController.delegate = nil;
+    self.wypopoverController.theme.borderWidth = 2;
+    self.wypopoverController.theme.innerCornerRadius = 0;
+    self.wypopoverController.theme.outerCornerRadius = 0;
+    self.wypopoverController.theme.outerStrokeColor = [UIColor lightGrayColor];
+    self.wypopoverController.popoverContentSize = CGSizeMake(self.view.bounds.size.width * 0.75f, self.view.bounds.size.height * 0.75f);
+    [self.wypopoverController presentPopoverAsDialogAnimated:YES];
+    
+}
+
+
+- (WOTTankConfigurationModuleMapping *)mappingForModuleType:(NSString *)moduleTypeStr {
+
+    WOTTankConfigurationModuleMapping *result = nil;
+    WOTModuleType moduleType = [ModulesTree moduleTypeFromString:moduleTypeStr];
+    
+    switch (moduleType) {
+            
+        case WOTModuleTypeChassis: {
+            
+            result = [WOTTankConfigurationModuleMapping chassisMapping];
+            break;
+        }
+            
+        default: {
+
+            break;
+        }
+    }
+    return result;
 }
 
 @end

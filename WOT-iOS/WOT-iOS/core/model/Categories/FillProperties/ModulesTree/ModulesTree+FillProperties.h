@@ -7,16 +7,6 @@
 //
 
 #import "ModulesTree.h"
-typedef NS_ENUM(NSInteger, WOTModuleType){
-    WOTModuleTypeUnknown  = 1 << 0,
-    WOTModuleTypeChassis  = 1 << 1,
-    WOTModuleTypeEngine = 1 << 2,
-    WOTModuleTypeRadios = 1 << 3,
-    WOTModuleTypeTurrets = 1 << 4,
-    WOTModuleTypeGuns = 1 << 5,
-    WOTModuleTypeTank = 1 << 6
-};
-
 
 @interface ModulesTree (FillProperties)
 
