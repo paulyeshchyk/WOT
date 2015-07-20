@@ -11,12 +11,15 @@
 #import "WOTNode.h"
 #import "WOTTankConfigurationCollectionViewCell.h"
 #import "WOTTankConfigurationFlowLayout.h"
+#import "WOTTankConfigurationItemViewController.h"
+#import "WYPopoverController.h"
 
 @interface WOTTankConfigurationViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong)WOTTree *tree;
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak)IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
+@property (nonatomic, strong)WYPopoverController *wypopoverController;
 
 @end
 
@@ -25,6 +28,10 @@
 - (void)dealloc {
     
     self.tree = nil;
+
+    [self.wypopoverController dismissPopoverAnimated:YES];
+    self.wypopoverController.delegate = nil;
+    self.wypopoverController = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -102,6 +109,31 @@
     
     
     return result;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+
+    WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+    
+    if (IS_IPAD) {
+    
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:itemViewController];
+        [popover presentPopoverFromRect:attributes.frame inView:self.view permittedArrowDirections:(UIPopoverArrowDirectionAny) animated:YES];
+    } else {
+        
+        if (self.wypopoverController) {
+            
+            [self.wypopoverController dismissPopoverAnimated:YES];
+            self.wypopoverController.delegate = nil;
+            self.wypopoverController = nil;
+        }
+
+        self.wypopoverController = [[WYPopoverController alloc] initWithContentViewController:itemViewController];
+        self.wypopoverController.delegate = nil;
+        [self.wypopoverController presentPopoverFromRect:CGRectZero inView:self.view permittedArrowDirections:(WYPopoverArrowDirectionNone) animated:YES];
+    }
+    
 }
 
 @end

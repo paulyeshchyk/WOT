@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, assign) NSUInteger privateHash;
+@property (nonatomic, strong) NSMutableData *parsedData;
+
 @end
 
 @implementation WOTWEBRequest
@@ -33,6 +35,7 @@ static NSString *urlEncode(NSString *string) {
     static NSOperationQueue *_requestQueue;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
         _requestQueue = [NSOperationQueue new];
     });
     
@@ -191,13 +194,20 @@ static NSString *urlEncode(NSString *string) {
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    debugLog(@"webrequest-received-data:%@",self);
-    [self parseData:data error:nil];
+    if (!self.parsedData){
+        
+        self.parsedData = [[NSMutableData alloc] init];
+    }
+    
+    [self.parsedData appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
     debugLog(@"webrequest-finished:%@",self);
+    [self parseData:self.parsedData error:nil];
+    self.parsedData = nil;
+
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -205,6 +215,7 @@ static NSString *urlEncode(NSString *string) {
     debugError(@"webrequest-failture:%@",self);
     
     [self parseData:nil error:error];
+    self.parsedData = nil;
 }
 
 @end

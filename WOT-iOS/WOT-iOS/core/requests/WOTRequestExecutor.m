@@ -171,6 +171,7 @@
     __weak typeof(self)weakSelf = self;
     
     WOTRequest *request = [[RegisteredRequestClass alloc] init];
+    __weak typeof(request)weakRequest = request;
     [request setCallback:^(id data, NSError *error){
         
         //callbacks
@@ -191,7 +192,7 @@
                 
                 if (![data isKindOfClass:[NSDictionary class]]) {
                     
-                    debugError(@"invalid data is parsing");
+                    debugError(@"%@\n%@\n\n in request:%@\n\n",error.localizedDescription,error.userInfo,weakRequest.description);
                     
                 } else {
                 
