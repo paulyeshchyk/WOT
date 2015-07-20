@@ -152,7 +152,11 @@
             result = [WOTTankConfigurationModuleMapping chassisMapping];
             break;
         }
+        case WOTModuleTypeGuns: {
             
+            result = [WOTTankConfigurationModuleMapping gunMapping];
+            break;
+        }
         default: {
 
             break;

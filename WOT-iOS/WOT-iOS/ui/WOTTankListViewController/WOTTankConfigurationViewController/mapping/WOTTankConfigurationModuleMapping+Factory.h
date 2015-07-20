@@ -11,6 +11,6 @@
 @interface WOTTankConfigurationModuleMapping (Factory)
 
 + (WOTTankConfigurationModuleMapping *)chassisMapping;
-
++ (WOTTankConfigurationModuleMapping *)gunMapping;
 
 @end
