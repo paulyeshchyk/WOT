@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, assign) NSUInteger privateHash;
-@property (nonatomic, strong) NSMutableData *parsedData;
+@property (nonatomic, strong) NSMutableData *data;
 
 @end
 
@@ -35,7 +35,6 @@ static NSString *urlEncode(NSString *string) {
     static NSOperationQueue *_requestQueue;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
         _requestQueue = [NSOperationQueue new];
     });
     
@@ -51,8 +50,14 @@ static NSString *urlEncode(NSString *string) {
         NSUInteger argHash = [self.args hash];
         
         self.privateHash =  urlHash ^ argHash;
+        self.data = nil;
     }
     return self;
+}
+
+- (void)dealloc {
+    
+    self.data = nil;
 }
 
 - (NSUInteger)hash {
@@ -194,28 +199,28 @@ static NSString *urlEncode(NSString *string) {
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    if (!self.parsedData){
+    debugLog(@"webrequest-received-data:%@",self);
+    if (self.data == nil) {
         
-        self.parsedData = [[NSMutableData alloc] init];
+        self.data = [[NSMutableData alloc] init];
     }
-    
-    [self.parsedData appendData:data];
+    [self.data appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
+    [self parseData:self.data error:nil];
+    self.data = nil;
+    
     debugLog(@"webrequest-finished:%@",self);
-    [self parseData:self.parsedData error:nil];
-    self.parsedData = nil;
-
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 
-    debugError(@"webrequest-failture:%@",self);
-    
     [self parseData:nil error:error];
-    self.parsedData = nil;
+    self.data = nil;
+
+    debugError(@"webrequest-failture:%@",self);
 }
 
 @end

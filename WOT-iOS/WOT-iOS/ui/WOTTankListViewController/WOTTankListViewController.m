@@ -32,7 +32,6 @@
 @implementation WOTTankListViewController
 
 - (void)dealloc {
-    
 
 }
 

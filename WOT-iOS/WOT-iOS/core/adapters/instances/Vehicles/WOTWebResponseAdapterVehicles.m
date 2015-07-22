@@ -39,9 +39,14 @@
         for (id key in [objects allKeys]) {
             
             id jSON = objects[key];
-            NSDictionary *requestsForSingleObj = [self parseVehicleObject:jSON class:[Vehicles class] context:context key:key];
-            [requests addEntriesFromDictionary:requestsForSingleObj];
-            
+            if ([jSON isKindOfClass:[NSDictionary class]]) {
+                
+                NSDictionary *requestsForSingleObj = [self parseVehicleObject:jSON class:[Vehicles class] context:context key:key];
+                [requests addEntriesFromDictionary:requestsForSingleObj];
+            } else {
+                
+                debugError(@"json is not valid; jSON class is %@",NSStringFromClass([jSON class]));
+            }
         }
         
         if ([context hasChanges]) {

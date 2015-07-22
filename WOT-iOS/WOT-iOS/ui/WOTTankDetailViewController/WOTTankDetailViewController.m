@@ -173,6 +173,12 @@
 
 - (void)refetchTankID:(NSString *)tankID {
 
+    if (!([tankID integerValue] > 0)) {
+        
+        debugError(@"tankID should not be nil");
+        return;
+    }
+    
     NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
     [args setObject:tankID forKey:WOT_KEY_TANK_ID];
     [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
