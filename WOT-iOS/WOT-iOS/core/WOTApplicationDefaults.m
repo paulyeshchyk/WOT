@@ -71,15 +71,13 @@
 }
 
 + (void)registerRequests {
-    
-    
+
     /**
      * Login
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestClass:[WOTWEBRequestLogin class]];
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerDataAdapterClass:[WOTWebResponseAdapterLogin class]];
-    
-    
+
     /**
      * Logout
      **/
@@ -100,8 +98,7 @@
         }
         
     }];
-    
-    
+
     /**
      * Save Sassion
      **/
@@ -111,8 +108,7 @@
         [[WOTSessionManager sharedInstance] invalidateTimer];
         
     }];
-    
-    
+
     /**
      * Clear Sassion
      **/

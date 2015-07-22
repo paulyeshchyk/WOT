@@ -11,6 +11,44 @@
 
 @implementation WOTTankConfigurationModuleMapping (Factory)
 
++ (WOTTankConfigurationModuleMapping *)engineMapping {
+    
+    WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
+    [result addFields:@[WOT_KEY_POWER, WOT_KEY_FIRE_STARTING_CHANCE] forSection:@"Характеристика"];
+    [result setExtractor:^(id obj){
+        
+        ModulesTree *moduleTree = obj;
+        NSSet *setOfObjs = moduleTree.nextEngines;
+        return [setOfObjs anyObject];
+    }];
+    return result;
+}
+
++ (WOTTankConfigurationModuleMapping *)radiosMapping {
+    
+    WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
+    [result addFields:@[WOT_KEY_DISTANCE] forSection:@"Характеристика"];
+    [result setExtractor:^(id obj){
+        
+        ModulesTree *moduleTree = obj;
+        NSSet *setOfObjs = moduleTree.nextRadios;
+        return [setOfObjs anyObject];
+    }];
+    return result;
+}
+
++ (WOTTankConfigurationModuleMapping *)turretMapping {
+    
+    WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
+    [result addFields:@[WOT_KEY_ARMOR_BOARD, WOT_KEY_ARMOR_FOREHEAD, WOT_KEY_ARMOR_FEDD, WOT_KEY_ROTATION_SPEED] forSection:@"Характеристика"];
+    [result setExtractor:^(id obj){
+        
+        ModulesTree *moduleTree = obj;
+        NSSet *setOfObjs = moduleTree.nextTurrets;
+        return [setOfObjs anyObject];
+    }];
+    return result;
+}
 
 + (WOTTankConfigurationModuleMapping *)chassisMapping {
     

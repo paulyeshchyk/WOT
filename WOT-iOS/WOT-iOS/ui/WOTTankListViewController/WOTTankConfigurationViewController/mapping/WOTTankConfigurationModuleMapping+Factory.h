@@ -10,6 +10,9 @@
 
 @interface WOTTankConfigurationModuleMapping (Factory)
 
++ (WOTTankConfigurationModuleMapping *)engineMapping;
++ (WOTTankConfigurationModuleMapping *)radiosMapping;
++ (WOTTankConfigurationModuleMapping *)turretMapping;
 + (WOTTankConfigurationModuleMapping *)chassisMapping;
 + (WOTTankConfigurationModuleMapping *)gunMapping;
 

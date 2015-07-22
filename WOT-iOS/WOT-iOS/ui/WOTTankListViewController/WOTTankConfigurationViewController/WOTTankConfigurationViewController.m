@@ -79,8 +79,6 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class])];
 }
 
-
-
 - (void)setTankId:(NSNumber *)value {
 
     _tankId = [value copy];
@@ -146,6 +144,22 @@
     WOTModuleType moduleType = [ModulesTree moduleTypeFromString:moduleTypeStr];
     
     switch (moduleType) {
+            
+        case WOTModuleTypeEngine: {
+            
+            result = [WOTTankConfigurationModuleMapping engineMapping];
+            break;
+        }
+        case WOTModuleTypeRadios: {
+            
+            result = [WOTTankConfigurationModuleMapping radiosMapping];
+            break;
+        }
+        case WOTModuleTypeTurrets :{
+            
+            result = [WOTTankConfigurationModuleMapping turretMapping];
+            break;
+        }
             
         case WOTModuleTypeChassis: {
             
