@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^WOTConfigurationCompletionCancelBlock) ();
+typedef void(^WOTConfigurationCompletionDoneBlock) (id configuration);
+
 @interface WOTTankConfigurationViewController : UIViewController
 
 @property (nonatomic, copy)NSNumber *tankId;
+
+@property (nonatomic, copy)WOTConfigurationCompletionCancelBlock cancelBlock;
+@property (nonatomic, copy)WOTConfigurationCompletionDoneBlock doneBlock;
 
 @end

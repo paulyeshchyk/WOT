@@ -51,11 +51,23 @@
 
     [super viewDidLoad];
     
-    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
-    UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
-    
+    UIBarButtonItem *doneButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
+        
+        if (self.doneBlock) {
+            
+            self.doneBlock(nil);
+        }
     }];
-    [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
+    [self.navigationItem setRightBarButtonItems:@[doneButtonItem]];
+    UIBarButtonItem *cancelButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_BACK) eventBlock:^(id sender) {
+        
+        if (self.cancelBlock) {
+            
+            self.cancelBlock();
+        }
+    }];
+    [self.navigationItem setLeftBarButtonItems:@[cancelButtonItem]];
+    [self.navigationController.navigationBar setDarkStyle];
     
     [self.flowLayout setDepthCallback:^(){
         
@@ -128,11 +140,12 @@
     
     self.wypopoverController = [[WYPopoverController alloc] initWithContentViewController:itemViewController];
     self.wypopoverController.delegate = nil;
+    self.wypopoverController.dismissOnTap = YES;
     self.wypopoverController.theme.borderWidth = 2;
     self.wypopoverController.theme.innerCornerRadius = 0;
     self.wypopoverController.theme.outerCornerRadius = 0;
     self.wypopoverController.theme.outerStrokeColor = [UIColor lightGrayColor];
-    self.wypopoverController.popoverContentSize = CGSizeMake(self.view.bounds.size.width * 0.75f, self.view.bounds.size.height * 0.75f);
+    self.wypopoverController.popoverContentSize = [[[UIApplication sharedApplication] keyWindow] bounds].size;
     [self.wypopoverController presentPopoverAsDialogAnimated:YES];
     
 }

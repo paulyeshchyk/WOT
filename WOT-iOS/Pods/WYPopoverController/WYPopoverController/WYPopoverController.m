@@ -1774,17 +1774,22 @@ static WYPopoverTheme *defaultTheme_ = nil;
   _animated = aAnimated;
   options = aOptions;
 
+    
+  UIWindow *window = nil;
   if (!_inView) {
-    _inView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+    window = [UIApplication sharedApplication].keyWindow;
+    _inView = window.rootViewController.view;
     if (CGRectIsEmpty(_rect)) {
       _rect = CGRectMake((int)_inView.bounds.size.width / 2 - 5, (int)_inView.bounds.size.height / 2 - 5, 10, 10);
     }
+  } else {
+    window = _inView.window;
   }
 
   CGSize contentViewSize = self.popoverContentSize;
 
   if (_overlayView == nil) {
-    _overlayView = [[WYPopoverOverlayView alloc] initWithFrame:_inView.window.bounds];
+    _overlayView = [[WYPopoverOverlayView alloc] initWithFrame:window.bounds];
     _overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _overlayView.autoresizesSubviews = NO;
     _overlayView.delegate = self;
@@ -1806,8 +1811,8 @@ static WYPopoverTheme *defaultTheme_ = nil;
       [_backgroundView addGestureRecognizer:tap];
     }
 
-    [_inView.window addSubview:_backgroundView];
-    [_inView.window insertSubview:_overlayView belowSubview:_backgroundView];
+    [window addSubview:_backgroundView];
+    [window insertSubview:_overlayView belowSubview:_backgroundView];
   }
 
   [self updateThemeUI];

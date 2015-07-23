@@ -26,7 +26,20 @@
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, weak) IBOutlet UIToolbar *toolBar;
+@property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
+@property (nonatomic, weak) IBOutlet UIToolbar *topBar;
+
+@property (nonatomic, weak) IBOutlet UIButton *propertyAllButton;
+@property (nonatomic, weak) IBOutlet UIButton *propertyMobilityButton;
+@property (nonatomic, weak) IBOutlet UIButton *propertyArmorButton;
+@property (nonatomic, weak) IBOutlet UIButton *propertyObserveButton;
+@property (nonatomic, weak) IBOutlet UIButton *propertyFireButton;
+
+@property (nonatomic, weak) IBOutlet UIButton *configurationCustomButton;
+@property (nonatomic, weak) IBOutlet UIButton *configurationTopButton;
+@property (nonatomic, weak) IBOutlet UIButton *configurationDefaultButton;
+
+
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) WOTTankDetailDatasource *datasource;
@@ -102,25 +115,18 @@
     
     [super viewDidLoad];
 
+    
+    [self.configurationCustomButton setSelected:YES];
+    [self.propertyAllButton setSelected:YES];
+    
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionReusableView class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class])];
 
-    __weak typeof(self)weakSelf = self;
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextObjectsDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+
+    [self.topBar setDarkStyle];
+    [self.bottomBar setDarkStyle];
     
-    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)];
-    UIBarButtonItem *gearButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
-
-        WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
-        configurationSelector.tankId = self.tankId;
-        [weakSelf.navigationController pushViewController:configurationSelector animated:YES];
-        
-    }];
-
-    [self.navigationItem setRightBarButtonItems:@[gearButtonItem]];
-
-    [self.toolBar setDarkStyle];
 }
 
 - (void)setVehicle:(Vehicles *)vehicle {
@@ -337,4 +343,89 @@
         });
     }
 }
+
+
+
+#pragma mark - IBActions
+- (IBAction)onConfigurationCustomSelection:(id)sender {
+    
+    self.configurationCustomButton.selected = YES;
+    self.configurationDefaultButton.selected = NO;
+    self.configurationTopButton.selected = NO;
+    
+    
+    WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
+    [configurationSelector setCancelBlock:^(){
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
+    [configurationSelector setDoneBlock:^(id configuration){
+        
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
+    configurationSelector.tankId = self.tankId;
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:configurationSelector];
+    [self presentViewController:navController animated:YES completion:NULL];
+    
+}
+
+- (IBAction)onConfigurationTopSelection:(id)sender {
+    
+    self.configurationCustomButton.selected = NO;
+    self.configurationDefaultButton.selected = NO;
+    self.configurationTopButton.selected = YES;
+}
+
+- (IBAction)onConfigurationDefaultSelection:(id)sender {
+    
+    self.configurationCustomButton.selected = NO;
+    self.configurationDefaultButton.selected = YES;
+    self.configurationTopButton.selected = NO;
+}
+
+- (IBAction)onPropertyAllSelection:(id)sender {
+    
+    self.propertyAllButton.selected = YES;
+    self.propertyArmorButton.selected = NO;
+    self.propertyFireButton.selected = NO;
+    self.propertyMobilityButton.selected = NO;
+}
+
+- (IBAction)onPropertyArmorSelection:(id)sender {
+    
+    self.propertyAllButton.selected = NO;
+    self.propertyArmorButton.selected = YES;
+    self.propertyFireButton.selected = NO;
+    self.propertyMobilityButton.selected = NO;
+    self.propertyObserveButton.selected = NO;
+}
+
+- (IBAction)onPropertyFireSelection:(id)sender {
+    
+    self.propertyAllButton.selected = NO;
+    self.propertyArmorButton.selected = NO;
+    self.propertyFireButton.selected = YES;
+    self.propertyMobilityButton.selected = NO;
+    self.propertyObserveButton.selected = NO;
+}
+
+- (IBAction)onPropertyMobilitySelection:(id)sender {
+    
+    self.propertyAllButton.selected = NO;
+    self.propertyArmorButton.selected = NO;
+    self.propertyFireButton.selected = NO;
+    self.propertyMobilityButton.selected = YES;
+    self.propertyObserveButton.selected = NO;
+}
+
+- (IBAction)onPropertyObserveSelection:(id)sender {
+    
+    self.propertyAllButton.selected = NO;
+    self.propertyArmorButton.selected = NO;
+    self.propertyFireButton.selected = NO;
+    self.propertyMobilityButton.selected = NO;
+    self.propertyObserveButton.selected = YES;
+}
+
+
 @end

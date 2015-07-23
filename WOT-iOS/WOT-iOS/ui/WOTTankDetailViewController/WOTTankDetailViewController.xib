@@ -6,8 +6,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOTTankDetailViewController">
             <connections>
+                <outlet property="bottomBar" destination="Pac-xP-RlC" id="0IL-U1-1sM"/>
                 <outlet property="collectionView" destination="wqt-eG-e71" id="m63-pM-8Aw"/>
-                <outlet property="toolBar" destination="Pac-xP-RlC" id="51C-5E-d38"/>
+                <outlet property="configurationCustomButton" destination="dM2-fK-m1I" id="Bij-3r-7AM"/>
+                <outlet property="configurationDefaultButton" destination="gm8-rY-ej9" id="Drh-tq-66O"/>
+                <outlet property="configurationTopButton" destination="HUu-rp-fCE" id="EOX-Rs-zyE"/>
+                <outlet property="propertyAllButton" destination="y2f-iW-1J8" id="vNh-rS-v1N"/>
+                <outlet property="propertyArmorButton" destination="Q0P-Ps-aQb" id="XKH-F1-7Mf"/>
+                <outlet property="propertyFireButton" destination="KgP-Cg-dUK" id="4VG-S9-lRE"/>
+                <outlet property="propertyMobilityButton" destination="kLG-m5-WFI" id="eWJ-Qq-wY0"/>
+                <outlet property="propertyObserveButton" destination="YXa-BJ-uR7" id="yXl-Lr-LML"/>
+                <outlet property="topBar" destination="lHP-KM-4hE" id="lh6-sy-3q2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,8 +25,107 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lHP-KM-4hE">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Umi-IB-tZD"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem style="plain" id="zrV-nO-sjV">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="y2f-iW-1J8">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="All">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPropertyAllSelection:" destination="-1" eventType="touchUpInside" id="xes-Q4-Sz9"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ibD-IS-f17"/>
+                        <barButtonItem style="plain" id="NSc-f4-9c1">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q0P-Ps-aQb">
+                                <rect key="frame" x="56" y="7" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Bulletproof Vest Gray.png">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="Bulletproof Vest Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" image="Bulletproof Vest Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPropertyArmorSelection:" destination="-1" eventType="touchUpInside" id="st2-9p-ECN"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem style="plain" id="IpZ-YT-6ch">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kLG-m5-WFI">
+                                <rect key="frame" x="128" y="5" width="32" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Speedometer Gray.png">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="Speedometer Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" image="Speedometer Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPropertyMobilitySelection:" destination="-1" eventType="touchUpInside" id="5u8-GB-yPV"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem style="plain" id="u1u-yw-1aB">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YXa-BJ-uR7">
+                                <rect key="frame" x="200" y="7" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Opera Glasses Gray.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="Opera Glasses Yellow.png"/>
+                                <state key="highlighted" image="Opera Glasses Yellow.png"/>
+                                <connections>
+                                    <action selector="onPropertyObserveSelection:" destination="-1" eventType="touchUpInside" id="tYp-JK-Wt8"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem style="plain" id="MEH-c7-jnc">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KgP-Cg-dUK">
+                                <rect key="frame" x="274" y="5" width="32" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Firing Gun Gray.png">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="Firing Gun Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" image="Firing Gun Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPropertyFireSelection:" destination="-1" eventType="touchUpInside" id="lBa-ZN-VlE"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wqt-eG-e71">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                    <rect key="frame" x="0.0" y="44" width="320" height="480"/>
                     <color key="backgroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="a1f-lY-FRn" customClass="WOTTankDetailCollectionViewFlowLayout">
                         <size key="itemSize" width="320" height="44"/>
@@ -36,15 +144,62 @@
                         <constraint firstAttribute="height" constant="44" id="9lH-lI-Kf9"/>
                     </constraints>
                     <items>
-                        <barButtonItem title="Item" id="Vfe-8N-bqG"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="wWO-rK-xYr"/>
-                        <barButtonItem style="plain" id="ItU-e0-LNE">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dM2-fK-m1I">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                        <barButtonItem style="plain" id="zpv-ZK-Thd">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gm8-rY-ej9">
+                                <rect key="frame" x="16" y="5" width="32" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="rose">
+                                <state key="normal" image="Hourglass Sand Bottom Gray.png">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected" image="Hourglass Sand Bottom Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" image="Hourglass Sand Bottom Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onConfigurationDefaultSelection:" destination="-1" eventType="touchUpInside" id="3Pn-WP-DFA"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem style="plain" id="Ke1-vf-w0Y">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HUu-rp-fCE">
+                                <rect key="frame" x="84" y="5" width="32" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Hourglass Sand Top Gray.png">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="Hourglass Sand Top Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" image="Hourglass Sand Top Yellow.png">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onConfigurationTopSelection:" destination="-1" eventType="touchUpInside" id="gJS-QG-SQc"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="wWO-rK-xYr"/>
+                        <barButtonItem style="plain" id="ItU-e0-LNE">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dM2-fK-m1I">
+                                <rect key="frame" x="240" y="7" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Custom">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.37254901960784315" blue="0.074509803921568626" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onConfigurationCustomSelection:" destination="-1" eventType="touchUpInside" id="x3F-uP-Pq7"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </items>
@@ -52,17 +207,34 @@
             </subviews>
             <color key="backgroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="lHP-KM-4hE" secondAttribute="trailing" id="0PZ-RA-Pie"/>
                 <constraint firstItem="Pac-xP-RlC" firstAttribute="top" secondItem="wqt-eG-e71" secondAttribute="bottom" id="2yM-oK-MDK"/>
                 <constraint firstAttribute="bottom" secondItem="Pac-xP-RlC" secondAttribute="bottom" id="75k-Z4-PzY"/>
                 <constraint firstItem="Pac-xP-RlC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9gB-vs-Ct4"/>
+                <constraint firstItem="wqt-eG-e71" firstAttribute="top" secondItem="lHP-KM-4hE" secondAttribute="bottom" id="OOJ-Pw-sPS"/>
                 <constraint firstAttribute="trailing" secondItem="wqt-eG-e71" secondAttribute="trailing" id="Rav-La-J6g"/>
-                <constraint firstItem="wqt-eG-e71" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fEr-RS-nqk"/>
+                <constraint firstItem="lHP-KM-4hE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="WAa-GM-RJk"/>
+                <constraint firstItem="lHP-KM-4hE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mbG-rN-Llu"/>
                 <constraint firstItem="wqt-eG-e71" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ohc-fK-u0y"/>
                 <constraint firstAttribute="trailing" secondItem="Pac-xP-RlC" secondAttribute="trailing" id="x3C-GD-nl3"/>
             </constraints>
             <point key="canvasLocation" x="526" y="371"/>
         </view>
     </objects>
+    <resources>
+        <image name="Bulletproof Vest Gray.png" width="32" height="32"/>
+        <image name="Bulletproof Vest Yellow.png" width="32" height="32"/>
+        <image name="Firing Gun Gray.png" width="32" height="32"/>
+        <image name="Firing Gun Yellow.png" width="32" height="32"/>
+        <image name="Hourglass Sand Bottom Gray.png" width="32" height="32"/>
+        <image name="Hourglass Sand Bottom Yellow.png" width="32" height="32"/>
+        <image name="Hourglass Sand Top Gray.png" width="32" height="32"/>
+        <image name="Hourglass Sand Top Yellow.png" width="32" height="32"/>
+        <image name="Opera Glasses Gray.png" width="32" height="32"/>
+        <image name="Opera Glasses Yellow.png" width="32" height="32"/>
+        <image name="Speedometer Gray.png" width="32" height="32"/>
+        <image name="Speedometer Yellow.png" width="32" height="32"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
