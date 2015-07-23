@@ -133,6 +133,9 @@
 		1D672B651B60D15C00617E5C /* Hourglass Sand Top Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B591B60D15C00617E5C /* Hourglass Sand Top Yellow.png */; };
 		1D672B661B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B5A1B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png */; };
 		1D672B671B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B5B1B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png */; };
+		1D672B6A1B6104BB00617E5C /* WOTTankAllDataMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B691B6104BB00617E5C /* WOTTankAllDataMetric.m */; };
+		1D672B6D1B61101E00617E5C /* WOTMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B6C1B61101E00617E5C /* WOTMetric.m */; };
+		1D672B711B61198900617E5C /* WOTTankID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B701B61198900617E5C /* WOTTankID.m */; };
 		1D90695D1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */; };
 		1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695F1B4161F300237852 /* UIToolbar+WOT.m */; };
 		1D9069651B41697300237852 /* WOTTankConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9069631B41697300237852 /* WOTTankConfigurationViewController.m */; };
@@ -458,6 +461,13 @@
 		1D672B591B60D15C00617E5C /* Hourglass Sand Top Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow.png"; sourceTree = "<group>"; };
 		1D672B5A1B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow@2x.png"; sourceTree = "<group>"; };
 		1D672B5B1B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow@3x.png"; sourceTree = "<group>"; };
+		1D672B681B6104BB00617E5C /* WOTTankAllDataMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankAllDataMetric.h; sourceTree = "<group>"; };
+		1D672B691B6104BB00617E5C /* WOTTankAllDataMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankAllDataMetric.m; sourceTree = "<group>"; };
+		1D672B6B1B61101E00617E5C /* WOTMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMetric.h; sourceTree = "<group>"; };
+		1D672B6C1B61101E00617E5C /* WOTMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMetric.m; sourceTree = "<group>"; };
+		1D672B6E1B61103E00617E5C /* WOTTankMetricProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankMetricProtocol.h; sourceTree = "<group>"; };
+		1D672B6F1B61198900617E5C /* WOTTankID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankID.h; sourceTree = "<group>"; };
+		1D672B701B61198900617E5C /* WOTTankID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankID.m; sourceTree = "<group>"; };
 		1D90695A1B412D6B00237852 /* WOTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
 		1D90695B1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailCollectionViewFlowLayout.m; sourceTree = "<group>"; };
@@ -1546,6 +1556,13 @@
 			children = (
 				1DCC80E61B315D6D005FF193 /* WOTRadarSampleMetric.h */,
 				1DCC80E71B315D6D005FF193 /* WOTRadarSampleMetric.m */,
+				1D672B681B6104BB00617E5C /* WOTTankAllDataMetric.h */,
+				1D672B691B6104BB00617E5C /* WOTTankAllDataMetric.m */,
+				1D672B6B1B61101E00617E5C /* WOTMetric.h */,
+				1D672B6C1B61101E00617E5C /* WOTMetric.m */,
+				1D672B6E1B61103E00617E5C /* WOTTankMetricProtocol.h */,
+				1D672B6F1B61198900617E5C /* WOTTankID.h */,
+				1D672B701B61198900617E5C /* WOTTankID.m */,
 			);
 			path = metrics;
 			sourceTree = "<group>";
@@ -2239,6 +2256,7 @@
 				DA720C901B5D3C69003F3B5A /* WOTTankConfigurationModuleMapping.m in Sources */,
 				1D4C92561B25F27200E320B5 /* WOTLanguageTableViewCell.m in Sources */,
 				1DC07B571B3A9489002FAA72 /* WOTWEBRequestTankEngines.m in Sources */,
+				1D672B6D1B61101E00617E5C /* WOTMetric.m in Sources */,
 				1D4C926E1B270BF400E320B5 /* WOTTankListSettingsDatasource.m in Sources */,
 				1DA1D7401B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.m in Sources */,
 				1DC07B611B3A9489002FAA72 /* WOTWEBRequest.m in Sources */,
@@ -2286,9 +2304,11 @@
 				1DC07B5D1B3A9489002FAA72 /* WOTSaveSessionRequest.m in Sources */,
 				1D519CFD1B4E90BC00D3A286 /* WOTTankDetailTextTableViewCell.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
+				1D672B6A1B6104BB00617E5C /* WOTTankAllDataMetric.m in Sources */,
 				1DCC7F311B2EE974005FF193 /* NSString+RomanUtils.m in Sources */,
 				1D519D571B53A85600D3A286 /* WOTWebResponseAdapterModulesTree.m in Sources */,
 				1DD646C71B1F371700B0EC76 /* WOTMenuViewController.m in Sources */,
+				1D672B711B61198900617E5C /* WOTTankID.m in Sources */,
 				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,
 				DAD13F951B5D053200EDB655 /* WOTTankConfigurationItemViewController.m in Sources */,
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,

@@ -13,18 +13,19 @@
 #import "ModulesTree.h"
 
 #import "WOTRequestExecutor.h"
-#import "WOTTankDetailCollectionViewCell.h"
-#import "WOTTankDetailCollectionReusableView.h"
 #import "WOTTankDetailDatasource.h"
-#import "WOTTankDetailCollectionViewFlowLayout.h"
 #import "WOTTankConfigurationViewController.h"
 
 #import "WOTTankIdsDatasource.h"
 
 #import "WOTRadarViewController.h"
 #import "WOTTankDetailSection+Factory.h"
+#import "WOTRadarViewController.h"
+#import "WOTTankAllDataMetric.h"
+#import "WOTMetric.h"
+#import "WOTTankID.h"
 
-@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate >
 
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
 @property (nonatomic, weak) IBOutlet UIToolbar *topBar;
@@ -39,10 +40,13 @@
 @property (nonatomic, weak) IBOutlet UIButton *configurationTopButton;
 @property (nonatomic, weak) IBOutlet UIButton *configurationDefaultButton;
 
+@property (nonatomic, weak) IBOutlet UIView *radarContainer;
+
+@property (nonatomic, strong)WOTRadarViewController *radarViewController;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, strong) WOTTankDetailDatasource *datasource;
+
+
 @property (nonatomic, strong) NSError *fetchError;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, readonly)NSString *requestsGroupId;
@@ -53,10 +57,10 @@
 
 - (void)dealloc {
     
+    self.radarViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:self.requestsGroupId];
     self.fetchedResultController.delegate = nil;
-    self.datasource = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -64,16 +68,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         
-        self.datasource = [[WOTTankDetailDatasource alloc] init];
-        [self.datasource addSection:[WOTTankDetailSection engineSection]];
-        [self.datasource addSection:[WOTTankDetailSection chassisSection]];
-        [self.datasource addSection:[WOTTankDetailSection turretsSection]];
-        [self.datasource addSection:[WOTTankDetailSection radiosSection]];
-        [self.datasource addSection:[WOTTankDetailSection gunsSection]];
     }
     return self;
 }
-
 
 - (NSString *)requestsGroupId {
     
@@ -115,18 +112,21 @@
     
     [super viewDidLoad];
 
-    
+    self.radarViewController = [[WOTRadarViewController alloc] initWithNibName:NSStringFromClass([WOTRadarViewController class]) bundle:nil];
+    [self.radarContainer addSubview:self.radarViewController.view];
+    [self.radarViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.radarViewController.view addStretchingConstraints];
+    [self.radarViewController setDelegate:self];
+
     [self.configurationCustomButton setSelected:YES];
     [self.propertyAllButton setSelected:YES];
-    
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionReusableView class]) bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class])];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankDetailCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class])];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextObjectsDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
 
     [self.topBar setDarkStyle];
     [self.bottomBar setDarkStyle];
     
+    [self.radarViewController reload];
 }
 
 - (void)setVehicle:(Vehicles *)vehicle {
@@ -137,15 +137,11 @@
         
         [self refetchPossibleTiersForTier:_vehicle.tier];
     }
-    
 }
 
 - (void)updateUI {
     
     self.title = self.vehicle.tanks.name_i18n;
-    
-    [self.collectionView reloadData];
-    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -224,78 +220,6 @@
  
     self.vehicle = [self.fetchedResultController.fetchedObjects lastObject];
     [self updateUI];
-}
-
-
-#pragma mark - UICollectionViewDataSource
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-
-    return [self.datasource numberOfSections];
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
-    WOTTankDetailCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionReusableView class]) forIndexPath:indexPath];
-    view.hasSubitems = ([self collectionView:collectionView numberOfItemsInSection:indexPath.section] > 0);
-    [view setViewName:[self.datasource sectionNameAtIndex:indexPath.section]];
-    return view;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-
-    NSString *query = [self.datasource queryAtSection:section];
-    NSSet *fetchedObjects = [[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject];
-    if (!fetchedObjects || ![fetchedObjects isKindOfClass:[NSSet class]]) {
-
-        return 0;
-    }
-    
-    id filteredObjects = [fetchedObjects allObjects];
-    NSInteger cnt = [filteredObjects count];
-    return cnt;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    WOTTankDetailCollectionViewCell *result =(WOTTankDetailCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankDetailCollectionViewCell class]) forIndexPath:indexPath];
-
-    NSString *query = [self.datasource queryAtSection:indexPath.section];
-
-    NSArray * fields = [self.datasource metricsInSecton:indexPath.section];
-
-    id filteredObjects = [[[self.fetchedResultController.fetchedObjects valueForKeyPath:query] lastObject] allObjects];
-    
-    NSManagedObject *faultedObject = filteredObjects[indexPath.row];
-    
-    result.isLastInSection = (indexPath.row == ([self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1));
-    result.fetchedObject = faultedObject;
-    result.fields = fields;
-    [result invalidate];
-    return result;
-}
-
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-
-    CGFloat separatorHeight = 1.0f;
-    CGSize initialSize = [(WOTTankDetailCollectionViewFlowLayout *)collectionViewLayout itemSize];
-    
-    NSArray * fields = [self.datasource metricsInSecton:indexPath.section];
-    CGSize result = [WOTTankDetailCollectionViewCell sizeFitSize:initialSize forFetchedObject:nil andFields:fields];
-    
-    return CGSizeMake(result.width, result.height + separatorHeight);
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    
-    CGSize initialSize = [(WOTTankDetailCollectionViewFlowLayout *)collectionViewLayout headerReferenceSize];
-    return initialSize;
 }
 
 #pragma mark -
@@ -387,6 +311,7 @@
     
     self.propertyAllButton.selected = YES;
     self.propertyArmorButton.selected = NO;
+    self.propertyObserveButton.selected = NO;
     self.propertyFireButton.selected = NO;
     self.propertyMobilityButton.selected = NO;
 }
@@ -394,38 +319,44 @@
 - (IBAction)onPropertyArmorSelection:(id)sender {
     
     self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = YES;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = NO;
-    self.propertyObserveButton.selected = NO;
+    self.propertyArmorButton.selected = !self.propertyArmorButton.selected;
 }
 
 - (IBAction)onPropertyFireSelection:(id)sender {
     
     self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = NO;
-    self.propertyFireButton.selected = YES;
-    self.propertyMobilityButton.selected = NO;
-    self.propertyObserveButton.selected = NO;
+    self.propertyFireButton.selected = !self.propertyFireButton.selected;
 }
 
 - (IBAction)onPropertyMobilitySelection:(id)sender {
     
     self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = NO;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = YES;
-    self.propertyObserveButton.selected = NO;
+    self.propertyMobilityButton.selected = !self.propertyMobilityButton.selected;
 }
 
 - (IBAction)onPropertyObserveSelection:(id)sender {
     
     self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = NO;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = NO;
-    self.propertyObserveButton.selected = YES;
+    self.propertyObserveButton.selected = !self.propertyObserveButton.selected;
 }
 
+
+#pragma mark - WOTRadarViewControllerDelegate
+
+- (RadarChartData *)radarData {
+
+    WOTTankAllDataMetric *sample = [[WOTTankAllDataMetric alloc] init];
+    [sample addMetric:[WOTMetric circularVisionMetric]];
+    [sample addMetric:[WOTMetric armorBoardMetric]];
+    [sample addMetric:[WOTMetric armorFeddMetric]];
+    [sample addMetric:[WOTMetric armorForeheadMetric]];
+    [sample addMetric:[WOTMetric fireStartingChanceMetric]];
+    
+
+    WOTTankID *tankID = [[WOTTankID alloc] initWithId:@([self.tankId integerValue])];
+    [sample addTankID: tankID];
+    
+    return sample.chartData;
+}
 
 @end

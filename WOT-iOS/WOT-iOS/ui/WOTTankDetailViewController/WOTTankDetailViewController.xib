@@ -2,12 +2,12 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOTTankDetailViewController">
             <connections>
                 <outlet property="bottomBar" destination="Pac-xP-RlC" id="0IL-U1-1sM"/>
-                <outlet property="collectionView" destination="wqt-eG-e71" id="m63-pM-8Aw"/>
                 <outlet property="configurationCustomButton" destination="dM2-fK-m1I" id="Bij-3r-7AM"/>
                 <outlet property="configurationDefaultButton" destination="gm8-rY-ej9" id="Drh-tq-66O"/>
                 <outlet property="configurationTopButton" destination="HUu-rp-fCE" id="EOX-Rs-zyE"/>
@@ -16,6 +16,7 @@
                 <outlet property="propertyFireButton" destination="KgP-Cg-dUK" id="4VG-S9-lRE"/>
                 <outlet property="propertyMobilityButton" destination="kLG-m5-WFI" id="eWJ-Qq-wY0"/>
                 <outlet property="propertyObserveButton" destination="YXa-BJ-uR7" id="yXl-Lr-LML"/>
+                <outlet property="radarContainer" destination="ko6-3e-nTX" id="aMY-ia-Hvu"/>
                 <outlet property="topBar" destination="lHP-KM-4hE" id="lh6-sy-3q2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -124,20 +125,24 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wqt-eG-e71">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsb-9C-bHE">
                     <rect key="frame" x="0.0" y="44" width="320" height="480"/>
-                    <color key="backgroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="a1f-lY-FRn" customClass="WOTTankDetailCollectionViewFlowLayout">
-                        <size key="itemSize" width="320" height="44"/>
-                        <size key="headerReferenceSize" width="320" height="44"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="S0D-bw-z5e"/>
-                        <outlet property="delegate" destination="-1" id="624-eD-124"/>
-                    </connections>
-                </collectionView>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ko6-3e-nTX">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ko6-3e-nTX" secondAttribute="height" multiplier="1:1" id="NOx-1r-O6h"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="ko6-3e-nTX" secondAttribute="trailing" id="43O-wr-D9O"/>
+                        <constraint firstItem="ko6-3e-nTX" firstAttribute="top" secondItem="wsb-9C-bHE" secondAttribute="top" id="9gN-Cb-Bdc"/>
+                        <constraint firstItem="ko6-3e-nTX" firstAttribute="leading" secondItem="wsb-9C-bHE" secondAttribute="leading" id="ccu-Bx-xuY"/>
+                    </constraints>
+                </view>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pac-xP-RlC">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <constraints>
@@ -208,14 +213,14 @@
             <color key="backgroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="lHP-KM-4hE" secondAttribute="trailing" id="0PZ-RA-Pie"/>
-                <constraint firstItem="Pac-xP-RlC" firstAttribute="top" secondItem="wqt-eG-e71" secondAttribute="bottom" id="2yM-oK-MDK"/>
+                <constraint firstItem="wsb-9C-bHE" firstAttribute="top" secondItem="lHP-KM-4hE" secondAttribute="bottom" id="3F5-FJ-vSn"/>
                 <constraint firstAttribute="bottom" secondItem="Pac-xP-RlC" secondAttribute="bottom" id="75k-Z4-PzY"/>
                 <constraint firstItem="Pac-xP-RlC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9gB-vs-Ct4"/>
-                <constraint firstItem="wqt-eG-e71" firstAttribute="top" secondItem="lHP-KM-4hE" secondAttribute="bottom" id="OOJ-Pw-sPS"/>
-                <constraint firstAttribute="trailing" secondItem="wqt-eG-e71" secondAttribute="trailing" id="Rav-La-J6g"/>
+                <constraint firstItem="Pac-xP-RlC" firstAttribute="top" secondItem="wsb-9C-bHE" secondAttribute="bottom" id="Iby-Tq-YAO"/>
+                <constraint firstAttribute="trailing" secondItem="wsb-9C-bHE" secondAttribute="trailing" id="JNn-i0-6L8"/>
+                <constraint firstItem="wsb-9C-bHE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TDi-Wt-D4n"/>
                 <constraint firstItem="lHP-KM-4hE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="WAa-GM-RJk"/>
                 <constraint firstItem="lHP-KM-4hE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mbG-rN-Llu"/>
-                <constraint firstItem="wqt-eG-e71" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ohc-fK-u0y"/>
                 <constraint firstAttribute="trailing" secondItem="Pac-xP-RlC" secondAttribute="trailing" id="x3C-GD-nl3"/>
             </constraints>
             <point key="canvasLocation" x="526" y="371"/>
