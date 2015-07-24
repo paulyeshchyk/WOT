@@ -41,9 +41,11 @@ static CGFloat const mult = 10.0f;
         request.resultType = NSDictionaryResultType;
         NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
         id result = [context executeFetchRequest:request error:&error];
-        debugLog(@"%@",result);
         
-        return [[result lastObject][@"this"] floatValue];
+        float thisValue = [[result lastObject][@"this"] floatValue];
+//        float maxValue = [[result lastObject][@"max"] floatValue];
+//        float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue );
+        return (thisValue == 0)?1.0f:thisValue;
     }];
 }
 
@@ -64,9 +66,11 @@ static CGFloat const mult = 10.0f;
         request.resultType = NSDictionaryResultType;
         NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
         id result = [context executeFetchRequest:request error:&error];
-        debugLog(@"%@",result);
-        
-        return [[result lastObject][@"this"] floatValue];
+
+        float thisValue = [[result lastObject][@"this"] floatValue];
+//        float maxValue = [[result lastObject][@"max"] floatValue];
+//        float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue );
+        return (thisValue == 0)?1.0f:thisValue;
     }];
 }
 
@@ -87,9 +91,11 @@ static CGFloat const mult = 10.0f;
         request.resultType = NSDictionaryResultType;
         NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
         id result = [context executeFetchRequest:request error:&error];
-        debugLog(@"%@",result);
         
-        return [[result lastObject][@"this"] floatValue];
+        float thisValue = [[result lastObject][@"this"] floatValue];
+        float maxValue = [[result lastObject][@"max"] floatValue];
+        float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue );
+        return (thisValue == 0)?1.0f:thisValue;
     }];
 }
 
@@ -110,9 +116,11 @@ static CGFloat const mult = 10.0f;
         request.resultType = NSDictionaryResultType;
         NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
         id result = [context executeFetchRequest:request error:&error];
-        debugLog(@"%@",result);
         
-        return [[result lastObject][@"this"] floatValue];
+        float thisValue = [[result lastObject][@"this"] floatValue];
+//        float maxValue = [[result lastObject][@"max"] floatValue];
+//        float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue );
+        return (thisValue == 0)?1.0f:thisValue;
     }];
 }
 
@@ -132,9 +140,11 @@ static CGFloat const mult = 10.0f;
         request.resultType = NSDictionaryResultType;
         NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
         id result = [context executeFetchRequest:request error:&error];
-        debugLog(@"%@",result);
         
-        return [[result lastObject][@"this"] floatValue];
+        float thisValue = [[result lastObject][@"this"] floatValue];
+//        float maxValue = [[result lastObject][@"max"] floatValue];
+//        float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue );
+        return (thisValue == 0)?1.0f:thisValue;
     }];
 }
 

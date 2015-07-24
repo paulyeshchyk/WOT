@@ -126,7 +126,7 @@
     [self.topBar setDarkStyle];
     [self.bottomBar setDarkStyle];
     
-    [self.radarViewController reload];
+    [self updateUI];
 }
 
 - (void)setVehicle:(Vehicles *)vehicle {
@@ -141,7 +141,11 @@
 
 - (void)updateUI {
     
-    self.title = self.vehicle.tanks.name_i18n;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.title = self.vehicle.tanks.name_i18n;
+        [self.radarViewController reload];
+    });
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -346,11 +350,11 @@
 - (RadarChartData *)radarData {
 
     WOTTankAllDataMetric *sample = [[WOTTankAllDataMetric alloc] init];
-    [sample addMetric:[WOTMetric circularVisionMetric]];
+//    [sample addMetric:[WOTMetric circularVisionMetric]];
     [sample addMetric:[WOTMetric armorBoardMetric]];
     [sample addMetric:[WOTMetric armorFeddMetric]];
     [sample addMetric:[WOTMetric armorForeheadMetric]];
-    [sample addMetric:[WOTMetric fireStartingChanceMetric]];
+//    [sample addMetric:[WOTMetric fireStartingChanceMetric]];
     
 
     WOTTankID *tankID = [[WOTTankID alloc] initWithId:@([self.tankId integerValue])];
