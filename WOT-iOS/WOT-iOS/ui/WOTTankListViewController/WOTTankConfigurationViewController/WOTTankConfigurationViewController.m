@@ -71,14 +71,12 @@
     
     [self.flowLayout setDepthCallback:^(){
         
-        NSInteger result = self.tree.levels;
-        return result;
+        return self.tree.levels;
     }];
 
     [self.flowLayout setWidthCallback:^(){
         
-        NSInteger result = self.tree.endpointsCount;
-        return result;
+        return self.tree.endpointsCount;
     }];
 
     [self.flowLayout setLayoutPreviousSiblingNodeChildrenCountCallback:^(NSIndexPath *indexPath){

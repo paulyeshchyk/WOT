@@ -18,6 +18,8 @@
 #define WOT_IMAGE_DATA_LIST @"Data-List-icon.png"
 #define WOT_IMAGE_DOWN @"WOTArrowDown.png"
 #define WOT_IMAGE_GEAR @"WOTiPadMenuGear.png"
+#define WOT_IMAGE_SEARCH @"Search Gray.png"
+#define WOT_IMAGE_CANCEL @"Cancel Gray.png"
 #define WOT_IMAGE_GLOBE @"WOTGlobe.png"
 #define WOT_IMAGE_MENU_ICON @"WOT_IMAGE_MENU_ICON"
 #define WOT_IMAGE_MESSAGING_CATEGORIZE @"Messaging-Categorize-icon.png"

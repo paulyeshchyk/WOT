@@ -37,7 +37,8 @@
         width = self.widthCallback();
     }
     
-    return CGSizeMake(width * self.itemSize.width,depth * self.itemSize.height);
+    CGSize result = CGSizeMake(width * self.itemSize.width,depth * self.itemSize.height);
+    return result;
 }
 
 

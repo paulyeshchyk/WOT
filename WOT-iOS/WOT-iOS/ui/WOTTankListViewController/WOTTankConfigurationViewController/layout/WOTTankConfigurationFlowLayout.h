@@ -10,6 +10,10 @@
 
 typedef NSInteger(^LayoutDimensionBlock)(void);
 typedef NSInteger(^LayoutSiblingChildrenCount)(NSIndexPath *);
+typedef NS_ENUM(NSInteger, LayoutOrientation){
+    LayoutOrientationHorizontal,
+    LayoutOrientationVertical
+};
 
 @interface WOTTankConfigurationFlowLayout : UICollectionViewFlowLayout
 

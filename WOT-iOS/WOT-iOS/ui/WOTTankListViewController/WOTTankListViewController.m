@@ -17,6 +17,7 @@
 #import "WOTTankListCollectionViewHeader.h"
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTTankDetailViewController.h"
+#import "WOTTankListSearchBar.h"
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -24,8 +25,13 @@
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic, readonly)NSArray *sortDescriptors;
-@property (nonatomic, readonly)NSPredicate *filterBy;
+@property (nonatomic, readonly)NSPredicate *filterByPredicate;
 @property (nonatomic, readonly)NSString *groupByField;
+@property (nonatomic, strong)UIBarButtonItem *settingsItem;
+@property (nonatomic, strong)UIBarButtonItem *searchItem;
+@property (nonatomic, weak)WOTTankListSearchBar *searchBar;
+@property (nonatomic, copy)NSArray *leftBarButtonItems;
+@property (nonatomic, copy)NSString *searchBarText;
 
 @end
 
@@ -40,7 +46,7 @@
     [super viewDidLoad];
     
     __weak typeof(self)weakSelf = self;
-    UIBarButtonItem *settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
+    self.settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
         
         
         WOTTankListSortViewController *vc = [[WOTTankListSortViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSortViewController class]) bundle:nil];
@@ -56,7 +62,40 @@
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
     
-    [self.navigationItem setRightBarButtonItems:@[settingsItem]];
+    self.searchItem = [UIBarButtonItem barButtonItemForImage:[self searchItemSearchImage] text:nil eventBlock:^(id sender) {
+
+        if (self.searchBar) {
+
+            [((UIButton *)self.searchItem.customView )setImage:[self searchItemSearchImage] forState:UIControlStateNormal];
+            self.searchBarText = nil;
+            [self invalidateFetchedResultController];
+            [self restoreTitleViewState];
+        } else {
+            
+            self.searchBar  = [[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([WOTTankListSearchBar class]) owner:self options:nil] lastObject];
+            [self.searchBar setCommitBlock:^(NSString *text){
+
+                self.searchBarText = text;
+                [self invalidateFetchedResultController];
+                [((UIButton *)self.searchItem.customView )setImage:[self searchItemCancelImage] forState:UIControlStateNormal];
+            }];
+            [self.searchBar setCloseBlock:^(){
+
+                [self restoreTitleViewState];
+                [((UIButton *)self.searchItem.customView )setImage:[self searchItemSearchImage] forState:UIControlStateNormal];
+
+                self.searchBarText = nil;
+                [self invalidateFetchedResultController];
+            }];
+
+            [self saveTitleViewState];
+            [self searchBarMakeVisible];
+            [((UIButton *)self.searchItem.customView )setImage:[self searchItemCancelImage] forState:UIControlStateNormal];
+        }
+        
+    }];
+    
+    [self.navigationItem setRightBarButtonItems:@[self.searchItem, self.settingsItem]];
 
 #warning implement listener
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestCallback:^(id data, NSError *error) {
@@ -165,7 +204,7 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
     [fetchRequest setSortDescriptors:self.sortDescriptors];
-    [fetchRequest setPredicate:self.filterBy];
+    [fetchRequest setPredicate:self.filterByPredicate];
     
     NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
     self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:self.groupByField cacheName:nil];
@@ -177,9 +216,21 @@
 
 }
 
-- (NSPredicate *)filterBy {
+- (NSPredicate *)filterByPredicate {
     
-    return [WOTTankListSettingsDatasource sharedInstance].filterBy;
+    NSPredicate *filterByPredicate = [WOTTankListSettingsDatasource sharedInstance].filterBy;
+    NSMutableArray *predicates = [[NSMutableArray alloc] init];
+    if (filterByPredicate){
+        
+        [predicates addObject:filterByPredicate];
+    }
+    
+    if ([self.searchBarText length] != 0) {
+
+        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOT_KEY_NAME_I18N, self.searchBarText];
+        [predicates addObject:searchBarPredicate];
+    }
+    return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
 }
 
 - (NSArray *)sortDescriptors {
@@ -193,6 +244,43 @@
 - (NSString *)groupByField {
     
     return [WOTTankListSettingsDatasource sharedInstance].groupBy;
+}
+
+#pragma mark - private
+- (UIImage *)searchItemSearchImage {
+    
+    return [UIImage imageWithImage:[UIImage imageNamed:WOTString(WOT_IMAGE_SEARCH)] scaledToSize:CGSizeMake(22.0f,22.0f)];
+
+}
+
+- (UIImage *)searchItemCancelImage {
+    
+    return [UIImage imageWithImage:[UIImage imageNamed:WOTString(WOT_IMAGE_CANCEL)] scaledToSize:CGSizeMake(22.0f,22.0f)];
+}
+
+- (void)restoreTitleViewState {
+    
+    self.searchBarText = nil;
+    self.navigationItem.titleView = nil;
+    [self.navigationItem setRightBarButtonItems:@[self.searchItem,self.settingsItem]];
+    [self.navigationItem setLeftBarButtonItems:self.leftBarButtonItems];
+    self.searchBar = nil;
+    self.leftBarButtonItems = nil;
+
+}
+
+- (void)saveTitleViewState {
+    
+    self.leftBarButtonItems = self.navigationItem.leftBarButtonItems;
+}
+
+- (void)searchBarMakeVisible {
+
+//    CGSize size = self.navigationItem.titleView.bounds.size;
+    self.navigationItem.titleView = self.searchBar;
+    [self.searchBar setNeedsLayout];
+    [self.navigationItem setLeftBarButtonItems:nil];
+    [self.navigationItem setRightBarButtonItems:@[self.searchItem]];
 }
 
 @end

@@ -248,6 +248,17 @@
 		1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */; };
 		1DE319AE1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */; };
 		1DE319AF1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */; };
+		DA522D281B6637630087D684 /* Search Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D221B6637630087D684 /* Search Gray.png */; };
+		DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D231B6637630087D684 /* Search Gray@2x.png */; };
+		DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D241B6637630087D684 /* Search Gray@3x.png */; };
+		DA522D2B1B6637630087D684 /* Search Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D251B6637630087D684 /* Search Yellow.png */; };
+		DA522D2C1B6637630087D684 /* Search Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D261B6637630087D684 /* Search Yellow@2x.png */; };
+		DA522D2D1B6637630087D684 /* Search Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D271B6637630087D684 /* Search Yellow@3x.png */; };
+		DA522D311B663C210087D684 /* WOTTankListSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DA522D301B663C210087D684 /* WOTTankListSearchBar.m */; };
+		DA522D331B663C290087D684 /* WOTTankListSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA522D321B663C290087D684 /* WOTTankListSearchBar.xib */; };
+		DA522D371B6649020087D684 /* Cancel Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D341B6649020087D684 /* Cancel Gray.png */; };
+		DA522D381B6649020087D684 /* Cancel Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D351B6649020087D684 /* Cancel Gray@2x.png */; };
+		DA522D391B6649020087D684 /* Cancel Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D361B6649020087D684 /* Cancel Gray@3x.png */; };
 		DA720C811B5D0DE9003F3B5A /* ModulesTree+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = DA720C801B5D0DE9003F3B5A /* ModulesTree+UI.m */; };
 		DA720C861B5D1AEE003F3B5A /* WOTTankConfigurationItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA720C841B5D1AEE003F3B5A /* WOTTankConfigurationItemCell.m */; };
 		DA720C871B5D1AEE003F3B5A /* WOTTankConfigurationItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA720C851B5D1AEE003F3B5A /* WOTTankConfigurationItemCell.xib */; };
@@ -659,6 +670,18 @@
 		1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray@2x.png"; sourceTree = "<group>"; };
 		75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		95194089742F312E67004937 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		DA522D221B6637630087D684 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
+		DA522D231B6637630087D684 /* Search Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@2x.png"; sourceTree = "<group>"; };
+		DA522D241B6637630087D684 /* Search Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@3x.png"; sourceTree = "<group>"; };
+		DA522D251B6637630087D684 /* Search Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow.png"; sourceTree = "<group>"; };
+		DA522D261B6637630087D684 /* Search Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow@2x.png"; sourceTree = "<group>"; };
+		DA522D271B6637630087D684 /* Search Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow@3x.png"; sourceTree = "<group>"; };
+		DA522D2F1B663C210087D684 /* WOTTankListSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSearchBar.h; sourceTree = "<group>"; };
+		DA522D301B663C210087D684 /* WOTTankListSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSearchBar.m; sourceTree = "<group>"; };
+		DA522D321B663C290087D684 /* WOTTankListSearchBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSearchBar.xib; sourceTree = "<group>"; };
+		DA522D341B6649020087D684 /* Cancel Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray.png"; sourceTree = "<group>"; };
+		DA522D351B6649020087D684 /* Cancel Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@2x.png"; sourceTree = "<group>"; };
+		DA522D361B6649020087D684 /* Cancel Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@3x.png"; sourceTree = "<group>"; };
 		DA720C7F1B5D0DE9003F3B5A /* ModulesTree+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ModulesTree+UI.h"; sourceTree = "<group>"; };
 		DA720C801B5D0DE9003F3B5A /* ModulesTree+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ModulesTree+UI.m"; sourceTree = "<group>"; };
 		DA720C831B5D1AEE003F3B5A /* WOTTankConfigurationItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationItemCell.h; sourceTree = "<group>"; };
@@ -1100,6 +1123,15 @@
 		1D672B0F1B60C6F800617E5C /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				DA522D341B6649020087D684 /* Cancel Gray.png */,
+				DA522D351B6649020087D684 /* Cancel Gray@2x.png */,
+				DA522D361B6649020087D684 /* Cancel Gray@3x.png */,
+				DA522D221B6637630087D684 /* Search Gray.png */,
+				DA522D231B6637630087D684 /* Search Gray@2x.png */,
+				DA522D241B6637630087D684 /* Search Gray@3x.png */,
+				DA522D251B6637630087D684 /* Search Yellow.png */,
+				DA522D261B6637630087D684 /* Search Yellow@2x.png */,
+				DA522D271B6637630087D684 /* Search Yellow@3x.png */,
 				1D672B501B60D15C00617E5C /* Hourglass Sand Bottom Gray.png */,
 				1D672B511B60D15C00617E5C /* Hourglass Sand Bottom Gray@2x.png */,
 				1D672B521B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png */,
@@ -1733,6 +1765,7 @@
 		1DD646C91B1F377300B0EC76 /* WOTTankListViewController */ = {
 			isa = PBXGroup;
 			children = (
+				DA522D2E1B663C070087D684 /* searchBar */,
 				1D9069611B41695B00237852 /* WOTTankConfigurationViewController */,
 				1DCC7F3E1B2F031B005FF193 /* WOTTankDetailViewController */,
 				1D4C926B1B270BE700E320B5 /* WOTTankListSettingsDatasource */,
@@ -1913,6 +1946,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DA522D2E1B663C070087D684 /* searchBar */ = {
+			isa = PBXGroup;
+			children = (
+				DA522D2F1B663C210087D684 /* WOTTankListSearchBar.h */,
+				DA522D301B663C210087D684 /* WOTTankListSearchBar.m */,
+				DA522D321B663C290087D684 /* WOTTankListSearchBar.xib */,
+			);
+			path = searchBar;
+			sourceTree = "<group>";
+		};
 		DA720C821B5D1ACD003F3B5A /* cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2042,6 +2085,7 @@
 				1D672B4D1B60CC8700617E5C /* Firing Gun Yellow.png in Resources */,
 				1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */,
 				1D672B261B60C86700617E5C /* Bulletproof Vest Gray.png in Resources */,
+				DA522D281B6637630087D684 /* Search Gray.png in Resources */,
 				DA720C8C1B5D1BFE003F3B5A /* WOTTankConfigurationItemHeaderFooter.xib in Resources */,
 				1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */,
 				1D4C92361B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png in Resources */,
@@ -2060,6 +2104,7 @@
 				1DC07B941B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.xib in Resources */,
 				1D4C92651B27085600E320B5 /* WOTTankListSortViewController.xib in Resources */,
 				1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */,
+				DA522D391B6649020087D684 /* Cancel Gray@3x.png in Resources */,
 				1D672B341B60C9A100617E5C /* Opera Glasses Gray@3x.png in Resources */,
 				1D519CFE1B4E90BC00D3A286 /* WOTTankDetailTextTableViewCell.xib in Resources */,
 				1D672B291B60C86700617E5C /* Bulletproof Vest Yellow.png in Resources */,
@@ -2096,11 +2141,13 @@
 				1D519D361B4FC8DB00D3A286 /* WOTTankDetailProgressTableViewCell.xib in Resources */,
 				1D4C92351B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png in Resources */,
 				1DCC7F3C1B2EF604005FF193 /* mediumTank.png in Resources */,
+				DA522D2B1B6637630087D684 /* Search Yellow.png in Resources */,
 				1D4C92431B25EBE400E320B5 /* WOTiPadMenuGear@3x.png in Resources */,
 				1DD646C81B1F371700B0EC76 /* WOTMenuViewController.xib in Resources */,
 				1D672AF71B57952700617E5C /* WOTModuleTypeEngine.png in Resources */,
 				1D4C921E1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib in Resources */,
 				1D672B601B60D15C00617E5C /* Hourglass Sand Bottom Yellow@2x.png in Resources */,
+				DA522D331B663C290087D684 /* WOTTankListSearchBar.xib in Resources */,
 				1DCC7F281B2ED07F005FF193 /* WOTArrowUp.png in Resources */,
 				1D4C92591B25F27200E320B5 /* WOTLanguageSelectorViewController.xib in Resources */,
 				1D672B2B1B60C86700617E5C /* Bulletproof Vest Yellow@3x.png in Resources */,
@@ -2112,15 +2159,19 @@
 				1D672AF91B57952700617E5C /* WOTModuleTypeRadios.png in Resources */,
 				1D672B401B60CB7100617E5C /* Speedometer Gray@3x.png in Resources */,
 				1D672B5E1B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png in Resources */,
+				DA522D2C1B6637630087D684 /* Search Yellow@2x.png in Resources */,
 				1DCC7F2A1B2ED07F005FF193 /* WOTArrowUp@3x.png in Resources */,
 				1D672B5F1B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png in Resources */,
 				1D672AF61B57952700617E5C /* WOTModuleTypeChassis.png in Resources */,
+				DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */,
 				1DC07BA51B3B003D002FAA72 /* Data-Flow-Chart-icon@3x.png in Resources */,
+				DA522D2D1B6637630087D684 /* Search Yellow@3x.png in Resources */,
 				1DC07BA31B3B003D002FAA72 /* Data-Flow-Chart-icon.png in Resources */,
 				1D672B351B60C9A100617E5C /* Opera Glasses Yellow.png in Resources */,
 				1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */,
 				1D4C923B1B25EB1000E320B5 /* WOTBackIconGray.png in Resources */,
 				1DE319AF1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png in Resources */,
+				DA522D381B6649020087D684 /* Cancel Gray@2x.png in Resources */,
 				1D4C924C1B25EF2E00E320B5 /* WOTGlobe.png in Resources */,
 				1D4C92471B25ED0900E320B5 /* WOTLoggedInUser.png in Resources */,
 				1DC07BA41B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png in Resources */,
@@ -2135,11 +2186,13 @@
 				1D4C92481B25ED0900E320B5 /* WOTLoggedInUser@2x.png in Resources */,
 				1D672B371B60C9A100617E5C /* Opera Glasses Yellow@3x.png in Resources */,
 				1D672B331B60C9A100617E5C /* Opera Glasses Gray@2x.png in Resources */,
+				DA522D371B6649020087D684 /* Cancel Gray.png in Resources */,
 				1D672B321B60C9A100617E5C /* Opera Glasses Gray.png in Resources */,
 				1D9069661B41697300237852 /* WOTTankConfigurationViewController.xib in Resources */,
 				1D672B431B60CB7100617E5C /* Speedometer Yellow@3x.png in Resources */,
 				1D672B631B60D15C00617E5C /* Hourglass Sand Top Gray@2x.png in Resources */,
 				1D672B5D1B60D15C00617E5C /* Hourglass Sand Bottom Gray@2x.png in Resources */,
+				DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */,
 				1DD646DD1B20533E00B0EC76 /* WOTMenuTableViewCell.xib in Resources */,
 				1D672B4B1B60CC8700617E5C /* Firing Gun Gray@2x.png in Resources */,
 			);
@@ -2326,6 +2379,7 @@
 				1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */,
 				1DC07B931B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.m in Sources */,
 				1D4C92621B27085600E320B5 /* WOTTankListSettingTableViewCell.m in Sources */,
+				DA522D311B663C210087D684 /* WOTTankListSearchBar.m in Sources */,
 				1D519D611B54FFD800D3A286 /* Tanks.m in Sources */,
 				1D047B461B331B9700B5B696 /* WOTRequestExecutor.m in Sources */,
 				1DD646C31B1F36FB00B0EC76 /* WOTDrawerViewController.m in Sources */,
