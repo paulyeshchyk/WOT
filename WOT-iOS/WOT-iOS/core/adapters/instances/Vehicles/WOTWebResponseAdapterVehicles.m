@@ -63,9 +63,11 @@
                 WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
                 
 #warning check groupId
-                [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicle"];
-                
-                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+                BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicle"];
+                if (canAdd) {
+                    
+                    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+                }
             }];
             
         }];
