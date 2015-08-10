@@ -259,10 +259,7 @@
      
      */
 
-    [NSThread executeOnMainThread:^(){
-        
-        [self updateUI];
-    }];
+    [self updateUI];
     
 }
 

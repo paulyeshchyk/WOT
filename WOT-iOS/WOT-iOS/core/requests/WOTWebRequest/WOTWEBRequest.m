@@ -108,10 +108,8 @@ static NSString *urlEncode(NSString *string) {
 
     [super temp_executeWithArgs:args];
 
-    if (self.availableInGroups == nil) {
-        
-        debugLog(@"no group defined");
-    }
+    NSCAssert(self.availableInGroups, @"execution group is unknown");
+    
     debugLog(@"webrequest-start%@-%@",self.availableInGroups, [self.url absoluteString]);
     NSURL *url = self.url;
     NSData *bodyData = self.httpBodyData;
