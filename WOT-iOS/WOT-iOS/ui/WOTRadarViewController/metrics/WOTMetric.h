@@ -11,12 +11,6 @@
 
 @interface WOTMetric : NSObject <WOTTankMetricProtocol>
 
-+ (id<WOTTankMetricProtocol>)circularVisionMetric;
-+ (id<WOTTankMetricProtocol>)armorBoardMetric;
-+ (id<WOTTankMetricProtocol>)armorFeddMetric;
-+ (id<WOTTankMetricProtocol>)armorForeheadMetric;
-+ (id<WOTTankMetricProtocol>)fireStartingChanceMetric;
-
 - (id)initWithMetricName:(NSString *)metricName evaluator:(WOTTankMetricEvaluator)evaluator;
 
 @end

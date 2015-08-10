@@ -21,9 +21,12 @@
 #import "WOTRadarViewController.h"
 #import "WOTTankDetailSection+Factory.h"
 #import "WOTRadarViewController.h"
-#import "WOTTankAllDataMetric.h"
+#import "WOTTankMetricsList.h"
 #import "WOTMetric.h"
-#import "WOTTankID.h"
+#import "WOTTanksIDList.h"
+#import "WOTTankMetricOptions.h"
+
+#import "WOTMetric+Samples.h"
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate >
 
@@ -50,6 +53,8 @@
 @property (nonatomic, strong) NSError *fetchError;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, readonly)NSString *requestsGroupId;
+
+@property (nonatomic, assign)WOTTankMetricOptions metricOptions;
 
 @end
 
@@ -108,10 +113,35 @@
     
 }
 
+- (void)setMetricOptions:(WOTTankMetricOptions)metricOptions {
+
+    if (metricOptions == WOTTankMetricOptionNone) {
+        
+        if (_metricOptions == WOTTankMetricOptionNone) {
+            
+            _metricOptions = WOTTankMetricOptionArmor;
+        } else {
+            
+            //do nothing; leave as is
+        }
+    } else {
+        
+        _metricOptions = metricOptions;
+    }
+    
+    self.propertyArmorButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionArmor];
+    self.propertyObserveButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionObserve];
+    self.propertyFireButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionFire];
+    self.propertyMobilityButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionMobility];
+    [self updateUI];
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
 
+    self.metricOptions = WOTTankMetricOptionNone;
+    
     self.radarViewController = [[WOTRadarViewController alloc] initWithNibName:NSStringFromClass([WOTRadarViewController class]) bundle:nil];
     [self.radarContainer addSubview:self.radarViewController.view];
     [self.radarViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -126,7 +156,7 @@
     [self.topBar setDarkStyle];
     [self.bottomBar setDarkStyle];
     
-    [self updateUI];
+//    [self updateUI];
 }
 
 - (void)setVehicle:(Vehicles *)vehicle {
@@ -135,17 +165,28 @@
 
         _vehicle = vehicle;
         
+        
         [self refetchPossibleTiersForTier:_vehicle.tier];
     }
 }
 
 - (void)updateUI {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    __weak typeof(self)weakSelf = self;
+    BOOL isMain = [NSThread isMainThread];
+    if (isMain) {
         
-        self.title = self.vehicle.tanks.name_i18n;
-        [self.radarViewController reload];
-    });
+        weakSelf.title = self.vehicle.tanks.name_i18n;
+        [weakSelf.radarViewController reload];
+    } else {
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            weakSelf.title = self.vehicle.tanks.name_i18n;
+            [weakSelf.radarViewController reload];
+        });
+    }
+    
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -209,6 +250,9 @@
 
 - (void)refetchPossibleTiersForTier:(NSNumber *)tier {
     
+#warning temporary removed
+    return;
+    
     NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[tier]];
     
     NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
@@ -258,18 +302,7 @@
      
      */
 
-    __weak typeof(self)weakSelf = self;
-    BOOL isMain = [NSThread isMainThread];
-    if (isMain) {
-        
-        [self updateUI];
-    } else {
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-
-            [weakSelf updateUI];
-        });
-    }
+    [self updateUI];
 }
 
 
@@ -313,51 +346,36 @@
 
 - (IBAction)onPropertyAllSelection:(id)sender {
     
-    self.propertyAllButton.selected = YES;
-    self.propertyArmorButton.selected = NO;
-    self.propertyObserveButton.selected = NO;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = NO;
+//    self.propertySelection |= WOTTankDetailPropertySelectionAll;
 }
 
 - (IBAction)onPropertyArmorSelection:(id)sender {
     
-    self.propertyAllButton.selected = NO;
-    self.propertyArmorButton.selected = !self.propertyArmorButton.selected;
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionArmor];
 }
 
 - (IBAction)onPropertyFireSelection:(id)sender {
-    
-    self.propertyAllButton.selected = NO;
-    self.propertyFireButton.selected = !self.propertyFireButton.selected;
+
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankDetailPropertySelectionFire];
 }
 
 - (IBAction)onPropertyMobilitySelection:(id)sender {
-    
-    self.propertyAllButton.selected = NO;
-    self.propertyMobilityButton.selected = !self.propertyMobilityButton.selected;
+
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankDetailPropertySelectionMobility];
 }
 
 - (IBAction)onPropertyObserveSelection:(id)sender {
     
-    self.propertyAllButton.selected = NO;
-    self.propertyObserveButton.selected = !self.propertyObserveButton.selected;
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankDetailPropertySelectionObserve];
 }
 
-
 #pragma mark - WOTRadarViewControllerDelegate
-
 - (RadarChartData *)radarData {
 
-    WOTTankAllDataMetric *sample = [[WOTTankAllDataMetric alloc] init];
-//    [sample addMetric:[WOTMetric circularVisionMetric]];
-    [sample addMetric:[WOTMetric armorBoardMetric]];
-    [sample addMetric:[WOTMetric armorFeddMetric]];
-    [sample addMetric:[WOTMetric armorForeheadMetric]];
-//    [sample addMetric:[WOTMetric fireStartingChanceMetric]];
-    
+    WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
+    [sample addMetrics:[WOTMetric metricsForOption:self.metricOptions]];
 
-    WOTTankID *tankID = [[WOTTankID alloc] initWithId:@([self.tankId integerValue])];
+    WOTTanksIDList *tankID = [[WOTTanksIDList alloc] initWithId:@([self.tankId integerValue])];
     [sample addTankID: tankID];
     
     return sample.chartData;

@@ -1,5 +1,5 @@
 //
-//  WOTTankAllDataMetric.h
+//  WOTTankMetricsList.h
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 7/23/15.
@@ -9,16 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "WOT_iOS-Swift.h"
 #import "WOTTankMetricProtocol.h"
-#import "WOTTankID.h"
+#import "WOTTanksIDList.h"
 
-@interface WOTTankAllDataMetric : NSObject
+@interface WOTTankMetricsList : NSObject
 
 @property (nonatomic, readonly)RadarChartData *chartData;
 
 - (void)addMetric:(id<WOTTankMetricProtocol>)metric;
 - (void)removeMetric:(id<WOTTankMetricProtocol>)metric;
 
-- (void)addTankID:(WOTTankID *)tankID;
-- (void)removeTankID:(WOTTankID *)tankID;
+- (void)addMetrics:(NSArray *)metrics;
+
+- (void)addTankID:(WOTTanksIDList *)tankID;
+- (void)removeTankID:(WOTTanksIDList *)tankID;
 
 @end

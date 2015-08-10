@@ -47,8 +47,7 @@
     
     __weak typeof(self)weakSelf = self;
     self.settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
-        
-        
+
         WOTTankListSortViewController *vc = [[WOTTankListSortViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSortViewController class]) bundle:nil];
         vc.cancelBlock = ^(){
             
@@ -97,23 +96,25 @@
     
     [self.navigationItem setRightBarButtonItems:@[self.searchItem, self.settingsItem]];
 
-#warning implement listener
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestCallback:^(id data, NSError *error) {
-        
-        if (!error) {
-            
-            NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-            [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-            WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
-            [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicles+"];
-            [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
-        } else {
-            
-            debugError(@"request-fail:%@",error.localizedDescription);
-        }
-        
-    }];
+#warning WTF!!!! tankId is not used in new request
+//    
+//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestCallback:^(id data, NSError *error) {
+//        
+//        if (!error) {
+//            
+//            NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+//            [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
+//            WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
+//            [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicles+"];
+//            [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+//        } else {
+//            
+//            debugError(@"request-fail:%@",error.localizedDescription);
+//        }
+//        
+//    }];
     
+#warning implement listener
     NSDictionary *args = @{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]};
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTanks];
     [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Tanks+"];
@@ -141,7 +142,8 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    NSInteger result = [sectionInfo numberOfObjects];
+    return result;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WOTTankID.h"
+#import "WOTTanksIDList.h"
 
-typedef float(^WOTTankMetricEvaluator)(WOTTankID *tankID);
+typedef float(^WOTTankMetricEvaluator)(WOTTanksIDList *tankID);
 
 @protocol WOTTankMetricProtocol <NSObject>
 

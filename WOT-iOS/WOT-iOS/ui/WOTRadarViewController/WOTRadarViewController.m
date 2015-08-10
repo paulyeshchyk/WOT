@@ -51,22 +51,22 @@
     self.radarView.marker = marker;
     
     ChartXAxis *xAxis = self.radarView.xAxis;
-    xAxis.labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.f];
+    xAxis.labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:6.f];
     xAxis.labelTextColor = WOT_COLOR_RADAR_LEGEND;
     xAxis.axisLineColor = WOT_COLOR_RADAR_GRID;
     xAxis.gridColor = WOT_COLOR_RADAR_GRID;
     
     ChartYAxis *yAxis = self.radarView.yAxis;
-    yAxis.labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.f];
+    yAxis.labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:6.f];
     yAxis.labelTextColor = WOT_COLOR_RADAR_LEGEND;
     xAxis.axisLineColor = WOT_COLOR_RADAR_GRID;
     yAxis.gridColor = WOT_COLOR_RADAR_GRID;
-    yAxis.labelCount = 5;
-    yAxis.startAtZeroEnabled = NO;
+//    yAxis.labelCount = 5;
+    yAxis.startAtZeroEnabled = YES;
     
     ChartLegend *l = self.radarView.legend;
     l.position = ChartLegendPositionBelowChartLeft;
-    l.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.f];
+    l.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:6.f];
     l.textColor = WOT_COLOR_RADAR_LEGEND;
     l.xEntrySpace = 1.0;
     l.yEntrySpace = 1.0;
@@ -76,6 +76,7 @@
 
 - (void)reload {
 
+    [self.radarView clear];
     RadarChartData *data = [self.delegate radarData];
     self.radarView.data = data;
 }

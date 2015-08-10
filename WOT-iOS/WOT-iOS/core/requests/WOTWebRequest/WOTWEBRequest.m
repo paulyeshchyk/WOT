@@ -13,7 +13,7 @@
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection *connection;
-@property (nonatomic, assign) NSUInteger privateHash;
+//@property (nonatomic, assign) NSUInteger privateHash;
 @property (nonatomic, strong) NSMutableData *data;
 
 @end
@@ -45,11 +45,7 @@ static NSString *urlEncode(NSString *string) {
     
     self = [super init];
     if (self){
-        
-        NSUInteger urlHash = [[self queryIntoString] hash];
-        NSUInteger argHash = [self.args hash];
-        
-        self.privateHash =  urlHash ^ argHash;
+
         self.data = nil;
     }
     return self;
@@ -62,8 +58,10 @@ static NSString *urlEncode(NSString *string) {
 
 - (NSUInteger)hash {
 
+    NSUInteger urlHash = [[self queryIntoString] hash];
+    NSUInteger argHash = [self.args hash];
 
-    return self.privateHash;
+    return urlHash ^ argHash;
 }
 
 - (NSString *)description {

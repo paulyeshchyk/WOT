@@ -1,5 +1,5 @@
 //
-//  WOTTankID.h
+//  WOTTanksIDList.h
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 7/23/15.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WOTTankID : NSObject
+@interface WOTTanksIDList : NSObject
 
 @property (nonatomic, readonly)NSArray *allObjects;
 @property (nonatomic, readonly)NSString *label;

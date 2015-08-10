@@ -133,9 +133,9 @@
 		1D672B651B60D15C00617E5C /* Hourglass Sand Top Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B591B60D15C00617E5C /* Hourglass Sand Top Yellow.png */; };
 		1D672B661B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B5A1B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png */; };
 		1D672B671B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B5B1B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png */; };
-		1D672B6A1B6104BB00617E5C /* WOTTankAllDataMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B691B6104BB00617E5C /* WOTTankAllDataMetric.m */; };
+		1D672B6A1B6104BB00617E5C /* WOTTankMetricsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B691B6104BB00617E5C /* WOTTankMetricsList.m */; };
 		1D672B6D1B61101E00617E5C /* WOTMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B6C1B61101E00617E5C /* WOTMetric.m */; };
-		1D672B711B61198900617E5C /* WOTTankID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B701B61198900617E5C /* WOTTankID.m */; };
+		1D672B711B61198900617E5C /* WOTTanksIDList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B701B61198900617E5C /* WOTTanksIDList.m */; };
 		1D90695D1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */; };
 		1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695F1B4161F300237852 /* UIToolbar+WOT.m */; };
 		1D9069651B41697300237852 /* WOTTankConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9069631B41697300237852 /* WOTTankConfigurationViewController.m */; };
@@ -217,7 +217,6 @@
 		1DCC80DB1B306227005FF193 /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80D71B306227005FF193 /* BalloonMarker.swift */; };
 		1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80D91B306227005FF193 /* WOTRadarViewController.m */; };
 		1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */; };
-		1DCC80E81B315D6D005FF193 /* WOTRadarSampleMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80E71B315D6D005FF193 /* WOTRadarSampleMetric.m */; };
 		1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC81221B32B83B005FF193 /* UIImage+Resize.m */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
 		1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */; };
@@ -268,6 +267,8 @@
 		DA720C931B5D3DAC003F3B5A /* WOTTankConfigurationModuleMapping+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = DA720C921B5D3DAC003F3B5A /* WOTTankConfigurationModuleMapping+Factory.m */; };
 		DAD13F951B5D053200EDB655 /* WOTTankConfigurationItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD13F931B5D053200EDB655 /* WOTTankConfigurationItemViewController.m */; };
 		DAD13F961B5D053200EDB655 /* WOTTankConfigurationItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD13F941B5D053200EDB655 /* WOTTankConfigurationItemViewController.xib */; };
+		DAF0E4091B67A7CE00E7C614 /* WOTRadarSampleMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF0E4081B67A7CE00E7C614 /* WOTRadarSampleMetric.m */; };
+		DAF0E40C1B67A7FF00E7C614 /* WOTMetric+Samples.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF0E40B1B67A7FF00E7C614 /* WOTMetric+Samples.m */; };
 		E2990185E840B645BEA2F197 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB9DC1F0F086677D49391180 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -472,13 +473,13 @@
 		1D672B591B60D15C00617E5C /* Hourglass Sand Top Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow.png"; sourceTree = "<group>"; };
 		1D672B5A1B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow@2x.png"; sourceTree = "<group>"; };
 		1D672B5B1B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow@3x.png"; sourceTree = "<group>"; };
-		1D672B681B6104BB00617E5C /* WOTTankAllDataMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankAllDataMetric.h; sourceTree = "<group>"; };
-		1D672B691B6104BB00617E5C /* WOTTankAllDataMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankAllDataMetric.m; sourceTree = "<group>"; };
+		1D672B681B6104BB00617E5C /* WOTTankMetricsList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankMetricsList.h; sourceTree = "<group>"; };
+		1D672B691B6104BB00617E5C /* WOTTankMetricsList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankMetricsList.m; sourceTree = "<group>"; };
 		1D672B6B1B61101E00617E5C /* WOTMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMetric.h; sourceTree = "<group>"; };
 		1D672B6C1B61101E00617E5C /* WOTMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMetric.m; sourceTree = "<group>"; };
 		1D672B6E1B61103E00617E5C /* WOTTankMetricProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankMetricProtocol.h; sourceTree = "<group>"; };
-		1D672B6F1B61198900617E5C /* WOTTankID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankID.h; sourceTree = "<group>"; };
-		1D672B701B61198900617E5C /* WOTTankID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankID.m; sourceTree = "<group>"; };
+		1D672B6F1B61198900617E5C /* WOTTanksIDList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTanksIDList.h; sourceTree = "<group>"; };
+		1D672B701B61198900617E5C /* WOTTanksIDList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTanksIDList.m; sourceTree = "<group>"; };
 		1D90695A1B412D6B00237852 /* WOTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
 		1D90695B1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		1D90695C1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailCollectionViewFlowLayout.m; sourceTree = "<group>"; };
@@ -613,8 +614,6 @@
 		1DCC80D81B306227005FF193 /* WOTRadarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadarViewController.h; sourceTree = "<group>"; };
 		1DCC80D91B306227005FF193 /* WOTRadarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRadarViewController.m; sourceTree = "<group>"; };
 		1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTRadarViewController.xib; sourceTree = "<group>"; };
-		1DCC80E61B315D6D005FF193 /* WOTRadarSampleMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadarSampleMetric.h; sourceTree = "<group>"; };
-		1DCC80E71B315D6D005FF193 /* WOTRadarSampleMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRadarSampleMetric.m; sourceTree = "<group>"; };
 		1DCC81211B32B83B005FF193 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		1DCC81221B32B83B005FF193 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		1DD646331B1C616A00B0EC76 /* WOT-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WOT-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -697,6 +696,11 @@
 		DAD13F921B5D053200EDB655 /* WOTTankConfigurationItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationItemViewController.h; sourceTree = "<group>"; };
 		DAD13F931B5D053200EDB655 /* WOTTankConfigurationItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankConfigurationItemViewController.m; sourceTree = "<group>"; };
 		DAD13F941B5D053200EDB655 /* WOTTankConfigurationItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankConfigurationItemViewController.xib; sourceTree = "<group>"; };
+		DAF0E4071B67A7CE00E7C614 /* WOTRadarSampleMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadarSampleMetric.h; sourceTree = "<group>"; };
+		DAF0E4081B67A7CE00E7C614 /* WOTRadarSampleMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRadarSampleMetric.m; sourceTree = "<group>"; };
+		DAF0E40A1B67A7FF00E7C614 /* WOTMetric+Samples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTMetric+Samples.h"; sourceTree = "<group>"; };
+		DAF0E40B1B67A7FF00E7C614 /* WOTMetric+Samples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTMetric+Samples.m"; sourceTree = "<group>"; };
+		DAF0E4101B67AB4900E7C614 /* WOTTankMetricOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTTankMetricOptions.h; sourceTree = "<group>"; };
 		EB9DC1F0F086677D49391180 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1586,15 +1590,15 @@
 		1DCC80E51B315D55005FF193 /* metrics */ = {
 			isa = PBXGroup;
 			children = (
-				1DCC80E61B315D6D005FF193 /* WOTRadarSampleMetric.h */,
-				1DCC80E71B315D6D005FF193 /* WOTRadarSampleMetric.m */,
-				1D672B681B6104BB00617E5C /* WOTTankAllDataMetric.h */,
-				1D672B691B6104BB00617E5C /* WOTTankAllDataMetric.m */,
+				DAF0E4061B67A7A900E7C614 /* samples */,
+				1D672B6E1B61103E00617E5C /* WOTTankMetricProtocol.h */,
+				DAF0E4101B67AB4900E7C614 /* WOTTankMetricOptions.h */,
 				1D672B6B1B61101E00617E5C /* WOTMetric.h */,
 				1D672B6C1B61101E00617E5C /* WOTMetric.m */,
-				1D672B6E1B61103E00617E5C /* WOTTankMetricProtocol.h */,
-				1D672B6F1B61198900617E5C /* WOTTankID.h */,
-				1D672B701B61198900617E5C /* WOTTankID.m */,
+				1D672B681B6104BB00617E5C /* WOTTankMetricsList.h */,
+				1D672B691B6104BB00617E5C /* WOTTankMetricsList.m */,
+				1D672B6F1B61198900617E5C /* WOTTanksIDList.h */,
+				1D672B701B61198900617E5C /* WOTTanksIDList.m */,
 			);
 			path = metrics;
 			sourceTree = "<group>";
@@ -1991,6 +1995,17 @@
 			path = configurationItemViewController;
 			sourceTree = "<group>";
 		};
+		DAF0E4061B67A7A900E7C614 /* samples */ = {
+			isa = PBXGroup;
+			children = (
+				DAF0E4071B67A7CE00E7C614 /* WOTRadarSampleMetric.h */,
+				DAF0E4081B67A7CE00E7C614 /* WOTRadarSampleMetric.m */,
+				DAF0E40A1B67A7FF00E7C614 /* WOTMetric+Samples.h */,
+				DAF0E40B1B67A7FF00E7C614 /* WOTMetric+Samples.m */,
+			);
+			path = samples;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2289,6 +2304,7 @@
 				1D4C92641B27085600E320B5 /* WOTTankListSortViewController.m in Sources */,
 				1D047B571B331D5100B5B696 /* WOTCoreDataProvider.m in Sources */,
 				1DC07AD01B39A03D002FAA72 /* WOTWebResponseAdapterRadios.m in Sources */,
+				DAF0E4091B67A7CE00E7C614 /* WOTRadarSampleMetric.m in Sources */,
 				1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				1DC07AC21B399FE4002FAA72 /* WOTWebResponseAdapterTanks.m in Sources */,
 				1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */,
@@ -2339,7 +2355,6 @@
 				1DC07B951B3AF434002FAA72 /* WOTTankDetailCollectionViewCell.m in Sources */,
 				1DD646391B1C616A00B0EC76 /* main.m in Sources */,
 				1DC07B581B3A9489002FAA72 /* WOTWebRequestTankGuns.m in Sources */,
-				1DCC80E81B315D6D005FF193 /* WOTRadarSampleMetric.m in Sources */,
 				DA720C931B5D3DAC003F3B5A /* WOTTankConfigurationModuleMapping+Factory.m in Sources */,
 				1D519CF61B4E7BE400D3A286 /* WOTTankDetailFieldKVO.m in Sources */,
 				1DC07AC11B399FE4002FAA72 /* WOTWebResponseAdapterLogin.m in Sources */,
@@ -2357,11 +2372,12 @@
 				1DC07B5D1B3A9489002FAA72 /* WOTSaveSessionRequest.m in Sources */,
 				1D519CFD1B4E90BC00D3A286 /* WOTTankDetailTextTableViewCell.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
-				1D672B6A1B6104BB00617E5C /* WOTTankAllDataMetric.m in Sources */,
+				1D672B6A1B6104BB00617E5C /* WOTTankMetricsList.m in Sources */,
 				1DCC7F311B2EE974005FF193 /* NSString+RomanUtils.m in Sources */,
 				1D519D571B53A85600D3A286 /* WOTWebResponseAdapterModulesTree.m in Sources */,
+				DAF0E40C1B67A7FF00E7C614 /* WOTMetric+Samples.m in Sources */,
 				1DD646C71B1F371700B0EC76 /* WOTMenuViewController.m in Sources */,
-				1D672B711B61198900617E5C /* WOTTankID.m in Sources */,
+				1D672B711B61198900617E5C /* WOTTanksIDList.m in Sources */,
 				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,
 				DAD13F951B5D053200EDB655 /* WOTTankConfigurationItemViewController.m in Sources */,
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,

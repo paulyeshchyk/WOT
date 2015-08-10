@@ -15,9 +15,8 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WOT_KEY_POWER, WOT_KEY_FIRE_STARTING_CHANCE] forSection:@"Характеристика"];
-    [result setExtractor:^(id obj){
+    [result setExtractor:^(ModulesTree *moduleTree){
         
-        ModulesTree *moduleTree = obj;
         NSSet *setOfObjs = moduleTree.nextEngines;
         return [setOfObjs anyObject];
     }];
@@ -28,9 +27,8 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WOT_KEY_DISTANCE] forSection:@"Характеристика"];
-    [result setExtractor:^(id obj){
-        
-        ModulesTree *moduleTree = obj;
+    [result setExtractor:^(ModulesTree *moduleTree){
+
         NSSet *setOfObjs = moduleTree.nextRadios;
         return [setOfObjs anyObject];
     }];
@@ -41,9 +39,8 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WOT_KEY_ARMOR_BOARD, WOT_KEY_ARMOR_FOREHEAD, WOT_KEY_ARMOR_FEDD, WOT_KEY_ROTATION_SPEED] forSection:@"Характеристика"];
-    [result setExtractor:^(id obj){
-        
-        ModulesTree *moduleTree = obj;
+    [result setExtractor:^(ModulesTree *moduleTree){
+
         NSSet *setOfObjs = moduleTree.nextTurrets;
         return [setOfObjs anyObject];
     }];
@@ -54,9 +51,8 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WOT_KEY_MAX_LOAD,WOT_KEY_ROTATION_SPEED] forSection:@"Характеристика"];
-    [result setExtractor:^(id obj){
-        
-        ModulesTree *moduleTree = obj;
+    [result setExtractor:^(ModulesTree *moduleTree){
+
         NSSet *setOfObjs = moduleTree.nextChassis;
         return [setOfObjs anyObject];
     }];
@@ -67,9 +63,8 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WOT_KEY_RATE] forSection:@"Характеристика"];
-    [result setExtractor:^(id obj){
+    [result setExtractor:^(ModulesTree *moduleTree){
         
-        ModulesTree *moduleTree = obj;
         NSSet *setOfObjs = moduleTree.nextGuns;
         return [setOfObjs anyObject];
     }];
