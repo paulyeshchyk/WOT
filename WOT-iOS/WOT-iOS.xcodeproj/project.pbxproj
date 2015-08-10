@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D010D051B789A8900FA6A75 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D041B789A8900FA6A75 /* NSThread+ExecutionOnMain.m */; };
 		1D047B231B331B0F00B5B696 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B221B331B0F00B5B696 /* WOTSessionManager.m */; };
 		1D047B441B331B9700B5B696 /* WOTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B371B331B9700B5B696 /* WOTRequest.m */; };
 		1D047B461B331B9700B5B696 /* WOTRequestExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B3B1B331B9700B5B696 /* WOTRequestExecutor.m */; };
@@ -282,6 +283,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D010D031B789A8900FA6A75 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
+		1D010D041B789A8900FA6A75 /* NSThread+ExecutionOnMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+ExecutionOnMain.m"; sourceTree = "<group>"; };
 		1D047B211B331B0F00B5B696 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		1D047B221B331B0F00B5B696 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
 		1D047B361B331B9700B5B696 /* WOTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRequest.h; sourceTree = "<group>"; };
@@ -719,6 +722,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D010D021B789A6E00FA6A75 /* NSThread */ = {
+			isa = PBXGroup;
+			children = (
+				1D010D031B789A8900FA6A75 /* NSThread+ExecutionOnMain.h */,
+				1D010D041B789A8900FA6A75 /* NSThread+ExecutionOnMain.m */,
+			);
+			path = NSThread;
+			sourceTree = "<group>";
+		};
 		1D047B201B331B0F00B5B696 /* session */ = {
 			isa = PBXGroup;
 			children = (
@@ -1710,6 +1722,7 @@
 		1DD6469C1B1DC42100B0EC76 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				1D010D021B789A6E00FA6A75 /* NSThread */,
 				1D519D5B1B54F1F800D3A286 /* NSArray */,
 				1D519D371B4FD40600D3A286 /* UIProgressView */,
 				1D519D1B1B4E9FCF00D3A286 /* NSExpressionDescription */,
@@ -2367,6 +2380,7 @@
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,
 				1D519D4F1B50043700D3A286 /* Tankguns.m in Sources */,
 				1DC07ACD1B39A032002FAA72 /* WOTWebResponseAdapterGuns.m in Sources */,
+				1D010D051B789A8900FA6A75 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */,
 				1DC07B5B1B3A9489002FAA72 /* WOTWebRequestTankRadios.m in Sources */,

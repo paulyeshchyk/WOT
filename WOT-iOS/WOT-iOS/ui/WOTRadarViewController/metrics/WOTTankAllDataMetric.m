@@ -13,7 +13,7 @@
 
 @property (nonatomic, readonly)NSArray *datasets;
 @property (nonatomic, readonly)NSArray *xVals;
-@property (nonatomic, strong)NSMutableSet *metrics;
+@property (nonatomic, strong)NSMutableOrderedSet *metrics;
 @property (nonatomic, strong)NSMutableSet *tankIDs;
 
 @end
@@ -24,7 +24,7 @@
  
     if (!self.metrics) {
         
-        self.metrics = [[NSMutableSet alloc] init];
+        self.metrics = [[NSMutableOrderedSet alloc] init];
     }
     
     [self.metrics addObject:metric];
@@ -70,7 +70,7 @@
 - (NSArray *)xVals {
 
     NSMutableArray *result = [[NSMutableArray alloc] init];
-    [self.metrics enumerateObjectsUsingBlock:^(id<WOTTankMetricProtocol> obj, BOOL *stop) {
+    [self.metrics enumerateObjectsUsingBlock:^(id<WOTTankMetricProtocol> obj, NSUInteger idx, BOOL *stop) {
         
         [result addObject:obj.metricName];
     }];
@@ -93,7 +93,7 @@
     __block NSMutableArray *result = [[NSMutableArray alloc] init];
     __block NSInteger index = 0;
     
-    [self.metrics enumerateObjectsUsingBlock:^(id<WOTTankMetricProtocol> obj, BOOL *stop) {
+    [self.metrics enumerateObjectsUsingBlock:^(id<WOTTankMetricProtocol> obj, NSUInteger idx,  BOOL *stop) {
         
         float value = 0;
         if (obj.evaluator) {

@@ -141,11 +141,12 @@
 
 - (void)updateUI {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [NSThread executeOnMainThread:^{
         
         self.title = self.vehicle.tanks.name_i18n;
         [self.radarViewController reload];
-    });
+    }];
+    
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -258,18 +259,11 @@
      
      */
 
-    __weak typeof(self)weakSelf = self;
-    BOOL isMain = [NSThread isMainThread];
-    if (isMain) {
+    [NSThread executeOnMainThread:^(){
         
         [self updateUI];
-    } else {
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-
-            [weakSelf updateUI];
-        });
-    }
+    }];
+    
 }
 
 

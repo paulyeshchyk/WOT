@@ -17,6 +17,17 @@
 
 @implementation WOTRequest
 
+- (id)init {
+    
+    self = [super init];
+    if (self){
+        
+//        [self updateHash];
+    }
+    return self;
+}
+
+
 - (void)temp_executeWithArgs:(NSDictionary *)args{
     
     self.args = [args copy];
@@ -30,8 +41,9 @@
 - (BOOL)isEqual:(id)object {
 
     BOOL result = [NSStringFromClass([object class]) isEqualToString:NSStringFromClass([self class])];
-    
-    result &= ([object hash] == [self hash]);
+    NSUInteger selfHash = [self hash];
+    NSUInteger objectHash = [(WOTRequest *)object hash];
+    result &= (selfHash == objectHash);
     
     return result;
 }
@@ -66,5 +78,6 @@
     
 }
 
+#pragma mark -
 
 @end

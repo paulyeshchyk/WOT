@@ -97,9 +97,9 @@
         self.grouppedRequests[groupId] = requests;
     }
     
-    NSUInteger index = [[requests allObjects] indexOfObjectPassingTest:^BOOL(WOTRequest *req, NSUInteger idx, BOOL *stop) {
+    NSUInteger index = [[requests allObjects] indexOfObjectPassingTest:^BOOL(WOTRequest *testingRequest, NSUInteger idx, BOOL *stop) {
         
-        BOOL isEqual = [req isEqual:request];
+        BOOL isEqual = [testingRequest isEqual:request];
         if (isEqual) {
             
             *stop = YES;

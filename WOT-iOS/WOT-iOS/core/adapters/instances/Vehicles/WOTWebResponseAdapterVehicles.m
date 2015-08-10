@@ -57,16 +57,17 @@
         
         [requests enumerateKeysAndObjectsUsingBlock:^(NSNumber *requestId, id obj, BOOL *stop) {
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [NSThread executeOnMainThread:^{
                 
                 id args = requests[requestId];
                 WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
-                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
                 
 #warning check groupId
                 [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicle"];
                 
-            });
+                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+            }];
+            
         }];
         
     }];

@@ -50,15 +50,10 @@
     static id instance;
     dispatch_once(&once, ^{
         
-        if ([NSThread isMainThread]) {
-            instance = [[self alloc] init];
-        } else {
+        [NSThread executeOnMainThread:^{
             
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                instance = [[self alloc] init];
-            });
-        }
-        
+            instance = [[self alloc] init];
+        }];
     });
     return instance;
 }
