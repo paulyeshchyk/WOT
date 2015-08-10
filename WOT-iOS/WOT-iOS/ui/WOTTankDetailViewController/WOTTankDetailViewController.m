@@ -156,7 +156,7 @@
     [self.topBar setDarkStyle];
     [self.bottomBar setDarkStyle];
     
-//    [self updateUI];
+    [self updateUI];
 }
 
 - (void)setVehicle:(Vehicles *)vehicle {
@@ -165,27 +165,17 @@
 
         _vehicle = vehicle;
         
-        
         [self refetchPossibleTiersForTier:_vehicle.tier];
     }
 }
 
 - (void)updateUI {
     
-    __weak typeof(self)weakSelf = self;
-    BOOL isMain = [NSThread isMainThread];
-    if (isMain) {
+    [NSThread executeOnMainThread:^{
         
-        weakSelf.title = self.vehicle.tanks.name_i18n;
-        [weakSelf.radarViewController reload];
-    } else {
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            
-            weakSelf.title = self.vehicle.tanks.name_i18n;
-            [weakSelf.radarViewController reload];
-        });
-    }
+        self.title = self.vehicle.tanks.name_i18n;
+        [self.radarViewController reload];
+    }];
     
 }
 
@@ -250,9 +240,6 @@
 
 - (void)refetchPossibleTiersForTier:(NSNumber *)tier {
     
-#warning temporary removed
-    return;
-    
     NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[tier]];
     
     NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
@@ -303,6 +290,7 @@
      */
 
     [self updateUI];
+    
 }
 
 
@@ -346,7 +334,11 @@
 
 - (IBAction)onPropertyAllSelection:(id)sender {
     
-//    self.propertySelection |= WOTTankDetailPropertySelectionAll;
+    self.propertyAllButton.selected = YES;
+    self.propertyArmorButton.selected = NO;
+    self.propertyObserveButton.selected = NO;
+    self.propertyFireButton.selected = NO;
+    self.propertyMobilityButton.selected = NO;
 }
 
 - (IBAction)onPropertyArmorSelection:(id)sender {
@@ -369,16 +361,28 @@
     self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankDetailPropertySelectionObserve];
 }
 
-#pragma mark - WOTRadarViewControllerDelegate
-- (RadarChartData *)radarData {
 
+#pragma mark - WOTRadarViewControllerDelegate
+
+- (RadarChartData *)radarData {
+    
     WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
     [sample addMetrics:[WOTMetric metricsForOption:self.metricOptions]];
-
-    WOTTanksIDList *tankID = [[WOTTanksIDList alloc] initWithId:@([self.tankId integerValue])];
-    [sample addTankID: tankID];
-    
     return sample.chartData;
+
+//    WOTTankAllDataMetric *sample = [[WOTTankAllDataMetric alloc] init];
+////    [sample addMetric:[WOTMetric circularVisionMetric]];
+//    [sample addMetric:[WOTMetric armorBoardMetric]];
+//    [sample addMetric:[WOTMetric armorFeddMetric]];
+//    [sample addMetric:[WOTMetric armorForeheadMetric]];
+////    [sample addMetric:[WOTMetric fireStartingChanceMetric]];
+//    
+//
+//    WOTTankID *tankID = [[WOTTankID alloc] initWithId:@([self.tankId integerValue])];
+//    [sample addTankID: tankID];
+//    
+//    return sample.chartData;
+    return nil;
 }
 
 @end
