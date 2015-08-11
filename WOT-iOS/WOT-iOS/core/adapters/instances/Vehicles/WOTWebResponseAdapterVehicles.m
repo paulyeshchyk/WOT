@@ -63,7 +63,7 @@
                 WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
                 
 #warning check groupId
-                BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicle"];
+                BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_ADOPT];
                 if (canAdd) {
                     
                     [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
@@ -76,7 +76,7 @@
 }
 
 #pragma mark - private
-- (NSMutableDictionary *)parseVehicleObject:(NSDictionary *)jSON class:(Class)clazz context:(NSManagedObjectContext *)context key:(id)key{
+- (NSDictionary *)parseVehicleObject:(NSDictionary *)jSON class:(Class)clazz context:(NSManagedObjectContext *)context key:(id)key{
     
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
@@ -127,7 +127,7 @@
         }
     }
     
-    return result;
+    return [result copy];
 }
 
 /**

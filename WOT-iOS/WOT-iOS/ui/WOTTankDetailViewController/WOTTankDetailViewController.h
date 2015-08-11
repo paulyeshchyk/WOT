@@ -10,6 +10,6 @@
 
 @interface WOTTankDetailViewController : UIViewController
 
-@property (nonatomic, copy)NSNumber * tankId DEPRECATED_ATTRIBUTE;
+@property (nonatomic, strong) NSNumber *tankId;
 
 @end

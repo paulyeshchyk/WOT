@@ -110,7 +110,6 @@ static NSString *urlEncode(NSString *string) {
 
     NSCAssert(self.availableInGroups, @"execution group is unknown");
     
-    debugLog(@"webrequest-start%@-%@",self.availableInGroups, [self.url absoluteString]);
     NSURL *url = self.url;
     NSData *bodyData = self.httpBodyData;
     
@@ -121,15 +120,22 @@ static NSString *urlEncode(NSString *string) {
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [self.connection start];
     
+    [[WOTRequestExecutor sharedInstance] requestHasStarted:self];
 }
 
 - (void)cancel {
     
     [self.connection cancel];
+    [[WOTRequestExecutor sharedInstance] requestHasCanceled:self];
     
-    [[WOTRequestExecutor sharedInstance] removeRequest:self];
 }
 
+- (void)cancelAndRemoveFromQueue {
+    
+    [self cancel];
+
+    [[WOTRequestExecutor sharedInstance] removeRequest:self];
+}
 
 - (void)finalizeWithData:(id)data error:(NSError *)error {
     
@@ -210,7 +216,7 @@ static NSString *urlEncode(NSString *string) {
     [self parseData:self.data error:nil];
     self.data = nil;
     
-    debugLog(@"webrequest-finished:%@",self);
+    [[WOTRequestExecutor sharedInstance] requestHasFinishedLoadData:self];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -218,7 +224,7 @@ static NSString *urlEncode(NSString *string) {
     [self parseData:nil error:error];
     self.data = nil;
 
-    debugError(@"webrequest-failture:%@",self);
+    [[WOTRequestExecutor sharedInstance] requestHasFailed:self];
 }
 
 @end

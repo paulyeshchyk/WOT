@@ -105,7 +105,7 @@
             NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
             [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
             WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
-            BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Vehicles+"];
+            BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PLUS];
             if (canAdd) {
                 
                 [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
@@ -119,7 +119,7 @@
     
     NSDictionary *args = @{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]};
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTanks];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:@"Tanks+"];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_TANKS_PLUS];
     if (canAdd) {
 
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];

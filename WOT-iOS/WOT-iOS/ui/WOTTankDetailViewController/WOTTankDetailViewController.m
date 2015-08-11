@@ -49,12 +49,12 @@
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 
-
 @property (nonatomic, strong) NSError *fetchError;
-@property (nonatomic, strong)Vehicles *vehicle;
-@property (nonatomic, readonly)NSString *requestsGroupId;
+@property (nonatomic, readonly)NSString *tankGroupId;
 
 @property (nonatomic, assign)WOTTankMetricOptions metricOptions;
+@property (nonatomic, strong)Vehicles *vehicle;
+@property (nonatomic, strong)NSMutableSet *runningRequestIDs;
 
 @end
 
@@ -64,7 +64,15 @@
     
     self.radarViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:self.requestsGroupId];
+    [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:self.tankGroupId];
+    
+    [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
+        
+        [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:requestID];
+    }];
+    
+    [self.runningRequestIDs removeAllObjects];
+    
     self.fetchedResultController.delegate = nil;
 }
 
@@ -77,9 +85,9 @@
     return self;
 }
 
-- (NSString *)requestsGroupId {
+- (NSString *)tankGroupId {
     
-    return [NSString stringWithFormat:@"vehicles:%@",self.tankId];
+    return [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_CUSTOM, self.tankId];
 }
 
 - (NSString *)prevModuleNamesForModule:(ModulesTree *)moduleTree {
@@ -133,7 +141,31 @@
     self.propertyObserveButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionObserve];
     self.propertyFireButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionFire];
     self.propertyMobilityButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankDetailPropertySelectionMobility];
-    [self updateUI];
+    [self updateUINeedReset:YES];
+}
+
+- (void)setVehicle:(Vehicles *)vehicle {
+
+    if (_vehicle != vehicle) {
+        
+        _vehicle = vehicle;
+        self.title = _vehicle.tanks.name_i18n;
+
+        NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[_vehicle.tier]];
+        
+        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
+        [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
+            
+            NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_BY_TIER, tankId];
+            if (!self.runningRequestIDs){
+                
+                self.runningRequestIDs = [[NSMutableSet alloc] init];
+            }
+            [self.runningRequestIDs addObject:groupId];
+            [self refetchTankID:[tankId stringValue] groupId:groupId];
+        }];
+    }
+    
 }
 
 - (void)viewDidLoad {
@@ -156,27 +188,19 @@
     [self.topBar setDarkStyle];
     [self.bottomBar setDarkStyle];
     
-    [self updateUI];
+    [self updateUINeedReset:NO];
 }
 
-- (void)setVehicle:(Vehicles *)vehicle {
-    
-    if (_vehicle != vehicle){
-
-        _vehicle = vehicle;
-        
-        [self refetchPossibleTiersForTier:_vehicle.tier];
-    }
-}
-
-- (void)updateUI {
+- (void)updateUINeedReset:(BOOL)needReset {
     
     [NSThread executeOnMainThread:^{
         
-        self.title = self.vehicle.tanks.name_i18n;
+        if (needReset) {
+            
+            [self.radarViewController needToBeCleared];
+        }
         [self.radarViewController reload];
     }];
-    
 }
 
 - (NSFetchedResultsController *)fetchedResultController {
@@ -194,13 +218,20 @@
     return _fetchedResultController;
 }
 
-- (void)setTankId:(NSString *)tankId {
+- (void)setTankId:(NSNumber *)tankId {
     
-    _tankId = [tankId copy];
-    [self refetchTankID:[self.tankId stringValue]];
+    if (![tankId isEqual:_tankId]) {
+        
+        _tankId = [tankId copy];
+        
+        [self refetchTankID:[_tankId stringValue] groupId:self.tankGroupId];
 
-    
-    [self refetchCurrentVehicle];
+        NSError *error = nil;
+        [self.fetchedResultController performFetch:&error];
+        self.fetchError = error;
+        
+        self.vehicle =  [self.fetchedResultController.fetchedObjects lastObject];
+    }
 }
 
 - (void)setFetchError:(NSError *)fetchError {
@@ -208,7 +239,7 @@
     _fetchError = fetchError;
 }
 
-- (void)refetchTankID:(NSString *)tankID {
+- (void)refetchTankID:(NSString *)tankID groupId:(id)groupId{
 
     if (!([tankID integerValue] > 0)) {
         
@@ -221,32 +252,11 @@
     [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdTankVehicles];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:self.requestsGroupId];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:groupId];
     if (canAdd) {
         
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
     }
-    
-}
-
-- (void)refetchCurrentVehicle {
-    
-    NSError *error = nil;
-    [self.fetchedResultController performFetch:&error];
-    self.fetchError = error;
-    
-    self.vehicle = [self.fetchedResultController.fetchedObjects lastObject];
-}
-
-- (void)refetchPossibleTiersForTier:(NSNumber *)tier {
-    
-    NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[tier]];
-    
-    NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
-    [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
-        
-        [self refetchTankID:[tankId stringValue]];
-    }];
 }
 
 
@@ -254,7 +264,8 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
  
     self.vehicle = [self.fetchedResultController.fetchedObjects lastObject];
-    [self updateUI];
+
+    [self updateUINeedReset:NO];
 }
 
 #pragma mark -
@@ -289,7 +300,7 @@
      
      */
 
-    [self updateUI];
+    [self updateUINeedReset:NO];
     
 }
 
@@ -361,28 +372,14 @@
     self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankDetailPropertySelectionObserve];
 }
 
-
 #pragma mark - WOTRadarViewControllerDelegate
 
 - (RadarChartData *)radarData {
     
     WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
+    [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];
     [sample addMetrics:[WOTMetric metricsForOption:self.metricOptions]];
     return sample.chartData;
-
-//    WOTTankAllDataMetric *sample = [[WOTTankAllDataMetric alloc] init];
-////    [sample addMetric:[WOTMetric circularVisionMetric]];
-//    [sample addMetric:[WOTMetric armorBoardMetric]];
-//    [sample addMetric:[WOTMetric armorFeddMetric]];
-//    [sample addMetric:[WOTMetric armorForeheadMetric]];
-////    [sample addMetric:[WOTMetric fireStartingChanceMetric]];
-//    
-//
-//    WOTTankID *tankID = [[WOTTankID alloc] initWithId:@([self.tankId integerValue])];
-//    [sample addTankID: tankID];
-//    
-//    return sample.chartData;
-    return nil;
 }
 
 @end

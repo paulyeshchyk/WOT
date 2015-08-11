@@ -38,6 +38,11 @@
     NSCAssert(NO, @"should be overriden");
 }
 
+- (void)cancelAndRemoveFromQueue {
+    
+    NSCAssert(NO, @"should be overriden");
+}
+
 - (BOOL)isEqual:(id)object {
 
     BOOL result = [NSStringFromClass([object class]) isEqualToString:NSStringFromClass([self class])];

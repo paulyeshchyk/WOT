@@ -71,12 +71,16 @@
     l.xEntrySpace = 1.0;
     l.yEntrySpace = 1.0;
 
+}
 
+- (void)needToBeCleared {
+    
+    [self.radarView clearValues];
+    [self.radarView clear];
 }
 
 - (void)reload {
 
-    [self.radarView clear];
     RadarChartData *data = [self.delegate radarData];
     self.radarView.data = data;
 }

@@ -47,8 +47,7 @@
 + (id<WOTTankMetricProtocol>)armorBoardCompareMetric {
     
     return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_BOARD) evaluator:^float(WOTTanksIDList *tankID) {
-        
-        
+
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
         

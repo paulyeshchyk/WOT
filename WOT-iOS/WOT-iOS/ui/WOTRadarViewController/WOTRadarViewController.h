@@ -22,5 +22,6 @@ typedef RadarChartData *(^WOTRadarDataCallback)();
 @property (nonatomic, assign)id<WOTRadarViewControllerDelegate>delegate;
 
 - (void)reload;
+- (void)needToBeCleared;
 
 @end

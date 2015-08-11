@@ -14,8 +14,8 @@
 @property (nonatomic, strong) NSMutableDictionary *registeredRequests;
 @property (nonatomic, strong) NSMutableDictionary *registeredRequestCallbacks;
 @property (nonatomic, strong) NSMutableDictionary *registeredDataAdapters;
-
 @property (nonatomic, strong) NSMutableDictionary *grouppedRequests;
+@property (nonatomic, readwrite, assign) NSInteger pendingRequestsCount;
 
 @end
 
@@ -45,6 +45,7 @@
     self = [super init];
     if (self){
         
+        self.pendingRequestsCount = 0;
         self.registeredRequests = [[NSMutableDictionary alloc] init];
         self.registeredRequestCallbacks = [[NSMutableDictionary alloc] init];
         self.registeredDataAdapters = [[NSMutableDictionary alloc] init];
@@ -56,15 +57,20 @@
 - (void)cancelRequestsByGroupId:(NSString *)groupId {
     
     NSPointerArray *requests = self.grouppedRequests[groupId];
-    if (requests){
-        
-        [requests compact];
-        for (NSInteger idx = ([requests count]-1); idx>=0; idx--) {
-            
-            WOTRequest *request = [requests pointerAtIndex:idx];
-            [request cancel];
-        }
+    if ([requests count] == 0){
+
+        return;
     }
+    
+    [requests compact];
+    for (NSInteger idx = ([requests count]-1); idx>=0; idx--) {
+        
+        WOTRequest *request = [requests pointerAtIndex:idx];
+        [request cancel];
+        [requests removePointerAtIndex:idx];
+    }
+    
+    NSCAssert(([requests count] == 0), @"requestsArray is not empty after cancelation");
 }
 
 - (void)removeRequest:(WOTRequest *)request {
@@ -73,17 +79,29 @@
     [groups enumerateObjectsUsingBlock:^(id group, NSUInteger idx, BOOL *stop) {
         
         NSPointerArray *requests = self.grouppedRequests[group];
-        [requests compact];
-        
-        NSInteger requestIndex = [[requests allObjects] indexOfObject:request];
-        if (requestIndex != NSNotFound) {
-            
-            [requests removePointerAtIndex:requestIndex];
-        } else {
-            
-            debugError(@"attempting to remove unknown request:%@",request);
-        }
+        [self requestsArray:requests removeRequest:request];
     }];
+}
+
+- (void)requestsArray:(NSPointerArray *)requests removeRequest:(WOTRequest *)request {
+    
+    [requests compact];
+    
+    NSCAssert([requests count] != 0, @"requestsArray is empty");
+    
+    NSInteger requestIndex = [[requests allObjects] indexOfObject:request];
+    if (requestIndex != NSNotFound) {
+        
+        [requests removePointerAtIndex:requestIndex];
+    } else {
+        
+        debugError(@"attempting to remove unknown request:%@",request);
+    }
+    
+    if ([requests count]  == 0) {
+        
+        debugLog(@"grouppedRequests for %@ is empty",request.availableInGroups);
+    }
 }
 
 - (BOOL)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId {
@@ -204,6 +222,30 @@
     }];
     
     return request;
+}
+
+- (void)requestHasFailed:(WOTRequest *)request {
+
+    self.pendingRequestsCount -= 1;
+    debugError(@"webrequest-failture:%@",request);
+}
+
+- (void)requestHasFinishedLoadData:(WOTRequest *)request {
+    
+    self.pendingRequestsCount -= 1;
+    debugLog(@"webrequest-finished:%@",request);
+}
+
+- (void)requestHasCanceled:(WOTRequest *)request {
+    
+    self.pendingRequestsCount -= 1;
+    debugLog(@"webrequest-canceled:%@",request);
+}
+
+- (void)requestHasStarted:(WOTRequest *)request {
+    
+    self.pendingRequestsCount += 1;
+    debugLog(@"webrequest-start:%@-%@",request.availableInGroups, request.description);
 }
 
 @end
