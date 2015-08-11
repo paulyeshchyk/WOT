@@ -44,13 +44,13 @@
 
 + (void)logout {
     
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogout];
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogout];
     [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
 }
 
 + (void)login {
 
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogin];
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
     [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
 }
 

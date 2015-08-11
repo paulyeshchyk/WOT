@@ -176,7 +176,7 @@
     self.registeredDataAdapters[@(requestId)] = providers;
 }
 
-- (WOTRequest *)requestById:(NSInteger)requestId {
+- (WOTRequest *)createRequestForId:(NSInteger)requestId {
     
     Class RegisteredRequestClass = self.registeredRequests[@(requestId)];
     

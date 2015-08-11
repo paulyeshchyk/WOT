@@ -60,10 +60,10 @@
             [NSThread executeOnMainThread:^{
                 
                 id args = requests[requestId];
-                WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:[requestId integerValue]];
+                WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:[requestId integerValue]];
                 
-#warning check groupId
-                BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_ADOPT];
+                NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
+                BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:groupId];
                 if (canAdd) {
                     
                     [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];

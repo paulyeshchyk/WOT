@@ -102,7 +102,7 @@
 
         [WOTApplicationDefaults setLanguage:language];
 
-        WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdLogin];
+        WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
     }
     

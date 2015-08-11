@@ -44,7 +44,7 @@
                 if (account_id) args[WOT_KEY_ACCOUNT_ID]=account_id;
                 if (expires_at) args[WOT_KEY_EXPIRES_AT]=expires_at;//@([[NSDate date] timeIntervalSince1970] + 60.0f*0.25f);//
                 
-                WOTRequest *request = [[WOTRequestExecutor sharedInstance] requestById:WOTRequestIdSaveSession];
+                WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdSaveSession];
                 [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
 
                 
