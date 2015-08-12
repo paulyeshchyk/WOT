@@ -50,7 +50,6 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 
 @property (nonatomic, strong) NSError *fetchError;
-@property (nonatomic, readonly)NSString *tankGroupId;
 
 @property (nonatomic, assign)WOTTankMetricOptions metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
@@ -64,7 +63,9 @@
     
     self.radarViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:self.tankGroupId];
+
+    NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
+    [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:requestId];
     
     [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
         
@@ -83,11 +84,6 @@
         
     }
     return self;
-}
-
-- (NSString *)tankGroupId {
-    
-    return [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_CUSTOM, self.tankId];
 }
 
 - (NSString *)prevModuleNamesForModule:(ModulesTree *)moduleTree {
@@ -224,7 +220,8 @@
         
         _tankId = [tankId copy];
         
-        [self refetchTankID:[_tankId stringValue] groupId:self.tankGroupId];
+        NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
+        [self refetchTankID:[_tankId stringValue] groupId:requestId];
 
         NSError *error = nil;
         [self.fetchedResultController performFetch:&error];
