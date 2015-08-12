@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1D010D051B789A8900FA6A75 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D041B789A8900FA6A75 /* NSThread+ExecutionOnMain.m */; };
+		1D010D0A1B7B800A00FA6A75 /* WOTTankPivotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D081B7B800A00FA6A75 /* WOTTankPivotViewController.m */; };
+		1D010D0B1B7B800A00FA6A75 /* WOTTankPivotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D091B7B800A00FA6A75 /* WOTTankPivotViewController.xib */; };
+		1D010D111B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D0E1B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.m */; };
+		1D010D121B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D0F1B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.xib */; };
+		1D010D151B7B847800FA6A75 /* WOTTankPivotLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D141B7B847800FA6A75 /* WOTTankPivotLayout.m */; };
 		1D047B231B331B0F00B5B696 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B221B331B0F00B5B696 /* WOTSessionManager.m */; };
 		1D047B441B331B9700B5B696 /* WOTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B371B331B9700B5B696 /* WOTRequest.m */; };
 		1D047B461B331B9700B5B696 /* WOTRequestExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B3B1B331B9700B5B696 /* WOTRequestExecutor.m */; };
@@ -286,6 +291,14 @@
 /* Begin PBXFileReference section */
 		1D010D031B789A8900FA6A75 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
 		1D010D041B789A8900FA6A75 /* NSThread+ExecutionOnMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+ExecutionOnMain.m"; sourceTree = "<group>"; };
+		1D010D071B7B800A00FA6A75 /* WOTTankPivotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotViewController.h; sourceTree = "<group>"; };
+		1D010D081B7B800A00FA6A75 /* WOTTankPivotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotViewController.m; sourceTree = "<group>"; };
+		1D010D091B7B800A00FA6A75 /* WOTTankPivotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotViewController.xib; sourceTree = "<group>"; };
+		1D010D0D1B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotCollectionViewCell.h; sourceTree = "<group>"; };
+		1D010D0E1B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotCollectionViewCell.m; sourceTree = "<group>"; };
+		1D010D0F1B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotCollectionViewCell.xib; sourceTree = "<group>"; };
+		1D010D131B7B847800FA6A75 /* WOTTankPivotLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotLayout.h; sourceTree = "<group>"; };
+		1D010D141B7B847800FA6A75 /* WOTTankPivotLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotLayout.m; sourceTree = "<group>"; };
 		1D047B211B331B0F00B5B696 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		1D047B221B331B0F00B5B696 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
 		1D047B361B331B9700B5B696 /* WOTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRequest.h; sourceTree = "<group>"; };
@@ -733,6 +746,37 @@
 				1D010D041B789A8900FA6A75 /* NSThread+ExecutionOnMain.m */,
 			);
 			path = NSThread;
+			sourceTree = "<group>";
+		};
+		1D010D061B7B7FE400FA6A75 /* WOTTankPivotViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D010D0C1B7B835F00FA6A75 /* cells */,
+				1D010D101B7B835F00FA6A75 /* layout */,
+				1D010D071B7B800A00FA6A75 /* WOTTankPivotViewController.h */,
+				1D010D081B7B800A00FA6A75 /* WOTTankPivotViewController.m */,
+				1D010D091B7B800A00FA6A75 /* WOTTankPivotViewController.xib */,
+			);
+			path = WOTTankPivotViewController;
+			sourceTree = "<group>";
+		};
+		1D010D0C1B7B835F00FA6A75 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				1D010D0D1B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.h */,
+				1D010D0E1B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.m */,
+				1D010D0F1B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.xib */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
+		1D010D101B7B835F00FA6A75 /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				1D010D131B7B847800FA6A75 /* WOTTankPivotLayout.h */,
+				1D010D141B7B847800FA6A75 /* WOTTankPivotLayout.m */,
+			);
+			path = layout;
 			sourceTree = "<group>";
 		};
 		1D047B201B331B0F00B5B696 /* session */ = {
@@ -1782,6 +1826,7 @@
 		1DD646C91B1F377300B0EC76 /* WOTTankListViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1D010D061B7B7FE400FA6A75 /* WOTTankPivotViewController */,
 				DA522D2E1B663C070087D684 /* searchBar */,
 				1D9069611B41695B00237852 /* WOTTankConfigurationViewController */,
 				1DCC7F3E1B2F031B005FF193 /* WOTTankDetailViewController */,
@@ -2189,6 +2234,7 @@
 				1D672B5E1B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png in Resources */,
 				DA522D2C1B6637630087D684 /* Search Yellow@2x.png in Resources */,
 				1DCC7F2A1B2ED07F005FF193 /* WOTArrowUp@3x.png in Resources */,
+				1D010D121B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.xib in Resources */,
 				1D672B5F1B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png in Resources */,
 				1D672AF61B57952700617E5C /* WOTModuleTypeChassis.png in Resources */,
 				DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */,
@@ -2212,6 +2258,7 @@
 				1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */,
 				1D4C923D1B25EB1000E320B5 /* WOTBackIconGray@3x.png in Resources */,
 				1D4C92481B25ED0900E320B5 /* WOTLoggedInUser@2x.png in Resources */,
+				1D010D0B1B7B800A00FA6A75 /* WOTTankPivotViewController.xib in Resources */,
 				1D672B371B60C9A100617E5C /* Opera Glasses Yellow@3x.png in Resources */,
 				1D672B331B60C9A100617E5C /* Opera Glasses Gray@2x.png in Resources */,
 				DA522D371B6649020087D684 /* Cancel Gray.png in Resources */,
@@ -2295,6 +2342,7 @@
 				DA720C861B5D1AEE003F3B5A /* WOTTankConfigurationItemCell.m in Sources */,
 				1DC07B7D1B3AB778002FAA72 /* Tankradios+FillProperties.m in Sources */,
 				1DD646F81B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */,
+				1D010D111B7B835F00FA6A75 /* WOTTankPivotCollectionViewCell.m in Sources */,
 				1DD647071B2081E900B0EC76 /* NSBundle+LanguageBundle.m in Sources */,
 				1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */,
 				1DCC7F1D1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.m in Sources */,
@@ -2344,6 +2392,7 @@
 				1DC07B611B3A9489002FAA72 /* WOTWEBRequest.m in Sources */,
 				1DC07B5C1B3A9489002FAA72 /* WOTClearSessionRequest.m in Sources */,
 				DA720C8A1B5D1BEE003F3B5A /* WOTTankConfigurationItemHeaderFooter.m in Sources */,
+				1D010D0A1B7B800A00FA6A75 /* WOTTankPivotViewController.m in Sources */,
 				1D90697F1B427F2200237852 /* WOTTankConfigurationCollectionViewCell.m in Sources */,
 				1D519CF51B4E7BE400D3A286 /* WOTTankDetailFieldExpression.m in Sources */,
 				1DC07B601B3A9489002FAA72 /* WOTWEBRequestTankVehicles.m in Sources */,
@@ -2373,6 +2422,7 @@
 				1DC07AC11B399FE4002FAA72 /* WOTWebResponseAdapterLogin.m in Sources */,
 				1DC07B811B3AB778002FAA72 /* Vehicles+FillProperties.m in Sources */,
 				1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */,
+				1D010D151B7B847800FA6A75 /* WOTTankPivotLayout.m in Sources */,
 				1D519D211B4EA0E300D3A286 /* WOTRadiosDistanceCompareFieldExpression.m in Sources */,
 				1D519D081B4E9CB200D3A286 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */,
 				1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */,

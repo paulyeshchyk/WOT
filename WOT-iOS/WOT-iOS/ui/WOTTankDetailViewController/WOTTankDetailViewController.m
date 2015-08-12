@@ -15,6 +15,7 @@
 #import "WOTRequestExecutor.h"
 #import "WOTTankDetailDatasource.h"
 #import "WOTTankConfigurationViewController.h"
+#import "WOTTankPivotViewController.h"
 
 #import "WOTTankIdsDatasource.h"
 
@@ -323,7 +324,6 @@
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:configurationSelector];
     [self presentViewController:navController animated:YES completion:NULL];
-    
 }
 
 - (IBAction)onConfigurationTopSelection:(id)sender {
@@ -342,11 +342,17 @@
 
 - (IBAction)onPropertyAllSelection:(id)sender {
     
-    self.propertyAllButton.selected = YES;
-    self.propertyArmorButton.selected = NO;
-    self.propertyObserveButton.selected = NO;
-    self.propertyFireButton.selected = NO;
-    self.propertyMobilityButton.selected = NO;
+    WOTTankPivotViewController *pivotViewController = [[WOTTankPivotViewController alloc] initWithNibName:NSStringFromClass([WOTTankPivotViewController class]) bundle:nil];
+    [pivotViewController setCancelBlock:^(){
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
+    [pivotViewController setDoneBlock:^(id configuration){
+        
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:pivotViewController];
+    [self presentViewController:navController animated:YES completion:NULL];
 }
 
 - (IBAction)onPropertyArmorSelection:(id)sender {

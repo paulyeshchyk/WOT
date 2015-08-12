@@ -72,8 +72,8 @@
         for(NSUInteger row = 0; row < [self.collectionView numberOfItemsInSection:section]; row++) {
             
             
-            CGFloat x = row*self.itemSize.width;
-            CGFloat y = section*self.itemSize.height;
+            CGFloat x = row * self.itemSize.width;
+            CGFloat y = section * self.itemSize.height;
             
             if (self.layoutPreviousSiblingNodeChildrenCountCallback) {
                 
