@@ -10,7 +10,7 @@
 
 typedef void(^NodeBlock)(NSIndexPath *indexPath);
 
-@interface WOTTankPivotCollectionViewCell : UICollectionViewCell
+@interface WOTTankPivotDataCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic,copy)NSIndexPath *indexPath;
 @property (nonatomic,weak)IBOutlet UILabel *label;

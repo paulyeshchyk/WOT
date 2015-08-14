@@ -7,13 +7,23 @@
 //
 
 #import "WOTTankPivotViewController.h"
-#import "WOTTankPivotCollectionViewCell.h"
+#import "WOTTankPivotDataCollectionViewCell.h"
+#import "WOTTankPivotFilterCollectionViewCell.h"
+#import "WOTTankPivotFixedCollectionViewCell.h"
 #import "WOTTankPivotLayout.h"
+
+static NSInteger WOTTankPivotFixedRowsCount = 2;
+static NSInteger WOTTankPivotFixedColsCount = 2;
 
 @interface WOTTankPivotViewController () <UICollectionViewDataSource>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak)IBOutlet WOTTankPivotLayout *flowLayout;
+
+@property (nonatomic, strong)NSArray *fixedRowsTopLevel;
+@property (nonatomic, strong)NSArray *fixedColsTopLevel;
+@property (nonatomic, strong)NSDictionary *fixedColsChildren;
+@property (nonatomic, strong)NSDictionary *fixedRowsChildren;
 
 @end
 
@@ -22,6 +32,16 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.fixedColsTopLevel = @[@"Type"];
+    self.fixedColsChildren = @{@"Type":@[@"SPG",@"TD",@"LT",@"MT",@"HT"]};
+
+    self.fixedRowsTopLevel = @[@"Tier"];
+    self.fixedRowsChildren = @{@"Tier":@[@"I",@"II",@"III",@"IV",@"V",@"VI",@"VII",@"VIII",@"IX",@"X"]};
+    
+
+    
+    
     
     UIBarButtonItem *doneButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
         
@@ -41,23 +61,31 @@
     [self.navigationItem setLeftBarButtonItems:@[cancelButtonItem]];
     [self.navigationController.navigationBar setDarkStyle];
     
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotCollectionViewCell class])];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class])];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class])];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class])];
 }
 
 #pragma mark - UICollectionViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    WOTTankPivotCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotCollectionViewCell class]) forIndexPath:indexPath];
+    WOTTankPivotDataCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) forIndexPath:indexPath];
     result.label.text = @"lOrEm";
     return result;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSInteger filterCellsCount = 1;
+    NSInteger topLevelColsCount = 1;
+    NSInteger nextLevelColsCount = 5;
     
-    return 1;
+    NSInteger topLevelRowsCount = 1;
+    NSInteger nextLevelRowsCount = 10;
+    return filterCellsCount + topLevelColsCount + nextLevelColsCount + topLevelRowsCount + nextLevelRowsCount+380;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    
     return 1;
 }
 

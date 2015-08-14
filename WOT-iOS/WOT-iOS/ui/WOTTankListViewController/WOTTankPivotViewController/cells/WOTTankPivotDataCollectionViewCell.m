@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTTankPivotCollectionViewCell.h"
+#import "WOTTankPivotDataCollectionViewCell.h"
 
-@implementation WOTTankPivotCollectionViewCell
+@implementation WOTTankPivotDataCollectionViewCell
 
 - (void)awakeFromNib {
     // Initialization code
