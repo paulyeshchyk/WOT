@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTNode+Tanks.h"
+#import "WOTNode+ModuleTree.h"
 #import "ModulesTree+UI.h"
 #import "ModulesTree+FillProperties.h"
 #import <objc/runtime.h>
 
-@implementation WOTNode (Tanks)
+@implementation WOTNode (ModuleTree)
 
 
 - (id)initWithModuleTree:(ModulesTree *)module {

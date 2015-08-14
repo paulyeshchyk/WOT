@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOTTankConfigurationViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOTTankModuleTreeViewController">
             <connections>
                 <outlet property="collectionView" destination="Mfw-dz-DVC" id="Muf-Ug-RUo"/>
                 <outlet property="flowLayout" destination="ae5-Q7-qy5" id="aY6-SV-mG4"/>

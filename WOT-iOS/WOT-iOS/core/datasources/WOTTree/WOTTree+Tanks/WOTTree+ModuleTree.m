@@ -6,30 +6,17 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTTree+Tanks.h"
-#import "WOTNode+Tanks.h"
+#import "WOTTree+ModuleTree.h"
+#import "WOTNode+ModuleTree.h"
 #import "Tanks.h"
 #import "ModulesTree+PlainList.h"
 
-@implementation WOTTree (Tanks)
+@implementation WOTTree (ModuleTree)
 
 - (void)setTankId:(NSNumber *)tankId {
 
     [self removeAllNodes];
-//    WOTNodeComparator comparator = ^(WOTNode *left, WOTNode *right){
-//            
-//            if (left.moduleType > right.moduleType) {
-//                
-//                return (NSComparisonResult)NSOrderedDescending;
-//            }
-//            if (left.moduleType < right.moduleType) {
-//                
-//                return (NSComparisonResult)NSOrderedAscending;
-//            }
-//            
-//            return (NSComparisonResult)NSOrderedSame;
-//        }
-//    }
+
     [self setNodeComparator:nil];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tank_id == %@",tankId];

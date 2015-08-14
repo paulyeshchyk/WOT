@@ -1,5 +1,5 @@
 //
-//  WOTTankConfigurationViewController.h
+//  WOTTankModuleTreeViewController.h
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 6/29/15.
@@ -11,7 +11,7 @@
 typedef void(^WOTConfigurationCompletionCancelBlock) ();
 typedef void(^WOTConfigurationCompletionDoneBlock) (id configuration);
 
-@interface WOTTankConfigurationViewController : UIViewController
+@interface WOTTankModuleTreeViewController : UIViewController
 
 @property (nonatomic, copy)NSNumber *tankId;
 

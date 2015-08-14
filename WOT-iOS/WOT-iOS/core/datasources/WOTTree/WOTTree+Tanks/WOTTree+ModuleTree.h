@@ -8,7 +8,7 @@
 
 #import "WOTTree.h"
 
-@interface WOTTree (Tanks)
+@interface WOTTree (ModuleTree)
 
 - (void)setTankId:(NSNumber *)tankId;
 

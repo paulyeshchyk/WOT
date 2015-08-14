@@ -12,12 +12,6 @@
 
 @implementation WOTTankConfigurationFlowLayout
 
-- (void)prepareLayout {
-    
-    [super prepareLayout];
-    
-}
-
 - (CGSize)itemSize {
     
     return DEFAULT_SIZE;
@@ -53,13 +47,11 @@
 
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     
-    UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
-    return attributes;
+    return [self layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
 }
 - (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
  
-    UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
-    return attributes;
+    return [self layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {

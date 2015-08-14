@@ -14,7 +14,7 @@
 
 #import "WOTRequestExecutor.h"
 #import "WOTTankDetailDatasource.h"
-#import "WOTTankConfigurationViewController.h"
+#import "WOTTankModuleTreeViewController.h"
 #import "WOTTankPivotViewController.h"
 
 #import "WOTTankIdsDatasource.h"
@@ -312,7 +312,7 @@
     self.configurationTopButton.selected = NO;
     
     
-    WOTTankConfigurationViewController *configurationSelector = [[WOTTankConfigurationViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationViewController class]) bundle:nil];
+    WOTTankModuleTreeViewController *configurationSelector = [[WOTTankModuleTreeViewController alloc] initWithNibName:NSStringFromClass([WOTTankModuleTreeViewController class]) bundle:nil];
     [configurationSelector setCancelBlock:^(){
         [self dismissViewControllerAnimated:YES completion:NULL];
     }];

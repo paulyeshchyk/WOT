@@ -9,7 +9,7 @@
 #import "WOTNode.h"
 #import "ModulesTree.h"
 
-@interface WOTNode (Tanks)
+@interface WOTNode (ModuleTree)
 
 @property (nonatomic, strong)ModulesTree *moduleTree;
 @property (nonatomic, readonly)WOTModuleType moduleType;

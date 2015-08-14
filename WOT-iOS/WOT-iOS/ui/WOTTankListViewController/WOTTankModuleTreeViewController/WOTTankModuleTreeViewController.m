@@ -1,14 +1,14 @@
 //
-//  WOTTankConfigurationViewController.m
+//  WOTTankModuleTreeViewController.m
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 6/29/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTTankConfigurationViewController.h"
-#import "WOTTree+Tanks.h"
-#import "WOTNode+Tanks.h"
+#import "WOTTankModuleTreeViewController.h"
+#import "WOTTree+ModuleTree.h"
+#import "WOTNode+ModuleTree.h"
 #import "ModulesTree+UI.h"
 #import "WOTTankConfigurationCollectionViewCell.h"
 #import "WOTTankConfigurationFlowLayout.h"
@@ -17,16 +17,16 @@
 
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 
-@interface WOTTankConfigurationViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong)WOTTree *tree;
-@property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
-@property (nonatomic, weak)IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
-@property (nonatomic, strong)WYPopoverController *wypopoverController;
+@property (nonatomic, strong) WOTTree *tree;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
+@property (nonatomic, strong) WYPopoverController *wypopoverController;
 
 @end
 
-@implementation WOTTankConfigurationViewController
+@implementation WOTTankModuleTreeViewController
 
 - (void)dealloc {
     
