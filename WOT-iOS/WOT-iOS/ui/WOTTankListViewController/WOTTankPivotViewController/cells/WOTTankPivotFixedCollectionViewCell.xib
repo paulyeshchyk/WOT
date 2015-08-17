@@ -15,7 +15,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fixed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BzF-Bs-Uec">
                         <rect key="frame" x="4" y="4" width="42" height="42"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.17254901959999999" green="1" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -27,6 +27,9 @@
                 <constraint firstAttribute="bottom" secondItem="BzF-Bs-Uec" secondAttribute="bottom" constant="4" id="cgb-c0-5Rb"/>
                 <constraint firstAttribute="trailing" secondItem="BzF-Bs-Uec" secondAttribute="trailing" constant="4" id="xSm-dA-gYg"/>
             </constraints>
+            <connections>
+                <outlet property="label" destination="BzF-Bs-Uec" id="6L2-29-xj0"/>
+            </connections>
             <point key="canvasLocation" x="494" y="371"/>
         </collectionViewCell>
     </objects>

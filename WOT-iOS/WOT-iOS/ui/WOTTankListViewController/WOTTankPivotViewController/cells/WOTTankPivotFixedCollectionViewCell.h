@@ -10,4 +10,6 @@
 
 @interface WOTTankPivotFixedCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic,weak)IBOutlet UILabel *label;
+
 @end
