@@ -14,7 +14,6 @@
 
 @property (nonatomic, readwrite, strong) NSMutableArray *colsList;
 @property (nonatomic, readwrite, strong) NSMutableArray *rowsList;
-@property (nonatomic, strong) NSArray *data;
 
 @end
 
@@ -31,7 +30,6 @@
 
 - (void)reload {
     
-    self.data = self.templateDataBlock(nil,nil);
     self.templateDataReloadCompletionBlock();
 }
 
@@ -55,8 +53,9 @@
         NSArray *rowsForLevel = [self rowsForLevel:rowLevel];
         [rowsForLevel enumerateObjectsUsingBlock:^(WOTPivotRow *row, NSUInteger idx, BOOL *stop) {
 
-            NSPredicate *predicate = row.predicate;
-            result += [[self.data filteredArrayUsingPredicate:predicate] count];
+            NSArray *rowData = self.templateDataBlock(nil,row);
+            
+            result += [rowData count];
         }];
     }
     return result;
@@ -75,13 +74,6 @@
     return filterCellsCount + topLevelColsCount + nextLevelColsCount + topLevelRowsCount + nextLevelRowsCount;
 }
 
-
-- (NSInteger)cellsCount {
-
-    NSInteger metadataCellsCount = [self metadataCellsCount];
-    NSInteger dataCellsCount = [self.data count];
-    return  metadataCellsCount + dataCellsCount;
-}
 
 - (WOTPivotColumn *)columnAtIndexPath:(NSIndexPath *)indexPath {
 #warning refactor it

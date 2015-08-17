@@ -29,7 +29,7 @@ typedef void (^WOTPivotTemplateDataReloadCompletionBlock)();
 @property (nonatomic, readonly) NSInteger rowsDepth;
 @property (nonatomic, readonly) NSInteger lastLevelColsCount;
 @property (nonatomic, readonly) NSInteger lastLevelRowsCount;
-@property (nonatomic, readonly) NSInteger cellsCount;
+//@property (nonatomic, readonly) NSInteger cellsCount;
 @property (nonatomic, copy) WOTPivotTemplateDataBlock templateDataBlock;
 @property (nonatomic, copy) WOTPivotTemplateDataReloadCompletionBlock templateDataReloadCompletionBlock;
 
