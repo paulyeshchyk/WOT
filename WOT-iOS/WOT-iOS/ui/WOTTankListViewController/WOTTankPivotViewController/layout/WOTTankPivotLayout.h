@@ -10,4 +10,7 @@
 
 @interface WOTTankPivotLayout : UICollectionViewFlowLayout
 
+@property (nonatomic, copy) LayoutDimensionBlock depthCallback;
+@property (nonatomic, copy) LayoutDimensionBlock widthCallback;
+
 @end

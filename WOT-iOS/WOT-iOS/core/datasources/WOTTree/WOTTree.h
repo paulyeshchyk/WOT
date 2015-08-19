@@ -17,10 +17,10 @@ typedef NSComparisonResult(^WOTNodeComparator)(WOTNode *left, WOTNode *right);
 @property (nonatomic, readonly)NSInteger width;
 @property (nonatomic, readonly)NSInteger endpointsCount;
 @property (nonatomic, copy)WOTNodeComparator nodeComparator;
+@property (nonatomic, readonly)NSSet *rootNodes;
 
 - (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)nodesCountAtSection:(NSInteger)sectionIndex;
-- (NSInteger)endPointsCountForNode:(WOTNode *)node;
 - (NSInteger)childrenCountForSiblingNode:(WOTNode *)node;
 
 - (void)addNode:(WOTNode *)node;

@@ -7,6 +7,7 @@
 //
 
 #import "WOTTree.h"
+#import "WOTNode+Enumeration.h"
 
 @interface WOTTree ()
 
@@ -97,15 +98,15 @@
         
         [self reindexChildNode:childNode atLevel:level+1];
     }];
-    
 }
-
 
 - (NSArray *)nodes:(NSArray *)nodes sortedUsingComparator:(WOTNodeComparator)comparator {
 
     if (comparator) {
+        
         return [nodes sortedArrayUsingComparator:comparator];
     } else {
+        
         return nodes;
     }
 }
@@ -131,29 +132,11 @@
     __block NSInteger result = 0;
     [self.rootNodes_ enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
     
-        result += [self endPointsCountForNode:node];
+        NSArray *endpoints = node.endpoints;
+        
+        result += [endpoints count];
     }];
     return result;
-}
-
-- (NSInteger)endPointsCountForNode:(WOTNode *)node {
-
-    NSInteger cnt = [node.children count];
-
-    if (cnt == 0) {
-        
-        return 1;
-    }
-    
-    NSInteger result = 0;
-    for (int i=0;i<cnt;i++) {
-        
-        WOTNode *childNode = node.children[i];
-        result += [self endPointsCountForNode:childNode];
-    }
-    
-    return result;
-    
 }
 
 - (NSInteger)childrenCountForSiblingNode:(WOTNode *)node {
@@ -166,7 +149,8 @@
         for (int i=0;i<indexOfNode;i++) {
             
             WOTNode *child = parent.children[i];
-            result += [self endPointsCountForNode:child];
+            NSArray *endpoints = child.endpoints;
+            result += [endpoints count];
         }
 
         result += [self childrenCountForSiblingNode:parent];

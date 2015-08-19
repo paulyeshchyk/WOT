@@ -10,11 +10,13 @@
 #import "WOTTankPivotDataCollectionViewCell.h"
 #import "WOTTankPivotFilterCollectionViewCell.h"
 #import "WOTTankPivotFixedCollectionViewCell.h"
+#import "WOTTankPivotEmptyCollectionViewCell.h"
 #import "WOTTankPivotLayout.h"
 #import "WOTNode.h"
-#import "WOTPivotTemplate+Tanks.h"
 #import "Tanks.h"
 #import "WOTTankListSettingsDatasource.h"
+#import "WOTTree+Pivot.h"
+#import "WOTNode+Pivot.h"
 
 @interface WOTTankPivotViewController () <UICollectionViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -24,10 +26,10 @@
 @property (nonatomic, strong)NSArray *fixedRowsTopLevel;
 @property (nonatomic, strong)NSDictionary *fixedRowsChildren;
 
-@property (nonatomic, strong)WOTPivotTemplate *template;
-
 @property (nonatomic, strong)NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, readonly)NSArray *sortDescriptors;
+
+@property (nonatomic, strong)WOTTree *pivotTree;
 
 @end
 
@@ -45,32 +47,41 @@
     
     [self invalidateFetchedResultController];
     
-    __weak typeof(self)weakSelf = self;
-    
-    self.template = [[WOTPivotTemplate alloc] init];
-    [self.template makeTanksDefaultPivot];
-    [self.template setTemplateDataBlock:^NSArray *(id<WOTPivotMetaDataProtocol> column, id<WOTPivotMetaDataProtocol> row){
-
-        NSMutableArray *subpredicates = [[NSMutableArray alloc] init];
-        if (column.predicate) {
-            
-            [subpredicates addObject:column.predicate];
-        }
-        if (row.predicate) {
-            
-            [subpredicates addObject:row.predicate];
-        }
-        NSCompoundPredicate *metadataPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:subpredicates];
-        NSArray *resultArray = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:metadataPredicate];
+    [self.flowLayout setDepthCallback:^(){
         
+        return 0;
+    }];
+    
+    [self.flowLayout setWidthCallback:^(){
+        
+        return 0;
+    }];
+    
+    
+    __weak typeof(self)weakSelf = self;
+    self.pivotTree = [[WOTTree alloc] init];
+    [self.pivotTree setRows:[self pivotRows]];
+    [self.pivotTree setFilters:[self pivotFilters]];
+    [self.pivotTree setColumns:[self pivotColumns]];
+    
+    [self.pivotTree setPivotItemCreationBlock:^NSArray *(NSArray *stepParents) {
+        
+        NSArray *predicates = [stepParents valueForKeyPath:@"predicate"];
+        NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+        
+        NSMutableArray *resultArray = [[NSMutableArray alloc] init];
+        NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
+        [fetchedData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+
+            WOTNode *node = [[WOTNode alloc] initWithName:nil pivotMetadataType:PivotMetadataTypeData predicate:predicate];
+            [node addStepParentsFromArray:stepParents];
+            [node setData:obj];
+            [resultArray addObject:node];
+        }];
         return resultArray;
     }];
-
-    [self.template setTemplateDataReloadCompletionBlock:^{
-       
-        [weakSelf.collectionView reloadData];
-    }];
     
+    [self.pivotTree makePivot];
     
     UIBarButtonItem *doneButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
         
@@ -93,8 +104,8 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class])];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class])];
     
-    [self.template reload];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -102,57 +113,52 @@
 
     UICollectionViewCell *result = nil;
     
-    WOTPivotCellType cellType = [self.template cellTypeForRowAtIndexPath:indexPath];
-    switch (cellType) {
-        case WOTPivotCellTypeColumn: {
+    WOTNode *node = [self.pivotTree pivotItemAtIndexPath:indexPath];
+    switch (node.pivotMetadataType) {
+        case PivotMetadataTypeColumn:{
+
+            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
+            WOTTankPivotFixedCollectionViewCell *fixed = (WOTTankPivotFixedCollectionViewCell *)result;
+            fixed.label.text = node.name;
+            break;
+        }
+        case PivotMetadataTypeRow:{
             
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
-            WOTTankPivotFixedCollectionViewCell *dataCell = (WOTTankPivotFixedCollectionViewCell *)result;
-            dataCell.label.text = [self.template columnAtIndexPath:indexPath].name;
+            WOTTankPivotFixedCollectionViewCell *row = (WOTTankPivotFixedCollectionViewCell *)result;
+            row.label.text = node.name;
             break;
         }
-        case WOTPivotCellTypeRow: {
-            
-            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
-            WOTTankPivotFixedCollectionViewCell *dataCell = (WOTTankPivotFixedCollectionViewCell *)result;
-            dataCell.label.text = [self.template rowAtIndexPath:indexPath].name;
-            break;
-        }
-        case WOTPivotCellTypeData: {
-            
-            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) forIndexPath:indexPath];
-            WOTTankPivotDataCollectionViewCell *dataCell = (WOTTankPivotDataCollectionViewCell *)result;
-            dataCell.label.text = @"lOrEm";
-            break;
-        }
-        case WOTPivotCellTypeFilter: {
+        case PivotMetadataTypeFilter:{
             
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) forIndexPath:indexPath];
             break;
         }
+        case PivotMetadataTypeData:{
+            
+            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) forIndexPath:indexPath];
+            WOTTankPivotDataCollectionViewCell *data = (WOTTankPivotDataCollectionViewCell *)result;
+            data.label.text = node.name;
+            break;
+        }
         default: {
             
-            NSCAssert(NO, @"unknown cell type used");
+            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) forIndexPath:indexPath];
             break;
         }
     }
-    
-    
+
     return result;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return [self.template cellsCountForRowAtIndex:section];
-    
+    return [self.pivotTree pivotItemsCountForRowAtIndex:section];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    
-    NSInteger rows = self.template.lastLevelRowsCount;
-    NSInteger cols = self.template.colsDepth;
-    
-    return  rows + cols;
+
+    return [self.pivotTree pivotRowsCount];
 }
 
 
@@ -187,6 +193,44 @@
     [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
     
     return result;
+}
+
+
+#pragma mark - private
+- (NSArray *)pivotFilters {
+    
+    WOTNode *node = [[WOTNode alloc] initWithName:@"Filter" pivotMetadataType:PivotMetadataTypeFilter predicate:nil];
+    return @[node];
+}
+
+- (NSArray *)pivotColumns {
+
+    WOTNode *typeColumn = [[WOTNode alloc] initWithName:@"Type" pivotMetadataType:PivotMetadataTypeColumn predicate:nil];
+
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"TD" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"AT-SPG"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"SPG" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"SPG"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"LT" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"lightTank"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"MT" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"mediumTank"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"HT" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"heavyTank"]]];
+    
+    return @[typeColumn];
+}
+
+- (NSArray *)pivotRows {
+    
+    WOTNode *tierRow = [[WOTNode alloc] initWithName:@"Tier" pivotMetadataType:PivotMetadataTypeRow predicate:nil];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"I" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(1)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"II" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(2)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"III" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(3)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"IV" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(4)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"V" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(5)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"VI" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(6)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"VII" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(7)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"VIII" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(8)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"IX" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(9)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"X" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(10)]]];
+
+    return @[tierRow];
 }
 
 @end

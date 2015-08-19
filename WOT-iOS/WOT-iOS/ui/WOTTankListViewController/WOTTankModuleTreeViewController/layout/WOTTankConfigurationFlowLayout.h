@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NSInteger(^LayoutDimensionBlock)(void);
-typedef NSInteger(^LayoutSiblingChildrenCount)(NSIndexPath *);
-typedef NS_ENUM(NSInteger, LayoutOrientation){
-    LayoutOrientationHorizontal,
-    LayoutOrientationVertical
-};
-
 @interface WOTTankConfigurationFlowLayout : UICollectionViewFlowLayout
 
 @property (nonatomic, copy) LayoutDimensionBlock depthCallback;

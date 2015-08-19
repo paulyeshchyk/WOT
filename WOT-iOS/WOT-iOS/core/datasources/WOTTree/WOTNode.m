@@ -10,8 +10,9 @@
 
 @interface WOTNode ()
 
-@property (nonatomic, strong)NSMutableOrderedSet *childList;
+@property (nonatomic, readwrite, strong)NSMutableOrderedSet *childList;
 @property (nonatomic, readwrite, strong)NSURL *imageURL;
+
 @end
 
 @implementation WOTNode
@@ -57,6 +58,12 @@
     [self.childList addObject:child];
 }
 
+- (void)addChildArray:(NSArray *)childArray {
+    
+    NSSet *set = [NSSet setWithArray:childArray];
+    [self addChildren:set];
+}
+
 - (void)removeChild:(WOTNode *)child {
 
     child.parent = nil;
@@ -72,5 +79,6 @@
     
     [self.childList unionSet:childrenSet];
 }
+
 
 @end
