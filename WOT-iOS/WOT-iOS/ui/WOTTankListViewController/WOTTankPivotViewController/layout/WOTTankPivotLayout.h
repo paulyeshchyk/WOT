@@ -12,5 +12,6 @@
 
 @property (nonatomic, copy) LayoutDimensionBlock depthCallback;
 @property (nonatomic, copy) LayoutDimensionBlock widthCallback;
+@property (nonatomic, copy) LayoutRelativeRectBlock itemRelativeRectCallback;
 
 @end

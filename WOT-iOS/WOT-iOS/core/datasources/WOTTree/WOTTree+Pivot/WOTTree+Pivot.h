@@ -12,8 +12,8 @@ typedef NSArray *(^PivotItemCreationBlock)(NSArray *stepParents);
 
 @interface WOTTree (Pivot)
 
-- (void)setFilters:(NSArray *)filters;
-- (NSArray *)filters;
+- (void)setFilter:(WOTNode *)filter;
+- (WOTNode *)filter;
 
 - (void)setColumns:(NSArray *)columns;
 - (NSArray *)columns;
@@ -29,5 +29,7 @@ typedef NSArray *(^PivotItemCreationBlock)(NSArray *stepParents);
 - (NSInteger)pivotRowsCount;
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex;
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath;
+
+- (CGRect)dimensionForNode:(WOTNode *)node;
 
 @end

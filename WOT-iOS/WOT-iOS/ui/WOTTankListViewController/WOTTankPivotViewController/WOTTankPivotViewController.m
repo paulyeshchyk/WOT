@@ -48,20 +48,32 @@
     [self invalidateFetchedResultController];
     
     [self.flowLayout setDepthCallback:^(){
-        
-        return 0;
+
+        NSInteger filterHeight = 2;
+        NSInteger rowsCount = 10;
+        return filterHeight + rowsCount;
     }];
     
     [self.flowLayout setWidthCallback:^(){
-        
-        return 0;
+
+        NSInteger filterWidth = 2;
+        NSInteger maxItemsForRow = 20;
+        return filterWidth + maxItemsForRow;
     }];
     
     
+    [self.flowLayout setItemRelativeRectCallback:^CGRect(NSIndexPath *indexPath) {
+       
+        WOTNode *node = [self.pivotTree pivotItemAtIndexPath:indexPath];
+
+        CGRect resultRect = [self.pivotTree dimensionForNode:node];
+        return resultRect;
+    }];
+    
     __weak typeof(self)weakSelf = self;
     self.pivotTree = [[WOTTree alloc] init];
+    [self.pivotTree setFilter:[self pivotFilter]];
     [self.pivotTree setRows:[self pivotRows]];
-    [self.pivotTree setFilters:[self pivotFilters]];
     [self.pivotTree setColumns:[self pivotColumns]];
     
     [self.pivotTree setPivotItemCreationBlock:^NSArray *(NSArray *stepParents) {
@@ -197,10 +209,10 @@
 
 
 #pragma mark - private
-- (NSArray *)pivotFilters {
+- (WOTNode *)pivotFilter {
     
     WOTNode *node = [[WOTNode alloc] initWithName:@"Filter" pivotMetadataType:PivotMetadataTypeFilter predicate:nil];
-    return @[node];
+    return node;
 }
 
 - (NSArray *)pivotColumns {

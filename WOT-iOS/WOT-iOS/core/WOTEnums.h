@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, WOTModuleType){
 };
 
 typedef NSInteger(^LayoutDimensionBlock)(void);
+typedef CGRect(^LayoutRelativeRectBlock)(NSIndexPath *indexPath);
 typedef NSInteger(^LayoutSiblingChildrenCount)(NSIndexPath *);
 typedef NS_ENUM(NSInteger, LayoutOrientation){
     LayoutOrientationHorizontal,

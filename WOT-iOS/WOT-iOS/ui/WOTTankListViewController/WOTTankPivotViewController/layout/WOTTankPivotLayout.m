@@ -57,23 +57,22 @@
         
         for(NSUInteger row = 0; row < [self.collectionView numberOfItemsInSection:section]; row++) {
             
+            CGRect itemRelativeRect = CGRectZero;
+            if (self.itemRelativeRectCallback) {
+                
+                itemRelativeRect = self.itemRelativeRectCallback([NSIndexPath indexPathForRow:row inSection:section]);
+            }
             
-            CGFloat x = row * self.itemSize.width;
-            CGFloat y = section * self.itemSize.height;
-            
-//            if (self.layoutPreviousSiblingNodeChildrenCountCallback) {
-//                
-//                //used with lines
-//                //NSInteger layoutSiblingChildrenCount = row;
-//                NSInteger layoutSiblingChildrenCount = self.layoutPreviousSiblingNodeChildrenCountCallback([NSIndexPath indexPathForRow:row inSection:section]);
-//                x = layoutSiblingChildrenCount * self.itemSize.width;
-//            }
+            CGFloat x = itemRelativeRect.origin.x * self.itemSize.width;
+            CGFloat y = itemRelativeRect.origin.y * self.itemSize.height;
+            CGFloat width = itemRelativeRect.size.width * self.itemSize.width;
+            CGFloat height = itemRelativeRect.size.height * self.itemSize.height;
             
             //this is the cell at row j in section i
             CGRect cellFrame = CGRectMake(x,
                                           y,
-                                          self.itemSize.width,
-                                          self.itemSize.height);
+                                          width,
+                                          height);
             
             //see if the collection view needs this cell
             if(CGRectIntersectsRect(cellFrame, rect)) {

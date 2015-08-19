@@ -10,20 +10,21 @@
 #import "WOTPivotColumn.h"
 #import "WOTPivotRow.h"
 #import "WOTNode+Enumeration.h"
+#import "WOTNode+Pivot.h"
 
 #import <objc/runtime.h>
 
 @implementation WOTTree (Pivot)
 
-static const void *PivotFilters = &PivotFilters;
-- (void)setFilters:(NSArray *)filters {
+static const void *PivotFilter = &PivotFilter;
+- (void)setFilter:(WOTNode *)filter {
     
-    objc_setAssociatedObject(self, PivotFilters, filters, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, PivotFilter, filter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSArray *)filters {
+- (NSArray *)filter {
     
-    return objc_getAssociatedObject(self, PivotFilters);
+    return objc_getAssociatedObject(self, PivotFilter);
 }
 
 static const void *PivotColumns = &PivotColumns;
@@ -98,10 +99,13 @@ static const void *PivotDataItems = &PivotDataItems;
     
     [self removeAllNodes];
     
+    WOTNode *filter = [self filter];
+    
+    [filter addChildArray:[self columns]];
+    [filter addChildArray:[self rows]];
+
     WOTNode *root = [[WOTNode alloc] init];
-    [root addChildArray:[self filters]];
-    [root addChildArray:[self columns]];
-    [root addChildArray:[self rows]];
+    [root addChild:filter];
     [self addNode:root];
     
     [self makeData];
@@ -131,9 +135,9 @@ static const void *PivotDataItems = &PivotDataItems;
     }];
     
     NSMutableArray *metadataItems = [[NSMutableArray alloc] init];
-    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[self filters]]];
-    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[self rows]]];
-    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[self columns]]];
+    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[[self filter] children]]];
+//    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[self rows]]];
+//    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[self columns]]];
     
     [self setMetadataItems:metadataItems];
     [self setDataItems:dataItems];
@@ -164,13 +168,34 @@ static const void *PivotDataItems = &PivotDataItems;
 }
 
 - (NSInteger)metadataRowsCount {
-    
-    __block NSInteger filterMaxDepth = 0;
-    [[self filters] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+  
+    return 0;
+//    __block NSInteger filterMaxDepth = 0;
+//    [[[self rows] ] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+//        
+//        NSInteger nodeDepth = [node depth];
+//        filterMaxDepth = MAX(filterMaxDepth, nodeDepth);
+//    }];
+//    
+//    NSInteger columnsMaxDepth = [self columnsMaxDepth];
+//    
+//    NSInteger filterAndColumnsDepth = MAX(filterMaxDepth, columnsMaxDepth);
+//    return filterAndColumnsDepth;
+}
+
+
+- (NSInteger)rowsMaxDepth {
+
+    __block NSInteger rowsMaxDepth = 0;
+    [[self rows] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
         
         NSInteger nodeDepth = [node depth];
-        filterMaxDepth = MAX(filterMaxDepth, nodeDepth);
+        rowsMaxDepth = MAX(rowsMaxDepth, nodeDepth);
     }];
+    return rowsMaxDepth;
+}
+
+- (NSInteger)columnsMaxDepth {
     
     __block NSInteger columnsMaxDepth = 0;
     [[self columns] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
@@ -178,9 +203,44 @@ static const void *PivotDataItems = &PivotDataItems;
         NSInteger nodeDepth = [node depth];
         columnsMaxDepth = MAX(columnsMaxDepth, nodeDepth);
     }];
+    return columnsMaxDepth;
+}
+
+- (CGRect)dimensionForNode:(WOTNode *)node {
     
-    NSInteger filterAndColumnsDepth = MAX(filterMaxDepth, columnsMaxDepth);
-    return filterAndColumnsDepth;
+    CGRect result = CGRectZero;
+    
+    PivotMetadataType metadatatype = [node pivotMetadataType];
+    switch (metadatatype) {
+            
+        case PivotMetadataTypeFilter: {
+            
+            NSInteger x = 0;
+            NSInteger y = 0;
+            NSInteger rowsDepth = [self rowsMaxDepth];
+            NSInteger columnsMaxDepth = [self columnsMaxDepth];
+            result = CGRectMake(x, y, rowsDepth, columnsMaxDepth);
+            break;
+        }
+        case PivotMetadataTypeColumn: {
+            
+            break;
+        }
+        case PivotMetadataTypeRow: {
+            
+            break;
+        }
+        case PivotMetadataTypeData: {
+            
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    
+    
+    return result;
 }
 
 @end
