@@ -22,5 +22,6 @@
 - (void)addChild:(WOTNode *)child;
 - (void)addChildArray:(NSArray *)childArray;
 - (void)removeChild:(WOTNode *)child;
+- (void)removeAllNodes;
 
 @end

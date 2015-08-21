@@ -39,6 +39,15 @@
     return self;
 }
 
+- (void)dealloc {
+    
+    [self.rootDataNode removeAllNodes];
+    [self.rootRowsNode removeAllNodes];
+    [self.rootColumnsNode removeAllNodes];
+    [self.rootFiltersNode removeAllNodes];
+    [self setLargeIndex:nil];
+}
+
 - (CGSize)contentSize {
 
     NSInteger rowNodesDepth = [self.rootRowsNode depth];
@@ -63,7 +72,35 @@
 
     [self makeData];
     
-    [self reindex];
+    [self makeIndex];
+}
+
+- (void)makeIndex {
+    
+    [self setLargeIndex:nil];
+    NSMutableDictionary *largeIndex = [[NSMutableDictionary alloc] init];
+    
+    [[self.rootFiltersNode allItems] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+
+        largeIndex[@(node.index)] = node;
+    }];
+
+    [[self.rootColumnsNode allItems] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+        
+        largeIndex[@(node.index)] = node;
+    }];
+    
+    [[self.rootRowsNode allItems] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+        
+        largeIndex[@(node.index)] = node;
+    }];
+    
+    [[self.rootDataNode allItems] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+        
+        largeIndex[@(node.index)] = node;
+    }];
+    
+    [self setLargeIndex:largeIndex];
 }
 
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex {
@@ -78,24 +115,7 @@
 
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    WOTNode *result;
-    
-    result = [[[self.rootFiltersNode allItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d",indexPath.row]] lastObject];
-    if (!result) {
-        
-        result = [[[self.rootColumnsNode allItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d",indexPath.row]] lastObject];
-    }
-    
-    if (!result) {
-        
-        result = [[[self.rootRowsNode allItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d",indexPath.row]] lastObject];
-    }
-    
-    if (!result) {
-        
-        result = [[[self.rootDataNode allItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d",indexPath.row]] lastObject];
-    }
-    
+    WOTNode *result = [self largeIndex][@(indexPath.row)];
     if (!result) {
         
         NSCAssert(NO, @"Node not found for indexPath:%@",indexPath);
@@ -105,6 +125,17 @@
 }
 
 #pragma mark - getters / setters
+
+static const void *LargeIndexRef = &LargeIndexRef;
+- (NSDictionary *)largeIndex {
+    
+    return objc_getAssociatedObject(self, LargeIndexRef);
+}
+
+- (void)setLargeIndex:(NSDictionary *)largeIndex {
+    
+    objc_setAssociatedObject(self, LargeIndexRef, largeIndex, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 static const void *RootDataNodeRef = &RootDataNodeRef;
 - (WOTNode *)rootDataNode {
@@ -192,6 +223,13 @@ static const void *PivotItemBlock = &PivotItemBlock;
                     NSMutableArray *predicates = [[NSMutableArray alloc] init];
                     if (columnNode.predicate) [predicates addObject:columnNode.predicate];
                     if (rowNode.predicate) [predicates addObject:rowNode.predicate];
+                    [[self.rootFiltersNode endpoints] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+                        
+                        if (node.predicate) {
+                            
+                            [predicates addObject:node.predicate];
+                        }
+                    }];
 
                     NSArray *dataNodes = self.pivotItemCreationBlock(predicates);
 

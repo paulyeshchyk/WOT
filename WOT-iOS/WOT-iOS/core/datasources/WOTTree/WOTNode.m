@@ -19,11 +19,7 @@
 
 - (void)dealloc {
     
-    [self.childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-        
-        node.parent = nil;
-    }];
-    [self.childList removeAllObjects];
+    [self removeAllNodes];
 }
 
 - (id)init {
@@ -76,6 +72,16 @@
     
     child.parent = self;
     [self.childList addObject:child];
+}
+
+- (void)removeAllNodes {
+    
+    [self.childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+       
+        node.parent = nil;
+        [node removeAllNodes];
+    }];
+    [self.childList removeAllObjects];
 }
 
 - (void)addChildArray:(NSArray *)childArray {
