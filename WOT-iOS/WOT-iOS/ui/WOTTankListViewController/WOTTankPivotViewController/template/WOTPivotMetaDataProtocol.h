@@ -11,6 +11,7 @@
 @protocol WOTPivotMetaDataProtocol <NSObject>
 
 @required
-@property(nonatomic, readonly)NSPredicate *predicate;
+
+@property (nonatomic, readonly)NSPredicate *predicate;
 
 @end

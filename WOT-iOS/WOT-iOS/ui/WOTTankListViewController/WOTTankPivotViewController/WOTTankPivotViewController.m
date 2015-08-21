@@ -47,46 +47,36 @@
     
     [self invalidateFetchedResultController];
     
-    [self.flowLayout setDepthCallback:^(){
-
-        NSInteger filterHeight = 2;
-        NSInteger rowsCount = 10;
-        return filterHeight + rowsCount;
+    [self.flowLayout setRelativeContentSizeBlock:^(){
+        
+        return self.pivotTree.contentSize;
     }];
-    
-    [self.flowLayout setWidthCallback:^(){
-
-        NSInteger filterWidth = 2;
-        NSInteger maxItemsForRow = 20;
-        return filterWidth + maxItemsForRow;
-    }];
-    
     
     [self.flowLayout setItemRelativeRectCallback:^CGRect(NSIndexPath *indexPath) {
        
         WOTNode *node = [self.pivotTree pivotItemAtIndexPath:indexPath];
 
-        CGRect resultRect = [self.pivotTree dimensionForNode:node];
+        CGRect resultRect = node.relativeRect;
         return resultRect;
     }];
     
     __weak typeof(self)weakSelf = self;
+
     self.pivotTree = [[WOTTree alloc] init];
-    [self.pivotTree setFilter:[self pivotFilter]];
-    [self.pivotTree setRows:[self pivotRows]];
-    [self.pivotTree setColumns:[self pivotColumns]];
+    [self.pivotTree.rootRowsNode addChildArray:[self pivotRows]];
+    [self.pivotTree.rootFiltersNode addChildArray:[self pivotFilters]];
+    [self.pivotTree.rootColumnsNode addChildArray:[self pivotColumns]];
     
-    [self.pivotTree setPivotItemCreationBlock:^NSArray *(NSArray *stepParents) {
+    [self.pivotTree setPivotItemCreationBlock:^NSArray *(NSArray *predicates) {
         
-        NSArray *predicates = [stepParents valueForKeyPath:@"predicate"];
         NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
         
         NSMutableArray *resultArray = [[NSMutableArray alloc] init];
         NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
         [fetchedData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
-            WOTNode *node = [[WOTNode alloc] initWithName:nil pivotMetadataType:PivotMetadataTypeData predicate:predicate];
-            [node addStepParentsFromArray:stepParents];
+            NSURL *imageURL = [NSURL URLWithString:[obj image_small]];
+            WOTNode *node = [[WOTNode alloc] initWithName:[obj name_i18n] imageURL:imageURL pivotMetadataType:PivotMetadataTypeData predicate:predicate];
             [node setData:obj];
             [resultArray addObject:node];
         }];
@@ -151,6 +141,7 @@
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) forIndexPath:indexPath];
             WOTTankPivotDataCollectionViewCell *data = (WOTTankPivotDataCollectionViewCell *)result;
             data.label.text = node.name;
+            [data.imageView sd_setImageWithURL:node.imageURL];
             break;
         }
         default: {
@@ -170,7 +161,7 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
-    return [self.pivotTree pivotRowsCount];
+    return 1;
 }
 
 
@@ -209,10 +200,10 @@
 
 
 #pragma mark - private
-- (WOTNode *)pivotFilter {
+- (NSArray *)pivotFilters {
     
     WOTNode *node = [[WOTNode alloc] initWithName:@"Filter" pivotMetadataType:PivotMetadataTypeFilter predicate:nil];
-    return node;
+    return @[node];
 }
 
 - (NSArray *)pivotColumns {

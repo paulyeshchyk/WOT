@@ -15,38 +15,139 @@
 #import <objc/runtime.h>
 
 @implementation WOTTree (Pivot)
+@dynamic rootFiltersNode;
+@dynamic rootColumnsNode;
+@dynamic rootRowsNode;
+@dynamic rootDataNode;
+@dynamic pivotItemCreationBlock;
 
-static const void *PivotFilter = &PivotFilter;
-- (void)setFilter:(WOTNode *)filter {
+- (id)init {
     
-    objc_setAssociatedObject(self, PivotFilter, filter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    self = [super init];
+    if (self){
+        
+        self.rootFiltersNode = [[WOTNode alloc] initWithName:@"root filter" tree:self isVisible:NO];
+        self.rootRowsNode = [[WOTNode alloc] initWithName:@"root rows" tree:self isVisible:NO];
+        self.rootColumnsNode = [[WOTNode alloc] initWithName:@"root columns" tree:self isVisible:NO];
+        self.rootDataNode = [[WOTNode alloc] initWithName:@"root data" tree:self isVisible:NO];
+
+        [self addNode:self.rootFiltersNode];
+        [self addNode:self.rootRowsNode];
+        [self addNode:self.rootColumnsNode];
+        [self addNode:self.rootDataNode];
+    }
+    return self;
 }
 
-- (NSArray *)filter {
+- (CGSize)contentSize {
+
+    NSInteger rowNodesDepth = [self.rootRowsNode depth];
     
-    return objc_getAssociatedObject(self, PivotFilter);
+    __block NSInteger maxWidth = 0;
+    [[self.rootColumnsNode endpoints] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+        maxWidth += [node maxWidthOrValue:1];
+    }];
+    
+    NSInteger width = rowNodesDepth + maxWidth;
+    
+    
+    
+    NSInteger colNodesDepth = [self.rootColumnsNode depth];
+    NSInteger rowNodesEndpointsCount = [[self.rootRowsNode endpoints] count];
+    NSInteger height = colNodesDepth + rowNodesEndpointsCount;
+    
+    return CGSizeMake(width, height);
 }
 
-static const void *PivotColumns = &PivotColumns;
-- (void)setColumns:(NSArray *)columns {
+- (void)makePivot {
+
+    [self makeData];
     
-    objc_setAssociatedObject(self, PivotColumns, columns, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self reindex];
 }
 
-- (NSArray *)columns {
+- (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex {
     
-    return objc_getAssociatedObject(self, PivotColumns);
+    NSInteger filtersItemsCount = [[self.rootFiltersNode allItems] count];
+    NSInteger columnsItemsCount = [[self.rootColumnsNode allItems] count];
+    NSInteger rowsItemsCount = [[self.rootRowsNode allItems] count];
+    NSInteger dataItemsCount = [[self.rootDataNode allItems] count];
+    
+    return filtersItemsCount + columnsItemsCount + rowsItemsCount + dataItemsCount;
 }
 
-static const void *PivotRows = &PivotRows;
-- (void)setRows:(NSArray *)rows {
+- (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    objc_setAssociatedObject(self, PivotRows, rows, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    WOTNode *result;
+    
+    result = [[[self.rootFiltersNode allItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d",indexPath.row]] lastObject];
+    if (!result) {
+        
+        result = [[[self.rootColumnsNode allItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d",indexPath.row]] lastObject];
+    }
+    
+    if (!result) {
+        
+        result = [[[self.rootRowsNode allItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d",indexPath.row]] lastObject];
+    }
+    
+    if (!result) {
+        
+        result = [[[self.rootDataNode allItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"index == %d",indexPath.row]] lastObject];
+    }
+    
+    if (!result) {
+        
+        NSCAssert(NO, @"Node not found for indexPath:%@",indexPath);
+    }
+    
+    return result;
 }
 
-- (NSArray *)rows {
+#pragma mark - getters / setters
+
+static const void *RootDataNodeRef = &RootDataNodeRef;
+- (WOTNode *)rootDataNode {
     
-    return objc_getAssociatedObject(self, PivotRows);
+    return objc_getAssociatedObject(self, RootDataNodeRef);
+}
+
+- (void)setRootDataNode:(WOTNode *)node {
+    
+    objc_setAssociatedObject(self, RootDataNodeRef, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+static const void *RootColumnsNodeRef = &RootColumnsNodeRef;
+- (WOTNode *)rootColumnsNode {
+    
+    return objc_getAssociatedObject(self, RootColumnsNodeRef);
+}
+
+- (void)setRootColumnsNode:(WOTNode *)node {
+    
+    objc_setAssociatedObject(self, RootColumnsNodeRef, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+static const void *RootRowsNodeRef = &RootRowsNodeRef;
+- (WOTNode *)rootRowsNode {
+    
+    return objc_getAssociatedObject(self, RootRowsNodeRef);
+}
+
+- (void)setRootRowsNode:(WOTNode *)node {
+    
+    objc_setAssociatedObject(self, RootRowsNodeRef, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+static const void *RootFilterNodeRef = &RootFilterNodeRef;
+- (WOTNode *)rootFiltersNode {
+    
+    return objc_getAssociatedObject(self, RootFilterNodeRef);
+}
+
+- (void)setRootFiltersNode:(WOTNode *)node {
+    
+    objc_setAssociatedObject(self, RootFilterNodeRef, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 static const void *PivotItemBlock = &PivotItemBlock;
@@ -60,187 +161,58 @@ static const void *PivotItemBlock = &PivotItemBlock;
     return objc_getAssociatedObject(self, PivotItemBlock);
 }
 
-
-static const void *PivotMetadataItems = &PivotMetadataItems;
-- (void)setMetadataItems:(NSArray *)metadataItems {
-    
-    objc_setAssociatedObject(self, PivotMetadataItems, metadataItems, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSArray *)metadataItems {
-    
-    return objc_getAssociatedObject(self, PivotMetadataItems);
-}
-
-static const void *PivotAllItems = &PivotAllItems;
-- (void)setAllItems:(NSArray *)allItems {
-    
-    objc_setAssociatedObject(self, PivotAllItems, allItems, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSArray *)allItems {
-    
-    return objc_getAssociatedObject(self, PivotAllItems);
-}
-
-static const void *PivotDataItems = &PivotDataItems;
-- (void)setDataItems:(NSArray *)dataItems {
-    
-    objc_setAssociatedObject(self, PivotDataItems, dataItems, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSArray *)dataItems {
-    
-    return objc_getAssociatedObject(self, PivotDataItems);
-}
-
-
-- (void)makePivot {
-    
-    [self removeAllNodes];
-    
-    WOTNode *filter = [self filter];
-    
-    [filter addChildArray:[self columns]];
-    [filter addChildArray:[self rows]];
-
-    WOTNode *root = [[WOTNode alloc] init];
-    [root addChild:filter];
-    [self addNode:root];
-    
-    [self makeData];
-    
-    [self reindex];
-}
-
+#pragma mark - private
 - (void)makeData {
     
-    PivotItemCreationBlock block = [self pivotItemCreationBlock];
+    __block NSInteger index = 0;
     
-    NSArray *rowsEndPoints = [WOTNode endpointsForArray:[self rows]];
-    NSArray *colsEndPoints = [WOTNode endpointsForArray:[self columns]];
-    
-    NSMutableArray *dataItems = [[NSMutableArray alloc] init];
-    
-    [colsEndPoints enumerateObjectsUsingBlock:^(WOTPivotColumn *columnNode, NSUInteger idx, BOOL *stop) {
+    [self.rootFiltersNode enumerateAllChildrenUsingBlock:^(WOTNode *node) {
         
-        [rowsEndPoints enumerateObjectsUsingBlock:^(WOTPivotRow *rowNode, NSUInteger idx, BOOL *stop) {
-            
-            if (block){
+        [node setIndex:index];
+        index++;
+    }];
+
+    [self.rootColumnsNode enumerateAllChildrenUsingBlock:^(WOTNode *node) {
+        
+        [node setIndex:index];
+        index++;
+    }];
+    
+    [self.rootRowsNode enumerateAllChildrenUsingBlock:^(WOTNode *rowNode) {
+
+        [rowNode setIndex:index];
+        index++;
+
+        if (rowNode.predicate) {
+        
+            if (self.pivotItemCreationBlock) {
                 
-                NSArray *nodes = block(@[columnNode, rowNode]);
-                [dataItems addObjectsFromArray:nodes];
+                [self.rootColumnsNode enumerateEndpointsUsingBlock:^(WOTNode *columnNode) {
+
+                    NSMutableArray *predicates = [[NSMutableArray alloc] init];
+                    if (columnNode.predicate) [predicates addObject:columnNode.predicate];
+                    if (rowNode.predicate) [predicates addObject:rowNode.predicate];
+
+                    NSArray *dataNodes = self.pivotItemCreationBlock(predicates);
+
+                    [columnNode setMaxWidth:dataNodes.count forKey:@(rowNode.hash)];
+                    [rowNode setMaxWidth:dataNodes.count forKey:@(columnNode.hash)];
+                    
+                    [dataNodes enumerateObjectsUsingBlock:^(WOTNode *dataNode, NSUInteger idx, BOOL *stop) {
+                        
+                        [dataNode setIndex:index];
+                        index++;
+                        
+                        [dataNode setStepParentColumn:columnNode];
+                        [dataNode setStepParentRow:rowNode];
+                        [dataNode setIndexInsideStepParentColumn:idx];
+                        
+                        [self.rootDataNode addChild:dataNode];
+                    }];
+                }];
             }
-        }];
+        }
     }];
-    
-    NSMutableArray *metadataItems = [[NSMutableArray alloc] init];
-    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[[self filter] children]]];
-//    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[self rows]]];
-//    [metadataItems addObjectsFromArray:[WOTNode allItemsForArray:[self columns]]];
-    
-    [self setMetadataItems:metadataItems];
-    [self setDataItems:dataItems];
-    
-    NSMutableArray *allItems = [[NSMutableArray alloc] init];
-    [allItems addObjectsFromArray:metadataItems];
-    [allItems addObjectsFromArray:dataItems];
-    [self setAllItems:allItems];
-    
-}
-
-- (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex {
-
-    NSInteger allItemsCount = [[self allItems] count];
-    
-    return allItemsCount;
-}
-
-- (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath {
-
-    WOTNode *result = [self allItems][indexPath.row];
-    return result;
-}
-
-- (NSInteger)pivotRowsCount {
-
-    return 1;
-}
-
-- (NSInteger)metadataRowsCount {
-  
-    return 0;
-//    __block NSInteger filterMaxDepth = 0;
-//    [[[self rows] ] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-//        
-//        NSInteger nodeDepth = [node depth];
-//        filterMaxDepth = MAX(filterMaxDepth, nodeDepth);
-//    }];
-//    
-//    NSInteger columnsMaxDepth = [self columnsMaxDepth];
-//    
-//    NSInteger filterAndColumnsDepth = MAX(filterMaxDepth, columnsMaxDepth);
-//    return filterAndColumnsDepth;
-}
-
-
-- (NSInteger)rowsMaxDepth {
-
-    __block NSInteger rowsMaxDepth = 0;
-    [[self rows] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-        
-        NSInteger nodeDepth = [node depth];
-        rowsMaxDepth = MAX(rowsMaxDepth, nodeDepth);
-    }];
-    return rowsMaxDepth;
-}
-
-- (NSInteger)columnsMaxDepth {
-    
-    __block NSInteger columnsMaxDepth = 0;
-    [[self columns] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-        
-        NSInteger nodeDepth = [node depth];
-        columnsMaxDepth = MAX(columnsMaxDepth, nodeDepth);
-    }];
-    return columnsMaxDepth;
-}
-
-- (CGRect)dimensionForNode:(WOTNode *)node {
-    
-    CGRect result = CGRectZero;
-    
-    PivotMetadataType metadatatype = [node pivotMetadataType];
-    switch (metadatatype) {
-            
-        case PivotMetadataTypeFilter: {
-            
-            NSInteger x = 0;
-            NSInteger y = 0;
-            NSInteger rowsDepth = [self rowsMaxDepth];
-            NSInteger columnsMaxDepth = [self columnsMaxDepth];
-            result = CGRectMake(x, y, rowsDepth, columnsMaxDepth);
-            break;
-        }
-        case PivotMetadataTypeColumn: {
-            
-            break;
-        }
-        case PivotMetadataTypeRow: {
-            
-            break;
-        }
-        case PivotMetadataTypeData: {
-            
-            break;
-        }
-        default: {
-            break;
-        }
-    }
-    
-    
-    return result;
 }
 
 @end

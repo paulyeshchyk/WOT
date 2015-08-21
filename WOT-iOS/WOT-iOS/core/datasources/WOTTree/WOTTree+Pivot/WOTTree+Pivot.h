@@ -8,28 +8,20 @@
 
 #import "WOTTree.h"
 
-typedef NSArray *(^PivotItemCreationBlock)(NSArray *stepParents);
+typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
 @interface WOTTree (Pivot)
 
-- (void)setFilter:(WOTNode *)filter;
-- (WOTNode *)filter;
-
-- (void)setColumns:(NSArray *)columns;
-- (NSArray *)columns;
-
-- (void)setRows:(NSArray *)rows;
-- (NSArray *)rows;
-
-
-- (void)setPivotItemCreationBlock:(PivotItemCreationBlock)block;
+@property (nonatomic)WOTNode *rootFiltersNode;
+@property (nonatomic)WOTNode *rootColumnsNode;
+@property (nonatomic)WOTNode *rootRowsNode;
+@property (nonatomic)WOTNode *rootDataNode;
+@property (nonatomic)PivotItemCreationBlock pivotItemCreationBlock;
 
 - (void)makePivot;
 
-- (NSInteger)pivotRowsCount;
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex;
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath;
-
-- (CGRect)dimensionForNode:(WOTNode *)node;
+- (CGSize)contentSize;
 
 @end

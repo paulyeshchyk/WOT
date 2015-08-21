@@ -15,15 +15,12 @@
 - (CGSize)collectionViewContentSize {
     
     NSInteger depth = 0;
-    if (self.depthCallback) {
-        
-        depth = self.depthCallback();
-    }
-    
     NSInteger width = 0;
-    if (self.widthCallback) {
+    if (self.relativeContentSizeBlock) {
         
-        width = self.widthCallback();
+        CGSize size = self.relativeContentSizeBlock();
+        depth = size.height;
+        width = size.width;
     }
     
     CGSize result = CGSizeMake(width * self.itemSize.width,depth * self.itemSize.height);
@@ -68,7 +65,6 @@
             CGFloat width = itemRelativeRect.size.width * self.itemSize.width;
             CGFloat height = itemRelativeRect.size.height * self.itemSize.height;
             
-            //this is the cell at row j in section i
             CGRect cellFrame = CGRectMake(x,
                                           y,
                                           width,

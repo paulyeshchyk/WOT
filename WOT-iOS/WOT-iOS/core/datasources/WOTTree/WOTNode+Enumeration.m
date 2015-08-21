@@ -12,15 +12,21 @@
 
 - (NSInteger)depth {
     
-    return [self depthForChildList:self.childList initialLevel:1];
+    return [WOTNode depthForChildList:self.children initialLevel:self.isVisible?1:0];
 }
 
-- (NSInteger)depthForChildList:(NSMutableOrderedSet *)childList initialLevel:(NSInteger)initialLevel {
++ (NSInteger)depthForArray:(NSArray *)array {
+
+    return [self depthForChildList:array initialLevel:0];
+    
+}
+
++ (NSInteger)depthForChildList:(NSArray *)childList initialLevel:(NSInteger)initialLevel {
     
     __block NSInteger result = initialLevel;
     [childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
         
-        NSInteger resultFromChild = [self depthForChildList:node.childList initialLevel:(initialLevel + 1)];
+        NSInteger resultFromChild = [self depthForChildList:node.children initialLevel:(initialLevel + 1)];
         result = MAX(result, resultFromChild);
     }];
     
@@ -36,6 +42,42 @@
     
     NSArray *array = [self.childList array];
     return [WOTNode endpointsForArray:array];
+}
+
+- (NSArray *)allItems {
+    
+    return [WOTNode allItemsForArray:self.children];
+}
+
+- (void)enumerateAllChildrenUsingBlock:(HierarchyEnumarationCallback)callback {
+    
+    [WOTNode enumerateItemsHierarchy:self.children callback:callback];
+    
+}
+
+- (void)enumerateEndpointsUsingBlock:(HierarchyEnumarationCallback)callback {
+    
+    [[WOTNode endpointsForArray:self.children] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+        
+        if (callback) {
+            
+            callback(node);
+        }
+    }];
+    
+}
+
++ (void)enumerateItemsHierarchy:(NSArray *)items callback:(HierarchyEnumarationCallback)callback{
+    
+    [items enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+        
+        if (callback){
+            
+            callback(node);
+        }
+        
+        [WOTNode enumerateItemsHierarchy:node.children callback:callback];
+    }];
 }
 
 + (NSArray *)allItemsForArray:(NSArray *)childArray {
@@ -90,5 +132,71 @@
     
     return result;
 }
+
+- (NSInteger)parentsCount {
+    
+    return [self parentsCountForNode:self];
+}
+
+- (NSInteger)parentsCountForNode:(WOTNode *)node {
+    
+    if (!node.parent) {
+        
+        return 0;
+    }
+    
+    NSInteger result = 1;
+    result += [self parentsCountForNode:node.parent];
+    return result;
+}
+
+- (NSInteger)visibleParentsCount {
+    
+    return [self visibleParentsCountForNode:self];
+}
+
+- (NSInteger)visibleParentsCountForNode:(WOTNode *)node {
+    
+    WOTNode *parent = node.parent;
+    if (!parent) {
+        
+        return 0;
+    }
+    
+    if (!parent.isVisible) {
+        
+        return 0;
+    }
+    
+    NSInteger result = 1;
+    result += [self visibleParentsCountForNode:parent];
+    return result;
+}
+
+- (NSInteger)childrenCountForSiblingNode {
+    
+    return [self childrenCountForSiblingNode:self];
+}
+
+- (NSInteger)childrenCountForSiblingNode:(WOTNode *)node {
+    
+    __block NSInteger result = 0;
+    WOTNode *parent = node.parent;
+    if (parent) {
+        
+        NSInteger indexOfNode = [parent.children indexOfObject:node];
+        for (int i=0;i<indexOfNode;i++) {
+            
+            WOTNode *child = parent.children[i];
+            NSArray *endpoints = child.endpoints;
+            result += [endpoints count];
+        }
+        
+        result += [self childrenCountForSiblingNode:parent];
+    }
+    
+    return result;
+}
+
 
 @end

@@ -139,24 +139,4 @@
     return result;
 }
 
-- (NSInteger)childrenCountForSiblingNode:(WOTNode *)node {
-    
-    __block NSInteger result = 0;
-    WOTNode *parent = node.parent;
-    if (parent) {
-        
-        NSInteger indexOfNode = [parent.children indexOfObject:node];
-        for (int i=0;i<indexOfNode;i++) {
-            
-            WOTNode *child = parent.children[i];
-            NSArray *endpoints = child.endpoints;
-            result += [endpoints count];
-        }
-
-        result += [self childrenCountForSiblingNode:parent];
-    }
-    
-    return result;
-}
-
 @end

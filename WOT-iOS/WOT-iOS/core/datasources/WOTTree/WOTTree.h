@@ -19,9 +19,8 @@ typedef NSComparisonResult(^WOTNodeComparator)(WOTNode *left, WOTNode *right);
 @property (nonatomic, copy)WOTNodeComparator nodeComparator;
 @property (nonatomic, readonly)NSSet *rootNodes;
 
-- (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)nodesCountAtSection:(NSInteger)sectionIndex;
-- (NSInteger)childrenCountForSiblingNode:(WOTNode *)node;
+- (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)addNode:(WOTNode *)node;
 - (void)removeNode:(WOTNode *)node;

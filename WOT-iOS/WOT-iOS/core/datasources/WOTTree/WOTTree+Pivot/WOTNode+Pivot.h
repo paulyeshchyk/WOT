@@ -7,6 +7,7 @@
 //
 
 #import "WOTNode.h"
+#import "WOTTree+Pivot.h"
 
 typedef NS_ENUM(NSInteger, PivotMetadataType) {
     PivotMetadataTypeUnknown = 0,
@@ -18,17 +19,21 @@ typedef NS_ENUM(NSInteger, PivotMetadataType) {
 
 @interface WOTNode (Pivot)
 
+@property (nonatomic, readonly)CGRect relativeRect;
+@property (nonatomic) NSPredicate *predicate;
+@property (nonatomic) PivotMetadataType pivotMetadataType;
+@property (nonatomic) id<NSCopying> data;
+@property (nonatomic) NSInteger index;
+@property (nonatomic) WOTNode *stepParentColumn;
+@property (nonatomic) WOTNode *stepParentRow;
+@property (nonatomic) NSInteger indexInsideStepParentColumn;
+@property (nonatomic) WOTTree *tree;
+
+- (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL pivotMetadataType:(PivotMetadataType)metadataType predicate:(NSPredicate *)predicate;
 - (id)initWithName:(NSString *)name pivotMetadataType:(PivotMetadataType)metadataType predicate:(NSPredicate *)predicate;
+- (id)initWithName:(NSString *)name tree:(WOTTree *)tree isVisible:(BOOL)isVisible;
 
-- (void)setPredicate:(NSPredicate *)predicate;
-- (NSPredicate *)predicate;
-
-- (void)setPivotMetadataType:(PivotMetadataType)pivotMetadataType;
-- (PivotMetadataType)pivotMetadataType;
-
-- (void)setData:(id<NSCopying>)data;
-- (id<NSCopying>)data;
-
-- (void)addStepParentsFromArray:(NSArray *)stepParents;
+- (void)setMaxWidth:(NSInteger)width forKey:(id)key;
+- (NSInteger)maxWidthOrValue:(NSInteger)value;
 
 @end

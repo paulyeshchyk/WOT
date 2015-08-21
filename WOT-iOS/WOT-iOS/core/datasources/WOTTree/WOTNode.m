@@ -19,12 +19,26 @@
 
 - (void)dealloc {
     
+    [self.childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+        
+        node.parent = nil;
+    }];
     [self.childList removeAllObjects];
+}
+
+- (id)init {
+    
+    self = [super init];
+    if (self){
+    
+        self.isVisible = YES;
+    }
+    return self;
 }
 
 - (id)initWithName:(NSString *)name {
     
-    self = [super init];
+    self = [self init];
     if (self){
         
         self.name = name;
@@ -34,14 +48,19 @@
 
 - (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL{
     
-    self = [super init];
+    self = [self initWithName:name];
     if (self){
         
-        self.name = name;
         self.imageURL = imageURL;
     }
     return self;
 }
+
+- (NSUInteger)hash {
+    
+    return [self.name hash];
+}
+
 
 - (NSArray *)children {
     
@@ -54,6 +73,7 @@
         
         self.childList = [[NSMutableOrderedSet alloc] init];
     }
+    
     child.parent = self;
     [self.childList addObject:child];
 }
@@ -76,6 +96,12 @@
         
         self.childList = [[NSMutableOrderedSet alloc] init];
     }
+    
+    [childrenSet enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
+        
+        node.parent = self;
+    }];
+    
     
     [self.childList unionSet:childrenSet];
 }

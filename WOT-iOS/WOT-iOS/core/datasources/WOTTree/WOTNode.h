@@ -15,6 +15,7 @@
 @property (nonatomic, weak) WOTNode *parent;
 @property (nonatomic, readonly) NSURL *imageURL;
 @property (nonatomic, readonly) NSMutableOrderedSet *childList;
+@property (nonatomic, assign) BOOL isVisible;
 
 - (id)initWithName:(NSString *)name;
 - (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL;

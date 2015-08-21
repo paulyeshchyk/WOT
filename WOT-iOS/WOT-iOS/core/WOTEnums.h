@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, WOTModuleType){
     WOTModuleTypeTank = 1 << 6
 };
 
+typedef CGSize(^LayoutRelativeContentSizeBlock)(void);
 typedef NSInteger(^LayoutDimensionBlock)(void);
 typedef CGRect(^LayoutRelativeRectBlock)(NSIndexPath *indexPath);
 typedef NSInteger(^LayoutSiblingChildrenCount)(NSIndexPath *);

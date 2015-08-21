@@ -9,6 +9,7 @@
 #import "WOTTankModuleTreeViewController.h"
 #import "WOTTree+ModuleTree.h"
 #import "WOTNode+ModuleTree.h"
+#import "WOTNode+Enumeration.h"
 #import "ModulesTree+UI.h"
 #import "WOTTankConfigurationCollectionViewCell.h"
 #import "WOTTankConfigurationFlowLayout.h"
@@ -82,7 +83,7 @@
     [self.flowLayout setLayoutPreviousSiblingNodeChildrenCountCallback:^(NSIndexPath *indexPath){
 
         WOTNode *node = [self.tree nodeAtIndexPath:indexPath];
-        NSInteger result = [self.tree childrenCountForSiblingNode:node];
+        NSInteger result = node.childrenCountForSiblingNode;
         return result;
     }];
 

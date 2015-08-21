@@ -15,6 +15,7 @@
 
 @implementation WOTPivotColumn
 
+
 - (id)initWithName:(NSString *)name predicate:(NSPredicate *)predicate {
     
     self = [super initWithName:name];
