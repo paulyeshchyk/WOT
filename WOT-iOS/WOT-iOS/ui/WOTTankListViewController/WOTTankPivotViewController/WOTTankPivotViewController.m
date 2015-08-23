@@ -60,6 +60,12 @@
         return resultRect;
     }];
     
+    [self.flowLayout setItemLayoutStickyType:^PivotStickyType(NSIndexPath *indexPath) {
+
+        WOTNode *node = [self.pivotTree pivotItemAtIndexPath:indexPath];
+        return node.stickyType;
+    }];
+    
     __weak typeof(self)weakSelf = self;
 
     self.pivotTree = [[WOTTree alloc] init];
@@ -73,7 +79,7 @@
         
         NSMutableArray *resultArray = [[NSMutableArray alloc] init];
         NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
-        [fetchedData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [fetchedData enumerateObjectsUsingBlock:^(Tanks *obj, NSUInteger idx, BOOL *stop) {
 
             NSURL *imageURL = [NSURL URLWithString:[obj image]];
             WOTNode *node = [[WOTNode alloc] initWithName:[obj name_i18n] imageURL:imageURL pivotMetadataType:PivotMetadataTypeData predicate:predicate];
@@ -202,7 +208,7 @@
 #pragma mark - private
 - (NSArray *)pivotFilters {
     
-    WOTNode *node = [[WOTNode alloc] initWithName:@"Filter" pivotMetadataType:PivotMetadataTypeFilter predicate:[NSPredicate predicateWithFormat:@"nation == %@",@"usa"]];
+    WOTNode *node = [[WOTNode alloc] initWithName:@"Filter" pivotMetadataType:PivotMetadataTypeFilter predicate:nil];//[NSPredicate predicateWithFormat:@"nation == %@",@"usa"]
     return @[node];
 }
 

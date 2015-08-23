@@ -12,5 +12,6 @@
 
 @property (nonatomic, copy) LayoutRelativeContentSizeBlock relativeContentSizeBlock;
 @property (nonatomic, copy) LayoutRelativeRectBlock itemRelativeRectCallback;
+@property (nonatomic, copy) LayoutStickyType itemLayoutStickyType;
 
 @end

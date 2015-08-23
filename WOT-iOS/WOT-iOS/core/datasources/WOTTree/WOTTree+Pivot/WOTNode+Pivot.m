@@ -19,6 +19,7 @@
 @dynamic stepParentColumn;
 @dynamic stepParentRow;
 @dynamic indexInsideStepParentColumn;
+@dynamic stickyType;
 
 - (id)initWithName:(NSString *)name tree:(WOTTree *)tree isVisible:(BOOL)isVisible{
     
@@ -56,6 +57,26 @@
         [self setPredicate:predicate];
     }
     return self;
+}
+
+- (PivotStickyType)stickyType {
+    
+    PivotMetadataType metadataType = [self pivotMetadataType];
+    PivotStickyType result = PivotStickyTypeFloat;
+    switch (metadataType) {
+        case PivotMetadataTypeFilter:
+            result = PivotStickyTypeHorizontal | PivotStickyTypeVertical;
+            break;
+        case PivotMetadataTypeRow:
+            result = PivotStickyTypeHorizontal;
+            break;
+        case PivotMetadataTypeColumn:
+            result = PivotStickyTypeVertical;
+            break;
+        default:
+            break;
+    }
+    return result;
 }
 
 - (CGRect)relativeRect {

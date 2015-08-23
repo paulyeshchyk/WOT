@@ -60,6 +60,12 @@
                 itemRelativeRect = self.itemRelativeRectCallback([NSIndexPath indexPathForRow:row inSection:section]);
             }
             
+            PivotStickyType stickyType = PivotStickyTypeFloat;
+            if (self.itemLayoutStickyType) {
+                
+                stickyType = self.itemLayoutStickyType([NSIndexPath indexPathForRow:row inSection:section]);
+            }
+            
             CGFloat x = itemRelativeRect.origin.x * self.itemSize.width;
             CGFloat y = itemRelativeRect.origin.y * self.itemSize.height;
             CGFloat width = itemRelativeRect.size.width * self.itemSize.width;

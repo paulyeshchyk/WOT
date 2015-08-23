@@ -7,8 +7,6 @@
 //
 
 #import "WOTTree+Pivot.h"
-#import "WOTPivotColumn.h"
-#import "WOTPivotRow.h"
 #import "WOTNode+Enumeration.h"
 #import "WOTNode+Pivot.h"
 
