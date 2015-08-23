@@ -49,6 +49,8 @@
     
     NSMutableArray* elementsInRect = [NSMutableArray array];
     
+    CGPoint const contentOffset = self.collectionView.contentOffset;
+    
     //iterate over all cells in this collection
     for(NSUInteger section = 0; section < [self.collectionView numberOfSections]; section++) {
         
@@ -66,10 +68,23 @@
                 stickyType = self.itemLayoutStickyType([NSIndexPath indexPathForRow:row inSection:section]);
             }
             
+            NSInteger zIndex = 0;
+            
             CGFloat x = itemRelativeRect.origin.x * self.itemSize.width;
             CGFloat y = itemRelativeRect.origin.y * self.itemSize.height;
             CGFloat width = itemRelativeRect.size.width * self.itemSize.width;
             CGFloat height = itemRelativeRect.size.height * self.itemSize.height;
+            
+            if ((stickyType & PivotStickyTypeVertical) == PivotStickyTypeVertical) {
+                
+                y += contentOffset.y;
+                zIndex = 1024;
+            }
+            if ((stickyType & PivotStickyTypeHorizontal) == PivotStickyTypeHorizontal) {
+                
+                x += contentOffset.x;
+                zIndex = 1024;
+            }
             
             CGRect cellFrame = CGRectMake(x,
                                           y,
@@ -85,6 +100,7 @@
                 
                 //set the frame for this attributes object
                 attr.frame = cellFrame;
+                attr.zIndex = zIndex;
                 [elementsInRect addObject:attr];
             }
         }
