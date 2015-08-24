@@ -14,5 +14,6 @@
 - (UIColor *)darkerColor:(CGFloat)koeff;
 - (UIColor *)inverseColor;
 - (UIColor *)inverseColorBW;
+- (UIColor *)paleColor;
 
 @end

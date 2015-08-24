@@ -9,21 +9,22 @@
 #ifndef WOT_iOS_WOTPrefixHeader_pch
 #define WOT_iOS_WOTPrefixHeader_pch
 
+#import "NSArray+WOT.h"
+#import "NSBundle+LanguageBundle.h"
+#import "NSExpressionDescription+WOT.h"
+#import "NSManagedObject+CoreDataOperations.h"
+#import "NSManagedObject+FillProperties.h"
+#import "NSNumber+CustomFormatter.h"
+#import "NSString+WOTValue.h"
+#import "NSThread+ExecutionOnMain.h"
+#import "UIBarButtonItem+EventBlock.h"
+#import "UIColor+HSB.h"
+#import "UIImage+Resize.h"
+#import "UIImageView+WebCache.h"
+#import "UIKit+AFNetworking.h"
 #import "UINavigationBar+WOT.h"
 #import "UIToolbar+WOT.h"
-#import "NSArray+WOT.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+WOTValue.h"
-#import "UIImage+Resize.h"
-#import "NSBundle+LanguageBundle.h"
 #import "UIView+StretchingConstraints.h"
-#import "UIKit+AFNetworking.h"
-#import "NSThread+ExecutionOnMain.h"
-#import "UIColor+HSB.h"
-#import "NSManagedObject+CoreDataOperations.h"
-#import "UIBarButtonItem+EventBlock.h"
-#import "NSManagedObject+FillProperties.h"
-#import "NSExpressionDescription+WOT.h"
 
 #import <ASProgressPopUpView/ASProgressPopUpView.h>
 

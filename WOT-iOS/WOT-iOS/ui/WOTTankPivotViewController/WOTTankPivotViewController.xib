@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOTTankPivotViewController">
+            <connections>
+                <outlet property="collectionView" destination="D0E-PC-FYm" id="Q9s-wL-hvY"/>
+                <outlet property="flowLayout" destination="wKE-mk-LJd" id="3te-59-1Vt"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="605" height="477"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="D0E-PC-FYm">
+                    <rect key="frame" x="0.0" y="0.0" width="605" height="477"/>
+                    <collectionViewLayout key="collectionViewLayout" id="wKE-mk-LJd" customClass="WOTTankPivotLayout"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="cZe-O7-BFk"/>
+                        <outlet property="delegate" destination="-1" id="SAm-c9-OA0"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="D0E-PC-FYm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7jC-YX-a28"/>
+                <constraint firstItem="D0E-PC-FYm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Gl8-cu-0MC"/>
+                <constraint firstAttribute="trailing" secondItem="D0E-PC-FYm" secondAttribute="trailing" id="LRm-pc-haO"/>
+                <constraint firstAttribute="bottom" secondItem="D0E-PC-FYm" secondAttribute="bottom" id="wUP-DV-idI"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="496.5" y="309.5"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

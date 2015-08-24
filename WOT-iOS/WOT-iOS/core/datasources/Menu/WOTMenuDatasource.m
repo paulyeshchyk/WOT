@@ -13,6 +13,7 @@
 #import "WOTProfileViewController.h"
 #import "WOTTankListViewController.h"
 #import "WOTPlayersListViewController.h"
+#import "WOTTankPivotViewController.h"
 
 @interface WOTMenuDatasource () <NSFetchedResultsControllerDelegate>
 
@@ -31,6 +32,7 @@
         
 
         self.availableViewControllers = [[NSMutableArray alloc] init];
+        [self.availableViewControllers addObject:[[WOTMenuItem alloc] initWithClass:[WOTTankPivotViewController class] title:WOTString(WOT_STRING_TANKDELEYEV) image:nil userDependence:NO]];
         [self.availableViewControllers addObject:[[WOTMenuItem alloc] initWithClass:[WOTTankListViewController class] title:WOTString(WOT_STRING_TANKOPEDIA) image:nil userDependence:NO]];
         [self.availableViewControllers addObject:[[WOTMenuItem alloc] initWithClass:[WOTPlayersListViewController class] title:WOTString(WOT_STRING_PLAYERS) image:nil userDependence:NO]];
         [self.availableViewControllers addObject:[[WOTMenuItem alloc] initWithClass:[WOTProfileViewController class] title:WOTString(WOT_STRING_PROFILE) image:nil userDependence:YES]];

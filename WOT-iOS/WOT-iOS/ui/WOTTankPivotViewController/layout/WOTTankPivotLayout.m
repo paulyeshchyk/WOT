@@ -75,12 +75,10 @@
             
             NSInteger zIndex = 0;
             
-            CGSize itemSize = self.itemSize;
-            
-            CGFloat x = itemRelativeRect.origin.x * itemSize.width;
-            CGFloat y = itemRelativeRect.origin.y * itemSize.height;
-            CGFloat width = itemRelativeRect.size.width * itemSize.width;
-            CGFloat height = itemRelativeRect.size.height * itemSize.height;
+            CGFloat x = itemRelativeRect.origin.x * self.itemSize.width;
+            CGFloat y = itemRelativeRect.origin.y * self.itemSize.height;
+            CGFloat width = itemRelativeRect.size.width * self.itemSize.width;
+            CGFloat height = itemRelativeRect.size.height * self.itemSize.height;
 
             if ((stickyType & PivotStickyTypeVertical) == PivotStickyTypeVertical) {
                 

@@ -15,7 +15,6 @@
 #import "WOTRequestExecutor.h"
 #import "WOTTankDetailDatasource.h"
 #import "WOTTankModuleTreeViewController.h"
-#import "WOTTankPivotViewController.h"
 
 #import "WOTTankIdsDatasource.h"
 
@@ -342,17 +341,6 @@
 
 - (IBAction)onPropertyAllSelection:(id)sender {
     
-    WOTTankPivotViewController *pivotViewController = [[WOTTankPivotViewController alloc] initWithNibName:NSStringFromClass([WOTTankPivotViewController class]) bundle:nil];
-    [pivotViewController setCancelBlock:^(){
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }];
-    [pivotViewController setDoneBlock:^(id configuration){
-        
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }];
-    
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:pivotViewController];
-    [self presentViewController:navController animated:YES completion:NULL];
 }
 
 - (IBAction)onPropertyArmorSelection:(id)sender {

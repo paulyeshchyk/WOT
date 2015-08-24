@@ -40,6 +40,16 @@
     return [UIColor colorWithRed:1.-r green:1.-g blue:1.-b alpha:a];
 }
 
+- (UIColor *)paleColor {
+    
+    CGFloat h, s, b, a;
+    if ([self getHue:&h saturation:&s brightness:&b alpha:&a])
+        return [UIColor colorWithHue:h
+                          saturation:0.6f
+                          brightness:b
+                               alpha:a];
+    return nil;
+}
 
 - (UIColor *)inverseColorBW {
     
