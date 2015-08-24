@@ -32,6 +32,24 @@ WOT_STRING_CHANGE_SORTING   = "Change sorting";
 WOT_STRING_CHANGE_GROUP     = "Change groupping";
 WOT_STRING_CHANGE_FILTER    = "Change filter";
 
+WOT_STRING_LEVEL_1          = "I";
+WOT_STRING_LEVEL_2          = "II";
+WOT_STRING_LEVEL_3          = "III";
+WOT_STRING_LEVEL_4          = "IV";
+WOT_STRING_LEVEL_5          = "V";
+WOT_STRING_LEVEL_6          = "VI";
+WOT_STRING_LEVEL_7          = "VII";
+WOT_STRING_LEVEL_8          = "VIII";
+WOT_STRING_LEVEL_9          = "IX";
+WOT_STRING_LEVEL_10         = "X";
+
+WOT_STRING_AT_SPG           = "AT SPG";
+WOT_STRING_SPG              = "SPG";
+WOT_STRING_HT               = "HT";
+WOT_STRING_LT               = "LT";
+WOT_STRING_MT               = "MT";
+
+
 ARMOR_BOARD                 = "Armor Board";
 ARMOR_FEDD                  = "Armor Fedd";
 ARMOR_FOREHEAD              = "Armor Forehead";

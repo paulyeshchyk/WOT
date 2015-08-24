@@ -66,8 +66,34 @@
     return CGSizeMake(width, height);
 }
 
+- (void)addMetadataItems:(NSArray *)metadataItems {
+    
+    NSMutableArray *selfMetadataItems = [self metadataItems];
+    if (!selfMetadataItems) {
+        
+        selfMetadataItems = [[NSMutableArray alloc] init];
+        [self setMetadataItems:selfMetadataItems];
+    }
+
+    [selfMetadataItems addObjectsFromArray:metadataItems];
+}
+
+- (void)resortMetadata {
+    
+    NSArray *rows = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pivotMetadataType == %d",PivotMetadataTypeRow]];
+    [self.rootRowsNode addChildArray:rows];
+    
+    NSArray *cols = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pivotMetadataType == %d",PivotMetadataTypeColumn]];
+    [self.rootColumnsNode addChildArray:cols];
+
+    NSArray *filters = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pivotMetadataType == %d",PivotMetadataTypeFilter]];
+    [self.rootFiltersNode addChildArray:filters];
+}
+
 - (void)makePivot {
 
+    [self resortMetadata];
+    
     [self makeData];
     
     [self makeIndex];
@@ -123,6 +149,17 @@
 }
 
 #pragma mark - getters / setters
+
+static const void *MetadataItemsRef = &MetadataItemsRef;
+- (NSMutableArray *)metadataItems {
+    
+    return objc_getAssociatedObject(self, MetadataItemsRef);
+}
+
+- (void)setMetadataItems:(NSMutableArray *)metadataItems {
+    
+    objc_setAssociatedObject(self, MetadataItemsRef, metadataItems, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 static const void *LargeIndexRef = &LargeIndexRef;
 - (NSDictionary *)largeIndex {

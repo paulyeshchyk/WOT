@@ -19,6 +19,7 @@ typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 @property (nonatomic)PivotItemCreationBlock pivotItemCreationBlock;
 
 - (void)makePivot;
+- (void)addMetadataItems:(NSArray *)metadataItems;
 
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex;
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath;
