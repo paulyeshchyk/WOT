@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, PivotMetadataType) {
 @property (nonatomic) NSInteger indexInsideStepParentColumn;
 @property (nonatomic) WOTTree *tree;
 @property (nonatomic) PivotStickyType stickyType;
+@property (nonatomic) UIColor *dataColor;
 
 - (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL pivotMetadataType:(PivotMetadataType)metadataType predicate:(NSPredicate *)predicate;
 - (id)initWithName:(NSString *)name pivotMetadataType:(PivotMetadataType)metadataType predicate:(NSPredicate *)predicate;

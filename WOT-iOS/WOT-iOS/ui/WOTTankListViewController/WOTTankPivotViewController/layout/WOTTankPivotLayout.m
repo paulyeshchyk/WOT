@@ -8,9 +8,15 @@
 
 #import "WOTTankPivotLayout.h"
 
-#define DEFAULT_ITEM_SIZE CGSizeMake(44.0f,88.0f)
+#define DEFAULT_ITEM_SIZE_IPAD CGSizeMake(132.0f,88.0f)
+#define DEFAULT_ITEM_SIZE_IPHONE CGSizeMake(66.0f,44.0f)
 
 @implementation WOTTankPivotLayout
+
+- (CGSize)itemSize {
+    
+    return IS_IPAD?DEFAULT_ITEM_SIZE_IPAD:DEFAULT_ITEM_SIZE_IPHONE;
+}
 
 - (CGSize)collectionViewContentSize {
     
@@ -29,10 +35,9 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    CGSize defSize = DEFAULT_ITEM_SIZE;
     UICollectionViewLayoutAttributes* attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     attributes.size = self.itemSize;
-    attributes.center = CGPointMake(indexPath.row * defSize.width, indexPath.section * defSize.height);
+    attributes.center = CGPointMake(indexPath.row * self.itemSize.width, indexPath.section * self.itemSize.height);
     return attributes;
 }
 
@@ -74,16 +79,16 @@
             CGFloat y = itemRelativeRect.origin.y * self.itemSize.height;
             CGFloat width = itemRelativeRect.size.width * self.itemSize.width;
             CGFloat height = itemRelativeRect.size.height * self.itemSize.height;
-            
+
             if ((stickyType & PivotStickyTypeVertical) == PivotStickyTypeVertical) {
                 
                 y += contentOffset.y;
-                zIndex = 1024;
+                zIndex += 1;
             }
             if ((stickyType & PivotStickyTypeHorizontal) == PivotStickyTypeHorizontal) {
                 
                 x += contentOffset.x;
-                zIndex = 1024;
+                zIndex += 1;
             }
             
             CGRect cellFrame = CGRectMake(x,

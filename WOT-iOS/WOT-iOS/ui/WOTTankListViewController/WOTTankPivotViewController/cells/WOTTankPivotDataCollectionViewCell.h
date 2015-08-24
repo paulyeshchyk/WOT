@@ -12,8 +12,11 @@ typedef void(^NodeBlock)(NSIndexPath *indexPath);
 
 @interface WOTTankPivotDataCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic,copy)NSIndexPath *indexPath;
-@property (nonatomic,weak)IBOutlet UILabel *label;
-@property (nonatomic,weak)IBOutlet UIImageView *imageView;
+@property (nonatomic, copy) NSIndexPath *indexPath;
+@property (nonatomic, weak) IBOutlet UILabel *label;
+@property (nonatomic, weak) IBOutlet UILabel *dataLabel;
+@property (nonatomic, weak) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) UIColor *dataViewColor;
+
 
 @end

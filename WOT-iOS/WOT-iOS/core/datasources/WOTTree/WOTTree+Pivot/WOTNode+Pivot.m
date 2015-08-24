@@ -95,8 +95,7 @@
 
     [self setRelativeRectValue:[NSValue valueWithCGRect:result]];
     
-    return result;
-    
+    return result;    
 }
 
 - (NSInteger)x {
@@ -352,6 +351,17 @@ static const void *TreeRef = &TreeRef;
 - (void)setTree:(WOTTree *)tree {
     
     objc_setAssociatedObject(self, TreeRef, tree, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+static const void *DataColorRef = &DataColorRef;
+- (UIColor *)dataColor {
+    
+    return objc_getAssociatedObject(self, DataColorRef);
+}
+
+- (void)setDataColor:(UIColor *)dataColor {
+    
+    objc_setAssociatedObject(self, DataColorRef, dataColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 static const void *IndexRef = &IndexRef;

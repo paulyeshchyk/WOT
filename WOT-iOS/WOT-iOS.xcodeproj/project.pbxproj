@@ -11,7 +11,6 @@
 		1D010D0A1B7B800A00FA6A75 /* WOTTankPivotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D081B7B800A00FA6A75 /* WOTTankPivotViewController.m */; };
 		1D010D0B1B7B800A00FA6A75 /* WOTTankPivotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D091B7B800A00FA6A75 /* WOTTankPivotViewController.xib */; };
 		1D010D111B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D0E1B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.m */; };
-		1D010D121B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D0F1B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.xib */; };
 		1D010D151B7B847800FA6A75 /* WOTTankPivotLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D141B7B847800FA6A75 /* WOTTankPivotLayout.m */; };
 		1D010D311B7DFF1100FA6A75 /* WOTTankConfigurationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D191B7DFF1100FA6A75 /* WOTTankConfigurationCollectionViewCell.m */; };
 		1D010D321B7DFF1100FA6A75 /* WOTTankConfigurationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D1A1B7DFF1100FA6A75 /* WOTTankConfigurationCollectionViewCell.xib */; };
@@ -35,6 +34,9 @@
 		1D010D6C1B83386900FA6A75 /* WOTTankPivotEmptyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D6A1B83386900FA6A75 /* WOTTankPivotEmptyCollectionViewCell.m */; };
 		1D010D6D1B83386900FA6A75 /* WOTTankPivotEmptyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D6B1B83386900FA6A75 /* WOTTankPivotEmptyCollectionViewCell.xib */; };
 		1D010D731B84794000FA6A75 /* WOTNode+Enumeration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D721B84794000FA6A75 /* WOTNode+Enumeration.m */; };
+		1D010D7A1B8AF60300FA6A75 /* UIColor+HSB.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D791B8AF60300FA6A75 /* UIColor+HSB.m */; };
+		1D010D7D1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D7B1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~ipad.xib */; };
+		1D010D7E1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D7C1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~iphone.xib */; };
 		1D047B231B331B0F00B5B696 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B221B331B0F00B5B696 /* WOTSessionManager.m */; };
 		1D047B441B331B9700B5B696 /* WOTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B371B331B9700B5B696 /* WOTRequest.m */; };
 		1D047B461B331B9700B5B696 /* WOTRequestExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B3B1B331B9700B5B696 /* WOTRequestExecutor.m */; };
@@ -305,7 +307,6 @@
 		1D010D091B7B800A00FA6A75 /* WOTTankPivotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotViewController.xib; sourceTree = "<group>"; };
 		1D010D0D1B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotDataCollectionViewCell.h; sourceTree = "<group>"; };
 		1D010D0E1B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotDataCollectionViewCell.m; sourceTree = "<group>"; };
-		1D010D0F1B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotDataCollectionViewCell.xib; sourceTree = "<group>"; };
 		1D010D131B7B847800FA6A75 /* WOTTankPivotLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotLayout.h; sourceTree = "<group>"; };
 		1D010D141B7B847800FA6A75 /* WOTTankPivotLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotLayout.m; sourceTree = "<group>"; };
 		1D010D181B7DFF1100FA6A75 /* WOTTankConfigurationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationCollectionViewCell.h; sourceTree = "<group>"; };
@@ -344,6 +345,10 @@
 		1D010D6B1B83386900FA6A75 /* WOTTankPivotEmptyCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotEmptyCollectionViewCell.xib; sourceTree = "<group>"; };
 		1D010D711B84794000FA6A75 /* WOTNode+Enumeration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+Enumeration.h"; sourceTree = "<group>"; };
 		1D010D721B84794000FA6A75 /* WOTNode+Enumeration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+Enumeration.m"; sourceTree = "<group>"; };
+		1D010D781B8AF60300FA6A75 /* UIColor+HSB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HSB.h"; sourceTree = "<group>"; };
+		1D010D791B8AF60300FA6A75 /* UIColor+HSB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HSB.m"; sourceTree = "<group>"; };
+		1D010D7B1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "WOTTankPivotDataCollectionViewCell~ipad.xib"; sourceTree = "<group>"; };
+		1D010D7C1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "WOTTankPivotDataCollectionViewCell~iphone.xib"; sourceTree = "<group>"; };
 		1D047B211B331B0F00B5B696 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		1D047B221B331B0F00B5B696 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
 		1D047B361B331B9700B5B696 /* WOTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRequest.h; sourceTree = "<group>"; };
@@ -789,7 +794,8 @@
 			children = (
 				1D010D0D1B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.h */,
 				1D010D0E1B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.m */,
-				1D010D0F1B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.xib */,
+				1D010D7B1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~ipad.xib */,
+				1D010D7C1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~iphone.xib */,
 				1D010D3E1B7E2F3300FA6A75 /* WOTTankPivotFilterCollectionViewCell.h */,
 				1D010D3F1B7E2F3300FA6A75 /* WOTTankPivotFilterCollectionViewCell.m */,
 				1D010D401B7E2F3300FA6A75 /* WOTTankPivotFilterCollectionViewCell.xib */,
@@ -889,6 +895,15 @@
 				1D010D641B831C0900FA6A75 /* WOTNode+Pivot.m */,
 			);
 			path = "WOTTree+Pivot";
+			sourceTree = "<group>";
+		};
+		1D010D771B8AF5F400FA6A75 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				1D010D781B8AF60300FA6A75 /* UIColor+HSB.h */,
+				1D010D791B8AF60300FA6A75 /* UIColor+HSB.m */,
+			);
+			path = UIColor;
 			sourceTree = "<group>";
 		};
 		1D047B201B331B0F00B5B696 /* session */ = {
@@ -1852,6 +1867,7 @@
 		1DD6469C1B1DC42100B0EC76 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				1D010D771B8AF5F400FA6A75 /* UIColor */,
 				1D010D021B789A6E00FA6A75 /* NSThread */,
 				1D519D5B1B54F1F800D3A286 /* NSArray */,
 				1D519D371B4FD40600D3A286 /* UIProgressView */,
@@ -2259,6 +2275,7 @@
 				1D672B621B60D15C00617E5C /* Hourglass Sand Top Gray.png in Resources */,
 				1D4C92491B25ED0900E320B5 /* WOTLoggedInUser@3x.png in Resources */,
 				1D672B671B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png in Resources */,
+				1D010D7D1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~ipad.xib in Resources */,
 				1D672AFA1B57952700617E5C /* WOTModuleTypeTurrets.png in Resources */,
 				1D519D361B4FC8DB00D3A286 /* WOTTankDetailProgressTableViewCell.xib in Resources */,
 				1D4C92351B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png in Resources */,
@@ -2284,7 +2301,6 @@
 				1D672B5E1B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png in Resources */,
 				DA522D2C1B6637630087D684 /* Search Yellow@2x.png in Resources */,
 				1DCC7F2A1B2ED07F005FF193 /* WOTArrowUp@3x.png in Resources */,
-				1D010D121B7B835F00FA6A75 /* WOTTankPivotDataCollectionViewCell.xib in Resources */,
 				1D672B5F1B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png in Resources */,
 				1D672AF61B57952700617E5C /* WOTModuleTypeChassis.png in Resources */,
 				DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */,
@@ -2301,6 +2317,7 @@
 				1D4C92471B25ED0900E320B5 /* WOTLoggedInUser.png in Resources */,
 				1DC07BA41B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png in Resources */,
 				1D672B4C1B60CC8700617E5C /* Firing Gun Gray@3x.png in Resources */,
+				1D010D7E1B8B073200FA6A75 /* WOTTankPivotDataCollectionViewCell~iphone.xib in Resources */,
 				1D4C92341B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png in Resources */,
 				1D672B2A1B60C86700617E5C /* Bulletproof Vest Yellow@2x.png in Resources */,
 				1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */,
@@ -2516,6 +2533,7 @@
 				1D519D611B54FFD800D3A286 /* Tanks.m in Sources */,
 				1D047B461B331B9700B5B696 /* WOTRequestExecutor.m in Sources */,
 				1DD646C31B1F36FB00B0EC76 /* WOTDrawerViewController.m in Sources */,
+				1D010D7A1B8AF60300FA6A75 /* UIColor+HSB.m in Sources */,
 				1D519D431B50043700D3A286 /* Tankengines.m in Sources */,
 				1D010D3A1B7DFF1100FA6A75 /* WOTTankConfigurationModuleMapping+Factory.m in Sources */,
 				1D519D2C1B4EAD7F00D3A286 /* WOTEnginePowerCompareFieldExpression.m in Sources */,

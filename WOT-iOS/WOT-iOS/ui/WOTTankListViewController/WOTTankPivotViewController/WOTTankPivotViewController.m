@@ -83,6 +83,40 @@
 
             NSURL *imageURL = [NSURL URLWithString:[obj image]];
             WOTNode *node = [[WOTNode alloc] initWithName:[obj name_i18n] imageURL:imageURL pivotMetadataType:PivotMetadataTypeData predicate:predicate];
+            
+            node.dataColor = [UIColor whiteColor];
+            
+            
+            if ([obj.nation isEqualToString:@"usa"]) {
+                
+                node.dataColor = [UIColor purpleColor];
+            }
+            if ([obj.nation isEqualToString:@"ussr"]) {
+                
+                node.dataColor = [UIColor redColor];
+            }
+            if ([obj.nation isEqualToString:@"japan"]) {
+                
+                node.dataColor = [UIColor orangeColor];
+            }
+            if ([obj.nation isEqualToString:@"china"]) {
+                
+                node.dataColor = [UIColor yellowColor];
+            }
+            if ([obj.nation isEqualToString:@"germany"]) {
+                
+                node.dataColor = [UIColor brownColor];
+            }
+            if ([obj.nation isEqualToString:@"france"]) {
+                
+                node.dataColor = [UIColor greenColor];
+            }
+            if ([obj.nation isEqualToString:@"uk"]) {
+                
+                node.dataColor = [UIColor blueColor];
+            }
+            
+            
             [node setData:obj];
             [resultArray addObject:node];
         }];
@@ -145,9 +179,11 @@
         case PivotMetadataTypeData:{
             
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) forIndexPath:indexPath];
-            WOTTankPivotDataCollectionViewCell *data = (WOTTankPivotDataCollectionViewCell *)result;
-            data.label.text = node.name;
-            [data.imageView sd_setImageWithURL:node.imageURL];
+            WOTTankPivotDataCollectionViewCell *dataCell = (WOTTankPivotDataCollectionViewCell *)result;
+            dataCell.label.text = node.name;
+            dataCell.dataViewColor = node.dataColor;
+            
+            [dataCell.imageView sd_setImageWithURL:node.imageURL];
             break;
         }
         default: {
@@ -214,30 +250,34 @@
 
 - (NSArray *)pivotColumns {
 
-    WOTNode *typeColumn = [[WOTNode alloc] initWithName:@"Type" pivotMetadataType:PivotMetadataTypeColumn predicate:nil];
+    PivotMetadataType type = PivotMetadataTypeColumn;
+    
+    WOTNode *typeColumn = [[WOTNode alloc] initWithName:@"Type" pivotMetadataType:type predicate:nil];
 
-    [typeColumn addChild:[[WOTNode alloc] initWithName:@"TD" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"AT-SPG"]]];
-    [typeColumn addChild:[[WOTNode alloc] initWithName:@"SPG" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"SPG"]]];
-    [typeColumn addChild:[[WOTNode alloc] initWithName:@"LT" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"lightTank"]]];
-    [typeColumn addChild:[[WOTNode alloc] initWithName:@"MT" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"mediumTank"]]];
-    [typeColumn addChild:[[WOTNode alloc] initWithName:@"HT" pivotMetadataType:PivotMetadataTypeColumn predicate:[NSPredicate predicateWithFormat:@"type == %@",@"heavyTank"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"TD" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",@"AT-SPG"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"SPG" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",@"SPG"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"LT" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",@"lightTank"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"MT" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",@"mediumTank"]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:@"HT" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",@"heavyTank"]]];
     
     return @[typeColumn];
 }
 
 - (NSArray *)pivotRows {
     
-    WOTNode *tierRow = [[WOTNode alloc] initWithName:@"Tier" pivotMetadataType:PivotMetadataTypeRow predicate:nil];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"I" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(1)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"II" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(2)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"III" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(3)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"IV" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(4)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"V" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(5)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"VI" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(6)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"VII" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(7)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"VIII" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(8)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"IX" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(9)]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:@"X" pivotMetadataType:PivotMetadataTypeRow predicate:[NSPredicate predicateWithFormat:@"level == %@",@(10)]]];
+    PivotMetadataType type = PivotMetadataTypeRow;
+
+    WOTNode *tierRow = [[WOTNode alloc] initWithName:@"Tier" pivotMetadataType:type predicate:nil];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"I" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(1)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"II" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(2)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"III" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(3)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"IV" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(4)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"V" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(5)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"VI" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(6)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"VII" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(7)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"VIII" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(8)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"IX" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(9)]]];
+    [tierRow addChild:[[WOTNode alloc] initWithName:@"X" pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %@",@(10)]]];
 
     return @[tierRow];
 }
