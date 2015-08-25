@@ -67,4 +67,24 @@
     return result;
 }
 
++ (NSDictionary *)nationColors {
+    
+    return @{WOT_STRING_NATION_USA:     [[UIColor purpleColor] paleColor],
+             WOT_STRING_NATION_USSR:    [[UIColor redColor] paleColor],
+             WOT_STRING_NATION_JAPAN:   [[UIColor orangeColor] paleColor],
+             WOT_STRING_NATION_CHINA:   [[UIColor yellowColor] paleColor],
+             WOT_STRING_NATION_GERMANY: [[UIColor brownColor] paleColor],
+             WOT_STRING_NATION_FRANCE:  [[UIColor greenColor] paleColor],
+             WOT_STRING_NATION_UK:      [[UIColor blueColor] paleColor]};
+}
+
++ (NSDictionary *)typeColors {
+    
+    return @{WOT_STRING_TANK_TYPE_AT_SPG:       [[UIColor blueColor] paleColor],
+             WOT_STRING_TANK_TYPE_SPG:          [[UIColor brownColor] paleColor],
+             WOT_STRING_TANK_TYPE_LIGHT_TANK:   [[UIColor greenColor] paleColor],
+             WOT_STRING_TANK_TYPE_MEDIUM_TANK:  [[UIColor yellowColor] paleColor],
+             WOT_STRING_TANK_TYPE_HEAVY_TANK:   [[UIColor redColor] paleColor]};
+}
+
 @end

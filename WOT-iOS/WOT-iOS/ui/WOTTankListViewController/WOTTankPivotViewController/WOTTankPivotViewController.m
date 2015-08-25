@@ -70,12 +70,11 @@
     
     __weak typeof(self)weakSelf = self;
 
-    
-    WOTNode *level0Row = [WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeRow];
+    WOTNode *level0Row =[WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
     WOTNode *level1Row = [WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeRow];
     NSArray *rows = [self complexMetadataType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
     
-    WOTNode *level0Col = [WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTNode *level0Col = [WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeColumn];
     WOTNode *level1Col = [WOTNode pivotPremiumMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
     
@@ -97,7 +96,7 @@
             WOTNode *node = [[WOTNode alloc] initWithName:[obj short_name_i18n] imageURL:imageURL pivotMetadataType:PivotMetadataTypeData predicate:predicate];
             
             node.dataColor = [UIColor whiteColor];
-            NSDictionary *colors = [weakSelf typeColors];
+            NSDictionary *colors = [WOTNode typeColors];
 
             node.dataColor = colors[obj.type];
             
@@ -115,26 +114,6 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class])];
-    
-}
-
-- (NSDictionary *)nationColors {
-    
-  return @{WOT_STRING_NATION_USA:     [[UIColor purpleColor] paleColor],
-           WOT_STRING_NATION_USSR:    [[UIColor redColor] paleColor],
-           WOT_STRING_NATION_JAPAN:   [[UIColor orangeColor] paleColor],
-           WOT_STRING_NATION_CHINA:   [[UIColor yellowColor] paleColor],
-           WOT_STRING_NATION_GERMANY: [[UIColor brownColor] paleColor],
-           WOT_STRING_NATION_FRANCE:  [[UIColor greenColor] paleColor],
-           WOT_STRING_NATION_UK:      [[UIColor blueColor] paleColor]};
-}
-- (NSDictionary *)typeColors {
-    
-    return @{WOT_STRING_TANK_TYPE_AT_SPG:       [[UIColor blueColor] paleColor],
-             WOT_STRING_TANK_TYPE_SPG:          [[UIColor brownColor] paleColor],
-             WOT_STRING_TANK_TYPE_LIGHT_TANK:   [[UIColor greenColor] paleColor],
-             WOT_STRING_TANK_TYPE_MEDIUM_TANK:  [[UIColor yellowColor] paleColor],
-             WOT_STRING_TANK_TYPE_HEAVY_TANK:   [[UIColor redColor] paleColor]};
 }
 
 #pragma mark - UICollectionViewDataSource
