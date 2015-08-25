@@ -14,6 +14,7 @@
 + (WOTNode *)pivotTierMetadataItemAsType:(PivotMetadataType)type;
 + (WOTNode *)pivotPremiumMetadataItemAsType:(PivotMetadataType)type;
 + (WOTNode *)pivotTypeMetadataItemAsType:(PivotMetadataType)type;
++ (WOTNode *)pivotDPMMetadataItemAsType:(PivotMetadataType)type;
 
 + (NSDictionary *)nationColors;
 + (NSDictionary *)typeColors;

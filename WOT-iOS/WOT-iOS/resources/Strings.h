@@ -55,6 +55,7 @@
 #define WOT_KEY_NAME @"name"
 #define WOT_KEY_MODULES_TREE @"modules_tree"
 #define WOT_KEY_NAME_I18N @"name_i18n"
+#define WOT_KEY_DPM @"dpm"
 #define WOT_KEY_NATION @"nation"
 #define WOT_KEY_NATION_I18N @"nation_i18n"
 #define WOT_KEY_NICKNAME @"nickname"

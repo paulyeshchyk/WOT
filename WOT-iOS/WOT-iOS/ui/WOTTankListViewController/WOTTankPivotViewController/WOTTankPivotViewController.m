@@ -13,7 +13,7 @@
 #import "WOTTankPivotEmptyCollectionViewCell.h"
 #import "WOTTankPivotLayout.h"
 #import "WOTNode.h"
-#import "Tanks.h"
+#import "Tanks+DPM.h"
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTTree+Pivot.h"
 #import "WOTNode+Pivot.h"
@@ -70,17 +70,18 @@
     
     __weak typeof(self)weakSelf = self;
 
-    WOTNode *level0Row =[WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
-    WOTNode *level1Row = [WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeRow];
+    WOTNode *level0Row =[WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeRow];
+    WOTNode *level1Row = [WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeRow];
     NSArray *rows = [self complexMetadataType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
     
-    WOTNode *level0Col = [WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTNode *level1Col = [WOTNode pivotPremiumMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTNode *level0Col = [WOTNode pivotDPMMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTNode *level1Col = [WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
     
+    NSArray *filters = [self pivotFilters];
     
     self.pivotTree = [[WOTTree alloc] init];
-    [self.pivotTree addMetadataItems:[self pivotFilters]];
+    [self.pivotTree addMetadataItems:filters];
     [self.pivotTree addMetadataItems:rows];
     [self.pivotTree addMetadataItems:cols];
     
@@ -100,7 +101,7 @@
 
             node.dataColor = colors[obj.type];
             
-//            [node setData1:obj];
+            [node setData1:obj];
             [resultArray addObject:node];
         }];
         return resultArray;
@@ -153,10 +154,13 @@
             WOTTankPivotDataCollectionViewCell *dataCell = (WOTTankPivotDataCollectionViewCell *)result;
             dataCell.dataViewColor = node.dataColor;
 
+            Tanks *tank = (Tanks *)node.data1;
+            
+            
             dataCell.symbol = node.name;
-            dataCell.dpm = [@(1787) suffixNumber];
-            dataCell.mask = @"18/18/3";
-            dataCell.visibility = @"450";
+            dataCell.dpm = [tank.dpm suffixNumber];
+            dataCell.mask = tank.invisibility;
+            dataCell.visibility = [tank.visionRadius suffixNumber];
             break;
         }
         default: {
@@ -194,6 +198,13 @@
     
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
+    
+#warning !!!remove when dpm fetched
+    NSArray *fetchedObjects = [self.fetchedResultController fetchedObjects];
+    [fetchedObjects enumerateObjectsUsingBlock:^(Tanks *tank, NSUInteger idx, BOOL *stop) {
+
+        debugLog(@"dpm:%@",tank.dpm);
+    }];
 }
 
 - (NSArray *)sortDescriptors {
