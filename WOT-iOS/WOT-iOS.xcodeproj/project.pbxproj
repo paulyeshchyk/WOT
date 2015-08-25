@@ -38,6 +38,7 @@
 		1D010DA11B8B4D2F00FA6A75 /* WOTTankPivotLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D941B8B4D2F00FA6A75 /* WOTTankPivotLayout.m */; };
 		1D010DA21B8B4D2F00FA6A75 /* WOTTankPivotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D961B8B4D2F00FA6A75 /* WOTTankPivotViewController.m */; };
 		1D010DA31B8B4D2F00FA6A75 /* WOTTankPivotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D971B8B4D2F00FA6A75 /* WOTTankPivotViewController.xib */; };
+		1D010DA61B8C60AA00FA6A75 /* WOTNode+PivotFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010DA51B8C60AA00FA6A75 /* WOTNode+PivotFactory.m */; };
 		1D047B231B331B0F00B5B696 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B221B331B0F00B5B696 /* WOTSessionManager.m */; };
 		1D047B441B331B9700B5B696 /* WOTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B371B331B9700B5B696 /* WOTRequest.m */; };
 		1D047B461B331B9700B5B696 /* WOTRequestExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B3B1B331B9700B5B696 /* WOTRequestExecutor.m */; };
@@ -352,6 +353,8 @@
 		1D010D951B8B4D2F00FA6A75 /* WOTTankPivotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotViewController.h; sourceTree = "<group>"; };
 		1D010D961B8B4D2F00FA6A75 /* WOTTankPivotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotViewController.m; sourceTree = "<group>"; };
 		1D010D971B8B4D2F00FA6A75 /* WOTTankPivotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotViewController.xib; sourceTree = "<group>"; };
+		1D010DA41B8C60AA00FA6A75 /* WOTNode+PivotFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+PivotFactory.h"; sourceTree = "<group>"; };
+		1D010DA51B8C60AA00FA6A75 /* WOTNode+PivotFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+PivotFactory.m"; sourceTree = "<group>"; };
 		1D047B211B331B0F00B5B696 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		1D047B221B331B0F00B5B696 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
 		1D047B361B331B9700B5B696 /* WOTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRequest.h; sourceTree = "<group>"; };
@@ -885,6 +888,8 @@
 				1D010D951B8B4D2F00FA6A75 /* WOTTankPivotViewController.h */,
 				1D010D961B8B4D2F00FA6A75 /* WOTTankPivotViewController.m */,
 				1D010D971B8B4D2F00FA6A75 /* WOTTankPivotViewController.xib */,
+				1D010DA41B8C60AA00FA6A75 /* WOTNode+PivotFactory.h */,
+				1D010DA51B8C60AA00FA6A75 /* WOTNode+PivotFactory.m */,
 			);
 			path = WOTTankPivotViewController;
 			sourceTree = "<group>";
@@ -2541,6 +2546,7 @@
 				1D90695D1B41440700237852 /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */,
 				1DC07B931B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.m in Sources */,
+				1D010DA61B8C60AA00FA6A75 /* WOTNode+PivotFactory.m in Sources */,
 				1D010D621B83183D00FA6A75 /* WOTTree+Pivot.m in Sources */,
 				1D4C92621B27085600E320B5 /* WOTTankListSettingTableViewCell.m in Sources */,
 				DA522D311B663C210087D684 /* WOTTankListSearchBar.m in Sources */,

@@ -52,13 +52,12 @@
     
     __block NSInteger maxWidth = 0;
     [[self.rootColumnsNode endpoints] enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+
         maxWidth += [node maxWidthOrValue:1];
     }];
     
     NSInteger width = rowNodesDepth + maxWidth;
-    
-    
-    
+
     NSInteger colNodesDepth = [self.rootColumnsNode depth];
     NSInteger rowNodesEndpointsCount = [[self.rootRowsNode endpoints] count];
     NSInteger height = colNodesDepth + rowNodesEndpointsCount;
@@ -258,8 +257,7 @@ static const void *PivotItemBlock = &PivotItemBlock;
         
         return [[[obj1 predicate] predicateFormat] compare:[[obj2 predicate] predicateFormat]];
     }];
-    
-    
+
     [self.rootRowsNode enumerateEndpointsUsingBlock:^(WOTNode *rowNode) {
 
         if (rowNode.predicate) {
