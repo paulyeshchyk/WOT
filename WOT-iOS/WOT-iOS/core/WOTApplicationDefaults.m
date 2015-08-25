@@ -197,7 +197,7 @@ static NSString *WOTWEBRequestDefaultLanguage;
 
 + (NSString *)host {
     
-    return [NSString stringWithFormat:@"%@.%@",@"https://api.worldoftanks",[self language]];
+    return [NSString stringWithFormat:@"%@.%@",ApplicationHost,[self language]];
 }
 
 

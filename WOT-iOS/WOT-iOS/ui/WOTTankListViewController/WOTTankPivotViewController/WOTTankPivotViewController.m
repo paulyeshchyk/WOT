@@ -70,8 +70,8 @@
 
     self.pivotTree = [[WOTTree alloc] init];
     [self.pivotTree addMetadataItems:[self pivotFilters]];
-    [self.pivotTree addMetadataItems:[self pivotTierMetadataItemsAsType:PivotMetadataTypeRow]];
-    [self.pivotTree addMetadataItems:[self pivotNationMetadataItemsAsType:PivotMetadataTypeColumn]];
+    [self.pivotTree addMetadataItems:[self pivotNationMetadataItemsAsType:PivotMetadataTypeRow]];
+    [self.pivotTree addMetadataItems:[self pivotPremiumMetadataItemsAsType:PivotMetadataTypeColumn]];
     
     [self.pivotTree setPivotItemCreationBlock:^NSArray *(NSArray *predicates) {
         
@@ -89,7 +89,7 @@
 
             node.dataColor = colors[obj.type];
             
-            [node setData:obj];
+            [node setData1:obj];
             [resultArray addObject:node];
         }];
         return resultArray;
@@ -97,22 +97,6 @@
     
     [self.pivotTree makePivot];
     
-//    UIBarButtonItem *doneButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
-//        
-//        if (self.doneBlock) {
-//            
-//            self.doneBlock(nil);
-//        }
-//    }];
-//    [self.navigationItem setRightBarButtonItems:@[doneButtonItem]];
-//    UIBarButtonItem *cancelButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_BACK) eventBlock:^(id sender) {
-//        
-//        if (self.cancelBlock) {
-//            
-//            self.cancelBlock();
-//        }
-//    }];
-//    [self.navigationItem setLeftBarButtonItems:@[cancelButtonItem]];
     [self.navigationController.navigationBar setDarkStyle];
     
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class])];
@@ -151,6 +135,8 @@
         case PivotMetadataTypeColumn:{
 
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
+            result.backgroundColor = [self.collectionView.backgroundColor lighterColor:1.3f];
+
             WOTTankPivotFixedCollectionViewCell *fixed = (WOTTankPivotFixedCollectionViewCell *)result;
             fixed.label.text = node.name;
             break;
@@ -158,6 +144,8 @@
         case PivotMetadataTypeRow:{
             
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
+            result.backgroundColor = [self.collectionView.backgroundColor lighterColor:1.3f];
+
             WOTTankPivotFixedCollectionViewCell *row = (WOTTankPivotFixedCollectionViewCell *)result;
             row.label.text = node.name;
             break;
@@ -165,6 +153,7 @@
         case PivotMetadataTypeFilter:{
             
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) forIndexPath:indexPath];
+            result.backgroundColor = [self.collectionView.backgroundColor lighterColor:1.3f];
             break;
         }
         case PivotMetadataTypeData:{
@@ -177,8 +166,6 @@
             dataCell.dpm = [@(1787) suffixNumber];
             dataCell.mask = @"18/18/3";
             dataCell.visibility = @"450";
-            
-//            [dataCell.imageView sd_setImageWithURL:node.imageURL];
             break;
         }
         default: {
@@ -195,12 +182,6 @@
 
     return [self.pivotTree pivotItemsCountForRowAtIndex:section];
 }
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-
-    return 1;
-}
-
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -252,6 +233,16 @@
     [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LT)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",WOT_STRING_TANK_TYPE_LIGHT_TANK]]];
     [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_MT)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",WOT_STRING_TANK_TYPE_MEDIUM_TANK]]];
     [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_HT)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",WOT_STRING_TANK_TYPE_HEAVY_TANK]]];
+    
+    return @[typeColumn];
+}
+
+- (NSArray *)pivotPremiumMetadataItemsAsType:(PivotMetadataType)type {
+    
+    WOTNode *typeColumn = [[WOTNode alloc] initWithName:@"Premium" pivotMetadataType:type predicate:nil];
+    
+    [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_IS_PREMIUM) pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"%K == YES",WOT_KEY_IS_PREMIUM]]];
+    [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_IS_NOT_PREMIUM) pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"%K == NO",WOT_KEY_IS_PREMIUM]]];
     
     return @[typeColumn];
 }

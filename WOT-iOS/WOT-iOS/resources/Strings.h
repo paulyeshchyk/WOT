@@ -9,6 +9,7 @@
 #ifndef WOT_iOS_Strings_h
 #define WOT_iOS_Strings_h
 
+#define ApplicationHost @"https://api.worldoftanks"
 #define ApplicationRedirectURI @"https://api.worldoftanks.ru/wot/blank/" //"https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/"
 
 #define WOT_IMAGE_BACK @"WOTBackIconGray.png"
@@ -157,6 +158,7 @@
 #define WOT_STRING_EDIT @"WOT_STRING_EDIT"
 #define WOT_STRING_GROUP_AND_SORT @"WOT_STRING_GROUP_AND_SORT"
 #define WOT_STRING_IS_PREMIUM @"WOT_STRING_IS_PREMIUM"
+#define WOT_STRING_IS_NOT_PREMIUM @"WOT_STRING_IS_NOT_PREMIUM"
 #define WOT_STRING_LEVEL @"WOT_STRING_LEVEL"
 #define WOT_STRING_LOGIN @"WOT_STRING_LOGIN"
 #define WOT_STRING_NAME_I18N @"WOT_STRING_NAME_I18N"

@@ -33,6 +33,9 @@ WOT_STRING_CHANGE_SORTING   = "Change sorting";
 WOT_STRING_CHANGE_GROUP     = "Change groupping";
 WOT_STRING_CHANGE_FILTER    = "Change filter";
 
+WOT_STRING_IS_PREMIUM       = "Premium";
+WOT_STRING_IS_NOT_PREMIUM   = "Not premium";
+
 WOT_STRING_LEVEL_1          = "I";
 WOT_STRING_LEVEL_2          = "II";
 WOT_STRING_LEVEL_3          = "III";

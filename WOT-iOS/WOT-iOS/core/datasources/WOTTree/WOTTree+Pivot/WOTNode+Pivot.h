@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, PivotMetadataType) {
 @property (nonatomic, readonly)CGRect relativeRect;
 @property (nonatomic) NSPredicate *predicate;
 @property (nonatomic) PivotMetadataType pivotMetadataType;
-@property (nonatomic) id<NSCopying> data;
+@property (nonatomic) id<NSCopying> data1;
 @property (nonatomic) NSInteger index;
 @property (nonatomic) WOTNode *stepParentColumn;
 @property (nonatomic) WOTNode *stepParentRow;

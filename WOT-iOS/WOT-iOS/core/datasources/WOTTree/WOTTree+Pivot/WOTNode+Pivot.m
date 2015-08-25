@@ -14,7 +14,7 @@
 
 @dynamic predicate;
 @dynamic pivotMetadataType;
-@dynamic data;
+@dynamic data1;
 @dynamic index;
 @dynamic stepParentColumn;
 @dynamic stepParentRow;
@@ -398,12 +398,12 @@ static const void *PivotMetadataTypeRef = &PivotMetadataTypeRef;
 }
 
 static const void *PivotDataRef = &PivotDataRef;
-- (void)setData:(id)data {
+- (void)setData1:(id)data {
     
     objc_setAssociatedObject(self, PivotDataRef, data, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (id)data {
+- (id)data1 {
     
     return objc_getAssociatedObject(self, PivotDataRef);
 }
