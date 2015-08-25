@@ -8,6 +8,8 @@
 
 #import "WOTNode.h"
 
+typedef NSComparisonResult(^HierarchyComparator)(WOTNode *obj1, WOTNode *obj2, id level);
+
 typedef void(^HierarchyEnumarationCallback)(WOTNode *node);
 
 @interface WOTNode (Enumeration)
@@ -26,10 +28,10 @@ typedef void(^HierarchyEnumarationCallback)(WOTNode *node);
 
 + (NSInteger)depthForArray:(NSArray *)array;
 
-+ (void)enumerateItemsHierarchy:(NSArray *)items callback:(HierarchyEnumarationCallback)callback;
++ (void)enumerateItemsHierarchy:(NSArray *)items callback:(HierarchyEnumarationCallback)callback comparator:(HierarchyComparator)comparator;
 
 
-- (void)enumerateAllChildrenUsingBlock:(HierarchyEnumarationCallback)callback;
+- (void)enumerateAllChildrenUsingBlock:(HierarchyEnumarationCallback)callback comparator:(HierarchyComparator)comparator;
 - (void)enumerateEndpointsUsingBlock:(HierarchyEnumarationCallback)callback;
 
 @end

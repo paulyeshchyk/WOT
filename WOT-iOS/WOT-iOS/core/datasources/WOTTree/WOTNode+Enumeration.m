@@ -29,7 +29,7 @@
         NSInteger resultFromChild = [self depthForChildList:node.children initialLevel:(initialLevel + 1)];
         result = MAX(result, resultFromChild);
     }];
-    
+
     return result;
 }
 
@@ -49,10 +49,9 @@
     return [WOTNode allItemsForArray:self.children];
 }
 
-- (void)enumerateAllChildrenUsingBlock:(HierarchyEnumarationCallback)callback {
+- (void)enumerateAllChildrenUsingBlock:(HierarchyEnumarationCallback)callback  comparator:(HierarchyComparator)comparator{
     
-    [WOTNode enumerateItemsHierarchy:self.children callback:callback];
-    
+    [WOTNode enumerateItemsHierarchy:self.children callback:callback comparator:comparator];
 }
 
 - (void)enumerateEndpointsUsingBlock:(HierarchyEnumarationCallback)callback {
@@ -64,19 +63,27 @@
             callback(node);
         }
     }];
-    
 }
 
-+ (void)enumerateItemsHierarchy:(NSArray *)items callback:(HierarchyEnumarationCallback)callback{
++ (void)enumerateItemsHierarchy:(NSArray *)items callback:(HierarchyEnumarationCallback)callback comparator:(HierarchyComparator)comparator{
     
-    [items enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+    NSArray *sortedItems = [items sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+
+        if (comparator) {
+            
+            return comparator(obj1, obj2,@(-1));
+        }
+        return NSOrderedSame;
+    }];
+    
+    [sortedItems enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
         
         if (callback){
             
             callback(node);
         }
         
-        [WOTNode enumerateItemsHierarchy:node.children callback:callback];
+        [WOTNode enumerateItemsHierarchy:node.children callback:callback comparator:comparator];
     }];
 }
 

@@ -51,7 +51,7 @@ WOT_STRING_AT_SPG           = "Tank Destroyer";
 WOT_STRING_SPG              = "Self-Propelled Guns";
 WOT_STRING_HT               = "Heavy";
 WOT_STRING_LT               = "light tank";
-WOT_STRING_MT               = "middle";
+WOT_STRING_MT               = "Medium";
 
 
 ARMOR_BOARD                 = "Armor Board";

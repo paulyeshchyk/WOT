@@ -236,18 +236,31 @@ static const void *PivotItemBlock = &PivotItemBlock;
         
         [node setIndex:index];
         index++;
+    } comparator:^NSComparisonResult(WOTNode *obj1, WOTNode *obj2, id level) {
+
+        return NSOrderedSame;
     }];
 
     [self.rootColumnsNode enumerateAllChildrenUsingBlock:^(WOTNode *node) {
         
         [node setIndex:index];
         index++;
+    } comparator:^NSComparisonResult(WOTNode *obj1, WOTNode *obj2, id level) {
+
+        return [[obj1 name] compare:[obj2 name]];
+    }];
+
+    [self.rootRowsNode enumerateAllChildrenUsingBlock:^(WOTNode *node) {
+        
+        [node setIndex:index];
+        index++;
+    } comparator:^NSComparisonResult(WOTNode *obj1, WOTNode *obj2, id level) {
+        
+        return [[[obj1 predicate] predicateFormat] compare:[[obj2 predicate] predicateFormat]];
     }];
     
-    [self.rootRowsNode enumerateAllChildrenUsingBlock:^(WOTNode *rowNode) {
-
-        [rowNode setIndex:index];
-        index++;
+    
+    [self.rootRowsNode enumerateEndpointsUsingBlock:^(WOTNode *rowNode) {
 
         if (rowNode.predicate) {
         
