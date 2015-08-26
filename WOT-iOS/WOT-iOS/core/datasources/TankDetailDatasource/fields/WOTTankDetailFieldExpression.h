@@ -13,9 +13,8 @@
 @property (nonatomic, strong)NSArray *expressionDescriptions;
 @property (nonatomic, strong)NSArray *keyPaths;
 
++ (WOTTankDetailFieldExpression *)expressionName:(NSString *)expressionName fieldWithExpressionDescriptions:(NSArray *)expressionDescriptions  keyPaths:(NSArray *)keyPaths;
 
 - (NSPredicate *)predicateForObject:(id)object;
-
-+ (WOTTankDetailFieldExpression *)expressionName:(NSString *)expressionName fieldWithExpressionDescriptions:(NSArray *)expressionDescriptions  keyPaths:(NSArray *)keyPaths;
 
 @end

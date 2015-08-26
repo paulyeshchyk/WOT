@@ -40,6 +40,7 @@
 		1D010DA31B8B4D2F00FA6A75 /* WOTTankPivotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D971B8B4D2F00FA6A75 /* WOTTankPivotViewController.xib */; };
 		1D010DA61B8C60AA00FA6A75 /* WOTNode+PivotFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010DA51B8C60AA00FA6A75 /* WOTNode+PivotFactory.m */; };
 		1D010DAA1B8C73EE00FA6A75 /* Tanks+DPM.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010DA91B8C73EE00FA6A75 /* Tanks+DPM.m */; };
+		1D010DAC1B8DC45100FA6A75 /* TestWOTRequestExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010DAB1B8DC45100FA6A75 /* TestWOTRequestExecutor.m */; };
 		1D047B231B331B0F00B5B696 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B221B331B0F00B5B696 /* WOTSessionManager.m */; };
 		1D047B441B331B9700B5B696 /* WOTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B371B331B9700B5B696 /* WOTRequest.m */; };
 		1D047B461B331B9700B5B696 /* WOTRequestExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B3B1B331B9700B5B696 /* WOTRequestExecutor.m */; };
@@ -358,6 +359,8 @@
 		1D010DA51B8C60AA00FA6A75 /* WOTNode+PivotFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+PivotFactory.m"; sourceTree = "<group>"; };
 		1D010DA81B8C73EE00FA6A75 /* Tanks+DPM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tanks+DPM.h"; sourceTree = "<group>"; };
 		1D010DA91B8C73EE00FA6A75 /* Tanks+DPM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tanks+DPM.m"; sourceTree = "<group>"; };
+		1D010DAB1B8DC45100FA6A75 /* TestWOTRequestExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWOTRequestExecutor.m; sourceTree = "<group>"; };
+		1D010DAD1B8DCAC900FA6A75 /* WOTRequestListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRequestListener.h; sourceTree = "<group>"; };
 		1D047B211B331B0F00B5B696 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		1D047B221B331B0F00B5B696 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
 		1D047B361B331B9700B5B696 /* WOTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRequest.h; sourceTree = "<group>"; };
@@ -952,6 +955,7 @@
 				1D047B371B331B9700B5B696 /* WOTRequest.m */,
 				1D047B3A1B331B9700B5B696 /* WOTRequestExecutor.h */,
 				1D047B3B1B331B9700B5B696 /* WOTRequestExecutor.m */,
+				1D010DAD1B8DCAC900FA6A75 /* WOTRequestListener.h */,
 			);
 			path = requests;
 			sourceTree = "<group>";
@@ -1846,6 +1850,7 @@
 			children = (
 				1DD646551B1C616A00B0EC76 /* WOT_iOSTests.m */,
 				1DD646531B1C616A00B0EC76 /* Supporting Files */,
+				1D010DAB1B8DC45100FA6A75 /* TestWOTRequestExecutor.m */,
 			);
 			path = "WOT-iOSTests";
 			sourceTree = "<group>";
@@ -2595,6 +2600,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DD646561B1C616A00B0EC76 /* WOT_iOSTests.m in Sources */,
+				1D010DAC1B8DC45100FA6A75 /* TestWOTRequestExecutor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2657,7 +2663,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2695,7 +2701,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

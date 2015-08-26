@@ -10,6 +10,8 @@
 
 @interface WOTTankPivotFixedCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic,weak)IBOutlet UILabel *label;
+@property (nonatomic, assign) BOOL hasBottomSeparator;
+@property (nonatomic, assign) BOOL hasRightSeparator;
+@property (nonatomic, strong) NSString *textValue;
 
 @end

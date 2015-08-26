@@ -74,8 +74,6 @@
     return expirationAt <= timeIntervalSince1970;
 }
 
-
-
 + (WOTSessionManager *)sharedInstance {
     
     static dispatch_once_t once;

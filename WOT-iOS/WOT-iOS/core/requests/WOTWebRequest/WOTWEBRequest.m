@@ -120,21 +120,18 @@ static NSString *urlEncode(NSString *string) {
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [self.connection start];
     
-    [[WOTRequestExecutor sharedInstance] requestHasStarted:self];
+    [self.listener requestHasStarted:self];
 }
 
 - (void)cancel {
     
     [self.connection cancel];
-    [[WOTRequestExecutor sharedInstance] requestHasCanceled:self];
-    
+    [self.listener requestHasCanceled:self];
 }
 
 - (void)cancelAndRemoveFromQueue {
     
     [self cancel];
-
-    [[WOTRequestExecutor sharedInstance] removeRequest:self];
 }
 
 - (void)finalizeWithData:(id)data error:(NSError *)error {
@@ -216,7 +213,7 @@ static NSString *urlEncode(NSString *string) {
     [self parseData:self.data error:nil];
     self.data = nil;
     
-    [[WOTRequestExecutor sharedInstance] requestHasFinishedLoadData:self];
+    [self.listener requestHasFinishedLoadData:self];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -224,7 +221,7 @@ static NSString *urlEncode(NSString *string) {
     [self parseData:nil error:error];
     self.data = nil;
 
-    [[WOTRequestExecutor sharedInstance] requestHasFailed:self];
+    [self.listener requestHasFailed:self];
 }
 
 @end

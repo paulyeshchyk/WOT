@@ -70,12 +70,12 @@
     
     __weak typeof(self)weakSelf = self;
 
-    WOTNode *level0Row =[WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeRow];
-    WOTNode *level1Row = [WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeRow];
+    WOTNode *level0Row =[WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeRow];
+    WOTNode *level1Row = nil;//[WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
     NSArray *rows = [self complexMetadataType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
     
-    WOTNode *level0Col = [WOTNode pivotDPMMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTNode *level1Col = [WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTNode *level0Col = [WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTNode *level1Col = nil;//[WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
     
     NSArray *filters = [self pivotFilters];
@@ -127,25 +127,29 @@
         case PivotMetadataTypeColumn:{
 
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
-            result.backgroundColor = [self.collectionView.backgroundColor lighterColor:1.3f];
 
             WOTTankPivotFixedCollectionViewCell *fixed = (WOTTankPivotFixedCollectionViewCell *)result;
-            fixed.label.text = node.name;
+            fixed.textValue = node.name;
+//            fixed.hasBottomSeparator = NO;
+//            fixed.hasRightSeparator = NO;
+            
             break;
         }
         case PivotMetadataTypeRow:{
             
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
-            result.backgroundColor = [self.collectionView.backgroundColor lighterColor:1.3f];
-
+            
             WOTTankPivotFixedCollectionViewCell *row = (WOTTankPivotFixedCollectionViewCell *)result;
-            row.label.text = node.name;
+            row.textValue = node.name;
+//            row.hasBottomSeparator = NO;
+//            row.hasRightSeparator = NO;
+            
             break;
         }
         case PivotMetadataTypeFilter:{
             
             result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) forIndexPath:indexPath];
-            result.backgroundColor = [self.collectionView.backgroundColor lighterColor:1.3f];
+
             break;
         }
         case PivotMetadataTypeData:{
@@ -155,8 +159,6 @@
             dataCell.dataViewColor = node.dataColor;
 
             Tanks *tank = (Tanks *)node.data1;
-            
-            
             dataCell.symbol = node.name;
             dataCell.dpm = [tank.dpm suffixNumber];
             dataCell.mask = tank.invisibility;
@@ -204,6 +206,20 @@
     [fetchedObjects enumerateObjectsUsingBlock:^(Tanks *tank, NSUInteger idx, BOOL *stop) {
 
         debugLog(@"dpm:%@",tank.dpm);
+        debugLog(@"visionRadius:%@", tank.visionRadius);
+        debugLog(@"invisibility:%@", tank.invisibility);
+        debugLog(@"invisibilityShot:%@", tank.invisibilityShot);
+        debugLog(@"invisibilityImmobility:%@", tank.invisibilityImmobility);
+        debugLog(@"invisibilityMobility:%@", tank.invisibilityMobility);
+        debugLog(@"speed:%@", tank.speed);
+        debugLog(@"rotationSpeed:%@", tank.rotationSpeed);
+        debugLog(@"turretTraverseSpeed:%@", tank.turretTraverseSpeed);
+        debugLog(@"powerToWeightRatio:%@", tank.powerToWeightRatio);
+        debugLog(@"armor:%@", tank.armor);
+        debugLog(@"penetration:%@", tank.penetration);
+        debugLog(@"dispersion:%@", tank.dispersion);
+        debugLog(@"aimingTime:%@", tank.aimingTime);
+        
     }];
 }
 
@@ -224,8 +240,8 @@
 
 - (NSArray *)complexMetadataType:(PivotMetadataType)type forLevel0Node:(WOTNode *)level0Node level1Node:(WOTNode *)level1Node {
     
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    
+//    NSMutableArray *result = [[NSMutableArray alloc] init];
+    WOTNode *root = [[WOTNode alloc] initWithName:@"-" pivotMetadataType:type predicate:nil];
     [level0Node.endpoints enumerateObjectsUsingBlock:^(WOTNode *level0Child, NSUInteger idx, BOOL *stop) {
         
         WOTNode *level0ChildCopy = [[WOTNode alloc] initWithName:level0Child.name pivotMetadataType:level0Child.pivotMetadataType predicate:level0Child.predicate];
@@ -236,10 +252,10 @@
             [level0ChildCopy addChild:nationCopy];
         }];
         
-        [result addObject:level0ChildCopy];
+        [root addChild:level0ChildCopy];
     }];
     
-    return result;
+    return @[root];
 }
 
 

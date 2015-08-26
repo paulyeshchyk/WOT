@@ -73,16 +73,6 @@
     NSCAssert(([requests count] == 0), @"requestsArray is not empty after cancelation");
 }
 
-- (void)removeRequest:(WOTRequest *)request {
-    
-    NSArray *groups = request.availableInGroups;
-    [groups enumerateObjectsUsingBlock:^(id group, NSUInteger idx, BOOL *stop) {
-        
-        NSPointerArray *requests = self.grouppedRequests[group];
-        [self requestsArray:requests removeRequest:request];
-    }];
-}
-
 - (void)requestsArray:(NSPointerArray *)requests removeRequest:(WOTRequest *)request {
     
     [requests compact];
@@ -128,6 +118,7 @@
     BOOL canAdd = (index == NSNotFound);
     if (canAdd) {
         
+        [request setListener:self];
         [request addGroup:groupId];
         [requests addPointer:(__bridge void *)request];
     } else {
@@ -224,28 +215,45 @@
     return request;
 }
 
-- (void)requestHasFailed:(WOTRequest *)request {
+#pragma mark - WOTRequestListener
+
+- (void)requestHasFailed:(id)request {
 
     self.pendingRequestsCount -= 1;
+    [(WOTRequest *)request setListener:nil];
     debugError(@"webrequest-failture:%@",request);
 }
 
-- (void)requestHasFinishedLoadData:(WOTRequest *)request {
+- (void)requestHasFinishedLoadData:(id)request {
     
     self.pendingRequestsCount -= 1;
     debugLog(@"webrequest-finished:%@",request);
 }
 
-- (void)requestHasCanceled:(WOTRequest *)request {
+- (void)requestHasCanceled:(id)request {
     
     self.pendingRequestsCount -= 1;
+    [(WOTRequest *)request setListener:nil];
     debugLog(@"webrequest-canceled:%@",request);
 }
 
-- (void)requestHasStarted:(WOTRequest *)request {
+- (void)requestHasStarted:(id)request {
     
     self.pendingRequestsCount += 1;
-    debugLog(@"webrequest-start:%@-%@",request.availableInGroups, request.description);
+    debugLog(@"webrequest-start:%@",request);
 }
 
+
+- (void)removeRequest:(id)request {
+    
+    NSCAssert([[request class] isSubclassOfClass:[WOTRequest class]], @"request is not subclass of WOTRequest class");
+
+    NSArray *groups = [(WOTRequest *)request availableInGroups];
+    [groups enumerateObjectsUsingBlock:^(id group, NSUInteger idx, BOOL *stop) {
+        
+        NSPointerArray *requests = self.grouppedRequests[group];
+        [self requestsArray:requests removeRequest:request];
+    }];
+    [request setListener:nil];
+}
 @end

@@ -18,7 +18,7 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="D0E-PC-FYm">
                     <rect key="frame" x="0.0" y="0.0" width="605" height="477"/>
-                    <color key="backgroundColor" red="0.22745098039215686" green="0.27058823529411763" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <collectionViewLayout key="collectionViewLayout" id="wKE-mk-LJd" customClass="WOTTankPivotLayout"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="cZe-O7-BFk"/>
@@ -26,6 +26,7 @@
                     </connections>
                 </collectionView>
             </subviews>
+            <color key="backgroundColor" red="0.24313725490196078" green="0.24313725490196078" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="D0E-PC-FYm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7jC-YX-a28"/>
                 <constraint firstItem="D0E-PC-FYm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Gl8-cu-0MC"/>

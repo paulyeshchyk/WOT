@@ -15,22 +15,14 @@
 
     WOTNode *result = [[WOTNode alloc] initWithName:@"DPM" pivotMetadataType:type predicate:nil];
     
-    NSCompoundPredicate *predicateLess500 = [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(500)]]];
-    NSCompoundPredicate *predicateGreat500Less1000 = [NSCompoundPredicate andPredicateWithSubpredicates:@[
-                                                                                                          [NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(500)],
-                                                                                                          [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(1000)]
-                                                      ]];
-    NSCompoundPredicate *predicateGreat1000Less1500 = [NSCompoundPredicate andPredicateWithSubpredicates:@[
-                                                                                                          [NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(1000)],
-                                                                                                          [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(1500)]
-                                                                                                          ]];
-    NSCompoundPredicate *predicateGreat1500Less2000 = [NSCompoundPredicate andPredicateWithSubpredicates:@[
-                                                                                                           [NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(1500)],
-                                                                                                           [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(2000)]
-                                                                                                           ]];
-    NSCompoundPredicate *predicateGreat2000 = [NSCompoundPredicate andPredicateWithSubpredicates:@[
-                                                                                                           [NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(2000)]
-                                                                                                           ]];
+    NSCompoundPredicate *predicateLess500 =             [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(500)]]];
+    NSCompoundPredicate *predicateGreat500Less1000 =    [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(500)],
+                                                                                                             [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(1000)]]];
+    NSCompoundPredicate *predicateGreat1000Less1500 =   [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(1000)],
+                                                                                                             [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(1500)]]];
+    NSCompoundPredicate *predicateGreat1500Less2000 =   [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(1500)],
+                                                                                                             [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(2000)]]];
+    NSCompoundPredicate *predicateGreat2000 =           [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(2000)]]];
     
     [result addChild:[[WOTNode alloc] initWithName:@"[0;500)"       pivotMetadataType:type predicate:predicateLess500]];
     [result addChild:[[WOTNode alloc] initWithName:@"[500;1000)"    pivotMetadataType:type predicate:predicateGreat500Less1000]];

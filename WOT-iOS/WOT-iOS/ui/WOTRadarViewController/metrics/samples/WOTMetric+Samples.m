@@ -37,8 +37,6 @@
         } else {
             
             float thisValue = [[result lastObject][@"this"] floatValue];
-//            float maxValue = [[result lastObject][@"max"] floatValue];
-//            float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue * 100.0f);
             return thisValue;
         }
     }];
@@ -67,8 +65,6 @@
         } else {
             
             float thisValue = [[result lastObject][@"this"] floatValue];
-//            float maxValue = [[result lastObject][@"max"] floatValue];
-//            float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue * 100.0f);
             return thisValue;
         }
     }];
@@ -98,8 +94,6 @@
         } else {
             
             float thisValue = [[result lastObject][@"this"] floatValue];
-//            float maxValue = [[result lastObject][@"max"] floatValue];
-//            float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue * 100.0f);
             return thisValue;
         }
     }];
@@ -128,8 +122,6 @@
         } else {
             
             float thisValue = [[result lastObject][@"this"] floatValue];
-//            float maxValue = [[result lastObject][@"max"] floatValue];
-//            float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue * 100.0f);
             return thisValue;
         }
     }];
