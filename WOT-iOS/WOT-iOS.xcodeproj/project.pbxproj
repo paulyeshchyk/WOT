@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		1D010DDF1B8EE5DD00FA6A75 /* OCLintT */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 1D010DE01B8EE5DD00FA6A75 /* Build configuration list for PBXAggregateTarget "OCLintT" */;
+			buildPhases = (
+				1D010DE31B8EE5E700FA6A75 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = OCLintT;
+			productName = OCLintT;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		1D010D051B789A8900FA6A75 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D041B789A8900FA6A75 /* NSThread+ExecutionOnMain.m */; };
 		1D010D311B7DFF1100FA6A75 /* WOTTankConfigurationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D191B7DFF1100FA6A75 /* WOTTankConfigurationCollectionViewCell.m */; };
@@ -21,8 +35,6 @@
 		1D010D3B1B7DFF1100FA6A75 /* WOTTankConfigurationModuleMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D2D1B7DFF1100FA6A75 /* WOTTankConfigurationModuleMapping.m */; };
 		1D010D3C1B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D2F1B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.m */; };
 		1D010D3D1B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D010D301B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.xib */; };
-		1D010D621B83183D00FA6A75 /* WOTTree+Pivot.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D611B83183D00FA6A75 /* WOTTree+Pivot.m */; };
-		1D010D651B831C0900FA6A75 /* WOTNode+Pivot.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D641B831C0900FA6A75 /* WOTNode+Pivot.m */; };
 		1D010D731B84794000FA6A75 /* WOTNode+Enumeration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D721B84794000FA6A75 /* WOTNode+Enumeration.m */; };
 		1D010D7A1B8AF60300FA6A75 /* UIColor+HSB.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D791B8AF60300FA6A75 /* UIColor+HSB.m */; };
 		1D010D821B8B3B4F00FA6A75 /* NSNumber+CustomFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D010D811B8B3B4F00FA6A75 /* NSNumber+CustomFormatter.m */; };
@@ -272,6 +284,8 @@
 		1DD6471A1B2084FF00B0EC76 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1DD647191B2084FF00B0EC76 /* podfile */; };
 		1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6471F1B20855400B0EC76 /* Localizable.strings */; };
 		1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD647451B21C57900B0EC76 /* UINavigationBar+WOT.m */; };
+		1DDEE3741B8EF6C800C90D4B /* WOTPivotTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE3731B8EF6C800C90D4B /* WOTPivotTree.m */; };
+		1DDEE3771B8EF95C00C90D4B /* WOTPivotNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE3761B8EF95C00C90D4B /* WOTPivotNode.m */; };
 		1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */; };
 		1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */; };
 		1DE319AE1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */; };
@@ -327,10 +341,6 @@
 		1D010D2E1B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankModuleTreeViewController.h; sourceTree = "<group>"; };
 		1D010D2F1B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankModuleTreeViewController.m; sourceTree = "<group>"; };
 		1D010D301B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankModuleTreeViewController.xib; sourceTree = "<group>"; };
-		1D010D601B83183D00FA6A75 /* WOTTree+Pivot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTree+Pivot.h"; sourceTree = "<group>"; };
-		1D010D611B83183D00FA6A75 /* WOTTree+Pivot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTree+Pivot.m"; sourceTree = "<group>"; };
-		1D010D631B831C0900FA6A75 /* WOTNode+Pivot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+Pivot.h"; sourceTree = "<group>"; };
-		1D010D641B831C0900FA6A75 /* WOTNode+Pivot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+Pivot.m"; sourceTree = "<group>"; };
 		1D010D711B84794000FA6A75 /* WOTNode+Enumeration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+Enumeration.h"; sourceTree = "<group>"; };
 		1D010D721B84794000FA6A75 /* WOTNode+Enumeration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+Enumeration.m"; sourceTree = "<group>"; };
 		1D010D781B8AF60300FA6A75 /* UIColor+HSB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HSB.h"; sourceTree = "<group>"; };
@@ -733,6 +743,11 @@
 		1DD6471E1B20855400B0EC76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1DD647441B21C57900B0EC76 /* UINavigationBar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+WOT.h"; sourceTree = "<group>"; };
 		1DD647451B21C57900B0EC76 /* UINavigationBar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+WOT.m"; sourceTree = "<group>"; };
+		1DDEE3721B8EF6C800C90D4B /* WOTPivotTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPivotTree.h; sourceTree = "<group>"; };
+		1DDEE3731B8EF6C800C90D4B /* WOTPivotTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTPivotTree.m; sourceTree = "<group>"; };
+		1DDEE3751B8EF95C00C90D4B /* WOTPivotNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPivotNode.h; sourceTree = "<group>"; };
+		1DDEE3761B8EF95C00C90D4B /* WOTPivotNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTPivotNode.m; sourceTree = "<group>"; };
+		1DDEE3781B8F061100C90D4B /* WOTPivotDimensionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPivotDimensionProtocol.h; sourceTree = "<group>"; };
 		1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark.png"; sourceTree = "<group>"; };
 		1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark@2x.png"; sourceTree = "<group>"; };
 		1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray.png"; sourceTree = "<group>"; };
@@ -860,10 +875,11 @@
 		1D010D5F1B8317F700FA6A75 /* WOTTree+Pivot */ = {
 			isa = PBXGroup;
 			children = (
-				1D010D601B83183D00FA6A75 /* WOTTree+Pivot.h */,
-				1D010D611B83183D00FA6A75 /* WOTTree+Pivot.m */,
-				1D010D631B831C0900FA6A75 /* WOTNode+Pivot.h */,
-				1D010D641B831C0900FA6A75 /* WOTNode+Pivot.m */,
+				1DDEE3781B8F061100C90D4B /* WOTPivotDimensionProtocol.h */,
+				1DDEE3721B8EF6C800C90D4B /* WOTPivotTree.h */,
+				1DDEE3731B8EF6C800C90D4B /* WOTPivotTree.m */,
+				1DDEE3751B8EF95C00C90D4B /* WOTPivotNode.h */,
+				1DDEE3761B8EF95C00C90D4B /* WOTPivotNode.m */,
 			);
 			path = "WOTTree+Pivot";
 			sourceTree = "<group>";
@@ -2176,6 +2192,7 @@
 				1DD646311B1C616A00B0EC76 /* Resources */,
 				1F505D0B136E134003F88DEE /* Copy Pods Resources */,
 				A60CF0312932EB17B0C5C34C /* Embed Pods Frameworks */,
+				1D010DE61B8EEA7300FA6A75 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2237,6 +2254,7 @@
 			targets = (
 				1DD646321B1C616A00B0EC76 /* WOT-iOS */,
 				1DD6464E1B1C616A00B0EC76 /* WOT-iOSTests */,
+				1D010DDF1B8EE5DD00FA6A75 /* OCLintT */,
 			);
 		};
 /* End PBXProject section */
@@ -2386,6 +2404,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1D010DE31B8EE5E700FA6A75 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "source ~/.bash_profile\n\nhash oclint &> /dev/null\nif [ $? -eq 1 ]; then\necho >&2 \"oclint not found, analyzing stopped\"\nexit 1\nfi\n\ncd ${TARGET_TEMP_DIR}\n\nif [ ! -f compile_commands.json ]; then\necho \"[*] compile_commands.json not found, possibly clean was performed\"\necho \"[*] starting xcodebuild to rebuild the project..\"\n# clean previous output\nif [ -f xcodebuild.log ]; then\nrm xcodebuild.log\nfi\n\ncd ${SRCROOT}\n\nxcodebuild clean\n\n#build xcodebuild.log\nxcodebuild | tee ${TARGET_TEMP_DIR}/xcodebuild.log\n#xcodebuild <options>| tee ${TARGET_TEMP_DIR}/xcodebuild.log\n\necho \"[*] transforming xcodebuild.log into compile_commands.json...\"\ncd ${TARGET_TEMP_DIR}\n#transform it into compile_commands.json\noclint-xcodebuild\n\necho \"[*] copy compile_commands.json to the project root...\"\ncp ${TARGET_TEMP_DIR}/compile_commands.json ${SRCROOT}/compile_commands.json\n\nfi\n\necho \"[*] starting analyzing\"\ncd ${TARGET_TEMP_DIR}\noclint-json-compilation-database | sed 's/\\(.*\\.\\m\\{1,2\\}:[0-9]*:[0-9]*:\\)/\\1 warning:/'";
+		};
+		1D010DE61B8EEA7300FA6A75 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+			showEnvVarsInLog = 0;
+		};
 		1F505D0B136E134003F88DEE /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2505,7 +2550,6 @@
 				1D047B691B331DF000B5B696 /* WOTApplicationDefaults.m in Sources */,
 				1D519CF31B4E7BE400D3A286 /* WOTTankDetailField.m in Sources */,
 				1DC07B591B3A9489002FAA72 /* WOTWEBRequestLogin.m in Sources */,
-				1D010D651B831C0900FA6A75 /* WOTNode+Pivot.m in Sources */,
 				1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */,
 				1D010D9F1B8B4D2F00FA6A75 /* WOTTankPivotFixedCollectionViewCell.m in Sources */,
@@ -2516,6 +2560,7 @@
 				1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */,
 				1D010D9D1B8B4D2F00FA6A75 /* WOTTankPivotFilterCollectionViewCell.m in Sources */,
 				1DC07B1A1B39B672002FAA72 /* ListSetting.m in Sources */,
+				1DDEE3771B8EF95C00C90D4B /* WOTPivotNode.m in Sources */,
 				1DC07B7B1B3AB778002FAA72 /* Tankguns+FillProperties.m in Sources */,
 				1DC07B561B3A9489002FAA72 /* WOTWebRequestTankChassis.m in Sources */,
 				1DC07B2C1B39B672002FAA72 /* UserSession.m in Sources */,
@@ -2565,7 +2610,6 @@
 				1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */,
 				1DC07B931B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.m in Sources */,
 				1D010DA61B8C60AA00FA6A75 /* WOTNode+PivotFactory.m in Sources */,
-				1D010D621B83183D00FA6A75 /* WOTTree+Pivot.m in Sources */,
 				1D4C92621B27085600E320B5 /* WOTTankListSettingTableViewCell.m in Sources */,
 				DA522D311B663C210087D684 /* WOTTankListSearchBar.m in Sources */,
 				1D519D611B54FFD800D3A286 /* Tanks.m in Sources */,
@@ -2576,6 +2620,7 @@
 				1D010D3A1B7DFF1100FA6A75 /* WOTTankConfigurationModuleMapping+Factory.m in Sources */,
 				1D519D2C1B4EAD7F00D3A286 /* WOTEnginePowerCompareFieldExpression.m in Sources */,
 				1D519CF81B4E7BE400D3A286 /* WOTTankDetailSection.m in Sources */,
+				1DDEE3741B8EF6C800C90D4B /* WOTPivotTree.m in Sources */,
 				1DCC80DB1B306227005FF193 /* BalloonMarker.swift in Sources */,
 				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
 				1D047B641B331D8900B5B696 /* WOTMenuDatasource.m in Sources */,
@@ -2626,6 +2671,32 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1D010DE11B8EE5DD00FA6A75 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+					x86_64,
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1D010DE21B8EE5DD00FA6A75 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+					x86_64,
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		1DD646571B1C616A00B0EC76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2786,6 +2857,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1D010DE01B8EE5DD00FA6A75 /* Build configuration list for PBXAggregateTarget "OCLintT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D010DE11B8EE5DD00FA6A75 /* Debug */,
+				1D010DE21B8EE5DD00FA6A75 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1DD6462E1B1C616A00B0EC76 /* Build configuration list for PBXProject "WOT-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

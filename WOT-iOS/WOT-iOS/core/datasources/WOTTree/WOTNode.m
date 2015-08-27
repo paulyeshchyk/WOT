@@ -19,7 +19,7 @@
 
 - (void)dealloc {
     
-    [self removeAllNodes];
+    [self removeAllNodesWithCompletionBlock:NULL];
 }
 
 - (id)init {
@@ -74,12 +74,16 @@
     [self.childList addObject:child];
 }
 
-- (void)removeAllNodes {
+- (void)removeAllNodesWithCompletionBlock:(WOTNodeRemoveCompletionBlock)completionBlock {
     
     [self.childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-       
+
+        if (completionBlock) {
+            
+            completionBlock(node);
+        }
         node.parent = nil;
-        [node removeAllNodes];
+        [node removeAllNodesWithCompletionBlock:completionBlock];
     }];
     [self.childList removeAllObjects];
 }
@@ -90,8 +94,12 @@
     [self addChildren:set];
 }
 
-- (void)removeChild:(WOTNode *)child {
+- (void)removeChild:(WOTNode *)child completionBlock:(WOTNodeRemoveCompletionBlock)completionBlock{
 
+    if (completionBlock) {
+        
+        completionBlock(child);
+    }
     child.parent = nil;
     [self.childList removeObject:child];
 }

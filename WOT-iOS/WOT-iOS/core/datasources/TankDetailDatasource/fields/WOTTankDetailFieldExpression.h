@@ -15,6 +15,7 @@
 
 + (WOTTankDetailFieldExpression *)expressionName:(NSString *)expressionName fieldWithExpressionDescriptions:(NSArray *)expressionDescriptions  keyPaths:(NSArray *)keyPaths;
 
-- (NSPredicate *)predicateForObject:(id)object;
+- (NSPredicate *)predicateForAllPlayingVehiclesWithObject:(id)object;
+- (NSPredicate *)predicateForAnyObject:(NSArray *)objects;
 
 @end

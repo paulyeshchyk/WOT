@@ -22,7 +22,7 @@
         NSArray *allids = [tankID allObjects];
         
         WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression turretsCircularVisionRadiusCompareFieldExpression];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(vehicles.tank_id, $m, ANY $m.tank_id IN %@).@count > 0",allids];
+        NSPredicate *predicate = [expr predicateForAnyObject:allids];
         
         NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankturrets class])];
         request.predicate = predicate;
@@ -50,7 +50,7 @@
         NSArray *allids = [tankID allObjects];
         
         WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(vehicles.tank_id, $m, ANY $m.tank_id IN %@).@count > 0",allids];
+        NSPredicate *predicate = [expr predicateForAnyObject:allids];
         
         NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankturrets class])];
         request.predicate = predicate;
@@ -79,7 +79,7 @@
         NSArray *allids = [tankID allObjects];
         
         WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(vehicles.tank_id, $m, ANY $m.tank_id IN %@).@count > 0",allids];
+        NSPredicate *predicate = [expr predicateForAnyObject:allids];
         
         NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankturrets class])];
         request.predicate = predicate;
@@ -108,7 +108,7 @@
         NSArray *allids = [tankID allObjects];
         
         WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression turretsArmorForeheadCompareFieldExpression];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(vehicles.tank_id, $m, ANY $m.tank_id IN %@).@count > 0",allids];
+        NSPredicate *predicate = [expr predicateForAnyObject:allids];
         
         NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankturrets class])];
         request.predicate = predicate;
@@ -133,9 +133,9 @@
         
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(vehicles.tank_id, $m, ANY $m.tank_id IN %@).@count > 0",allids];
         
-        id expr = [WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression];
+        WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression];
+        NSPredicate *predicate = [expr predicateForAnyObject:allids];
         
         NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankengines class])];
         request.predicate = predicate;

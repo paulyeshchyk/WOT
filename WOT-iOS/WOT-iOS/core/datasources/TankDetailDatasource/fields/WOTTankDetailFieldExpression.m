@@ -24,8 +24,14 @@
     return result;
 }
 
-- (NSPredicate *)predicateForObject:(id)object {
+- (NSPredicate *)predicateForAllPlayingVehiclesWithObject:(id)object {
     
+    NSCAssert(NO, @"should be overriden");
+    return nil;
+}
+
+- (NSPredicate *)predicateForAnyObject:(NSArray *)objects {
+
     NSCAssert(NO, @"should be overriden");
     return nil;
 }
@@ -52,7 +58,10 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([object class])];
     [request setResultType:NSDictionaryResultType];
 
-    request.predicate = [self predicateForObject:object];
+    
+    request.predicate = [self predicateForAllPlayingVehiclesWithObject:object];
+
+    
     request.propertiesToFetch = expressionsForRequest;
 
     NSError *error = nil;

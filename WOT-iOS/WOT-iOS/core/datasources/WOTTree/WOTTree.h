@@ -12,12 +12,12 @@ typedef NSComparisonResult(^WOTNodeComparator)(WOTNode *left, WOTNode *right);
 
 @interface WOTTree : NSObject
 
-@property (nonatomic, readonly)NSArray *nodes;
-@property (nonatomic, readonly)NSInteger levels;
-@property (nonatomic, readonly)NSInteger width;
-@property (nonatomic, readonly)NSInteger endpointsCount;
-@property (nonatomic, copy)WOTNodeComparator nodeComparator;
-@property (nonatomic, readonly)NSSet *rootNodes;
+@property (nonatomic, readonly) NSArray *nodes;
+@property (nonatomic, readonly) NSInteger levels;
+@property (nonatomic, readonly) NSInteger width;
+@property (nonatomic, readonly) NSInteger endpointsCount;
+@property (nonatomic, copy) WOTNodeComparator nodeComparator;
+@property (nonatomic, readonly) NSSet *rootNodes;
 
 - (NSInteger)nodesCountAtSection:(NSInteger)sectionIndex;
 - (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath;

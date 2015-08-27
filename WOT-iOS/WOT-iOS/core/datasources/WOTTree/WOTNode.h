@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class WOTNode;
+
+typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode *node);
+
 @interface WOTNode : NSObject
 
 @property (nonatomic, copy) NSString *name;
@@ -21,7 +25,7 @@
 - (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL;
 - (void)addChild:(WOTNode *)child;
 - (void)addChildArray:(NSArray *)childArray;
-- (void)removeChild:(WOTNode *)child;
-- (void)removeAllNodes;
+- (void)removeChild:(WOTNode *)child completionBlock:(WOTNodeRemoveCompletionBlock)completionBlock;
+- (void)removeAllNodesWithCompletionBlock:(WOTNodeRemoveCompletionBlock)completionBlock;
 
 @end

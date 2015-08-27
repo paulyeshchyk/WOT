@@ -6,15 +6,16 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTNode.h"
+#import "WOTPivotNode.h"
+
 
 @interface WOTNode (PivotFactory)
 
-+ (WOTNode *)pivotNationMetadataItemAsType:(PivotMetadataType)type;
-+ (WOTNode *)pivotTierMetadataItemAsType:(PivotMetadataType)type;
-+ (WOTNode *)pivotPremiumMetadataItemAsType:(PivotMetadataType)type;
-+ (WOTNode *)pivotTypeMetadataItemAsType:(PivotMetadataType)type;
-+ (WOTNode *)pivotDPMMetadataItemAsType:(PivotMetadataType)type;
++ (WOTPivotNode *)pivotNationMetadataItemAsType:(PivotMetadataType)type;
++ (WOTPivotNode *)pivotTierMetadataItemAsType:(PivotMetadataType)type;
++ (WOTPivotNode *)pivotPremiumMetadataItemAsType:(PivotMetadataType)type;
++ (WOTPivotNode *)pivotTypeMetadataItemAsType:(PivotMetadataType)type;
++ (WOTPivotNode *)pivotDPMMetadataItemAsType:(PivotMetadataType)type;
 
 + (NSDictionary *)nationColors;
 + (NSDictionary *)typeColors;

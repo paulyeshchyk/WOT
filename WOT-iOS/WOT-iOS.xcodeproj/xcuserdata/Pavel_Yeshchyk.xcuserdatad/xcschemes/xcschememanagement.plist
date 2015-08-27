@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>OCLintT.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
 		<key>WOT-iOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1D010DB11B8EE18A00FA6A75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1D010DCF1B8EE18A00FA6A75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1D010DDF1B8EE5DD00FA6A75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1DD646321B1C616A00B0EC76</key>
 		<dict>
 			<key>primary</key>
