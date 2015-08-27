@@ -19,8 +19,43 @@
 #import "WOTRequestExecutor.h"
 #import "WOTWebResponseAdapterModulesTree.h"
 
+typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
+    WOTVehicleModuleTypeUnknown,
+    WOTVehicleModuleTypeChassis,
+    WOTVehicleModuleTypeTurret,
+    WOTVehicleModuleTypeEngine,
+    WOTVehicleModuleTypeGun,
+    WOTVehicleModuleTypeRadio
+};
+
+
+
 @implementation WOTWebResponseAdapterVehicles
 
+
++ (WOTVehicleModuleType)moduleTypeFromString:(NSString *)type {
+    
+    WOTVehicleModuleType result = WOTVehicleModuleTypeUnknown;
+
+    if ([type isEqualToString:WOT_VALUE_VEHICLE_CHASSIS]) {
+
+        result = WOTVehicleModuleTypeChassis;
+    } else if ([type isEqualToString:WOT_VALUE_VEHICLE_GUN]) {
+        
+        result = WOTVehicleModuleTypeGun;
+    } else if ([type isEqualToString:WOT_VALUE_VEHICLE_ENGINE]) {
+        
+        result = WOTVehicleModuleTypeEngine;
+    } else if ([type isEqualToString:WOT_VALUE_VEHICLE_TURRET]) {
+        
+        result = WOTVehicleModuleTypeTurret;
+    } else if([type isEqualToString:WOT_VALUE_VEHICLE_RADIO]) {
+        
+        result = WOTVehicleModuleTypeRadio;
+    };
+
+    return result;
+}
 
 - (void)parseData:(id)data error:(NSError *)error {
     
@@ -264,8 +299,7 @@
         [moduleTree fillPropertiesFromDictionary:jSON];
         
         *returningModule = moduleTree;
-        
-        
+
         NSArray *nextTanks = jSON[WOT_KEY_NEXT_TANKS];
         if ([NSArray hasDataInArray:nextTanks]) {
             
@@ -276,36 +310,44 @@
                 [moduleTree addNextTanksObject:tanks];
             }];
         }
-        
-        
-        NSString *type = jSON[WOT_KEY_TYPE];
-        if ([type isEqualToString:WOT_VALUE_VEHICLE_CHASSIS]) {
-            
-            Tankchassis *chassis = [Tankchassis findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-            [moduleTree addNextChassisObject:chassis];
-        }
-        if ([type isEqualToString:WOT_VALUE_VEHICLE_GUN]) {
-            
-            Tankguns *gun = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-            [moduleTree addNextGunsObject:gun];
-        }
-        if ([type isEqualToString:WOT_VALUE_VEHICLE_ENGINE]) {
-            
-            Tankengines *engine = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-            [moduleTree addNextEnginesObject:engine];
-        };
-        if ([type isEqualToString:WOT_VALUE_VEHICLE_TURRET]) {
-            
-            Tankturrets *turrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-            [moduleTree addNextTurretsObject:turrets];
-        };
-        if ([type isEqualToString:WOT_VALUE_VEHICLE_RADIO]) {
-            
-            
-            Tankradios *radios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
-            [moduleTree addNextRadiosObject:radios];
-        };
 
+        WOTVehicleModuleType moduleType = [WOTWebResponseAdapterVehicles moduleTypeFromString:jSON[WOT_KEY_TYPE]];
+        switch (moduleType) {
+            case WOTVehicleModuleTypeChassis: {
+
+                Tankchassis *chassis = [Tankchassis findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                [moduleTree addNextChassisObject:chassis];
+                break;
+            }
+            case WOTVehicleModuleTypeEngine: {
+                
+                Tankengines *engine = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                [moduleTree addNextEnginesObject:engine];
+                break;
+            }
+            case WOTVehicleModuleTypeGun: {
+
+                Tankguns *gun = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                [moduleTree addNextGunsObject:gun];
+                break;
+            }
+            case WOTVehicleModuleTypeTurret: {
+                
+                Tankturrets *turrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                [moduleTree addNextTurretsObject:turrets];
+                break;
+            }
+            case WOTVehicleModuleTypeRadio: {
+
+                Tankradios *radios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                [moduleTree addNextRadiosObject:radios];
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        
         if (parentModule) {
             
             [parentModule addNextModulesObject:moduleTree];

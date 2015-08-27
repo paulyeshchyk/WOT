@@ -114,7 +114,6 @@
             
             debugError(@"request-fail:%@",error.localizedDescription);
         }
-        
     }];
     
     NSDictionary *args = @{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]};
