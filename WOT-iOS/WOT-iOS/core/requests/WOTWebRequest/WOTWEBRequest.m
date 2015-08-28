@@ -155,7 +155,9 @@ static NSString *urlEncode(NSString *string) {
     } else {
         
         NSError *serializationError = nil;
-        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializationError];
+        NSMutableDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                                        options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                                          error:&serializationError];
         if (serializationError) {
             
             [self finalizeWithData:nil error:serializationError];
@@ -173,11 +175,13 @@ static NSString *urlEncode(NSString *string) {
                 NSMutableDictionary *result = nil;
                 if (jsonData) {
                     
-                    result = [NSMutableDictionary dictionaryWithDictionary:jsonData];
+                    result = [jsonData mutableCopy];
                 } else {
                     
                     result = [[NSMutableDictionary alloc] init];
                 }
+                
+                [result clearNullValues];
                 
                 [result addEntriesFromDictionary:self.userInfo];
                 [self finalizeWithData:result error:nil];

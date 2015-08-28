@@ -14,6 +14,7 @@
 #import "WOTTankPivotLayout.h"
 #import "WOTNode.h"
 #import "Tanks+DPM.h"
+#import "Tanks+PivotNode.h"
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTPivotTree.h"
 #import "WOTPivotNode.h"
@@ -97,15 +98,7 @@
         NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
         [fetchedData enumerateObjectsUsingBlock:^(Tanks *obj, NSUInteger idx, BOOL *stop) {
 
-            NSURL *imageURL = [NSURL URLWithString:[obj image]];
-            WOTPivotNode *node = [[WOTPivotDataNode alloc] initWithName:[obj short_name_i18n] imageURL:imageURL predicate:predicate];
-            
-            node.dataColor = [UIColor whiteColor];
-            NSDictionary *colors = [WOTNode typeColors];
-
-            node.dataColor = colors[obj.type];
-            
-            [node setData1:obj];
+            WOTPivotNode *node = [obj pivotDataNodeForPredicate:predicate];
             [resultArray addObject:node];
         }];
         return resultArray;
