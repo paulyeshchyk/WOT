@@ -76,11 +76,11 @@
     __weak typeof(self)weakSelf = self;
 
     WOTPivotNode *level0Row =[WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeRow];
-    WOTPivotNode *level1Row = nil;//[WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
+    WOTPivotNode *level1Row = [WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
     NSArray *rows = [self complexMetadataOfClass:[WOTPivotRowNode class] forLevel0Node:level0Row level1Node:level1Row];
     
     WOTPivotNode *level0Col = [WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTPivotNode *level1Col = nil;//[WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNode *level1Col = [WOTNode pivotPremiumMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataOfClass:[WOTPivotColNode class] forLevel0Node:level0Col level1Node:level1Col];
     
     NSArray *filters = [self pivotFilters];
@@ -96,9 +96,9 @@
         
         NSMutableArray *resultArray = [[NSMutableArray alloc] init];
         NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
-        [fetchedData enumerateObjectsUsingBlock:^(Tanks *obj, NSUInteger idx, BOOL *stop) {
+        [fetchedData enumerateObjectsUsingBlock:^(Tanks *tanks, NSUInteger idx, BOOL *stop) {
 
-            WOTPivotNode *node = [obj pivotDataNodeForPredicate:predicate];
+            WOTPivotNode *node = [tanks pivotDataNodeForPredicate:predicate];
             [resultArray addObject:node];
         }];
         return resultArray;
@@ -237,6 +237,5 @@
     
     return @[root];
 }
-
 
 @end
