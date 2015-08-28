@@ -60,47 +60,15 @@
     for(NSUInteger section = 0; section < [self.collectionView numberOfSections]; section++) {
         
         for(NSUInteger row = 0; row < [self.collectionView numberOfItemsInSection:section]; row++) {
-            
-            CGRect itemRelativeRect = CGRectZero;
-            if (self.itemRelativeRectCallback) {
-                
-                itemRelativeRect = self.itemRelativeRectCallback([NSIndexPath indexPathForRow:row inSection:section]);
-            }
-            
-            PivotStickyType stickyType = PivotStickyTypeFloat;
-            if (self.itemLayoutStickyType) {
-                
-                stickyType = self.itemLayoutStickyType([NSIndexPath indexPathForRow:row inSection:section]);
-            }
-            
-            NSInteger zIndex = 0;
-            
-            CGFloat x = itemRelativeRect.origin.x * self.itemSize.width;
-            CGFloat y = itemRelativeRect.origin.y * self.itemSize.height;
-            CGFloat width = itemRelativeRect.size.width * self.itemSize.width;
-            CGFloat height = itemRelativeRect.size.height * self.itemSize.height;
 
-            if ((stickyType & PivotStickyTypeVertical) == PivotStickyTypeVertical) {
-                
-                y += contentOffset.y;
-                zIndex += 1;
-            }
-            if ((stickyType & PivotStickyTypeHorizontal) == PivotStickyTypeHorizontal) {
-                
-                x += contentOffset.x;
-                zIndex += 1;
-            }
-            
-            CGRect cellFrame = CGRectMake(x,
-                                          y,
-                                          width,
-                                          height);
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            NSInteger zIndex = 0;
+            CGRect cellFrame = [self frameForItemAtIndexPath:indexPath contentOffset:contentOffset zIndex:&zIndex];
             
             //see if the collection view needs this cell
             if(CGRectIntersectsRect(cellFrame, rect)) {
                 
                 //create the attributes object
-                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:section];
                 UICollectionViewLayoutAttributes* attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
                 
                 //set the frame for this attributes object
@@ -119,6 +87,43 @@
     return YES;
 }
 
+#pragma mark - private
 
+- (CGRect)frameForItemAtIndexPath:(NSIndexPath *)indexPath contentOffset:(CGPoint)contentOffset zIndex:(NSInteger *)zIndex{
+    
+    CGRect itemRelativeRect = CGRectZero;
+    if (self.itemRelativeRectCallback) {
+        
+        itemRelativeRect = self.itemRelativeRectCallback(indexPath);
+    }
+    
+    PivotStickyType stickyType = PivotStickyTypeFloat;
+    if (self.itemLayoutStickyType) {
+        
+        stickyType = self.itemLayoutStickyType(indexPath);
+    }
+    
+    *zIndex = 0;
+    
+    CGSize itemSize = self.itemSize;
+    
+    CGFloat x = itemRelativeRect.origin.x * itemSize.width;
+    CGFloat y = itemRelativeRect.origin.y * itemSize.height;
+    CGFloat width = itemRelativeRect.size.width * itemSize.width;
+    CGFloat height = itemRelativeRect.size.height * itemSize.height;
+    
+    if ((stickyType & PivotStickyTypeVertical) == PivotStickyTypeVertical) {
+        
+        y += contentOffset.y;
+        *zIndex += 1;
+    }
+    if ((stickyType & PivotStickyTypeHorizontal) == PivotStickyTypeHorizontal) {
+        
+        x += contentOffset.x;
+        *zIndex += 1;
+    }
+    
+    return CGRectMake(x, y, width, height);
+}
 
 @end

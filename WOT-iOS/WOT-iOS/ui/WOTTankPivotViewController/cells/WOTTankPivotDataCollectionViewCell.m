@@ -29,7 +29,7 @@
 - (void)setDataViewColor:(UIColor *)dataViewColor {
 
     self.dataView.backgroundColor = dataViewColor;
-    self.borderView.backgroundColor = [UIColor lightGrayColor];
+//    self.borderView.backgroundColor = [UIColor lightGrayColor];
     self.label.textColor = [dataViewColor inverseColorBW];
     self.dataLabel.textColor = [dataViewColor inverseColorBW];
     self.visionRadiusLabel.textColor = [dataViewColor inverseColorBW];
@@ -40,7 +40,6 @@
     
     return self.dataView.backgroundColor;
 }
-
 
 - (void)setVisibility:(NSString *)visibility {
     

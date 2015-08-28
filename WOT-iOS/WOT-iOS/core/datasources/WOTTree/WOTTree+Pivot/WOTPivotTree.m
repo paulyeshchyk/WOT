@@ -11,6 +11,14 @@
 #import "WOTPivotNode.h"
 #import "WOTNode+Enumeration.h"
 
+
+#import "WOTPivotColNode.h"
+#import "WOTPivotRowNode.h"
+#import "WOTPivotFilterNode.h"
+#import "WOTPivotColNode.h"
+#import "WOTPivotDataNode.h"
+
+
 @interface WOTPivotTree()
 
 @property (nonatomic, strong) NSMutableArray *metadataItems;
@@ -81,13 +89,13 @@
 
 - (void)resortMetadata {
     
-    NSArray *rows = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pivotMetadataType == %d",PivotMetadataTypeRow]];
+    NSArray *rows = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[WOTPivotRowNode class]]];
     [self.rootRowsNode addChildArray:rows];
     
-    NSArray *cols = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pivotMetadataType == %d",PivotMetadataTypeColumn]];
+    NSArray *cols = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[WOTPivotColNode class]]];
     [self.rootColumnsNode addChildArray:cols];
     
-    NSArray *filters = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pivotMetadataType == %d",PivotMetadataTypeFilter]];
+    NSArray *filters = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[WOTPivotFilterNode class]]];
     [self.rootFiltersNode addChildArray:filters];
 }
 
@@ -213,52 +221,69 @@
         index++;
     } comparator:^NSComparisonResult(WOTNode *obj1, WOTNode *obj2, id level) {
         
-        return [[[(WOTPivotNode *)obj1 predicate] predicateFormat] compare:[[(WOTPivotNode *)obj2 predicate] predicateFormat]];
+        NSPredicate *predicate1 = [(WOTPivotNode *)obj1 predicate];
+        NSPredicate *predicate2 = [(WOTPivotNode *)obj2 predicate];
+        
+        return [[predicate1 predicateFormat] compare:[predicate2 predicateFormat]];
     }];
+    
+    if (!self.pivotItemCreationBlock) {
+
+        return;
+    }
     
     [self.rootRowsNode enumerateEndpointsUsingBlock:^(WOTNode *rNode) {
 
         WOTPivotNode *rowNode = (WOTPivotNode *)rNode;
         if ([rowNode predicate]) {
-            
-            if (self.pivotItemCreationBlock) {
+
+            [self.rootColumnsNode enumerateEndpointsUsingBlock:^(WOTNode *cnode) {
                 
-                [self.rootColumnsNode enumerateEndpointsUsingBlock:^(WOTNode *cnode) {
-                    
-                    WOTPivotNode *columnNode = (WOTPivotNode *)cnode;
-                    NSMutableArray *predicates = [[NSMutableArray alloc] init];
-                    if (columnNode.predicate) [predicates addObject:columnNode.predicate];
-                    if (rowNode.predicate) [predicates addObject:rowNode.predicate];
-                    [[self.rootFiltersNode endpoints] enumerateObjectsUsingBlock:^(WOTNode *fnode, NSUInteger idx, BOOL *stop) {
+                WOTPivotNode *columnNode = (WOTPivotNode *)cnode;
 
-                        WOTPivotNode *filterNode = (WOTPivotNode *)fnode;
-                        if (filterNode.predicate) {
-                            
-                            [predicates addObject:filterNode.predicate];
-                        }
-                    }];
-                    
-                    NSArray *dataNodes = self.pivotItemCreationBlock(predicates);
-                    
-                    [columnNode setMaxWidth:dataNodes.count forKey:@(rowNode.hash)];
-                    [rowNode setMaxWidth:dataNodes.count forKey:@(columnNode.hash)];
-                    
-                    [dataNodes enumerateObjectsUsingBlock:^(WOTNode *dnode, NSUInteger idx, BOOL *stop) {
+                NSArray *predicates = [self predicatesFromColumnNode:columnNode rowNode:rowNode];
+                NSArray *dataNodes = self.pivotItemCreationBlock(predicates);
+                
+                [columnNode setMaxWidth:dataNodes.count forKey:@(rowNode.hash)];
+                [rowNode setMaxWidth:dataNodes.count forKey:@(columnNode.hash)];
+                
+                [dataNodes enumerateObjectsUsingBlock:^(WOTNode *dnode, NSUInteger idx, BOOL *stop) {
 
-                        WOTPivotNode *dataNode = (WOTPivotNode *)dnode;
-                        [dataNode setIndex:index];
-                        index++;
-                        
-                        [dataNode setStepParentColumn:columnNode];
-                        [dataNode setStepParentRow:rowNode];
-                        [dataNode setIndexInsideStepParentColumn:idx];
-                        
-                        [self.rootDataNode addChild:dataNode];
-                    }];
+                    WOTPivotNode *dataNode = (WOTPivotNode *)dnode;
+                    [dataNode setIndex:index];
+                    index++;
+                    
+                    [dataNode setStepParentColumn:columnNode];
+                    [dataNode setStepParentRow:rowNode];
+                    [dataNode setIndexInsideStepParentColumn:idx];
+                    
+                    [self.rootDataNode addChild:dataNode];
                 }];
-            }
+            }];
         }
     }];
+}
+
+- (NSArray *)predicatesFromColumnNode:(WOTPivotNode *)columnNode rowNode:(WOTPivotNode *)rowNode{
+    
+    NSMutableArray *predicates = [[NSMutableArray alloc] init];
+    
+    if (columnNode.predicate)
+        [predicates addObject:columnNode.predicate];
+    
+    if (rowNode.predicate)
+        [predicates addObject:rowNode.predicate];
+    
+    [[self.rootFiltersNode endpoints] enumerateObjectsUsingBlock:^(WOTNode *fnode, NSUInteger idx, BOOL *stop) {
+        
+        WOTPivotNode *filterNode = (WOTPivotNode *)fnode;
+        if (filterNode.predicate) {
+            
+            [predicates addObject:filterNode.predicate];
+        }
+    }];
+ 
+    return predicates;
 }
 
 @end

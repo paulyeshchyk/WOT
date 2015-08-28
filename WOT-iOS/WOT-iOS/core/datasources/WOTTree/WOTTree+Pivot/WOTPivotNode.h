@@ -9,21 +9,12 @@
 #import "WOTNode.h"
 #import "WOTPivotDimensionProtocol.h"
 
-typedef NS_ENUM(NSInteger, PivotMetadataType) {
-    PivotMetadataTypeUnknown = 0,
-    PivotMetadataTypeFilter,
-    PivotMetadataTypeColumn,
-    PivotMetadataTypeRow,
-    PivotMetadataTypeData
-};
-
 @interface WOTPivotNode : WOTNode
 
 @property (nonatomic, strong) UIColor *dataColor;
 @property (nonatomic, strong) NSManagedObject *data1;
 @property (nonatomic, readonly) CGRect relativeRect;
 @property (nonatomic, readonly) PivotStickyType stickyType;
-@property (nonatomic, assign) PivotMetadataType pivotMetadataType;
 @property (nonatomic, strong) NSPredicate *predicate;
 @property (nonatomic, strong) WOTPivotNode *stepParentColumn;
 @property (nonatomic, strong) WOTPivotNode *stepParentRow;
@@ -32,11 +23,19 @@ typedef NS_ENUM(NSInteger, PivotMetadataType) {
 @property (nonatomic, assign) NSInteger indexInsideStepParentColumn;
 @property (nonatomic, assign) id<WOTPivotDimensionProtocol> dimensionDelegate;
 
-- (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL pivotMetadataType:(PivotMetadataType)metadataType predicate:(NSPredicate *)predicate;
-- (id)initWithName:(NSString *)name pivotMetadataType:(PivotMetadataType)metadataType predicate:(NSPredicate *)predicate;
+@property (nonatomic, readonly)NSInteger x;
+@property (nonatomic, readonly)NSInteger y;
+@property (nonatomic, readonly)NSInteger width;
+@property (nonatomic, readonly)NSInteger height;
+
+- (id)initWithName:(NSString *)name predicate:(NSPredicate *)predicate;
+- (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL predicate:(NSPredicate *)predicate ;
 - (id)initWithName:(NSString *)name dimensionDelegate:(id<WOTPivotDimensionProtocol>)dimensionDelegate isVisible:(BOOL)isVisible;
+- (id)copyWithPredicate:(NSPredicate *)predicate;
 
 - (void)setMaxWidth:(NSInteger)width forKey:(id)key;
 - (NSInteger)maxWidthOrValue:(NSInteger)value;
+- (NSInteger)childrenWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
+- (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
 
 @end

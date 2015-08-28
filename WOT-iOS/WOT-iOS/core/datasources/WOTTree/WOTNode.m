@@ -32,6 +32,15 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    
+    WOTNode *result = [[[self class] allocWithZone: zone] init];
+    result.isVisible = self.isVisible;
+    result.imageURL = self.imageURL;
+    result.name = self.name;
+    return result;
+}
+
 - (id)initWithName:(NSString *)name {
     
     self = [self init];

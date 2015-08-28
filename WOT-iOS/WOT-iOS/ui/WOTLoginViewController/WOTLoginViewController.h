@@ -7,9 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+@class WOTLogin;
 
 typedef void(^WOTLoginCallback)(NSError *error, NSString *userID, NSString *access_token, NSString *account_id, NSNumber *expires_at);
 typedef void(^WOTLogout)(NSError *error);
+
+@interface WOTLogin : NSObject
+
+@property (nonatomic, copy) NSError *error;
+@property (nonatomic, copy) NSString *userID;
+@property (nonatomic, copy) NSString *access_token;
+@property (nonatomic, copy) NSString *account_id;
+@property (nonatomic, copy) NSString *expires_at;
+
+@end
 
 
 @interface WOTLoginViewController : UIViewController

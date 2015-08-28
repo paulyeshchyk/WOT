@@ -20,15 +20,13 @@
 #import "WOTWebResponseAdapterModulesTree.h"
 
 typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
-    WOTVehicleModuleTypeUnknown,
+    WOTVehicleModuleTypeUnknown = 0,
     WOTVehicleModuleTypeChassis,
     WOTVehicleModuleTypeTurret,
     WOTVehicleModuleTypeEngine,
     WOTVehicleModuleTypeGun,
     WOTVehicleModuleTypeRadio
 };
-
-
 
 @implementation WOTWebResponseAdapterVehicles
 

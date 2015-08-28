@@ -9,7 +9,17 @@
 #import "WOTPivotNode.h"
 
 
+typedef NS_ENUM(NSInteger, PivotMetadataType) {
+    PivotMetadataTypeUnknown = 0,
+    PivotMetadataTypeFilter,
+    PivotMetadataTypeColumn,
+    PivotMetadataTypeRow,
+    PivotMetadataTypeData
+};
+
 @interface WOTNode (PivotFactory)
+
++ (Class)pivotNodeClassForType:(PivotMetadataType)type;
 
 + (WOTPivotNode *)pivotNationMetadataItemAsType:(PivotMetadataType)type;
 + (WOTPivotNode *)pivotTierMetadataItemAsType:(PivotMetadataType)type;

@@ -13,23 +13,29 @@
 #import "WOTTankPivotEmptyCollectionViewCell.h"
 #import "WOTTankPivotLayout.h"
 #import "WOTNode.h"
-#import "Tanks.h"
+#import "Tanks+DPM.h"
 #import "WOTTankListSettingsDatasource.h"
-#import "WOTTree+Pivot.h"
-#import "WOTNode+Pivot.h"
+#import "WOTPivotTree.h"
+#import "WOTPivotNode.h"
+#import "WOTNode+PivotFactory.h"
+#import "WOTNode+Enumeration.h"
+#import "WOTPivotRowNode.h"
+#import "WOTPivotColNode.h"
+#import "WOTPivotDataNode.h"
+#import "WOTPivotFilterNode.h"
 
 @interface WOTTankPivotViewController () <UICollectionViewDataSource, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak)IBOutlet WOTTankPivotLayout *flowLayout;
 
-@property (nonatomic, strong)NSArray *fixedRowsTopLevel;
-@property (nonatomic, strong)NSDictionary *fixedRowsChildren;
+@property (nonatomic, strong) NSArray *fixedRowsTopLevel;
+@property (nonatomic, strong) NSDictionary *fixedRowsChildren;
 
-@property (nonatomic, strong)NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, readonly)NSArray *sortDescriptors;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
+@property (nonatomic, readonly) NSArray *sortDescriptors;
 
-@property (nonatomic, strong)WOTTree *pivotTree;
+@property (nonatomic, strong) WOTPivotTree *pivotTree;
 
 @end
 
@@ -54,7 +60,7 @@
     
     [self.flowLayout setItemRelativeRectCallback:^CGRect(NSIndexPath *indexPath) {
        
-        WOTNode *node = [self.pivotTree pivotItemAtIndexPath:indexPath];
+        WOTPivotNode *node = (WOTPivotNode *)[self.pivotTree pivotItemAtIndexPath:indexPath];
 
         CGRect resultRect = node.relativeRect;
         return resultRect;
@@ -62,16 +68,26 @@
     
     [self.flowLayout setItemLayoutStickyType:^PivotStickyType(NSIndexPath *indexPath) {
 
-        WOTNode *node = [self.pivotTree pivotItemAtIndexPath:indexPath];
+        WOTPivotNode *node = (WOTPivotNode *)[self.pivotTree pivotItemAtIndexPath:indexPath];
         return node.stickyType;
     }];
     
     __weak typeof(self)weakSelf = self;
 
-    self.pivotTree = [[WOTTree alloc] init];
-    [self.pivotTree addMetadataItems:[self pivotFilters]];
-    [self.pivotTree addMetadataItems:[self pivotTierMetadataItemsAsType:PivotMetadataTypeRow]];
-    [self.pivotTree addMetadataItems:[self pivotNationMetadataItemsAsType:PivotMetadataTypeColumn]];
+    WOTPivotNode *level0Row =[WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeRow];
+    WOTPivotNode *level1Row = nil;//[WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
+    NSArray *rows = [self complexMetadataOfClass:[WOTPivotRowNode class] forLevel0Node:level0Row level1Node:level1Row];
+    
+    WOTPivotNode *level0Col = [WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNode *level1Col = nil;//[WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    NSArray *cols = [self complexMetadataOfClass:[WOTPivotColNode class] forLevel0Node:level0Col level1Node:level1Col];
+    
+    NSArray *filters = [self pivotFilters];
+    
+    self.pivotTree = [[WOTPivotTree alloc] init];
+    [self.pivotTree addMetadataItems:filters];
+    [self.pivotTree addMetadataItems:rows];
+    [self.pivotTree addMetadataItems:cols];
     
     [self.pivotTree setPivotItemCreationBlock:^NSArray *(NSArray *predicates) {
         
@@ -82,14 +98,14 @@
         [fetchedData enumerateObjectsUsingBlock:^(Tanks *obj, NSUInteger idx, BOOL *stop) {
 
             NSURL *imageURL = [NSURL URLWithString:[obj image]];
-            WOTNode *node = [[WOTNode alloc] initWithName:[obj short_name_i18n] imageURL:imageURL pivotMetadataType:PivotMetadataTypeData predicate:predicate];
+            WOTPivotNode *node = [[WOTPivotDataNode alloc] initWithName:[obj short_name_i18n] imageURL:imageURL predicate:predicate];
             
             node.dataColor = [UIColor whiteColor];
-            NSDictionary *colors = [weakSelf typeColors];
+            NSDictionary *colors = [WOTNode typeColors];
 
             node.dataColor = colors[obj.type];
             
-            [node setData:obj];
+            [node setData1:obj];
             [resultArray addObject:node];
         }];
         return resultArray;
@@ -97,48 +113,12 @@
     
     [self.pivotTree makePivot];
     
-//    UIBarButtonItem *doneButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
-//        
-//        if (self.doneBlock) {
-//            
-//            self.doneBlock(nil);
-//        }
-//    }];
-//    [self.navigationItem setRightBarButtonItems:@[doneButtonItem]];
-//    UIBarButtonItem *cancelButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_BACK) eventBlock:^(id sender) {
-//        
-//        if (self.cancelBlock) {
-//            
-//            self.cancelBlock();
-//        }
-//    }];
-//    [self.navigationItem setLeftBarButtonItems:@[cancelButtonItem]];
     [self.navigationController.navigationBar setDarkStyle];
     
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class])];
-    
-}
-
-- (NSDictionary *)nationColors {
-    
-  return @{WOT_STRING_NATION_USA:     [[UIColor purpleColor] paleColor],
-           WOT_STRING_NATION_USSR:    [[UIColor redColor] paleColor],
-           WOT_STRING_NATION_JAPAN:   [[UIColor orangeColor] paleColor],
-           WOT_STRING_NATION_CHINA:   [[UIColor yellowColor] paleColor],
-           WOT_STRING_NATION_GERMANY: [[UIColor brownColor] paleColor],
-           WOT_STRING_NATION_FRANCE:  [[UIColor greenColor] paleColor],
-           WOT_STRING_NATION_UK:      [[UIColor blueColor] paleColor]};
-}
-- (NSDictionary *)typeColors {
-    
-    return @{WOT_STRING_TANK_TYPE_AT_SPG:       [[UIColor blueColor] paleColor],
-             WOT_STRING_TANK_TYPE_SPG:          [[UIColor brownColor] paleColor],
-             WOT_STRING_TANK_TYPE_LIGHT_TANK:   [[UIColor greenColor] paleColor],
-             WOT_STRING_TANK_TYPE_MEDIUM_TANK:  [[UIColor yellowColor] paleColor],
-             WOT_STRING_TANK_TYPE_HEAVY_TANK:   [[UIColor redColor] paleColor]};
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -146,48 +126,40 @@
 
     UICollectionViewCell *result = nil;
     
-    WOTNode *node = [self.pivotTree pivotItemAtIndexPath:indexPath];
-    switch (node.pivotMetadataType) {
-        case PivotMetadataTypeColumn:{
-
-            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
-            WOTTankPivotFixedCollectionViewCell *fixed = (WOTTankPivotFixedCollectionViewCell *)result;
-            fixed.label.text = node.name;
-            break;
-        }
-        case PivotMetadataTypeRow:{
-            
-            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
-            WOTTankPivotFixedCollectionViewCell *row = (WOTTankPivotFixedCollectionViewCell *)result;
-            row.label.text = node.name;
-            break;
-        }
-        case PivotMetadataTypeFilter:{
-            
-            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) forIndexPath:indexPath];
-            break;
-        }
-        case PivotMetadataTypeData:{
-            
-            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) forIndexPath:indexPath];
-            WOTTankPivotDataCollectionViewCell *dataCell = (WOTTankPivotDataCollectionViewCell *)result;
-            dataCell.dataViewColor = node.dataColor;
-
-            dataCell.symbol = node.name;
-            dataCell.dpm = [@(1787) suffixNumber];
-            dataCell.mask = @"18/18/3";
-            dataCell.visibility = @"450";
-            
-//            [dataCell.imageView sd_setImageWithURL:node.imageURL];
-            break;
-        }
-        default: {
-            
-            result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) forIndexPath:indexPath];
-            break;
-        }
+    WOTPivotNode *node = (WOTPivotNode *)[self.pivotTree pivotItemAtIndexPath:indexPath];
+    if ([node isKindOfClass:[WOTPivotRowNode class]]) {
+        
+        result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
+        
+        WOTTankPivotFixedCollectionViewCell *row = (WOTTankPivotFixedCollectionViewCell *)result;
+        row.textValue = node.name;
     }
-
+    
+    if ([node isKindOfClass:[WOTPivotColNode class]]) {
+        
+        result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
+        
+        WOTTankPivotFixedCollectionViewCell *fixed = (WOTTankPivotFixedCollectionViewCell *)result;
+        fixed.textValue = node.name;
+    }
+    
+    if ([node isKindOfClass:[WOTPivotFilterNode class]]) {
+        
+        result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) forIndexPath:indexPath];
+    }
+    
+    if ([node isKindOfClass:[WOTPivotDataNode class]]) {
+        
+        result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) forIndexPath:indexPath];
+        WOTTankPivotDataCollectionViewCell *dataCell = (WOTTankPivotDataCollectionViewCell *)result;
+        dataCell.dataViewColor = node.dataColor;
+        
+        Tanks *tank = (Tanks *)node.data1;
+        dataCell.symbol = node.name;
+        dataCell.dpm = [tank.dpm suffixNumber];
+        dataCell.mask = tank.invisibility;
+        dataCell.visibility = [tank.visionRadius suffixNumber];
+    }
     return result;
 }
 
@@ -195,12 +167,6 @@
 
     return [self.pivotTree pivotItemsCountForRowAtIndex:section];
 }
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-
-    return 1;
-}
-
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -212,8 +178,7 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
     [fetchRequest setSortDescriptors:self.sortDescriptors];
-//    [fetchRequest setPredicate:self.filterByPredicate];
-    
+
     if (!self.fetchedResultController) {
         
         NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
@@ -223,9 +188,28 @@
     
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
+    
+#warning !!!remove when dpm fetched
+    NSArray *fetchedObjects = [self.fetchedResultController fetchedObjects];
+    [fetchedObjects enumerateObjectsUsingBlock:^(Tanks *tank, NSUInteger idx, BOOL *stop) {
+        {
+        debugLog(@"dpm:%@",tank.dpm);
+//        debugLog(@"visionRadius:%@", tank.visionRadius);
+//        debugLog(@"invisibility:%@", tank.invisibility);
+//        debugLog(@"invisibilityShot:%@", tank.invisibilityShot);
+//        debugLog(@"invisibilityImmobility:%@", tank.invisibilityImmobility);
+//        debugLog(@"invisibilityMobility:%@", tank.invisibilityMobility);
+//        debugLog(@"speed:%@", tank.speed);
+//        debugLog(@"rotationSpeed:%@", tank.rotationSpeed);
+//        debugLog(@"turretTraverseSpeed:%@", tank.turretTraverseSpeed);
+//        debugLog(@"powerToWeightRatio:%@", tank.powerToWeightRatio);
+//        debugLog(@"armor:%@", tank.armor);
+//        debugLog(@"penetration:%@", tank.penetration);
+//        debugLog(@"dispersion:%@", tank.dispersion);
+//        debugLog(@"aimingTime:%@", tank.aimingTime);
+        }
+    }];
 }
-
-
 
 - (NSArray *)sortDescriptors {
     
@@ -235,57 +219,31 @@
     return result;
 }
 
-
 #pragma mark - private
 - (NSArray *)pivotFilters {
     
-    WOTNode *node = [[WOTNode alloc] initWithName:@"Filter" pivotMetadataType:PivotMetadataTypeFilter predicate:nil];
+    WOTPivotNode *node = [[WOTPivotFilterNode alloc] initWithName:@"Filter" predicate:nil];
     return @[node];
 }
 
-- (NSArray *)pivotTypeMetadataItemsAsType:(PivotMetadataType)type {
-
-    WOTNode *typeColumn = [[WOTNode alloc] initWithName:@"Type" pivotMetadataType:type predicate:nil];
-
-    [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_AT_SPG) pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",WOT_STRING_TANK_TYPE_AT_SPG]]];
-    [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_SPG)    pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",WOT_STRING_TANK_TYPE_SPG]]];
-    [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LT)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",WOT_STRING_TANK_TYPE_LIGHT_TANK]]];
-    [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_MT)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",WOT_STRING_TANK_TYPE_MEDIUM_TANK]]];
-    [typeColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_HT)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"type == %@",WOT_STRING_TANK_TYPE_HEAVY_TANK]]];
+- (NSArray *)complexMetadataOfClass:(Class)clazz forLevel0Node:(WOTPivotNode *)level0Node level1Node:(WOTPivotNode *)level1Node {
     
-    return @[typeColumn];
+    WOTPivotNode *root = [[clazz alloc] initWithName:@"-" predicate:nil];
+    [level0Node.endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *level0Child, NSUInteger idx, BOOL *stop) {
+
+        WOTPivotNode *level0ChildCopy = [level0Child copy];
+        [level1Node.endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *level1Child, NSUInteger idx, BOOL *stop) {
+            
+            NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
+            WOTNode *nationCopy = [level1Child copyWithPredicate:predicate];
+            [level0ChildCopy addChild:nationCopy];
+        }];
+        
+        [root addChild:level0ChildCopy];
+    }];
+    
+    return @[root];
 }
 
-- (NSArray *)pivotNationMetadataItemsAsType:(PivotMetadataType)type {
-    
-    WOTNode *nationColumn = [[WOTNode alloc] initWithName:@"Nation" pivotMetadataType:type predicate:nil];
-    
-    [nationColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_NATION_USA) pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"nation == %@",WOT_STRING_NATION_USA]]];
-    [nationColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_NATION_USSR)    pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"nation == %@",WOT_STRING_NATION_USSR]]];
-    [nationColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_NATION_UK)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"nation == %@",WOT_STRING_NATION_UK]]];
-    [nationColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_NATION_GERMANY)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"nation == %@",WOT_STRING_NATION_GERMANY]]];
-    [nationColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_NATION_FRANCE)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"nation == %@",WOT_STRING_NATION_FRANCE]]];
-    [nationColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_NATION_CHINA)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"nation == %@",WOT_STRING_NATION_CHINA]]];
-    [nationColumn addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_NATION_JAPAN)     pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"nation == %@",WOT_STRING_NATION_JAPAN]]];
-    
-    return @[nationColumn];
-}
-
-- (NSArray *)pivotTierMetadataItemsAsType:(PivotMetadataType)type {
-    
-    WOTNode *tierRow = [[WOTNode alloc] initWithName:@"Tier" pivotMetadataType:type predicate:nil];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_1)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_1]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_2)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_2]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_3)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_3]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_4)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_4]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_5)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_5]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_6)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_6]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_7)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_7]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_8)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_8]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_9)  pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_9]]];
-    [tierRow addChild:[[WOTNode alloc] initWithName:WOTString(WOT_STRING_LEVEL_10) pivotMetadataType:type predicate:[NSPredicate predicateWithFormat:@"level == %d",WOT_INTEGER_LEVEL_10]]];
-
-    return @[tierRow];
-}
 
 @end

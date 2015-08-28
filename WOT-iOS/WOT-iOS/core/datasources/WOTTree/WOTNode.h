@@ -12,7 +12,7 @@
 
 typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode *node);
 
-@interface WOTNode : NSObject
+@interface WOTNode : NSObject <NSCopying>
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, readonly) NSArray *children;

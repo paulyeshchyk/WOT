@@ -17,6 +17,42 @@
 
 @implementation WOTPivotNode
 
+- (id)copyWithZone:(NSZone *)zone {
+    
+    WOTPivotNode *result = [super copyWithZone:zone];
+    
+    result.dataColor = self.dataColor;
+    result.predicate = self.predicate;
+    return result;
+}
+
+- (id)copyWithPredicate:(NSPredicate *)predicate {
+
+    WOTPivotNode *result = [self copy];
+    result.predicate = predicate;
+    return result;
+}
+
+- (id)initWithName:(NSString *)name predicate:(NSPredicate *)predicate {
+    
+    self = [self initWithName:name];
+    if (self) {
+        
+        [self setPredicate:predicate];
+    }
+    return self;
+}
+
+- (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL predicate:(NSPredicate *)predicate {
+    
+    self = [self initWithName:name imageURL:imageURL];
+    if (self){
+        
+        [self setPredicate:predicate];
+    }
+    return self;
+}
+
 - (id)initWithName:(NSString *)name dimensionDelegate:(id<WOTPivotDimensionProtocol>)dimensionDelegate isVisible:(BOOL)isVisible {
     
     self = [self initWithName:name];
@@ -33,46 +69,11 @@
     self.dimensionDelegate = nil;
 }
 
-- (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL pivotMetadataType:(PivotMetadataType)metadataType predicate:(NSPredicate *)predicate {
-    
-    self = [self initWithName:name imageURL:imageURL];
-    if (self){
-        
-        [self setPivotMetadataType:metadataType];
-        [self setPredicate:predicate];
-    }
-    return self;
-}
-
-- (id)initWithName:(NSString *)name pivotMetadataType:(PivotMetadataType)metadataType predicate:(NSPredicate *)predicate {
-    
-    self = [self initWithName:name];
-    if (self) {
-        
-        [self setPivotMetadataType:metadataType];
-        [self setPredicate:predicate];
-    }
-    return self;
-}
+#pragma mark - getters / setters
 
 - (PivotStickyType)stickyType {
     
-    PivotMetadataType metadataType = [self pivotMetadataType];
-    PivotStickyType result = PivotStickyTypeFloat;
-    switch (metadataType) {
-        case PivotMetadataTypeFilter:
-            result = PivotStickyTypeHorizontal | PivotStickyTypeVertical;
-            break;
-        case PivotMetadataTypeRow:
-            result = PivotStickyTypeHorizontal;
-            break;
-        case PivotMetadataTypeColumn:
-            result = PivotStickyTypeVertical;
-            break;
-        default:
-            break;
-    }
-    return result;
+    return PivotStickyTypeFloat;
 }
 
 - (CGRect)relativeRect {
@@ -96,150 +97,25 @@
 
 - (NSInteger)x {
     
-    NSInteger result = 0;
-    switch (self.pivotMetadataType) {
-            
-        case PivotMetadataTypeRow:{
-            
-            result = [self visibleParentsCount];
-            break;
-        }
-        case PivotMetadataTypeFilter:{
-            
-            result = 0;
-            break;
-        }
-        case PivotMetadataTypeColumn:{
-            
-            result += [self childrenMaxWidthForSiblingNode:self orValue:0];
-            result += self.dimensionDelegate.rootNodeWidth;
-            break;
-        }
-        case PivotMetadataTypeData:{
-            
-            result += [[self stepParentColumn] relativeRect].origin.x;
-            result += [self indexInsideStepParentColumn];
-            
-            break;
-        }
-            
-        default:{
-            
-            break;
-        }
-    }
-    return result;
+    return 0;
 }
 
 - (NSInteger)y{
     
-    NSInteger result = 0;
-    switch (self.pivotMetadataType) {
-            
-        case PivotMetadataTypeFilter:{
-            
-            result = 0;
-            break;
-        }
-        case PivotMetadataTypeColumn:{
-            
-            result = self.visibleParentsCount;
-            break;
-        }
-        case PivotMetadataTypeRow:{
-            
-            result += [self childrenWidthForSiblingNode:self orValue:1];
-            result += self.dimensionDelegate.rootNodeWidth;
-            break;
-        }
-        case PivotMetadataTypeData:{
-            
-            result = [[self stepParentRow] relativeRect].origin.y;
-            break;
-        }
-        default:{
-            
-            break;
-        }
-    }
-    return result;
+    return 0;
 }
 
 - (NSInteger)width {
     
-    __block NSInteger result = 0;
-    switch (self.pivotMetadataType) {
-        case PivotMetadataTypeRow:{
-            
-            result = 1;
-            break;
-        }
-        case PivotMetadataTypeColumn: {
-            
-            NSArray *endPoints = self.endpoints;
-            if ([endPoints count] == 0) {
-                
-                result = 1;
-            } else {
-                
-                [endPoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-                    
-                    result += [node maxWidthOrValue:0];
-                }];
-            }
-            break;
-        }
-        case PivotMetadataTypeFilter:{
-            
-            result = self.dimensionDelegate.rootNodeWidth;
-            break;
-        }
-        case PivotMetadataTypeData: {
-            result = 1;
-            break;
-        }
-            
-        default: {
-            break;
-        }
-    }
-    
-    return result;
+    return 0;
 }
 
 - (NSInteger)height {
     
-    __block NSInteger result = 0;
-    switch (self.pivotMetadataType) {
-            
-        case PivotMetadataTypeRow:{
-            
-            result = self.endpoints.count;
-            break;
-        }
-        case PivotMetadataTypeColumn:{
-            
-            result = 1;
-            break;
-        }
-        case PivotMetadataTypeFilter:{
-            
-            result = self.dimensionDelegate.rootNodeHeight;
-            break;
-        }
-        case PivotMetadataTypeData:{
-            
-            result = 1;
-            break;
-        }
-        default:{
-            
-            break;
-        }
-    }
-    return result;
+   return 0;
 }
 
+#pragma mark - 
 - (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value{
     
     __block NSInteger result = 0;
