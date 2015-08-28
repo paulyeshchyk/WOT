@@ -15,6 +15,7 @@
 #import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import "NSNumber+CustomFormatter.h"
+#import "NSSet+WOT.h"
 #import "NSString+WOTValue.h"
 #import "NSThread+ExecutionOnMain.h"
 #import "UIBarButtonItem+EventBlock.h"

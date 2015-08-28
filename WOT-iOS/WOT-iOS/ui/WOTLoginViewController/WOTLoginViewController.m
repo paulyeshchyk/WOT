@@ -61,6 +61,8 @@
 
         return;
     }
+
+    WOTLogin *wotLogin = [[WOTLogin alloc] init];
     
     NSURLComponents *components = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
     NSArray *queryItems = [components queryItems];
@@ -70,17 +72,22 @@
     NSURLQueryItem *account_id = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_ACCOUNT_ID]] lastObject];
     NSURLQueryItem *expires_at = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_EXPIRES_AT]] lastObject];
 
-    NSError *error = nil;
+    wotLogin.error = nil;
+    wotLogin.access_token = access_token.value;
+    wotLogin.account_id = account_id.value;
+    wotLogin.userID = nickname.value;
+    wotLogin.expires_at = @([expires_at.value integerValue]);
+    
     if ([status.value isEqual:WOT_KEY_ERROR]) {
 
         NSURLQueryItem *errorMessage = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_MESSAGE]] lastObject];
         NSURLQueryItem *errorCode = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_CODE]] lastObject];
-        error = [WOTError loginErrorWithCode:WOT_ERROR_CODE_ENDPOINT_ERROR userInfo:@{@"message":errorMessage,@"code":errorCode.value}];
+        wotLogin.error = [WOTError loginErrorWithCode:WOT_ERROR_CODE_ENDPOINT_ERROR userInfo:@{@"message":errorMessage,@"code":errorCode.value}];
     }
     
     if (self.callback) {
         
-        self.callback(error, nickname.value, access_token.value, account_id.value, @([expires_at.value integerValue]));
+        self.callback(wotLogin);
     }
 }
 
@@ -103,5 +110,16 @@
 
 
 @implementation WOTLogin
+
+- (NSDictionary *)asDictionary {
+    
+    NSMutableDictionary *args =[[NSMutableDictionary alloc] init];
+    if (self.error) args[WOT_KEY_ERROR] = self.error;
+    if (self.userID) args[WOT_KEY_USER_ID] = self.userID;
+    if (self.access_token) args[WOT_KEY_ACCESS_TOKEN] = self.access_token;
+    if (self.account_id) args[WOT_KEY_ACCOUNT_ID] = self.account_id;
+    if (self.expires_at) args[WOT_KEY_EXPIRES_AT] = self.expires_at;
+    return args;
+}
 
 @end

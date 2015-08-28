@@ -180,8 +180,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
      * hasLinkedObjects can be FALSE,
      * i.e. vehicle has no turrets (ISU-152)
      */
-    BOOL hasLinkedObjects = ([NSArray hasDataInArray:arrayLinkIDs]);
-    if (!hasLinkedObjects) {
+    if (!arrayLinkIDs.hasItems) {
         
         return requests;
     }
@@ -216,8 +215,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
     
     NSArray *keys = [jSON allKeys];
-    BOOL hasLinkedObjects = ([NSArray hasDataInArray:keys]);
-    if (!hasLinkedObjects) {
+    if (!keys.hasItems) {
         
         return requests;
     }
@@ -231,7 +229,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 
 - (void)parseModulesJSON:(NSDictionary *)jSON clazz:(Class)clazz keys:(NSArray *)keys coreDataIdName:(id)coreDataIdName context:(NSManagedObjectContext *)context tank:(Tanks *)tank{
     
-    if (![NSArray hasDataInArray:keys]) {
+    if (!keys.hasItems) {
 
         return;
     }
@@ -243,16 +241,16 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         NSString *key = [moduleId isKindOfClass:[NSNumber class]]?[moduleId stringValue]:moduleId;
         NSDictionary *data = jSON[key];
         NSArray *nextModuleIDs = [self parentModule:nil addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:@([key integerValue]) clazz:clazz context:context returningModule:&returningModule];
-        if ([NSArray hasDataInArray:nextModuleIDs]) {
+        if (nextModuleIDs.hasItems) {
             
             NSArray *new = nil;
             NSArray *old = childrenModuleIDs[key];
-            if ([NSArray hasDataInArray:old]){
+            if (old.hasItems){
                 
                 new = [NSArray arrayWithArray:old];
             } else {
                 
-                if ([NSArray hasDataInArray:nextModuleIDs]) {
+                if (nextModuleIDs.hasItems) {
                     
                     new = [NSArray arrayWithArray:nextModuleIDs];
                 }
@@ -276,7 +274,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             ModulesTree *returningModule = nil;
             NSDictionary *data = jSON[[moduleID stringValue]];
             NSArray *nextChild = [self parentModule:parent addChildModuleFromJSON:data coreDataIdName:coreDataIdName jSONLinkId:moduleID clazz:clazz context:context returningModule:&returningModule];
-            if ([NSArray hasDataInArray:nextChild]) {
+            if (nextChild.hasItems) {
                 
                 [nextChildren addObjectsFromArray:nextChild];
             }
@@ -299,7 +297,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         *returningModule = moduleTree;
 
         NSArray *nextTanks = jSON[WOT_KEY_NEXT_TANKS];
-        if ([NSArray hasDataInArray:nextTanks]) {
+        if (nextTanks.hasItems) {
             
             [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
                 
