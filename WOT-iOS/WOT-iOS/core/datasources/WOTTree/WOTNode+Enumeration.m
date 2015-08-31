@@ -17,7 +17,7 @@
 
 + (NSInteger)depthForArray:(NSArray *)array {
 
-    return [self depthForChildList:array initialLevel:0];
+    return [WOTNode depthForChildList:array initialLevel:0];
     
 }
 
@@ -26,7 +26,7 @@
     __block NSInteger result = initialLevel;
     [childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
         
-        NSInteger resultFromChild = [self depthForChildList:node.children initialLevel:(initialLevel + 1)];
+        NSInteger resultFromChild = [WOTNode depthForChildList:node.children initialLevel:(initialLevel + 1)];
         result = MAX(result, resultFromChild);
     }];
 

@@ -28,6 +28,9 @@
 @property (nonatomic, readonly)NSInteger width;
 @property (nonatomic, readonly)NSInteger height;
 
++ (NSInteger)childrenWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
++ (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
+
 - (id)initWithName:(NSString *)name predicate:(NSPredicate *)predicate;
 - (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL predicate:(NSPredicate *)predicate ;
 - (id)initWithName:(NSString *)name dimensionDelegate:(id<WOTPivotDimensionProtocol>)dimensionDelegate isVisible:(BOOL)isVisible;
@@ -35,7 +38,5 @@
 
 - (void)setMaxWidth:(NSInteger)width forKey:(id)key;
 - (NSInteger)maxWidthOrValue:(NSInteger)value;
-- (NSInteger)childrenWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
-- (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
 
 @end

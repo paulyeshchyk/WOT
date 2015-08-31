@@ -19,7 +19,7 @@
 - (NSInteger)x {
     
     NSInteger result  = 0;
-    result += [self childrenMaxWidthForSiblingNode:self orValue:0];
+    result += [WOTPivotNode childrenMaxWidthForSiblingNode:self orValue:0];
     result += self.dimensionDelegate.rootNodeWidth;
     return result;
 }

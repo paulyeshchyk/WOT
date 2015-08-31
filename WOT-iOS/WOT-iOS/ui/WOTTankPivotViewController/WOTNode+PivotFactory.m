@@ -12,6 +12,7 @@
 #import "WOTPivotFilterNode.h"
 #import "WOTPivotColNode.h"
 #import "WOTPivotDataNode.h"
+#import "Tanks.h"
 
 @implementation WOTNode (PivotFactory)
 
@@ -41,6 +42,22 @@
     }
     return result;
 }
+
++ (WOTPivotNode *)pivotDataNodeForPredicate:(NSPredicate *)predicate andTanksObject:(id)tanksObject {
+    
+    Tanks *tanks = tanksObject;
+    NSURL *imageURL = [NSURL URLWithString:tanks.image];
+    WOTPivotNode *node = [[WOTPivotDataNode alloc] initWithName:tanks.short_name_i18n imageURL:imageURL predicate:predicate];
+    
+    node.dataColor = [UIColor whiteColor];
+    NSDictionary *colors = [WOTNode typeColors];
+    
+    node.dataColor = colors[tanks.type];
+    
+    [node setData1:tanks];
+    return node;
+}
+
 
 + (WOTPivotNode *)pivotDPMMetadataItemAsType:(PivotMetadataType)type {
     

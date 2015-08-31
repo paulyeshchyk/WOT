@@ -8,7 +8,6 @@
 
 #import "WOTPivotNode.h"
 
-
 typedef NS_ENUM(NSInteger, PivotMetadataType) {
     PivotMetadataTypeUnknown = 0,
     PivotMetadataTypeFilter,
@@ -20,6 +19,8 @@ typedef NS_ENUM(NSInteger, PivotMetadataType) {
 @interface WOTNode (PivotFactory)
 
 + (Class)pivotNodeClassForType:(PivotMetadataType)type;
+
++ (WOTPivotNode *)pivotDataNodeForPredicate:(NSPredicate *)predicate andTanksObject:(id)tanksObject;
 
 + (WOTPivotNode *)pivotNationMetadataItemAsType:(PivotMetadataType)type;
 + (WOTPivotNode *)pivotTierMetadataItemAsType:(PivotMetadataType)type;

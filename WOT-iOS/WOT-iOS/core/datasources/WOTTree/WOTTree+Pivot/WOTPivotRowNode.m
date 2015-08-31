@@ -14,8 +14,8 @@
 - (NSInteger)y {
     
     NSInteger result = 0;
-    result += [self childrenWidthForSiblingNode:self orValue:1];
-    result += self.dimensionDelegate.rootNodeWidth;
+    result += [WOTPivotNode childrenWidthForSiblingNode:self orValue:1];
+    result += self.dimensionDelegate.rootNodeHeight;
     return result;
 }
 

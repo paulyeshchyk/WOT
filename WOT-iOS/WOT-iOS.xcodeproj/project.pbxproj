@@ -297,7 +297,6 @@
 		1DF73EB71B9047BA00AE6F86 /* NSSet+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EB61B9047BA00AE6F86 /* NSSet+WOT.m */; };
 		1DF73EBB1B90534300AE6F86 /* NSMutableDictionary+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EBA1B90534300AE6F86 /* NSMutableDictionary+WOT.m */; };
 		1DF73EBE1B90563300AE6F86 /* NSMutableArray+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EBD1B90563300AE6F86 /* NSMutableArray+WOT.m */; };
-		1DF73EC21B906AED00AE6F86 /* Tanks+PivotNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EC11B906AED00AE6F86 /* Tanks+PivotNode.m */; };
 		DA522D281B6637630087D684 /* Search Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D221B6637630087D684 /* Search Gray.png */; };
 		DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D231B6637630087D684 /* Search Gray@2x.png */; };
 		DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D241B6637630087D684 /* Search Gray@3x.png */; };
@@ -774,8 +773,6 @@
 		1DF73EBA1B90534300AE6F86 /* NSMutableDictionary+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+WOT.m"; sourceTree = "<group>"; };
 		1DF73EBC1B90563300AE6F86 /* NSMutableArray+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WOT.h"; sourceTree = "<group>"; };
 		1DF73EBD1B90563300AE6F86 /* NSMutableArray+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WOT.m"; sourceTree = "<group>"; };
-		1DF73EC01B906AED00AE6F86 /* Tanks+PivotNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tanks+PivotNode.h"; sourceTree = "<group>"; };
-		1DF73EC11B906AED00AE6F86 /* Tanks+PivotNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tanks+PivotNode.m"; sourceTree = "<group>"; };
 		75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		95194089742F312E67004937 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DA522D221B6637630087D684 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
@@ -2199,8 +2196,6 @@
 		1DF73EBF1B906AD600AE6F86 /* Pivot */ = {
 			isa = PBXGroup;
 			children = (
-				1DF73EC01B906AED00AE6F86 /* Tanks+PivotNode.h */,
-				1DF73EC11B906AED00AE6F86 /* Tanks+PivotNode.m */,
 			);
 			path = Pivot;
 			sourceTree = "<group>";
@@ -2589,7 +2584,6 @@
 				DA720C811B5D0DE9003F3B5A /* ModulesTree+UI.m in Sources */,
 				1DCC7F421B2F0330005FF193 /* WOTTankDetailViewController.m in Sources */,
 				1D519D241B4EA20900D3A286 /* WOTTankDetailFieldExpression+Factory.m in Sources */,
-				1DF73EC21B906AED00AE6F86 /* Tanks+PivotNode.m in Sources */,
 				1DCC7F321B2EE974005FF193 /* RomanNumber.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
 				1D519D0B1B4E9D2600D3A286 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,

@@ -17,6 +17,55 @@
 
 @implementation WOTPivotNode
 
+#pragma mark -
++ (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value{
+    
+    __block NSInteger result = 0;
+    WOTNode *parent = node.parent;
+    if (parent) {
+        
+        NSInteger indexOfNode = [parent.children indexOfObject:node];
+        for (int i=0;i<indexOfNode;i++) {
+            
+            WOTNode *child = parent.children[i];
+            NSArray *endpoints = child.endpoints;
+            [endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
+                
+                result += [node maxWidthOrValue:value];
+            }];
+        }
+        
+        result += [WOTPivotNode childrenMaxWidthForSiblingNode:parent orValue:value];
+    }
+    
+    return result;
+}
+
+
++ (NSInteger)childrenWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value{
+    
+    __block NSInteger result = 0;
+    WOTNode *parent = node.parent;
+    if (parent) {
+        
+        NSInteger indexOfNode = [parent.children indexOfObject:node];
+        for (int i=0;i<indexOfNode;i++) {
+            
+            WOTNode *child = parent.children[i];
+            NSArray *endpoints = child.endpoints;
+            [endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
+                
+                result += value;
+            }];
+        }
+        
+        result += [WOTPivotNode childrenWidthForSiblingNode:parent orValue:value];
+    }
+    
+    return result;
+}
+
+#pragma mark -
 - (id)copyWithZone:(NSZone *)zone {
     
     WOTPivotNode *result = [super copyWithZone:zone];
@@ -116,52 +165,6 @@
 }
 
 #pragma mark - 
-- (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value{
-    
-    __block NSInteger result = 0;
-    WOTNode *parent = node.parent;
-    if (parent) {
-        
-        NSInteger indexOfNode = [parent.children indexOfObject:node];
-        for (int i=0;i<indexOfNode;i++) {
-            
-            WOTNode *child = parent.children[i];
-            NSArray *endpoints = child.endpoints;
-            [endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-                
-                result += [node maxWidthOrValue:value];
-            }];
-        }
-        
-        result += [self childrenMaxWidthForSiblingNode:parent orValue:value];
-    }
-    
-    return result;
-}
-
-
-- (NSInteger)childrenWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value{
-    
-    __block NSInteger result = 0;
-    WOTNode *parent = node.parent;
-    if (parent) {
-        
-        NSInteger indexOfNode = [parent.children indexOfObject:node];
-        for (int i=0;i<indexOfNode;i++) {
-            
-            WOTNode *child = parent.children[i];
-            NSArray *endpoints = child.endpoints;
-            [endpoints enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-                
-                result += value;
-            }];
-        }
-        
-        result += [self childrenWidthForSiblingNode:parent orValue:value];
-    }
-    
-    return result;
-}
 
 - (NSInteger)maxWidthForKey:(id)key {
     
