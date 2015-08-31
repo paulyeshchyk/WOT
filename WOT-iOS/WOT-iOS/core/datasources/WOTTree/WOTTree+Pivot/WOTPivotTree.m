@@ -40,39 +40,21 @@
     
     self = [super init];
     if (self){
-        
-        self.rootFiltersNode = [[WOTPivotNode alloc] initWithName:@"root filter" dimensionDelegate:self isVisible:NO];
-        self.rootRowsNode = [[WOTPivotNode alloc] initWithName:@"root rows" dimensionDelegate:self isVisible:NO];
-        self.rootColumnsNode = [[WOTPivotNode alloc] initWithName:@"root columns" dimensionDelegate:self isVisible:NO];
-        self.rootDataNode = [[WOTPivotNode alloc] initWithName:@"root data" dimensionDelegate:self isVisible:NO];
-        
-        [self addNode:self.rootFiltersNode];
-        [self addNode:self.rootRowsNode];
-        [self addNode:self.rootColumnsNode];
-        [self addNode:self.rootDataNode];
+
     }
     return self;
 }
 
 - (void)dealloc {
     
-    [self.rootDataNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
-
-        [(WOTPivotNode *)node setDimensionDelegate:nil];
-    }];
-    [self.rootRowsNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
-
-        [(WOTPivotNode *)node setDimensionDelegate:nil];
-    }];
-    [self.rootColumnsNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
-
-        [(WOTPivotNode *)node setDimensionDelegate:nil];
-    }];
-    [self.rootFiltersNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
-
-        [(WOTPivotNode *)node setDimensionDelegate:nil];
-    }];
     [self setLargeIndex:nil];
+}
+
+- (WOTPivotNode *)newRootNode:(NSString *)name {
+    
+    WOTPivotNode *result = [[WOTPivotNode alloc] initWithName:name dimensionDelegate:self isVisible:NO];
+    [self addNode:result];
+    return result;
 }
 
 - (void)addMetadataItems:(NSArray *)metadataItems {
@@ -89,17 +71,25 @@
 
 - (void)resortMetadata {
     
+    self.rootDataNode = [self newRootNode:@"root data"];
+
+    self.rootRowsNode = [self newRootNode:@"root rows"];
     NSArray *rows = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[WOTPivotRowNode class]]];
     [self.rootRowsNode addChildArray:rows];
     
+    self.rootColumnsNode = [self newRootNode:@"root columns"];
     NSArray *cols = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[WOTPivotColNode class]]];
     [self.rootColumnsNode addChildArray:cols];
     
+    self.rootFiltersNode = [self newRootNode:@"root filter"];
     NSArray *filters = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[WOTPivotFilterNode class]]];
     [self.rootFiltersNode addChildArray:filters];
+    
 }
 
 - (void)makePivot {
+    
+    [self removeAllNodes];
     
     [self resortMetadata];
     
@@ -284,6 +274,34 @@
     }];
  
     return predicates;
+}
+
+#pragma mark -
+- (void)removeAllNodes {
+
+    __block typeof(self)strongSelf = self;
+    [self.rootDataNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
+        
+        [(WOTPivotNode *)strongSelf.rootDataNode setDimensionDelegate:nil];
+        strongSelf.rootDataNode = nil;
+    }];
+    [self.rootRowsNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
+        
+        [(WOTPivotNode *)strongSelf.rootRowsNode setDimensionDelegate:nil];
+        strongSelf.rootRowsNode = nil;
+    }];
+    [self.rootColumnsNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
+        
+        [(WOTPivotNode *)strongSelf.rootColumnsNode setDimensionDelegate:nil];
+        strongSelf.rootColumnsNode = nil;
+    }];
+    [self.rootFiltersNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
+        
+        [(WOTPivotNode *)strongSelf.rootFiltersNode setDimensionDelegate:nil];
+        strongSelf.rootFiltersNode = nil;
+    }];
+    
+    [super removeAllNodes];
 }
 
 @end

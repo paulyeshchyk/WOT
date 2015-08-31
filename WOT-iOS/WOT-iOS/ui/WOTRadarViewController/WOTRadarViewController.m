@@ -75,14 +75,16 @@
 
 - (void)needToBeCleared {
     
-    [self.radarView clearValues];
+    [self.radarView setData:NULL];
     [self.radarView clear];
+    [self.radarView clearValues];
 }
 
 - (void)reload {
 
     RadarChartData *data = [self.delegate radarData];
     self.radarView.data = data;
+//    self.radarView.yAxis.showOnlyMinMaxEnabled = NO;
 }
 
 #pragma mark - ChartViewDelegate

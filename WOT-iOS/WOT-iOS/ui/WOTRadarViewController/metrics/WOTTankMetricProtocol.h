@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "WOTTanksIDList.h"
+#import "WOTTankEvalutionResult.h"
 
-typedef float(^WOTTankMetricEvaluator)(WOTTanksIDList *tankID);
+typedef WOTTankEvalutionResult*(^WOTTankMetricEvaluator)(WOTTanksIDList *tankID);
 
 @protocol WOTTankMetricProtocol <NSObject>
 

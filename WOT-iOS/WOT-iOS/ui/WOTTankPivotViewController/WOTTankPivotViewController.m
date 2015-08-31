@@ -49,8 +49,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    
+
     [self invalidateFetchedResultController];
     
     [self.flowLayout setRelativeContentSizeBlock:^(){
@@ -74,8 +73,8 @@
     
     __weak typeof(self)weakSelf = self;
 
-    WOTPivotNode *level0Col =[WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTPivotNode *level1Col = [WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNode *level0Col = [WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNode *level1Col =[WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
     
     WOTPivotNode *level0Row = [WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeRow];

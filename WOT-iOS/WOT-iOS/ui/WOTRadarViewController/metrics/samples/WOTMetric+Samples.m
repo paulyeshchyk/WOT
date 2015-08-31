@@ -16,7 +16,7 @@
 
 + (id<WOTTankMetricProtocol>)circularVisionCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_CIRCULAR_VISION_RADIUS) evaluator:^float(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_CIRCULAR_VISION_RADIUS) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
@@ -33,18 +33,20 @@
         
         if ([result count] == 0) {
             
-            return NAN;
+            return nil;
         } else {
             
-            float thisValue = [[result lastObject][@"this"] floatValue];
-            return thisValue;
+            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
+            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
+
+            return returningValue;
         }
     }];
 }
 
 + (id<WOTTankMetricProtocol>)armorBoardCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_BOARD) evaluator:^float(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_BOARD) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
 
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
@@ -61,18 +63,21 @@
         
         if ([result count] == 0) {
             
-            return NAN;
+            return nil;
         } else {
             
-            float thisValue = [[result lastObject][@"this"] floatValue];
-            return thisValue;
+            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
+            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
+            returningValue.maxValue = [[result lastObject][@"max"] floatValue];
+            returningValue.averageValue = [[result lastObject][@"av"] floatValue];
+            return returningValue;
         }
     }];
 }
 
 + (id<WOTTankMetricProtocol>)armorFeddCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FEDD) evaluator:^float(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FEDD) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         
         NSError *error = nil;
@@ -90,18 +95,21 @@
         
         if ([result count] == 0) {
             
-            return NAN;
+            return nil;
         } else {
             
-            float thisValue = [[result lastObject][@"this"] floatValue];
-            return thisValue;
+            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
+            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
+            returningValue.maxValue = [[result lastObject][@"max"] floatValue];
+            returningValue.averageValue = [[result lastObject][@"av"] floatValue];
+            return returningValue;
         }
     }];
 }
 
 + (id<WOTTankMetricProtocol>)armorForeheadCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FOREHEAD) evaluator:^float(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FOREHEAD) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         
         NSError *error = nil;
@@ -118,18 +126,21 @@
         id result = [context executeFetchRequest:request error:&error];
         if ([result count] == 0) {
             
-            return NAN;
+            return NULL;
         } else {
             
-            float thisValue = [[result lastObject][@"this"] floatValue];
-            return thisValue;
+            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
+            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
+            returningValue.maxValue = [[result lastObject][@"max"] floatValue];
+            returningValue.averageValue = [[result lastObject][@"av"] floatValue];
+            return returningValue;
         }
     }];
 }
 
 + (id<WOTTankMetricProtocol>)fireStartingChanceCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_FIRE_STARTING_CHANCE) evaluator:^float(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_FIRE_STARTING_CHANCE) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
@@ -146,13 +157,14 @@
         
         if ([result count] == 0) {
             
-            return NAN;
+            return NULL;
         } else {
             
-            float thisValue = [[result lastObject][@"this"] floatValue];
-//            float maxValue = [[result lastObject][@"max"] floatValue];
-//            float floatResult = (maxValue == 0)?1.0f:(thisValue / maxValue * 100.0f);
-            return thisValue;
+            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
+            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
+            returningValue.maxValue = [[result lastObject][@"max"] floatValue];
+            returningValue.averageValue = [[result lastObject][@"av"] floatValue];
+            return returningValue;
         }
     }];
 }

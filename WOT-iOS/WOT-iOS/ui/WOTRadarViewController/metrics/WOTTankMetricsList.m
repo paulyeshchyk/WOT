@@ -128,19 +128,22 @@
     NSArray *sortedMetrics = [self sortedMetrics];
     [sortedMetrics enumerateObjectsUsingBlock:^(id<WOTTankMetricProtocol> metric, NSUInteger idx, BOOL *stop) {
         
-        float value = 0;
+        WOTTankEvalutionResult *value;
         if (metric.evaluator) {
             
             value = metric.evaluator(tankIDList);
         }
-        if (!isnan(value)){
+        
+        if (value != NULL) {
             
             if (!result) {
                 
                 result = [[NSMutableArray alloc] init];
             }
             
-            [result addObject:[[ChartDataEntry alloc] initWithValue:value xIndex:index]];
+            [result addObject:[[ChartDataEntry alloc] initWithValue:value.thisValue xIndex:index]];
+//            [result addObject:[[ChartDataEntry alloc] initWithValue:value.maxValue xIndex:index]];
+//            [result addObject:[[ChartDataEntry alloc] initWithValue:value.averageValue xIndex:index]];
             index++;
         }
         

@@ -21,17 +21,17 @@
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, strong)NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, readonly)NSArray *sortDescriptors;
-@property (nonatomic, readonly)NSPredicate *filterByPredicate;
-@property (nonatomic, readonly)NSString *groupByField;
-@property (nonatomic, strong)UIBarButtonItem *settingsItem;
-@property (nonatomic, strong)UIBarButtonItem *searchItem;
-@property (nonatomic, weak)WOTTankListSearchBar *searchBar;
-@property (nonatomic, copy)NSArray *leftBarButtonItems;
-@property (nonatomic, copy)NSString *searchBarText;
+@property (nonatomic, readonly) NSArray *sortDescriptors;
+@property (nonatomic, readonly) NSPredicate *filterByPredicate;
+@property (nonatomic, readonly) NSString *groupByField;
+@property (nonatomic, strong) UIBarButtonItem *settingsItem;
+@property (nonatomic, strong) UIBarButtonItem *searchItem;
+@property (nonatomic, weak) WOTTankListSearchBar *searchBar;
+@property (nonatomic, copy) NSArray *leftBarButtonItems;
+@property (nonatomic, copy) NSString *searchBarText;
 
 @end
 
