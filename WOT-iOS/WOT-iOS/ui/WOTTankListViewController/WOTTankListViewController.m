@@ -88,6 +88,8 @@
                 [self invalidateFetchedResultController];
             }];
 
+            [self.searchBar becomeFirstResponder];
+            
             [self saveTitleViewState];
             [self searchBarMakeVisible];
             [((UIButton *)self.searchItem.customView )setImage:[self searchItemCancelImage] forState:UIControlStateNormal];
@@ -101,15 +103,20 @@
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestCallback:^(id data, NSError *error) {
         
         if (!error) {
-            
-            NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-            [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
-            WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
-            BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_LIST];
-            if (canAdd) {
+            /*
+             * Vehicles
+             */
+            [self executeVehiclesRequest];
+
+            /*
+             * Default Profile
+             */
+            NSDictionary *tankList = data[WOT_KEY_DATA];
+            [[tankList allKeys] enumerateObjectsUsingBlock:^(id tankId, NSUInteger idx, BOOL *stop) {
                 
-                [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
-            }
+                [self executeDefaultProfileRequestForTankId:tankId];
+            }];
+            
         } else {
             
             debugError(@"request-fail:%@",error.localizedDescription);
@@ -129,6 +136,32 @@
     
     [self invalidateFetchedResultController];
     
+}
+
+#pragma mark - Requests
+- (void)executeVehiclesRequest {
+    
+    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+    [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_LIST];
+    if (canAdd) {
+        
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+    }
+}
+
+- (void)executeDefaultProfileRequestForTankId:(id)tankId {
+    
+    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+    [args setObject:tankId forKey:WOT_KEY_TANK_ID];
+    
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+    if (canAdd) {
+        
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+    }
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

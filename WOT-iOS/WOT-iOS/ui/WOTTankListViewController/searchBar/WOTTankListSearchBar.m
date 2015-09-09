@@ -50,4 +50,9 @@
 }
 
 
+- (BOOL)becomeFirstResponder {
+    
+    return [self.textField becomeFirstResponder];
+}
+
 @end

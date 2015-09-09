@@ -2,14 +2,14 @@
 //  Tanks.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/14/15.
+//  Created by Pavel Yeshchyk on 9/9/15.
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ModulesTree, Vehicles;
+@class ModulesTree, NSManagedObject, Vehicles;
 
 @interface Tanks : NSManagedObject
 
@@ -26,8 +26,9 @@
 @property (nonatomic, retain) NSDecimalNumber * tank_id;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * type_i18n;
-@property (nonatomic, retain) Vehicles *vehicles;
 @property (nonatomic, retain) NSSet *modulesTree;
+@property (nonatomic, retain) Vehicles *vehicles;
+@property (nonatomic, retain) NSSet *vehicleprofiles;
 @end
 
 @interface Tanks (CoreDataGeneratedAccessors)
@@ -36,5 +37,10 @@
 - (void)removeModulesTreeObject:(ModulesTree *)value;
 - (void)addModulesTree:(NSSet *)values;
 - (void)removeModulesTree:(NSSet *)values;
+
+- (void)addVehicleprofilesObject:(NSManagedObject *)value;
+- (void)removeVehicleprofilesObject:(NSManagedObject *)value;
+- (void)addVehicleprofiles:(NSSet *)values;
+- (void)removeVehicleprofiles:(NSSet *)values;
 
 @end

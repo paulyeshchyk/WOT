@@ -147,21 +147,9 @@
         _vehicle = vehicle;
         self.title = _vehicle.tanks.name_i18n;
 
-        NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[_vehicle.tier]];
-        
-        NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
-        [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
-            
-            NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_BY_TIER, tankId];
-            if (!self.runningRequestIDs){
-                
-                self.runningRequestIDs = [[NSMutableSet alloc] init];
-            }
-            [self.runningRequestIDs addObject:groupId];
-            [self refetchTankID:[tankId stringValue] groupId:groupId];
-        }];
+        [self fetchPlayableVehiclesForTier:_vehicle.tier];
+//        [self fetchDefaultConfigurationForTankId:[_vehicle.tank_id stringValue]];
     }
-    
 }
 
 - (void)viewDidLoad {
@@ -234,6 +222,42 @@
 - (void)setFetchError:(NSError *)fetchError {
     
     _fetchError = fetchError;
+}
+
+
+#pragma mark - private
+//
+//- (void)fetchDefaultConfigurationForTankId:(id)tankId {
+//    
+//    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+//    [args setObject:tankId forKey:WOT_KEY_TANK_ID];
+//
+//    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+//    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+//    if (canAdd) {
+//        
+//        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+//    }
+//}
+
+- (void)fetchPlayableVehiclesForTier:(id)tier {
+    
+    
+    return;
+    
+    NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[tier]];
+    
+    NSArray *ids = [WOTTankIdsDatasource fetchForTiers:tiers nations:nil types:nil];
+    [ids enumerateObjectsUsingBlock:^(NSNumber *tankId, NSUInteger idx, BOOL *stop) {
+        
+        NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_BY_TIER, tankId];
+        if (!self.runningRequestIDs){
+            
+            self.runningRequestIDs = [[NSMutableSet alloc] init];
+        }
+        [self.runningRequestIDs addObject:groupId];
+        [self refetchTankID:[tankId stringValue] groupId:groupId];
+    }];
 }
 
 - (void)refetchTankID:(NSString *)tankID groupId:(id)groupId{
