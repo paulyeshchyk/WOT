@@ -10,6 +10,7 @@
 #define WOT_iOS_WOTPrefixHeader_pch
 
 #import "NSArray+WOT.h"
+#import "NSDictionary+Hash.h"
 #import "NSMutableArray+WOT.h"
 #import "NSMutableDictionary+WOT.h"
 #import "NSBundle+LanguageBundle.h"

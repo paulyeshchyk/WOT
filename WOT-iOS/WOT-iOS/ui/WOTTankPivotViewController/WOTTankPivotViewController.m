@@ -50,8 +50,6 @@
     
     [super viewDidLoad];
 
-    [self invalidateFetchedResultController];
-    
     [self.flowLayout setRelativeContentSizeBlock:^(){
         
         return self.pivotTree.contentSize;
@@ -70,46 +68,18 @@
         WOTPivotNode *node = (WOTPivotNode *)[self.pivotTree pivotItemAtIndexPath:indexPath];
         return node.stickyType;
     }];
-    
-    __weak typeof(self)weakSelf = self;
 
-    WOTPivotNode *level0Col = [WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTPivotNode *level1Col =[WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeColumn];
-    NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
-    
-    WOTPivotNode *level0Row = [WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeRow];
-    WOTPivotNode *level1Row = nil;//[WOTNode pivotPremiumMetadataItemAsType:PivotMetadataTypeRow];
-    NSArray *rows = [self complexMetadataAsType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
-    
-    NSArray *filters = [self pivotFilters];
-    
-    self.pivotTree = [[WOTPivotTree alloc] init];
-    [self.pivotTree addMetadataItems:filters];
-    [self.pivotTree addMetadataItems:rows];
-    [self.pivotTree addMetadataItems:cols];
-    
-    [self.pivotTree setPivotItemCreationBlock:^NSArray *(NSArray *predicates) {
-        
-        NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
-        
-        NSMutableArray *resultArray = [[NSMutableArray alloc] init];
-        NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
-        [fetchedData enumerateObjectsUsingBlock:^(Tanks *tanks, NSUInteger idx, BOOL *stop) {
-
-            WOTPivotNode *node = [WOTNode pivotDataNodeForPredicate:predicate andTanksObject:tanks];
-            [resultArray addObject:node];
-        }];
-        return resultArray;
-    }];
-    
-    [self.pivotTree makePivot];
-    
     [self.navigationController.navigationBar setDarkStyle];
     
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class])];
+    
+    [self invalidateFetchedResultController];
+
+    self.pivotTree = [[WOTPivotTree alloc] init];
+    [self reloadPivot];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -164,7 +134,52 @@
     
 }
 
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    
+    [self reloadPivot];
+}
+
+
 #pragma mark - private
+- (void)reloadPivot {
+
+    [self.pivotTree clearMetadataItems];
+    
+    WOTPivotNode *level0Col = [WOTNode pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNode *level1Col =[WOTNode pivotNationMetadataItemAsType:PivotMetadataTypeColumn];
+    NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
+    
+    WOTPivotNode *level0Row = [WOTNode pivotTierMetadataItemAsType:PivotMetadataTypeRow];
+    WOTPivotNode *level1Row = nil;//[WOTNode pivotPremiumMetadataItemAsType:PivotMetadataTypeRow];
+    NSArray *rows = [self complexMetadataAsType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
+    
+    NSArray *filters = [self pivotFilters];
+    
+    [self.pivotTree addMetadataItems:filters];
+    [self.pivotTree addMetadataItems:rows];
+    [self.pivotTree addMetadataItems:cols];
+    
+    __weak typeof(self)weakSelf = self;
+    [self.pivotTree setPivotItemCreationBlock:^NSArray *(NSArray *predicates) {
+        
+        NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+        
+        NSMutableArray *resultArray = [[NSMutableArray alloc] init];
+        NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
+        [fetchedData enumerateObjectsUsingBlock:^(Tanks *tanks, NSUInteger idx, BOOL *stop) {
+            
+            WOTPivotNode *node = [WOTNode pivotDataNodeForPredicate:predicate andTanksObject:tanks];
+            [resultArray addObject:node];
+        }];
+        return resultArray;
+    }];
+    
+
+    [self.pivotTree makePivot];
+    
+}
+
 - (void)invalidateFetchedResultController {
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];

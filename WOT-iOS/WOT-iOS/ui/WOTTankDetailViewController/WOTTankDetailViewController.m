@@ -216,6 +216,13 @@
         self.fetchError = error;
         
         self.vehicle =  [self.fetchedResultController.fetchedObjects lastObject];
+        
+        
+        /*
+         * Default Profile
+         */
+        [self executeDefaultProfileRequestForTankId:[tankId stringValue]];
+        
     }
 }
 
@@ -279,6 +286,22 @@
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
     }
 }
+
+
+- (void)executeDefaultProfileRequestForTankId:(id)tankId {
+    
+    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
+    [args setObject:tankId forKey:WOT_KEY_TANK_ID];
+    
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+    if (canAdd) {
+        
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+    }
+}
+
+
 
 
 #pragma mark - NSFetchedResultsControllerDelegate

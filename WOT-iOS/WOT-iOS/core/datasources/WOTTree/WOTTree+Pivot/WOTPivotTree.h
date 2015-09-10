@@ -17,6 +17,7 @@ typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
 - (void)makePivot;
 - (void)addMetadataItems:(NSArray *)metadataItems;
+- (void)clearMetadataItems;
 
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex;
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath;

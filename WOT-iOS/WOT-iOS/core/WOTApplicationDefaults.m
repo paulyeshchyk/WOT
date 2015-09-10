@@ -37,9 +37,7 @@
 #import "WOTWebResponseAdapterTurrets.h"
 #import "WOTWebResponseAdapterVehicles.h"
 
-
 @implementation WOTApplicationDefaults
-
 
 + (void)registerDefaultSettings {
     

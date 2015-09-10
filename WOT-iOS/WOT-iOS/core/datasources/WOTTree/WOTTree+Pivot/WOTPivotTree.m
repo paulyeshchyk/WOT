@@ -47,7 +47,7 @@
 
 - (void)dealloc {
     
-    [self setLargeIndex:nil];
+    [self clearMetadataItems];
 }
 
 - (WOTPivotNode *)newRootNode:(NSString *)name {
@@ -69,6 +69,14 @@
     [selfMetadataItems addObjectsFromArray:metadataItems];
 }
 
+- (void)clearMetadataItems {
+
+    [self setLargeIndex:nil];
+    [self removeAllNodes];
+    [self.metadataItems removeAllObjects];
+    
+}
+
 - (void)resortMetadata {
     
     self.rootDataNode = [self newRootNode:@"root data"];
@@ -84,7 +92,6 @@
     self.rootFiltersNode = [self newRootNode:@"root filter"];
     NSArray *filters = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[WOTPivotFilterNode class]]];
     [self.rootFiltersNode addChildArray:filters];
-    
 }
 
 - (void)makePivot {

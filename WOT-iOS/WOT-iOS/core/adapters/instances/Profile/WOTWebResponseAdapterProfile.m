@@ -49,11 +49,6 @@
 }
 
 #pragma mark - private
-- (NSUInteger)hashForDictionary:(NSDictionary *)dict {
- 
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
-    return [data hash];
-}
 
 - (void)context:(NSManagedObjectContext *)context parseProfile:(NSDictionary *)profileJSON {
 
@@ -64,10 +59,13 @@
 
         NSDictionary *profile = profileJSON[key];
         
-        NSUInteger hashName = [self hashForDictionary:profile];
+        NSUInteger hashName = profile.completeHash;
+        
         NSString *hashNameStr = [NSString stringWithFormat:@"%d",hashName];
         NSPredicate *vehicleProfilePredicate = [NSPredicate predicateWithFormat:@"%K == %d",WOT_KEY_HASHNAME,hashName];
         Vehicleprofile *vehicleProfile = [Vehicleprofile findOrCreateObjectWithPredicate:vehicleProfilePredicate inManagedObjectContext:context];
+        NSCAssert(vehicleProfile, @"vehicleProfile should not be nil");
+        
         [vehicleProfile setHashName:[NSDecimalNumber decimalNumberWithString:hashNameStr]];
         [vehicleProfile fillPropertiesFromDictionary:profile];
 
