@@ -53,6 +53,7 @@
 		1D188FE11B9437460056D208 /* PivotTreeTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D188FE01B9437460056D208 /* PivotTreeTestCase.m */; };
 		1D188FE41B947B0C0056D208 /* WOTTankEvalutionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D188FE31B947B0C0056D208 /* WOTTankEvalutionResult.m */; };
 		1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */; };
+		1D1E26F41BA17D2900E5F220 /* ModulesTree+CustomName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1E26F31BA17D2900E5F220 /* ModulesTree+CustomName.m */; };
 		1D21433B1B9F1784001A7DEE /* WOTWEBRequestTankProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D21433A1B9F1784001A7DEE /* WOTWEBRequestTankProfile.m */; };
 		1D21433F1B9F17D1001A7DEE /* WOTWebResponseAdapterProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D21433E1B9F17D1001A7DEE /* WOTWebResponseAdapterProfile.m */; };
 		1D2143AE1BA00B37001A7DEE /* ListSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2143831BA00B37001A7DEE /* ListSetting.m */; };
@@ -413,6 +414,8 @@
 		1D188FE31B947B0C0056D208 /* WOTTankEvalutionResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankEvalutionResult.m; sourceTree = "<group>"; };
 		1D1E26EF1BA155F200E5F220 /* WOTApplicationStartupRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTApplicationStartupRequests.h; sourceTree = "<group>"; };
 		1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTApplicationStartupRequests.m; sourceTree = "<group>"; };
+		1D1E26F21BA17D2900E5F220 /* ModulesTree+CustomName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ModulesTree+CustomName.h"; sourceTree = "<group>"; };
+		1D1E26F31BA17D2900E5F220 /* ModulesTree+CustomName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ModulesTree+CustomName.m"; sourceTree = "<group>"; };
 		1D2143391B9F1784001A7DEE /* WOTWEBRequestTankProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestTankProfile.h; sourceTree = "<group>"; };
 		1D21433A1B9F1784001A7DEE /* WOTWEBRequestTankProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestTankProfile.m; sourceTree = "<group>"; };
 		1D21433D1B9F17D1001A7DEE /* WOTWebResponseAdapterProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseAdapterProfile.h; sourceTree = "<group>"; };
@@ -1436,6 +1439,8 @@
 				1D672B0A1B57DC0A00617E5C /* ModulesTree+PlainList.m */,
 				DA720C7F1B5D0DE9003F3B5A /* ModulesTree+UI.h */,
 				DA720C801B5D0DE9003F3B5A /* ModulesTree+UI.m */,
+				1D1E26F21BA17D2900E5F220 /* ModulesTree+CustomName.h */,
+				1D1E26F31BA17D2900E5F220 /* ModulesTree+CustomName.m */,
 			);
 			path = ModulesTree;
 			sourceTree = "<group>";
@@ -2844,6 +2849,7 @@
 				1D519D241B4EA20900D3A286 /* WOTTankDetailFieldExpression+Factory.m in Sources */,
 				1DCC7F321B2EE974005FF193 /* RomanNumber.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
+				1D1E26F41BA17D2900E5F220 /* ModulesTree+CustomName.m in Sources */,
 				1D519D0B1B4E9D2600D3A286 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
 				1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */,
 				1D5A8E401B43F34700A8261E /* WOTCoreDataPredicates.m in Sources */,
