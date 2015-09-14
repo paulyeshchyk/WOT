@@ -39,6 +39,12 @@
     return CGSizeMake(itemWidth,itemHeight);
 }
 
+- (void)dealloc {
+    
+    self.subitemsTableView.delegate = nil;
+    self.subitemsTableView.dataSource = nil;
+}
+
 - (void)awakeFromNib {
     // Initialization code
     [super awakeFromNib];

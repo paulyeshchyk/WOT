@@ -18,10 +18,8 @@
 
 #import "WOTTankIdsDatasource.h"
 
-#import "WOTRadarViewController.h"
 #import "WOTTankDetailSection+Factory.h"
 
-#import "WOTRadarViewController.h"
 #import "WOTTankGridViewController.h"
 
 #import "WOTTankMetricsList.h"
@@ -31,7 +29,9 @@
 
 #import "WOTMetric+Samples.h"
 
-@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate >
+#import "WOTRadarViewController.h"
+
+@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
 @property (nonatomic, weak) IBOutlet UIToolbar *topBar;
@@ -50,8 +50,8 @@
 
 @property (nonatomic, strong) NSArray *viewContainerConstraints;
 @property (nonatomic, weak) IBOutlet UIView *viewContainer;
-@property (nonatomic, strong)WOTRadarViewController *radarViewController;
 @property (nonatomic, strong)WOTTankGridViewController *gridViewController;
+@property (nonatomic, strong)WOTRadarViewController *radarViewController;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 
@@ -68,7 +68,6 @@
 
 - (void)dealloc {
     
-    self.radarViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
@@ -82,6 +81,9 @@
     [self.runningRequestIDs removeAllObjects];
     
     self.fetchedResultController.delegate = nil;
+    
+    self.radarViewController.delegate = nil;
+    self.radarViewController = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -179,6 +181,7 @@
     [self.radarViewController setDelegate:self];
 
     self.gridViewController = [[WOTTankGridViewController alloc] initWithNibName:NSStringFromClass([WOTTankGridViewController class]) bundle:nil];
+    [self.gridViewController setDelegate:self];
     
     self.metricOptions = WOTTankMetricOptionNone;
     self.viewMode = WOTTankDetailViewModeGrid;
@@ -211,6 +214,10 @@
             case WOTTankDetailViewModeGrid:{
                 
                 viewToAdd = self.gridViewController.view;
+                if (needReset) {
+                    [self.gridViewController needToBeCleared];
+                }
+                [self.gridViewController reload];
                 break;
             }
             case WOTTankDetailViewModeRadar :{
@@ -477,6 +484,20 @@
     [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];
     [sample addMetrics:[WOTMetric metricsForOption:self.metricOptions]];
     return sample.chartData;
+}
+
+#pragma mark - WOTGridViewControllerDelegate
+
+- (id)gridData {
+    
+    NSArray *result = @[@{@"children":@{@"Lorem 1":@"1",@"Lorem 2":@"2"}, @"caption":@"Lorem"},
+                        @{@"children":@{@"Lorem ips 1":@"1",@"\tLorem ips 2":@"3",@"\tLorem ips 3":@"3",@"\tLorem ips 4":@"4",@"\tLorem ips 11":@"11",@"Lorem ips 12":@"13",@"Lorem ips 13":@"13",@"Lorem ips 14":@"14"}, @"caption":@"Lorem ips"},
+                        @{@"children":@{@"Lorem ips 101":@"101",@"Lorem ips 102":@"103",@"Lorem ips 103":@"103",@"Lorem ips 104":@"104",@"Lorem ips 1011":@"1011",@"Lorem ips 1012":@"1013",@"Lorem ips 1013":@"1013",@"Lorem ips 1014":@"1014"}, @"caption":@"Lorem ips"},
+                        @{@"children":@{@"Lorem ips 201":@"201",@"Lorem ips 102":@"103",@"Lorem ips 103":@"103",@"Lorem ips 104":@"104",@"Lorem ips 2011":@"2011",@"Lorem ips 2012":@"2013",@"Lorem ips 2013":@"2013",@"Lorem ips 2014":@"2014"}, @"caption":@"Lorem ips"}
+                        ];
+    
+    
+    return result;
 }
 
 @end

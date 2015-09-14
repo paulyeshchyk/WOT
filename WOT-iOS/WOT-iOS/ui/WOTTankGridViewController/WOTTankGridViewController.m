@@ -30,16 +30,21 @@
     [super viewDidLoad];
     
     
-    self.subitems = @[@{@"children":@{@"Lorem 1":@"1",@"Lorem 2":@"2"}, @"caption":@"Lorem"},
-                      @{@"children":@{@"Lorem ips 1":@"1",@"\tLorem ips 2":@"3",@"\tLorem ips 3":@"3",@"\tLorem ips 4":@"4",@"\tLorem ips 11":@"11",@"Lorem ips 12":@"13",@"Lorem ips 13":@"13",@"Lorem ips 14":@"14"}, @"caption":@"Lorem ips"},
-                      @{@"children":@{@"Lorem ips 101":@"101",@"Lorem ips 102":@"103",@"Lorem ips 103":@"103",@"Lorem ips 104":@"104",@"Lorem ips 1011":@"1011",@"Lorem ips 1012":@"1013",@"Lorem ips 1013":@"1013",@"Lorem ips 1014":@"1014"}, @"caption":@"Lorem ips"},
-                      @{@"children":@{@"Lorem ips 201":@"201",@"Lorem ips 102":@"103",@"Lorem ips 103":@"103",@"Lorem ips 104":@"104",@"Lorem ips 2011":@"2011",@"Lorem ips 2012":@"2013",@"Lorem ips 2013":@"2013",@"Lorem ips 2014":@"2014"}, @"caption":@"Lorem ips"}
-                      ];
-    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChanged:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankGridCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class])];
+}
+
+#warning crash  occurs after third time ui changed
+- (void)reload {
+    
+    self.subitems = [self.delegate gridData];
+    [self.collectionView reloadData];
+}
+
+- (void)needToBeCleared {
+
+    self.subitems = nil;
 }
 
 - (NSInteger)columnsCount {
@@ -47,13 +52,11 @@
     return IS_IPAD?4.0f:2.0f;
 }
 
+#pragma mark - Notifications
 - (void)orientationDidChanged:(id)notification {
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)[self.collectionView collectionViewLayout];
     [flowLayout invalidateLayout];
-
-    //    UICollectionViewScrollDirection scrollDirection = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)?UICollectionViewScrollDirectionHorizontal:UICollectionViewScrollDirectionVertical;
-    //    [flowLayout setScrollDirection:scrollDirection];
 }
 
 #pragma mark - UICollectionViewDataSource
