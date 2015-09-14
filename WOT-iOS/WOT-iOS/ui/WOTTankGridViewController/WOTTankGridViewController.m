@@ -49,7 +49,11 @@
 
 - (void)orientationDidChanged:(id)notification {
     
-    [self.collectionView.collectionViewLayout invalidateLayout];
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)[self.collectionView collectionViewLayout];
+    [flowLayout invalidateLayout];
+
+    //    UICollectionViewScrollDirection scrollDirection = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)?UICollectionViewScrollDirectionHorizontal:UICollectionViewScrollDirectionVertical;
+    //    [flowLayout setScrollDirection:scrollDirection];
 }
 
 #pragma mark - UICollectionViewDataSource
