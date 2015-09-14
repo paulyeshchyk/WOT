@@ -18,6 +18,7 @@
 #import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import "NSNumber+CustomFormatter.h"
+#import "NSNumber+Randomizer.h"
 #import "NSSet+WOT.h"
 #import "NSString+WOTValue.h"
 #import "NSThread+ExecutionOnMain.h"

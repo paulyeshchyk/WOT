@@ -22,7 +22,7 @@ static const void *SpeedRef = &SpeedRef;
     NSNumber *result = objc_getAssociatedObject(self, SpeedRef);
     if (!result){
         
-        result = [self randomValueForLow:12.0f high:72.0f];
+        result = [NSNumber randomValueForLow:12.0f high:72.0f];
         [self setSpeed:result];
     }
     return result;
@@ -39,7 +39,7 @@ static const void *RotationSpeedRef = &RotationSpeedRef;
     NSNumber *result = objc_getAssociatedObject(self, RotationSpeedRef);
     if (!result){
         
-        result = [self randomValueForLow:0.0f high:48.0f];
+        result = [NSNumber randomValueForLow:0.0f high:48.0f];
         [self setRotationSpeed:result];
     }
     return result;
@@ -56,7 +56,7 @@ static const void *TurretTraverseSpeed = &TurretTraverseSpeed;
     NSNumber *result = objc_getAssociatedObject(self, TurretTraverseSpeed);
     if (!result){
         
-        result = [self randomValueForLow:0.0f high:48.0f];
+        result = [NSNumber randomValueForLow:0.0f high:48.0f];
         [self setTurretTraverseSpeed:result];
     }
     return result;
@@ -73,7 +73,7 @@ static const void *PowerToWeightRatioRef = &PowerToWeightRatioRef;
     NSNumber *result = objc_getAssociatedObject(self, PowerToWeightRatioRef);
     if (!result){
         
-        result = [self randomValueForLow:12.0f high:72.0f];
+        result = [NSNumber randomValueForLow:12.0f high:72.0f];
         [self setPowerToWeightRatio:result];
     }
     return result;
@@ -90,7 +90,7 @@ static const void *ArmorRef = &ArmorRef;
     NSNumber *result = objc_getAssociatedObject(self, ArmorRef);
     if (!result){
         
-        result = [self randomValueForLow:1.0f high:400.0f];
+        result = [NSNumber randomValueForLow:1.0f high:400.0f];
         [self setArmor:result];
     }
     return result;
@@ -107,7 +107,7 @@ static const void *PenetrationRef = &PenetrationRef;
     NSNumber *result = objc_getAssociatedObject(self, PenetrationRef);
     if (!result){
         
-        result = [self randomValueForLow:12.0f high:440.0f];
+        result = [NSNumber randomValueForLow:12.0f high:440.0f];
         [self setPenetration:result];
     }
     return result;
@@ -124,7 +124,7 @@ static const void *DispersionRef = &DispersionRef;
     NSNumber *result = objc_getAssociatedObject(self, DispersionRef);
     if (!result){
         
-        result = [self randomValueForLow:0.1f high:1.2f];
+        result = [NSNumber randomValueForLow:0.1f high:1.2f];
         [self setDispersion:result];
     }
     return result;
@@ -141,7 +141,7 @@ static const void *AimingTimeRef = &AimingTimeRef;
     NSNumber *result = objc_getAssociatedObject(self, AimingTimeRef);
     if (!result){
         
-        result = [self randomValueForLow:0.1f high:80.0f];
+        result = [NSNumber randomValueForLow:0.1f high:80.0f];
         [self setAimingTime:result];
     }
     return result;
@@ -166,7 +166,7 @@ static const void *InvisibilityShotRef = &InvisibilityShotRef;
     NSNumber *result = objc_getAssociatedObject(self, InvisibilityShotRef);
     if (!result){
         
-        result = [self randomValueForLow:0.0f high:([self.invisibilityMobility floatValue]-1)];
+        result = [NSNumber randomValueForLow:0.0f high:([self.invisibilityMobility floatValue]-1)];
         [self setInvisibilityShot:result];
     }
     return result;
@@ -183,7 +183,7 @@ static const void *InvisibilityMobilityRef = &InvisibilityMobilityRef;
     NSNumber *result = objc_getAssociatedObject(self, InvisibilityMobilityRef);
     if (!result){
         
-        result = [self randomValueForLow:1.0f high:[self.invisibilityImmobility floatValue]];
+        result = [NSNumber randomValueForLow:1.0f high:[self.invisibilityImmobility floatValue]];
         [self setInvisibilityMobility:result];
     }
     return result;
@@ -200,7 +200,7 @@ static const void *InvisibilityImmobilityRef = &InvisibilityImmobilityRef;
     NSNumber *result = objc_getAssociatedObject(self, InvisibilityImmobilityRef);
     if (!result){
         
-        result = [self randomValueForLow:12.0f high:18.0f];
+        result = [NSNumber randomValueForLow:12.0f high:18.0f];
         [self setInvisibilityImmobility:result];
     }
     return result;
@@ -217,7 +217,7 @@ static const void *VisionRadiusRef = &VisionRadiusRef;
     NSNumber *result = objc_getAssociatedObject(self, VisionRadiusRef);
     if (!result){
         
-        result = [self randomValueForLow:250.0f high:480.0f];
+        result = [NSNumber randomValueForLow:250.0f high:480.0f];
         [self setVisionRadius:result];
     }
     return result;
@@ -236,7 +236,7 @@ static const void *DPMRef = &DPMRef;
         
         float low_bound = [self.level floatValue] * 25.0f;
         float high_bound = low_bound * 10;
-        result = [self randomValueForLow:low_bound high:high_bound];
+        result = [NSNumber randomValueForLow:low_bound high:high_bound];
         [self setDpm:result];
     }
     return result;
@@ -246,13 +246,5 @@ static const void *DPMRef = &DPMRef;
     
     objc_setAssociatedObject(self, DPMRef, dpm, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
-
-#pragma mark - private
-- (NSNumber *)randomValueForLow:(CGFloat)low_bound high:(CGFloat)high_bound {
-    
-    float rndValue = (((float)arc4random()/0x100000000)*(high_bound-low_bound)+low_bound);
-    return @(rndValue);
-}
-
 
 @end

@@ -7,6 +7,6 @@
 
 @interface UIView (StretchingConstraints)
 
-- (void)addStretchingConstraints;
+- (NSArray *)addStretchingConstraints;
 
 @end

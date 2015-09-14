@@ -17,4 +17,10 @@ typedef NS_OPTIONS(NSUInteger, WOTTankMetricOptions) {
     WOTTankDetailPropertySelectionFire      = 1 << 3
 };
 
+typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
+    WOTTankDetailViewModeUnknown = 0,
+    WOTTankDetailViewModeRadar = 1,
+    WOTTankDetailViewModeGrid = 2
+};
+
 #endif

@@ -20,7 +20,10 @@
 
 #import "WOTRadarViewController.h"
 #import "WOTTankDetailSection+Factory.h"
+
 #import "WOTRadarViewController.h"
+#import "WOTTankGridViewController.h"
+
 #import "WOTTankMetricsList.h"
 #import "WOTMetric.h"
 #import "WOTTanksIDList.h"
@@ -33,7 +36,9 @@
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
 @property (nonatomic, weak) IBOutlet UIToolbar *topBar;
 
-@property (nonatomic, weak) IBOutlet UIButton *propertyAllButton;
+@property (nonatomic, weak) IBOutlet UIButton *viewModeRadarButton;
+@property (nonatomic, weak) IBOutlet UIButton *viewModeGridButton;
+
 @property (nonatomic, weak) IBOutlet UIButton *propertyMobilityButton;
 @property (nonatomic, weak) IBOutlet UIButton *propertyArmorButton;
 @property (nonatomic, weak) IBOutlet UIButton *propertyObserveButton;
@@ -43,14 +48,16 @@
 @property (nonatomic, weak) IBOutlet UIButton *configurationTopButton;
 @property (nonatomic, weak) IBOutlet UIButton *configurationDefaultButton;
 
-@property (nonatomic, weak) IBOutlet UIView *radarContainer;
-
+@property (nonatomic, strong) NSArray *viewContainerConstraints;
+@property (nonatomic, weak) IBOutlet UIView *viewContainer;
 @property (nonatomic, strong)WOTRadarViewController *radarViewController;
+@property (nonatomic, strong)WOTTankGridViewController *gridViewController;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 
 @property (nonatomic, strong) NSError *fetchError;
 
+@property (nonatomic, assign)WOTTankDetailViewMode viewMode;
 @property (nonatomic, assign)WOTTankMetricOptions metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, strong)NSMutableSet *runningRequestIDs;
@@ -152,38 +159,84 @@
     }
 }
 
+- (void)setViewMode:(WOTTankDetailViewMode)viewMode {
+
+    if (viewMode != _viewMode) {
+    
+        _viewMode = viewMode;
+    }
+    
+    self.viewModeGridButton.selected = (_viewMode == WOTTankDetailViewModeGrid);
+    self.viewModeRadarButton.selected = (_viewMode == WOTTankDetailViewModeRadar);
+    [self updateUINeedReset:YES];
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
 
-    self.metricOptions = WOTTankMetricOptionNone;
-    
     self.radarViewController = [[WOTRadarViewController alloc] initWithNibName:NSStringFromClass([WOTRadarViewController class]) bundle:nil];
-    [self.radarContainer addSubview:self.radarViewController.view];
-    [self.radarViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.radarViewController.view addStretchingConstraints];
     [self.radarViewController setDelegate:self];
 
+    self.gridViewController = [[WOTTankGridViewController alloc] initWithNibName:NSStringFromClass([WOTTankGridViewController class]) bundle:nil];
+    
+    self.metricOptions = WOTTankMetricOptionNone;
+    self.viewMode = WOTTankDetailViewModeGrid;
+
     [self.configurationCustomButton setSelected:YES];
-    [self.propertyAllButton setSelected:YES];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextObjectsDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
 
     [self.topBar setDarkStyle];
     [self.bottomBar setDarkStyle];
-    
-    [self updateUINeedReset:NO];
 }
 
 - (void)updateUINeedReset:(BOOL)needReset {
     
     [NSThread executeOnMainThread:^{
         
-        if (needReset) {
+        if ([self.viewContainerConstraints count] != 0) {
             
-            [self.radarViewController needToBeCleared];
+            [self.viewContainer removeConstraints:self.viewContainerConstraints];
+            self.viewContainerConstraints = nil;
         }
-        [self.radarViewController reload];
+        
+        [self.viewContainer.subviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
+            [subview removeFromSuperview];
+        }];
+        
+        UIView *viewToAdd = nil;
+        switch (self.viewMode) {
+                
+            case WOTTankDetailViewModeGrid:{
+                
+                viewToAdd = self.gridViewController.view;
+                break;
+            }
+            case WOTTankDetailViewModeRadar :{
+
+                viewToAdd = self.radarViewController.view;
+                
+                if (needReset) {
+                    
+                    [self.radarViewController needToBeCleared];
+                }
+                [self.radarViewController reload];
+
+                break;
+            }
+        
+            default: {
+                break;
+            }
+        }
+        
+        if (viewToAdd) {
+            
+            [self.viewContainer addSubview:viewToAdd];
+            self.viewContainerConstraints = [[viewToAdd addStretchingConstraints] copy];
+        }
+        
     }];
 }
 
@@ -386,8 +439,14 @@
     self.configurationTopButton.selected = NO;
 }
 
-- (IBAction)onPropertyAllSelection:(id)sender {
+- (IBAction)onViewModeRadarSelection:(id)sender {
     
+    self.viewMode = WOTTankDetailViewModeRadar;
+}
+
+- (IBAction)onViewModeGridSelection:(id)sender {
+    
+    self.viewMode = WOTTankDetailViewModeGrid;
 }
 
 - (IBAction)onPropertyArmorSelection:(id)sender {

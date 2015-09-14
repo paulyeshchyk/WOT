@@ -276,6 +276,26 @@
 		1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80D91B306227005FF193 /* WOTRadarViewController.m */; };
 		1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */; };
 		1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC81221B32B83B005FF193 /* UIImage+Resize.m */; };
+		1DD46B1C1BA6941900D3B3CE /* WOTTankGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B1A1BA6941900D3B3CE /* WOTTankGridViewController.m */; };
+		1DD46B1D1BA6941900D3B3CE /* WOTTankGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B1B1BA6941900D3B3CE /* WOTTankGridViewController.xib */; };
+		1DD46B2A1BA69CC900D3B3CE /* Activity Grid Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B1E1BA69CC900D3B3CE /* Activity Grid Yellow.png */; };
+		1DD46B2B1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B1F1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png */; };
+		1DD46B2C1BA69CC900D3B3CE /* Activity Grid Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B201BA69CC900D3B3CE /* Activity Grid Yellow@3x.png */; };
+		1DD46B2D1BA69CC900D3B3CE /* Activity Grid@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B211BA69CC900D3B3CE /* Activity Grid@3x.png */; };
+		1DD46B2E1BA69CC900D3B3CE /* Activity Grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B221BA69CC900D3B3CE /* Activity Grid@2x.png */; };
+		1DD46B2F1BA69CC900D3B3CE /* Activity Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B231BA69CC900D3B3CE /* Activity Grid.png */; };
+		1DD46B301BA69CC900D3B3CE /* Radar Plot.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B241BA69CC900D3B3CE /* Radar Plot.png */; };
+		1DD46B311BA69CC900D3B3CE /* Radar Plot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B251BA69CC900D3B3CE /* Radar Plot@2x.png */; };
+		1DD46B321BA69CC900D3B3CE /* Radar Plot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B261BA69CC900D3B3CE /* Radar Plot@3x.png */; };
+		1DD46B331BA69CC900D3B3CE /* Radar Plot Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B271BA69CC900D3B3CE /* Radar Plot Yellow@3x.png */; };
+		1DD46B341BA69CC900D3B3CE /* Radar Plot Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B281BA69CC900D3B3CE /* Radar Plot Yellow@2x.png */; };
+		1DD46B351BA69CC900D3B3CE /* Radar Plot Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B291BA69CC900D3B3CE /* Radar Plot Yellow.png */; };
+		1DD46B3A1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B381BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m */; };
+		1DD46B3B1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B391BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib */; };
+		1DD46B3F1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B3E1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m */; };
+		1DD46B421BA6C21300D3B3CE /* NSNumber+Randomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B411BA6C21300D3B3CE /* NSNumber+Randomizer.m */; };
+		1DD46B461BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B441BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.m */; };
+		1DD46B471BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B451BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
 		1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */; };
 		1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646461B1C616A00B0EC76 /* Images.xcassets */; };
@@ -772,6 +792,31 @@
 		1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTRadarViewController.xib; sourceTree = "<group>"; };
 		1DCC81211B32B83B005FF193 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		1DCC81221B32B83B005FF193 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		1DD46B191BA6941900D3B3CE /* WOTTankGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankGridViewController.h; sourceTree = "<group>"; };
+		1DD46B1A1BA6941900D3B3CE /* WOTTankGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankGridViewController.m; sourceTree = "<group>"; };
+		1DD46B1B1BA6941900D3B3CE /* WOTTankGridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankGridViewController.xib; sourceTree = "<group>"; };
+		1DD46B1E1BA69CC900D3B3CE /* Activity Grid Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow.png"; sourceTree = "<group>"; };
+		1DD46B1F1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@2x.png"; sourceTree = "<group>"; };
+		1DD46B201BA69CC900D3B3CE /* Activity Grid Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@3x.png"; sourceTree = "<group>"; };
+		1DD46B211BA69CC900D3B3CE /* Activity Grid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid@3x.png"; sourceTree = "<group>"; };
+		1DD46B221BA69CC900D3B3CE /* Activity Grid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid@2x.png"; sourceTree = "<group>"; };
+		1DD46B231BA69CC900D3B3CE /* Activity Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid.png"; sourceTree = "<group>"; };
+		1DD46B241BA69CC900D3B3CE /* Radar Plot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot.png"; sourceTree = "<group>"; };
+		1DD46B251BA69CC900D3B3CE /* Radar Plot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot@2x.png"; sourceTree = "<group>"; };
+		1DD46B261BA69CC900D3B3CE /* Radar Plot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot@3x.png"; sourceTree = "<group>"; };
+		1DD46B271BA69CC900D3B3CE /* Radar Plot Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow@3x.png"; sourceTree = "<group>"; };
+		1DD46B281BA69CC900D3B3CE /* Radar Plot Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow@2x.png"; sourceTree = "<group>"; };
+		1DD46B291BA69CC900D3B3CE /* Radar Plot Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow.png"; sourceTree = "<group>"; };
+		1DD46B371BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankGridCollectionViewCell.h; sourceTree = "<group>"; };
+		1DD46B381BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankGridCollectionViewCell.m; sourceTree = "<group>"; };
+		1DD46B391BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankGridCollectionViewCell.xib; sourceTree = "<group>"; };
+		1DD46B3D1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankGridFlowLayout.h; sourceTree = "<group>"; };
+		1DD46B3E1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankGridFlowLayout.m; sourceTree = "<group>"; };
+		1DD46B401BA6C21300D3B3CE /* NSNumber+Randomizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Randomizer.h"; sourceTree = "<group>"; };
+		1DD46B411BA6C21300D3B3CE /* NSNumber+Randomizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Randomizer.m"; sourceTree = "<group>"; };
+		1DD46B431BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankGridCollectionSubitemTableViewCell.h; sourceTree = "<group>"; };
+		1DD46B441BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankGridCollectionSubitemTableViewCell.m; sourceTree = "<group>"; };
+		1DD46B451BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankGridCollectionSubitemTableViewCell.xib; sourceTree = "<group>"; };
 		1DD646331B1C616A00B0EC76 /* WOT-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WOT-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD646371B1C616A00B0EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DD646381B1C616A00B0EC76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1016,6 +1061,8 @@
 			children = (
 				1D010D801B8B3B4F00FA6A75 /* NSNumber+CustomFormatter.h */,
 				1D010D811B8B3B4F00FA6A75 /* NSNumber+CustomFormatter.m */,
+				1DD46B401BA6C21300D3B3CE /* NSNumber+Randomizer.h */,
+				1DD46B411BA6C21300D3B3CE /* NSNumber+Randomizer.m */,
 			);
 			path = NSNumber;
 			sourceTree = "<group>";
@@ -1514,6 +1561,18 @@
 		1D672B0F1B60C6F800617E5C /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				1DD46B1E1BA69CC900D3B3CE /* Activity Grid Yellow.png */,
+				1DD46B1F1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png */,
+				1DD46B201BA69CC900D3B3CE /* Activity Grid Yellow@3x.png */,
+				1DD46B211BA69CC900D3B3CE /* Activity Grid@3x.png */,
+				1DD46B221BA69CC900D3B3CE /* Activity Grid@2x.png */,
+				1DD46B231BA69CC900D3B3CE /* Activity Grid.png */,
+				1DD46B241BA69CC900D3B3CE /* Radar Plot.png */,
+				1DD46B251BA69CC900D3B3CE /* Radar Plot@2x.png */,
+				1DD46B261BA69CC900D3B3CE /* Radar Plot@3x.png */,
+				1DD46B271BA69CC900D3B3CE /* Radar Plot Yellow@3x.png */,
+				1DD46B281BA69CC900D3B3CE /* Radar Plot Yellow@2x.png */,
+				1DD46B291BA69CC900D3B3CE /* Radar Plot Yellow.png */,
 				DA522D341B6649020087D684 /* Cancel Gray.png */,
 				DA522D351B6649020087D684 /* Cancel Gray@2x.png */,
 				DA522D361B6649020087D684 /* Cancel Gray@3x.png */,
@@ -2033,6 +2092,40 @@
 			path = UIImage;
 			sourceTree = "<group>";
 		};
+		1DD46B181BA6940000D3B3CE /* WOTTankGridViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1DD46B3C1BA6A6C600D3B3CE /* layout */,
+				1DD46B361BA6A5CE00D3B3CE /* cells */,
+				1DD46B191BA6941900D3B3CE /* WOTTankGridViewController.h */,
+				1DD46B1A1BA6941900D3B3CE /* WOTTankGridViewController.m */,
+				1DD46B1B1BA6941900D3B3CE /* WOTTankGridViewController.xib */,
+			);
+			path = WOTTankGridViewController;
+			sourceTree = "<group>";
+		};
+		1DD46B361BA6A5CE00D3B3CE /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				1DD46B371BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.h */,
+				1DD46B381BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m */,
+				1DD46B391BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib */,
+				1DD46B431BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.h */,
+				1DD46B441BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.m */,
+				1DD46B451BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
+		1DD46B3C1BA6A6C600D3B3CE /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				1DD46B3D1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.h */,
+				1DD46B3E1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m */,
+			);
+			path = layout;
+			sourceTree = "<group>";
+		};
 		1DD6462A1B1C616A00B0EC76 = {
 			isa = PBXGroup;
 			children = (
@@ -2102,6 +2195,7 @@
 		1DD6465F1B1C619500B0EC76 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				1DD46B181BA6940000D3B3CE /* WOTTankGridViewController */,
 				1DDEE3791B8F353200C90D4B /* WOTTankPivotViewController */,
 				1DCC80D51B306227005FF193 /* WOTRadarViewController */,
 				1DD646BE1B1F36FB00B0EC76 /* Root */,
@@ -2597,6 +2691,7 @@
 				1D672B4D1B60CC8700617E5C /* Firing Gun Yellow.png in Resources */,
 				1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */,
 				1D672B261B60C86700617E5C /* Bulletproof Vest Gray.png in Resources */,
+				1DD46B3B1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib in Resources */,
 				DA522D281B6637630087D684 /* Search Gray.png in Resources */,
 				1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */,
 				1D4C92361B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png in Resources */,
@@ -2606,11 +2701,13 @@
 				1D4C92411B25EBE400E320B5 /* WOTiPadMenuGear.png in Resources */,
 				1D672B281B60C86700617E5C /* Bulletproof Vest Gray@3x.png in Resources */,
 				1DCC7F431B2F0330005FF193 /* WOTTankDetailViewController.xib in Resources */,
+				1DD46B311BA69CC900D3B3CE /* Radar Plot@2x.png in Resources */,
 				1D672B611B60D15C00617E5C /* Hourglass Sand Bottom Yellow@3x.png in Resources */,
 				1DCC7F271B2ED07F005FF193 /* WOTArrowDown@3x.png in Resources */,
 				1DD6471A1B2084FF00B0EC76 /* podfile in Resources */,
 				1D672B361B60C9A100617E5C /* Opera Glasses Yellow@2x.png in Resources */,
 				1D4C923C1B25EB1000E320B5 /* WOTBackIconGray@2x.png in Resources */,
+				1DD46B341BA69CC900D3B3CE /* Radar Plot Yellow@2x.png in Resources */,
 				1D672B5C1B60D15C00617E5C /* Hourglass Sand Bottom Gray.png in Resources */,
 				1DC07B941B3AF434002FAA72 /* WOTTankDetailCollectionReusableView.xib in Resources */,
 				1D4C92651B27085600E320B5 /* WOTTankListSortViewController.xib in Resources */,
@@ -2625,13 +2722,16 @@
 				1DDEE3911B8F353200C90D4B /* WOTTankPivotDataCollectionViewCell~ipad.xib in Resources */,
 				1D672B651B60D15C00617E5C /* Hourglass Sand Top Yellow.png in Resources */,
 				1D4C92631B27085600E320B5 /* WOTTankListSettingTableViewCell.xib in Resources */,
+				1DD46B2A1BA69CC900D3B3CE /* Activity Grid Yellow.png in Resources */,
 				1DCC7F3D1B2EF604005FF193 /* AT-SPG.png in Resources */,
 				1DC07BAA1B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png in Resources */,
 				1D672B641B60D15C00617E5C /* Hourglass Sand Top Gray@3x.png in Resources */,
 				1DDEE3981B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib in Resources */,
+				1DD46B351BA69CC900D3B3CE /* Radar Plot Yellow.png in Resources */,
 				1DCC7F391B2EF604005FF193 /* SPG.png in Resources */,
 				1DD646E41B205BF500B0EC76 /* WOTProfileViewController.xib in Resources */,
 				1D010D381B7DFF1100FA6A75 /* WOTTankConfigurationItemViewController.xib in Resources */,
+				1DD46B331BA69CC900D3B3CE /* Radar Plot Yellow@3x.png in Resources */,
 				1D4C92301B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib in Resources */,
 				1DCC7F251B2ED07F005FF193 /* WOTArrowDown.png in Resources */,
 				1D672B271B60C86700617E5C /* Bulletproof Vest Gray@2x.png in Resources */,
@@ -2659,6 +2759,7 @@
 				1D4C92431B25EBE400E320B5 /* WOTiPadMenuGear@3x.png in Resources */,
 				1DD646C81B1F371700B0EC76 /* WOTMenuViewController.xib in Resources */,
 				1D672AF71B57952700617E5C /* WOTModuleTypeEngine.png in Resources */,
+				1DD46B321BA69CC900D3B3CE /* Radar Plot@3x.png in Resources */,
 				1D4C921E1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib in Resources */,
 				1D672B601B60D15C00617E5C /* Hourglass Sand Bottom Yellow@2x.png in Resources */,
 				DA522D331B663C290087D684 /* WOTTankListSearchBar.xib in Resources */,
@@ -2673,9 +2774,13 @@
 				1D672AF91B57952700617E5C /* WOTModuleTypeRadios.png in Resources */,
 				1D672B401B60CB7100617E5C /* Speedometer Gray@3x.png in Resources */,
 				1D672B5E1B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png in Resources */,
+				1DD46B301BA69CC900D3B3CE /* Radar Plot.png in Resources */,
 				1DDEE3961B8F353200C90D4B /* WOTTankPivotFilterCollectionViewCell.xib in Resources */,
+				1DD46B1D1BA6941900D3B3CE /* WOTTankGridViewController.xib in Resources */,
 				DA522D2C1B6637630087D684 /* Search Yellow@2x.png in Resources */,
 				1DCC7F2A1B2ED07F005FF193 /* WOTArrowUp@3x.png in Resources */,
+				1DD46B471BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib in Resources */,
+				1DD46B2F1BA69CC900D3B3CE /* Activity Grid.png in Resources */,
 				1D672B5F1B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png in Resources */,
 				1D672AF61B57952700617E5C /* WOTModuleTypeChassis.png in Resources */,
 				DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */,
@@ -2686,6 +2791,7 @@
 				1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */,
 				1D4C923B1B25EB1000E320B5 /* WOTBackIconGray.png in Resources */,
 				1DDEE39C1B8F353200C90D4B /* WOTTankPivotViewController.xib in Resources */,
+				1DD46B2B1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png in Resources */,
 				1DE319AF1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png in Resources */,
 				DA522D381B6649020087D684 /* Cancel Gray@2x.png in Resources */,
 				1D4C924C1B25EF2E00E320B5 /* WOTGlobe.png in Resources */,
@@ -2694,6 +2800,7 @@
 				1D672B4C1B60CC8700617E5C /* Firing Gun Gray@3x.png in Resources */,
 				1D4C92341B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png in Resources */,
 				1D672B2A1B60C86700617E5C /* Bulletproof Vest Yellow@2x.png in Resources */,
+				1DD46B2E1BA69CC900D3B3CE /* Activity Grid@2x.png in Resources */,
 				1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */,
 				1DC07BA61B3B003D002FAA72 /* Data-List-icon.png in Resources */,
 				1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */,
@@ -2705,7 +2812,9 @@
 				DA522D371B6649020087D684 /* Cancel Gray.png in Resources */,
 				1D672B321B60C9A100617E5C /* Opera Glasses Gray.png in Resources */,
 				1D672B431B60CB7100617E5C /* Speedometer Yellow@3x.png in Resources */,
+				1DD46B2D1BA69CC900D3B3CE /* Activity Grid@3x.png in Resources */,
 				1D672B631B60D15C00617E5C /* Hourglass Sand Top Gray@2x.png in Resources */,
+				1DD46B2C1BA69CC900D3B3CE /* Activity Grid Yellow@3x.png in Resources */,
 				1D672B5D1B60D15C00617E5C /* Hourglass Sand Bottom Gray@2x.png in Resources */,
 				DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */,
 				1DD646DD1B20533E00B0EC76 /* WOTMenuTableViewCell.xib in Resources */,
@@ -2823,6 +2932,7 @@
 				1DC07ACA1B39A027002FAA72 /* WOTWebResponseAdapterChassis.m in Sources */,
 				1D519D351B4FC8DB00D3A286 /* WOTTankDetailProgressTableViewCell.m in Sources */,
 				1DC07B7E1B3AB778002FAA72 /* Tankengines+FillProperties.m in Sources */,
+				1DD46B461BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.m in Sources */,
 				1DC07B5A1B3A9489002FAA72 /* WOTWEBRequestLogout.m in Sources */,
 				1D519D051B4E990900D3A286 /* WOTGunRateCompareFieldExpression.m in Sources */,
 				1D047B231B331B0F00B5B696 /* WOTSessionManager.m in Sources */,
@@ -2846,9 +2956,11 @@
 				1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */,
 				DA720C811B5D0DE9003F3B5A /* ModulesTree+UI.m in Sources */,
 				1DCC7F421B2F0330005FF193 /* WOTTankDetailViewController.m in Sources */,
+				1DD46B421BA6C21300D3B3CE /* NSNumber+Randomizer.m in Sources */,
 				1D519D241B4EA20900D3A286 /* WOTTankDetailFieldExpression+Factory.m in Sources */,
 				1DCC7F321B2EE974005FF193 /* RomanNumber.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
+				1DD46B3A1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m in Sources */,
 				1D1E26F41BA17D2900E5F220 /* ModulesTree+CustomName.m in Sources */,
 				1D519D0B1B4E9D2600D3A286 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
 				1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */,
@@ -2876,6 +2988,7 @@
 				1D519CF51B4E7BE400D3A286 /* WOTTankDetailFieldExpression.m in Sources */,
 				1D010D3C1B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.m in Sources */,
 				1D2143BA1BA00B37001A7DEE /* VehicleprofileAmmoList.m in Sources */,
+				1DD46B1C1BA6941900D3B3CE /* WOTTankGridViewController.m in Sources */,
 				1D2143BE1BA00B37001A7DEE /* VehicleprofileEngine.m in Sources */,
 				1DC07B601B3A9489002FAA72 /* WOTWEBRequestTankVehicles.m in Sources */,
 				1DF73EBE1B90563300AE6F86 /* NSMutableArray+WOT.m in Sources */,
@@ -2937,6 +3050,7 @@
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,
 				1DC07ACD1B39A032002FAA72 /* WOTWebResponseAdapterGuns.m in Sources */,
 				1D21433F1B9F17D1001A7DEE /* WOTWebResponseAdapterProfile.m in Sources */,
+				1DD46B3F1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m in Sources */,
 				1D010D051B789A8900FA6A75 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1D2143C01BA00B37001A7DEE /* VehicleprofileRadio.m in Sources */,
