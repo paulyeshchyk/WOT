@@ -12,10 +12,10 @@
 //
 
 import Foundation
-import CoreGraphics.CGBase
+import CoreGraphics
 
 /// This chart class allows the combination of lines, bars, scatter and candle data all displayed in one chart area.
-public class CombinedChartView: BarLineChartViewBase
+public class CombinedChartView: BarLineChartViewBase, LineChartDataProvider, BarChartDataProvider, ScatterChartDataProvider, CandleChartDataProvider, BubbleChartDataProvider
 {
     /// the fill-formatter used for determining the position of the fill-line
     internal var _fillFormatter: ChartFillFormatter!
@@ -33,42 +33,46 @@ public class CombinedChartView: BarLineChartViewBase
     
     public override func initialize()
     {
-        super.initialize();
+        super.initialize()
         
-        _fillFormatter = BarLineChartFillFormatter(chart: self);
+        _highlighter = CombinedHighlighter(chart: self)
         
-        renderer = CombinedChartRenderer(chart: self, animator: _animator, viewPortHandler: _viewPortHandler);
+        /// WORKAROUND: Swift 2.0 compiler malfunctions when optimizations are enabled, and assigning directly to _fillFormatter causes a crash with a EXC_BAD_ACCESS. See https://github.com/danielgindi/ios-charts/issues/406
+        let workaroundFormatter = BarLineChartFillFormatter()
+        _fillFormatter = workaroundFormatter
+        
+        renderer = CombinedChartRenderer(chart: self, animator: _animator, viewPortHandler: _viewPortHandler)
     }
     
     override func calcMinMax()
     {
-        super.calcMinMax();
+        super.calcMinMax()
         
         if (self.barData !== nil || self.candleData !== nil || self.bubbleData !== nil)
         {
-            _chartXMin = -0.5;
-            _chartXMax = Float(_data.xVals.count) - 0.5;
+            _chartXMin = -0.5
+            _chartXMax = Double(_data.xVals.count) - 0.5
             
             if (self.bubbleData !== nil)
             {
-                for set in self.bubbleData.dataSets as! [BubbleChartDataSet]
+                for set in self.bubbleData?.dataSets as! [BubbleChartDataSet]
                 {
-                    let xmin = set.xMin;
-                    let xmax = set.xMax;
+                    let xmin = set.xMin
+                    let xmax = set.xMax
                     
                     if (xmin < chartXMin)
                     {
-                        _chartXMin = xmin;
+                        _chartXMin = xmin
                     }
                     
                     if (xmax > chartXMax)
                     {
-                        _chartXMax = xmax;
+                        _chartXMax = xmax
                     }
                 }
             }
 
-            _deltaX = CGFloat(abs(_chartXMax - _chartXMin));
+            _deltaX = CGFloat(abs(_chartXMax - _chartXMin))
         }
     }
     
@@ -76,12 +80,12 @@ public class CombinedChartView: BarLineChartViewBase
     {
         get
         {
-            return super.data;
+            return super.data
         }
         set
         {
-            super.data = newValue;
-            (renderer as! CombinedChartRenderer?)!.createRenderers();
+            super.data = newValue
+            (renderer as! CombinedChartRenderer?)!.createRenderers()
         }
     }
     
@@ -89,118 +93,118 @@ public class CombinedChartView: BarLineChartViewBase
     {
         get
         {
-            return _fillFormatter;
+            return _fillFormatter
         }
         set
         {
-            _fillFormatter = newValue;
-            if (_fillFormatter === nil)
+            _fillFormatter = newValue
+            if (_fillFormatter == nil)
             {
-                _fillFormatter = BarLineChartFillFormatter(chart: self);
+                _fillFormatter = BarLineChartFillFormatter()
             }
         }
     }
     
-    public var lineData: LineChartData!
+    // MARK: - LineChartDataProvider
+    
+    public var lineData: LineChartData?
     {
         get
         {
             if (_data === nil)
             {
-                return nil;
+                return nil
             }
-            return (_data as! CombinedChartData!).lineData;
+            return (_data as! CombinedChartData!).lineData
         }
     }
     
-    public var barData: BarChartData!
+    // MARK: - BarChartDataProvider
+    
+    public var barData: BarChartData?
     {
         get
         {
             if (_data === nil)
             {
-                return nil;
+                return nil
             }
-            return (_data as! CombinedChartData!).barData;
+            return (_data as! CombinedChartData!).barData
         }
     }
     
-    public var scatterData: ScatterChartData!
+    // MARK: - ScatterChartDataProvider
+    
+    public var scatterData: ScatterChartData?
     {
         get
         {
             if (_data === nil)
             {
-                return nil;
+                return nil
             }
-            return (_data as! CombinedChartData!).scatterData;
+            return (_data as! CombinedChartData!).scatterData
         }
     }
     
-    public var candleData: CandleChartData!
+    // MARK: - CandleChartDataProvider
+    
+    public var candleData: CandleChartData?
     {
         get
         {
             if (_data === nil)
             {
-                return nil;
+                return nil
             }
-            return (_data as! CombinedChartData!).candleData;
+            return (_data as! CombinedChartData!).candleData
         }
     }
     
-    public var bubbleData: BubbleChartData!
+    // MARK: - BubbleChartDataProvider
+    
+    public var bubbleData: BubbleChartData?
     {
         get
         {
             if (_data === nil)
             {
-                return nil;
+                return nil
             }
-            return (_data as! CombinedChartData!).bubbleData;
+            return (_data as! CombinedChartData!).bubbleData
         }
     }
     
-    // MARK: Accessors
+    // MARK: - Accessors
     
     /// flag that enables or disables the highlighting arrow
     public var drawHighlightArrowEnabled: Bool
     {
-        get { return (renderer as! CombinedChartRenderer!).drawHighlightArrowEnabled; }
-        set { (renderer as! CombinedChartRenderer!).drawHighlightArrowEnabled = newValue; }
+        get { return (renderer as! CombinedChartRenderer!).drawHighlightArrowEnabled }
+        set { (renderer as! CombinedChartRenderer!).drawHighlightArrowEnabled = newValue }
     }
     
     /// if set to true, all values are drawn above their bars, instead of below their top
     public var drawValueAboveBarEnabled: Bool
         {
-        get { return (renderer as! CombinedChartRenderer!).drawValueAboveBarEnabled; }
-        set { (renderer as! CombinedChartRenderer!).drawValueAboveBarEnabled = newValue; }
-    }
-    
-    /// if set to true, all values of a stack are drawn individually, and not just their sum
-    public var drawValuesForWholeStackEnabled: Bool
-    {
-        get { return (renderer as! CombinedChartRenderer!).drawValuesForWholeStackEnabled; }
-        set { (renderer as! CombinedChartRenderer!).drawValuesForWholeStackEnabled = newValue; }
+        get { return (renderer as! CombinedChartRenderer!).drawValueAboveBarEnabled }
+        set { (renderer as! CombinedChartRenderer!).drawValueAboveBarEnabled = newValue }
     }
     
     /// if set to true, a grey area is darawn behind each bar that indicates the maximum value
     public var drawBarShadowEnabled: Bool
     {
-        get { return (renderer as! CombinedChartRenderer!).drawBarShadowEnabled; }
-        set { (renderer as! CombinedChartRenderer!).drawBarShadowEnabled = newValue; }
+        get { return (renderer as! CombinedChartRenderer!).drawBarShadowEnabled }
+        set { (renderer as! CombinedChartRenderer!).drawBarShadowEnabled = newValue }
     }
     
-    /// returns true if drawing the highlighting arrow is enabled, false if not
+    /// - returns: true if drawing the highlighting arrow is enabled, false if not
     public var isDrawHighlightArrowEnabled: Bool { return (renderer as! CombinedChartRenderer!).drawHighlightArrowEnabled; }
     
-    /// returns true if drawing values above bars is enabled, false if not
+    /// - returns: true if drawing values above bars is enabled, false if not
     public var isDrawValueAboveBarEnabled: Bool { return (renderer as! CombinedChartRenderer!).drawValueAboveBarEnabled; }
     
-    /// returns true if all values of a stack are drawn, and not just their sum
-    public var isDrawValuesForWholeStackEnabled: Bool { return (renderer as! CombinedChartRenderer!).drawValuesForWholeStackEnabled; }
-    
-    /// returns true if drawing shadows (maxvalue) for each bar is enabled, false if not
+    /// - returns: true if drawing shadows (maxvalue) for each bar is enabled, false if not
     public var isDrawBarShadowEnabled: Bool { return (renderer as! CombinedChartRenderer!).drawBarShadowEnabled; }
     
     /// the order in which the provided data objects should be drawn.
@@ -210,11 +214,11 @@ public class CombinedChartView: BarLineChartViewBase
     {
         get
         {
-            return (renderer as! CombinedChartRenderer!).drawOrder.map { $0.rawValue };
+            return (renderer as! CombinedChartRenderer!).drawOrder.map { $0.rawValue }
         }
         set
         {
-            (renderer as! CombinedChartRenderer!).drawOrder = newValue.map { CombinedChartDrawOrder(rawValue: $0)! };
+            (renderer as! CombinedChartRenderer!).drawOrder = newValue.map { CombinedChartDrawOrder(rawValue: $0)! }
         }
     }
 }

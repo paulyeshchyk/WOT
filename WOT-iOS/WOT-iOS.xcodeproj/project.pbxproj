@@ -361,7 +361,7 @@
 		DA522D381B6649020087D684 /* Cancel Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D351B6649020087D684 /* Cancel Gray@2x.png */; };
 		DA522D391B6649020087D684 /* Cancel Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D361B6649020087D684 /* Cancel Gray@3x.png */; };
 		DA720C811B5D0DE9003F3B5A /* ModulesTree+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = DA720C801B5D0DE9003F3B5A /* ModulesTree+UI.m */; };
-		E2990185E840B645BEA2F197 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB9DC1F0F086677D49391180 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E2990185E840B645BEA2F197 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB9DC1F0F086677D49391180 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2639,6 +2639,7 @@
 		1DD6462B1B1C616A00B0EC76 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Pavel Yeshchyk";
 				TargetAttributes = {
@@ -3176,6 +3177,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -3221,6 +3223,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

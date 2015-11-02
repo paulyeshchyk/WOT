@@ -12,66 +12,31 @@
 //
 
 import Foundation
-import CoreGraphics.CGBase
+import CoreGraphics
 
 /// Financial chart type that draws candle-sticks.
-public class CandleStickChartView: BarLineChartViewBase, CandleStickChartRendererDelegate
+public class CandleStickChartView: BarLineChartViewBase, CandleChartDataProvider
 {
     internal override func initialize()
     {
-        super.initialize();
+        super.initialize()
         
-        renderer = CandleStickChartRenderer(delegate: self, animator: _animator, viewPortHandler: _viewPortHandler);
-        _chartXMin = -0.5;
+        renderer = CandleStickChartRenderer(dataProvider: self, animator: _animator, viewPortHandler: _viewPortHandler)
+        _chartXMin = -0.5
     }
 
     internal override func calcMinMax()
     {
-        super.calcMinMax();
+        super.calcMinMax()
 
-        _chartXMax += 0.5;
-        _deltaX = CGFloat(abs(_chartXMax - _chartXMin));
+        _chartXMax += 0.5
+        _deltaX = CGFloat(abs(_chartXMax - _chartXMin))
     }
     
-    // MARK: - CandleStickChartRendererDelegate
+    // MARK: - CandleChartDataProvider
     
-    public func candleStickChartRendererCandleData(renderer: CandleStickChartRenderer) -> CandleChartData!
+    public var candleData: CandleChartData?
     {
-        return _data as! CandleChartData!;
-    }
-    
-    public func candleStickChartRenderer(renderer: CandleStickChartRenderer, transformerForAxis which: ChartYAxis.AxisDependency) -> ChartTransformer!
-    {
-        return self.getTransformer(which);
-    }
-    
-    public func candleStickChartDefaultRendererValueFormatter(renderer: CandleStickChartRenderer) -> NSNumberFormatter!
-    {
-        return self.valueFormatter;
-    }
-    
-    public func candleStickChartRendererChartYMax(renderer: CandleStickChartRenderer) -> Float
-    {
-        return self.chartYMax;
-    }
-    
-    public func candleStickChartRendererChartYMin(renderer: CandleStickChartRenderer) -> Float
-    {
-        return self.chartYMin;
-    }
-    
-    public func candleStickChartRendererChartXMax(renderer: CandleStickChartRenderer) -> Float
-    {
-        return self.chartXMax;
-    }
-    
-    public func candleStickChartRendererChartXMin(renderer: CandleStickChartRenderer) -> Float
-    {
-        return self.chartXMin;
-    }
-    
-    public func candleStickChartRendererMaxVisibleValueCount(renderer: CandleStickChartRenderer) -> Int
-    {
-        return self.maxVisibleValueCount;
+        return _data as? CandleChartData
     }
 }
