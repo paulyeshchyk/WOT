@@ -199,7 +199,7 @@
     NSArray *fetchedObjects = [self.fetchedResultController fetchedObjects];
     [fetchedObjects enumerateObjectsUsingBlock:^(Tanks *tank, NSUInteger idx, BOOL *stop) {
         {
-        debugLog(@"dpm:%@",tank.dpm);
+//        debugLog(@"dpm:%@",tank.dpm);
 //        debugLog(@"visionRadius:%@", tank.visionRadius);
 //        debugLog(@"invisibility:%@", tank.invisibility);
 //        debugLog(@"invisibilityShot:%@", tank.invisibilityShot);

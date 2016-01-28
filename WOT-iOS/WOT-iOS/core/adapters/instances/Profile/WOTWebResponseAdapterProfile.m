@@ -61,7 +61,7 @@
         
         NSUInteger hashName = profile.completeHash;
         
-        NSString *hashNameStr = [NSString stringWithFormat:@"%d",hashName];
+        NSString *hashNameStr = [NSString stringWithFormat:@"%lu",(unsigned long)hashName];
         NSPredicate *vehicleProfilePredicate = [NSPredicate predicateWithFormat:@"%K == %d",WOT_KEY_HASHNAME,hashName];
         Vehicleprofile *vehicleProfile = [Vehicleprofile findOrCreateObjectWithPredicate:vehicleProfilePredicate inManagedObjectContext:context];
         NSCAssert(vehicleProfile, @"vehicleProfile should not be nil");

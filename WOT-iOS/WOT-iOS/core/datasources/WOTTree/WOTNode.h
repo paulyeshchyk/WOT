@@ -20,6 +20,7 @@ typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode *node);
 @property (nonatomic, readonly) NSURL *imageURL;
 @property (nonatomic, readonly) NSMutableOrderedSet *childList;
 @property (nonatomic, assign) BOOL isVisible;
+@property (nonatomic, readonly)NSString *fullName;
 
 - (id)initWithName:(NSString *)name;
 - (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL;

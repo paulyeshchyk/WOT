@@ -27,6 +27,7 @@
 @property (nonatomic, strong) WOTNode *rootColumnsNode;
 @property (nonatomic, strong) WOTNode *rootRowsNode;
 @property (nonatomic, strong) WOTNode *rootDataNode;
+@property (nonatomic, assign)BOOL shouldDisplayEmptyColumns;
 
 @end
 
@@ -41,6 +42,7 @@
     self = [super init];
     if (self){
 
+        self.shouldDisplayEmptyColumns = NO;
     }
     return self;
 }
@@ -172,10 +174,14 @@
     NSInteger rowNodesDepth = self.rootNodeWidth;
     NSInteger colNodesDepth = self.rootNodeHeight;
     
+#warning emptyDataColumnWidth should be refactored
+    NSInteger emptyDataColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0;
+    
     __block NSInteger maxWidth = 0;
     [[self.rootColumnsNode endpoints] enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
         
-        maxWidth += [node maxWidthOrValue:1];
+        NSInteger value = [node maxWidthOrValue:emptyDataColumnWidth];
+        maxWidth += value;
     }];
     
     NSInteger width = rowNodesDepth + maxWidth;

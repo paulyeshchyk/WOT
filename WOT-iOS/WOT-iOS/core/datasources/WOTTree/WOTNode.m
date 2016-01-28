@@ -72,6 +72,19 @@
     return [self.childList array];
 }
 
+- (NSString *)fullName {
+    
+    if (self.parent == nil) {
+        
+        return self.name;
+    } else {
+        
+        NSString *parentFullName = self.parent.fullName;
+        return [NSString stringWithFormat:@"%@.%@",parentFullName,self.name];
+    }
+    
+}
+
 - (void)addChild:(WOTNode *)child {
     
     if (!self.childList) {
