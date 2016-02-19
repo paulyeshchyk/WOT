@@ -14,7 +14,6 @@
 #import "WOTTankConfigurationCollectionViewCell.h"
 #import "WOTTankConfigurationFlowLayout.h"
 #import "WOTTankConfigurationItemViewController.h"
-#import "WYPopoverController.h"
 
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 
@@ -23,7 +22,6 @@
 @property (nonatomic, strong) WOTTree *tree;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
-@property (nonatomic, strong) WYPopoverController *wypopoverController;
 
 @end
 
@@ -32,10 +30,6 @@
 - (void)dealloc {
     
     self.tree = nil;
-
-    [self.wypopoverController dismissPopoverAnimated:YES];
-    self.wypopoverController.delegate = nil;
-    self.wypopoverController = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -130,24 +124,7 @@
     WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
     itemViewController.moduleTree = moduleTree;
     itemViewController.mapping = [self mappingForModuleType:moduleTree.type];
-    
-    if (self.wypopoverController) {
-        
-        [self.wypopoverController dismissPopoverAnimated:YES];
-        self.wypopoverController.delegate = nil;
-        self.wypopoverController = nil;
-    }
-    
-    self.wypopoverController = [[WYPopoverController alloc] initWithContentViewController:itemViewController];
-    self.wypopoverController.delegate = nil;
-    self.wypopoverController.dismissOnTap = YES;
-    self.wypopoverController.theme.borderWidth = 2;
-    self.wypopoverController.theme.innerCornerRadius = 0;
-    self.wypopoverController.theme.outerCornerRadius = 0;
-    self.wypopoverController.theme.outerStrokeColor = [UIColor lightGrayColor];
-    self.wypopoverController.popoverContentSize = [[[UIApplication sharedApplication] keyWindow] bounds].size;
-    [self.wypopoverController presentPopoverAsDialogAnimated:YES];
-    
+    [self.navigationController pushViewController:itemViewController animated:YES];
 }
 
 

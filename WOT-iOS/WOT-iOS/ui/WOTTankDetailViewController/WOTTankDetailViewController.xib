@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -54,7 +55,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="egp-pz-pfV">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IcS-oY-Fcd">
-                                <rect key="frame" x="107" y="7" width="32" height="32"/>
+                                <rect key="frame" x="58" y="6" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Activity Grid.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -77,7 +78,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="xaa-6b-3Cr"/>
                         <barButtonItem style="plain" id="NSc-f4-9c1">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q0P-Ps-aQb">
-                                <rect key="frame" x="56" y="7" width="32" height="32"/>
+                                <rect key="frame" x="146" y="6" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Bulletproof Vest Gray.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -96,7 +97,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="IpZ-YT-6ch">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kLG-m5-WFI">
-                                <rect key="frame" x="128" y="5" width="32" height="34"/>
+                                <rect key="frame" x="188" y="5" width="32" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Speedometer Gray.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -115,7 +116,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="u1u-yw-1aB">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YXa-BJ-uR7">
-                                <rect key="frame" x="200" y="7" width="32" height="32"/>
+                                <rect key="frame" x="230" y="6" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Opera Glasses Gray.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -129,7 +130,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="MEH-c7-jnc">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KgP-Cg-dUK">
-                                <rect key="frame" x="274" y="5" width="32" height="34"/>
+                                <rect key="frame" x="272" y="5" width="32" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Firing Gun Gray.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -193,7 +194,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" id="Ke1-vf-w0Y">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HUu-rp-fCE">
-                                <rect key="frame" x="84" y="5" width="32" height="34"/>
+                                <rect key="frame" x="58" y="5" width="32" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Hourglass Sand Top Gray.png">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -213,7 +214,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="wWO-rK-xYr"/>
                         <barButtonItem style="plain" id="ItU-e0-LNE">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dM2-fK-m1I">
-                                <rect key="frame" x="240" y="7" width="65" height="30"/>
+                                <rect key="frame" x="239" y="7" width="65" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Custom">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -267,9 +268,4 @@
         <image name="Speedometer Gray.png" width="32" height="32"/>
         <image name="Speedometer Yellow.png" width="32" height="32"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

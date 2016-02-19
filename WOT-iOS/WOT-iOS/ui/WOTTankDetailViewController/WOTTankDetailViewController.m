@@ -420,16 +420,16 @@
     
     WOTTankModuleTreeViewController *configurationSelector = [[WOTTankModuleTreeViewController alloc] initWithNibName:NSStringFromClass([WOTTankModuleTreeViewController class]) bundle:nil];
     [configurationSelector setCancelBlock:^(){
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     [configurationSelector setDoneBlock:^(id configuration){
         
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     configurationSelector.tankId = self.tankId;
-    
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:configurationSelector];
-    [self presentViewController:navController animated:YES completion:NULL];
+
+    [self.navigationController pushViewController:configurationSelector animated:YES];
 }
 
 - (IBAction)onConfigurationTopSelection:(id)sender {
