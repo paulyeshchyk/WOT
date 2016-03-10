@@ -135,7 +135,7 @@
         
         if (_metricOptions == WOTTankMetricOptionsNone) {
             
-            _metricOptions = WOTTankMetricOptionsArmo;
+            _metricOptions = WOTTankMetricOptionsArmor;
         } else {
             
             //do nothing; leave as is
@@ -145,10 +145,10 @@
         _metricOptions = metricOptions;
     }
     
-    self.propertyArmorButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsArmo];
-    self.propertyObserveButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsObse];
+    self.propertyArmorButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsArmor];
+    self.propertyObserveButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsObserve];
     self.propertyFireButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsFire];
-    self.propertyMobilityButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsMobi];
+    self.propertyMobilityButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsMobility];
     [self updateUINeedReset:YES];
 }
 
@@ -463,7 +463,7 @@
 
 - (IBAction)onPropertyArmorSelection:(id)sender {
     
-    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsArmo];
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsArmor];
 }
 
 - (IBAction)onPropertyFireSelection:(id)sender {
@@ -473,12 +473,12 @@
 
 - (IBAction)onPropertyMobilitySelection:(id)sender {
 
-    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsMobi];
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsMobility];
 }
 
 - (IBAction)onPropertyObserveSelection:(id)sender {
     
-    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsObse];
+    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsObserve];
 }
 
 #pragma mark - WOTRadarViewControllerDelegate

@@ -38,4 +38,9 @@
     return [NSPredicate predicateWithFormat:@"SUBQUERY(vehicles.tier, $m, ANY $m.tier IN %@).@count > 0",tiers];
 }
 
+- (NSPredicate *)predicateForAnyObject:(NSArray *)objects {
+    
+    return [NSPredicate predicateWithFormat:@"SUBQUERY(vehicles.tank_id, $m, ANY $m.tank_id IN %@).@count > 0",objects];
+}
+
 @end

@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "WOTTankMetricProtocol.h"
+#import "WOTTankMetricOptions.h"
+
 
 @interface WOTMetric : NSObject <WOTTankMetricProtocol>
+
++ (BOOL)options:(WOTTankMetricOptions)sourceOption includesOption:(WOTTankMetricOptions)option;
++ (WOTTankMetricOptions)options:(WOTTankMetricOptions)options invertOption:(WOTTankMetricOptions)option ;
 
 - (id)initWithMetricName:(NSString *)ametricName grouppingName:(NSString *)agrouppingName evaluator:(WOTTankMetricEvaluator)aevaluator;
 

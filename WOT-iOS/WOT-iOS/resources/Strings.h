@@ -92,6 +92,7 @@
 #define WOT_STRING_ARMOR @"armor"
 #define WOT_STRING_OBSERVE @"observe"
 #define WOT_STRING_FIRE @"fire"
+#define WOT_STRING_MOBI @"mobi"
 
 
 #define WOT_STRING_NATION_USA @"usa"

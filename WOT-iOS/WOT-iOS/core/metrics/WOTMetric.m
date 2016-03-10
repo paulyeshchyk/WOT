@@ -17,8 +17,23 @@
 
 @end
 
-
 @implementation WOTMetric
+
++ (BOOL)options:(WOTTankMetricOptions)sourceOption includesOption:(WOTTankMetricOptions)option {
+    
+    return ((sourceOption & option) == option);
+}
+
++ (WOTTankMetricOptions)options:(WOTTankMetricOptions)options invertOption:(WOTTankMetricOptions)option {
+    
+    if ([WOTMetric options:options includesOption:option]) {
+        
+        return options &= ~option;
+    } else {
+        
+        return options |= option;
+    }
+}
 
 - (id)initWithMetricName:(NSString *)ametricName grouppingName:(NSString *)agrouppingName evaluator:(WOTTankMetricEvaluator)aevaluator{
     

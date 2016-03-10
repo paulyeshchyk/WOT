@@ -85,7 +85,7 @@
     
 }
 
-- (void)addChild:(WOTNode *)child {
+- (void)addChild:(WOTNode * _Nonnull)child {
     
     if (!self.childList) {
         

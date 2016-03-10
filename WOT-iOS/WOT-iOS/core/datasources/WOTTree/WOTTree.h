@@ -27,4 +27,6 @@ typedef NSComparisonResult(^WOTNodeComparator)(WOTNode *left, WOTNode *right);
 - (void)reindex;
 - (void)removeAllNodes;
 
+- (WOTNode *)findOrCreateRootNodeByPredicate:(NSPredicate *)predicate;
+
 @end

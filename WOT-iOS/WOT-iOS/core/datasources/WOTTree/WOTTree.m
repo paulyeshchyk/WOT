@@ -139,4 +139,22 @@
     return result;
 }
 
+- (WOTNode *)findOrCreateRootNodeByPredicate:(NSPredicate *)predicate {
+    
+    WOTNode *rootNode = nil;
+
+    NSSet *roots = [self.rootNodes filteredSetUsingPredicate:predicate];
+    if ([roots count]  == 0) {
+        
+        rootNode = [[WOTNode alloc] init];
+        [self addNode:rootNode];
+    } else {
+        
+        rootNode = [roots anyObject];
+    }
+    
+    return rootNode;
+}
+
+
 @end

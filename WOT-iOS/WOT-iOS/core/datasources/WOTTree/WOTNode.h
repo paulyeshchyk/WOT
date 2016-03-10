@@ -10,7 +10,7 @@
 
 @class WOTNode;
 
-typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode *node);
+typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode * node);
 
 @interface WOTNode : NSObject <NSCopying>
 

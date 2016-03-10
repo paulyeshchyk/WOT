@@ -11,9 +11,9 @@
 
 typedef NS_OPTIONS(NSUInteger, WOTTankMetricOptions) {
     WOTTankMetricOptionsNone  = 0,
-    WOTTankMetricOptionsMobi  = 1 << 0,
-    WOTTankMetricOptionsArmo  = 1 << 1,
-    WOTTankMetricOptionsObse  = 1 << 2,
+    WOTTankMetricOptionsMobility  = 1 << 0,
+    WOTTankMetricOptionsArmor  = 1 << 1,
+    WOTTankMetricOptionsObserve  = 1 << 2,
     WOTTankMetricOptionsFire  = 1 << 3
 };
 

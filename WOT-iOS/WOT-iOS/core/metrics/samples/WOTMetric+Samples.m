@@ -8,122 +8,29 @@
 
 #import "WOTMetric+Samples.h"
 #import "WOTCoreDataProvider.h"
+#import "Tankchassis.h"
 #import "Tankengines.h"
 #import "Tankturrets.h"
 #import "WOTTankDetailFieldExpression+Factory.h"
 
 @implementation WOTMetric (Samples)
 
-+ (id<WOTTankMetricProtocol>)circularVisionCompareMetric {
++ (id<WOTTankMetricProtocol>)standardCompareMetricForClass:(Class)clazz byExpression:(WOTTankDetailFieldExpression *)expression withName:(NSString *)name groupName:(NSString *)groupName {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_CIRCULAR_VISION_RADIUS) grouppingName:WOTString(WOT_STRING_OBSERVE)  evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:name grouppingName:groupName evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
         
-        WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression turretsCircularVisionRadiusCompareFieldExpression];
-        NSPredicate *predicate = [expr predicateForAnyObject:allids];
+        NSPredicate *predicate = [expression predicateForAnyObject:allids];
         
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankturrets class])];
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass(clazz)];
         request.predicate = predicate;
-        request.propertiesToFetch = [expr expressionDescriptions];
+        request.propertiesToFetch = [expression expressionDescriptions];
         request.resultType = NSDictionaryResultType;
         NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
         id result = [context executeFetchRequest:request error:&error];
         
-        if ([result count] == 0) {
-            
-            return nil;
-        } else {
-            
-            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
-            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
-
-            return returningValue;
-        }
-    }];
-}
-
-+ (id<WOTTankMetricProtocol>)armorBoardCompareMetric {
-    
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_BOARD) grouppingName:WOTString(WOT_STRING_ARMOR) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
-
-        NSError *error = nil;
-        NSArray *allids = [tankID allObjects];
-        
-        WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression];
-        NSPredicate *predicate = [expr predicateForAnyObject:allids];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankturrets class])];
-        request.predicate = predicate;
-        request.propertiesToFetch = [expr expressionDescriptions];
-        request.resultType = NSDictionaryResultType;
-        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-        id result = [context executeFetchRequest:request error:&error];
-        
-        if ([result count] == 0) {
-            
-            return nil;
-        } else {
-            
-            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
-            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
-            returningValue.maxValue = [[result lastObject][@"max"] floatValue];
-            returningValue.averageValue = [[result lastObject][@"av"] floatValue];
-            return returningValue;
-        }
-    }];
-}
-
-+ (id<WOTTankMetricProtocol>)armorFeddCompareMetric {
-    
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FEDD) grouppingName:WOTString(WOT_STRING_ARMOR)  evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
-        
-        
-        NSError *error = nil;
-        NSArray *allids = [tankID allObjects];
-        
-        WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression];
-        NSPredicate *predicate = [expr predicateForAnyObject:allids];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankturrets class])];
-        request.predicate = predicate;
-        request.propertiesToFetch = [expr expressionDescriptions];
-        request.resultType = NSDictionaryResultType;
-        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-        id result = [context executeFetchRequest:request error:&error];
-        
-        if ([result count] == 0) {
-            
-            return nil;
-        } else {
-            
-            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
-            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
-            returningValue.maxValue = [[result lastObject][@"max"] floatValue];
-            returningValue.averageValue = [[result lastObject][@"av"] floatValue];
-            return returningValue;
-        }
-    }];
-}
-
-+ (id<WOTTankMetricProtocol>)armorForeheadCompareMetric {
-    
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FOREHEAD) grouppingName:WOTString(WOT_STRING_ARMOR)  evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
-        
-        
-        NSError *error = nil;
-        NSArray *allids = [tankID allObjects];
-        
-        WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression turretsArmorForeheadCompareFieldExpression];
-        NSPredicate *predicate = [expr predicateForAnyObject:allids];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankturrets class])];
-        request.predicate = predicate;
-        request.propertiesToFetch = [expr expressionDescriptions];
-        request.resultType = NSDictionaryResultType;
-        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-        id result = [context executeFetchRequest:request error:&error];
         if ([result count] == 0) {
             
             return NULL;
@@ -136,77 +43,79 @@
             return returningValue;
         }
     }];
+}
+
++ (id<WOTTankMetricProtocol>)suspensionRotationSpeedCompareMetric {
+    
+    return [self standardCompareMetricForClass:[Tankchassis class]
+                                  byExpression:[WOTTankDetailFieldExpression suspensionRotationSpeedCompareFieldExpression]
+                                      withName:WOTString(WOT_KEY_ROTATION_SPEED)
+                                     groupName:WOTString(WOT_STRING_MOBI)];
 }
 
 + (id<WOTTankMetricProtocol>)fireStartingChanceCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_FIRE_STARTING_CHANCE) grouppingName:WOTString(WOT_STRING_FIRE) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
-        
-        NSError *error = nil;
-        NSArray *allids = [tankID allObjects];
-        
-        WOTTankDetailFieldExpression *expr = [WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression];
-        NSPredicate *predicate = [expr predicateForAnyObject:allids];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tankengines class])];
-        request.predicate = predicate;
-        request.propertiesToFetch = [expr expressionDescriptions];
-        request.resultType = NSDictionaryResultType;
-        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-        id result = [context executeFetchRequest:request error:&error];
-        
-        if ([result count] == 0) {
-            
-            return NULL;
-        } else {
-            
-            WOTTankEvalutionResult *returningValue = [[WOTTankEvalutionResult alloc] init];
-            returningValue.thisValue = [[result lastObject][@"this"] floatValue];
-            returningValue.maxValue = [[result lastObject][@"max"] floatValue];
-            returningValue.averageValue = [[result lastObject][@"av"] floatValue];
-            return returningValue;
-        }
-    }];
+    return [self standardCompareMetricForClass:[Tankengines class]
+                                  byExpression:[WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression]
+                                      withName:WOTString(WOT_KEY_FIRE_STARTING_CHANCE)
+                                     groupName:WOTString(WOT_STRING_MOBI)];
 }
 
++ (id<WOTTankMetricProtocol>)circularVisionCompareMetric {
+    
+    return [self standardCompareMetricForClass:[Tankturrets class]
+                                  byExpression:[WOTTankDetailFieldExpression turretsCircularVisionRadiusCompareFieldExpression]
+                                      withName:WOTString(WOT_KEY_CIRCULAR_VISION_RADIUS)
+                                     groupName:WOTString(WOT_STRING_OBSERVE)];
+
+}
+
++ (id<WOTTankMetricProtocol>)armorBoardCompareMetric {
+    
+    return [self standardCompareMetricForClass:[Tankturrets class]
+                                  byExpression:[WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression]
+                                      withName:WOTString(WOT_KEY_ARMOR_BOARD)
+                                     groupName:WOTString(WOT_STRING_ARMOR)];
+}
+
++ (id<WOTTankMetricProtocol>)armorFeddCompareMetric {
+
+    return [self standardCompareMetricForClass:[Tankturrets class]
+                                  byExpression:[WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression]
+                                      withName:WOTString(WOT_KEY_ARMOR_FEDD)
+                                     groupName:WOTString(WOT_STRING_ARMOR)];
+}
+
++ (id<WOTTankMetricProtocol>)armorForeheadCompareMetric {
+    
+    
+    return [self standardCompareMetricForClass:[Tankturrets class]
+                                  byExpression:[WOTTankDetailFieldExpression turretsArmorForeheadCompareFieldExpression]
+                                      withName:WOTString(WOT_KEY_ARMOR_FOREHEAD)
+                                     groupName:WOTString(WOT_STRING_ARMOR)];
+}
 
 + (NSArray *)metricsForOptions:(WOTTankMetricOptions) option {
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
-    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsArmo]) {
+    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsArmor]) {
         
         [result addObject:[WOTMetric armorBoardCompareMetric]];
         [result addObject:[WOTMetric armorFeddCompareMetric]];
         [result addObject:[WOTMetric armorForeheadCompareMetric]];
     }
     
-    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsFire]) {
+    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsMobility]) {
         
         [result addObject:[WOTMetric fireStartingChanceCompareMetric]];
+        [result addObject:[WOTMetric suspensionRotationSpeedCompareMetric]];
     }
     
-    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsObse]) {
+    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsObserve]) {
         
         [result addObject:[WOTMetric circularVisionCompareMetric]];
     }
     return result;
-}
-
-
-+ (BOOL)options:(WOTTankMetricOptions)sourceOption includesOption:(WOTTankMetricOptions)option {
-    
-    return ((sourceOption & option) == option);
-}
-
-+ (WOTTankMetricOptions)options:(WOTTankMetricOptions)options invertOption:(WOTTankMetricOptions)option {
-    
-    if ([WOTMetric options:options includesOption:option]) {
-        
-        return options &= ~option;
-    } else {
-        
-        return options |= option;
-    }
 }
 
 @end
