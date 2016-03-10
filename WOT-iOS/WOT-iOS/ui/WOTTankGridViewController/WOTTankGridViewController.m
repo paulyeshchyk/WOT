@@ -8,12 +8,13 @@
 
 #import "WOTTankGridViewController.h"
 #import "WOTTankGridCollectionViewCell.h"
+#import "WOTTree.h"
 
 @interface WOTTankGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, strong)NSArray *subitems;
+@property (nonatomic, strong)WOTTree *subitemsTree;
 
 @property (nonatomic, readonly) NSInteger columnsCount;
 
@@ -37,14 +38,14 @@
 
 - (void)reload {
     
-    self.subitems = [self.delegate gridData];
+    self.subitemsTree = [self.delegate gridData];
     
     [self.collectionView reloadData];
 }
 
 - (void)needToBeCleared {
 
-    self.subitems = nil;
+    self.subitemsTree = nil;
 }
 
 - (NSInteger)columnsCount {
@@ -62,16 +63,16 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return [self.subitems count];
+    return [[self.subitemsTree rootNodes] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSDictionary *subitem = self.subitems[indexPath.row];
+    WOTNode *rootNode = [[self.subitemsTree rootNodes] allObjects][indexPath.row];
     
     WOTTankGridCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class]) forIndexPath:indexPath];
-    result.metricName = subitem[@"caption"];
-    result.subitems = subitem[@"children"];
+    result.metricName = rootNode.name;
+    result.subitems = rootNode.children;
     [result reloadCell];
     return result;
 }
@@ -86,9 +87,9 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     NSInteger maxValue = 0;
-    for (id subItem in self.subitems) {
+    for (id rootNode in self.subitemsTree.rootNodes) {
         
-        maxValue = MAX(maxValue, [[subItem valueForKeyPath:@"children.@count"] integerValue]);
+        maxValue = MAX(maxValue, [[rootNode children] count]);
     }
     return [WOTTankGridCollectionViewCell sizeForSubitemsCount:maxValue columnsCount:self.columnsCount];
 }

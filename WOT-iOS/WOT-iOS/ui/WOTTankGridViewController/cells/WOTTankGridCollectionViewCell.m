@@ -8,6 +8,8 @@
 
 #import "WOTTankGridCollectionViewCell.h"
 #import "WOTTankGridCollectionSubitemTableViewCell.h"
+#import "WOTNode+DetailGrid.h"
+#import "WOTTankEvalutionResult.h"
 
 @interface WOTTankGridCollectionViewCell () <UITableViewDataSource, UITableViewDelegate>
 
@@ -70,17 +72,20 @@
 #pragma mark - UITableViewDatasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [[self.subitems allKeys] count];
+    return [self.subitems count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     WOTTankGridCollectionSubitemTableViewCell *result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankGridCollectionSubitemTableViewCell class]) forIndexPath:indexPath];
-    id key = [self.subitems allKeys][indexPath.row];
-    id value = self.subitems[key];
+
+    WOTNode *node = self.subitems[indexPath.row];
+    
+    id key = node.name;
+    WOTTankEvalutionResult *value = node.gridNodeData;
     
     result.captionText = key;
-    result.valueText = value;
+    result.valueText = [NSString stringWithFormat:@"%2.3f",value.thisValue];
     return result;
 }
 #pragma mark - UITableViewDelegate

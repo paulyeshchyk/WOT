@@ -11,7 +11,7 @@
 @interface WOTTankGridCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, copy)NSString *metricName;
-@property (nonatomic, copy)NSDictionary *subitems;
+@property (nonatomic, copy)NSArray *subitems;
 
 
 + (CGSize)sizeForSubitemsCount:(NSInteger)subitemsCount columnsCount:(NSInteger)rowsCount;
