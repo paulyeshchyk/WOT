@@ -16,7 +16,7 @@
 
 + (id<WOTTankMetricProtocol>)circularVisionCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_CIRCULAR_VISION_RADIUS) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_CIRCULAR_VISION_RADIUS) grouppingName:WOTString(WOT_STRING_OBSERVE)  evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
@@ -46,7 +46,7 @@
 
 + (id<WOTTankMetricProtocol>)armorBoardCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_BOARD) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_BOARD) grouppingName:WOTString(WOT_STRING_ARMOR) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
 
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
@@ -77,7 +77,7 @@
 
 + (id<WOTTankMetricProtocol>)armorFeddCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FEDD) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FEDD) grouppingName:WOTString(WOT_STRING_ARMOR)  evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         
         NSError *error = nil;
@@ -109,7 +109,7 @@
 
 + (id<WOTTankMetricProtocol>)armorForeheadCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FOREHEAD) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_ARMOR_FOREHEAD) grouppingName:WOTString(WOT_STRING_ARMOR)  evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         
         NSError *error = nil;
@@ -140,7 +140,7 @@
 
 + (id<WOTTankMetricProtocol>)fireStartingChanceCompareMetric {
     
-    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_FIRE_STARTING_CHANCE) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
+    return [[WOTMetric alloc] initWithMetricName:WOTString(WOT_KEY_FIRE_STARTING_CHANCE) grouppingName:WOTString(WOT_STRING_FIRE) evaluator:^WOTTankEvalutionResult*(WOTTanksIDList *tankID) {
         
         NSError *error = nil;
         NSArray *allids = [tankID allObjects];
@@ -170,22 +170,22 @@
 }
 
 
-+ (NSArray *)metricsForOption:(WOTTankMetricOptions) option {
++ (NSArray *)metricsForOptions:(WOTTankMetricOptions) option {
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
-    if ([WOTMetric options:option includesOption:WOTTankMetricOptionArmor]) {
+    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsArmo]) {
         
         [result addObject:[WOTMetric armorBoardCompareMetric]];
         [result addObject:[WOTMetric armorFeddCompareMetric]];
         [result addObject:[WOTMetric armorForeheadCompareMetric]];
     }
     
-    if ([WOTMetric options:option includesOption:WOTTankDetailPropertySelectionFire]) {
+    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsFire]) {
         
         [result addObject:[WOTMetric fireStartingChanceCompareMetric]];
     }
     
-    if ([WOTMetric options:option includesOption:WOTTankDetailPropertySelectionObserve]) {
+    if ([WOTMetric options:option includesOption:WOTTankMetricOptionsObse]) {
         
         [result addObject:[WOTMetric circularVisionCompareMetric]];
     }

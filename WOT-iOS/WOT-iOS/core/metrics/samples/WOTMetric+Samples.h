@@ -17,7 +17,7 @@
 + (id<WOTTankMetricProtocol>)armorForeheadCompareMetric;
 + (id<WOTTankMetricProtocol>)fireStartingChanceCompareMetric;
 
-+ (NSArray *)metricsForOption:(WOTTankMetricOptions) option;
++ (NSArray *)metricsForOptions:(WOTTankMetricOptions) option;
 + (BOOL)options:(WOTTankMetricOptions)sourceOption includesOption:(WOTTankMetricOptions)option;
 + (WOTTankMetricOptions)options:(WOTTankMetricOptions)options invertOption:(WOTTankMetricOptions)option ;
 @end

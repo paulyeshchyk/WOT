@@ -57,6 +57,16 @@
     self.metricNameLabel.text = _metricName;
 }
 
+- (void)setSubitems:(NSDictionary *)subitems {
+    
+    _subitems = [subitems copy];
+}
+
+- (void)reloadCell {
+    
+    [self.subitemsTableView reloadData];
+}
+
 #pragma mark - UITableViewDatasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     

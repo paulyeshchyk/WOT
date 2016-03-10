@@ -50,6 +50,8 @@
 		1D047B691B331DF000B5B696 /* WOTApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */; };
 		1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D047BB91B34095500B5B696 /* WOT_iOS.xcdatamodeld */; };
 		1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047BBD1B3419C000B5B696 /* WOTWebResponseLink.m */; };
+		1D0F55011C91677600272B05 /* WOTTankMetricsList+ChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */; };
+		1D0F55041C9169BF00272B05 /* WOTTankMetricsList+GridData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F55031C9169BF00272B05 /* WOTTankMetricsList+GridData.m */; };
 		1D188FE11B9437460056D208 /* PivotTreeTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D188FE01B9437460056D208 /* PivotTreeTestCase.m */; };
 		1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */; };
 		1D1E26F41BA17D2900E5F220 /* ModulesTree+CustomName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1E26F31BA17D2900E5F220 /* ModulesTree+CustomName.m */; };
@@ -429,6 +431,10 @@
 		1D047BBA1B34095500B5B696 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
 		1D047BBC1B3419C000B5B696 /* WOTWebResponseLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseLink.h; sourceTree = "<group>"; };
 		1D047BBD1B3419C000B5B696 /* WOTWebResponseLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWebResponseLink.m; sourceTree = "<group>"; };
+		1D0F54FF1C91677600272B05 /* WOTTankMetricsList+ChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankMetricsList+ChartData.h"; sourceTree = "<group>"; };
+		1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankMetricsList+ChartData.m"; sourceTree = "<group>"; };
+		1D0F55021C9169BF00272B05 /* WOTTankMetricsList+GridData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankMetricsList+GridData.h"; sourceTree = "<group>"; };
+		1D0F55031C9169BF00272B05 /* WOTTankMetricsList+GridData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankMetricsList+GridData.m"; sourceTree = "<group>"; };
 		1D188FE01B9437460056D208 /* PivotTreeTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PivotTreeTestCase.m; sourceTree = "<group>"; };
 		1D1E26EF1BA155F200E5F220 /* WOTApplicationStartupRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTApplicationStartupRequests.h; sourceTree = "<group>"; };
 		1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTApplicationStartupRequests.m; sourceTree = "<group>"; };
@@ -2079,6 +2085,10 @@
 				1DD46B6E1BA6DC4100D3B3CE /* WOTTankMetricsList.m */,
 				1DD46B6F1BA6DC4100D3B3CE /* WOTTanksIDList.h */,
 				1DD46B701BA6DC4100D3B3CE /* WOTTanksIDList.m */,
+				1D0F54FF1C91677600272B05 /* WOTTankMetricsList+ChartData.h */,
+				1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */,
+				1D0F55021C9169BF00272B05 /* WOTTankMetricsList+GridData.h */,
+				1D0F55031C9169BF00272B05 /* WOTTankMetricsList+GridData.m */,
 			);
 			path = metrics;
 			sourceTree = "<group>";
@@ -2966,6 +2976,7 @@
 				1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */,
 				1D5A8E401B43F34700A8261E /* WOTCoreDataPredicates.m in Sources */,
 				1D010D3B1B7DFF1100FA6A75 /* WOTTankConfigurationModuleMapping.m in Sources */,
+				1D0F55011C91677600272B05 /* WOTTankMetricsList+ChartData.m in Sources */,
 				1DD46B941BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				1D2143B51BA00B37001A7DEE /* Tankturrets.m in Sources */,
 				1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */,
@@ -3105,6 +3116,7 @@
 				1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */,
 				1D2143BC1BA00B37001A7DEE /* VehicleprofileArmor.m in Sources */,
 				1D672B061B57A6E800617E5C /* WOTNode+ModuleTree.m in Sources */,
+				1D0F55041C9169BF00272B05 /* WOTTankMetricsList+GridData.m in Sources */,
 				1D010D731B84794000FA6A75 /* WOTNode+Enumeration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

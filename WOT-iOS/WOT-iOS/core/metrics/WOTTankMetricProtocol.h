@@ -14,9 +14,8 @@ typedef WOTTankEvalutionResult*(^WOTTankMetricEvaluator)(WOTTanksIDList *tankID)
 
 @protocol WOTTankMetricProtocol <NSObject>
 
-@property (nonatomic, readonly)NSString *metricName;
-@property (nonatomic, readonly)WOTTankMetricEvaluator evaluator;
-
-
+@property (nonatomic, readonly) NSString *metricName;
+@property (nonatomic, readonly) NSString *grouppingName;
+@property (nonatomic, readonly) WOTTankMetricEvaluator evaluator;
 
 @end

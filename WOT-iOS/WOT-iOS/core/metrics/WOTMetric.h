@@ -11,6 +11,6 @@
 
 @interface WOTMetric : NSObject <WOTTankMetricProtocol>
 
-- (id)initWithMetricName:(NSString *)metricName evaluator:(WOTTankMetricEvaluator)evaluator;
+- (id)initWithMetricName:(NSString *)ametricName grouppingName:(NSString *)agrouppingName evaluator:(WOTTankMetricEvaluator)aevaluator;
 
 @end

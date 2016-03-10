@@ -13,19 +13,21 @@
 
 @property (nonatomic, readwrite, strong)NSString *metricName;
 @property (nonatomic, readwrite, strong)WOTTankMetricEvaluator evaluator;
+@property (nonatomic, readwrite, strong)NSString *grouppingName;
 
 @end
 
 
 @implementation WOTMetric
 
-- (id)initWithMetricName:(NSString *)ametricName evaluator:(WOTTankMetricEvaluator)aevaluator {
+- (id)initWithMetricName:(NSString *)ametricName grouppingName:(NSString *)agrouppingName evaluator:(WOTTankMetricEvaluator)aevaluator{
     
     self = [super init];
     if (self){
         
         self.metricName = ametricName;
         self.evaluator = aevaluator;
+        self.grouppingName = agrouppingName;
     }
     return self;
 }

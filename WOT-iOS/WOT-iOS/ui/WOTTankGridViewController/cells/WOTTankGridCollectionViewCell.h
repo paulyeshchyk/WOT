@@ -15,5 +15,6 @@
 
 
 + (CGSize)sizeForSubitemsCount:(NSInteger)subitemsCount columnsCount:(NSInteger)rowsCount;
+- (void)reloadCell;
 
 @end

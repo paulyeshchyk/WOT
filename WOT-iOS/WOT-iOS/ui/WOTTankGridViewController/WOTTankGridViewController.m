@@ -27,18 +27,18 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChanged:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankGridCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class])];
 }
 
-#warning crash  occurs after third time ui changed
 - (void)reload {
     
     self.subitems = [self.delegate gridData];
+    
     [self.collectionView reloadData];
 }
 
@@ -65,7 +65,6 @@
     return [self.subitems count];
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     NSDictionary *subitem = self.subitems[indexPath.row];
@@ -73,11 +72,13 @@
     WOTTankGridCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class]) forIndexPath:indexPath];
     result.metricName = subitem[@"caption"];
     result.subitems = subitem[@"children"];
+    [result reloadCell];
     return result;
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
 }
 

@@ -13,7 +13,8 @@
 
 @interface WOTTankMetricsList : NSObject
 
-@property (nonatomic, readonly)RadarChartData *chartData;
+#warning should be readonly
+@property (nonatomic, strong)NSMutableSet *tankIDs;
 
 - (void)addMetric:(id<WOTTankMetricProtocol>)metric;
 - (void)removeMetric:(id<WOTTankMetricProtocol>)metric;
@@ -22,5 +23,7 @@
 
 - (void)addTankID:(WOTTanksIDList *)tankID;
 - (void)removeTankID:(WOTTanksIDList *)tankID;
+
+- (NSArray *)sortedMetrics;
 
 @end

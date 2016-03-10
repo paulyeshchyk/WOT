@@ -89,6 +89,11 @@
 #define WOT_KEY_NEXT_MODULES @"next_modules"
 #define WOT_KEY_NEXT_TANKS @"next_tanks"
 
+#define WOT_STRING_ARMOR @"armor"
+#define WOT_STRING_OBSERVE @"observe"
+#define WOT_STRING_FIRE @"fire"
+
+
 #define WOT_STRING_NATION_USA @"usa"
 #define WOT_STRING_NATION_USSR @"ussr"
 #define WOT_STRING_NATION_UK @"uk"

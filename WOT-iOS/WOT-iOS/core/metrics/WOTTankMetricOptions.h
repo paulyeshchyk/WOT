@@ -10,11 +10,11 @@
 #define WOT_iOS_WOTTankMetricOptions_h
 
 typedef NS_OPTIONS(NSUInteger, WOTTankMetricOptions) {
-    WOTTankMetricOptionNone      = 0,
-    WOTTankDetailPropertySelectionMobility  = 1 << 0,
-    WOTTankMetricOptionArmor     = 1 << 1,
-    WOTTankDetailPropertySelectionObserve   = 1 << 2,
-    WOTTankDetailPropertySelectionFire      = 1 << 3
+    WOTTankMetricOptionsNone  = 0,
+    WOTTankMetricOptionsMobi  = 1 << 0,
+    WOTTankMetricOptionsArmo  = 1 << 1,
+    WOTTankMetricOptionsObse  = 1 << 2,
+    WOTTankMetricOptionsFire  = 1 << 3
 };
 
 typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {

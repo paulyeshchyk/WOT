@@ -11,10 +11,7 @@
 
 @interface WOTTankMetricsList ()
 
-@property (nonatomic, readonly)NSArray *datasets;
-@property (nonatomic, readonly)NSArray *xVals;
 @property (nonatomic, strong)NSMutableSet *metrics;
-@property (nonatomic, strong)NSMutableSet *tankIDs;
 
 @end
 
@@ -37,13 +34,11 @@
     }
     
     [self.metrics addObject:metric];
-    
 }
 
 - (void)removeMetric:(id<WOTTankMetricProtocol>)metric {
     
     [self.metrics removeObject:metric];
-    
 }
 
 - (void)addTankID:(WOTTanksIDList *)tankID {
@@ -61,56 +56,6 @@
     [self.tankIDs removeObject:tankID];
 }
 
-- (NSArray *)datasets {
-    
-    __block NSMutableArray *result = nil;
-    
-    __block NSInteger index = 0;
-    [self.tankIDs enumerateObjectsUsingBlock:^(WOTTanksIDList *tankIDList, BOOL *stop) {
-       
-        RadarChartDataSet *dataset = [self datasetForTanksIDList:tankIDList atIndex:index];
-        if (dataset){
-            
-            if (!result) {
-                
-                result = [[NSMutableArray alloc] init];
-            }
-            [result addObject:dataset];
-        }
-        index++;
-    }];
-    
-    return result;
-}
-
-
-- (NSArray *)xVals {
-
-    NSArray *sortedMetrics = [self sortedMetrics];
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    [sortedMetrics enumerateObjectsUsingBlock:^(id<WOTTankMetricProtocol> obj, NSUInteger idx, BOOL *stop) {
-        
-        [result addObject:obj.metricName];
-    }];
-    return result;
-}
-
-- (RadarChartDataSet *)datasetForTanksIDList:(WOTTanksIDList *)tankIDList atIndex:(NSInteger)index {
-    
-    NSArray *yVals = [self yValsForTanksIDList:tankIDList];
-    if (!yVals) {
-        
-        return nil;
-    } else {
-        
-        RadarChartDataSet *result = [[RadarChartDataSet alloc] initWithYVals:yVals label:tankIDList.label];
-        [result setColor:ChartColorTemplates.vordiplom[index]];
-        result.drawFilledEnabled = YES;
-        result.lineWidth = 0.75;//2.0;
-        return result;
-    }
-}
-
 - (NSArray *)sortedMetrics {
     
     NSArray *sortedArray = [[self.metrics allObjects] sortedArrayUsingComparator:^NSComparisonResult(id<WOTTankMetricProtocol> obj1, id<WOTTankMetricProtocol> obj2) {
@@ -120,44 +65,5 @@
     return sortedArray;
 }
 
-- (NSArray *)yValsForTanksIDList:(WOTTanksIDList *)tankIDList {
-    
-    __block NSMutableArray *result = nil;
-    __block NSInteger index = 0;
-    
-    NSArray *sortedMetrics = [self sortedMetrics];
-    [sortedMetrics enumerateObjectsUsingBlock:^(id<WOTTankMetricProtocol> metric, NSUInteger idx, BOOL *stop) {
-        
-        WOTTankEvalutionResult *value;
-        if (metric.evaluator) {
-            
-            value = metric.evaluator(tankIDList);
-        }
-        
-        if (value != NULL) {
-            
-            if (!result) {
-                
-                result = [[NSMutableArray alloc] init];
-            }
-            
-            [result addObject:[[ChartDataEntry alloc] initWithValue:value.thisValue xIndex:index]];
-//            [result addObject:[[ChartDataEntry alloc] initWithValue:value.maxValue xIndex:index]];
-//            [result addObject:[[ChartDataEntry alloc] initWithValue:value.averageValue xIndex:index]];
-            index++;
-        }
-        
-        
-    }];
-    return result;
-}
-
-- (RadarChartData *)chartData {
-
-    RadarChartData *result =  [[RadarChartData alloc] initWithXVals:self.xVals dataSets:self.datasets];
-    [result setValueFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:8.f]];
-    [result setDrawValues:NO];
-    return result;
-}
 
 @end
