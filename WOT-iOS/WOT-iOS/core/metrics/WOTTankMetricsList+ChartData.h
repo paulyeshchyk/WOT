@@ -7,13 +7,13 @@
 //
 
 #import "WOTTankMetricsList.h"
-#import "WOT_iOS-Swift.h"
+//#import "WOT_iOS-Swift.h"
 
 @interface WOTTankMetricsList (ChartData)
 
 @property (nonatomic, readonly)NSArray *datasets;
 @property (nonatomic, readonly)NSArray *xVals;
-@property (nonatomic, readonly)RadarChartData *chartData;
+//@property (nonatomic, readonly)RadarChartData *chartData;
 
 
 @end

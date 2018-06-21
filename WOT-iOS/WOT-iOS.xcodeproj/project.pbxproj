@@ -261,7 +261,6 @@
 		1DCC7F3C1B2EF604005FF193 /* mediumTank.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F371B2EF604005FF193 /* mediumTank.png */; };
 		1DCC7F3D1B2EF604005FF193 /* AT-SPG.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F381B2EF604005FF193 /* AT-SPG.png */; };
 		1DCC7F4D1B2F0619005FF193 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC7F4C1B2F0619005FF193 /* UIView+StretchingConstraints.m */; };
-		1DCC80DB1B306227005FF193 /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80D71B306227005FF193 /* BalloonMarker.swift */; };
 		1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80D91B306227005FF193 /* WOTRadarViewController.m */; };
 		1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */; };
 		1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC81221B32B83B005FF193 /* UIImage+Resize.m */; };
@@ -286,7 +285,6 @@
 		1DD46B461BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B441BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.m */; };
 		1DD46B471BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B451BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib */; };
 		1DD46B711BA6DC4100D3B3CE /* WOTMetric+Samples.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B641BA6DC4100D3B3CE /* WOTMetric+Samples.m */; };
-		1DD46B721BA6DC4100D3B3CE /* WOTRadarSampleMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B661BA6DC4100D3B3CE /* WOTRadarSampleMetric.m */; };
 		1DD46B731BA6DC4100D3B3CE /* WOTMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B681BA6DC4100D3B3CE /* WOTMetric.m */; };
 		1DD46B741BA6DC4100D3B3CE /* WOTTankEvalutionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B6A1BA6DC4100D3B3CE /* WOTTankEvalutionResult.m */; };
 		1DD46B751BA6DC4100D3B3CE /* WOTTankMetricsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B6E1BA6DC4100D3B3CE /* WOTTankMetricsList.m */; };
@@ -353,6 +351,7 @@
 		1DF73EB71B9047BA00AE6F86 /* NSSet+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EB61B9047BA00AE6F86 /* NSSet+WOT.m */; };
 		1DF73EBB1B90534300AE6F86 /* NSMutableDictionary+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EBA1B90534300AE6F86 /* NSMutableDictionary+WOT.m */; };
 		1DF73EBE1B90563300AE6F86 /* NSMutableArray+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EBD1B90563300AE6F86 /* NSMutableArray+WOT.m */; };
+		A9223E19C68BF3C0D78A8841 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C7B417D652B7D05F30860 /* Pods_WOT_iOS.framework */; };
 		DA522D281B6637630087D684 /* Search Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D221B6637630087D684 /* Search Gray.png */; };
 		DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D231B6637630087D684 /* Search Gray@2x.png */; };
 		DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D241B6637630087D684 /* Search Gray@3x.png */; };
@@ -770,7 +769,6 @@
 		1DCC7F381B2EF604005FF193 /* AT-SPG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AT-SPG.png"; sourceTree = "<group>"; };
 		1DCC7F4B1B2F0619005FF193 /* UIView+StretchingConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+StretchingConstraints.h"; sourceTree = "<group>"; };
 		1DCC7F4C1B2F0619005FF193 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
-		1DCC80D71B306227005FF193 /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		1DCC80D81B306227005FF193 /* WOTRadarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadarViewController.h; sourceTree = "<group>"; };
 		1DCC80D91B306227005FF193 /* WOTRadarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRadarViewController.m; sourceTree = "<group>"; };
 		1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTRadarViewController.xib; sourceTree = "<group>"; };
@@ -803,8 +801,6 @@
 		1DD46B451BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankGridCollectionSubitemTableViewCell.xib; sourceTree = "<group>"; };
 		1DD46B631BA6DC4100D3B3CE /* WOTMetric+Samples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTMetric+Samples.h"; sourceTree = "<group>"; };
 		1DD46B641BA6DC4100D3B3CE /* WOTMetric+Samples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTMetric+Samples.m"; sourceTree = "<group>"; };
-		1DD46B651BA6DC4100D3B3CE /* WOTRadarSampleMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadarSampleMetric.h; sourceTree = "<group>"; };
-		1DD46B661BA6DC4100D3B3CE /* WOTRadarSampleMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRadarSampleMetric.m; sourceTree = "<group>"; };
 		1DD46B671BA6DC4100D3B3CE /* WOTMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMetric.h; sourceTree = "<group>"; };
 		1DD46B681BA6DC4100D3B3CE /* WOTMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMetric.m; sourceTree = "<group>"; };
 		1DD46B691BA6DC4100D3B3CE /* WOTTankEvalutionResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankEvalutionResult.h; sourceTree = "<group>"; };
@@ -923,6 +919,9 @@
 		1DF73EBA1B90534300AE6F86 /* NSMutableDictionary+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+WOT.m"; sourceTree = "<group>"; };
 		1DF73EBC1B90563300AE6F86 /* NSMutableArray+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WOT.h"; sourceTree = "<group>"; };
 		1DF73EBD1B90563300AE6F86 /* NSMutableArray+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WOT.m"; sourceTree = "<group>"; };
+		393C6FFE4E3B2D9B28E2A4C8 /* Pods-WOT-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		99CC6180C70935140649AC52 /* Pods-WOT-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		B25C7B417D652B7D05F30860 /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA522D221B6637630087D684 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
 		DA522D231B6637630087D684 /* Search Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@2x.png"; sourceTree = "<group>"; };
 		DA522D241B6637630087D684 /* Search Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@3x.png"; sourceTree = "<group>"; };
@@ -945,6 +944,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9223E19C68BF3C0D78A8841 /* Pods_WOT_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2037,7 +2037,6 @@
 		1DCC80D61B306227005FF193 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				1DCC80D71B306227005FF193 /* BalloonMarker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -2112,8 +2111,6 @@
 			children = (
 				1DD46B631BA6DC4100D3B3CE /* WOTMetric+Samples.h */,
 				1DD46B641BA6DC4100D3B3CE /* WOTMetric+Samples.m */,
-				1DD46B651BA6DC4100D3B3CE /* WOTRadarSampleMetric.h */,
-				1DD46B661BA6DC4100D3B3CE /* WOTRadarSampleMetric.m */,
 			);
 			path = samples;
 			sourceTree = "<group>";
@@ -2168,6 +2165,7 @@
 				1DD646521B1C616A00B0EC76 /* WOT-iOSTests */,
 				1DD646341B1C616A00B0EC76 /* Products */,
 				73D1069022E23097C59EE24A /* Frameworks */,
+				1E8D578D6C4DB65145A587B4 /* Pods */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
@@ -2587,10 +2585,20 @@
 			path = Pivot;
 			sourceTree = "<group>";
 		};
+		1E8D578D6C4DB65145A587B4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				99CC6180C70935140649AC52 /* Pods-WOT-iOS.debug.xcconfig */,
+				393C6FFE4E3B2D9B28E2A4C8 /* Pods-WOT-iOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		73D1069022E23097C59EE24A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				EB9DC1F0F086677D49391180 /* Pods.framework */,
+				B25C7B417D652B7D05F30860 /* Pods_WOT_iOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2612,10 +2620,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DD646591B1C616A00B0EC76 /* Build configuration list for PBXNativeTarget "WOT-iOS" */;
 			buildPhases = (
+				5D303F42211C100DD79EC818 /* [CP] Check Pods Manifest.lock */,
 				1DD6462F1B1C616A00B0EC76 /* Sources */,
 				1DD646301B1C616A00B0EC76 /* Frameworks */,
 				1DD646311B1C616A00B0EC76 /* Resources */,
 				1D010DE61B8EEA7300FA6A75 /* ShellScript */,
+				CF12C85E440AA4C91C201747 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2656,9 +2666,12 @@
 				TargetAttributes = {
 					1DD646321B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = SM687X2N9M;
+						LastSwiftMigration = 0830;
 					};
 					1DD6464E1B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 0830;
 						TestTargetID = 1DD646321B1C616A00B0EC76;
 					};
 				};
@@ -2870,6 +2883,54 @@
 			shellScript = "";
 			showEnvVarsInLog = 0;
 		};
+		5D303F42211C100DD79EC818 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WOT-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF12C85E440AA4C91C201747 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/ASProgressPopUpView/ASProgressPopUpView.framework",
+				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/MMDrawerController/MMDrawerController.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/WYPopoverController/WYPopoverController.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ASProgressPopUpView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMDrawerController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WYPopoverController.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2913,7 +2974,6 @@
 				1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */,
 				1D047B651B331D8900B5B696 /* WOTMenuItem.m in Sources */,
 				1D2143AE1BA00B37001A7DEE /* ListSetting.m in Sources */,
-				1DD46B721BA6DC4100D3B3CE /* WOTRadarSampleMetric.m in Sources */,
 				1D2143E11BA0214A001A7DEE /* VehicleprofileAmmoPenetration+FillProperties.m in Sources */,
 				1DCC7F4D1B2F0619005FF193 /* UIView+StretchingConstraints.m in Sources */,
 				1D010D331B7DFF1100FA6A75 /* WOTTankConfigurationItemCell.m in Sources */,
@@ -3051,7 +3111,6 @@
 				1D519CF81B4E7BE400D3A286 /* WOTTankDetailSection.m in Sources */,
 				1D2143C31BA00B37001A7DEE /* Vehicles.m in Sources */,
 				1DDEE3741B8EF6C800C90D4B /* WOTPivotTree.m in Sources */,
-				1DCC80DB1B306227005FF193 /* BalloonMarker.swift in Sources */,
 				1D691EF21BA0429B00E1555D /* Vehicleprofile.m in Sources */,
 				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
 				1D047B641B331D8900B5B696 /* WOTMenuDatasource.m in Sources */,
@@ -3130,6 +3189,7 @@
 		1DD646571B1C616A00B0EC76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -3147,6 +3207,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3177,6 +3238,7 @@
 		1DD646581B1C616A00B0EC76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -3194,6 +3256,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3215,31 +3278,37 @@
 		};
 		1DD6465A1B1C616A00B0EC76 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99CC6180C70935140649AC52 /* Pods-WOT-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = SM687X2N9M;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOTPrefixHeader.pch";
 				INFOPLIST_FILE = "WOT-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		1DD6465B1B1C616A00B0EC76 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 393C6FFE4E3B2D9B28E2A4C8 /* Pods-WOT-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = SM687X2N9M;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOTPrefixHeader.pch";
 				INFOPLIST_FILE = "WOT-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -3259,6 +3328,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WOT-iOS.app/WOT-iOS";
 			};
 			name = Debug;
@@ -3275,6 +3345,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WOT-iOS.app/WOT-iOS";
 			};
 			name = Release;

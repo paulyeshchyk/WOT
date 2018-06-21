@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOT_iOS-Swift.h"
+//#import "WOT_iOS-Swift.h"
 
 @protocol WOTRadarViewControllerDelegate <NSObject>
 
-- (RadarChartData *)radarData;
+//- (RadarChartData *)radarData;
 
 @end
 
-typedef RadarChartData *(^WOTRadarDataCallback)();
+//typedef RadarChartData *(^WOTRadarDataCallback)();
 
 @interface WOTRadarViewController : UIViewController
 

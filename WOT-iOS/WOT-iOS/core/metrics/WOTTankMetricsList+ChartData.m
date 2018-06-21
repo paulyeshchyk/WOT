@@ -11,14 +11,14 @@
 @implementation WOTTankMetricsList (ChartData)
 
 
-- (RadarChartData *)chartData {
-    
-    RadarChartData *result =  [[RadarChartData alloc] initWithXVals:self.xVals dataSets:self.datasets];
-    [result setValueFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:8.f]];
-    [result setDrawValues:NO];
-    return result;
-}
-
+//- (RadarChartData *)chartData {
+//
+//    RadarChartData *result =  [[RadarChartData alloc] initWithXVals:self.xVals dataSets:self.datasets];
+//    [result setValueFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:8.f]];
+//    [result setDrawValues:NO];
+//    return result;
+//}
+//
 
 #pragma mark - private
 
@@ -40,36 +40,36 @@
     __block NSInteger index = 0;
     [self.tankIDs enumerateObjectsUsingBlock:^(WOTTanksIDList *tankIDList, BOOL *stop) {
         
-        RadarChartDataSet *dataset = [self datasetForTanksIDList:tankIDList atIndex:index];
-        if (dataset){
-            
-            if (!result) {
-                
-                result = [[NSMutableArray alloc] init];
-            }
-            [result addObject:dataset];
-        }
+//        RadarChartDataSet *dataset = [self datasetForTanksIDList:tankIDList atIndex:index];
+//        if (dataset){
+//
+//            if (!result) {
+//
+//                result = [[NSMutableArray alloc] init];
+//            }
+//            [result addObject:dataset];
+//        }
         index++;
     }];
     
     return result;
 }
 
-- (RadarChartDataSet *)datasetForTanksIDList:(WOTTanksIDList *)tankIDList atIndex:(NSInteger)index {
-    
-    NSArray *yVals = [self yValsForTanksIDList:tankIDList];
-    if (!yVals) {
-        
-        return nil;
-    } else {
-        
-        RadarChartDataSet *result = [[RadarChartDataSet alloc] initWithYVals:yVals label:tankIDList.label];
-        [result setColor:ChartColorTemplates.vordiplom[index]];
-        result.drawFilledEnabled = YES;
-        result.lineWidth = 0.75;//2.0;
-        return result;
-    }
-}
+//- (RadarChartDataSet *)datasetForTanksIDList:(WOTTanksIDList *)tankIDList atIndex:(NSInteger)index {
+//
+//    NSArray *yVals = [self yValsForTanksIDList:tankIDList];
+//    if (!yVals) {
+//
+//        return nil;
+//    } else {
+//
+//        RadarChartDataSet *result = [[RadarChartDataSet alloc] initWithYVals:yVals label:tankIDList.label];
+//        [result setColor:ChartColorTemplates.vordiplom[index]];
+//        result.drawFilledEnabled = YES;
+//        result.lineWidth = 0.75;//2.0;
+//        return result;
+//    }
+//}
 
 - (NSArray *)yValsForTanksIDList:(WOTTanksIDList *)tankIDList {
     
@@ -92,9 +92,9 @@
                 result = [[NSMutableArray alloc] init];
             }
             
-            [result addObject:[[ChartDataEntry alloc] initWithValue:value.thisValue xIndex:index]];
-            //            [result addObject:[[ChartDataEntry alloc] initWithValue:value.maxValue xIndex:index]];
-            //            [result addObject:[[ChartDataEntry alloc] initWithValue:value.averageValue xIndex:index]];
+//            [result addObject:[[ChartDataEntry alloc] initWithValue:value.thisValue xIndex:index]];
+//            //            [result addObject:[[ChartDataEntry alloc] initWithValue:value.maxValue xIndex:index]];
+//            //            [result addObject:[[ChartDataEntry alloc] initWithValue:value.averageValue xIndex:index]];
             index++;
         }
         

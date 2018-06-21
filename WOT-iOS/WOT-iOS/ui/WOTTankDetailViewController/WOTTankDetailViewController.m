@@ -481,15 +481,15 @@
     self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsObserve];
 }
 
-#pragma mark - WOTRadarViewControllerDelegate
-
-- (RadarChartData *)radarData {
-    
-    WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
-    [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];
-    [sample addMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
-    return sample.chartData;
-}
+//#pragma mark - WOTRadarViewControllerDelegate
+//
+//- (RadarChartData *)radarData {
+//    
+//    WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
+//    [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];
+//    [sample addMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
+//    return sample.chartData;
+//}
 
 #pragma mark - WOTGridViewControllerDelegate
 

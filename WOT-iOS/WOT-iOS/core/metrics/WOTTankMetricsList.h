@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WOT_iOS-Swift.h"
+//#import "WOT_iOS-Swift.h"
 #import "WOTTankMetricProtocol.h"
 #import "WOTTanksIDList.h"
 
