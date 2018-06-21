@@ -365,7 +365,6 @@
 		DA522D381B6649020087D684 /* Cancel Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D351B6649020087D684 /* Cancel Gray@2x.png */; };
 		DA522D391B6649020087D684 /* Cancel Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D361B6649020087D684 /* Cancel Gray@3x.png */; };
 		DA720C811B5D0DE9003F3B5A /* ModulesTree+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = DA720C801B5D0DE9003F3B5A /* ModulesTree+UI.m */; };
-		E2990185E840B645BEA2F197 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB9DC1F0F086677D49391180 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -924,8 +923,6 @@
 		1DF73EBA1B90534300AE6F86 /* NSMutableDictionary+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+WOT.m"; sourceTree = "<group>"; };
 		1DF73EBC1B90563300AE6F86 /* NSMutableArray+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WOT.h"; sourceTree = "<group>"; };
 		1DF73EBD1B90563300AE6F86 /* NSMutableArray+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WOT.m"; sourceTree = "<group>"; };
-		75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		95194089742F312E67004937 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DA522D221B6637630087D684 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
 		DA522D231B6637630087D684 /* Search Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@2x.png"; sourceTree = "<group>"; };
 		DA522D241B6637630087D684 /* Search Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@3x.png"; sourceTree = "<group>"; };
@@ -948,7 +945,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2990185E840B645BEA2F197 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2171,7 +2167,6 @@
 				1DD646351B1C616A00B0EC76 /* WOT-iOS */,
 				1DD646521B1C616A00B0EC76 /* WOT-iOSTests */,
 				1DD646341B1C616A00B0EC76 /* Products */,
-				C2B5EBF89E2E0B891FA8396B /* Pods */,
 				73D1069022E23097C59EE24A /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -2600,15 +2595,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C2B5EBF89E2E0B891FA8396B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */,
-				95194089742F312E67004937 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		DA522D2E1B663C070087D684 /* searchBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2626,12 +2612,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DD646591B1C616A00B0EC76 /* Build configuration list for PBXNativeTarget "WOT-iOS" */;
 			buildPhases = (
-				807DC378EC4AAE9D00237336 /* Check Pods Manifest.lock */,
 				1DD6462F1B1C616A00B0EC76 /* Sources */,
 				1DD646301B1C616A00B0EC76 /* Frameworks */,
 				1DD646311B1C616A00B0EC76 /* Resources */,
-				1F505D0B136E134003F88DEE /* Copy Pods Resources */,
-				A60CF0312932EB17B0C5C34C /* Embed Pods Frameworks */,
 				1D010DE61B8EEA7300FA6A75 /* ShellScript */,
 			);
 			buildRules = (
@@ -2885,51 +2868,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "";
-			showEnvVarsInLog = 0;
-		};
-		1F505D0B136E134003F88DEE /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		807DC378EC4AAE9D00237336 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		A60CF0312932EB17B0C5C34C /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3277,7 +3215,6 @@
 		};
 		1DD6465A1B1C616A00B0EC76 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 75FF2BBE578895C2ACD7751E /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -3293,7 +3230,6 @@
 		};
 		1DD6465B1B1C616A00B0EC76 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 95194089742F312E67004937 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
