@@ -103,6 +103,7 @@
 #define WOT_STRING_NATION_CHINA @"china"
 #define WOT_STRING_NATION_FRANCE @"france"
 #define WOT_STRING_NATION_CZECH @"czech"
+#define WOT_STRING_NATION_SWEDEN @"sweden"
 
 
 #define WOT_STRING_AT_SPG @"WOT_STRING_AT_SPG"

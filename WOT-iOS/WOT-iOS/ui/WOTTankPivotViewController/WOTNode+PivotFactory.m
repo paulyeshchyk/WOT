@@ -96,7 +96,8 @@
     [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_UK)      predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_UK]]];
     [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_USA)     predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_USA]]];
     [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_USSR)    predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_USSR]]];
-    
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_SWEDEN)  predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_SWEDEN]]];
+
     return result;
 }
 
