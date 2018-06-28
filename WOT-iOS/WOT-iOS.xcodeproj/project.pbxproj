@@ -141,6 +141,7 @@
 		1D519D5E1B54F20800D3A286 /* NSArray+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D5D1B54F20800D3A286 /* NSArray+WOT.m */; };
 		1D5A8E401B43F34700A8261E /* WOTCoreDataPredicates.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A8E3F1B43F34700A8261E /* WOTCoreDataPredicates.m */; };
 		1D5A8E441B4401FB00A8261E /* WOTTankIdsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */; };
+		1D64665D20E386DC002C8388 /* Test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D64665C20E386DC002C8388 /* Test1.swift */; };
 		1D672AF61B57952700617E5C /* WOTModuleTypeChassis.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF11B57952700617E5C /* WOTModuleTypeChassis.png */; };
 		1D672AF71B57952700617E5C /* WOTModuleTypeEngine.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF21B57952700617E5C /* WOTModuleTypeEngine.png */; };
 		1D672AF81B57952700617E5C /* WOTModuleTypeGuns.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF31B57952700617E5C /* WOTModuleTypeGuns.png */; };
@@ -344,6 +345,7 @@
 		1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */; };
 		1DE319AE1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */; };
 		1DE319AF1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */; };
+		1DE8444C20E0F600003949EC /* WOTNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8444B20E0F600003949EC /* WOTNode.swift */; };
 		1DF73EAA1B8F49EC00AE6F86 /* WOTPivotRowNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EA91B8F49EC00AE6F86 /* WOTPivotRowNode.m */; };
 		1DF73EAD1B8F4A9B00AE6F86 /* WOTPivotColNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EAC1B8F4A9B00AE6F86 /* WOTPivotColNode.m */; };
 		1DF73EB01B8F4B0F00AE6F86 /* WOTPivotFilterNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EAF1B8F4B0F00AE6F86 /* WOTPivotFilterNode.m */; };
@@ -591,6 +593,7 @@
 		1D5A8E3F1B43F34700A8261E /* WOTCoreDataPredicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTCoreDataPredicates.m; sourceTree = "<group>"; };
 		1D5A8E421B4401FB00A8261E /* WOTTankIdsDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankIdsDatasource.h; sourceTree = "<group>"; };
 		1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankIdsDatasource.m; sourceTree = "<group>"; };
+		1D64665C20E386DC002C8388 /* Test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test1.swift; sourceTree = "<group>"; };
 		1D672AF11B57952700617E5C /* WOTModuleTypeChassis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeChassis.png; sourceTree = "<group>"; };
 		1D672AF21B57952700617E5C /* WOTModuleTypeEngine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeEngine.png; sourceTree = "<group>"; };
 		1D672AF31B57952700617E5C /* WOTModuleTypeGuns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeGuns.png; sourceTree = "<group>"; };
@@ -774,6 +777,7 @@
 		1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTRadarViewController.xib; sourceTree = "<group>"; };
 		1DCC81211B32B83B005FF193 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		1DCC81221B32B83B005FF193 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		1DD0E3C620E51E1C00D22555 /* WOT-iOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOT-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		1DD46B191BA6941900D3B3CE /* WOTTankGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankGridViewController.h; sourceTree = "<group>"; };
 		1DD46B1A1BA6941900D3B3CE /* WOTTankGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankGridViewController.m; sourceTree = "<group>"; };
 		1DD46B1B1BA6941900D3B3CE /* WOTTankGridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankGridViewController.xib; sourceTree = "<group>"; };
@@ -905,6 +909,7 @@
 		1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark@2x.png"; sourceTree = "<group>"; };
 		1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray.png"; sourceTree = "<group>"; };
 		1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray@2x.png"; sourceTree = "<group>"; };
+		1DE8444B20E0F600003949EC /* WOTNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNode.swift; sourceTree = "<group>"; };
 		1DF73EA81B8F49EC00AE6F86 /* WOTPivotRowNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPivotRowNode.h; sourceTree = "<group>"; };
 		1DF73EA91B8F49EC00AE6F86 /* WOTPivotRowNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTPivotRowNode.m; sourceTree = "<group>"; };
 		1DF73EAB1B8F4A9B00AE6F86 /* WOTPivotColNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPivotColNode.h; sourceTree = "<group>"; };
@@ -1547,6 +1552,8 @@
 				1D672B041B57A6E800617E5C /* WOTTree.m */,
 				1D010D711B84794000FA6A75 /* WOTNode+Enumeration.h */,
 				1D010D721B84794000FA6A75 /* WOTNode+Enumeration.m */,
+				1DE8444B20E0F600003949EC /* WOTNode.swift */,
+				1D64665C20E386DC002C8388 /* Test1.swift */,
 			);
 			path = WOTTree;
 			sourceTree = "<group>";
@@ -2189,6 +2196,7 @@
 				1DD646461B1C616A00B0EC76 /* Images.xcassets */,
 				1D047BB91B34095500B5B696 /* WOT_iOS.xcdatamodeld */,
 				1DD6463A1B1C616A00B0EC76 /* AppDelegate.h */,
+				1DD0E3C620E51E1C00D22555 /* WOT-iOS-Bridging-Header.h */,
 				1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */,
 			);
 			path = "WOT-iOS";
@@ -2667,7 +2675,7 @@
 					1DD646321B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = SM687X2N9M;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0940;
 					};
 					1DD6464E1B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -2940,6 +2948,7 @@
 			files = (
 				1DC07B331B3A9465002FAA72 /* Reachability.m in Sources */,
 				1DC07B5E1B3A9489002FAA72 /* WOTWEBRequestTanks.m in Sources */,
+				1DE8444C20E0F600003949EC /* WOTNode.swift in Sources */,
 				1D010D391B7DFF1100FA6A75 /* WOTTankConfigurationFlowLayout.m in Sources */,
 				1DC07B7D1B3AB778002FAA72 /* Tankradios+FillProperties.m in Sources */,
 				1DD646F81B20700000B0EC76 /* NSManagedObject+CoreDataOperations.m in Sources */,
@@ -3054,6 +3063,7 @@
 				1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */,
 				1D519D211B4EA0E300D3A286 /* WOTRadiosDistanceCompareFieldExpression.m in Sources */,
 				1DF73EAA1B8F49EC00AE6F86 /* WOTPivotRowNode.m in Sources */,
+				1D64665D20E386DC002C8388 /* Test1.swift in Sources */,
 				1D519D081B4E9CB200D3A286 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */,
 				1DF73EAD1B8F4A9B00AE6F86 /* WOTPivotColNode.m in Sources */,
 				1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */,
@@ -3282,6 +3292,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SM687X2N9M;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOTPrefixHeader.pch";
@@ -3289,7 +3300,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_MODULE_NAME = WOT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -3300,6 +3314,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SM687X2N9M;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOTPrefixHeader.pch";
@@ -3307,7 +3322,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_MODULE_NAME = WOT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -3315,6 +3332,7 @@
 		1DD6465D1B1C616A00B0EC76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -3336,6 +3354,7 @@
 		1DD6465E1B1C616A00B0EC76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

@@ -142,21 +142,4 @@
     [self.childList unionSet:childrenSet];
 }
 
-
-//#pragma mark - NSCopying
-//- (id)copyWithZone:(NSZone *)zone {
-//    
-//    
-//    WOTNode *copy = [[[self class] allocWithZone: zone] init];
-//    copy.name = self.name;
-//    copy.subtitle = self.subtitle;
-//    copy.imageurlPath = self.imageurlPath;
-//    copy.redirectedurlPath = self.redirectedurlPath;
-//    copy.streamType = self.streamType;
-//    copy.duration = self.duration;
-//    copy.position = self.position;
-//    
-//}
-
-
 @end
