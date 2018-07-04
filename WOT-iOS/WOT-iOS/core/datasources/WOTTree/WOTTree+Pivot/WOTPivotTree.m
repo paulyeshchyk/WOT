@@ -293,22 +293,22 @@
 - (void)removeAllNodes {
 
     __block typeof(self)strongSelf = self;
-    [self.rootDataNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
-        
+    [self.rootDataNode removeChildren:^(id<WOTNodeProtocol> _Nonnull node) {
+
         [(WOTPivotNode *)strongSelf.rootDataNode setDimensionDelegate:nil];
         strongSelf.rootDataNode = nil;
     }];
-    [self.rootRowsNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
+    [self.rootRowsNode removeChildren:^(id<WOTNodeProtocol> _Nonnull node) {
         
         [(WOTPivotNode *)strongSelf.rootRowsNode setDimensionDelegate:nil];
         strongSelf.rootRowsNode = nil;
     }];
-    [self.rootColumnsNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
+    [self.rootColumnsNode removeChildren:^(id<WOTNodeProtocol> _Nonnull node) {
         
         [(WOTPivotNode *)strongSelf.rootColumnsNode setDimensionDelegate:nil];
         strongSelf.rootColumnsNode = nil;
     }];
-    [self.rootFiltersNode removeAllNodesWithCompletionBlock:^(WOTNode *node) {
+    [self.rootFiltersNode removeChildren:^(id<WOTNodeProtocol> _Nonnull node) {
         
         [(WOTPivotNode *)strongSelf.rootFiltersNode setDimensionDelegate:nil];
         strongSelf.rootFiltersNode = nil;

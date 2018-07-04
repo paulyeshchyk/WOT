@@ -9,17 +9,20 @@
 #import "WOTNode.h"
 
 @interface WOTNode ()
-
-@property (nonatomic, readwrite, strong)NSMutableOrderedSet *childList;
-@property (nonatomic, readwrite, strong)NSURL *imageURL;
-
+@property (nonatomic, readwrite, strong)NSMutableOrderedSet<WOTNodeProtocol> *childSet;
 @end
 
 @implementation WOTNode
 
+@synthesize imageURL;
+@synthesize isVisible;
+@synthesize name;
+@synthesize parent;
+@synthesize childList;
+
 - (void)dealloc {
-    
-    [self removeAllNodesWithCompletionBlock:NULL];
+
+    [self removeChildren: NULL];
 }
 
 - (id)init {
@@ -68,8 +71,7 @@
 
 
 - (NSArray *)children {
-    
-    return [self.childList array];
+    return [self.childSet array];
 }
 
 - (NSString *)fullName {
@@ -87,18 +89,46 @@
 
 - (void)addChild:(WOTNode * _Nonnull)child {
     
-    if (!self.childList) {
+    if (!self.childSet) {
         
-        self.childList = [[NSMutableOrderedSet alloc] init];
+        self.childSet = [[NSMutableOrderedSet<WOTNodeProtocol> alloc] init];
     }
     
     child.parent = self;
-    [self.childList addObject:child];
+    [self.childSet addObject:child];
+}
+
+- (void)removeChild:(id<WOTNodeProtocol>)child completion:(void (^)(id<WOTNodeProtocol> _Nonnull))completion {
+
+    [self.childSet enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+
+        if (completion) {
+
+            completion(node);
+        }
+        node.parent = nil;
+        [node removeChildren: NULL];
+
+    }];
+    [self.childSet removeAllObjects];
+}
+
+- (void)removeChildren:(void (^)(id<WOTNodeProtocol> _Nonnull))completion {
+    [self.childSet enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+
+        if (completion) {
+
+            completion(node);
+        }
+        node.parent = nil;
+        [node removeChildren: NULL];
+    }];
+    [self.childSet removeAllObjects];
 }
 
 - (void)removeAllNodesWithCompletionBlock:(WOTNodeRemoveCompletionBlock)completionBlock {
     
-    [self.childList enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+    [self.childSet enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
 
         if (completionBlock) {
             
@@ -107,39 +137,37 @@
         node.parent = nil;
         [node removeAllNodesWithCompletionBlock:completionBlock];
     }];
-    [self.childList removeAllObjects];
+    [self.childSet removeAllObjects];
 }
 
-- (void)addChildArray:(NSArray *)childArray {
+- (void) addChildArray:(NSArray<id<WOTNodeProtocol>> *)childArray {
     
-    NSSet *set = [NSSet setWithArray:childArray];
-    [self addChildren:set];
+    NSSet<WOTNodeProtocol> *set = [NSSet<WOTNodeProtocol> setWithArray:childArray];
+    [set enumerateObjectsUsingBlock:^(id  _Nonnull child, BOOL * _Nonnull stop) {
+        id<WOTNodeProtocol> node = child;
+        node.parent = self;
+
+    }];
+
+    if (!self.childSet) {
+        self.childSet =  [[NSMutableOrderedSet<WOTNodeProtocol> alloc] init];
+    }
+
+    [self.childSet unionSet: set];
 }
 
-- (void)removeChild:(WOTNode *)child completionBlock:(WOTNodeRemoveCompletionBlock)completionBlock{
+- (void)removeChild:(id<WOTNodeProtocol>)child completionBlock:(WOTNodeRemoveCompletionBlock)completionBlock{
 
     if (completionBlock) {
         
         completionBlock(child);
     }
     child.parent = nil;
-    [self.childList removeObject:child];
+    [self.childSet removeObject:child];
 }
 
-- (void)addChildren:(NSSet *)childrenSet {
-    
-    if (!self.childList) {
-        
-        self.childList = [[NSMutableOrderedSet alloc] init];
-    }
-    
-    [childrenSet enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
-        
-        node.parent = self;
-    }];
-    
-    
-    [self.childList unionSet:childrenSet];
+- (NSOrderedSet *)childList {
+    return self.childSet;
 }
 
 @end

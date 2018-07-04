@@ -13,7 +13,7 @@
 
 - (id)initWithName:(NSString *)name gridData:(id)gridData {
     
-    self = [super init];
+    self = [self initWithName: name];
     if (self) {
         
         self.name = name;

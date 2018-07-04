@@ -141,7 +141,6 @@
 		1D519D5E1B54F20800D3A286 /* NSArray+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D5D1B54F20800D3A286 /* NSArray+WOT.m */; };
 		1D5A8E401B43F34700A8261E /* WOTCoreDataPredicates.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A8E3F1B43F34700A8261E /* WOTCoreDataPredicates.m */; };
 		1D5A8E441B4401FB00A8261E /* WOTTankIdsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */; };
-		1D64665D20E386DC002C8388 /* Test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D64665C20E386DC002C8388 /* Test1.swift */; };
 		1D672AF61B57952700617E5C /* WOTModuleTypeChassis.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF11B57952700617E5C /* WOTModuleTypeChassis.png */; };
 		1D672AF71B57952700617E5C /* WOTModuleTypeEngine.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF21B57952700617E5C /* WOTModuleTypeEngine.png */; };
 		1D672AF81B57952700617E5C /* WOTModuleTypeGuns.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF31B57952700617E5C /* WOTModuleTypeGuns.png */; };
@@ -593,7 +592,6 @@
 		1D5A8E3F1B43F34700A8261E /* WOTCoreDataPredicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTCoreDataPredicates.m; sourceTree = "<group>"; };
 		1D5A8E421B4401FB00A8261E /* WOTTankIdsDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankIdsDatasource.h; sourceTree = "<group>"; };
 		1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankIdsDatasource.m; sourceTree = "<group>"; };
-		1D64665C20E386DC002C8388 /* Test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test1.swift; sourceTree = "<group>"; };
 		1D672AF11B57952700617E5C /* WOTModuleTypeChassis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeChassis.png; sourceTree = "<group>"; };
 		1D672AF21B57952700617E5C /* WOTModuleTypeEngine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeEngine.png; sourceTree = "<group>"; };
 		1D672AF31B57952700617E5C /* WOTModuleTypeGuns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeGuns.png; sourceTree = "<group>"; };
@@ -1553,7 +1551,6 @@
 				1D010D711B84794000FA6A75 /* WOTNode+Enumeration.h */,
 				1D010D721B84794000FA6A75 /* WOTNode+Enumeration.m */,
 				1DE8444B20E0F600003949EC /* WOTNode.swift */,
-				1D64665C20E386DC002C8388 /* Test1.swift */,
 			);
 			path = WOTTree;
 			sourceTree = "<group>";
@@ -3063,7 +3060,6 @@
 				1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */,
 				1D519D211B4EA0E300D3A286 /* WOTRadiosDistanceCompareFieldExpression.m in Sources */,
 				1DF73EAA1B8F49EC00AE6F86 /* WOTPivotRowNode.m in Sources */,
-				1D64665D20E386DC002C8388 /* Test1.swift in Sources */,
 				1D519D081B4E9CB200D3A286 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */,
 				1DF73EAD1B8F4A9B00AE6F86 /* WOTPivotColNode.m in Sources */,
 				1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */,
@@ -3296,6 +3292,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SM687X2N9M;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOTPrefixHeader.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "WOT-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -3305,6 +3302,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
+				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Debug;
 		};
@@ -3318,6 +3316,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SM687X2N9M;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOTPrefixHeader.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "WOT-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -3326,6 +3325,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
+				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Release;
 		};

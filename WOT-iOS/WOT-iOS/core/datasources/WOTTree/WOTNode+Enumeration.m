@@ -40,7 +40,7 @@
         return @[self];
     }
     
-    NSArray *array = [self.childList array];
+    NSArray *array = [self.childList allObjects];
     return [WOTNode endpointsForArray:array];
 }
 
@@ -129,7 +129,7 @@
         
         [childArray enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
             
-            result = [self endpointForArray:[node.childList array] atIndexPath:indexPath initialLevel:(indexPath.section + 1)];
+            result = [self endpointForArray:[node.childList allObjects] atIndexPath:indexPath initialLevel:(indexPath.section + 1)];
             if (result) {
                 
                 *stop = YES;

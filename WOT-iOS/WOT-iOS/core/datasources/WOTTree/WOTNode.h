@@ -8,25 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+
 @class WOTNode;
 
 typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode * node);
+@protocol WOTNodeProtocol;
 
-@interface WOTNode : NSObject <NSCopying>
-
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, readonly) NSArray *children;
-@property (nonatomic, weak) WOTNode *parent;
-@property (nonatomic, readonly) NSURL *imageURL;
-@property (nonatomic, readonly) NSMutableOrderedSet *childList;
-@property (nonatomic, assign) BOOL isVisible;
-@property (nonatomic, readonly)NSString *fullName;
-
-- (id)initWithName:(NSString *)name;
-- (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL;
-- (void)addChild:(WOTNode *)child;
-- (void)addChildArray:(NSArray *)childArray;
-- (void)removeChild:(WOTNode *)child completionBlock:(WOTNodeRemoveCompletionBlock)completionBlock;
-- (void)removeAllNodesWithCompletionBlock:(WOTNodeRemoveCompletionBlock)completionBlock;
-
+@interface WOTNode : NSObject <WOTNodeProtocol>
 @end
