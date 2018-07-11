@@ -13,7 +13,7 @@
 
 - (NSInteger)y {
     
-    return self.visibleParentsCount;
+    return [WOTNodeEnumerator.sharedInstance visibleParentsCountWithNode:self];
 }
 
 - (NSInteger)x {
@@ -27,7 +27,7 @@
 - (NSInteger)width {
     
     __block NSInteger result = 0;
-    NSArray *endPoints = self.endpoints;
+    NSArray *endPoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: self];
     if ([endPoints count] == 0) {
         
         result = 1;

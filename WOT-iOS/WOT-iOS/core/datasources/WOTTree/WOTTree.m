@@ -13,127 +13,69 @@
 
 @property (nonatomic, strong)NSMutableSet *rootNodes_;
 @property (nonatomic, strong)NSMutableDictionary *levelIndex;
+@property (nonatomic, readwrite, strong) WOTDataModel *model;
 
 @end
 
 @implementation WOTTree
 
-- (void)dealloc {
+- (id)init {
+    if (self = [super init]) {
+        self.model = [[WOTDataModel alloc] init];
+    }
+    return self;
+}
 
-    [self removeAllNodes];
+- (void)dealloc {
+    [self.model removeAll];
 }
 
 - (NSSet *)rootNodes {
-    
-    return self.rootNodes_;
+    return self.model.rootNodes;
+//    return self.rootNodes_;
 }
 
 - (void)addNode:(WOTNode *)node {
-    
-    if (!self.rootNodes_) {
-        
-        self.rootNodes_ = [[NSMutableSet alloc] init];
-    }
-    
-    [self.rootNodes_ addObject:node];
-    [self reindex];
+    [self.model addWithNode:node];
 }
 
 - (void)removeAllNodes {
-    
-    [self.rootNodes_ removeAllObjects];
-    [self reindex];
-    
+    [self.model removeAll];
 }
+
 - (void)removeNode:(WOTNode *)node {
-    
-    [self.rootNodes_ removeObject:node];
-    [self reindex];
+    [self.model removeWithNode:node];
 }
 
 - (NSArray *)nodes {
-    
-    if (self.nodeComparator) {
-        
-        return [[self.rootNodes_ allObjects] sortedArrayUsingComparator:self.nodeComparator];
-    } else {
-        
-        return [self.rootNodes_ allObjects];
-    }
-}
-
-- (void)reindex {
-    
-    [self.levelIndex removeAllObjects];
-    self.levelIndex = [[NSMutableDictionary alloc] init];
-    NSInteger level = 0;
-
-    NSArray *rootNodes = [self nodes:[self.rootNodes allObjects] sortedUsingComparator:self.nodeComparator];
-    [rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-        
-        [self reindexChildNode:node atLevel:level];
+    return [self.model allObjectsWithSortComparator:^BOOL(WOTNode * _Nonnull left, WOTNode * _Nonnull right) {
+        return true;
     }];
 }
 
 - (WOTNode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSArray *section = self.levelIndex[@(indexPath.section)];
-    return section[indexPath.row];
+    return [self.model nodeAtIndexPath:indexPath];
 }
 
 - (NSInteger)nodesCountAtSection:(NSInteger)sectionIndex {
-    
-    NSArray *section = self.levelIndex[@(sectionIndex)];
-    return [section count];
+    return [self.model nodesCountWithSection:sectionIndex];
 }
 
-- (void)reindexChildNode:(WOTNode *)node atLevel:(NSInteger)level{
-    
-    NSMutableArray *items = [NSMutableArray arrayWithArray:self.levelIndex[@(level)]];
-    [items addObject:node];
-    self.levelIndex[@(level)] = [items copy];
-
-    NSArray *childNodes = [self nodes:node.children sortedUsingComparator:self.nodeComparator];
-    [childNodes enumerateObjectsUsingBlock:^(WOTNode *childNode, NSUInteger idx, BOOL *stop) {
-        
-        [self reindexChildNode:childNode atLevel:level+1];
-    }];
-}
-
-- (NSArray *)nodes:(NSArray *)nodes sortedUsingComparator:(WOTNodeComparator)comparator {
-
-    if (comparator) {
-        
-        return [nodes sortedArrayUsingComparator:comparator];
-    } else {
-        
-        return nodes;
-    }
-}
 
 - (NSInteger)levels {
-    
-    return [[self.levelIndex allKeys] count];
+    return self.model.levels;
 }
 
 - (NSInteger)width {
-    
-    __block NSInteger result = 0;
-    [[self.levelIndex allKeys] enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
-        
-        id arr = self.levelIndex[key];
-        result = MAX(result,[arr count]);
-    }];
-    return result;
+    return self.model.width;
 }
 
 - (NSInteger)endpointsCount {
 
     __block NSInteger result = 0;
-    [self.rootNodes_ enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
-    
-        NSArray *endpoints = node.endpoints;
-        
+    [self.model.rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
+        NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: node];
+
         result += [endpoints count];
     }];
     return result;

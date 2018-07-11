@@ -237,10 +237,12 @@
     Class PivotNodeClass = [WOTNode pivotNodeClassForType:type];
 
     WOTPivotNode *root = [[PivotNodeClass alloc] initWithName:@"-" predicate:nil];
-    [level0Node.endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *level0Child, NSUInteger idx, BOOL *stop) {
+    NSArray *level1Endpoints = level1Node.endpoints;
+    NSArray *level0Endpoints = level0Node.endpoints;
+    [level0Endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *level0Child, NSUInteger idx, BOOL *stop) {
 
         WOTPivotNode *level0ChildCopy = [level0Child copy];
-        [level1Node.endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *level1Child, NSUInteger idx, BOOL *stop) {
+        [level1Endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *level1Child, NSUInteger idx, BOOL *stop) {
             
             NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
             WOTNode *nationCopy = [level1Child copyWithPredicate:predicate];

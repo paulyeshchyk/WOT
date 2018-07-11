@@ -11,8 +11,14 @@
 
 int main(int argc, char * argv[]) {
     
-    @autoreleasepool {
-        
+    BOOL inTests = (NSClassFromString(@"SenTestCase") != nil
+                    || NSClassFromString(@"XCTest") != nil);
+
+    if (inTests){
+
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegateTest class]));
+    } else {
+
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }

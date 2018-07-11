@@ -196,6 +196,10 @@
 		1D691EEF1BA03E2000E1555D /* VehicleprofileRadio+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D691EEE1BA03E2000E1555D /* VehicleprofileRadio+FillProperties.m */; };
 		1D691EF21BA0429B00E1555D /* Vehicleprofile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D691EF11BA0429B00E1555D /* Vehicleprofile.m */; };
 		1D691EF51BA066AA00E1555D /* NSDictionary+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D691EF41BA066AA00E1555D /* NSDictionary+Hash.m */; };
+		1D79C77F20F5D0FF00FFAF02 /* WOTDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */; };
+		1D79C78220F5D32F00FFAF02 /* WOTDataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */; };
+		1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */; };
+		1D79C78620F5FB0D00FFAF02 /* WOTNodeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78520F5FB0D00FFAF02 /* WOTNodeEnumerator.swift */; };
 		1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695F1B4161F300237852 /* UIToolbar+WOT.m */; };
 		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
 		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
@@ -661,6 +665,10 @@
 		1D691EF11BA0429B00E1555D /* Vehicleprofile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vehicleprofile.m; sourceTree = "<group>"; };
 		1D691EF31BA066AA00E1555D /* NSDictionary+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Hash.h"; sourceTree = "<group>"; };
 		1D691EF41BA066AA00E1555D /* NSDictionary+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Hash.m"; sourceTree = "<group>"; };
+		1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModel.swift; sourceTree = "<group>"; };
+		1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModelTest.swift; sourceTree = "<group>"; };
+		1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
+		1D79C78520F5FB0D00FFAF02 /* WOTNodeEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumerator.swift; sourceTree = "<group>"; };
 		1D90695A1B412D6B00237852 /* WOTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
 		1D90695E1B4161F300237852 /* UIToolbar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+WOT.h"; sourceTree = "<group>"; };
 		1D90695F1B4161F300237852 /* UIToolbar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+WOT.m"; sourceTree = "<group>"; };
@@ -1541,6 +1549,7 @@
 		1D672AFB1B57A6E800617E5C /* WOTTree */ = {
 			isa = PBXGroup;
 			children = (
+				1D79C77D20F5D0E400FFAF02 /* WOTDataModel */,
 				1D0F55081C9193EB00272B05 /* WOTTree+GridData */,
 				1D672AFE1B57A6E800617E5C /* WOTTree+Tanks */,
 				1D010D5F1B8317F700FA6A75 /* WOTTree+Pivot */,
@@ -1684,6 +1693,16 @@
 				1D691EEE1BA03E2000E1555D /* VehicleprofileRadio+FillProperties.m */,
 			);
 			path = VehicleprofileRadio;
+			sourceTree = "<group>";
+		};
+		1D79C77D20F5D0E400FFAF02 /* WOTDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */,
+				1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */,
+				1D79C78520F5FB0D00FFAF02 /* WOTNodeEnumerator.swift */,
+			);
+			path = WOTDataModel;
 			sourceTree = "<group>";
 		};
 		1DA1D7431B2AFD4A00C5C2FB /* cells */ = {
@@ -2195,6 +2214,7 @@
 				1DD6463A1B1C616A00B0EC76 /* AppDelegate.h */,
 				1DD0E3C620E51E1C00D22555 /* WOT-iOS-Bridging-Header.h */,
 				1DD6463B1B1C616A00B0EC76 /* AppDelegate.m */,
+				1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */,
 			);
 			path = "WOT-iOS";
 			sourceTree = "<group>";
@@ -2676,7 +2696,7 @@
 					};
 					1DD6464E1B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0940;
 						TestTargetID = 1DD646321B1C616A00B0EC76;
 					};
 				};
@@ -2976,9 +2996,11 @@
 				1DC07AD01B39A03D002FAA72 /* WOTWebResponseAdapterRadios.m in Sources */,
 				1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				1D2143B91BA00B37001A7DEE /* VehicleprofileAmmoDamage.m in Sources */,
+				1D79C77F20F5D0FF00FFAF02 /* WOTDataModel.swift in Sources */,
 				1DC07AC21B399FE4002FAA72 /* WOTWebResponseAdapterTanks.m in Sources */,
 				1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */,
 				1D047B651B331D8900B5B696 /* WOTMenuItem.m in Sources */,
+				1D79C78620F5FB0D00FFAF02 /* WOTNodeEnumerator.swift in Sources */,
 				1D2143AE1BA00B37001A7DEE /* ListSetting.m in Sources */,
 				1D2143E11BA0214A001A7DEE /* VehicleprofileAmmoPenetration+FillProperties.m in Sources */,
 				1DCC7F4D1B2F0619005FF193 /* UIView+StretchingConstraints.m in Sources */,
@@ -3002,6 +3024,7 @@
 				1DD46B941BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				1D2143B51BA00B37001A7DEE /* Tankturrets.m in Sources */,
 				1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */,
+				1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */,
 				1D691EF51BA066AA00E1555D /* NSDictionary+Hash.m in Sources */,
 				1D010D371B7DFF1100FA6A75 /* WOTTankConfigurationItemViewController.m in Sources */,
 				1D2143D21BA01511001A7DEE /* VehicleprofileAmmoList+FillProperties.m in Sources */,
@@ -3150,6 +3173,7 @@
 			files = (
 				1DD646561B1C616A00B0EC76 /* WOT_iOSTests.m in Sources */,
 				1D188FE11B9437460056D208 /* PivotTreeTestCase.m in Sources */,
+				1D79C78220F5D32F00FFAF02 /* WOTDataModelTest.swift in Sources */,
 				1D010DAC1B8DC45100FA6A75 /* TestWOTRequestExecutor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3334,6 +3358,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -3346,6 +3371,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOSTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WOT-iOS.app/WOT-iOS";
 			};
@@ -3356,6 +3383,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -3364,6 +3392,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOSTests-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WOT-iOS.app/WOT-iOS";
 			};

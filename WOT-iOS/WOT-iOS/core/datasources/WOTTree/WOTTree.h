@@ -9,9 +9,11 @@
 #import "WOTNode.h"
 
 typedef NSComparisonResult(^WOTNodeComparator)(WOTNode *left, WOTNode *right);
+@class WOTDataModel;
 
 @interface WOTTree : NSObject
 
+@property (nonatomic, readonly) WOTDataModel *model;
 @property (nonatomic, readonly) NSArray *nodes;
 @property (nonatomic, readonly) NSInteger levels;
 @property (nonatomic, readonly) NSInteger width;
@@ -24,7 +26,6 @@ typedef NSComparisonResult(^WOTNodeComparator)(WOTNode *left, WOTNode *right);
 
 - (void)addNode:(WOTNode *)node;
 - (void)removeNode:(WOTNode *)node;
-- (void)reindex;
 - (void)removeAllNodes;
 
 - (WOTNode *)findOrCreateRootNodeByPredicate:(NSPredicate *)predicate;

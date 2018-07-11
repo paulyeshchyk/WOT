@@ -8,11 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-
-@class WOTNode;
-
-typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode * node);
 @protocol WOTNodeProtocol;
 
 @interface WOTNode : NSObject <WOTNodeProtocol>
 @end
+
+typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode * node);

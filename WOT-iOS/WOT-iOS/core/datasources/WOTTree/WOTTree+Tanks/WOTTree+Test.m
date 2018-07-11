@@ -16,7 +16,6 @@
 
     WOTNode *root = [self testRoot];
     [self addNode:root];
-    [self reindex];
     
 }
 

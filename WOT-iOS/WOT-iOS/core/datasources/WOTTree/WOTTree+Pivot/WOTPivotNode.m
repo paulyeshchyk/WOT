@@ -28,7 +28,7 @@
         for (int i=0;i<indexOfNode;i++) {
             
             WOTNode *child = parent.children[i];
-            NSArray *endpoints = child.endpoints;
+            NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: child];
             [endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
                 
                 result += [node maxWidthOrValue:value];
@@ -52,7 +52,7 @@
         for (int i=0;i<indexOfNode;i++) {
             
             WOTNode *child = parent.children[i];
-            NSArray *endpoints = child.endpoints;
+            NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: child];
             [endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
                 
                 result += value;

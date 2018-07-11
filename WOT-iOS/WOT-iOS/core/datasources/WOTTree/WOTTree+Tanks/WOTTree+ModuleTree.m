@@ -57,7 +57,6 @@
     
     
     [self addNode:rootNode];
-    [self reindex];
 }
 
 - (void)setOfNodes:(NSMutableSet *)setOfNodes addChildNodeForModuleTree:(ModulesTree *)moduleTree{

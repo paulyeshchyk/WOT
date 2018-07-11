@@ -160,13 +160,13 @@
 
 #pragma mark - PivotDimensionDelegate
 - (NSInteger)rootNodeWidth {
-    
-    return  self.rootRowsNode.depth;
+    id<WOTNodeProtocol> node = self.rootRowsNode;
+    return [WOTNodeEnumerator.sharedInstance depthForChildren: node.children initialLevel: node.isVisible?1:0];
 }
 
-- (NSInteger)rootNodeHeight {
-    
-    return self.rootColumnsNode.depth;
+- (NSInteger)rootNodeHeight {    
+    id<WOTNodeProtocol> node = self.rootColumnsNode;
+    return [WOTNodeEnumerator.sharedInstance depthForChildren: node.children initialLevel: node.isVisible?1:0];
 }
 
 - (CGSize)contentSize {
@@ -176,9 +176,11 @@
     
 #warning emptyDataColumnWidth should be refactored
     NSInteger emptyDataColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0;
-    
+
+    NSArray * columnEndpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:self.rootColumnsNode];
+
     __block NSInteger maxWidth = 0;
-    [[self.rootColumnsNode endpoints] enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
+    [columnEndpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
         
         NSInteger value = [node maxWidthOrValue:emptyDataColumnWidth];
         maxWidth += value;
@@ -186,7 +188,9 @@
     
     NSInteger width = rowNodesDepth + maxWidth;
     
-    NSInteger rowNodesEndpointsCount = [[self.rootRowsNode endpoints] count];
+    NSArray *rowEndpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:self.rootRowsNode];
+    NSInteger rowNodesEndpointsCount = [rowEndpoints count];
+
     NSInteger height = colNodesDepth + rowNodesEndpointsCount;
     
     return CGSizeMake(width, height);
@@ -234,14 +238,16 @@
 
         return;
     }
-    
-    [self.rootRowsNode enumerateEndpointsUsingBlock:^(WOTNode *rNode) {
 
-        WOTPivotNode *rowNode = (WOTPivotNode *)rNode;
+    NSArray *colNodeEndpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:self.rootColumnsNode];
+    NSArray *rowNodeEndpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:self.rootRowsNode];
+    [rowNodeEndpoints enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        WOTPivotNode *rowNode = (WOTPivotNode *)obj;
         if ([rowNode predicate]) {
 
-            [self.rootColumnsNode enumerateEndpointsUsingBlock:^(WOTNode *cnode) {
-                
+            [colNodeEndpoints enumerateObjectsUsingBlock:^(id  _Nonnull cnode, NSUInteger idx, BOOL * _Nonnull stop) {
+
                 WOTPivotNode *columnNode = (WOTPivotNode *)cnode;
 
                 NSArray *predicates = [self predicatesFromColumnNode:columnNode rowNode:rowNode];
@@ -276,8 +282,9 @@
     
     if (rowNode.predicate)
         [predicates addObject:rowNode.predicate];
-    
-    [[self.rootFiltersNode endpoints] enumerateObjectsUsingBlock:^(WOTNode *fnode, NSUInteger idx, BOOL *stop) {
+
+    NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: self.rootFiltersNode];
+    [endpoints enumerateObjectsUsingBlock:^(WOTNode *fnode, NSUInteger idx, BOOL *stop) {
         
         WOTPivotNode *filterNode = (WOTPivotNode *)fnode;
         if (filterNode.predicate) {

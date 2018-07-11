@@ -20,8 +20,7 @@
 }
 
 - (NSInteger)x {
-    
-    return [self visibleParentsCount];
+    return [WOTNodeEnumerator.sharedInstance visibleParentsCountWithNode:self];
 }
 
 - (NSInteger)width {
@@ -30,8 +29,8 @@
 }
 
 - (NSInteger)height {
-    
-    return self.endpoints.count;
+    NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: self];
+    return endpoints.count;
 
 }
 
