@@ -65,8 +65,13 @@ class WOTDataModelTest: XCTestCase {
         XCTAssert(model.allObjects(sortComparator: nil).count == 1)
     }
 
-
     func testEndpoints() {
-        XCTAssert(false)
+        model.removeAll()
+        XCTAssert(model.rootNodes.count == 0)
+        let parentnode = WOTNode()
+        (parentnode as? WOTNodeProtocol)?.addChild(WOTNode())
+        (parentnode as? WOTNodeProtocol)?.addChild(WOTNode())
+        model.add(node: parentnode)
+        XCTAssert(model.endpointsCount == 2)
     }
 }

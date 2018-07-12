@@ -20,13 +20,13 @@ typedef NS_ENUM(NSInteger, PivotMetadataType) {
 
 + (Class)pivotNodeClassForType:(PivotMetadataType)type;
 
-+ (WOTPivotNode *)pivotDataNodeForPredicate:(NSPredicate *)predicate andTanksObject:(id)tanksObject;
++ (id<WOTNodeProtocol>)pivotDataNodeForPredicate:(NSPredicate *)predicate andTanksObject:(id)tanksObject;
 
-+ (WOTPivotNode *)pivotNationMetadataItemAsType:(PivotMetadataType)type;
-+ (WOTPivotNode *)pivotTierMetadataItemAsType:(PivotMetadataType)type;
-+ (WOTPivotNode *)pivotPremiumMetadataItemAsType:(PivotMetadataType)type;
-+ (WOTPivotNode *)pivotTypeMetadataItemAsType:(PivotMetadataType)type;
-+ (WOTPivotNode *)pivotDPMMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTNodeProtocol>)pivotNationMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTNodeProtocol>)pivotTierMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTNodeProtocol>)pivotPremiumMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTNodeProtocol>)pivotTypeMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTNodeProtocol>)pivotDPMMetadataItemAsType:(PivotMetadataType)type;
 
 + (NSDictionary *)nationColors;
 + (NSDictionary *)typeColors;

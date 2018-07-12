@@ -43,7 +43,7 @@
     return result;
 }
 
-+ (WOTPivotNode *)pivotDataNodeForPredicate:(NSPredicate *)predicate andTanksObject:(id)tanksObject {
++ (id<WOTNodeProtocol> )pivotDataNodeForPredicate:(NSPredicate *)predicate andTanksObject:(id)tanksObject {
     
     Tanks *tanks = tanksObject;
     NSURL *imageURL = [NSURL URLWithString:tanks.image];
@@ -58,8 +58,7 @@
     return node;
 }
 
-
-+ (WOTPivotNode *)pivotDPMMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTNodeProtocol>)pivotDPMMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
 
@@ -83,7 +82,7 @@
     return result;
 }
 
-+ (WOTPivotNode *)pivotNationMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTNodeProtocol>)pivotNationMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
     WOTPivotNode *result = [[PivotNodeClass alloc] initWithName:@"Nation" predicate:nil];
@@ -101,7 +100,7 @@
     return result;
 }
 
-+ (WOTPivotNode *)pivotTierMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTNodeProtocol>)pivotTierMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
     WOTPivotNode *result = [[PivotNodeClass alloc] initWithName:@"Tier" predicate:nil];
@@ -120,7 +119,7 @@
     return result;
 }
 
-+ (WOTPivotNode *)pivotPremiumMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTNodeProtocol>)pivotPremiumMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
     WOTPivotNode *result = [[PivotNodeClass alloc] initWithName:@"Premium" predicate:nil];
@@ -131,7 +130,7 @@
     return result;
 }
 
-+ (WOTPivotNode *)pivotTypeMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTNodeProtocol>)pivotTypeMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
     WOTPivotNode *result = [[PivotNodeClass alloc] initWithName:@"Type" predicate:nil];

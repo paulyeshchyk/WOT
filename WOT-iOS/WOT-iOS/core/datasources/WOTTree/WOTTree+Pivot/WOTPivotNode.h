@@ -8,6 +8,8 @@
 
 #import "WOTNode.h"
 #import "WOTPivotDimensionProtocol.h"
+#import "WOTEnums.h"
+#import <CoreData/CoreData.h>
 
 @interface WOTPivotNode : WOTNode
 
@@ -28,7 +30,6 @@
 @property (nonatomic, readonly)NSInteger width;
 @property (nonatomic, readonly)NSInteger height;
 
-+ (NSInteger)childrenWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
 + (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
 
 - (id)initWithName:(NSString *)name predicate:(NSPredicate *)predicate;

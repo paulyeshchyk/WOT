@@ -32,7 +32,6 @@
 
 - (NSSet *)rootNodes {
     return self.model.rootNodes;
-//    return self.rootNodes_;
 }
 
 - (void)addNode:(WOTNode *)node {
@@ -61,7 +60,6 @@
     return [self.model nodesCountWithSection:sectionIndex];
 }
 
-
 - (NSInteger)levels {
     return self.model.levels;
 }
@@ -71,14 +69,7 @@
 }
 
 - (NSInteger)endpointsCount {
-
-    __block NSInteger result = 0;
-    [self.model.rootNodes enumerateObjectsUsingBlock:^(WOTNode *node, BOOL *stop) {
-        NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: node];
-
-        result += [endpoints count];
-    }];
-    return result;
+    return self.model.endpointsCount;
 }
 
 - (WOTNode *)findOrCreateRootNodeByPredicate:(NSPredicate *)predicate {

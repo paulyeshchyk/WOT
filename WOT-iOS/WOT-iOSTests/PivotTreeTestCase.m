@@ -26,12 +26,12 @@
     [super tearDown];
 }
 
-- (void)testInitialPivotContentSizeShouldBeSizeZero {
- 
-    WOTPivotTree *tree = [[WOTPivotTree alloc] init];
-    CGSize contentSize = tree.contentSize;
-    
-    XCTAssert(CGSizeEqualToSize(CGSizeZero,contentSize), @"contentSize should be equal to CGSizeZero");
-}
+//- (void)testInitialPivotContentSizeShouldBeSizeZero {
+//
+//    WOTPivotTree *tree = [[WOTPivotTree alloc] init];
+//    CGSize contentSize = tree.contentSize;
+//
+//    XCTAssert(CGSizeEqualToSize(CGSizeZero,contentSize), @"contentSize should be equal to CGSizeZero");
+//}
 
 @end

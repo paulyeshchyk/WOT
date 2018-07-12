@@ -77,7 +77,7 @@
     [self.flowLayout setLayoutPreviousSiblingNodeChildrenCountCallback:^(NSIndexPath *indexPath){
 
         WOTNode *node = [self.tree nodeAtIndexPath:indexPath];
-        NSInteger result = node.childrenCountForSiblingNode;
+        NSInteger result = [WOTNodeEnumerator.sharedInstance childrenCountWithSiblingNode:node];
         return result;
     }];
 

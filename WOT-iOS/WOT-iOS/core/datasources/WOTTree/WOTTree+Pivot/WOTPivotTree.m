@@ -111,23 +111,27 @@
     
     [self setLargeIndex:nil];
     NSMutableDictionary *largeIndex = [[NSMutableDictionary alloc] init];
-    
-    [[self.rootFiltersNode allItems] enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
+
+    NSArray *allFilterItems = [WOTNodeEnumerator.sharedInstance allItemsFromNode:self.rootFiltersNode];
+    [allFilterItems enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
+        
+        largeIndex[@(node.index)] = node;
+    }];
+
+    NSArray *allColumnItems = [WOTNodeEnumerator.sharedInstance allItemsFromNode:self.rootColumnsNode];
+    [allColumnItems enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
         
         largeIndex[@(node.index)] = node;
     }];
     
-    [[self.rootColumnsNode allItems] enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
+    NSArray *allRowItems = [WOTNodeEnumerator.sharedInstance allItemsFromNode:self.rootRowsNode];
+    [allRowItems enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
         
         largeIndex[@(node.index)] = node;
     }];
     
-    [[self.rootRowsNode allItems] enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-        
-        largeIndex[@(node.index)] = node;
-    }];
-    
-    [[self.rootDataNode allItems] enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
+    NSArray *allDataItems = [WOTNodeEnumerator.sharedInstance allItemsFromNode:self.rootDataNode];
+    [allDataItems enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
         
         largeIndex[@(node.index)] = node;
     }];

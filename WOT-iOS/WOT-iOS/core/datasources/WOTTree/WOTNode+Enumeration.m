@@ -10,7 +10,7 @@
 
 @implementation WOTNode (Enumeration)
 
-
+ 
 - (NSArray *)endpoints {
     return [WOTNodeEnumerator.sharedInstance endpointsWithNode: self];
 }
@@ -46,54 +46,28 @@
     }];
 }
 
-+ (WOTNode *)endpointForArray:(NSArray *)childArray atIndexPath:(NSIndexPath *)indexPath initialLevel:(NSInteger)initialLevel{
-    
-    __block WOTNode *result = nil;
-    if (initialLevel == indexPath.section) {
-        
-        if (indexPath.row < [childArray count]) {
-            
-            result = childArray[indexPath.row];
-        }
-    } else {
-        
-        [childArray enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-            
-            result = [self endpointForArray:[node.childList allObjects] atIndexPath:indexPath initialLevel:(indexPath.section + 1)];
-            if (result) {
-                
-                *stop = YES;
-            }
-        }];
-    }
-    
-    return result;
-}
-
-- (NSInteger)childrenCountForSiblingNode {
-    
-    return [self childrenCountForSiblingNode:self];
-}
-
-- (NSInteger)childrenCountForSiblingNode:(WOTNode *)node {
-    
-    __block NSInteger result = 0;
-    WOTNode *parent = node.parent;
-    if (parent) {
-        
-        NSInteger indexOfNode = [parent.children indexOfObject:node];
-        for (int i=0;i<indexOfNode;i++) {
-            
-            WOTNode *child = parent.children[i];
-            NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: child];
-            result += [endpoints count];
-        }
-        
-        result += [self childrenCountForSiblingNode:parent];
-    }
-    
-    return result;
-}
-
+//+ (WOTNode *)endpointForArray:(NSArray *)childArray atIndexPath:(NSIndexPath *)indexPath initialLevel:(NSInteger)initialLevel{
+//    
+//    __block WOTNode *result = nil;
+//    if (initialLevel == indexPath.section) {
+//        
+//        if (indexPath.row < [childArray count]) {
+//            
+//            result = childArray[indexPath.row];
+//        }
+//    } else {
+//        
+//        [childArray enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
+//            
+//            result = [self endpointForArray:[node.childList allObjects] atIndexPath:indexPath initialLevel:(indexPath.section + 1)];
+//            if (result) {
+//                
+//                *stop = YES;
+//            }
+//        }];
+//    }
+//    
+//    return result;
+//}
 
 @end

@@ -41,30 +41,6 @@
     return result;
 }
 
-
-+ (NSInteger)childrenWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value{
-    
-    __block NSInteger result = 0;
-    WOTNode *parent = node.parent;
-    if (parent) {
-        
-        NSInteger indexOfNode = [parent.children indexOfObject:node];
-        for (int i=0;i<indexOfNode;i++) {
-            
-            WOTNode *child = parent.children[i];
-            NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: child];
-            [endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-                
-                result += value;
-            }];
-        }
-        
-        result += [WOTPivotNode childrenWidthForSiblingNode:parent orValue:value];
-    }
-    
-    return result;
-}
-
 #pragma mark -
 - (id)copyWithZone:(NSZone *)zone {
     

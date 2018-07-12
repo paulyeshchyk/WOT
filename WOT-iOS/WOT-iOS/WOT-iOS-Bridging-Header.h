@@ -3,3 +3,4 @@
 //
 
 #import "WOTNode.h"
+#import "WOTNode+PivotFactory.h"

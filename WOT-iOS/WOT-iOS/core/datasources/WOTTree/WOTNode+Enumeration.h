@@ -14,9 +14,8 @@ typedef void(^HierarchyEnumarationCallback)(WOTNode *node);
 
 @interface WOTNode (Enumeration)
 
-@property (nonatomic, readonly) NSArray *endpoints;
+@property (nonatomic, readonly) NSArray *endpoints __deprecated_msg("use WOTEnumerator instead");
 @property (nonatomic, readonly) NSArray *allItems;
-@property (nonatomic, readonly) NSInteger childrenCountForSiblingNode;
 
 + (void)enumerateItemsHierarchy:(NSArray *)items callback:(HierarchyEnumarationCallback)callback comparator:(HierarchyComparator)comparator;
 - (void)enumerateAllChildrenUsingBlock:(HierarchyEnumarationCallback)callback comparator:(HierarchyComparator)comparator;

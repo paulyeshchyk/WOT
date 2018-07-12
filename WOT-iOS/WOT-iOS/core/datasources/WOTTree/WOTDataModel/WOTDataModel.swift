@@ -15,9 +15,11 @@ typealias WOTIndexTypeAlias = Dictionary<Int, [WOTNodeAlias]>
 
 @objc
 public protocol WOTDataModelProtocol: NSObjectProtocol {
+    var index: WOTNodeIndexProtocol { get }
     var rootNodes: Set<WOTNodeAlias> { get }
     var levels: Int { get }
     var width: Int { get }
+    var endpointsCount: Int { get }
     func reindex()
     func add(node: WOTNodeAlias)
     func remove(node: WOTNodeAlias)
@@ -25,12 +27,15 @@ public protocol WOTDataModelProtocol: NSObjectProtocol {
     func allObjects(sortComparator: WOTNodeComparator?) -> [WOTNodeAlias]
     func nodesCount(section: Int) -> Int
     func node(atIndexPath: NSIndexPath) -> WOTNodeAlias?
-    func endpointsCount() -> Int
 }
 
 @objc
 public class WOTDataModel: NSObject, WOTDataModelProtocol {
 
+    lazy public var index: WOTNodeIndexProtocol = {
+        return WOTNodeIndex()
+    }()
+    
     private(set)public var rootNodes: Set<WOTNodeAlias>
     private var comparator: WOTNodeComparator = { (left, right) in
         return true
@@ -49,6 +54,16 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol {
         self.levelIndex.keys.forEach { (key) in
             let arraycount = self.levelIndex[key]?.count ?? 0
             result = max(result, arraycount)
+        }
+        return result
+    }
+
+    //TODO: too complex
+    public var endpointsCount: Int {
+        var result: Int = 0
+        self.rootNodes.forEach { (node) in
+            let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: node)
+            result += endpoints.count
         }
         return result
     }
@@ -109,8 +124,4 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol {
         return itemsAtSection?[indexPath.row]
     }
 
-    public func endpointsCount() -> Int {
-        assert(false)
-        return 0
-    }
 }
