@@ -18,6 +18,8 @@
 @property (nonatomic, readonly) NSDictionary *userInfo;
 @property (nonatomic, readonly) NSData *httpBodyData;
 @property (nonatomic, readonly) NSURL *url;
+@property (nonatomic, readonly) NSString *fakeJSON;
+
 
 - (NSString *)queryIntoString ;
 

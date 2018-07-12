@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, strong) NSMutableData *data;
 
+- (NSData *)loadFakeData;
+
 @end
 
 @implementation WOTWEBRequest
@@ -205,11 +207,7 @@ static NSString *urlEncode(NSString *string) {
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
     debugLog(@"webrequest-received-data:%@",self);
-    if (self.data == nil) {
-        
-        self.data = [[NSMutableData alloc] init];
-    }
-    [self.data appendData:data];
+    [self appendData: data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -220,12 +218,47 @@ static NSString *urlEncode(NSString *string) {
     [self.listener requestHasFinishedLoadData:self];
 }
 
+- (void)appendData:(NSData *)data {
+    if (self.data == nil) {
+        self.data = [[NSMutableData alloc] init];
+    }
+    [self.data appendData:data];
+}
+
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+
+    NSData *fake = [self loadFakeData];
+    if ([fake length] != 0) {
+
+        [self appendData: fake];
+
+        [self parseData:self.data error:nil];
+        self.data = nil;
+
+        [self.listener requestHasFinishedLoadData:self];
+
+        return;
+    }
 
     [self parseData:nil error:error];
     self.data = nil;
 
     [self.listener requestHasFailed:self];
+
+}
+
+- (NSData *)loadFakeData {
+    
+    NSData *result = nil;
+
+    NSString *filename = self.fakeJSON;
+
+    if ([filename length] > 0) {
+        result = [NSData dataWithContentsOfFile: WOTResourcePath(filename)];
+    }
+
+    return result;
 }
 
 @end
