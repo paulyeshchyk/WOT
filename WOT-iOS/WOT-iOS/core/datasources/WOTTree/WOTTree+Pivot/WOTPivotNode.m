@@ -35,7 +35,7 @@
             }];
         }
         
-        result += [WOTPivotNode childrenMaxWidthForSiblingNode:parent orValue:value];
+        result += [self childrenMaxWidthForSiblingNode:parent orValue:value];
     }
     
     return result;
