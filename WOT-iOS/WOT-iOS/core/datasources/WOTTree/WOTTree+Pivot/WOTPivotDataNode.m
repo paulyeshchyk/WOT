@@ -12,13 +12,13 @@
 
 - (NSInteger)y {
     
-    return [[self stepParentRow] relativeRect].origin.y;
+    return self.stepParentRow.relativeRect.origin.y;
 }
 
 - (NSInteger)x {
     
     NSInteger result = 0;
-    result += [[self stepParentColumn] relativeRect].origin.x;
+    result += self.stepParentColumn.relativeRect.origin.x;
     result += [self indexInsideStepParentColumn];
     return result;
 }
