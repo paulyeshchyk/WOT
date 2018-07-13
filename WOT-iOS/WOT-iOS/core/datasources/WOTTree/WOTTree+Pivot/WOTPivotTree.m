@@ -22,7 +22,6 @@
 @interface WOTPivotTree()
 
 @property (nonatomic, strong) NSMutableArray *metadataItems;
-@property (nonatomic, strong) NSDictionary *largeIndex;
 @property (nonatomic, strong) WOTNode *rootFiltersNode;
 @property (nonatomic, strong) WOTNode *rootColumnsNode;
 @property (nonatomic, strong) WOTNode *rootRowsNode;
@@ -73,7 +72,7 @@
 
 - (void)clearMetadataItems {
 
-    [self setLargeIndex:nil];
+    [self.model.index reset];
     [self removeAllNodes];
     [self.metadataItems removeAllObjects];
     
@@ -101,42 +100,13 @@
     [self removeAllNodes];
     
     [self resortMetadata];
-    
-    [self makeData];
-    
-    [self makeIndex];
-}
 
-- (void)makeIndex {
-    
-    [self setLargeIndex:nil];
-    NSMutableDictionary *largeIndex = [[NSMutableDictionary alloc] init];
+    NSInteger metadataIndex = [self reindexMetaitems];
 
-    NSArray *allFilterItems = [WOTNodeEnumerator.sharedInstance allItemsFromNode:self.rootFiltersNode];
-    [allFilterItems enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-        
-        largeIndex[@(node.index)] = node;
-    }];
-
-    NSArray *allColumnItems = [WOTNodeEnumerator.sharedInstance allItemsFromNode:self.rootColumnsNode];
-    [allColumnItems enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-        
-        largeIndex[@(node.index)] = node;
-    }];
+    [self makeDataForIndex: metadataIndex];
     
-    NSArray *allRowItems = [WOTNodeEnumerator.sharedInstance allItemsFromNode:self.rootRowsNode];
-    [allRowItems enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-        
-        largeIndex[@(node.index)] = node;
-    }];
-    
-    NSArray *allDataItems = [WOTNodeEnumerator.sharedInstance allItemsFromNode:self.rootDataNode];
-    [allDataItems enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-        
-        largeIndex[@(node.index)] = node;
-    }];
-    
-    [self setLargeIndex:largeIndex];
+    [self.model.index reset];
+    [self.model.index addNodesToIndex:@[self.rootFiltersNode, self.rootColumnsNode, self.rootRowsNode, self.rootDataNode]];
 }
 
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex {
@@ -148,12 +118,12 @@
      * currently not used
      */
 
-    return [[[self largeIndex] allKeys] count];
+    return self.model.index.count;
 }
 
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    WOTNode *result = [self largeIndex][@(indexPath.row)];
+    WOTNode *result = [self.model.index itemWithIndexPath:indexPath];
     if (!result) {
         
         NSCAssert(NO, @"Node not found for indexPath:%@",indexPath);
@@ -164,13 +134,11 @@
 
 #pragma mark - PivotDimensionDelegate
 - (NSInteger)rootNodeWidth {
-    id<WOTNodeProtocol> node = self.rootRowsNode;
-    return [WOTNodeEnumerator.sharedInstance depthForChildren: node.children initialLevel: node.isVisible?1:0];
+    return [WOTNodeEnumerator.sharedInstance depthForChildren: self.rootRowsNode.children initialLevel: self.rootRowsNode.isVisible?1:0];
 }
 
 - (NSInteger)rootNodeHeight {    
-    id<WOTNodeProtocol> node = self.rootColumnsNode;
-    return [WOTNodeEnumerator.sharedInstance depthForChildren: node.children initialLevel: node.isVisible?1:0];
+    return [WOTNodeEnumerator.sharedInstance depthForChildren: self.rootColumnsNode.children initialLevel: self.rootColumnsNode.isVisible?1:0];
 }
 
 - (CGSize)contentSize {
@@ -201,47 +169,49 @@
 }
 
 #pragma mark - private
-- (void)makeData {
-    
+- (NSInteger) reindexMetaitems {
     __block NSInteger index = 0;
-    
-    [self.rootFiltersNode enumerateAllChildrenUsingBlock:^(WOTNode *node) {
-        
-        [(WOTPivotNode *)node setIndex:index];
-        [(WOTPivotNode *)node setDimensionDelegate:self];
-        index++;
-    } comparator:^NSComparisonResult(WOTNode *obj1, WOTNode *obj2, id level) {
-        
+
+    [WOTNodeEnumerator.sharedInstance enumerateAllWithNode:self.rootFiltersNode comparator:^enum NSComparisonResult(id<WOTNodeProtocol> _Nonnull obj1, id<WOTNodeProtocol> _Nonnull obj2, NSInteger level) {
         return NSOrderedSame;
-    }];
-    
-    [self.rootColumnsNode enumerateAllChildrenUsingBlock:^(WOTNode *node) {
-        
+    } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
+
         [(WOTPivotNode *)node setIndex:index];
         [(WOTPivotNode *)node setDimensionDelegate:self];
         index++;
-    } comparator:^NSComparisonResult(WOTNode *obj1, WOTNode *obj2, id level) {
-        
+    }];
+
+    [WOTNodeEnumerator.sharedInstance enumerateAllWithNode:self.rootColumnsNode comparator:^enum NSComparisonResult(id<WOTNodeProtocol> _Nonnull obj1, id<WOTNodeProtocol> _Nonnull obj2, NSInteger level) {
         return [[obj1 name] compare:[obj2 name]];
-    }];
-    
-    [self.rootRowsNode enumerateAllChildrenUsingBlock:^(WOTNode *node) {
-        
+    } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
+
         [(WOTPivotNode *)node setIndex:index];
         [(WOTPivotNode *)node setDimensionDelegate:self];
         index++;
-    } comparator:^NSComparisonResult(WOTNode *obj1, WOTNode *obj2, id level) {
-        
+    }];
+
+    [WOTNodeEnumerator.sharedInstance enumerateAllWithNode:self.rootRowsNode comparator:^enum NSComparisonResult(id<WOTNodeProtocol> _Nonnull obj1, id<WOTNodeProtocol> _Nonnull obj2, NSInteger level) {
         NSPredicate *predicate1 = [(WOTPivotNode *)obj1 predicate];
         NSPredicate *predicate2 = [(WOTPivotNode *)obj2 predicate];
-        
+
         return [[predicate1 predicateFormat] compare:[predicate2 predicateFormat]];
+    } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
+
+        [(WOTPivotNode *)node setIndex:index];
+        [(WOTPivotNode *)node setDimensionDelegate:self];
+        index++;
     }];
+    return index;
+}
+
+- (void)makeDataForIndex:(NSInteger) externalIndex {
     
     if (!self.pivotItemCreationBlock) {
 
         return;
     }
+
+    __block NSInteger index = externalIndex;
 
     NSArray *colNodeEndpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:self.rootColumnsNode];
     NSArray *rowNodeEndpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:self.rootRowsNode];

@@ -21,7 +21,6 @@
 @property (nonatomic, strong) WOTPivotNode *stepParentColumn;
 @property (nonatomic, strong) WOTPivotNode *stepParentRow;
 @property (nonatomic, strong) NSDictionary *sizesMap;
-@property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign) NSInteger indexInsideStepParentColumn;
 @property (nonatomic, assign) id<WOTPivotDimensionProtocol> dimensionDelegate;
 

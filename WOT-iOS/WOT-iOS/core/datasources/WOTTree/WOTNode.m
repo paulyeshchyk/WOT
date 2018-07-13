@@ -19,6 +19,7 @@
 @synthesize name;
 @synthesize parent;
 @synthesize childList;
+@synthesize index;
 
 - (void)dealloc {
 

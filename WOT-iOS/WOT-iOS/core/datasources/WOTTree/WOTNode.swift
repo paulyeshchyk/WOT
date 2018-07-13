@@ -20,6 +20,7 @@ public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
     var childList: Set<AnyHashable> { get }
     var isVisible: Bool { get set }
     var fullName: String { get }
+    var index: Int { get set }
     init()
     init(name: String)
     init(name: String, imageURL: NSURL)

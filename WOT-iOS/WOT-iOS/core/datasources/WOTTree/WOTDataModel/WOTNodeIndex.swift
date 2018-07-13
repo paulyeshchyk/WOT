@@ -11,16 +11,46 @@ import Foundation
 @objc
 public protocol WOTNodeIndexProtocol: NSObjectProtocol {
 
-    func makeIndex()
+    func reset()
+    func addNodeToIndex(_ node: WOTNodeProtocol)
+    func addNodesToIndex(_ nodes: [WOTNodeProtocol])
+    var count: Int { get }
+    func item(indexPath: NSIndexPath) -> WOTNodeProtocol?
+    func maxWidthOrValue( _ value: Int) -> Int
 
 }
 
 @objc
 class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
+
     private var largeIndex = Dictionary<AnyHashable, Any> ()
 
-    func makeIndex() {
+    func maxWidthOrValue( _ value: Int) -> Int {
+        return 0
+    }
 
+    func reset() {
         largeIndex.removeAll()
+    }
+
+    func addNodesToIndex(_ nodes: [WOTNodeProtocol]) {
+        nodes.forEach { (node) in
+            self.addNodeToIndex(node)
+        }
+    }
+
+    func addNodeToIndex(_ node: WOTNodeProtocol) {
+        let allItems = WOTNodeEnumerator.sharedInstance.allItems(fromNode: node)
+        allItems.forEach { (node) in
+            largeIndex[node.index] = node
+        }
+    }
+
+    var count: Int {
+        return self.largeIndex.keys.count
+    }
+
+    func item(indexPath: NSIndexPath) -> WOTNodeProtocol? {
+        return self.largeIndex[indexPath.row] as? WOTNodeProtocol
     }
 }
