@@ -20,7 +20,7 @@
 @implementation WOTTankListSettingSortTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    [super awakeFromNib];
     self.ascending = NO;
 }
 

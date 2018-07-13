@@ -23,7 +23,7 @@
 @implementation WOTTankPivotDataCollectionViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setDataViewColor:(UIColor *)dataViewColor {

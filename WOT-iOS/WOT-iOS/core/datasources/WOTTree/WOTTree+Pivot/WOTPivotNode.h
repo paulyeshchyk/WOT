@@ -7,8 +7,8 @@
 //
 
 #import "WOTNode.h"
-#import "WOTPivotDimensionProtocol.h"
 #import "WOTEnums.h"
+#import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
 @protocol WOTDimensionProtocol;

@@ -27,7 +27,6 @@
 @property (nonatomic, readwrite, strong) WOTNode *rootRowsNode;
 @property (nonatomic, readwrite, strong) WOTNode *rootDataNode;
 @property (nonatomic, assign)BOOL shouldDisplayEmptyColumns;
-@property (nonatomic, strong) id<WOTDimensionProtocol> dimension;
 
 @end
 
@@ -37,19 +36,6 @@
 @synthesize rootColsNode;
 @synthesize rootRowsNode;
 @synthesize rootDataNode;
-
-@dynamic rootNodeHeight;
-@dynamic rootNodeWidth;
-@dynamic contentSize;
-
-+ (WOTPivotTree *)sharedInstance {
-    static WOTPivotTree *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
 
 - (id)init {
     
@@ -69,7 +55,7 @@
 
 - (WOTPivotNode *)newRootNode:(NSString *)name {
     
-    WOTPivotNode *result = [[WOTPivotNode alloc] initWithName:name dimensionDelegate:self isVisible:NO];
+    WOTPivotNode *result = [[WOTPivotNode alloc] initWithName:name dimensionDelegate:self.dimension isVisible:NO];
     [self addNode:result];
     return result;
 }
@@ -148,52 +134,6 @@
     return result;
 }
 
-#pragma mark - PivotDimensionDelegate
-- (NSInteger)rootNodeWidth {
-    return self.dimension.rootNodeWidth;
-}
-
-- (NSInteger)rootNodeHeight {    
-    return self.dimension.rootNodeHeight;
-}
-
-
-- (void)node:(id<WOTNodeProtocol>)node setMaxWidth:(NSInteger) maxWidth forKey:(NSString *)key {
-    [self.dimension setMaxWidth:maxWidth forNode:node byKey:key];
-}
-
-
-- (CGSize)contentSize {
-//    return self.dimension.contentSize
-    NSInteger rowNodesDepth = self.dimension.rootNodeWidth;
-    NSInteger colNodesDepth = self.dimension.rootNodeHeight;
-    
-#warning emptyDataColumnWidth should be refactored
-    NSInteger emptyDataColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0;
-
-    NSArray * columnEndpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:self.rootColsNode];
-
-    __block NSInteger maxWidth = 0;
-    [columnEndpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-
-
-
-        NSInteger value = [self.dimension maxWidth:node orValue:emptyDataColumnWidth];
-
-//        NSInteger value = [node maxWidthOrValue:emptyDataColumnWidth];
-        maxWidth += value;
-    }];
-    
-    NSInteger width = rowNodesDepth + maxWidth;
-    
-    NSArray *rowEndpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:self.rootRowsNode];
-    NSInteger rowNodesEndpointsCount = [rowEndpoints count];
-
-    NSInteger height = colNodesDepth + rowNodesEndpointsCount;
-    
-    return CGSizeMake(width, height);
-}
-
 #pragma mark - private
 - (NSInteger) reindexMetaitems {
     __block NSInteger index = 0;
@@ -255,9 +195,6 @@
 
                 [self.dimension setMaxWidth:dataNodes.count forNode:columnNode byKey:[NSString stringWithFormat:@"%d",rowNode.hash]];
                 [self.dimension setMaxWidth:dataNodes.count forNode:rowNode byKey:[NSString stringWithFormat:@"%d",columnNode.hash]];
-
-//                [columnNode setMaxWidth:dataNodes.count forKey:rowNode.hash];
-//                [rowNode setMaxWidth:dataNodes.count forKey:columnNode.hash];
 
                 [dataNodes enumerateObjectsUsingBlock:^(WOTNode *dnode, NSUInteger idx, BOOL *stop) {
 

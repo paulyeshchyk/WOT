@@ -13,7 +13,6 @@ protocol WOTNodeEnumeratorProtocol: NSObjectProtocol {
     func endpoints(node: WOTNodeProtocol) -> [WOTNodeProtocol]
     func endpoints(array: [WOTNodeProtocol]) -> [WOTNodeProtocol]
     func childrenWidth(siblingNode:WOTNodeProtocol, orValue: Int) -> Int
-    func childrenMaxWidth(siblingNode: WOTNodeProtocol, orValue: Int) -> Int
     func childrenCount(siblingNode: WOTNodeProtocol) -> Int
     func depth(forChildren: [WOTNodeProtocol], initialLevel: Int) -> Int
     func allItems(fromNode node: WOTNodeProtocol) -> [WOTNodeProtocol]
@@ -97,32 +96,6 @@ class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
             let childEndpoints = self.endpoints(node: child)
             result.append(contentsOf: childEndpoints)
         }
-        return result
-    }
-
-    func maxWidth(node: WOTNodeProtocol, orValue: Int) -> Int {
-        assert(false, "not implemented")
-        return 0
-    }
-
-    func childrenMaxWidth(siblingNode: WOTNodeProtocol, orValue: Int) -> Int {
-
-        var result: Int = 0
-        guard let parent = siblingNode.parent else {
-            return result
-        }
-
-        guard let siblingIndex = (parent.children.index { $0 === siblingNode }) else {
-            return result
-        }
-        for idx in 0 ..< siblingIndex {
-            let child = parent.children[idx]
-            let endpoints = self.endpoints(node: child)
-            endpoints.forEach { (node) in
-                result += self.maxWidth(node: node, orValue: orValue)
-            }
-        }
-        result += self.childrenMaxWidth(siblingNode: parent, orValue: orValue)
         return result
     }
 

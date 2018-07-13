@@ -16,25 +16,57 @@ protocol RootNodeHolderProtocol: NSObjectProtocol {
     var rootDataNode: WOTNodeProtocol? { get }
 }
 
+
+
+/**
+
+ ***********************************************************************
+ *              *         1           *         2         *      3     *
+ *              ********************************************************
+ *              *    1    *     2     *    3    *    4    *      5     *
+ ***********************************************************************
+ *     *   1    *
+ *  1  **********
+ *     *   2    *
+ ****************
+ *     *   3    *
+ *     **********
+ *     *   4    *
+ *  2  **********
+ *     *   5    *
+ *     **********
+ *     *   6    *
+ ****************
+ */
+
 @objc
 protocol WOTDimensionProtocol: NSObjectProtocol {
     init(rootNodeHolder: RootNodeHolderProtocol)
     var shouldDisplayEmptyColumns: Bool { get }
+    /**
+     *  for table above returns 5
+     */
     var rootNodeWidth: Int { get }
+    /**
+     *  for table above returns 6
+     */
     var rootNodeHeight: Int { get }
+    /**
+     *  for table above returns {7,8}
+     *  {rowsDepth+colsEndpoints, colsDepth+rowsEndpoints}
+     */
     var contentSize: CGSize { get }
     func setMaxWidth(_ maxWidth: Int, forNode: WOTNodeProtocol, byKey: String)
     func maxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int
     func childrenMaxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int
 }
 
+
 typealias TNodeSize = [String: Int]
 typealias TNodesSizesType = [WOTNode: TNodeSize]
 
 @objc
 class WOTDimension: NSObject, WOTDimensionProtocol {
-//    @objc
-//    static let sharedInstance = WOTDimension(rootNodeHolder: WOTPivotTree.sharedInstance())
 
     private var sizes: TNodesSizesType = TNodesSizesType()
 

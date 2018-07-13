@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef CGSize(^LayoutRelativeContentSizeBlock)(void);
+typedef CGRect(^LayoutRelativeRectBlock)(NSIndexPath *indexPath);
 
 @interface WOTTankPivotLayout : UICollectionViewFlowLayout
 

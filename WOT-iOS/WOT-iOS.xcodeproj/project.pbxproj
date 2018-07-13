@@ -936,7 +936,6 @@
 		1DDEE3731B8EF6C800C90D4B /* WOTPivotTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTPivotTree.m; sourceTree = "<group>"; };
 		1DDEE3751B8EF95C00C90D4B /* WOTPivotNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPivotNode.h; sourceTree = "<group>"; };
 		1DDEE3761B8EF95C00C90D4B /* WOTPivotNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTPivotNode.m; sourceTree = "<group>"; };
-		1DDEE3781B8F061100C90D4B /* WOTPivotDimensionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPivotDimensionProtocol.h; sourceTree = "<group>"; };
 		1DDEE37B1B8F353200C90D4B /* WOTTankPivotDataCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotDataCollectionViewCell.h; sourceTree = "<group>"; };
 		1DDEE37C1B8F353200C90D4B /* WOTTankPivotDataCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotDataCollectionViewCell.m; sourceTree = "<group>"; };
 		1DDEE37D1B8F353200C90D4B /* WOTTankPivotDataCollectionViewCell~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "WOTTankPivotDataCollectionViewCell~ipad.xib"; sourceTree = "<group>"; };
@@ -1095,7 +1094,6 @@
 		1D010D5F1B8317F700FA6A75 /* WOTTree+Pivot */ = {
 			isa = PBXGroup;
 			children = (
-				1DDEE3781B8F061100C90D4B /* WOTPivotDimensionProtocol.h */,
 				1DDEE3721B8EF6C800C90D4B /* WOTPivotTree.h */,
 				1DDEE3731B8EF6C800C90D4B /* WOTPivotTree.m */,
 				1DDEE3751B8EF95C00C90D4B /* WOTPivotNode.h */,

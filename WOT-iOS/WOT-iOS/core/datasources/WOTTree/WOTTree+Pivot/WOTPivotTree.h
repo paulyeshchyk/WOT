@@ -7,15 +7,17 @@
 //
 
 #import "WOTTree.h"
-#import "WOTPivotDimensionProtocol.h"
 
 typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
 @protocol RootNodeHolderProtocol;
+@protocol WOTDimensionProtocol;
 
-@interface WOTPivotTree : WOTTree <WOTPivotDimensionProtocol, RootNodeHolderProtocol>
+@interface WOTPivotTree : WOTTree <RootNodeHolderProtocol>
 
 @property (nonatomic, copy) PivotItemCreationBlock pivotItemCreationBlock;
+@property (nonatomic, strong) id<WOTDimensionProtocol> dimension;
+
 
 - (void)makePivot;
 - (void)addMetadataItems:(NSArray *)metadataItems;
@@ -23,6 +25,5 @@ typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex;
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath;
-+ (WOTPivotTree *)sharedInstance;
 
 @end

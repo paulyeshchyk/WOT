@@ -50,19 +50,18 @@
     
     [super viewDidLoad];
 
-    [self.flowLayout setRelativeContentSizeBlock:^(){
-        
-        return self.pivotTree.contentSize;
+    [self.flowLayout setRelativeContentSizeBlock:^CGSize{
+        return self.pivotTree.dimension.contentSize;
     }];
-    
+
     [self.flowLayout setItemRelativeRectCallback:^CGRect(NSIndexPath *indexPath) {
-       
+
         WOTPivotNode *node = (WOTPivotNode *)[self.pivotTree pivotItemAtIndexPath:indexPath];
 
         CGRect resultRect = node.relativeRect;
         return resultRect;
     }];
-    
+
     [self.flowLayout setItemLayoutStickyType:^PivotStickyType(NSIndexPath *indexPath) {
 
         WOTPivotNode *node = (WOTPivotNode *)[self.pivotTree pivotItemAtIndexPath:indexPath];

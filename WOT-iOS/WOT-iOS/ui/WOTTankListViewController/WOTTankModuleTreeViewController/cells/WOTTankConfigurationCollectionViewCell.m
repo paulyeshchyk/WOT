@@ -11,7 +11,7 @@
 @implementation WOTTankConfigurationCollectionViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    [super awakeFromNib];
 }
 
 @end

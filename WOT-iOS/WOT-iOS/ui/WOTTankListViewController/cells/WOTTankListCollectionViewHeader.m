@@ -17,7 +17,7 @@
 @implementation WOTTankListCollectionViewHeader
 
 - (void)awakeFromNib {
-    // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setSectionName:(NSString *)sectionName {
