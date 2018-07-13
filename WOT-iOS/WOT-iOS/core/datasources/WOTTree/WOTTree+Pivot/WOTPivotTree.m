@@ -19,7 +19,7 @@
 #import "WOTPivotDataNode.h"
 
 
-@interface WOTPivotTree() <RootNodeHolderProtocol>
+@interface WOTPivotTree()
 
 @property (nonatomic, strong) NSMutableArray *metadataItems;
 @property (nonatomic, readwrite, strong) WOTNode *rootFiltersNode;
@@ -41,6 +41,15 @@
 @dynamic rootNodeHeight;
 @dynamic rootNodeWidth;
 @dynamic contentSize;
+
++ (WOTPivotTree *)sharedInstance {
+    static WOTPivotTree *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
 
 - (id)init {
     
@@ -148,8 +157,14 @@
     return self.dimension.rootNodeHeight;
 }
 
+
+- (void)node:(id<WOTNodeProtocol>)node setMaxWidth:(NSInteger) maxWidth forKey:(NSString *)key {
+    [self.dimension setMaxWidth:maxWidth forNode:node byKey:key];
+}
+
+
 - (CGSize)contentSize {
-    
+//    return self.dimension.contentSize
     NSInteger rowNodesDepth = self.dimension.rootNodeWidth;
     NSInteger colNodesDepth = self.dimension.rootNodeHeight;
     
@@ -160,8 +175,12 @@
 
     __block NSInteger maxWidth = 0;
     [columnEndpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-        
-        NSInteger value = [node maxWidthOrValue:emptyDataColumnWidth];
+
+
+
+        NSInteger value = [self.dimension maxWidth:node orValue:emptyDataColumnWidth];
+
+//        NSInteger value = [node maxWidthOrValue:emptyDataColumnWidth];
         maxWidth += value;
     }];
     
@@ -184,7 +203,7 @@
     } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
 
         [(WOTPivotNode *)node setIndex:index];
-        [(WOTPivotNode *)node setDimensionDelegate:self];
+        [(WOTPivotNode *)node setDimensionDelegate:self.dimension];
         index++;
     }];
 
@@ -193,7 +212,7 @@
     } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
 
         [(WOTPivotNode *)node setIndex:index];
-        [(WOTPivotNode *)node setDimensionDelegate:self];
+        [(WOTPivotNode *)node setDimensionDelegate:self.dimension];
         index++;
     }];
 
@@ -205,7 +224,7 @@
     } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
 
         [(WOTPivotNode *)node setIndex:index];
-        [(WOTPivotNode *)node setDimensionDelegate:self];
+        [(WOTPivotNode *)node setDimensionDelegate:self.dimension];
         index++;
     }];
     return index;
@@ -233,10 +252,13 @@
 
                 NSArray *predicates = [self predicatesFromColumnNode:columnNode rowNode:rowNode];
                 NSArray *dataNodes = self.pivotItemCreationBlock(predicates);
-                
-                [columnNode setMaxWidth:dataNodes.count forKey:@(rowNode.hash)];
-                [rowNode setMaxWidth:dataNodes.count forKey:@(columnNode.hash)];
-                
+
+                [self.dimension setMaxWidth:dataNodes.count forNode:columnNode byKey:[NSString stringWithFormat:@"%d",rowNode.hash]];
+                [self.dimension setMaxWidth:dataNodes.count forNode:rowNode byKey:[NSString stringWithFormat:@"%d",columnNode.hash]];
+
+//                [columnNode setMaxWidth:dataNodes.count forKey:rowNode.hash];
+//                [rowNode setMaxWidth:dataNodes.count forKey:columnNode.hash];
+
                 [dataNodes enumerateObjectsUsingBlock:^(WOTNode *dnode, NSUInteger idx, BOOL *stop) {
 
                     WOTPivotNode *dataNode = (WOTPivotNode *)dnode;
@@ -280,28 +302,22 @@
 #pragma mark -
 - (void)removeAllNodes {
 
-    __block typeof(self)strongSelf = self;
-    [self.rootDataNode removeChildren:^(id<WOTNodeProtocol> _Nonnull node) {
+    [self.rootDataNode removeChildren: NULL];
+    [(WOTPivotNode *)self.rootDataNode setDimensionDelegate:nil];
+    self.rootDataNode = nil;
 
-        [(WOTPivotNode *)strongSelf.rootDataNode setDimensionDelegate:nil];
-        strongSelf.rootDataNode = nil;
-    }];
-    [self.rootRowsNode removeChildren:^(id<WOTNodeProtocol> _Nonnull node) {
-        
-        [(WOTPivotNode *)strongSelf.rootRowsNode setDimensionDelegate:nil];
-        strongSelf.rootRowsNode = nil;
-    }];
-    [self.rootColsNode removeChildren:^(id<WOTNodeProtocol> _Nonnull node) {
-        
-        [(WOTPivotNode *)strongSelf.rootColsNode setDimensionDelegate:nil];
-        strongSelf.rootColsNode = nil;
-    }];
-    [self.rootFiltersNode removeChildren:^(id<WOTNodeProtocol> _Nonnull node) {
-        
-        [(WOTPivotNode *)strongSelf.rootFiltersNode setDimensionDelegate:nil];
-        strongSelf.rootFiltersNode = nil;
-    }];
-    
+    [self.rootRowsNode removeChildren: NULL];
+    [(WOTPivotNode *)self.rootRowsNode setDimensionDelegate:nil];
+    self.rootRowsNode = nil;
+
+    [self.rootColsNode removeChildren: NULL];
+    [(WOTPivotNode *)self.rootColsNode setDimensionDelegate:nil];
+    self.rootColsNode = nil;
+
+    [self.rootFiltersNode removeChildren: NULL];
+    [(WOTPivotNode *)self.rootFiltersNode setDimensionDelegate:nil];
+    self.rootFiltersNode = nil;
+
     [super removeAllNodes];
 }
 

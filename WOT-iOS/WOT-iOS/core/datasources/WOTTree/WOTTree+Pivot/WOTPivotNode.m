@@ -55,7 +55,7 @@
     return self;
 }
 
-- (id)initWithName:(NSString *)name dimensionDelegate:(id<WOTPivotDimensionProtocol>)dimensionDelegate isVisible:(BOOL)isVisible {
+- (id)initWithName:(NSString *)name dimensionDelegate:(id<WOTDimensionProtocol>)dimensionDelegate isVisible:(BOOL)isVisible {
     
     self = [self initWithName:name];
     if (self){
@@ -92,7 +92,7 @@
     NSInteger height = [self height];
     CGRect result = CGRectMake(x,y,width, height);
     
-    self.relativeRectValue =[NSValue valueWithCGRect:result];
+    self.relativeRectValue = [NSValue valueWithCGRect:result];
     
     return result;
 }
@@ -117,57 +117,5 @@
    return 0;
 }
 
-#pragma mark - 
-- (void)setMaxWidth:(NSInteger)width forKey:(id)key {
-    
-    if (width == 0) {
-        
-        return;
-    }
-    
-    NSDictionary *prevMap = [self sizesMap];
-    NSMutableDictionary *map = [[NSMutableDictionary alloc] init];
-    [map addEntriesFromDictionary:prevMap];
-    
-    NSNumber *value = map[key];
-    map[key] = @(MAX(width,[value integerValue]));
-    [self setSizesMap:[map copy]];
-}
-
-- (NSInteger)maxWidthOrValue:(NSInteger)value {
-    
-    __block NSInteger result = value;
-    NSDictionary *map = [self sizesMap];
-    [[map allKeys] enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
-        
-        result = MAX([map[key] integerValue],result);
-    }];
-    
-    return result;
-}
-
-#pragma mark -
-+ (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value{
-
-    __block NSInteger result = 0;
-    WOTNode *parent = node.parent;
-    if (parent) {
-
-        NSInteger indexOfNode = [parent.children indexOfObject:node];
-        for (int i=0;i<indexOfNode;i++) {
-
-            WOTNode *child = parent.children[i];
-            NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: child];
-            [endpoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-
-                result += [node maxWidthOrValue:value];
-            }];
-        }
-
-        result += [self childrenMaxWidthForSiblingNode:parent orValue:value];
-    }
-
-    return result;
-}
 
 @end

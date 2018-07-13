@@ -11,8 +11,16 @@
 
 @implementation WOTPivotRowNode
 
+- (PivotStickyType)stickyType {
+    return PivotStickyTypeHorizontal;
+}
+
+@end
+
+@implementation WOTPivotRowNode (Dimension)
+
 - (NSInteger)y {
-    
+
     NSInteger result = 0;
     result += [WOTNodeEnumerator.sharedInstance childrenWidthWithSiblingNode:self orValue:1];
     result += self.dimensionDelegate.rootNodeHeight;
@@ -24,7 +32,7 @@
 }
 
 - (NSInteger)width {
-    
+
     return 1;
 }
 
@@ -32,11 +40,6 @@
     NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: self];
     return endpoints.count;
 
-}
-
-- (PivotStickyType)stickyType {
-    
-    return PivotStickyTypeHorizontal;
 }
 
 @end

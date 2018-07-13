@@ -11,46 +11,42 @@
 
 @implementation WOTPivotColNode
 
+- (PivotStickyType)stickyType {
+    return PivotStickyTypeVertical;
+}
+
+@end
+
+@implementation WOTPivotColNode(Dimension)
+
 - (NSInteger)y {
-    
     return [WOTNodeEnumerator.sharedInstance visibleParentsCountWithNode:self];
 }
 
 - (NSInteger)x {
-    
     NSInteger result  = 0;
-    result += [WOTPivotNode childrenMaxWidthForSiblingNode:self orValue:0];
+
+    result += [self.dimensionDelegate childrenMaxWidth:self orValue:0];
     result += self.dimensionDelegate.rootNodeWidth;
     return result;
 }
 
 - (NSInteger)width {
-    
-    __block NSInteger result = 0;
     NSArray *endPoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: self];
     if ([endPoints count] == 0) {
-        
-        result = 1;
-    } else {
-        
-        [endPoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
-            
-            result += [node maxWidthOrValue:0];
-        }];
+
+        return 1;
     }
 
+    __block NSInteger result = 0;
+    [endPoints enumerateObjectsUsingBlock:^(WOTPivotNode *node, NSUInteger idx, BOOL *stop) {
+        result += [self.dimensionDelegate maxWidth:node orValue:0];
+    }];
     return result;
 }
 
 - (NSInteger)height {
-    
     return 1;
-}
-
-
-- (PivotStickyType)stickyType {
-    
-    return PivotStickyTypeVertical;
 }
 
 @end

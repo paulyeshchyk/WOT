@@ -4,3 +4,4 @@
 
 #import "WOTNode.h"
 #import "WOTNode+PivotFactory.h"
+#import "WOTPivotTree.h"

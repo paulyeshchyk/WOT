@@ -13,6 +13,7 @@ public typealias WOTNodeProtocolRemoveCompletion = ( WOTNodeProtocol )->()
 
 @objc
 public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
+    var hashString: String { get }
     var name: String { get set }
     var children: [WOTNodeProtocol] { get }
     var parent: WOTNodeProtocol? { get set }
@@ -21,6 +22,7 @@ public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
     var isVisible: Bool { get set }
     var fullName: String { get }
     var index: Int { get set }
+
     init()
     init(name: String)
     init(name: String, imageURL: NSURL)
@@ -29,6 +31,7 @@ public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
     func removeChild(_ child: WOTNodeProtocol, completion: WOTNodeProtocolRemoveCompletion)
     func removeChildren(_ completion: WOTNodeProtocolRemoveCompletion?)
 }
+
 
 @objc
 public class WOTNodeSwift: NSObject {

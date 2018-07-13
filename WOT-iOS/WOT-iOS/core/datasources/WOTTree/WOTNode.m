@@ -20,6 +20,12 @@
 @synthesize parent;
 @synthesize childList;
 @synthesize index;
+@synthesize hashString;
+
+- (NSString *)hashString {
+
+    return [NSString stringWithFormat:@"%d",self.hash];
+}
 
 - (void)dealloc {
 
@@ -66,7 +72,8 @@
 }
 
 - (NSUInteger)hash {
-    
+
+
     return [self.name hash];
 }
 

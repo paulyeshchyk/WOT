@@ -11,6 +11,8 @@
 #import "WOTEnums.h"
 #import <CoreData/CoreData.h>
 
+@protocol WOTDimensionProtocol;
+
 @interface WOTPivotNode : WOTNode
 
 @property (nonatomic, strong) UIColor *dataColor;
@@ -20,23 +22,17 @@
 @property (nonatomic, strong) NSPredicate *predicate;
 @property (nonatomic, strong) WOTPivotNode *stepParentColumn;
 @property (nonatomic, strong) WOTPivotNode *stepParentRow;
-@property (nonatomic, strong) NSDictionary *sizesMap;
 @property (nonatomic, assign) NSInteger indexInsideStepParentColumn;
-@property (nonatomic, assign) id<WOTPivotDimensionProtocol> dimensionDelegate;
+@property (nonatomic, assign) id<WOTDimensionProtocol> dimensionDelegate;
 
 @property (nonatomic, readonly)NSInteger x;
 @property (nonatomic, readonly)NSInteger y;
 @property (nonatomic, readonly)NSInteger width;
 @property (nonatomic, readonly)NSInteger height;
 
-+ (NSInteger)childrenMaxWidthForSiblingNode:(WOTNode *)node orValue:(NSInteger)value;
-
 - (id)initWithName:(NSString *)name predicate:(NSPredicate *)predicate;
 - (id)initWithName:(NSString *)name imageURL:(NSURL *)imageURL predicate:(NSPredicate *)predicate ;
-- (id)initWithName:(NSString *)name dimensionDelegate:(id<WOTPivotDimensionProtocol>)dimensionDelegate isVisible:(BOOL)isVisible;
+- (id)initWithName:(NSString *)name dimensionDelegate:(id<WOTDimensionProtocol>)dimensionDelegate isVisible:(BOOL)isVisible;
 - (id)copyWithPredicate:(NSPredicate *)predicate;
-
-- (void)setMaxWidth:(NSInteger)width forKey:(id)key;
-- (NSInteger)maxWidthOrValue:(NSInteger)value;
 
 @end

@@ -11,7 +11,9 @@
 
 typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
-@interface WOTPivotTree : WOTTree <WOTPivotDimensionProtocol>
+@protocol RootNodeHolderProtocol;
+
+@interface WOTPivotTree : WOTTree <WOTPivotDimensionProtocol, RootNodeHolderProtocol>
 
 @property (nonatomic, copy) PivotItemCreationBlock pivotItemCreationBlock;
 
@@ -21,5 +23,6 @@ typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex;
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath;
++ (WOTPivotTree *)sharedInstance;
 
 @end

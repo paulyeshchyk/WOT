@@ -55,4 +55,12 @@
  */
 @property (nonatomic, readwrite) CGSize contentSize;
 
+
+/**
+ *
+ **/
+
+- (void)node:(id<WOTNodeProtocol>)node setMaxWidth:(NSInteger) maxWidth forKey:(NSString *)key;
+
+
 @end
