@@ -10,7 +10,6 @@
 
 @implementation WOTNode (Enumeration)
 
- 
 - (NSArray *)endpoints {
     return [WOTNodeEnumerator.sharedInstance endpointsWithNode: self];
 }

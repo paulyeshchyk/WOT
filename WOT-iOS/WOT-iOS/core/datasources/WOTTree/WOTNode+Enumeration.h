@@ -8,10 +8,6 @@
 
 #import "WOTNode.h"
 
-typedef NSComparisonResult(^HierarchyComparator)(WOTNode *obj1, WOTNode *obj2, id level);
-
-typedef void(^HierarchyEnumarationCallback)(WOTNode *node);
-
 @interface WOTNode (Enumeration)
 
 @property (nonatomic, readonly) NSArray *endpoints __deprecated_msg("use WOTEnumerator instead");
