@@ -7,7 +7,6 @@
 //
 
 #import "WOTTree.h"
-#import "WOTNode+Enumeration.h"
 
 @interface WOTTree ()
 

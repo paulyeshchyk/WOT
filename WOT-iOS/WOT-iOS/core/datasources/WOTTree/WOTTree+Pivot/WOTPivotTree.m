@@ -9,15 +9,11 @@
 #import "WOTPivotTree.h"
 
 #import "WOTPivotNode.h"
-#import "WOTNode+Enumeration.h"
-
-
 #import "WOTPivotColNode.h"
 #import "WOTPivotRowNode.h"
 #import "WOTPivotFilterNode.h"
 #import "WOTPivotColNode.h"
 #import "WOTPivotDataNode.h"
-
 
 @interface WOTPivotTree()
 

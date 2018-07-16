@@ -18,7 +18,6 @@
 #import "WOTPivotTree.h"
 #import "WOTPivotNode.h"
 #import "WOTNode+PivotFactory.h"
-#import "WOTNode+Enumeration.h"
 #import "WOTPivotRowNode.h"
 #import "WOTPivotColNode.h"
 #import "WOTPivotDataNode.h"

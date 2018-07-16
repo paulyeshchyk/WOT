@@ -138,20 +138,6 @@
     [self.childSet removeAllObjects];
 }
 
-- (void)removeAllNodesWithCompletionBlock:(WOTNodeRemoveCompletionBlock)completionBlock {
-    
-    [self.childSet enumerateObjectsUsingBlock:^(WOTNode *node, NSUInteger idx, BOOL *stop) {
-
-        if (completionBlock) {
-            
-            completionBlock(node);
-        }
-        node.parent = nil;
-        [node removeAllNodesWithCompletionBlock:completionBlock];
-    }];
-    [self.childSet removeAllObjects];
-}
-
 - (void) addChildArray:(NSArray<id<WOTNodeProtocol>> *)childArray {
     
     NSSet<WOTNodeProtocol> *set = [NSSet<WOTNodeProtocol> setWithArray:childArray];
@@ -168,18 +154,12 @@
     [self.childSet unionSet: set];
 }
 
-- (void)removeChild:(id<WOTNodeProtocol>)child completionBlock:(WOTNodeRemoveCompletionBlock)completionBlock{
-
-    if (completionBlock) {
-        
-        completionBlock(child);
-    }
-    child.parent = nil;
-    [self.childSet removeObject:child];
-}
-
 - (NSOrderedSet *)childList {
     return self.childSet;
+}
+
+- (NSArray *)endpoints {
+    return [WOTNodeEnumerator.sharedInstance endpointsWithNode: self];
 }
 
 @end

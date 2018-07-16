@@ -89,6 +89,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol {
         guard let wotnode = node as? WOTNodeProtocol else {
             return
         }
+
         wotnode.children.forEach { (child) in
             if let aliaschild = child as? WOTNodeAlias {
                 self.reindexChildNode(aliaschild, atLevel: atLevel + 1)

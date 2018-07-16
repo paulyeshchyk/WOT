@@ -28,7 +28,6 @@ public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
 
     var relativeRect: NSValue? { get set }
 
-
     init()
     init(name: String)
     init(name: String, imageURL: NSURL)

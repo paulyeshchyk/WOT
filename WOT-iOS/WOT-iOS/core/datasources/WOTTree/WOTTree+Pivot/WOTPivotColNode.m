@@ -7,16 +7,11 @@
 //
 
 #import "WOTPivotColNode.h"
-#import "WOTNode+Enumeration.h"
 
 @implementation WOTPivotColNode
 
 - (PivotStickyType)stickyType {
     return PivotStickyTypeVertical;
 }
-
-@end
-
-@implementation WOTPivotColNode(Dimension)
 
 @end

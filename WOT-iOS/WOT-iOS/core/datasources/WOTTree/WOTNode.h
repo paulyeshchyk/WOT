@@ -11,6 +11,7 @@
 @protocol WOTNodeProtocol;
 
 @interface WOTNode : NSObject <WOTNodeProtocol>
+@property (nonatomic, readonly) NSArray *endpoints __deprecated_msg("use WOTEnumerator instead");
 @end
 
 typedef void(^WOTNodeRemoveCompletionBlock)(WOTNode * node);

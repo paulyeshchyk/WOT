@@ -7,11 +7,6 @@
 //
 
 #import "WOTPivotNode.h"
-#import "WOTNode+Enumeration.h"
-
-@interface WOTPivotNode ()
-
-@end
 
 @implementation WOTPivotNode
 
