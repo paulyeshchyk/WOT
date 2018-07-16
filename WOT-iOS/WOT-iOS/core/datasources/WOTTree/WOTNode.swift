@@ -22,6 +22,12 @@ public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
     var isVisible: Bool { get set }
     var fullName: String { get }
     var index: Int { get set }
+    var indexInsideStepParentColumn: Int { get set }
+    var stepParentColumn: WOTNodeProtocol? { get set }
+    var stepParentRow: WOTNodeProtocol? { get set }
+
+    var relativeRect: NSValue? { get set }
+
 
     init()
     init(name: String)

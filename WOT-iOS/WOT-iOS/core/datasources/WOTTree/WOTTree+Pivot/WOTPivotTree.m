@@ -44,6 +44,10 @@
 
         self.shouldDisplayEmptyColumns = NO;
         self.dimension = [[WOTDimension alloc] initWithRootNodeHolder:self];
+        [self.dimension registerCalculatorClass:WOTDimensionColumnCalculator.self forNodeClass:WOTPivotColNode.self];
+        [self.dimension registerCalculatorClass:WOTDimensionRowCalculator.self forNodeClass:WOTPivotRowNode.self];
+        [self.dimension registerCalculatorClass:WOTDimensionFilterCalculator.self forNodeClass:WOTPivotFilterNode.self];
+        [self.dimension registerCalculatorClass:WOTDimensionDataCalculator.self forNodeClass:WOTPivotDataNode.self];
     }
     return self;
 }
@@ -55,7 +59,7 @@
 
 - (WOTPivotNode *)newRootNode:(NSString *)name {
     
-    WOTPivotNode *result = [[WOTPivotNode alloc] initWithName:name dimensionDelegate:self.dimension isVisible:NO];
+    WOTPivotNode *result = [[WOTPivotNode alloc] initWithName:name isVisible:NO];
     [self addNode:result];
     return result;
 }
@@ -136,7 +140,21 @@
     if (node == nil) {
         return CGRectZero;
     }
-    return node.relativeRect;
+
+    //FIXME: node.relativeRect should be optimized
+    NSValue *relativeRectValue = node.relativeRect;
+    if (relativeRectValue != nil) {
+        return [relativeRectValue CGRectValue];
+    }
+
+    Class<WOTDimensionCalculatorProtocol> _Nullable calculator = [self.dimension calculatorClassForNodeClass: [node class]];
+    if (calculator == nil) {
+        return CGRectZero;
+    }
+    CGRect result = [calculator rectangleForNode:node dimension: self.dimension];
+
+    node.relativeRect = [NSValue valueWithCGRect:result];
+    return result;
 }
 
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -159,7 +177,6 @@
     } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
 
         [(WOTPivotNode *)node setIndex:index];
-        [(WOTPivotNode *)node setDimensionDelegate:self.dimension];
         index++;
     }];
 
@@ -168,7 +185,6 @@
     } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
 
         [(WOTPivotNode *)node setIndex:index];
-        [(WOTPivotNode *)node setDimensionDelegate:self.dimension];
         index++;
     }];
 
@@ -180,7 +196,6 @@
     } childCompletion:^(id<WOTNodeProtocol> _Nonnull node) {
 
         [(WOTPivotNode *)node setIndex:index];
-        [(WOTPivotNode *)node setDimensionDelegate:self.dimension];
         index++;
     }];
     return index;
@@ -256,19 +271,15 @@
 - (void)removeAllNodes {
 
     [self.rootDataNode removeChildren: NULL];
-    [(WOTPivotNode *)self.rootDataNode setDimensionDelegate:nil];
     self.rootDataNode = nil;
 
     [self.rootRowsNode removeChildren: NULL];
-    [(WOTPivotNode *)self.rootRowsNode setDimensionDelegate:nil];
     self.rootRowsNode = nil;
 
     [self.rootColsNode removeChildren: NULL];
-    [(WOTPivotNode *)self.rootColsNode setDimensionDelegate:nil];
     self.rootColsNode = nil;
 
     [self.rootFiltersNode removeChildren: NULL];
-    [(WOTPivotNode *)self.rootFiltersNode setDimensionDelegate:nil];
     self.rootFiltersNode = nil;
 
     [super removeAllNodes];

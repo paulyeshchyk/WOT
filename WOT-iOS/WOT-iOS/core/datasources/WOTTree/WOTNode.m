@@ -21,6 +21,10 @@
 @synthesize childList;
 @synthesize index;
 @synthesize hashString;
+@synthesize stepParentRow;
+@synthesize stepParentColumn;
+@synthesize indexInsideStepParentColumn;
+@synthesize relativeRect;
 
 - (NSString *)hashString {
 

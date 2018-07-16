@@ -59,14 +59,38 @@ protocol WOTDimensionProtocol: NSObjectProtocol {
     func setMaxWidth(_ maxWidth: Int, forNode: WOTNodeProtocol, byKey: String)
     func maxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int
     func childrenMaxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int
-}
 
+    func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
+    func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type?
+
+}
 
 typealias TNodeSize = [String: Int]
 typealias TNodesSizesType = [WOTNode: TNodeSize]
 
+
 @objc
 class WOTDimension: NSObject, WOTDimensionProtocol {
+
+    private func hashValue(type: Any.Type) -> Int {
+        return ObjectIdentifier(type).hashValue
+    }
+
+    private lazy var registeredCalculators:Dictionary<AnyHashable, AnyClass> = {
+        return Dictionary<AnyHashable, AnyClass>()
+    }()
+
+
+    func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
+        let hash = hashValue(type: forNodeClass)
+        self.registeredCalculators[hash] = calculatorClass
+    }
+
+    func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type? {
+        let hash = hashValue(type: forNodeClass)
+        let result: WOTDimensionCalculator.Type? = self.registeredCalculators[hash] as? WOTDimensionCalculator.Type
+        return result
+    }
 
     private var sizes: TNodesSizesType = TNodesSizesType()
 

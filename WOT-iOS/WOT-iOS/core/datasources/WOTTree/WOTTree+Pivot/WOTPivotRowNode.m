@@ -19,27 +19,4 @@
 
 @implementation WOTPivotRowNode (Dimension)
 
-- (NSInteger)y {
-
-    NSInteger result = 0;
-    result += [WOTNodeEnumerator.sharedInstance childrenWidthWithSiblingNode:self orValue:1];
-    result += self.dimensionDelegate.rootNodeHeight;
-    return result;
-}
-
-- (NSInteger)x {
-    return [WOTNodeEnumerator.sharedInstance visibleParentsCountWithNode:self];
-}
-
-- (NSInteger)width {
-
-    return 1;
-}
-
-- (NSInteger)height {
-    NSArray *endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode: self];
-    return endpoints.count;
-
-}
-
 @end

@@ -11,8 +11,6 @@
 
 @interface WOTPivotNode ()
 
-@property (nonatomic, strong) NSValue *relativeRectValue;
-
 @end
 
 @implementation WOTPivotNode
@@ -55,20 +53,18 @@
     return self;
 }
 
-- (id)initWithName:(NSString *)name dimensionDelegate:(id<WOTDimensionProtocol>)dimensionDelegate isVisible:(BOOL)isVisible {
+- (id)initWithName:(NSString *)name isVisible:(BOOL)isVisible {
     
     self = [self initWithName:name];
     if (self){
         
         self.isVisible = isVisible;
-        self.dimensionDelegate = dimensionDelegate;
     }
     return self;
 }
 
 - (void)dealloc {
     
-    self.dimensionDelegate = nil;
 }
 
 #pragma mark - getters / setters
@@ -77,45 +73,5 @@
     
     return PivotStickyTypeFloat;
 }
-
-- (CGRect)relativeRect {
-    
-    NSValue *relativeRectValue = self.relativeRectValue;
-    if (relativeRectValue) {
-        
-        return [relativeRectValue CGRectValue];
-    }
-    
-    NSInteger x = [self x];
-    NSInteger y = [self y];
-    NSInteger width = [self width];
-    NSInteger height = [self height];
-    CGRect result = CGRectMake(x,y,width, height);
-    
-    self.relativeRectValue = [NSValue valueWithCGRect:result];
-    
-    return result;
-}
-
-- (NSInteger)x {
-    
-    return 0;
-}
-
-- (NSInteger)y{
-    
-    return 0;
-}
-
-- (NSInteger)width {
-    
-    return 0;
-}
-
-- (NSInteger)height {
-    
-   return 0;
-}
-
 
 @end
