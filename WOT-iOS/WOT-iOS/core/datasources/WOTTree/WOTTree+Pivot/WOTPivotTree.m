@@ -86,6 +86,7 @@
 
     self.rootRowsNode = [self newRootNode:@"root rows"];
     NSArray *rows = [[self metadataItems] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[WOTPivotRowNode class]]];
+
     [self.rootRowsNode addChildArray:rows];
     
     self.rootColsNode = [self newRootNode:@"root columns"];
@@ -121,6 +122,21 @@
      */
 
     return self.model.index.count;
+}
+
+- (PivotStickyType)itemStickyTypeAtIndexPath:(NSIndexPath *)indexPath {
+
+    WOTPivotNode *node = (WOTPivotNode *)[self pivotItemAtIndexPath:indexPath];
+    return node.stickyType;
+}
+
+- (CGRect)itemRectAtIndexPath:(NSIndexPath *)indexPath {
+
+    WOTPivotNode *node = (WOTPivotNode *)[self pivotItemAtIndexPath:indexPath];
+    if (node == nil) {
+        return CGRectZero;
+    }
+    return node.relativeRect;
 }
 
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath {

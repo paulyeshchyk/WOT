@@ -7,6 +7,7 @@
 //
 
 #import "WOTTree.h"
+#import "WOTEnums.h"
 
 typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
@@ -25,5 +26,7 @@ typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
 - (NSInteger)pivotItemsCountForRowAtIndex:(NSInteger)rowIndex;
 - (WOTNode *)pivotItemAtIndexPath:(NSIndexPath *)indexPath;
+- (CGRect)itemRectAtIndexPath:(NSIndexPath *)indexPath;
+- (PivotStickyType)itemStickyTypeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

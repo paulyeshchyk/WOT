@@ -55,17 +55,11 @@
     }];
 
     [self.flowLayout setItemRelativeRectCallback:^CGRect(NSIndexPath *indexPath) {
-
-        WOTPivotNode *node = (WOTPivotNode *)[self.pivotTree pivotItemAtIndexPath:indexPath];
-
-        CGRect resultRect = node.relativeRect;
-        return resultRect;
+        return [self.pivotTree itemRectAtIndexPath:indexPath];
     }];
 
     [self.flowLayout setItemLayoutStickyType:^PivotStickyType(NSIndexPath *indexPath) {
-
-        WOTPivotNode *node = (WOTPivotNode *)[self.pivotTree pivotItemAtIndexPath:indexPath];
-        return node.stickyType;
+        return [self.pivotTree itemStickyTypeAtIndexPath: indexPath];
     }];
 
     [self.navigationController.navigationBar setDarkStyle];
