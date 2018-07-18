@@ -9,6 +9,14 @@
 #ifndef WOT_iOS_WOTEnums_h
 #define WOT_iOS_WOTEnums_h
 
+typedef NS_ENUM(NSInteger, PivotMetadataType) {
+    PivotMetadataTypeUnknown = 0,
+    PivotMetadataTypeFilter,
+    PivotMetadataTypeColumn,
+    PivotMetadataTypeRow,
+    PivotMetadataTypeData
+};
+
 typedef NS_ENUM(NSInteger, WOTRequestId) {
     WOTRequestIdLogin = 0,
     WOTRequestIdSaveSession,

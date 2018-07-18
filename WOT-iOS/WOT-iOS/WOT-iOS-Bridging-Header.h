@@ -2,6 +2,6 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#import "WOTNode.h"
 #import "WOTNode+PivotFactory.h"
-#import "WOTPivotTree.h"
+#import "ModulesTree.h"
+#import "ModulesTree+FillProperties.h"

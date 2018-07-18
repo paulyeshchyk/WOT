@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTTree.h"
+//#import "WOTTree.h"
 
-@interface WOTTree (Test)
-
-- (void)setTestTankId:(id)tankId;
-
-@end
+//@interface WOTTree (Test)
+//
+//- (void)setTestTankId:(id)tankId;
+//
+//@end

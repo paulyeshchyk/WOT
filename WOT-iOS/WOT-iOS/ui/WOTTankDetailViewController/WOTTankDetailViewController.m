@@ -32,7 +32,7 @@
 #import "WOTRadarViewController.h"
 
 #import "WOTTankMetricsList+ChartData.h"
-#import "WOTTankMetricsList+GridData.h"
+#import "NSObject+WOTTankGridValueData.h"
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate>
 
@@ -493,12 +493,12 @@
 
 #pragma mark - WOTGridViewControllerDelegate
 
-- (id)gridData {
+- (WOTTreeSwift *)gridData {
 
     WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
     [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];
     [sample addMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
-    return sample.gridData;
+    return [NSObject gridData:sample];
 }
 
 @end

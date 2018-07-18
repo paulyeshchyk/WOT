@@ -11,7 +11,7 @@
 @implementation WOTTankPivotEmptyCollectionViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    [super awakeFromNib];
 }
 
 @end

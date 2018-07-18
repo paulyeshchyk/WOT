@@ -10,10 +10,10 @@ import Foundation
 
 @objc
 protocol RootNodeHolderProtocol: NSObjectProtocol {
-    var rootFilterNode: WOTNodeProtocol? { get }
-    var rootColsNode: WOTNodeProtocol? { get }
-    var rootRowsNode: WOTNodeProtocol? { get }
-    var rootDataNode: WOTNodeProtocol? { get }
+    var rootFilterNode: WOTPivotNodeProtocol { get }
+    var rootColsNode: WOTPivotNodeProtocol { get }
+    var rootRowsNode: WOTPivotNodeProtocol { get }
+    var rootDataNode: WOTPivotNodeProtocol { get }
 }
 
 
@@ -66,7 +66,7 @@ protocol WOTDimensionProtocol: NSObjectProtocol {
 }
 
 typealias TNodeSize = [String: Int]
-typealias TNodesSizesType = [WOTNode: TNodeSize]
+typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
 
 @objc
@@ -76,10 +76,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         return ObjectIdentifier(type).hashValue
     }
 
-    private lazy var registeredCalculators:Dictionary<AnyHashable, AnyClass> = {
-        return Dictionary<AnyHashable, AnyClass>()
-    }()
-
+    private var registeredCalculators:Dictionary<AnyHashable, AnyClass> = Dictionary<AnyHashable, AnyClass>()
 
     func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
         let hash = hashValue(type: forNodeClass)
@@ -95,11 +92,18 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
     private var sizes: TNodesSizesType = TNodesSizesType()
 
     private func sizeMap(node: WOTNodeProtocol) -> TNodeSize? {
-        return sizes[node as! WOTNode]
+
+        if let obj = node as? AnyHashable {
+            return sizes[obj]
+        }
+        return nil
     }
 
     private func set(sizeMap: TNodeSize, node: WOTNodeProtocol) {
-        sizes[node as! WOTNode] = sizeMap
+
+        if let obj = node as? AnyHashable {
+            sizes[obj] = sizeMap
+        }
     }
 
     func setMaxWidth(_ maxWidth: Int, forNode: WOTNodeProtocol, byKey: String) {
@@ -129,7 +133,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
     func maxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int {
         var result = orValue
 
-        guard let nodeSizes = sizeMap(node:node) else {
+        guard let nodeSizes = sizeMap(node: node) else {
             return result
         }
 
@@ -174,17 +178,13 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
     }
 
     var rootNodeWidth: Int {
-        guard let rows = self.rootNodeHolder.rootRowsNode else {
-            return 0
-        }
+        let rows = self.rootNodeHolder.rootRowsNode
         let level = rows.isVisible ? 1 : 0
         return WOTNodeEnumerator.sharedInstance.depth(forChildren: rows.children, initialLevel: level)
     }
 
     var rootNodeHeight: Int {
-        guard let cols = self.rootNodeHolder.rootColsNode else {
-            return 0
-        }
+        let cols = self.rootNodeHolder.rootColsNode
         let level = cols.isVisible ? 1 : 0
         return WOTNodeEnumerator.sharedInstance.depth(forChildren: cols.children, initialLevel: level)
     }
@@ -193,9 +193,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         let rowNodesDepth = self.rootNodeWidth
         let colNodesDepth = self.rootNodeHeight
         let emptyDayaColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0
-        guard let rootCols = self.rootNodeHolder.rootColsNode, let rootRows = self.rootNodeHolder.rootRowsNode  else {
-            return .zero
-        }
+        let rootCols = self.rootNodeHolder.rootColsNode
         let columnEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: rootCols)
         var maxWidth: Int = 0
         columnEndpoints.forEach { (column) in
@@ -203,6 +201,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
             maxWidth += value
         }
 
+        let rootRows = self.rootNodeHolder.rootRowsNode
         let width = rowNodesDepth + maxWidth
         let rowEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: rootRows)
         let rowNodesEndpointsCount = rowEndpoints.count

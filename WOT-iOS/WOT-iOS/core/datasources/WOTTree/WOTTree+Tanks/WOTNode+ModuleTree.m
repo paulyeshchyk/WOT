@@ -12,34 +12,34 @@
 #import "ModulesTree+CustomName.h"
 #import <objc/runtime.h>
 
-@implementation WOTNode (ModuleTree)
-
-
-- (id)initWithModuleTree:(ModulesTree *)module {
-
-    NSURL *imageURL = [module localImageURL];
-    WOTNode *result = [self initWithName:module.customName imageURL:imageURL];
-    if (result){
-        
-        [result setModuleTree:module];
-    }
-    return result;
-}
-
-- (WOTModuleType) moduleType {
-
-    return [self moduleTree].moduleType;
-}
-
-static const void *WOTModuleTree = &WOTModuleTree;
-- (void)setModuleTree:(ModulesTree *)moduleTree {
-    
-    objc_setAssociatedObject(self, WOTModuleTree, moduleTree, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (ModulesTree *)moduleTree {
-
-    return objc_getAssociatedObject(self, WOTModuleTree);
-}
-
-@end
+//@implementation WOTNode (ModuleTree)
+//
+//
+//- (id)initWithModuleTree:(ModulesTree *)module {
+//
+//    NSURL *imageURL = [module localImageURL];
+//    WOTNode *result = [self initWithName:module.customName imageURL:imageURL];
+//    if (result){
+//        
+//        [result setModuleTree:module];
+//    }
+//    return result;
+//}
+//
+//- (WOTModuleType) moduleType {
+//
+//    return [self moduleTree].moduleType;
+//}
+//
+//static const void *WOTModuleTree = &WOTModuleTree;
+//- (void)setModuleTree:(ModulesTree *)moduleTree {
+//    
+//    objc_setAssociatedObject(self, WOTModuleTree, moduleTree, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//}
+//
+//- (ModulesTree *)moduleTree {
+//
+//    return objc_getAssociatedObject(self, WOTModuleTree);
+//}
+//
+//@end

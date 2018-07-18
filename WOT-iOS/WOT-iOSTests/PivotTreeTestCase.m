@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "WOTPivotTree.h"
 
 @interface PivotTreeTestCase : XCTestCase
 

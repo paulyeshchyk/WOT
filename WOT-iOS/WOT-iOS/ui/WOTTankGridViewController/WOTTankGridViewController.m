@@ -8,13 +8,12 @@
 
 #import "WOTTankGridViewController.h"
 #import "WOTTankGridCollectionViewCell.h"
-#import "WOTTree.h"
 
 @interface WOTTankGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, strong)WOTTree *subitemsTree;
+@property (nonatomic, strong)WOTTreeSwift *subitemsTree;
 
 @property (nonatomic, readonly) NSInteger columnsCount;
 
@@ -68,11 +67,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    WOTNode *rootNode = [[self.subitemsTree rootNodes] allObjects][indexPath.row];
-    
+
     WOTTankGridCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class]) forIndexPath:indexPath];
-    result.metricName = rootNode.name;
-    result.subitems = rootNode.children;
+    //TODO: remove comment
+//    WOTNode *rootNode = [[self.subitemsTree rootNodes] allObjects][indexPath.row];
+//    result.metricName = rootNode.name;
+//    result.subitems = rootNode.children;
     [result reloadCell];
     return result;
 }

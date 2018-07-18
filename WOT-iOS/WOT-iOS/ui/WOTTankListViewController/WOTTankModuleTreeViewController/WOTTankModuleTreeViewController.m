@@ -13,12 +13,12 @@
 #import "WOTTankConfigurationCollectionViewCell.h"
 #import "WOTTankConfigurationFlowLayout.h"
 #import "WOTTankConfigurationItemViewController.h"
-
 #import "WOTTankConfigurationModuleMapping+Factory.h"
+#import "WOTEnums.h"
 
 @interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) WOTTree *tree;
+@property (nonatomic, strong) WOTTreeSwift *tree;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 
@@ -36,7 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         
-        self.tree = [[WOTTree alloc] init];
+//        self.tree = [[WOTTreeSwift alloc] init];
     }
     return self;
 }
@@ -75,7 +75,7 @@
 
     [self.flowLayout setLayoutPreviousSiblingNodeChildrenCountCallback:^(NSIndexPath *indexPath){
 
-        WOTNode *node = [self.tree nodeAtIndexPath:indexPath];
+        id<WOTNodeProtocol> node = [self.tree nodeAtIndexPath:indexPath];
         NSInteger result = [WOTNodeEnumerator.sharedInstance childrenCountWithSiblingNode:node];
         return result;
     }];
@@ -87,7 +87,8 @@
 - (void)setTankId:(NSNumber *)value {
 
     _tankId = [value copy];
-    [self.tree setTankId:value];
+    //TODO: remove comment
+//    [self.tree setTankId:value];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -98,13 +99,13 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return [self.tree nodesCountAtSection:section];
+    return [self.tree nodesCountWithSectionIndex:section];
 }
 
 #pragma mark - UICollectionViewDelegate
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    WOTNode *node = [self.tree nodeAtIndexPath:indexPath];
+    id<WOTNodeProtocol> node = [self.tree nodeAtIndexPath:indexPath];
     WOTTankConfigurationCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) forIndexPath:indexPath];
     result.indexPath = indexPath;
     result.label.text = node.name;
@@ -116,14 +117,14 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-
-    WOTNode *node = [self.tree nodeAtIndexPath:indexPath];
-    ModulesTree *moduleTree = [node moduleTree];
-    
-    WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
-    itemViewController.moduleTree = moduleTree;
-    itemViewController.mapping = [self mappingForModuleType:moduleTree.type];
-    [self.navigationController pushViewController:itemViewController animated:YES];
+    //TODO: remove comment
+//    id<WOTNodeProtocol> node = [self.tree nodeAtIndexPath:indexPath];
+//    ModulesTree *moduleTree = [node moduleTree];
+//
+//    WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
+//    itemViewController.moduleTree = moduleTree;
+//    itemViewController.mapping = [self mappingForModuleType:moduleTree.type];
+//    [self.navigationController pushViewController:itemViewController animated:YES];
 }
 
 

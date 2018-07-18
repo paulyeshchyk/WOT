@@ -6,12 +6,10 @@
 //  Copyright © 2016 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTNode.h"
-
-@interface WOTNode (DetailGrid)
-
-- (id)initWithName:(NSString *)name gridData:(id)gridData;
-- (void)setGridNodeData:(id)gridNodeData;
-- (id)gridNodeData;
-
-@end
+//@interface WOTNode (DetailGrid)
+//
+//- (id)initWithName:(NSString *)name gridData:(id)gridData;
+//- (void)setGridNodeData:(id)gridNodeData;
+//- (id)gridNodeData;
+//
+//@end

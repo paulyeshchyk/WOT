@@ -6,16 +6,15 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTNode.h"
 #import "ModulesTree.h"
 
-@interface WOTNode (ModuleTree)
-
-@property (nonatomic, strong)ModulesTree *moduleTree;
-@property (nonatomic, readonly)WOTModuleType moduleType;
-
-- (id)initWithModuleTree:(ModulesTree *)module;
-- (void)setModuleTree:(ModulesTree *)moduleTree;
-- (ModulesTree *)moduleTree;
-
-@end
+//@interface WOTNode (ModuleTree)
+//
+//@property (nonatomic, strong)ModulesTree *moduleTree;
+//@property (nonatomic, readonly)WOTModuleType moduleType;
+//
+//- (id)initWithModuleTree:(ModulesTree *)module;
+//- (void)setModuleTree:(ModulesTree *)moduleTree;
+//- (ModulesTree *)moduleTree;
+//
+//@end

@@ -22,7 +22,7 @@ class WOTNodePivotFactoryTest: XCTestCase {
     }
 
     func testNation() {
-        guard let node = WOTNode.pivotNationMetadataItem(as: PivotMetadataType.column) else {
+        guard let node = WOTNodeFactory.pivotNationMetadataItem(as: PivotMetadataType.column) else {
             XCTAssert(false, "nation not found")
             return
         }
@@ -31,7 +31,7 @@ class WOTNodePivotFactoryTest: XCTestCase {
     }
 
     func testTier() {
-        guard let node = WOTNode.pivotTierMetadataItem(as: PivotMetadataType.column) else {
+        guard let node = WOTNodeFactory.pivotTierMetadataItem(as: PivotMetadataType.column) else {
             XCTAssert(false, "nation not found")
             return
         }
@@ -40,7 +40,7 @@ class WOTNodePivotFactoryTest: XCTestCase {
     }
 
     func testType() {
-        guard let node = WOTNode.pivotTypeMetadataItem(as: PivotMetadataType.column) else {
+        guard let node = WOTNodeFactory.pivotTypeMetadataItem(as: PivotMetadataType.column) else {
             XCTAssert(false, "nation not found")
             return
         }

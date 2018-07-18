@@ -30,18 +30,18 @@ class WOTDataModelTest: XCTestCase {
     func testAddNode() {
         model.removeAll()
         XCTAssert(model.rootNodes.count == 0)
-        let node: WOTNode = WOTNode()
+        let node: WOTNodeSwift = WOTNodeSwift(name: "")
         model.add(node: node)
         model.add(node: node)
         model.add(node: node)
         model.add(node: node)
-        XCTAssert(model.rootNodes.count == 1)
+        XCTAssert(model.rootNodes.count == 4)
     }
 
     func testRemoveNode() {
         model.removeAll()
         XCTAssert(model.rootNodes.count == 0)
-        let node: WOTNode = WOTNode()
+        let node: WOTNodeSwift = WOTNodeSwift(name: "")
         model.add(node: node)
         XCTAssert(model.rootNodes.count == 1)
         model.remove(node: node)
@@ -51,7 +51,7 @@ class WOTDataModelTest: XCTestCase {
     func testRemoveAllNodes() {
         model.removeAll()
         XCTAssert(model.rootNodes.count == 0)
-        let node: WOTNode = WOTNode()
+        let node: WOTNodeSwift = WOTNodeSwift(name: "")
         model.add(node: node)
         model.removeAll()
         XCTAssert(model.rootNodes.count == 0)
@@ -60,7 +60,7 @@ class WOTDataModelTest: XCTestCase {
     func testAllObjects() {
         model.removeAll()
         XCTAssert(model.rootNodes.count == 0)
-        let node: WOTNode = WOTNode()
+        let node: WOTNodeSwift = WOTNodeSwift(name: "")
         model.add(node: node)
         XCTAssert(model.allObjects(sortComparator: nil).count == 1)
     }
@@ -68,9 +68,9 @@ class WOTDataModelTest: XCTestCase {
     func testEndpoints() {
         model.removeAll()
         XCTAssert(model.rootNodes.count == 0)
-        let parentnode = WOTNode()
-        (parentnode as? WOTNodeProtocol)?.addChild(WOTNode())
-        (parentnode as? WOTNodeProtocol)?.addChild(WOTNode())
+        let parentnode: WOTNodeSwift = WOTNodeSwift(name: "")
+        parentnode.addChild(WOTNodeSwift(name: ""))
+        parentnode.addChild(WOTNodeSwift(name: ""))
         model.add(node: parentnode)
         XCTAssert(model.endpointsCount == 2)
     }
