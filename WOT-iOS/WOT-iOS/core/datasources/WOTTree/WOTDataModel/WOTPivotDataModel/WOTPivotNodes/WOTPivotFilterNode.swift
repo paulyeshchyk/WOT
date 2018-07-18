@@ -11,7 +11,9 @@ import Foundation
 class WOTPivotFilterNodeSwift: WOTPivotNodeSwift {
 
     override var stickyType: PivotStickyType {
-//        return PivotStickyTypeHorizontal | PivotStickyTypeVertical;
-        return (PivotStickyType(rawValue: PivotStickyType.RawValue(UInt8(PivotStickyType.horizontal.rawValue) | UInt8(PivotStickyType.vertical.rawValue))))!
+        let horizontal = UInt8(PivotStickyType.horizontal.rawValue)
+        let vertical = UInt8(PivotStickyType.vertical.rawValue)
+        let raw = PivotStickyType.RawValue(horizontal | vertical)
+        return PivotStickyType(rawValue: raw)!
     }
 }

@@ -8,7 +8,7 @@
 
 @protocol WOTGridViewControllerDelegate <NSObject>
 
-- (WOTPivotTreeSwift *)gridData;
+- (WOTPivotDataModel *)gridData;
 
 @end
 

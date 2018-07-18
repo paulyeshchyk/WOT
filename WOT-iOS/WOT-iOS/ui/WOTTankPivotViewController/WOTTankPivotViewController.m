@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, readonly) NSArray *sortDescriptors;
 
-@property (nonatomic, strong) WOTPivotTreeSwift *pivotTree;
+@property (nonatomic, strong) WOTPivotDataModel *pivotDataModel;
 
 @end
 
@@ -43,15 +43,15 @@
     [super viewDidLoad];
 
     [self.flowLayout setRelativeContentSizeBlock:^CGSize{
-        return self.pivotTree.dimension.contentSize;
+        return self.pivotDataModel.dimension.contentSize;
     }];
 
     [self.flowLayout setItemRelativeRectCallback:^CGRect(NSIndexPath *indexPath) {
-        return [self.pivotTree itemRectAtIndexPath:indexPath];
+        return [self.pivotDataModel itemRectAtIndexPath:indexPath];
     }];
 
     [self.flowLayout setItemLayoutStickyType:^PivotStickyType(NSIndexPath *indexPath) {
-        return [self.pivotTree itemStickyTypeAtIndexPath: indexPath];
+        return [self.pivotDataModel itemStickyTypeAtIndexPath: indexPath];
     }];
 
     [self.navigationController.navigationBar setDarkStyle];
@@ -79,7 +79,7 @@
         return resultArray;
     };
 
-    self.pivotTree = [[WOTPivotTreeSwift alloc] initWithPivotItemCreation:pivotItemCreation];
+    self.pivotDataModel = [[WOTPivotDataModel alloc] initWithPivotItemCreation:pivotItemCreation];
     [self reloadPivot];
 }
 
@@ -88,7 +88,7 @@
 
     UICollectionViewCell *result = nil;
     
-    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.pivotTree itemAtIndexPath:indexPath];
+    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.pivotDataModel itemAtIndexPath:indexPath];
     if ([node isKindOfClass:[WOTPivotRowNodeSwift class]]) {
         
         result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
@@ -127,7 +127,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return [self.pivotTree itemsCountWithSection:section];
+    return [self.pivotDataModel itemsCountWithSection:section];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -145,23 +145,23 @@
 #pragma mark - private
 - (void)reloadPivot {
 
-    [self.pivotTree clearMetadataItems];
+    [self.pivotDataModel clearMetadataItems];
     
-    WOTPivotNodeSwift *level0Col = [WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTPivotNodeSwift *level1Col = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNodeSwift *level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNodeSwift *level1Col = nil;
     NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
     
-    WOTPivotNodeSwift *level0Row = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeRow];
-    WOTPivotNodeSwift *level1Row = nil;//[WOTNodeFactory pivotPremiumMetadataItemAsType:PivotMetadataTypeRow];
+    WOTPivotNodeSwift *level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];
+    WOTPivotNodeSwift *level1Row = nil;//[WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
     NSArray *rows = [self complexMetadataAsType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
     
     NSArray *filters = [self pivotFilters];
 
-    [self.pivotTree addWithMetadataItems:filters];
-    [self.pivotTree addWithMetadataItems:rows];
-    [self.pivotTree addWithMetadataItems:cols];
+    [self.pivotDataModel addWithMetadataItems:filters];
+    [self.pivotDataModel addWithMetadataItems:rows];
+    [self.pivotDataModel addWithMetadataItems:cols];
 
-    [self.pivotTree makePivot];
+    [self.pivotDataModel makePivot];
     
 }
 

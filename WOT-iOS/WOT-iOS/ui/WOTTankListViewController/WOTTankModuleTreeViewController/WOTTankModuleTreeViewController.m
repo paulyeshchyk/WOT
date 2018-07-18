@@ -18,7 +18,7 @@
 
 @interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) WOTPivotTreeSwift *tree;
+@property (nonatomic, strong) WOTPivotDataModel *tree;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 

@@ -9,7 +9,6 @@
 import Foundation
 
 public typealias WOTNodeComparator = (_ left: WOTNodeProtocol, _ right: WOTNodeProtocol) -> Bool
-typealias WOTIndexTypeAlias = Dictionary<Int, [WOTNodeProtocol]>
 
 @objc
 public protocol WOTNodeCreatorProtocol {
@@ -18,7 +17,7 @@ public protocol WOTNodeCreatorProtocol {
 
 @objc
 public protocol WOTDataModelProtocol {
-    var index: WOTNodeIndexProtocol { get }
+    var nodeIndex: WOTNodeIndexProtocol { get }
     var rootNodes: [WOTNodeProtocol] { get }
     var levels: Int { get }
     var width: Int { get }
@@ -31,33 +30,32 @@ public protocol WOTDataModelProtocol {
     func node(atIndexPath: NSIndexPath) -> WOTNodeProtocol?
 }
 
+
 @objc
 public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtocol {
 
-    lazy public var index: WOTNodeIndexProtocol = {
+    lazy public var nodeIndex: WOTNodeIndexProtocol = {
         return WOTNodeIndex()
     }()
-    
-    private(set)public var rootNodes: [WOTNodeProtocol]
+
+    lazy private var levelIndex: WOTLevelIndexProtocol = {
+        return WOTLevelIndex()
+    }()
+
+    lazy public var rootNodes: [WOTNodeProtocol] = {
+        return []
+    }()
+
     private var comparator: WOTNodeComparator = { (left, right) in
         return true
     }
 
-    private lazy var levelIndex: WOTIndexTypeAlias = {
-        return WOTIndexTypeAlias()
-    }()
-
     public var levels: Int {
-        return self.levelIndex.keys.count
+        return self.levelIndex.levels
     }
 
     public var width: Int {
-        var result: Int = 0
-        self.levelIndex.keys.forEach { (key) in
-            let arraycount = self.levelIndex[key]?.count ?? 0
-            result = max(result, arraycount)
-        }
-        return result
+        return self.levelIndex.width
     }
 
     public var endpointsCount: Int {
@@ -65,31 +63,28 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
     }
 
     override init() {
-        self.rootNodes = []
+
     }
 
-    private func reindex() {
-        self.levelIndex.removeAll()
-        let level: Int = 0
-        let rootNodes = self.allObjects(sortComparator: nil)
-        rootNodes.forEach { (node) in
-            self.reindexChildNode(node, atLevel: level)
-        }
+    func resetNodeIndex() {
+        let nodes = [self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode]
+        self.nodeIndex.reset()
+        self.nodeIndex.addNodesToIndex(nodes)
+    }
+
+    func resetLevelIndex() {
+        let nodes = self.allObjects(sortComparator: nil)
+        self.levelIndex.reset()
+        self.levelIndex.addNodesToIndex(nodes)
     }
 
     private func reindexChildNode(_ node: WOTNodeProtocol, atLevel: Int) {
-        var itemsAtLevel = self.levelIndex[atLevel] ?? [WOTNodeProtocol]()
-        itemsAtLevel.append(node)
-        self.levelIndex[atLevel] = itemsAtLevel
-
-        node.children.forEach { (child) in
-            self.reindexChildNode(child, atLevel: atLevel + 1)
-        }
+        self.levelIndex.reindexChildNode(node, atLevel: atLevel)
     }
 
     public func add(node: WOTNodeProtocol) {
         self.rootNodes.append(node)
-        reindex()
+        resetLevelIndex()
     }
 
     public func remove(node: WOTNodeProtocol) {
@@ -97,7 +92,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
             return
         }
         self.rootNodes.remove(at: index)
-        reindex()
+        resetLevelIndex()
     }
 
     public func removeAll() {
@@ -106,7 +101,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
         self.rootColsNode.removeChildren(nil)
         self.rootFilterNode.removeChildren(nil)
         self.rootNodes.removeAll()
-        reindex()
+        resetLevelIndex()
     }
 
     public func allObjects(sortComparator: WOTNodeComparator?) -> [WOTNodeProtocol] {
@@ -116,12 +111,11 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
     
     @objc
     public func nodesCount(section: Int) -> Int {
-        return self.levelIndex[section]?.count ?? 0
+        return self.levelIndex.itemsCount(atLevel: section)
     }
 
     public func node(atIndexPath indexPath: NSIndexPath) -> WOTNodeProtocol? {
-        let itemsAtSection = self.levelIndex[indexPath.section]
-        return itemsAtSection?[indexPath.row]
+        return self.levelIndex.node(atIndexPath: indexPath)
     }
 
     //RootNodeHolderProtocol
@@ -146,13 +140,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
         return result
     }()
 
-    func resetIndex() {
-        self.index.reset()
-        self.index.addNodesToIndex([self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode])
-    }
-
     func resortMetadata(metadataItems: [WOTNodeProtocol]) {
-
         self.rootDataNode.removeChildren(nil)
         self.rootRowsNode.removeChildren(nil)
         self.rootColsNode.removeChildren(nil)

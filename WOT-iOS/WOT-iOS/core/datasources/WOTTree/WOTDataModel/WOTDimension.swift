@@ -14,7 +14,6 @@ protocol RootNodeHolderProtocol: NSObjectProtocol {
     var rootColsNode: WOTNodeProtocol { get }
     var rootRowsNode: WOTNodeProtocol { get }
     var rootDataNode: WOTNodeProtocol { get }
-    func resetIndex()
     func resortMetadata(metadataItems: [WOTNodeProtocol])
     func reindexMetaItems() -> Int
 }

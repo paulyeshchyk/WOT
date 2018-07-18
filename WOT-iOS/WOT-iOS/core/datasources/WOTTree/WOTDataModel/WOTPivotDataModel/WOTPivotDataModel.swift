@@ -7,7 +7,6 @@
 //
 
 import Foundation
-//typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
 
 protocol WOTTreeProtocol: NSObjectProtocol {
@@ -28,7 +27,7 @@ protocol WOTPivotTreeProtocol: NSObjectProtocol {
 }
 
 @objc
-class WOTPivotTreeSwift: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
+class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
 
     @objc
     lazy var dimension: WOTDimensionProtocol = {
@@ -48,7 +47,7 @@ class WOTPivotTreeSwift: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
 
     @objc
     required init( pivotItemCreation: @escaping PivotItemCreationType) {
-        shouldDisplayEmptyColumns = false
+        shouldDisplayEmptyColumns = true
         pivotItemCreationBlock = pivotItemCreation
 
         super.init()
@@ -60,7 +59,7 @@ class WOTPivotTreeSwift: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
     }
 
     func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol? {
-        guard let result = self.index.item(indexPath: atIndexPath) as? WOTPivotNodeProtocol else {
+        guard let result = self.nodeIndex.item(indexPath: atIndexPath) as? WOTPivotNodeProtocol else {
             assert(false)
             return nil
         }
@@ -77,7 +76,6 @@ class WOTPivotTreeSwift: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
     }
 
     func itemRect(atIndexPath: NSIndexPath) -> CGRect {
-
         guard let node = self.item(atIndexPath: atIndexPath) else {
             return .zero
         }
@@ -105,12 +103,12 @@ class WOTPivotTreeSwift: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
          *
          * currently not used
          */
-        let cnt = self.index.count
+        let cnt = self.nodeIndex.count
         return cnt
     }
 
     func clearMetadataItems() {
-        self.index.reset()
+        self.nodeIndex.reset()
         self.removeAll()
         self.metadataItems.removeAll()
     }
@@ -126,9 +124,8 @@ class WOTPivotTreeSwift: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
         self.resortMetadata(metadataItems: self.metadataItems)
         let metadataIndex = self.reindexMetaItems()
         self.dimension.makeData(index: metadataIndex)
-        self.resetIndex()
+        self.resetNodeIndex()
     }
-
 
     // WOTTreeProtocol
     func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol {
@@ -142,5 +139,4 @@ class WOTPivotTreeSwift: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
             return root!
         }
     }
-
 }

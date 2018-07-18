@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/pavel_yeshchyk/Documents/projects/WOT/WOT-iOS/WOT-iOS/core/datasources/WOTTree/WOTDataModel/Indexer/WOTLevelIndex.swift">
+   </FileRef>
+   <FileRef
       location = "group:WOT-iOS.xcodeproj">
    </FileRef>
    <FileRef
