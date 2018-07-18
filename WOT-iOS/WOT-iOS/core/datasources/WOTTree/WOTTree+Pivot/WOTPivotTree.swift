@@ -10,70 +10,57 @@ import Foundation
 //typedef NSArray *(^PivotItemCreationBlock)(NSArray *predicates);
 
 
+protocol WOTTreeProtocol: NSObjectProtocol {
+    func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol
+}
+
 @objc
 protocol WOTPivotTreeProtocol: NSObjectProtocol {
     var dimension: WOTDimensionProtocol { get }
-    var pivotItemCreationBlock: (([NSPredicate]) -> ([WOTPivotNodeProtocol]))? { get set }
     var shouldDisplayEmptyColumns: Bool { get set };
     func itemRect(atIndexPath: NSIndexPath) -> CGRect
     func itemStickyType(atIndexPath: NSIndexPath) -> PivotStickyType
     func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol?
     func itemsCount(section: Int) -> Int
     func clearMetadataItems()
-    func add(metadataItems: [WOTPivotNodeProtocol])
+    func add(metadataItems: [WOTNodeProtocol])
     func makePivot()
 }
 
 @objc
-class WOTPivotTreeSwift: WOTTreeSwift, WOTPivotTreeProtocol, RootNodeHolderProtocol {
+class WOTPivotTreeSwift: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
 
-    lazy var rootFilterNode: WOTPivotNodeProtocol = {
-        return self.newRoot(name: "root filters")
-    }()
-    lazy var rootColsNode: WOTPivotNodeProtocol = {
-        return self.newRoot(name: "root cols")
-    }()
-    lazy var rootRowsNode: WOTPivotNodeProtocol = {
-        return self.newRoot(name: "root data")
-    }()
-    lazy var rootDataNode: WOTPivotNodeProtocol = {
-        return self.newRoot(name: "root rows")
+    @objc
+    lazy var dimension: WOTDimensionProtocol = {
+        return WOTDimension(rootNodeHolder: self, pivotCreation: self.pivotItemCreationBlock)
     }()
 
     var shouldDisplayEmptyColumns: Bool
 
-    var metadataItems = [WOTPivotNodeProtocol]()
+    var metadataItems = [WOTNodeProtocol]()
+
     @objc
-    var pivotItemCreationBlock: (([NSPredicate]) -> ([WOTPivotNodeProtocol]))?
+    var pivotItemCreationBlock: PivotItemCreationType
 
     deinit {
         self.clearMetadataItems()
     }
 
-    override init(dataModel: WOTDataModel) {
+    @objc
+    required init( pivotItemCreation: @escaping PivotItemCreationType) {
         shouldDisplayEmptyColumns = false
-        super.init(dataModel: dataModel)
+        pivotItemCreationBlock = pivotItemCreation
+
+        super.init()
+
         self.dimension.registerCalculatorClass(WOTDimensionColumnCalculator.self, forNodeClass: WOTPivotColNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionRowCalculator.self, forNodeClass: WOTPivotRowNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionFilterCalculator.self, forNodeClass: WOTPivotFilterNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionDataCalculator.self, forNodeClass: WOTPivotDataNodeSwift.self)
     }
 
-    override func removeAllNodes() {
-        self.rootDataNode.removeChildren(nil)
-        self.rootRowsNode.removeChildren(nil)
-        self.rootColsNode.removeChildren(nil)
-        self.rootFilterNode.removeChildren(nil)
-        super.removeAllNodes()
-    }
-
-    @objc
-    lazy var dimension: WOTDimensionProtocol = {
-        return WOTDimension(rootNodeHolder: self)
-    }()
-
     func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol? {
-        guard let result = self.model.index.item(indexPath: atIndexPath) as? WOTPivotNodeProtocol else {
+        guard let result = self.index.item(indexPath: atIndexPath) as? WOTPivotNodeProtocol else {
             assert(false)
             return nil
         }
@@ -118,139 +105,42 @@ class WOTPivotTreeSwift: WOTTreeSwift, WOTPivotTreeProtocol, RootNodeHolderProto
          *
          * currently not used
          */
-        let cnt = self.model.index.count
+        let cnt = self.index.count
         return cnt
     }
 
     func clearMetadataItems() {
-        self.model.index.reset()
-        self.removeAllNodes()
+        self.index.reset()
+        self.removeAll()
         self.metadataItems.removeAll()
     }
 
     @objc
-    func add(metadataItems: [WOTPivotNodeProtocol]) {
+    func add(metadataItems: [WOTNodeProtocol]) {
         self.metadataItems.append(contentsOf: metadataItems)
     }
 
     @objc
     func makePivot() {
-        self.removeAllNodes()
-        self.resortMetadata()
-
-        let metatadaIndex = self.reindexMetaItems()
-        self.makeData(index: metatadaIndex)
-        self.model.index.reset()
-        self.model.index.addNodesToIndex([self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode])
-    }
-
-    private func resortMetadata() {
-
-        self.rootDataNode.removeChildren(nil)
-
-        self.rootRowsNode.removeChildren(nil)
-        let rows = self.metadataItems.compactMap { $0 as? WOTPivotRowNodeSwift }
-        self.rootRowsNode.addChildArray(rows)
-
-        self.rootColsNode.removeChildren(nil)
-        let cols = self.metadataItems.compactMap { $0 as? WOTPivotColNodeSwift }
-        self.rootColsNode.addChildArray(cols)
-
-        self.rootFilterNode.removeChildren(nil)
-        let filters = self.metadataItems.compactMap { $0 as? WOTPivotFilterNodeSwift }
-        self.rootFilterNode.addChildArray(filters)
-    }
-
-    private func makeData(index externalIndex: Int) {
-
-        guard let block = self.pivotItemCreationBlock else {
-            return
-        }
-
-        var index = externalIndex
-        let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootColsNode)
-        let rowNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootRowsNode)
-        rowNodeEndpoints.forEach { (rowNode) in
-
-            if (rowNode as? WOTPivotNodeProtocol)?.predicate != nil {
-
-                colNodeEndpoints.forEach({ (colNode) in
-                    let predicates = self.predicates(colNode: colNode, rowNode: rowNode)
-                    let dataNodes = block(predicates)
-                    self.dimension.setMaxWidth(dataNodes.count, forNode: colNode, byKey: rowNode.hashString)
-                    self.dimension.setMaxWidth(dataNodes.count, forNode: rowNode, byKey: colNode.hashString)
-                    var idx: Int = 0
-                    dataNodes.forEach({ (dataNode) in
-                        dataNode.index = index
-                        index += 1
-                        dataNode.stepParentColumn = colNode
-                        dataNode.stepParentRow = rowNode
-                        dataNode.indexInsideStepParentColumn = idx
-                        self.rootDataNode.addChild(dataNode)
-                        idx += 1
-                    })
-                })
-            }
-        }
-    }
-
-    private func predicates(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol) -> [NSPredicate] {
-        var result = [NSPredicate]()
-        if let colPredicate = (colNode as? WOTPivotNodeProtocol)?.predicate {
-            result.append(colPredicate)
-        }
-        if let rowPredicate = (rowNode as? WOTPivotNodeProtocol)?.predicate {
-            result.append(rowPredicate)
-        }
-
-        let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootFilterNode)
-        endpoints.forEach { (fnode) in
-            if let filterPredicate = (fnode as? WOTPivotNodeProtocol)?.predicate {
-                result.append(filterPredicate)
-            }
-        }
-        return result
-
+        self.removeAll()
+        self.resortMetadata(metadataItems: self.metadataItems)
+        let metadataIndex = self.reindexMetaItems()
+        self.dimension.makeData(index: metadataIndex)
+        self.resetIndex()
     }
 
 
-    private func reindexMetaItems() -> Int {
-        var result: Int = 0
-        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootFilterNode, comparator: { (_, _, _) -> ComparisonResult in
-            return ComparisonResult.orderedSame
-
-        }) { (node) in
-            node.index = result
-            result += 1
+    // WOTTreeProtocol
+    func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol {
+        let roots = self.rootNodes.filter { _ in forPredicate.evaluate(with: nil) }
+        if roots.count == 0 {
+            let root = self.createNode(name: "root")
+            self.add(node: root)
+            return root
+        } else {
+            let root = roots.first
+            return root!
         }
-
-        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootColsNode, comparator: { (obj1, obj2, level) -> ComparisonResult in
-            return obj1.name.compare(obj2.name)
-        }) { (node) in
-
-            node.index = result
-            result += 1
-        }
-
-        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootRowsNode, comparator: { (obj1, obj2, level) -> ComparisonResult in
-            if let predicate1 = (obj1 as? WOTPivotNodeProtocol)?.predicate, let predicate2 = (obj2 as? WOTPivotNodeProtocol)?.predicate {
-                return predicate1.predicateFormat.compare(predicate2.predicateFormat)
-            } else {
-                return ComparisonResult.orderedAscending
-            }
-
-        }) { (node) in
-            node.index = result
-            result += 1
-        }
-
-        return result
     }
 
-    private func newRoot(name: String) -> WOTPivotNodeProtocol {
-        let result = WOTPivotNodeSwift(name: name)
-        result.isVisible = false
-        self.addNode(node: result)
-        return result
-    }
 }

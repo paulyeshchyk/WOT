@@ -12,7 +12,7 @@
 //
 //- (void)setTestTankId:(id)tankId {
 //
-//    [self removeAllNodes];
+//    [self removeAll];
 //
 //    WOTNode *root = [self testRoot];
 //    [self addNode:root];

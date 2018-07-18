@@ -11,6 +11,8 @@ import ObjectiveC
 
 public typealias WOTNodeProtocolRemoveCompletion = (WOTNodeProtocol) -> ()
 
+typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult
+
 @objc
 public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
     var hashString: String { get }
@@ -36,6 +38,14 @@ public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
 }
 
 public class WOTNodeSwift: NSObject, WOTNodeProtocol {
+
+    static let WOTNodeEmptyComparator: WOTNodeComparatorType  = { (node1, node2, level) in
+        return .orderedSame
+    }
+
+    static let WOTNodeNameComparator: WOTNodeComparatorType  = { (node1, node2, level) in
+        return node1.name.compare(node2.name)
+    }
 
     override public var hashValue: Int {
         return self.fullName.hashValue

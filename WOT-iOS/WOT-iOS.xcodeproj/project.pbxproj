@@ -294,7 +294,6 @@
 		1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80D91B306227005FF193 /* WOTRadarViewController.m */; };
 		1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */; };
 		1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC81221B32B83B005FF193 /* UIImage+Resize.m */; };
-		1DCD678620FCB262001BC81C /* WOTTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCD678520FCB262001BC81C /* WOTTree.swift */; };
 		1DD46B1C1BA6941900D3B3CE /* WOTTankGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B1A1BA6941900D3B3CE /* WOTTankGridViewController.m */; };
 		1DD46B1D1BA6941900D3B3CE /* WOTTankGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B1B1BA6941900D3B3CE /* WOTTankGridViewController.xib */; };
 		1DD46B2A1BA69CC900D3B3CE /* Activity Grid Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B1E1BA69CC900D3B3CE /* Activity Grid Yellow.png */; };
@@ -834,7 +833,6 @@
 		1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTRadarViewController.xib; sourceTree = "<group>"; };
 		1DCC81211B32B83B005FF193 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		1DCC81221B32B83B005FF193 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		1DCD678520FCB262001BC81C /* WOTTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTree.swift; sourceTree = "<group>"; };
 		1DD0E3C620E51E1C00D22555 /* WOT-iOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOT-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		1DD46B191BA6941900D3B3CE /* WOTTankGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankGridViewController.h; sourceTree = "<group>"; };
 		1DD46B1A1BA6941900D3B3CE /* WOTTankGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankGridViewController.m; sourceTree = "<group>"; };
@@ -1582,7 +1580,6 @@
 				1D010D5F1B8317F700FA6A75 /* WOTTree+Pivot */,
 				1DE8444B20E0F600003949EC /* WOTNode.swift */,
 				1D4891CA20FE30E100AB0CE5 /* WOTNodeTest.swift */,
-				1DCD678520FCB262001BC81C /* WOTTree.swift */,
 			);
 			path = WOTTree;
 			sourceTree = "<group>";
@@ -3061,7 +3058,6 @@
 				1D691EDF1BA0375300E1555D /* VehicleprofileSuspension+FillProperties.m in Sources */,
 				1DD647071B2081E900B0EC76 /* NSBundle+LanguageBundle.m in Sources */,
 				1DD6463C1B1C616A00B0EC76 /* AppDelegate.m in Sources */,
-				1DCD678620FCB262001BC81C /* WOTTree.swift in Sources */,
 				1DCC7F1D1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.m in Sources */,
 				1D010D351B7DFF1100FA6A75 /* WOTTankConfigurationItemHeaderFooter.m in Sources */,
 				1DD6468F1B1D9A8200B0EC76 /* WOTError.m in Sources */,

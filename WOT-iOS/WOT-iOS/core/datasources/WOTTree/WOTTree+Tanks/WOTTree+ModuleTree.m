@@ -15,7 +15,7 @@
 //
 //- (void)setTankId:(NSNumber *)tankId {
 //
-//    [self removeAllNodes];
+//    [self removeAll];
 //
 //    [self setNodeComparator:nil];
 //

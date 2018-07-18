@@ -13,7 +13,7 @@
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, strong)WOTTreeSwift *subitemsTree;
+@property (nonatomic, strong)WOTPivotTreeSwift *subitemsTree;
 
 @property (nonatomic, readonly) NSInteger columnsCount;
 

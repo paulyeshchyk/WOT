@@ -48,7 +48,7 @@ class WOTDataModelTest: XCTestCase {
         XCTAssert(model.rootNodes.count == 0)
     }
 
-    func testRemoveAllNodes() {
+    func testRemoveAll() {
         model.removeAll()
         XCTAssert(model.rootNodes.count == 0)
         let node: WOTNodeSwift = WOTNodeSwift(name: "")

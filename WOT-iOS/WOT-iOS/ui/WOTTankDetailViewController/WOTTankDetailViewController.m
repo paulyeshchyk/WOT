@@ -493,7 +493,7 @@
 
 #pragma mark - WOTGridViewControllerDelegate
 
-- (WOTTreeSwift *)gridData {
+- (WOTPivotTreeSwift *)gridData {
 
     WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
     [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];

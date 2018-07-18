@@ -63,8 +63,23 @@
     
     [self invalidateFetchedResultController];
 
-    WOTDataModel *model = [[WOTDataModel alloc] init];
-    self.pivotTree = [[WOTPivotTreeSwift alloc] initWithDataModel:model];
+    __weak typeof(self)weakSelf = self;
+
+    NSArray * (^pivotItemCreation)(NSArray *predicates) = ^(NSArray *predicates){
+
+        NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+
+        NSMutableArray *resultArray = [[NSMutableArray alloc] init];
+        NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
+        [fetchedData enumerateObjectsUsingBlock:^(Tanks *tanks, NSUInteger idx, BOOL *stop) {
+
+            id<WOTPivotNodeProtocol> node = [WOTNodeFactory pivotDataNodeForPredicate:predicate andTanksObject:tanks];
+            [resultArray addObject:node];
+        }];
+        return resultArray;
+    };
+
+    self.pivotTree = [[WOTPivotTreeSwift alloc] initWithPivotItemCreation:pivotItemCreation];
     [self reloadPivot];
 }
 
@@ -145,25 +160,6 @@
     [self.pivotTree addWithMetadataItems:filters];
     [self.pivotTree addWithMetadataItems:rows];
     [self.pivotTree addWithMetadataItems:cols];
-    
-    __weak typeof(self)weakSelf = self;
-
-    NSArray * (^Block)(NSArray *predicates) = ^(NSArray *predicates){
-
-        NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
-
-        NSMutableArray *resultArray = [[NSMutableArray alloc] init];
-        NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
-        [fetchedData enumerateObjectsUsingBlock:^(Tanks *tanks, NSUInteger idx, BOOL *stop) {
-
-            id<WOTPivotNodeProtocol> node = [WOTNodeFactory pivotDataNodeForPredicate:predicate andTanksObject:tanks];
-            [resultArray addObject:node];
-        }];
-        return resultArray;
-    };
-
-    [self.pivotTree setPivotItemCreationBlock:Block];
-
 
     [self.pivotTree makePivot];
     
@@ -233,9 +229,9 @@
         [level1Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level1Child, NSUInteger idx, BOOL *stop) {
             
             NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
-            WOTPivotNodeSwift *nationCopy = [level1Child copyWithZone:nil];
-            nationCopy.predicate = predicate;
-            [level0ChildCopy addChild:nationCopy];
+            WOTPivotNodeSwift *level1ChildCopy = [level1Child copyWithZone:nil];
+            level1ChildCopy.predicate = predicate;
+            [level0ChildCopy addChild:level1ChildCopy];
         }];
         
         [root addChild:level0ChildCopy];

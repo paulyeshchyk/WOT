@@ -18,7 +18,7 @@
 
 @interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) WOTTreeSwift *tree;
+@property (nonatomic, strong) WOTPivotTreeSwift *tree;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 
@@ -36,7 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         
-//        self.tree = [[WOTTreeSwift alloc] init];
+//        self.tree = [[WOTTreeDataModel alloc] init];
     }
     return self;
 }
@@ -99,7 +99,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return [self.tree nodesCountWithSectionIndex:section];
+    return [self.tree nodesCountWithSection:section];
 }
 
 #pragma mark - UICollectionViewDelegate

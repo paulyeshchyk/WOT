@@ -17,7 +17,7 @@
     return @"";
 }
 
-+ (WOTTreeSwift *)gridData:(WOTTankMetricsList *)metrics {
++ (WOTPivotTreeSwift *)gridData:(WOTTankMetricsList *)metrics {
     return nil;
 //    WOTTree *tree = [[WOTTree alloc] init];
 //

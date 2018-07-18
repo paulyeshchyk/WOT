@@ -47,7 +47,6 @@ class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         }
     }
 
-
     func visibleParentsCount(node: WOTNodeProtocol) -> Int {
 
         guard let parent = node.parent, parent.isVisible else {

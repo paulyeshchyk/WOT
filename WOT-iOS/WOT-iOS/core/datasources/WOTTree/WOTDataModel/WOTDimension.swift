@@ -10,13 +10,15 @@ import Foundation
 
 @objc
 protocol RootNodeHolderProtocol: NSObjectProtocol {
-    var rootFilterNode: WOTPivotNodeProtocol { get }
-    var rootColsNode: WOTPivotNodeProtocol { get }
-    var rootRowsNode: WOTPivotNodeProtocol { get }
-    var rootDataNode: WOTPivotNodeProtocol { get }
+    var rootFilterNode: WOTNodeProtocol { get }
+    var rootColsNode: WOTNodeProtocol { get }
+    var rootRowsNode: WOTNodeProtocol { get }
+    var rootDataNode: WOTNodeProtocol { get }
+    func resetIndex()
+    func resortMetadata(metadataItems: [WOTNodeProtocol])
+    func reindexMetaItems() -> Int
 }
-
-
+typealias PivotItemCreationType = ([NSPredicate]) -> ([WOTNodeProtocol])
 
 /**
 
@@ -41,7 +43,7 @@ protocol RootNodeHolderProtocol: NSObjectProtocol {
 
 @objc
 protocol WOTDimensionProtocol: NSObjectProtocol {
-    init(rootNodeHolder: RootNodeHolderProtocol)
+    init(rootNodeHolder: RootNodeHolderProtocol, pivotCreation: @escaping PivotItemCreationType)
     var shouldDisplayEmptyColumns: Bool { get }
     /**
      *  for table above returns 5
@@ -62,6 +64,9 @@ protocol WOTDimensionProtocol: NSObjectProtocol {
 
     func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
     func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type?
+
+    func makeData(index: Int)
+    var pivotItemCreationBlock: PivotItemCreationType { get set }
 
 }
 
@@ -90,9 +95,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
     }
 
     private var sizes: TNodesSizesType = TNodesSizesType()
-
     private func sizeMap(node: WOTNodeProtocol) -> TNodeSize? {
-
         if let obj = node as? AnyHashable {
             return sizes[obj]
         }
@@ -169,7 +172,8 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
 
     private var rootNodeHolder: RootNodeHolderProtocol
 
-    required init(rootNodeHolder: RootNodeHolderProtocol) {
+    required init(rootNodeHolder: RootNodeHolderProtocol, pivotCreation: @escaping PivotItemCreationType) {
+        self.pivotItemCreationBlock = pivotCreation
         self.rootNodeHolder = rootNodeHolder
     }
 
@@ -208,5 +212,52 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         let height = colNodesDepth + rowNodesEndpointsCount
         return CGSize(width: width, height: height)
     }
+
+    func makeData(index externalIndex: Int) {
+        var index = externalIndex
+        let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootColsNode)
+        let rowNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootRowsNode)
+        rowNodeEndpoints.forEach { (rowNode) in
+            colNodeEndpoints.forEach({ (colNode) in
+                let predicates = self.predicates(colNode: colNode, rowNode: rowNode)
+                let dataNodes = self.pivotItemCreationBlock(predicates)
+                self.setMaxWidth(dataNodes.count, forNode: colNode, byKey: rowNode.hashString)
+                self.setMaxWidth(dataNodes.count, forNode: rowNode, byKey: colNode.hashString)
+                var idx: Int = 0
+                dataNodes.forEach({ (dataNode) in
+                    dataNode.index = index
+                    index += 1
+                    dataNode.stepParentColumn = colNode
+                    dataNode.stepParentRow = rowNode
+                    dataNode.indexInsideStepParentColumn = idx
+                    self.rootNodeHolder.rootDataNode.addChild(dataNode)
+                    idx += 1
+                })
+            })
+        }
+    }
+
+    private func predicates(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol) -> [NSPredicate] {
+        var result = [NSPredicate]()
+        if let colPredicate = (colNode as? WOTPivotNodeProtocol)?.predicate {
+            result.append(colPredicate)
+        }
+        if let rowPredicate = (rowNode as? WOTPivotNodeProtocol)?.predicate {
+            result.append(rowPredicate)
+        }
+
+        let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootFilterNode)
+        endpoints.forEach { (fnode) in
+            if let filterPredicate = (fnode as? WOTPivotNodeProtocol)?.predicate {
+                result.append(filterPredicate)
+            }
+        }
+        return result
+    }
+
+    var pivotItemCreationBlock: PivotItemCreationType
+
+
+
 
 }

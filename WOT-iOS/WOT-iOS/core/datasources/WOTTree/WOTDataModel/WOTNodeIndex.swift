@@ -10,14 +10,12 @@ import Foundation
 
 @objc
 public protocol WOTNodeIndexProtocol: NSObjectProtocol {
-
     func reset()
     func addNodeToIndex(_ node: WOTNodeProtocol)
     func addNodesToIndex(_ nodes: [WOTNodeProtocol])
     var count: Int { get }
     func item(indexPath: NSIndexPath) -> WOTNodeProtocol?
-    func maxWidthOrValue( _ value: Int) -> Int
-
+    func maxWidthOrValue(_ value: Int) -> Int
 }
 
 @objc
@@ -25,7 +23,7 @@ class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
 
     private var largeIndex = Dictionary<AnyHashable, Any> ()
 
-    func maxWidthOrValue( _ value: Int) -> Int {
+    func maxWidthOrValue(_ value: Int) -> Int {
         return 0
     }
 

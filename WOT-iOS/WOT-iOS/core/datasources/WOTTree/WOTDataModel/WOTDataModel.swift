@@ -11,15 +11,18 @@ import Foundation
 public typealias WOTNodeComparator = (_ left: WOTNodeProtocol, _ right: WOTNodeProtocol) -> Bool
 typealias WOTIndexTypeAlias = Dictionary<Int, [WOTNodeProtocol]>
 
+@objc
+public protocol WOTNodeCreatorProtocol {
+    func createNode(name: String) -> WOTNodeProtocol
+}
 
 @objc
-public protocol WOTDataModelProtocol: NSObjectProtocol {
+public protocol WOTDataModelProtocol {
     var index: WOTNodeIndexProtocol { get }
     var rootNodes: [WOTNodeProtocol] { get }
     var levels: Int { get }
     var width: Int { get }
     var endpointsCount: Int { get }
-    func reindex()
     func add(node: WOTNodeProtocol)
     func remove(node: WOTNodeProtocol)
     func removeAll()
@@ -29,7 +32,7 @@ public protocol WOTDataModelProtocol: NSObjectProtocol {
 }
 
 @objc
-public class WOTDataModel: NSObject, WOTDataModelProtocol {
+public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtocol {
 
     lazy public var index: WOTNodeIndexProtocol = {
         return WOTNodeIndex()
@@ -57,21 +60,15 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol {
         return result
     }
 
-    //TODO: too complex
     public var endpointsCount: Int {
-        var result: Int = 0
-        self.rootNodes.forEach { (node) in
-            let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: node)
-            result += endpoints.count
-        }
-        return result
+        return WOTNodeEnumerator.sharedInstance.endpoints(array: self.rootNodes).count
     }
 
     override init() {
         self.rootNodes = []
     }
 
-    public func reindex() {
+    private func reindex() {
         self.levelIndex.removeAll()
         let level: Int = 0
         let rootNodes = self.allObjects(sortComparator: nil)
@@ -100,9 +97,14 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol {
             return
         }
         self.rootNodes.remove(at: index)
+        reindex()
     }
 
     public func removeAll() {
+        self.rootDataNode.removeChildren(nil)
+        self.rootRowsNode.removeChildren(nil)
+        self.rootColsNode.removeChildren(nil)
+        self.rootFilterNode.removeChildren(nil)
         self.rootNodes.removeAll()
         reindex()
     }
@@ -111,7 +113,8 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol {
         let comparator = sortComparator ?? self.comparator
         return Array(self.rootNodes).sorted(by: comparator)
     }
-
+    
+    @objc
     public func nodesCount(section: Int) -> Int {
         return self.levelIndex[section]?.count ?? 0
     }
@@ -121,4 +124,72 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol {
         return itemsAtSection?[indexPath.row]
     }
 
+    //RootNodeHolderProtocol
+    lazy var rootFilterNode: WOTNodeProtocol = {
+        let result = self.createNode(name: "root filters")
+        self.add(node: result)
+        return result
+    }()
+    lazy var rootColsNode: WOTNodeProtocol = {
+        let result = self.createNode(name: "root cols")
+        self.add(node: result)
+        return result
+    }()
+    lazy var rootRowsNode: WOTNodeProtocol = {
+        let result = self.createNode(name: "root data")
+        self.add(node: result)
+        return result
+    }()
+    lazy var rootDataNode: WOTNodeProtocol = {
+        let result = self.createNode(name: "root rows")
+        self.add(node: result)
+        return result
+    }()
+
+    func resetIndex() {
+        self.index.reset()
+        self.index.addNodesToIndex([self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode])
+    }
+
+    func resortMetadata(metadataItems: [WOTNodeProtocol]) {
+
+        self.rootDataNode.removeChildren(nil)
+        self.rootRowsNode.removeChildren(nil)
+        self.rootColsNode.removeChildren(nil)
+        self.rootFilterNode.removeChildren(nil)
+
+        let rows = metadataItems.compactMap { $0 as? WOTPivotRowNodeSwift }
+        self.rootRowsNode.addChildArray(rows)
+
+        let cols = metadataItems.compactMap { $0 as? WOTPivotColNodeSwift }
+        self.rootColsNode.addChildArray(cols)
+
+        let filters = metadataItems.compactMap { $0 as? WOTPivotFilterNodeSwift }
+        self.rootFilterNode.addChildArray(filters)
+    }
+
+    func reindexMetaItems() -> Int {
+
+        var result: Int = 0
+        let completion: (WOTNodeProtocol)->Void = { (node) in
+            node.index = result
+            result += 1
+        }
+
+        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootFilterNode, comparator: WOTPivotNodeSwift.WOTNodeEmptyComparator, childCompletion: completion)
+        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootColsNode, comparator: WOTPivotNodeSwift.WOTNodeNameComparator, childCompletion: completion)
+        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootRowsNode, comparator: WOTPivotNodeSwift.WOTNodePredicateComparator, childCompletion: completion)
+
+        return result
+    }
+
 }
+
+extension WOTDataModel: WOTNodeCreatorProtocol {
+    public func createNode(name: String) -> WOTNodeProtocol {
+        let result = WOTNodeSwift(name: name)
+        result.isVisible = false
+        return result
+    }
+}
+
