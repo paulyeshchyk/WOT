@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^WOTTankPivotCompletionCancelBlock) ();
+typedef void(^WOTTankPivotCompletionCancelBlock) (void);
 typedef void(^WOTTankPivotCompletionDoneBlock) (id configuration);
 
 @interface WOTTankPivotViewController : UIViewController

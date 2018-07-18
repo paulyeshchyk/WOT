@@ -9,8 +9,8 @@
 #import "WOTTableViewDatasourceProtocol.h"
 #import "WOTTankListSettingsAvailableFieldsProtocol.h"
 
-typedef void (^WOTTankListSettingCancelBlock) ();
-typedef void (^WOTTankListSettingApplyBlock) ();
+typedef void (^WOTTankListSettingCancelBlock) (void);
+typedef void (^WOTTankListSettingApplyBlock) (void);
 
 @interface WOTTankListSettingViewController : UIViewController
 

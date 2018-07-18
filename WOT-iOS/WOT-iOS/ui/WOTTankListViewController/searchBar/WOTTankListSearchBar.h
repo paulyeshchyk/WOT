@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^SearchCommitBlock)(NSString *text);
-typedef void(^SearchCloseBlock)();
+typedef void(^SearchCloseBlock)(void);
 
 @interface WOTTankListSearchBar : UIView
 

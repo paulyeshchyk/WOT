@@ -73,7 +73,7 @@
         NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
         [fetchedData enumerateObjectsUsingBlock:^(Tanks *tanks, NSUInteger idx, BOOL *stop) {
 
-            id<WOTPivotNodeProtocol> node = [WOTNodeFactory pivotDataNodeForPredicate:predicate andTanksObject:tanks];
+            id<WOTNodeProtocol> node = [WOTNodeFactory pivotDataNodeForPredicate:predicate andTanksObject:tanks];
             [resultArray addObject:node];
         }];
         return resultArray;

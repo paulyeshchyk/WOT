@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^WOTConfigurationCompletionCancelBlock) ();
+typedef void(^WOTConfigurationCompletionCancelBlock) (void);
 typedef void(^WOTConfigurationCompletionDoneBlock) (id configuration);
 
 @interface WOTTankModuleTreeViewController : UIViewController

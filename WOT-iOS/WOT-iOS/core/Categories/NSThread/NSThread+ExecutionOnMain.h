@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^WOTMainThreadExecutionBlock)();
+typedef void(^WOTMainThreadExecutionBlock)(void);
 
 @interface NSThread (ExecutionOnMain)
 

@@ -221,7 +221,6 @@
 		1DA1D7481B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7461B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib */; };
 		1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74A1B2B005F00C5C2FB /* WOTTankListSettingField.m */; };
 		1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */; };
-		1DB57B1120F7591F003FF3EC /* WOTNodePivotFactoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB57B1020F7591F003FF3EC /* WOTNodePivotFactoryTest.swift */; };
 		1DB57B1920F772FB003FF3EC /* tanks.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1B20F772FB003FF3EC /* tanks.json */; };
 		1DB57B2820F77415003FF3EC /* tankguns.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1C20F77413003FF3EC /* tankguns.json */; };
 		1DB57B2920F77415003FF3EC /* chassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1E20F77414003FF3EC /* chassis.json */; };
@@ -376,6 +375,7 @@
 		1DF3E9DC20FF6CFC00224F0B /* WOTPivotNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF3E9D620FF6CFC00224F0B /* WOTPivotNode.swift */; };
 		1DF3E9DD20FF6CFC00224F0B /* WOTPivotDataNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF3E9D720FF6CFC00224F0B /* WOTPivotDataNode.swift */; };
 		1DF3E9DF20FF6D1200224F0B /* WOTPivotDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF3E9DE20FF6D1200224F0B /* WOTPivotDataModel.swift */; };
+		1DF3E9E220FF737300224F0B /* WOTNodePivotFactoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF3E9E020FF729600224F0B /* WOTNodePivotFactoryTest.swift */; };
 		1DF73EB71B9047BA00AE6F86 /* NSSet+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EB61B9047BA00AE6F86 /* NSSet+WOT.m */; };
 		1DF73EBB1B90534300AE6F86 /* NSMutableDictionary+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EBA1B90534300AE6F86 /* NSMutableDictionary+WOT.m */; };
 		1DF73EBE1B90563300AE6F86 /* NSMutableArray+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EBD1B90563300AE6F86 /* NSMutableArray+WOT.m */; };
@@ -726,7 +726,6 @@
 		1DA1D74C1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankListSettingsDatasource+AvailableFields.h"; sourceTree = "<group>"; };
 		1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankListSettingsDatasource+AvailableFields.m"; sourceTree = "<group>"; };
 		1DA1D74F1B2B017C00C5C2FB /* WOTTankListSettingsAvailableFieldsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsAvailableFieldsProtocol.h; sourceTree = "<group>"; };
-		1DB57B1020F7591F003FF3EC /* WOTNodePivotFactoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodePivotFactoryTest.swift; sourceTree = "<group>"; };
 		1DB57B1A20F772FB003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tanks.json; sourceTree = "<group>"; };
 		1DB57B1D20F77413003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankguns.json; sourceTree = "<group>"; };
 		1DB57B1F20F77414003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/chassis.json; sourceTree = "<group>"; };
@@ -967,6 +966,7 @@
 		1DF3E9D620FF6CFC00224F0B /* WOTPivotNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNode.swift; sourceTree = "<group>"; };
 		1DF3E9D720FF6CFC00224F0B /* WOTPivotDataNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataNode.swift; sourceTree = "<group>"; };
 		1DF3E9DE20FF6D1200224F0B /* WOTPivotDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModel.swift; sourceTree = "<group>"; };
+		1DF3E9E020FF729600224F0B /* WOTNodePivotFactoryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodePivotFactoryTest.swift; sourceTree = "<group>"; };
 		1DF73EB51B9047BA00AE6F86 /* NSSet+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+WOT.h"; sourceTree = "<group>"; };
 		1DF73EB61B9047BA00AE6F86 /* NSSet+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+WOT.m"; sourceTree = "<group>"; };
 		1DF73EB91B90534300AE6F86 /* NSMutableDictionary+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+WOT.h"; sourceTree = "<group>"; };
@@ -2603,7 +2603,6 @@
 				1DDEE38D1B8F353200C90D4B /* WOTTankPivotViewController.h */,
 				1DDEE38E1B8F353200C90D4B /* WOTTankPivotViewController.m */,
 				1DDEE38F1B8F353200C90D4B /* WOTTankPivotViewController.xib */,
-				1DB57B1020F7591F003FF3EC /* WOTNodePivotFactoryTest.swift */,
 			);
 			path = WOTTankPivotViewController;
 			sourceTree = "<group>";
@@ -2668,6 +2667,7 @@
 		1DF3E9CD20FF6CAD00224F0B /* WOTNodeFactory */ = {
 			isa = PBXGroup;
 			children = (
+				1DF3E9E020FF729600224F0B /* WOTNodePivotFactoryTest.swift */,
 				1DF3E9CE20FF6CAD00224F0B /* WOTNode+PivotFactory.m */,
 				1DF3E9CF20FF6CAD00224F0B /* WOTNode+PivotFactory.h */,
 			);
@@ -2789,7 +2789,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Pavel Yeshchyk";
 				TargetAttributes = {
 					1DD646321B1C616A00B0EC76 = {
@@ -3297,9 +3297,9 @@
 			files = (
 				1DD646561B1C616A00B0EC76 /* WOT_iOSTests.m in Sources */,
 				1D188FE11B9437460056D208 /* PivotTreeTestCase.m in Sources */,
-				1DB57B1120F7591F003FF3EC /* WOTNodePivotFactoryTest.swift in Sources */,
 				1D79C78220F5D32F00FFAF02 /* WOTDataModelTest.swift in Sources */,
 				1D4891CB20FE30E100AB0CE5 /* WOTNodeTest.swift in Sources */,
+				1DF3E9E220FF737300224F0B /* WOTNodePivotFactoryTest.swift in Sources */,
 				1D010DAC1B8DC45100FA6A75 /* TestWOTRequestExecutor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3411,24 +3411,34 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3460,24 +3470,34 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3491,6 +3511,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
