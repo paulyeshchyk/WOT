@@ -13,13 +13,13 @@ import CoreData
 protocol WOTPivotNodeProtocol: WOTNodeProtocol {
     var dataColor: UIColor { get set }
     var data1: NSManagedObject? { get set }
-    var stickyType: PivotStickyType  { get }
-    var predicate: NSPredicate?  { get set }
+    var stickyType: PivotStickyType { get }
+    var predicate: NSPredicate? { get set }
 }
 
 class WOTPivotNodeSwift: WOTNodeSwift, WOTPivotNodeProtocol {
 
-    static let WOTNodePredicateComparator: WOTNodeComparatorType  = { (node1, node2, level) in
+    static let WOTNodePredicateComparator: WOTNodeComparatorType = { (node1, node2, level) in
         if let predicate1 = (node1 as? WOTPivotNodeProtocol)?.predicate, let predicate2 = (node2 as? WOTPivotNodeProtocol)?.predicate {
             return predicate1.predicateFormat.compare(predicate2.predicateFormat)
         } else {
@@ -44,6 +44,6 @@ class WOTPivotNodeSwift: WOTNodeSwift, WOTPivotNodeProtocol {
         result.dataColor = self.dataColor
         result.isVisible = self.isVisible
         result.imageURL = self.imageURL
-        return result;
+        return result
     }
 }

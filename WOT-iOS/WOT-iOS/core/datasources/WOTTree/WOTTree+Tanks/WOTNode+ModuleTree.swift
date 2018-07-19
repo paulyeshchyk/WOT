@@ -32,7 +32,7 @@ extension WOTNodeSwift: WOTNodeModuleTreeProtocol {
 
     }
     var moduleType: WOTModuleType? {
-        return self.moduleTree?.moduleType();
+        return self.moduleTree?.moduleType()
 
     }
 

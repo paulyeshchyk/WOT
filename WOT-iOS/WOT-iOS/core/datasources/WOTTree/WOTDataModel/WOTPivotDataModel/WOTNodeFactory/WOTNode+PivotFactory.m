@@ -11,34 +11,16 @@
 
 @implementation WOTNodeFactory 
 
-+ (Class)pivotNodeClassForType:(PivotMetadataType)type {
-
-    Class result;
++ (Class _Nonnull)pivotNodeClassForType:(PivotMetadataType)type {
     switch (type) {
-            
-        case PivotMetadataTypeColumn:
-            
-            result = [WOTPivotColNodeSwift class];
-            break;
-        case PivotMetadataTypeFilter:
-            
-            result = [WOTPivotFilterNodeSwift class];
-            break;
-        case PivotMetadataTypeData:
-            
-            result = [WOTPivotDataNodeSwift class];
-            break;
-        case PivotMetadataTypeRow:
-            
-            result = [WOTPivotRowNodeSwift class];
-            break;
-        default:
-            break;
+        case PivotMetadataTypeColumn: return [WOTPivotColNodeSwift class];
+        case PivotMetadataTypeFilter: return [WOTPivotFilterNodeSwift class];
+        case PivotMetadataTypeData: return [WOTPivotDataNodeSwift class];
+        case PivotMetadataTypeRow: return [WOTPivotRowNodeSwift class];
     }
-    return result;
 }
 
-+ (id<WOTPivotNodeProtocol> )pivotDataNodeForPredicate:(NSPredicate *)predicate andTanksObject:(id)tanksObject {
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nonnull)predicate andTanksObject:(id _Nonnull)tanksObject {
     
     Tanks *tanks = tanksObject;
     WOTPivotDataNodeSwift *node = [[WOTPivotDataNodeSwift alloc] initWithName:tanks.short_name_i18n];
@@ -55,7 +37,7 @@
     return node;
 }
 
-+ (id<WOTPivotNodeProtocol>)pivotDPMMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotDPMMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
 
@@ -80,7 +62,7 @@
     return result;
 }
 
-+ (id<WOTPivotNodeProtocol>)pivotNationMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotNationMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
     WOTPivotNodeSwift *result = [[PivotNodeClass alloc] initWithName:@"Nation"];
@@ -98,7 +80,7 @@
     return result;
 }
 
-+ (id<WOTPivotNodeProtocol>)pivotTierMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotTierMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
     WOTPivotNodeSwift *result = [[PivotNodeClass alloc] initWithName:@"Tier"];
@@ -117,7 +99,7 @@
     return result;
 }
 
-+ (id<WOTPivotNodeProtocol>)pivotPremiumMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotPremiumMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
     WOTPivotNodeSwift *result = [[PivotNodeClass alloc] initWithName:@"Premium"];
@@ -128,7 +110,7 @@
     return result;
 }
 
-+ (id<WOTPivotNodeProtocol>)pivotTypeMetadataItemAsType:(PivotMetadataType)type {
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotTypeMetadataItemAsType:(PivotMetadataType)type {
     
     Class PivotNodeClass = [self pivotNodeClassForType:type];
     WOTPivotNodeSwift *result = [[PivotNodeClass alloc] initWithName:@"Type"];
@@ -142,7 +124,7 @@
     return result;
 }
 
-+ (NSDictionary *)nationColors {
++ (NSDictionary * _Nonnull)nationColors {
     
     return @{WOT_STRING_NATION_USA:     [[UIColor purpleColor] paleColor],
              WOT_STRING_NATION_USSR:    [[UIColor redColor] paleColor],
@@ -154,7 +136,7 @@
              WOT_STRING_NATION_UK:      [[UIColor blueColor] paleColor]};
 }
 
-+ (NSDictionary *)typeColors {
++ (NSDictionary * _Nonnull)typeColors {
     
     return @{WOT_STRING_TANK_TYPE_AT_SPG:       [[UIColor blueColor] paleColor],
              WOT_STRING_TANK_TYPE_SPG:          [[UIColor brownColor] paleColor],

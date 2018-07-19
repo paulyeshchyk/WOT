@@ -10,7 +10,7 @@
 #import "WOTRequestListener.h"
 
 @interface WOTRequestExecutor : NSObject <WOTRequestListener>
-
++ (NSString *)pendingRequestNotificationName;
 + (WOTRequestExecutor *)sharedInstance;
 
 @property (nonatomic, readonly)NSInteger pendingRequestsCount;

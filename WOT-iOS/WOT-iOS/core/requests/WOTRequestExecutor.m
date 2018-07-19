@@ -33,6 +33,10 @@
     return instance;
 }
 
++ (NSString *)pendingRequestNotificationName {
+    return @"WOTRequestExecutorPendingRequestNotificationName";
+}
+
 - (void)dealloc {
     
     [self.registeredRequests removeAllObjects];
@@ -52,6 +56,12 @@
         self.grouppedRequests = [[NSMutableDictionary alloc] init];
     }
     return self;
+}
+
+- (void)setPendingRequestsCount:(NSInteger)pendingRequestsCount {
+    _pendingRequestsCount = pendingRequestsCount;
+    NSString *notificationName = [WOTRequestExecutor pendingRequestNotificationName];
+    [[NSNotificationCenter defaultCenter] postNotificationName: notificationName object:self];
 }
 
 - (void)cancelRequestsByGroupId:(NSString *)groupId {
@@ -117,8 +127,7 @@
     
     BOOL canAdd = (index == NSNotFound);
     if (canAdd) {
-        
-        [request setListener:self];
+        [request addListener: self];
         [request addGroup:groupId];
         [requests addPointer:(__bridge void *)request];
     } else {
@@ -220,7 +229,7 @@
 - (void)requestHasFailed:(id)request {
 
     self.pendingRequestsCount -= 1;
-    [(WOTRequest *)request setListener:nil];
+    [(WOTRequest *)request removeListener:self];
     debugError(@"webrequest-failture:%@",request);
 }
 
@@ -233,7 +242,7 @@
 - (void)requestHasCanceled:(id)request {
     
     self.pendingRequestsCount -= 1;
-    [(WOTRequest *)request setListener:nil];
+    [(WOTRequest *)request removeListener:self];
     debugLog(@"webrequest-canceled:%@",request);
 }
 
@@ -254,6 +263,6 @@
         NSPointerArray *requests = self.grouppedRequests[group];
         [self requestsArray:requests removeRequest:request];
     }];
-    [request setListener:nil];
+    [request removeListener:self];
 }
 @end

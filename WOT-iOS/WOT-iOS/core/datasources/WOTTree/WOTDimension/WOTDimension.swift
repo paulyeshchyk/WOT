@@ -7,6 +7,8 @@
 //
 
 import Foundation
+typealias TNodeSize = [String: Int]
+typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
 @objc
 protocol RootNodeHolderProtocol: NSObjectProtocol {
@@ -26,7 +28,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
     }
 
     private var fetchController: WOTDataFetchControllerProtocol
-    private var registeredCalculators:Dictionary<AnyHashable, AnyClass> = Dictionary<AnyHashable, AnyClass>()
+    private var registeredCalculators = [AnyHashable: AnyClass]()
 
     func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
         let hash = hashValue(type: forNodeClass)
@@ -85,7 +87,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
             return result
         }
         nodeSizes.keys.forEach { (key) in
-            if let oldValue = nodeSizes[key]{
+            if let oldValue = nodeSizes[key] {
                 result = max(oldValue, result)
             }
         }
@@ -97,7 +99,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         guard let parent = node.parent else {
             return result
         }
-        guard let indexOfNode = ( parent.children.index { $0 === node} ) else {
+        guard let indexOfNode = ( parent.children.index { $0 === node}) else {
             return result
         }
 

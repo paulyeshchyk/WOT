@@ -18,17 +18,17 @@ class WOTDataModelTest: XCTestCase {
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
-    
+
     func testInit() {
         XCTAssert(model.rootNodes.count == 0)
     }
 
     func testAddNode() {
-        model.removeAll()
+        model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
         let node: WOTNodeSwift = WOTNodeSwift(name: "")
         model.add(node: node)
@@ -39,7 +39,7 @@ class WOTDataModelTest: XCTestCase {
     }
 
     func testRemoveNode() {
-        model.removeAll()
+        model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
         let node: WOTNodeSwift = WOTNodeSwift(name: "")
         model.add(node: node)
@@ -49,16 +49,16 @@ class WOTDataModelTest: XCTestCase {
     }
 
     func testRemoveAll() {
-        model.removeAll()
+        model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
         let node: WOTNodeSwift = WOTNodeSwift(name: "")
         model.add(node: node)
-        model.removeAll()
+        model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
     }
 
     func testAllObjects() {
-        model.removeAll()
+        model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
         let node: WOTNodeSwift = WOTNodeSwift(name: "")
         model.add(node: node)
@@ -66,7 +66,7 @@ class WOTDataModelTest: XCTestCase {
     }
 
     func testEndpoints() {
-        model.removeAll()
+        model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
         let parentnode: WOTNodeSwift = WOTNodeSwift(name: "")
         parentnode.addChild(WOTNodeSwift(name: ""))

@@ -13,17 +13,17 @@
 
 @interface WOTNodeFactory: NSObject
 
-+ (Class)pivotNodeClassForType:(PivotMetadataType)type;
++ (Class _Nonnull)pivotNodeClassForType:(PivotMetadataType)type;
 
-+ (id<WOTPivotNodeProtocol>)pivotDataNodeForPredicate:(NSPredicate *)predicate andTanksObject:(id)tanksObject;
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nonnull)predicate andTanksObject:(id _Nonnull)tanksObject;
 
-+ (id<WOTPivotNodeProtocol>)pivotNationMetadataItemAsType:(PivotMetadataType)type;
-+ (id<WOTPivotNodeProtocol>)pivotTierMetadataItemAsType:(PivotMetadataType)type;
-+ (id<WOTPivotNodeProtocol>)pivotPremiumMetadataItemAsType:(PivotMetadataType)type;
-+ (id<WOTPivotNodeProtocol>)pivotTypeMetadataItemAsType:(PivotMetadataType)type;
-+ (id<WOTPivotNodeProtocol>)pivotDPMMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotNationMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotTierMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotPremiumMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotTypeMetadataItemAsType:(PivotMetadataType)type;
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotDPMMetadataItemAsType:(PivotMetadataType)type;
 
-+ (NSDictionary *)nationColors;
-+ (NSDictionary *)typeColors;
++ (NSDictionary * _Nonnull)nationColors;
++ (NSDictionary * _Nonnull)typeColors;
 
 @end

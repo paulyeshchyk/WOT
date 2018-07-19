@@ -117,18 +117,24 @@ static NSString *urlEncode(NSString *string) {
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPBody:bodyData];
+    [request setTimeoutInterval: 0];
     [request setHTTPMethod:self.method];
     
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [self.connection start];
-    
-    [self.listener requestHasStarted:self];
+
+    [self.listeners enumerateObjectsUsingBlock:^(id  _Nonnull listener, NSUInteger idx, BOOL * _Nonnull stop) {
+        [listener requestHasStarted:self];
+    }];
+
 }
 
 - (void)cancel {
     
     [self.connection cancel];
-    [self.listener requestHasCanceled:self];
+    [self.listeners enumerateObjectsUsingBlock:^(id  _Nonnull listener, NSUInteger idx, BOOL * _Nonnull stop) {
+        [listener requestHasCanceled:self];
+    }];
 }
 
 - (void)cancelAndRemoveFromQueue {
@@ -203,6 +209,21 @@ static NSString *urlEncode(NSString *string) {
     return [queryArgs componentsJoinedByString:@"&"];
 }
 
+
+- (void)notifyListenersAboutFinish {
+    [self.listeners enumerateObjectsUsingBlock:^(id  _Nonnull listener, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        [listener requestHasFinishedLoadData:self];
+    }];
+}
+
+- (void)notifyListenersAboutFail {
+    [self.listeners enumerateObjectsUsingBlock:^(id  _Nonnull listener, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        [listener requestHasFinishedLoadData:self];
+    }];
+}
+
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
@@ -214,8 +235,8 @@ static NSString *urlEncode(NSString *string) {
     
     [self parseData:self.data error:nil];
     self.data = nil;
-    
-    [self.listener requestHasFinishedLoadData:self];
+
+    [self notifyListenersAboutFinish];
 }
 
 - (void)appendData:(NSData *)data {
@@ -233,19 +254,15 @@ static NSString *urlEncode(NSString *string) {
 
         [self appendData: fake];
 
+        [self notifyListenersAboutFinish];
         [self parseData:self.data error:nil];
         self.data = nil;
+    } else {
 
-        [self.listener requestHasFinishedLoadData:self];
-
-        return;
+        [self notifyListenersAboutFail];
+        [self parseData:nil error:error];
+        self.data = nil;
     }
-
-    [self parseData:nil error:error];
-    self.data = nil;
-
-    [self.listener requestHasFailed:self];
-
 }
 
 - (NSData *)loadFakeData {

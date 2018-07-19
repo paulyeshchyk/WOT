@@ -1,12 +1,12 @@
 //
 //  WOTLevelIndex.swift
-//  
+//
 //
 //  Created by Pavel Yeshchyk on 7/18/18.
 //
 
 import Foundation
-typealias WOTIndexTypeAlias = Dictionary<Int, [WOTNodeProtocol]>
+typealias WOTIndexTypeAlias = [Int: [WOTNodeProtocol]]
 
 protocol WOTLevelIndexProtocol {
     var width: Int { get }
@@ -45,11 +45,11 @@ class WOTLevelIndex: WOTLevelIndexProtocol {
     func itemsCount(atLevel: Int) -> Int {
         return self.levelIndex[atLevel]?.count ?? 0
     }
-    
+
     func set(itemsCount: Int, atLevel: Int) {
 
     }
-    
+
     func reindexChildNode(_ node: WOTNodeProtocol, atLevel: Int) {
 
         var itemsAtLevel = self.levelIndex[atLevel] ?? [WOTNodeProtocol]()
@@ -65,12 +65,12 @@ class WOTLevelIndex: WOTLevelIndexProtocol {
         let itemsAtSection = self.levelIndex[indexPath.section]
         return itemsAtSection?[indexPath.row]
     }
-    
+
     func addNodesToIndex(_ nodes: [WOTNodeProtocol]) {
 
         let level: Int = 0
         nodes.forEach { (node) in
-            
+
             self.reindexChildNode(node, atLevel: level)
         }
     }

@@ -1,0 +1,32 @@
+warning_threshold: 1
+
+disabled_rules:
+- line_length
+- trailing_newline
+- todo
+- unused_optional_binding
+- redundant_string_enum_value
+- nesting
+- identifier_name
+#- weak_delegate
+
+excluded:
+- Pods
+- LGICore
+- Resources/Strings.swift
+- M4W
+- HorizonTests
+
+type_body_length:
+- 350 # warning
+- 1000 # error
+
+function_body_length:
+- 50 # warning
+
+cyclomatic_complexity:
+- 15 # warning
+
+file_length:
+- 600 # warning
+- 1200 # error

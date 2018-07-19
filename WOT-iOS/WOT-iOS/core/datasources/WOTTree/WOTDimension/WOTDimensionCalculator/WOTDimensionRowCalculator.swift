@@ -18,7 +18,7 @@ class WOTDimensionRowCalculator: WOTDimensionCalculator {
     override class func y(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int {
         var result: Int = WOTNodeEnumerator.sharedInstance.childrenWidth(siblingNode: forNode, orValue: 1)
         result += dimension.rootNodeHeight
-        return result;
+        return result
     }
 
     override class func width(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int {

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol WOTTreeProtocol: NSObjectProtocol {
     func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol
 }
@@ -16,7 +15,7 @@ protocol WOTTreeProtocol: NSObjectProtocol {
 @objc
 protocol WOTPivotTreeProtocol: NSObjectProtocol {
     var dimension: WOTDimensionProtocol { get }
-    var shouldDisplayEmptyColumns: Bool { get set };
+    var shouldDisplayEmptyColumns: Bool { get set }
     func itemRect(atIndexPath: NSIndexPath) -> CGRect
     func itemStickyType(atIndexPath: NSIndexPath) -> PivotStickyType
     func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol?
@@ -27,12 +26,13 @@ protocol WOTPivotTreeProtocol: NSObjectProtocol {
 }
 
 @objc
-protocol WOTDataFetchControllerProtocol {
-    func fetchedNodes(byPredicates:[NSPredicate]) -> [WOTPivotNodeProtocol]
+protocol WOTPivotDataModelListener: NSObjectProtocol {
+    func modelDidLoad()
+    func modelDidFailLoad(error: Error)
 }
 
 @objc
-class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
+class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol {
 
     @objc
     lazy var dimension: WOTDimensionProtocol = {
@@ -41,6 +41,9 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
 
     var shouldDisplayEmptyColumns: Bool
 
+    @objc
+    var listener: WOTPivotDataModelListener
+
     var metadataItems = [WOTNodeProtocol]()
 
     @objc
@@ -48,19 +51,34 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
 
     deinit {
         self.clearMetadataItems()
+        self.fetchController.setListener(nil)
     }
 
     @objc
-    required init(fetchController fetch: WOTDataFetchControllerProtocol ) {
+    required init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTPivotDataModelListener) {
         shouldDisplayEmptyColumns = true
         fetchController = fetch
+        listener = list
 
         super.init()
+
+        self.fetchController.setListener(self)
 
         self.dimension.registerCalculatorClass(WOTDimensionColumnCalculator.self, forNodeClass: WOTPivotColNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionRowCalculator.self, forNodeClass: WOTPivotRowNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionFilterCalculator.self, forNodeClass: WOTPivotFilterNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionDataCalculator.self, forNodeClass: WOTPivotDataNodeSwift.self)
+
+        self.invalidate()
+    }
+
+    private func invalidate() {
+        do {
+            try self.fetchController.invalidate()
+        } catch let error {
+            fetchFailed(by: self.fetchController, withError: error)
+        }
+
     }
 
     func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol? {
@@ -92,14 +110,12 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
         return relativeRectValue.cgRectValue
     }
 
-
     func itemStickyType(atIndexPath: NSIndexPath) -> PivotStickyType {
         guard let node = self.item(atIndexPath: atIndexPath) else {
             return .float
         }
         return node.stickyType
     }
-
 
     func itemsCount(section: Int) -> Int {
         /*
@@ -114,7 +130,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
 
     func clearMetadataItems() {
         self.nodeIndex.reset()
-        self.removeAll()
+        self.clearRootNodes()
         self.metadataItems.removeAll()
     }
 
@@ -125,14 +141,16 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
 
     @objc
     func makePivot() {
-        self.removeAll()
+        self.clearRootNodes()
         self.resortMetadata(metadataItems: self.metadataItems)
         let metadataIndex = self.reindexMetaItems()
         self.dimension.fetchData(index: metadataIndex)
         self.resetNodeIndex()
     }
+}
 
-    // WOTTreeProtocol
+extension WOTPivotDataModel: WOTTreeProtocol {
+
     func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol {
         let roots = self.rootNodes.filter { _ in forPredicate.evaluate(with: nil) }
         if roots.count == 0 {
@@ -143,5 +161,15 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
             let root = roots.first
             return root!
         }
+    }
+}
+
+extension WOTPivotDataModel: WOTDataFetchControllerListenerProtocol {
+    func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error) {
+        listener.modelDidFailLoad(error: withError)
+    }
+
+    func fetchPerformed(by: WOTDataFetchControllerProtocol) {
+        listener.modelDidLoad()
     }
 }

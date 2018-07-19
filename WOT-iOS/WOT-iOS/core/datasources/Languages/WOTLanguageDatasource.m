@@ -44,7 +44,7 @@
 @implementation WOTLanguageDatasource
 
 
-+ (WOTLanguageDatasource *)sharedInstance {
++ (WOTLanguageDatasource * _Nonnull)sharedInstance {
     
     static dispatch_once_t once;
     static id instance;

@@ -5,3 +5,10 @@
 #import "WOTNode+PivotFactory.h"
 #import "ModulesTree.h"
 #import "ModulesTree+FillProperties.h"
+#import "WOTCoreDataProvider.h"
+#import "WOTTankListSettingsDatasource.h"
+#import "Tanks.h"
+#import "WOTApplicationDefaults.h"
+#import "WOTApplicationStartupRequests.h"
+#import "WOTRequestExecutor.h"
+

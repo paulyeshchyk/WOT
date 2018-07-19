@@ -21,7 +21,11 @@ public protocol WOTNodeIndexProtocol: NSObjectProtocol {
 @objc
 class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
 
-    private var largeIndex = Dictionary<AnyHashable, Any> ()
+    // contains node.index: node
+    // where node.index - global autoincremented value
+    // used to get item by indexpath while iterating in  WOTTankPivotLayout::layoutAttributesForElementsInRect
+
+    private var largeIndex = [AnyHashable: Any] ()
 
     func maxWidthOrValue(_ value: Int) -> Int {
         return 0

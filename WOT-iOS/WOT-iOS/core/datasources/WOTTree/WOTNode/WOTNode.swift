@@ -9,7 +9,7 @@
 import Foundation
 import ObjectiveC
 
-public typealias WOTNodeProtocolRemoveCompletion = (WOTNodeProtocol) -> ()
+public typealias WOTNodeProtocolRemoveCompletion = (WOTNodeProtocol) -> Void
 
 typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult
 
@@ -102,7 +102,7 @@ public class WOTNodeSwift: NSObject, WOTNodeProtocol {
         let result = type(of: self).init(name: self.name)
         result.isVisible = self.isVisible
         result.imageURL = self.imageURL
-        return result;
+        return result
     }
 
     public func addChild(_ child: WOTNodeProtocol) {
@@ -117,7 +117,7 @@ public class WOTNodeSwift: NSObject, WOTNodeProtocol {
         }
     }
 
-    public func removeChild(_ child: WOTNodeProtocol, completion: (WOTNodeProtocol) -> ()) {
+    public func removeChild(_ child: WOTNodeProtocol, completion: (WOTNodeProtocol) -> Void) {
         guard let index = (self.children.index { $0 === child }) else {
             return
         }

@@ -12,11 +12,14 @@ typedef void(^WOTRequestCallback)(id data, NSError *error);
 
 @interface WOTRequest : NSObject
 
-@property (nonatomic, assign)id<WOTRequestListener>listener;
 @property (nonatomic, copy) WOTRequestCallback callback;
 @property (nonatomic, readonly) NSDictionary *args;
 
 @property (nonatomic, readonly)NSArray *availableInGroups;
+@property (nonatomic, strong)NSMutableArray *listeners;
+
+- (void)addListener:(id<WOTRequestListener>)listener;
+- (void)removeListener:(id<WOTRequestListener>)listener;
 
 - (void)addGroup:(NSString *)group;
 - (void)removeGroup:(NSString *)group;

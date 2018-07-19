@@ -34,7 +34,6 @@ class WOTDimensionColumnCalculator: WOTDimensionCalculator {
         return result
     }
 
-
     override class func height(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int {
         return 1
     }

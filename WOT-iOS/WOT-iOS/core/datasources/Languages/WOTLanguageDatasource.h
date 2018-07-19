@@ -10,12 +10,12 @@
 
 @interface WOTLanguageDatasource : NSObject
 
-@property (nonatomic, readonly) NSArray *availableLanguages;
+@property (nonatomic, readonly) NSArray *_Nonnull availableLanguages;
 
-+ (WOTLanguageDatasource *)sharedInstance;
++ (WOTLanguageDatasource * _Nonnull)sharedInstance;
 
-- (NSString *)langAtIndex:(NSInteger)index;
-- (UIImage *)imageAtIndex:(NSInteger)index;
-- (NSString *)appIdAtIndex:(NSInteger)index;
+- (NSString *_Nonnull)langAtIndex:(NSInteger)index;
+- (UIImage *_Nonnull)imageAtIndex:(NSInteger)index;
+- (NSString *_Nonnull)appIdAtIndex:(NSInteger)index;
 
 @end

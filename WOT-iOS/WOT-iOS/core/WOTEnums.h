@@ -10,8 +10,7 @@
 #define WOT_iOS_WOTEnums_h
 
 typedef NS_ENUM(NSInteger, PivotMetadataType) {
-    PivotMetadataTypeUnknown = 0,
-    PivotMetadataTypeFilter,
+    PivotMetadataTypeFilter = 0,
     PivotMetadataTypeColumn,
     PivotMetadataTypeRow,
     PivotMetadataTypeData

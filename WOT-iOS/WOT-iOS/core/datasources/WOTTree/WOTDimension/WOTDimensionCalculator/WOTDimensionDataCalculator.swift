@@ -24,7 +24,7 @@ class WOTDimensionDataCalculator: WOTDimensionCalculator {
 
         var result: Int = Int(relativeRect.origin.x)
         result += forNode.indexInsideStepParentColumn
-        return result;
+        return result
     }
 
     override class func y(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int {

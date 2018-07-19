@@ -12,7 +12,6 @@
 
 @property (nonatomic, readwrite)NSDictionary *args;
 @property (nonatomic, strong)NSMutableArray *groups;
-
 @end
 
 @implementation WOTRequest
@@ -22,20 +21,29 @@
     self = [super init];
     if (self){
         
-        self.listener = nil;
+        self.listeners = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (void)dealloc {
-    
-    NSCAssert(self.listener == nil, @"listener should be nilled before");
-    self.listener = nil;
+    [self.listeners removeAllObjects];
+//    NSCAssert(self.listener == nil, @"listener should be nilled before");
+//    self.listener = nil;
 }
+
+- (void)addListener:(id<WOTRequestListener>)listener {
+    [self.listeners addObject:listener];
+}
+
+- (void)removeListener:(id<WOTRequestListener>)listener {
+    [self.listeners removeObject:listener];
+}
+
 
 - (void)temp_executeWithArgs:(NSDictionary *)args{
     
-    NSCAssert(self.listener, @"listener is not defined");
+//    NSCAssert(self.listener, @"listener is not defined");
     self.args = [args copy];
 }
 

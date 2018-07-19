@@ -16,7 +16,7 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTNode+PivotFactory.h"
 
-@interface WOTTankPivotViewController () <UICollectionViewDataSource, NSFetchedResultsControllerDelegate>
+@interface WOTTankPivotViewController () <UICollectionViewDataSource>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak)IBOutlet WOTTankPivotLayout *flowLayout;
@@ -28,33 +28,33 @@
 @property (nonatomic, readonly) NSArray *sortDescriptors;
 
 @property (nonatomic, strong) WOTPivotDataModel *pivotDataModel;
-
+@property (nonatomic, strong) id<WOTDataFetchControllerProtocol> fetchController;
+- (void)reloadPivot;
 @end
 
-@interface WOTTankPivotViewController(WOTDataFetchControllerProtocol) <WOTDataFetchControllerProtocol>
+@interface WOTTankPivotViewController(ModelListener)<WOTPivotDataModelListener>
 @end
 
-@implementation WOTTankPivotViewController(WOTDataFetchControllerProtocol)
+@implementation WOTTankPivotViewController (ModelListener)
 
-- (NSArray * _Nonnull)fetchedNodesByPredicates:(NSArray<NSPredicate *> * _Nonnull)byPredicates {
-    NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:byPredicates];
-    NSArray *fetchedObjects = [self.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    [fetchedObjects enumerateObjectsUsingBlock:^(id  _Nonnull tank, NSUInteger idx, BOOL * _Nonnull stop) {
-
-        id<WOTNodeProtocol> node = [WOTNodeFactory pivotDataNodeForPredicate:predicate andTanksObject:tank];
-        [result addObject:node];
-    }];
-    return result;
+- (void)modelDidLoad {
+    [self reloadPivot];
 }
 
+- (void)modelDidFailLoadWithError:(NSError * _Nonnull)error {
+
+}
 @end
+
 
 @implementation WOTTankPivotViewController
 
 - (void)dealloc {
     
-    self.fetchedResultController.delegate = nil;
+}
+
+- (void)setPivotDataModel:(WOTPivotDataModel *)pivotDataModel {
+    _pivotDataModel = pivotDataModel;
 }
 
 - (void)viewDidLoad {
@@ -80,10 +80,8 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class])];
     
-    [self invalidateFetchedResultController];
-
-    self.pivotDataModel = [[WOTPivotDataModel alloc] initWithFetchController: self];
-    [self reloadPivot];
+    self.fetchController = [[WOTDataTanksFetchController alloc] init];
+    self.pivotDataModel = [[WOTPivotDataModel alloc] initWithFetchController: self.fetchController listener: self];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -138,13 +136,6 @@
     
 }
 
-#pragma mark - NSFetchedResultsControllerDelegate
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    
-    [self reloadPivot];
-}
-
-
 #pragma mark - private
 - (void)reloadPivot {
 
@@ -165,52 +156,8 @@
     [self.pivotDataModel addWithMetadataItems:cols];
 
     [self.pivotDataModel makePivot];
+    [self.collectionView reloadData];
     
-}
-
-- (void)invalidateFetchedResultController {
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
-    [fetchRequest setSortDescriptors:self.sortDescriptors];
-
-    if (!self.fetchedResultController) {
-        
-        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-        self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-        self.fetchedResultController.delegate = self;
-    }
-    
-    NSError *error = nil;
-    [self.fetchedResultController performFetch:&error];
-    
-#warning !!!remove when dpm fetched
-    NSArray *fetchedObjects = [self.fetchedResultController fetchedObjects];
-    [fetchedObjects enumerateObjectsUsingBlock:^(Tanks *tank, NSUInteger idx, BOOL *stop) {
-        {
-//        debugLog(@"dpm:%@",tank.dpm);
-//        debugLog(@"visionRadius:%@", tank.visionRadius);
-//        debugLog(@"invisibility:%@", tank.invisibility);
-//        debugLog(@"invisibilityShot:%@", tank.invisibilityShot);
-//        debugLog(@"invisibilityImmobility:%@", tank.invisibilityImmobility);
-//        debugLog(@"invisibilityMobility:%@", tank.invisibilityMobility);
-//        debugLog(@"speed:%@", tank.speed);
-//        debugLog(@"rotationSpeed:%@", tank.rotationSpeed);
-//        debugLog(@"turretTraverseSpeed:%@", tank.turretTraverseSpeed);
-//        debugLog(@"powerToWeightRatio:%@", tank.powerToWeightRatio);
-//        debugLog(@"armor:%@", tank.armor);
-//        debugLog(@"penetration:%@", tank.penetration);
-//        debugLog(@"dispersion:%@", tank.dispersion);
-//        debugLog(@"aimingTime:%@", tank.aimingTime);
-        }
-    }];
-}
-
-- (NSArray *)sortDescriptors {
-    
-    NSMutableArray *result = [[NSMutableArray alloc] initWithArray:[WOTTankListSettingsDatasource sharedInstance].sortBy];
-    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
-    
-    return result;
 }
 
 #pragma mark - private

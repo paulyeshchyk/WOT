@@ -24,12 +24,11 @@ public protocol WOTDataModelProtocol {
     var endpointsCount: Int { get }
     func add(node: WOTNodeProtocol)
     func remove(node: WOTNodeProtocol)
-    func removeAll()
+    func clearRootNodes()
     func allObjects(sortComparator: WOTNodeComparator?) -> [WOTNodeProtocol]
     func nodesCount(section: Int) -> Int
     func node(atIndexPath: NSIndexPath) -> WOTNodeProtocol?
 }
-
 
 @objc
 public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtocol {
@@ -88,14 +87,14 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
     }
 
     public func remove(node: WOTNodeProtocol) {
-        guard let index = (self.rootNodes.index { $0 === node}) else {
+        guard let index = (self.rootNodes.index { $0 === node }) else {
             return
         }
         self.rootNodes.remove(at: index)
         resetLevelIndex()
     }
 
-    public func removeAll() {
+    public func clearRootNodes() {
         self.rootDataNode.removeChildren(nil)
         self.rootRowsNode.removeChildren(nil)
         self.rootColsNode.removeChildren(nil)
@@ -108,7 +107,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
         let comparator = sortComparator ?? self.comparator
         return Array(self.rootNodes).sorted(by: comparator)
     }
-    
+
     @objc
     public func nodesCount(section: Int) -> Int {
         return self.levelIndex.itemsCount(atLevel: section)
@@ -159,7 +158,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
     func reindexMetaItems() -> Int {
 
         var result: Int = 0
-        let completion: (WOTNodeProtocol)->Void = { (node) in
+        let completion: (WOTNodeProtocol) -> Void = { (node) in
             node.index = result
             result += 1
         }
@@ -180,4 +179,3 @@ extension WOTDataModel: WOTNodeCreatorProtocol {
         return result
     }
 }
-

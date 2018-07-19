@@ -101,7 +101,7 @@
     
 }
 
-- (NSArray *)sortBy {
+- (NSArray<NSSortDescriptor *> *  _Nonnull)sortBy {
     
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];

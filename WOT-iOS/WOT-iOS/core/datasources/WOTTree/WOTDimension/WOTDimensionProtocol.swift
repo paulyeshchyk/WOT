@@ -56,6 +56,3 @@ protocol WOTDimensionProtocol: NSObjectProtocol {
 
     func fetchData(index: Int)
 }
-
-typealias TNodeSize = [String: Int]
-typealias TNodesSizesType = [AnyHashable: TNodeSize]

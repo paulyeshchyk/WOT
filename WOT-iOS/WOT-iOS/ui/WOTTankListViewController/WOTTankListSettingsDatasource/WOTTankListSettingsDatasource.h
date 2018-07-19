@@ -14,36 +14,36 @@
 
 - (void)willChangeContent;
 - (void)didChangeContent;
-- (void)didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath;
+- (void)didChangeObject:(id _Nullable )anObject atIndexPath:(NSIndexPath *_Nullable)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *_Nullable)newIndexPath;
 
 @end
 
-typedef void(^WOTTankListSettingsDatasourceCreateCallback)(NSManagedObjectContext *context, id createdObject);
+typedef void(^WOTTankListSettingsDatasourceCreateCallback)(NSManagedObjectContext * _Nullable context, id _Nullable createdObject);
 
 typedef void(^WOTTankListSettingsDatasourceCallback)(void);
 
 @interface WOTTankListSettingsDatasource : NSObject
 
-@property (nonatomic, readonly) NSString *groupBy;
-@property (nonatomic, readonly) NSArray *sortBy;
-@property (nonatomic, readonly) NSCompoundPredicate *filterBy;
-@property (nonatomic, readonly) NSManagedObjectContext *context;
-@property (nonatomic, readonly) NSFetchedResultsController *fetchedResultController;
+@property (nonatomic, readonly) NSString * _Nullable groupBy;
+@property (nonatomic, readonly) NSArray <NSSortDescriptor *>*  _Nonnull sortBy;
+@property (nonatomic, readonly) NSCompoundPredicate * _Nullable filterBy;
+@property (nonatomic, readonly) NSManagedObjectContext * _Nullable context;
+@property (nonatomic, readonly) NSFetchedResultsController * _Nullable fetchedResultController;
 
-+ (WOTTankListSettingsDatasource *)sharedInstance;
++ (WOTTankListSettingsDatasource * _Nonnull)sharedInstance;
 
-+ (id)context:(NSManagedObjectContext *)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback;
-+ (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback;
-+ (id)context:(NSManagedObjectContext *)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback;
++ (id _Nonnull )context:(NSManagedObjectContext *_Nonnull)context createSortSettingForKey:(NSString *_Nonnull)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
++ (id _Nonnull )context:(NSManagedObjectContext *_Nonnull)context createGroupBySettingForKey:(NSString *_Nullable)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
++ (id _Nonnull )context:(NSManagedObjectContext *_Nonnull)context createFilterBySettingForKey:(NSString *_Nullable)key value:(NSString *_Nullable)value callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
 
-- (void)registerListener:(id<WOTTankListSettingsDatasourceListener>)listener;
-- (void)unregisterListener:(id<WOTTankListSettingsDatasourceListener>)listener;
-- (void)setting:(id)setting setOrderIndex:(NSInteger)orderIndex;
-- (void)setting:(id)setting setType:(NSString *)type;
-- (void)setting:(id)setting setAscending:(BOOL)ascending;
-- (void)setting:(id)setting setKey:(NSString *)key;
-- (void)setting:(id)setting setValues:(NSString *)values;
-- (id)keyForSetting:(id)setting;
+- (void)registerListener:(id <WOTTankListSettingsDatasourceListener> _Nullable )listener;
+- (void)unregisterListener:(id <WOTTankListSettingsDatasourceListener> _Nullable)listener;
+- (void)setting:(id _Nonnull )setting setOrderIndex:(NSInteger)orderIndex;
+- (void)setting:(id _Nullable )setting setType:(NSString *_Nullable)type;
+- (void)setting:(id _Nullable )setting setAscending:(BOOL)ascending;
+- (void)setting:(id _Nonnull )setting setKey:(NSString *_Nullable)key;
+- (void)setting:(id _Nullable )setting setValues:(NSString *_Nonnull)values;
+- (id _Nullable )keyForSetting:(id _Nullable )setting;
 
 
 @end
