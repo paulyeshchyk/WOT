@@ -89,7 +89,6 @@
 		1D2E136E20F77E090057DCAF /* WOTWEBRequestTanks+Fake.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2E136D20F77E090057DCAF /* WOTWEBRequestTanks+Fake.m */; };
 		1D2E137120F77E230057DCAF /* WOTWebRequestTankTurrets+Fake.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2E137020F77E230057DCAF /* WOTWebRequestTankTurrets+Fake.m */; };
 		1D2E137420F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2E137320F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.m */; };
-		1D2E137920F88AE20057DCAF /* WOTDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2E137820F88AE20057DCAF /* WOTDimension.swift */; };
 		1D4891C920FDDC3400AB0CE5 /* WOTNode+ModuleTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4891C820FDDC3400AB0CE5 /* WOTNode+ModuleTree.swift */; };
 		1D4891CB20FE30E100AB0CE5 /* WOTNodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4891CA20FE30E100AB0CE5 /* WOTNodeTest.swift */; };
 		1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92121B25B71000E320B5 /* WOTTankListCollectionViewCell.m */; };
@@ -204,13 +203,16 @@
 		1D79C77F20F5D0FF00FFAF02 /* WOTDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */; };
 		1D79C78220F5D32F00FFAF02 /* WOTDataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */; };
 		1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */; };
-		1D79C78620F5FB0D00FFAF02 /* WOTNodeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78520F5FB0D00FFAF02 /* WOTNodeEnumerator.swift */; };
 		1D8C05A820FCA33F001FBAC3 /* WOTDimensionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C05A720FCA33E001FBAC3 /* WOTDimensionCalculator.swift */; };
 		1D8C05AA20FCA353001FBAC3 /* WOTDimensionColumnCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C05A920FCA353001FBAC3 /* WOTDimensionColumnCalculator.swift */; };
 		1D8C05AC20FCA36F001FBAC3 /* WOTDimensionRowCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C05AB20FCA36F001FBAC3 /* WOTDimensionRowCalculator.swift */; };
 		1D8C05AE20FCA386001FBAC3 /* WOTDimensionDataCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C05AD20FCA386001FBAC3 /* WOTDimensionDataCalculator.swift */; };
 		1D8C05B020FCA3A6001FBAC3 /* WOTDimensionFilterCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C05AF20FCA3A6001FBAC3 /* WOTDimensionFilterCalculator.swift */; };
 		1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695F1B4161F300237852 /* UIToolbar+WOT.m */; };
+		1DA00BF921005F20004F9FDE /* WOTDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00BF821005F20004F9FDE /* WOTDimension.swift */; };
+		1DA00BFB21005F35004F9FDE /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00BFA21005F35004F9FDE /* WOTDimensionProtocol.swift */; };
+		1DA00BFE21005FD9004F9FDE /* WOTNodeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00BFD21005FD9004F9FDE /* WOTNodeEnumerator.swift */; };
+		1DA00C0021005FE8004F9FDE /* WOTNodeEnumeratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00BFF21005FE8004F9FDE /* WOTNodeEnumeratorProtocol.swift */; };
 		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
 		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
 		1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7381B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m */; };
@@ -536,7 +538,6 @@
 		1D2E137020F77E230057DCAF /* WOTWebRequestTankTurrets+Fake.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WOTWebRequestTankTurrets+Fake.m"; sourceTree = "<group>"; };
 		1D2E137220F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WOTWEBRequestTankVehicles+Fake.h"; sourceTree = "<group>"; };
 		1D2E137320F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WOTWEBRequestTankVehicles+Fake.m"; sourceTree = "<group>"; };
-		1D2E137820F88AE20057DCAF /* WOTDimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDimension.swift; sourceTree = "<group>"; };
 		1D4891C820FDDC3400AB0CE5 /* WOTNode+ModuleTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTNode+ModuleTree.swift"; sourceTree = "<group>"; };
 		1D4891CA20FE30E100AB0CE5 /* WOTNodeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeTest.swift; sourceTree = "<group>"; };
 		1D4C920F1B25B39800E320B5 /* WOTMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTMacro.h; sourceTree = "<group>"; };
@@ -698,7 +699,6 @@
 		1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModel.swift; sourceTree = "<group>"; };
 		1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModelTest.swift; sourceTree = "<group>"; };
 		1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
-		1D79C78520F5FB0D00FFAF02 /* WOTNodeEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumerator.swift; sourceTree = "<group>"; };
 		1D8C05A720FCA33E001FBAC3 /* WOTDimensionCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionCalculator.swift; sourceTree = "<group>"; };
 		1D8C05A920FCA353001FBAC3 /* WOTDimensionColumnCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDimensionColumnCalculator.swift; sourceTree = "<group>"; };
 		1D8C05AB20FCA36F001FBAC3 /* WOTDimensionRowCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDimensionRowCalculator.swift; sourceTree = "<group>"; };
@@ -707,6 +707,10 @@
 		1D90695A1B412D6B00237852 /* WOTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
 		1D90695E1B4161F300237852 /* UIToolbar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+WOT.h"; sourceTree = "<group>"; };
 		1D90695F1B4161F300237852 /* UIToolbar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+WOT.m"; sourceTree = "<group>"; };
+		1DA00BF821005F20004F9FDE /* WOTDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimension.swift; sourceTree = "<group>"; };
+		1DA00BFA21005F35004F9FDE /* WOTDimensionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDimensionProtocol.swift; sourceTree = "<group>"; };
+		1DA00BFD21005FD9004F9FDE /* WOTNodeEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumerator.swift; sourceTree = "<group>"; };
+		1DA00BFF21005FE8004F9FDE /* WOTNodeEnumeratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumeratorProtocol.swift; sourceTree = "<group>"; };
 		1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingAddNewTableViewCell.h; sourceTree = "<group>"; };
 		1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingAddNewTableViewCell.m; sourceTree = "<group>"; };
 		1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingAddNewTableViewCell.xib; sourceTree = "<group>"; };
@@ -1707,13 +1711,13 @@
 		1D79C77D20F5D0E400FFAF02 /* WOTDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				1DA00BFC21005FD9004F9FDE /* WOTNodeEnumerator */,
+				1DA00BF721005F20004F9FDE /* WOTDimension */,
 				1DF3E9C020FF6C5000224F0B /* WOTPivotDataModel */,
 				1DF3E9BB20FF5EFE00224F0B /* Indexer */,
 				1D8C05A620FCA328001FBAC3 /* WOTDimensionCalculator */,
 				1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */,
 				1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */,
-				1D79C78520F5FB0D00FFAF02 /* WOTNodeEnumerator.swift */,
-				1D2E137820F88AE20057DCAF /* WOTDimension.swift */,
 			);
 			path = WOTDataModel;
 			sourceTree = "<group>";
@@ -1728,6 +1732,24 @@
 				1D8C05AF20FCA3A6001FBAC3 /* WOTDimensionFilterCalculator.swift */,
 			);
 			path = WOTDimensionCalculator;
+			sourceTree = "<group>";
+		};
+		1DA00BF721005F20004F9FDE /* WOTDimension */ = {
+			isa = PBXGroup;
+			children = (
+				1DA00BF821005F20004F9FDE /* WOTDimension.swift */,
+				1DA00BFA21005F35004F9FDE /* WOTDimensionProtocol.swift */,
+			);
+			path = WOTDimension;
+			sourceTree = "<group>";
+		};
+		1DA00BFC21005FD9004F9FDE /* WOTNodeEnumerator */ = {
+			isa = PBXGroup;
+			children = (
+				1DA00BFD21005FD9004F9FDE /* WOTNodeEnumerator.swift */,
+				1DA00BFF21005FE8004F9FDE /* WOTNodeEnumeratorProtocol.swift */,
+			);
+			path = WOTNodeEnumerator;
 			sourceTree = "<group>";
 		};
 		1DA1D7431B2AFD4A00C5C2FB /* cells */ = {
@@ -2677,10 +2699,10 @@
 		1DF3E9D120FF6CFC00224F0B /* WOTPivotNodes */ = {
 			isa = PBXGroup;
 			children = (
+				1DF3E9D620FF6CFC00224F0B /* WOTPivotNode.swift */,
 				1DF3E9D320FF6CFC00224F0B /* WOTPivotFilterNode.swift */,
 				1DF3E9D420FF6CFC00224F0B /* WOTPivotRowNode.swift */,
 				1DF3E9D520FF6CFC00224F0B /* WOTPivotColNode.swift */,
-				1DF3E9D620FF6CFC00224F0B /* WOTPivotNode.swift */,
 				1DF3E9D720FF6CFC00224F0B /* WOTPivotDataNode.swift */,
 			);
 			path = WOTPivotNodes;
@@ -3106,7 +3128,6 @@
 				1D4C92641B27085600E320B5 /* WOTTankListSortViewController.m in Sources */,
 				1D047B571B331D5100B5B696 /* WOTCoreDataProvider.m in Sources */,
 				1DC07AD01B39A03D002FAA72 /* WOTWebResponseAdapterRadios.m in Sources */,
-				1D2E137920F88AE20057DCAF /* WOTDimension.swift in Sources */,
 				1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				1DF3E9BD20FF5EFE00224F0B /* WOTNodeIndex.swift in Sources */,
 				1D2143B91BA00B37001A7DEE /* VehicleprofileAmmoDamage.m in Sources */,
@@ -3115,11 +3136,11 @@
 				1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */,
 				1D8C05A820FCA33F001FBAC3 /* WOTDimensionCalculator.swift in Sources */,
 				1D047B651B331D8900B5B696 /* WOTMenuItem.m in Sources */,
-				1D79C78620F5FB0D00FFAF02 /* WOTNodeEnumerator.swift in Sources */,
 				1D2143AE1BA00B37001A7DEE /* ListSetting.m in Sources */,
 				1D8C05B020FCA3A6001FBAC3 /* WOTDimensionFilterCalculator.swift in Sources */,
 				1DF3E9DC20FF6CFC00224F0B /* WOTPivotNode.swift in Sources */,
 				1DEEAC6420FF1ABF0072E099 /* WOTNode+DetailGrid.m in Sources */,
+				1DA00BF921005F20004F9FDE /* WOTDimension.swift in Sources */,
 				1D2143E11BA0214A001A7DEE /* VehicleprofileAmmoPenetration+FillProperties.m in Sources */,
 				1DCC7F4D1B2F0619005FF193 /* UIView+StretchingConstraints.m in Sources */,
 				1D010D331B7DFF1100FA6A75 /* WOTTankConfigurationItemCell.m in Sources */,
@@ -3145,6 +3166,7 @@
 				1DD46B941BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				1D2143B51BA00B37001A7DEE /* Tankturrets.m in Sources */,
 				1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */,
+				1DA00C0021005FE8004F9FDE /* WOTNodeEnumeratorProtocol.swift in Sources */,
 				1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */,
 				1D691EF51BA066AA00E1555D /* NSDictionary+Hash.m in Sources */,
 				1D010D371B7DFF1100FA6A75 /* WOTTankConfigurationItemViewController.m in Sources */,
@@ -3187,6 +3209,7 @@
 				1DD646EE1B206B4100B0EC76 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1DD646FF1B20717800B0EC76 /* WOTLoginViewController.m in Sources */,
 				1D2143BB1BA00B37001A7DEE /* VehicleprofileAmmoPenetration.m in Sources */,
+				1DA00BFE21005FD9004F9FDE /* WOTNodeEnumerator.swift in Sources */,
 				1DF3E9D920FF6CFC00224F0B /* WOTPivotFilterNode.swift in Sources */,
 				1D8C05AA20FCA353001FBAC3 /* WOTDimensionColumnCalculator.swift in Sources */,
 				1DC07B5F1B3A9489002FAA72 /* WOTWebRequestTankTurrets.m in Sources */,
@@ -3238,6 +3261,7 @@
 				1D010D051B789A8900FA6A75 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1D2143C01BA00B37001A7DEE /* VehicleprofileRadio.m in Sources */,
+				1DA00BFB21005F35004F9FDE /* WOTDimensionProtocol.swift in Sources */,
 				1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */,
 				1D2E137120F77E230057DCAF /* WOTWebRequestTankTurrets+Fake.m in Sources */,
 				1DC07B5B1B3A9489002FAA72 /* WOTWebRequestTankRadios.m in Sources */,

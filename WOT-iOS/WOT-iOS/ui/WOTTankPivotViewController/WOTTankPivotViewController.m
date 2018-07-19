@@ -31,6 +31,25 @@
 
 @end
 
+@interface WOTTankPivotViewController(WOTDataFetchControllerProtocol) <WOTDataFetchControllerProtocol>
+@end
+
+@implementation WOTTankPivotViewController(WOTDataFetchControllerProtocol)
+
+- (NSArray * _Nonnull)fetchedNodesByPredicates:(NSArray<NSPredicate *> * _Nonnull)byPredicates {
+    NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:byPredicates];
+    NSArray *fetchedObjects = [self.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    [fetchedObjects enumerateObjectsUsingBlock:^(id  _Nonnull tank, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        id<WOTNodeProtocol> node = [WOTNodeFactory pivotDataNodeForPredicate:predicate andTanksObject:tank];
+        [result addObject:node];
+    }];
+    return result;
+}
+
+@end
+
 @implementation WOTTankPivotViewController
 
 - (void)dealloc {
@@ -63,23 +82,7 @@
     
     [self invalidateFetchedResultController];
 
-    __weak typeof(self)weakSelf = self;
-
-    NSArray * (^pivotItemCreation)(NSArray *predicates) = ^(NSArray *predicates){
-
-        NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
-
-        NSMutableArray *resultArray = [[NSMutableArray alloc] init];
-        NSArray *fetchedData = [weakSelf.fetchedResultController.fetchedObjects filteredArrayUsingPredicate:predicate];
-        [fetchedData enumerateObjectsUsingBlock:^(Tanks *tanks, NSUInteger idx, BOOL *stop) {
-
-            id<WOTNodeProtocol> node = [WOTNodeFactory pivotDataNodeForPredicate:predicate andTanksObject:tanks];
-            [resultArray addObject:node];
-        }];
-        return resultArray;
-    };
-
-    self.pivotDataModel = [[WOTPivotDataModel alloc] initWithPivotItemCreation:pivotItemCreation];
+    self.pivotDataModel = [[WOTPivotDataModel alloc] initWithFetchController: self];
     [self reloadPivot];
 }
 

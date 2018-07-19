@@ -9,21 +9,6 @@
 import Foundation
 
 @objc
-protocol WOTNodeEnumeratorProtocol: NSObjectProtocol {
-    func endpoints(node: WOTNodeProtocol) -> [WOTNodeProtocol]
-    func endpoints(array: [WOTNodeProtocol]) -> [WOTNodeProtocol]
-    func childrenWidth(siblingNode:WOTNodeProtocol, orValue: Int) -> Int
-    func childrenCount(siblingNode: WOTNodeProtocol) -> Int
-    func depth(forChildren: [WOTNodeProtocol], initialLevel: Int) -> Int
-    func allItems(fromNode node: WOTNodeProtocol) -> [WOTNodeProtocol]
-    func allItems(fromArray: [WOTNodeProtocol]) -> [WOTNodeProtocol]
-    func parentsCount(node: WOTNodeProtocol) -> Int
-    func visibleParentsCount(node: WOTNodeProtocol) -> Int
-    func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping(WOTNodeProtocol)->Void)
-    func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping(WOTNodeProtocol)->Void)
-}
-
-@objc
 class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
 
     @objc
@@ -33,11 +18,11 @@ class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         super.init()
     }
 
-    func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping(WOTNodeProtocol)->Void) {
+    func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping(WOTNodeProtocol) -> Void) {
         self.enumerateAll(children: node.children, comparator: comparator, childCompletion: childCompletion)
     }
 
-    func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping(WOTNodeProtocol)->Void) {
+    func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping(WOTNodeProtocol) -> Void) {
         let sortedItems = children.sorted { (obj1, obj2) -> Bool in
             return comparator(obj1, obj2, -1) == .orderedSame
         }
@@ -98,12 +83,12 @@ class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         return result
     }
 
-    func childrenWidth(siblingNode:WOTNodeProtocol, orValue: Int) -> Int {
+    func childrenWidth(siblingNode: WOTNodeProtocol, orValue: Int) -> Int {
         var result: Int = 0
         guard let parent = siblingNode.parent else {
             return result
         }
-        guard let indexOfNode = (parent.children.index { $0 === siblingNode}) else {
+        guard let indexOfNode = (parent.children.index { $0 === siblingNode }) else {
             return result
         }
         for idx in 0 ..< indexOfNode {
@@ -135,8 +120,6 @@ class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         result += self.childrenCount(siblingNode: parent)
         return result
     }
-
-
 
     func depth(forChildren children: [WOTNodeProtocol], initialLevel: Int) -> Int {
         var result: Int = initialLevel

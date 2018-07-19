@@ -27,11 +27,16 @@ protocol WOTPivotTreeProtocol: NSObjectProtocol {
 }
 
 @objc
+protocol WOTDataFetchControllerProtocol {
+    func fetchedNodes(byPredicates:[NSPredicate]) -> [WOTPivotNodeProtocol]
+}
+
+@objc
 class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
 
     @objc
     lazy var dimension: WOTDimensionProtocol = {
-        return WOTDimension(rootNodeHolder: self, pivotCreation: self.pivotItemCreationBlock)
+        return WOTDimension(rootNodeHolder: self, fetchController: self.fetchController)
     }()
 
     var shouldDisplayEmptyColumns: Bool
@@ -39,16 +44,16 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
     var metadataItems = [WOTNodeProtocol]()
 
     @objc
-    var pivotItemCreationBlock: PivotItemCreationType
+    var fetchController: WOTDataFetchControllerProtocol
 
     deinit {
         self.clearMetadataItems()
     }
 
     @objc
-    required init( pivotItemCreation: @escaping PivotItemCreationType) {
+    required init(fetchController fetch: WOTDataFetchControllerProtocol ) {
         shouldDisplayEmptyColumns = true
-        pivotItemCreationBlock = pivotItemCreation
+        fetchController = fetch
 
         super.init()
 
@@ -123,7 +128,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol, WOTTreeProtocol {
         self.removeAll()
         self.resortMetadata(metadataItems: self.metadataItems)
         let metadataIndex = self.reindexMetaItems()
-        self.dimension.makeData(index: metadataIndex)
+        self.dimension.fetchData(index: metadataIndex)
         self.resetNodeIndex()
     }
 

@@ -17,61 +17,6 @@ protocol RootNodeHolderProtocol: NSObjectProtocol {
     func resortMetadata(metadataItems: [WOTNodeProtocol])
     func reindexMetaItems() -> Int
 }
-typealias PivotItemCreationType = ([NSPredicate]) -> ([WOTNodeProtocol])
-
-/**
-
- ***********************************************************************
- *              *         1           *         2         *      3     *
- *              ********************************************************
- *              *    1    *     2     *    3    *    4    *      5     *
- ***********************************************************************
- *     *   1    *
- *  1  **********
- *     *   2    *
- ****************
- *     *   3    *
- *     **********
- *     *   4    *
- *  2  **********
- *     *   5    *
- *     **********
- *     *   6    *
- ****************
- */
-
-@objc
-protocol WOTDimensionProtocol: NSObjectProtocol {
-    init(rootNodeHolder: RootNodeHolderProtocol, pivotCreation: @escaping PivotItemCreationType)
-    var shouldDisplayEmptyColumns: Bool { get }
-    /**
-     *  for table above returns 5
-     */
-    var rootNodeWidth: Int { get }
-    /**
-     *  for table above returns 6
-     */
-    var rootNodeHeight: Int { get }
-    /**
-     *  for table above returns {7,8}
-     *  {rowsDepth+colsEndpoints, colsDepth+rowsEndpoints}
-     */
-    var contentSize: CGSize { get }
-    func setMaxWidth(_ maxWidth: Int, forNode: WOTNodeProtocol, byKey: String)
-    func maxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int
-    func childrenMaxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int
-
-    func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
-    func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type?
-
-    func makeData(index: Int)
-    var pivotItemCreationBlock: PivotItemCreationType { get set }
-
-}
-
-typealias TNodeSize = [String: Int]
-typealias TNodesSizesType = [AnyHashable: TNodeSize]
-
 
 @objc
 class WOTDimension: NSObject, WOTDimensionProtocol {
@@ -80,6 +25,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         return ObjectIdentifier(type).hashValue
     }
 
+    private var fetchController: WOTDataFetchControllerProtocol
     private var registeredCalculators:Dictionary<AnyHashable, AnyClass> = Dictionary<AnyHashable, AnyClass>()
 
     func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
@@ -94,6 +40,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
     }
 
     private var sizes: TNodesSizesType = TNodesSizesType()
+
     private func sizeMap(node: WOTNodeProtocol) -> TNodeSize? {
         if let obj = node as? AnyHashable {
             return sizes[obj]
@@ -102,7 +49,6 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
     }
 
     private func set(sizeMap: TNodeSize, node: WOTNodeProtocol) {
-
         if let obj = node as? AnyHashable {
             sizes[obj] = sizeMap
         }
@@ -138,13 +84,11 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         guard let nodeSizes = sizeMap(node: node) else {
             return result
         }
-
         nodeSizes.keys.forEach { (key) in
             if let oldValue = nodeSizes[key]{
                 result = max(oldValue, result)
             }
         }
-
         return result
     }
 
@@ -171,8 +115,8 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
 
     private var rootNodeHolder: RootNodeHolderProtocol
 
-    required init(rootNodeHolder: RootNodeHolderProtocol, pivotCreation: @escaping PivotItemCreationType) {
-        self.pivotItemCreationBlock = pivotCreation
+    required init(rootNodeHolder: RootNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol) {
+        self.fetchController = fetchController
         self.rootNodeHolder = rootNodeHolder
     }
 
@@ -209,27 +153,27 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         let rowEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: rootRows)
         let rowNodesEndpointsCount = rowEndpoints.count
         let height = colNodesDepth + rowNodesEndpointsCount
-        return CGSize(width: width, height: height)
+        return CGSize(width: width, height: height)//156:11
     }
 
-    func makeData(index externalIndex: Int) {
+    func fetchData(index externalIndex: Int) {
         var index = externalIndex
         let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootColsNode)
         let rowNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootRowsNode)
         rowNodeEndpoints.forEach { (rowNode) in
             colNodeEndpoints.forEach({ (colNode) in
                 let predicates = self.predicates(colNode: colNode, rowNode: rowNode)
-                let dataNodes = self.pivotItemCreationBlock(predicates)
-                self.setMaxWidth(dataNodes.count, forNode: colNode, byKey: rowNode.hashString)
-                self.setMaxWidth(dataNodes.count, forNode: rowNode, byKey: colNode.hashString)
+                let fetchedNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
+                self.setMaxWidth(fetchedNodes.count, forNode: colNode, byKey: rowNode.hashString)
+                self.setMaxWidth(fetchedNodes.count, forNode: rowNode, byKey: colNode.hashString)
                 var idx: Int = 0
-                dataNodes.forEach({ (dataNode) in
-                    dataNode.index = index
+                fetchedNodes.forEach({ (fetchedNode) in
+                    fetchedNode.index = index
                     index += 1
-                    dataNode.stepParentColumn = colNode
-                    dataNode.stepParentRow = rowNode
-                    dataNode.indexInsideStepParentColumn = idx
-                    self.rootNodeHolder.rootDataNode.addChild(dataNode)
+                    fetchedNode.stepParentColumn = colNode
+                    fetchedNode.stepParentRow = rowNode
+                    fetchedNode.indexInsideStepParentColumn = idx
+                    self.rootNodeHolder.rootDataNode.addChild(fetchedNode)
                     idx += 1
                 })
             })
@@ -253,10 +197,4 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         }
         return result
     }
-
-    var pivotItemCreationBlock: PivotItemCreationType
-
-
-
-
 }
