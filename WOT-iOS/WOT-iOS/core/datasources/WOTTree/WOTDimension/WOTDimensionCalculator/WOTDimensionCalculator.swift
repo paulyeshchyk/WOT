@@ -17,9 +17,9 @@ protocol WOTDimensionCalculatorProtocol: NSObjectProtocol {
 class WOTDimensionCalculator: NSObject, WOTDimensionCalculatorProtocol {
     static func rectangle(forNode node: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> CGRect {
         return CGRect(x: self.x(forNode: node, dimension: dimension),
-            y: self.y(forNode: node, dimension: dimension),
-            width: self.width(forNode: node, dimension: dimension),
-            height: self.height(forNode: node, dimension: dimension))
+                      y: self.y(forNode: node, dimension: dimension),
+                      width: self.width(forNode: node, dimension: dimension),
+                      height: self.height(forNode: node, dimension: dimension))
     }
     class func x(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int { return 0 }
     class func y(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int { return 0 }

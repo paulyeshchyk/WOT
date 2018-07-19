@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+
+
+
 @interface WOTCoreDataProvider : NSObject
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *mainManagedObjectContext;
