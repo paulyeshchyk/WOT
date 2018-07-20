@@ -237,6 +237,7 @@
 		1DAC86F62101F36C00EF5216 /* WOTDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC86F52101F36C00EF5216 /* WOTDataModelProtocol.swift */; };
 		1DAC86F82101FE2600EF5216 /* WOTNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC86F72101FE2600EF5216 /* WOTNodeProtocol.swift */; };
 		1DAC86FA2101FE6300EF5216 /* WOTPivotNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC86F92101FE6300EF5216 /* WOTPivotNodeProtocol.swift */; };
+		1DAC86FC21021B1800EF5216 /* WOTPivotNodeHolderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC86FB21021B1800EF5216 /* WOTPivotNodeHolderProtocol.swift */; };
 		1DB57B1920F772FB003FF3EC /* tanks.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1B20F772FB003FF3EC /* tanks.json */; };
 		1DB57B2820F77415003FF3EC /* tankguns.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1C20F77413003FF3EC /* tankguns.json */; };
 		1DB57B2920F77415003FF3EC /* chassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1E20F77414003FF3EC /* chassis.json */; };
@@ -755,6 +756,7 @@
 		1DAC86F52101F36C00EF5216 /* WOTDataModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModelProtocol.swift; sourceTree = "<group>"; };
 		1DAC86F72101FE2600EF5216 /* WOTNodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeProtocol.swift; sourceTree = "<group>"; };
 		1DAC86F92101FE6300EF5216 /* WOTPivotNodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeProtocol.swift; sourceTree = "<group>"; };
+		1DAC86FB21021B1800EF5216 /* WOTPivotNodeHolderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeHolderProtocol.swift; sourceTree = "<group>"; };
 		1DB57B1A20F772FB003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tanks.json; sourceTree = "<group>"; };
 		1DB57B1D20F77413003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankguns.json; sourceTree = "<group>"; };
 		1DB57B1F20F77414003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/chassis.json; sourceTree = "<group>"; };
@@ -1824,9 +1826,10 @@
 		1DAC86E32101D80900EF5216 /* WOTPivotDimension */ = {
 			isa = PBXGroup;
 			children = (
-				1DAC86E42101D80900EF5216 /* WOTPivotDimensionCalculator */,
-				1DAC86EF2101D81D00EF5216 /* WOTPivotDimension.swift */,
+				1DAC86FB21021B1800EF5216 /* WOTPivotNodeHolderProtocol.swift */,
 				1DAC86F12101D84000EF5216 /* WOTPivotDimensionProtocol.swift */,
+				1DAC86EF2101D81D00EF5216 /* WOTPivotDimension.swift */,
+				1DAC86E42101D80900EF5216 /* WOTPivotDimensionCalculator */,
 			);
 			path = WOTPivotDimension;
 			sourceTree = "<group>";
@@ -3269,6 +3272,7 @@
 				1D2E136520F77DB10057DCAF /* WOTWEBRequestTankEngines+Fake.m in Sources */,
 				1D010D3C1B7DFF1100FA6A75 /* WOTTankModuleTreeViewController.m in Sources */,
 				1D2143BA1BA00B37001A7DEE /* VehicleprofileAmmoList.m in Sources */,
+				1DAC86FC21021B1800EF5216 /* WOTPivotNodeHolderProtocol.swift in Sources */,
 				1D2E137420F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.m in Sources */,
 				1DD46B1C1BA6941900D3B3CE /* WOTTankGridViewController.m in Sources */,
 				1D2143BE1BA00B37001A7DEE /* VehicleprofileEngine.m in Sources */,

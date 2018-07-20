@@ -129,11 +129,11 @@
 
 - (NSArray *)metadataItems {
     WOTPivotNodeSwift *level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTPivotNodeSwift *level1Col = nil;
+    WOTPivotNodeSwift *level1Col = [WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
 
     WOTPivotNodeSwift *level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];
-    WOTPivotNodeSwift *level1Row = nil;//[WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
+    WOTPivotNodeSwift *level1Row = nil;
     NSArray *rows = [self complexMetadataAsType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
 
     NSArray *filters = [self pivotFilters];
@@ -149,23 +149,30 @@
     return @[node];
 }
 
+
 - (NSArray *)complexMetadataAsType:(PivotMetadataType)type forLevel0Node:(WOTPivotNodeSwift * _Nullable )level0Node level1Node:(WOTPivotNodeSwift  * _Nullable )level1Node {
 
     Class PivotNodeClass = [WOTNodeFactory pivotNodeClassForType:type];
 
     WOTPivotNodeSwift *root = [[PivotNodeClass alloc] initWithName:@"-"];
-    NSArray *level0Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level0Node];
     NSArray *level1Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level1Node];
+    NSArray *level0Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level0Node];
     [level0Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level0Child, NSUInteger idx, BOOL *stop) {
+
         if (level0Child != nil) {
+
+            WOTPivotNodeSwift *level0ChildCopy = [level0Child copy];
             [level1Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level1Child, NSUInteger idx, BOOL *stop) {
+
                 if (level1Child != nil) {
-                    NSCompoundPredicate *compountPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
-                    level1Child.predicate = compountPredicate;
-                    [level0Child addChild:level1Child];
+                    NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
+                    WOTPivotNodeSwift *level1ChildCopy = [level1Child copyWithZone:nil];
+                    level1ChildCopy.predicate = predicate;
+                    [level0ChildCopy addChild:level1ChildCopy];
                 }
             }];
-            [root addChild:level0Child];
+
+            [root addChild:level0ChildCopy];
         }
     }];
 

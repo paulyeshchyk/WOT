@@ -10,8 +10,8 @@ import Foundation
 
 @objc
 class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
-    private var rootNodeHolder: WOTPivotNodeHolderProtocol
 
+    private var rootNodeHolder: WOTPivotNodeHolderProtocol
     required init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol) {
         self.rootNodeHolder = rootNodeHolder
         super.init(fetchController: fetchController)
@@ -22,7 +22,7 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     }
 
     private var registeredCalculators = [AnyHashable: AnyClass]()
-    func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
+    func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
         let hash = hashValue(type: forNodeClass)
         self.registeredCalculators[hash] = calculatorClass
     }
@@ -46,22 +46,8 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     }
 
     override var contentSize: CGSize {
-        let rowNodesDepth = self.rootNodeWidth
-        let colNodesDepth = self.rootNodeHeight
-        let emptyDayaColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0
-        let rootCols = self.rootNodeHolder.rootColsNode
-        let columnEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: rootCols)
-        var maxWidth: Int = 0
-        columnEndpoints.forEach { (column) in
-            let value = self.maxWidth(column, orValue: emptyDayaColumnWidth)
-            maxWidth += value
-        }
-
-        let rootRows = self.rootNodeHolder.rootRowsNode
-        let width = rowNodesDepth + maxWidth
-        let rowEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: rootRows)
-        let rowNodesEndpointsCount = rowEndpoints.count
-        let height = colNodesDepth + rowNodesEndpointsCount
+        let height = self.getHeight()
+        let width = self.getWidth()
         return CGSize(width: width, height: height)//156:11
     }
 
@@ -104,6 +90,25 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
             }
         }
         return result
+    }
+
+    private func getWidth() -> Int {
+        let rootCols = self.rootNodeHolder.rootColsNode
+        let columnEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: rootCols)
+        let emptyDayaColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0
+
+        var maxWidth: Int = 0
+        columnEndpoints.forEach { (column) in
+            let value = self.maxWidth(column, orValue: emptyDayaColumnWidth)
+            maxWidth += value
+        }
+        return self.rootNodeWidth + maxWidth
+    }
+
+    private func getHeight() -> Int {
+        let rootRows = self.rootNodeHolder.rootRowsNode
+        let rowNodesEndpointsCount = WOTNodeEnumerator.sharedInstance.endpoints(node: rootRows).count
+        return self.rootNodeHeight + rowNodesEndpointsCount
     }
 
     private func hashValue(type: Any.Type) -> Int {

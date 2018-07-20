@@ -14,7 +14,6 @@ class WOTDataTanksFetchController: NSObject {
 
     lazy private var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>? = {
         guard let context = WOTCoreDataProvider.sharedInstance().mainManagedObjectContext else {
-//            assert(false, "context should not be nil")
             return nil
         }
         let request = WOTDataTanksFetchController.fetchRequest()

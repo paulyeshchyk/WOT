@@ -8,24 +8,43 @@
 
 import Foundation
 
-@objc
-protocol WOTPivotNodeHolderProtocol: NSObjectProtocol {
-    var rootFilterNode: WOTNodeProtocol { get }
-    var rootColsNode: WOTNodeProtocol { get }
-    var rootRowsNode: WOTNodeProtocol { get }
-    var rootDataNode: WOTNodeProtocol { get }
-    func reindexMetaItems() -> Int
-}
+/**
 
-@objc
-protocol WOTPivotDimensionProtocol: WOTDimensionProtocol {
+ ***********************************************************************
+ *              *         1           *         2         *      3     *
+ *              ********************************************************
+ *              *    1    *     2     *    3    *    4    *      5     *
+ ***********************************************************************
+ *     *   1    *
+ *  1  **********
+ *     *   2    *
+ ****************
+ *     *   3    *
+ *     **********
+ *     *   4    *
+ *  2  **********
+ *     *   5    *
+ *     **********
+ *     *   6    *
+ ****************
+
+ *  for table above contentSize returns {7,8}
+ *  {rowsDepth+colsEndpoints, colsDepth+rowsEndpoints}
+
+ */
+@objc protocol WOTPivotDimensionProtocol: WOTDimensionProtocol {
+
     init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol)
-    func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
+
+    func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
+
     func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type?
+
     /**
      *  for table above returns 5
      */
     var rootNodeWidth: Int { get }
+
     /**
      *  for table above returns 6
      */

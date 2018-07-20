@@ -19,7 +19,9 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
 
     var fetchController: WOTDataFetchControllerProtocol
 
-    private var sizes: TNodesSizesType = TNodesSizesType()
+    lazy private var sizes: TNodesSizesType = {
+        return TNodesSizesType()
+    }()
 
     private func sizeMap(node: WOTNodeProtocol) -> TNodeSize? {
         if let obj = node as? AnyHashable {
@@ -46,7 +48,6 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
                 nodeSizes[key] = oldSizes[key]
             }
         }
-
         var value = 0
         if let nodeSizesValue = nodeSizes[byKey] {
             value = nodeSizesValue
@@ -55,7 +56,6 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         let maxValue = max(value, maxWidth)
         nodeSizes[byKey] = maxValue
         set(sizeMap: nodeSizes, node: forNode)
-
     }
 
     func maxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int {
@@ -73,21 +73,20 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
     }
 
     func childrenMaxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int {
-        var result: Int = 0
         guard let parent = node.parent else {
-            return result
+            return 0
         }
-        guard let indexOfNode = ( parent.children.index { $0 === node}) else {
-            return result
+        guard let indexOfNode = (parent.children.index { $0 === node }) else {
+            return 0
         }
 
+        var result: Int = 0
         for idx in 0 ..< indexOfNode {
             let child = parent.children[idx]
             let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: child)
             endpoints.forEach { (endpoint) in
                 result += self.maxWidth(endpoint, orValue: orValue)
             }
-
         }
         result += self.childrenMaxWidth(parent, orValue: orValue)
         return result
