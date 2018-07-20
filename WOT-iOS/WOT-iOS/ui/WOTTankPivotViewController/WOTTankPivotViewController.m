@@ -16,7 +16,7 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTNode+PivotFactory.h"
 
-@interface WOTTankPivotViewController () <UICollectionViewDataSource>
+@interface WOTTankPivotViewController () <UICollectionViewDataSource, WOTPivotDataModelListener>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak)IBOutlet WOTTankPivotLayout *flowLayout;
@@ -29,14 +29,9 @@
 
 @property (nonatomic, strong) WOTPivotDataModel *pivotDataModel;
 @property (nonatomic, strong) id<WOTDataFetchControllerProtocol> fetchController;
-- (void)reloadPivot;
 @end
 
 @implementation WOTTankPivotViewController
-
-- (void)dealloc {
-    
-}
 
 - (void)setPivotDataModel:(WOTPivotDataModel *)pivotDataModel {
     _pivotDataModel = pivotDataModel;
@@ -121,44 +116,7 @@
     
 }
 
-#pragma mark - private
-- (NSArray *)pivotFilters {
-    WOTPivotFilterNodeSwift *node = [[WOTPivotFilterNodeSwift alloc] initWithName:@"Filter"];
-    return @[node];
-}
-
-- (NSArray *)complexMetadataAsType:(PivotMetadataType)type forLevel0Node:(WOTPivotNodeSwift *)level0Node level1Node:(WOTPivotNodeSwift *)level1Node {
-
-    Class PivotNodeClass = [WOTNodeFactory pivotNodeClassForType:type];
-
-    WOTPivotNodeSwift *root = [[PivotNodeClass alloc] initWithName:@"-"];
-    NSArray *level1Endpoints = level1Node.endpoints;
-    NSArray *level0Endpoints = level0Node.endpoints;
-    [level0Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level0Child, NSUInteger idx, BOOL *stop) {
-
-        WOTPivotNodeSwift *level0ChildCopy = [level0Child copy];
-        [level1Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level1Child, NSUInteger idx, BOOL *stop) {
-            
-            NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
-            WOTPivotNodeSwift *level1ChildCopy = [level1Child copyWithZone:nil];
-            level1ChildCopy.predicate = predicate;
-            [level0ChildCopy addChild:level1ChildCopy];
-        }];
-        
-        [root addChild:level0ChildCopy];
-    }];
-    
-    return @[root];
-}
-
-@end
-
-
-
-@interface WOTTankPivotViewController(ModelListener)<WOTPivotDataModelListener>
-@end
-
-@implementation WOTTankPivotViewController (ModelListener)
+#pragma mark - WOTPivotDataModelListener
 
 - (void)modelDidLoad {
     [self.collectionView reloadData];
@@ -184,4 +142,35 @@
     [result addObjectsFromArray:filters];
     return result;
 }
+
+- (NSArray *)pivotFilters {
+    WOTPivotFilterNodeSwift *node = [[WOTPivotFilterNodeSwift alloc] initWithName:@"Filter"];
+    return @[node];
+}
+
+- (NSArray *)complexMetadataAsType:(PivotMetadataType)type forLevel0Node:(WOTPivotNodeSwift *)level0Node level1Node:(WOTPivotNodeSwift *)level1Node {
+
+    Class PivotNodeClass = [WOTNodeFactory pivotNodeClassForType:type];
+
+    WOTPivotNodeSwift *root = [[PivotNodeClass alloc] initWithName:@"-"];
+    NSArray *level1Endpoints = level1Node.endpoints;
+    NSArray *level0Endpoints = level0Node.endpoints;
+    [level0Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level0Child, NSUInteger idx, BOOL *stop) {
+
+        WOTPivotNodeSwift *level0ChildCopy = [level0Child copy];
+        [level1Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level1Child, NSUInteger idx, BOOL *stop) {
+
+            NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
+            WOTPivotNodeSwift *level1ChildCopy = [level1Child copyWithZone:nil];
+            level1ChildCopy.predicate = predicate;
+            [level0ChildCopy addChild:level1ChildCopy];
+        }];
+
+        [root addChild:level0ChildCopy];
+    }];
+
+    return @[root];
+}
+
+
 @end
