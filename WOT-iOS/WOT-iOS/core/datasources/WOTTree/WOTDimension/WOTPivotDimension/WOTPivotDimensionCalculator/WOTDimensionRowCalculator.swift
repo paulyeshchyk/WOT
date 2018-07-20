@@ -11,21 +11,21 @@ import Foundation
 @objc
 class WOTDimensionRowCalculator: WOTDimensionCalculator {
 
-    override class func x(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int {
+    override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         return WOTNodeEnumerator.sharedInstance.visibleParentsCount(node: forNode)
     }
 
-    override class func y(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int {
+    override class func y(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         var result: Int = WOTNodeEnumerator.sharedInstance.childrenWidth(siblingNode: forNode, orValue: 1)
         result += dimension.rootNodeHeight
         return result
     }
 
-    override class func width(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int {
+    override class func width(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         return 1
     }
 
-    override class func height(forNode: WOTNodeProtocol, dimension: WOTDimensionProtocol) -> Int {
+    override class func height(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         return WOTNodeEnumerator.sharedInstance.endpoints(node: forNode).count
     }
 }

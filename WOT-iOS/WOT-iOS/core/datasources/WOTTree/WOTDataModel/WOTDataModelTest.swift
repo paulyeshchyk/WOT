@@ -31,10 +31,10 @@ class WOTDataModelTest: XCTestCase {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
         let node: WOTNodeSwift = WOTNodeSwift(name: "")
-        model.add(node: node)
-        model.add(node: node)
-        model.add(node: node)
-        model.add(node: node)
+        model.add(rootNode: node)
+        model.add(rootNode: node)
+        model.add(rootNode: node)
+        model.add(rootNode: node)
         XCTAssert(model.rootNodes.count == 4)
     }
 
@@ -42,9 +42,9 @@ class WOTDataModelTest: XCTestCase {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
         let node: WOTNodeSwift = WOTNodeSwift(name: "")
-        model.add(node: node)
+        model.add(rootNode: node)
         XCTAssert(model.rootNodes.count == 1)
-        model.remove(node: node)
+        model.remove(rootNode: node)
         XCTAssert(model.rootNodes.count == 0)
     }
 
@@ -52,7 +52,7 @@ class WOTDataModelTest: XCTestCase {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
         let node: WOTNodeSwift = WOTNodeSwift(name: "")
-        model.add(node: node)
+        model.add(rootNode: node)
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
     }
@@ -60,9 +60,9 @@ class WOTDataModelTest: XCTestCase {
     func testAllObjects() {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
-        let node: WOTNodeSwift = WOTNodeSwift(name: "")
-        model.add(node: node)
-        XCTAssert(model.allObjects(sortComparator: nil).count == 1)
+        model.add(rootNode: WOTNodeSwift(name: ""))
+        model.add(rootNode: WOTNodeSwift(name: ""))
+        XCTAssert(model.nodesCount(section: 0) == 2)
     }
 
     func testEndpoints() {
@@ -71,7 +71,7 @@ class WOTDataModelTest: XCTestCase {
         let parentnode: WOTNodeSwift = WOTNodeSwift(name: "")
         parentnode.addChild(WOTNodeSwift(name: ""))
         parentnode.addChild(WOTNodeSwift(name: ""))
-        model.add(node: parentnode)
+        model.add(rootNode: parentnode)
         XCTAssert(model.endpointsCount == 2)
     }
 }

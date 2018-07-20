@@ -13,11 +13,12 @@ import CoreData
 class WOTDataTanksFetchController: NSObject {
 
     lazy private var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>? = {
-        let context = WOTCoreDataProvider.sharedInstance().mainManagedObjectContext
-        assert(context != nil, "context should not be nil")
-
+        guard let context = WOTCoreDataProvider.sharedInstance().mainManagedObjectContext else {
+//            assert(false, "context should not be nil")
+            return nil
+        }
         let request = WOTDataTanksFetchController.fetchRequest()
-        let result = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context!, sectionNameKeyPath: nil, cacheName: nil)
+        let result = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         result.delegate = self
         return result
     }()

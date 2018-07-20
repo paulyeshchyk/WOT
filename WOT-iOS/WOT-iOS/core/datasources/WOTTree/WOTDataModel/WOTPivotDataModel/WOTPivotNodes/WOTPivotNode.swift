@@ -9,14 +9,6 @@
 import Foundation
 import CoreData
 
-@objc
-protocol WOTPivotNodeProtocol: WOTNodeProtocol {
-    var dataColor: UIColor { get set }
-    var data1: NSManagedObject? { get set }
-    var stickyType: PivotStickyType { get }
-    var predicate: NSPredicate? { get set }
-}
-
 class WOTPivotNodeSwift: WOTNodeSwift, WOTPivotNodeProtocol {
 
     static let WOTNodePredicateComparator: WOTNodeComparatorType = { (node1, node2, level) in
@@ -27,10 +19,15 @@ class WOTPivotNodeSwift: WOTNodeSwift, WOTPivotNodeProtocol {
         }
     }
 
-    var dataColor: UIColor = UIColor.clear
+    var dataColor: UIColor?
     var data1: NSManagedObject?
     var stickyType: PivotStickyType { return .float }
     var predicate: NSPredicate?
+    public var indexInsideStepParentColumn: Int = 0
+    public var stepParentColumn: WOTNodeProtocol?
+    public var stepParentRow: WOTNodeProtocol?
+    public var imageURL: NSURL?
+    public var relativeRect: NSValue?
 
     @objc
     convenience init(name nameValue: String, predicate predicateValue: NSPredicate) {
@@ -40,10 +37,10 @@ class WOTPivotNodeSwift: WOTNodeSwift, WOTPivotNodeProtocol {
 
     public override func copy(with zone: NSZone? = nil) -> Any {
         let result = type(of: self).init(name: self.name)
-        result.predicate = self.predicate
-        result.dataColor = self.dataColor
+        result.predicate = self.predicate?.copy(with: zone) as? NSPredicate
+        result.dataColor = self.dataColor?.copy(with: zone) as? UIColor
         result.isVisible = self.isVisible
-        result.imageURL = self.imageURL
+        result.imageURL = self.imageURL?.copy(with: zone) as? NSURL
         return result
     }
 }

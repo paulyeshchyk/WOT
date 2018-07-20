@@ -25,14 +25,14 @@ class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
     // where node.index - global autoincremented value
     // used to get item by indexpath while iterating in  WOTTankPivotLayout::layoutAttributesForElementsInRect
 
-    private var largeIndex = [AnyHashable: Any] ()
+    private var index = [AnyHashable: Any] ()
 
     func maxWidthOrValue(_ value: Int) -> Int {
         return 0
     }
 
     func reset() {
-        largeIndex.removeAll()
+        index.removeAll()
     }
 
     func addNodesToIndex(_ nodes: [WOTNodeProtocol]) {
@@ -44,15 +44,15 @@ class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
     func addNodeToIndex(_ node: WOTNodeProtocol) {
         let allItems = WOTNodeEnumerator.sharedInstance.allItems(fromNode: node)
         allItems.forEach { (node) in
-            largeIndex[node.index] = node
+            index[node.index] = node
         }
     }
 
     var count: Int {
-        return self.largeIndex.keys.count
+        return self.index.keys.count
     }
 
     func item(indexPath: NSIndexPath) -> WOTNodeProtocol? {
-        return self.largeIndex[indexPath.row] as? WOTNodeProtocol
+        return self.index[indexPath.row] as? WOTNodeProtocol
     }
 }

@@ -111,8 +111,8 @@
     WOTTankConfigurationCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) forIndexPath:indexPath];
     result.indexPath = indexPath;
     result.label.text = node.name;
-    [result.imageView sd_setImageWithURL:node.imageURL];
-    
+//    [result.imageView sd_setImageWithURL:node.imageURL];
+
     
     return result;
 }

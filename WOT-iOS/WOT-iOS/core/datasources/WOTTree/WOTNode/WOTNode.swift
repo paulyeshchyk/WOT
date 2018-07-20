@@ -9,34 +9,6 @@
 import Foundation
 import ObjectiveC
 
-public typealias WOTNodeProtocolRemoveCompletion = (WOTNodeProtocol) -> Void
-
-typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult
-
-@objc
-public protocol WOTNodeProtocol: NSObjectProtocol, NSCopying {
-    var hashString: String { get }
-    var name: String { get set }
-    var children: [WOTNodeProtocol] { get }
-    var endpoints: [WOTNodeProtocol] { get }
-    var parent: WOTNodeProtocol? { get set }
-    var imageURL: NSURL { get set }
-    var childList: Set<AnyHashable> { get }
-    var isVisible: Bool { get set }
-    var fullName: String { get }
-    var index: Int { get set }
-    var indexInsideStepParentColumn: Int { get set }
-    var stepParentColumn: WOTNodeProtocol? { get set }
-    var stepParentRow: WOTNodeProtocol? { get set }
-
-    var relativeRect: NSValue? { get set }
-
-    func addChild(_ child: WOTNodeProtocol)
-    func addChildArray(_ childArray: [WOTNodeProtocol])
-    func removeChild(_ child: WOTNodeProtocol, completion: WOTNodeProtocolRemoveCompletion)
-    func removeChildren(_ completion: WOTNodeProtocolRemoveCompletion?)
-}
-
 public class WOTNodeSwift: NSObject, WOTNodeProtocol {
 
     static let WOTNodeEmptyComparator: WOTNodeComparatorType  = { (node1, node2, level) in
@@ -63,13 +35,7 @@ public class WOTNodeSwift: NSObject, WOTNodeProtocol {
 
     public var children: [WOTNodeProtocol] = [WOTNodeProtocol]()
 
-    public var endpoints: [WOTNodeProtocol] {
-        return WOTNodeEnumerator.sharedInstance.endpoints(node: self)
-    }
-
     public var parent: WOTNodeProtocol?
-
-    public var imageURL: NSURL = NSURL(string: "mock")!
 
     public var childList: Set<AnyHashable> = Set<AnyHashable>()
 
@@ -84,14 +50,6 @@ public class WOTNodeSwift: NSObject, WOTNodeProtocol {
 
     public var index: Int = 0
 
-    public var indexInsideStepParentColumn: Int = 0
-
-    public var stepParentColumn: WOTNodeProtocol?
-
-    public var stepParentRow: WOTNodeProtocol?
-
-    public var relativeRect: NSValue?
-
     @objc
     public required init(name nameValue: String) {
         super.init()
@@ -101,7 +59,6 @@ public class WOTNodeSwift: NSObject, WOTNodeProtocol {
     public func copy(with zone: NSZone? = nil) -> Any {
         let result = type(of: self).init(name: self.name)
         result.isVisible = self.isVisible
-        result.imageURL = self.imageURL
         return result
     }
 

@@ -50,7 +50,8 @@
     }];
 
     [self.flowLayout setItemLayoutStickyType:^PivotStickyType(NSIndexPath *indexPath) {
-        return [self.pivotDataModel itemStickyTypeAtIndexPath: indexPath];
+        id<WOTPivotNodeProtocol> node = [self.pivotDataModel itemAtIndexPath:indexPath];
+        return node == nil ? PivotStickyTypeFloat : node.stickyType;
     }];
 
     [self.navigationController.navigationBar setDarkStyle];
@@ -148,25 +149,24 @@
     return @[node];
 }
 
-- (NSArray *)complexMetadataAsType:(PivotMetadataType)type forLevel0Node:(WOTPivotNodeSwift *)level0Node level1Node:(WOTPivotNodeSwift *)level1Node {
+- (NSArray *)complexMetadataAsType:(PivotMetadataType)type forLevel0Node:(WOTPivotNodeSwift * _Nullable )level0Node level1Node:(WOTPivotNodeSwift  * _Nullable )level1Node {
 
     Class PivotNodeClass = [WOTNodeFactory pivotNodeClassForType:type];
 
     WOTPivotNodeSwift *root = [[PivotNodeClass alloc] initWithName:@"-"];
-    NSArray *level1Endpoints = level1Node.endpoints;
-    NSArray *level0Endpoints = level0Node.endpoints;
+    NSArray *level0Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level0Node];
+    NSArray *level1Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level1Node];
     [level0Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level0Child, NSUInteger idx, BOOL *stop) {
-
-        WOTPivotNodeSwift *level0ChildCopy = [level0Child copy];
-        [level1Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level1Child, NSUInteger idx, BOOL *stop) {
-
-            NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
-            WOTPivotNodeSwift *level1ChildCopy = [level1Child copyWithZone:nil];
-            level1ChildCopy.predicate = predicate;
-            [level0ChildCopy addChild:level1ChildCopy];
-        }];
-
-        [root addChild:level0ChildCopy];
+        if (level0Child != nil) {
+            [level1Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level1Child, NSUInteger idx, BOOL *stop) {
+                if (level1Child != nil) {
+                    NSCompoundPredicate *compountPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
+                    level1Child.predicate = compountPredicate;
+                    [level0Child addChild:level1Child];
+                }
+            }];
+            [root addChild:level0Child];
+        }
     }];
 
     return @[root];
