@@ -24,7 +24,7 @@ class WOTDataTanksFetchControllerTest: XCTestCase {
         let fetchController = WOTDataTanksFetchController()
         fetchController.setListener(listener)
         do {
-            try fetchController.invalidate()
+            try fetchController.performFetch()
         } catch let error {
             XCTFail("invalidate failed with error:\(String(describing: error))")
         }
@@ -37,7 +37,7 @@ class WOTDataTanksFetchControllerTest: XCTestCase {
             XCTAssert(error == nil, "fetched with error\(String(describing: error))")
 
             let resultCnt = listener.result?.count ?? 0
-            XCTAssert(resultCnt == expectedResult, "result is equal to \(expectedResult)")
+            XCTAssert(resultCnt == expectedResult, "result is equal to:\(resultCnt); expected: \(expectedResult)")
         }
     }
 
@@ -52,7 +52,7 @@ class WOTDataTanksFetchControllerTest: XCTestCase {
                 XCTFail("wait for expectation error:\(String(describing: error))")
             }
             let predicate = NSPredicate(format: "tank_id != -1")
-            self.invalidateEmptyDataset(predicate: predicate, expectedResult: 647)
+            self.invalidateEmptyDataset(predicate: predicate, expectedResult: 697)
         }
     }
 }

@@ -22,13 +22,13 @@ protocol WOTPivotTreeProtocol: NSObjectProtocol {
     func itemsCount(section: Int) -> Int
     func clearMetadataItems()
     func add(metadataItems: [WOTNodeProtocol])
-    func makePivot()
 }
 
 @objc
 protocol WOTPivotDataModelListener: NSObjectProtocol {
     func modelDidLoad()
     func modelDidFailLoad(error: Error)
+    func metadataItems() -> [WOTNodeProtocol]
 }
 
 @objc
@@ -69,12 +69,12 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol {
         self.dimension.registerCalculatorClass(WOTDimensionFilterCalculator.self, forNodeClass: WOTPivotFilterNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionDataCalculator.self, forNodeClass: WOTPivotDataNodeSwift.self)
 
-        self.invalidate()
+        self.performFetch()
     }
 
-    private func invalidate() {
+    private func performFetch() {
         do {
-            try self.fetchController.invalidate()
+            try self.fetchController.performFetch()
         } catch let error {
             fetchFailed(by: self.fetchController, withError: error)
         }
@@ -139,13 +139,24 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotTreeProtocol {
         self.metadataItems.append(contentsOf: metadataItems)
     }
 
-    @objc
-    func makePivot() {
+    private func makePivot() {
+
+        self.clearMetadataItems()
+
+        let metadataItems = self.listener.metadataItems()
+        self.add(metadataItems: metadataItems)
+
         self.clearRootNodes()
         self.resortMetadata(metadataItems: self.metadataItems)
         let metadataIndex = self.reindexMetaItems()
-        self.dimension.fetchData(index: metadataIndex)
-        self.resetNodeIndex()
+        self.dimension.reload(forIndex: metadataIndex)
+        self.reindexNodes()
+
+        listener.modelDidLoad()
+    }
+
+    private func failPivot(_ error: Error) {
+        listener.modelDidFailLoad(error: error)
     }
 }
 
@@ -166,10 +177,10 @@ extension WOTPivotDataModel: WOTTreeProtocol {
 
 extension WOTPivotDataModel: WOTDataFetchControllerListenerProtocol {
     func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error) {
-        listener.modelDidFailLoad(error: withError)
+        self.failPivot(withError)
     }
 
     func fetchPerformed(by: WOTDataFetchControllerProtocol) {
-        listener.modelDidLoad()
+        self.makePivot()
     }
 }

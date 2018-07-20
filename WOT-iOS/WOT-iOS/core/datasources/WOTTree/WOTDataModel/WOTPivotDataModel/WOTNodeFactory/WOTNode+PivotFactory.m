@@ -76,6 +76,7 @@
     [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_USA)     predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_USA]]];
     [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_USSR)    predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_USSR]]];
     [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_SWEDEN)  predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_SWEDEN]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_POLAND)  predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_POLAND]]];
 
     return result;
 }
@@ -132,8 +133,10 @@
              WOT_STRING_NATION_CHINA:   [[UIColor yellowColor] paleColor],
              WOT_STRING_NATION_GERMANY: [[UIColor brownColor] paleColor],
              WOT_STRING_NATION_FRANCE:  [[UIColor greenColor] paleColor],
+             WOT_STRING_NATION_POLAND:  [[UIColor whiteColor] paleColor],
+             WOT_STRING_NATION_SWEDEN:  [[UIColor blueColor] paleColor],
              WOT_STRING_NATION_CZECH:   [[UIColor cyanColor] paleColor],
-             WOT_STRING_NATION_UK:      [[UIColor blueColor] paleColor]};
+             WOT_STRING_NATION_UK:      [[UIColor brownColor] paleColor]};
 }
 
 + (NSDictionary * _Nonnull)typeColors {

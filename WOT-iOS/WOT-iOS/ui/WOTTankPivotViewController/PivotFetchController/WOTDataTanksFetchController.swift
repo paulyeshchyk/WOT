@@ -45,7 +45,7 @@ class WOTDataTanksFetchController: NSObject {
 
 extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
 
-    func invalidate() throws {
+    func performFetch() throws {
 
         try self.fetchResultController?.performFetch()
         DispatchQueue.main.async {

@@ -32,21 +32,6 @@
 - (void)reloadPivot;
 @end
 
-@interface WOTTankPivotViewController(ModelListener)<WOTPivotDataModelListener>
-@end
-
-@implementation WOTTankPivotViewController (ModelListener)
-
-- (void)modelDidLoad {
-    [self reloadPivot];
-}
-
-- (void)modelDidFailLoadWithError:(NSError * _Nonnull)error {
-
-}
-@end
-
-
 @implementation WOTTankPivotViewController
 
 - (void)dealloc {
@@ -137,30 +122,6 @@
 }
 
 #pragma mark - private
-- (void)reloadPivot {
-
-    [self.pivotDataModel clearMetadataItems];
-    
-    WOTPivotNodeSwift *level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTPivotNodeSwift *level1Col = nil;
-    NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
-    
-    WOTPivotNodeSwift *level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];
-    WOTPivotNodeSwift *level1Row = nil;//[WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
-    NSArray *rows = [self complexMetadataAsType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
-    
-    NSArray *filters = [self pivotFilters];
-
-    [self.pivotDataModel addWithMetadataItems:filters];
-    [self.pivotDataModel addWithMetadataItems:rows];
-    [self.pivotDataModel addWithMetadataItems:cols];
-
-    [self.pivotDataModel makePivot];
-    [self.collectionView reloadData];
-    
-}
-
-#pragma mark - private
 - (NSArray *)pivotFilters {
     WOTPivotFilterNodeSwift *node = [[WOTPivotFilterNodeSwift alloc] initWithName:@"Filter"];
     return @[node];
@@ -190,4 +151,37 @@
     return @[root];
 }
 
+@end
+
+
+
+@interface WOTTankPivotViewController(ModelListener)<WOTPivotDataModelListener>
+@end
+
+@implementation WOTTankPivotViewController (ModelListener)
+
+- (void)modelDidLoad {
+    [self.collectionView reloadData];
+}
+
+- (void)modelDidFailLoadWithError:(NSError * _Nonnull)error {
+
+}
+
+- (NSArray *)metadataItems {
+    WOTPivotNodeSwift *level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNodeSwift *level1Col = nil;
+    NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
+
+    WOTPivotNodeSwift *level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];
+    WOTPivotNodeSwift *level1Row = nil;//[WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeRow];
+    NSArray *rows = [self complexMetadataAsType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
+
+    NSArray *filters = [self pivotFilters];
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    [result addObjectsFromArray:cols];
+    [result addObjectsFromArray:rows];
+    [result addObjectsFromArray:filters];
+    return result;
+}
 @end

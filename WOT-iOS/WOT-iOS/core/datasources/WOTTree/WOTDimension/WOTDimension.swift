@@ -158,7 +158,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         return CGSize(width: width, height: height)//156:11
     }
 
-    func fetchData(index externalIndex: Int) {
+    func reload(forIndex externalIndex: Int) {
         var index = externalIndex
         let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootColsNode)
         let rowNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootRowsNode)

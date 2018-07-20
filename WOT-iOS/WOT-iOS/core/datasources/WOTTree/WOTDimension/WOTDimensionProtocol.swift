@@ -54,5 +54,5 @@ protocol WOTDimensionProtocol: NSObjectProtocol {
     func registerCalculatorClass( _ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
     func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type?
 
-    func fetchData(index: Int)
+    func reload(forIndex: Int)
 }

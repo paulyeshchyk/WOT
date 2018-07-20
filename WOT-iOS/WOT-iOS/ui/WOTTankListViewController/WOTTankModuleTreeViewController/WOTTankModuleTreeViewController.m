@@ -16,11 +16,12 @@
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTEnums.h"
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTPivotDataModelListener>
 
 @property (nonatomic, strong) WOTPivotDataModel *tree;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
+@property (nonatomic, strong) id<WOTDataFetchControllerProtocol> fetchController;
 
 @end
 
@@ -35,8 +36,9 @@
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
-        
-//        self.tree = [[WOTTreeDataModel alloc] init];
+
+        self.fetchController = [[WOTDataTanksFetchController alloc] init];
+        self.tree = [[WOTPivotDataModel alloc] initWithFetchController: self.fetchController listener: self];
     }
     return self;
 }
@@ -167,6 +169,18 @@
         }
     }
     return result;
+}
+
+//WOTPivotDataModelListener
+- (void)modelDidLoad {
+    [self.collectionView reloadData];
+}
+
+- (void) modelDidFailLoadWithError:(NSError *)error {
+
+}
+- (NSArray *)metadataItems {
+    return [[NSArray alloc] init];
 }
 
 @end

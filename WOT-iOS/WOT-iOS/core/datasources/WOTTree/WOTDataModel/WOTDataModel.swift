@@ -28,6 +28,7 @@ public protocol WOTDataModelProtocol {
     func allObjects(sortComparator: WOTNodeComparator?) -> [WOTNodeProtocol]
     func nodesCount(section: Int) -> Int
     func node(atIndexPath: NSIndexPath) -> WOTNodeProtocol?
+    func reindexNodes()
 }
 
 @objc
@@ -65,13 +66,13 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
 
     }
 
-    func resetNodeIndex() {
+    public func reindexNodes() {
         let nodes = [self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode]
         self.nodeIndex.reset()
         self.nodeIndex.addNodesToIndex(nodes)
     }
 
-    func resetLevelIndex() {
+    private func reindexLevels() {
         let nodes = self.allObjects(sortComparator: nil)
         self.levelIndex.reset()
         self.levelIndex.addNodesToIndex(nodes)
@@ -83,7 +84,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
 
     public func add(node: WOTNodeProtocol) {
         self.rootNodes.append(node)
-        resetLevelIndex()
+        reindexLevels()
     }
 
     public func remove(node: WOTNodeProtocol) {
@@ -91,7 +92,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
             return
         }
         self.rootNodes.remove(at: index)
-        resetLevelIndex()
+        reindexLevels()
     }
 
     public func clearRootNodes() {
@@ -100,7 +101,7 @@ public class WOTDataModel: NSObject, WOTDataModelProtocol, RootNodeHolderProtoco
         self.rootColsNode.removeChildren(nil)
         self.rootFilterNode.removeChildren(nil)
         self.rootNodes.removeAll()
-        resetLevelIndex()
+        reindexLevels()
     }
 
     public func allObjects(sortComparator: WOTNodeComparator?) -> [WOTNodeProtocol] {
