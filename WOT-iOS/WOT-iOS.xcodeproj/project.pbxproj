@@ -89,7 +89,8 @@
 		1D2E136E20F77E090057DCAF /* WOTWEBRequestTanks+Fake.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2E136D20F77E090057DCAF /* WOTWEBRequestTanks+Fake.m */; };
 		1D2E137120F77E230057DCAF /* WOTWebRequestTankTurrets+Fake.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2E137020F77E230057DCAF /* WOTWebRequestTankTurrets+Fake.m */; };
 		1D2E137420F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2E137320F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.m */; };
-		1D4891C920FDDC3400AB0CE5 /* WOTNode+ModuleTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4891C820FDDC3400AB0CE5 /* WOTNode+ModuleTree.swift */; };
+		1D428C482105BF9D0057A85C /* WOTTreeModuleNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D428C472105BF9D0057A85C /* WOTTreeModuleNodeProtocol.swift */; };
+		1D428C4A2105BFCB0057A85C /* WOTTreeModuleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D428C492105BFCB0057A85C /* WOTTreeModuleNode.swift */; };
 		1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92121B25B71000E320B5 /* WOTTankListCollectionViewCell.m */; };
 		1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92131B25B71000E320B5 /* WOTTankListCollectionViewCell.xib */; };
 		1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92181B25B92500E320B5 /* WOTTankListFlowLayout.m */; };
@@ -151,10 +152,7 @@
 		1D672AF81B57952700617E5C /* WOTModuleTypeGuns.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF31B57952700617E5C /* WOTModuleTypeGuns.png */; };
 		1D672AF91B57952700617E5C /* WOTModuleTypeRadios.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF41B57952700617E5C /* WOTModuleTypeRadios.png */; };
 		1D672AFA1B57952700617E5C /* WOTModuleTypeTurrets.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672AF51B57952700617E5C /* WOTModuleTypeTurrets.png */; };
-		1D672B061B57A6E800617E5C /* WOTNode+ModuleTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B001B57A6E800617E5C /* WOTNode+ModuleTree.m */; };
-		1D672B071B57A6E800617E5C /* WOTTree+ModuleTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B021B57A6E800617E5C /* WOTTree+ModuleTree.m */; };
 		1D672B0B1B57DC0A00617E5C /* ModulesTree+PlainList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B0A1B57DC0A00617E5C /* ModulesTree+PlainList.m */; };
-		1D672B0E1B57F5C900617E5C /* WOTTree+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D672B0D1B57F5C900617E5C /* WOTTree+Test.m */; };
 		1D672B261B60C86700617E5C /* Bulletproof Vest Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B201B60C86700617E5C /* Bulletproof Vest Gray.png */; };
 		1D672B271B60C86700617E5C /* Bulletproof Vest Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B211B60C86700617E5C /* Bulletproof Vest Gray@2x.png */; };
 		1D672B281B60C86700617E5C /* Bulletproof Vest Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B221B60C86700617E5C /* Bulletproof Vest Gray@3x.png */; };
@@ -238,6 +236,8 @@
 		1DAC86F82101FE2600EF5216 /* WOTNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC86F72101FE2600EF5216 /* WOTNodeProtocol.swift */; };
 		1DAC86FA2101FE6300EF5216 /* WOTPivotNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC86F92101FE6300EF5216 /* WOTPivotNodeProtocol.swift */; };
 		1DAC86FC21021B1800EF5216 /* WOTPivotNodeHolderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC86FB21021B1800EF5216 /* WOTPivotNodeHolderProtocol.swift */; };
+		1DAC86FF2105A1EA00EF5216 /* WOTTreeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC86FE2105A1EA00EF5216 /* WOTTreeDataModel.swift */; };
+		1DAC87012105A52000EF5216 /* WOTTreeDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAC87002105A52000EF5216 /* WOTTreeDataModelProtocol.swift */; };
 		1DB57B1920F772FB003FF3EC /* tanks.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1B20F772FB003FF3EC /* tanks.json */; };
 		1DB57B2820F77415003FF3EC /* tankguns.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1C20F77413003FF3EC /* tankguns.json */; };
 		1DB57B2920F77415003FF3EC /* chassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1E20F77414003FF3EC /* chassis.json */; };
@@ -550,7 +550,8 @@
 		1D2E137020F77E230057DCAF /* WOTWebRequestTankTurrets+Fake.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WOTWebRequestTankTurrets+Fake.m"; sourceTree = "<group>"; };
 		1D2E137220F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WOTWEBRequestTankVehicles+Fake.h"; sourceTree = "<group>"; };
 		1D2E137320F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WOTWEBRequestTankVehicles+Fake.m"; sourceTree = "<group>"; };
-		1D4891C820FDDC3400AB0CE5 /* WOTNode+ModuleTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTNode+ModuleTree.swift"; sourceTree = "<group>"; };
+		1D428C472105BF9D0057A85C /* WOTTreeModuleNodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTreeModuleNodeProtocol.swift; sourceTree = "<group>"; };
+		1D428C492105BFCB0057A85C /* WOTTreeModuleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTreeModuleNode.swift; sourceTree = "<group>"; };
 		1D4C920F1B25B39800E320B5 /* WOTMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTMacro.h; sourceTree = "<group>"; };
 		1D4C92111B25B71000E320B5 /* WOTTankListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListCollectionViewCell.h; sourceTree = "<group>"; };
 		1D4C92121B25B71000E320B5 /* WOTTankListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListCollectionViewCell.m; sourceTree = "<group>"; };
@@ -647,14 +648,8 @@
 		1D672AF31B57952700617E5C /* WOTModuleTypeGuns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeGuns.png; sourceTree = "<group>"; };
 		1D672AF41B57952700617E5C /* WOTModuleTypeRadios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeRadios.png; sourceTree = "<group>"; };
 		1D672AF51B57952700617E5C /* WOTModuleTypeTurrets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeTurrets.png; sourceTree = "<group>"; };
-		1D672AFF1B57A6E800617E5C /* WOTNode+ModuleTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+ModuleTree.h"; sourceTree = "<group>"; };
-		1D672B001B57A6E800617E5C /* WOTNode+ModuleTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+ModuleTree.m"; sourceTree = "<group>"; };
-		1D672B011B57A6E800617E5C /* WOTTree+ModuleTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTree+ModuleTree.h"; sourceTree = "<group>"; };
-		1D672B021B57A6E800617E5C /* WOTTree+ModuleTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTree+ModuleTree.m"; sourceTree = "<group>"; };
 		1D672B091B57DC0A00617E5C /* ModulesTree+PlainList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ModulesTree+PlainList.h"; sourceTree = "<group>"; };
 		1D672B0A1B57DC0A00617E5C /* ModulesTree+PlainList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ModulesTree+PlainList.m"; sourceTree = "<group>"; };
-		1D672B0C1B57F5C900617E5C /* WOTTree+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTree+Test.h"; sourceTree = "<group>"; };
-		1D672B0D1B57F5C900617E5C /* WOTTree+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTree+Test.m"; sourceTree = "<group>"; };
 		1D672B201B60C86700617E5C /* Bulletproof Vest Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray.png"; sourceTree = "<group>"; };
 		1D672B211B60C86700617E5C /* Bulletproof Vest Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray@2x.png"; sourceTree = "<group>"; };
 		1D672B221B60C86700617E5C /* Bulletproof Vest Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray@3x.png"; sourceTree = "<group>"; };
@@ -757,6 +752,8 @@
 		1DAC86F72101FE2600EF5216 /* WOTNodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeProtocol.swift; sourceTree = "<group>"; };
 		1DAC86F92101FE6300EF5216 /* WOTPivotNodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeProtocol.swift; sourceTree = "<group>"; };
 		1DAC86FB21021B1800EF5216 /* WOTPivotNodeHolderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeHolderProtocol.swift; sourceTree = "<group>"; };
+		1DAC86FE2105A1EA00EF5216 /* WOTTreeDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModel.swift; sourceTree = "<group>"; };
+		1DAC87002105A52000EF5216 /* WOTTreeDataModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModelProtocol.swift; sourceTree = "<group>"; };
 		1DB57B1A20F772FB003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tanks.json; sourceTree = "<group>"; };
 		1DB57B1D20F77413003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankguns.json; sourceTree = "<group>"; };
 		1DB57B1F20F77414003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/chassis.json; sourceTree = "<group>"; };
@@ -1322,6 +1319,15 @@
 			path = VehicleprofileAmmoPenetration;
 			sourceTree = "<group>";
 		};
+		1D428C462105BF820057A85C /* WOTTreeNodes */ = {
+			isa = PBXGroup;
+			children = (
+				1D428C472105BF9D0057A85C /* WOTTreeModuleNodeProtocol.swift */,
+				1D428C492105BFCB0057A85C /* WOTTreeModuleNode.swift */,
+			);
+			path = WOTTreeNodes;
+			sourceTree = "<group>";
+		};
 		1D4C92101B25B6E900E320B5 /* cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -1598,23 +1604,8 @@
 				1DA00C0621007F4A004F9FDE /* WOTDimension */,
 				1DEEAC5F20FF1ABE0072E099 /* WOTTree+GridData */,
 				1D79C77D20F5D0E400FFAF02 /* WOTDataModel */,
-				1D672AFE1B57A6E800617E5C /* WOTTree+Tanks */,
 			);
 			path = WOTTree;
-			sourceTree = "<group>";
-		};
-		1D672AFE1B57A6E800617E5C /* WOTTree+Tanks */ = {
-			isa = PBXGroup;
-			children = (
-				1D4891C820FDDC3400AB0CE5 /* WOTNode+ModuleTree.swift */,
-				1D672AFF1B57A6E800617E5C /* WOTNode+ModuleTree.h */,
-				1D672B001B57A6E800617E5C /* WOTNode+ModuleTree.m */,
-				1D672B011B57A6E800617E5C /* WOTTree+ModuleTree.h */,
-				1D672B021B57A6E800617E5C /* WOTTree+ModuleTree.m */,
-				1D672B0C1B57F5C900617E5C /* WOTTree+Test.h */,
-				1D672B0D1B57F5C900617E5C /* WOTTree+Test.m */,
-			);
-			path = "WOTTree+Tanks";
 			sourceTree = "<group>";
 		};
 		1D672B0F1B60C6F800617E5C /* 3rdParty */ = {
@@ -1738,10 +1729,11 @@
 		1D79C77D20F5D0E400FFAF02 /* WOTDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				1DF3E9C020FF6C5000224F0B /* WOTPivotDataModel */,
+				1DAC86FD2105A00000EF5216 /* WOTTreeDataModel */,
 				1DAC86F52101F36C00EF5216 /* WOTDataModelProtocol.swift */,
 				1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */,
 				1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */,
-				1DF3E9C020FF6C5000224F0B /* WOTPivotDataModel */,
 			);
 			path = WOTDataModel;
 			sourceTree = "<group>";
@@ -1844,6 +1836,16 @@
 				1DAC86E92101D80900EF5216 /* WOTDimensionColumnCalculator.swift */,
 			);
 			path = WOTPivotDimensionCalculator;
+			sourceTree = "<group>";
+		};
+		1DAC86FD2105A00000EF5216 /* WOTTreeDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				1D428C462105BF820057A85C /* WOTTreeNodes */,
+				1DAC86FE2105A1EA00EF5216 /* WOTTreeDataModel.swift */,
+				1DAC87002105A52000EF5216 /* WOTTreeDataModelProtocol.swift */,
+			);
+			path = WOTTreeDataModel;
 			sourceTree = "<group>";
 		};
 		1DB57B1620F771B9003FF3EC /* json */ = {
@@ -3210,6 +3212,7 @@
 				1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				1D2143B91BA00B37001A7DEE /* VehicleprofileAmmoDamage.m in Sources */,
 				1D79C77F20F5D0FF00FFAF02 /* WOTDataModel.swift in Sources */,
+				1D428C482105BF9D0057A85C /* WOTTreeModuleNodeProtocol.swift in Sources */,
 				1DC07AC21B399FE4002FAA72 /* WOTWebResponseAdapterTanks.m in Sources */,
 				1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */,
 				1D047B651B331D8900B5B696 /* WOTMenuItem.m in Sources */,
@@ -3222,7 +3225,9 @@
 				1D519D1A1B4E9F5400D3A286 /* WOTTurretsRotationSpeedCompareFieldExpression.m in Sources */,
 				1DD46B951BA6DD6F00D3B3CE /* WOTTankDetailViewController.m in Sources */,
 				1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */,
+				1DAC86FF2105A1EA00EF5216 /* WOTTreeDataModel.swift in Sources */,
 				DA720C811B5D0DE9003F3B5A /* ModulesTree+UI.m in Sources */,
+				1D428C4A2105BFCB0057A85C /* WOTTreeModuleNode.swift in Sources */,
 				1DD46B421BA6C21300D3B3CE /* NSNumber+Randomizer.m in Sources */,
 				1D519D241B4EA20900D3A286 /* WOTTankDetailFieldExpression+Factory.m in Sources */,
 				1DA00C2F21009ACB004F9FDE /* NSManagedObjectContext+AllObjects.swift in Sources */,
@@ -3262,7 +3267,6 @@
 				1DA1D7401B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.m in Sources */,
 				1DC07B611B3A9489002FAA72 /* WOTWEBRequest.m in Sources */,
 				1DD46B751BA6DC4100D3B3CE /* WOTTankMetricsList.m in Sources */,
-				1D4891C920FDDC3400AB0CE5 /* WOTNode+ModuleTree.swift in Sources */,
 				1D2143C21BA00B37001A7DEE /* VehicleprofileTurret.m in Sources */,
 				1DD46B711BA6DC4100D3B3CE /* WOTMetric+Samples.m in Sources */,
 				1DF3E9DA20FF6CFC00224F0B /* WOTPivotRowNode.swift in Sources */,
@@ -3279,6 +3283,7 @@
 				1DC07B601B3A9489002FAA72 /* WOTWEBRequestTankVehicles.m in Sources */,
 				1DF73EBE1B90563300AE6F86 /* NSMutableArray+WOT.m in Sources */,
 				1D2143B21BA00B37001A7DEE /* Tankguns.m in Sources */,
+				1DAC87012105A52000EF5216 /* WOTTreeDataModelProtocol.swift in Sources */,
 				1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */,
 				1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */,
 				1D519D531B50071800D3A286 /* ModulesTree+FillProperties.m in Sources */,
@@ -3292,7 +3297,6 @@
 				1DF3E9D920FF6CFC00224F0B /* WOTPivotFilterNode.swift in Sources */,
 				1DC07B5F1B3A9489002FAA72 /* WOTWebRequestTankTurrets.m in Sources */,
 				1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */,
-				1D672B071B57A6E800617E5C /* WOTTree+ModuleTree.m in Sources */,
 				1DDEE3991B8F353200C90D4B /* WOTTankPivotLayout.m in Sources */,
 				1DDEE3951B8F353200C90D4B /* WOTTankPivotFilterCollectionViewCell.m in Sources */,
 				1DA00C1A21007F6C004F9FDE /* WOTNodeEnumerator.swift in Sources */,
@@ -3314,7 +3318,6 @@
 				1D519D211B4EA0E300D3A286 /* WOTRadiosDistanceCompareFieldExpression.m in Sources */,
 				1D519D081B4E9CB200D3A286 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */,
 				1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */,
-				1D672B0E1B57F5C900617E5C /* WOTTree+Test.m in Sources */,
 				1D519D171B4E9EF600D3A286 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.m in Sources */,
 				1D2143C91BA00BFE001A7DEE /* VehicleprofileSuspension.m in Sources */,
 				1D519D3A1B4FD42000D3A286 /* WOTProgressView.m in Sources */,
@@ -3397,7 +3400,6 @@
 				1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */,
 				1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */,
 				1D2143BC1BA00B37001A7DEE /* VehicleprofileArmor.m in Sources */,
-				1D672B061B57A6E800617E5C /* WOTNode+ModuleTree.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,7 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTNode+PivotFactory.h"
 
-@interface WOTTankPivotViewController () <UICollectionViewDataSource, WOTPivotDataModelListener>
+@interface WOTTankPivotViewController () <UICollectionViewDataSource, WOTDataModelListener>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak)IBOutlet WOTTankPivotLayout *flowLayout;
@@ -114,7 +114,21 @@
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.pivotDataModel itemAtIndexPath:indexPath];
+    if ([node isKindOfClass:[WOTPivotDataNodeSwift class]]) {
+        Tanks* tank = (Tanks *)node.data1;
+        WOTTankModuleTreeViewController *configurationSelector = [[WOTTankModuleTreeViewController alloc] initWithNibName:NSStringFromClass([WOTTankModuleTreeViewController class]) bundle:nil];
+        configurationSelector.tankId = tank.tank_id;
+        [configurationSelector setCancelBlock:^(){
+
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [configurationSelector setDoneBlock:^(id configuration){
+
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [self.navigationController pushViewController:configurationSelector animated:YES];
+    }
 }
 
 #pragma mark - WOTPivotDataModelListener

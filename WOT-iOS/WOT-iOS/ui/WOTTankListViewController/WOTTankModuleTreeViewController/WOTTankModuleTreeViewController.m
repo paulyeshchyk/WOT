@@ -7,8 +7,6 @@
 //
 
 #import "WOTTankModuleTreeViewController.h"
-#import "WOTTree+ModuleTree.h"
-#import "WOTNode+ModuleTree.h"
 #import "ModulesTree+UI.h"
 #import "WOTTankConfigurationCollectionViewCell.h"
 #import "WOTTankConfigurationFlowLayout.h"
@@ -16,9 +14,9 @@
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTEnums.h"
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTPivotDataModelListener>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTDataModelListener>
 
-@property (nonatomic, strong) WOTPivotDataModel *tree;
+@property (nonatomic, strong) WOTTreeDataModel *tree;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 @property (nonatomic, strong) id<WOTDataFetchControllerProtocol> fetchController;
@@ -38,7 +36,7 @@
     if (self){
 
         self.fetchController = [[WOTDataTanksFetchController alloc] init];
-        self.tree = [[WOTPivotDataModel alloc] initWithFetchController: self.fetchController listener: self];
+        self.tree = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController listener: self];
     }
     return self;
 }
@@ -89,8 +87,7 @@
 - (void)setTankId:(NSNumber *)value {
 
     _tankId = [value copy];
-    //TODO: remove comment
-//    [self.tree setTankId:value];
+    [self.tree setTankId: value];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -111,24 +108,26 @@
     WOTTankConfigurationCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) forIndexPath:indexPath];
     result.indexPath = indexPath;
     result.label.text = node.name;
-//    [result.imageView sd_setImageWithURL:node.imageURL];
-
-    
+    if ([node conformsToProtocol:@protocol(WOTTreeModuleNodeProtocol)]) {
+        [result.imageView sd_setImageWithURL:((id<WOTTreeModuleNodeProtocol> )node).imageURL];
+    }
     return result;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    //TODO: remove comment
-//    id<WOTNodeProtocol> node = [self.tree nodeAtIndexPath:indexPath];
-//    ModulesTree *moduleTree = [node moduleTree];
-//
-//    WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
-//    itemViewController.moduleTree = moduleTree;
-//    itemViewController.mapping = [self mappingForModuleType:moduleTree.type];
-//    [self.navigationController pushViewController:itemViewController animated:YES];
-}
+    id<WOTNodeProtocol> node = [self.tree nodeAtIndexPath:indexPath];
 
+    if ([node conformsToProtocol:@protocol(WOTTreeModuleNodeProtocol)]) {
+        id<WOTTreeModuleNodeProtocol> treeNode = (id<WOTTreeModuleNodeProtocol>) node;
+        ModulesTree *moduleTree = treeNode.modulesTree;
+
+        WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
+        itemViewController.moduleTree = moduleTree;
+        itemViewController.mapping = [self mappingForModuleType:moduleTree.type];
+        [self.navigationController pushViewController:itemViewController animated:YES];
+    }
+}
 
 - (WOTTankConfigurationModuleMapping *)mappingForModuleType:(NSString *)moduleTypeStr {
 

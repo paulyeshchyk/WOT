@@ -18,7 +18,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
     var shouldDisplayEmptyColumns: Bool
 
-    private var listener: WOTPivotDataModelListener
+    private var listener: WOTDataModelListener
     private var fetchController: WOTDataFetchControllerProtocol
 
     deinit {
@@ -61,7 +61,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
     }
 
     @objc
-    required init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTPivotDataModelListener) {
+    required init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener) {
         shouldDisplayEmptyColumns = false
         fetchController = fetch
         listener = list
@@ -94,22 +94,13 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
         return result
     }
 
-    private func pivotRect(forNode: WOTPivotNodeProtocol) -> CGRect {
-        guard let calculator = self.dimension.calculatorClass(forNodeClass: type(of: forNode)) else {
-            return .zero
-        }
-        let result = calculator.rectangle(forNode: forNode, dimension: self.dimension)
-        forNode.relativeRect = NSValue(cgRect: result)
-        return result
-    }
-
     func itemRect(atIndexPath: NSIndexPath) -> CGRect {
         guard let node = self.item(atIndexPath: atIndexPath) else {
             return .zero
         }
         //FIXME: node.relativeRect should be optimized
         guard let relativeRectValue = node.relativeRect else {
-            return self.pivotRect(forNode: node)
+            return self.dimension.pivotRect(forNode: node)
         }
 
         return relativeRectValue.cgRectValue

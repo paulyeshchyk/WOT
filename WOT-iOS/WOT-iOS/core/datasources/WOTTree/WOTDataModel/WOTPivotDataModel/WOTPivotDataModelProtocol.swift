@@ -13,20 +13,13 @@ protocol WOTTreeProtocol: NSObjectProtocol {
 }
 
 @objc
-protocol WOTPivotDataModelListener: NSObjectProtocol {
-    func modelDidLoad()
-    func modelDidFailLoad(error: Error)
-    func metadataItems() -> [WOTNodeProtocol]
-}
-
-@objc
 protocol WOTPivotDataModelProtocol: NSObjectProtocol {
     var dimension: WOTPivotDimensionProtocol { get }
     var shouldDisplayEmptyColumns: Bool { get set }
+    init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener)
     func itemRect(atIndexPath: NSIndexPath) -> CGRect
     func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol?
     func itemsCount(section: Int) -> Int
     func clearMetadataItems()
     func add(metadataItems: [WOTNodeProtocol])
 }
-

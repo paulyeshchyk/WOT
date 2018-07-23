@@ -16,6 +16,13 @@ public protocol WOTNodeCreatorProtocol {
 }
 
 @objc
+protocol WOTDataModelListener: NSObjectProtocol {
+    func modelDidLoad()
+    func modelDidFailLoad(error: Error)
+    func metadataItems() -> [WOTNodeProtocol]
+}
+
+@objc
 public protocol WOTDataModelProtocol {
     var rootNodes: [WOTNodeProtocol] { get }
     var levels: Int { get }

@@ -49,4 +49,6 @@ import Foundation
      *  for table above returns 6
      */
     var rootNodeHeight: Int { get }
+
+    func pivotRect(forNode: WOTPivotNodeProtocol) -> CGRect
 }

@@ -115,4 +115,12 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         return ObjectIdentifier(type).hashValue
     }
 
+    func pivotRect(forNode: WOTPivotNodeProtocol) -> CGRect {
+        guard let calculator = self.calculatorClass(forNodeClass: type(of: forNode)) else {
+            return .zero
+        }
+        let result = calculator.rectangle(forNode: forNode, dimension: self)
+        forNode.relativeRect = NSValue(cgRect: result)
+        return result
+    }
 }
