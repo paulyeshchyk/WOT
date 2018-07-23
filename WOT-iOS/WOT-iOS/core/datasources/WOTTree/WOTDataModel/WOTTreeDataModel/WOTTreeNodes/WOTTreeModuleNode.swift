@@ -12,8 +12,8 @@ import Foundation
 class WOTTreeModuleNode: WOTNodeSwift, WOTTreeModuleNodeProtocol {
 
     private(set)var modulesTree: ModulesTree
-    var imageURL: NSURL? {
-        guard let result = self.modulesTree.localImageURL() as? NSURL else {
+    var imageURL: URL? {
+        guard let result = self.modulesTree.localImageURL() else {
             return nil
         }
         return result

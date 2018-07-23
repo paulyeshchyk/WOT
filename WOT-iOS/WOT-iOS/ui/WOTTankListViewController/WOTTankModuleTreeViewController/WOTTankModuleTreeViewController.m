@@ -20,38 +20,13 @@
 @implementation WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)
 @dynamic fetchRequest;
 
-- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nonnull)fetchedObject byPredicate:(NSPredicate * _Nonnull)byPredicate {
-    if ([fetchedObject isKindOfClass:[Tanks class]]) {
-        Tanks *tanks = (Tanks *)fetchedObject;
-        NSMutableDictionary *plainList = [[NSMutableDictionary alloc] init];
-        id<WOTNodeProtocol> rootNode = [[WOTNodeSwift alloc] initWithName:tanks.name_i18n];
-        [tanks.modulesTree enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
-            ModulesTree *module = (ModulesTree *)obj;
-            id<WOTNodeProtocol> moduleNode = [[WOTTreeModuleNode alloc] initWithModuleTree: module];
-            plainList[module.module_id] = moduleNode;
-
-            [[module plainListForVehicleId:tanks.tank_id] enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
-                ModulesTree *submodule = (ModulesTree *)obj;
-
-                id<WOTNodeProtocol> childModuleNode = [[WOTTreeModuleNode alloc] initWithModuleTree: submodule];
-                plainList[submodule.module_id] = childModuleNode;
-            }];
-        }];
-
-        [[plainList allValues] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            WOTTreeModuleNode *moduleNode = (WOTTreeModuleNode *)obj;
-            ModulesTree *moduleTree = moduleNode.modulesTree.prevModules;
-            NSNumber *module_id = moduleTree.module_id;
-            WOTTreeModuleNode *parent = plainList[module_id];
-            if (parent == nil) {
-                [rootNode addChild:moduleNode];
-            } else {
-                [parent addChild:moduleNode];
-            }
-        }];
-        return rootNode;
-    } else {
-        return [[WOTNodeSwift alloc] initWithName:@""];//[WOTNodeFactory pivotDataNodeForPredicate:byPredicate andTanksObject:fetchedObject];
+- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
+    if ([fetchedObject isKindOfClass: [Tanks class]]) {
+        return [[WOTNodeSwift alloc] initWithName:((Tanks *)fetchedObject).name_i18n];
+    } else if ([fetchedObject isKindOfClass: [ModulesTree class]]) {
+        return [[WOTTreeModuleNode alloc] initWithModuleTree: fetchedObject];
+    } else  {
+        return [[WOTNodeSwift alloc] initWithName:@""];
     }
 }
 

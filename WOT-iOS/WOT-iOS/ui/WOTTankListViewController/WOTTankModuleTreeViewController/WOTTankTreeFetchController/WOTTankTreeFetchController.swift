@@ -20,12 +20,96 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         let filtered = self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }
 
         filtered?.forEach { (fetchedObject) in
-            if let fetchObj = fetchedObject as? NSFetchRequestResult {
-                if let node = self.nodeCreator?.createNode(fetchedObject: fetchObj, byPredicate: predicate) {
-                    result.append(node)
-                }
-            }
+            let transformed = self.transform(tank: fetchedObject)
+            result.append(contentsOf: transformed)
         }
         return result
+    }
+
+    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber) -> [Int: WOTTreeModuleNode] {
+        var plainList = [Int: WOTTreeModuleNode]()
+        modulesSet.forEach { (submodule) in
+            guard let childNode = self.nodeCreator?.createNode(fetchedObject: submodule, byPredicate: nil) as? WOTTreeModuleNode else {
+                return
+            }
+            plainList[submodule.module_id.intValue] = childNode
+
+            let sub = self.transform(module: submodule, withId: tankId)
+            plainList = plainList.merge(with: sub)
+        }
+        return plainList
+    }
+
+    private func transform(module: ModulesTree, withId tankId: NSDecimalNumber) -> [Int: WOTTreeModuleNode] {
+        var plainList = [Int: WOTTreeModuleNode]()
+        guard let setOfSubmodules = module.plainList(forVehicleId: tankId) else {
+            return [:]
+        }
+        setOfSubmodules.forEach({ (subsub) in
+            guard let subsubmodule = subsub as? ModulesTree else {
+                return
+            }
+
+            guard let plainchildNode = self.nodeCreator?.createNode(fetchedObject: subsubmodule, byPredicate: nil) as? WOTTreeModuleNode else {
+                return
+            }
+            plainList[subsubmodule.module_id.intValue] = plainchildNode
+        })
+        return plainList
+    }
+
+    private func transform(tank: AnyObject) -> [WOTNodeProtocol] {
+        guard let tanks = tank as? Tanks else {
+            return []
+        }
+        guard let tankId = tanks.tank_id else {
+            return []
+        }
+        guard let root = self.nodeCreator?.createNode(fetchedObject: tanks, byPredicate: nil) else {
+            return []
+        }
+
+        guard let modules = tanks.modulesTree as? Set<ModulesTree> else {
+            return [root]
+        }
+
+        var plainList = self.transform(modulesSet: modules, withId: tankId)
+
+        plainList.forEach { (_, value) in
+            guard let prevModule = value.modulesTree.prevModules else {
+                root.addChild(value)
+                return
+            }
+            if let prevNode = plainList[prevModule.module_id.intValue] {
+                prevNode.addChild(value)
+            } else {
+                root.addChild(value)
+            }
+        }
+
+        return [root]
+    }
+}
+
+/*
+ https://medium.com/ios-swift-development-notes/swiftbites-8-merging-dictionaries-in-swift-894c3e235fec
+ */
+extension Dictionary {
+    /// Merge and return a new dictionary
+    func merge(with: [Key: Value]) -> [Key: Value] {
+        var copy = self
+        for (k, v) in with {
+            // If a key is already present it will be overritten
+            copy[k] = v
+        }
+        return copy
+    }
+
+    /// Merge in-place
+    mutating func append(with: [Key: Value]) {
+        for (k, v) in with {
+            // If a key is already present it will be overritten
+            self[k] = v
+        }
     }
 }

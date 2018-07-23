@@ -22,7 +22,7 @@
 @implementation WOTTankPivotViewController(WOTDataFetchControllerDelegateProtocol)
 @dynamic fetchRequest;
 
-- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nonnull)fetchedObject byPredicate:(NSPredicate * _Nonnull)byPredicate {
+- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
     return [WOTNodeFactory pivotDataNodeForPredicate:byPredicate andTanksObject:fetchedObject];
 }
 

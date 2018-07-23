@@ -12,5 +12,5 @@ import Foundation
 protocol WOTTreeModuleNodeProtocol: WOTNodeProtocol {
 
     var modulesTree: ModulesTree { get }
-    var imageURL: NSURL? { get }
+    var imageURL: URL? { get }
 }
