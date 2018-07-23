@@ -42,18 +42,22 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
 
     private func transform(module: ModulesTree, withId tankId: NSDecimalNumber) -> [Int: WOTTreeModuleNode] {
         var plainList = [Int: WOTTreeModuleNode]()
+
+        guard let plainchildNode = self.nodeCreator?.createNode(fetchedObject: module, byPredicate: nil) as? WOTTreeModuleNode else {
+            return plainList
+        }
+        plainList[module.module_id.intValue] = plainchildNode
+
         guard let setOfSubmodules = module.plainList(forVehicleId: tankId) else {
-            return [:]
+            return plainList
         }
         setOfSubmodules.forEach({ (subsub) in
             guard let subsubmodule = subsub as? ModulesTree else {
                 return
             }
 
-            guard let plainchildNode = self.nodeCreator?.createNode(fetchedObject: subsubmodule, byPredicate: nil) as? WOTTreeModuleNode else {
-                return
-            }
-            plainList[subsubmodule.module_id.intValue] = plainchildNode
+            let submoduleNodes = self.transform(module: subsubmodule, withId: tankId)
+            plainList = plainList.merge(with: submoduleNodes)
         })
         return plainList
     }
