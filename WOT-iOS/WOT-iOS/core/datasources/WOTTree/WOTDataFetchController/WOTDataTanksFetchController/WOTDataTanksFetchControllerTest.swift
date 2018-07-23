@@ -110,7 +110,7 @@ class WOTRequestCountListener {
 class TESTWOTDataTanksFetchControllerListener: WOTDataFetchControllerListenerProtocol {
 
     var asyncExpectation: XCTestExpectation?
-    var result: [WOTPivotNodeProtocol]?
+    var result: [WOTNodeProtocol]?
     var error: Error?
 
     lazy var predicates: [NSPredicate] = {
@@ -126,9 +126,7 @@ class TESTWOTDataTanksFetchControllerListener: WOTDataFetchControllerListenerPro
             XCTFail("missing expectation")
             return
         }
-
         self.result = by.fetchedNodes(byPredicates: self.predicates)
-
         expectation.fulfill()
     }
 

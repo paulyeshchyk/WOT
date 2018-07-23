@@ -16,31 +16,25 @@ class WOTDataTanksFetchController: NSObject {
         guard let context = WOTCoreDataProvider.sharedInstance().mainManagedObjectContext else {
             return nil
         }
-        let request = WOTDataTanksFetchController.fetchRequest()
+        guard let request = self.nodeCreator?.fetchRequest else {
+            return nil
+        }
         let result = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         result.delegate = self
         return result
     }()
 
     var listener: WOTDataFetchControllerListenerProtocol?
+    weak var nodeCreator: WOTDataFetchControllerDelegateProtocol?
+
+    @objc
+    init(delegate nodeCreatorDelegate: WOTDataFetchControllerDelegateProtocol) {
+        nodeCreator = nodeCreatorDelegate
+    }
 
     deinit {
         self.fetchResultController?.delegate = nil
     }
-
-    private static func fetchRequest() -> NSFetchRequest<NSFetchRequestResult> {
-        let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Tanks")
-        result.sortDescriptors = self.sortDescriptors()
-        return result
-    }
-
-    private static func sortDescriptors() -> [NSSortDescriptor] {
-        var result = WOTTankListSettingsDatasource.sharedInstance().sortBy
-        let descriptor = NSSortDescriptor.init(key: "tank_id", ascending: true) //WOT_KEY_TANK_ID
-        result.append(descriptor)
-        return result
-    }
-
 }
 
 extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
@@ -57,18 +51,24 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
         self.listener = listener
     }
 
-    func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTPivotNodeProtocol] {
+    func fetchedObjects() -> [AnyObject]? {
+        return self.fetchResultController?.fetchedObjects
+    }
+
+    func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
 
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
-        var result = [WOTPivotNodeProtocol]()
+        var result = [WOTNodeProtocol]()
 
-        let fetchedObjects = self.fetchResultController?.fetchedObjects
-        let filtered = fetchedObjects?.filter { predicate.evaluate(with: $0) }
+        let filtered = self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }
 
         filtered?.forEach { (fetchedObject) in
-            let node = WOTNodeFactory.pivotDataNode(for: predicate, andTanksObject: fetchedObject)
-            result.append(node)
+            if let fetchObj = fetchedObject as? NSFetchRequestResult {
+                if let node = self.nodeCreator?.createNode(fetchedObject: fetchObj, byPredicate: predicate) {
+                    result.append(node)
+                }
+            }
         }
         return result
     }

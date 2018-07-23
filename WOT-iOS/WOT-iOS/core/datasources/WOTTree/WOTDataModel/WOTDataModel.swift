@@ -24,6 +24,9 @@ class WOTDataModel: NSObject, WOTDataModelProtocol {
 
     var nodes: [WOTNodeProtocol] { return [] }
 
+    func loadModel() {
+    }
+
     func reindexNodes() {
         self.nodeIndex.reset()
         self.nodeIndex.addNodesToIndex(self.nodes)

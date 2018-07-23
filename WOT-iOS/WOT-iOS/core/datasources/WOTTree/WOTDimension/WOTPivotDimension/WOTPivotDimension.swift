@@ -63,12 +63,15 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
                 self.setMaxWidth(fetchedNodes.count, forNode: rowNode, byKey: String(format: "%d", colNode.hash))
                 var idx: Int = 0
                 fetchedNodes.forEach({ (fetchedNode) in
-                    fetchedNode.index = index
+                    guard let pivotNode = fetchedNode as? WOTPivotNodeProtocol else {
+                        return
+                    }
+                    pivotNode.index = index
                     index += 1
-                    fetchedNode.stepParentColumn = colNode
-                    fetchedNode.stepParentRow = rowNode
-                    fetchedNode.indexInsideStepParentColumn = idx
-                    self.rootNodeHolder.rootDataNode.addChild(fetchedNode)
+                    pivotNode.stepParentColumn = colNode
+                    pivotNode.stepParentRow = rowNode
+                    pivotNode.indexInsideStepParentColumn = idx
+                    self.rootNodeHolder.rootDataNode.addChild(pivotNode)
                     idx += 1
                 })
             })

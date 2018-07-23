@@ -18,7 +18,7 @@ function_body_length:
 - 50 # warning
 
 cyclomatic_complexity:
-- 5 # warning
+- 4 # warning
 
 file_length:
 - 600 # warning

@@ -10,54 +10,13 @@ import Foundation
 
 class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
 
-    var tankId: NSNumber? {
-        didSet {
-            //            do { try self.fetchController.performFetch() } catch { }
-            guard let id = tankId else {
-                return
-            }
+    var tankId: NSNumber?
 
-            let predicate = NSPredicate(format: "tank_id = %@", id)
-            let context = WOTCoreDataProvider.sharedInstance().mainManagedObjectContext
-            guard let tanks = Tanks.singleObject(with: predicate, in: context, includingSubentities: true) else {
-                return
-            }
-
-            var plainList = [NSDecimalNumber: WOTNodeProtocol]()
-            let rootNode = WOTNodeSwift(name: tanks.name_i18n)
-            tanks.modulesTree.forEach { (module) in
-                guard let moduleTree = module as? ModulesTree else {
-                    return
-                }
-                let node = WOTTreeModuleNode(moduleTree: moduleTree)
-                plainList[moduleTree.module_id] = node
-                moduleTree.plainList(forVehicleId: id).forEach({ (child) in
-                    guard let childModule = child as? ModulesTree else {
-                        return
-                    }
-                    let childNode = WOTNodeSwift(name: childModule.type)
-                    plainList[childModule.module_id] = childNode
-                })
-            }
-
-            plainList.forEach { (_, node) in
-                guard let moduleNode = node as? WOTTreeModuleNodeProtocol else {
-                    return
-                }
-                guard let prevModule = moduleNode.modulesTree.prevModules else {
-                    return
-                }
-                guard let parentId = prevModule.module_id else {
-                    return
-                }
-                if let parentNode = plainList[parentId] {
-                    parentNode.addChild(moduleNode)
-                } else {
-                    rootNode.addChild(moduleNode)
-                }
-            }
-
-            self.add(rootNode: rootNode)
+    override func loadModel() {
+        do {
+            try self.fetchController.performFetch()
+        } catch let error {
+            fetchFailed(by: self.fetchController, withError: error)
         }
     }
 
@@ -75,15 +34,20 @@ class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         listener.modelDidFailLoad(error: error)
     }
 
-    fileprivate func makeTree() {
+    fileprivate func makeTree(_ fetchController: WOTDataFetchControllerProtocol) {
+        let fetchedNodes = fetchController.fetchedNodes(byPredicates: [])
+
+        fetchedNodes.forEach { (node) in
+            self.add(rootNode: node)
+        }
         self.listener.modelDidLoad()
     }
 }
 
 extension WOTTreeDataModel: WOTDataFetchControllerListenerProtocol {
 
-    func fetchPerformed(by: WOTDataFetchControllerProtocol) {
-        self.makeTree()
+    func fetchPerformed(by fetchController: WOTDataFetchControllerProtocol) {
+        self.makeTree(fetchController)
     }
 
     func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error) {

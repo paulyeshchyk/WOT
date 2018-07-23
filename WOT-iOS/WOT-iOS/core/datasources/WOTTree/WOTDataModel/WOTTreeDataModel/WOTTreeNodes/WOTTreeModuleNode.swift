@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objc
 class WOTTreeModuleNode: WOTNodeSwift, WOTTreeModuleNodeProtocol {
 
     private(set)var modulesTree: ModulesTree
@@ -18,12 +19,14 @@ class WOTTreeModuleNode: WOTNodeSwift, WOTTreeModuleNodeProtocol {
         return result
     }
 
+    @objc
     required init(moduleTree module: ModulesTree) {
         modulesTree = module
         super.init(name: module.name)
     }
 
-    @objc public required init(name nameValue: String) {
+    @objc
+    public required init(name nameValue: String) {
         fatalError("init(name:) has not been implemented")
     }
 }

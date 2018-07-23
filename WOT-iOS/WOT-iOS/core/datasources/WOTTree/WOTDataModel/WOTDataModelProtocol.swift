@@ -34,4 +34,5 @@ public protocol WOTDataModelProtocol {
     func rootNodes(sortComparator: WOTNodeComparator?) -> [WOTNodeProtocol]
     func nodesCount(section: Int) -> Int
     func node(atIndexPath: NSIndexPath) -> WOTNodeProtocol?
+    func loadModel()
 }

@@ -16,6 +16,44 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTNode+PivotFactory.h"
 
+@interface WOTTankPivotViewController(WOTDataFetchControllerDelegateProtocol) <WOTDataFetchControllerDelegateProtocol>
+@end
+
+@implementation WOTTankPivotViewController(WOTDataFetchControllerDelegateProtocol)
+@dynamic fetchRequest;
+
+- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nonnull)fetchedObject byPredicate:(NSPredicate * _Nonnull)byPredicate {
+    return [WOTNodeFactory pivotDataNodeForPredicate:byPredicate andTanksObject:fetchedObject];
+}
+
+- (NSFetchRequest *)fetchRequest {
+
+    return [WOTTankPivotViewController fetchRequest];
+}
+
++ (NSFetchRequest*) fetchRequest  {
+    NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:@"Tanks"];
+    result.sortDescriptors = [WOTTankPivotViewController sortDescriptors];
+    result.predicate = [WOTTankPivotViewController fetchCustomPredicate];
+    return result;
+}
+
++ (NSArray *) sortDescriptors {
+    NSMutableArray *result = [[[WOTTankListSettingsDatasource sharedInstance] sortBy] mutableCopy];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"tank_id" ascending:YES];
+    [result addObject:descriptor];
+    return result;
+}
+
++ (NSPredicate *) fetchCustomPredicate {
+
+    NSPredicate *level10 = [NSPredicate predicateWithFormat:@"level == %d", 10];
+    NSPredicate *level8 = [NSPredicate predicateWithFormat:@"level == %d", 8];
+    return [NSCompoundPredicate orPredicateWithSubpredicates:@[level10, level8]];
+}
+
+@end
+
 @interface WOTTankPivotViewController () <UICollectionViewDataSource, WOTDataModelListener>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
@@ -27,30 +65,28 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, readonly) NSArray *sortDescriptors;
 
-@property (nonatomic, strong) WOTPivotDataModel *pivotDataModel;
+@property (nonatomic, strong) WOTPivotDataModel *model;
 @property (nonatomic, strong) id<WOTDataFetchControllerProtocol> fetchController;
+
+
 @end
 
 @implementation WOTTankPivotViewController
-
-- (void)setPivotDataModel:(WOTPivotDataModel *)pivotDataModel {
-    _pivotDataModel = pivotDataModel;
-}
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
 
     [self.flowLayout setRelativeContentSizeBlock:^CGSize{
-        return self.pivotDataModel.dimension.contentSize;
+        return self.model.contentSize;
     }];
 
     [self.flowLayout setItemRelativeRectCallback:^CGRect(NSIndexPath *indexPath) {
-        return [self.pivotDataModel itemRectAtIndexPath:indexPath];
+        return [self.model itemRectAtIndexPath:indexPath];
     }];
 
     [self.flowLayout setItemLayoutStickyType:^PivotStickyType(NSIndexPath *indexPath) {
-        id<WOTPivotNodeProtocol> node = [self.pivotDataModel itemAtIndexPath:indexPath];
+        id<WOTPivotNodeProtocol> node = [self.model itemAtIndexPath:indexPath];
         return node == nil ? PivotStickyTypeFloat : node.stickyType;
     }];
 
@@ -61,8 +97,9 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class])];
     
-    self.fetchController = [[WOTDataTanksFetchController alloc] init];
-    self.pivotDataModel = [[WOTPivotDataModel alloc] initWithFetchController: self.fetchController listener: self];
+    self.fetchController = [[WOTDataTanksFetchController alloc] initWithDelegate: self];
+    self.model = [[WOTPivotDataModel alloc] initWithFetchController: self.fetchController listener: self];
+    [self.model loadModel];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -70,7 +107,7 @@
 
     UICollectionViewCell *result = nil;
     
-    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.pivotDataModel itemAtIndexPath:indexPath];
+    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.model itemAtIndexPath:indexPath];
     if ([node isKindOfClass:[WOTPivotRowNodeSwift class]]) {
         
         result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
@@ -109,12 +146,12 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return [self.pivotDataModel itemsCountWithSection:section];
+    return [self.model itemsCountWithSection:section];
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.pivotDataModel itemAtIndexPath:indexPath];
+    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.model itemAtIndexPath:indexPath];
     if ([node isKindOfClass:[WOTPivotDataNodeSwift class]]) {
         Tanks* tank = (Tanks *)node.data1;
         WOTTankModuleTreeViewController *configurationSelector = [[WOTTankModuleTreeViewController alloc] initWithNibName:NSStringFromClass([WOTTankModuleTreeViewController class]) bundle:nil];
@@ -143,7 +180,7 @@
 
 - (NSArray *)metadataItems {
     WOTPivotNodeSwift *level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTPivotNodeSwift *level1Col = [WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    WOTPivotNodeSwift *level1Col = nil;//[WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
 
     WOTPivotNodeSwift *level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];

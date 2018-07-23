@@ -15,6 +15,7 @@ protocol WOTTreeProtocol: NSObjectProtocol {
 @objc
 protocol WOTPivotDataModelProtocol: NSObjectProtocol {
     var dimension: WOTPivotDimensionProtocol { get }
+    var contentSize: CGSize { get }
     var shouldDisplayEmptyColumns: Bool { get set }
     init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener)
     func itemRect(atIndexPath: NSIndexPath) -> CGRect

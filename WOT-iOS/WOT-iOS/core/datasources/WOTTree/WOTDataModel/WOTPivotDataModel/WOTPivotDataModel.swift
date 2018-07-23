@@ -16,6 +16,11 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
         return WOTPivotDimension(rootNodeHolder: self, fetchController: self.fetchController)
     }()
 
+    @objc
+    var contentSize: CGSize {
+        return self.dimension.contentSize
+    }
+
     var shouldDisplayEmptyColumns: Bool
 
     private var listener: WOTDataModelListener
@@ -74,11 +79,9 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
         self.dimension.registerCalculatorClass(WOTDimensionRowCalculator.self, forNodeClass: WOTPivotRowNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionFilterCalculator.self, forNodeClass: WOTPivotFilterNodeSwift.self)
         self.dimension.registerCalculatorClass(WOTDimensionDataCalculator.self, forNodeClass: WOTPivotDataNodeSwift.self)
-
-        self.performFetch()
     }
 
-    private func performFetch() {
+    override func loadModel() {
         do {
             try self.fetchController.performFetch()
         } catch let error {

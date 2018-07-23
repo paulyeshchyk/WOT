@@ -14,9 +14,73 @@
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTEnums.h"
 
+@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<WOTDataFetchControllerDelegateProtocol>
+@end
+
+@implementation WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)
+@dynamic fetchRequest;
+
+- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nonnull)fetchedObject byPredicate:(NSPredicate * _Nonnull)byPredicate {
+    if ([fetchedObject isKindOfClass:[Tanks class]]) {
+        Tanks *tanks = (Tanks *)fetchedObject;
+        NSMutableDictionary *plainList = [[NSMutableDictionary alloc] init];
+        id<WOTNodeProtocol> rootNode = [[WOTNodeSwift alloc] initWithName:tanks.name_i18n];
+        [tanks.modulesTree enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+            ModulesTree *module = (ModulesTree *)obj;
+            id<WOTNodeProtocol> moduleNode = [[WOTTreeModuleNode alloc] initWithModuleTree: module];
+            plainList[module.module_id] = moduleNode;
+
+            [[module plainListForVehicleId:tanks.tank_id] enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+                ModulesTree *submodule = (ModulesTree *)obj;
+
+                id<WOTNodeProtocol> childModuleNode = [[WOTTreeModuleNode alloc] initWithModuleTree: submodule];
+                plainList[submodule.module_id] = childModuleNode;
+            }];
+        }];
+
+        [[plainList allValues] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            WOTTreeModuleNode *moduleNode = (WOTTreeModuleNode *)obj;
+            ModulesTree *moduleTree = moduleNode.modulesTree.prevModules;
+            NSNumber *module_id = moduleTree.module_id;
+            WOTTreeModuleNode *parent = plainList[module_id];
+            if (parent == nil) {
+                [rootNode addChild:moduleNode];
+            } else {
+                [parent addChild:moduleNode];
+            }
+        }];
+        return rootNode;
+    } else {
+        return [[WOTNodeSwift alloc] initWithName:@""];//[WOTNodeFactory pivotDataNodeForPredicate:byPredicate andTanksObject:fetchedObject];
+    }
+}
+
+- (NSFetchRequest *)fetchRequest {
+
+    NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:@"Tanks"];
+    result.sortDescriptors = [self sortDescriptors];
+    result.predicate = [self fetchCustomPredicate];
+    return result;
+}
+
+- (NSArray *) sortDescriptors {
+    NSMutableArray *result = [[[WOTTankListSettingsDatasource sharedInstance] sortBy] mutableCopy];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"tank_id" ascending:YES];
+    [result addObject:descriptor];
+    return result;
+}
+
+- (NSPredicate *) fetchCustomPredicate {
+
+    NSPredicate *result = [NSPredicate predicateWithFormat:@"tank_id == %d", [self.tankId integerValue] ];
+    return result;
+}
+
+@end
+
 @interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTDataModelListener>
 
-@property (nonatomic, strong) WOTTreeDataModel *tree;
+@property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 @property (nonatomic, strong) id<WOTDataFetchControllerProtocol> fetchController;
@@ -27,7 +91,7 @@
 
 - (void)dealloc {
     
-    self.tree = nil;
+    self.model = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -35,8 +99,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
 
-        self.fetchController = [[WOTDataTanksFetchController alloc] init];
-        self.tree = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController listener: self];
+        self.fetchController = [[WOTTankTreeFetchController alloc] initWithDelegate: self];
+        self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController listener: self];
     }
     return self;
 }
@@ -65,17 +129,17 @@
     
     [self.flowLayout setDepthCallback:^(){
         
-        return self.tree.levels;
+        return self.model.levels;
     }];
 
     [self.flowLayout setWidthCallback:^(){
         
-        return self.tree.endpointsCount;
+        return self.model.endpointsCount;
     }];
 
     [self.flowLayout setLayoutPreviousSiblingNodeChildrenCountCallback:^(NSIndexPath *indexPath){
 
-        id<WOTNodeProtocol> node = [self.tree nodeAtIndexPath:indexPath];
+        id<WOTNodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
         NSInteger result = [WOTNodeEnumerator.sharedInstance childrenCountWithSiblingNode:node];
         return result;
     }];
@@ -87,24 +151,25 @@
 - (void)setTankId:(NSNumber *)value {
 
     _tankId = [value copy];
-    [self.tree setTankId: value];
+    [self.model loadModel];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.model setTankId: value];
+//    });
 }
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    
-    return self.tree.levels;
+    return self.model.levels;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-
-    return [self.tree nodesCountWithSection:section];
+    return [self.model nodesCountWithSection:section];
 }
 
 #pragma mark - UICollectionViewDelegate
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    id<WOTNodeProtocol> node = [self.tree nodeAtIndexPath:indexPath];
+    id<WOTNodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
     WOTTankConfigurationCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) forIndexPath:indexPath];
     result.indexPath = indexPath;
     result.label.text = node.name;
@@ -116,7 +181,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    id<WOTNodeProtocol> node = [self.tree nodeAtIndexPath:indexPath];
+    id<WOTNodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
 
     if ([node conformsToProtocol:@protocol(WOTTreeModuleNodeProtocol)]) {
         id<WOTTreeModuleNodeProtocol> treeNode = (id<WOTTreeModuleNodeProtocol>) node;
