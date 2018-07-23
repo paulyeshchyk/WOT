@@ -48,21 +48,6 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
         return result
     }()
 
-    func reindexMetaItems() -> Int {
-
-        var result: Int = 0
-        let completion: (WOTNodeProtocol) -> Void = { (node) in
-            node.index = result
-            result += 1
-        }
-
-        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootFilterNode, comparator: WOTPivotNodeSwift.WOTNodeEmptyComparator, childCompletion: completion)
-        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootColsNode, comparator: WOTPivotNodeSwift.WOTNodeNameComparator, childCompletion: completion)
-        WOTNodeEnumerator.sharedInstance.enumerateAll(node: self.rootRowsNode, comparator: WOTPivotNodeSwift.WOTNodePredicateComparator, childCompletion: completion)
-
-        return result
-    }
-
     override var nodes: [WOTNodeProtocol] {
         return [self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode]
     }
@@ -163,7 +148,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
         self.add(metadataItems: self.listener.metadataItems())
 
-        let metadataIndex = self.reindexMetaItems()
+        let metadataIndex = self.nodeIndex.doAutoincrementIndex(forNodes: [self.rootFilterNode, self.rootColsNode, self.rootRowsNode])
         self.dimension.reload(forIndex: metadataIndex)
         self.reindexNodes()
 

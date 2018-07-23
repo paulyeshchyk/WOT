@@ -17,6 +17,4 @@ import Foundation
     var rootRowsNode: WOTNodeProtocol { get }
 
     var rootDataNode: WOTNodeProtocol { get }
-
-    func reindexMetaItems() -> Int
 }

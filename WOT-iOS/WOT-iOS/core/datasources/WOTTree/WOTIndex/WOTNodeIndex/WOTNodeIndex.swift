@@ -16,6 +16,7 @@ public protocol WOTNodeIndexProtocol: NSObjectProtocol {
     var count: Int { get }
     func item(indexPath: NSIndexPath) -> WOTNodeProtocol?
     func maxWidthOrValue(_ value: Int) -> Int
+    func doAutoincrementIndex(forNodes: [WOTNodeProtocol]) -> Int
 }
 
 @objc
@@ -54,5 +55,16 @@ class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
 
     func item(indexPath: NSIndexPath) -> WOTNodeProtocol? {
         return self.index[indexPath.row] as? WOTNodeProtocol
+    }
+
+    func doAutoincrementIndex(forNodes: [WOTNodeProtocol]) -> Int {
+        var result: Int = 0
+        forNodes.forEach { (node) in
+            WOTNodeEnumerator.sharedInstance.enumerateAll(node: node, comparator: WOTPivotNodeSwift.WOTNodeEmptyComparator) { (node) in
+                node.index = result
+                result += 1
+            }
+        }
+        return result
     }
 }
