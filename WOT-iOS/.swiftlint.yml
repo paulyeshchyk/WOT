@@ -21,7 +21,7 @@ cyclomatic_complexity:
 - 4 # warning
 
 file_length:
-- 600 # warning
+- 190 # warning
 - 1200 # error
 
 excluded:
