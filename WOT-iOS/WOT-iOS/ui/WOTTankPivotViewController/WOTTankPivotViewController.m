@@ -215,6 +215,8 @@
     Class PivotNodeClass = [WOTNodeFactory pivotNodeClassForType:type];
 
     WOTPivotNodeSwift *root = [[PivotNodeClass alloc] initWithName:@"-"];
+    //TODO: isVisible == NO makes pivot invalid
+    root.isVisible = YES;
     NSArray *level1Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level1Node];
     NSArray *level0Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level0Node];
     [level0Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level0Child, NSUInteger idx, BOOL *stop) {

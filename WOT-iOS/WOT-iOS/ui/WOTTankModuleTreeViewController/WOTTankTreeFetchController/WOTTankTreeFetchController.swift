@@ -26,12 +26,41 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         return result
     }
 
-    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber) -> [Int: WOTTreeModuleNode] {
-        var plainList = [Int: WOTTreeModuleNode]()
-        modulesSet.forEach { (submodule) in
-            guard let childNode = self.nodeCreator.createNode(fetchedObject: submodule, byPredicate: nil) as? WOTTreeModuleNode else {
+    private func transform(tank: AnyObject) -> [WOTNodeProtocol] {
+        guard let tanks = tank as? Tanks else {
+            return []
+        }
+        guard let tankId = tanks.tank_id else {
+            return []
+        }
+        let root = self.nodeCreator.createNode(fetchedObject: tanks, byPredicate: nil)
+
+        guard let modules = tanks.modulesTree as? Set<ModulesTree> else {
+            return [root]
+        }
+
+        guard var plainList = self.transform(modulesSet: modules, withId: tankId) as? [Int: WOTTreeModuleNodeProtocol] else {
+            return [root]
+        }
+
+        plainList.forEach { (_, value) in
+            guard let prevModule = value.modulesTree.prevModules else {
+                root.addChild(value)
                 return
             }
+            if let prevNode = plainList[prevModule.module_id.intValue] {
+                prevNode.addChild(value)
+            } else {
+                root.addChild(value)
+            }
+        }
+        return [root]
+    }
+
+    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber) -> [Int: WOTNodeProtocol] {
+        var plainList = [Int: WOTNodeProtocol]()
+        modulesSet.forEach { (submodule) in
+            let childNode = self.nodeCreator.createNode(fetchedObject: submodule, byPredicate: nil)
             plainList[submodule.module_id.intValue] = childNode
 
             let sub = self.transform(module: submodule, withId: tankId)
@@ -40,12 +69,10 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         return plainList
     }
 
-    private func transform(module: ModulesTree, withId tankId: NSDecimalNumber) -> [Int: WOTTreeModuleNode] {
-        var plainList = [Int: WOTTreeModuleNode]()
+    private func transform(module: ModulesTree, withId tankId: NSDecimalNumber) -> [Int: WOTNodeProtocol] {
+        var plainList = [Int: WOTNodeProtocol]()
 
-        guard let plainchildNode = self.nodeCreator.createNode(fetchedObject: module, byPredicate: nil) as? WOTTreeModuleNode else {
-            return plainList
-        }
+        let plainchildNode = self.nodeCreator.createNode(fetchedObject: module, byPredicate: nil)
         plainList[module.module_id.intValue] = plainchildNode
 
         guard let setOfSubmodules = module.plainList(forVehicleId: tankId) else {
@@ -60,36 +87,6 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
             plainList = plainList.merge(with: submoduleNodes)
         })
         return plainList
-    }
-
-    private func transform(tank: AnyObject) -> [WOTNodeProtocol] {
-        guard let tanks = tank as? Tanks else {
-            return []
-        }
-        guard let tankId = tanks.tank_id else {
-            return []
-        }
-        let root = self.nodeCreator.createNode(fetchedObject: tanks, byPredicate: nil)
-
-        guard let modules = tanks.modulesTree as? Set<ModulesTree> else {
-            return [root]
-        }
-
-        var plainList = self.transform(modulesSet: modules, withId: tankId)
-
-        plainList.forEach { (_, value) in
-            guard let prevModule = value.modulesTree.prevModules else {
-                root.addChild(value)
-                return
-            }
-            if let prevNode = plainList[prevModule.module_id.intValue] {
-                prevNode.addChild(value)
-            } else {
-                root.addChild(value)
-            }
-        }
-
-        return [root]
     }
 }
 
