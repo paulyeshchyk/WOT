@@ -202,6 +202,7 @@
 		1D6FF5122106FF85006C1328 /* WOTTankConfigurationItemHeaderFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FF50A2106FF85006C1328 /* WOTTankConfigurationItemHeaderFooter.xib */; };
 		1D6FF5132106FF85006C1328 /* WOTTankConfigurationItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FF50C2106FF85006C1328 /* WOTTankConfigurationItemViewController.xib */; };
 		1D6FF5142106FF85006C1328 /* WOTTankConfigurationItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF50E2106FF85006C1328 /* WOTTankConfigurationItemViewController.m */; };
+		1D6FF516210722EC006C1328 /* WOTModuleNextItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF515210722EC006C1328 /* WOTModuleNextItemProtocol.swift */; };
 		1D79C77F20F5D0FF00FFAF02 /* WOTDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */; };
 		1D79C78220F5D32F00FFAF02 /* WOTDataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */; };
 		1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */; };
@@ -708,6 +709,7 @@
 		1D6FF50C2106FF85006C1328 /* WOTTankConfigurationItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankConfigurationItemViewController.xib; sourceTree = "<group>"; };
 		1D6FF50D2106FF85006C1328 /* WOTTankConfigurationItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationItemViewController.h; sourceTree = "<group>"; };
 		1D6FF50E2106FF85006C1328 /* WOTTankConfigurationItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankConfigurationItemViewController.m; sourceTree = "<group>"; };
+		1D6FF515210722EC006C1328 /* WOTModuleNextItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTModuleNextItemProtocol.swift; sourceTree = "<group>"; };
 		1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModel.swift; sourceTree = "<group>"; };
 		1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModelTest.swift; sourceTree = "<group>"; };
 		1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
@@ -1755,6 +1757,13 @@
 			path = cells;
 			sourceTree = "<group>";
 		};
+		1D6FF51721072379006C1328 /* NextItem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NextItem;
+			sourceTree = "<group>";
+		};
 		1D79C77D20F5D0E400FFAF02 /* WOTDataModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1978,6 +1987,7 @@
 				1DC07B511B3A9489002FAA72 /* Vehicles */,
 				1DC07B541B3A9489002FAA72 /* WOTWEBRequest.h */,
 				1DC07B551B3A9489002FAA72 /* WOTWEBRequest.m */,
+				1D6FF515210722EC006C1328 /* WOTModuleNextItemProtocol.swift */,
 			);
 			path = WOTWebRequest;
 			sourceTree = "<group>";
@@ -2630,7 +2640,7 @@
 		1DD646F01B20700000B0EC76 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				1DF73EBF1B906AD600AE6F86 /* Pivot */,
+				1D6FF51721072379006C1328 /* NextItem */,
 				1D010DA71B8C73D900FA6A75 /* Temporary */,
 				1DC07B621B3AB778002FAA72 /* FillProperties */,
 				1DD646F11B20700000B0EC76 /* NSManagedObject+CoreDataOperations.h */,
@@ -2823,13 +2833,6 @@
 				1D691EF41BA066AA00E1555D /* NSDictionary+Hash.m */,
 			);
 			path = NSDictionary;
-			sourceTree = "<group>";
-		};
-		1DF73EBF1B906AD600AE6F86 /* Pivot */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pivot;
 			sourceTree = "<group>";
 		};
 		1E8D578D6C4DB65145A587B4 /* Pods */ = {
@@ -3347,6 +3350,7 @@
 				1D6FF4F62106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m in Sources */,
 				1DC07B5D1B3A9489002FAA72 /* WOTSaveSessionRequest.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
+				1D6FF516210722EC006C1328 /* WOTModuleNextItemProtocol.swift in Sources */,
 				1DCC7F311B2EE974005FF193 /* NSString+RomanUtils.m in Sources */,
 				1D519D571B53A85600D3A286 /* WOTWebResponseAdapterModulesTree.m in Sources */,
 				1DDEE39B1B8F353200C90D4B /* WOTTankPivotViewController.m in Sources */,

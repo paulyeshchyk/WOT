@@ -23,7 +23,7 @@
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nonnull)predicate andTanksObject:(id _Nonnull)tanksObject {
     
     Tanks *tanks = tanksObject;
-    WOTPivotDataNodeSwift *node = [[WOTPivotDataNodeSwift alloc] initWithName:tanks.short_name_i18n];
+    WOTPivotDataNodeSwift *node = [[WOTPivotDataNodeSwift alloc] initWithName:tanks.name_i18n];
 
     node.predicate = predicate;
     node.imageURL = [NSURL URLWithString:tanks.image];

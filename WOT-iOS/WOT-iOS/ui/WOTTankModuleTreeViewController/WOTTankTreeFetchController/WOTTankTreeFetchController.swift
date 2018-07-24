@@ -62,37 +62,44 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
 
         self.transform(modulesSet: modules, withId: tankId, nodeCreation: nodeCreation)
 
-        temporaryList.forEach { (_, value) in
+        self.append(listofNodes: temporaryList, into: root)
+        return [root]
+    }
+
+    private func append(listofNodes: [Int: WOTNodeProtocol], into root: WOTNodeProtocol) {
+        listofNodes.forEach { (_, value) in
             guard let modulesTree = (value as? WOTTreeModuleNodeProtocol)?.modulesTree else {
                 return
             }
-            guard let prevModule = modulesTree.prevModules else {
+            guard let nestedModules = modulesTree.nestedModules() else {
                 root.addChild(value)
                 return
             }
-            guard let prevNode = temporaryList[prevModule.module_id.intValue] else {
-                root.addChild(value)
-                return
-            }
-            prevNode.addChild(value)
+            nestedModules.forEach({ (module) in
+                guard let prevNode = listofNodes[module.module_id.intValue] else {
+                    root.addChild(value)
+                    return
+                }
+                prevNode.addChild(value)
+            })
         }
-        return [root]
     }
 
     typealias NodeCreateClosure = (Int, ModulesTree) -> Void
 
     private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber, nodeCreation: NodeCreateClosure) {
-
         modulesSet.forEach { (submodule) in
             if let moduleId = submodule.module_id?.intValue {
-                nodeCreation(moduleId, submodule)
+                if submodule.isCompatible(forTankId: tankId) {
+                    nodeCreation(moduleId, submodule)
+                }
             }
             self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
         }
     }
 
     private func transform(module: ModulesTree, withId tankId: NSDecimalNumber, nodeCreation: NodeCreateClosure) {
-        guard let submodules = module.plainList(forVehicleId: tankId) else {
+        guard let submodules = module.nextModules else {
             return
         }
         submodules.forEach({ (a_submodule) in
@@ -100,12 +107,29 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
                 return
             }
 
-            if let moduleId = submodule.module_id?.intValue {
+            if let moduleId = submodule.module_id?.intValue, submodule.isCompatible(forTankId: tankId) {
                 nodeCreation(moduleId, submodule)
             }
 
             self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
         })
+    }
+}
+
+extension ModulesTree {
+
+    func isCompatible(forTankId: NSDecimalNumber) -> Bool {
+        let result = self.nextTanks.filter({ (next) -> Bool in
+            return (next as? Tanks)?.tank_id.intValue == forTankId.intValue
+        })
+        return (result.count != 0)
+    }
+
+    func nestedModules () -> Set<ModulesTree>? {
+        guard let modules = self.prevModules else {
+            return nil
+        }
+        return [modules]
     }
 }
 

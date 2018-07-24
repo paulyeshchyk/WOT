@@ -78,7 +78,8 @@ class WOTRequestCountListener {
 
     private var triggered: Bool = false
 
-    @objc func pendingRequestCountChaged(notification: Notification) {
+    @objc
+    func pendingRequestCountChaged(notification: Notification) {
 
         guard let executor = notification.object as? WOTRequestExecutor else {
             return
