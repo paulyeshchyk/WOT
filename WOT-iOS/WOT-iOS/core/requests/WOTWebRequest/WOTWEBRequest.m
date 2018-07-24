@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, strong) NSMutableData *data;
 
-- (NSData *)loadFakeData;
+- (NSData *)stubs;
 
 @end
 
@@ -249,10 +249,10 @@ static NSString *urlEncode(NSString *string) {
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 
-    NSData *fake = [self loadFakeData];
-    if ([fake length] != 0) {
+    NSData *stubs = [self stubs];
+    if ([stubs length] != 0) {
 
-        [self appendData: fake];
+        [self appendData: stubs];
 
         [self notifyListenersAboutFinish];
         [self parseData:self.data error:nil];
@@ -265,11 +265,11 @@ static NSString *urlEncode(NSString *string) {
     }
 }
 
-- (NSData *)loadFakeData {
+- (NSData *)stubs {
     
     NSData *result = nil;
 
-    NSString *filename = self.fakeJSON;
+    NSString *filename = self.stubJSON;
 
     if ([filename length] > 0) {
         result = [NSData dataWithContentsOfFile: WOTResourcePath(filename)];

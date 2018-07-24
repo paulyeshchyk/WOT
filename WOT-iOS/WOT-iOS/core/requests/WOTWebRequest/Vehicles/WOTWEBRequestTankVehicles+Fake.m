@@ -10,7 +10,7 @@
 
 @implementation WOTWEBRequestTankVehicles (Fake)
 
-- (NSString *)fakeJSON {
+- (NSString *)stubJSON {
 
     return @"vehicles.json";
 }

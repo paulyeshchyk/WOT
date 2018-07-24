@@ -10,7 +10,7 @@
 
 @implementation WOTWebRequestTankRadios (Fake)
 
-- (NSString *)fakeJSON {
+- (NSString *)stubJSON {
 
     return @"tankradios.json";
 }

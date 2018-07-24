@@ -26,67 +26,86 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         return result
     }
 
-    private func transform(tank: AnyObject) -> [WOTNodeProtocol] {
+    private func tankId(_ tank: AnyObject) -> NSDecimalNumber? {
         guard let tanks = tank as? Tanks else {
-            return []
+            return nil
         }
-        guard let tankId = tanks.tank_id else {
-            return []
-        }
-        let root = self.nodeCreator.createNode(fetchedObject: tanks, byPredicate: nil)
+        return tanks.tank_id
+    }
 
+    private func tankModules(_ tank: AnyObject) -> Set<ModulesTree>? {
+        guard let tanks = tank as? Tanks else {
+            return nil
+        }
         guard let modules = tanks.modulesTree as? Set<ModulesTree> else {
+            return nil
+        }
+        return modules
+    }
+
+    private func transform(tank: AnyObject) -> [WOTNodeProtocol] {
+        guard let tankId = self.tankId(tank) else {
+            return []
+        }
+
+        let root = self.nodeCreator.createNode(fetchedObject: tank, byPredicate: nil)
+
+        guard let modules = self.tankModules(tank) else {
             return [root]
         }
 
-        guard var plainList = self.transform(modulesSet: modules, withId: tankId) as? [Int: WOTTreeModuleNodeProtocol] else {
-            return [root]
+        var temporaryList = [Int: WOTNodeProtocol]()
+        let nodeCreation: NodeCreateClosure = { (id: Int, module: ModulesTree) in
+            let node = self.nodeCreator.createNode(fetchedObject: module, byPredicate: nil)
+            temporaryList[id] = node
         }
 
-        plainList.forEach { (_, value) in
-            guard let prevModule = value.modulesTree.prevModules else {
+        self.transform(modulesSet: modules, withId: tankId, nodeCreation: nodeCreation)
+
+        temporaryList.forEach { (_, value) in
+            guard let modulesTree = (value as? WOTTreeModuleNodeProtocol)?.modulesTree else {
+                return
+            }
+            guard let prevModule = modulesTree.prevModules else {
                 root.addChild(value)
                 return
             }
-            if let prevNode = plainList[prevModule.module_id.intValue] {
-                prevNode.addChild(value)
-            } else {
+            guard let prevNode = temporaryList[prevModule.module_id.intValue] else {
                 root.addChild(value)
+                return
             }
+            prevNode.addChild(value)
         }
         return [root]
     }
 
-    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber) -> [Int: WOTNodeProtocol] {
-        var plainList = [Int: WOTNodeProtocol]()
-        modulesSet.forEach { (submodule) in
-            let childNode = self.nodeCreator.createNode(fetchedObject: submodule, byPredicate: nil)
-            plainList[submodule.module_id.intValue] = childNode
+    typealias NodeCreateClosure = (Int, ModulesTree) -> Void
 
-            let sub = self.transform(module: submodule, withId: tankId)
-            plainList = plainList.merge(with: sub)
+    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber, nodeCreation: NodeCreateClosure) {
+
+        modulesSet.forEach { (submodule) in
+            if let moduleId = submodule.module_id?.intValue {
+                nodeCreation(moduleId, submodule)
+            }
+            self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
         }
-        return plainList
     }
 
-    private func transform(module: ModulesTree, withId tankId: NSDecimalNumber) -> [Int: WOTNodeProtocol] {
-        var plainList = [Int: WOTNodeProtocol]()
-
-        let plainchildNode = self.nodeCreator.createNode(fetchedObject: module, byPredicate: nil)
-        plainList[module.module_id.intValue] = plainchildNode
-
-        guard let setOfSubmodules = module.plainList(forVehicleId: tankId) else {
-            return plainList
+    private func transform(module: ModulesTree, withId tankId: NSDecimalNumber, nodeCreation: NodeCreateClosure) {
+        guard let submodules = module.plainList(forVehicleId: tankId) else {
+            return
         }
-        setOfSubmodules.forEach({ (subsub) in
-            guard let subsubmodule = subsub as? ModulesTree else {
+        submodules.forEach({ (a_submodule) in
+            guard let submodule = a_submodule as? ModulesTree else {
                 return
             }
 
-            let submoduleNodes = self.transform(module: subsubmodule, withId: tankId)
-            plainList = plainList.merge(with: submoduleNodes)
+            if let moduleId = submodule.module_id?.intValue {
+                nodeCreation(moduleId, submodule)
+            }
+
+            self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
         })
-        return plainList
     }
 }
 

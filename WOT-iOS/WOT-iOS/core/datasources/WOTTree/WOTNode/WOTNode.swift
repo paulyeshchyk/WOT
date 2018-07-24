@@ -11,11 +11,11 @@ import ObjectiveC
 
 public class WOTNodeSwift: NSObject, WOTNodeProtocol {
 
-    static let WOTNodeEmptyComparator: WOTNodeComparatorType  = { (node1, node2, level) in
+    static let WOTNodeEmptyComparator: WOTNodeComparatorType = { (node1, node2, level) in
         return .orderedSame
     }
 
-    static let WOTNodeNameComparator: WOTNodeComparatorType  = { (node1, node2, level) in
+    static let WOTNodeNameComparator: WOTNodeComparatorType = { (node1, node2, level) in
         return node1.name.compare(node2.name)
     }
 
@@ -74,22 +74,25 @@ public class WOTNodeSwift: NSObject, WOTNodeProtocol {
         }
     }
 
-    public func removeChild(_ child: WOTNodeProtocol, completion: (WOTNodeProtocol) -> Void) {
+    public func removeChild(_ child: WOTNodeProtocol, completion: @escaping (WOTNodeProtocol) -> Void) {
         guard let index = (self.children.index { $0 === child }) else {
             return
         }
         child.parent = nil
-        self.children.remove(at: index)
+        child.removeChildren { (_) in
+
+            self.children.remove(at: index)
+            completion(self)
+        }
     }
 
-    public func removeChildren(_ completion: WOTNodeProtocolRemoveCompletion?) {
+    public func removeChildren(completion: @escaping (WOTNodeProtocol) -> Void) {
         self.children.forEach { (child) in
-            child.removeChildren({ (node) in
-
+            child.removeChildren(completion: { (node) in
                 node.parent = nil
             })
-            completion?(child)
         }
         self.children.removeAll()
+        completion(self)
     }
 }

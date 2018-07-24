@@ -32,7 +32,8 @@ internal typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: W
 
     func addChildArray(_ childArray: [WOTNodeProtocol])
 
-    func removeChild(_ child: WOTNodeProtocol, completion: WOTNodeProtocolRemoveCompletion)
+    func removeChild(_ child: WOTNodeProtocol, completion: @escaping (WOTNodeProtocol) -> Void)
 
-    func removeChildren(_ completion: WOTNodeProtocolRemoveCompletion?)
+    func removeChildren(completion: @escaping (WOTNodeProtocol) -> Void)
+
 }

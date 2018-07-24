@@ -10,7 +10,7 @@
 
 @implementation WOTWebRequestTankChassis (Fake)
 
-- (NSString *)fakeJSON {
+- (NSString *)stubJSON {
 
     return @"chassis.json";
 }
