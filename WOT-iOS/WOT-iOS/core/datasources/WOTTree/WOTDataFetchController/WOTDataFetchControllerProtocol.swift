@@ -25,5 +25,4 @@ protocol WOTDataFetchControllerListenerProtocol {
 @objc
 protocol WOTDataFetchControllerDelegateProtocol {
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> { get }
-    func createNode(fetchedObject: NSFetchRequestResult?, byPredicate: NSPredicate?) -> WOTNodeProtocol
 }

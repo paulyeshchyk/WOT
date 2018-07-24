@@ -17,7 +17,7 @@ protocol WOTPivotDataModelProtocol: NSObjectProtocol {
     var dimension: WOTPivotDimensionProtocol { get }
     var contentSize: CGSize { get }
     var shouldDisplayEmptyColumns: Bool { get set }
-    init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener)
+    init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol)
     func itemRect(atIndexPath: NSIndexPath) -> CGRect
     func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol?
     func itemsCount(section: Int) -> Int

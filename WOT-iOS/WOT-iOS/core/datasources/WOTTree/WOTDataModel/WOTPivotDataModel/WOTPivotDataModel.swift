@@ -25,6 +25,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
     private var listener: WOTDataModelListener
     private var fetchController: WOTDataFetchControllerProtocol
+    private var nodeCreator: WOTNodeCreatorProtocol
 
     deinit {
         self.clearMetadataItems()
@@ -33,22 +34,22 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
     //WOTPivotNodeHolderProtocol
     lazy var rootFilterNode: WOTNodeProtocol = {
-        let result = self.createNode(name: "root filters")
+        let result = self.nodeCreator.createNode(name: "root filters")
         self.add(rootNode: result)
         return result
     }()
     lazy var rootColsNode: WOTNodeProtocol = {
-        let result = self.createNode(name: "root cols")
+        let result = self.nodeCreator.createNode(name: "root cols")
         self.add(rootNode: result)
         return result
     }()
     lazy var rootRowsNode: WOTNodeProtocol = {
-        let result = self.createNode(name: "root rows")
+        let result = self.nodeCreator.createNode(name: "root rows")
         self.add(rootNode: result)
         return result
     }()
     lazy var rootDataNode: WOTNodeProtocol = {
-        let result = self.createNode(name: "root data")
+        let result = self.nodeCreator.createNode(name: "root data")
         self.add(rootNode: result)
         return result
     }()
@@ -66,10 +67,11 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
     }
 
     @objc
-    required init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener) {
+    required init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol) {
         shouldDisplayEmptyColumns = false
-        fetchController = fetch
-        listener = list
+        fetchController = fc
+        listener = modelListener
+        nodeCreator = nc
 
         super.init()
 
@@ -159,7 +161,7 @@ extension WOTPivotDataModel: WOTTreeProtocol {
     func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol {
         let roots = self.rootNodes.filter { _ in forPredicate.evaluate(with: nil) }
         if roots.count == 0 {
-            let root = self.createNode(name: "root")
+            let root = self.nodeCreator.createNode(name: "root")
             self.add(rootNode: root)
             return root
         } else {

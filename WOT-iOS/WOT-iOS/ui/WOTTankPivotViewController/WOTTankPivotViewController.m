@@ -16,39 +16,48 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTNode+PivotFactory.h"
 
+@interface WOTTankPivotViewController(NodeCreator) <WOTNodeCreatorProtocol>
+@end
+
+@implementation WOTTankPivotViewController(NodeCreator)
+
+- (id<WOTNodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
+    id<WOTNodeProtocol> result = [[WOTNodeSwift alloc] initWithName: name];
+    result.isVisible = false;
+    return result;
+}
+
+- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
+    return [WOTNodeFactory pivotDataNodeForPredicate:byPredicate andTanksObject:fetchedObject];
+}
+
+@end
+
 @interface WOTTankPivotViewController(WOTDataFetchControllerDelegateProtocol) <WOTDataFetchControllerDelegateProtocol>
 @end
 
 @implementation WOTTankPivotViewController(WOTDataFetchControllerDelegateProtocol)
 @dynamic fetchRequest;
 
-- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
-    return [WOTNodeFactory pivotDataNodeForPredicate:byPredicate andTanksObject:fetchedObject];
-}
-
 - (NSFetchRequest *)fetchRequest {
 
-    return [WOTTankPivotViewController fetchRequest];
-}
-
-+ (NSFetchRequest*) fetchRequest  {
     NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:@"Tanks"];
-    result.sortDescriptors = [WOTTankPivotViewController sortDescriptors];
-    result.predicate = [WOTTankPivotViewController fetchCustomPredicate];
+    result.sortDescriptors = [self sortDescriptors];
+    result.predicate = [self fetchCustomPredicate];
     return result;
 }
 
-+ (NSArray *) sortDescriptors {
+- (NSArray *) sortDescriptors {
     NSMutableArray *result = [[[WOTTankListSettingsDatasource sharedInstance] sortBy] mutableCopy];
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"tank_id" ascending:YES];
     [result addObject:descriptor];
     return result;
 }
 
-+ (NSPredicate *) fetchCustomPredicate {
+- (NSPredicate *) fetchCustomPredicate {
 
-    NSPredicate *level10 = [NSPredicate predicateWithFormat:@"level == %d", 10];
-    NSPredicate *level8 = [NSPredicate predicateWithFormat:@"level == %d", 8];
+    NSPredicate *level10 = [NSPredicate predicateWithFormat:@"level == %d", 6];
+    NSPredicate *level8 = [NSPredicate predicateWithFormat:@"level == %d", 6];
     return [NSCompoundPredicate orPredicateWithSubpredicates:@[level10, level8]];
 }
 
@@ -97,8 +106,8 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotEmptyCollectionViewCell class])];
     
-    self.fetchController = [[WOTDataTanksFetchController alloc] initWithDelegate: self];
-    self.model = [[WOTPivotDataModel alloc] initWithFetchController: self.fetchController listener: self];
+    self.fetchController = [[WOTDataTanksFetchController alloc] initWithNodeFetchRequestCreator:self nodeCreator:self];
+    self.model = [[WOTPivotDataModel alloc] initWithFetchController:self.fetchController modelListener:self nodeCreator:self];
     [self.model loadModel];
 }
 
@@ -229,6 +238,5 @@
 
     return @[root];
 }
-
 
 @end

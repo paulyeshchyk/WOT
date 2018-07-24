@@ -13,6 +13,7 @@ public typealias WOTNodeComparator = (_ left: WOTNodeProtocol, _ right: WOTNodeP
 @objc
 public protocol WOTNodeCreatorProtocol {
     func createNode(name: String) -> WOTNodeProtocol
+    func createNode(fetchedObject: NSFetchRequestResult?, byPredicate: NSPredicate?) -> WOTNodeProtocol
 }
 
 @objc

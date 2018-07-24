@@ -29,7 +29,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
     private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber) -> [Int: WOTTreeModuleNode] {
         var plainList = [Int: WOTTreeModuleNode]()
         modulesSet.forEach { (submodule) in
-            guard let childNode = self.nodeCreator?.createNode(fetchedObject: submodule, byPredicate: nil) as? WOTTreeModuleNode else {
+            guard let childNode = self.nodeCreator.createNode(fetchedObject: submodule, byPredicate: nil) as? WOTTreeModuleNode else {
                 return
             }
             plainList[submodule.module_id.intValue] = childNode
@@ -43,7 +43,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
     private func transform(module: ModulesTree, withId tankId: NSDecimalNumber) -> [Int: WOTTreeModuleNode] {
         var plainList = [Int: WOTTreeModuleNode]()
 
-        guard let plainchildNode = self.nodeCreator?.createNode(fetchedObject: module, byPredicate: nil) as? WOTTreeModuleNode else {
+        guard let plainchildNode = self.nodeCreator.createNode(fetchedObject: module, byPredicate: nil) as? WOTTreeModuleNode else {
             return plainList
         }
         plainList[module.module_id.intValue] = plainchildNode
@@ -69,9 +69,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         guard let tankId = tanks.tank_id else {
             return []
         }
-        guard let root = self.nodeCreator?.createNode(fetchedObject: tanks, byPredicate: nil) else {
-            return []
-        }
+        let root = self.nodeCreator.createNode(fetchedObject: tanks, byPredicate: nil)
 
         guard let modules = tanks.modulesTree as? Set<ModulesTree> else {
             return [root]

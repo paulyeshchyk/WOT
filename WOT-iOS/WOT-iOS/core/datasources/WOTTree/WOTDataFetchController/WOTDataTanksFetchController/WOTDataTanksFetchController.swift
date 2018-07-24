@@ -16,20 +16,20 @@ class WOTDataTanksFetchController: NSObject {
         guard let context = WOTCoreDataProvider.sharedInstance().mainManagedObjectContext else {
             return nil
         }
-        guard let request = self.nodeCreator?.fetchRequest else {
-            return nil
-        }
+        let request = self.nodeFetchRequestCreator.fetchRequest
         let result = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         result.delegate = self
         return result
     }()
 
     var listener: WOTDataFetchControllerListenerProtocol?
-    weak var nodeCreator: WOTDataFetchControllerDelegateProtocol?
+    var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
+    var nodeCreator: WOTNodeCreatorProtocol
 
     @objc
-    init(delegate nodeCreatorDelegate: WOTDataFetchControllerDelegateProtocol) {
-        nodeCreator = nodeCreatorDelegate
+    init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, nodeCreator nc: WOTNodeCreatorProtocol) {
+        nodeFetchRequestCreator = nfrc
+        nodeCreator = nc
     }
 
     deinit {
@@ -40,7 +40,6 @@ class WOTDataTanksFetchController: NSObject {
 extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
 
     func performFetch() throws {
-
         try self.fetchResultController?.performFetch()
         DispatchQueue.main.async {
             self.listener?.fetchPerformed(by: self)
@@ -65,9 +64,8 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
 
         filtered?.forEach { (fetchedObject) in
             if let fetchObj = fetchedObject as? NSFetchRequestResult {
-                if let node = self.nodeCreator?.createNode(fetchedObject: fetchObj, byPredicate: predicate) {
-                    result.append(node)
-                }
+                let node = self.nodeCreator.createNode(fetchedObject: fetchObj, byPredicate: predicate)
+                result.append(node)
             }
         }
         return result

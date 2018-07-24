@@ -14,11 +14,10 @@
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTEnums.h"
 
-@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<WOTDataFetchControllerDelegateProtocol>
+@interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
 @end
 
-@implementation WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)
-@dynamic fetchRequest;
+@implementation WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
     if ([fetchedObject isKindOfClass: [Tanks class]]) {
@@ -26,9 +25,25 @@
     } else if ([fetchedObject isKindOfClass: [ModulesTree class]]) {
         return [[WOTTreeModuleNode alloc] initWithModuleTree: fetchedObject];
     } else  {
-        return [[WOTNodeSwift alloc] initWithName:@""];
+        return [self createNodeWithName:@""];
     }
 }
+
+- (id<WOTNodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
+   id<WOTNodeProtocol> result = [[WOTNodeSwift alloc] initWithName: name];
+    result.isVisible = true;
+    return result;
+}
+
+@end
+
+
+
+@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<WOTDataFetchControllerDelegateProtocol>
+@end
+
+@implementation WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)
+@dynamic fetchRequest;
 
 - (NSFetchRequest *)fetchRequest {
 
@@ -74,7 +89,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
 
-        self.fetchController = [[WOTTankTreeFetchController alloc] initWithDelegate: self];
+        self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self nodeCreator:self];
         self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController listener: self];
     }
     return self;
@@ -127,9 +142,6 @@
 
     _tankId = [value copy];
     [self.model loadModel];
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.model setTankId: value];
-//    });
 }
 
 #pragma mark - UICollectionViewDataSource

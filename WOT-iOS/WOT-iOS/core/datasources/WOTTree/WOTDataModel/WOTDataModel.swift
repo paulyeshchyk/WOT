@@ -71,11 +71,3 @@ class WOTDataModel: NSObject, WOTDataModelProtocol {
     }
 
 }
-
-extension WOTDataModel: WOTNodeCreatorProtocol {
-    public func createNode(name: String) -> WOTNodeProtocol {
-        let result = WOTNodeSwift(name: name)
-        result.isVisible = false
-        return result
-    }
-}
