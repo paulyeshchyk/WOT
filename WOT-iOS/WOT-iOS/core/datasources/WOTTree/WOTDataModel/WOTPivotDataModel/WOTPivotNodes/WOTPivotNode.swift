@@ -11,14 +11,6 @@ import CoreData
 
 class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
 
-    static let WOTNodePredicateComparator: WOTNodeComparatorType = { (node1, node2, level) in
-        if let predicate1 = (node1 as? WOTPivotNodeProtocol)?.predicate, let predicate2 = (node2 as? WOTPivotNodeProtocol)?.predicate {
-            return predicate1.predicateFormat.compare(predicate2.predicateFormat)
-        } else {
-            return ComparisonResult.orderedAscending
-        }
-    }
-
     var dataColor: UIColor?
     var data1: NSManagedObject?
     var stickyType: PivotStickyType { return .float }

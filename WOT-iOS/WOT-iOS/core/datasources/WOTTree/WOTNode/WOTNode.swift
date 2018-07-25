@@ -27,15 +27,12 @@ public class WOTNode: NSObject, WOTNodeProtocol {
         return self.fullName.hashValue
     }
 
-    public var hashString: String {
-        return String(format: "%d", self.hashValue)
-    }
-
     public var name: String = ""
+    fileprivate var hiddenParent: WOTNodeProtocol?
 
     public var children: [WOTNodeProtocol] = [WOTNodeProtocol]()
 
-    public var parent: WOTNodeProtocol?
+    public private(set) var parent: WOTNodeProtocol?
 
     public var childList: Set<AnyHashable> = Set<AnyHashable>()
 
@@ -63,13 +60,13 @@ public class WOTNode: NSObject, WOTNodeProtocol {
     }
 
     public func addChild(_ child: WOTNodeProtocol) {
-        child.parent = self
+        child.addToParent(self)
         self.children.append(child)
     }
 
     public func addChildArray(_ childArray: [WOTNodeProtocol]) {
         childArray.forEach { (child) in
-            child.parent = self
+            child.addToParent(self)
             self.children.append(child)
         }
     }
@@ -78,7 +75,7 @@ public class WOTNode: NSObject, WOTNodeProtocol {
         guard let index = (self.children.index { $0 === child }) else {
             return
         }
-        child.parent = nil
+        child.removeParent()
         child.removeChildren { (_) in
 
             self.children.remove(at: index)
@@ -89,10 +86,41 @@ public class WOTNode: NSObject, WOTNodeProtocol {
     public func removeChildren(completion: @escaping (WOTNodeProtocol) -> Void) {
         self.children.forEach { (child) in
             child.removeChildren(completion: { (node) in
-                node.parent = nil
+                node.removeParent()
             })
         }
         self.children.removeAll()
         completion(self)
+    }
+
+    public func addToParent(_ newParent: WOTNodeProtocol) {
+        self.unlinkFromParent()
+        self.parent = newParent
+    }
+
+    public func removeParent() {
+        guard let parent = self.parent else {
+            return
+        }
+        self.parent = nil
+        parent.removeChild(self) { (_ ) in
+
+        }
+    }
+
+    public func unlinkChild(_ child: WOTNodeProtocol) {
+        guard let index = (self.children.index { $0 === child }) else {
+            return
+        }
+        child.removeParent()
+        self.children.remove(at: index)
+    }
+
+    public func unlinkFromParent() {
+        guard let parent = self.parent else {
+            return
+        }
+        self.parent = nil
+        parent.unlinkChild(self)
     }
 }

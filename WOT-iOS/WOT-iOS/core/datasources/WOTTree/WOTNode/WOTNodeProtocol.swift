@@ -12,13 +12,11 @@ internal typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: W
 
 @objc public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
 
-    var hashString: String { get }
-
     var name: String { get set }
 
     var children: [WOTNodeProtocol] { get }
 
-    var parent: WOTNodeProtocol? { get set }
+    var parent: WOTNodeProtocol? { get }
 
     var childList: Set<AnyHashable> { get }
 
@@ -35,5 +33,13 @@ internal typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: W
     func removeChild(_ child: WOTNodeProtocol, completion: @escaping (WOTNodeProtocol) -> Void)
 
     func removeChildren(completion: @escaping (WOTNodeProtocol) -> Void)
+
+    func addToParent(_ newParent: WOTNodeProtocol)
+
+    func removeParent()
+
+    func unlinkFromParent()
+
+    func unlinkChild(_ child: WOTNodeProtocol)
 
 }

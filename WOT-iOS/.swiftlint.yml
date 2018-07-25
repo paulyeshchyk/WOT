@@ -11,8 +11,8 @@ disabled_rules:
 #- weak_delegate
 
 type_body_length:
-- 100 # warning
-- 150 # error
+- 250 # warning
+- 300 # error
 
 function_body_length:
 - 20 # warning
