@@ -77,10 +77,10 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
         self.fetchController.setListener(self)
 
-        self.dimension.registerCalculatorClass(WOTDimensionColumnCalculator.self, forNodeClass: WOTPivotColNodeSwift.self)
-        self.dimension.registerCalculatorClass(WOTDimensionRowCalculator.self, forNodeClass: WOTPivotRowNodeSwift.self)
-        self.dimension.registerCalculatorClass(WOTDimensionFilterCalculator.self, forNodeClass: WOTPivotFilterNodeSwift.self)
-        self.dimension.registerCalculatorClass(WOTDimensionDataCalculator.self, forNodeClass: WOTPivotDataNodeSwift.self)
+        self.dimension.registerCalculatorClass(WOTDimensionColumnCalculator.self, forNodeClass: WOTPivotColNode.self)
+        self.dimension.registerCalculatorClass(WOTDimensionRowCalculator.self, forNodeClass: WOTPivotRowNode.self)
+        self.dimension.registerCalculatorClass(WOTDimensionFilterCalculator.self, forNodeClass: WOTPivotFilterNode.self)
+        self.dimension.registerCalculatorClass(WOTDimensionDataCalculator.self, forNodeClass: WOTPivotDataNode.self)
     }
 
     override func loadModel() {
@@ -128,13 +128,13 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
     }
 
     func add(metadataItems: [WOTNodeProtocol]) {
-        let rows = metadataItems.compactMap { $0 as? WOTPivotRowNodeSwift }
+        let rows = metadataItems.compactMap { $0 as? WOTPivotRowNode }
         self.rootRowsNode.addChildArray(rows)
 
-        let cols = metadataItems.compactMap { $0 as? WOTPivotColNodeSwift }
+        let cols = metadataItems.compactMap { $0 as? WOTPivotColNode }
         self.rootColsNode.addChildArray(cols)
 
-        let filters = metadataItems.compactMap { $0 as? WOTPivotFilterNodeSwift }
+        let filters = metadataItems.compactMap { $0 as? WOTPivotFilterNode }
         self.rootFilterNode.addChildArray(filters)
     }
 

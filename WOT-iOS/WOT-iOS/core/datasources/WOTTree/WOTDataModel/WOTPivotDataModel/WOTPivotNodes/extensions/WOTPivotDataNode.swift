@@ -8,6 +8,6 @@
 
 import Foundation
 
-class WOTPivotDataNodeSwift: WOTPivotNodeSwift {
+class WOTPivotDataNode: WOTPivotNode {
 
 }

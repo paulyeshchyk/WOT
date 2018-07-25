@@ -30,7 +30,7 @@ class WOTDataModelTest: XCTestCase {
     func testAddNode() {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
-        let node: WOTNodeSwift = WOTNodeSwift(name: "")
+        let node = WOTNode(name: "")
         model.add(rootNode: node)
         model.add(rootNode: node)
         model.add(rootNode: node)
@@ -41,7 +41,7 @@ class WOTDataModelTest: XCTestCase {
     func testRemoveNode() {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
-        let node: WOTNodeSwift = WOTNodeSwift(name: "")
+        let node = WOTNode(name: "")
         model.add(rootNode: node)
         XCTAssert(model.rootNodes.count == 1)
         model.remove(rootNode: node)
@@ -51,7 +51,7 @@ class WOTDataModelTest: XCTestCase {
     func testRemoveAll() {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
-        let node: WOTNodeSwift = WOTNodeSwift(name: "")
+        let node = WOTNode(name: "")
         model.add(rootNode: node)
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
@@ -60,17 +60,17 @@ class WOTDataModelTest: XCTestCase {
     func testAllObjects() {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
-        model.add(rootNode: WOTNodeSwift(name: ""))
-        model.add(rootNode: WOTNodeSwift(name: ""))
+        model.add(rootNode: WOTNode(name: ""))
+        model.add(rootNode: WOTNode(name: ""))
         XCTAssert(model.nodesCount(section: 0) == 2)
     }
 
     func testEndpoints() {
         model.clearRootNodes()
         XCTAssert(model.rootNodes.count == 0)
-        let parentnode: WOTNodeSwift = WOTNodeSwift(name: "")
-        parentnode.addChild(WOTNodeSwift(name: ""))
-        parentnode.addChild(WOTNodeSwift(name: ""))
+        let parentnode = WOTNode(name: "")
+        parentnode.addChild(WOTNode(name: ""))
+        parentnode.addChild(WOTNode(name: ""))
         model.add(rootNode: parentnode)
         XCTAssert(model.endpointsCount == 2)
     }

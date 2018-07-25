@@ -11,18 +11,18 @@ disabled_rules:
 #- weak_delegate
 
 type_body_length:
-- 350 # warning
-- 1000 # error
+- 100 # warning
+- 150 # error
 
 function_body_length:
-- 50 # warning
+- 20 # warning
 
 cyclomatic_complexity:
 - 4 # warning
 
 file_length:
 - 190 # warning
-- 1200 # error
+- 200 # error
 
 excluded:
 - Pods

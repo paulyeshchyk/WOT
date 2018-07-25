@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class WOTTreeModuleNode: WOTNodeSwift, WOTTreeModuleNodeProtocol {
+class WOTTreeModuleNode: WOTNode, WOTTreeModuleNodeProtocol {
 
     private(set)var modulesTree: ModulesTree
     var imageURL: URL? {

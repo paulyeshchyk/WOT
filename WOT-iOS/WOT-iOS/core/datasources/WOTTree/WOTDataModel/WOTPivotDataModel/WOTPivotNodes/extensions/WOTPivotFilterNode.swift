@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WOTPivotFilterNodeSwift: WOTPivotNodeSwift {
+class WOTPivotFilterNode: WOTPivotNode {
 
     override var stickyType: PivotStickyType {
         let horizontal = UInt8(PivotStickyType.horizontal.rawValue)

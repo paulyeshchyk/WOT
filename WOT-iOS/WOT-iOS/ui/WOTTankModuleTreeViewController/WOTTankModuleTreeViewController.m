@@ -21,7 +21,7 @@
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
     if ([fetchedObject isKindOfClass: [Tanks class]]) {
-        return [[WOTNodeSwift alloc] initWithName:((Tanks *)fetchedObject).name_i18n];
+        return [[WOTNode alloc] initWithName:((Tanks *)fetchedObject).name_i18n];
     } else if ([fetchedObject isKindOfClass: [ModulesTree class]]) {
         return [[WOTTreeModuleNode alloc] initWithModuleTree: fetchedObject];
     } else  {
@@ -30,7 +30,7 @@
 }
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
-   id<WOTNodeProtocol> result = [[WOTNodeSwift alloc] initWithName: name];
+   id<WOTNodeProtocol> result = [[WOTNode alloc] initWithName: name];
     result.isVisible = true;
     return result;
 }

@@ -22,7 +22,7 @@
 @implementation WOTTankPivotViewController(NodeCreator)
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
-    id<WOTNodeProtocol> result = [[WOTNodeSwift alloc] initWithName: name];
+    id<WOTNodeProtocol> result = [[WOTNode alloc] initWithName: name];
     result.isVisible = false;
     return result;
 }
@@ -116,8 +116,8 @@
 
     UICollectionViewCell *result = nil;
     
-    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.model itemAtIndexPath:indexPath];
-    if ([node isKindOfClass:[WOTPivotRowNodeSwift class]]) {
+    id<WOTPivotNodeProtocol> node = [self.model itemAtIndexPath:indexPath];
+    if ([node isKindOfClass:[WOTPivotRowNode class]]) {
         
         result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
         
@@ -125,7 +125,7 @@
         row.textValue = node.name;
     }
     
-    if ([node isKindOfClass:[WOTPivotColNodeSwift class]]) {
+    if ([node isKindOfClass:[WOTPivotColNode class]]) {
         
         result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFixedCollectionViewCell class]) forIndexPath:indexPath];
         
@@ -133,12 +133,12 @@
         fixed.textValue = node.name;
     }
     
-    if ([node isKindOfClass:[WOTPivotFilterNodeSwift class]]) {
+    if ([node isKindOfClass:[WOTPivotFilterNode class]]) {
         
         result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotFilterCollectionViewCell class]) forIndexPath:indexPath];
     }
     
-    if ([node isKindOfClass:[WOTPivotDataNodeSwift class]]) {
+    if ([node isKindOfClass:[WOTPivotDataNode class]]) {
         
         result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankPivotDataCollectionViewCell class]) forIndexPath:indexPath];
         WOTTankPivotDataCollectionViewCell *dataCell = (WOTTankPivotDataCollectionViewCell *)result;
@@ -160,8 +160,8 @@
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    WOTPivotNodeSwift *node = (WOTPivotNodeSwift *)[self.model itemAtIndexPath:indexPath];
-    if ([node isKindOfClass:[WOTPivotDataNodeSwift class]]) {
+    id<WOTPivotNodeProtocol> node = [self.model itemAtIndexPath:indexPath];
+    if ([node isKindOfClass:[WOTPivotDataNode class]]) {
         Tanks* tank = (Tanks *)node.data1;
         WOTTankModuleTreeViewController *configurationSelector = [[WOTTankModuleTreeViewController alloc] initWithNibName:NSStringFromClass([WOTTankModuleTreeViewController class]) bundle:nil];
         configurationSelector.tankId = tank.tank_id;
@@ -188,12 +188,12 @@
 }
 
 - (NSArray *)metadataItems {
-    WOTPivotNodeSwift *level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
-    WOTPivotNodeSwift *level1Col = nil;//[WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    id<WOTPivotNodeProtocol> level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
+    id<WOTPivotNodeProtocol> level1Col = nil;//[WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
 
-    WOTPivotNodeSwift *level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];
-    WOTPivotNodeSwift *level1Row = nil;
+    id<WOTPivotNodeProtocol> level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];
+    id<WOTPivotNodeProtocol> level1Row = nil;
     NSArray *rows = [self complexMetadataAsType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
 
     NSArray *filters = [self pivotFilters];
@@ -205,30 +205,29 @@
 }
 
 - (NSArray *)pivotFilters {
-    WOTPivotFilterNodeSwift *node = [[WOTPivotFilterNodeSwift alloc] initWithName:@"Filter"];
+    id<WOTPivotNodeProtocol> node = [[WOTPivotFilterNode alloc] initWithName:@"Filter"];
     return @[node];
 }
 
-
-- (NSArray *)complexMetadataAsType:(PivotMetadataType)type forLevel0Node:(WOTPivotNodeSwift * _Nullable )level0Node level1Node:(WOTPivotNodeSwift  * _Nullable )level1Node {
+- (NSArray *)complexMetadataAsType:(PivotMetadataType)type forLevel0Node:(id<WOTPivotNodeProtocol>  _Nullable )level0Node level1Node:(id<WOTPivotNodeProtocol>  _Nullable )level1Node {
 
     Class PivotNodeClass = [WOTNodeFactory pivotNodeClassForType:type];
 
-    WOTPivotNodeSwift *root = [[PivotNodeClass alloc] initWithName:@"-"];
+    id<WOTPivotNodeProtocol> root = [[PivotNodeClass alloc] initWithName:@"-"];
     //TODO: isVisible == NO makes pivot invalid
     root.isVisible = YES;
     NSArray *level1Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level1Node];
     NSArray *level0Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level0Node];
-    [level0Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level0Child, NSUInteger idx, BOOL *stop) {
+    [level0Endpoints enumerateObjectsUsingBlock:^(id<WOTPivotNodeProtocol> level0Child, NSUInteger idx, BOOL *stop) {
 
         if (level0Child != nil) {
 
-            WOTPivotNodeSwift *level0ChildCopy = [level0Child copy];
-            [level1Endpoints enumerateObjectsUsingBlock:^(WOTPivotNodeSwift *level1Child, NSUInteger idx, BOOL *stop) {
+            id<WOTPivotNodeProtocol> level0ChildCopy = [level0Child copyWithZone:nil];
+            [level1Endpoints enumerateObjectsUsingBlock:^(id<WOTPivotNodeProtocol> level1Child, NSUInteger idx, BOOL *stop) {
 
                 if (level1Child != nil) {
                     NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
-                    WOTPivotNodeSwift *level1ChildCopy = [level1Child copyWithZone:nil];
+                    id<WOTPivotNodeProtocol> level1ChildCopy = [level1Child copyWithZone:nil];
                     level1ChildCopy.predicate = predicate;
                     [level0ChildCopy addChild:level1ChildCopy];
                 }

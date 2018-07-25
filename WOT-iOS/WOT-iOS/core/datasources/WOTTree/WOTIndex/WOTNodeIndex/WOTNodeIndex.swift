@@ -60,7 +60,7 @@ class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
     func doAutoincrementIndex(forNodes: [WOTNodeProtocol]) -> Int {
         var result: Int = 0
         forNodes.forEach { (node) in
-            WOTNodeEnumerator.sharedInstance.enumerateAll(node: node, comparator: WOTPivotNodeSwift.WOTNodeEmptyComparator) { (node) in
+            WOTNodeEnumerator.sharedInstance.enumerateAll(node: node, comparator: WOTPivotNode.WOTNodeEmptyComparator) { (node) in
                 node.index = result
                 result += 1
             }

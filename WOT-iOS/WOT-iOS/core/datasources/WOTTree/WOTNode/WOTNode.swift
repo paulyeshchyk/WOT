@@ -9,7 +9,7 @@
 import Foundation
 import ObjectiveC
 
-public class WOTNodeSwift: NSObject, WOTNodeProtocol {
+public class WOTNode: NSObject, WOTNodeProtocol {
 
     static let WOTNodeEmptyComparator: WOTNodeComparatorType = { (node1, node2, level) in
         return .orderedSame

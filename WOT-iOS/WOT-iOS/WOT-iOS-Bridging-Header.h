@@ -12,6 +12,5 @@
 #import "WOTApplicationStartupRequests.h"
 #import "WOTRequestExecutor.h"
 #import "NSManagedObject+CoreDataOperations.h"
-#import "ModulesTree+PlainList.h"
 #import "ModulesTree+UI.h"
 #import "WOTTankModuleTreeViewController.h"

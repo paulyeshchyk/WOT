@@ -7,7 +7,8 @@
 //
 
 import Foundation
-class WOTPivotRowNodeSwift: WOTPivotNodeSwift {
+
+class WOTPivotRowNode: WOTPivotNode {
 
     override var stickyType: PivotStickyType {
 

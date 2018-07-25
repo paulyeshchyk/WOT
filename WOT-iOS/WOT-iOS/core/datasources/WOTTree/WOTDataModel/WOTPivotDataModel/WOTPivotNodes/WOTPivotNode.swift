@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class WOTPivotNodeSwift: WOTNodeSwift, WOTPivotNodeProtocol {
+class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
 
     static let WOTNodePredicateComparator: WOTNodeComparatorType = { (node1, node2, level) in
         if let predicate1 = (node1 as? WOTPivotNodeProtocol)?.predicate, let predicate2 = (node2 as? WOTPivotNodeProtocol)?.predicate {
