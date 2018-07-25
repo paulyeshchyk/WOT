@@ -10,8 +10,4 @@
 
 @implementation WOTTankPivotFilterCollectionViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
 @end

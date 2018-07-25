@@ -22,10 +22,6 @@
 
 @implementation WOTTankPivotDataCollectionViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
 - (void)setDataViewColor:(UIColor *)dataViewColor {
 
     self.dataView.backgroundColor = dataViewColor;

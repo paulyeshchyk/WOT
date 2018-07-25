@@ -40,7 +40,6 @@
 @dynamic fetchRequest;
 
 - (NSFetchRequest *)fetchRequest {
-
     NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:@"Tanks"];
     result.sortDescriptors = [self sortDescriptors];
     result.predicate = [self fetchCustomPredicate];
@@ -55,7 +54,6 @@
 }
 
 - (NSPredicate *) fetchCustomPredicate {
-
     NSPredicate *level6 = [NSPredicate predicateWithFormat:@"level == %d", 6];
     NSPredicate *level7 = [NSPredicate predicateWithFormat:@"level == %d", 7];
     return [NSCompoundPredicate orPredicateWithSubpredicates:@[level6, level7]];

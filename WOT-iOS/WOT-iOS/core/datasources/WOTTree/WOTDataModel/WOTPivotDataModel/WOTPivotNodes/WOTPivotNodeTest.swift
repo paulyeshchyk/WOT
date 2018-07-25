@@ -23,8 +23,21 @@ class WOTPivotNodeTest: XCTestCase {
 
     func testCopy() {
         let node = WOTPivotNode(name: "node")
+        node.predicate = NSPredicate(format: "data1 == %d", 1)
+        node.dataColor = UIColor.white
 
-        let copy = node.copy(with: nil)
+        guard let copy = node.copy(with: nil) as? WOTPivotNodeProtocol else {
+            XCTAssert(false, "wrong copy")
+            return
+        }
+        XCTAssert(copy.name.compare("node") == .orderedSame)
+        XCTAssert(copy.predicate?.predicateFormat.compare("data1 == 1") == .orderedSame)
+        XCTAssert(copy.dataColor == UIColor.white)
+        XCTAssert(copy.stickyType == .float)
+        XCTAssert(copy.relativeRect == nil)
+        XCTAssert(copy.indexInsideStepParentColumn == 0)
+        XCTAssert(copy.stepParentColumn == nil)
+        XCTAssert(copy.stepParentRow == nil)
     }
 
 }

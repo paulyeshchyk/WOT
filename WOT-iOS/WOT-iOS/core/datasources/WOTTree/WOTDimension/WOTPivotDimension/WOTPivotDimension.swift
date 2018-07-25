@@ -55,30 +55,46 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         var index = externalIndex
         let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootColsNode)
         let rowNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootRowsNode)
+        let filterEndPoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootFilterNode)
         rowNodeEndpoints.forEach { (rowNode) in
             colNodeEndpoints.forEach({ (colNode) in
-                let predicates = self.predicates(colNode: colNode, rowNode: rowNode)
-                let fetchedNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
-                self.setMaxWidth(fetchedNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))
-                self.setMaxWidth(fetchedNodes.count, forNode: rowNode, byKey: String(format: "%d", colNode.hash))
-                var idx: Int = 0
-                fetchedNodes.forEach({ (fetchedNode) in
-                    guard let pivotNode = fetchedNode as? WOTPivotNodeProtocol else {
-                        return
-                    }
-                    pivotNode.index = index
-                    index += 1
-                    pivotNode.stepParentColumn = colNode
-                    pivotNode.stepParentRow = rowNode
-                    pivotNode.indexInsideStepParentColumn = idx
-                    self.rootNodeHolder.rootDataNode.addChild(pivotNode)
-                    idx += 1
+                filterEndPoints.forEach({ (filterNode) in
+                    index = updateDimensions(externalIndex: index, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
                 })
             })
         }
     }
 
-    private func predicates(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol) -> [NSPredicate] {
+    private func fetchDataNodes(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) -> [WOTNodeProtocol] {
+        let predicates = self.predicates(colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+        let fetchedNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
+        self.setMaxWidth(fetchedNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))
+        self.setMaxWidth(fetchedNodes.count, forNode: rowNode, byKey: String(format: "%d", colNode.hash))
+        return fetchedNodes
+    }
+
+    private func updateDimensions(externalIndex: Int, colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) -> Int {
+        var result = externalIndex
+
+        let fetchedNodes = fetchDataNodes(colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+
+        var idx: Int = 0
+        fetchedNodes.forEach({ (fetchedNode) in
+            guard let pivotNode = fetchedNode as? WOTPivotNodeProtocol else {
+                return
+            }
+            pivotNode.index = result
+            result += 1
+            pivotNode.stepParentColumn = colNode
+            pivotNode.stepParentRow = rowNode
+            pivotNode.indexInsideStepParentColumn = idx
+            self.rootNodeHolder.rootDataNode.addChild(pivotNode)
+            idx += 1
+        })
+        return result
+    }
+
+    private func predicates(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) -> [NSPredicate] {
         var result = [NSPredicate]()
         if let colPredicate = (colNode as? WOTPivotNodeProtocol)?.predicate {
             result.append(colPredicate)
@@ -86,11 +102,8 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         if let rowPredicate = (rowNode as? WOTPivotNodeProtocol)?.predicate {
             result.append(rowPredicate)
         }
-        let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootFilterNode)
-        endpoints.forEach { (fnode) in
-            if let filterPredicate = (fnode as? WOTPivotNodeProtocol)?.predicate {
-                result.append(filterPredicate)
-            }
+        if let filterPredicate = (filterNode as? WOTPivotNodeProtocol)?.predicate {
+            result.append(filterPredicate)
         }
         return result
     }

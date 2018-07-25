@@ -10,8 +10,4 @@
 
 @implementation WOTTankPivotEmptyCollectionViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
 @end
