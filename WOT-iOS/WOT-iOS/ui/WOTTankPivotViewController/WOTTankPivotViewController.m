@@ -56,9 +56,9 @@
 
 - (NSPredicate *) fetchCustomPredicate {
 
-    NSPredicate *level10 = [NSPredicate predicateWithFormat:@"level == %d", 6];
-    NSPredicate *level8 = [NSPredicate predicateWithFormat:@"level == %d", 6];
-    return [NSCompoundPredicate orPredicateWithSubpredicates:@[level10, level8]];
+    NSPredicate *level6 = [NSPredicate predicateWithFormat:@"level == %d", 6];
+    NSPredicate *level7 = [NSPredicate predicateWithFormat:@"level == %d", 7];
+    return [NSCompoundPredicate orPredicateWithSubpredicates:@[level6, level7]];
 }
 
 @end
