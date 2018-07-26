@@ -212,6 +212,7 @@
 		1D6FF52D210874E0006C1328 /* WOTDimensionDataCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF529210874E0006C1328 /* WOTDimensionDataCalculator.swift */; };
 		1D6FF52E210874E0006C1328 /* WOTDimensionColumnCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF52A210874E0006C1328 /* WOTDimensionColumnCalculator.swift */; };
 		1D6FF530210878DA006C1328 /* WOTTankPivotLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF52F210878DA006C1328 /* WOTTankPivotLayout.swift */; };
+		1D6FF5342109ADB9006C1328 /* WOTPivotLayoutCellAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF5332109ADB9006C1328 /* WOTPivotLayoutCellAttributes.swift */; };
 		1D79C77F20F5D0FF00FFAF02 /* WOTDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */; };
 		1D79C78220F5D32F00FFAF02 /* WOTDataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */; };
 		1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */; };
@@ -380,7 +381,6 @@
 		1DDEE3961B8F353200C90D4B /* WOTTankPivotFilterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEE3841B8F353200C90D4B /* WOTTankPivotFilterCollectionViewCell.xib */; };
 		1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE3861B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m */; };
 		1DDEE3981B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEE3871B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib */; };
-		1DDEE3991B8F353200C90D4B /* WOTTankPivotLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE38A1B8F353200C90D4B /* WOTTankPivotLayout.m */; };
 		1DDEE39B1B8F353200C90D4B /* WOTTankPivotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE38E1B8F353200C90D4B /* WOTTankPivotViewController.m */; };
 		1DDEE39C1B8F353200C90D4B /* WOTTankPivotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEE38F1B8F353200C90D4B /* WOTTankPivotViewController.xib */; };
 		1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */; };
@@ -719,6 +719,7 @@
 		1D6FF529210874E0006C1328 /* WOTDimensionDataCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionDataCalculator.swift; sourceTree = "<group>"; };
 		1D6FF52A210874E0006C1328 /* WOTDimensionColumnCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionColumnCalculator.swift; sourceTree = "<group>"; };
 		1D6FF52F210878DA006C1328 /* WOTTankPivotLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankPivotLayout.swift; sourceTree = "<group>"; };
+		1D6FF5332109ADB9006C1328 /* WOTPivotLayoutCellAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotLayoutCellAttributes.swift; sourceTree = "<group>"; };
 		1D79C77E20F5D0FF00FFAF02 /* WOTDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModel.swift; sourceTree = "<group>"; };
 		1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataModelTest.swift; sourceTree = "<group>"; };
 		1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
@@ -979,8 +980,6 @@
 		1DDEE3851B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotFixedCollectionViewCell.h; sourceTree = "<group>"; };
 		1DDEE3861B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotFixedCollectionViewCell.m; sourceTree = "<group>"; };
 		1DDEE3871B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotFixedCollectionViewCell.xib; sourceTree = "<group>"; };
-		1DDEE3891B8F353200C90D4B /* WOTTankPivotLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotLayout.h; sourceTree = "<group>"; };
-		1DDEE38A1B8F353200C90D4B /* WOTTankPivotLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotLayout.m; sourceTree = "<group>"; };
 		1DDEE38D1B8F353200C90D4B /* WOTTankPivotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotViewController.h; sourceTree = "<group>"; };
 		1DDEE38E1B8F353200C90D4B /* WOTTankPivotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotViewController.m; sourceTree = "<group>"; };
 		1DDEE38F1B8F353200C90D4B /* WOTTankPivotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotViewController.xib; sourceTree = "<group>"; };
@@ -2784,9 +2783,8 @@
 		1DDEE3881B8F353200C90D4B /* layout */ = {
 			isa = PBXGroup;
 			children = (
-				1DDEE3891B8F353200C90D4B /* WOTTankPivotLayout.h */,
-				1DDEE38A1B8F353200C90D4B /* WOTTankPivotLayout.m */,
 				1D6FF52F210878DA006C1328 /* WOTTankPivotLayout.swift */,
+				1D6FF5332109ADB9006C1328 /* WOTPivotLayoutCellAttributes.swift */,
 			);
 			path = layout;
 			sourceTree = "<group>";
@@ -3156,7 +3154,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint autocorrect --format\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		5D303F42211C100DD79EC818 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3271,6 +3269,7 @@
 				1DD46B951BA6DD6F00D3B3CE /* WOTTankDetailViewController.m in Sources */,
 				1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */,
 				1DAC86FF2105A1EA00EF5216 /* WOTTreeDataModel.swift in Sources */,
+				1D6FF5342109ADB9006C1328 /* WOTPivotLayoutCellAttributes.swift in Sources */,
 				DA720C811B5D0DE9003F3B5A /* ModulesTree+UI.m in Sources */,
 				1D6FF530210878DA006C1328 /* WOTTankPivotLayout.swift in Sources */,
 				1D428C4A2105BFCB0057A85C /* WOTTreeModuleNode.swift in Sources */,
@@ -3338,7 +3337,6 @@
 				1D2143BB1BA00B37001A7DEE /* VehicleprofileAmmoPenetration.m in Sources */,
 				1DC07B5F1B3A9489002FAA72 /* WOTWebRequestTankTurrets.m in Sources */,
 				1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */,
-				1DDEE3991B8F353200C90D4B /* WOTTankPivotLayout.m in Sources */,
 				1DDEE3951B8F353200C90D4B /* WOTTankPivotFilterCollectionViewCell.m in Sources */,
 				1DA00C1A21007F6C004F9FDE /* WOTNodeEnumerator.swift in Sources */,
 				1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */,

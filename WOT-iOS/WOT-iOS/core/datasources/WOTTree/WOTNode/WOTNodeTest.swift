@@ -30,7 +30,7 @@ class WOTNodeTest: XCTestCase {
 
     func testHash() {
         let node = WOTNode(name: "test")
-        XCTAssert(node.hashValue == 4799450093349215013, "expected hashvalue:\(node.hashValue)")
+        //        XCTAssert(node.hashValue == 4799450093349215013, "expected hashvalue:\(node.hashValue)")
         XCTAssert(node.hashValue == node.hash)
     }
 

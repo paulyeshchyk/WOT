@@ -11,7 +11,6 @@
 #import "WOTTankPivotFilterCollectionViewCell.h"
 #import "WOTTankPivotFixedCollectionViewCell.h"
 #import "WOTTankPivotEmptyCollectionViewCell.h"
-#import "WOTTankPivotLayout.h"
 #import "Tanks+DPM.h"
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTNode+PivotFactory.h"

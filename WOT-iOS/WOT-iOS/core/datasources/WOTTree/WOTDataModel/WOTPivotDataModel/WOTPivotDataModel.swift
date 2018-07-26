@@ -93,7 +93,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
     func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol? {
         guard let result = self.nodeIndex.item(indexPath: atIndexPath) as? WOTPivotNodeProtocol else {
-//            assert(false)
+            //            assert(false)
             return nil
         }
         return result

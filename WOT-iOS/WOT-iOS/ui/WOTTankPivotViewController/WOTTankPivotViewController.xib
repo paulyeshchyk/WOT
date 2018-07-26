@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOTTankPivotViewController">
@@ -18,15 +23,15 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="D0E-PC-FYm">
                     <rect key="frame" x="0.0" y="0.0" width="605" height="477"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <collectionViewLayout key="collectionViewLayout" id="wKE-mk-LJd" customClass="WOTTankPivotLayout"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <collectionViewLayout key="collectionViewLayout" id="wKE-mk-LJd" customClass="WOTTankPivotLayout" customModule="WOT" customModuleProvider="target"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="cZe-O7-BFk"/>
                         <outlet property="delegate" destination="-1" id="SAm-c9-OA0"/>
                     </connections>
                 </collectionView>
             </subviews>
-            <color key="backgroundColor" red="0.24313725490196078" green="0.24313725490196078" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.18544720113277435" green="0.18544161319732666" blue="0.18544477224349976" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="D0E-PC-FYm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7jC-YX-a28"/>
                 <constraint firstItem="D0E-PC-FYm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Gl8-cu-0MC"/>
@@ -37,9 +42,4 @@
             <point key="canvasLocation" x="496.5" y="309.5"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>
