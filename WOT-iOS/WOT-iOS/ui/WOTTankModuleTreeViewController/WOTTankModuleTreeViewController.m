@@ -9,7 +9,6 @@
 #import "WOTTankModuleTreeViewController.h"
 #import "ModulesTree+UI.h"
 #import "WOTTankConfigurationCollectionViewCell.h"
-#import "WOTTankConfigurationFlowLayout.h"
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTEnums.h"
@@ -21,6 +20,7 @@
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
     if ([fetchedObject isKindOfClass: [Tanks class]]) {
+        //TODO: add WOTTankNode
         return [[WOTNode alloc] initWithName:((Tanks *)fetchedObject).name_i18n];
     } else if ([fetchedObject isKindOfClass: [ModulesTree class]]) {
         return [[WOTTreeModuleNode alloc] initWithModuleTree: fetchedObject];

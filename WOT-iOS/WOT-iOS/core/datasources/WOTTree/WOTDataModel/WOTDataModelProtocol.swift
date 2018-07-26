@@ -30,6 +30,7 @@ public protocol WOTDataModelProtocol {
     var width: Int { get }
     var endpointsCount: Int { get }
     func add(rootNode: WOTNodeProtocol)
+    func add(nodes: [WOTNodeProtocol])
     func remove(rootNode: WOTNodeProtocol)
     func clearRootNodes()
     func rootNodes(sortComparator: WOTNodeComparator?) -> [WOTNodeProtocol]

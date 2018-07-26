@@ -36,10 +36,7 @@ class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
 
     fileprivate func makeTree(_ fetchController: WOTDataFetchControllerProtocol) {
         let fetchedNodes = fetchController.fetchedNodes(byPredicates: [])
-
-        fetchedNodes.forEach { (node) in
-            self.add(rootNode: node)
-        }
+        self.add(nodes: fetchedNodes)
         self.listener.modelDidLoad()
     }
 }

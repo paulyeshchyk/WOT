@@ -27,6 +27,15 @@ public class WOTNode: NSObject, WOTNodeProtocol {
         return self.fullName.hashValue
     }
 
+    public subscript(index: Int) -> WOTNodeProtocol {
+        get {
+            return self.children[index]
+        }
+        set(newValue) {
+            self.children[index] = newValue
+        }
+    }
+
     public var name: String = ""
     fileprivate var hiddenParent: WOTNodeProtocol?
 
@@ -43,6 +52,10 @@ public class WOTNode: NSObject, WOTNodeProtocol {
             return self.name
         }
         return String(format: "%@.%@", parent.fullName, self.name)
+    }
+
+    public func value(key: AnyHashable) -> Any? {
+        return nil
     }
 
     public var index: Int = 0

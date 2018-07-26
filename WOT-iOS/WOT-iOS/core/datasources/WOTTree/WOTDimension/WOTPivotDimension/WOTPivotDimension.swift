@@ -111,11 +111,11 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     private func getWidth() -> Int {
         let rootCols = self.rootNodeHolder.rootColsNode
         let columnEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: rootCols)
-        let emptyDayaColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0
+        let emptyDataColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0
 
         var maxWidth: Int = 0
         columnEndpoints.forEach { (column) in
-            let value = self.maxWidth(column, orValue: emptyDayaColumnWidth)
+            let value = self.maxWidth(column, orValue: emptyDataColumnWidth)
             maxWidth += value
         }
         return self.rootNodeWidth + maxWidth

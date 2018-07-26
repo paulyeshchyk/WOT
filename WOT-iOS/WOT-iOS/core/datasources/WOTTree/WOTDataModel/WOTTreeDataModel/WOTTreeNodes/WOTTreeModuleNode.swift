@@ -29,4 +29,11 @@ class WOTTreeModuleNode: WOTNode, WOTTreeModuleNodeProtocol {
     public required init(name nameValue: String) {
         fatalError("init(name:) has not been implemented")
     }
+
+    override func value(key: AnyHashable) -> Any? {
+        guard let keyAsString = key as? String else {
+            return nil
+        }
+        return modulesTree.value(forKey: keyAsString)
+    }
 }

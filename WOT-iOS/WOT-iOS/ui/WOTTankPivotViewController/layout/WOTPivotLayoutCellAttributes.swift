@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol PivotLayoutCellAttributesProtocol {
+protocol WOTPivotLayoutCellAttributesProtocol {
     var rect: CGRect { get }
     var zIndex: Int { get }
     init(cellRect: CGRect, cellZIndex: Int, cellIndexPath: IndexPath)
     func collectionViewLayoutAttributes(forRect rect: CGRect) -> UICollectionViewLayoutAttributes?
 }
 
-struct PivotLayoutCellAttributes: PivotLayoutCellAttributesProtocol {
+struct WOTPivotLayoutCellAttributes: WOTPivotLayoutCellAttributesProtocol {
 
     var rect: CGRect
     var zIndex: Int

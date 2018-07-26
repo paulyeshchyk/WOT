@@ -49,16 +49,4 @@ typedef NS_ENUM(NSInteger, PivotStickyType) {
     PivotStickyTypeVertical = 1 << 2
 };
 
-
-
-typedef NSInteger(^LayoutDimensionBlock)(void);
-typedef PivotStickyType (^LayoutStickyType)(NSIndexPath *indexPath);
-typedef NSInteger(^LayoutSiblingChildrenCount)(NSIndexPath *);
-typedef NS_ENUM(NSInteger, LayoutOrientation){
-    LayoutOrientationHorizontal,
-    LayoutOrientationVertical
-};
-
-
-
 #endif

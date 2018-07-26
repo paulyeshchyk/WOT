@@ -14,4 +14,3 @@
 #import "NSManagedObject+CoreDataOperations.h"
 #import "ModulesTree+UI.h"
 #import "WOTTankModuleTreeViewController.h"
-

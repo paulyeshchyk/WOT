@@ -39,6 +39,13 @@ class WOTDataModel: NSObject, WOTDataModelProtocol {
         self.levelIndex.addNodesToIndex(nodes)
     }
 
+    func add(nodes: [WOTNodeProtocol]) {
+        nodes.forEach { (node) in
+            self.rootNodes.append(node)
+        }
+        reindexLevels()
+    }
+
     func add(rootNode: WOTNodeProtocol) {
         self.rootNodes.append(rootNode)
         reindexLevels()
