@@ -16,6 +16,7 @@ protocol WOTLevelIndexProtocol {
     func set(itemsCount: Int, atLevel: Int)
     func reindexChildNode(_ node: WOTNodeProtocol, atLevel: Int)
     func node(atIndexPath indexPath: NSIndexPath) -> WOTNodeProtocol?
+    func indexPath(forNode: WOTNodeProtocol) -> IndexPath?
     func addNodesToIndex(_ nodes: [WOTNodeProtocol])
 }
 
@@ -66,11 +67,27 @@ class WOTLevelIndex: WOTLevelIndexProtocol {
         return itemsAtSection?[indexPath.row]
     }
 
-    func addNodesToIndex(_ nodes: [WOTNodeProtocol]) {
+    //TODO: simplify it
+    func indexPath(forNode: WOTNodeProtocol) -> IndexPath? {
 
+        var indexPath: IndexPath? = nil
+        self.levelIndex.keys.forEach { (key) in
+            if let section = self.levelIndex[key] {
+                section.forEach({ (node) in
+                    if node === forNode {
+                        if let row = section.index(where: { $0 === forNode }) {
+                            indexPath = IndexPath(row: row, section: key)
+                        }
+                    }
+                })
+            }
+        }
+        return indexPath
+    }
+
+    func addNodesToIndex(_ nodes: [WOTNodeProtocol]) {
         let level: Int = 0
         nodes.forEach { (node) in
-
             self.reindexChildNode(node, atLevel: level)
         }
     }

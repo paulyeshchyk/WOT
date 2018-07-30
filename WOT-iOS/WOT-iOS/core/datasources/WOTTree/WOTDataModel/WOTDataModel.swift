@@ -77,4 +77,11 @@ class WOTDataModel: NSObject, WOTDataModelProtocol {
         return self.levelIndex.node(atIndexPath: indexPath)
     }
 
+    func indexPath(forNode: WOTNodeProtocol?) -> IndexPath? {
+        guard let node = forNode else {
+            return nil
+        }
+        return self.levelIndex.indexPath(forNode: node)
+    }
+
 }

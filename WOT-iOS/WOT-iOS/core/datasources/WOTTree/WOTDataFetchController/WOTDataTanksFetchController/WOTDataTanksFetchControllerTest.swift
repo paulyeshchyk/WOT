@@ -22,7 +22,7 @@ class WOTDataTanksFetchControllerTest: XCTestCase {
     //        listener.append(filters: [predicate])
     //
     //        let fetchController = WOTDataTanksFetchController()
-    //        fetchController.setListener(listener)
+    //        fetchController.setFetchListener(listener)
     //        do {
     //            try fetchController.performFetch()
     //        } catch let error {

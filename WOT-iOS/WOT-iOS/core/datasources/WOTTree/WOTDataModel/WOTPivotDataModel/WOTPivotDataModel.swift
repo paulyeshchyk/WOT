@@ -29,7 +29,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
     deinit {
         self.clearMetadataItems()
-        self.fetchController.setListener(nil)
+        self.fetchController.setFetchListener(nil)
     }
 
     //WOTPivotNodeHolderProtocol
@@ -75,7 +75,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
         super.init()
 
-        self.fetchController.setListener(self)
+        self.fetchController.setFetchListener(self)
 
         self.dimension.registerCalculatorClass(WOTDimensionColumnCalculator.self, forNodeClass: WOTPivotColNode.self)
         self.dimension.registerCalculatorClass(WOTDimensionRowCalculator.self, forNodeClass: WOTPivotRowNode.self)

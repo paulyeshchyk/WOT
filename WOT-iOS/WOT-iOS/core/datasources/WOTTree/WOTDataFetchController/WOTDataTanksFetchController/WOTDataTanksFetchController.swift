@@ -46,7 +46,7 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
         }
     }
 
-    func setListener(_ listener: WOTDataFetchControllerListenerProtocol?) {
+    func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?) {
         self.listener = listener
     }
 

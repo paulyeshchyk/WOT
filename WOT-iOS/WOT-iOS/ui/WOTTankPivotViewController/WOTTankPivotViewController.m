@@ -186,7 +186,7 @@
 
 - (NSArray *)metadataItems {
     id<WOTPivotNodeProtocol> level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
-    id<WOTPivotNodeProtocol> level1Col = nil;//[WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
+    id<WOTPivotNodeProtocol> level1Col = [WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
     NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
 
     id<WOTPivotNodeProtocol> level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];

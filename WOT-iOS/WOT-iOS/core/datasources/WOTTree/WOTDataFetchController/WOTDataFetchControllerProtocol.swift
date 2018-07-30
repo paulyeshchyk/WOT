@@ -13,7 +13,7 @@ protocol WOTDataFetchControllerProtocol {
     func performFetch() throws
     func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol]
     func fetchedObjects() -> [AnyObject]?
-    func setListener(_ listener: WOTDataFetchControllerListenerProtocol?)
+    func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?)
 }
 
 @objc

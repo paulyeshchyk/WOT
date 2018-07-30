@@ -255,6 +255,7 @@
 		1DB57B2C20F77415003FF3EC /* tankradios.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B2420F77415003FF3EC /* tankradios.json */; };
 		1DB57B2D20F77415003FF3EC /* vehicles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B2620F77415003FF3EC /* vehicles.json */; };
 		1DB57B3020F77797003FF3EC /* vehicleprofile.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B2E20F77797003FF3EC /* vehicleprofile.json */; };
+		1DB6B348210EF22E007872AF /* WOTTankModuleTreeNodeConnectorLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB6B347210EF22E007872AF /* WOTTankModuleTreeNodeConnectorLayer.swift */; };
 		1DC07AC01B399FE4002FAA72 /* WOTWebResponseAdapterEngines.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07AB61B399FE4002FAA72 /* WOTWebResponseAdapterEngines.m */; };
 		1DC07AC11B399FE4002FAA72 /* WOTWebResponseAdapterLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07AB91B399FE4002FAA72 /* WOTWebResponseAdapterLogin.m */; };
 		1DC07AC21B399FE4002FAA72 /* WOTWebResponseAdapterTanks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07ABC1B399FE4002FAA72 /* WOTWebResponseAdapterTanks.m */; };
@@ -773,6 +774,7 @@
 		1DB57B2520F77415003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankradios.json; sourceTree = "<group>"; };
 		1DB57B2720F77415003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicles.json; sourceTree = "<group>"; };
 		1DB57B2F20F77797003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicleprofile.json; sourceTree = "<group>"; };
+		1DB6B347210EF22E007872AF /* WOTTankModuleTreeNodeConnectorLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankModuleTreeNodeConnectorLayer.swift; sourceTree = "<group>"; };
 		1DC07AB51B399FE4002FAA72 /* WOTWebResponseAdapterEngines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseAdapterEngines.h; sourceTree = "<group>"; };
 		1DC07AB61B399FE4002FAA72 /* WOTWebResponseAdapterEngines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWebResponseAdapterEngines.m; sourceTree = "<group>"; };
 		1DC07AB81B399FE4002FAA72 /* WOTWebResponseAdapterLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseAdapterLogin.h; sourceTree = "<group>"; };
@@ -1683,6 +1685,7 @@
 		1D6FF4D92106FD7A006C1328 /* WOTTankModuleTreeViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1DB6B346210EF1C6007872AF /* layers */,
 				1D6FF4DA2106FD7A006C1328 /* mapping */,
 				1D6FF4DF2106FD7A006C1328 /* cells */,
 				1D6FF4E32106FD7A006C1328 /* WOTTankTreeFetchController */,
@@ -1906,6 +1909,14 @@
 				1DB57B1B20F772FB003FF3EC /* tanks.json */,
 			);
 			path = json;
+			sourceTree = "<group>";
+		};
+		1DB6B346210EF1C6007872AF /* layers */ = {
+			isa = PBXGroup;
+			children = (
+				1DB6B347210EF22E007872AF /* WOTTankModuleTreeNodeConnectorLayer.swift */,
+			);
+			path = layers;
 			sourceTree = "<group>";
 		};
 		1DC07AB41B399FE4002FAA72 /* Engines */ = {
@@ -2933,11 +2944,11 @@
 					1DD646321B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = SM687X2N9M;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1000;
 					};
 					1DD6464E1B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1000;
 						TestTargetID = 1DD646321B1C616A00B0EC76;
 					};
 				};
@@ -3155,7 +3166,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "#if which swiftlint >/dev/null; then\n#    swiftlint\n#else\n#    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n";
 		};
 		5D303F42211C100DD79EC818 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3408,6 +3419,7 @@
 				1DD646DC1B20533E00B0EC76 /* WOTMenuTableViewCell.m in Sources */,
 				1D2143CE1BA00EEA001A7DEE /* VehicleprofileAmmo+FillProperties.m in Sources */,
 				1D4C92621B27085600E320B5 /* WOTTankListSettingTableViewCell.m in Sources */,
+				1DB6B348210EF22E007872AF /* WOTTankModuleTreeNodeConnectorLayer.swift in Sources */,
 				1D691EEF1BA03E2000E1555D /* VehicleprofileRadio+FillProperties.m in Sources */,
 				1DAC86FA2101FE6300EF5216 /* WOTPivotNodeProtocol.swift in Sources */,
 				DA522D311B663C210087D684 /* WOTTankListSearchBar.m in Sources */,
@@ -3691,7 +3703,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Debug;
@@ -3714,7 +3727,8 @@
 				PRODUCT_MODULE_NAME = WOT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Release;
@@ -3739,7 +3753,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOSTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WOT-iOS.app/WOT-iOS";
 			};
 			name = Debug;
@@ -3759,7 +3774,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOSTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WOT-iOS.app/WOT-iOS";
 			};
 			name = Release;

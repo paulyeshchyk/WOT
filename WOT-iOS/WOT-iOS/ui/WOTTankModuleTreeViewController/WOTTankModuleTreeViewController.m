@@ -134,7 +134,7 @@
         return result;
     }];
 
-    
+
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class])];
 }
 
@@ -225,6 +225,10 @@
 //WOTPivotDataModelListener
 - (void)modelDidLoad {
     [self.collectionView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        [self addConnectorsLayer];
+    });
 }
 
 - (void) modelDidFailLoadWithError:(NSError *)error {
@@ -232,6 +236,24 @@
 }
 - (NSArray *)metadataItems {
     return [[NSArray alloc] init];
+}
+
+//-------
+- (void)addConnectorsLayer {
+    UIImage *img = [WOTTankModuleTreeNodeConnectorLayer connectorsForModel:self.model byFrame:self.collectionView.frame flowLayout:self.flowLayout];
+    [self.collectionView addSubview: [[UIImageView alloc] initWithImage:img]];
+}
+
+- (CGPoint)center:(CGRect)rect {
+    return CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+}
+
+- (CGPoint)centerHorizontalBottomVertical:(CGRect)rect {
+    return CGPointMake(CGRectGetMidX(rect), rect.origin.y + rect.size.height);
+}
+
+- (CGPoint)centerHorizontalTopVertical:(CGRect)rect {
+    return CGPointMake(CGRectGetMidX(rect), rect.origin.y);
 }
 
 @end

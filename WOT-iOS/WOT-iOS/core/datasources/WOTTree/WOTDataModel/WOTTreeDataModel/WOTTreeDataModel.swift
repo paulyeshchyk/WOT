@@ -27,7 +27,7 @@ class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         listener = list
         super.init()
 
-        self.fetchController.setListener(self)
+        self.fetchController.setFetchListener(self)
     }
 
     private func failPivot(_ error: Error) {
