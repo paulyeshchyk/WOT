@@ -84,6 +84,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
     }
 
     override func loadModel() {
+        super.loadModel()
         do {
             try self.fetchController.performFetch()
         } catch let error {

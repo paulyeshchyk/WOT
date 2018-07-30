@@ -13,6 +13,7 @@ class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
     var tankId: NSNumber?
 
     override func loadModel() {
+        super.loadModel()
         do {
             try self.fetchController.performFetch()
         } catch let error {

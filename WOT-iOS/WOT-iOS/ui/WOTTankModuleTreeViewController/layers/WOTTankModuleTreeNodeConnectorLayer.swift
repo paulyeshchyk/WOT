@@ -11,9 +11,9 @@ import Foundation
 protocol WOTTankModuleTreeNodeConnectorLayerProtocol: NSObjectProtocol {
 
 }
+
 @objc
 class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnectorLayerProtocol {
-
 
     @objc
     static func connectors(forModel: WOTDataModelProtocol, byFrame: CGRect, flowLayout: WOTTankConfigurationFlowCellLayoutProtocol) -> UIImage? {

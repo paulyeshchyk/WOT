@@ -1690,9 +1690,9 @@
 				1D6FF4DF2106FD7A006C1328 /* cells */,
 				1D6FF4E32106FD7A006C1328 /* WOTTankTreeFetchController */,
 				1D6FF4E52106FD7A006C1328 /* layout */,
+				1D6FF4F52106FD7A006C1328 /* WOTTankModuleTreeViewController.h */,
 				1D6FF4F32106FD7A006C1328 /* WOTTankModuleTreeViewController.m */,
 				1D6FF4F42106FD7A006C1328 /* WOTTankModuleTreeViewController.xib */,
-				1D6FF4F52106FD7A006C1328 /* WOTTankModuleTreeViewController.h */,
 			);
 			path = WOTTankModuleTreeViewController;
 			sourceTree = "<group>";

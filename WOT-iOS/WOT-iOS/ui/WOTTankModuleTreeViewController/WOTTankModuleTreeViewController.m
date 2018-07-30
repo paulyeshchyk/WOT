@@ -244,16 +244,4 @@
     [self.collectionView addSubview: [[UIImageView alloc] initWithImage:img]];
 }
 
-- (CGPoint)center:(CGRect)rect {
-    return CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
-}
-
-- (CGPoint)centerHorizontalBottomVertical:(CGRect)rect {
-    return CGPointMake(CGRectGetMidX(rect), rect.origin.y + rect.size.height);
-}
-
-- (CGPoint)centerHorizontalTopVertical:(CGRect)rect {
-    return CGPointMake(CGRectGetMidX(rect), rect.origin.y);
-}
-
 @end
