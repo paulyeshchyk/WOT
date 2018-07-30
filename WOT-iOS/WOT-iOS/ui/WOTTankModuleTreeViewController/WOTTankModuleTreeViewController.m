@@ -8,7 +8,7 @@
 
 #import "WOTTankModuleTreeViewController.h"
 #import "ModulesTree+UI.h"
-#import "WOTTankConfigurationCollectionViewCell.h"
+#import "WOTTankTreeNodeCollectionViewCell.h"
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTEnums.h"
@@ -135,7 +135,8 @@
     }];
 
 
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class])];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class])];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class])];
 }
 
 - (void)setTankId:(NSNumber *)value {
@@ -157,7 +158,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     id<WOTNodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
-    WOTTankConfigurationCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankConfigurationCollectionViewCell class]) forIndexPath:indexPath];
+    WOTTankTreeNodeCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class]) forIndexPath:indexPath];
     result.indexPath = indexPath;
     result.label.text = node.name;
     if ([node conformsToProtocol:@protocol(WOTTreeModuleNodeProtocol)]) {

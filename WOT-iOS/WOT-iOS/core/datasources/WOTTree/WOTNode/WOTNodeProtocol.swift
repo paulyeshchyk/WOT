@@ -20,8 +20,6 @@ internal typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: W
 
     var parent: WOTNodeProtocol? { get }
 
-    var childList: Set<AnyHashable> { get }
-
     var isVisible: Bool { get set }
 
     var fullName: String { get }

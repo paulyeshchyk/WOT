@@ -43,8 +43,6 @@ public class WOTNode: NSObject, WOTNodeProtocol {
 
     public private(set) var parent: WOTNodeProtocol?
 
-    public var childList: Set<AnyHashable> = Set<AnyHashable>()
-
     public var isVisible: Bool = true
 
     public var fullName: String {

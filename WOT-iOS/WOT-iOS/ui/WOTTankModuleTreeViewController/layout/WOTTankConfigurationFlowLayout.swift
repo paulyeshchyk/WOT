@@ -18,7 +18,7 @@ protocol WOTTankConfigurationFlowLayoutProtocol: NSObjectProtocol {
 @objc
 protocol WOTTankConfigurationFlowCellLayoutProtocol {
     func cellFrame(indexPath: IndexPath) -> CGRect
-    func treeLayoutCellAttrubutes(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes?
+    func layoutAttribute(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes?
     func layoutAttributes(in rect: CGRect) -> [UICollectionViewLayoutAttributes]?
 }
 
@@ -77,15 +77,15 @@ extension WOTTankConfigurationFlowLayout {
         for section in 0 ..< collectionView.numberOfSections {
             for row in 0 ..< collectionView.numberOfItems(inSection: section) {
                 let indexPath = IndexPath(row: row, section: section)
-                if let attrs = treeLayoutCellAttrubutes(indexPath: indexPath, rect: rect) {
-                    result.append(attrs)
+                if let attr = layoutAttribute(indexPath: indexPath, rect: rect) {
+                    result.append(attr)
                 }
             }
         }
         return result
     }
 
-    func treeLayoutCellAttrubutes(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes? {
+    func layoutAttribute(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes? {
         let cellFrame = self.cellFrame(indexPath: indexPath)
         if cellFrame.intersects(rect) {
             let attrs = UICollectionViewLayoutAttributes(forCellWith: indexPath)

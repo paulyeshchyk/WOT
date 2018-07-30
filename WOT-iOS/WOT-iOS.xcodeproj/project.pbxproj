@@ -189,8 +189,7 @@
 		1D6E94E62100CA1200B65FC3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E94E52100CA1200B65FC3 /* .swiftlint.yml */; };
 		1D6FF4F62106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF4DD2106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m */; };
 		1D6FF4F72106FD7A006C1328 /* WOTTankConfigurationModuleMapping+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF4DE2106FD7A006C1328 /* WOTTankConfigurationModuleMapping+Factory.m */; };
-		1D6FF4F82106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FF4E02106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.xib */; };
-		1D6FF4F92106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF4E12106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.m */; };
+		1D6FF4F82106FD7A006C1328 /* WOTTankTreeNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FF4E02106FD7A006C1328 /* WOTTankTreeNodeCollectionViewCell.xib */; };
 		1D6FF4FA2106FD7A006C1328 /* WOTTankTreeFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF4E42106FD7A006C1328 /* WOTTankTreeFetchController.swift */; };
 		1D6FF5022106FD7A006C1328 /* WOTTankModuleTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF4F32106FD7A006C1328 /* WOTTankModuleTreeViewController.m */; };
 		1D6FF5032106FD7A006C1328 /* WOTTankModuleTreeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FF4F42106FD7A006C1328 /* WOTTankModuleTreeViewController.xib */; };
@@ -218,6 +217,9 @@
 		1D79C78220F5D32F00FFAF02 /* WOTDataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78120F5D32F00FFAF02 /* WOTDataModelTest.swift */; };
 		1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */; };
 		1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D90695F1B4161F300237852 /* UIToolbar+WOT.m */; };
+		1D9CAA20210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA1E210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m */; };
+		1D9CAA22210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */; };
+		1D9CAA24210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */; };
 		1DA00C0F21007F4B004F9FDE /* WOTDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C0721007F4A004F9FDE /* WOTDimension.swift */; };
 		1DA00C1021007F4B004F9FDE /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C0821007F4A004F9FDE /* WOTDimensionProtocol.swift */; };
 		1DA00C1921007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C1721007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift */; };
@@ -692,9 +694,7 @@
 		1D6FF4DC2106FD7A006C1328 /* WOTTankConfigurationModuleMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationModuleMapping.h; sourceTree = "<group>"; };
 		1D6FF4DD2106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankConfigurationModuleMapping.m; sourceTree = "<group>"; };
 		1D6FF4DE2106FD7A006C1328 /* WOTTankConfigurationModuleMapping+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankConfigurationModuleMapping+Factory.m"; sourceTree = "<group>"; };
-		1D6FF4E02106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankConfigurationCollectionViewCell.xib; sourceTree = "<group>"; };
-		1D6FF4E12106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankConfigurationCollectionViewCell.m; sourceTree = "<group>"; };
-		1D6FF4E22106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationCollectionViewCell.h; sourceTree = "<group>"; };
+		1D6FF4E02106FD7A006C1328 /* WOTTankTreeNodeCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankTreeNodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		1D6FF4E42106FD7A006C1328 /* WOTTankTreeFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankTreeFetchController.swift; sourceTree = "<group>"; };
 		1D6FF4F32106FD7A006C1328 /* WOTTankModuleTreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankModuleTreeViewController.m; sourceTree = "<group>"; };
 		1D6FF4F42106FD7A006C1328 /* WOTTankModuleTreeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankModuleTreeViewController.xib; sourceTree = "<group>"; };
@@ -728,6 +728,10 @@
 		1D90695A1B412D6B00237852 /* WOTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
 		1D90695E1B4161F300237852 /* UIToolbar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+WOT.h"; sourceTree = "<group>"; };
 		1D90695F1B4161F300237852 /* UIToolbar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+WOT.m"; sourceTree = "<group>"; };
+		1D9CAA1E210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankTreeNodeCollectionViewCell.m; sourceTree = "<group>"; };
+		1D9CAA1F210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankTreeNodeCollectionViewCell.h; sourceTree = "<group>"; };
+		1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankTreeConnectorCollectionViewCell.swift; sourceTree = "<group>"; };
+		1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTTankTreeConnectorCollectionViewCell.xib; sourceTree = "<group>"; };
 		1DA00C0721007F4A004F9FDE /* WOTDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimension.swift; sourceTree = "<group>"; };
 		1DA00C0821007F4A004F9FDE /* WOTDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionProtocol.swift; sourceTree = "<group>"; };
 		1DA00C1721007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumeratorProtocol.swift; sourceTree = "<group>"; };
@@ -1711,9 +1715,11 @@
 		1D6FF4DF2106FD7A006C1328 /* cells */ = {
 			isa = PBXGroup;
 			children = (
-				1D6FF4E02106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.xib */,
-				1D6FF4E12106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.m */,
-				1D6FF4E22106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.h */,
+				1D9CAA1E210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m */,
+				1D9CAA1F210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.h */,
+				1D6FF4E02106FD7A006C1328 /* WOTTankTreeNodeCollectionViewCell.xib */,
+				1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */,
+				1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -3031,6 +3037,7 @@
 				1DCC7F391B2EF604005FF193 /* SPG.png in Resources */,
 				1DD646E41B205BF500B0EC76 /* WOTProfileViewController.xib in Resources */,
 				1DD46B331BA69CC900D3B3CE /* Radar Plot Yellow@3x.png in Resources */,
+				1D9CAA24210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib in Resources */,
 				1D4C92301B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib in Resources */,
 				1DCC7F251B2ED07F005FF193 /* WOTArrowDown.png in Resources */,
 				1D672B271B60C86700617E5C /* Bulletproof Vest Gray@2x.png in Resources */,
@@ -3076,7 +3083,7 @@
 				1DCC7F3A1B2EF604005FF193 /* heavyTank.png in Resources */,
 				1DCC7F261B2ED07F005FF193 /* WOTArrowDown@2x.png in Resources */,
 				1DD646CE1B1F378100B0EC76 /* WOTTankListViewController.xib in Resources */,
-				1D6FF4F82106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.xib in Resources */,
+				1D6FF4F82106FD7A006C1328 /* WOTTankTreeNodeCollectionViewCell.xib in Resources */,
 				1D672AF91B57952700617E5C /* WOTModuleTypeRadios.png in Resources */,
 				1DB57B2B20F77415003FF3EC /* tankengines.json in Resources */,
 				1D672B401B60CB7100617E5C /* Speedometer Gray@3x.png in Resources */,
@@ -3224,7 +3231,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DC07B331B3A9465002FAA72 /* Reachability.m in Sources */,
-				1D6FF4F92106FD7A006C1328 /* WOTTankConfigurationCollectionViewCell.m in Sources */,
 				1DEEAC6B20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m in Sources */,
 				1DC07B5E1B3A9489002FAA72 /* WOTWEBRequestTanks.m in Sources */,
 				1DC07B7D1B3AB778002FAA72 /* Tankradios+FillProperties.m in Sources */,
@@ -3308,6 +3314,7 @@
 				1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */,
 				1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */,
 				1D691EF51BA066AA00E1555D /* NSDictionary+Hash.m in Sources */,
+				1D9CAA20210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m in Sources */,
 				1D2143D21BA01511001A7DEE /* VehicleprofileAmmoList+FillProperties.m in Sources */,
 				1D2143C61BA00BFD001A7DEE /* Tankchassis.m in Sources */,
 				1DF3E9D020FF6CAD00224F0B /* WOTNode+PivotFactory.m in Sources */,
@@ -3366,6 +3373,7 @@
 				1DC07AC11B399FE4002FAA72 /* WOTWebResponseAdapterLogin.m in Sources */,
 				1DC07B811B3AB778002FAA72 /* Vehicles+FillProperties.m in Sources */,
 				1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */,
+				1D9CAA22210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift in Sources */,
 				1D519D211B4EA0E300D3A286 /* WOTRadiosDistanceCompareFieldExpression.m in Sources */,
 				1D519D081B4E9CB200D3A286 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */,
 				1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */,
