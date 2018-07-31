@@ -91,25 +91,25 @@ class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
                     if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.right.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
                         decor.customFrame = pivotAttributes.rect
                         decor.kind = .right
-                        decor.zIndex = pivotAttributes.zIndex
+                        decor.zIndex = pivotAttributes.zIndex + 1
                         result.append(decor)
                     }
                     if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.left.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
                         decor.customFrame = pivotAttributes.rect
                         decor.kind = .left
-                        decor.zIndex = pivotAttributes.zIndex
+                        decor.zIndex = pivotAttributes.zIndex + 1
                         result.append(decor)
                     }
                     if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.top.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
                         decor.customFrame = pivotAttributes.rect
                         decor.kind = .top
-                        decor.zIndex = pivotAttributes.zIndex
+                        decor.zIndex = pivotAttributes.zIndex + 1
                         result.append(decor)
                     }
                     if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.bottom.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
                         decor.customFrame = pivotAttributes.rect
                         decor.kind = .bottom
-                        decor.zIndex = pivotAttributes.zIndex
+                        decor.zIndex = pivotAttributes.zIndex + 1
                         result.append(decor)
                     }
                 }
@@ -159,14 +159,14 @@ extension WOTTankPivotLayout {
         let width: CGFloat = relativeRect.size.width * CGFloat(itemSize.width)
         let height: CGFloat = relativeRect.size.height * CGFloat(itemSize.height)
 
-        var cellZIndex = -2
+        var cellZIndex = -5
         if (stickyType.rawValue & PivotStickyType.vertical.rawValue) == PivotStickyType.vertical.rawValue {
             y += contentOffset.y
-            cellZIndex += 1
+            cellZIndex += 2
         }
         if (stickyType.rawValue & PivotStickyType.horizontal.rawValue) == PivotStickyType.horizontal.rawValue {
             x += contentOffset.x
-            cellZIndex += 1
+            cellZIndex += 2
         }
         let approxRect = CGRect(x: x, y: y, width: width, height: height)
         let cellRect = approxRect//.integral
