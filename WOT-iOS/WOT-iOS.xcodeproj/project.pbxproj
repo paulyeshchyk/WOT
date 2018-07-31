@@ -220,6 +220,7 @@
 		1D9CAA20210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA1E210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m */; };
 		1D9CAA22210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */; };
 		1D9CAA24210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */; };
+		1D9CAA30211059F500B6CA5A /* WOTPivotSeparatorLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA2F211059F500B6CA5A /* WOTPivotSeparatorLayoutAttributes.swift */; };
 		1DA00C0F21007F4B004F9FDE /* WOTDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C0721007F4A004F9FDE /* WOTDimension.swift */; };
 		1DA00C1021007F4B004F9FDE /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C0821007F4A004F9FDE /* WOTDimensionProtocol.swift */; };
 		1DA00C1921007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C1721007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift */; };
@@ -400,7 +401,7 @@
 		1DF73EB71B9047BA00AE6F86 /* NSSet+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EB61B9047BA00AE6F86 /* NSSet+WOT.m */; };
 		1DF73EBB1B90534300AE6F86 /* NSMutableDictionary+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EBA1B90534300AE6F86 /* NSMutableDictionary+WOT.m */; };
 		1DF73EBE1B90563300AE6F86 /* NSMutableArray+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF73EBD1B90563300AE6F86 /* NSMutableArray+WOT.m */; };
-		A9223E19C68BF3C0D78A8841 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25C7B417D652B7D05F30860 /* Pods_WOT_iOS.framework */; };
+		4908876698A87AF77D91EAD5 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */; };
 		DA522D281B6637630087D684 /* Search Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D221B6637630087D684 /* Search Gray.png */; };
 		DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D231B6637630087D684 /* Search Gray@2x.png */; };
 		DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D241B6637630087D684 /* Search Gray@3x.png */; };
@@ -732,6 +733,7 @@
 		1D9CAA1F210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankTreeNodeCollectionViewCell.h; sourceTree = "<group>"; };
 		1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankTreeConnectorCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTTankTreeConnectorCollectionViewCell.xib; sourceTree = "<group>"; };
+		1D9CAA2F211059F500B6CA5A /* WOTPivotSeparatorLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotSeparatorLayoutAttributes.swift; sourceTree = "<group>"; };
 		1DA00C0721007F4A004F9FDE /* WOTDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimension.swift; sourceTree = "<group>"; };
 		1DA00C0821007F4A004F9FDE /* WOTDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionProtocol.swift; sourceTree = "<group>"; };
 		1DA00C1721007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumeratorProtocol.swift; sourceTree = "<group>"; };
@@ -1009,9 +1011,7 @@
 		1DF73EBA1B90534300AE6F86 /* NSMutableDictionary+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+WOT.m"; sourceTree = "<group>"; };
 		1DF73EBC1B90563300AE6F86 /* NSMutableArray+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WOT.h"; sourceTree = "<group>"; };
 		1DF73EBD1B90563300AE6F86 /* NSMutableArray+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WOT.m"; sourceTree = "<group>"; };
-		393C6FFE4E3B2D9B28E2A4C8 /* Pods-WOT-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		99CC6180C70935140649AC52 /* Pods-WOT-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		B25C7B417D652B7D05F30860 /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A176CC6D9BAC80B33FBEA3A /* Pods-WOT-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		DA522D221B6637630087D684 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
 		DA522D231B6637630087D684 /* Search Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@2x.png"; sourceTree = "<group>"; };
 		DA522D241B6637630087D684 /* Search Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@3x.png"; sourceTree = "<group>"; };
@@ -1026,6 +1026,8 @@
 		DA522D361B6649020087D684 /* Cancel Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@3x.png"; sourceTree = "<group>"; };
 		DA720C7F1B5D0DE9003F3B5A /* ModulesTree+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ModulesTree+UI.h"; sourceTree = "<group>"; };
 		DA720C801B5D0DE9003F3B5A /* ModulesTree+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ModulesTree+UI.m"; sourceTree = "<group>"; };
+		DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0CAF57B0233E28A614AE83F /* Pods-WOT-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		EB9DC1F0F086677D49391180 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1034,7 +1036,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9223E19C68BF3C0D78A8841 /* Pods_WOT_iOS.framework in Frameworks */,
+				4908876698A87AF77D91EAD5 /* Pods_WOT_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2411,7 +2413,7 @@
 				1DD646521B1C616A00B0EC76 /* WOT-iOSTests */,
 				1DD646341B1C616A00B0EC76 /* Products */,
 				73D1069022E23097C59EE24A /* Frameworks */,
-				1E8D578D6C4DB65145A587B4 /* Pods */,
+				3557967E5FF81E19F0783759 /* Pods */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
@@ -2802,6 +2804,7 @@
 			children = (
 				1D6FF52F210878DA006C1328 /* WOTTankPivotLayout.swift */,
 				1D6FF5332109ADB9006C1328 /* WOTPivotLayoutCellAttributes.swift */,
+				1D9CAA2F211059F500B6CA5A /* WOTPivotSeparatorLayoutAttributes.swift */,
 				1D6FF5352109B443006C1328 /* WOTPivotLayoutCellAttributesTest.swift */,
 			);
 			path = layout;
@@ -2868,11 +2871,11 @@
 			path = NSDictionary;
 			sourceTree = "<group>";
 		};
-		1E8D578D6C4DB65145A587B4 /* Pods */ = {
+		3557967E5FF81E19F0783759 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				99CC6180C70935140649AC52 /* Pods-WOT-iOS.debug.xcconfig */,
-				393C6FFE4E3B2D9B28E2A4C8 /* Pods-WOT-iOS.release.xcconfig */,
+				2A176CC6D9BAC80B33FBEA3A /* Pods-WOT-iOS.debug.xcconfig */,
+				E0CAF57B0233E28A614AE83F /* Pods-WOT-iOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2881,7 +2884,7 @@
 			isa = PBXGroup;
 			children = (
 				EB9DC1F0F086677D49391180 /* Pods.framework */,
-				B25C7B417D652B7D05F30860 /* Pods_WOT_iOS.framework */,
+				DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2903,12 +2906,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DD646591B1C616A00B0EC76 /* Build configuration list for PBXNativeTarget "WOT-iOS" */;
 			buildPhases = (
-				5D303F42211C100DD79EC818 /* [CP] Check Pods Manifest.lock */,
+				A70D0AFA5460D30E17BC9F18 /* [CP] Check Pods Manifest.lock */,
 				1DD6462F1B1C616A00B0EC76 /* Sources */,
 				1DD646301B1C616A00B0EC76 /* Frameworks */,
 				1DD646311B1C616A00B0EC76 /* Resources */,
-				CF12C85E440AA4C91C201747 /* [CP] Embed Pods Frameworks */,
 				1D6E94E42100C9CC00B65FC3 /* ShellScript */,
+				6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3175,25 +3178,7 @@
 			shellPath = /bin/sh;
 			shellScript = "#if which swiftlint >/dev/null; then\n#    swiftlint\n#else\n#    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n";
 		};
-		5D303F42211C100DD79EC818 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WOT-iOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CF12C85E440AA4C91C201747 /* [CP] Embed Pods Frameworks */ = {
+		6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3221,6 +3206,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A70D0AFA5460D30E17BC9F18 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WOT-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3361,6 +3364,7 @@
 				1DD646A01B1DC42100B0EC76 /* NSString+WOTValue.m in Sources */,
 				1DC07B7B1B3AB778002FAA72 /* Tankguns+FillProperties.m in Sources */,
 				1DA00C2A210080BC004F9FDE /* WOTNode.swift in Sources */,
+				1D9CAA30211059F500B6CA5A /* WOTPivotSeparatorLayoutAttributes.swift in Sources */,
 				1DDEE3901B8F353200C90D4B /* WOTTankPivotDataCollectionViewCell.m in Sources */,
 				1DC07B561B3A9489002FAA72 /* WOTWebRequestTankChassis.m in Sources */,
 				1D2143B61BA00B37001A7DEE /* UserSession.m in Sources */,
@@ -3694,7 +3698,7 @@
 		};
 		1DD6465A1B1C616A00B0EC76 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 99CC6180C70935140649AC52 /* Pods-WOT-iOS.debug.xcconfig */;
+			baseConfigurationReference = 2A176CC6D9BAC80B33FBEA3A /* Pods-WOT-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -3719,7 +3723,7 @@
 		};
 		1DD6465B1B1C616A00B0EC76 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 393C6FFE4E3B2D9B28E2A4C8 /* Pods-WOT-iOS.release.xcconfig */;
+			baseConfigurationReference = E0CAF57B0233E28A614AE83F /* Pods-WOT-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

@@ -15,10 +15,30 @@ protocol WOTTankPivotLayoutProtocol {
     var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)? { get set }
 }
 
-class WOTTankPivotLayout: UICollectionViewFlowLayout, WOTTankPivotLayoutProtocol {
+class WOTColoredLayout: UICollectionViewFlowLayout {
+
+    override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        let layoutAttributes = WOTPivotSeparatorLayoutAttributes(forDecorationViewOfKind: elementKind,
+            with: indexPath)
+
+        layoutAttributes.color = UIColor.darkGray
+        layoutAttributes.zIndex = -1
+        return layoutAttributes
+    }
+}
+
+class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     var relativeContentSizeBlock: (() -> CGSize)?
     var itemRelativeRectCallback: ((IndexPath) -> CGRect)?
     var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)?
+
+    override func prepare() {
+        super.prepare()
+        register(WOTPivotSeparatorView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.top.rawValue)
+        register(WOTPivotSeparatorView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.left.rawValue)
+        register(WOTPivotSeparatorView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.right.rawValue)
+        register(WOTPivotSeparatorView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.bottom.rawValue)
+    }
 
     override open var itemSize: CGSize {
         get {
@@ -54,11 +74,11 @@ class WOTTankPivotLayout: UICollectionViewFlowLayout, WOTTankPivotLayoutProtocol
     }
 
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var result = [UICollectionViewLayoutAttributes]()
         guard let collectionView = self.collectionView else {
-            return nil
+            return result
         }
 
-        var result = [UICollectionViewLayoutAttributes]()
         let contentOffset = collectionView.contentOffset
 
         for section in 0 ..< collectionView.numberOfSections {
@@ -66,7 +86,32 @@ class WOTTankPivotLayout: UICollectionViewFlowLayout, WOTTankPivotLayoutProtocol
                 let indexPath = IndexPath(row: row, section: section)
                 let pivotAttributes = self.pivotLayoutCellAttributes(indexPath: indexPath, contentOffset: contentOffset)
                 if let cellAttributes = pivotAttributes.collectionViewLayoutAttributes(forRect: rect) {
-                    result.append(cellAttributes)
+                    result.append(contentsOf: cellAttributes)
+
+                    if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.right.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
+                        decor.customFrame = pivotAttributes.rect
+                        decor.kind = .right
+                        decor.zIndex = pivotAttributes.zIndex
+                        result.append(decor)
+                    }
+                    if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.left.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
+                        decor.customFrame = pivotAttributes.rect
+                        decor.kind = .left
+                        decor.zIndex = pivotAttributes.zIndex
+                        result.append(decor)
+                    }
+                    if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.top.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
+                        decor.customFrame = pivotAttributes.rect
+                        decor.kind = .top
+                        decor.zIndex = pivotAttributes.zIndex
+                        result.append(decor)
+                    }
+                    if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.bottom.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
+                        decor.customFrame = pivotAttributes.rect
+                        decor.kind = .bottom
+                        decor.zIndex = pivotAttributes.zIndex
+                        result.append(decor)
+                    }
                 }
             }
         }
@@ -77,8 +122,8 @@ class WOTTankPivotLayout: UICollectionViewFlowLayout, WOTTankPivotLayoutProtocol
 extension WOTTankPivotLayout {
 
     fileprivate struct Constants {
-        static let ipadCellSize = CGSize(width: 88, height: 66)
-        static let iphoneCellSize = CGSize(width: 66, height: 44)
+        static let ipadCellSize = CGSize(width: 88.0, height: 66.0)
+        static let iphoneCellSize = CGSize(width: 66.0, height: 44.0)
         static let itemSize = (UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad) ? ipadCellSize : iphoneCellSize
     }
 
@@ -96,25 +141,25 @@ extension WOTTankPivotLayout {
         return block(indexPath)
     }
 
-    private func relativeSize() -> CGSize {
+    fileprivate func relativeSize() -> CGSize {
         guard let block = self.relativeContentSizeBlock else {
             return .zero
         }
         return block()
     }
 
-    private func pivotLayoutCellAttributes(indexPath: IndexPath, contentOffset: CGPoint) -> WOTPivotLayoutCellAttributesProtocol {
+    fileprivate func pivotLayoutCellAttributes(indexPath: IndexPath, contentOffset: CGPoint) -> WOTPivotLayoutCellAttributesProtocol {
         let relativeRect = self.relativeRect(indexPath: indexPath)
         let stickyType = self.stickyType(indexPath: indexPath)
         let itemSize = self.itemSize
 
-        var x = relativeRect.origin.x * itemSize.width
-        var y = relativeRect.origin.y * itemSize.height
+        var x: CGFloat = relativeRect.origin.x * CGFloat(itemSize.width)
+        var y: CGFloat = relativeRect.origin.y * CGFloat(itemSize.height)
 
-        let width = relativeRect.size.width * itemSize.width
-        let height = relativeRect.size.height * itemSize.height
+        let width: CGFloat = relativeRect.size.width * CGFloat(itemSize.width)
+        let height: CGFloat = relativeRect.size.height * CGFloat(itemSize.height)
 
-        var cellZIndex = 0
+        var cellZIndex = -2
         if (stickyType.rawValue & PivotStickyType.vertical.rawValue) == PivotStickyType.vertical.rawValue {
             y += contentOffset.y
             cellZIndex += 1
@@ -123,7 +168,8 @@ extension WOTTankPivotLayout {
             x += contentOffset.x
             cellZIndex += 1
         }
-        let cellRect = CGRect(x: x, y: y, width: width, height: height)
+        let approxRect = CGRect(x: x, y: y, width: width, height: height)
+        let cellRect = approxRect//.integral
         return WOTPivotLayoutCellAttributes(cellRect: cellRect, cellZIndex: cellZIndex, cellIndexPath: indexPath)
     }
 }

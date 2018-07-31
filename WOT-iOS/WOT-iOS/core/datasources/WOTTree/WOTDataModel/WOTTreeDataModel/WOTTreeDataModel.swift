@@ -31,7 +31,7 @@ class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         self.fetchController.setFetchListener(self)
     }
 
-    private func failPivot(_ error: Error) {
+    fileprivate func failPivot(_ error: Error) {
         listener.modelDidFailLoad(error: error)
     }
 

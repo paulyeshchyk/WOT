@@ -25,7 +25,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
 
     private var listener: WOTDataModelListener
     private var fetchController: WOTDataFetchControllerProtocol
-    private var nodeCreator: WOTNodeCreatorProtocol
+    fileprivate var nodeCreator: WOTNodeCreatorProtocol
 
     deinit {
         self.clearMetadataItems()
@@ -139,7 +139,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
         self.rootFilterNode.addChildArray(filters)
     }
 
-    private func makePivot() {
+    fileprivate func makePivot() {
 
         self.clearMetadataItems()
 
@@ -152,7 +152,7 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
         listener.modelDidLoad()
     }
 
-    private func failPivot(_ error: Error) {
+    fileprivate func failPivot(_ error: Error) {
         listener.modelDidFailLoad(error: error)
     }
 }

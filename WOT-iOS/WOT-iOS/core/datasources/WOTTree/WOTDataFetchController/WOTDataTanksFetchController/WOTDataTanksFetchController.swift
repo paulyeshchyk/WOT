@@ -12,7 +12,7 @@ import CoreData
 @objc
 class WOTDataTanksFetchController: NSObject {
 
-    lazy private var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>? = {
+    lazy fileprivate var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>? = {
         guard let context = WOTCoreDataProvider.sharedInstance().mainManagedObjectContext else {
             return nil
         }

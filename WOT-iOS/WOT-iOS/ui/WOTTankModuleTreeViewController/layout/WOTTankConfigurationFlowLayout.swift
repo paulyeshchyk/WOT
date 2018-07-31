@@ -132,7 +132,7 @@ extension WOTTankConfigurationFlowLayout {
         return block()
     }
 
-    private func siblingChildrenCount(indexPath: IndexPath) -> Int {
+    fileprivate func siblingChildrenCount(indexPath: IndexPath) -> Int {
         guard let block = self.layoutPreviousSiblingNodeChildrenCountCallback else {
             return indexPath.row
         }

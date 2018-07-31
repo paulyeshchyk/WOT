@@ -12,7 +12,7 @@ protocol WOTPivotLayoutCellAttributesProtocol {
     var rect: CGRect { get }
     var zIndex: Int { get }
     init(cellRect: CGRect, cellZIndex: Int, cellIndexPath: IndexPath)
-    func collectionViewLayoutAttributes(forRect rect: CGRect) -> UICollectionViewLayoutAttributes?
+    func collectionViewLayoutAttributes(forRect rect: CGRect) -> [UICollectionViewLayoutAttributes]?
 }
 
 struct WOTPivotLayoutCellAttributes: WOTPivotLayoutCellAttributesProtocol {
@@ -27,13 +27,13 @@ struct WOTPivotLayoutCellAttributes: WOTPivotLayoutCellAttributesProtocol {
         indexPath = cellIndexPath
     }
 
-    func collectionViewLayoutAttributes(forRect rect: CGRect) -> UICollectionViewLayoutAttributes? {
+    func collectionViewLayoutAttributes(forRect rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard self.rect.intersects(rect) == true else {
             return nil
         }
         let result = UICollectionViewLayoutAttributes(forCellWith: self.indexPath)
         result.frame = self.rect
         result.zIndex = self.zIndex
-        return result
+        return [result]
     }
 }
