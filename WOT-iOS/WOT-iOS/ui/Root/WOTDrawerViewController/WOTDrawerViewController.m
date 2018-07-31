@@ -76,8 +76,14 @@
     
     [super viewDidLoad];
 
+    [UIViewController attemptRotationToDeviceOrientation];
+
     [[WOTSessionManager sharedInstance] invalidateTimer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onLogout:) name:WOT_NOTIFICATION_LOGOUT object:nil];
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
 }
 
 #pragma mark - WOTMenuDelegate
