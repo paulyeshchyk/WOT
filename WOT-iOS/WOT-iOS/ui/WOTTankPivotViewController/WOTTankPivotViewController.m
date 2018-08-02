@@ -186,15 +186,17 @@
 
 - (NSArray *)metadataItems {
 
+    WOTPivotPermutator *permutator = [[WOTPivotPermutator alloc] init];
+
     WOTPivotTemplates *templates = [[WOTPivotTemplates alloc] init];
 
     id<WOTPivotNodeProtocol> levelTier = [templates.vehicleTier asType: PivotMetadataTypeColumn];
     id<WOTPivotNodeProtocol> levelPrem = [templates.vehiclePremium asType: PivotMetadataTypeColumn];
-    NSArray *cols = [templates permutateWithPivotNodes:@[levelPrem, levelTier] as:PivotMetadataTypeColumn];
+    NSArray *cols = [permutator permutateWithPivotNodes:@[levelPrem, levelTier] as:PivotMetadataTypeColumn];
 
     id<WOTPivotNodeProtocol> levelNati = [templates.vehicleNation asType: PivotMetadataTypeRow];
     id<WOTPivotNodeProtocol> levelType = [templates.vehicleType asType: PivotMetadataTypeRow];
-    NSArray *rows = [templates permutateWithPivotNodes:@[levelNati,levelType] as:PivotMetadataTypeRow];
+    NSArray *rows = [permutator permutateWithPivotNodes:@[levelNati,levelType] as:PivotMetadataTypeRow];
 
     NSArray *filters = [self pivotFilters];
     NSMutableArray *result = [[NSMutableArray alloc] init];

@@ -36,6 +36,7 @@
 		1D047B691B331DF000B5B696 /* WOTApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */; };
 		1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D047BB91B34095500B5B696 /* WOT_iOS.xcdatamodeld */; };
 		1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047BBD1B3419C000B5B696 /* WOTWebResponseLink.m */; };
+		1D0F3E8021131AE000129E4B /* WOTPivotPermutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F3E7F21131AE000129E4B /* WOTPivotPermutator.swift */; };
 		1D0F55011C91677600272B05 /* WOTTankMetricsList+ChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */; };
 		1D188FE11B9437460056D208 /* PivotTreeTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D188FE01B9437460056D208 /* PivotTreeTestCase.m */; };
 		1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */; };
@@ -460,6 +461,7 @@
 		1D047BBA1B34095500B5B696 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
 		1D047BBC1B3419C000B5B696 /* WOTWebResponseLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseLink.h; sourceTree = "<group>"; };
 		1D047BBD1B3419C000B5B696 /* WOTWebResponseLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWebResponseLink.m; sourceTree = "<group>"; };
+		1D0F3E7F21131AE000129E4B /* WOTPivotPermutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotPermutator.swift; sourceTree = "<group>"; };
 		1D0F54FF1C91677600272B05 /* WOTTankMetricsList+ChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankMetricsList+ChartData.h"; sourceTree = "<group>"; };
 		1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankMetricsList+ChartData.m"; sourceTree = "<group>"; };
 		1D188FE01B9437460056D208 /* PivotTreeTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PivotTreeTestCase.m; sourceTree = "<group>"; };
@@ -1183,6 +1185,14 @@
 				1D047B601B331D8900B5B696 /* WOTMenuItem.m */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		1D0F3E7E21131ACB00129E4B /* permutator */ = {
+			isa = PBXGroup;
+			children = (
+				1D0F3E7F21131AE000129E4B /* WOTPivotPermutator.swift */,
+			);
+			path = permutator;
 			sourceTree = "<group>";
 		};
 		1D2143381B9F176A001A7DEE /* Profile */ = {
@@ -2783,6 +2793,7 @@
 		1DDEE3791B8F353200C90D4B /* WOTTankPivotViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1D0F3E7E21131ACB00129E4B /* permutator */,
 				1D9CAA31211192CD00B6CA5A /* templates */,
 				1DDEE37A1B8F353200C90D4B /* cells */,
 				1DDEE3881B8F353200C90D4B /* layout */,
@@ -3384,6 +3395,7 @@
 				1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */,
 				1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */,
 				1D519D531B50071800D3A286 /* ModulesTree+FillProperties.m in Sources */,
+				1D0F3E8021131AE000129E4B /* WOTPivotPermutator.swift in Sources */,
 				1D047B691B331DF000B5B696 /* WOTApplicationDefaults.m in Sources */,
 				1D519CF31B4E7BE400D3A286 /* WOTTankDetailField.m in Sources */,
 				1DC07B591B3A9489002FAA72 /* WOTWEBRequestLogin.m in Sources */,
