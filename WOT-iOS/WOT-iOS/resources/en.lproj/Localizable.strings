@@ -47,6 +47,17 @@ WOT_STRING_LEVEL_8          = "VIII";
 WOT_STRING_LEVEL_9          = "IX";
 WOT_STRING_LEVEL_10         = "X";
 
+WOT_INTEGER_LEVEL_1          = "1";
+WOT_INTEGER_LEVEL_2          = "2";
+WOT_INTEGER_LEVEL_3          = "3";
+WOT_INTEGER_LEVEL_4          = "4";
+WOT_INTEGER_LEVEL_5          = "5";
+WOT_INTEGER_LEVEL_6          = "6";
+WOT_INTEGER_LEVEL_7          = "7";
+WOT_INTEGER_LEVEL_8          = "8";
+WOT_INTEGER_LEVEL_9          = "9";
+WOT_INTEGER_LEVEL_10         = "10";
+
 WOT_STRING_AT_SPG           = "Tank Destroyer";
 WOT_STRING_SPG              = "Self-Propelled Guns";
 WOT_STRING_HT               = "Heavy";
@@ -89,3 +100,152 @@ TYPE_I18N                   = "Type (national)";
 VALUES                      = "Values";
 WEIGHT                      = "Weight";
 
+
+
+ApplicationHost             = "https://api.worldoftanks";
+ApplicationRedirectURI      =  "https://api.worldoftanks.ru/wot/blank/"; //"https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/";
+
+WOT_IMAGE_BACK  = "WOTBackIconGray.png";
+WOT_IMAGE_CHECKMARK_DARK  = "WOTSelector-checkmark-dark.png";
+WOT_IMAGE_CHECKMARK_GRAY  = "WOTSelector-checkmark-gray.png";
+WOT_IMAGE_DATA_FLOW_CHART  = "Data-Flow-Chart-icon.png";
+WOT_IMAGE_DATA_LIST  = "Data-List-icon.png";
+WOT_IMAGE_DOWN  = "WOTArrowDown.png";
+WOT_IMAGE_GEAR  = "WOTiPadMenuGear.png";
+WOT_IMAGE_SEARCH  = "Search Gray.png";
+WOT_IMAGE_CANCEL  = "Cancel Gray.png";
+WOT_IMAGE_GLOBE  = "WOTGlobe.png";
+WOT_IMAGE_MESSAGING_CATEGORIZE  = "Messaging-Categorize-icon.png";
+WOT_IMAGE_UP  = "WOTArrowUp.png";
+WOT_IMAGE_USER  = "WOTLoggedInUser.png";
+
+WOT_KEY_ACCESS_TOKEN  = "access_token";
+WOT_KEY_ACCOUNT_ID  = "account_id";
+WOT_KEY_APPLICATION_ID  = "application_id";
+WOT_KEY_ARMOR_BOARD  = "armor_board";
+WOT_KEY_ARMOR_FEDD  = "armor_fedd";
+WOT_KEY_ARMOR_FOREHEAD  = "armor_forehead";
+WOT_KEY_CIRCULAR_VISION_RADIUS  = "circular_vision_radius";
+WOT_KEY_CODE  = "code";
+WOT_KEY_CONTOUR_IMAGE  = "contour_image";
+WOT_KEY_DATA  = "data";
+WOT_KEY_DISTANCE  = "distance";
+WOT_KEY_ERROR  = "error";
+WOT_KEY_EXPIRES_AT  = "expires_at";
+WOT_KEY_FIELDS  = "fields";
+WOT_KEY_FIRE_STARTING_CHANCE  = "fire_starting_chance";
+WOT_KEY_HASHNAME  = "hashName";
+WOT_KEY_IMAGE  = "image";
+WOT_KEY_IMAGE_SMALL  = "image_small";
+WOT_KEY_IS_GIFT  = "is_gift";
+WOT_KEY_IS_PREMIUM  = "vehicles.is_premium";
+WOT_KEY_KEY  = "key";
+WOT_KEY_LEVEL  = "level";
+WOT_KEY_DEFAULT_PROFILE_HP  = "vehicles.default_profile.hp";
+WOT_KEY_DEFAULT_PROFILE_WEIGHT  = "vehicles.default_profile.weight";
+WOT_KEY_DEFAULT_PROFILE_FIRE_RATE  = "vehicles.default_profile.gun.fire_rate";
+WOT_KEY_LOCATION  = "location";
+WOT_KEY_MAX_LOAD  = "max_load";
+WOT_KEY_MESSAGE  = "message";
+WOT_KEY_MODULE_ID  = "module_id";
+WOT_KEY_NAME  = "name";
+WOT_KEY_MODULES_TREE  = "modules_tree";
+WOT_KEY_NAME_I18N  = "name_i18n";
+WOT_KEY_DPM  = "dpm";
+WOT_KEY_NATION  = "nation";
+WOT_KEY_NATION_I18N  = "nation_i18n";
+WOT_KEY_NICKNAME  = "nickname";
+WOT_KEY_NOFOLLOW  = "nofollow";
+WOT_KEY_ORDERBY  = "orderBy";
+WOT_KEY_POWER  = "power";
+WOT_KEY_PRICE_CREDIT  = "price_credit";
+WOT_KEY_PRICE_GOLD  = "price_gold";
+WOT_KEY_PRICES_XP  = "prices_xp";
+WOT_KEY_PRICE_XP  = "price_xp";
+WOT_KEY_IS_DEFAULT  = "is_default";
+WOT_KEY_RATE  = "rate";
+WOT_KEY_REDIRECT_URI  = "redirect_uri";
+WOT_KEY_ROTATION_SPEED  = "rotation_speed";
+WOT_KEY_SHORT_NAME  = "short_name";
+WOT_KEY_SHORT_NAME_I18N  = "short_name_i18n";
+WOT_KEY_STATUS  = "status";
+WOT_KEY_TAG  = "tag";
+WOT_KEY_TANK_ID  = "tank_id";
+WOT_KEY_TIER  = "tier";
+WOT_KEY_TYPE  = "type";
+WOT_KEY_TYPE_I18N  = "type_i18n";
+WOT_KEY_VEHICLES  = "vehicles";
+WOT_KEY_USER_ID  = "userId";
+WOT_KEY_VALUES  = "values";
+WOT_KEY_WEIGHT  = "weight";
+WOT_KEY_NEXT_MODULES  = "next_modules";
+WOT_KEY_NEXT_TANKS  = "next_tanks";
+WOT_KEY_TRAVERSE_LEFT_ARC  = "traverse_left_arc";
+WOT_KEY_TRAVERSE_RIGHT_ARC  = "traverse_right_arc";
+WOT_KEY_TRAVERSE_SPEED  = "traverse_speed";
+WOT_KEY_DEFAULT_PROFILE  = "default_profile";
+
+WOT_STRING_ARMOR  = "armor";
+WOT_STRING_OBSERVE  = "observe";
+WOT_STRING_FIRE  = "fire";
+WOT_STRING_MOBI  = "mobi";
+
+
+WOT_STRING_NATION_USA  = "usa";
+WOT_STRING_NATION_USSR  = "ussr";
+WOT_STRING_NATION_ITALY  = "italy";
+WOT_STRING_NATION_UK  = "uk";
+WOT_STRING_NATION_GERMANY  = "germany";
+WOT_STRING_NATION_JAPAN  = "japan";
+WOT_STRING_NATION_CHINA  = "china";
+WOT_STRING_NATION_FRANCE  = "france";
+WOT_STRING_NATION_CZECH  = "czech";
+WOT_STRING_NATION_SWEDEN  = "sweden";
+WOT_STRING_NATION_POLAND  = "poland";
+
+
+WOT_STRING_TANK_TYPE_AT_SPG  = "AT-SPG";
+WOT_STRING_TANK_TYPE_SPG  = "SPG";
+WOT_STRING_TANK_TYPE_LIGHT_TANK  = "lightTank";
+WOT_STRING_TANK_TYPE_MEDIUM_TANK  = "mediumTank";
+WOT_STRING_TANK_TYPE_HEAVY_TANK  = "heavyTank";
+
+WOT_STRING_HP_LESS_100  = "(100)";
+WOT_STRING_HP_LESS_200  = "[100;200)";
+WOT_STRING_HP_LESS_400  = "[200;400)";
+WOT_STRING_HP_LESS_800  = "[400;800)";
+WOT_STRING_HP_LESS_1600  = "[800;1600)";
+WOT_STRING_HP_LESS_5000  = "[1600;5000)";
+WOT_STRING_HP_GR_5000  = ">5000";
+
+WOT_STRING_DPM_LESS_100  = "(100)";
+WOT_STRING_DPM_LESS_200  = "[100;200)";
+WOT_STRING_DPM_LESS_500  = "[200;500)";
+WOT_STRING_DPM_LESS_1000  = "[500;1000)";
+WOT_STRING_DPM_LESS_2000  = "[1000;2000)";
+WOT_STRING_DPM_LESS_3000  = "[2000;3000)";
+WOT_STRING_DPM_GR_3000  = "[3000;)";
+
+WOT_LINKKEY_MODULESTREE  = "modules_tree";
+WOT_LINKKEY_DEFAULT_PROFILE  = "default_profile";
+WOT_LINKKEY_ENGINES  = "engines";
+WOT_LINKKEY_GUNS  = "guns";
+WOT_LINKKEY_RADIOS  = "radios";
+WOT_LINKKEY_SUSPENSIONS  = "suspensions";
+WOT_LINKKEY_TURRETS  = "turrets";
+
+WOT_VALUE_VEHICLE_GUN  = "vehicleGun";
+WOT_VALUE_VEHICLE_ENGINE  = "vehicleEngine";
+WOT_VALUE_VEHICLE_TURRET  = "vehicleTurret";
+WOT_VALUE_VEHICLE_CHASSIS  = "vehicleChassis";
+WOT_VALUE_VEHICLE_RADIO  = "vehicleRadio";
+
+WOT_USERDEFAULTS_LOGIN_LANGUAGE  = "LoginLanguage";
+WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU  = "eu";
+WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU  = "ru";
+
+WOT_VALUE_APPLICATION_ID_EU  = "e3a1e0889ff9c76fa503177f351b853c";
+WOT_VALUE_APPLICATION_ID_RU  = "e3a1e0889ff9c76fa503177f351b853c";
+
+WOT_VALUE_LANGUAGE_EU  = "eu";
+WOT_VALUE_LANGUAGE_RU  = "ru";

@@ -53,9 +53,9 @@
 }
 
 - (NSPredicate *) fetchCustomPredicate {
-    NSPredicate *level6 = [NSPredicate predicateWithFormat:@"level == %d", 6];
-    NSPredicate *level7 = [NSPredicate predicateWithFormat:@"level == %d", 7];
-    return [NSCompoundPredicate orPredicateWithSubpredicates:@[level6, level7]];
+    NSPredicate *level6 = [NSPredicate predicateWithFormat:@"level != %d", 600];
+//    NSPredicate *level7 = [NSPredicate predicateWithFormat:@"level == %d", 7];
+    return [NSCompoundPredicate orPredicateWithSubpredicates:@[level6]];
 }
 
 @end
@@ -185,13 +185,16 @@
 }
 
 - (NSArray *)metadataItems {
-    id<WOTPivotNodeProtocol> level0Col = [WOTNodeFactory pivotTierMetadataItemAsType:PivotMetadataTypeColumn];
-    id<WOTPivotNodeProtocol> level1Col = [WOTNodeFactory pivotTypeMetadataItemAsType:PivotMetadataTypeColumn];
-    NSArray *cols = [self complexMetadataAsType:PivotMetadataTypeColumn forLevel0Node:level0Col level1Node:level1Col];
 
-    id<WOTPivotNodeProtocol> level0Row = [WOTNodeFactory pivotNationMetadataItemAsType:PivotMetadataTypeRow];
-    id<WOTPivotNodeProtocol> level1Row = nil;
-    NSArray *rows = [self complexMetadataAsType:PivotMetadataTypeRow forLevel0Node:level0Row level1Node:level1Row];
+    WOTPivotTemplates *templates = [[WOTPivotTemplates alloc] init];
+
+    id<WOTPivotNodeProtocol> levelTier = [templates.vehicleTier asType: PivotMetadataTypeColumn];
+    id<WOTPivotNodeProtocol> levelPrem = [templates.vehiclePremium asType: PivotMetadataTypeColumn];
+    NSArray *cols = [templates permutateWithPivotNodes:@[levelPrem, levelTier] as:PivotMetadataTypeColumn];
+
+    id<WOTPivotNodeProtocol> levelNati = [templates.vehicleNation asType: PivotMetadataTypeRow];
+    id<WOTPivotNodeProtocol> levelType = [templates.vehicleType asType: PivotMetadataTypeRow];
+    NSArray *rows = [templates permutateWithPivotNodes:@[levelNati,levelType] as:PivotMetadataTypeRow];
 
     NSArray *filters = [self pivotFilters];
     NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -206,35 +209,5 @@
     return @[node];
 }
 
-- (NSArray *)complexMetadataAsType:(PivotMetadataType)type forLevel0Node:(id<WOTPivotNodeProtocol>  _Nullable )level0Node level1Node:(id<WOTPivotNodeProtocol>  _Nullable )level1Node {
-
-    Class PivotNodeClass = [WOTNodeFactory pivotNodeClassForType:type];
-
-    id<WOTPivotNodeProtocol> root = [[PivotNodeClass alloc] initWithName:@"-"];
-    //TODO: isVisible == NO makes pivot invalid
-    root.isVisible = YES;
-    NSArray *level1Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level1Node];
-    NSArray *level0Endpoints = [WOTNodeEnumerator.sharedInstance endpointsWithNode:level0Node];
-    [level0Endpoints enumerateObjectsUsingBlock:^(id<WOTPivotNodeProtocol> level0Child, NSUInteger idx, BOOL *stop) {
-
-        if (level0Child != nil) {
-
-            id<WOTPivotNodeProtocol> level0ChildCopy = [level0Child copyWithZone:nil];
-            [level1Endpoints enumerateObjectsUsingBlock:^(id<WOTPivotNodeProtocol> level1Child, NSUInteger idx, BOOL *stop) {
-
-                if (level1Child != nil) {
-                    NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[level0Child.predicate, level1Child.predicate]];
-                    id<WOTPivotNodeProtocol> level1ChildCopy = [level1Child copyWithZone:nil];
-                    level1ChildCopy.predicate = predicate;
-                    [level0ChildCopy addChild:level1ChildCopy];
-                }
-            }];
-
-            [root addChild:level0ChildCopy];
-        }
-    }];
-
-    return @[root];
-}
 
 @end

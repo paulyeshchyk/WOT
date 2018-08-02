@@ -13,6 +13,7 @@
 #import "Tankradios.h"
 #import "Tanks.h"
 #import "Tankturrets.h"
+#import "Vehicleprofile.h"
 
 
 @implementation Vehicles
@@ -34,5 +35,6 @@
 @dynamic suspensions;
 @dynamic tanks;
 @dynamic turrets;
+@dynamic default_profile;
 
 @end

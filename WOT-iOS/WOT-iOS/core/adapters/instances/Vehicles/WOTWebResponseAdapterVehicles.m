@@ -15,6 +15,7 @@
 #import "Tankturrets.h"
 #import "Tankengines.h"
 #import "ModulesTree.h"
+#import "Vehicleprofile.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import "WOTRequestExecutor.h"
 #import "WOTWebResponseAdapterModulesTree.h"
@@ -117,7 +118,12 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     Vehicles *vehicle = [Vehicles findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
     [vehicle fillPropertiesFromDictionary:jSON];
     
-    
+#warning dirty code
+    Vehicleprofile *defaultProfile = [Vehicleprofile insertNewObjectInManagedObjectContext:context];
+    [defaultProfile fillPropertiesFromDictionary:jSON[WOT_KEY_DEFAULT_PROFILE]];
+    vehicle.default_profile = defaultProfile;
+
+
 #warning should be refactored
     
     NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TANK_ID, @([key integerValue])];

@@ -22,19 +22,28 @@ class WOTNodePivotFactoryTest: XCTestCase {
     }
 
     func testNation() {
-        let node = WOTNodeFactory.pivotNationMetadataItem(as: PivotMetadataType.column)
+        guard let node = WOTPivotTemplateVehicleNation().asType(PivotMetadataType.column) else {
+            XCTAssert(false)
+            return
+        }
         let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
         XCTAssert(depth == 1)
     }
 
     func testTier() {
-        let node = WOTNodeFactory.pivotTierMetadataItem(as: PivotMetadataType.column)
+        guard let node = WOTPivotTemplateVehicleTier().asType(PivotMetadataType.column) else {
+            XCTAssert(false)
+            return
+        }
         let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
         XCTAssert(depth == 1)
     }
 
     func testType() {
-        let node = WOTNodeFactory.pivotTypeMetadataItem(as: PivotMetadataType.column)
+        guard let node = WOTPivotTemplateVehicleType().asType(PivotMetadataType.column) else {
+            XCTAssert(false)
+            return
+        }
         let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
         XCTAssert(depth == 1)
     }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14C1514" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14296.2" systemVersion="17G65" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="ListSetting" representedClassName="ListSetting" syncable="YES">
-        <attribute name="ascending" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="ascending" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="orderBy" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="orderBy" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="values" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ModulesTree" representedClassName="ModulesTree" syncable="YES">
-        <attribute name="is_default" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="is_default" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="module_id" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -25,7 +25,7 @@
     </entity>
     <entity name="Tankchassis" representedClassName="Tankchassis" syncable="YES">
         <attribute name="level" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="max_load" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="max_load" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="module_id" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name_i18n" optional="YES" attributeType="String" syncable="YES"/>
@@ -84,7 +84,7 @@
         <attribute name="contour_image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image_small" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="is_premium" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="is_premium" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="level" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name_i18n" optional="YES" attributeType="String" syncable="YES"/>
@@ -118,9 +118,9 @@
     <entity name="UserSession" representedClassName="UserSession" syncable="YES">
         <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accound_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="currentSession" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="expires_at" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="isCurrent" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="currentSession" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="expires_at" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isCurrent" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Vehicleprofile" representedClassName="Vehicleprofile" syncable="YES">
@@ -128,7 +128,7 @@
         <attribute name="hp" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="hull_hp" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="hull_weight" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="is_default" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="is_default" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="max_ammo" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="max_weight" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="speed_backward" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -227,17 +227,18 @@
         <relationship name="vehicleprofile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicleprofile" inverseName="turret" inverseEntity="Vehicleprofile" syncable="YES"/>
     </entity>
     <entity name="Vehicles" representedClassName="Vehicles" syncable="YES">
-        <attribute name="is_gift" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="is_premium" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="is_gift" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="is_premium" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nation" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="price_credit" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="price_gold" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="price_credit" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="price_gold" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="short_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tank_id" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
         <attribute name="tier" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="default_profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicleprofile" syncable="YES"/>
         <relationship name="engines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankengines" inverseName="vehicles" inverseEntity="Tankengines" syncable="YES"/>
         <relationship name="guns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankguns" inverseName="vehicles" inverseEntity="Tankguns" syncable="YES"/>
         <relationship name="radios" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankradios" inverseName="vehicles" inverseEntity="Tankradios" syncable="YES"/>
@@ -267,6 +268,6 @@
         <element name="VehicleprofileRadio" positionX="-1476" positionY="-279" width="128" height="150"/>
         <element name="VehicleprofileSuspension" positionX="-1476" positionY="-279" width="128" height="165"/>
         <element name="VehicleprofileTurret" positionX="-1449" positionY="-252" width="128" height="75"/>
-        <element name="Vehicles" positionX="-675" positionY="-18" width="128" height="298"/>
+        <element name="Vehicles" positionX="-675" positionY="-18" width="128" height="315"/>
     </elements>
 </model>

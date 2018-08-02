@@ -221,6 +221,8 @@
 		1D9CAA22210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */; };
 		1D9CAA24210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */; };
 		1D9CAA30211059F500B6CA5A /* WOTPivotSeparatorLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA2F211059F500B6CA5A /* WOTPivotSeparatorLayoutAttributes.swift */; };
+		1D9CAA332111937200B6CA5A /* WOTPivotTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA322111937200B6CA5A /* WOTPivotTemplates.swift */; };
+		1D9CAA362111A09700B6CA5A /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA352111A09600B6CA5A /* strings.swift */; };
 		1DA00C0F21007F4B004F9FDE /* WOTDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C0721007F4A004F9FDE /* WOTDimension.swift */; };
 		1DA00C1021007F4B004F9FDE /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C0821007F4A004F9FDE /* WOTDimensionProtocol.swift */; };
 		1DA00C1921007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C1721007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift */; };
@@ -734,6 +736,8 @@
 		1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankTreeConnectorCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTTankTreeConnectorCollectionViewCell.xib; sourceTree = "<group>"; };
 		1D9CAA2F211059F500B6CA5A /* WOTPivotSeparatorLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotSeparatorLayoutAttributes.swift; sourceTree = "<group>"; };
+		1D9CAA322111937200B6CA5A /* WOTPivotTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotTemplates.swift; sourceTree = "<group>"; };
+		1D9CAA352111A09600B6CA5A /* strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = strings.swift; sourceTree = "<group>"; };
 		1DA00C0721007F4A004F9FDE /* WOTDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimension.swift; sourceTree = "<group>"; };
 		1DA00C0821007F4A004F9FDE /* WOTDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionProtocol.swift; sourceTree = "<group>"; };
 		1DA00C1721007F6C004F9FDE /* WOTNodeEnumeratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumeratorProtocol.swift; sourceTree = "<group>"; };
@@ -1807,6 +1811,14 @@
 			path = WOTDataModel;
 			sourceTree = "<group>";
 		};
+		1D9CAA31211192CD00B6CA5A /* templates */ = {
+			isa = PBXGroup;
+			children = (
+				1D9CAA322111937200B6CA5A /* WOTPivotTemplates.swift */,
+			);
+			path = templates;
+			sourceTree = "<group>";
+		};
 		1DA00C0621007F4A004F9FDE /* WOTDimension */ = {
 			isa = PBXGroup;
 			children = (
@@ -2597,6 +2609,7 @@
 				1DB57B1620F771B9003FF3EC /* json */,
 				1DD646D01B1F4C9D00B0EC76 /* images */,
 				1DD647081B20823400B0EC76 /* Strings.h */,
+				1D9CAA352111A09600B6CA5A /* strings.swift */,
 				1DD6471F1B20855400B0EC76 /* Localizable.strings */,
 				1D4C920F1B25B39800E320B5 /* WOTMacro.h */,
 			);
@@ -2770,6 +2783,7 @@
 		1DDEE3791B8F353200C90D4B /* WOTTankPivotViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1D9CAA31211192CD00B6CA5A /* templates */,
 				1DDEE37A1B8F353200C90D4B /* cells */,
 				1DDEE3881B8F353200C90D4B /* layout */,
 				1DDEE38D1B8F353200C90D4B /* WOTTankPivotViewController.h */,
@@ -2907,10 +2921,11 @@
 			buildConfigurationList = 1DD646591B1C616A00B0EC76 /* Build configuration list for PBXNativeTarget "WOT-iOS" */;
 			buildPhases = (
 				A70D0AFA5460D30E17BC9F18 /* [CP] Check Pods Manifest.lock */,
+				1D9CAA3421119BD300B6CA5A /* Swiftgen */,
+				1D6E94E42100C9CC00B65FC3 /* ShellScript */,
 				1DD6462F1B1C616A00B0EC76 /* Sources */,
 				1DD646301B1C616A00B0EC76 /* Frameworks */,
 				1DD646311B1C616A00B0EC76 /* Resources */,
-				1D6E94E42100C9CC00B65FC3 /* ShellScript */,
 				6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -3178,6 +3193,24 @@
 			shellPath = /bin/sh;
 			shellScript = "#if which swiftlint >/dev/null; then\n#    swiftlint\n#else\n#    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n";
 		};
+		1D9CAA3421119BD300B6CA5A /* Swiftgen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftgen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/SwiftGen/bin/swiftgen strings -p $PODS_ROOT/SwiftGen/templates/strings/flat-swift3.stencil --output ${SRCROOT}/WOT-iOS/resources/strings.swift ${SRCROOT}/WOT-iOS/resources/en.lproj/Localizable.strings\n";
+		};
 		6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3275,6 +3308,7 @@
 				1D6FF5112106FF85006C1328 /* WOTTankConfigurationItemCell.m in Sources */,
 				1D6FF52E210874E0006C1328 /* WOTDimensionColumnCalculator.swift in Sources */,
 				1D2143B91BA00B37001A7DEE /* VehicleprofileAmmoDamage.m in Sources */,
+				1D9CAA362111A09700B6CA5A /* strings.swift in Sources */,
 				1D79C77F20F5D0FF00FFAF02 /* WOTDataModel.swift in Sources */,
 				1D428C482105BF9D0057A85C /* WOTTreeModuleNodeProtocol.swift in Sources */,
 				1DC07AC21B399FE4002FAA72 /* WOTWebResponseAdapterTanks.m in Sources */,
@@ -3342,6 +3376,7 @@
 				1D2E137420F77E3C0057DCAF /* WOTWEBRequestTankVehicles+Fake.m in Sources */,
 				1DD46B1C1BA6941900D3B3CE /* WOTTankGridViewController.m in Sources */,
 				1D2143BE1BA00B37001A7DEE /* VehicleprofileEngine.m in Sources */,
+				1D9CAA332111937200B6CA5A /* WOTPivotTemplates.swift in Sources */,
 				1DC07B601B3A9489002FAA72 /* WOTWEBRequestTankVehicles.m in Sources */,
 				1DF73EBE1B90563300AE6F86 /* NSMutableArray+WOT.m in Sources */,
 				1D2143B21BA00B37001A7DEE /* Tankguns.m in Sources */,
@@ -3716,7 +3751,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Debug;
@@ -3740,7 +3775,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Release;

@@ -11,4 +11,5 @@ target 'WOT-iOS' do
     pod 'Charts'
     pod 'ASProgressPopUpView'
     pod 'WYPopoverController'
+    pod 'SwiftGen'
 end

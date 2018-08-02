@@ -22,9 +22,14 @@ class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
     public var relativeRect: NSValue?
 
     @objc
-    convenience init(name nameValue: String, predicate predicateValue: NSPredicate) {
-        self.init(name: nameValue)
-        self.predicate = predicateValue
+    required init(name nameValue: String, predicate predicateValue: NSPredicate) {
+        predicate = predicateValue
+        super.init(name: nameValue)
+    }
+
+    @objc public required init(name nameValue: String) {
+
+        super.init(name: nameValue)
     }
 
     public override func copy(with zone: NSZone? = nil) -> Any {

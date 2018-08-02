@@ -48,6 +48,7 @@ PODS:
   - SDWebImage (4.4.1):
     - SDWebImage/Core (= 4.4.1)
   - SDWebImage/Core (4.4.1)
+  - SwiftGen (5.3.0)
   - WYPopoverController (0.3.9)
 
 DEPENDENCIES:
@@ -57,6 +58,7 @@ DEPENDENCIES:
   - Charts
   - MMDrawerController
   - SDWebImage
+  - SwiftGen
   - WYPopoverController
 
 SPEC REPOS:
@@ -67,6 +69,7 @@ SPEC REPOS:
     - Charts
     - MMDrawerController
     - SDWebImage
+    - SwiftGen
     - WYPopoverController
 
 SPEC CHECKSUMS:
@@ -76,8 +79,9 @@ SPEC CHECKSUMS:
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   MMDrawerController: e3a54a5570388463ad3b36975251575b50c4e1a0
   SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
+  SwiftGen: 4379bd3640b0a212a0f6ea3c494adba385513d10
   WYPopoverController: a9db25ac2841a686acdc0f3a99bdb21545db32f4
 
-PODFILE CHECKSUM: 7433d1e19ab17dccfb00b36fa7eb2ab03385213f
+PODFILE CHECKSUM: c98257cc57a252a727501d6df41a45d1b0dd470f
 
 COCOAPODS: 1.5.3

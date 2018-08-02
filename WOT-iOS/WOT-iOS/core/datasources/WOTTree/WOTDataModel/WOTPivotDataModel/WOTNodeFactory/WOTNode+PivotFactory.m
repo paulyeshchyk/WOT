@@ -11,14 +11,6 @@
 
 @implementation WOTNodeFactory 
 
-+ (Class _Nonnull)pivotNodeClassForType:(PivotMetadataType)type {
-    switch (type) {
-        case PivotMetadataTypeColumn: return [WOTPivotColNode class];
-        case PivotMetadataTypeFilter: return [WOTPivotFilterNode class];
-        case PivotMetadataTypeData: return [WOTPivotDataNode class];
-        case PivotMetadataTypeRow: return [WOTPivotRowNode class];
-    }
-}
 
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nonnull)predicate andTanksObject:(id _Nonnull)tanksObject {
     
@@ -39,7 +31,7 @@
 
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotDPMMetadataItemAsType:(PivotMetadataType)type {
     
-    Class PivotNodeClass = [self pivotNodeClassForType:type];
+    Class PivotNodeClass = [WOTPivotMetaTypeConverter nodeClassFor:type];
 
     id<WOTPivotNodeProtocol> result = [[PivotNodeClass alloc] initWithName:@"DPM"];
 
@@ -62,90 +54,88 @@
     return result;
 }
 
-+ (id<WOTPivotNodeProtocol> _Nonnull)pivotNationMetadataItemAsType:(PivotMetadataType)type {
-    
-    Class PivotNodeClass = [self pivotNodeClassForType:type];
-    id<WOTPivotNodeProtocol> result = [[PivotNodeClass alloc] initWithName:@"Nation"];
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotWeightMetadataItemAsType:(PivotMetadataType)type {
 
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_CHINA)   predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_CHINA]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_CZECH)   predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_CZECH]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_FRANCE)  predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_FRANCE]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_GERMANY) predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_GERMANY]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_JAPAN)   predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_JAPAN]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_UK)      predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_UK]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_USA)     predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_USA]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_USSR)    predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_USSR]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_SWEDEN)  predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_SWEDEN]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_NATION_POLAND)  predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_NATION, WOT_STRING_NATION_POLAND]]];
+    Class PivotNodeClass = [WOTPivotMetaTypeConverter nodeClassFor:type];
+    id<WOTPivotNodeProtocol> result = [[PivotNodeClass alloc] initWithName:@"Weight"];
+
+
+    NSPredicate *predicateLess1K = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 1*1000];
+    NSPredicate *predicateLess5K = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 5*1000];
+    NSPredicate *predicateLess10K = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 10*1000];
+    NSPredicate *predicateLess25K = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 25*1000];
+    NSPredicate *predicateLess50K = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 50*1000];
+    NSPredicate *predicateLess100K = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 100*1000];
+
+    NSPredicate *predicateGr1K = [NSPredicate predicateWithFormat:@"%K > %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 1*1000];
+    NSPredicate *predicateGr5K = [NSPredicate predicateWithFormat:@"%K > %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 5*1000];
+    NSPredicate *predicateGr10K = [NSPredicate predicateWithFormat:@"%K > %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 10*1000];
+    NSPredicate *predicateGr25K = [NSPredicate predicateWithFormat:@"%K > %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 25*1000];
+    NSPredicate *predicateGr50K = [NSPredicate predicateWithFormat:@"%K > %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 50*1000];
+    NSPredicate *predicateGr100K = [NSPredicate predicateWithFormat:@"%K > %d", WOT_KEY_DEFAULT_PROFILE_WEIGHT, 100*1000];
+
+    [result addChild:[[PivotNodeClass alloc] initWithName:@"(1k]"  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateLess1K]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:@"(1K;5K]"  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr1K, predicateLess5K]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:@"(5K;10K]"  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr5K, predicateLess10K]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:@"(10K;25K]"  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr10K, predicateLess25K]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:@"(25K;50K]"  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr25K, predicateLess50K]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:@"(50K;100K]"  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr50K, predicateLess100K]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:@"[100K)"  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr100K]]]];
 
     return result;
 }
 
-+ (id<WOTPivotNodeProtocol> _Nonnull)pivotTierMetadataItemAsType:(PivotMetadataType)type {
-    
-    Class PivotNodeClass = [self pivotNodeClassForType:type];
-    id<WOTPivotNodeProtocol> result = [[PivotNodeClass alloc] initWithName:@"Tier"];
-    
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_1)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_1]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_2)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_2]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_3)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_3]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_4)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_4]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_5)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_5]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_6)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_6]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_7)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_7]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_8)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_8]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_9)  predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_9]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LEVEL_10) predicate:[NSPredicate predicateWithFormat:@"%K == %d", WOT_KEY_LEVEL, WOT_INTEGER_LEVEL_10]]];
-    
-    return result;
-}
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotHPMetadataItemAsType:(PivotMetadataType)type {
 
-+ (id<WOTPivotNodeProtocol> _Nonnull)pivotPremiumMetadataItemAsType:(PivotMetadataType)type {
-    
-    Class PivotNodeClass = [self pivotNodeClassForType:type];
-    id<WOTPivotNodeProtocol> result = [[PivotNodeClass alloc] initWithName:@"Premium"];
+    Class PivotNodeClass = [WOTPivotMetaTypeConverter nodeClassFor:type];
+    id<WOTPivotNodeProtocol> result = [[PivotNodeClass alloc] initWithName:@"HP"];
 
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_IS_PREMIUM)     predicate:[NSPredicate predicateWithFormat:@"%K == YES", WOT_KEY_IS_PREMIUM]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_IS_NOT_PREMIUM) predicate:[NSPredicate predicateWithFormat:@"%K == NO",  WOT_KEY_IS_PREMIUM]]];
-    
-    return result;
-}
 
-+ (id<WOTPivotNodeProtocol> _Nonnull)pivotTypeMetadataItemAsType:(PivotMetadataType)type {
-    
-    Class PivotNodeClass = [self pivotNodeClassForType:type];
-    id<WOTPivotNodeProtocol> result = [[PivotNodeClass alloc] initWithName:@"Type"];
+    NSPredicate *predicateGr100 = [NSPredicate predicateWithFormat:@"%K >= %d", WOT_KEY_DEFAULT_PROFILE_HP, 100];
+    NSPredicate *predicateGr200 = [NSPredicate predicateWithFormat:@"%K >= %d", WOT_KEY_DEFAULT_PROFILE_HP, 200];
+    NSPredicate *predicateGr400 = [NSPredicate predicateWithFormat:@"%K >= %d", WOT_KEY_DEFAULT_PROFILE_HP, 400];
+    NSPredicate *predicateGr800 = [NSPredicate predicateWithFormat:@"%K >= %d", WOT_KEY_DEFAULT_PROFILE_HP, 800];
+    NSPredicate *predicateGr1600 = [NSPredicate predicateWithFormat:@"%K >= %d", WOT_KEY_DEFAULT_PROFILE_HP, 1600];
+    NSPredicate *predicateGr5000 = [NSPredicate predicateWithFormat:@"%K >= %d", WOT_KEY_DEFAULT_PROFILE_HP, 5000];
+    NSPredicate *predicateLess100 = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_HP, 100];
+    NSPredicate *predicateLess200 = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_HP, 200];
+    NSPredicate *predicateLess400 = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_HP, 400];
+    NSPredicate *predicateLess800 = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_HP, 800];
+    NSPredicate *predicateLess1600 = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_HP, 1600];
+    NSPredicate *predicateLess5000 = [NSPredicate predicateWithFormat:@"%K < %d", WOT_KEY_DEFAULT_PROFILE_HP, 5000];
 
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_AT_SPG) predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_TYPE, WOT_STRING_TANK_TYPE_AT_SPG]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_LT)     predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_TYPE, WOT_STRING_TANK_TYPE_LIGHT_TANK]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_HT)     predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_TYPE, WOT_STRING_TANK_TYPE_HEAVY_TANK]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_MT)     predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_TYPE, WOT_STRING_TANK_TYPE_MEDIUM_TANK]]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_SPG)    predicate:[NSPredicate predicateWithFormat:@"%K == %@", WOT_KEY_TYPE, WOT_STRING_TANK_TYPE_SPG]]];
-    
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_HP_LESS_100)  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateLess100]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_HP_LESS_200)  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr100, predicateLess200]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_HP_LESS_400)  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr200, predicateLess400]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_HP_LESS_800)  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr400, predicateLess800]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_HP_LESS_1600)  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr800, predicateLess1600]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_HP_LESS_5000)  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr1600, predicateLess5000]]]];
+    [result addChild:[[PivotNodeClass alloc] initWithName:WOTString(WOT_STRING_HP_GR_5000)  predicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[predicateGr5000]]]];
+
     return result;
 }
 
 + (NSDictionary * _Nonnull)nationColors {
     
-    return @{WOT_STRING_NATION_USA:     [[UIColor purpleColor] paleColor],
-             WOT_STRING_NATION_USSR:    [[UIColor redColor] paleColor],
-             WOT_STRING_NATION_JAPAN:   [[UIColor orangeColor] paleColor],
-             WOT_STRING_NATION_CHINA:   [[UIColor yellowColor] paleColor],
-             WOT_STRING_NATION_GERMANY: [[UIColor brownColor] paleColor],
-             WOT_STRING_NATION_FRANCE:  [[UIColor greenColor] paleColor],
-             WOT_STRING_NATION_POLAND:  [[UIColor whiteColor] paleColor],
-             WOT_STRING_NATION_SWEDEN:  [[UIColor blueColor] paleColor],
-             WOT_STRING_NATION_CZECH:   [[UIColor cyanColor] paleColor],
-             WOT_STRING_NATION_UK:      [[UIColor brownColor] paleColor]};
+    return @{NSLocalizedString(WOT_STRING_NATION_USA, nil):     [[UIColor purpleColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_USSR, nil):    [[UIColor redColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_JAPAN, nil):   [[UIColor orangeColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_CHINA, nil):   [[UIColor yellowColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_GERMANY, nil): [[UIColor brownColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_FRANCE, nil):  [[UIColor greenColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_POLAND, nil):  [[UIColor whiteColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_SWEDEN, nil):  [[UIColor blueColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_CZECH, nil):   [[UIColor cyanColor] paleColor],
+             NSLocalizedString(WOT_STRING_NATION_UK, nil):      [[UIColor brownColor] paleColor]};
 }
 
 + (NSDictionary * _Nonnull)typeColors {
     
-    return @{WOT_STRING_TANK_TYPE_AT_SPG:       [[UIColor blueColor] paleColor],
-             WOT_STRING_TANK_TYPE_SPG:          [[UIColor brownColor] paleColor],
-             WOT_STRING_TANK_TYPE_LIGHT_TANK:   [[UIColor greenColor] paleColor],
-             WOT_STRING_TANK_TYPE_MEDIUM_TANK:  [[UIColor yellowColor] paleColor],
-             WOT_STRING_TANK_TYPE_HEAVY_TANK:   [[UIColor redColor] paleColor]};
+    return @{NSLocalizedString(WOT_STRING_TANK_TYPE_AT_SPG, nil):       [[UIColor blueColor] paleColor],
+             NSLocalizedString(WOT_STRING_TANK_TYPE_SPG, nil):          [[UIColor brownColor] paleColor],
+             NSLocalizedString(WOT_STRING_TANK_TYPE_LIGHT_TANK, nil):   [[UIColor greenColor] paleColor],
+             NSLocalizedString(WOT_STRING_TANK_TYPE_MEDIUM_TANK, nil):  [[UIColor yellowColor] paleColor],
+             NSLocalizedString(WOT_STRING_TANK_TYPE_HEAVY_TANK, nil):   [[UIColor redColor] paleColor]};
 }
 
 @end

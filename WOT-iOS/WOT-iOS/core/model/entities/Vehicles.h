@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Tankchassis, Tankengines, Tankguns, Tankradios, Tanks, Tankturrets;
+@class Tankchassis, Tankengines, Tankguns, Tankradios, Tanks, Tankturrets, Vehicleprofile;
 
 @interface Vehicles : NSManagedObject
 
@@ -30,6 +30,7 @@
 @property (nonatomic, retain) NSSet *suspensions;
 @property (nonatomic, retain) Tanks *tanks;
 @property (nonatomic, retain) NSSet *turrets;
+@property (nonatomic, retain) Vehicleprofile *default_profile;
 @end
 
 @interface Vehicles (CoreDataGeneratedAccessors)
