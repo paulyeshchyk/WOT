@@ -54,6 +54,11 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
         return result
     }()
 
+    func add(dataNode: WOTNodeProtocol) {
+        self.rootDataNode.addChild(dataNode)
+        self.listener.modelHasNewDataItem()
+    }
+
     override var nodes: [WOTNodeProtocol] {
         return [self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode]
     }
@@ -146,10 +151,10 @@ class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHo
         self.add(metadataItems: self.listener.metadataItems())
 
         let metadataIndex = self.nodeIndex.doAutoincrementIndex(forNodes: [self.rootFilterNode, self.rootColsNode, self.rootRowsNode])
-        self.dimension.reload(forIndex: metadataIndex)
-        self.reindexNodes()
-
-        listener.modelDidLoad()
+        self.dimension.reload(forIndex: metadataIndex, completion: {
+            self.reindexNodes()
+            self.listener.modelDidLoad()
+        })
     }
 
     fileprivate func failPivot(_ error: Error) {

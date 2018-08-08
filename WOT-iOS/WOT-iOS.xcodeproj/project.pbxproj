@@ -36,7 +36,10 @@
 		1D047B691B331DF000B5B696 /* WOTApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */; };
 		1D047BBB1B34095500B5B696 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D047BB91B34095500B5B696 /* WOT_iOS.xcdatamodeld */; };
 		1D047BBE1B3419C000B5B696 /* WOTWebResponseLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047BBD1B3419C000B5B696 /* WOTWebResponseLink.m */; };
-		1D0F3E8021131AE000129E4B /* WOTPivotPermutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F3E7F21131AE000129E4B /* WOTPivotPermutator.swift */; };
+		1D054A832118615F002D25EF /* WOTTankPivotViewController+NodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D054A822118615F002D25EF /* WOTTankPivotViewController+NodeCreator.swift */; };
+		1D054A852118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D054A842118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift */; };
+		1D054A8721186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D054A8621186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift */; };
+		1D0F3E8021131AE000129E4B /* WOTPivotMetadataPermutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F3E7F21131AE000129E4B /* WOTPivotMetadataPermutator.swift */; };
 		1D0F55011C91677600272B05 /* WOTTankMetricsList+ChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */; };
 		1D188FE11B9437460056D208 /* PivotTreeTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D188FE01B9437460056D208 /* PivotTreeTestCase.m */; };
 		1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */; };
@@ -461,7 +464,10 @@
 		1D047BBA1B34095500B5B696 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
 		1D047BBC1B3419C000B5B696 /* WOTWebResponseLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseLink.h; sourceTree = "<group>"; };
 		1D047BBD1B3419C000B5B696 /* WOTWebResponseLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWebResponseLink.m; sourceTree = "<group>"; };
-		1D0F3E7F21131AE000129E4B /* WOTPivotPermutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotPermutator.swift; sourceTree = "<group>"; };
+		1D054A822118615F002D25EF /* WOTTankPivotViewController+NodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+NodeCreator.swift"; sourceTree = "<group>"; };
+		1D054A842118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift"; sourceTree = "<group>"; };
+		1D054A8621186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+WOTDataModelListener.swift"; sourceTree = "<group>"; };
+		1D0F3E7F21131AE000129E4B /* WOTPivotMetadataPermutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutator.swift; sourceTree = "<group>"; };
 		1D0F54FF1C91677600272B05 /* WOTTankMetricsList+ChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankMetricsList+ChartData.h"; sourceTree = "<group>"; };
 		1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankMetricsList+ChartData.m"; sourceTree = "<group>"; };
 		1D188FE01B9437460056D208 /* PivotTreeTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PivotTreeTestCase.m; sourceTree = "<group>"; };
@@ -1190,7 +1196,7 @@
 		1D0F3E7E21131ACB00129E4B /* permutator */ = {
 			isa = PBXGroup;
 			children = (
-				1D0F3E7F21131AE000129E4B /* WOTPivotPermutator.swift */,
+				1D0F3E7F21131AE000129E4B /* WOTPivotMetadataPermutator.swift */,
 			);
 			path = permutator;
 			sourceTree = "<group>";
@@ -2799,6 +2805,9 @@
 				1DDEE3881B8F353200C90D4B /* layout */,
 				1DDEE38D1B8F353200C90D4B /* WOTTankPivotViewController.h */,
 				1DDEE38E1B8F353200C90D4B /* WOTTankPivotViewController.m */,
+				1D054A8621186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift */,
+				1D054A842118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift */,
+				1D054A822118615F002D25EF /* WOTTankPivotViewController+NodeCreator.swift */,
 				1DDEE38F1B8F353200C90D4B /* WOTTankPivotViewController.xib */,
 			);
 			path = WOTTankPivotViewController;
@@ -2933,7 +2942,7 @@
 			buildPhases = (
 				A70D0AFA5460D30E17BC9F18 /* [CP] Check Pods Manifest.lock */,
 				1D9CAA3421119BD300B6CA5A /* Swiftgen */,
-				1D6E94E42100C9CC00B65FC3 /* ShellScript */,
+				1D6E94E42100C9CC00B65FC3 /* Swiftlint */,
 				1DD6462F1B1C616A00B0EC76 /* Sources */,
 				1DD646301B1C616A00B0EC76 /* Frameworks */,
 				1DD646311B1C616A00B0EC76 /* Resources */,
@@ -3191,13 +3200,14 @@
 			shellPath = /bin/sh;
 			shellScript = "source ~/.bash_profile\n\nhash oclint &> /dev/null\nif [ $? -eq 1 ]; then\necho >&2 \"oclint not found, analyzing stopped\"\nexit 1\nfi\n\ncd ${TARGET_TEMP_DIR}\n\nif [ ! -f compile_commands.json ]; then\necho \"[*] compile_commands.json not found, possibly clean was performed\"\necho \"[*] starting xcodebuild to rebuild the project..\"\n# clean previous output\nif [ -f xcodebuild.log ]; then\nrm xcodebuild.log\nfi\n\ncd ${SRCROOT}\n\nxcodebuild clean\n\n#build xcodebuild.log\nxcodebuild | tee ${TARGET_TEMP_DIR}/xcodebuild.log\n#xcodebuild <options>| tee ${TARGET_TEMP_DIR}/xcodebuild.log\n\necho \"[*] transforming xcodebuild.log into compile_commands.json...\"\ncd ${TARGET_TEMP_DIR}\n#transform it into compile_commands.json\noclint-xcodebuild\n\necho \"[*] copy compile_commands.json to the project root...\"\ncp ${TARGET_TEMP_DIR}/compile_commands.json ${SRCROOT}/compile_commands.json\n\nfi\n\necho \"[*] starting analyzing\"\ncd ${TARGET_TEMP_DIR}\noclint-json-compilation-database | sed 's/\\(.*\\.\\m\\{1,2\\}:[0-9]*:[0-9]*:\\)/\\1 warning:/'";
 		};
-		1D6E94E42100C9CC00B65FC3 /* ShellScript */ = {
+		1D6E94E42100C9CC00B65FC3 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = Swiftlint;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3209,13 +3219,9 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 			);
 			name = Swiftgen;
-			outputFileListPaths = (
-			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3395,7 +3401,7 @@
 				1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */,
 				1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */,
 				1D519D531B50071800D3A286 /* ModulesTree+FillProperties.m in Sources */,
-				1D0F3E8021131AE000129E4B /* WOTPivotPermutator.swift in Sources */,
+				1D0F3E8021131AE000129E4B /* WOTPivotMetadataPermutator.swift in Sources */,
 				1D047B691B331DF000B5B696 /* WOTApplicationDefaults.m in Sources */,
 				1D519CF31B4E7BE400D3A286 /* WOTTankDetailField.m in Sources */,
 				1DC07B591B3A9489002FAA72 /* WOTWEBRequestLogin.m in Sources */,
@@ -3439,6 +3445,7 @@
 				1D6FF516210722EC006C1328 /* WOTModuleNextItemProtocol.swift in Sources */,
 				1DCC7F311B2EE974005FF193 /* NSString+RomanUtils.m in Sources */,
 				1D519D571B53A85600D3A286 /* WOTWebResponseAdapterModulesTree.m in Sources */,
+				1D054A8721186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift in Sources */,
 				1DDEE39B1B8F353200C90D4B /* WOTTankPivotViewController.m in Sources */,
 				1D428C512105D1380057A85C /* WOTDataTanksFetchController.swift in Sources */,
 				1D2143DD1BA01F56001A7DEE /* VehicleprofileAmmoDamage+FillProperties.m in Sources */,
@@ -3451,12 +3458,14 @@
 				1DD46B731BA6DC4100D3B3CE /* WOTMetric.m in Sources */,
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,
 				1D2E136820F77DCF0057DCAF /* WOTWebRequestTankGuns+Fake.m in Sources */,
+				1D054A832118615F002D25EF /* WOTTankPivotViewController+NodeCreator.swift in Sources */,
 				1DAC86F82101FE2600EF5216 /* WOTNodeProtocol.swift in Sources */,
 				1DC07ACD1B39A032002FAA72 /* WOTWebResponseAdapterGuns.m in Sources */,
 				1D21433F1B9F17D1001A7DEE /* WOTWebResponseAdapterProfile.m in Sources */,
 				1DD46B3F1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m in Sources */,
 				1D010D051B789A8900FA6A75 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
+				1D054A852118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift in Sources */,
 				1D2143C01BA00B37001A7DEE /* VehicleprofileRadio.m in Sources */,
 				1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */,
 				1D2E137120F77E230057DCAF /* WOTWebRequestTankTurrets+Fake.m in Sources */,

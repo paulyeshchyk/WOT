@@ -8,6 +8,6 @@
 
 import Foundation
 
-class WOTTankTreeConnectorCollectionViewCell : UICollectionViewCell {
+class WOTTankTreeConnectorCollectionViewCell: UICollectionViewCell {
 
 }

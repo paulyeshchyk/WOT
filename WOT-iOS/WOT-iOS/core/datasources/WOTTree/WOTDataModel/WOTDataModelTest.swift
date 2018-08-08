@@ -117,13 +117,11 @@ class WOTDataModelTest: XCTestCase {
         }
         XCTAssert(indexPath.compare(IndexPath(row: 0, section: 1)) == .orderedSame)
 
-        let nodeToCheck = model.node(atIndexPath: IndexPath(row:0, section: 1) as NSIndexPath)
+        let nodeToCheck = model.node(atIndexPath: IndexPath(row: 0, section: 1) as NSIndexPath)
         XCTAssert(nodeToCheck === node2)
-
 
         let node3: WOTNode? = nil
         let nonExistantIndexPath = model.indexPath(forNode: node3)
         XCTAssert(nonExistantIndexPath == nil)
-
     }
 }

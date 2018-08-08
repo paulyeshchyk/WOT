@@ -144,8 +144,9 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             
             return result;
         }
-        
-        id jSONLink = jSON[wotWebResponseLink.jsonKeyName];
+
+        NSString *linkName = NSLocalizedString(wotWebResponseLink.jsonKeyName, nil);
+        id jSONLink = jSON[linkName];
         if ([jSONLink isKindOfClass:[NSArray class]]) {
             
             NSDictionary *requestsForLinks  = [self parseArrayLinkIDs:jSONLink

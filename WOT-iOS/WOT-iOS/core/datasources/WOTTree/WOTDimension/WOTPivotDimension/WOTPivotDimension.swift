@@ -51,61 +51,47 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         return CGSize(width: width, height: height)//156:11
     }
 
-    override func reload(forIndex externalIndex: Int) {
-        var index = externalIndex
+    private var index: Int = 0
+
+    override func reload(forIndex externalIndex: Int, completion:  ()->()) {
+
+        self.index = externalIndex
         let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootColsNode)
         let rowNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootRowsNode)
         let filterEndPoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootFilterNode)
         rowNodeEndpoints.forEach { (rowNode) in
             colNodeEndpoints.forEach({ (colNode) in
                 filterEndPoints.forEach({ (filterNode) in
-                    index = updateDimensions(externalIndex: index, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+                    self.updateDimensions(colNode: colNode, rowNode: rowNode, filterNode: filterNode)
                 })
             })
         }
+        completion()
     }
 
-    private func fetchDataNodes(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) -> [WOTNodeProtocol] {
-        let predicates = self.predicates(colNode: colNode, rowNode: rowNode, filterNode: filterNode)
-        let fetchedNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
-        self.setMaxWidth(fetchedNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))
-        self.setMaxWidth(fetchedNodes.count, forNode: rowNode, byKey: String(format: "%d", colNode.hash))
-        return fetchedNodes
-    }
+    private func updateDimensions(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) {
+        var result = self.index
 
-    private func updateDimensions(externalIndex: Int, colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) -> Int {
-        var result = externalIndex
+        let predicates = [colNode, rowNode, filterNode].compactMap { ($0 as? WOTPivotNodeProtocol)?.predicate }
+        let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
 
-        let fetchedNodes = fetchDataNodes(colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+        self.setMaxWidth(dataNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))
+        self.setMaxWidth(dataNodes.count, forNode: rowNode, byKey: String(format: "%d", colNode.hash))
 
         var idx: Int = 0
-        fetchedNodes.forEach({ (fetchedNode) in
-            guard let pivotNode = fetchedNode as? WOTPivotNodeProtocol else {
+        dataNodes.forEach({ (fetchedNode) in
+            guard let dataNode = fetchedNode as? WOTPivotNodeProtocol else {
                 return
             }
-            pivotNode.index = result
+            dataNode.index = result
             result += 1
-            pivotNode.stepParentColumn = colNode
-            pivotNode.stepParentRow = rowNode
-            pivotNode.indexInsideStepParentColumn = idx
-            self.rootNodeHolder.rootDataNode.addChild(pivotNode)
+            dataNode.stepParentColumn = colNode
+            dataNode.stepParentRow = rowNode
+            dataNode.indexInsideStepParentColumn = idx
+            self.rootNodeHolder.add(dataNode: dataNode)
             idx += 1
         })
-        return result
-    }
-
-    private func predicates(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) -> [NSPredicate] {
-        var result = [NSPredicate]()
-        if let colPredicate = (colNode as? WOTPivotNodeProtocol)?.predicate {
-            result.append(colPredicate)
-        }
-        if let rowPredicate = (rowNode as? WOTPivotNodeProtocol)?.predicate {
-            result.append(rowPredicate)
-        }
-        if let filterPredicate = (filterNode as? WOTPivotNodeProtocol)?.predicate {
-            result.append(filterPredicate)
-        }
-        return result
+        self.index = result
     }
 
     private func getWidth() -> Int {

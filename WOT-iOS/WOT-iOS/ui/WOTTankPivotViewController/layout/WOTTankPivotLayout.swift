@@ -17,10 +17,19 @@ protocol WOTTankPivotLayoutProtocol {
 
 class WOTColoredLayout: UICollectionViewFlowLayout {
 
-    override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        let layoutAttributes = WOTPivotSeparatorLayoutAttributes(forDecorationViewOfKind: elementKind,
-            with: indexPath)
+    func layoutAttributesForDecorationView(ofKind elementKind: WOTPivotSeparatorKind, at indexPath: IndexPath, pivotAttributes: WOTPivotLayoutCellAttributesProtocol) -> WOTPivotSeparatorLayoutAttributes? {
+        guard let layoutAttributes = self.layoutAttributesForDecorationView(ofKind: elementKind.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes else {
+            return nil
+        }
+        layoutAttributes.kind = elementKind
+        layoutAttributes.customFrame = pivotAttributes.rect
+        layoutAttributes.zIndex = pivotAttributes.zIndex + 1
+        return layoutAttributes
+    }
 
+    override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+
+        let layoutAttributes = WOTPivotSeparatorLayoutAttributes(forDecorationViewOfKind: elementKind, with: indexPath)
         layoutAttributes.color = UIColor.darkGray
         layoutAttributes.zIndex = -1
         return layoutAttributes
@@ -73,46 +82,46 @@ class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
         return true
     }
 
+    func sepatorAttributes(for collectionView: UICollectionView, at indexPath: IndexPath, in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
+
+        let contentOffset = collectionView.contentOffset
+
+        let pivotAttributes = self.pivotLayoutCellAttributes(indexPath: indexPath, contentOffset: contentOffset)
+
+        guard let cellAttributes = pivotAttributes.collectionViewLayoutAttributes(forRect: rect) else {
+
+            return []
+        }
+
+        var result: [UICollectionViewLayoutAttributes] = cellAttributes
+
+        if let decor = layoutAttributesForDecorationView(ofKind: .right, at: indexPath, pivotAttributes: pivotAttributes) {
+            result.append(decor)
+        }
+        if let decor = layoutAttributesForDecorationView(ofKind: .left, at: indexPath, pivotAttributes: pivotAttributes) {
+            result.append(decor)
+        }
+        if let decor = layoutAttributesForDecorationView(ofKind: .top, at: indexPath, pivotAttributes: pivotAttributes) {
+            result.append(decor)
+        }
+        if let decor = layoutAttributesForDecorationView(ofKind: .bottom, at: indexPath, pivotAttributes: pivotAttributes) {
+            result.append(decor)
+        }
+
+        return result
+    }
+
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var result = [UICollectionViewLayoutAttributes]()
         guard let collectionView = self.collectionView else {
             return result
         }
 
-        let contentOffset = collectionView.contentOffset
-
         for section in 0 ..< collectionView.numberOfSections {
             for row in 0 ..< collectionView.numberOfItems(inSection: section) {
                 let indexPath = IndexPath(row: row, section: section)
-                let pivotAttributes = self.pivotLayoutCellAttributes(indexPath: indexPath, contentOffset: contentOffset)
-                if let cellAttributes = pivotAttributes.collectionViewLayoutAttributes(forRect: rect) {
-                    result.append(contentsOf: cellAttributes)
-
-                    if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.right.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
-                        decor.customFrame = pivotAttributes.rect
-                        decor.kind = .right
-                        decor.zIndex = pivotAttributes.zIndex + 1
-                        result.append(decor)
-                    }
-                    if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.left.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
-                        decor.customFrame = pivotAttributes.rect
-                        decor.kind = .left
-                        decor.zIndex = pivotAttributes.zIndex + 1
-                        result.append(decor)
-                    }
-                    if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.top.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
-                        decor.customFrame = pivotAttributes.rect
-                        decor.kind = .top
-                        decor.zIndex = pivotAttributes.zIndex + 1
-                        result.append(decor)
-                    }
-                    if let decor = layoutAttributesForDecorationView(ofKind: WOTPivotSeparatorKind.bottom.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes {
-                        decor.customFrame = pivotAttributes.rect
-                        decor.kind = .bottom
-                        decor.zIndex = pivotAttributes.zIndex + 1
-                        result.append(decor)
-                    }
-                }
+                let separatorAttributes = self.sepatorAttributes(for: collectionView, at: indexPath, in: rect)
+                result.append(contentsOf: separatorAttributes)
             }
         }
         return result

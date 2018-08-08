@@ -163,7 +163,7 @@
 
 - (void)workContextDidSave:(NSNotification *)notification {
     
-    [self.managedObjectContext performBlockAndWait:^{
+    [self.managedObjectContext performBlock:^{
         
         [self mergeChanges:notification toContext:self.managedObjectContext];
     }];

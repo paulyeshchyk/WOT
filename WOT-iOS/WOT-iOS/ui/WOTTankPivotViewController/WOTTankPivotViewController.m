@@ -15,54 +15,8 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTNode+PivotFactory.h"
 
-@interface WOTTankPivotViewController(NodeCreator) <WOTNodeCreatorProtocol>
-@end
+@interface WOTTankPivotViewController () <UICollectionViewDataSource>
 
-@implementation WOTTankPivotViewController(NodeCreator)
-
-- (id<WOTNodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
-    id<WOTNodeProtocol> result = [[WOTNode alloc] initWithName: name];
-    result.isVisible = false;
-    return result;
-}
-
-- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
-    return [WOTNodeFactory pivotDataNodeForPredicate:byPredicate andTanksObject:fetchedObject];
-}
-
-@end
-
-@interface WOTTankPivotViewController(WOTDataFetchControllerDelegateProtocol) <WOTDataFetchControllerDelegateProtocol>
-@end
-
-@implementation WOTTankPivotViewController(WOTDataFetchControllerDelegateProtocol)
-@dynamic fetchRequest;
-
-- (NSFetchRequest *)fetchRequest {
-    NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:@"Tanks"];
-    result.sortDescriptors = [self sortDescriptors];
-    result.predicate = [self fetchCustomPredicate];
-    return result;
-}
-
-- (NSArray *) sortDescriptors {
-    NSMutableArray *result = [[[WOTTankListSettingsDatasource sharedInstance] sortBy] mutableCopy];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"tank_id" ascending:YES];
-    [result addObject:descriptor];
-    return result;
-}
-
-- (NSPredicate *) fetchCustomPredicate {
-    NSPredicate *level6 = [NSPredicate predicateWithFormat:@"level != %d", 600];
-//    NSPredicate *level7 = [NSPredicate predicateWithFormat:@"level == %d", 7];
-    return [NSCompoundPredicate orPredicateWithSubpredicates:@[level6]];
-}
-
-@end
-
-@interface WOTTankPivotViewController () <UICollectionViewDataSource, WOTDataModelListener>
-
-@property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak)IBOutlet WOTTankPivotLayout *flowLayout;
 
 @property (nonatomic, strong) NSArray *fixedRowsTopLevel;
@@ -105,6 +59,7 @@
     
     self.fetchController = [[WOTDataTanksFetchController alloc] initWithNodeFetchRequestCreator:self nodeCreator:self];
     self.model = [[WOTPivotDataModel alloc] initWithFetchController:self.fetchController modelListener:self nodeCreator:self];
+
     [self.model loadModel];
 }
 
@@ -173,43 +128,5 @@
         [self.navigationController pushViewController:configurationSelector animated:YES];
     }
 }
-
-#pragma mark - WOTPivotDataModelListener
-
-- (void)modelDidLoad {
-    [self.collectionView reloadData];
-}
-
-- (void)modelDidFailLoadWithError:(NSError * _Nonnull)error {
-
-}
-
-- (NSArray *)metadataItems {
-
-    WOTPivotPermutator *permutator = [[WOTPivotPermutator alloc] init];
-
-    WOTPivotTemplates *templates = [[WOTPivotTemplates alloc] init];
-
-    id<WOTPivotNodeProtocol> levelTier = [templates.vehicleTier asType: PivotMetadataTypeColumn];
-    id<WOTPivotNodeProtocol> levelPrem = [templates.vehiclePremium asType: PivotMetadataTypeColumn];
-    NSArray *cols = [permutator permutateWithPivotNodes:@[levelPrem, levelTier] as:PivotMetadataTypeColumn];
-
-    id<WOTPivotNodeProtocol> levelNati = [templates.vehicleNation asType: PivotMetadataTypeRow];
-    id<WOTPivotNodeProtocol> levelType = [templates.vehicleType asType: PivotMetadataTypeRow];
-    NSArray *rows = [permutator permutateWithPivotNodes:@[levelNati,levelType] as:PivotMetadataTypeRow];
-
-    NSArray *filters = [self pivotFilters];
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    [result addObjectsFromArray:cols];
-    [result addObjectsFromArray:rows];
-    [result addObjectsFromArray:filters];
-    return result;
-}
-
-- (NSArray *)pivotFilters {
-    id<WOTPivotNodeProtocol> node = [[WOTPivotFilterNode alloc] initWithName:@"Filter"];
-    return @[node];
-}
-
 
 @end

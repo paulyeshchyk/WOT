@@ -18,48 +18,76 @@ enum WOTPivotSeparatorKind: String {
 
 class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
 
-    private func invalidateFrame() {
-        let separatorWidth: CGFloat = 1
-        guard let customFrame = self.customFrame else {
-            return
-        }
-        guard let kind = self.kind else {
-            return
-        }
+    private var separatorWidth: CGFloat {
+        return 1.0
+    }
+
+    private var topSeparatorFrame: CGRect {
+
+        let customFrame = self.customFrame ?? CGRect.zero
+        return CGRect(x: customFrame.minX,
+                      y: customFrame.minY - self.separatorWidth,
+                      width: customFrame.width,
+                      height: self.separatorWidth)
+    }
+
+    private var leftSeparatorFrame: CGRect {
+
+        let customFrame = self.customFrame ?? CGRect.zero
+        return CGRect(x: customFrame.minX,
+                      y: customFrame.minY - self.separatorWidth,
+                      width: self.separatorWidth,
+                      height: customFrame.height + self.separatorWidth)
+    }
+
+    private var bottomSeparatorFrame: CGRect {
+
+        let customFrame = self.customFrame ?? CGRect.zero
+        return CGRect(x: customFrame.minX ,
+                      y: customFrame.maxY - self.separatorWidth,
+                      width: customFrame.width,
+                      height: self.separatorWidth)
+    }
+
+    private var rightSeparatorFrame: CGRect {
+
+        let customFrame = self.customFrame ?? CGRect.zero
+        return CGRect(x: customFrame.maxX,
+                      y: customFrame.minY - self.separatorWidth,
+                      width: self.separatorWidth,
+                      height: customFrame.height + self.separatorWidth )
+    }
+
+    private func invalidateFrame(kind: WOTPivotSeparatorKind) {
+
         switch kind {
         case .top:
-            self.frame = CGRect(x: customFrame.minX,
-                                y: customFrame.minY - separatorWidth,
-                                width: customFrame.width,
-                                height: separatorWidth)
+            self.frame = self.topSeparatorFrame
         case .left:
-            self.frame = CGRect(x: customFrame.minX,
-                                y: customFrame.minY - separatorWidth,
-                                width: separatorWidth,
-                                height: customFrame.height + separatorWidth)
+            self.frame = self.leftSeparatorFrame
         case .bottom:
-            self.frame = CGRect(x: customFrame.minX ,
-                                y: customFrame.maxY - separatorWidth,
-                                width: customFrame.width,
-                                height: separatorWidth)
+            self.frame = self.bottomSeparatorFrame
         case .right:
-            self.frame = CGRect(x: customFrame.maxX,
-                                y: customFrame.minY - separatorWidth,
-                                width: separatorWidth,
-                                height: customFrame.height + separatorWidth )
+            self.frame = self.rightSeparatorFrame
         }
     }
 
     var color: UIColor = UIColor.clear
     var kind: WOTPivotSeparatorKind? {
         didSet {
-            invalidateFrame()
+            guard let kindValue = kind else {
+                return
+            }
+            invalidateFrame(kind: kindValue)
         }
 
     }
     var customFrame: CGRect? {
         didSet {
-            invalidateFrame()
+            guard let kindValue = kind else {
+                return
+            }
+            invalidateFrame(kind: kindValue)
         }
     }
 }

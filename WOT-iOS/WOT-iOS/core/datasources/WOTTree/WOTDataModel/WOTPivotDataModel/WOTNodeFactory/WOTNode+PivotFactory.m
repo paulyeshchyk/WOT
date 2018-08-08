@@ -12,7 +12,7 @@
 @implementation WOTNodeFactory 
 
 
-+ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nonnull)predicate andTanksObject:(id _Nonnull)tanksObject {
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nullable)predicate andTanksObject:(id _Nonnull)tanksObject {
     
     Tanks *tanks = tanksObject;
     id<WOTPivotNodeProtocol> node = [[WOTPivotDataNode alloc] initWithName:tanks.name_i18n];
@@ -27,31 +27,6 @@
     
     [node setData1:tanks];
     return node;
-}
-
-+ (id<WOTPivotNodeProtocol> _Nonnull)pivotDPMMetadataItemAsType:(PivotMetadataType)type {
-    
-    Class PivotNodeClass = [WOTPivotMetaTypeConverter nodeClassFor:type];
-
-    id<WOTPivotNodeProtocol> result = [[PivotNodeClass alloc] initWithName:@"DPM"];
-
-    
-    NSCompoundPredicate *predicateLess500 =             [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(500)]]];
-    NSCompoundPredicate *predicateGreat500Less1000 =    [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(500)],
-                                                                                                             [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(1000)]]];
-    NSCompoundPredicate *predicateGreat1000Less1500 =   [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(1000)],
-                                                                                                             [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(1500)]]];
-    NSCompoundPredicate *predicateGreat1500Less2000 =   [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(1500)],
-                                                                                                             [NSPredicate predicateWithFormat:@"%K < %@", WOT_KEY_DPM, @(2000)]]];
-    NSCompoundPredicate *predicateGreat2000 =           [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"%K >= %@", WOT_KEY_DPM, @(2000)]]];
-    
-    [result addChild:[[PivotNodeClass alloc] initWithName:@"[0;500)"       predicate:predicateLess500]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:@"[500;1000)"    predicate:predicateGreat500Less1000]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:@"[1000;1500)"   predicate:predicateGreat1000Less1500]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:@"[1500;2000)"   predicate:predicateGreat1500Less2000]];
-    [result addChild:[[PivotNodeClass alloc] initWithName:@"2000+"         predicate:predicateGreat2000]];
-    
-    return result;
 }
 
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotWeightMetadataItemAsType:(PivotMetadataType)type {

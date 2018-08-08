@@ -41,9 +41,7 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
 
     func performFetch() throws {
         try self.fetchResultController?.performFetch()
-        DispatchQueue.main.async {
-            self.listener?.fetchPerformed(by: self)
-        }
+        self.listener?.fetchPerformed(by: self)
     }
 
     func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?) {

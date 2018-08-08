@@ -12,6 +12,23 @@ protocol WOTTankModuleTreeNodeConnectorLayerProtocol: NSObjectProtocol {
 
 }
 
+extension CGContext {
+
+    func drawNodeConnector(frame: CGRect, node: WOTNodeProtocol, model: WOTDataModelProtocol, layout: WOTTankConfigurationFlowCellLayoutProtocol ) {
+        let parentCenter = WOTTankModuleTreeNodeConnectorLayer.center(rect: frame)
+        node.children.forEach { (child) in
+            if let childIndexPath = model.indexPath(forNode: child) {
+                let childFrame = layout.cellFrame(indexPath: childIndexPath)
+                let childCenter = WOTTankModuleTreeNodeConnectorLayer.center(rect: childFrame)
+
+                self.move(to: childCenter)
+                self.addLine(to: parentCenter)
+                self.strokePath()
+            }
+        }
+    }
+}
+
 @objc
 class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnectorLayerProtocol {
 
@@ -21,7 +38,6 @@ class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnec
         guard let context = UIGraphicsGetCurrentContext() else {
             return nil
         }
-
         context.setLineWidth(1)
         context.setStrokeColor(UIColor.yellow.cgColor)
 
@@ -29,17 +45,8 @@ class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnec
             for j in 0 ..< forModel.nodesCount(section: i) {
                 let indexPath = IndexPath(row: j, section: i)
                 let frame = flowLayout.cellFrame(indexPath: indexPath)
-                let parentCenter = WOTTankModuleTreeNodeConnectorLayer.center(rect: frame)
                 if let node = forModel.node(atIndexPath: indexPath as NSIndexPath) {
-                    node.children.forEach { (child) in
-                        if let childIndexPath = forModel.indexPath(forNode: child) {
-                            let childFrame = flowLayout.cellFrame(indexPath: childIndexPath)
-                            let childCenter = WOTTankModuleTreeNodeConnectorLayer.center(rect: childFrame)
-                            context.move(to: childCenter)
-                            context.addLine(to: parentCenter)
-                            context.strokePath()
-                        }
-                    }
+                    context.drawNodeConnector(frame: frame, node: node, model: forModel, layout: flowLayout)
                 }
             }
         }
@@ -49,18 +56,16 @@ class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnec
         return result
     }
 
-
     static func center(rect: CGRect) -> CGPoint {
-        return CGPoint(x: rect.midX, y: rect.midY);
+        return CGPoint(x: rect.midX, y: rect.midY)
     }
 
     static func centerHorizontalBottomVertical(rect: CGRect) -> CGPoint {
-        return CGPoint(x: rect.midX, y: rect.origin.y + rect.size.height);
+        return CGPoint(x: rect.midX, y: rect.origin.y + rect.size.height)
     }
 
     static func centerHorizontalTopVertical(rect: CGRect) -> CGPoint {
-        return CGPoint(x: rect.midX, y: rect.origin.y);
+        return CGPoint(x: rect.midX, y: rect.origin.y)
     }
-
 
 }

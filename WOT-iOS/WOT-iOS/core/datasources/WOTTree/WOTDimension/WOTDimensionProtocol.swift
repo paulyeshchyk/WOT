@@ -22,5 +22,5 @@ import Foundation
 
     func childrenMaxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int
 
-    func reload(forIndex: Int)
+    func reload(forIndex: Int, completion: ()->())
 }

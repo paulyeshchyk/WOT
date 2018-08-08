@@ -10,13 +10,13 @@ import Foundation
 
 @objc
 protocol WOTPivotTemplateProtocol: NSObjectProtocol {
-    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol?
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol
 }
 
 @objc
 class WOTPivotMetaTypeConverter: NSObject {
     @objc
-    static func nodeClass(for type: PivotMetadataType) -> AnyClass {
+    static func nodeClass(for type: PivotMetadataType) -> WOTPivotNode.Type {
         switch type {
         case .filter: return WOTPivotFilterNode.self
         case .column: return WOTPivotColNode.self
@@ -29,12 +29,10 @@ class WOTPivotMetaTypeConverter: NSObject {
 @objc
 class WOTPivotTemplateVehicleTier: NSObject, WOTPivotTemplateProtocol {
 
-    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol? {
-        guard let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type) as? WOTPivotNode.Type else {
-            return nil
-        }
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
+
+        let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: L10n.wotKeyTier)
-        result.addChild(pivotNodeClass.init(name: "NULL", predicate: NSPredicate(format: "NOT (%K BETWEEN %@) ", L10n.wotKeyLevel, [1, 10])))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel1, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel1)))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel2, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel2)))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel3, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel3)))
@@ -53,11 +51,8 @@ class WOTPivotTemplateVehicleTier: NSObject, WOTPivotTemplateProtocol {
 @objc
 class WOTPivotTemplateVehiclePremium: NSObject, WOTPivotTemplateProtocol {
 
-    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol? {
-
-        guard let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type) as? WOTPivotNode.Type else {
-            return nil
-        }
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
+        let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: L10n.wotKeyIsPremium)
         result.addChild(pivotNodeClass.init(name: L10n.wotStringIsPremium, predicate: NSPredicate(format: "%K == CAST(%d, 'NSDecimalNumber')", L10n.wotKeyIsPremium, 1)))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringIsNotPremium, predicate: NSPredicate(format: "%K == CAST(%d, 'NSDecimalNumber')", L10n.wotKeyIsPremium, 0)))
@@ -68,10 +63,8 @@ class WOTPivotTemplateVehiclePremium: NSObject, WOTPivotTemplateProtocol {
 @objc
 class WOTPivotTemplateVehicleType: NSObject, WOTPivotTemplateProtocol {
 
-    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol? {
-        guard let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type) as? WOTPivotNode.Type else {
-            return nil
-        }
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
+        let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: L10n.wotKeyType)
         result.addChild(pivotNodeClass.init(name: L10n.wotStringAtSpg, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyType, L10n.wotStringTankTypeAtSpg)))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringLt, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyType, L10n.wotStringTankTypeLightTank)))
@@ -85,12 +78,9 @@ class WOTPivotTemplateVehicleType: NSObject, WOTPivotTemplateProtocol {
 @objc
 class WOTPivotTemplateVehicleNation: NSObject, WOTPivotTemplateProtocol {
 
-    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol? {
-        guard let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type) as? WOTPivotNode.Type else {
-            return nil
-        }
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
+        let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: L10n.wotKeyNation)
-
         result.addChild(pivotNodeClass.init(name: L10n.wotStringNationChina, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationChina)))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringNationCzech, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationCzech)))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringNationFrance, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationFrance)))
@@ -109,10 +99,8 @@ class WOTPivotTemplateVehicleNation: NSObject, WOTPivotTemplateProtocol {
 @objc
 class WOTPivotTemplateVehicleDPM: NSObject, WOTPivotTemplateProtocol {
 
-    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol? {
-        guard let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type) as? WOTPivotNode.Type else {
-            return nil
-        }
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
+        let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: L10n.wotKeyDpm)
         let predicateLess100 = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "%K < CAST(%d, 'NSDecimalNumber')", L10n.wotKeyDefaultProfileFireRate, 100)])
         let predicateLess200 = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "%K >= CAST(%d, 'NSDecimalNumber')", L10n.wotKeyDefaultProfileFireRate, 100), NSPredicate(format: "%K < CAST(%d, 'NSDecimalNumber')", L10n.wotKeyDefaultProfileFireRate, 200)])

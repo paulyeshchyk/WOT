@@ -17,4 +17,6 @@ import Foundation
     var rootRowsNode: WOTNodeProtocol { get }
 
     var rootDataNode: WOTNodeProtocol { get }
+
+    func add(dataNode: WOTNodeProtocol)
 }

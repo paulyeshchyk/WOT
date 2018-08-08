@@ -100,7 +100,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         return .zero
     }
 
-    func reload(forIndex externalIndex: Int) {
+    func reload(forIndex externalIndex: Int, completion: ()->()) {
         preconditionFailure("This method must be overridden")
     }
 

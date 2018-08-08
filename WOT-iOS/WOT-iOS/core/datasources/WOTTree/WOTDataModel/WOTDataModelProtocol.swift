@@ -21,6 +21,7 @@ protocol WOTDataModelListener: NSObjectProtocol {
     func modelDidLoad()
     func modelDidFailLoad(error: Error)
     func metadataItems() -> [WOTNodeProtocol]
+    func modelHasNewDataItem()
 }
 
 @objc

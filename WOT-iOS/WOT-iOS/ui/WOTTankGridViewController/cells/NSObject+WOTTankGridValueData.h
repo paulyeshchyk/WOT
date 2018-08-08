@@ -11,5 +11,5 @@
 
 @interface NSObject (WOTTankGridValueData)
 + (NSString *)gridValueData:(id)node;
-+ (WOTPivotDataModel *)gridData:(WOTTankMetricsList *)metrics;
++ (WOTPivotDataModel * _Nullable)gridData:(WOTTankMetricsList *)metrics;
 @end

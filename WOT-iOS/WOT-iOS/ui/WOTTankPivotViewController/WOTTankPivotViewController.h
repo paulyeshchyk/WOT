@@ -13,6 +13,8 @@ typedef void(^WOTTankPivotCompletionDoneBlock) (id configuration);
 
 @interface WOTTankPivotViewController : UIViewController
 
+@property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
+
 @property (nonatomic, copy)WOTTankPivotCompletionCancelBlock cancelBlock;
 @property (nonatomic, copy)WOTTankPivotCompletionDoneBlock doneBlock;
 
