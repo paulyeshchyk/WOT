@@ -10,7 +10,11 @@ import Foundation
 class WOTPivotColNode: WOTPivotNode {
 
     override var stickyType: PivotStickyType {
-
         return PivotStickyType.vertical
     }
+
+    override var cellType: WOTPivotCellType {
+        return .column
+    }
+
 }

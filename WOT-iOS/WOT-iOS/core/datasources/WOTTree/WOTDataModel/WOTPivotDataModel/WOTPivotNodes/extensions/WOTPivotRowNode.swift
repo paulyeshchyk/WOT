@@ -14,4 +14,8 @@ class WOTPivotRowNode: WOTPivotNode {
 
         return PivotStickyType.horizontal
     }
+
+    override var cellType: WOTPivotCellType {
+        return .row
+    }
 }

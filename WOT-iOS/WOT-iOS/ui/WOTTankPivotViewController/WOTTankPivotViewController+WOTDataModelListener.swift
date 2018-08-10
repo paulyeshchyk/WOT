@@ -11,7 +11,7 @@ import Foundation
 extension WOTTankPivotViewController: WOTDataModelListener {
 
     func modelDidLoad() {
-        self.collectionView.reloadData()
+        self.collectionView?.reloadData()
     }
 
     func modelHasNewDataItem() {
@@ -27,15 +27,15 @@ extension WOTTankPivotViewController: WOTDataModelListener {
         var result = [WOTPivotNodeProtocol]()
 
         let templates = WOTPivotTemplates()
-        let levelTier = templates.vehicleTier.asType(.column)
+        let levelPrem = templates.vehiclePremium.asType(.column)
+        let levelNati = templates.vehicleNation.asType(.column)
         let levelType = templates.vehicleType.asType(.column)
-//        let levelNati = templates.vehicleNation.asType(.column)
-        let levelPrem = templates.vehicleNation.asType(.row)
+        let levelTier = templates.vehicleTier.asType(.row)
 
         let permutator = WOTPivotMetadataPermutator()
 
-        let cols = permutator.permutate(pivotNodes: [levelTier, levelType])
-        let rows = permutator.permutate(pivotNodes: [levelPrem])
+        let cols = permutator.permutate(pivotNodes: [levelPrem, levelType, levelNati])
+        let rows = permutator.permutate(pivotNodes: [levelTier])
         let filt = self.pivotFilters()
 
         result.append(contentsOf: cols)

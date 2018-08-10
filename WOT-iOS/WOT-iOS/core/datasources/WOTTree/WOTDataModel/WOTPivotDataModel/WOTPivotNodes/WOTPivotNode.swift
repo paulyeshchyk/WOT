@@ -14,6 +14,7 @@ class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
     var dataColor: UIColor?
     var data1: NSManagedObject?
     var stickyType: PivotStickyType { return .float }
+    var cellType: WOTPivotCellType { return .data }
     var predicate: NSPredicate?
     public var indexInsideStepParentColumn: Int = 0
     public var stepParentColumn: WOTNodeProtocol?
@@ -40,4 +41,5 @@ class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
         result.imageURL = self.imageURL?.copy(with: zone) as? NSURL
         return result
     }
+
 }

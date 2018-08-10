@@ -13,7 +13,6 @@
 #import "WOTProfileViewController.h"
 #import "WOTTankListViewController.h"
 #import "WOTPlayersListViewController.h"
-#import "WOTTankPivotViewController.h"
 
 @interface WOTMenuDatasource () <NSFetchedResultsControllerDelegate>
 

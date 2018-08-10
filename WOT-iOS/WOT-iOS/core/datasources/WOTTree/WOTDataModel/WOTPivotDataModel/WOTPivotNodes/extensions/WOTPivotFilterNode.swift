@@ -16,4 +16,8 @@ class WOTPivotFilterNode: WOTPivotNode {
         let raw = PivotStickyType.RawValue(horizontal | vertical)
         return PivotStickyType(rawValue: raw)!
     }
+
+    override var cellType: WOTPivotCellType {
+        return .filter
+    }
 }

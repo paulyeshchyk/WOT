@@ -24,8 +24,9 @@
 @implementation WOTDrawerViewController
 
 + (UIViewController *)centerViewControllerForClassName:(Class )class title:(NSString *)title image:(UIImage *)image{
-    
-    UIViewController *centerViewController = [[class alloc] initWithNibName:NSStringFromClass(class) bundle:nil];
+
+    NSString *nibName = NSStringFromClass(class.self);
+    UIViewController *centerViewController = [[class alloc] initWithNibName:nibName bundle:nil];
     [centerViewController setTitle:title];
     return centerViewController;
 }

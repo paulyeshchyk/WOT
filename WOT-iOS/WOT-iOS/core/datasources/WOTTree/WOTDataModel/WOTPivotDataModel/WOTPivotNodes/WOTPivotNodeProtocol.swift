@@ -7,6 +7,13 @@
 //
 
 import Foundation
+@objc
+enum WOTPivotCellType: Int {
+    case filter
+    case column
+    case row
+    case data
+}
 
 @objc
 protocol WOTPivotNodeProtocol: WOTNodeProtocol {
@@ -14,6 +21,7 @@ protocol WOTPivotNodeProtocol: WOTNodeProtocol {
     var dataColor: UIColor? { get set }
     var data1: NSManagedObject? { get set }
     var stickyType: PivotStickyType { get }
+    var cellType: WOTPivotCellType { get }
     var predicate: NSPredicate? { get set }
     var relativeRect: NSValue? { get set }
     var indexInsideStepParentColumn: Int { get set }

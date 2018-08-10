@@ -54,8 +54,8 @@ class WOTPivotTemplateVehiclePremium: NSObject, WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: L10n.wotKeyIsPremium)
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsPremium, predicate: NSPredicate(format: "%K == CAST(%d, 'NSDecimalNumber')", L10n.wotKeyIsPremium, 1)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsNotPremium, predicate: NSPredicate(format: "%K == CAST(%d, 'NSDecimalNumber')", L10n.wotKeyIsPremium, 0)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsPremium, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsPremium, NSNumber(value: 1))))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsNotPremium, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsPremium, NSNumber(value: 0))))
         return result
     }
 }

@@ -10,4 +10,8 @@ import Foundation
 
 class WOTPivotDataNode: WOTPivotNode {
 
+    override var cellType: WOTPivotCellType {
+        return .data
+    }
+
 }
