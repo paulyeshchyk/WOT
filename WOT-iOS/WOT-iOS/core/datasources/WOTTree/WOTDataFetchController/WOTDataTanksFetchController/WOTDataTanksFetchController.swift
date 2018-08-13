@@ -58,14 +58,13 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
 
         var result = [WOTNodeProtocol]()
 
-        let filtered = self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }
-
-        filtered?.forEach { (fetchedObject) in
-            if let fetchObj = fetchedObject as? NSFetchRequestResult {
-                let node = self.nodeCreator.createNode(fetchedObject: fetchObj, byPredicate: predicate)
-                result.append(node)
-            }
+        guard let filtered = (self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }) else {
+            return result
         }
+
+        let nodes = self.nodeCreator.createNodes(fetchedObjects: filtered, byPredicate: predicate, hasGroups: true)
+        result.append(contentsOf: nodes)
+
         return result
     }
 }

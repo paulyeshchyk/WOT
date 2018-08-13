@@ -27,15 +27,15 @@ extension WOTTankPivotViewController: WOTDataModelListener {
         var result = [WOTPivotNodeProtocol]()
 
         let templates = WOTPivotTemplates()
-        let levelPrem = templates.vehiclePremium.asType(.column)
-        let levelNati = templates.vehicleNation.asType(.column)
+//        let levelPrem = templates.vehiclePremium.asType(.column)
+        let levelNati = templates.vehicleNation.asType(.row)
         let levelType = templates.vehicleType.asType(.column)
-        let levelTier = templates.vehicleTier.asType(.row)
+        let levelTier = templates.vehicleTier.asType(.column)
 
         let permutator = WOTPivotMetadataPermutator()
 
-        let cols = permutator.permutate(pivotNodes: [levelPrem, levelType, levelNati])
-        let rows = permutator.permutate(pivotNodes: [levelTier])
+        let cols = permutator.permutate(pivotNodes: [ levelNati])
+        let rows = permutator.permutate(pivotNodes: [levelType, levelTier])
         let filt = self.pivotFilters()
 
         result.append(contentsOf: cols)

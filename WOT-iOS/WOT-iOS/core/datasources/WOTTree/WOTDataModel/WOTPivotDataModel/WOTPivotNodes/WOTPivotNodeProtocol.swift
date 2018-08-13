@@ -13,6 +13,7 @@ enum WOTPivotCellType: Int {
     case column
     case row
     case data
+    case dataGroup
 }
 
 @objc

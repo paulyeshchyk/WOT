@@ -14,7 +14,8 @@ extension WOTTankPivotViewController {
         return [WOTTankPivotDataCollectionViewCell.self,
                 WOTTankPivotFilterCollectionViewCell.self,
                 WOTTankPivotFixedCollectionViewCell.self,
-                WOTTankPivotEmptyCollectionViewCell.self]
+                WOTTankPivotEmptyCollectionViewCell.self,
+                WOTTankPivotDataGroupCollectionViewCell.self]
     }()
 
     @objc
@@ -38,6 +39,21 @@ extension WOTTankPivotViewController {
             cell.mask = tank.invisibility
             cell.visibility = tank.visionRadius.suffixNumber()
         }
+        return cell
+    }
+
+    private func cell(forDataGroupNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        let ident = String(describing: WOTTankPivotDataGroupCollectionViewCell.self)
+        guard let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataGroupCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+//        cell.symbol = node.name
+//        cell.dataViewColor = node.dataColor
+//        if let tank = node.data1 as? Tanks {
+//            cell.dpm = tank.dpm.suffixNumber()
+//            cell.mask = tank.invisibility
+//            cell.visibility = tank.visionRadius.suffixNumber()
+//        }
         return cell
     }
 
@@ -77,6 +93,8 @@ extension WOTTankPivotViewController {
             return self.cell(forFilterNode: node, at: indexPath)
         case .data:
             return self.cell(forDataNode: node, at: indexPath)
+        case .dataGroup:
+            return self.cell(forDataGroupNode: node, at: indexPath)
         }
 
     }

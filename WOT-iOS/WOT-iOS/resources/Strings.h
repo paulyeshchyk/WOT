@@ -45,7 +45,7 @@
 #define WOT_KEY_HASHNAME @"hashName"
 #define WOT_KEY_IMAGE @"image"
 #define WOT_KEY_IMAGE_SMALL @"image_small"
-#define WOT_KEY_IS_GIFT @"is_gift"
+#define WOT_KEY_IS_GIFT @"vehicles.is_gift"
 #define WOT_KEY_IS_PREMIUM @"is_premium"
 #define WOT_KEY_KEY @"key"
 #define WOT_KEY_LEVEL @"level"

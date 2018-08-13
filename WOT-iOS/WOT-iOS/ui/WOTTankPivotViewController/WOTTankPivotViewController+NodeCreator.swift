@@ -16,9 +16,31 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
         return result
     }
 
+    public func createNodeGroup(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol {
+
+        return WOTNodeFactory.pivotDataNodeGroup(for: byPredicate, andTanksObjects: fetchedObjects)
+    }
+
     public func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
 
         return WOTNodeFactory.pivotDataNode(for: byPredicate, andTanksObject: fetchedObject as Any)
     }
 
+    public func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?, hasGroups: Bool) -> [WOTNodeProtocol] {
+
+        var result = [WOTNodeProtocol]()
+        if fetchedObjects.count < 2 || hasGroups == false {
+            fetchedObjects.forEach { (fetchedObject) in
+                if let fetchObj = fetchedObject as? NSFetchRequestResult {
+                    let node = self.createNode(fetchedObject: fetchObj, byPredicate: byPredicate)
+                    result.append(node)
+                }
+            }
+        } else {
+            let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)
+            result.append(node)
+        }
+
+        return result
+    }
 }

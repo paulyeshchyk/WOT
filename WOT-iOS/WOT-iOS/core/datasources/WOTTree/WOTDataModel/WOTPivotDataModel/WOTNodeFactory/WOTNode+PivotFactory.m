@@ -29,6 +29,27 @@
     return node;
 }
 
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeGroupForPredicate:(NSPredicate * _Nullable)predicate andTanksObjects:(NSArray * _Nonnull)tanksObjects {
+
+    WOTPivotDataGroupNode *nodeGroup = [[WOTPivotDataGroupNode alloc] initWithName:@"Group1"];
+    nodeGroup.fetchedObjects = tanksObjects;
+//    Tanks *tanks = tanksObject;
+//    id<WOTPivotNodeProtocol> node = [[WOTPivotDataNode alloc] initWithName:tanks.name_i18n];
+//
+//    node.predicate = predicate;
+//    node.imageURL = [NSURL URLWithString:tanks.image];
+//
+//    node.dataColor = [UIColor whiteColor];
+//    NSDictionary *colors = [WOTNodeFactory typeColors];
+//
+//    node.dataColor = colors[tanks.type];
+//
+//    [node setData1:tanks];
+    return nodeGroup;
+}
+
+
+
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotWeightMetadataItemAsType:(PivotMetadataType)type {
 
     Class PivotNodeClass = [WOTPivotMetaTypeConverter nodeClassFor:type];

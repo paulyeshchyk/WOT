@@ -21,12 +21,11 @@ class WOTPivotMetadataPermutatorTest: XCTestCase {
 
     func test2LevelColumns() {
         let templates = WOTPivotTemplates()
-        let levelPrem = templates.vehiclePremium.asType(.column)
         let levelNation = templates.vehicleNation.asType(.column)
 
         let permutator = WOTPivotMetadataPermutator()
 
-        let cols = permutator.permutate(pivotNodes: [levelPrem, levelNation])
+        let cols = permutator.permutate(pivotNodes: [levelNation])
         XCTAssert(cols.count == 11)
         let column = cols[0]
         XCTAssert(column.children.count == 2)

@@ -18,10 +18,14 @@ class WOTPivotMetaTypeConverter: NSObject {
     @objc
     static func nodeClass(for type: PivotMetadataType) -> WOTPivotNode.Type {
         switch type {
-        case .filter: return WOTPivotFilterNode.self
-        case .column: return WOTPivotColNode.self
-        case .row: return WOTPivotRowNode.self
-        case .data: return WOTPivotDataNode.self
+        case .filter:
+            return WOTPivotFilterNode.self
+        case .column:
+            return WOTPivotColNode.self
+        case .row:
+            return WOTPivotRowNode.self
+        case .data:
+            return WOTPivotDataNode.self
         }
     }
 }
@@ -56,6 +60,18 @@ class WOTPivotTemplateVehiclePremium: NSObject, WOTPivotTemplateProtocol {
         let result = pivotNodeClass.init(name: L10n.wotKeyIsPremium)
         result.addChild(pivotNodeClass.init(name: L10n.wotStringIsPremium, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsPremium, NSNumber(value: 1))))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringIsNotPremium, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsPremium, NSNumber(value: 0))))
+        return result
+    }
+}
+
+@objc
+class WOTPivotTemplateVehicleGift: NSObject, WOTPivotTemplateProtocol {
+
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
+        let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
+        let result = pivotNodeClass.init(name: L10n.wotKeyIsGift)
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsGift, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsGift, NSNumber(value: 1))))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsNotGift, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsGift, NSNumber(value: 0))))
         return result
     }
 }
@@ -122,6 +138,11 @@ class WOTPivotTemplateVehicleDPM: NSObject, WOTPivotTemplateProtocol {
 
 @objc
 class WOTPivotTemplates: NSObject {
+
+    @objc
+    lazy var vehicleGift: WOTPivotTemplateProtocol = {
+        return WOTPivotTemplateVehicleGift()
+    }()
 
     @objc
     lazy var vehiclePremium: WOTPivotTemplateProtocol = {

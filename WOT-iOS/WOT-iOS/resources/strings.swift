@@ -175,7 +175,7 @@ internal enum L10n {
   internal static let wotKeyImageSmall = L10n.tr("Localizable", "WOT_KEY_IMAGE_SMALL")
   /// is_default
   internal static let wotKeyIsDefault = L10n.tr("Localizable", "WOT_KEY_IS_DEFAULT")
-  /// is_gift
+  /// vehicles.is_gift
   internal static let wotKeyIsGift = L10n.tr("Localizable", "WOT_KEY_IS_GIFT")
   /// vehicles.is_premium
   internal static let wotKeyIsPremium = L10n.tr("Localizable", "WOT_KEY_IS_PREMIUM")
@@ -283,7 +283,7 @@ internal enum L10n {
   internal static let wotStringApply = L10n.tr("Localizable", "WOT_STRING_APPLY")
   /// armor
   internal static let wotStringArmor = L10n.tr("Localizable", "WOT_STRING_ARMOR")
-  /// Tank Destroyer
+  /// TD
   internal static let wotStringAtSpg = L10n.tr("Localizable", "WOT_STRING_AT_SPG")
   /// Back
   internal static let wotStringBack = L10n.tr("Localizable", "WOT_STRING_BACK")
@@ -331,8 +331,12 @@ internal enum L10n {
   internal static let wotStringHpLess5000 = L10n.tr("Localizable", "WOT_STRING_HP_LESS_5000")
   /// [400;800)
   internal static let wotStringHpLess800 = L10n.tr("Localizable", "WOT_STRING_HP_LESS_800")
-  /// Heavy
+  /// HT
   internal static let wotStringHt = L10n.tr("Localizable", "WOT_STRING_HT")
+  /// Is gift
+  internal static let wotStringIsGift = L10n.tr("Localizable", "WOT_STRING_IS_GIFT")
+  /// Is not gift
+  internal static let wotStringIsNotGift = L10n.tr("Localizable", "WOT_STRING_IS_NOT_GIFT")
   /// Not premium
   internal static let wotStringIsNotPremium = L10n.tr("Localizable", "WOT_STRING_IS_NOT_PREMIUM")
   /// Premium
@@ -359,11 +363,11 @@ internal enum L10n {
   internal static let wotStringLevel9 = L10n.tr("Localizable", "WOT_STRING_LEVEL_9")
   /// Login
   internal static let wotStringLogin = L10n.tr("Localizable", "WOT_STRING_LOGIN")
-  /// light tank
+  /// LT
   internal static let wotStringLt = L10n.tr("Localizable", "WOT_STRING_LT")
   /// mobi
   internal static let wotStringMobi = L10n.tr("Localizable", "WOT_STRING_MOBI")
-  /// Medium
+  /// MT
   internal static let wotStringMt = L10n.tr("Localizable", "WOT_STRING_MT")
   /// china
   internal static let wotStringNationChina = L10n.tr("Localizable", "WOT_STRING_NATION_CHINA")
@@ -399,7 +403,7 @@ internal enum L10n {
   internal static let wotStringReorder = L10n.tr("Localizable", "WOT_STRING_REORDER")
   /// SELECT lang
   internal static let wotStringSelectLanguage = L10n.tr("Localizable", "WOT_STRING_SELECT_LANGUAGE")
-  /// Self-Propelled Guns
+  /// SPG
   internal static let wotStringSpg = L10n.tr("Localizable", "WOT_STRING_SPG")
   /// AT-SPG
   internal static let wotStringTankTypeAtSpg = L10n.tr("Localizable", "WOT_STRING_TANK_TYPE_AT_SPG")
