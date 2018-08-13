@@ -34,6 +34,11 @@ class WOTNodeTest: XCTestCase {
         XCTAssert(node.hashValue == node.hash)
     }
 
+    func testValueForKey() {
+        let node = WOTNode(name:"test")
+        XCTAssert(node.value(key: "test") == nil)
+    }
+
     func testParentProperty() {
         let node = WOTNode(name: "parent")
         let child = WOTNode(name: "child")

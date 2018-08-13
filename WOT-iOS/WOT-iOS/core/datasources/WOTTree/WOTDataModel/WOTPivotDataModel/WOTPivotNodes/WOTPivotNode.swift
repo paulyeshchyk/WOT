@@ -11,11 +11,22 @@ import CoreData
 
 class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
 
+
     var dataColor: UIColor?
     var data1: NSManagedObject?
     var stickyType: PivotStickyType { return .float }
     var cellType: WOTPivotCellType { return .data }
     var predicate: NSPredicate?
+    var fullPredicate: NSPredicate? {
+
+        var predicates = [NSPredicate?]()
+        if let parentPredicate = (self.parent as? WOTPivotNodeProtocol)?.fullPredicate {
+            predicates.append(parentPredicate)
+        }
+        predicates.append(self.predicate)
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates.compactMap{$0})
+
+    }
     public var indexInsideStepParentColumn: Int = 0
     public var stepParentColumn: WOTNodeProtocol?
     public var stepParentRow: WOTNodeProtocol?

@@ -23,6 +23,7 @@ protocol WOTPivotNodeProtocol: WOTNodeProtocol {
     var stickyType: PivotStickyType { get }
     var cellType: WOTPivotCellType { get }
     var predicate: NSPredicate? { get set }
+    var fullPredicate: NSPredicate? { get }
     var relativeRect: NSValue? { get set }
     var indexInsideStepParentColumn: Int { get set }
     var stepParentColumn: WOTNodeProtocol? { get set }

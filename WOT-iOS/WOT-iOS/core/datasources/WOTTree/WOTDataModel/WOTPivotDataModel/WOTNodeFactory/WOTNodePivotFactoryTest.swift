@@ -22,30 +22,29 @@ class WOTNodePivotFactoryTest: XCTestCase {
     }
 
     func testNation() {
-        guard let node = WOTPivotTemplateVehicleNation().asType(PivotMetadataType.column) else {
-            XCTAssert(false)
-            return
-        }
+        let node = WOTPivotTemplateVehicleNation().asType(PivotMetadataType.column)
         let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
         XCTAssert(depth == 1)
     }
 
     func testTier() {
-        guard let node = WOTPivotTemplateVehicleTier().asType(PivotMetadataType.column) else {
-            XCTAssert(false)
-            return
-        }
+        let node = WOTPivotTemplateVehicleTier().asType(PivotMetadataType.column)
         let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
         XCTAssert(depth == 1)
     }
 
     func testType() {
-        guard let node = WOTPivotTemplateVehicleType().asType(PivotMetadataType.column) else {
-            XCTAssert(false)
-            return
-        }
+        let node = WOTPivotTemplateVehicleType().asType(PivotMetadataType.column)
         let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
         XCTAssert(depth == 1)
     }
 
+    func testPrem() {
+        let node = WOTPivotTemplateVehiclePremium().asType(.column)
+        let children = node.children
+        XCTAssert(children.count == 2)
+        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: children, initialLevel: 0)
+        XCTAssert(depth == 1)
+
+    }
 }

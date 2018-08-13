@@ -72,7 +72,7 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     private func updateDimensions(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) {
         var result = self.index
 
-        let predicates = [colNode, rowNode, filterNode].compactMap { ($0 as? WOTPivotNodeProtocol)?.predicate }
+        let predicates = [colNode, rowNode, filterNode].compactMap { ($0 as? WOTPivotNodeProtocol)?.fullPredicate }
         let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
 
         self.setMaxWidth(dataNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))
