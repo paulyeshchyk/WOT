@@ -170,11 +170,15 @@ extension WOTTankPivotLayout {
 
         var cellZIndex = -5
         if (stickyType.rawValue & PivotStickyType.vertical.rawValue) == PivotStickyType.vertical.rawValue {
-            y += contentOffset.y
+            if contentOffset.y >= 0 {
+                y += contentOffset.y
+            }
             cellZIndex += 2
         }
         if (stickyType.rawValue & PivotStickyType.horizontal.rawValue) == PivotStickyType.horizontal.rawValue {
-            x += contentOffset.x
+            if contentOffset.x >= 0 {
+                x += contentOffset.x
+            }
             cellZIndex += 2
         }
         let approxRect = CGRect(x: x, y: y, width: width, height: height)
