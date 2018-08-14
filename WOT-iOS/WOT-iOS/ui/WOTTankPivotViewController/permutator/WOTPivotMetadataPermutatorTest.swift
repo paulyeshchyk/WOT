@@ -27,8 +27,6 @@ class WOTPivotMetadataPermutatorTest: XCTestCase {
 
         let cols = permutator.permutate(pivotNodes: [levelNation])
         XCTAssert(cols.count == 11)
-        let column = cols[0]
-        XCTAssert(column.children.count == 2)
     }
 
     func test3LevelColumns() {

@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-@objc
 class WOTDataTanksFetchController: NSObject {
 
     lazy fileprivate var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>? = {
@@ -26,7 +25,6 @@ class WOTDataTanksFetchController: NSObject {
     var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
     var nodeCreator: WOTNodeCreatorProtocol
 
-    @objc
     init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, nodeCreator nc: WOTNodeCreatorProtocol) {
         nodeFetchRequestCreator = nfrc
         nodeCreator = nc
@@ -38,10 +36,17 @@ class WOTDataTanksFetchController: NSObject {
 }
 
 extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
-
-    func performFetch() throws {
-        try self.fetchResultController?.performFetch()
-        self.listener?.fetchPerformed(by: self)
+    func performFetch() {
+        self.fetchResultController?.managedObjectContext.perform({
+            do {
+                try self.fetchResultController?.performFetch()
+                OperationQueue.main.addOperation {
+                    self.listener?.fetchPerformed(by: self)
+                }
+            } catch let error {
+                self.listener?.fetchFailed(by: self, withError: error)
+            }
+        })
     }
 
     func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?) {
@@ -62,7 +67,7 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
             return result
         }
 
-        let nodes = self.nodeCreator.createNodes(fetchedObjects: filtered, byPredicate: predicate, hasGroups: true)
+        let nodes = self.nodeCreator.createNodes(fetchedObjects: filtered, byPredicate: predicate)
         result.append(contentsOf: nodes)
 
         return result
@@ -71,8 +76,16 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
 
 extension WOTDataTanksFetchController: NSFetchedResultsControllerDelegate {
 
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        print(String(describing: indexPath))
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+
+    }
+
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        listener?.fetchPerformed(by: self)
+
     }
 
 }

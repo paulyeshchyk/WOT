@@ -20,6 +20,9 @@ class WOTTankPivotViewController : UIViewController {
 
     var cancelBlock: WOTTankPivotCompletionCancelBlock?
     var doneBlock: WOTTankPivotCompletionDoneBlock?
+    lazy var refreshControl: WOTPivotRefreshControl = {
+        return WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
+    }()
 
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
 
@@ -35,16 +38,26 @@ class WOTTankPivotViewController : UIViewController {
 
         super.viewDidLoad()
 
+        self.collectionView?.bounces = true
+        self.collectionView?.alwaysBounceHorizontal = false
+        self.collectionView?.alwaysBounceVertical = false
+
+        if #available(iOS 10.0, *) {
+            self.collectionView?.refreshControl = self.refreshControl
+        } else {
+            self.collectionView?.addSubview(self.refreshControl)
+        }
+
         self.navigationController?.navigationBar.setDarkStyle()
 
         self.setupFlow()
 
         self.registerCells()
-
-        self.model.loadModel()
+        self.fullReload()
     }
 
     private func setupFlow() {
+        
         self.flowLayout?.relativeContentSizeBlock = {
             return self.model.contentSize
         }
@@ -59,4 +72,18 @@ class WOTTankPivotViewController : UIViewController {
         }
     }
 
+    private func fullReload() {
+        self.model.loadModel()
+    }
+
+    @objc func refresh(_ refreshControl: UIRefreshControl) {
+        self.fullReload()
+    }
+
+}
+
+extension WOTTankPivotViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.refreshControl.contentOffset = scrollView.contentOffset
+    }
 }

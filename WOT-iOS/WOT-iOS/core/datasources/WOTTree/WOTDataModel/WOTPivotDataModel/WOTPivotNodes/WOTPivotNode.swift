@@ -10,8 +10,6 @@ import Foundation
 import CoreData
 
 class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
-
-
     var dataColor: UIColor?
     var data1: NSManagedObject?
     var stickyType: PivotStickyType { return .float }

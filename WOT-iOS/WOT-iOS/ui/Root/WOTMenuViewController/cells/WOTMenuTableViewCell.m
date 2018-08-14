@@ -25,11 +25,6 @@
     
     self.bottomSeparatorView.backgroundColor = WOT_COLOR_BOTTOM_CELL_SEPARATOR;
     self.customBackgroundView.backgroundColor = WOT_COLOR_CELL_BACKGROUND;
-    
-//    UIView *selectedBackgroundView = [[UIView alloc] init];
-//    [selectedBackgroundView setOpaque:NO];
-//    selectedBackgroundView.backgroundColor = [UIColor colorWithRed:45.0f/255.0f green:45.0f/255.0f blue:45.0f/255.0f alpha:1.0f];
-//    [self setSelectedBackgroundView:selectedBackgroundView];
 }
 
 - (void)setCellImage:(UIImage *)cellImage {

@@ -10,7 +10,7 @@ import Foundation
 typealias TNodeSize = [String: Int]
 typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
-@objc
+
 class WOTDimension: NSObject, WOTDimensionProtocol {
 
     required init(fetchController: WOTDataFetchControllerProtocol) {

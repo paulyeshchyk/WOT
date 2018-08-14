@@ -17,7 +17,7 @@ enum WOTPivotCellType: Int {
 }
 
 @objc
-protocol WOTPivotNodeProtocol: WOTNodeProtocol {
+protocol WOTPivotNodeProtocol: NSObjectProtocol, WOTNodeProtocol {
     var imageURL: NSURL? { get set }
     var dataColor: UIColor? { get set }
     var data1: NSManagedObject? { get set }

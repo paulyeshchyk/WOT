@@ -26,8 +26,25 @@ extension WOTTankPivotViewController: UICollectionViewDataSource {
 extension WOTTankPivotViewController: UICollectionViewDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let node = self.model.item(atIndexPath: indexPath as NSIndexPath)
-        guard let pivotNode = node as? WOTPivotDataNode, let tank = pivotNode.data1 as? Tanks  else {
+        guard let pivotNode = self.model.item(atIndexPath: indexPath as NSIndexPath)  else {
+            return
+        }
+
+        guard self.hasOpenedPopover == false else {
+            self.closePopover()
+            return
+        }
+
+        switch pivotNode.cellType {
+        case .data: openTankDetail(data: pivotNode.data1)
+        case .dataGroup: openPopover()
+        default: break
+        }
+
+    }
+
+    private func openTankDetail(data: NSManagedObject?) {
+        guard let tank = data as? Tanks else {
             return
         }
         let config = WOTTankModuleTreeViewController(nibName: String(describing:WOTTankModuleTreeViewController.self ), bundle: nil)
@@ -39,5 +56,42 @@ extension WOTTankPivotViewController: UICollectionViewDelegate {
             self.navigationController?.popViewController(animated: true)
         }
         self.navigationController?.pushViewController(config, animated: true)
+    }
+}
+
+extension WOTTankPivotViewController {
+
+    static var openedPopoverKey : UInt8 = 0
+    var hasOpenedPopover: Bool {
+        get {
+            guard let result = objc_getAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey) as? Bool else {
+                return false
+            }
+            return result
+        }
+        set {
+            objc_setAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
+
+    func closePopover () {
+        self.hasOpenedPopover = false
+
+    }
+
+    func openPopover () {
+
+
+//        let viewController = UIViewController()
+//        viewController.modalPresentationStyle = UIModalPresentationStyle.popover
+//        viewController.
+//        guard let popover = viewController.popoverPresentationController else {
+//            return
+//        }
+//        self.present(viewController, animated: true) {
+//
+//        }
+
+        self.hasOpenedPopover = true
     }
 }

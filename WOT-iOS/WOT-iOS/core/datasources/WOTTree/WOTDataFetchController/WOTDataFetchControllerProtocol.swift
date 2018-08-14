@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 protocol WOTDataFetchControllerProtocol {
-    func performFetch() throws
+    func performFetch()
     func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol]
     func fetchedObjects() -> [AnyObject]?
     func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?)

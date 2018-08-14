@@ -10,6 +10,8 @@ import Foundation
 
 extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
 
+    var collapseToGroups: Bool { return true }
+
     public func createNode(name: String) -> WOTNodeProtocol {
         let result = WOTNode(name: name)
         result.isVisible = false
@@ -26,10 +28,10 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
         return WOTNodeFactory.pivotDataNode(for: byPredicate, andTanksObject: fetchedObject as Any)
     }
 
-    public func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?, hasGroups: Bool) -> [WOTNodeProtocol] {
+    public func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol] {
 
         var result = [WOTNodeProtocol]()
-        if fetchedObjects.count < 2 || hasGroups == false {
+        if fetchedObjects.count < 2 || self.collapseToGroups == false {
             fetchedObjects.forEach { (fetchedObject) in
                 if let fetchObj = fetchedObject as? NSFetchRequestResult {
                     let node = self.createNode(fetchedObject: fetchObj, byPredicate: byPredicate)

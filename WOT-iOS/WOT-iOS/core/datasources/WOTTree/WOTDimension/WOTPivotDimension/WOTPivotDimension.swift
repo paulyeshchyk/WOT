@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc
+
 class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private var rootNodeHolder: WOTPivotNodeHolderProtocol
@@ -53,6 +53,7 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private var index: Int = 0
 
+    #warning("!!! TO BE refactored: too slow !!!")
     override func reload(forIndex externalIndex: Int, completion:  ()->()) {
 
         self.index = externalIndex
@@ -66,6 +67,7 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
                 })
             })
         }
+
         completion()
     }
 

@@ -7,10 +7,7 @@
 //
 
 #import "WOTDrawerViewController.h"
-#import "WOTMenuViewController.h"
 #import "MMDrawerVisualState.h"
-
-#import "WOTMenuProtocol.h"
 
 #import "WOTSessionManager.h"
 

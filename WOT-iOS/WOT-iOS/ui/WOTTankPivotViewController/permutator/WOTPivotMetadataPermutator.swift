@@ -8,24 +8,28 @@
 
 import Foundation
 
-class WOTPivotMetadataPermutator {
+struct WOTPivotMetadataPermutator {
 
-    func permutate(pivotNodes: [WOTPivotNodeProtocol]) -> [WOTPivotNodeProtocol] {
+    func permutate(templates: [WOTPivotTemplateProtocol], as type: PivotMetadataType) -> [WOTPivotNodeProtocol] {
 
-        var mutablePivotNodes = pivotNodes
+        var mutableTemplates = [WOTPivotNodeProtocol]()
+        templates.forEach { (template) in
+            let templateNode = template.asType(type)
+            mutableTemplates.append(templateNode)
+        }
 
         var endpoints: [WOTPivotNodeProtocol]? = nil
-        if let nextPivotNode = mutablePivotNodes.popLast() {
+        if let nextPivotNode = mutableTemplates.popLast() {
             endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: nextPivotNode) as? [WOTPivotNodeProtocol]
         }
 
-        return iterateMiddle(pivotNodes: mutablePivotNodes, endpoints: endpoints)
+        return iterateMiddle(templates: mutableTemplates, endpoints: endpoints)
     }
 
-    private func iterateMiddle(pivotNodes: [WOTPivotNodeProtocol], endpoints: [WOTPivotNodeProtocol]?) -> [WOTPivotNodeProtocol] {
+    private func iterateMiddle(templates: [WOTPivotNodeProtocol], endpoints: [WOTPivotNodeProtocol]?) -> [WOTPivotNodeProtocol] {
 
         var resultArray = [WOTPivotNodeProtocol]()
-        var mutablePivotNodes = pivotNodes
+        var mutablePivotNodes = templates
         var nextEndPoints: [WOTPivotNodeProtocol]? = nil
         if let nextPivotNode = mutablePivotNodes.popLast() {
             nextEndPoints = WOTNodeEnumerator.sharedInstance.endpoints(node: nextPivotNode) as? [WOTPivotNodeProtocol]
@@ -38,7 +42,7 @@ class WOTPivotMetadataPermutator {
                 resultArray.append(result)
 
                 if mutablePivotNodes.count > 0 {
-                    let children = iterateMiddle(pivotNodes: mutablePivotNodes, endpoints: nextEndPoints)
+                    let children = iterateMiddle(templates: mutablePivotNodes, endpoints: nextEndPoints)
                     result.addChildArray(children)
                 } else {
                     let subpredicates: [NSPredicate?] = [endpoint.predicate]

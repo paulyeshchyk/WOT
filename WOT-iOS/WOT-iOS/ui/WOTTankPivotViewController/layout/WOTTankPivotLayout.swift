@@ -170,13 +170,13 @@ extension WOTTankPivotLayout {
 
         var cellZIndex = -5
         if (stickyType.rawValue & PivotStickyType.vertical.rawValue) == PivotStickyType.vertical.rawValue {
-            if contentOffset.y >= 0 {
+            if contentOffset.y > 0 {
                 y += contentOffset.y
             }
             cellZIndex += 2
         }
         if (stickyType.rawValue & PivotStickyType.horizontal.rawValue) == PivotStickyType.horizontal.rawValue {
-            if contentOffset.x >= 0 {
+            if contentOffset.x > 0 {
                 x += contentOffset.x
             }
             cellZIndex += 2
