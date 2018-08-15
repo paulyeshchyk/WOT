@@ -59,9 +59,10 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
 
     func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
 
-        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
-
         var result = [WOTNodeProtocol]()
+//        result.append(self.nodeCreator.createEmptyNode())
+
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
         guard let filtered = (self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }) else {
             return result

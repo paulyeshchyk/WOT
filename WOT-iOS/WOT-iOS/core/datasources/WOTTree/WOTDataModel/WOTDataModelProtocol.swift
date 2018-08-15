@@ -12,6 +12,9 @@ public typealias WOTNodeComparator = (_ left: WOTNodeProtocol, _ right: WOTNodeP
 
 @objc
 public protocol WOTNodeCreatorProtocol {
+    var collapseToGroups: Bool { get }
+    var useEmptyNode: Bool { get }
+    func createEmptyNode() -> WOTNodeProtocol
     func createNode(name: String) -> WOTNodeProtocol
     func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol
     func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol]

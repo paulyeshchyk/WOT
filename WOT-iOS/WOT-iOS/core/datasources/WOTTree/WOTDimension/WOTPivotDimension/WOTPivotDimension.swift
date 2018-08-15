@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private var rootNodeHolder: WOTPivotNodeHolderProtocol
@@ -54,7 +53,7 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     private var index: Int = 0
 
     #warning("!!! TO BE refactored: too slow !!!")
-    override func reload(forIndex externalIndex: Int, completion:  ()->()) {
+    override func reload(forIndex externalIndex: Int, completion:  ()->Void) {
 
         self.index = externalIndex
         let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootColsNode)
@@ -63,7 +62,9 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         rowNodeEndpoints.forEach { (rowNode) in
             colNodeEndpoints.forEach({ (colNode) in
                 filterEndPoints.forEach({ (filterNode) in
-                    self.updateDimensions(colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+                    let predicates = [colNode, rowNode, filterNode].compactMap { ($0 as? WOTPivotNodeProtocol)?.fullPredicate }
+                    let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
+                    self.updateDimensions(dataNodes: dataNodes, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
                 })
             })
         }
@@ -71,11 +72,9 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         completion()
     }
 
-    private func updateDimensions(colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) {
-        var result = self.index
+    private func updateDimensions(dataNodes: [WOTNodeProtocol], colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) {
 
-        let predicates = [colNode, rowNode, filterNode].compactMap { ($0 as? WOTPivotNodeProtocol)?.fullPredicate }
-        let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
+        var result = self.index
 
         self.setMaxWidth(dataNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))
         self.setMaxWidth(dataNodes.count, forNode: rowNode, byKey: String(format: "%d", colNode.hash))

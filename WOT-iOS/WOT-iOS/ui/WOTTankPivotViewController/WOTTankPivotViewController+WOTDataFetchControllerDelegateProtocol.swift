@@ -25,6 +25,7 @@ extension WOTTankPivotViewController: WOTDataFetchControllerDelegateProtocol {
         return result
     }
 
+    #warning("TO BE RECACTORED")
     private func fetchCustomPredicate() -> NSPredicate {
         let fakePredicate = NSPredicate(format: "level != %d", 600)
         return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])

@@ -11,6 +11,10 @@
 
 @implementation WOTNodeFactory 
 
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotEmptyNode {
+    id<WOTPivotNodeProtocol> node = [[WOTPivotDataNode alloc] initWithName:@""];
+    return node;
+}
 
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nullable)predicate andTanksObject:(id _Nonnull)tanksObject {
     
