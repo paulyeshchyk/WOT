@@ -7,6 +7,7 @@
 //
 
 #import "ModulesTree.h"
+#import "WOTEnums.h"
 
 @interface ModulesTree (FillProperties)
 

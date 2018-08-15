@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import WOTPivot
+
 @objc
 protocol WOTTankModuleTreeNodeConnectorLayerProtocol: NSObjectProtocol {
 

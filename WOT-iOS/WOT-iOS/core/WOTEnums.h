@@ -9,13 +9,6 @@
 #ifndef WOT_iOS_WOTEnums_h
 #define WOT_iOS_WOTEnums_h
 
-typedef NS_ENUM(NSInteger, PivotMetadataType) {
-    PivotMetadataTypeFilter = 0,
-    PivotMetadataTypeColumn,
-    PivotMetadataTypeRow,
-    PivotMetadataTypeData
-};
-
 typedef NS_ENUM(NSInteger, WOTRequestId) {
     WOTRequestIdLogin = 0,
     WOTRequestIdSaveSession,
@@ -40,13 +33,6 @@ typedef NS_ENUM(NSInteger, WOTModuleType){
     WOTModuleTypeTurrets = 1 << 4,
     WOTModuleTypeGuns = 1 << 5,
     WOTModuleTypeTank = 1 << 6
-};
-
-typedef NS_ENUM(NSInteger, PivotStickyType) {
-    
-    PivotStickyTypeFloat = 0,
-    PivotStickyTypeHorizontal = 1 << 1,
-    PivotStickyTypeVertical = 1 << 2
 };
 
 #endif

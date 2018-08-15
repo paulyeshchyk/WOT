@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WOTPivot
 
 extension WOTTankPivotViewController: WOTDataFetchControllerDelegateProtocol {
 
@@ -17,7 +18,7 @@ extension WOTTankPivotViewController: WOTDataFetchControllerDelegateProtocol {
         return result
     }
 
-    private func sortDescriptors() -> [NSSortDescriptor]{
+    private func sortDescriptors() -> [NSSortDescriptor] {
 
         let tankIdDescriptor = NSSortDescriptor(key: "tank_id", ascending: true)
         var result = WOTTankListSettingsDatasource.sharedInstance().sortBy
@@ -25,7 +26,7 @@ extension WOTTankPivotViewController: WOTDataFetchControllerDelegateProtocol {
         return result
     }
 
-    #warning("TO BE RECACTORED")
+    //TODO: "TO BE RECACTORED"
     private func fetchCustomPredicate() -> NSPredicate {
         let fakePredicate = NSPredicate(format: "level != %d", 600)
         return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])

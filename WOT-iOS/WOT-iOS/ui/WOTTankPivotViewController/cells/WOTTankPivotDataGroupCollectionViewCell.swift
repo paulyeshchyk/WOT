@@ -10,5 +10,4 @@ import Foundation
 
 @objc
 class WOTTankPivotDataGroupCollectionViewCell: UICollectionViewCell {
-    
 }

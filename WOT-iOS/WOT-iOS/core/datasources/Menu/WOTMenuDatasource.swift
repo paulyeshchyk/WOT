@@ -58,7 +58,7 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
 
     }
 
-    var delegate: WOTMenuDatasourceDelegate?
+    weak var delegate: WOTMenuDatasourceDelegate?
     func object(at index: Int) -> WOTMenuItem? {
         return self.visibleViewControllers?[index]
     }

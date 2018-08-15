@@ -10,6 +10,6 @@
 #import "WOTTankMetricsList.h"
 
 @interface NSObject (WOTTankGridValueData)
-+ (NSString *)gridValueData:(id)node;
-+ (WOTPivotDataModel * _Nullable)gridData:(WOTTankMetricsList *)metrics;
++ (NSString * _Nullable)gridValueData:(id)node;
++ (WOTPivotDataModel * _Nullable)gridData:(WOTTankMetricsList * _Nullable)metrics;
 @end

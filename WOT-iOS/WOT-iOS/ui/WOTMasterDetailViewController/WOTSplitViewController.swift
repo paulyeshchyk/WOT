@@ -34,11 +34,9 @@ struct WOTMasterDetailBehaviour {
     }
 }
 
-
 extension WOTMasterDetailBehaviour {
     static let PivotModuletree = WOTMasterDetailBehaviour(master: WOTSplitViewController.self, detail: WOTTankModuleTreeViewController.self, behaviour: .moduleTree)
 }
-
 
 @objc
 class WOTSplitViewController: UISplitViewController, WOTMasterControllerProtocol {

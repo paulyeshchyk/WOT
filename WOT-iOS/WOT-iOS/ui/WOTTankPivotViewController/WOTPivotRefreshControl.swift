@@ -16,7 +16,7 @@ import Foundation
         }
     }
 
-    convenience init(target:Any, action: Selector) {
+    convenience init(target: Any, action: Selector) {
         self.init()
         let color = UIColor.red
         let attributes = [NSAttributedStringKey.foregroundColor: color]

@@ -22,7 +22,6 @@ extension WOTTankPivotViewController: UICollectionViewDataSource {
     }
 }
 
-
 extension WOTTankPivotViewController: UICollectionViewDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -47,7 +46,7 @@ extension WOTTankPivotViewController: UICollectionViewDelegate {
         guard let tank = data as? Tanks else {
             return
         }
-        let config = WOTTankModuleTreeViewController(nibName: String(describing:WOTTankModuleTreeViewController.self ), bundle: nil)
+        let config = WOTTankModuleTreeViewController(nibName: String(describing: WOTTankModuleTreeViewController.self ), bundle: nil)
         config.tankId = tank.tank_id
         config.cancelBlock = {
             self.navigationController?.popViewController(animated: true)
@@ -61,7 +60,7 @@ extension WOTTankPivotViewController: UICollectionViewDelegate {
 
 extension WOTTankPivotViewController {
 
-    static var openedPopoverKey : UInt8 = 0
+    static var openedPopoverKey: UInt8 = 0
     var hasOpenedPopover: Bool {
         get {
             guard let result = objc_getAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey) as? Bool else {
@@ -81,16 +80,15 @@ extension WOTTankPivotViewController {
 
     func openPopover () {
 
-
-//        let viewController = UIViewController()
-//        viewController.modalPresentationStyle = UIModalPresentationStyle.popover
-//        viewController.
-//        guard let popover = viewController.popoverPresentationController else {
-//            return
-//        }
-//        self.present(viewController, animated: true) {
-//
-//        }
+        //        let viewController = UIViewController()
+        //        viewController.modalPresentationStyle = UIModalPresentationStyle.popover
+        //        viewController.
+        //        guard let popover = viewController.popoverPresentationController else {
+        //            return
+        //        }
+        //        self.present(viewController, animated: true) {
+        //
+        //        }
 
         self.hasOpenedPopover = true
     }

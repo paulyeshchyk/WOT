@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WOTPivot
 
 @objc
 protocol WOTPivotTemplateProtocol: NSObjectProtocol {

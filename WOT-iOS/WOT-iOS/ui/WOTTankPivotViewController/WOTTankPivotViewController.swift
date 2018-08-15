@@ -8,13 +8,13 @@
 
 import Foundation
 
-typealias WOTTankPivotCompletionCancelBlock = () -> ()
-typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> ()
+typealias WOTTankPivotCompletionCancelBlock = () -> Void
+typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 
 @objc(WOTTankPivotViewController)
 
-class WOTTankPivotViewController : UIViewController {
-    
+class WOTTankPivotViewController: UIViewController {
+
     @IBOutlet var collectionView: UICollectionView?
     @IBOutlet var flowLayout: WOTTankPivotLayout?
 
@@ -57,7 +57,7 @@ class WOTTankPivotViewController : UIViewController {
     }
 
     private func setupFlow() {
-        
+
         self.flowLayout?.relativeContentSizeBlock = {
             return self.model.contentSize
         }

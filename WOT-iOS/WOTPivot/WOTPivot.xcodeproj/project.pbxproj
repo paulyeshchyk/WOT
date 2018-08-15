@@ -1,0 +1,668 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D79EDAF212439C2005FBA34 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79EDA5212439C2005FBA34 /* WOTPivot.framework */; };
+		1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */; };
+		1D79EDB6212439C2005FBA34 /* WOTPivot.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D79EDA8212439C2005FBA34 /* WOTPivot.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D02124560500576D41 /* WOTPivotFilterNode.swift */; };
+		1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D12124560500576D41 /* WOTPivotRowNode.swift */; };
+		1DE558DF2124560500576D41 /* WOTPivotColNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D22124560500576D41 /* WOTPivotColNode.swift */; };
+		1DE558E02124560500576D41 /* WOTPivotDataGroupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D32124560500576D41 /* WOTPivotDataGroupNode.swift */; };
+		1DE558E12124560500576D41 /* WOTPivotDataNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D42124560500576D41 /* WOTPivotDataNode.swift */; };
+		1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D62124560500576D41 /* WOTPivotNode.swift */; };
+		1DE558E42124560500576D41 /* WOTPivotNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D72124560500576D41 /* WOTPivotNodeProtocol.swift */; };
+		1DE558E52124560500576D41 /* WOTNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D92124560500576D41 /* WOTNodeProtocol.swift */; };
+		1DE558E72124560500576D41 /* WOTNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558DB2124560500576D41 /* WOTNode.swift */; };
+		1DE558E82124561000576D41 /* WOTPivotNodeExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558CF2124560500576D41 /* WOTPivotNodeExtensionTest.swift */; };
+		1DE558E92124561000576D41 /* WOTPivotNodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D52124560500576D41 /* WOTPivotNodeTest.swift */; };
+		1DE558EA2124561500576D41 /* WOTNodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558DA2124560500576D41 /* WOTNodeTest.swift */; };
+		1DE559022124571000576D41 /* WOTDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558F92124571000576D41 /* WOTDataModelProtocol.swift */; };
+		1DE559042124571000576D41 /* WOTDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558FB2124571000576D41 /* WOTDataModel.swift */; };
+		1DE559072124571000576D41 /* WOTTreeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559002124571000576D41 /* WOTTreeDataModel.swift */; };
+		1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */; };
+		1DE5590A2124572D00576D41 /* WOTDataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558FA2124571000576D41 /* WOTDataModelTest.swift */; };
+		1DE55916212458A400576D41 /* WOTNodeEnumeratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE55914212458A400576D41 /* WOTNodeEnumeratorProtocol.swift */; };
+		1DE55917212458A400576D41 /* WOTNodeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE55915212458A400576D41 /* WOTNodeEnumerator.swift */; };
+		1DE5591D212458E100576D41 /* WOTNodeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5591A212458E100576D41 /* WOTNodeIndex.swift */; };
+		1DE5591E212458E100576D41 /* WOTLevelIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5591C212458E100576D41 /* WOTLevelIndex.swift */; };
+		1DE559252124594B00576D41 /* WOTDataFetchControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559212124594B00576D41 /* WOTDataFetchControllerProtocol.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1D79EDB0212439C2005FBA34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D79ED9C212439C2005FBA34 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D79EDA4212439C2005FBA34;
+			remoteInfo = WOTPivot;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D79EDA5212439C2005FBA34 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D79EDA8212439C2005FBA34 /* WOTPivot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPivot.h; sourceTree = "<group>"; };
+		1D79EDA9212439C2005FBA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D79EDAE212439C2005FBA34 /* WOTPivotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTPivotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotTests.swift; sourceTree = "<group>"; };
+		1D79EDB5212439C2005FBA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D79EDF521243F96005FBA34 /* Enums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
+		1DE558CF2124560500576D41 /* WOTPivotNodeExtensionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeExtensionTest.swift; sourceTree = "<group>"; };
+		1DE558D02124560500576D41 /* WOTPivotFilterNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotFilterNode.swift; sourceTree = "<group>"; };
+		1DE558D12124560500576D41 /* WOTPivotRowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotRowNode.swift; sourceTree = "<group>"; };
+		1DE558D22124560500576D41 /* WOTPivotColNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotColNode.swift; sourceTree = "<group>"; };
+		1DE558D32124560500576D41 /* WOTPivotDataGroupNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataGroupNode.swift; sourceTree = "<group>"; };
+		1DE558D42124560500576D41 /* WOTPivotDataNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataNode.swift; sourceTree = "<group>"; };
+		1DE558D52124560500576D41 /* WOTPivotNodeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeTest.swift; sourceTree = "<group>"; };
+		1DE558D62124560500576D41 /* WOTPivotNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNode.swift; sourceTree = "<group>"; };
+		1DE558D72124560500576D41 /* WOTPivotNodeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeProtocol.swift; sourceTree = "<group>"; };
+		1DE558D92124560500576D41 /* WOTNodeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeProtocol.swift; sourceTree = "<group>"; };
+		1DE558DA2124560500576D41 /* WOTNodeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeTest.swift; sourceTree = "<group>"; };
+		1DE558DB2124560500576D41 /* WOTNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNode.swift; sourceTree = "<group>"; };
+		1DE558F92124571000576D41 /* WOTDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataModelProtocol.swift; sourceTree = "<group>"; };
+		1DE558FA2124571000576D41 /* WOTDataModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataModelTest.swift; sourceTree = "<group>"; };
+		1DE558FB2124571000576D41 /* WOTDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataModel.swift; sourceTree = "<group>"; };
+		1DE559002124571000576D41 /* WOTTreeDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModel.swift; sourceTree = "<group>"; };
+		1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModelProtocol.swift; sourceTree = "<group>"; };
+		1DE55914212458A400576D41 /* WOTNodeEnumeratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumeratorProtocol.swift; sourceTree = "<group>"; };
+		1DE55915212458A400576D41 /* WOTNodeEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumerator.swift; sourceTree = "<group>"; };
+		1DE5591A212458E100576D41 /* WOTNodeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeIndex.swift; sourceTree = "<group>"; };
+		1DE5591C212458E100576D41 /* WOTLevelIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTLevelIndex.swift; sourceTree = "<group>"; };
+		1DE559212124594B00576D41 /* WOTDataFetchControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataFetchControllerProtocol.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D79EDA1212439C2005FBA34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D79EDAB212439C2005FBA34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D79EDAF212439C2005FBA34 /* WOTPivot.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D79ED9B212439C2005FBA34 = {
+			isa = PBXGroup;
+			children = (
+				1D79EDA7212439C2005FBA34 /* WOTPivot */,
+				1D79EDB2212439C2005FBA34 /* WOTPivotTests */,
+				1D79EDA6212439C2005FBA34 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1D79EDA6212439C2005FBA34 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D79EDA5212439C2005FBA34 /* WOTPivot.framework */,
+				1D79EDAE212439C2005FBA34 /* WOTPivotTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D79EDA7212439C2005FBA34 /* WOTPivot */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558CB2124560500576D41 /* core */,
+				1D79EDA8212439C2005FBA34 /* WOTPivot.h */,
+				1D79EDA9212439C2005FBA34 /* Info.plist */,
+				1D79EDF521243F96005FBA34 /* Enums.h */,
+			);
+			path = WOTPivot;
+			sourceTree = "<group>";
+		};
+		1D79EDB2212439C2005FBA34 /* WOTPivotTests */ = {
+			isa = PBXGroup;
+			children = (
+				1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */,
+				1D79EDB5212439C2005FBA34 /* Info.plist */,
+			);
+			path = WOTPivotTests;
+			sourceTree = "<group>";
+		};
+		1DE558CB2124560500576D41 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				1DE5591F2124594B00576D41 /* fetchers */,
+				1DE55918212458E100576D41 /* indexes */,
+				1DE55912212458A400576D41 /* enumerators */,
+				1DE558CC2124560500576D41 /* nodes */,
+				1DE558F72124571000576D41 /* models */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		1DE558CC2124560500576D41 /* nodes */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558CD2124560500576D41 /* WOTPivotNode */,
+				1DE558D82124560500576D41 /* WOTNode */,
+			);
+			path = nodes;
+			sourceTree = "<group>";
+		};
+		1DE558CD2124560500576D41 /* WOTPivotNode */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558CE2124560500576D41 /* extensions */,
+				1DE558D52124560500576D41 /* WOTPivotNodeTest.swift */,
+				1DE558D62124560500576D41 /* WOTPivotNode.swift */,
+				1DE558D72124560500576D41 /* WOTPivotNodeProtocol.swift */,
+			);
+			path = WOTPivotNode;
+			sourceTree = "<group>";
+		};
+		1DE558CE2124560500576D41 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558CF2124560500576D41 /* WOTPivotNodeExtensionTest.swift */,
+				1DE558D02124560500576D41 /* WOTPivotFilterNode.swift */,
+				1DE558D12124560500576D41 /* WOTPivotRowNode.swift */,
+				1DE558D22124560500576D41 /* WOTPivotColNode.swift */,
+				1DE558D32124560500576D41 /* WOTPivotDataGroupNode.swift */,
+				1DE558D42124560500576D41 /* WOTPivotDataNode.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		1DE558D82124560500576D41 /* WOTNode */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558D92124560500576D41 /* WOTNodeProtocol.swift */,
+				1DE558DA2124560500576D41 /* WOTNodeTest.swift */,
+				1DE558DB2124560500576D41 /* WOTNode.swift */,
+			);
+			path = WOTNode;
+			sourceTree = "<group>";
+		};
+		1DE558F72124571000576D41 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558F82124571000576D41 /* WOTDataModel */,
+				1DE558FF2124571000576D41 /* WOTTreeDataModel */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		1DE558F82124571000576D41 /* WOTDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558F92124571000576D41 /* WOTDataModelProtocol.swift */,
+				1DE558FA2124571000576D41 /* WOTDataModelTest.swift */,
+				1DE558FB2124571000576D41 /* WOTDataModel.swift */,
+			);
+			path = WOTDataModel;
+			sourceTree = "<group>";
+		};
+		1DE558FF2124571000576D41 /* WOTTreeDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				1DE559002124571000576D41 /* WOTTreeDataModel.swift */,
+				1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */,
+			);
+			path = WOTTreeDataModel;
+			sourceTree = "<group>";
+		};
+		1DE55912212458A400576D41 /* enumerators */ = {
+			isa = PBXGroup;
+			children = (
+				1DE55913212458A400576D41 /* WOTNodeEnumerator */,
+			);
+			path = enumerators;
+			sourceTree = "<group>";
+		};
+		1DE55913212458A400576D41 /* WOTNodeEnumerator */ = {
+			isa = PBXGroup;
+			children = (
+				1DE55914212458A400576D41 /* WOTNodeEnumeratorProtocol.swift */,
+				1DE55915212458A400576D41 /* WOTNodeEnumerator.swift */,
+			);
+			path = WOTNodeEnumerator;
+			sourceTree = "<group>";
+		};
+		1DE55918212458E100576D41 /* indexes */ = {
+			isa = PBXGroup;
+			children = (
+				1DE55919212458E100576D41 /* WOTNodeIndex */,
+				1DE5591B212458E100576D41 /* WOTLevelIndex */,
+			);
+			path = indexes;
+			sourceTree = "<group>";
+		};
+		1DE55919212458E100576D41 /* WOTNodeIndex */ = {
+			isa = PBXGroup;
+			children = (
+				1DE5591A212458E100576D41 /* WOTNodeIndex.swift */,
+			);
+			path = WOTNodeIndex;
+			sourceTree = "<group>";
+		};
+		1DE5591B212458E100576D41 /* WOTLevelIndex */ = {
+			isa = PBXGroup;
+			children = (
+				1DE5591C212458E100576D41 /* WOTLevelIndex.swift */,
+			);
+			path = WOTLevelIndex;
+			sourceTree = "<group>";
+		};
+		1DE5591F2124594B00576D41 /* fetchers */ = {
+			isa = PBXGroup;
+			children = (
+				1DE559202124594B00576D41 /* WOTDataFetchController */,
+			);
+			path = fetchers;
+			sourceTree = "<group>";
+		};
+		1DE559202124594B00576D41 /* WOTDataFetchController */ = {
+			isa = PBXGroup;
+			children = (
+				1DE559212124594B00576D41 /* WOTDataFetchControllerProtocol.swift */,
+			);
+			path = WOTDataFetchController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1D79EDA2212439C2005FBA34 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D79EDB6212439C2005FBA34 /* WOTPivot.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1D79EDA4212439C2005FBA34 /* WOTPivot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D79EDB9212439C2005FBA34 /* Build configuration list for PBXNativeTarget "WOTPivot" */;
+			buildPhases = (
+				1D79EDA0212439C2005FBA34 /* Sources */,
+				1D79EDA1212439C2005FBA34 /* Frameworks */,
+				1D79EDA2212439C2005FBA34 /* Headers */,
+				1D79EDA3212439C2005FBA34 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WOTPivot;
+			productName = WOTPivot;
+			productReference = 1D79EDA5212439C2005FBA34 /* WOTPivot.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		1D79EDAD212439C2005FBA34 /* WOTPivotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D79EDBC212439C2005FBA34 /* Build configuration list for PBXNativeTarget "WOTPivotTests" */;
+			buildPhases = (
+				1D79EDAA212439C2005FBA34 /* Sources */,
+				1D79EDAB212439C2005FBA34 /* Frameworks */,
+				1D79EDAC212439C2005FBA34 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D79EDB1212439C2005FBA34 /* PBXTargetDependency */,
+			);
+			name = WOTPivotTests;
+			productName = WOTPivotTests;
+			productReference = 1D79EDAE212439C2005FBA34 /* WOTPivotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1D79ED9C212439C2005FBA34 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Pavel Yeshchyk";
+				TargetAttributes = {
+					1D79EDA4212439C2005FBA34 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					1D79EDAD212439C2005FBA34 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 1D79ED9F212439C2005FBA34 /* Build configuration list for PBXProject "WOTPivot" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1D79ED9B212439C2005FBA34;
+			productRefGroup = 1D79EDA6212439C2005FBA34 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D79EDA4212439C2005FBA34 /* WOTPivot */,
+				1D79EDAD212439C2005FBA34 /* WOTPivotTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D79EDA3212439C2005FBA34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D79EDAC212439C2005FBA34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D79EDA0212439C2005FBA34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DE559022124571000576D41 /* WOTDataModelProtocol.swift in Sources */,
+				1DE55917212458A400576D41 /* WOTNodeEnumerator.swift in Sources */,
+				1DE558DF2124560500576D41 /* WOTPivotColNode.swift in Sources */,
+				1DE559042124571000576D41 /* WOTDataModel.swift in Sources */,
+				1DE558E42124560500576D41 /* WOTPivotNodeProtocol.swift in Sources */,
+				1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */,
+				1DE559072124571000576D41 /* WOTTreeDataModel.swift in Sources */,
+				1DE558E12124560500576D41 /* WOTPivotDataNode.swift in Sources */,
+				1DE5591D212458E100576D41 /* WOTNodeIndex.swift in Sources */,
+				1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */,
+				1DE558E52124560500576D41 /* WOTNodeProtocol.swift in Sources */,
+				1DE558E72124560500576D41 /* WOTNode.swift in Sources */,
+				1DE558E02124560500576D41 /* WOTPivotDataGroupNode.swift in Sources */,
+				1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */,
+				1DE55916212458A400576D41 /* WOTNodeEnumeratorProtocol.swift in Sources */,
+				1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */,
+				1DE5591E212458E100576D41 /* WOTLevelIndex.swift in Sources */,
+				1DE559252124594B00576D41 /* WOTDataFetchControllerProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D79EDAA212439C2005FBA34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DE558EA2124561500576D41 /* WOTNodeTest.swift in Sources */,
+				1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */,
+				1DE558E92124561000576D41 /* WOTPivotNodeTest.swift in Sources */,
+				1DE5590A2124572D00576D41 /* WOTDataModelTest.swift in Sources */,
+				1DE558E82124561000576D41 /* WOTPivotNodeExtensionTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1D79EDB1212439C2005FBA34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D79EDA4212439C2005FBA34 /* WOTPivot */;
+			targetProxy = 1D79EDB0212439C2005FBA34 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D79EDB7212439C2005FBA34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1D79EDB8212439C2005FBA34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1D79EDBA212439C2005FBA34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = WOTPivot/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTPivot;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D79EDBB212439C2005FBA34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = WOTPivot/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTPivot;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1D79EDBD212439C2005FBA34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WOTPivotTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTPivotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D79EDBE212439C2005FBA34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WOTPivotTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTPivotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D79ED9F212439C2005FBA34 /* Build configuration list for PBXProject "WOTPivot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D79EDB7212439C2005FBA34 /* Debug */,
+				1D79EDB8212439C2005FBA34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D79EDB9212439C2005FBA34 /* Build configuration list for PBXNativeTarget "WOTPivot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D79EDBA212439C2005FBA34 /* Debug */,
+				1D79EDBB212439C2005FBA34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D79EDBC212439C2005FBA34 /* Build configuration list for PBXNativeTarget "WOTPivotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D79EDBD212439C2005FBA34 /* Debug */,
+				1D79EDBE212439C2005FBA34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1D79ED9C212439C2005FBA34 /* Project object */;
+}
