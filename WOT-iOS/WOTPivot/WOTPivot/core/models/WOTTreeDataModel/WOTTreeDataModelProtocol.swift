@@ -9,7 +9,9 @@
 import Foundation
 
 @objc
-protocol WOTTreeDataModelProtocol {
+public protocol WOTTreeDataModelProtocol: WOTDataModelProtocol {
+    var levels: Int { get }
+    var width: Int { get }
     var tankId: NSNumber? { get set }
     init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener)
 }

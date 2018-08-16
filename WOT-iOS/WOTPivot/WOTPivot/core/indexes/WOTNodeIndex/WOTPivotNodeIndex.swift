@@ -7,21 +7,8 @@
 //
 
 import Foundation
-import WOTPivot
 
-@objc
-public protocol WOTNodeIndexProtocol: NSObjectProtocol {
-    func reset()
-    func addNodeToIndex(_ node: WOTNodeProtocol)
-    func addNodesToIndex(_ nodes: [WOTNodeProtocol])
-    var count: Int { get }
-    func item(indexPath: NSIndexPath) -> WOTNodeProtocol?
-    func maxWidthOrValue(_ value: Int) -> Int
-    func doAutoincrementIndex(forNodes: [WOTNodeProtocol]) -> Int
-}
-
-@objc
-class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
+class WOTPivotNodeIndex: WOTPivotNodeIndexProtocol {
 
     // contains node.index: node
     // where node.index - global autoincremented value
@@ -29,21 +16,17 @@ class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
 
     private var index = [AnyHashable: Any] ()
 
-    func maxWidthOrValue(_ value: Int) -> Int {
-        return 0
-    }
-
     func reset() {
         index.removeAll()
     }
 
-    func addNodesToIndex(_ nodes: [WOTNodeProtocol]) {
+    func add(nodes: [WOTNodeProtocol], level: Any?) {
         nodes.forEach { (node) in
-            self.addNodeToIndex(node)
+            self.add(node: node, level: level)
         }
     }
 
-    func addNodeToIndex(_ node: WOTNodeProtocol) {
+    func add(node: WOTNodeProtocol, level: Any?) {
         let allItems = WOTNodeEnumerator.sharedInstance.allItems(fromNode: node)
         allItems.forEach { (node) in
             index[node.index] = node
@@ -65,7 +48,7 @@ class WOTNodeIndex: NSObject, WOTNodeIndexProtocol {
     func doAutoincrementIndex(forNodes: [WOTNodeProtocol]) -> Int {
         var result: Int = 0
         forNodes.forEach { (node) in
-            WOTNodeEnumerator.sharedInstance.enumerateAll(node: node, comparator: WOTNodeIndex.WOTNodeEmptyComparator) { (node) in
+            WOTNodeEnumerator.sharedInstance.enumerateAll(node: node, comparator: WOTPivotNodeIndex.WOTNodeEmptyComparator) { (node) in
                 node.index = result
                 result += 1
             }

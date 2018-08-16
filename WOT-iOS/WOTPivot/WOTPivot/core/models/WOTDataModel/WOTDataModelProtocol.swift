@@ -32,8 +32,6 @@ public protocol WOTDataModelListener: NSObjectProtocol {
 @objc
 public protocol WOTDataModelProtocol {
     var rootNodes: [WOTNodeProtocol] { get }
-    var levels: Int { get }
-    var width: Int { get }
     var endpointsCount: Int { get }
     func add(rootNode: WOTNodeProtocol)
     func add(nodes: [WOTNodeProtocol])

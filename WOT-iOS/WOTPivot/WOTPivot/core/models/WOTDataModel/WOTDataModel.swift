@@ -11,14 +11,9 @@ import Foundation
 @objc
 open class WOTDataModel: NSObject, WOTDataModelProtocol {
 
-    lazy public var nodeIndex: WOTNodeIndexProtocol = { return WOTNodeIndex() }()
+    lazy public var nodeIndex: WOTPivotNodeIndexProtocol = { return WOTPivotNodeIndex() }()
     lazy public var rootNodes: [WOTNodeProtocol] = { return [] }()
-    lazy private var levelIndex: WOTLevelIndexProtocol = { return WOTLevelIndex() }()
     private var comparator: WOTNodeComparator = { (left, right) in return true }
-
-    public var levels: Int { return self.levelIndex.levels }
-
-    public var width: Int { return self.levelIndex.width }
 
     public var endpointsCount: Int { return WOTNodeEnumerator.sharedInstance.endpoints(array: self.rootNodes).count }
 
@@ -26,31 +21,21 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
 
     open func loadModel() {
         self.reindexNodes()
-        self.reindexLevels()
     }
 
     public func reindexNodes() {
         self.nodeIndex.reset()
-        self.nodeIndex.addNodesToIndex(self.nodes)
-    }
-
-    func reindexLevels() {
-        self.levelIndex.reset()
-
-        let nodes = self.rootNodes(sortComparator: nil)
-        self.levelIndex.addNodesToIndex(nodes)
+        self.nodeIndex.add(nodes: self.nodes, level: nil)
     }
 
     public func add(nodes: [WOTNodeProtocol]) {
         nodes.forEach { (node) in
             self.rootNodes.append(node)
         }
-        reindexLevels()
     }
 
     public func add(rootNode: WOTNodeProtocol) {
         self.rootNodes.append(rootNode)
-        reindexLevels()
     }
 
     public func remove(rootNode: WOTNodeProtocol) {
@@ -58,12 +43,10 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
             return
         }
         self.rootNodes.remove(at: index)
-        reindexLevels()
     }
 
     open func clearRootNodes() {
         self.rootNodes.removeAll()
-        reindexLevels()
     }
 
     public func rootNodes(sortComparator: WOTNodeComparator?) -> [WOTNodeProtocol] {
@@ -71,19 +54,19 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
         return Array(self.rootNodes).sorted(by: comparator)
     }
 
+    //TODO: check
     public func nodesCount(section: Int) -> Int {
-        return self.levelIndex.itemsCount(atLevel: section)
+        return 0
     }
 
+    //TODO: check
     public func node(atIndexPath indexPath: NSIndexPath) -> WOTNodeProtocol? {
-        return self.levelIndex.node(atIndexPath: indexPath)
+        return self.nodeIndex.item(indexPath: indexPath)
     }
 
+    //TODO: check
     public func indexPath(forNode: WOTNodeProtocol?) -> IndexPath? {
-        guard let node = forNode else {
-            return nil
-        }
-        return self.levelIndex.indexPath(forNode: node)
+        return nil
     }
 
 }

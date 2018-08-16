@@ -1,28 +1,35 @@
 //
-//  WOTLevelIndex.swift
+//  WOTConnectorNodeIndex.swift
 //
 //
 //  Created by Pavel Yeshchyk on 7/18/18.
 //
 
 import Foundation
-import WOTPivot
 
 typealias WOTIndexTypeAlias = [Int: [WOTNodeProtocol]]
 
-protocol WOTLevelIndexProtocol {
-    var width: Int { get }
-    var levels: Int { get }
-    func reset()
-    func itemsCount(atLevel: Int) -> Int
-    func set(itemsCount: Int, atLevel: Int)
-    func reindexChildNode(_ node: WOTNodeProtocol, atLevel: Int)
-    func node(atIndexPath indexPath: NSIndexPath) -> WOTNodeProtocol?
-    func indexPath(forNode: WOTNodeProtocol) -> IndexPath?
-    func addNodesToIndex(_ nodes: [WOTNodeProtocol])
-}
+class WOTConnectorNodeIndex: NSObject, WOTConnectorNodeIndexProtocol {
 
-class WOTLevelIndex: WOTLevelIndexProtocol {
+    func add(nodes: [WOTNodeProtocol], level: Any?) {
+        nodes.forEach { (node) in
+            self.add(node: node, level: level)
+        }
+    }
+
+    func add(node: WOTNodeProtocol, level: Any?) {
+        let atLevel = (level as? Int) ?? 0
+
+        var itemsAtLevel = self.levelIndex[atLevel] ?? [WOTNodeProtocol]()
+        itemsAtLevel.append(node)
+        self.levelIndex[atLevel] = itemsAtLevel
+
+        self.add(nodes: node.children, level: atLevel + 1)
+    }
+
+    func addNodeToIndex(_ node: WOTNodeProtocol) {
+        self.add(node: node, level: 0)
+    }
 
     private lazy var levelIndex: WOTIndexTypeAlias = {
         return WOTIndexTypeAlias()
@@ -53,25 +60,13 @@ class WOTLevelIndex: WOTLevelIndexProtocol {
 
     }
 
-    func reindexChildNode(_ node: WOTNodeProtocol, atLevel: Int) {
-
-        var itemsAtLevel = self.levelIndex[atLevel] ?? [WOTNodeProtocol]()
-        itemsAtLevel.append(node)
-        self.levelIndex[atLevel] = itemsAtLevel
-
-        node.children.forEach { (child) in
-            self.reindexChildNode(child, atLevel: atLevel + 1)
-        }
-    }
-
-    func node(atIndexPath indexPath: NSIndexPath) -> WOTNodeProtocol? {
+    func item(indexPath: NSIndexPath) -> WOTNodeProtocol? {
         let itemsAtSection = self.levelIndex[indexPath.section]
         return itemsAtSection?[indexPath.row]
     }
 
     //TODO: simplify it
     func indexPath(forNode: WOTNodeProtocol) -> IndexPath? {
-
         var indexPath: IndexPath? = nil
         self.levelIndex.keys.forEach { (key) in
             if let section = self.levelIndex[key] {
@@ -87,10 +82,4 @@ class WOTLevelIndex: WOTLevelIndexProtocol {
         return indexPath
     }
 
-    func addNodesToIndex(_ nodes: [WOTNodeProtocol]) {
-        let level: Int = 0
-        nodes.forEach { (node) in
-            self.reindexChildNode(node, atLevel: level)
-        }
-    }
 }

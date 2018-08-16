@@ -35,7 +35,7 @@ extension CGContext {
 class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnectorLayerProtocol {
 
     @objc
-    static func connectors(forModel: WOTDataModelProtocol, byFrame: CGRect, flowLayout: WOTTankConfigurationFlowCellLayoutProtocol) -> UIImage? {
+    static func connectors(forModel: WOTTreeDataModelProtocol, byFrame: CGRect, flowLayout: WOTTankConfigurationFlowCellLayoutProtocol) -> UIImage? {
         UIGraphicsBeginImageContext(byFrame.size)
         guard let context = UIGraphicsGetCurrentContext() else {
             return nil

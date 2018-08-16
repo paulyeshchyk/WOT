@@ -11,7 +11,7 @@ import WOTPivot
 
 extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
 
-    var collapseToGroups: Bool { return false }
+    var collapseToGroups: Bool { return true }
 
     var useEmptyNode: Bool { return false }
 
@@ -56,7 +56,6 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
                 }
             }
         }
-
         return result
     }
 }
