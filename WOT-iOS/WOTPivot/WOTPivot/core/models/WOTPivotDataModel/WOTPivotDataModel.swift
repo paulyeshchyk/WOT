@@ -8,10 +8,8 @@
 
 import Foundation
 
-@objc
 public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol {
 
-    @objc
     lazy public var dimension: WOTPivotDimensionProtocol = {
         return WOTPivotDimension(rootNodeHolder: self, fetchController: self.fetchController)
     }()
@@ -92,7 +90,10 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
     override public func loadModel() {
         super.loadModel()
 
-        self.fetchController.performFetch()
+        do {
+            try self.fetchController.performFetch()
+        } catch {
+        }
     }
 
     public func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol? {
@@ -162,7 +163,7 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
 
 extension WOTPivotDataModel: WOTTreeProtocol {
 
-    func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol {
+    public func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol {
         let roots = self.rootNodes.filter { _ in forPredicate.evaluate(with: nil) }
         if roots.count == 0 {
             let root = self.nodeCreator.createNode(name: "root")

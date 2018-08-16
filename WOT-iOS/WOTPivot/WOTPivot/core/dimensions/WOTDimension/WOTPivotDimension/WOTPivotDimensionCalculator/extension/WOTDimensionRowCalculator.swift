@@ -7,10 +7,8 @@
 //
 
 import Foundation
-import WOTPivot
 
-@objc
-class WOTDimensionRowCalculator: WOTDimensionCalculator {
+public class WOTDimensionRowCalculator: WOTDimensionCalculator {
 
     override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         return WOTNodeEnumerator.sharedInstance.visibleParentsCount(node: forNode)

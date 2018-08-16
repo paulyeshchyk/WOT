@@ -10,6 +10,23 @@
 		1D79EDAF212439C2005FBA34 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79EDA5212439C2005FBA34 /* WOTPivot.framework */; };
 		1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */; };
 		1D79EDB6212439C2005FBA34 /* WOTPivot.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D79EDA8212439C2005FBA34 /* WOTPivot.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DC6D4A92125720E00A1C9C2 /* WOTPivotMetadataPermutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4A72125720E00A1C9C2 /* WOTPivotMetadataPermutator.swift */; };
+		1DC6D4AA2125721300A1C9C2 /* WOTPivotMetadataPermutatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4A62125720E00A1C9C2 /* WOTPivotMetadataPermutatorTest.swift */; };
+		1DC6D4BB212575D500A1C9C2 /* WOTDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4AD212575D500A1C9C2 /* WOTDimension.swift */; };
+		1DC6D4BC212575D500A1C9C2 /* WOTDimensionDataGroupCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B1212575D500A1C9C2 /* WOTDimensionDataGroupCalculator.swift */; };
+		1DC6D4BD212575D500A1C9C2 /* WOTDimensionRowCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B2212575D500A1C9C2 /* WOTDimensionRowCalculator.swift */; };
+		1DC6D4BE212575D500A1C9C2 /* WOTDimensionFilterCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B3212575D500A1C9C2 /* WOTDimensionFilterCalculator.swift */; };
+		1DC6D4BF212575D500A1C9C2 /* WOTDimensionDataCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B4212575D500A1C9C2 /* WOTDimensionDataCalculator.swift */; };
+		1DC6D4C0212575D500A1C9C2 /* WOTDimensionColumnCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B5212575D500A1C9C2 /* WOTDimensionColumnCalculator.swift */; };
+		1DC6D4C1212575D500A1C9C2 /* WOTDimensionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B6212575D500A1C9C2 /* WOTDimensionCalculator.swift */; };
+		1DC6D4C2212575D500A1C9C2 /* WOTPivotNodeHolderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B7212575D500A1C9C2 /* WOTPivotNodeHolderProtocol.swift */; };
+		1DC6D4C3212575D500A1C9C2 /* WOTPivotDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B8212575D500A1C9C2 /* WOTPivotDimension.swift */; };
+		1DC6D4C4212575D500A1C9C2 /* WOTPivotDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4B9212575D500A1C9C2 /* WOTPivotDimensionProtocol.swift */; };
+		1DC6D4C5212575D500A1C9C2 /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4BA212575D500A1C9C2 /* WOTDimensionProtocol.swift */; };
+		1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */; };
+		1DC6D4CA212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */; };
+		1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */; };
+		1DC6D4CF212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4CD212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift */; };
 		1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D02124560500576D41 /* WOTPivotFilterNode.swift */; };
 		1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D12124560500576D41 /* WOTPivotRowNode.swift */; };
 		1DE558DF2124560500576D41 /* WOTPivotColNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D22124560500576D41 /* WOTPivotColNode.swift */; };
@@ -55,6 +72,23 @@
 		1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotTests.swift; sourceTree = "<group>"; };
 		1D79EDB5212439C2005FBA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D79EDF521243F96005FBA34 /* Enums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
+		1DC6D4A62125720E00A1C9C2 /* WOTPivotMetadataPermutatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutatorTest.swift; sourceTree = "<group>"; };
+		1DC6D4A72125720E00A1C9C2 /* WOTPivotMetadataPermutator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutator.swift; sourceTree = "<group>"; };
+		1DC6D4AD212575D500A1C9C2 /* WOTDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimension.swift; sourceTree = "<group>"; };
+		1DC6D4B1212575D500A1C9C2 /* WOTDimensionDataGroupCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionDataGroupCalculator.swift; sourceTree = "<group>"; };
+		1DC6D4B2212575D500A1C9C2 /* WOTDimensionRowCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionRowCalculator.swift; sourceTree = "<group>"; };
+		1DC6D4B3212575D500A1C9C2 /* WOTDimensionFilterCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionFilterCalculator.swift; sourceTree = "<group>"; };
+		1DC6D4B4212575D500A1C9C2 /* WOTDimensionDataCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionDataCalculator.swift; sourceTree = "<group>"; };
+		1DC6D4B5212575D500A1C9C2 /* WOTDimensionColumnCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionColumnCalculator.swift; sourceTree = "<group>"; };
+		1DC6D4B6212575D500A1C9C2 /* WOTDimensionCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionCalculator.swift; sourceTree = "<group>"; };
+		1DC6D4B7212575D500A1C9C2 /* WOTPivotNodeHolderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeHolderProtocol.swift; sourceTree = "<group>"; };
+		1DC6D4B8212575D500A1C9C2 /* WOTPivotDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDimension.swift; sourceTree = "<group>"; };
+		1DC6D4B9212575D500A1C9C2 /* WOTPivotDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDimensionProtocol.swift; sourceTree = "<group>"; };
+		1DC6D4BA212575D500A1C9C2 /* WOTDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionProtocol.swift; sourceTree = "<group>"; };
+		1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModel.swift; sourceTree = "<group>"; };
+		1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModelProtocol.swift; sourceTree = "<group>"; };
+		1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeModuleNode.swift; sourceTree = "<group>"; };
+		1DC6D4CD212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeModuleNodeProtocol.swift; sourceTree = "<group>"; };
 		1DE558CF2124560500576D41 /* WOTPivotNodeExtensionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeExtensionTest.swift; sourceTree = "<group>"; };
 		1DE558D02124560500576D41 /* WOTPivotFilterNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotFilterNode.swift; sourceTree = "<group>"; };
 		1DE558D12124560500576D41 /* WOTPivotRowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotRowNode.swift; sourceTree = "<group>"; };
@@ -139,9 +173,96 @@
 			path = WOTPivotTests;
 			sourceTree = "<group>";
 		};
+		1DC6D4A42125720E00A1C9C2 /* permutators */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4A52125720E00A1C9C2 /* pivotPermutator */,
+			);
+			path = permutators;
+			sourceTree = "<group>";
+		};
+		1DC6D4A52125720E00A1C9C2 /* pivotPermutator */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4A72125720E00A1C9C2 /* WOTPivotMetadataPermutator.swift */,
+				1DC6D4A62125720E00A1C9C2 /* WOTPivotMetadataPermutatorTest.swift */,
+			);
+			path = pivotPermutator;
+			sourceTree = "<group>";
+		};
+		1DC6D4AB212575D500A1C9C2 /* dimensions */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4AC212575D500A1C9C2 /* WOTDimension */,
+			);
+			path = dimensions;
+			sourceTree = "<group>";
+		};
+		1DC6D4AC212575D500A1C9C2 /* WOTDimension */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4BA212575D500A1C9C2 /* WOTDimensionProtocol.swift */,
+				1DC6D4AD212575D500A1C9C2 /* WOTDimension.swift */,
+				1DC6D4AE212575D500A1C9C2 /* WOTPivotDimension */,
+			);
+			path = WOTDimension;
+			sourceTree = "<group>";
+		};
+		1DC6D4AE212575D500A1C9C2 /* WOTPivotDimension */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4B7212575D500A1C9C2 /* WOTPivotNodeHolderProtocol.swift */,
+				1DC6D4B9212575D500A1C9C2 /* WOTPivotDimensionProtocol.swift */,
+				1DC6D4B8212575D500A1C9C2 /* WOTPivotDimension.swift */,
+				1DC6D4AF212575D500A1C9C2 /* WOTPivotDimensionCalculator */,
+			);
+			path = WOTPivotDimension;
+			sourceTree = "<group>";
+		};
+		1DC6D4AF212575D500A1C9C2 /* WOTPivotDimensionCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4B0212575D500A1C9C2 /* extension */,
+				1DC6D4B6212575D500A1C9C2 /* WOTDimensionCalculator.swift */,
+			);
+			path = WOTPivotDimensionCalculator;
+			sourceTree = "<group>";
+		};
+		1DC6D4B0212575D500A1C9C2 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4B1212575D500A1C9C2 /* WOTDimensionDataGroupCalculator.swift */,
+				1DC6D4B2212575D500A1C9C2 /* WOTDimensionRowCalculator.swift */,
+				1DC6D4B3212575D500A1C9C2 /* WOTDimensionFilterCalculator.swift */,
+				1DC6D4B4212575D500A1C9C2 /* WOTDimensionDataCalculator.swift */,
+				1DC6D4B5212575D500A1C9C2 /* WOTDimensionColumnCalculator.swift */,
+			);
+			path = extension;
+			sourceTree = "<group>";
+		};
+		1DC6D4C6212576EA00A1C9C2 /* WOTPivotDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */,
+				1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */,
+			);
+			path = WOTPivotDataModel;
+			sourceTree = "<group>";
+		};
+		1DC6D4CB212577D400A1C9C2 /* WOTTreeNode */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4CD212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift */,
+				1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */,
+			);
+			path = WOTTreeNode;
+			sourceTree = "<group>";
+		};
 		1DE558CB2124560500576D41 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1DC6D4AB212575D500A1C9C2 /* dimensions */,
+				1DC6D4A42125720E00A1C9C2 /* permutators */,
 				1DE5591F2124594B00576D41 /* fetchers */,
 				1DE55918212458E100576D41 /* indexes */,
 				1DE55912212458A400576D41 /* enumerators */,
@@ -154,6 +275,7 @@
 		1DE558CC2124560500576D41 /* nodes */ = {
 			isa = PBXGroup;
 			children = (
+				1DC6D4CB212577D400A1C9C2 /* WOTTreeNode */,
 				1DE558CD2124560500576D41 /* WOTPivotNode */,
 				1DE558D82124560500576D41 /* WOTNode */,
 			);
@@ -197,6 +319,7 @@
 		1DE558F72124571000576D41 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				1DC6D4C6212576EA00A1C9C2 /* WOTPivotDataModel */,
 				1DE558F82124571000576D41 /* WOTDataModel */,
 				1DE558FF2124571000576D41 /* WOTTreeDataModel */,
 			);
@@ -207,8 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				1DE558F92124571000576D41 /* WOTDataModelProtocol.swift */,
-				1DE558FA2124571000576D41 /* WOTDataModelTest.swift */,
 				1DE558FB2124571000576D41 /* WOTDataModel.swift */,
+				1DE558FA2124571000576D41 /* WOTDataModelTest.swift */,
 			);
 			path = WOTDataModel;
 			sourceTree = "<group>";
@@ -216,8 +339,8 @@
 		1DE558FF2124571000576D41 /* WOTTreeDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				1DE559002124571000576D41 /* WOTTreeDataModel.swift */,
 				1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */,
+				1DE559002124571000576D41 /* WOTTreeDataModel.swift */,
 			);
 			path = WOTTreeDataModel;
 			sourceTree = "<group>";
@@ -392,26 +515,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DE559022124571000576D41 /* WOTDataModelProtocol.swift in Sources */,
+				1DC6D4C0212575D500A1C9C2 /* WOTDimensionColumnCalculator.swift in Sources */,
 				1DE55917212458A400576D41 /* WOTNodeEnumerator.swift in Sources */,
+				1DC6D4CA212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift in Sources */,
 				1DE558DF2124560500576D41 /* WOTPivotColNode.swift in Sources */,
 				1DE559042124571000576D41 /* WOTDataModel.swift in Sources */,
 				1DE558E42124560500576D41 /* WOTPivotNodeProtocol.swift in Sources */,
 				1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */,
+				1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */,
+				1DC6D4BB212575D500A1C9C2 /* WOTDimension.swift in Sources */,
 				1DE559072124571000576D41 /* WOTTreeDataModel.swift in Sources */,
 				1DE5595921255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift in Sources */,
+				1DC6D4C3212575D500A1C9C2 /* WOTPivotDimension.swift in Sources */,
+				1DC6D4BC212575D500A1C9C2 /* WOTDimensionDataGroupCalculator.swift in Sources */,
 				1DE558E12124560500576D41 /* WOTPivotDataNode.swift in Sources */,
+				1DC6D4C5212575D500A1C9C2 /* WOTDimensionProtocol.swift in Sources */,
 				1DE5591D212458E100576D41 /* WOTPivotNodeIndex.swift in Sources */,
 				1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */,
+				1DC6D4BD212575D500A1C9C2 /* WOTDimensionRowCalculator.swift in Sources */,
 				1DE558E52124560500576D41 /* WOTNodeProtocol.swift in Sources */,
 				1DE5595B21255AE400576D41 /* WOTNodeIndexProtocol.swift in Sources */,
 				1DE558E72124560500576D41 /* WOTNode.swift in Sources */,
+				1DC6D4CF212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift in Sources */,
+				1DC6D4C2212575D500A1C9C2 /* WOTPivotNodeHolderProtocol.swift in Sources */,
 				1DE558E02124560500576D41 /* WOTPivotDataGroupNode.swift in Sources */,
 				1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */,
+				1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */,
 				1DE55916212458A400576D41 /* WOTNodeEnumeratorProtocol.swift in Sources */,
 				1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */,
+				1DC6D4A92125720E00A1C9C2 /* WOTPivotMetadataPermutator.swift in Sources */,
 				1DE5591E212458E100576D41 /* WOTConnectorNodeIndex.swift in Sources */,
 				1DE559252124594B00576D41 /* WOTDataFetchControllerProtocol.swift in Sources */,
 				1DE559572125586200576D41 /* WOTPivotNodeIndexProtocol.swift in Sources */,
+				1DC6D4BF212575D500A1C9C2 /* WOTDimensionDataCalculator.swift in Sources */,
+				1DC6D4BE212575D500A1C9C2 /* WOTDimensionFilterCalculator.swift in Sources */,
+				1DC6D4C4212575D500A1C9C2 /* WOTPivotDimensionProtocol.swift in Sources */,
+				1DC6D4C1212575D500A1C9C2 /* WOTDimensionCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +561,7 @@
 				1DE558EA2124561500576D41 /* WOTNodeTest.swift in Sources */,
 				1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */,
 				1DE558E92124561000576D41 /* WOTPivotNodeTest.swift in Sources */,
+				1DC6D4AA2125721300A1C9C2 /* WOTPivotMetadataPermutatorTest.swift in Sources */,
 				1DE5590A2124572D00576D41 /* WOTDataModelTest.swift in Sources */,
 				1DE558E82124561000576D41 /* WOTPivotNodeExtensionTest.swift in Sources */,
 			);

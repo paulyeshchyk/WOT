@@ -7,14 +7,13 @@
 //
 
 import Foundation
-import WOTPivot
 
 typealias TNodeSize = [String: Int]
 typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
-class WOTDimension: NSObject, WOTDimensionProtocol {
+public class WOTDimension: NSObject, WOTDimensionProtocol {
 
-    required init(fetchController: WOTDataFetchControllerProtocol) {
+    required public init(fetchController: WOTDataFetchControllerProtocol) {
         self.fetchController = fetchController
     }
 
@@ -37,7 +36,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         }
     }
 
-    func setMaxWidth(_ maxWidth: Int, forNode: WOTNodeProtocol, byKey: String) {
+    public func setMaxWidth(_ maxWidth: Int, forNode: WOTNodeProtocol, byKey: String) {
         guard maxWidth != 0 else {
             return
         }
@@ -59,7 +58,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         set(sizeMap: nodeSizes, node: forNode)
     }
 
-    func maxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int {
+    public func maxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int {
         var result = orValue
 
         guard let nodeSizes = sizeMap(node: node) else {
@@ -73,7 +72,7 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         return result
     }
 
-    func childrenMaxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int {
+    public func childrenMaxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int {
         guard let parent = node.parent else {
             return 0
         }
@@ -93,15 +92,15 @@ class WOTDimension: NSObject, WOTDimensionProtocol {
         return result
     }
 
-    var shouldDisplayEmptyColumns: Bool {
+    public var shouldDisplayEmptyColumns: Bool {
         return false
     }
 
-    var contentSize: CGSize {
+    public var contentSize: CGSize {
         return .zero
     }
 
-    func reload(forIndex externalIndex: Int, completion: @escaping () -> Void) {
+    public func reload(forIndex externalIndex: Int, completion: @escaping () -> Void) {
         preconditionFailure("This method must be overridden")
     }
 

@@ -8,10 +8,13 @@
 
 import Foundation
 
+public protocol WOTTreeProtocol: NSObjectProtocol {
+    func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol
+}
+
 @objc
 public protocol WOTTreeDataModelProtocol: WOTDataModelProtocol {
     var levels: Int { get }
     var width: Int { get }
-    var tankId: NSNumber? { get set }
     init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener)
 }

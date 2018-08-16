@@ -8,11 +8,6 @@
 
 import Foundation
 
-protocol WOTTreeProtocol: NSObjectProtocol {
-    func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol
-}
-
-@objc
 public protocol WOTPivotDataModelProtocol: NSObjectProtocol {
     var contentSize: CGSize { get }
     var shouldDisplayEmptyColumns: Bool { get set }

@@ -7,14 +7,11 @@
 //
 
 import Foundation
-import WOTPivot
 
-@objc
 public protocol WOTDimensionCalculatorProtocol: NSObjectProtocol {
     static func rectangle(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> CGRect
 }
 
-@objc
 public class WOTDimensionCalculator: NSObject, WOTDimensionCalculatorProtocol {
     public static func rectangle(forNode node: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> CGRect {
         return CGRect(x: self.x(forNode: node, dimension: dimension),

@@ -9,20 +9,20 @@
 import Foundation
 
 @objc
-class WOTTreeModuleNode: WOTNode, WOTTreeModuleNodeProtocol {
+public class WOTTreeModuleNode: WOTNode, WOTTreeModuleNodeProtocol {
 
-    private(set)var modulesTree: ModulesTree
-    var imageURL: URL? {
-        guard let result = self.modulesTree.localImageURL() else {
+    private(set)public var modulesTree: WOTTreeModulesTreeProtocol
+    public var imageURL: URL? {
+        guard let result = self.modulesTree.moduleLocalImageURL() else {
             return nil
         }
         return result
     }
 
     @objc
-    required init(moduleTree module: ModulesTree) {
+    required public init(moduleTree module: WOTTreeModulesTreeProtocol) {
         modulesTree = module
-        super.init(name: module.name)
+        super.init(name: module.moduleName())
     }
 
     @objc
@@ -30,10 +30,10 @@ class WOTTreeModuleNode: WOTNode, WOTTreeModuleNodeProtocol {
         fatalError("init(name:) has not been implemented")
     }
 
-    override func value(key: AnyHashable) -> Any? {
+    override public func value(key: AnyHashable) -> Any? {
         guard let keyAsString = key as? String else {
             return nil
         }
-        return modulesTree.value(forKey: keyAsString)
+        return modulesTree.moduleValue(forKey: keyAsString)
     }
 }

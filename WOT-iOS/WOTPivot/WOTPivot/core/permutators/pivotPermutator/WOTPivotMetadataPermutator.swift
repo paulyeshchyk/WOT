@@ -7,11 +7,36 @@
 //
 
 import Foundation
-import WOTPivot
 
-struct WOTPivotMetadataPermutator {
+@objc
+public protocol WOTPivotTemplateProtocol: NSObjectProtocol {
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol
+}
 
-    func permutate(templates: [WOTPivotTemplateProtocol], as type: PivotMetadataType) -> [WOTPivotNodeProtocol] {
+@objc
+public class WOTPivotMetaTypeConverter: NSObject {
+    @objc
+    public static func nodeClass(for type: PivotMetadataType) -> WOTPivotNode.Type {
+        switch type {
+        case .filter:
+            return WOTPivotFilterNode.self
+        case .column:
+            return WOTPivotColNode.self
+        case .row:
+            return WOTPivotRowNode.self
+        case .data:
+            return WOTPivotDataNode.self
+        }
+    }
+}
+
+public struct WOTPivotMetadataPermutator {
+
+    public init() {
+
+    }
+
+    public func permutate(templates: [WOTPivotTemplateProtocol], as type: PivotMetadataType) -> [WOTPivotNodeProtocol] {
 
         var mutableTemplates = [WOTPivotNodeProtocol]()
         templates.forEach { (template) in

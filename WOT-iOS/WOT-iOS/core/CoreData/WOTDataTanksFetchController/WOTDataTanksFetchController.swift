@@ -37,7 +37,7 @@ class WOTDataTanksFetchController: NSObject {
 }
 
 extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
-    func performFetch() {
+    func performFetch() throws {
         self.fetchResultController?.managedObjectContext.perform({
             do {
                 try self.fetchResultController?.performFetch()

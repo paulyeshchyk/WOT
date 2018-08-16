@@ -77,7 +77,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
                 return
             }
             nestedModules.forEach({ (module) in
-                guard let prevNode = listofNodes[module.module_id.intValue] else {
+                guard let prevNode = listofNodes[module.moduleIdInt()] else {
                     root.addChild(value)
                     return
                 }
@@ -117,7 +117,22 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
     }
 }
 
-extension ModulesTree {
+extension ModulesTree: WOTTreeModulesTreeProtocol {
+    public func moduleLocalImageURL() -> URL? {
+        return nil
+    }
+
+    public func moduleName() -> String {
+        return self.name
+    }
+
+    public func moduleValue(forKey: String) -> Any? {
+        return nil
+    }
+
+    public func moduleIdInt() -> Int {
+        return self.module_id.intValue
+    }
 
     func isCompatible(forTankId: NSDecimalNumber) -> Bool {
         let result = self.nextTanks.filter({ (next) -> Bool in
@@ -126,11 +141,14 @@ extension ModulesTree {
         return (result.count != 0)
     }
 
-    func nestedModules () -> Set<ModulesTree>? {
+    public func nestedModules() -> [WOTTreeModulesTreeProtocol]? {
+        var result = [WOTTreeModulesTreeProtocol]()
+
         guard let modules = self.prevModules else {
-            return nil
+            return result
         }
-        return [modules]
+        result.append(modules)
+        return result
     }
 }
 

@@ -10,28 +10,6 @@ import Foundation
 import WOTPivot
 
 @objc
-protocol WOTPivotTemplateProtocol: NSObjectProtocol {
-    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol
-}
-
-@objc
-class WOTPivotMetaTypeConverter: NSObject {
-    @objc
-    static func nodeClass(for type: PivotMetadataType) -> WOTPivotNode.Type {
-        switch type {
-        case .filter:
-            return WOTPivotFilterNode.self
-        case .column:
-            return WOTPivotColNode.self
-        case .row:
-            return WOTPivotRowNode.self
-        case .data:
-            return WOTPivotDataNode.self
-        }
-    }
-}
-
-@objc
 class WOTPivotTemplateVehicleTier: NSObject, WOTPivotTemplateProtocol {
 
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {

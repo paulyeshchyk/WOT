@@ -7,10 +7,8 @@
 //
 
 import Foundation
-import WOTPivot
 
-@objc
-class WOTDimensionColumnCalculator: WOTDimensionCalculator {
+public class WOTDimensionColumnCalculator: WOTDimensionCalculator {
 
     override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         var result: Int = dimension.childrenMaxWidth(forNode, orValue: 0)

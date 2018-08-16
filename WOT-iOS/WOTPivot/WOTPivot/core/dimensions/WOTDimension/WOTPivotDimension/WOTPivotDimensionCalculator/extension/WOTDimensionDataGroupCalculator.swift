@@ -8,8 +8,7 @@
 
 import Foundation
 
-@objc
-class WOTDimensionDataGroupCalculator: WOTDimensionDataCalculator {
+public class WOTDimensionDataGroupCalculator: WOTDimensionDataCalculator {
 
 }
 

@@ -10,7 +10,6 @@ import Foundation
 
 public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
 
-    public var tankId: NSNumber?
     lazy var nodeConnectorIndex: WOTConnectorNodeIndex = { return WOTConnectorNodeIndex() }()
     public var levels: Int { return self.nodeConnectorIndex.levels }
     public var width: Int { return self.nodeConnectorIndex.width }

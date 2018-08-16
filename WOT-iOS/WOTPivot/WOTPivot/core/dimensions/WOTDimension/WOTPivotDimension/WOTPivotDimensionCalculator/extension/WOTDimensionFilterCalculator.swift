@@ -7,10 +7,8 @@
 //
 
 import Foundation
-import WOTPivot
 
-@objc
-class WOTDimensionFilterCalculator: WOTDimensionCalculator {
+public class WOTDimensionFilterCalculator: WOTDimensionCalculator {
 
     override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         return 0

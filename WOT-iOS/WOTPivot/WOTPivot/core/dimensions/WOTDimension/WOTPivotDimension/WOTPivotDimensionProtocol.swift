@@ -32,7 +32,7 @@ import Foundation
  *  {rowsDepth+colsEndpoints, colsDepth+rowsEndpoints}
 
  */
-@objc
+
 public protocol WOTPivotDimensionProtocol: WOTDimensionProtocol {
 
     init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol)

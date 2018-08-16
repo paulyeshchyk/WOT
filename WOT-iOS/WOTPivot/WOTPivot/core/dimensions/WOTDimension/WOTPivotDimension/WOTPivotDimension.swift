@@ -7,45 +7,44 @@
 //
 
 import Foundation
-import WOTPivot
 
-class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
+public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private var rootNodeHolder: WOTPivotNodeHolderProtocol
-    required init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol) {
+    required public init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol) {
         self.rootNodeHolder = rootNodeHolder
         super.init(fetchController: fetchController)
     }
 
-    required init(fetchController: WOTDataFetchControllerProtocol) {
+    required public init(fetchController: WOTDataFetchControllerProtocol) {
         fatalError("init(fetchController:) has not been implemented")
     }
 
     private var registeredCalculators = [AnyHashable: AnyClass]()
-    func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
+    public func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
         let hash = hashValue(type: forNodeClass)
         self.registeredCalculators[hash] = calculatorClass
     }
 
-    func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type? {
+    public func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type? {
         let hash = hashValue(type: forNodeClass)
         let result: WOTDimensionCalculator.Type? = self.registeredCalculators[hash] as? WOTDimensionCalculator.Type
         return result
     }
 
-    var rootNodeWidth: Int {
+    public var rootNodeWidth: Int {
         let rows = self.rootNodeHolder.rootRowsNode
         let level = rows.isVisible ? 1 : 0
         return WOTNodeEnumerator.sharedInstance.depth(forChildren: rows.children, initialLevel: level)
     }
 
-    var rootNodeHeight: Int {
+    public var rootNodeHeight: Int {
         let cols = self.rootNodeHolder.rootColsNode
         let level = cols.isVisible ? 1 : 0
         return WOTNodeEnumerator.sharedInstance.depth(forChildren: cols.children, initialLevel: level)
     }
 
-    override var contentSize: CGSize {
+    override public var contentSize: CGSize {
         let height = self.getHeight()
         let width = self.getWidth()
         return CGSize(width: width, height: height)//156:11
@@ -54,7 +53,7 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     private var index: Int = 0
 
     //TODO: !!! TO BE refactored: too slow !!!
-    override func reload(forIndex externalIndex: Int, completion:  @escaping () -> Void) {
+    override public func reload(forIndex externalIndex: Int, completion:  @escaping () -> Void) {
 
         self.index = externalIndex
         let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootColsNode)
@@ -118,7 +117,7 @@ class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         return ObjectIdentifier(type).hashValue
     }
 
-    func pivotRect(forNode: WOTPivotNodeProtocol) -> CGRect {
+    public func pivotRect(forNode: WOTPivotNodeProtocol) -> CGRect {
         guard let calculator = self.calculatorClass(forNodeClass: type(of: forNode)) else {
             return .zero
         }
