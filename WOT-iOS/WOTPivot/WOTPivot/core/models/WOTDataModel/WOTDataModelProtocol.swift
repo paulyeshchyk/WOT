@@ -22,7 +22,7 @@ public protocol WOTNodeCreatorProtocol {
 }
 
 @objc
-public protocol WOTDataModelListener: NSObjectProtocol {
+public protocol WOTDataModelListener {
     func modelDidLoad()
     func modelDidFailLoad(error: Error)
     func metadataItems() -> [WOTNodeProtocol]

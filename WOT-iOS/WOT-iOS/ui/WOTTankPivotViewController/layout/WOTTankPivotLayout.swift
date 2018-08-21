@@ -86,30 +86,20 @@ class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     func sepatorAttributes(for collectionView: UICollectionView, at indexPath: IndexPath, in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
 
         let contentOffset = collectionView.contentOffset
-
         let pivotAttributes = self.pivotLayoutCellAttributes(indexPath: indexPath, contentOffset: contentOffset)
-
         guard let cellAttributes = pivotAttributes.collectionViewLayoutAttributes(forRect: rect) else {
 
             return []
         }
 
-        var result: [UICollectionViewLayoutAttributes] = cellAttributes
+        var result = [UICollectionViewLayoutAttributes?]()
+        result.append(contentsOf: cellAttributes)
+        result.append(layoutAttributesForDecorationView(ofKind: .right, at: indexPath, pivotAttributes: pivotAttributes))
+        result.append(layoutAttributesForDecorationView(ofKind: .left, at: indexPath, pivotAttributes: pivotAttributes))
+        result.append(layoutAttributesForDecorationView(ofKind: .top, at: indexPath, pivotAttributes: pivotAttributes))
+        result.append(layoutAttributesForDecorationView(ofKind: .bottom, at: indexPath, pivotAttributes: pivotAttributes))
 
-        if let decor = layoutAttributesForDecorationView(ofKind: .right, at: indexPath, pivotAttributes: pivotAttributes) {
-            result.append(decor)
-        }
-        if let decor = layoutAttributesForDecorationView(ofKind: .left, at: indexPath, pivotAttributes: pivotAttributes) {
-            result.append(decor)
-        }
-        if let decor = layoutAttributesForDecorationView(ofKind: .top, at: indexPath, pivotAttributes: pivotAttributes) {
-            result.append(decor)
-        }
-        if let decor = layoutAttributesForDecorationView(ofKind: .bottom, at: indexPath, pivotAttributes: pivotAttributes) {
-            result.append(decor)
-        }
-
-        return result
+        return result.compactMap { $0 }
     }
 
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {

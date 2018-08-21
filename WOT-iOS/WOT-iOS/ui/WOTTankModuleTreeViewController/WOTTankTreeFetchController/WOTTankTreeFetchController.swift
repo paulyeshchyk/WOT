@@ -142,11 +142,11 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     }
 
     public func nestedModules() -> [WOTTreeModulesTreeProtocol]? {
-        var result = [WOTTreeModulesTreeProtocol]()
 
         guard let modules = self.prevModules else {
-            return result
+            return nil
         }
+        var result = [WOTTreeModulesTreeProtocol]()
         result.append(modules)
         return result
     }

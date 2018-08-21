@@ -69,7 +69,7 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTDataModelListener>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
@@ -223,8 +223,18 @@
     }
     return result;
 }
+@end
 
-//WOTPivotDataModelListener
+
+@interface WOTTankModuleTreeViewController(WOTDataModelListener) <WOTDataModelListener>
+@end
+
+@implementation WOTTankModuleTreeViewController(WOTDataModelListener)
+
+- (void)modelHasNewDataItem {
+
+}
+
 - (void)modelDidLoad {
     [self.collectionView reloadData];
     dispatch_async(dispatch_get_main_queue(), ^{
