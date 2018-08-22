@@ -10,7 +10,10 @@ import Foundation
 public typealias WOTNodeProtocolRemoveCompletion = (WOTNodeProtocol) -> Void
 public typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult
 
-@objc public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
+@objc
+public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
+
+    init(name nameValue: String)
 
     subscript(index: Int) -> WOTNodeProtocol { get set }
 

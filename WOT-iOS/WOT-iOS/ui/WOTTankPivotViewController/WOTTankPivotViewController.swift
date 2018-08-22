@@ -31,7 +31,7 @@ class WOTTankPivotViewController: UIViewController {
     }()
 
     lazy var model: WOTPivotDataModel = {
-        return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self)
+        return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, enumerator: WOTNodeEnumerator.sharedInstance)
     }()
 
     override func viewDidLoad() {

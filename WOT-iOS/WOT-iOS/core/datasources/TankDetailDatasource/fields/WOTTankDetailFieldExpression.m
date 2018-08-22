@@ -65,7 +65,8 @@
     request.propertiesToFetch = expressionsForRequest;
 
     NSError *error = nil;
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     NSArray *objects = [context executeFetchRequest:request error:&error];
     NSDictionary *requestValues = [objects lastObject];
 

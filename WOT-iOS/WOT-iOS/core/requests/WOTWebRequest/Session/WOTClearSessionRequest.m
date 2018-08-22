@@ -15,7 +15,8 @@
 
     [super temp_executeWithArgs:args];
     
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     [context performBlock:^{
         
         [UserSession removeObjectsByPredicate:nil inManagedObjectContext:context];

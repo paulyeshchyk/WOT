@@ -37,8 +37,8 @@ extension WOTTankPivotViewController: WOTDataModelListener {
 
         let permutator = WOTPivotMetadataPermutator()
 
-        let cols = permutator.permutate(templates: [levelTier, levelPrem], as: .row)
-        let rows = permutator.permutate(templates: [levelNati, levelType], as: .column)
+        let cols = permutator.permutate(templates: [levelType, levelTier], as: .row)
+        let rows = permutator.permutate(templates: [levelNati, levelPrem], as: .column)
         let filt = self.pivotFilters()
 
         result.append(contentsOf: cols)

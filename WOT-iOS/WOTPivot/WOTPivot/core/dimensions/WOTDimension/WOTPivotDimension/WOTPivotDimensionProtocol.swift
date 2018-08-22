@@ -35,7 +35,7 @@ import Foundation
 
 public protocol WOTPivotDimensionProtocol: WOTDimensionProtocol {
 
-    init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol)
+    init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol)
 
     func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
 

@@ -93,7 +93,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         }
         for idx in 0 ..< indexOfNode {
             let child = parent.children[idx]
-            let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: child)
+            let endpoints = self.endpoints(node: child)
             endpoints.forEach { (_ ) in
                 result += orValue
             }

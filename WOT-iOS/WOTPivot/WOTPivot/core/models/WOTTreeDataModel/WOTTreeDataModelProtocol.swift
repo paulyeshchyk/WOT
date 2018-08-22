@@ -16,5 +16,5 @@ public protocol WOTTreeProtocol: NSObjectProtocol {
 public protocol WOTTreeDataModelProtocol: WOTDataModelProtocol {
     var levels: Int { get }
     var width: Int { get }
-    init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener)
+    init(fetchController: WOTDataFetchControllerProtocol, listener: WOTDataModelListener, enumerator: WOTNodeEnumeratorProtocol)
 }

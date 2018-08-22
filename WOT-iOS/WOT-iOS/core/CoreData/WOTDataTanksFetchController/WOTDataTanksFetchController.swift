@@ -11,10 +11,12 @@ import CoreData
 
 class WOTDataTanksFetchController: NSObject {
 
+    private lazy var dataProvider: WOTCoredataProviderProtocol =  {
+        return WOTCoreDataProvider.sharedInstance
+    } ()
+
     lazy fileprivate var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>? = {
-        guard let context = WOTCoreDataProvider.sharedInstance().mainManagedObjectContext else {
-            return nil
-        }
+        let context = self.dataProvider.mainManagedObjectContext
         let request = self.nodeFetchRequestCreator.fetchRequest
         let result = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         result.delegate = self

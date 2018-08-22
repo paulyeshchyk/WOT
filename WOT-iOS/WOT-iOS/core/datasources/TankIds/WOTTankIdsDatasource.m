@@ -12,7 +12,6 @@
 
 @implementation WOTTankIdsDatasource
 
-
 + (NSArray *)fetchForTiers:(NSArray *)tiers nations:(NSArray *)nations types:(NSArray *)types {
     
     NSPredicate *predicate = [WOTCoreDataPredicates tankIdsByTiers:tiers nations:nations tankTypes:types];
@@ -22,7 +21,9 @@
     [request setPropertiesToFetch:@[WOT_KEY_TANK_ID]];
     [request setResultType:NSDictionaryResultType];
 
-    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[WOTCoreDataProvider sharedInstance].mainManagedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
 
     NSError *error = nil;
     [fetchedResultsController performFetch:&error];

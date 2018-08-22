@@ -13,11 +13,13 @@ typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
 public class WOTDimension: NSObject, WOTDimensionProtocol {
 
-    required public init(fetchController: WOTDataFetchControllerProtocol) {
+    required public init(fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol) {
         self.fetchController = fetchController
+        self.enumerator = enumerator
     }
 
     var fetchController: WOTDataFetchControllerProtocol
+    var enumerator: WOTNodeEnumeratorProtocol
 
     lazy private var sizes: TNodesSizesType = {
         return TNodesSizesType()
@@ -83,7 +85,7 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
         var result: Int = 0
         for idx in 0 ..< indexOfNode {
             let child = parent.children[idx]
-            let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: child)
+            let endpoints = self.enumerator.endpoints(node: child)
             endpoints.forEach { (endpoint) in
                 result += self.maxWidth(endpoint, orValue: orValue)
             }

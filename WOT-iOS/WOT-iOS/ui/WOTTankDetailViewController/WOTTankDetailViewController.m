@@ -260,8 +260,11 @@
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
         fetchRequest.predicate = predicate;
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
-        
-        _fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[WOTCoreDataProvider sharedInstance] mainManagedObjectContext] sectionNameKeyPath:nil cacheName:nil];
+
+        id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+        NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
+
+        _fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
     }
     return _fetchedResultController;

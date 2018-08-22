@@ -28,12 +28,16 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
 
     var fetchController: WOTDataFetchControllerProtocol
     var listener: WOTDataModelListener
-    required public init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener) {
+    required public init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener, enumerator: WOTNodeEnumeratorProtocol) {
         fetchController = fetch
         listener = list
-        super.init()
+        super.init(enumerator: enumerator)
 
         self.fetchController.setFetchListener(self)
+    }
+
+    public required init(enumerator enumer: WOTNodeEnumeratorProtocol) {
+        fatalError("init(enumerator:) has not been implemented")
     }
 
     override public func nodesCount(section: Int) -> Int {

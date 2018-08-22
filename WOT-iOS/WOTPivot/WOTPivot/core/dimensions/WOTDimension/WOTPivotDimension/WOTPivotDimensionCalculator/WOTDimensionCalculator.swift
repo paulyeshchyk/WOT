@@ -8,11 +8,11 @@
 
 import Foundation
 
-public protocol WOTDimensionCalculatorProtocol: NSObjectProtocol {
+public protocol WOTDimensionCalculatorProtocol {
     static func rectangle(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> CGRect
 }
 
-public class WOTDimensionCalculator: NSObject, WOTDimensionCalculatorProtocol {
+public class WOTDimensionCalculator: WOTDimensionCalculatorProtocol {
     public static func rectangle(forNode node: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> CGRect {
         return CGRect(x: self.x(forNode: node, dimension: dimension),
                       y: self.y(forNode: node, dimension: dimension),

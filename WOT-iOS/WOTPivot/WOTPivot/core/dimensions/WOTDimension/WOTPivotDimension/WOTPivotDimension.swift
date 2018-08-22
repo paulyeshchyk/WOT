@@ -11,13 +11,17 @@ import Foundation
 public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private var rootNodeHolder: WOTPivotNodeHolderProtocol
-    required public init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol) {
+    required public init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol) {
         self.rootNodeHolder = rootNodeHolder
-        super.init(fetchController: fetchController)
+        super.init(fetchController: fetchController, enumerator: enumerator)
     }
 
     required public init(fetchController: WOTDataFetchControllerProtocol) {
         fatalError("init(fetchController:) has not been implemented")
+    }
+
+    required public init(fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol) {
+        fatalError("init(fetchController:enumerator:) has not been implemented")
     }
 
     private var registeredCalculators = [AnyHashable: AnyClass]()
@@ -35,13 +39,13 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     public var rootNodeWidth: Int {
         let rows = self.rootNodeHolder.rootRowsNode
         let level = rows.isVisible ? 1 : 0
-        return WOTNodeEnumerator.sharedInstance.depth(forChildren: rows.children, initialLevel: level)
+        return self.enumerator.depth(forChildren: rows.children, initialLevel: level)
     }
 
     public var rootNodeHeight: Int {
         let cols = self.rootNodeHolder.rootColsNode
         let level = cols.isVisible ? 1 : 0
-        return WOTNodeEnumerator.sharedInstance.depth(forChildren: cols.children, initialLevel: level)
+        return self.enumerator.depth(forChildren: cols.children, initialLevel: level)
     }
 
     override public var contentSize: CGSize {
@@ -56,9 +60,9 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     override public func reload(forIndex externalIndex: Int, completion:  @escaping () -> Void) {
 
         self.index = externalIndex
-        let colNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootColsNode)
-        let rowNodeEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootRowsNode)
-        let filterEndPoints = WOTNodeEnumerator.sharedInstance.endpoints(node: self.rootNodeHolder.rootFilterNode)
+        let colNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootColsNode)
+        let rowNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootRowsNode)
+        let filterEndPoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootFilterNode)
         rowNodeEndpoints.forEach { (rowNode) in
             colNodeEndpoints.forEach({ (colNode) in
                 filterEndPoints.forEach({(filterNode) in
@@ -96,7 +100,7 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private func getWidth() -> Int {
         let rootCols = self.rootNodeHolder.rootColsNode
-        let columnEndpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: rootCols)
+        let columnEndpoints = self.enumerator.endpoints(node: rootCols)
         let emptyDataColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0
 
         var maxWidth: Int = 0
@@ -109,7 +113,7 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private func getHeight() -> Int {
         let rootRows = self.rootNodeHolder.rootRowsNode
-        let rowNodesEndpointsCount = WOTNodeEnumerator.sharedInstance.endpoints(node: rootRows).count
+        let rowNodesEndpointsCount = self.enumerator.endpoints(node: rootRows).count
         return self.rootNodeHeight + rowNodesEndpointsCount
     }
 

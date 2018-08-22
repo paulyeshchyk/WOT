@@ -37,13 +37,10 @@
 #import "WOTApplicationDefaults.h"
 #import "WOTWebResponseLink.h"
 
-#import "WOTCoreDataProvider.h"
 #import "Strings.h"
 
 #import "WOTMacro.h"
 #import "WOTEnums.h"
-#import "WOTError.h"
-#import "WOTErrorCodes.h"
 #import "WOTColors.h"
 
 #import <Availability.h>

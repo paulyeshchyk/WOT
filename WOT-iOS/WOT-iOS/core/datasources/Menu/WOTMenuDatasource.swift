@@ -34,6 +34,7 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     }
 
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
+    var dataProvider = WOTCoreDataProvider.sharedInstance
 
     override init() {
         super.init()
@@ -42,9 +43,7 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: L10n.wotStringProfile, icon: UIImage(), userDependence: false))
 
-        guard let context = WOTCoreDataProvider.sharedInstance()?.mainManagedObjectContext else {
-            return
-        }
+        let context = self.dataProvider.mainManagedObjectContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: UserSession.self))
         request.sortDescriptors = [NSSortDescriptor(key: L10n.wotKeyExpiresAt, ascending: false)]
         let fetchedResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)

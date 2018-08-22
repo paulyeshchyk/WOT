@@ -53,8 +53,8 @@
 }
 
 - (NSManagedObjectContext *)context {
-    
-    return [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    return [dataProvider mainManagedObjectContext];
 }
 
 - (NSCompoundPredicate *)filterBy {

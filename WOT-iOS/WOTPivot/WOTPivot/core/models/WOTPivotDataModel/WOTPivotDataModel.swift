@@ -11,7 +11,7 @@ import Foundation
 public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol {
 
     lazy public var dimension: WOTPivotDimensionProtocol = {
-        return WOTPivotDimension(rootNodeHolder: self, fetchController: self.fetchController)
+        return WOTPivotDimension(rootNodeHolder: self, fetchController: self.fetchController, enumerator: self.enumerator)
     }()
 
     @objc
@@ -70,13 +70,13 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
     }
 
     @objc
-    required public init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol) {
+    required public init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol, enumerator: WOTNodeEnumeratorProtocol) {
         shouldDisplayEmptyColumns = false
         fetchController = fc
         listener = modelListener
         nodeCreator = nc
 
-        super.init()
+        super.init(enumerator: enumerator)
 
         self.fetchController.setFetchListener(self)
 
@@ -85,6 +85,10 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
         self.dimension.registerCalculatorClass(WOTDimensionFilterCalculator.self, forNodeClass: WOTPivotFilterNode.self)
         self.dimension.registerCalculatorClass(WOTDimensionDataCalculator.self, forNodeClass: WOTPivotDataNode.self)
         self.dimension.registerCalculatorClass(WOTDimensionDataGroupCalculator.self, forNodeClass: WOTPivotDataGroupNode.self)
+    }
+
+    public required init(enumerator enumer: WOTNodeEnumeratorProtocol) {
+        fatalError("init(enumerator:) has not been implemented")
     }
 
     override public func loadModel() {

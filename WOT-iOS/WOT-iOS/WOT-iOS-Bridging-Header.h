@@ -2,7 +2,6 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#import "WOTCoreDataProvider.h"
 #import "WOTTankListSettingsDatasource.h"
 #import "Tanks.h"
 #import "WOTApplicationDefaults.h"
@@ -25,3 +24,4 @@
 #import "WOTSessionManager.h"
 #import "WOTMenuTableViewCell.h"
 #import "WOTNode+PivotFactory.h"
+#import <WOTPivot/WOTPivot.h>

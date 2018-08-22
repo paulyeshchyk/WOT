@@ -64,7 +64,8 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         return;
     }
     
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
         
         NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];

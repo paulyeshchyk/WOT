@@ -11,6 +11,12 @@ import ObjectiveC
 
 open class WOTNode: NSObject, WOTNodeProtocol {
 
+    @objc
+    public required init(name nameValue: String) {
+        super.init()
+        self.name = nameValue
+    }
+
     override open var hashValue: Int {
         return self.fullName.hashValue
     }
@@ -50,12 +56,6 @@ open class WOTNode: NSObject, WOTNodeProtocol {
     }
 
     open var index: Int = 0
-
-    @objc
-    public required init(name nameValue: String) {
-        super.init()
-        self.name = nameValue
-    }
 
     open func copy(with zone: NSZone? = nil) -> Any {
         let result = type(of: self).init(name: self.name)

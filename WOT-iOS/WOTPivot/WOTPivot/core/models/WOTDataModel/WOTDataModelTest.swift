@@ -12,7 +12,8 @@ import XCTest
 class WOTDataModelTest: XCTestCase {
 
     lazy var model: WOTDataModelProtocol = {
-        return WOTDataModel()
+        let enumerator = WOTNodeEnumerator()
+        return WOTDataModel(enumerator: enumerator)
     }()
 
     override func setUp() {

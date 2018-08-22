@@ -8,7 +8,6 @@
 
 #import "WOTSaveSessionRequest.h"
 #import "UserSession.h"
-#import "WOTCoreDataProvider.h"
 
 @implementation WOTSaveSessionRequest
 
@@ -16,7 +15,8 @@
 
     [super temp_executeWithArgs:args];
 
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     [context performBlock:^{
         
         UserSession *session = [UserSession insertNewObjectInManagedObjectContext:context];

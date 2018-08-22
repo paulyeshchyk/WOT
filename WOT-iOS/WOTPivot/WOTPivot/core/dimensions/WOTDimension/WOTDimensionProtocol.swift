@@ -11,7 +11,7 @@ import Foundation
 @objc
 public protocol WOTDimensionProtocol: NSObjectProtocol {
 
-    init(fetchController: WOTDataFetchControllerProtocol)
+    init(fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol)
 
     var shouldDisplayEmptyColumns: Bool { get }
 

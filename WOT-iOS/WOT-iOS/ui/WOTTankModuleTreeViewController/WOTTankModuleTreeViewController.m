@@ -91,7 +91,7 @@
     if (self){
 
         self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self nodeCreator:self];
-        self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController listener: self];
+        self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController listener: self enumerator: [WOTNodeEnumerator sharedInstance]];
     }
     return self;
 }

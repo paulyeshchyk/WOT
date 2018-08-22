@@ -22,8 +22,8 @@
     NSDictionary *tankChassesDictionary = [data[WOT_KEY_DATA] copy];
     
     NSArray *tankChassisArray = [tankChassesDictionary allKeys];
-    
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
         
         [tankChassisArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {

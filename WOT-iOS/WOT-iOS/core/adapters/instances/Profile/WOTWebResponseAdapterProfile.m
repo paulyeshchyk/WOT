@@ -35,7 +35,8 @@
     
     NSDictionary *profileJSON = data[WOT_KEY_DATA];
 
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] workManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
         
         [self context:context parseProfile:profileJSON];

@@ -7,7 +7,6 @@
 //
 
 #import "WOTMetric+Samples.h"
-#import "WOTCoreDataProvider.h"
 #import "Tankchassis.h"
 #import "Tankengines.h"
 #import "Tankturrets.h"
@@ -28,7 +27,8 @@
         request.predicate = predicate;
         request.propertiesToFetch = [expression expressionDescriptions];
         request.resultType = NSDictionaryResultType;
-        NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
+        id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+        NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
         id result = [context executeFetchRequest:request error:&error];
         
         if ([result count] == 0) {
