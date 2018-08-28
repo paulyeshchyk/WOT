@@ -11,7 +11,6 @@
 #import <WOTData/WOTData.h>
 
 #import "WOTClearSessionRequest.h"
-#import "WOTRequestExecutor.h"
 #import "WOTSaveSessionRequest.h"
 #import "WOTSessionManager.h"
 #import "WOTTankListSettingsDatasource.h"
@@ -27,15 +26,8 @@
 #import "WOTWebRequestTankTurrets.h"
 #import "WOTWEBRequestTankVehicles.h"
 
-#import "WOTWebResponseAdapterChassis.h"
-#import "WOTWebResponseAdapterEngines.h"
-#import "WOTWebResponseAdapterGuns.h"
 #import "WOTWebResponseAdapterLogin.h"
-#import "WOTWebResponseAdapterProfile.h"
-#import "WOTWebResponseAdapterRadios.h"
-#import "WOTWebResponseAdapterTanks.h"
-#import "WOTWebResponseAdapterTurrets.h"
-#import "WOTWebResponseAdapterVehicles.h"
+
 
 @implementation WOTApplicationDefaults
 
@@ -209,7 +201,5 @@ static NSString *WOTWEBRequestDefaultLanguage;
     
     return [NSString stringWithFormat:@"%@.%@",ApplicationHost,[self language]];
 }
-
-
 
 @end

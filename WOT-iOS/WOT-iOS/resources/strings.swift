@@ -145,8 +145,6 @@ internal enum L10n {
   internal static let wotKeyCode = L10n.tr("Localizable", "WOT_KEY_CODE")
   /// contour_image
   internal static let wotKeyContourImage = L10n.tr("Localizable", "WOT_KEY_CONTOUR_IMAGE")
-  /// data
-  internal static let wotKeyData = L10n.tr("Localizable", "WOT_KEY_DATA")
   /// default_profile
   internal static let wotKeyDefaultProfile = L10n.tr("Localizable", "WOT_KEY_DEFAULT_PROFILE")
   /// vehicles.default_profile.gun.fire_rate
@@ -159,8 +157,6 @@ internal enum L10n {
   internal static let wotKeyDistance = L10n.tr("Localizable", "WOT_KEY_DISTANCE")
   /// dpm
   internal static let wotKeyDpm = L10n.tr("Localizable", "WOT_KEY_DPM")
-  /// error
-  internal static let wotKeyError = L10n.tr("Localizable", "WOT_KEY_ERROR")
   /// expires_at
   internal static let wotKeyExpiresAt = L10n.tr("Localizable", "WOT_KEY_EXPIRES_AT")
   /// fields
@@ -237,8 +233,6 @@ internal enum L10n {
   internal static let wotKeyShortName = L10n.tr("Localizable", "WOT_KEY_SHORT_NAME")
   /// short_name_i18n
   internal static let wotKeyShortNameI18N = L10n.tr("Localizable", "WOT_KEY_SHORT_NAME_I18N")
-  /// status
-  internal static let wotKeyStatus = L10n.tr("Localizable", "WOT_KEY_STATUS")
   /// tag
   internal static let wotKeyTag = L10n.tr("Localizable", "WOT_KEY_TAG")
   /// tank_id
@@ -263,20 +257,6 @@ internal enum L10n {
   internal static let wotKeyVehicles = L10n.tr("Localizable", "WOT_KEY_VEHICLES")
   /// weight
   internal static let wotKeyWeight = L10n.tr("Localizable", "WOT_KEY_WEIGHT")
-  /// default_profile
-  internal static let wotLinkkeyDefaultProfile = L10n.tr("Localizable", "WOT_LINKKEY_DEFAULT_PROFILE")
-  /// engines
-  internal static let wotLinkkeyEngines = L10n.tr("Localizable", "WOT_LINKKEY_ENGINES")
-  /// guns
-  internal static let wotLinkkeyGuns = L10n.tr("Localizable", "WOT_LINKKEY_GUNS")
-  /// modules_tree
-  internal static let wotLinkkeyModulestree = L10n.tr("Localizable", "WOT_LINKKEY_MODULESTREE")
-  /// radios
-  internal static let wotLinkkeyRadios = L10n.tr("Localizable", "WOT_LINKKEY_RADIOS")
-  /// suspensions
-  internal static let wotLinkkeySuspensions = L10n.tr("Localizable", "WOT_LINKKEY_SUSPENSIONS")
-  /// turrets
-  internal static let wotLinkkeyTurrets = L10n.tr("Localizable", "WOT_LINKKEY_TURRETS")
   /// Anonymous user
   internal static let wotStringAnonymousUser = L10n.tr("Localizable", "WOT_STRING_ANONYMOUS_USER")
   /// Apply
@@ -433,16 +413,6 @@ internal enum L10n {
   internal static let wotValueLanguageEu = L10n.tr("Localizable", "WOT_VALUE_LANGUAGE_EU")
   /// ru
   internal static let wotValueLanguageRu = L10n.tr("Localizable", "WOT_VALUE_LANGUAGE_RU")
-  /// vehicleChassis
-  internal static let wotValueVehicleChassis = L10n.tr("Localizable", "WOT_VALUE_VEHICLE_CHASSIS")
-  /// vehicleEngine
-  internal static let wotValueVehicleEngine = L10n.tr("Localizable", "WOT_VALUE_VEHICLE_ENGINE")
-  /// vehicleGun
-  internal static let wotValueVehicleGun = L10n.tr("Localizable", "WOT_VALUE_VEHICLE_GUN")
-  /// vehicleRadio
-  internal static let wotValueVehicleRadio = L10n.tr("Localizable", "WOT_VALUE_VEHICLE_RADIO")
-  /// vehicleTurret
-  internal static let wotValueVehicleTurret = L10n.tr("Localizable", "WOT_VALUE_VEHICLE_TURRET")
 }
 // swiftlint:enable identifier_name line_length type_body_length
 

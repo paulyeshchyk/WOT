@@ -7,8 +7,8 @@
 //
 
 #import "WOTApplicationStartupRequests.h"
-#import "WOTRequestExecutor.h"
 #import <WOTData/WOTData.h>
+#import <WOTPivot/WOTPivot.h>
 
 @implementation WOTApplicationStartupRequests
 
@@ -37,7 +37,6 @@
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTanks];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_TANK_LIST];
     if (canAdd) {
-        
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
     }
 }

@@ -9,6 +9,8 @@
 #import "WOTWEBRequestLogout.h"
 #import "WOTSessionManager.h"
 
+#import <WOTPivot/WOTPivot.h>
+
 @implementation WOTWEBRequestLogout
 
 + (void)clearCookies {
@@ -38,7 +40,7 @@
 
 - (NSDictionary *)query {
     
-    return @{WOT_KEY_APPLICATION_ID:[NSString valueOrSpaceString:self.applicationID], WOT_KEY_ACCESS_TOKEN:[NSString valueOrSpaceString:self.access_token]};
+    return @{WOT_KEY_APPLICATION_ID:[NSString valueOrSpaceString:self.hostConfiguration.applicationID], WOT_KEY_ACCESS_TOKEN:[NSString valueOrSpaceString:self.access_token]};
 }
 
 - (NSData *)httpBodyData {

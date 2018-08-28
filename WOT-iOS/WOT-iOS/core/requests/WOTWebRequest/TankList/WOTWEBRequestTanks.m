@@ -13,7 +13,7 @@
 - (NSDictionary *)query {
 
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    result[WOT_KEY_APPLICATION_ID] = [NSString valueOrSpaceString:self.applicationID];
+    result[WOT_KEY_APPLICATION_ID] = [NSString valueOrSpaceString:self.hostConfiguration.applicationID];
     result[WOT_KEY_FIELDS] = [NSString valueOrSpaceString:self.args[WOT_KEY_FIELDS]];
     return result;
 }

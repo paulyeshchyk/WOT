@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOTData-Model.h"
+
 
 //! Project version number for WOTData.
 FOUNDATION_EXPORT double WOTDataVersionNumber;
@@ -17,4 +17,19 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WOTData/PublicHeader.h>
 
+#import "WOTDataDefines.h"
+#import "WOTData-Model.h"
+#import "NSManagedObject+FillProperties.h"
+#import "Tanks+DPM.h"
+#import "ModulesTree+UI.h"
+#import "NSManagedObject+CoreDataOperations.h"
+#import "WOTWebResponseAdapterChassis.h"
+#import "WOTWebResponseAdapterRadios.h"
+#import "WOTWebResponseAdapterGuns.h"
+#import "WOTWebResponseAdapterProfile.h"
+#import "WOTWebResponseAdapterEngines.h"
+#import "WOTWebResponseAdapterTurrets.h"
+#import "WOTWebResponseAdapterVehicles.h"
+#import "WOTWebResponseAdapterTanks.h"
+#import "WOTWebResponseAdapterModulesTree.h"
 

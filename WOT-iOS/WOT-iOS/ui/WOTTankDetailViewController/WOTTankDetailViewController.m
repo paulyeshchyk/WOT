@@ -8,8 +8,9 @@
 
 #import "WOTTankDetailViewController.h"
 #import <WOTData/WOTData.h>
+#import <WOTPivot/WOTPivot.h>
 
-#import "WOTRequestExecutor.h"
+
 #import "WOTTankDetailDatasource.h"
 #import "WOTTankModuleTreeViewController.h"
 

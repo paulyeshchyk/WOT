@@ -37,7 +37,7 @@
 
 - (NSString *)redirectURL {
     
-    return [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",self.host];
+    return [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",self.hostConfiguration.host];
 }
 
 - (NSString *)noFollow {

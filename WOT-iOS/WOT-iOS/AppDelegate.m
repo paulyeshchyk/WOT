@@ -13,6 +13,21 @@
 #import "WOTApplicationStartupRequests.h"
 
 
+@interface WOTWEBHostConfiguration: NSObject<WEBHostConfiguration>
+@end
+
+@implementation WOTWEBHostConfiguration
+
+- (NSString *)applicationID {
+    return WOT_VALUE_APPLICATION_ID_RU;
+}
+
+- (NSString *)host {
+    return [WOTApplicationDefaults host];
+}
+
+@end
+
 
 @interface AppDelegate ()
 
@@ -26,11 +41,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 
-
-
     [WOTApplicationDefaults registerRequests];
     [WOTApplicationDefaults registerDefaultSettings];
     
+    WOTWEBHostConfiguration *hostConfig = [[WOTWEBHostConfiguration alloc] init];
+    [[WOTRequestExecutor sharedInstance] setHostConfiguration:hostConfig];
+
+
     [WOTApplicationStartupRequests executeAllStartupRequests];
 
     

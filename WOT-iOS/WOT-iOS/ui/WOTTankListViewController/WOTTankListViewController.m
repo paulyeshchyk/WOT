@@ -8,7 +8,6 @@
 
 #import "WOTTankListViewController.h"
 
-#import "WOTRequestExecutor.h"
 #import "WOTTankListSortViewController.h"
 
 #import <WOTData/WOTData.h>

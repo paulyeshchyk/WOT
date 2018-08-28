@@ -7,7 +7,6 @@
 //
 
 #import "WOTTankModuleTreeViewController.h"
-#import "ModulesTree+UI.h"
 #import "WOTTankTreeNodeCollectionViewCell.h"
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"

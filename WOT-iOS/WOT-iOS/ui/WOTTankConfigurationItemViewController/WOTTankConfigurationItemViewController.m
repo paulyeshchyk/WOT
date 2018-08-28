@@ -10,7 +10,8 @@
 
 #import "WOTTankConfigurationItemCell.h"
 #import "WOTTankConfigurationItemHeaderFooter.h"
-#import "ModulesTree+UI.h"
+#import <WOTPivot/WOTPivot.h>
+#import <WOTData/WOTData.h>
 
 @interface WOTTankConfigurationItemViewController () <UITableViewDataSource, UITableViewDelegate>
 

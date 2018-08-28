@@ -8,9 +8,7 @@
 
 #import "WOTLoginViewController.h"
 
-#import "WOTRequestExecutor.h"
 #import "WOTLanguageSelectorViewController.h"
-#import "WOTWEBRequest.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 

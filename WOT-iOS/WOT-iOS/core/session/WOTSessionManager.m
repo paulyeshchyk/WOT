@@ -8,7 +8,6 @@
 
 #import "WOTSessionManager.h"
 #import <WOTData/WOTData.h>
-#import "WOTRequestExecutor.h"
 
 #import "NSTimer+BlocksKit.h"
 

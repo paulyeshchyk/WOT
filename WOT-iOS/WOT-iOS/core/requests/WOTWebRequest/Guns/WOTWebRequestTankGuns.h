@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "WOTWEBRequest.h"
-
 @interface WOTWebRequestTankGuns : WOTWEBRequest
 
 @end

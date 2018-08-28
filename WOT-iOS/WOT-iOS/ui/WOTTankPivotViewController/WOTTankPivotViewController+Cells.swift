@@ -8,6 +8,7 @@
 
 import Foundation
 import WOTPivot
+import WOTData
 
 extension WOTTankPivotViewController {
     static var registeredCells: [UICollectionViewCell.Type] = {
