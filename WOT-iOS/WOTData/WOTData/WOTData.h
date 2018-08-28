@@ -33,3 +33,19 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 #import "WOTWebResponseAdapterTanks.h"
 #import "WOTWebResponseAdapterModulesTree.h"
 
+#import "WOTSessionManager.h"
+
+#import "WOTWEBRequestTanks.h"
+#import "WOTWebRequestTankChassis.h"
+#import "WOTWebRequestTankRadios.h"
+#import "WOTWebRequestTankGuns.h"
+#import "WOTWEBRequestTankProfile.h"
+#import "WOTWebRequestTankTurrets.h"
+#import "WOTWEBRequestTankVehicles.h"
+#import "WOTWEBRequestTankEngines.h"
+#import "WOTWEBRequestLogout.h"
+#import "WOTWEBRequestLogin.h"
+#import "WOTSaveSessionRequest.h"
+#import "WOTClearSessionRequest.h"
+
+

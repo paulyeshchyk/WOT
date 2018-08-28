@@ -14,7 +14,6 @@
 #import "WOTTankListViewController.h"
 #import "WOTPlayersListViewController.h"
 #import "WOTProfileViewController.h"
-#import "WOTSessionManager.h"
 #import "WOTMenuTableViewCell.h"
 #import "WOTNode+PivotFactory.h"
 #import <WOTPivot/WOTPivot.h>

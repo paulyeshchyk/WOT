@@ -405,10 +405,6 @@ internal enum L10n {
   internal static let wotUserdefaultsLoginLanguagevalueEu = L10n.tr("Localizable", "WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU")
   /// ru
   internal static let wotUserdefaultsLoginLanguagevalueRu = L10n.tr("Localizable", "WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU")
-  /// e3a1e0889ff9c76fa503177f351b853c
-  internal static let wotValueApplicationIdEu = L10n.tr("Localizable", "WOT_VALUE_APPLICATION_ID_EU")
-  /// e3a1e0889ff9c76fa503177f351b853c
-  internal static let wotValueApplicationIdRu = L10n.tr("Localizable", "WOT_VALUE_APPLICATION_ID_RU")
   /// eu
   internal static let wotValueLanguageEu = L10n.tr("Localizable", "WOT_VALUE_LANGUAGE_EU")
   /// ru

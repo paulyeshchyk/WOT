@@ -9,25 +9,11 @@
 #import "WOTApplicationDefaults.h"
 
 #import <WOTData/WOTData.h>
+#import <WOTPivot/WOTPivot.h>
 
-#import "WOTClearSessionRequest.h"
-#import "WOTSaveSessionRequest.h"
-#import "WOTSessionManager.h"
 #import "WOTTankListSettingsDatasource.h"
-
-#import "WOTWEBRequestLogin.h"
-#import "WOTWEBRequestLogout.h"
-#import "WOTWebRequestTankChassis.h"
-#import "WOTWEBRequestTankEngines.h"
-#import "WOTWebRequestTankGuns.h"
-#import "WOTWEBRequestTankProfile.h"
-#import "WOTWebRequestTankRadios.h"
-#import "WOTWEBRequestTanks.h"
-#import "WOTWebRequestTankTurrets.h"
-#import "WOTWEBRequestTankVehicles.h"
-
 #import "WOTWebResponseAdapterLogin.h"
-
+#import "NSTimer+BlocksKit.h"
 
 @implementation WOTApplicationDefaults
 
@@ -98,7 +84,14 @@
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestClass:[WOTSaveSessionRequest class]];
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCallback:^(id data, NSError *error) {
         
-        [[WOTSessionManager sharedInstance] invalidateTimer];
+        [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
+            NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
+
+                [WOTSessionManager logout];
+            } repeats:NO];
+            [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+            return timer;
+        }];
         
     }];
 
