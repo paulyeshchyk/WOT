@@ -38,6 +38,10 @@ class WOTTankPivotViewController: UIViewController {
 
         super.viewDidLoad()
 
+        let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
+        self.navigationItem.setRightBarButtonItems(items, animated: false)
+
+
         self.collectionView?.bounces = true
         self.collectionView?.alwaysBounceHorizontal = false
         self.collectionView?.alwaysBounceVertical = false
@@ -54,6 +58,14 @@ class WOTTankPivotViewController: UIViewController {
 
         self.registerCells()
         self.fullReload()
+    }
+
+    @objc
+    func openConstructor(_ sender: Any) {
+
+        let vc = WOTPivotConstructorViewController(nibName: "WOTPivotConstructorViewController", bundle: Bundle.main)
+        let nc = UINavigationController(rootViewController: vc)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     private func setupFlow() {

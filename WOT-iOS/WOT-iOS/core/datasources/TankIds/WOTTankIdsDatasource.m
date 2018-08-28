@@ -8,7 +8,7 @@
 
 #import "WOTTankIdsDatasource.h"
 #import "WOTCoreDataPredicates.h"
-#import "Tanks.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTTankIdsDatasource
 

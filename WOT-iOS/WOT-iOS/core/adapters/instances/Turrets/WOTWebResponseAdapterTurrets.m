@@ -7,7 +7,7 @@
 //
 
 #import "WOTWebResponseAdapterTurrets.h"
-#import "Tankturrets.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTWebResponseAdapterTurrets
 

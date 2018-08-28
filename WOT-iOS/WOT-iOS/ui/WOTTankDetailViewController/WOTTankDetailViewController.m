@@ -7,10 +7,7 @@
 //
 
 #import "WOTTankDetailViewController.h"
-#import "Tanks.h"
-#import "Tankengines.h"
-#import "Vehicles.h"
-#import "ModulesTree.h"
+#import <WOTData/WOTData.h>
 
 #import "WOTRequestExecutor.h"
 #import "WOTTankDetailDatasource.h"

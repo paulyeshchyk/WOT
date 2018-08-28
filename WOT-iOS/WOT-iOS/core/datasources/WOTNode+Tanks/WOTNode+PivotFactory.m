@@ -7,7 +7,7 @@
 //
 
 #import "WOTNode+PivotFactory.h"
-#import "Tanks.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTNodeFactory 
 

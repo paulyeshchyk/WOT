@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankListSettingsDatasource.h"
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
 
 @interface WOTTankListSettingsDatasource () <NSFetchedResultsControllerDelegate>
 

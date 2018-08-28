@@ -7,7 +7,7 @@
 //
 
 #import "WOTWebResponseAdapterGuns.h"
-#import "Tankguns.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTWebResponseAdapterGuns
 

@@ -8,7 +8,7 @@
 
 #import "WOTApplicationDefaults.h"
 
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
 
 #import "WOTClearSessionRequest.h"
 #import "WOTRequestExecutor.h"
@@ -44,8 +44,9 @@
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
 
+    NSString *entityName = NSStringFromClass([ListSetting class]);
     NSError *error = nil;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([ListSetting class])];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
     [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
     NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
     [fetchedResultController performFetch:&error];

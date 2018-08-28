@@ -12,7 +12,7 @@
 #import "WOTTankListSettingNameChooserViewController.h"
 #import "WOTTankListSettingValueChangerViewController.h"
 #import "WOTTankListSortHeaderView.h"
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankListSettingsDatasource+TableView.h"
 #import "WOTTankListSettingsDatasource+AvailableFields.h"
 

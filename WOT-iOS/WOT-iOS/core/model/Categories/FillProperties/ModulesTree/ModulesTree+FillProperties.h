@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "ModulesTree.h"
 #import "WOTEnums.h"
+#import <WOTData/WOTData.h>
 
 @interface ModulesTree (FillProperties)
 

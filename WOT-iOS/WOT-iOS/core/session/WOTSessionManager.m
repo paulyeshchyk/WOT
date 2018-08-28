@@ -7,7 +7,7 @@
 //
 
 #import "WOTSessionManager.h"
-#import "UserSession.h"
+#import <WOTData/WOTData.h>
 #import "WOTRequestExecutor.h"
 
 #import "NSTimer+BlocksKit.h"

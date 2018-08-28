@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "VehicleprofileAmmoPenetration.h"
+#import <WOTData/WOTData.h>
 
 @interface VehicleprofileAmmoPenetration (FillProperties)
 

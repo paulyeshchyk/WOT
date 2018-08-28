@@ -8,6 +8,7 @@
 
 import Foundation
 import WOTPivot
+import WOTData
 
 @objc
 class WOTTankTreeFetchController: WOTDataTanksFetchController {
@@ -123,7 +124,7 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     }
 
     public func moduleName() -> String {
-        return self.name
+        return self.name ?? ""
     }
 
     public func moduleValue(forKey: String) -> Any? {
@@ -131,14 +132,14 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     }
 
     public func moduleIdInt() -> Int {
-        return self.module_id.intValue
+        return self.module_id!.intValue ?? -1
     }
 
     func isCompatible(forTankId: NSDecimalNumber) -> Bool {
-        let result = self.nextTanks.filter({ (next) -> Bool in
-            return (next as? Tanks)?.tank_id.intValue == forTankId.intValue
+        let result = self.nextTanks?.filter({ (next) -> Bool in
+            return (next as? Tanks)?.tank_id?.intValue == forTankId.intValue
         })
-        return (result.count != 0)
+        return (result!.count != 0)
     }
 
     public func nestedModules() -> [WOTTreeModulesTreeProtocol]? {

@@ -41,5 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>Product module name</key>
+	<string>$(PRODUCT_MODULE_NAME)</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 </dict>
 </plist>

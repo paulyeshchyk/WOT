@@ -12,6 +12,7 @@
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTEnums.h"
+#import "WOTTankListSettingsDatasource.h"
 #import <WOTPivot/WOTPivot.h>
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>

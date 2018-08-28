@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankListSettingValueChangerViewController.h"
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankListSettingField.h"
 #import "WOTTankListSettingNameTableViewCell.h"
 

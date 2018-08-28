@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import "VehicleprofileAmmo.h"
+#import <WOTData/WOTData.h>
 
 @interface VehicleprofileAmmo (FillProperties)
 

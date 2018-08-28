@@ -5,6 +5,9 @@
       location = "group:WOTPivot/WOTPivot.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:WOTData/WOTData.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:WOT-iOS.xcodeproj">
    </FileRef>
    <FileRef

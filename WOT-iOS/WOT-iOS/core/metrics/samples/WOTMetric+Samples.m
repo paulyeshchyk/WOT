@@ -7,9 +7,7 @@
 //
 
 #import "WOTMetric+Samples.h"
-#import "Tankchassis.h"
-#import "Tankengines.h"
-#import "Tankturrets.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankDetailFieldExpression+Factory.h"
 
 @implementation WOTMetric (Samples)

@@ -7,7 +7,7 @@
 //
 
 #import "WOTSaveSessionRequest.h"
-#import "UserSession.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTSaveSessionRequest
 

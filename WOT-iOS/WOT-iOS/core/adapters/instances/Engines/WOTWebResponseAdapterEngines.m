@@ -7,7 +7,7 @@
 //
 
 #import "WOTWebResponseAdapterEngines.h"
-#import "Tankengines.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTWebResponseAdapterEngines
 

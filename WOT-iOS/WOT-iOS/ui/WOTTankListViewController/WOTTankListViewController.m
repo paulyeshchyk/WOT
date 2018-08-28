@@ -11,8 +11,7 @@
 #import "WOTRequestExecutor.h"
 #import "WOTTankListSortViewController.h"
 
-#import "Tanks.h"
-#import "Vehicles.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
 #import "WOTTankListSettingsDatasource.h"

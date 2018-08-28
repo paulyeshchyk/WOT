@@ -8,8 +8,7 @@
 
 #import "WOTApplicationStartupRequests.h"
 #import "WOTRequestExecutor.h"
-#import "Tanks.h"
-#import "Vehicles.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTApplicationStartupRequests
 

@@ -6,16 +6,9 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
+#import <WOTData/WOTData.h>
+
 #import "WOTWebResponseAdapterVehicles.h"
-#import "Tanks.h"
-#import "Vehicles.h"
-#import "Tankchassis.h"
-#import "Tankguns.h"
-#import "Tankradios.h"
-#import "Tankturrets.h"
-#import "Tankengines.h"
-#import "ModulesTree.h"
-#import "Vehicleprofile.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import "WOTRequestExecutor.h"
 #import "WOTWebResponseAdapterModulesTree.h"

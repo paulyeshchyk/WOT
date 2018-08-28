@@ -7,7 +7,7 @@
 //
 
 #import "WOTWebResponseAdapterRadios.h"
-#import "Tankradios.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTWebResponseAdapterRadios
 

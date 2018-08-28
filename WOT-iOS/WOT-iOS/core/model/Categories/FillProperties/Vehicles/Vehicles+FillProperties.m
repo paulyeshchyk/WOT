@@ -7,14 +7,7 @@
 //
 
 #import "Vehicles+FillProperties.h"
-#import "Tankengines.h"
-#import "Tankchassis.h"
-#import "Tankradios.h"
-#import "Tankguns.h"
-#import "Tankturrets.h"
-#import "Tanks.h"
-#import "ModulesTree.h"
-#import "Vehicleprofile.h"
+#import <WOTData/WOTData.h>
 
 @implementation Vehicles (FillProperties)
 
@@ -57,8 +50,8 @@
                                                              coredataIdName:WOT_KEY_MODULE_ID
                                                              linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                                  
-//                                                                 Vehicles *vehicles = (Vehicles *)entity;
-//                                                                 [vehicles addTurrets:items];
+                                                                 Vehicles *vehicles = (Vehicles *)entity;
+                                                                 [vehicles addTurrets:items];
                                                              }
                                            ];
     

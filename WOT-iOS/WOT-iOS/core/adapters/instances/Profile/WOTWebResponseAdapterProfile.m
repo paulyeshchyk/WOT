@@ -7,21 +7,7 @@
 //
 
 #import "WOTWebResponseAdapterProfile.h"
-
-#import "Vehicleprofile.h"
-#import "VehicleprofileAmmoList.h"
-#import "VehicleprofileAmmo.h"
-#import "VehicleprofileAmmoDamage.h"
-#import "VehicleprofileAmmoPenetration.h"
-#import "VehicleprofileEngine.h"
-#import "VehicleprofileGun.h"
-#import "VehicleprofileTurret.h"
-#import "VehicleprofileSuspension.h"
-#import "VehicleprofileRadio.h"
-#import "VehicleprofileArmor.h"
-#import "VehicleprofileArmorList.h"
-#import "Tanks.h"
-
+#import <WOTData/WOTData.h>
 
 @implementation WOTWebResponseAdapterProfile
 

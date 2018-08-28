@@ -3,7 +3,6 @@
 //
 
 #import "WOTTankListSettingsDatasource.h"
-#import "Tanks.h"
 #import "WOTApplicationDefaults.h"
 #import "WOTApplicationStartupRequests.h"
 #import "WOTRequestExecutor.h"
@@ -20,8 +19,8 @@
 #import "WOTTankListViewController.h"
 #import "WOTPlayersListViewController.h"
 #import "WOTProfileViewController.h"
-#import "UserSession.h"
 #import "WOTSessionManager.h"
 #import "WOTMenuTableViewCell.h"
 #import "WOTNode+PivotFactory.h"
 #import <WOTPivot/WOTPivot.h>
+#import <WOTData/WOTData.h>

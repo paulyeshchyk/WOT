@@ -7,7 +7,7 @@
 //
 
 #import "WOTClearSessionRequest.h"
-#import "UserSession.h"
+#import <WOTData/WOTData.h>
 
 @implementation WOTClearSessionRequest
 

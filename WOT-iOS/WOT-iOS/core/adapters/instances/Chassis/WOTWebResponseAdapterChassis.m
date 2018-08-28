@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
+#import <WOTData/WOTData.h>
+
 #import "WOTWebResponseAdapterChassis.h"
-#import "Tankchassis.h"
 
 @implementation WOTWebResponseAdapterChassis
 
