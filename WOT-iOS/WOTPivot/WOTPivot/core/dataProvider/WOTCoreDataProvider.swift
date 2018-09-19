@@ -47,12 +47,11 @@ public class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     @objc lazy public var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
 
         guard let sqliteURL = self.sqliteURL else {
-            return nil
+            abort()
         }
 
         guard let model = self.managedObjectModel else {
             abort()
-            return nil
         }
 
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)

@@ -8,7 +8,7 @@
 
 
 #import <XCTest/XCTest.h>
-#import "WOTRequestExecutor.h"
+#import <WOTPivot/WOTPivot.h>
 
 @interface TestWOTRequestExecutor : XCTestCase
 
