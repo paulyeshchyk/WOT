@@ -8,8 +8,6 @@
 
 #import "WOTDrawerViewController.h"
 #import "MMDrawerVisualState.h"
-#import "NSTimer+BlocksKit.h"
-
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 
@@ -76,15 +74,16 @@
 
     [UIViewController attemptRotationToDeviceOrientation];
 
-    [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
-        NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
+}
 
-            [WOTSessionManager logout];
-        } repeats:NO];
-        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-        return timer;
-    }];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onLogout:) name:WOT_NOTIFICATION_LOGOUT object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 - (BOOL)shouldAutorotate {

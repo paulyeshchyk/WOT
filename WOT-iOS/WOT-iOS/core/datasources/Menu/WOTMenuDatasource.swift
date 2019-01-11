@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import WOTData
+import WOTPivot
 
 @objc
 protocol WOTMenuDatasourceDelegate: NSObjectProtocol {

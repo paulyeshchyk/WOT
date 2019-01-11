@@ -8,21 +8,21 @@
 
 import Foundation
 
-enum VIPERModule: String {
+public enum VIPERModule: String {
     case Pivot
     case Tree
 }
 
 
-protocol VIPERViewProtocol: class {
+public protocol VIPERViewProtocol: class {
     var presenter: VIPERPresenterProtocol? { get set }
 }
 
-protocol VIPERInteractorProtocol: class {
+public protocol VIPERInteractorProtocol: class {
     var presenter: VIPERPresenterProtocol { get set }
 }
 
-protocol VIPERPresenterProtocol: class {
+public protocol VIPERPresenterProtocol: class {
     var wireFrame: VIPERWireFrameProtocol { get set }
     var interactor: VIPERInteractorProtocol { get set }
     var view: VIPERViewProtocol { get set }
@@ -44,7 +44,7 @@ func iterateEnum<T: Hashable>(_: T.Type) -> AnyIterator<T> {
     }
 }
 
-typealias InitializedModule = (view: VIPERViewProtocol, interactor: VIPERInteractorProtocol, presenter: VIPERPresenterProtocol, wireFrame: VIPERWireFrameProtocol)
+public typealias InitializedModule = (view: VIPERViewProtocol, interactor: VIPERInteractorProtocol, presenter: VIPERPresenterProtocol, wireFrame: VIPERWireFrameProtocol)
 
 extension VIPERModule {
 
@@ -84,7 +84,7 @@ extension VIPERModule {
         return (view, interactor, presenter, wireFrame)
     }
 
-    var wireFrame: VIPERWireFrame? {
+    public var wireFrame: VIPERWireFrame? {
         let classFor = self.classFor("WireFrame")
         guard let classObject = NSClassFromString(classFor) else {
             return nil

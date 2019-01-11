@@ -8,23 +8,23 @@
 
 import Foundation
 
-protocol VIPERWireFrameProtocol: class {
+public protocol VIPERWireFrameProtocol: class {
     var presenter: VIPERPresenterProtocol? { get set }
     init()
 }
 
 
-typealias ConfigureCallback = (InitializedModule) -> Void
+public typealias ConfigureCallback = (InitializedModule) -> Void
 
 public class VIPERWireFrame: NSObject, VIPERWireFrameProtocol {
     var module: VIPERModule?
-    var presenter: VIPERPresenterProtocol?
+    public var presenter: VIPERPresenterProtocol?
 
     required override public init() {
         super.init()
     }
 
-    func build(configureCallback: ConfigureCallback) {
+    public func build(configureCallback: ConfigureCallback) {
 
         let module = VIPERModule.module(for: self)
 //        let initializedModule = VIPERModule.initialize(with: , interactor: <#T##VIPERInteractorProtocol#>, presenter: <#T##VIPERPresenterProtocol#>, wireFrame: <#T##VIPERWireFrameProtocol#>)
