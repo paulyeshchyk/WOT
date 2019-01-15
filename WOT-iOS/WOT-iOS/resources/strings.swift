@@ -7,10 +7,6 @@ import Foundation
 
 // swiftlint:disable identifier_name line_length type_body_length
 internal enum L10n {
-  /// https://api.worldoftanks
-  internal static let applicationHost = L10n.tr("Localizable", "ApplicationHost")
-  /// https://api.worldoftanks.ru/wot/blank/
-  internal static let applicationRedirectURI = L10n.tr("Localizable", "ApplicationRedirectURI")
   /// Armor Board
   internal static let armorBoard = L10n.tr("Localizable", "ARMOR_BOARD")
   /// Armor Fedd
@@ -127,12 +123,8 @@ internal enum L10n {
   internal static let wotIntegerLevel8 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_8")
   /// 9
   internal static let wotIntegerLevel9 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_9")
-  /// access_token
-  internal static let wotKeyAccessToken = L10n.tr("Localizable", "WOT_KEY_ACCESS_TOKEN")
   /// account_id
   internal static let wotKeyAccountId = L10n.tr("Localizable", "WOT_KEY_ACCOUNT_ID")
-  /// application_id
-  internal static let wotKeyApplicationId = L10n.tr("Localizable", "WOT_KEY_APPLICATION_ID")
   /// armor_board
   internal static let wotKeyArmorBoard = L10n.tr("Localizable", "WOT_KEY_ARMOR_BOARD")
   /// armor_fedd
@@ -159,8 +151,6 @@ internal enum L10n {
   internal static let wotKeyDpm = L10n.tr("Localizable", "WOT_KEY_DPM")
   /// expires_at
   internal static let wotKeyExpiresAt = L10n.tr("Localizable", "WOT_KEY_EXPIRES_AT")
-  /// fields
-  internal static let wotKeyFields = L10n.tr("Localizable", "WOT_KEY_FIELDS")
   /// fire_starting_chance
   internal static let wotKeyFireStartingChance = L10n.tr("Localizable", "WOT_KEY_FIRE_STARTING_CHANCE")
   /// hashName
@@ -169,8 +159,6 @@ internal enum L10n {
   internal static let wotKeyImage = L10n.tr("Localizable", "WOT_KEY_IMAGE")
   /// image_small
   internal static let wotKeyImageSmall = L10n.tr("Localizable", "WOT_KEY_IMAGE_SMALL")
-  /// is_default
-  internal static let wotKeyIsDefault = L10n.tr("Localizable", "WOT_KEY_IS_DEFAULT")
   /// vehicles.is_gift
   internal static let wotKeyIsGift = L10n.tr("Localizable", "WOT_KEY_IS_GIFT")
   /// vehicles.is_premium
@@ -185,14 +173,8 @@ internal enum L10n {
   internal static let wotKeyMaxLoad = L10n.tr("Localizable", "WOT_KEY_MAX_LOAD")
   /// message
   internal static let wotKeyMessage = L10n.tr("Localizable", "WOT_KEY_MESSAGE")
-  /// module_id
-  internal static let wotKeyModuleId = L10n.tr("Localizable", "WOT_KEY_MODULE_ID")
   /// modules_tree
   internal static let wotKeyModulesTree = L10n.tr("Localizable", "WOT_KEY_MODULES_TREE")
-  /// name
-  internal static let wotKeyName = L10n.tr("Localizable", "WOT_KEY_NAME")
-  /// name_i18n
-  internal static let wotKeyNameI18N = L10n.tr("Localizable", "WOT_KEY_NAME_I18N")
   /// nation
   internal static let wotKeyNation = L10n.tr("Localizable", "WOT_KEY_NATION")
   /// nation_i18n
@@ -203,24 +185,16 @@ internal enum L10n {
   internal static let wotKeyNextTanks = L10n.tr("Localizable", "WOT_KEY_NEXT_TANKS")
   /// nickname
   internal static let wotKeyNickname = L10n.tr("Localizable", "WOT_KEY_NICKNAME")
-  /// nofollow
-  internal static let wotKeyNofollow = L10n.tr("Localizable", "WOT_KEY_NOFOLLOW")
   /// orderBy
   internal static let wotKeyOrderby = L10n.tr("Localizable", "WOT_KEY_ORDERBY")
   /// power
   internal static let wotKeyPower = L10n.tr("Localizable", "WOT_KEY_POWER")
-  /// price_credit
-  internal static let wotKeyPriceCredit = L10n.tr("Localizable", "WOT_KEY_PRICE_CREDIT")
   /// price_gold
   internal static let wotKeyPriceGold = L10n.tr("Localizable", "WOT_KEY_PRICE_GOLD")
-  /// price_xp
-  internal static let wotKeyPriceXp = L10n.tr("Localizable", "WOT_KEY_PRICE_XP")
   /// prices_xp
   internal static let wotKeyPricesXp = L10n.tr("Localizable", "WOT_KEY_PRICES_XP")
   /// rate
   internal static let wotKeyRate = L10n.tr("Localizable", "WOT_KEY_RATE")
-  /// redirect_uri
-  internal static let wotKeyRedirectUri = L10n.tr("Localizable", "WOT_KEY_REDIRECT_URI")
   /// rotation_speed
   internal static let wotKeyRotationSpeed = L10n.tr("Localizable", "WOT_KEY_ROTATION_SPEED")
   /// Filter
@@ -235,8 +209,6 @@ internal enum L10n {
   internal static let wotKeyShortNameI18N = L10n.tr("Localizable", "WOT_KEY_SHORT_NAME_I18N")
   /// tag
   internal static let wotKeyTag = L10n.tr("Localizable", "WOT_KEY_TAG")
-  /// tank_id
-  internal static let wotKeyTankId = L10n.tr("Localizable", "WOT_KEY_TANK_ID")
   /// tier
   internal static let wotKeyTier = L10n.tr("Localizable", "WOT_KEY_TIER")
   /// traverse_left_arc
@@ -403,8 +375,6 @@ internal enum L10n {
   internal static let wotUserdefaultsLoginLanguage = L10n.tr("Localizable", "WOT_USERDEFAULTS_LOGIN_LANGUAGE")
   /// eu
   internal static let wotUserdefaultsLoginLanguagevalueEu = L10n.tr("Localizable", "WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU")
-  /// ru
-  internal static let wotUserdefaultsLoginLanguagevalueRu = L10n.tr("Localizable", "WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU")
   /// eu
   internal static let wotValueLanguageEu = L10n.tr("Localizable", "WOT_VALUE_LANGUAGE_EU")
   /// ru

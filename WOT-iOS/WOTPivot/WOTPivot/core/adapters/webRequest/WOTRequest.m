@@ -8,9 +8,47 @@
 
 #import "WOTRequest.h"
 
+@interface WOTRequestArguments ()
+@property (nonatomic, strong) NSMutableDictionary *dict;
+@end
+
+@implementation WOTRequestArguments
++ (NSString *)urlEncode:(NSString *)string {
+
+    NSString *encodedString = (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes( NULL,
+                                                                                                     (CFStringRef) string,
+                                                                                                     NULL,
+                                                                                                     CFSTR("%;/?¿:@&=$+,[]#!'()*<> \"\n"),
+                                                                                                     kCFStringEncodingUTF8);
+    return encodedString;
+}
+
+- (void)setValues:(NSArray *)values forKey:(NSString *)key {
+    if (_dict == nil) {
+        _dict = [[NSMutableDictionary alloc] init];
+    }
+    _dict[key] = values;
+}
+
+- (NSDictionary *)asDictionary {
+    return [_dict copy];
+}
+
+- (NSString *)escapedValueForKey:(NSString *)key {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    [_dict[key] enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *objString = (NSString *)obj;
+        NSString *string = [WOTRequestArguments urlEncode:objString];
+        [result addObject:string];
+    }];
+    return [result componentsJoinedByString:@","];
+}
+
+@end
+
 @interface WOTRequest ()
 
-@property (nonatomic, readwrite)NSDictionary *args;
+@property (nonatomic, readwrite)WOTRequestArguments *args;
 @property (nonatomic, strong)NSMutableArray *groups;
 @end
 
@@ -41,10 +79,9 @@
 }
 
 
-- (void)temp_executeWithArgs:(NSDictionary *)args{
-    
-//    NSCAssert(self.listener, @"listener is not defined");
-    self.args = [args copy];
+- (void)temp_executeWithArgs:(WOTRequestArguments *)args{
+
+    self.args = args;
 }
 
 - (void)cancel {

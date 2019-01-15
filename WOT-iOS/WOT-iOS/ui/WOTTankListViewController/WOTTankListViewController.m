@@ -207,7 +207,7 @@
     
     if ([self.searchBarText length] != 0) {
 
-        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOT_KEY_NAME_I18N, self.searchBarText];
+        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOTApiKeys.nameI18N, self.searchBarText];
         [predicates addObject:searchBarPredicate];
     }
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
@@ -216,7 +216,7 @@
 - (NSArray *)sortDescriptors {
     
     NSMutableArray *result = [[NSMutableArray alloc] initWithArray:[WOTTankListSettingsDatasource sharedInstance].sortBy];
-    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
+    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tankId ascending:YES]];
 
     return result;
 }

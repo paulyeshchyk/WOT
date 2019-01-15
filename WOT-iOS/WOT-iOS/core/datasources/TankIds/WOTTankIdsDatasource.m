@@ -16,9 +16,9 @@
     
     NSPredicate *predicate = [WOTCoreDataPredicates tankIdsByTiers:tiers nations:nations tankTypes:types];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
-    [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]]];
+    [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tankId ascending:YES]]];
     [request setPredicate:predicate];
-    [request setPropertiesToFetch:@[WOT_KEY_TANK_ID]];
+    [request setPropertiesToFetch:@[WOTApiKeys.tankId]];
     [request setResultType:NSDictionaryResultType];
 
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
@@ -33,7 +33,7 @@
     NSMutableArray *result = [[NSMutableArray alloc] init];
     [objs enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
         
-        [result addObject:obj[WOT_KEY_TANK_ID]];
+        [result addObject:obj[WOTApiKeys.tankId]];
     }];
     
     return result;

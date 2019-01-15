@@ -40,7 +40,7 @@
 
 - (NSDictionary *)query {
     
-    return @{WOT_KEY_APPLICATION_ID:[NSString valueOrSpaceString:self.hostConfiguration.applicationID], WOT_KEY_ACCESS_TOKEN:[NSString valueOrSpaceString:self.access_token]};
+    return @{WOTApiKeys.applicationId:[NSString valueOrSpaceString:self.hostConfiguration.applicationID], WOTApiKeys.accessToken:[NSString valueOrSpaceString:self.access_token]};
 }
 
 - (NSData *)httpBodyData {
@@ -50,7 +50,7 @@
     return result;
 }
 
-- (void)temp_executeWithArgs:(NSDictionary *)args{
+- (void)temp_executeWithArgs:(WOTRequestArguments *)args{
     
     [super temp_executeWithArgs:args];
 

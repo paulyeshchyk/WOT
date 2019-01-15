@@ -103,11 +103,6 @@ TYPE_I18N                   = "Type (national)";
 VALUES                      = "Values";
 WEIGHT                      = "Weight";
 
-
-
-ApplicationHost             = "https://api.worldoftanks";
-ApplicationRedirectURI      =  "https://api.worldoftanks.ru/wot/blank/"; //"https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/";
-
 WOT_IMAGE_BACK  = "WOTBackIconGray.png";
 WOT_IMAGE_CHECKMARK_DARK  = "WOTSelector-checkmark-dark.png";
 WOT_IMAGE_CHECKMARK_GRAY  = "WOTSelector-checkmark-gray.png";
@@ -122,9 +117,7 @@ WOT_IMAGE_MESSAGING_CATEGORIZE  = "Messaging-Categorize-icon.png";
 WOT_IMAGE_UP  = "WOTArrowUp.png";
 WOT_IMAGE_USER  = "WOTLoggedInUser.png";
 
-WOT_KEY_ACCESS_TOKEN  = "access_token";
 WOT_KEY_ACCOUNT_ID  = "account_id";
-WOT_KEY_APPLICATION_ID  = "application_id";
 WOT_KEY_ARMOR_BOARD  = "armor_board";
 WOT_KEY_ARMOR_FEDD  = "armor_fedd";
 WOT_KEY_ARMOR_FOREHEAD  = "armor_forehead";
@@ -133,7 +126,6 @@ WOT_KEY_CODE  = "code";
 WOT_KEY_CONTOUR_IMAGE  = "contour_image";
 WOT_KEY_DISTANCE  = "distance";
 WOT_KEY_EXPIRES_AT  = "expires_at";
-WOT_KEY_FIELDS  = "fields";
 WOT_KEY_FIRE_STARTING_CHANCE  = "fire_starting_chance";
 WOT_KEY_HASHNAME  = "hashName";
 WOT_KEY_IMAGE  = "image";
@@ -148,29 +140,20 @@ WOT_KEY_DEFAULT_PROFILE_FIRE_RATE  = "vehicles.default_profile.gun.fire_rate";
 WOT_KEY_LOCATION  = "location";
 WOT_KEY_MAX_LOAD  = "max_load";
 WOT_KEY_MESSAGE  = "message";
-WOT_KEY_MODULE_ID  = "module_id";
-WOT_KEY_NAME  = "name";
 WOT_KEY_MODULES_TREE  = "modules_tree";
-WOT_KEY_NAME_I18N  = "name_i18n";
 WOT_KEY_DPM  = "dpm";
 WOT_KEY_NATION  = "nation";
 WOT_KEY_NATION_I18N  = "nation_i18n";
 WOT_KEY_NICKNAME  = "nickname";
-WOT_KEY_NOFOLLOW  = "nofollow";
 WOT_KEY_ORDERBY  = "orderBy";
 WOT_KEY_POWER  = "power";
-WOT_KEY_PRICE_CREDIT  = "price_credit";
 WOT_KEY_PRICE_GOLD  = "price_gold";
 WOT_KEY_PRICES_XP  = "prices_xp";
-WOT_KEY_PRICE_XP  = "price_xp";
-WOT_KEY_IS_DEFAULT  = "is_default";
 WOT_KEY_RATE  = "rate";
-WOT_KEY_REDIRECT_URI  = "redirect_uri";
 WOT_KEY_ROTATION_SPEED  = "rotation_speed";
 WOT_KEY_SHORT_NAME  = "short_name";
 WOT_KEY_SHORT_NAME_I18N  = "short_name_i18n";
 WOT_KEY_TAG  = "tag";
-WOT_KEY_TANK_ID  = "tank_id";
 WOT_KEY_TIER  = "tier";
 WOT_KEY_TYPE  = "type";
 WOT_KEY_TYPE_I18N  = "type_i18n";
@@ -228,7 +211,6 @@ WOT_STRING_DPM_GR_3000  = "[3000;)";
 
 WOT_USERDEFAULTS_LOGIN_LANGUAGE  = "LoginLanguage";
 WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU  = "eu";
-WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU  = "ru";
 
 
 WOT_VALUE_LANGUAGE_EU  = "eu";

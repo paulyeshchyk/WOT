@@ -143,7 +143,7 @@
     return canAdd;
 }
 
-- (void)runRequest:(WOTRequest *)request withArgs:(NSDictionary *)args {
+- (void)runRequest:(WOTRequest *)request withArgs:(WOTRequestArguments *)args {
 
     [request temp_executeWithArgs:args];
 }

@@ -9,9 +9,6 @@
 #ifndef WOT_iOS_Strings_h
 #define WOT_iOS_Strings_h
 
-#define ApplicationHost @"ApplicationHost"
-#define ApplicationRedirectURI @"ApplicationRedirectURI" //https://api.worldoftanks.ru/wot/blank/; //"https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/"
-
 #define WOT_IMAGE_BACK @"WOT_IMAGE_BACK"
 #define WOT_IMAGE_CHECKMARK_DARK @"WOT_IMAGE_CHECKMARK_DARK"
 #define WOT_IMAGE_CHECKMARK_GRAY @"WOT_IMAGE_CHECKMARK_GRAY"
@@ -119,8 +116,6 @@
 #define WOT_STRING_TYPE_I18N @"WOT_STRING_TYPE_I18N"
 
 #define WOT_USERDEFAULTS_LOGIN_LANGUAGE @"WOT_USERDEFAULTS_LOGIN_LANGUAGE"
-#define WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU @"WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU"
-#define WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU @"WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU"
 
 
 #define WOT_VALUE_LANGUAGE_EU @"WOT_VALUE_LANGUAGE_EU"

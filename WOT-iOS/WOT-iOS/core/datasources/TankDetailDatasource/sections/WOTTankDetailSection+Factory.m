@@ -15,8 +15,8 @@
 
 + (WOTTankDetailSection *)engineSection {
     
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Engines" query:WOT_LINKKEY_ENGINES metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_ENGINES],
-                                                                                                                              [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_ENGINES],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Engines" query:WOT_LINKKEY_ENGINES metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.nameI18N query:WOT_LINKKEY_ENGINES],
+                                                                                                                              [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.priceCredit query:WOT_LINKKEY_ENGINES],
                                                                                                                               [WOTTankDetailFieldExpression enginePowerCompareFieldExpression],
                                                                                                                               [WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression]
                                                                                                                               ]];
@@ -25,8 +25,8 @@
 
 + (WOTTankDetailSection *)chassisSection {
 
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Suspensions" query:WOT_LINKKEY_SUSPENSIONS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_SUSPENSIONS],
-                                                                                                                                      [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_SUSPENSIONS],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Suspensions" query:WOT_LINKKEY_SUSPENSIONS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.nameI18N query:WOT_LINKKEY_SUSPENSIONS],
+                                                                                                                                      [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.priceCredit query:WOT_LINKKEY_SUSPENSIONS],
                                                                                                                                       [WOTTankDetailFieldExpression suspensionRotationSpeedCompareFieldExpression]
                                                                                                                                       ]];
     return result;
@@ -34,9 +34,9 @@
 
 + (WOTTankDetailSection *)gunsSection {
 
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Guns" query:WOT_LINKKEY_GUNS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME query:WOT_LINKKEY_GUNS],
-                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_GUNS],
-                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_GUNS],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Guns" query:WOT_LINKKEY_GUNS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name query:WOT_LINKKEY_GUNS],
+                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.nameI18N query:WOT_LINKKEY_GUNS],
+                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.priceCredit query:WOT_LINKKEY_GUNS],
                                                                                                                         [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_GUNS],
                                                                                                                         [WOTTankDetailFieldExpression gunRateCompareFieldExpression]
                                                                                                                         ]];
@@ -45,7 +45,7 @@
 
 + (WOTTankDetailSection *)turretsSection {
 
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Turrets" query:WOT_LINKKEY_TURRETS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_TURRETS],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Turrets" query:WOT_LINKKEY_TURRETS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.nameI18N query:WOT_LINKKEY_TURRETS],
                                                                                                                            [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_TURRETS],
                                                                                                                            [WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression],
                                                                                                                            [WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression],
@@ -58,8 +58,8 @@
 
 + (WOTTankDetailSection *)radiosSection {
 
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Radios" query:WOT_LINKKEY_RADIOS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_NAME_I18N query:WOT_LINKKEY_RADIOS],
-                                                                                                                            [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_PRICE_CREDIT query:WOT_LINKKEY_RADIOS],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Radios" query:WOT_LINKKEY_RADIOS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.nameI18N query:WOT_LINKKEY_RADIOS],
+                                                                                                                            [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.priceCredit query:WOT_LINKKEY_RADIOS],
                                                                                                                             [WOTTankDetailFieldExpression radiosDistanceCompareFieldExpression]
                                                                                                                             ]];
     return result;

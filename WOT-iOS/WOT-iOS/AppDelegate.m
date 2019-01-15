@@ -26,6 +26,10 @@
     return [WOTApplicationDefaults host];
 }
 
+- (NSString *)scheme {
+    return [WOTApplicationDefaults scheme];
+}
+
 @end
 
 

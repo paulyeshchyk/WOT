@@ -14,15 +14,15 @@
 - (NSDictionary *)query {
     
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    result[WOT_KEY_APPLICATION_ID] = [NSString valueOrSpaceString:self.hostConfiguration.applicationID];
-    result[WOT_KEY_FIELDS] = [NSString valueOrSpaceString:self.args[WOT_KEY_FIELDS]];
-    result[WOT_KEY_MODULE_ID] = [NSString valueOrSpaceString:self.args[WOT_KEY_MODULE_ID]];
+    result[WOTApiKeys.applicationId] = [NSString valueOrSpaceString:self.hostConfiguration.applicationID];
+    result[WOTApiKeys.fields] = [NSString valueOrSpaceString:[self.args escapedValueForKey:WOTApiKeys.fields]];
+    result[WOTApiKeys.moduleId] = [NSString valueOrSpaceString:[self.args escapedValueForKey:WOTApiKeys.moduleId]];
     return result;
 }
 
 - (NSString *)path {
     
-    return @"wot/encyclopedia/tankengines/";
+    return @"/wot/encyclopedia/tankengines/";
 }
 
 @end

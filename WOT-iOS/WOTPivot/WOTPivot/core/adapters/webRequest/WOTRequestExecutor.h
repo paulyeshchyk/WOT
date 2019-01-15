@@ -21,7 +21,7 @@
 - (WOTRequest *)createRequestForId:(NSInteger)requestId;
 
 - (BOOL)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId ;//DEPRECATED_ATTRIBUTE;
-- (void)runRequest:(WOTRequest *)request withArgs:(NSDictionary *)args ;//DEPRECATED_ATTRIBUTE;
+- (void)runRequest:(WOTRequest *)request withArgs:(WOTRequestArguments *)args ;//DEPRECATED_ATTRIBUTE;
 
 - (void)cancelRequestsByGroupId:(NSString *)groupId;
 

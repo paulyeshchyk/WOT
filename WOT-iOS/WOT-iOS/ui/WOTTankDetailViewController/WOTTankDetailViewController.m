@@ -257,7 +257,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",@"tanks.tank_id", self.tankId];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
         fetchRequest.predicate = predicate;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tankId ascending:YES]];
 
         id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
         NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
@@ -303,7 +303,7 @@
 //- (void)fetchDefaultConfigurationForTankId:(id)tankId {
 //    
 //    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-//    [args setObject:tankId forKey:WOT_KEY_TANK_ID];
+//    [args setObject:tankId forKey:WOTApiKeys.tankId];
 //
 //    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
 //    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
@@ -341,9 +341,9 @@
         return;
     }
     
-    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-    [args setObject:tankID forKey:WOT_KEY_TANK_ID];
-    [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
+    WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
+    [args setValues:@[tankID]  forKey:WOTApiKeys.tankId];
+    [args setValues:@[[[Vehicles availableFields] componentsJoinedByString:@","]]  forKey:WOTApiKeys.fields];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:groupId];
@@ -356,9 +356,9 @@
 
 - (void)executeDefaultProfileRequestForTankId:(id)tankId {
     
-    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-    [args setObject:tankId forKey:WOT_KEY_TANK_ID];
-    
+    WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
+    [args setValues:@[tankId]  forKey:WOTApiKeys.tankId];
+
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
     if (canAdd) {
@@ -387,7 +387,7 @@
     NSPredicate *predicateClassVehicles = [NSPredicate predicateWithFormat: @"class == %@", [Vehicles class]];
     NSPredicate *predicateClassTanks = [NSPredicate predicateWithFormat: @"class == %@", [Tanks class]];
     NSCompoundPredicate *predicateClass = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicateClassVehicles,predicateClassTanks]];
-    NSPredicate *predicateTankId = [NSPredicate predicateWithFormat: @"%K == %@",WOT_KEY_TANK_ID, self.tankId];
+    NSPredicate *predicateTankId = [NSPredicate predicateWithFormat: @"%K == %@",WOTApiKeys.tankId, self.tankId];
     NSCompoundPredicate *predicate1 = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicateClass, predicateTankId]];
     
     NSPredicate *predicate2 = [NSPredicate predicateWithFormat: @"class == %@", [Tankengines class]];

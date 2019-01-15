@@ -21,7 +21,7 @@
         return;
     }
     
-    NSDictionary *tankEnginessDictionary = data[WOT_KEY_DATA];
+    NSDictionary *tankEnginessDictionary = data[WOTApiKeys.data];
     
     NSArray *tankEnginesArray = [tankEnginessDictionary allKeys];
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
@@ -37,7 +37,7 @@
                 return;
             }
 
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankEngineJSON[WOT_KEY_MODULE_ID]];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.moduleId,tankEngineJSON[WOTApiKeys.moduleId]];
             Tankengines *tankEngines = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
             [tankEngines fillPropertiesFromDictionary:tankEngineJSON];
         }];

@@ -14,12 +14,12 @@
 
 - (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
     
-    self.module_id = jSON[WOT_KEY_MODULE_ID];
-    self.name = jSON[WOT_KEY_NAME];
+    self.module_id = jSON[WOTApiKeys.moduleId];
+    self.name = jSON[WOTApiKeys.name];
     
-    self.price_credit = jSON[WOT_KEY_PRICE_CREDIT];
-    self.price_xp = jSON[WOT_KEY_PRICE_XP];
-    self.is_default = jSON[WOT_KEY_IS_DEFAULT];
+    self.price_credit = jSON[WOTApiKeys.priceCredit];
+    self.price_xp = jSON[WOTApiKeys.priceXP];
+    self.is_default = jSON[WOTApiKeys.isDefault];
 
     /**
      *  availableTypes
@@ -30,18 +30,18 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOT_KEY_NAME, WOT_KEY_MODULE_ID, WOT_KEY_PRICE_CREDIT];
+    return @[WOTApiKeys.name, WOTApiKeys.moduleId, WOTApiKeys.priceCredit];
 }
 
 + (NSArray *)availableLinks {
     
     WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]
                                                                   requestId:WOTRequestIdModulesTree
-                                                        argFieldNameToFetch:WOT_KEY_FIELDS
+                                                        argFieldNameToFetch:WOTApiKeys.fields
                                                       argFieldValuesToFetch:[ModulesTree availableFields]
-                                                       argFieldNameToFilter:WOT_KEY_MODULE_ID
+                                                       argFieldNameToFilter:WOTApiKeys.moduleId
                                                                 jsonKeyName:WOT_LINKKEY_MODULESTREE
-                                                             coredataIdName:WOT_KEY_MODULE_ID
+                                                             coredataIdName:WOTApiKeys.moduleId
                                                              linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                                  //                                                                 Vehicles *vehicles = (Vehicles *)entity;
                                                                  //                                                                 [vehicles addTurrets:items];

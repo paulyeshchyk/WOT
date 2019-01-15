@@ -13,6 +13,7 @@
 @protocol WEBHostConfiguration
 @property (nonatomic, readonly, nonnull) NSString *applicationID;
 @property (nonatomic, readonly, nonnull) NSString *host;
+@property (nonatomic, readonly, nonnull) NSString *scheme;
 @end
 
 

@@ -20,7 +20,7 @@
         return;
     }
     
-    NSDictionary *profileJSON = data[WOT_KEY_DATA];
+    NSDictionary *profileJSON = data[WOTApiKeys.data];
 
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
@@ -78,7 +78,7 @@
         id radio = [self context:context parseRadio:profile[@"radio"]];
         [vehicleProfile setRadio:radio];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",WOT_KEY_TANK_ID,[key integerValue]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tankId,[key integerValue]];
         Tanks *tank = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
         [tank addVehicleprofilesObject:vehicleProfile];
     }

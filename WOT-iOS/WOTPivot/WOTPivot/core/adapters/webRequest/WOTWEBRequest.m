@@ -23,7 +23,7 @@
 
 @implementation WOTWEBRequest
 
-static NSString *urlEncode(NSString *string) {
++ (NSString *)urlEncode:(NSString *)string {
 
     NSString *encodedString = (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes( NULL,
                                                                                                      (CFStringRef) string,
@@ -79,28 +79,26 @@ static NSString *urlEncode(NSString *string) {
 
 - (NSURL *)url {
     
-    NSString *urlPath = [NSMutableString stringWithString:self.hostConfiguration.host];
-    if (self.path) {
-        
-        urlPath = [NSString stringWithFormat:@"%@/%@",urlPath, self.path];
-    }
-    
+    NSURLComponents *components = [[NSURLComponents alloc] init];
+    components.scheme = self.hostConfiguration.scheme;
+    components.host = self.hostConfiguration.host;
+    components.path = self.path;
+
 #warning implement bodydata for POST
     NSData *bodyData = self.httpBodyData;
     if (!bodyData) {
         
-        NSString *queryStr = [self queryIntoString];
-        if (queryStr) {
-            
-            urlPath = [NSString stringWithFormat:@"%@?%@",urlPath,queryStr];
-        }
+        components.query = [self queryIntoString];
     }
 
-    return [NSURL URLWithString:urlPath];
+
+    return [components URL];
+
+//    return [NSURL URLWithString:urlPath];
 }
 
 
-- (void)temp_executeWithArgs:(NSDictionary *)args {
+- (void)temp_executeWithArgs:(WOTRequestArguments *)args {
     
     [super temp_executeWithArgs:args];
 
@@ -197,8 +195,9 @@ static NSString *urlEncode(NSString *string) {
     NSMutableArray *queryArgs = [[NSMutableArray alloc] init];
     NSDictionary *query = self.query;
     for (NSString *key in [query allKeys]) {
-
-        [queryArgs addObject:[NSString stringWithFormat:@"%@=%@",urlEncode(key),urlEncode(query[key])]];
+        NSString *arg = [WOTWEBRequest urlEncode:key];
+        NSString *value = query[key];
+        [queryArgs addObject:[NSString stringWithFormat:@"%@=%@", arg, value]];
     }
     return [queryArgs componentsJoinedByString:@"&"];
 }

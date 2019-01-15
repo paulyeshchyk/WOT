@@ -26,6 +26,6 @@
 - (NSString *)queryIntoString ;
 
 
-
+//+ (NSString *)urlEncode:(NSString *)string;
 
 @end

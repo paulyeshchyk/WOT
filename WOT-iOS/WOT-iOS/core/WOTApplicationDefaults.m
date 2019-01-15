@@ -63,7 +63,7 @@
             return;
         }
 
-        NSString *location = data[WOT_KEY_DATA][WOT_KEY_LOCATION];
+        NSString *location = data[WOTApiKeys.data][WOT_KEY_LOCATION];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
 
         UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
@@ -78,7 +78,7 @@
 
             WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:NSStringFromClass([WOTLoginViewController class]) bundle:nil];
             loginController.request = request;
-            loginController.redirectUrlPath = data[WOT_KEY_REDIRECT_URI];
+            loginController.redirectUrlPath = data[WOTApiKeys.redirectUri];
             [loginController setCallback:loginCallback];
 
             UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
@@ -221,7 +221,7 @@ static NSString *WOTWEBRequestDefaultLanguage;
         NSString *language = [[NSUserDefaults standardUserDefaults] stringForKey:WOT_USERDEFAULTS_LOGIN_LANGUAGE];
         if ([language length] == 0){
             
-            WOTWEBRequestDefaultLanguage =  WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_RU;
+            WOTWEBRequestDefaultLanguage =  WOTApiDefaults.languageRU;
         } else {
             
             WOTWEBRequestDefaultLanguage = language;
@@ -230,10 +230,13 @@ static NSString *WOTWEBRequestDefaultLanguage;
     return WOTWEBRequestDefaultLanguage;
 }
 
++ (NSString *)scheme {
+    return WOTApiDefaults.applicationScheme;
+}
 
 + (NSString *)host {
     
-    return [NSString stringWithFormat:@"%@.%@",ApplicationHost,[self language]];
+    return [NSString stringWithFormat:@"%@.%@", WOTApiDefaults.applicationHost, [self language]];
 }
 
 @end

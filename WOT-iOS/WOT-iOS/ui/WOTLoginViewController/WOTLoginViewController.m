@@ -66,7 +66,7 @@
     NSArray *queryItems = [components queryItems];
     NSURLQueryItem *status = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_STATUS]] lastObject];
     NSURLQueryItem *nickname = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_NICKNAME]] lastObject];
-    NSURLQueryItem *access_token = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_ACCESS_TOKEN]] lastObject];
+    NSURLQueryItem *access_token = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTApiKeys.accessToken]] lastObject];
     NSURLQueryItem *account_id = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_ACCOUNT_ID]] lastObject];
     NSURLQueryItem *expires_at = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_EXPIRES_AT]] lastObject];
 
@@ -115,7 +115,7 @@
     NSMutableDictionary *args =[[NSMutableDictionary alloc] init];
     if (self.error) args[WOT_KEY_ERROR] = self.error;
     if (self.userID) args[WOT_KEY_USER_ID] = self.userID;
-    if (self.access_token) args[WOT_KEY_ACCESS_TOKEN] = self.access_token;
+    if (self.access_token) args[WOTApiKeys.accessToken] = self.access_token;
     if (self.account_id) args[WOT_KEY_ACCOUNT_ID] = self.account_id;
     if (self.expires_at) args[WOT_KEY_EXPIRES_AT] = self.expires_at;
     return args;

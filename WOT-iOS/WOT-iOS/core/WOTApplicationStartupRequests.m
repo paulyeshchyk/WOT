@@ -32,26 +32,27 @@
             debugError(@"request-fail:%@",error.localizedDescription);
         }
     }];
-    
-    NSDictionary *args = @{WOT_KEY_FIELDS:[[Tanks availableFields] componentsJoinedByString:@","]};
+
+    WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
+    [arguments setValues:[Tanks availableFields] forKey:WOTApiKeys.fields];
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTanks];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_TANK_LIST];
     if (canAdd) {
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:arguments];
     }
 }
 
 
 #pragma mark - private
 + (void)executeVehiclesListRequest {
-    
-    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-    [args setObject:[[Vehicles availableFields] componentsJoinedByString:@","] forKey:WOT_KEY_FIELDS];
+    WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
+    [arguments setValues:[Vehicles availableFields]  forKey:WOTApiKeys.fields];
+
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_LIST];
     if (canAdd) {
         
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:arguments];
     }
 }
 

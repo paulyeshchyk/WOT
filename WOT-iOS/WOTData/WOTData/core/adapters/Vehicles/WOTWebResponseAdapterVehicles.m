@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         
         NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
         
-        NSDictionary *objects = data[WOT_KEY_DATA];
+        NSDictionary *objects = data[WOTApiKeys.data];
         for (id key in [objects allKeys]) {
             
             id jSON = objects[key];
@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 
 #warning should be refactored
     
-    NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TANK_ID, @([key integerValue])];
+    NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tankId, @([key integerValue])];
     Tanks *tank = [Tanks findOrCreateObjectWithPredicate:tanksPredicate inManagedObjectContext:context];
     [tank setVehicles:vehicle];
     
@@ -301,7 +301,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             
             [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
                 
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TANK_ID,nextTankId];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tankId,nextTankId];
                 Tanks *tanks = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
                 [moduleTree addNextTanksObject:tanks];
             }];

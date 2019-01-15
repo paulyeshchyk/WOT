@@ -20,7 +20,7 @@
         return;
     }
     
-    NSDictionary *tankTurretsDictionary = data[WOT_KEY_DATA];
+    NSDictionary *tankTurretsDictionary = data[WOTApiKeys.data];
     
     NSArray *tankTurretsArray = [tankTurretsDictionary allKeys];
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
@@ -36,7 +36,7 @@
                 return;
             }
             
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_MODULE_ID,tankTurretsJSON[WOT_KEY_MODULE_ID]];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", WOTApiKeys.moduleId, tankTurretsJSON[WOTApiKeys.moduleId]];
             Tankturrets *tankturrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
             [tankturrets fillPropertiesFromDictionary:tankTurretsJSON];
         }];

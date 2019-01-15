@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0304CF21E8C19100050131 /* WOTAPI.swift */; };
 		1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5021A54E4E001AF67F /* VIPER.swift */; };
 		1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */; };
 		1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5321A54E4E001AF67F /* PivotVIPER.swift */; };
@@ -31,6 +32,7 @@
 		1D8C298E21358B4200759C42 /* NSMutableArray+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C298A21358B4200759C42 /* NSMutableArray+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D8C299221358CF700759C42 /* WOTPivotDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C299121358CF700759C42 /* WOTPivotDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D8C299421358DB600759C42 /* WOTLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C299321358DB600759C42 /* WOTLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA00EE021EDE29C00D887E1 /* URLEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00EDF21EDE29C00D887E1 /* URLEncoder.swift */; };
 		1DA83C9421355A340039CB4B /* WOTWebResponseLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83C9121355A340039CB4B /* WOTWebResponseLink.m */; };
 		1DA83C9521355A340039CB4B /* WOTWebResponseAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83C9221355A340039CB4B /* WOTWebResponseAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DA83C9621355A340039CB4B /* WOTWebResponseLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83C9321355A340039CB4B /* WOTWebResponseLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -105,6 +107,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D0304CF21E8C19100050131 /* WOTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WOTAPI.swift; path = core/WOTAPI.swift; sourceTree = "<group>"; };
 		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
 		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
 		1D126A5321A54E4E001AF67F /* PivotVIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotVIPER.swift; sourceTree = "<group>"; };
@@ -132,6 +135,7 @@
 		1D8C298A21358B4200759C42 /* NSMutableArray+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WOT.h"; sourceTree = "<group>"; };
 		1D8C299121358CF700759C42 /* WOTPivotDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPivotDefines.h; sourceTree = "<group>"; };
 		1D8C299321358DB600759C42 /* WOTLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTLogger.h; sourceTree = "<group>"; };
+		1DA00EDF21EDE29C00D887E1 /* URLEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncoder.swift; sourceTree = "<group>"; };
 		1DA83C9121355A340039CB4B /* WOTWebResponseLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWebResponseLink.m; sourceTree = "<group>"; };
 		1DA83C9221355A340039CB4B /* WOTWebResponseAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseAdapter.h; sourceTree = "<group>"; };
 		1DA83C9321355A340039CB4B /* WOTWebResponseLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseLink.h; sourceTree = "<group>"; };
@@ -255,6 +259,7 @@
 		1D79EDA7212439C2005FBA34 /* WOTPivot */ = {
 			isa = PBXGroup;
 			children = (
+				1D0304CF21E8C19100050131 /* WOTAPI.swift */,
 				1DA83CA62135633F0039CB4B /* categories */,
 				1DE558CB2124560500576D41 /* core */,
 				1D79EDA8212439C2005FBA34 /* WOTPivot.h */,
@@ -352,6 +357,7 @@
 				1DA83C9B21355A6D0039CB4B /* WOTRequestListener.h */,
 				1DA83C9821355A6D0039CB4B /* WOTRequestExecutor.h */,
 				1DA83C9A21355A6D0039CB4B /* WOTRequestExecutor.m */,
+				1DA00EDF21EDE29C00D887E1 /* URLEncoder.swift */,
 			);
 			path = webRequest;
 			sourceTree = "<group>";
@@ -782,6 +788,8 @@
 				1DE558E42124560500576D41 /* WOTPivotNodeProtocol.swift in Sources */,
 				1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */,
 				1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */,
+				1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */,
+				1DA00EE021EDE29C00D887E1 /* URLEncoder.swift in Sources */,
 				1DC6D4BB212575D500A1C9C2 /* WOTDimension.swift in Sources */,
 				1DE559072124571000576D41 /* WOTTreeDataModel.swift in Sources */,
 				1DE5595921255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift in Sources */,

@@ -11,19 +11,20 @@
 
 @implementation WOTSaveSessionRequest
 
-- (void)temp_executeWithArgs:(NSDictionary *)args{
+- (void)temp_executeWithArgs:(WOTRequestArguments *)args{
 
     [super temp_executeWithArgs:args];
 
+    NSDictionary *fields = args.asDictionary;
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     [context performBlock:^{
-        
+
         UserSession *session = [UserSession insertNewObjectInManagedObjectContext:context];
-        session.nickname = args[WOT_KEY_USER_ID];
-        session.access_token = args[WOT_KEY_ACCESS_TOKEN];
-        session.accound_id = args[WOT_KEY_ACCOUNT_ID];
-        session.expires_at = args[WOT_KEY_EXPIRES_AT];
+        session.nickname = fields[WOT_KEY_USER_ID];
+        session.access_token = fields[WOTApiKeys.accessToken];
+        session.accound_id = fields[WOT_KEY_ACCOUNT_ID];
+        session.expires_at = fields[WOT_KEY_EXPIRES_AT];
         NSError *error = nil;
         [context save:&error];
         
