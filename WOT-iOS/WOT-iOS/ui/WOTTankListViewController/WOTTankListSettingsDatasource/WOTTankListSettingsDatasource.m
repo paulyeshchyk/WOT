@@ -40,9 +40,9 @@
 
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:self.context];
-        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TYPE ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
+        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
         
-        self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:WOT_KEY_TYPE cacheName:nil];
+        self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:WOTApiKeys.type cacheName:nil];
         self.fetchedResultController.delegate = self;
 
         NSError *error = nil;
@@ -64,7 +64,7 @@
 
     NSMutableArray *predicates = [[NSMutableArray alloc] init];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_FILTER];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_FILTER];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
 
     for (ListSetting *setting in objects) {
@@ -88,7 +88,7 @@
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_GROUP];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
     NSArray * result = [objects valueForKeyPath:@"key"];
     if ([result count] == 0) {
@@ -109,7 +109,7 @@
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@" %K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_SORT];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@" %K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_SORT];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
 
     for (ListSetting *setting in objects) {
@@ -210,7 +210,7 @@
 + (id)context:(NSManagedObjectContext *)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_SORT];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_SORT];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
     ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate inManagedObjectContext:context];
@@ -229,7 +229,7 @@
 + (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_GROUP];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
     ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate inManagedObjectContext:context];
@@ -249,7 +249,7 @@
 + (id)context:(NSManagedObjectContext *)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_FILTER];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_FILTER];
     NSPredicate *valuesPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_VALUES,value];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate,valuesPredicate]];
 
@@ -272,7 +272,7 @@
 - (id)filteredValue:(id)value forKey:(NSString *)key {
     
     id result = nil;
-    if ([key isEqualToString:WOT_KEY_LEVEL]) {
+    if ([key isEqualToString:WOTApiKeys.level]) {
         
         result = @([value integerValue]);
     } else if ([key isEqualToString:WOT_KEY_IS_PREMIUM]){

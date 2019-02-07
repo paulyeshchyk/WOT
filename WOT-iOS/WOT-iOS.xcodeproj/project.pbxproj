@@ -1833,7 +1833,7 @@
 					1DD646321B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = SM687X2N9M;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1010;
 					};
 					1DD6464E1B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -2412,6 +2412,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2463,6 +2464,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2487,8 +2489,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Debug;
@@ -2511,8 +2513,8 @@
 				PRODUCT_MODULE_NAME = WOT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Release;

@@ -25,7 +25,7 @@
      *  availableTypes
      *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
      */
-    self.type = jSON[WOT_KEY_TYPE];
+    self.type = jSON[WOTApiKeys.type];
 }
 
 + (NSArray *)availableFields {

@@ -16,27 +16,26 @@
 - (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
     
     self.name = jSON[WOTApiKeys.name];
-    self.nation = jSON[WOT_KEY_NATION];
+    self.nation = jSON[WOTApiKeys.nation];
     self.price_credit = jSON[WOTApiKeys.priceCredit];
     self.price_gold = jSON[WOT_KEY_PRICE_GOLD];
-//    self.prices_xp = jSON[WOT_KEY_PRICES_XP];
     self.is_gift = jSON[WOT_KEY_IS_GIFT];
     self.is_premium = jSON[WOT_KEY_IS_PREMIUM];
-    self.short_name = jSON[WOT_KEY_SHORT_NAME];
+    self.short_name = jSON[WOTApiKeys.short_name];
     self.tag = jSON[WOT_KEY_TAG];
-    self.tier = jSON[WOT_KEY_TIER];
+    self.tier = jSON[WOTApiKeys.tier];
     /*
      * can be
      * lightTank, SPG, AT-SPG, heavyTank, mediumTank
      */
-    self.type = jSON[WOT_KEY_TYPE];
+    self.type = jSON[WOTApiKeys.type];
     self.tank_id = jSON[WOTApiKeys.tankId];
 }
 
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.name,WOT_KEY_NATION,WOTApiKeys.priceCredit, WOT_KEY_PRICE_GOLD, WOT_KEY_SHORT_NAME, WOT_KEY_TAG, WOT_KEY_TIER, WOT_KEY_TYPE, WOT_LINKKEY_ENGINES, WOT_LINKKEY_SUSPENSIONS, WOT_LINKKEY_RADIOS, WOT_LINKKEY_GUNS, WOT_LINKKEY_TURRETS, WOT_KEY_PRICES_XP, WOT_KEY_IS_GIFT, WOTApiKeys.tankId, WOT_KEY_MODULES_TREE, WOT_KEY_TRAVERSE_LEFT_ARC, WOT_KEY_TRAVERSE_RIGHT_ARC, WOT_KEY_TRAVERSE_SPEED, WOT_KEY_DEFAULT_PROFILE];
+    return @[WOTApiKeys.name,WOTApiKeys.nation,WOTApiKeys.priceCredit, WOT_KEY_PRICE_GOLD, WOTApiKeys.short_name, WOT_KEY_TAG, WOTApiKeys.tier, WOTApiKeys.type, WOT_LINKKEY_ENGINES, WOT_LINKKEY_SUSPENSIONS, WOT_LINKKEY_RADIOS, WOT_LINKKEY_GUNS, WOT_LINKKEY_TURRETS, WOT_KEY_PRICES_XP, WOT_KEY_IS_GIFT, WOTApiKeys.tankId, WOT_KEY_MODULES_TREE, WOT_KEY_TRAVERSE_LEFT_ARC, WOT_KEY_TRAVERSE_RIGHT_ARC, WOT_KEY_TRAVERSE_SPEED, WOT_KEY_DEFAULT_PROFILE];
 }
 
 

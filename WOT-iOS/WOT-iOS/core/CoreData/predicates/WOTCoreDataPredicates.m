@@ -19,7 +19,7 @@
     NSMutableArray *subPredicates = [[NSMutableArray alloc] init];
     [tiers enumerateObjectsUsingBlock:^(NSNumber *tier, NSUInteger idx, BOOL *stop) {
        
-        [subPredicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_LEVEL, tier]];
+        [subPredicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.level, tier]];
         
     }];
 
@@ -31,7 +31,7 @@
     [subPredicates removeAllObjects];
     [nations enumerateObjectsUsingBlock:^(NSString *nation, NSUInteger idx, BOOL *stop) {
         
-        [subPredicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_NATION, nation]];
+        [subPredicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.nation, nation]];
         
     }];
     if ([nations count] != 0) {
@@ -42,7 +42,7 @@
     [subPredicates removeAllObjects];
     [tankTypes enumerateObjectsUsingBlock:^(NSString *tankType, NSUInteger idx, BOOL *stop) {
         
-        [subPredicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE, tankType]];
+        [subPredicates addObject:[NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type, tankType]];
         
     }];
 

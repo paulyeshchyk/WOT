@@ -165,8 +165,6 @@ internal enum L10n {
   internal static let wotKeyIsPremium = L10n.tr("Localizable", "WOT_KEY_IS_PREMIUM")
   /// key
   internal static let wotKeyKey = L10n.tr("Localizable", "WOT_KEY_KEY")
-  /// level
-  internal static let wotKeyLevel = L10n.tr("Localizable", "WOT_KEY_LEVEL")
   /// location
   internal static let wotKeyLocation = L10n.tr("Localizable", "WOT_KEY_LOCATION")
   /// max_load
@@ -175,10 +173,6 @@ internal enum L10n {
   internal static let wotKeyMessage = L10n.tr("Localizable", "WOT_KEY_MESSAGE")
   /// modules_tree
   internal static let wotKeyModulesTree = L10n.tr("Localizable", "WOT_KEY_MODULES_TREE")
-  /// nation
-  internal static let wotKeyNation = L10n.tr("Localizable", "WOT_KEY_NATION")
-  /// nation_i18n
-  internal static let wotKeyNationI18N = L10n.tr("Localizable", "WOT_KEY_NATION_I18N")
   /// next_modules
   internal static let wotKeyNextModules = L10n.tr("Localizable", "WOT_KEY_NEXT_MODULES")
   /// next_tanks
@@ -203,22 +197,14 @@ internal enum L10n {
   internal static let wotKeySettingTypeGroup = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_GROUP")
   /// Sorting
   internal static let wotKeySettingTypeSort = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_SORT")
-  /// short_name
-  internal static let wotKeyShortName = L10n.tr("Localizable", "WOT_KEY_SHORT_NAME")
-  /// short_name_i18n
-  internal static let wotKeyShortNameI18N = L10n.tr("Localizable", "WOT_KEY_SHORT_NAME_I18N")
   /// tag
   internal static let wotKeyTag = L10n.tr("Localizable", "WOT_KEY_TAG")
-  /// tier
-  internal static let wotKeyTier = L10n.tr("Localizable", "WOT_KEY_TIER")
   /// traverse_left_arc
   internal static let wotKeyTraverseLeftArc = L10n.tr("Localizable", "WOT_KEY_TRAVERSE_LEFT_ARC")
   /// traverse_right_arc
   internal static let wotKeyTraverseRightArc = L10n.tr("Localizable", "WOT_KEY_TRAVERSE_RIGHT_ARC")
   /// traverse_speed
   internal static let wotKeyTraverseSpeed = L10n.tr("Localizable", "WOT_KEY_TRAVERSE_SPEED")
-  /// type
-  internal static let wotKeyType = L10n.tr("Localizable", "WOT_KEY_TYPE")
   /// type_i18n
   internal static let wotKeyTypeI18N = L10n.tr("Localizable", "WOT_KEY_TYPE_I18N")
   /// userId

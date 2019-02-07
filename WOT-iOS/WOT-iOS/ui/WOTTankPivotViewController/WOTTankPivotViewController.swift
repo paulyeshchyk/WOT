@@ -38,7 +38,7 @@ class WOTTankPivotViewController: UIViewController {
 
         super.viewDidLoad()
 
-        let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
+        let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
         self.navigationItem.setRightBarButtonItems(items, animated: false)
 
 

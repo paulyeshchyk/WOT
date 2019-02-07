@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import WOT
+@testable import WOTPivot
 
 class WOTPivotNodeTest: XCTestCase {
 

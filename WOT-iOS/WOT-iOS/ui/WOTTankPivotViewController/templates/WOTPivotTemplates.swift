@@ -15,17 +15,17 @@ class WOTPivotTemplateVehicleTier: NSObject, WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
 
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: L10n.wotKeyTier)
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel1, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel1)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel2, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel2)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel3, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel3)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel4, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel4)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel5, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel5)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel6, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel6)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel7, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel7)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel8, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel8)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel9, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel9)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel10, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", L10n.wotKeyLevel, L10n.wotIntegerLevel10)))
+        let result = pivotNodeClass.init(name: WOTApiKeys.level)
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel1, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel1)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel2, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel2)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel3, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel3)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel4, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel4)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel5, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel5)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel6, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel6)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel7, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel7)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel8, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel8)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel9, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel9)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel10, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel10)))
 
         return result
     }
@@ -60,12 +60,12 @@ class WOTPivotTemplateVehicleType: NSObject, WOTPivotTemplateProtocol {
 
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: L10n.wotKeyType)
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringAtSpg, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyType, L10n.wotStringTankTypeAtSpg)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLt, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyType, L10n.wotStringTankTypeLightTank)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringHt, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyType, L10n.wotStringTankTypeHeavyTank)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringMt, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyType, L10n.wotStringTankTypeMediumTank)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringSpg, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyType, L10n.wotStringTankTypeSpg)))
+        let result = pivotNodeClass.init(name: WOTApiKeys.type)
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringAtSpg, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeAtSpg)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeLightTank)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringHt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeHeavyTank)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringMt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeMediumTank)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringSpg, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeSpg)))
         return result
     }
 }
@@ -75,18 +75,18 @@ class WOTPivotTemplateVehicleNation: NSObject, WOTPivotTemplateProtocol {
 
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: L10n.wotKeyNation)
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationChina, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationChina)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationCzech, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationCzech)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationFrance, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationFrance)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationGermany, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationGermany)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationItaly, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationItaly)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationJapan, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationJapan)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationPoland, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationPoland)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationSweden, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationSweden)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationUk, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationUk)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationUsa, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationUsa)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationUssr, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyNation, L10n.wotStringNationUssr)))
+        let result = pivotNodeClass.init(name: WOTApiKeys.nation)
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationChina, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationChina)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationCzech, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationCzech)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationFrance, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationFrance)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationGermany, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationGermany)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationItaly, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationItaly)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationJapan, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationJapan)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationPoland, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationPoland)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationSweden, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationSweden)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationUk, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationUk)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationUsa, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationUsa)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringNationUssr, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, L10n.wotStringNationUssr)))
         return result
     }
 }

@@ -18,9 +18,9 @@
     self.armor_fedd = jSON[WOT_KEY_ARMOR_FEDD];
     self.armor_forehead = jSON[WOT_KEY_ARMOR_FOREHEAD];
     self.circular_vision_radius = jSON[WOT_KEY_CIRCULAR_VISION_RADIUS];
-    self.level = jSON[WOT_KEY_LEVEL];
+    self.level = jSON[WOTApiKeys.level];
     self.name_i18n = jSON[WOTApiKeys.nameI18N];
-    self.nation = jSON[WOT_KEY_NATION];
+    self.nation = jSON[WOTApiKeys.nation];
     self.price_credit = jSON[WOTApiKeys.priceCredit];
     self.price_gold = jSON[WOT_KEY_PRICE_GOLD];
     self.rotation_speed = jSON[WOT_KEY_ROTATION_SPEED];
@@ -29,7 +29,7 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.name, WOTApiKeys.moduleId, WOT_KEY_ARMOR_BOARD, WOT_KEY_ARMOR_FEDD, WOT_KEY_ARMOR_FOREHEAD, WOT_KEY_CIRCULAR_VISION_RADIUS, WOT_KEY_LEVEL, WOTApiKeys.nameI18N, WOT_KEY_NATION, WOTApiKeys.priceCredit, WOT_KEY_PRICE_GOLD, WOT_KEY_ROTATION_SPEED, WOT_KEY_TRAVERSE_LEFT_ARC, WOT_KEY_TRAVERSE_RIGHT_ARC, WOT_KEY_TRAVERSE_SPEED];
+    return @[WOTApiKeys.name, WOTApiKeys.moduleId, WOT_KEY_ARMOR_BOARD, WOT_KEY_ARMOR_FEDD, WOT_KEY_ARMOR_FOREHEAD, WOT_KEY_CIRCULAR_VISION_RADIUS, WOTApiKeys.level, WOTApiKeys.nameI18N, WOTApiKeys.nation, WOTApiKeys.priceCredit, WOT_KEY_PRICE_GOLD, WOT_KEY_ROTATION_SPEED, WOT_KEY_TRAVERSE_LEFT_ARC, WOT_KEY_TRAVERSE_RIGHT_ARC, WOT_KEY_TRAVERSE_SPEED];
 }
 
 @end

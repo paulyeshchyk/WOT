@@ -32,13 +32,13 @@
 #warning will recreate objects if user has deleted everything
     if ([[fetchedResultController fetchedObjects] count] == 0) {
         
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOT_KEY_NATION_I18N ascending:NO orderBy:0 callback:NULL];
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOT_KEY_TYPE ascending:YES orderBy:1 callback:NULL];
+        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.nation_i18n ascending:NO orderBy:0 callback:NULL];
+        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.type ascending:YES orderBy:1 callback:NULL];
         
         
-        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOT_KEY_NATION_I18N ascending:YES orderBy:0 callback:NULL];
+        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOTApiKeys.nation_i18n ascending:YES orderBy:0 callback:NULL];
         
-        [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOT_KEY_LEVEL value:@"6" callback:NULL];
+        [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.level value:@"6" callback:NULL];
         
         if ([context hasChanges]) {
             

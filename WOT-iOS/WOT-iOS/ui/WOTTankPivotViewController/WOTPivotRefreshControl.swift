@@ -19,8 +19,8 @@ import Foundation
     convenience init(target: Any, action: Selector) {
         self.init()
         let color = UIColor.red
-        let attributes = [NSAttributedStringKey.foregroundColor: color]
-        self.addTarget(target, action: action, for: UIControlEvents.valueChanged)
+        let attributes = [NSAttributedString.Key.foregroundColor: color]
+        self.addTarget(target, action: action, for: UIControl.Event.valueChanged)
         self.tintColor = color
         self.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: attributes)
     }

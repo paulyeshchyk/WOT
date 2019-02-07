@@ -1293,10 +1293,11 @@
 				TargetAttributes = {
 					1D3DAEC92133FD5300368AFA = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1010;
 					};
 					1D3DAED22133FD5300368AFA = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -1617,7 +1618,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1643,7 +1644,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTData;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1661,7 +1662,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTDataTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1679,7 +1680,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTDataTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

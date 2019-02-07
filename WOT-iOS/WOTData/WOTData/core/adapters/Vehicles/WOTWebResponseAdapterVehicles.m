@@ -307,7 +307,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             }];
         }
 
-        WOTVehicleModuleType moduleType = [WOTWebResponseAdapterVehicles moduleTypeFromString:jSON[WOT_KEY_TYPE]];
+        WOTVehicleModuleType moduleType = [WOTWebResponseAdapterVehicles moduleTypeFromString:jSON[WOTApiKeys.type]];
         switch (moduleType) {
             case WOTVehicleModuleTypeChassis: {
 

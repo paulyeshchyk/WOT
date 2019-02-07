@@ -37,7 +37,7 @@
     WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Guns" query:WOT_LINKKEY_GUNS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name query:WOT_LINKKEY_GUNS],
                                                                                                                         [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.nameI18N query:WOT_LINKKEY_GUNS],
                                                                                                                         [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.priceCredit query:WOT_LINKKEY_GUNS],
-                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_GUNS],
+                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.level query:WOT_LINKKEY_GUNS],
                                                                                                                         [WOTTankDetailFieldExpression gunRateCompareFieldExpression]
                                                                                                                         ]];
     return result;
@@ -46,7 +46,7 @@
 + (WOTTankDetailSection *)turretsSection {
 
     WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Turrets" query:WOT_LINKKEY_TURRETS metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.nameI18N query:WOT_LINKKEY_TURRETS],
-                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOT_KEY_LEVEL query:WOT_LINKKEY_TURRETS],
+                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.level query:WOT_LINKKEY_TURRETS],
                                                                                                                            [WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression],
                                                                                                                            [WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression],
                                                                                                                            [WOTTankDetailFieldExpression turretsArmorForeheadCompareFieldExpression],
