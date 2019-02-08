@@ -22,7 +22,7 @@
     self.is_gift = jSON[WOT_KEY_IS_GIFT];
     self.is_premium = jSON[WOT_KEY_IS_PREMIUM];
     self.short_name = jSON[WOTApiKeys.short_name];
-    self.tag = jSON[WOT_KEY_TAG];
+    self.tag = jSON[WOTApiKeys.tag];
     self.tier = jSON[WOTApiKeys.tier];
     /*
      * can be
@@ -35,7 +35,7 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.name,WOTApiKeys.nation,WOTApiKeys.priceCredit, WOT_KEY_PRICE_GOLD, WOTApiKeys.short_name, WOT_KEY_TAG, WOTApiKeys.tier, WOTApiKeys.type, WOT_LINKKEY_ENGINES, WOT_LINKKEY_SUSPENSIONS, WOT_LINKKEY_RADIOS, WOT_LINKKEY_GUNS, WOT_LINKKEY_TURRETS, WOT_KEY_PRICES_XP, WOT_KEY_IS_GIFT, WOTApiKeys.tankId, WOT_KEY_MODULES_TREE, WOT_KEY_TRAVERSE_LEFT_ARC, WOT_KEY_TRAVERSE_RIGHT_ARC, WOT_KEY_TRAVERSE_SPEED, WOT_KEY_DEFAULT_PROFILE];
+    return @[WOTApiKeys.name,WOTApiKeys.nation,WOTApiKeys.priceCredit, WOT_KEY_PRICE_GOLD, WOTApiKeys.short_name, WOTApiKeys.tag, WOTApiKeys.tier, WOTApiKeys.type, WOT_LINKKEY_ENGINES, WOT_LINKKEY_SUSPENSIONS, WOT_LINKKEY_RADIOS, WOT_LINKKEY_GUNS, WOT_LINKKEY_TURRETS, WOT_KEY_PRICES_XP, WOT_KEY_IS_GIFT, WOTApiKeys.tankId, WOT_KEY_MODULES_TREE, WOT_KEY_TRAVERSE_LEFT_ARC, WOT_KEY_TRAVERSE_RIGHT_ARC, WOT_KEY_TRAVERSE_SPEED, WOTApiKeys.default_profile];
 }
 
 

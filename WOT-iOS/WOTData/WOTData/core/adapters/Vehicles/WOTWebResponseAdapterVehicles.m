@@ -107,13 +107,13 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TAG,jSON[WOT_KEY_TAG]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tag,jSON[WOTApiKeys.tag]];
     Vehicles *vehicle = [Vehicles findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
     [vehicle fillPropertiesFromDictionary:jSON];
     
 #warning dirty code
     Vehicleprofile *defaultProfile = [Vehicleprofile insertNewObjectInManagedObjectContext:context];
-    [defaultProfile fillPropertiesFromDictionary:jSON[WOT_KEY_DEFAULT_PROFILE]];
+    [defaultProfile fillPropertiesFromDictionary:jSON[WOTApiKeys.default_profile]];
     vehicle.default_profile = defaultProfile;
 
 
@@ -350,7 +350,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         }
         
     }];
-    return jSON[WOT_KEY_NEXT_MODULES];
+    return jSON[WOTApiKeys.next_modules];
 }
 
 @end

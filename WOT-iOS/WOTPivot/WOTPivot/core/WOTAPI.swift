@@ -15,6 +15,7 @@ protocol WOTAPIProtocol: NSObjectProtocol {
 }
 
 public class WOTApiKeys: NSObject, WOTAPIProtocol {
+    @objc public static let default_profile: String = "default_profile"
     @objc public static let fields: String = "fields"
     @objc public static let applicationId: String = "application_id"
     @objc public static let redirectUri: String = "redirect_uri"
@@ -31,10 +32,12 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let tier: String = "tier"
     @objc public static let nation: String = "nation"
     @objc public static let nation_i18n: String = "nation_i18n"
+    @objc public static let next_modules: String = "next_modules"
     @objc public static let priceCredit: String = "price_credit"
     @objc public static let isDefault: String = "is_default"
     @objc public static let priceXP: String = "price_xp"
     @objc public static let tankId: String = "tank_id"
+    @objc public static let tag: String = "tag"
 }
 
 @objc

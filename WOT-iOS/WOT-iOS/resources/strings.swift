@@ -137,8 +137,6 @@ internal enum L10n {
   internal static let wotKeyCode = L10n.tr("Localizable", "WOT_KEY_CODE")
   /// contour_image
   internal static let wotKeyContourImage = L10n.tr("Localizable", "WOT_KEY_CONTOUR_IMAGE")
-  /// default_profile
-  internal static let wotKeyDefaultProfile = L10n.tr("Localizable", "WOT_KEY_DEFAULT_PROFILE")
   /// vehicles.default_profile.gun.fire_rate
   internal static let wotKeyDefaultProfileFireRate = L10n.tr("Localizable", "WOT_KEY_DEFAULT_PROFILE_FIRE_RATE")
   /// vehicles.default_profile.hp
@@ -173,8 +171,6 @@ internal enum L10n {
   internal static let wotKeyMessage = L10n.tr("Localizable", "WOT_KEY_MESSAGE")
   /// modules_tree
   internal static let wotKeyModulesTree = L10n.tr("Localizable", "WOT_KEY_MODULES_TREE")
-  /// next_modules
-  internal static let wotKeyNextModules = L10n.tr("Localizable", "WOT_KEY_NEXT_MODULES")
   /// next_tanks
   internal static let wotKeyNextTanks = L10n.tr("Localizable", "WOT_KEY_NEXT_TANKS")
   /// nickname
@@ -197,8 +193,6 @@ internal enum L10n {
   internal static let wotKeySettingTypeGroup = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_GROUP")
   /// Sorting
   internal static let wotKeySettingTypeSort = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_SORT")
-  /// tag
-  internal static let wotKeyTag = L10n.tr("Localizable", "WOT_KEY_TAG")
   /// traverse_left_arc
   internal static let wotKeyTraverseLeftArc = L10n.tr("Localizable", "WOT_KEY_TRAVERSE_LEFT_ARC")
   /// traverse_right_arc
