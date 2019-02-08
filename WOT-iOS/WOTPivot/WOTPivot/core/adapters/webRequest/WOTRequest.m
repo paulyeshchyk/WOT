@@ -13,6 +13,20 @@
 @end
 
 @implementation WOTRequestArguments
+
+- (id)init:(NSDictionary *)dictionary {
+    
+    self = [super init];
+    if (self) {
+        [dictionary.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString *plainarray = dictionary[key];
+            NSArray *arr = [plainarray componentsSeparatedByString:@","];
+            [self setValues:arr forKey:key];
+        }];
+    }
+    return self;
+}
+
 + (NSString *)urlEncode:(NSString *)string {
 
     NSString *encodedString = (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes( NULL,

@@ -86,7 +86,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             
             [NSThread executeOnMainThread:^{
                 
-                id args = requests[requestId];
+                WOTRequestArguments *args = [[WOTRequestArguments alloc] init:requests[requestId]];
                 WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:[requestId integerValue]];
                 
                 NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];

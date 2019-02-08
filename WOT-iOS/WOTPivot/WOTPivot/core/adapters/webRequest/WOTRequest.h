@@ -11,6 +11,7 @@
 typedef void(^WOTRequestCallback)(id data, NSError *error);
 
 @interface WOTRequestArguments: NSObject
+- (id)init:(NSDictionary *)dictionary;
 - (void)setValues:(NSArray *)values forKey:(NSString *)key;
 - (NSString *)escapedValueForKey:(NSString *)key;
 
