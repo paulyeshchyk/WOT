@@ -89,6 +89,7 @@ public struct WOTPivotMetadataPermutator {
                 subpredicates.append(predicate)
             }
 
+            //TODO: makes dublicated predicates WTF???
             let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: subpredicates.compactMap { $0 })
             if let result: WOTPivotNodeProtocol = endpoint.copy(with: nil) as? WOTPivotNodeProtocol {
                 result.predicate = predicate

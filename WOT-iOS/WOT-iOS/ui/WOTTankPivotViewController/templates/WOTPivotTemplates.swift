@@ -36,21 +36,9 @@ class WOTPivotTemplateVehiclePremium: NSObject, WOTPivotTemplateProtocol {
 
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: L10n.wotKeyIsPremium)
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsPremium, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsPremium, NSNumber(value: 1))))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsNotPremium, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsPremium, NSNumber(value: 0))))
-        return result
-    }
-}
-
-@objc
-class WOTPivotTemplateVehicleGift: NSObject, WOTPivotTemplateProtocol {
-
-    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
-        let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: L10n.wotKeyIsGift)
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsGift, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsGift, NSNumber(value: 1))))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsNotGift, predicate: NSPredicate(format: "%K == %@", L10n.wotKeyIsGift, NSNumber(value: 0))))
+        let result = pivotNodeClass.init(name: WOTApiKeys.is_premium)
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsPremium, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.is_premium, NSNumber(value: 1))))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringIsNotPremium, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.is_premium, NSNumber(value: 0))))
         return result
     }
 }
@@ -61,11 +49,11 @@ class WOTPivotTemplateVehicleType: NSObject, WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.type)
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringAtSpg, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeAtSpg)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringLt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeLightTank)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringHt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeHeavyTank)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringMt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeMediumTank)))
-        result.addChild(pivotNodeClass.init(name: L10n.wotStringSpg, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, L10n.wotStringTankTypeSpg)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringAtSpg, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.at_spg)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.lightTank)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringHt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.heavyTank)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringMt, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.mediumTank)))
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringSpg, predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.spg)))
         return result
     }
 }
@@ -117,11 +105,6 @@ class WOTPivotTemplateVehicleDPM: NSObject, WOTPivotTemplateProtocol {
 
 @objc
 class WOTPivotTemplates: NSObject {
-
-    @objc
-    lazy var vehicleGift: WOTPivotTemplateProtocol = {
-        return WOTPivotTemplateVehicleGift()
-    }()
 
     @objc
     lazy var vehiclePremium: WOTPivotTemplateProtocol = {

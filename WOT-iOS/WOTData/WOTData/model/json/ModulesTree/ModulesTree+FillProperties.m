@@ -14,12 +14,12 @@
 
 - (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
     
-    self.module_id = jSON[WOTApiKeys.moduleId];
+    self.module_id = jSON[WOTApiKeys.module_id];
     self.name = jSON[WOTApiKeys.name];
     
-    self.price_credit = jSON[WOTApiKeys.priceCredit];
-    self.price_xp = jSON[WOTApiKeys.priceXP];
-    self.is_default = jSON[WOTApiKeys.isDefault];
+    self.price_credit = jSON[WOTApiKeys.price_credit];
+    self.price_xp = jSON[WOTApiKeys.price_xp];
+    self.is_default = jSON[WOTApiKeys.is_default];
 
     /**
      *  availableTypes
@@ -30,7 +30,7 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.name, WOTApiKeys.moduleId, WOTApiKeys.priceCredit];
+    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.price_credit];
 }
 
 + (NSArray *)availableLinks {
@@ -39,9 +39,9 @@
                                                                   requestId:WOTRequestIdModulesTree
                                                         argFieldNameToFetch:WOTApiKeys.fields
                                                       argFieldValuesToFetch:[ModulesTree availableFields]
-                                                       argFieldNameToFilter:WOTApiKeys.moduleId
+                                                       argFieldNameToFilter:WOTApiKeys.module_id
                                                                 jsonKeyName:WOT_LINKKEY_MODULESTREE
-                                                             coredataIdName:WOTApiKeys.moduleId
+                                                             coredataIdName:WOTApiKeys.module_id
                                                              linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                                  //                                                                 Vehicles *vehicles = (Vehicles *)entity;
                                                                  //                                                                 [vehicles addTurrets:items];

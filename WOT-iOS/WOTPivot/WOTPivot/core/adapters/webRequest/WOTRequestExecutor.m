@@ -103,11 +103,6 @@
         
         debugError(@"attempting to remove unknown request:%@",request);
     }
-    
-    if ([requests count]  == 0) {
-        
-        debugLog(@"grouppedRequests for %@ is empty",request.availableInGroups);
-    }
 }
 
 - (BOOL)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId {

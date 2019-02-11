@@ -12,16 +12,16 @@
 
 - (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
     
-    self.tank_id = jSON[WOTApiKeys.tankId];
+    self.tank_id = jSON[WOTApiKeys.tank_id];
     self.name = jSON[WOTApiKeys.name];
     
     
     self.contour_image = jSON[WOT_KEY_CONTOUR_IMAGE];
     self.image = jSON[WOT_KEY_IMAGE];
     self.image_small = jSON[WOT_KEY_IMAGE_SMALL];
-    self.is_premium = jSON[WOT_KEY_IS_PREMIUM];
+    self.is_premium = jSON[WOTApiKeys.is_premium];
     self.level = jSON[WOTApiKeys.level];
-    self.name_i18n = jSON[WOTApiKeys.nameI18N];
+    self.name_i18n = jSON[WOTApiKeys.name_i18n];
     self.nation = jSON[WOTApiKeys.nation];
     self.nation_i18n = jSON[WOTApiKeys.nation_i18n];
     self.short_name_i18n = jSON[WOTApiKeys.short_name_i18n];
@@ -32,7 +32,7 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.tankId, WOTApiKeys.name, WOT_KEY_IMAGE, WOT_KEY_CONTOUR_IMAGE, WOT_KEY_IMAGE_SMALL, WOT_KEY_IS_PREMIUM, WOTApiKeys.level, WOTApiKeys.nameI18N, WOTApiKeys.nation, WOTApiKeys.nation_i18n, WOTApiKeys.short_name_i18n, WOTApiKeys.type, WOT_KEY_TYPE_I18N];
+    return @[WOTApiKeys.tank_id, WOTApiKeys.name, WOT_KEY_IMAGE, WOT_KEY_CONTOUR_IMAGE, WOT_KEY_IMAGE_SMALL, WOTApiKeys.is_premium, WOTApiKeys.level, WOTApiKeys.name_i18n, WOTApiKeys.nation, WOTApiKeys.nation_i18n, WOTApiKeys.short_name_i18n, WOTApiKeys.type, WOT_KEY_TYPE_I18N];
 }
 
 @end

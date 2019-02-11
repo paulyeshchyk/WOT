@@ -131,11 +131,11 @@
 
 + (NSDictionary * _Nonnull)typeColors {
     
-    return @{NSLocalizedString(WOT_STRING_TANK_TYPE_AT_SPG, nil):       [[UIColor blueColor] paleColor],
-             NSLocalizedString(WOT_STRING_TANK_TYPE_SPG, nil):          [[UIColor brownColor] paleColor],
-             NSLocalizedString(WOT_STRING_TANK_TYPE_LIGHT_TANK, nil):   [[UIColor greenColor] paleColor],
-             NSLocalizedString(WOT_STRING_TANK_TYPE_MEDIUM_TANK, nil):  [[UIColor yellowColor] paleColor],
-             NSLocalizedString(WOT_STRING_TANK_TYPE_HEAVY_TANK, nil):   [[UIColor redColor] paleColor]};
+    return @{NSLocalizedString(WOTApiTankType.at_spg, nil):       [[UIColor blueColor] paleColor],
+             NSLocalizedString(WOTApiTankType.spg, nil):          [[UIColor brownColor] paleColor],
+             NSLocalizedString(WOTApiTankType.lightTank, nil):   [[UIColor greenColor] paleColor],
+             NSLocalizedString(WOTApiTankType.mediumTank, nil):  [[UIColor yellowColor] paleColor],
+             NSLocalizedString(WOTApiTankType.heavyTank, nil):   [[UIColor redColor] paleColor]};
 }
 
 @end

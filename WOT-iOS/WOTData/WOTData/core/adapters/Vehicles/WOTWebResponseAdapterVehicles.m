@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 
 #warning should be refactored
     
-    NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tankId, @([key integerValue])];
+    NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tank_id, [key integerValue]];
     Tanks *tank = [Tanks findOrCreateObjectWithPredicate:tanksPredicate inManagedObjectContext:context];
     [tank setVehicles:vehicle];
     
@@ -301,7 +301,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             
             [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
                 
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tankId,nextTankId];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tank_id,nextTankId];
                 Tanks *tanks = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
                 [moduleTree addNextTanksObject:tanks];
             }];

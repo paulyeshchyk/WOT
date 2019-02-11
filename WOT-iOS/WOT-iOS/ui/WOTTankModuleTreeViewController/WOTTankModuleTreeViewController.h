@@ -13,7 +13,7 @@ typedef void(^WOTConfigurationCompletionDoneBlock) (id configuration);
 
 @interface WOTTankModuleTreeViewController : UIViewController
 
-@property (nonatomic, copy)NSNumber *tankId;
+@property (nonatomic, copy)NSNumber *tank_Id;
 
 @property (nonatomic, copy)WOTConfigurationCompletionCancelBlock cancelBlock;
 @property (nonatomic, copy)WOTConfigurationCompletionDoneBlock doneBlock;

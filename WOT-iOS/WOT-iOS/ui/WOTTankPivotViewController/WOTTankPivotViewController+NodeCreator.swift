@@ -52,7 +52,18 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
                 }
             }
             return result
+        } else {
+            //extra data???????
+
+            fetchedObjects.forEach { (fetchedObject) in
+                if let fetchObj = fetchedObject as? NSFetchRequestResult {
+                    let node = self.createNode(fetchedObject: fetchObj, byPredicate: byPredicate)
+                    result.append(node)
+                }
+            }
+            return result
         }
+
 
         if self.collapseToGroups && cnt > 1 {
             let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)

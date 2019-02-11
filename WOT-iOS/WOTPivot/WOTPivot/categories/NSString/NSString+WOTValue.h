@@ -10,8 +10,6 @@
 
 @interface NSString (WOTValue)
 
-+ (NSString *)stringEmpty;
-+ (NSString *)valueOrEmptyString:(NSString *)value;
 + (NSString *)valueOrSpaceString:(NSString *)value;
 + (BOOL)isEmptyAfterTrimmingWhitespaceAndNewlineCharacterSet:(NSString *)value;
 

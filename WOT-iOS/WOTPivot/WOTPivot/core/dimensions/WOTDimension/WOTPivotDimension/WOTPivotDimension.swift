@@ -64,7 +64,9 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         let rowNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootRowsNode)
         let filterEndPoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootFilterNode)
         rowNodeEndpoints.forEach { (rowNode) in
+            print((rowNode as? WOTPivotNode)?.predicate)
             colNodeEndpoints.forEach({ (colNode) in
+                print((colNode as? WOTPivotNode)?.predicate)
                 filterEndPoints.forEach({(filterNode) in
                     let predicates = [colNode, rowNode, filterNode].compactMap { ($0 as? WOTPivotNodeProtocol)?.fullPredicate }
                     let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)

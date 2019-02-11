@@ -143,8 +143,6 @@ internal enum L10n {
   internal static let wotKeyDefaultProfileHp = L10n.tr("Localizable", "WOT_KEY_DEFAULT_PROFILE_HP")
   /// vehicles.default_profile.weight
   internal static let wotKeyDefaultProfileWeight = L10n.tr("Localizable", "WOT_KEY_DEFAULT_PROFILE_WEIGHT")
-  /// distance
-  internal static let wotKeyDistance = L10n.tr("Localizable", "WOT_KEY_DISTANCE")
   /// dpm
   internal static let wotKeyDpm = L10n.tr("Localizable", "WOT_KEY_DPM")
   /// expires_at
@@ -157,10 +155,6 @@ internal enum L10n {
   internal static let wotKeyImage = L10n.tr("Localizable", "WOT_KEY_IMAGE")
   /// image_small
   internal static let wotKeyImageSmall = L10n.tr("Localizable", "WOT_KEY_IMAGE_SMALL")
-  /// vehicles.is_gift
-  internal static let wotKeyIsGift = L10n.tr("Localizable", "WOT_KEY_IS_GIFT")
-  /// vehicles.is_premium
-  internal static let wotKeyIsPremium = L10n.tr("Localizable", "WOT_KEY_IS_PREMIUM")
   /// key
   internal static let wotKeyKey = L10n.tr("Localizable", "WOT_KEY_KEY")
   /// location
@@ -179,12 +173,8 @@ internal enum L10n {
   internal static let wotKeyOrderby = L10n.tr("Localizable", "WOT_KEY_ORDERBY")
   /// power
   internal static let wotKeyPower = L10n.tr("Localizable", "WOT_KEY_POWER")
-  /// price_gold
-  internal static let wotKeyPriceGold = L10n.tr("Localizable", "WOT_KEY_PRICE_GOLD")
   /// prices_xp
   internal static let wotKeyPricesXp = L10n.tr("Localizable", "WOT_KEY_PRICES_XP")
-  /// rate
-  internal static let wotKeyRate = L10n.tr("Localizable", "WOT_KEY_RATE")
   /// rotation_speed
   internal static let wotKeyRotationSpeed = L10n.tr("Localizable", "WOT_KEY_ROTATION_SPEED")
   /// Filter
@@ -193,12 +183,6 @@ internal enum L10n {
   internal static let wotKeySettingTypeGroup = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_GROUP")
   /// Sorting
   internal static let wotKeySettingTypeSort = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_SORT")
-  /// traverse_left_arc
-  internal static let wotKeyTraverseLeftArc = L10n.tr("Localizable", "WOT_KEY_TRAVERSE_LEFT_ARC")
-  /// traverse_right_arc
-  internal static let wotKeyTraverseRightArc = L10n.tr("Localizable", "WOT_KEY_TRAVERSE_RIGHT_ARC")
-  /// traverse_speed
-  internal static let wotKeyTraverseSpeed = L10n.tr("Localizable", "WOT_KEY_TRAVERSE_SPEED")
   /// type_i18n
   internal static let wotKeyTypeI18N = L10n.tr("Localizable", "WOT_KEY_TYPE_I18N")
   /// userId
@@ -337,16 +321,6 @@ internal enum L10n {
   internal static let wotStringSelectLanguage = L10n.tr("Localizable", "WOT_STRING_SELECT_LANGUAGE")
   /// SPG
   internal static let wotStringSpg = L10n.tr("Localizable", "WOT_STRING_SPG")
-  /// AT-SPG
-  internal static let wotStringTankTypeAtSpg = L10n.tr("Localizable", "WOT_STRING_TANK_TYPE_AT_SPG")
-  /// heavyTank
-  internal static let wotStringTankTypeHeavyTank = L10n.tr("Localizable", "WOT_STRING_TANK_TYPE_HEAVY_TANK")
-  /// lightTank
-  internal static let wotStringTankTypeLightTank = L10n.tr("Localizable", "WOT_STRING_TANK_TYPE_LIGHT_TANK")
-  /// mediumTank
-  internal static let wotStringTankTypeMediumTank = L10n.tr("Localizable", "WOT_STRING_TANK_TYPE_MEDIUM_TANK")
-  /// SPG
-  internal static let wotStringTankTypeSpg = L10n.tr("Localizable", "WOT_STRING_TANK_TYPE_SPG")
   /// Tankdeleyev
   internal static let wotStringTankdeleyev = L10n.tr("Localizable", "WOT_STRING_TANKDELEYEV")
   /// Tankopedia

@@ -25,7 +25,7 @@
     
 
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    result[WOTApiKeys.applicationId] = [NSString valueOrSpaceString:self.applicationID];
+    result[WOTApiKeys.application_id] = [NSString valueOrSpaceString:self.applicationID];
     result[WOTApiKeys.nofollow] = [NSString valueOrSpaceString:self.noFollow];
     result[WOTApiKeys.redirectUri] = [NSString valueOrSpaceString:self.redirectURL];
     return result;

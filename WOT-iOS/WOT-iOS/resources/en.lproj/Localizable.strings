@@ -124,14 +124,11 @@ WOT_KEY_ARMOR_FOREHEAD  = "armor_forehead";
 WOT_KEY_CIRCULAR_VISION_RADIUS  = "circular_vision_radius";
 WOT_KEY_CODE  = "code";
 WOT_KEY_CONTOUR_IMAGE  = "contour_image";
-WOT_KEY_DISTANCE  = "distance";
 WOT_KEY_EXPIRES_AT  = "expires_at";
 WOT_KEY_FIRE_STARTING_CHANCE  = "fire_starting_chance";
 WOT_KEY_HASHNAME  = "hashName";
 WOT_KEY_IMAGE  = "image";
 WOT_KEY_IMAGE_SMALL  = "image_small";
-WOT_KEY_IS_GIFT  = "vehicles.is_gift";
-WOT_KEY_IS_PREMIUM  = "vehicles.is_premium";
 WOT_KEY_KEY  = "key";
 WOT_KEY_DEFAULT_PROFILE_HP  = "vehicles.default_profile.hp";
 WOT_KEY_DEFAULT_PROFILE_WEIGHT  = "vehicles.default_profile.weight";
@@ -144,9 +141,7 @@ WOT_KEY_DPM  = "dpm";
 WOT_KEY_NICKNAME  = "nickname";
 WOT_KEY_ORDERBY  = "orderBy";
 WOT_KEY_POWER  = "power";
-WOT_KEY_PRICE_GOLD  = "price_gold";
 WOT_KEY_PRICES_XP  = "prices_xp";
-WOT_KEY_RATE  = "rate";
 WOT_KEY_ROTATION_SPEED  = "rotation_speed";
 WOT_KEY_TYPE_I18N  = "type_i18n";
 WOT_KEY_VEHICLES  = "vehicles";
@@ -154,9 +149,6 @@ WOT_KEY_USER_ID  = "userId";
 WOT_KEY_VALUES  = "values";
 WOT_KEY_WEIGHT  = "weight";
 WOT_KEY_NEXT_TANKS  = "next_tanks";
-WOT_KEY_TRAVERSE_LEFT_ARC  = "traverse_left_arc";
-WOT_KEY_TRAVERSE_RIGHT_ARC  = "traverse_right_arc";
-WOT_KEY_TRAVERSE_SPEED  = "traverse_speed";
 
 WOT_STRING_ARMOR  = "armor";
 WOT_STRING_OBSERVE  = "observe";
@@ -176,12 +168,6 @@ WOT_STRING_NATION_CZECH  = "czech";
 WOT_STRING_NATION_SWEDEN  = "sweden";
 WOT_STRING_NATION_POLAND  = "poland";
 
-
-WOT_STRING_TANK_TYPE_AT_SPG  = "AT-SPG";
-WOT_STRING_TANK_TYPE_SPG  = "SPG";
-WOT_STRING_TANK_TYPE_LIGHT_TANK  = "lightTank";
-WOT_STRING_TANK_TYPE_MEDIUM_TANK  = "mediumTank";
-WOT_STRING_TANK_TYPE_HEAVY_TANK  = "heavyTank";
 
 WOT_STRING_HP_LESS_100  = "(100)";
 WOT_STRING_HP_LESS_200  = "[100;200)";

@@ -47,7 +47,7 @@ extension WOTTankPivotViewController: UICollectionViewDelegate {
             return
         }
         let config = WOTTankModuleTreeViewController(nibName: String(describing: WOTTankModuleTreeViewController.self ), bundle: nil)
-        config.tankId = tank.tank_id
+        config.tank_Id = tank.tank_id
         config.cancelBlock = {
             self.navigationController?.popViewController(animated: true)
         }

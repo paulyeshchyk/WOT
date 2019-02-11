@@ -16,14 +16,13 @@
     self.weight = jSON[@"weight"];
     self.load_limit = jSON[@"load_limit"];
     self.tag = jSON[@"tag"];
-    self.traverse_speed = jSON[@"traverse_speed"];
     self.tier = jSON[@"tier"];
     
 }
 
 + (NSArray *)availableFields {
     
-    return @[@"name",@"weight",@"load_limit",@"tag",@"traverse_speed",@"tier"];
+    return @[@"name",@"weight",@"load_limit",@"tag",@"tier"];
 }
 
 

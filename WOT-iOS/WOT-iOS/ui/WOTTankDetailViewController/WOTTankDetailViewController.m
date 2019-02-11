@@ -158,7 +158,7 @@
         self.title = _vehicle.tanks.name_i18n;
 
         [self fetchPlayableVehiclesForTier:_vehicle.tier];
-//        [self fetchDefaultConfigurationForTankId:[_vehicle.tank_id stringValue]];
+        [self fetchDefaultConfigurationForTankId:[_vehicle.tank_id stringValue]];
     }
 }
 
@@ -257,7 +257,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",@"tanks.tank_id", self.tankId];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
         fetchRequest.predicate = predicate;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tankId ascending:YES]];
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
         id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
         NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
@@ -299,24 +299,23 @@
 
 
 #pragma mark - private
-//
-//- (void)fetchDefaultConfigurationForTankId:(id)tankId {
-//    
-//    NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-//    [args setObject:tankId forKey:WOTApiKeys.tankId];
-//
-//    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
-//    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
-//    if (canAdd) {
-//        
-//        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
-//    }
-//}
+
+- (void)fetchDefaultConfigurationForTankId:(id)tankId {
+
+    return;
+    WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
+    [arguments setValues:@[tankId] forKey:WOTApiKeys.tank_id];
+
+    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+    if (canAdd) {
+
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:arguments];
+    }
+}
 
 - (void)fetchPlayableVehiclesForTier:(id)tier {
     
-    
-    return;
     
     NSArray *tiers = [WOTTankIdsDatasource availableTiersForTiers:@[tier]];
     
@@ -335,6 +334,7 @@
 
 - (void)refetchTankID:(NSString *)tankID groupId:(id)groupId{
 
+    return;
     if (!([tankID integerValue] > 0)) {
         
         debugError(@"tankID should not be nil");
@@ -342,7 +342,7 @@
     }
     
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
-    [args setValues:@[tankID]  forKey:WOTApiKeys.tankId];
+    [args setValues:@[tankID]  forKey:WOTApiKeys.tank_id];
     [args setValues:@[[[Vehicles availableFields] componentsJoinedByString:@","]]  forKey:WOTApiKeys.fields];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
@@ -357,7 +357,7 @@
 - (void)executeDefaultProfileRequestForTankId:(id)tankId {
     
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
-    [args setValues:@[tankId]  forKey:WOTApiKeys.tankId];
+    [args setValues:@[tankId]  forKey:WOTApiKeys.tank_id];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
@@ -433,7 +433,7 @@
         
         [self.navigationController popViewControllerAnimated:YES];
     }];
-    configurationSelector.tankId = self.tankId;
+    configurationSelector.tank_Id = self.tankId;
 
     [self.navigationController pushViewController:configurationSelector animated:YES];
 }

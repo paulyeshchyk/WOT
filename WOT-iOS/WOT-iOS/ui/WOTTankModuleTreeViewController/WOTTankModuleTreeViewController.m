@@ -56,15 +56,14 @@
 
 - (NSArray *) sortDescriptors {
     NSMutableArray *result = [[[WOTTankListSettingsDatasource sharedInstance] sortBy] mutableCopy];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"tank_id" ascending:YES];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:WOTApiKeys.tank_id ascending:YES];
     [result addObject:descriptor];
     return result;
 }
 
 - (NSPredicate *) fetchCustomPredicate {
 
-    NSPredicate *result = [NSPredicate predicateWithFormat:@"tank_id == %d", [self.tankId integerValue] ];
-    return result;
+    return [NSPredicate predicateWithFormat:@"%K == %@", WOTApiKeys.tank_id, self.tank_Id ];
 }
 
 @end
@@ -138,12 +137,20 @@
 
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class])];
+
+    [self reloadModel];
 }
 
-- (void)setTankId:(NSNumber *)value {
+- (void)reloadModel {
+    if ( [self isViewLoaded] ){
+        [self.model loadModel];
+    }
+}
 
-    _tankId = [value copy];
-    [self.model loadModel];
+- (void)setTank_Id:(NSNumber *)value {
+
+    _tank_Id = [value copy];
+    [self reloadModel];
 }
 
 #pragma mark - UICollectionViewDataSource

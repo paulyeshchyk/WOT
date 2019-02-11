@@ -10,23 +10,9 @@
 
 @implementation NSString (WOTValue)
 
-+ (NSString *)stringEmpty {
-    
-    return @"";
-}
-
-+ (NSString *)stringSpace {
-    
-    return @" ";
-}
-+ (NSString *)valueOrEmptyString:(NSString *)value {
-    
-    return value ? value : [NSString stringEmpty];
-}
-
 + (NSString *)valueOrSpaceString:(NSString *)value {
     
-    return value ? value : [NSString stringSpace];
+    return value ? value : @" ";
 }
 
 + (BOOL)isEmptyAfterTrimmingWhitespaceAndNewlineCharacterSet:(NSString *)value {

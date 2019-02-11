@@ -14,9 +14,9 @@
 - (NSDictionary *)query {
     
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    result[WOTApiKeys.applicationId] = [NSString valueOrSpaceString:self.hostConfiguration.applicationID];
+    result[WOTApiKeys.application_id] = [NSString valueOrSpaceString:self.hostConfiguration.applicationID];
     result[WOTApiKeys.fields] = [NSString valueOrSpaceString:[self.args escapedValueForKey:WOTApiKeys.fields]];
-    result[WOTApiKeys.tankId] = [NSString valueOrSpaceString:[self.args escapedValueForKey:WOTApiKeys.tankId]];
+    result[WOTApiKeys.tank_id] = [NSString valueOrSpaceString:[self.args escapedValueForKey:WOTApiKeys.tank_id]];
     return result;
 }
 

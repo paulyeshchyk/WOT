@@ -40,7 +40,7 @@
 
 - (NSDictionary *)query {
     
-    return @{WOTApiKeys.applicationId:[NSString valueOrSpaceString:self.hostConfiguration.applicationID], WOTApiKeys.accessToken:[NSString valueOrSpaceString:self.access_token]};
+    return @{WOTApiKeys.application_id:[NSString valueOrSpaceString:self.hostConfiguration.applicationID], WOTApiKeys.accessToken:[NSString valueOrSpaceString:self.access_token]};
 }
 
 - (NSData *)httpBodyData {

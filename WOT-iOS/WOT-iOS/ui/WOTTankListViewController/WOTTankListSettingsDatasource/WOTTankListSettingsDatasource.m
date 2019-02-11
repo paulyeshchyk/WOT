@@ -275,7 +275,7 @@
     if ([key isEqualToString:WOTApiKeys.level]) {
         
         result = @([value integerValue]);
-    } else if ([key isEqualToString:WOT_KEY_IS_PREMIUM]){
+    } else if ([key isEqualToString: WOTApiKeys.is_premium]){
         
         result = @([value integerValue]);
     } else {

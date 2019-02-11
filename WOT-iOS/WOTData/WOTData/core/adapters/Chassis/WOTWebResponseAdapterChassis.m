@@ -36,7 +36,7 @@
                 return;
             }
             
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.moduleId,tankChassisJSON[WOTApiKeys.moduleId]];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankChassisJSON[WOTApiKeys.module_id]];
             Tankchassis *tankChasses = [Tankchassis findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
             [tankChasses fillPropertiesFromDictionary:tankChassisJSON];
         }];
