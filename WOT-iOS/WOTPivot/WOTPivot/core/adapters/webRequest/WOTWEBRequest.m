@@ -11,27 +11,19 @@
 #import "NSMutableDictionary+WOT.h"
 #import "NSBundle+LanguageBundle.h"
 #import "WOTLogger.h"
+#import "NSString+UrlEncode.h"
 
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, strong) NSMutableData *data;
+@property (nonatomic, copy) NSURL *url;
 
 - (NSData *)stubs;
 
 @end
 
 @implementation WOTWEBRequest
-
-+ (NSString *)urlEncode:(NSString *)string {
-
-    NSString *encodedString = (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes( NULL,
-                                                                                                     (CFStringRef) string,
-                                                                                                     NULL,
-                                                                                                     CFSTR("%;/?¿:@&=$+,[]#!'()*<> \"\n"),
-                                                                                                     kCFStringEncodingUTF8);
-    return encodedString;
-}
 
 + (NSOperationQueue *)requestQueue {
 
@@ -109,7 +101,7 @@
     return result;
 }
 
-- (NSURL *)url {
+- (NSURL *)composedURL {
     
     NSURLComponents *components = [[NSURLComponents alloc] init];
     components.scheme = self.hostConfiguration.scheme;
@@ -123,10 +115,9 @@
         components.query = [self queryIntoString];
     }
 
+    self.url = [components URL];
 
-    return [components URL];
-
-//    return [NSURL URLWithString:urlPath];
+    return self.url;
 }
 
 
@@ -136,7 +127,7 @@
 
     NSCAssert(self.availableInGroups, @"execution group is unknown");
     
-    NSURL *url = self.url;
+    NSURL *url = [self composedURL];
     NSData *bodyData = self.httpBodyData;
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -229,7 +220,8 @@
     NSMutableArray *queryArgs = [[NSMutableArray alloc] init];
     NSDictionary *query = self.query;
     for (NSString *key in [query allKeys]) {
-        NSString *arg = [WOTWEBRequest urlEncode:key];
+        
+        NSString *arg = [NSString urlEncode:key];
         NSString *value = query[key];
         [queryArgs addObject:[NSString stringWithFormat:@"%@=%@", arg, value]];
     }
@@ -254,7 +246,7 @@
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    debugLog(@"webrequest-received-data:%@",self);
+//    debugLog(@"webrequest-received-data:%@",self);
     [self appendData: data];
 }
 

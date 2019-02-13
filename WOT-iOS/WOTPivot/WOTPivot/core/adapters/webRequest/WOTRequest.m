@@ -7,6 +7,7 @@
 //
 
 #import "WOTRequest.h"
+#import "NSString+UrlEncode.h"
 
 @interface WOTRequestArguments ()
 @property (nonatomic, strong) NSMutableDictionary *dict;
@@ -27,16 +28,6 @@
     return self;
 }
 
-+ (NSString *)urlEncode:(NSString *)string {
-
-    NSString *encodedString = (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes( NULL,
-                                                                                                     (CFStringRef) string,
-                                                                                                     NULL,
-                                                                                                     CFSTR("%;/?¿:@&=$+,[]#!'()*<> \"\n"),
-                                                                                                     kCFStringEncodingUTF8);
-    return encodedString;
-}
-
 - (void)setValues:(NSArray *)values forKey:(NSString *)key {
     if (_dict == nil) {
         _dict = [[NSMutableDictionary alloc] init];
@@ -52,10 +43,19 @@
     NSMutableArray *result = [[NSMutableArray alloc] init];
     [_dict[key] enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *objString = (NSString *)obj;
-        NSString *string = [WOTRequestArguments urlEncode:objString];
+        NSString *string = [NSString urlEncode:objString];
         [result addObject:string];
     }];
     return [result componentsJoinedByString:@","];
+}
+
+- (NSString *)composeQuery {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    [_dict.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *escapedValue = [self escapedValueForKey:key];
+        [result addObject: [NSString stringWithFormat:@"%@=%@",key, escapedValue] ];
+    }];
+    return [result componentsJoinedByString:@"&"];
 }
 
 @end

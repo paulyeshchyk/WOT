@@ -9,7 +9,8 @@
 #import "WOTWebResponseAdapterGuns.h"
 #import "WOTData.h"
 #import <WOTPivot/WOTPivot.h>
-
+#import "NSManagedObject+CoreDataOperations.h"
+#import "NSManagedObject+FillProperties.h"
 
 @implementation WOTWebResponseAdapterGuns
 

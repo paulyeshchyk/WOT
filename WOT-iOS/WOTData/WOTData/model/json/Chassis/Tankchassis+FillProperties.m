@@ -7,6 +7,7 @@
 //
 
 #import "Tankchassis+FillProperties.h"
+#import <WOTPivot/WOTPivot.h>
 
 @implementation Tankchassis (FillProperties)
 
@@ -16,18 +17,17 @@
     self.name = jSON[WOTApiKeys.name];
 
     self.level = jSON[WOTApiKeys.level];
-    self.max_load = jSON[WOT_KEY_MAX_LOAD];
+    self.max_load = jSON[WOTApiKeys.max_load];
     self.name_i18n = jSON[WOTApiKeys.name_i18n];
     self.nation = jSON[WOTApiKeys.nation];
     self.nation_i18n = jSON[WOTApiKeys.nation_i18n];
     self.price_credit = jSON[WOTApiKeys.price_credit];
     self.price_gold = jSON[WOTApiKeys.price_gold];
-    self.rotation_speed = jSON[WOT_KEY_ROTATION_SPEED];
+    self.rotation_speed = jSON[WOTApiKeys.rotation_speed];
 }
 
 + (NSArray *)availableFields {
-    
-    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.level, WOT_KEY_MAX_LOAD, WOTApiKeys.name_i18n, WOTApiKeys.nation, WOTApiKeys.nation_i18n, WOTApiKeys.price_credit, WOTApiKeys.price_gold, WOT_KEY_ROTATION_SPEED];
+    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.level, WOTApiKeys.max_load, WOTApiKeys.name_i18n, WOTApiKeys.nation, WOTApiKeys.nation_i18n, WOTApiKeys.price_credit, WOTApiKeys.price_gold, WOTApiKeys.rotation_speed];
 }
 
 @end

@@ -125,14 +125,6 @@ internal enum L10n {
   internal static let wotIntegerLevel9 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_9")
   /// account_id
   internal static let wotKeyAccountId = L10n.tr("Localizable", "WOT_KEY_ACCOUNT_ID")
-  /// armor_board
-  internal static let wotKeyArmorBoard = L10n.tr("Localizable", "WOT_KEY_ARMOR_BOARD")
-  /// armor_fedd
-  internal static let wotKeyArmorFedd = L10n.tr("Localizable", "WOT_KEY_ARMOR_FEDD")
-  /// armor_forehead
-  internal static let wotKeyArmorForehead = L10n.tr("Localizable", "WOT_KEY_ARMOR_FOREHEAD")
-  /// circular_vision_radius
-  internal static let wotKeyCircularVisionRadius = L10n.tr("Localizable", "WOT_KEY_CIRCULAR_VISION_RADIUS")
   /// code
   internal static let wotKeyCode = L10n.tr("Localizable", "WOT_KEY_CODE")
   /// contour_image
@@ -147,20 +139,12 @@ internal enum L10n {
   internal static let wotKeyDpm = L10n.tr("Localizable", "WOT_KEY_DPM")
   /// expires_at
   internal static let wotKeyExpiresAt = L10n.tr("Localizable", "WOT_KEY_EXPIRES_AT")
-  /// fire_starting_chance
-  internal static let wotKeyFireStartingChance = L10n.tr("Localizable", "WOT_KEY_FIRE_STARTING_CHANCE")
   /// hashName
   internal static let wotKeyHashname = L10n.tr("Localizable", "WOT_KEY_HASHNAME")
-  /// image
-  internal static let wotKeyImage = L10n.tr("Localizable", "WOT_KEY_IMAGE")
-  /// image_small
-  internal static let wotKeyImageSmall = L10n.tr("Localizable", "WOT_KEY_IMAGE_SMALL")
   /// key
   internal static let wotKeyKey = L10n.tr("Localizable", "WOT_KEY_KEY")
   /// location
   internal static let wotKeyLocation = L10n.tr("Localizable", "WOT_KEY_LOCATION")
-  /// max_load
-  internal static let wotKeyMaxLoad = L10n.tr("Localizable", "WOT_KEY_MAX_LOAD")
   /// message
   internal static let wotKeyMessage = L10n.tr("Localizable", "WOT_KEY_MESSAGE")
   /// modules_tree
@@ -171,20 +155,14 @@ internal enum L10n {
   internal static let wotKeyNickname = L10n.tr("Localizable", "WOT_KEY_NICKNAME")
   /// orderBy
   internal static let wotKeyOrderby = L10n.tr("Localizable", "WOT_KEY_ORDERBY")
-  /// power
-  internal static let wotKeyPower = L10n.tr("Localizable", "WOT_KEY_POWER")
   /// prices_xp
   internal static let wotKeyPricesXp = L10n.tr("Localizable", "WOT_KEY_PRICES_XP")
-  /// rotation_speed
-  internal static let wotKeyRotationSpeed = L10n.tr("Localizable", "WOT_KEY_ROTATION_SPEED")
   /// Filter
   internal static let wotKeySettingTypeFilter = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_FILTER")
   /// Groupping
   internal static let wotKeySettingTypeGroup = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_GROUP")
   /// Sorting
   internal static let wotKeySettingTypeSort = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_SORT")
-  /// type_i18n
-  internal static let wotKeyTypeI18N = L10n.tr("Localizable", "WOT_KEY_TYPE_I18N")
   /// userId
   internal static let wotKeyUserId = L10n.tr("Localizable", "WOT_KEY_USER_ID")
   /// values

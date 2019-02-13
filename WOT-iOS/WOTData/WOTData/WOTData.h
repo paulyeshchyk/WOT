@@ -18,7 +18,8 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <WOTData/PublicHeader.h>
 
 #import "WOTDataDefines.h"
-#import "WOTData-Model.h"
+
+//TODO: availableFields is internal method see nsmanagedobject+fillproperties
 #import "NSManagedObject+FillProperties.h"
 #import "Tanks+DPM.h"
 #import "ModulesTree+UI.h"

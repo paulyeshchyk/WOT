@@ -16,15 +16,14 @@
     self = [super init];
     if (self){
         
-        NSString *field = WOT_KEY_ROTATION_SPEED;
-        NSExpressionDescription *averageExpressionDescription = [NSExpressionDescription averageExpressionDescriptionForField:field];
-        NSExpressionDescription *maxExpressionDescription = [NSExpressionDescription maxExpressionDescriptionForField:field];
-        NSExpressionDescription *valueExpressionDescription = [NSExpressionDescription valueExpressionDescriptionForField:field];
+        NSExpressionDescription *averageExpressionDescription = [NSExpressionDescription averageExpressionDescriptionForField:WOTApiKeys.rotation_speed];
+        NSExpressionDescription *maxExpressionDescription = [NSExpressionDescription maxExpressionDescriptionForField:WOTApiKeys.rotation_speed];
+        NSExpressionDescription *valueExpressionDescription = [NSExpressionDescription valueExpressionDescriptionForField:WOTApiKeys.rotation_speed];
         
         
         self.expressionDescriptions = @[averageExpressionDescription,valueExpressionDescription,maxExpressionDescription];
         self.keyPaths = @[averageExpressionDescription.name,valueExpressionDescription.name,maxExpressionDescription.name];
-        self.expressionName = field;
+        self.expressionName = WOTApiKeys.rotation_speed;
         
     }
     return self;

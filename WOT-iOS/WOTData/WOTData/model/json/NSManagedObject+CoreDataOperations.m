@@ -7,7 +7,6 @@
 //
 
 #import "NSManagedObject+CoreDataOperations.h"
-#import <WOTPivot/WOTPivot.h>
 
 @implementation NSManagedObject (CoreDataOperations)
 
@@ -45,7 +44,7 @@
         result = [self insertNewObjectInManagedObjectContext:managedObjectContext];
     } else {
         if ([[result class] isSubclassOfClass:NSClassFromString(@"Vehicleprofile")]) {
-            debugLog(@"has found dublicate");
+            //debugLog(@"has found dublicate");
         }
     }
     return result;

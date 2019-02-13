@@ -7,8 +7,14 @@
 //
 
 #import "WOTSessionManager.h"
-#import <WOTPivot/WOTPivot.h>
+
 #import <WOTData/WOTData.h>
+
+#import "UserSession+CoreDataClass.h"
+#import "NSManagedObject+CoreDataOperations.h"
+
+#define WOT_REQUEST_ID_LOGIN @"WOT_REQUEST_ID_LOGIN"
+#define WOT_REQUEST_ID_LOGOUT @"WOT_REQUEST_ID_LOGOUT"
 
 @interface WOTSessionManager ()
 

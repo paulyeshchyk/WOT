@@ -16,15 +16,14 @@
     self = [super init];
     if (self){
         
-        NSString *field = WOT_KEY_ARMOR_FOREHEAD;
-        NSExpressionDescription *averageExpressionDescription = [NSExpressionDescription averageExpressionDescriptionForField:field];
-        NSExpressionDescription *maxExpressionDescription = [NSExpressionDescription maxExpressionDescriptionForField:field];
-        NSExpressionDescription *valueExpressionDescription = [NSExpressionDescription valueExpressionDescriptionForField:field];
+        NSExpressionDescription *averageExpressionDescription = [NSExpressionDescription averageExpressionDescriptionForField:WOTApiKeys.armor_forehead];
+        NSExpressionDescription *maxExpressionDescription = [NSExpressionDescription maxExpressionDescriptionForField:WOTApiKeys.armor_forehead];
+        NSExpressionDescription *valueExpressionDescription = [NSExpressionDescription valueExpressionDescriptionForField:WOTApiKeys.armor_forehead];
         
         
         self.expressionDescriptions = @[averageExpressionDescription,valueExpressionDescription,maxExpressionDescription];
         self.keyPaths = @[averageExpressionDescription.name,valueExpressionDescription.name,maxExpressionDescription.name];
-        self.expressionName = field;
+        self.expressionName = WOTApiKeys.armor_forehead;
         
     }
     return self;

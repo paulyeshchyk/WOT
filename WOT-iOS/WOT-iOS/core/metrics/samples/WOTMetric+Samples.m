@@ -47,7 +47,7 @@
     
     return [self standardCompareMetricForClass:[Tankchassis class]
                                   byExpression:[WOTTankDetailFieldExpression suspensionRotationSpeedCompareFieldExpression]
-                                      withName:WOTString(WOT_KEY_ROTATION_SPEED)
+                                      withName:WOTString(WOTApiKeys.rotation_speed)
                                      groupName:WOTString(WOT_STRING_MOBI)];
 }
 
@@ -55,7 +55,7 @@
     
     return [self standardCompareMetricForClass:[Tankengines class]
                                   byExpression:[WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression]
-                                      withName:WOTString(WOT_KEY_FIRE_STARTING_CHANCE)
+                                      withName:WOTString(WOTApiKeys.fire_starting_chance)
                                      groupName:WOTString(WOT_STRING_MOBI)];
 }
 
@@ -63,7 +63,7 @@
     
     return [self standardCompareMetricForClass:[Tankturrets class]
                                   byExpression:[WOTTankDetailFieldExpression turretsCircularVisionRadiusCompareFieldExpression]
-                                      withName:WOTString(WOT_KEY_CIRCULAR_VISION_RADIUS)
+                                      withName:WOTString(WOTApiKeys.circular_vision_radius)
                                      groupName:WOTString(WOT_STRING_OBSERVE)];
 
 }
@@ -72,7 +72,7 @@
     
     return [self standardCompareMetricForClass:[Tankturrets class]
                                   byExpression:[WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression]
-                                      withName:WOTString(WOT_KEY_ARMOR_BOARD)
+                                      withName:WOTString(WOTApiKeys.armor_board)
                                      groupName:WOTString(WOT_STRING_ARMOR)];
 }
 
@@ -80,7 +80,7 @@
 
     return [self standardCompareMetricForClass:[Tankturrets class]
                                   byExpression:[WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression]
-                                      withName:WOTString(WOT_KEY_ARMOR_FEDD)
+                                      withName:WOTString(WOTApiKeys.armor_fedd)
                                      groupName:WOTString(WOT_STRING_ARMOR)];
 }
 
@@ -89,7 +89,7 @@
     
     return [self standardCompareMetricForClass:[Tankturrets class]
                                   byExpression:[WOTTankDetailFieldExpression turretsArmorForeheadCompareFieldExpression]
-                                      withName:WOTString(WOT_KEY_ARMOR_FOREHEAD)
+                                      withName:WOTString(WOTApiKeys.armor_forehead)
                                      groupName:WOTString(WOT_STRING_ARMOR)];
 }
 

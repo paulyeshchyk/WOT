@@ -14,7 +14,7 @@
 + (WOTTankConfigurationModuleMapping *)engineMapping {
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
-    [result addFields:@[WOTApiKeys.module_id, WOT_KEY_POWER, WOT_KEY_FIRE_STARTING_CHANCE] forSection:@"Характеристика"];
+    [result addFields:@[WOTApiKeys.module_id, WOTApiKeys.power, WOTApiKeys.fire_starting_chance] forSection:@"Характеристика"];
     [result setExtractor:^(ModulesTree *moduleTree){
         
         NSSet *setOfObjs = moduleTree.nextEngines;
@@ -38,7 +38,7 @@
 + (WOTTankConfigurationModuleMapping *)turretMapping {
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
-    [result addFields:@[WOTApiKeys.module_id, WOT_KEY_ARMOR_BOARD, WOT_KEY_ARMOR_FOREHEAD, WOT_KEY_ARMOR_FEDD, WOT_KEY_ROTATION_SPEED] forSection:@"Характеристика"];
+    [result addFields:@[WOTApiKeys.module_id, WOTApiKeys.armor_board, WOTApiKeys.armor_forehead, WOTApiKeys.armor_fedd, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
     [result setExtractor:^(ModulesTree *moduleTree){
 
         NSSet *setOfObjs = moduleTree.nextTurrets;
@@ -50,7 +50,7 @@
 + (WOTTankConfigurationModuleMapping *)chassisMapping {
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
-    [result addFields:@[WOTApiKeys.module_id, WOT_KEY_MAX_LOAD,WOT_KEY_ROTATION_SPEED] forSection:@"Характеристика"];
+    [result addFields:@[WOTApiKeys.module_id, WOTApiKeys.max_load, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
     [result setExtractor:^(ModulesTree *moduleTree){
 
         NSSet *setOfObjs = moduleTree.nextChassis;

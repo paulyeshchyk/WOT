@@ -11,8 +11,12 @@ import Foundation
 public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
 
     lazy var nodeConnectorIndex: WOTConnectorNodeIndex = { return WOTConnectorNodeIndex() }()
-    public var levels: Int { return self.nodeConnectorIndex.levels }
-    public var width: Int { return self.nodeConnectorIndex.width }
+    public var levels: Int {
+        return self.nodeConnectorIndex.levels
+    }
+    public var width: Int {
+        return self.nodeConnectorIndex.width
+    }
 
     override public func loadModel() {
         super.loadModel()

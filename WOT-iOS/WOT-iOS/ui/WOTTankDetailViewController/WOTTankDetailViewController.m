@@ -67,6 +67,8 @@
 
 @implementation WOTTankDetailViewController
 
+#define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
+
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -300,6 +302,8 @@
 
 #pragma mark - private
 
+#define WOT_REQUEST_ID_VEHICLE_PROFILE @"WOT_REQUEST_ID_VEHICLE_PROFILE"
+
 - (void)fetchDefaultConfigurationForTankId:(id)tankId {
 
     return;
@@ -313,6 +317,8 @@
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:arguments];
     }
 }
+
+#define WOT_REQUEST_ID_VEHICLE_BY_TIER @"WOT_REQUEST_ID_VEHICLE_BY_TIER"
 
 - (void)fetchPlayableVehiclesForTier:(id)tier {
     
@@ -343,6 +349,7 @@
     
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
     [args setValues:@[tankID]  forKey:WOTApiKeys.tank_id];
+    //TODO: availableFields is internal method
     [args setValues:@[[[Vehicles availableFields] componentsJoinedByString:@","]]  forKey:WOTApiKeys.fields];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];

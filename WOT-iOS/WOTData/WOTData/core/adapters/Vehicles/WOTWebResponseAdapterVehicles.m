@@ -11,6 +11,8 @@
 
 #import "WOTWebResponseAdapterVehicles.h"
 #import "WOTWebResponseAdapterModulesTree.h"
+#import "NSManagedObject+CoreDataOperations.h"
+#import "NSManagedObject+FillProperties.h"
 
 typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     WOTVehicleModuleTypeUnknown = 0,
@@ -47,6 +49,8 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 
     return result;
 }
+
+#define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
 - (void)parseData:(id)data error:(NSError *)error {
     

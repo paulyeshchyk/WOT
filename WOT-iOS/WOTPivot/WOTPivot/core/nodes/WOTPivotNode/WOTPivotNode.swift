@@ -14,11 +14,7 @@ public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
     public var data1: NSManagedObject?
     public var stickyType: PivotStickyType { return .float }
     public var cellType: WOTPivotCellType { return .data }
-    public var predicate: NSPredicate? {
-        didSet {
-//            print("")
-        }
-    }
+    public var predicate: NSPredicate?
     public var fullPredicate: NSPredicate? {
         guard let parentPredicate = (self.parent as? WOTPivotNodeProtocol)?.fullPredicate else {
             return self.predicate

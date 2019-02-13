@@ -9,7 +9,8 @@
 #import "WOTWebResponseAdapterEngines.h"
 #import <WOTData/WOTData.h>
 #import <WOTPivot/WOTPivot.h>
-
+#import "NSManagedObject+CoreDataOperations.h"
+#import "NSManagedObject+FillProperties.h"
 
 @implementation WOTWebResponseAdapterEngines
 

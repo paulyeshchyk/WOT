@@ -20,12 +20,10 @@
 @property (nonatomic, copy) NSString *headers;
 @property (nonatomic, readonly) NSDictionary *userInfo;
 @property (nonatomic, readonly) NSData *httpBodyData;
-@property (nonatomic, readonly) NSURL *url;
+
 @property (nonatomic, readonly) NSString *stubJSON;
 
-- (NSString *)queryIntoString ;
-
-
-//+ (NSString *)urlEncode:(NSString *)string;
+- (NSString *)queryIntoString;
+- (NSURL *)composedURL;
 
 @end

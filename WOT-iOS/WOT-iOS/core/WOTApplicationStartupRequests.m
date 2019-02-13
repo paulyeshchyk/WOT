@@ -10,6 +10,9 @@
 #import <WOTData/WOTData.h>
 #import <WOTPivot/WOTPivot.h>
 
+#define WOT_REQUEST_ID_TANK_LIST @"WOT_REQUEST_ID_TANK_LIST"
+#define WOT_REQUEST_ID_VEHICLE_LIST @"WOT_REQUEST_ID_VEHICLE_LIST"
+
 @implementation WOTApplicationStartupRequests
 
 + (void)executeAllStartupRequests {
@@ -34,6 +37,7 @@
     }];
 
     WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
+    //TODO: availableFields is internal method
     [arguments setValues:[Tanks availableFields] forKey:WOTApiKeys.fields];
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTanks];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_TANK_LIST];

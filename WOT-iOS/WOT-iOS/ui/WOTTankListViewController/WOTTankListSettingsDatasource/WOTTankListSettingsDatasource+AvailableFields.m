@@ -19,7 +19,7 @@
              [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.level value:WOTString(WOT_STRING_LEVEL) ascending:YES],
              [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.name_i18n value:WOTString(WOT_STRING_NAME_I18N) ascending:YES],
              [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.short_name_i18n value:WOTString(WOT_NAME_SHORT_NAME_I18N) ascending:YES],
-             [[WOTTankListSettingField alloc] initWithKey:WOT_KEY_TYPE_I18N value:WOTString(WOT_STRING_TYPE_I18N) ascending:YES]
+             [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.type_i18n value:WOTString(WOT_STRING_TYPE_I18N) ascending:YES]
             ];
     
     

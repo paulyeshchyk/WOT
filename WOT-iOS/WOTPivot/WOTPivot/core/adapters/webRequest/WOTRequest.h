@@ -17,6 +17,8 @@ typedef void(^WOTRequestCallback)(id data, NSError *error);
 
 @property (nonatomic, readonly) NSDictionary* asDictionary;
 
+- (NSString *)composeQuery;
+
 @end
 
 @interface WOTRequest : NSObject

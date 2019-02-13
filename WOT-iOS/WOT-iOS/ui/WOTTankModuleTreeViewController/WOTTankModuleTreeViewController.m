@@ -48,7 +48,7 @@
 
 - (NSFetchRequest *)fetchRequest {
 
-    NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:@"Tanks"];
+    NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
     result.sortDescriptors = [self sortDescriptors];
     result.predicate = [self fetchCustomPredicate];
     return result;

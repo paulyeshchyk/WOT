@@ -7,6 +7,7 @@
 //
 
 #import "Tanks+FillProperties.h"
+#import <WOTData/WOTData.h>
 
 @implementation Tanks (FillProperties)
 
@@ -16,9 +17,9 @@
     self.name = jSON[WOTApiKeys.name];
     
     
-    self.contour_image = jSON[WOT_KEY_CONTOUR_IMAGE];
-    self.image = jSON[WOT_KEY_IMAGE];
-    self.image_small = jSON[WOT_KEY_IMAGE_SMALL];
+    self.contour_image = jSON[WOTApiKeys.contour_image];
+    self.image = jSON[WOTApiKeys.image];
+    self.image_small = jSON[WOTApiKeys.image_small];
     self.is_premium = jSON[WOTApiKeys.is_premium];
     self.level = jSON[WOTApiKeys.level];
     self.name_i18n = jSON[WOTApiKeys.name_i18n];
@@ -26,13 +27,13 @@
     self.nation_i18n = jSON[WOTApiKeys.nation_i18n];
     self.short_name_i18n = jSON[WOTApiKeys.short_name_i18n];
     self.type = jSON[WOTApiKeys.type];
-    self.type_i18n = jSON[WOT_KEY_TYPE_I18N];
+    self.type_i18n = jSON[WOTApiKeys.type_i18n];
 }
 
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.tank_id, WOTApiKeys.name, WOT_KEY_IMAGE, WOT_KEY_CONTOUR_IMAGE, WOT_KEY_IMAGE_SMALL, WOTApiKeys.is_premium, WOTApiKeys.level, WOTApiKeys.name_i18n, WOTApiKeys.nation, WOTApiKeys.nation_i18n, WOTApiKeys.short_name_i18n, WOTApiKeys.type, WOT_KEY_TYPE_I18N];
+    return @[WOTApiKeys.tank_id, WOTApiKeys.name, WOTApiKeys.image, WOTApiKeys.contour_image, WOTApiKeys.image_small, WOTApiKeys.is_premium, WOTApiKeys.level, WOTApiKeys.name_i18n, WOTApiKeys.nation, WOTApiKeys.nation_i18n, WOTApiKeys.short_name_i18n, WOTApiKeys.type, WOTApiKeys.type_i18n];
 }
 
 @end

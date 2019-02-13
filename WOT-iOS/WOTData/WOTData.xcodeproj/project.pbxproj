@@ -655,8 +655,8 @@
 		1D8C28C021357AD900759C42 /* Tankengines */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28C121357AD900759C42 /* Tankengines+FillProperties.m */,
 				1D8C28C221357AD900759C42 /* Tankengines+FillProperties.h */,
+				1D8C28C121357AD900759C42 /* Tankengines+FillProperties.m */,
 			);
 			path = Tankengines;
 			sourceTree = "<group>";
@@ -682,8 +682,8 @@
 		1D8C28CA21357AD900759C42 /* Guns */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28CB21357AD900759C42 /* Tankguns+FillProperties.m */,
 				1D8C28CC21357AD900759C42 /* Tankguns+FillProperties.h */,
+				1D8C28CB21357AD900759C42 /* Tankguns+FillProperties.m */,
 			);
 			path = Guns;
 			sourceTree = "<group>";
@@ -736,8 +736,8 @@
 		1D8C28D721357AD900759C42 /* VehicleprofileAmmoDamage */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28D821357AD900759C42 /* VehicleprofileAmmoDamage+FillProperties.m */,
 				1D8C28D921357AD900759C42 /* VehicleprofileAmmoDamage+FillProperties.h */,
+				1D8C28D821357AD900759C42 /* VehicleprofileAmmoDamage+FillProperties.m */,
 			);
 			path = VehicleprofileAmmoDamage;
 			sourceTree = "<group>";
@@ -745,8 +745,8 @@
 		1D8C28DA21357AD900759C42 /* VehicleprofileEngine */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28DB21357AD900759C42 /* VehicleprofileEngine+FillProperties.m */,
 				1D8C28DC21357AD900759C42 /* VehicleprofileEngine+FillProperties.h */,
+				1D8C28DB21357AD900759C42 /* VehicleprofileEngine+FillProperties.m */,
 			);
 			path = VehicleprofileEngine;
 			sourceTree = "<group>";
@@ -754,8 +754,8 @@
 		1D8C28DD21357AD900759C42 /* VehicleprofileSuspension */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28DE21357AD900759C42 /* VehicleprofileSuspension+FillProperties.m */,
 				1D8C28DF21357AD900759C42 /* VehicleprofileSuspension+FillProperties.h */,
+				1D8C28DE21357AD900759C42 /* VehicleprofileSuspension+FillProperties.m */,
 			);
 			path = VehicleprofileSuspension;
 			sourceTree = "<group>";
@@ -763,8 +763,8 @@
 		1D8C28E021357AD900759C42 /* Vehicleprofile */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28E121357AD900759C42 /* Vehicleprofile+FillProperties.m */,
 				1D8C28E221357AD900759C42 /* Vehicleprofile+FillProperties.h */,
+				1D8C28E121357AD900759C42 /* Vehicleprofile+FillProperties.m */,
 			);
 			path = Vehicleprofile;
 			sourceTree = "<group>";
@@ -781,8 +781,8 @@
 		1D8C28E621357AD900759C42 /* VehicleprofileGun */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28E721357AD900759C42 /* VehicleprofileGun+FillProperties.m */,
 				1D8C28E821357AD900759C42 /* VehicleprofileGun+FillProperties.h */,
+				1D8C28E721357AD900759C42 /* VehicleprofileGun+FillProperties.m */,
 			);
 			path = VehicleprofileGun;
 			sourceTree = "<group>";
@@ -790,8 +790,8 @@
 		1D8C28E921357AD900759C42 /* VehicleprofileTurret */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28EA21357AD900759C42 /* VehicleprofileTurret+FillProperties.m */,
 				1D8C28EB21357AD900759C42 /* VehicleprofileTurret+FillProperties.h */,
+				1D8C28EA21357AD900759C42 /* VehicleprofileTurret+FillProperties.m */,
 			);
 			path = VehicleprofileTurret;
 			sourceTree = "<group>";
@@ -808,8 +808,8 @@
 		1D8C28EF21357AD900759C42 /* VehicleprofileArmor */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28F021357AD900759C42 /* VehicleprofileArmor+FillProperties.m */,
 				1D8C28F121357AD900759C42 /* VehicleprofileArmor+FillProperties.h */,
+				1D8C28F021357AD900759C42 /* VehicleprofileArmor+FillProperties.m */,
 			);
 			path = VehicleprofileArmor;
 			sourceTree = "<group>";
@@ -817,8 +817,8 @@
 		1D8C28F221357AD900759C42 /* Turrets */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28F321357AD900759C42 /* Tankturrets+FillProperties.m */,
 				1D8C28F421357AD900759C42 /* Tankturrets+FillProperties.h */,
+				1D8C28F321357AD900759C42 /* Tankturrets+FillProperties.m */,
 			);
 			path = Turrets;
 			sourceTree = "<group>";
@@ -835,8 +835,8 @@
 		1D8C28F921357AD900759C42 /* Tanks */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C28FA21357AD900759C42 /* Tanks+FillProperties.m */,
 				1D8C28FB21357AD900759C42 /* Tanks+FillProperties.h */,
+				1D8C28FA21357AD900759C42 /* Tanks+FillProperties.m */,
 			);
 			path = Tanks;
 			sourceTree = "<group>";

@@ -7,6 +7,7 @@
 //
 
 #import "Tankradios+FillProperties.h"
+#import <WOTPivot/WOTPivot.h>
 
 @implementation Tankradios (FillProperties)
 
@@ -24,7 +25,6 @@
 }
 
 + (NSArray *)availableFields {
-    
     return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.distance, WOTApiKeys.level, WOTApiKeys.name_i18n, WOTApiKeys.nation, WOTApiKeys.nation_i18n, WOTApiKeys.price_credit, WOTApiKeys.price_gold];
 }
 

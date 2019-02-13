@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
 //
 
-#import <WOTData/WOTData.h>
+#import "Vehicles+CoreDataClass.h"
 
 @interface Vehicles (FillProperties)
 

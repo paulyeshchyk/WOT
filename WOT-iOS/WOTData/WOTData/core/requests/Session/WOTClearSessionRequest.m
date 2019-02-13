@@ -8,6 +8,7 @@
 
 #import "WOTClearSessionRequest.h"
 #import <WOTData/WOTData.h>
+#import "NSManagedObject+CoreDataOperations.h"
 
 @implementation WOTClearSessionRequest
 

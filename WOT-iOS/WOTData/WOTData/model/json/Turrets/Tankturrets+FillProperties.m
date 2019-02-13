@@ -7,6 +7,7 @@
 //
 
 #import "Tankturrets+FillProperties.h"
+#import <WOTPivot/WOTPivot.h>
 
 @implementation Tankturrets (FillProperties)
 
@@ -14,22 +15,22 @@
     
     self.module_id = jSON[WOTApiKeys.module_id];
     self.name = jSON[WOTApiKeys.name];
-    self.armor_board = jSON[WOT_KEY_ARMOR_BOARD];
-    self.armor_fedd = jSON[WOT_KEY_ARMOR_FEDD];
-    self.armor_forehead = jSON[WOT_KEY_ARMOR_FOREHEAD];
-    self.circular_vision_radius = jSON[WOT_KEY_CIRCULAR_VISION_RADIUS];
+    self.armor_board = jSON[WOTApiKeys.armor_board];
+    self.armor_fedd = jSON[WOTApiKeys.armor_fedd];
+    self.armor_forehead = jSON[WOTApiKeys.armor_forehead];
+    self.circular_vision_radius = jSON[WOTApiKeys.circular_vision_radius];
     self.level = jSON[WOTApiKeys.level];
     self.name_i18n = jSON[WOTApiKeys.name_i18n];
     self.nation = jSON[WOTApiKeys.nation];
     self.price_credit = jSON[WOTApiKeys.price_credit];
     self.price_gold = jSON[WOTApiKeys.price_gold];
-    self.rotation_speed = jSON[WOT_KEY_ROTATION_SPEED];
+    self.rotation_speed = jSON[WOTApiKeys.rotation_speed];
     
 }
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOT_KEY_ARMOR_BOARD, WOT_KEY_ARMOR_FEDD, WOT_KEY_ARMOR_FOREHEAD, WOT_KEY_CIRCULAR_VISION_RADIUS, WOTApiKeys.level, WOTApiKeys.name_i18n, WOTApiKeys.nation, WOTApiKeys.price_credit, WOTApiKeys.price_gold, WOT_KEY_ROTATION_SPEED];
+    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.armor_board, WOTApiKeys.armor_fedd, WOTApiKeys.armor_forehead, WOTApiKeys.circular_vision_radius, WOTApiKeys.level, WOTApiKeys.name_i18n, WOTApiKeys.nation, WOTApiKeys.price_credit, WOTApiKeys.price_gold, WOTApiKeys.rotation_speed];
 }
 
 @end

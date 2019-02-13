@@ -9,9 +9,9 @@
 #import "Vehicles+FillProperties.h"
 #import <WOTData/WOTData.h>
 #import <WOTPivot/WOTPivot.h>
+#import "NSManagedObject+FillProperties.h"
 
 @implementation Vehicles (FillProperties)
-
 
 - (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
     

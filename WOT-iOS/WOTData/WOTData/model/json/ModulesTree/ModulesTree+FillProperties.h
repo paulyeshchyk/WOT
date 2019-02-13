@@ -7,6 +7,7 @@
 //
 
 #import "WOTData.h"
+#import "WOTData-Model.h"
 
 @interface ModulesTree (FillProperties)
 

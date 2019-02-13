@@ -15,6 +15,10 @@ protocol WOTAPIProtocol: NSObjectProtocol {
 }
 
 public class WOTApiKeys: NSObject, WOTAPIProtocol {
+    @objc public static let fire_starting_chance: String = "fire_starting_chance"
+    @objc public static let power: String = "power"
+    @objc public static let contour_image: String = "contour_image"
+
     @objc public static let default_profile: String = "default_profile"
     @objc public static let fields: String = "fields"
     @objc public static let application_id: String = "application_id"
@@ -29,6 +33,7 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let short_name: String = "short_name"
     @objc public static let short_name_i18n: String = "short_name_i18n"
     @objc public static let type: String = "type"
+    @objc public static let type_i18n: String = "type_i18n"
     @objc public static let tier: String = "tier"
     @objc public static let nation: String = "nation"
     @objc public static let nation_i18n: String = "nation_i18n"
@@ -37,11 +42,21 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let is_default: String = "is_default"
     @objc public static let is_premium: String = "is_premium"
     @objc public static let price_xp: String = "price_xp"
+    @objc public static let image_small: String = "image_small"
+    @objc public static let image: String = "image"
     @objc public static let tank_id: String = "tank_id"
     @objc public static let tag: String = "tag"
     @objc public static let distance: String = "distance"
     @objc public static let price_gold: String = "price_gold"
     @objc public static let rate: String = "rate"
+    @objc public static let rotation_speed: String = "rotation_speed"
+    @objc public static let max_load: String = "max_load"
+
+    @objc public static let armor_board: String = "armor_board"
+    @objc public static let armor_fedd: String = "armor_fedd"
+    @objc public static let armor_forehead: String = "armor_forehead"
+    @objc public static let circular_vision_radius: String = "circular_vision_radius"
+
 }
 
 public class WOTApiTankType: NSObject, WOTAPIProtocol {

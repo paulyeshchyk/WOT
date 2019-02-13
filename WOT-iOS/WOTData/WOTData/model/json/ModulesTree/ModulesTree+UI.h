@@ -7,6 +7,7 @@
 //
 
 #import "ModulesTree+FillProperties.h"
+#import "WOTData-Model.h"
 
 @interface ModulesTree (UI)
 
