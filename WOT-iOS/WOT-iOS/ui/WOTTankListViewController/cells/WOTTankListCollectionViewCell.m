@@ -8,6 +8,7 @@
 
 #import "WOTTankListCollectionViewCell.h"
 #import "RomanNumber.h"
+#import "UIImageView+WebCache.h"
 
 @interface WOTTankListCollectionViewCell()
 

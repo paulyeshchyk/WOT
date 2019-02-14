@@ -7,6 +7,7 @@
 //
 
 #import "WOTTankDetailField.h"
+#import "NSExpressionDescription+WOT.h"
 
 @interface WOTTankDetailFieldExpression : WOTTankDetailField
 

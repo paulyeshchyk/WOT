@@ -7,6 +7,7 @@
 //
 
 #import "WOTProgressView.h"
+#import "UIImage+Resize.h"
 
 @interface WOTProgressView ()
 

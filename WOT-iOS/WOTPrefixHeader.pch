@@ -9,28 +9,12 @@
 #ifndef WOT_iOS_WOTPrefixHeader_pch
 #define WOT_iOS_WOTPrefixHeader_pch
 #import "WOT-Swift.h"
-
-#import "NSExpressionDescription+WOT.h"
-#import "UIBarButtonItem+EventBlock.h"
-#import "UIColor+HSB.h"
-#import "UIImage+Resize.h"
-#import "UIImageView+WebCache.h"
-#import "UIKit+AFNetworking.h"
-#import "UINavigationBar+WOT.h"
-#import "UIToolbar+WOT.h"
-#import "UIView+StretchingConstraints.h"
-
-#import <ASProgressPopUpView/ASProgressPopUpView.h>
-
-#import "WOTApplicationDefaults.h"
-
 #import "Strings.h"
-
 #import "WOTMacro.h"
-#import "WOTEnums.h"
 #import "WOTColors.h"
 
 #import <Availability.h>
+
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>

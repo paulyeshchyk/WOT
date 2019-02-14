@@ -101,11 +101,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         guard let submodules = module.nextModules else {
             return
         }
-        submodules.forEach({ (a_submodule) in
-            guard let submodule = a_submodule as? ModulesTree else {
-                return
-            }
-
+        submodules.forEach({ (submodule) in
             if let moduleId = submodule.module_id?.intValue, submodule.isCompatible(forTankId: tankId) {
                 nodeCreation(moduleId, submodule)
             }
@@ -129,12 +125,12 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     }
 
     public func moduleIdInt() -> Int {
-        return self.module_id!.intValue ?? -1
+        return self.module_id!.intValue
     }
 
     func isCompatible(forTankId: NSDecimalNumber) -> Bool {
         let result = self.nextTanks?.filter({ (next) -> Bool in
-            return (next as? Tanks)?.tank_id?.intValue == forTankId.intValue
+            return next.tank_id?.intValue == forTankId.intValue
         })
         return (result!.count != 0)
     }
@@ -150,25 +146,3 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     }
 }
 
-/*
- https://medium.com/ios-swift-development-notes/swiftbites-8-merging-dictionaries-in-swift-894c3e235fec
- */
-extension Dictionary {
-    /// Merge and return a new dictionary
-    func merge(with: [Key: Value]) -> [Key: Value] {
-        var copy = self
-        for (k, v) in with {
-            // If a key is already present it will be overritten
-            copy[k] = v
-        }
-        return copy
-    }
-
-    /// Merge in-place
-    mutating func append(with: [Key: Value]) {
-        for (k, v) in with {
-            // If a key is already present it will be overritten
-            self[k] = v
-        }
-    }
-}

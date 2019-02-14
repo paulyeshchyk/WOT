@@ -15,6 +15,8 @@
 #import <WOTData/WOTData.h>
 #import "WOTTankListSettingsDatasource+TableView.h"
 #import "WOTTankListSettingsDatasource+AvailableFields.h"
+#import "UINavigationBar+WOT.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListSortViewController () <UITableViewDataSource, UITableViewDelegate, WOTTankListSettingsDatasourceListener>
 

@@ -12,6 +12,7 @@
 #import "WOTTankConfigurationItemHeaderFooter.h"
 #import <WOTPivot/WOTPivot.h>
 #import <WOTData/WOTData.h>
+#import "UIImageView+WebCache.h"
 
 @interface WOTTankConfigurationItemViewController () <UITableViewDataSource, UITableViewDelegate>
 

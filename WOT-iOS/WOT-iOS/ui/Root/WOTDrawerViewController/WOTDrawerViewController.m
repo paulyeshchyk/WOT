@@ -8,6 +8,8 @@
 
 #import "WOTDrawerViewController.h"
 #import "MMDrawerVisualState.h"
+#import "UINavigationBar+WOT.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 

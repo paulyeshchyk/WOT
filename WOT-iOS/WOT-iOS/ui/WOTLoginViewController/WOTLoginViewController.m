@@ -7,8 +7,11 @@
 //
 
 #import "WOTLoginViewController.h"
-
+#import "WOTApplicationDefaults.h"
 #import "WOTLanguageSelectorViewController.h"
+#import "UINavigationBar+WOT.h"
+#import "UIImage+Resize.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 

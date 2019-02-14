@@ -8,6 +8,8 @@
 
 #import "WOTTankListSettingViewController.h"
 #import "WOTTankListSettingsDatasource.h"
+#import "UINavigationBar+WOT.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListSettingViewController () <WOTTankListSettingsDatasourceListener>
 

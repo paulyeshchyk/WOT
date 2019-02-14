@@ -10,9 +10,11 @@
 #import "WOTTankTreeNodeCollectionViewCell.h"
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"
-#import "WOTEnums.h"
 #import "WOTTankListSettingsDatasource.h"
 #import <WOTPivot/WOTPivot.h>
+#import "UINavigationBar+WOT.h"
+#import "UIImageView+WebCache.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
 @end

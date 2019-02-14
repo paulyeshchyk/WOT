@@ -31,6 +31,9 @@
 
 #import "WOTTankMetricsList+ChartData.h"
 #import "NSObject+WOTTankGridValueData.h"
+#import "UIView+StretchingConstraints.h"
+#import "UIToolbar+WOT.h"
+
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate>
 

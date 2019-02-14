@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <WOTPivot/WOTPivot.h>
-#import "WOTEnums.h"
 
 @protocol WOTPivotNodeProtocol;
 

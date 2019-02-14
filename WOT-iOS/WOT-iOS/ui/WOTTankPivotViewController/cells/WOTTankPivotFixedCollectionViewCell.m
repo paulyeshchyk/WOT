@@ -7,6 +7,7 @@
 //
 
 #import "WOTTankPivotFixedCollectionViewCell.h"
+#import "UIColor+HSB.h"
 
 @interface WOTTankPivotFixedCollectionViewCell()
 
