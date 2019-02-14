@@ -15,6 +15,15 @@ protocol WOTAPIProtocol: NSObjectProtocol {
 }
 
 public class WOTApiKeys: NSObject, WOTAPIProtocol {
+
+    @objc public static let modules_tree: String = "modules_tree"
+    @objc public static let modulestree: String = "modulestree"
+    @objc public static let engines: String = "engines"
+    @objc public static let suspensions: String = "suspensions"
+    @objc public static let radios: String = "radios"
+    @objc public static let guns: String = "guns"
+    @objc public static let turrets: String = "turrets"
+
     @objc public static let fire_starting_chance: String = "fire_starting_chance"
     @objc public static let power: String = "power"
     @objc public static let contour_image: String = "contour_image"

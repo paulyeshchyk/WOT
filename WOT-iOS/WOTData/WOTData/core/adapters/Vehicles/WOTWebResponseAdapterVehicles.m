@@ -7,12 +7,14 @@
 //
 #import <WOTPivot/WOTPivot.h>
 #import "WOTData.h"
+
 #import <WOTPivot/WOTPivot.h>
 
 #import "WOTWebResponseAdapterVehicles.h"
 #import "WOTWebResponseAdapterModulesTree.h"
 #import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     WOTVehicleModuleTypeUnknown = 0,

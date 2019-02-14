@@ -9,6 +9,7 @@
 #import "WOTSaveSessionRequest.h"
 #import <WOTData/WOTData.h>
 #import "NSManagedObject+CoreDataOperations.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation WOTSaveSessionRequest
 

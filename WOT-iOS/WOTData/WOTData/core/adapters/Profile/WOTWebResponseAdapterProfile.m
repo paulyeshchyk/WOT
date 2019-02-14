@@ -11,6 +11,7 @@
 #import <WOTPivot/WOTPivot.h>
 #import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation WOTWebResponseAdapterProfile
 

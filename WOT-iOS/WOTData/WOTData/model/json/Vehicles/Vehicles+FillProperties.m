@@ -33,8 +33,10 @@
 
 
 + (NSArray *)availableFields {
-    
-    return @[WOTApiKeys.name,WOTApiKeys.nation, WOTApiKeys.type, WOTApiKeys.tag, WOTApiKeys.tier, WOTApiKeys.tank_id];//, WOTApiKeys.price_gold, WOTApiKeys.short_name, , WOT_LINKKEY_ENGINES, WOT_LINKKEY_SUSPENSIONS, WOT_LINKKEY_RADIOS, WOT_LINKKEY_GUNS, WOT_LINKKEY_TURRETS, WOT_KEY_PRICES_XP, WOT_KEY_MODULES_TREE, WOTApiKeys.default_profile];
+//, WOTApiKeys.price_gold, WOTApiKeys.short_name, WOT_KEY_PRICES_XP];
+    return @[WOTApiKeys.name,WOTApiKeys.nation, WOTApiKeys.type, WOTApiKeys.tag, WOTApiKeys.tier, WOTApiKeys.tank_id, WOTApiKeys.default_profile,
+             WOTApiKeys.modules_tree,
+             WOTApiKeys.engines, WOTApiKeys.suspensions, WOTApiKeys.radios, WOTApiKeys.guns, WOTApiKeys.turrets];
 }
 
 
@@ -45,7 +47,7 @@
                                                         argFieldNameToFetch:WOTApiKeys.fields
                                                       argFieldValuesToFetch:[ModulesTree availableFields]
                                                        argFieldNameToFilter:WOTApiKeys.module_id
-                                                                jsonKeyName:WOT_LINKKEY_MODULESTREE
+                                                                jsonKeyName:WOTApiKeys.modules_tree
                                                              coredataIdName:WOTApiKeys.module_id
                                                              linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                                  
@@ -60,7 +62,7 @@
                                                     argFieldNameToFetch:WOTApiKeys.fields
                                                   argFieldValuesToFetch:[Tankengines availableFields]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
-                                                            jsonKeyName:WOT_LINKKEY_ENGINES
+                                                            jsonKeyName:WOTApiKeys.engines
                                                          coredataIdName:WOTApiKeys.module_id
                                                          linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                              
@@ -74,7 +76,7 @@
                                                     argFieldNameToFetch:WOTApiKeys.fields
                                                   argFieldValuesToFetch:[Tankchassis availableFields]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
-                                                            jsonKeyName:WOT_LINKKEY_SUSPENSIONS
+                                                            jsonKeyName:WOTApiKeys.suspensions
                                                          coredataIdName:WOTApiKeys.module_id
                                                          linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                              
@@ -88,7 +90,7 @@
                                                    argFieldNameToFetch:WOTApiKeys.fields
                                                  argFieldValuesToFetch:[Tankradios availableFields]
                                                   argFieldNameToFilter:WOTApiKeys.module_id
-                                                           jsonKeyName:WOT_LINKKEY_RADIOS
+                                                           jsonKeyName:WOTApiKeys.radios
                                                         coredataIdName:WOTApiKeys.module_id
                                                         linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                             
@@ -102,7 +104,7 @@
                                                  argFieldNameToFetch:WOTApiKeys.fields
                                                argFieldValuesToFetch:[Tankguns availableFields]
                                                 argFieldNameToFilter:WOTApiKeys.module_id
-                                                         jsonKeyName:WOT_LINKKEY_GUNS
+                                                         jsonKeyName:WOTApiKeys.guns
                                                       coredataIdName:WOTApiKeys.module_id
                                                       linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                           
@@ -117,7 +119,7 @@
                                                     argFieldNameToFetch:WOTApiKeys.fields
                                                   argFieldValuesToFetch:[Tankturrets availableFields]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
-                                                            jsonKeyName:WOT_LINKKEY_TURRETS
+                                                            jsonKeyName:WOTApiKeys.turrets
                                                          coredataIdName:WOTApiKeys.module_id
                                                          linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                              

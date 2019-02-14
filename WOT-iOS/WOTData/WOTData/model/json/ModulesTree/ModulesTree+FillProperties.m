@@ -30,7 +30,7 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.price_credit];
+    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.price_credit, WOTApiKeys.modules_tree];
 }
 
 + (NSArray *)availableLinks {
@@ -40,7 +40,7 @@
                                                         argFieldNameToFetch:WOTApiKeys.fields
                                                       argFieldValuesToFetch:[ModulesTree availableFields]
                                                        argFieldNameToFilter:WOTApiKeys.module_id
-                                                                jsonKeyName:WOT_LINKKEY_MODULESTREE
+                                                                jsonKeyName:WOTApiKeys.modules_tree
                                                              coredataIdName:WOTApiKeys.module_id
                                                              linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                                  //                                                                 Vehicles *vehicles = (Vehicles *)entity;

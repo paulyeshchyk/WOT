@@ -147,8 +147,6 @@ internal enum L10n {
   internal static let wotKeyLocation = L10n.tr("Localizable", "WOT_KEY_LOCATION")
   /// message
   internal static let wotKeyMessage = L10n.tr("Localizable", "WOT_KEY_MESSAGE")
-  /// modules_tree
-  internal static let wotKeyModulesTree = L10n.tr("Localizable", "WOT_KEY_MODULES_TREE")
   /// next_tanks
   internal static let wotKeyNextTanks = L10n.tr("Localizable", "WOT_KEY_NEXT_TANKS")
   /// nickname

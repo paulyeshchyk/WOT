@@ -128,7 +128,6 @@ WOT_KEY_DEFAULT_PROFILE_WEIGHT  = "vehicles.default_profile.weight";
 WOT_KEY_DEFAULT_PROFILE_FIRE_RATE  = "vehicles.default_profile.gun.fire_rate";
 WOT_KEY_LOCATION  = "location";
 WOT_KEY_MESSAGE  = "message";
-WOT_KEY_MODULES_TREE  = "modules_tree";
 WOT_KEY_DPM  = "dpm";
 WOT_KEY_NICKNAME  = "nickname";
 WOT_KEY_ORDERBY  = "orderBy";

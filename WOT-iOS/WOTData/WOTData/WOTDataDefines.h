@@ -49,7 +49,6 @@ typedef NS_ENUM(NSInteger, WOTRequestId) {
 #define WOT_KEY_DEFAULT_PROFILE_FIRE_RATE @"vehicles.default_profile.gun.fire_rate"
 #define WOT_KEY_LOCATION @"location"
 #define WOT_KEY_MESSAGE @"message"
-#define WOT_KEY_MODULES_TREE @"modules_tree"
 #define WOT_KEY_DPM @"dpm"
 #define WOT_KEY_NICKNAME @"nickname"
 #define WOT_KEY_ORDERBY @"orderBy"
@@ -65,13 +64,7 @@ typedef NS_ENUM(NSInteger, WOTRequestId) {
 #define WOT_KEY_WEIGHT @"weight"
 #define WOT_KEY_NEXT_TANKS @"next_tanks"
 
-#define WOT_LINKKEY_MODULESTREE @"modulestree"
 #define WOT_LINKKEY_DEFAULT_PROFILE @"default_profile"
-#define WOT_LINKKEY_ENGINES @"engines"
-#define WOT_LINKKEY_GUNS @"guns"
-#define WOT_LINKKEY_RADIOS @"radios"
-#define WOT_LINKKEY_SUSPENSIONS @"suspensions"
-#define WOT_LINKKEY_TURRETS @"turrets"
 
 #define WOT_VALUE_VEHICLE_GUN @"WOT_VALUE_VEHICLE_GUN"
 #define WOT_VALUE_VEHICLE_ENGINE @"WOT_VALUE_VEHICLE_ENGINE"
