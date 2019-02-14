@@ -209,16 +209,6 @@
 		1D8C29F1213592B700759C42 /* WOTClearSessionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C29C8213592B600759C42 /* WOTClearSessionRequest.m */; };
 		1D8C29FA21359C4600759C42 /* WOTSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C29F821359C4600759C42 /* WOTSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D8C29FB21359C4600759C42 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C29F921359C4600759C42 /* WOTSessionManager.m */; };
-		1D8C2A0A2135A32E00759C42 /* WOTModuleTypeGuns.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A002135A32E00759C42 /* WOTModuleTypeGuns.png */; };
-		1D8C2A0B2135A32E00759C42 /* AT-SPG.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A012135A32E00759C42 /* AT-SPG.png */; };
-		1D8C2A0C2135A32E00759C42 /* mediumTank.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A022135A32E00759C42 /* mediumTank.png */; };
-		1D8C2A0D2135A32E00759C42 /* lightTank.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A032135A32E00759C42 /* lightTank.png */; };
-		1D8C2A0E2135A32E00759C42 /* WOTModuleTypeRadios.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A042135A32E00759C42 /* WOTModuleTypeRadios.png */; };
-		1D8C2A0F2135A32E00759C42 /* heavyTank.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A052135A32E00759C42 /* heavyTank.png */; };
-		1D8C2A102135A32E00759C42 /* SPG.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A062135A32E00759C42 /* SPG.png */; };
-		1D8C2A112135A32E00759C42 /* WOTModuleTypeChassis.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A072135A32E00759C42 /* WOTModuleTypeChassis.png */; };
-		1D8C2A122135A32E00759C42 /* WOTModuleTypeEngine.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A082135A32E00759C42 /* WOTModuleTypeEngine.png */; };
-		1D8C2A132135A32E00759C42 /* WOTModuleTypeTurrets.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D8C2A092135A32E00759C42 /* WOTModuleTypeTurrets.png */; };
 		1D91433A21522B9B00E0C777 /* NSManagedObject+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D91433921522B9B00E0C777 /* NSManagedObject+Operations.swift */; };
 		1DA83C87213558120039CB4B /* NSManagedObject+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83C85213558120039CB4B /* NSManagedObject+FillProperties.m */; };
 		1DA83C88213558120039CB4B /* NSManagedObject+FillProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83C86213558120039CB4B /* NSManagedObject+FillProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -442,16 +432,6 @@
 		1D8C29C8213592B600759C42 /* WOTClearSessionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTClearSessionRequest.m; sourceTree = "<group>"; };
 		1D8C29F821359C4600759C42 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		1D8C29F921359C4600759C42 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
-		1D8C2A002135A32E00759C42 /* WOTModuleTypeGuns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeGuns.png; sourceTree = "<group>"; };
-		1D8C2A012135A32E00759C42 /* AT-SPG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AT-SPG.png"; sourceTree = "<group>"; };
-		1D8C2A022135A32E00759C42 /* mediumTank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mediumTank.png; sourceTree = "<group>"; };
-		1D8C2A032135A32E00759C42 /* lightTank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightTank.png; sourceTree = "<group>"; };
-		1D8C2A042135A32E00759C42 /* WOTModuleTypeRadios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeRadios.png; sourceTree = "<group>"; };
-		1D8C2A052135A32E00759C42 /* heavyTank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heavyTank.png; sourceTree = "<group>"; };
-		1D8C2A062135A32E00759C42 /* SPG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SPG.png; sourceTree = "<group>"; };
-		1D8C2A072135A32E00759C42 /* WOTModuleTypeChassis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeChassis.png; sourceTree = "<group>"; };
-		1D8C2A082135A32E00759C42 /* WOTModuleTypeEngine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeEngine.png; sourceTree = "<group>"; };
-		1D8C2A092135A32E00759C42 /* WOTModuleTypeTurrets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTModuleTypeTurrets.png; sourceTree = "<group>"; };
 		1D91433921522B9B00E0C777 /* NSManagedObject+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Operations.swift"; sourceTree = "<group>"; };
 		1DA83C85213558120039CB4B /* NSManagedObject+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FillProperties.m"; sourceTree = "<group>"; };
 		1DA83C86213558120039CB4B /* NSManagedObject+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FillProperties.h"; sourceTree = "<group>"; };
@@ -597,7 +577,6 @@
 		1D3DAECC2133FD5300368AFA /* WOTData */ = {
 			isa = PBXGroup;
 			children = (
-				1D8C29FE2135A32E00759C42 /* resources */,
 				1DDC12112135349800B10A0B /* model */,
 				1D3DAEEC213416FD00368AFA /* core */,
 				1D3DAECD2133FD5300368AFA /* WOTData.h */,
@@ -1102,31 +1081,6 @@
 			path = session;
 			sourceTree = "<group>";
 		};
-		1D8C29FE2135A32E00759C42 /* resources */ = {
-			isa = PBXGroup;
-			children = (
-				1D8C29FF2135A32E00759C42 /* tanks */,
-			);
-			path = resources;
-			sourceTree = "<group>";
-		};
-		1D8C29FF2135A32E00759C42 /* tanks */ = {
-			isa = PBXGroup;
-			children = (
-				1D8C2A002135A32E00759C42 /* WOTModuleTypeGuns.png */,
-				1D8C2A012135A32E00759C42 /* AT-SPG.png */,
-				1D8C2A022135A32E00759C42 /* mediumTank.png */,
-				1D8C2A032135A32E00759C42 /* lightTank.png */,
-				1D8C2A042135A32E00759C42 /* WOTModuleTypeRadios.png */,
-				1D8C2A052135A32E00759C42 /* heavyTank.png */,
-				1D8C2A062135A32E00759C42 /* SPG.png */,
-				1D8C2A072135A32E00759C42 /* WOTModuleTypeChassis.png */,
-				1D8C2A082135A32E00759C42 /* WOTModuleTypeEngine.png */,
-				1D8C2A092135A32E00759C42 /* WOTModuleTypeTurrets.png */,
-			);
-			path = tanks;
-			sourceTree = "<group>";
-		};
 		1DA83C84213558120039CB4B /* parser */ = {
 			isa = PBXGroup;
 			children = (
@@ -1339,16 +1293,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D8C2A132135A32E00759C42 /* WOTModuleTypeTurrets.png in Resources */,
-				1D8C2A0C2135A32E00759C42 /* mediumTank.png in Resources */,
-				1D8C2A0F2135A32E00759C42 /* heavyTank.png in Resources */,
-				1D8C2A0A2135A32E00759C42 /* WOTModuleTypeGuns.png in Resources */,
-				1D8C2A112135A32E00759C42 /* WOTModuleTypeChassis.png in Resources */,
-				1D8C2A102135A32E00759C42 /* SPG.png in Resources */,
-				1D8C2A0D2135A32E00759C42 /* lightTank.png in Resources */,
-				1D8C2A122135A32E00759C42 /* WOTModuleTypeEngine.png in Resources */,
-				1D8C2A0E2135A32E00759C42 /* WOTModuleTypeRadios.png in Resources */,
-				1D8C2A0B2135A32E00759C42 /* AT-SPG.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

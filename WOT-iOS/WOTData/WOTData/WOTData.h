@@ -50,3 +50,23 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 #import "WOTClearSessionRequest.h"
 
 
+#import "Vehicles+FillProperties.h"
+#import "VehicleprofileAmmo+FillProperties.h"
+#import "VehicleprofileAmmoList+FillProperties.h"
+#import "VehicleprofileAmmoDamage+FillProperties.h"
+#import "VehicleprofileEngine+FillProperties.h"
+#import "VehicleprofileSuspension+FillProperties.h"
+#import "Vehicleprofile+FillProperties.h"
+#import "VehicleprofileRadio+FillProperties.h"
+#import "VehicleprofileGun+FillProperties.h"
+#import "VehicleprofileTurret+FillProperties.h"
+#import "VehicleprofileAmmoPenetration+FillProperties.h"
+#import "VehicleprofileArmor+FillProperties.h"
+
+#import "Tankradios+FillProperties.h"
+#import "Tankchassis+FillProperties.h"
+#import "ModulesTree+CustomName.h"
+#import "Tankengines+FillProperties.h"
+#import "Tankturrets+FillProperties.h"
+#import "Tankguns+FillProperties.h"
+#import "Tanks+FillProperties.h"

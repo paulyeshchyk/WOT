@@ -10,12 +10,25 @@ import Foundation
 import WOTPivot
 
 @objc
+class WOTPivotTemplateVehicleTankID: NSObject, WOTPivotTemplateProtocol {
+
+    func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
+
+        let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
+        let result = pivotNodeClass.init(name: WOTApiKeys.tank_id)
+        result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel10, predicate: NSPredicate(format: "%K > 0", WOTApiKeys.tank_id)))
+
+        return result
+    }
+}
+
+@objc
 class WOTPivotTemplateVehicleTier: NSObject, WOTPivotTemplateProtocol {
 
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
 
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: WOTApiKeys.level)
+        let result = pivotNodeClass.init(name: WOTApiKeys.tier)
         result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel1, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel1)))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel2, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel2)))
         result.addChild(pivotNodeClass.init(name: L10n.wotStringLevel3, predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.level, L10n.wotIntegerLevel3)))
@@ -105,6 +118,11 @@ class WOTPivotTemplateVehicleDPM: NSObject, WOTPivotTemplateProtocol {
 
 @objc
 class WOTPivotTemplates: NSObject {
+
+    @objc
+    lazy var tankID: WOTPivotTemplateProtocol = {
+        return WOTPivotTemplateVehicleTankID()
+    }()
 
     @objc
     lazy var vehiclePremium: WOTPivotTemplateProtocol = {

@@ -65,7 +65,7 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
         }
 
 
-        if self.collapseToGroups && cnt > 1 {
+        if ((self.collapseToGroups == true) && (cnt > 1)) {
             let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)
             result.append(node)
         }

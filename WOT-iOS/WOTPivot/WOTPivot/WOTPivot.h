@@ -24,6 +24,8 @@
 #import "NSThread+ExecutionOnMain.h"
 #import "NSArray+WOT.h"
 #import "NSMutableArray+WOT.h"
+#import "NSString+UrlEncode.h"
+
 
 #import "WOTLogger.h"
 

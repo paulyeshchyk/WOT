@@ -64,7 +64,7 @@ class WOTTankPivotViewController: UIViewController {
     func openConstructor(_ sender: Any) {
 
         let vc = WOTPivotConstructorViewController(nibName: "WOTPivotConstructorViewController", bundle: Bundle.main)
-        let nc = UINavigationController(rootViewController: vc)
+//        let nc = UINavigationController(rootViewController: vc)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
