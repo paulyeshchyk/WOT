@@ -2,8 +2,8 @@
 //  WOTTankConfigurationCollectionViewCell.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/30/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/30/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

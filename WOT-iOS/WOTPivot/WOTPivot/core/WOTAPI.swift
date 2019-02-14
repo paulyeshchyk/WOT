@@ -2,8 +2,8 @@
 //  WOTConstants.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/11/19.
-//  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
+//  Created on 1/11/19.
+//  Copyright © 2019. All rights reserved.
 //
 
 import Foundation

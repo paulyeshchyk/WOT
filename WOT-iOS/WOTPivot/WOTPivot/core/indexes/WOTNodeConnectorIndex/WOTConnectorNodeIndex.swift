@@ -2,7 +2,7 @@
 //  WOTConnectorNodeIndex.swift
 //
 //
-//  Created by Pavel Yeshchyk on 7/18/18.
+//  Created on 7/18/18.
 //
 
 import Foundation

@@ -2,8 +2,8 @@
 //  WOTTankMetricsList+ChartData.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 3/10/16.
-//  Copyright © 2016 Pavel Yeshchyk. All rights reserved.
+//  Created on 3/10/16.
+//  Copyright © 2016. All rights reserved.
 //
 
 #import "WOTTankMetricsList.h"

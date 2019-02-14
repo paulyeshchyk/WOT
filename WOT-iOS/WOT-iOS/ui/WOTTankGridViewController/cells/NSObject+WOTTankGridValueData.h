@@ -2,8 +2,8 @@
 //  NSObject+WOTTankGridValueData.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/18/18.
-//  Copyright © 2018 Pavel Yeshchyk. All rights reserved.
+//  Created on 7/18/18.
+//  Copyright © 2018. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

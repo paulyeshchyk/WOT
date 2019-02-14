@@ -2,8 +2,8 @@
 //  WOTPivotNodeTest.swift
 //  WOT-iOSTests
 //
-//  Created by Pavel Yeshchyk on 7/25/18.
-//  Copyright © 2018 Pavel Yeshchyk. All rights reserved.
+//  Created on 7/25/18.
+//  Copyright © 2018. All rights reserved.
 //
 
 import XCTest

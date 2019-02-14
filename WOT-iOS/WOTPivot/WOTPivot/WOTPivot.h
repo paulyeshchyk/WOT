@@ -2,8 +2,8 @@
 //  WOTPivot.h
 //  WOTPivot
 //
-//  Created by Pavel Yeshchyk on 8/15/18.
-//  Copyright © 2018 Pavel Yeshchyk. All rights reserved.
+//  Created on 8/15/18.
+//  Copyright © 2018. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

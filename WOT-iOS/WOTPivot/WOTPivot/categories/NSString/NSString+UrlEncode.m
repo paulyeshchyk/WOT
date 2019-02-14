@@ -2,8 +2,8 @@
 //  NSString+UrlEncode.m
 //  WOTPivot
 //
-//  Created by Pavel Yeshchyk on 2/13/19.
-//  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
+//  Created on 2/13/19.
+//  Copyright © 2019. All rights reserved.
 //
 
 #import "NSString+UrlEncode.h"

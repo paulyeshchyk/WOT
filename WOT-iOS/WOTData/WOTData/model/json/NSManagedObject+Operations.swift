@@ -2,8 +2,8 @@
 //  NSManagedObject+Operations.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 9/19/18.
-//  Copyright © 2018 Pavel Yeshchyk. All rights reserved.
+//  Created on 9/19/18.
+//  Copyright © 2018. All rights reserved.
 //
 
 import Foundation
