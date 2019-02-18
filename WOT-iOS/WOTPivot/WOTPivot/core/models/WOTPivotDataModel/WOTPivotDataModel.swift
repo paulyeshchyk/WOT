@@ -8,10 +8,12 @@
 
 import Foundation
 
-public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol {
+public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol, WOTPivotDimensionListenerProtocol {
 
     lazy public var dimension: WOTPivotDimensionProtocol = {
-        return WOTPivotDimension(rootNodeHolder: self, fetchController: self.fetchController, enumerator: self.enumerator)
+        let result = WOTPivotDimension(rootNodeHolder: self, fetchController: self.fetchController, enumerator: self.enumerator)
+        result.listener = self
+        return result
     }()
 
     @objc
@@ -154,14 +156,17 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
         self.add(metadataItems: self.listener.metadataItems())
 
         let metadataIndex = self.nodeIndex.doAutoincrementIndex(forNodes: [self.rootFilterNode, self.rootColsNode, self.rootRowsNode])
-        self.dimension.reload(forIndex: metadataIndex, completion: {
-            self.reindexNodes()
-            self.listener.modelDidLoad()
-        })
+        self.dimension.reload(forIndex: metadataIndex)
     }
 
     fileprivate func failPivot(_ error: Error) {
         listener.modelDidFailLoad(error: error)
+    }
+
+
+    public func didLoad(dimension: WOTDimensionProtocol) {
+        self.reindexNodes()
+        self.listener.modelDidLoad()
     }
 }
 

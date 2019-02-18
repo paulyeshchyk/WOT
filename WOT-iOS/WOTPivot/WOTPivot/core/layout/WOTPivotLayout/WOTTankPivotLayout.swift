@@ -7,16 +7,15 @@
 //
 
 import Foundation
-import WOTPivot
 
 @objc
-protocol WOTTankPivotLayoutProtocol {
+public protocol WOTTankPivotLayoutProtocol {
     var relativeContentSizeBlock: (() -> CGSize)? { get set }
     var itemRelativeRectCallback: ((IndexPath) -> CGRect)? { get set }
     var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)? { get set }
 }
 
-class WOTColoredLayout: UICollectionViewFlowLayout {
+public class WOTColoredLayout: UICollectionViewFlowLayout {
 
     func layoutAttributesForDecorationView(ofKind elementKind: WOTPivotSeparatorKind, at indexPath: IndexPath, pivotAttributes: WOTPivotLayoutCellAttributesProtocol) -> WOTPivotSeparatorLayoutAttributes? {
         guard let layoutAttributes = self.layoutAttributesForDecorationView(ofKind: elementKind.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes else {
@@ -28,7 +27,7 @@ class WOTColoredLayout: UICollectionViewFlowLayout {
         return layoutAttributes
     }
 
-    override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override public func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
 
         let layoutAttributes = WOTPivotSeparatorLayoutAttributes(forDecorationViewOfKind: elementKind, with: indexPath)
         layoutAttributes.color = UIColor.darkGray
@@ -37,12 +36,13 @@ class WOTColoredLayout: UICollectionViewFlowLayout {
     }
 }
 
-class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
-    var relativeContentSizeBlock: (() -> CGSize)?
-    var itemRelativeRectCallback: ((IndexPath) -> CGRect)?
-    var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)?
 
-    override func prepare() {
+public class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
+    public var relativeContentSizeBlock: (() -> CGSize)?
+    public var itemRelativeRectCallback: ((IndexPath) -> CGRect)?
+    public var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)?
+
+    override public func prepare() {
         super.prepare()
         register(WOTPivotSeparatorView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.top.rawValue)
         register(WOTPivotSeparatorView.self, forDecorationViewOfKind: WOTPivotSeparatorKind.left.rawValue)

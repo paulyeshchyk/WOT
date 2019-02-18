@@ -19,8 +19,9 @@ public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
         guard let parentPredicate = (self.parent as? WOTPivotNodeProtocol)?.fullPredicate else {
             return self.predicate
         }
-        let predicates: [NSPredicate?] = [self.predicate, parentPredicate]
-        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates.compactMap {$0})
+        let selfPredicate = self.predicate
+        let predicates: [NSPredicate] = [selfPredicate, parentPredicate].compactMap { $0 }
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
 
     public var indexInsideStepParentColumn: Int = 0

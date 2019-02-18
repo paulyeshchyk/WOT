@@ -33,6 +33,10 @@ import Foundation
 
  */
 
+public protocol WOTPivotDimensionListenerProtocol {
+    func didLoad(dimension: WOTDimensionProtocol)
+}
+
 public protocol WOTPivotDimensionProtocol: WOTDimensionProtocol {
 
     init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol)
@@ -40,6 +44,8 @@ public protocol WOTPivotDimensionProtocol: WOTDimensionProtocol {
     func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
 
     func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type?
+
+    var listener: WOTPivotDimensionListenerProtocol? { get set }
 
     /**
      *  for table above returns 5

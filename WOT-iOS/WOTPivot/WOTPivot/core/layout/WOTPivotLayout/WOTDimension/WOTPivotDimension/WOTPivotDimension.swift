@@ -10,6 +10,8 @@ import Foundation
 
 public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
+    public var listener: WOTPivotDimensionListenerProtocol?
+
     private var rootNodeHolder: WOTPivotNodeHolderProtocol
     required public init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol) {
         self.rootNodeHolder = rootNodeHolder
@@ -57,22 +59,36 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     private var index: Int = 0
 
     //TODO: !!! TO BE refactored: too slow !!!
-    override public func reload(forIndex externalIndex: Int, completion:  @escaping () -> Void) {
-
+    override public func reload(forIndex externalIndex: Int) {
         self.index = externalIndex
         let colNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootColsNode)
         let rowNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootRowsNode)
         let filterEndPoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootFilterNode)
+        var counter = colNodeEndpoints.count * rowNodeEndpoints.count * filterEndPoints.count
+
         rowNodeEndpoints.forEach { (rowNode) in
             colNodeEndpoints.forEach({ (colNode) in
                 filterEndPoints.forEach({(filterNode) in
-                    let predicates = [colNode, rowNode, filterNode].compactMap { ($0 as? WOTPivotNodeProtocol)?.fullPredicate }
-                    let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
-                    self.updateDimensions(dataNodes: dataNodes, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+                    DispatchQueue.main.async {
+
+
+                        //TODO: should we use predicate instead of fullPredicate ?
+                        let colFullPredicate = (colNode as? WOTPivotNodeProtocol)?.predicate
+                        let rowFullPredicate = (rowNode as? WOTPivotNodeProtocol)?.predicate
+                        let filterFullPredicate = (filterNode as? WOTPivotNodeProtocol)?.predicate
+
+                        let predicates = [colFullPredicate, rowFullPredicate, filterFullPredicate].compactMap { $0 }
+                        let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
+                        self.updateDimensions(dataNodes: dataNodes, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+                        counter -= 1
+                        if (counter == 0) {
+                            self.listener?.didLoad(dimension: self)
+                        }
+                    }
                 })
             })
         }
-        completion()
+
     }
 
     private func updateDimensions(dataNodes: [WOTNodeProtocol], colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WOTPivot
 
 typealias WOTTankPivotCompletionCancelBlock = () -> Void
 typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void

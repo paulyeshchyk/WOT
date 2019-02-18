@@ -113,7 +113,13 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
 
 extension ModulesTree: WOTTreeModulesTreeProtocol {
     public func moduleLocalImageURL() -> URL? {
-        return nil
+        guard let imageName = self.type else {
+            return nil
+        }
+        guard let path =  Bundle.main.url(forResource: imageName, withExtension: "png") else {
+            return nil
+        }
+        return path
     }
 
     public func moduleName() -> String {

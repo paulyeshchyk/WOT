@@ -102,7 +102,7 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
         return .zero
     }
 
-    public func reload(forIndex externalIndex: Int, completion: @escaping () -> Void) {
+    public func reload(forIndex externalIndex: Int) {
         preconditionFailure("This method must be overridden")
     }
 

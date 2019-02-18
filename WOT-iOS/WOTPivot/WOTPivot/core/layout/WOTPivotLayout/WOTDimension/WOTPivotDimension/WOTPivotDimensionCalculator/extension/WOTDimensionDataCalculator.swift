@@ -46,8 +46,8 @@ public class WOTDimensionDataCalculator: WOTDimensionCalculator {
         }
 
         let relativeRect = calculator.rectangle(forNode: stepParentRow, dimension: dimension)
-
-        return Int(relativeRect.origin.y)
+        let result: Int = Int(relativeRect.origin.y)
+        return result
     }
 
     override class func width(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {

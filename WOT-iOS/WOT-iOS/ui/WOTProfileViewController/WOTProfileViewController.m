@@ -10,15 +10,8 @@
 
 @implementation WOTProfileViewController
 
-- (void)dealloc {
-    
-}
-
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    
     return UIStatusBarStyleLightContent;
 }
-
 
 @end

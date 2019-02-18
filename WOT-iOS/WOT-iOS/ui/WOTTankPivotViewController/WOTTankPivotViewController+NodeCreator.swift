@@ -11,7 +11,7 @@ import WOTPivot
 
 extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
 
-    var collapseToGroups: Bool { return false }
+    var collapseToGroups: Bool { return true }
 
     var useEmptyNode: Bool { return false }
 
@@ -38,10 +38,14 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
         var result = [WOTNodeProtocol]()
         let cnt = fetchedObjects.count
 
-        if cnt == 0 && useEmptyNode {
-            let node = self.createEmptyNode()
-            result.append(node)
-            return result
+        if cnt == 0 {
+            if useEmptyNode {
+                let node = self.createEmptyNode()
+                result.append(node)
+                return result
+            } else {
+                return result
+            }
         }
 
         if cnt == 1 {
@@ -53,7 +57,13 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
             }
             return result
         } else {
-            //extra data???????
+            
+            let hasMoreThenOne = (cnt > 1)
+            if self.collapseToGroups && hasMoreThenOne  {
+                let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)
+                result.append(node)
+                return result
+            }
 
             fetchedObjects.forEach { (fetchedObject) in
                 if let fetchObj = fetchedObject as? NSFetchRequestResult {
@@ -63,12 +73,5 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
             }
             return result
         }
-
-
-        if ((self.collapseToGroups == true) && (cnt > 1)) {
-            let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)
-            result.append(node)
-        }
-        return result
     }
 }

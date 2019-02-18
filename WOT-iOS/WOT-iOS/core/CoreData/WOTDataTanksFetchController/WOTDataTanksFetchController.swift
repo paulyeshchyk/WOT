@@ -16,7 +16,7 @@ class WOTDataTanksFetchController: NSObject {
         return WOTCoreDataProvider.sharedInstance
     } ()
 
-    lazy fileprivate var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>? = {
+    lazy fileprivate var fetchResultController: NSFetchedResultsController<NSFetchRequestResult> = {
         let context = self.dataProvider.mainManagedObjectContext
         let request = self.nodeFetchRequestCreator.fetchRequest
         let result = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
@@ -35,15 +35,15 @@ class WOTDataTanksFetchController: NSObject {
     }
 
     deinit {
-        self.fetchResultController?.delegate = nil
+        self.fetchResultController.delegate = nil
     }
 }
 
 extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
     func performFetch() throws {
-        self.fetchResultController?.managedObjectContext.perform({
+        self.fetchResultController.managedObjectContext.perform({
             do {
-                try self.fetchResultController?.performFetch()
+                try self.fetchResultController.performFetch()
                 self.listener?.fetchPerformed(by: self)
             } catch let error {
                 self.listener?.fetchFailed(by: self, withError: error)
@@ -56,7 +56,7 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
     }
 
     func fetchedObjects() -> [AnyObject]? {
-        return self.fetchResultController?.fetchedObjects
+        return self.fetchResultController.fetchedObjects
     }
 
     func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
@@ -87,4 +87,11 @@ extension WOTDataTanksFetchController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     }
 
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
+        return nil
+    }
 }

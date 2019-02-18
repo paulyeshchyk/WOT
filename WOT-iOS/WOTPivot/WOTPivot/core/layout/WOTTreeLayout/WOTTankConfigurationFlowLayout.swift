@@ -9,23 +9,16 @@
 import Foundation
 
 @objc
-protocol WOTTankConfigurationFlowLayoutProtocol: NSObjectProtocol {
+public protocol WOTTankConfigurationFlowLayoutProtocol: NSObjectProtocol {
     var depthCallback: (() -> Int)? { get set }
     var widthCallback: (() -> Int)? { get set }
     var layoutPreviousSiblingNodeChildrenCountCallback: ((IndexPath) -> (Int))? { get set }
 }
 
-@objc
-protocol WOTTankConfigurationFlowCellLayoutProtocol {
-    func cellFrame(indexPath: IndexPath) -> CGRect
-    func layoutAttribute(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes?
-    func layoutAttributes(in rect: CGRect) -> [UICollectionViewLayoutAttributes]?
-}
-
-class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTankConfigurationFlowLayoutProtocol, WOTTankConfigurationFlowCellLayoutProtocol {
-    var depthCallback: (() -> Int)?
-    var widthCallback: (() -> Int)?
-    var layoutPreviousSiblingNodeChildrenCountCallback: ((IndexPath) -> (Int))?
+public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTankConfigurationFlowLayoutProtocol, WOTTankConfigurationFlowCellLayoutProtocol {
+    public var depthCallback: (() -> Int)?
+    public var widthCallback: (() -> Int)?
+    public var layoutPreviousSiblingNodeChildrenCountCallback: ((IndexPath) -> (Int))?
 
     override open var itemSize: CGSize {
         get {
@@ -68,7 +61,7 @@ class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTankConfigu
 
 extension WOTTankConfigurationFlowLayout {
 
-    func layoutAttributes(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    public func layoutAttributes(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = self.collectionView else {
             return nil
         }
@@ -85,7 +78,7 @@ extension WOTTankConfigurationFlowLayout {
         return result
     }
 
-    func layoutAttribute(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes? {
+    public func layoutAttribute(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes? {
         let cellFrame = self.cellFrame(indexPath: indexPath)
         if cellFrame.intersects(rect) {
             let attrs = UICollectionViewLayoutAttributes(forCellWith: indexPath)
@@ -95,13 +88,12 @@ extension WOTTankConfigurationFlowLayout {
         return nil
     }
 
-    func cellFrame(indexPath: IndexPath) -> CGRect {
+    public func cellFrame(indexPath: IndexPath) -> CGRect {
         let itemSize = self.itemSize
         let siblingChildrenCount = self.siblingChildrenCount(indexPath: indexPath)
         let x = itemSize.width * CGFloat(siblingChildrenCount)
         let y = itemSize.height * CGFloat(indexPath.section)
         return CGRect(x: x, y: y, width: itemSize.width, height: itemSize.height)
-
     }
 }
 
