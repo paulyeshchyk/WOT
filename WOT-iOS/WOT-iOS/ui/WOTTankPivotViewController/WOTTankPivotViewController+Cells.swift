@@ -48,26 +48,10 @@ extension WOTTankPivotViewController {
         guard let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataGroupCollectionViewCell else {
             return UICollectionViewCell()
         }
-//        cell.symbol = node.name
-//        cell.dataViewColor = node.dataColor
-//        if let tank = node.data1 as? Tanks {
-//            cell.dpm = tank.dpm.suffixNumber()
-//            cell.mask = tank.invisibility
-//            cell.visibility = tank.visionRadius.suffixNumber()
-//        }
         return cell
     }
 
-    private func cell(forRowNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
-        let ident = String(describing: WOTTankPivotFixedCollectionViewCell.self)
-        guard let result = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as?  WOTTankPivotFixedCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        result.textValue = node.name
-        return result
-    }
-
-    private func cell(forColNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+    private func cell(forFixedNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         let ident = String(describing: WOTTankPivotFixedCollectionViewCell.self)
         guard let result = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as?  WOTTankPivotFixedCollectionViewCell else {
             return UICollectionViewCell()
@@ -86,10 +70,8 @@ extension WOTTankPivotViewController {
 
     func cell(forNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         switch node.cellType {
-        case .column:
-            return self.cell(forColNode: node, at: indexPath)
-        case .row:
-            return self.cell(forRowNode: node, at: indexPath)
+        case .column, .row:
+            return self.cell(forFixedNode: node, at: indexPath)
         case .filter:
             return self.cell(forFilterNode: node, at: indexPath)
         case .data:

@@ -60,17 +60,17 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     //TODO: !!! TO BE refactored: too slow !!!
     override public func reload(forIndex externalIndex: Int) {
+
         self.index = externalIndex
+
         let colNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootColsNode)
         let rowNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootRowsNode)
         let filterEndPoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootFilterNode)
-        var counter = colNodeEndpoints.count * rowNodeEndpoints.count * filterEndPoints.count
 
-        rowNodeEndpoints.forEach { (rowNode) in
-            colNodeEndpoints.forEach({ (colNode) in
-                filterEndPoints.forEach({(filterNode) in
-                    DispatchQueue.main.async {
-
+        DispatchQueue.main.async {
+            colNodeEndpoints.forEach { (colNode) in
+                rowNodeEndpoints.forEach({ (rowNode) in
+                    filterEndPoints.forEach({(filterNode) in
 
                         //TODO: should we use predicate instead of fullPredicate ?
                         let colFullPredicate = (colNode as? WOTPivotNodeProtocol)?.predicate
@@ -80,15 +80,11 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
                         let predicates = [colFullPredicate, rowFullPredicate, filterFullPredicate].compactMap { $0 }
                         let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
                         self.updateDimensions(dataNodes: dataNodes, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
-                        counter -= 1
-                        if (counter == 0) {
-                            self.listener?.didLoad(dimension: self)
-                        }
-                    }
+                    })
                 })
-            })
+                self.listener?.didLoad(dimension: self)
+            }
         }
-
     }
 
     private func updateDimensions(dataNodes: [WOTNodeProtocol], colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) {
