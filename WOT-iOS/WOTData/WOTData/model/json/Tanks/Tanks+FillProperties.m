@@ -8,6 +8,7 @@
 
 #import "Tanks+FillProperties.h"
 #import <WOTData/WOTData.h>
+#import <WOTData/WOTData-Swift.h>
 
 @implementation Tanks (FillProperties)
 

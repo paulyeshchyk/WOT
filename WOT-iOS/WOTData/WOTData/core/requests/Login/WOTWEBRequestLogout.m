@@ -10,6 +10,7 @@
 #import <WOTPivot/WOTPivot.h>
 #import "WOTDataDefines.h"
 #import "WOTSessionManager.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation WOTWEBRequestLogout
 

@@ -9,7 +9,6 @@
 #import "WOTWebResponseAdapterRadios.h"
 #import "WOTData.h"
 #import <WOTPivot/WOTPivot.h>
-#import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
@@ -39,7 +38,7 @@
             }
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankRadiosJSON[WOTApiKeys.module_id]];
-            Tankradios *tankradios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            Tankradios *tankradios = [Tankradios findOrCreateObjectWithPredicate:predicate context:context];
             [tankradios fillPropertiesFromDictionary:tankRadiosJSON];
         }];
         

@@ -8,6 +8,7 @@
 
 #import "WOTWEBRequestTankProfile.h"
 #import "WOTDataDefines.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation WOTWEBRequestTankProfile
 

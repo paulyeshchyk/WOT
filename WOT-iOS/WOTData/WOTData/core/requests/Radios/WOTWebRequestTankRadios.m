@@ -9,6 +9,7 @@
 #import "WOTWebRequestTankRadios.h"
 #import "WOTDataDefines.h"
 #import <WOTData/WOTData.h>
+#import <WOTData/WOTData-Swift.h>
 
 @implementation WOTWebRequestTankRadios
 

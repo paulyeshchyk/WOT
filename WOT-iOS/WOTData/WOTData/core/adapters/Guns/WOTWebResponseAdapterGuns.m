@@ -9,7 +9,6 @@
 #import "WOTWebResponseAdapterGuns.h"
 #import "WOTData.h"
 #import <WOTPivot/WOTPivot.h>
-#import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
@@ -41,7 +40,7 @@
             }
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankGunsJSON[WOTApiKeys.module_id]];
-            Tankguns *tankGuns = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            Tankguns *tankGuns = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:predicate context:context];
             [tankGuns fillPropertiesFromDictionary:tankGunsJSON];
         }];
         

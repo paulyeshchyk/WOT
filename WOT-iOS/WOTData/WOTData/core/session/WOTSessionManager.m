@@ -11,7 +11,6 @@
 #import <WOTData/WOTData.h>
 
 #import "UserSession+CoreDataClass.h"
-#import "NSManagedObject+CoreDataOperations.h"
 #import <WOTData/WOTData-Swift.h>
 
 #define WOT_REQUEST_ID_LOGIN @"WOT_REQUEST_ID_LOGIN"
@@ -29,7 +28,7 @@
 
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    UserSession *session = [UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includingSubentities:NO];
+    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return session.access_token;
 }
 
@@ -37,7 +36,7 @@
     
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    UserSession *session = [UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includingSubentities:NO];
+    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return session.nickname;
 }
 
@@ -45,7 +44,7 @@
     
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    UserSession *session = [UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includingSubentities:NO];
+    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return [session.expires_at integerValue];
 }
 

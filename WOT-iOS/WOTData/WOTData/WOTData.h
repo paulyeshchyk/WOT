@@ -23,7 +23,6 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 #import "NSManagedObject+FillProperties.h"
 #import "Tanks+DPM.h"
 #import "ModulesTree+UI.h"
-#import "NSManagedObject+CoreDataOperations.h"
 #import "WOTWebResponseAdapterChassis.h"
 #import "WOTWebResponseAdapterRadios.h"
 #import "WOTWebResponseAdapterGuns.h"
@@ -49,6 +48,7 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 #import "WOTSaveSessionRequest.h"
 #import "WOTClearSessionRequest.h"
 
+#import "NSManagedObject+CoreDataOperations.h"
 
 #import "Vehicles+FillProperties.h"
 #import "VehicleprofileAmmo+FillProperties.h"

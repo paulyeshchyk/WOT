@@ -8,6 +8,7 @@
 
 #import "Tankturrets+FillProperties.h"
 #import <WOTPivot/WOTPivot.h>
+#import <WOTData/WOTData-Swift.h>
 
 @implementation Tankturrets (FillProperties)
 

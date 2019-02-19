@@ -9,6 +9,7 @@
 #import "ModulesTree+FillProperties.h"
 #import <objc/runtime.h>
 #import <WOTPivot/WOTPivot.h>
+#import <WOTData/WOTData-Swift.h>
 
 @implementation ModulesTree (FillProperties)
 

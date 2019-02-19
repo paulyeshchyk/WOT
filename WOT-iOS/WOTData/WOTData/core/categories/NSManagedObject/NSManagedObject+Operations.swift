@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+
 @objc
 extension NSManagedObject {
 
@@ -23,5 +24,18 @@ extension NSManagedObject {
         } catch {
             return nil
         }
+    }
+
+    @objc
+    public static func insertNewObject(_ context: NSManagedObjectContext) -> NSManagedObject {
+        return NSEntityDescription.insertNewObject(forEntityName: String(describing: self), into: context)
+    }
+
+    @objc
+    public static func findOrCreateObject(predicate: NSPredicate, context: NSManagedObjectContext) -> NSManagedObject? {
+        guard let foundObject = self.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
+            return self.insertNewObject(context)
+        }
+        return foundObject
     }
 }

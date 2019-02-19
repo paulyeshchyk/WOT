@@ -7,8 +7,8 @@
 //
 
 #import "WOTRequestExecutor.h"
-#import "WOTWebResponseAdapter.h"
 #import "WOTLogger.h"
+#import <WOTPivot/WOTPivot-Swift.h>
 
 @interface WOTRequestExecutor()
 

@@ -12,7 +12,6 @@
 
 #import "WOTWebResponseAdapterVehicles.h"
 #import "WOTWebResponseAdapterModulesTree.h"
-#import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
@@ -114,11 +113,11 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tag,jSON[WOTApiKeys.tag]];
-    Vehicles *vehicle = [Vehicles findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+    Vehicles *vehicle = [Vehicles findOrCreateObjectWithPredicate:predicate context:context];
     [vehicle fillPropertiesFromDictionary:jSON];
     
 #warning dirty code
-    Vehicleprofile *defaultProfile = [Vehicleprofile insertNewObjectInManagedObjectContext:context];
+    Vehicleprofile *defaultProfile = [Vehicleprofile insertNewObject:context];
     [defaultProfile fillPropertiesFromDictionary:jSON[WOTApiKeys.default_profile]];
     vehicle.default_profile = defaultProfile;
 
@@ -126,7 +125,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 #warning should be refactored
     
     NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tank_id, [key integerValue]];
-    Tanks *tank = [Tanks findOrCreateObjectWithPredicate:tanksPredicate inManagedObjectContext:context];
+    Tanks *tank = [Tanks findOrCreateObjectWithPredicate:tanksPredicate context:context];
     [tank setVehicles:vehicle];
     
     NSArray *availableLinks = [clazz availableLinks];
@@ -198,7 +197,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         //assuming that jSONLinkId is allways NSNumber
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",wotWebResponseLink.coredataIdName,jSONLinkId];
-        NSManagedObject *objToLink = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+        NSManagedObject *objToLink = [clazz findOrCreateObjectWithPredicate:predicate context:context];
         [objToLink setValue:jSONLinkId forKey:wotWebResponseLink.coredataIdName];
         [linkedObjects addObject:objToLink];
     }];
@@ -272,7 +271,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     [[childrenModuleIDs allKeys] enumerateObjectsUsingBlock:^(NSString *parentKey, NSUInteger idx, BOOL *stop) {
 
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,@([parentKey integerValue])];
-        ModulesTree *parent = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+        ModulesTree *parent = (ModulesTree *)[clazz findOrCreateObjectWithPredicate:predicate context:context];
         
         NSArray *children = childrenModuleIDs[parentKey];
         [children enumerateObjectsUsingBlock:^(NSNumber *moduleID, NSUInteger idx, BOOL *stop) {
@@ -296,7 +295,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     [context performBlockAndWait:^{
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
-        ModulesTree *moduleTree = [clazz findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+        ModulesTree *moduleTree = [clazz findOrCreateObjectWithPredicate:predicate context:context];
         [moduleTree setValue:jSONLinkId forKey:coreDataIdName];
         [moduleTree fillPropertiesFromDictionary:jSON];
         
@@ -308,7 +307,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
                 
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tank_id,nextTankId];
-                Tanks *tanks = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                Tanks *tanks = [Tanks findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextTanksObject:tanks];
             }];
         }
@@ -317,31 +316,31 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         switch (moduleType) {
             case WOTVehicleModuleTypeChassis: {
 
-                Tankchassis *chassis = [Tankchassis findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                Tankchassis *chassis = [Tankchassis findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextChassisObject:chassis];
                 break;
             }
             case WOTVehicleModuleTypeEngine: {
                 
-                Tankengines *engine = [Tankengines findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                Tankengines *engine = [Tankengines findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextEnginesObject:engine];
                 break;
             }
             case WOTVehicleModuleTypeGun: {
 
-                Tankguns *gun = [Tankguns findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                Tankguns *gun = [Tankguns findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextGunsObject:gun];
                 break;
             }
             case WOTVehicleModuleTypeTurret: {
                 
-                Tankturrets *turrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                Tankturrets *turrets = [Tankturrets findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextTurretsObject:turrets];
                 break;
             }
             case WOTVehicleModuleTypeRadio: {
 
-                Tankradios *radios = [Tankradios findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+                Tankradios *radios = [Tankradios findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextRadiosObject:radios];
                 break;
             }

@@ -9,7 +9,6 @@
 #import "WOTWebResponseAdapterChassis.h"
 #import "WOTData.h"
 #import <WOTPivot/WOTPivot.h>
-#import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
@@ -40,7 +39,7 @@
             }
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankChassisJSON[WOTApiKeys.module_id]];
-            Tankchassis *tankChasses = [Tankchassis findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            Tankchassis *tankChasses = [Tankchassis findOrCreateObjectWithPredicate:predicate context:context];
             [tankChasses fillPropertiesFromDictionary:tankChassisJSON];
         }];
         

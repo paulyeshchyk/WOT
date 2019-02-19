@@ -9,7 +9,6 @@
 #import "WOTWebResponseAdapterTanks.h"
 #import "WOTData.h"
 #import <WOTPivot/WOTPivot.h>
-#import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
@@ -36,7 +35,7 @@
             NSDictionary *tankJSON = tanksDictionary[key];
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tank_id,tankJSON[WOTApiKeys.tank_id]];
-            Tanks *tank = [Tanks findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            Tanks *tank = [Tanks findOrCreateObjectWithPredicate:predicate context:context];
             [tank fillPropertiesFromDictionary:tankJSON];
         }];
         

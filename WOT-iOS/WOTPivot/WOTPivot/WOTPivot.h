@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "WOTPivotDefines.h"
-#import "WOTWebResponseAdapter.h"
 #import "WOTWebResponseLink.h"
 #import "WOTRequestExecutor.h"
 #import "WOTWEBRequest.h"

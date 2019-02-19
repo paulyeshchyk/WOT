@@ -8,7 +8,6 @@
 
 #import "WOTSaveSessionRequest.h"
 #import <WOTData/WOTData.h>
-#import "NSManagedObject+CoreDataOperations.h"
 #import <WOTData/WOTData-Swift.h>
 
 @implementation WOTSaveSessionRequest
@@ -22,7 +21,7 @@
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     [context performBlock:^{
 
-        UserSession *session = [UserSession insertNewObjectInManagedObjectContext:context];
+        UserSession *session = (UserSession *)[UserSession insertNewObject:context];
         session.nickname = fields[WOT_KEY_USER_ID];
         session.access_token = fields[WOTApiKeys.accessToken];
         session.accound_id = fields[WOT_KEY_ACCOUNT_ID];

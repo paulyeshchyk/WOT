@@ -8,6 +8,7 @@
 
 #import "WOTWebRequestTankChassis.h"
 #import "WOTDataDefines.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation WOTWebRequestTankChassis
 

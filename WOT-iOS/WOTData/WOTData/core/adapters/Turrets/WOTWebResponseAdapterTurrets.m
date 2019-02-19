@@ -9,7 +9,7 @@
 #import "WOTWebResponseAdapterTurrets.h"
 #import "WOTData.h"
 #import <WOTPivot/WOTPivot.h>
-#import "NSManagedObject+CoreDataOperations.h"
+#import <WOTPivot/WOTPivot-Swift.h>
 #import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
@@ -40,7 +40,7 @@
             }
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", WOTApiKeys.module_id, tankTurretsJSON[WOTApiKeys.module_id]];
-            Tankturrets *tankturrets = [Tankturrets findOrCreateObjectWithPredicate:predicate inManagedObjectContext:context];
+            Tankturrets *tankturrets = [Tankturrets findOrCreateObjectWithPredicate:predicate context:context];
             [tankturrets fillPropertiesFromDictionary:tankTurretsJSON];
         }];
         
