@@ -36,38 +36,6 @@ WOT_STRING_CHANGE_FILTER    = "Change filter";
 WOT_STRING_IS_NOT_GIFT      = "Is not gift";
 WOT_STRING_IS_GIFT          = "Is gift";
 
-WOT_STRING_IS_PREMIUM       = "Premium";
-WOT_STRING_IS_NOT_PREMIUM   = "Not premium";
-
-WOT_STRING_LEVEL_1          = "I";
-WOT_STRING_LEVEL_2          = "II";
-WOT_STRING_LEVEL_3          = "III";
-WOT_STRING_LEVEL_4          = "IV";
-WOT_STRING_LEVEL_5          = "V";
-WOT_STRING_LEVEL_6          = "VI";
-WOT_STRING_LEVEL_7          = "VII";
-WOT_STRING_LEVEL_8          = "VIII";
-WOT_STRING_LEVEL_9          = "IX";
-WOT_STRING_LEVEL_10         = "X";
-
-WOT_INTEGER_LEVEL_1          = "1";
-WOT_INTEGER_LEVEL_2          = "2";
-WOT_INTEGER_LEVEL_3          = "3";
-WOT_INTEGER_LEVEL_4          = "4";
-WOT_INTEGER_LEVEL_5          = "5";
-WOT_INTEGER_LEVEL_6          = "6";
-WOT_INTEGER_LEVEL_7          = "7";
-WOT_INTEGER_LEVEL_8          = "8";
-WOT_INTEGER_LEVEL_9          = "9";
-WOT_INTEGER_LEVEL_10         = "10";
-
-WOT_STRING_AT_SPG           = "TD";
-WOT_STRING_SPG              = "SPG";
-WOT_STRING_HT               = "HT";
-WOT_STRING_LT               = "LT";
-WOT_STRING_MT               = "MT";
-
-
 ARMOR_BOARD                 = "Armor Board";
 ARMOR_FEDD                  = "Armor Fedd";
 ARMOR_FOREHEAD              = "Armor Forehead";
@@ -123,9 +91,6 @@ WOT_KEY_CONTOUR_IMAGE  = "contour_image";
 WOT_KEY_EXPIRES_AT  = "expires_at";
 WOT_KEY_HASHNAME  = "hashName";
 WOT_KEY_KEY  = "key";
-WOT_KEY_DEFAULT_PROFILE_HP  = "vehicles.default_profile.hp";
-WOT_KEY_DEFAULT_PROFILE_WEIGHT  = "vehicles.default_profile.weight";
-WOT_KEY_DEFAULT_PROFILE_FIRE_RATE  = "vehicles.default_profile.gun.fire_rate";
 WOT_KEY_LOCATION  = "location";
 WOT_KEY_MESSAGE  = "message";
 WOT_KEY_DPM  = "dpm";
@@ -142,36 +107,6 @@ WOT_STRING_ARMOR  = "armor";
 WOT_STRING_OBSERVE  = "observe";
 WOT_STRING_FIRE  = "fire";
 WOT_STRING_MOBI  = "mobi";
-
-
-WOT_STRING_NATION_USA  = "usa";
-WOT_STRING_NATION_USSR  = "ussr";
-WOT_STRING_NATION_ITALY  = "italy";
-WOT_STRING_NATION_UK  = "uk";
-WOT_STRING_NATION_GERMANY  = "germany";
-WOT_STRING_NATION_JAPAN  = "japan";
-WOT_STRING_NATION_CHINA  = "china";
-WOT_STRING_NATION_FRANCE  = "france";
-WOT_STRING_NATION_CZECH  = "czech";
-WOT_STRING_NATION_SWEDEN  = "sweden";
-WOT_STRING_NATION_POLAND  = "poland";
-
-
-WOT_STRING_HP_LESS_100  = "(100)";
-WOT_STRING_HP_LESS_200  = "[100;200)";
-WOT_STRING_HP_LESS_400  = "[200;400)";
-WOT_STRING_HP_LESS_800  = "[400;800)";
-WOT_STRING_HP_LESS_1600  = "[800;1600)";
-WOT_STRING_HP_LESS_5000  = "[1600;5000)";
-WOT_STRING_HP_GR_5000  = ">5000";
-
-WOT_STRING_DPM_LESS_100  = "(100)";
-WOT_STRING_DPM_LESS_200  = "[100;200)";
-WOT_STRING_DPM_LESS_500  = "[200;500)";
-WOT_STRING_DPM_LESS_1000  = "[500;1000)";
-WOT_STRING_DPM_LESS_2000  = "[1000;2000)";
-WOT_STRING_DPM_LESS_3000  = "[2000;3000)";
-WOT_STRING_DPM_GR_3000  = "[3000;)";
 
 WOT_USERDEFAULTS_LOGIN_LANGUAGE  = "LoginLanguage";
 WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU  = "eu";

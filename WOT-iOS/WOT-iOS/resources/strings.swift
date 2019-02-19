@@ -103,38 +103,12 @@ internal enum L10n {
   internal static let wotImageUp = L10n.tr("Localizable", "WOT_IMAGE_UP")
   /// WOTLoggedInUser.png
   internal static let wotImageUser = L10n.tr("Localizable", "WOT_IMAGE_USER")
-  /// 1
-  internal static let wotIntegerLevel1 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_1")
-  /// 10
-  internal static let wotIntegerLevel10 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_10")
-  /// 2
-  internal static let wotIntegerLevel2 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_2")
-  /// 3
-  internal static let wotIntegerLevel3 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_3")
-  /// 4
-  internal static let wotIntegerLevel4 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_4")
-  /// 5
-  internal static let wotIntegerLevel5 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_5")
-  /// 6
-  internal static let wotIntegerLevel6 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_6")
-  /// 7
-  internal static let wotIntegerLevel7 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_7")
-  /// 8
-  internal static let wotIntegerLevel8 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_8")
-  /// 9
-  internal static let wotIntegerLevel9 = L10n.tr("Localizable", "WOT_INTEGER_LEVEL_9")
   /// account_id
   internal static let wotKeyAccountId = L10n.tr("Localizable", "WOT_KEY_ACCOUNT_ID")
   /// code
   internal static let wotKeyCode = L10n.tr("Localizable", "WOT_KEY_CODE")
   /// contour_image
   internal static let wotKeyContourImage = L10n.tr("Localizable", "WOT_KEY_CONTOUR_IMAGE")
-  /// vehicles.default_profile.gun.fire_rate
-  internal static let wotKeyDefaultProfileFireRate = L10n.tr("Localizable", "WOT_KEY_DEFAULT_PROFILE_FIRE_RATE")
-  /// vehicles.default_profile.hp
-  internal static let wotKeyDefaultProfileHp = L10n.tr("Localizable", "WOT_KEY_DEFAULT_PROFILE_HP")
-  /// vehicles.default_profile.weight
-  internal static let wotKeyDefaultProfileWeight = L10n.tr("Localizable", "WOT_KEY_DEFAULT_PROFILE_WEIGHT")
   /// dpm
   internal static let wotKeyDpm = L10n.tr("Localizable", "WOT_KEY_DPM")
   /// expires_at
@@ -175,8 +149,6 @@ internal enum L10n {
   internal static let wotStringApply = L10n.tr("Localizable", "WOT_STRING_APPLY")
   /// armor
   internal static let wotStringArmor = L10n.tr("Localizable", "WOT_STRING_ARMOR")
-  /// TD
-  internal static let wotStringAtSpg = L10n.tr("Localizable", "WOT_STRING_AT_SPG")
   /// Back
   internal static let wotStringBack = L10n.tr("Localizable", "WOT_STRING_BACK")
   /// Cancel
@@ -189,100 +161,20 @@ internal enum L10n {
   internal static let wotStringChangeSorting = L10n.tr("Localizable", "WOT_STRING_CHANGE_SORTING")
   /// Compound
   internal static let wotStringCompound = L10n.tr("Localizable", "WOT_STRING_COMPOUND")
-  /// [3000;)
-  internal static let wotStringDpmGr3000 = L10n.tr("Localizable", "WOT_STRING_DPM_GR_3000")
-  /// (100)
-  internal static let wotStringDpmLess100 = L10n.tr("Localizable", "WOT_STRING_DPM_LESS_100")
-  /// [500;1000)
-  internal static let wotStringDpmLess1000 = L10n.tr("Localizable", "WOT_STRING_DPM_LESS_1000")
-  /// [100;200)
-  internal static let wotStringDpmLess200 = L10n.tr("Localizable", "WOT_STRING_DPM_LESS_200")
-  /// [1000;2000)
-  internal static let wotStringDpmLess2000 = L10n.tr("Localizable", "WOT_STRING_DPM_LESS_2000")
-  /// [2000;3000)
-  internal static let wotStringDpmLess3000 = L10n.tr("Localizable", "WOT_STRING_DPM_LESS_3000")
-  /// [200;500)
-  internal static let wotStringDpmLess500 = L10n.tr("Localizable", "WOT_STRING_DPM_LESS_500")
   /// Edit
   internal static let wotStringEdit = L10n.tr("Localizable", "WOT_STRING_EDIT")
   /// fire
   internal static let wotStringFire = L10n.tr("Localizable", "WOT_STRING_FIRE")
   /// Group and sort
   internal static let wotStringGroupAndSort = L10n.tr("Localizable", "WOT_STRING_GROUP_AND_SORT")
-  /// >5000
-  internal static let wotStringHpGr5000 = L10n.tr("Localizable", "WOT_STRING_HP_GR_5000")
-  /// (100)
-  internal static let wotStringHpLess100 = L10n.tr("Localizable", "WOT_STRING_HP_LESS_100")
-  /// [800;1600)
-  internal static let wotStringHpLess1600 = L10n.tr("Localizable", "WOT_STRING_HP_LESS_1600")
-  /// [100;200)
-  internal static let wotStringHpLess200 = L10n.tr("Localizable", "WOT_STRING_HP_LESS_200")
-  /// [200;400)
-  internal static let wotStringHpLess400 = L10n.tr("Localizable", "WOT_STRING_HP_LESS_400")
-  /// [1600;5000)
-  internal static let wotStringHpLess5000 = L10n.tr("Localizable", "WOT_STRING_HP_LESS_5000")
-  /// [400;800)
-  internal static let wotStringHpLess800 = L10n.tr("Localizable", "WOT_STRING_HP_LESS_800")
-  /// HT
-  internal static let wotStringHt = L10n.tr("Localizable", "WOT_STRING_HT")
   /// Is gift
   internal static let wotStringIsGift = L10n.tr("Localizable", "WOT_STRING_IS_GIFT")
   /// Is not gift
   internal static let wotStringIsNotGift = L10n.tr("Localizable", "WOT_STRING_IS_NOT_GIFT")
-  /// Not premium
-  internal static let wotStringIsNotPremium = L10n.tr("Localizable", "WOT_STRING_IS_NOT_PREMIUM")
-  /// Premium
-  internal static let wotStringIsPremium = L10n.tr("Localizable", "WOT_STRING_IS_PREMIUM")
-  /// I
-  internal static let wotStringLevel1 = L10n.tr("Localizable", "WOT_STRING_LEVEL_1")
-  /// X
-  internal static let wotStringLevel10 = L10n.tr("Localizable", "WOT_STRING_LEVEL_10")
-  /// II
-  internal static let wotStringLevel2 = L10n.tr("Localizable", "WOT_STRING_LEVEL_2")
-  /// III
-  internal static let wotStringLevel3 = L10n.tr("Localizable", "WOT_STRING_LEVEL_3")
-  /// IV
-  internal static let wotStringLevel4 = L10n.tr("Localizable", "WOT_STRING_LEVEL_4")
-  /// V
-  internal static let wotStringLevel5 = L10n.tr("Localizable", "WOT_STRING_LEVEL_5")
-  /// VI
-  internal static let wotStringLevel6 = L10n.tr("Localizable", "WOT_STRING_LEVEL_6")
-  /// VII
-  internal static let wotStringLevel7 = L10n.tr("Localizable", "WOT_STRING_LEVEL_7")
-  /// VIII
-  internal static let wotStringLevel8 = L10n.tr("Localizable", "WOT_STRING_LEVEL_8")
-  /// IX
-  internal static let wotStringLevel9 = L10n.tr("Localizable", "WOT_STRING_LEVEL_9")
   /// Login
   internal static let wotStringLogin = L10n.tr("Localizable", "WOT_STRING_LOGIN")
-  /// LT
-  internal static let wotStringLt = L10n.tr("Localizable", "WOT_STRING_LT")
   /// mobi
   internal static let wotStringMobi = L10n.tr("Localizable", "WOT_STRING_MOBI")
-  /// MT
-  internal static let wotStringMt = L10n.tr("Localizable", "WOT_STRING_MT")
-  /// china
-  internal static let wotStringNationChina = L10n.tr("Localizable", "WOT_STRING_NATION_CHINA")
-  /// czech
-  internal static let wotStringNationCzech = L10n.tr("Localizable", "WOT_STRING_NATION_CZECH")
-  /// france
-  internal static let wotStringNationFrance = L10n.tr("Localizable", "WOT_STRING_NATION_FRANCE")
-  /// germany
-  internal static let wotStringNationGermany = L10n.tr("Localizable", "WOT_STRING_NATION_GERMANY")
-  /// italy
-  internal static let wotStringNationItaly = L10n.tr("Localizable", "WOT_STRING_NATION_ITALY")
-  /// japan
-  internal static let wotStringNationJapan = L10n.tr("Localizable", "WOT_STRING_NATION_JAPAN")
-  /// poland
-  internal static let wotStringNationPoland = L10n.tr("Localizable", "WOT_STRING_NATION_POLAND")
-  /// sweden
-  internal static let wotStringNationSweden = L10n.tr("Localizable", "WOT_STRING_NATION_SWEDEN")
-  /// uk
-  internal static let wotStringNationUk = L10n.tr("Localizable", "WOT_STRING_NATION_UK")
-  /// usa
-  internal static let wotStringNationUsa = L10n.tr("Localizable", "WOT_STRING_NATION_USA")
-  /// ussr
-  internal static let wotStringNationUssr = L10n.tr("Localizable", "WOT_STRING_NATION_USSR")
   /// observe
   internal static let wotStringObserve = L10n.tr("Localizable", "WOT_STRING_OBSERVE")
   /// Players
@@ -295,8 +187,6 @@ internal enum L10n {
   internal static let wotStringReorder = L10n.tr("Localizable", "WOT_STRING_REORDER")
   /// SELECT lang
   internal static let wotStringSelectLanguage = L10n.tr("Localizable", "WOT_STRING_SELECT_LANGUAGE")
-  /// SPG
-  internal static let wotStringSpg = L10n.tr("Localizable", "WOT_STRING_SPG")
   /// Tankdeleyev
   internal static let wotStringTankdeleyev = L10n.tr("Localizable", "WOT_STRING_TANKDELEYEV")
   /// Tankopedia

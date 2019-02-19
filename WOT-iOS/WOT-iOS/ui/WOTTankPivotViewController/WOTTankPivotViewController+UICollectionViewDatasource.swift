@@ -79,17 +79,6 @@ extension WOTTankPivotViewController {
     }
 
     func openPopover () {
-
-        //        let viewController = UIViewController()
-        //        viewController.modalPresentationStyle = UIModalPresentationStyle.popover
-        //        viewController.
-        //        guard let popover = viewController.popoverPresentationController else {
-        //            return
-        //        }
-        //        self.present(viewController, animated: true) {
-        //
-        //        }
-
         self.hasOpenedPopover = true
     }
 }

@@ -20,6 +20,15 @@ protocol WOTAPIDefaultsProtocol: NSObjectProtocol {
 
 }
 
+@objc
+public class WOTApiForeignKeys: NSObject, WOTAPIProtocol {
+    @objc public static let vehicles_default_profile_hp: String = "vehicles.default_profile.hp"
+    @objc public static let vehicles_default_profile_weight: String =  "vehicles.default_profile.weight"
+    @objc public static let vehicles_default_profile_gun_fire_rate: String = "vehicles.default_profile.gun.fire_rate"
+
+}
+
+@objc
 public class WOTApiKeys: NSObject, WOTAPIProtocol {
 
     @objc public static let modules_tree: String = "modules_tree"
@@ -71,7 +80,6 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let armor_fedd: String = "armor_fedd"
     @objc public static let armor_forehead: String = "armor_forehead"
     @objc public static let circular_vision_radius: String = "circular_vision_radius"
-
 }
 
 public class WOTApiTankType: NSObject, WOTAPIProtocol {
