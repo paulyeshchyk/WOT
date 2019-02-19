@@ -29,7 +29,6 @@
 		1D054A852118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D054A842118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift */; };
 		1D054A8721186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D054A8621186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift */; };
 		1D0F55011C91677600272B05 /* WOTTankMetricsList+ChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */; };
-		1D126A6021A55700001AF67F /* WOTPivotTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5F21A55700001AF67F /* WOTPivotTemplates.swift */; };
 		1D1795E9211D6DD800A0E42E /* WOTTankPivotViewController+Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1795E8211D6DD800A0E42E /* WOTTankPivotViewController+Cells.swift */; };
 		1D1795EB211D8A8300A0E42E /* WOTTankPivotViewController+UICollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1795EA211D8A8300A0E42E /* WOTTankPivotViewController+UICollectionViewDatasource.swift */; };
 		1D1795ED211D9ACA00A0E42E /* WOTTankPivotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1795EC211D9ACA00A0E42E /* WOTTankPivotViewController.swift */; };
@@ -335,7 +334,6 @@
 		1D054A8621186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+WOTDataModelListener.swift"; sourceTree = "<group>"; };
 		1D0F54FF1C91677600272B05 /* WOTTankMetricsList+ChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankMetricsList+ChartData.h"; sourceTree = "<group>"; };
 		1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankMetricsList+ChartData.m"; sourceTree = "<group>"; };
-		1D126A5F21A55700001AF67F /* WOTPivotTemplates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotTemplates.swift; sourceTree = "<group>"; };
 		1D1795E8211D6DD800A0E42E /* WOTTankPivotViewController+Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+Cells.swift"; sourceTree = "<group>"; };
 		1D1795EA211D8A8300A0E42E /* WOTTankPivotViewController+UICollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+UICollectionViewDatasource.swift"; sourceTree = "<group>"; };
 		1D1795EC211D9ACA00A0E42E /* WOTTankPivotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankPivotViewController.swift; sourceTree = "<group>"; };
@@ -773,14 +771,6 @@
 				1D86DD032122F89A00678E71 /* WOTMenuItem.swift */,
 			);
 			path = Menu;
-			sourceTree = "<group>";
-		};
-		1D126A5E21A55700001AF67F /* templates */ = {
-			isa = PBXGroup;
-			children = (
-				1D126A5F21A55700001AF67F /* WOTPivotTemplates.swift */,
-			);
-			path = templates;
 			sourceTree = "<group>";
 		};
 		1D4C92101B25B6E900E320B5 /* cells */ = {
@@ -1673,7 +1663,6 @@
 		1DDEE3791B8F353200C90D4B /* WOTTankPivotViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1D126A5E21A55700001AF67F /* templates */,
 				1D5144E0212D87F9006FD577 /* WOTPivotConstructor */,
 				1DDEE37A1B8F353200C90D4B /* cells */,
 				1D1795EC211D9ACA00A0E42E /* WOTTankPivotViewController.swift */,
@@ -2222,7 +2211,6 @@
 				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
 				1D519D141B4E9E9B00D3A286 /* WOTTurretsArmorForeheadCompareFieldExpression.m in Sources */,
 				1DDEE3931B8F353200C90D4B /* WOTTankPivotEmptyCollectionViewCell.m in Sources */,
-				1D126A6021A55700001AF67F /* WOTPivotTemplates.swift in Sources */,
 				1D4C92581B25F27200E320B5 /* WOTLanguageSelectorViewController.m in Sources */,
 				1D519D1E1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m in Sources */,
 				1D86DD042122F89A00678E71 /* WOTMenuItem.swift in Sources */,

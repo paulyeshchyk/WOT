@@ -8,6 +8,7 @@
 
 import Foundation
 import WOTPivot
+import WOTData
 
 extension WOTTankPivotViewController: WOTDataModelListener {
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D2564FD221C18800047E8E3 /* WOTPivotTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2564FC221C18800047E8E3 /* WOTPivotTemplates.swift */; };
 		1D294C6F22116BCC002DA600 /* Tankradios+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D294C1722116BC0002DA600 /* Tankradios+CoreDataClass.m */; };
 		1D294C7022116BCC002DA600 /* Tankturrets+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D294C1822116BC0002DA600 /* Tankturrets+CoreDataClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D294C7122116BCC002DA600 /* VehicleprofileSuspension+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D294C1922116BC1002DA600 /* VehicleprofileSuspension+CoreDataClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -214,6 +215,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D2564FC221C18800047E8E3 /* WOTPivotTemplates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotTemplates.swift; sourceTree = "<group>"; };
 		1D294C1722116BC0002DA600 /* Tankradios+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tankradios+CoreDataClass.m"; sourceTree = "<group>"; };
 		1D294C1822116BC0002DA600 /* Tankturrets+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tankturrets+CoreDataClass.h"; sourceTree = "<group>"; };
 		1D294C1922116BC1002DA600 /* VehicleprofileSuspension+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VehicleprofileSuspension+CoreDataClass.h"; sourceTree = "<group>"; };
@@ -433,6 +435,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D2564FB221C18800047E8E3 /* templates */ = {
+			isa = PBXGroup;
+			children = (
+				1D2564FC221C18800047E8E3 /* WOTPivotTemplates.swift */,
+			);
+			path = templates;
+			sourceTree = "<group>";
+		};
 		1D294B6622116B9A002DA600 /* subclasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -580,6 +590,7 @@
 		1D3DAEEC213416FD00368AFA /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1D2564FB221C18800047E8E3 /* templates */,
 				1DB6745D221C05D500982EE6 /* categories */,
 				1D65F77D221552E6006A85E4 /* dataProvider */,
 				1D8C29F721359C4600759C42 /* session */,
@@ -1375,6 +1386,7 @@
 				1D294CB122116BCC002DA600 /* VehicleprofileGun+CoreDataClass.m in Sources */,
 				1D294C7222116BCC002DA600 /* VehicleprofileSuspension+CoreDataProperties.m in Sources */,
 				1D294C9822116BCC002DA600 /* VehicleprofileAmmoPenetration+CoreDataClass.m in Sources */,
+				1D2564FD221C18800047E8E3 /* WOTPivotTemplates.swift in Sources */,
 				1DA83C87213558120039CB4B /* NSManagedObject+FillProperties.m in Sources */,
 				1D294C9C22116BCC002DA600 /* ModulesTree+CoreDataClass.m in Sources */,
 			);
