@@ -35,7 +35,7 @@
             NSDictionary *tankJSON = tanksDictionary[key];
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tank_id,tankJSON[WOTApiKeys.tank_id]];
-            Tanks *tank = [Tanks findOrCreateObjectWithPredicate:predicate context:context];
+            Tanks *tank = (Tanks *)[Tanks findOrCreateObjectWithPredicate:predicate context:context];
             [tank fillPropertiesFromDictionary:tankJSON];
         }];
         

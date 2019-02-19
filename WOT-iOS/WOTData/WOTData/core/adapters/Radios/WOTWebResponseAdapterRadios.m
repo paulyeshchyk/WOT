@@ -38,7 +38,7 @@
             }
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankRadiosJSON[WOTApiKeys.module_id]];
-            Tankradios *tankradios = [Tankradios findOrCreateObjectWithPredicate:predicate context:context];
+            Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
             [tankradios fillPropertiesFromDictionary:tankRadiosJSON];
         }];
         

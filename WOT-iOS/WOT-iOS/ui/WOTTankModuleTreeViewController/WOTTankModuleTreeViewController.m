@@ -40,8 +40,6 @@
 
 @end
 
-
-
 @interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<WOTDataFetchControllerDelegateProtocol>
 @end
 
@@ -233,7 +231,6 @@
     return result;
 }
 @end
-
 
 @interface WOTTankModuleTreeViewController(WOTDataModelListener) <WOTDataModelListener>
 @end

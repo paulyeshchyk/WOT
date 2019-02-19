@@ -38,7 +38,7 @@ extern NSString *const kLanguageDidChangeNotification;
 
 /**
  * Function for string localization
- * @param name as key
+ * @param key as key
  * @return As localized string. If not available, returns the English Translation.
  */
 NSString *WOTString(NSString *key);
@@ -46,7 +46,7 @@ NSString *WOTString(NSString *key);
 
 /**
  * Function for resource localization
- * @param name as key
+ * @param key as key
  * @return As localized resource. If not available, returns the English Translation.
  */
 NSData *WOTResource(NSString *key);
@@ -55,14 +55,14 @@ NSData *WOTResource(NSString *key);
 
 /**
  * Function for image localization
- * @param name as key
+ * @param key as key
  * @return As localized image. If not available, returns the English Translation.
  */
 UIImage *WOTImage(NSString *key);
 
 /**
  * Function for image path localization
- * @param name as key
+ * @param path as key
  * @return As localized image path. If not available, returns the English Translation.
  */
 NSString *WOTImagePath(NSString *path);
@@ -70,7 +70,7 @@ NSString *WOTImagePath(NSString *path);
 
 /**
  * Function for resource path localization
- * @param name as key
+ * @param key as key
  * @return As localized resource path. If not available, returns the English Translation.
  */
 NSString *WOTResourcePath(NSString *key);

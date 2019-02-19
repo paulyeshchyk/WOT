@@ -113,11 +113,11 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tag,jSON[WOTApiKeys.tag]];
-    Vehicles *vehicle = [Vehicles findOrCreateObjectWithPredicate:predicate context:context];
+    Vehicles *vehicle = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:predicate context:context];
     [vehicle fillPropertiesFromDictionary:jSON];
     
 #warning dirty code
-    Vehicleprofile *defaultProfile = [Vehicleprofile insertNewObject:context];
+    Vehicleprofile *defaultProfile = (Vehicleprofile *)[Vehicleprofile insertNewObject:context];
     [defaultProfile fillPropertiesFromDictionary:jSON[WOTApiKeys.default_profile]];
     vehicle.default_profile = defaultProfile;
 
@@ -125,7 +125,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 #warning should be refactored
     
     NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tank_id, [key integerValue]];
-    Tanks *tank = [Tanks findOrCreateObjectWithPredicate:tanksPredicate context:context];
+    Tanks *tank = (Tanks *)[Tanks findOrCreateObjectWithPredicate:tanksPredicate context:context];
     [tank setVehicles:vehicle];
     
     NSArray *availableLinks = [clazz availableLinks];
@@ -295,7 +295,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     [context performBlockAndWait:^{
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
-        ModulesTree *moduleTree = [clazz findOrCreateObjectWithPredicate:predicate context:context];
+        ModulesTree *moduleTree = (ModulesTree *)[clazz findOrCreateObjectWithPredicate:predicate context:context];
         [moduleTree setValue:jSONLinkId forKey:coreDataIdName];
         [moduleTree fillPropertiesFromDictionary:jSON];
         
@@ -307,7 +307,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
                 
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tank_id,nextTankId];
-                Tanks *tanks = [Tanks findOrCreateObjectWithPredicate:predicate context:context];
+                Tanks *tanks = (Tanks *)[Tanks findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextTanksObject:tanks];
             }];
         }
@@ -316,31 +316,31 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         switch (moduleType) {
             case WOTVehicleModuleTypeChassis: {
 
-                Tankchassis *chassis = [Tankchassis findOrCreateObjectWithPredicate:predicate context:context];
+                Tankchassis *chassis = (Tankchassis *)[Tankchassis findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextChassisObject:chassis];
                 break;
             }
             case WOTVehicleModuleTypeEngine: {
                 
-                Tankengines *engine = [Tankengines findOrCreateObjectWithPredicate:predicate context:context];
+                Tankengines *engine = (Tankengines *)[Tankengines findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextEnginesObject:engine];
                 break;
             }
             case WOTVehicleModuleTypeGun: {
 
-                Tankguns *gun = [Tankguns findOrCreateObjectWithPredicate:predicate context:context];
+                Tankguns *gun = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextGunsObject:gun];
                 break;
             }
             case WOTVehicleModuleTypeTurret: {
                 
-                Tankturrets *turrets = [Tankturrets findOrCreateObjectWithPredicate:predicate context:context];
+                Tankturrets *turrets = (Tankturrets *)[Tankturrets findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextTurretsObject:turrets];
                 break;
             }
             case WOTVehicleModuleTypeRadio: {
 
-                Tankradios *radios = [Tankradios findOrCreateObjectWithPredicate:predicate context:context];
+                Tankradios *radios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
                 [moduleTree addNextRadiosObject:radios];
                 break;
             }

@@ -213,7 +213,7 @@
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_SORT];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
-    ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
+    ListSetting *setting = (ListSetting *)[ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
     setting.key = key;
     setting.ascending = @(ascending);
     setting.type = WOT_KEY_SETTING_TYPE_SORT;
@@ -232,7 +232,7 @@
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_GROUP];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
-    ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
+    ListSetting *setting = (ListSetting *)[ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
     setting.key = key;
     setting.ascending = @(ascending);
     setting.type = WOT_KEY_SETTING_TYPE_GROUP;
@@ -253,7 +253,7 @@
     NSPredicate *valuesPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_VALUES,value];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate,valuesPredicate]];
 
-    ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
+    ListSetting *setting = (ListSetting *)[ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
     setting.key = key;
     setting.ascending = @(NO);
     setting.type = WOT_KEY_SETTING_TYPE_FILTER;

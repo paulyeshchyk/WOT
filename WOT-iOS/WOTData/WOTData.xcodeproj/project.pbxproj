@@ -1071,8 +1071,8 @@
 			isa = PBXGroup;
 			children = (
 				1D8C28BF21357AD900759C42 /* json */,
-				1DDC12122135349800B10A0B /* WOT_iOS.xcdatamodeld */,
 				1DDC13762135364400B10A0B /* WOTData-Model.h */,
+				1DDC12122135349800B10A0B /* WOT_iOS.xcdatamodeld */,
 			);
 			path = model;
 			sourceTree = "<group>";
