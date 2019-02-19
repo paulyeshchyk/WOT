@@ -174,14 +174,15 @@
 		1DA1D7481B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7461B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib */; };
 		1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74A1B2B005F00C5C2FB /* WOTTankListSettingField.m */; };
 		1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */; };
-		1DB57B1920F772FB003FF3EC /* tanks.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1B20F772FB003FF3EC /* tanks.json */; };
-		1DB57B2820F77415003FF3EC /* tankguns.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1C20F77413003FF3EC /* tankguns.json */; };
-		1DB57B2920F77415003FF3EC /* chassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B1E20F77414003FF3EC /* chassis.json */; };
-		1DB57B2A20F77415003FF3EC /* tankturrets.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B2020F77414003FF3EC /* tankturrets.json */; };
-		1DB57B2B20F77415003FF3EC /* tankengines.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B2220F77414003FF3EC /* tankengines.json */; };
-		1DB57B2C20F77415003FF3EC /* tankradios.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B2420F77415003FF3EC /* tankradios.json */; };
-		1DB57B2D20F77415003FF3EC /* vehicles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B2620F77415003FF3EC /* vehicles.json */; };
-		1DB57B3020F77797003FF3EC /* vehicleprofile.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB57B2E20F77797003FF3EC /* vehicleprofile.json */; };
+		1DB67437221BF0B300982EE6 /* chassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67439221BF0B300982EE6 /* chassis.json */; };
+		1DB6743A221BF0B800982EE6 /* tanks.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6743C221BF0B800982EE6 /* tanks.json */; };
+		1DB6743D221BF0C300982EE6 /* vehicles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6743F221BF0C300982EE6 /* vehicles.json */; };
+		1DB67440221BF0C700982EE6 /* tankradios.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67442221BF0C700982EE6 /* tankradios.json */; };
+		1DB67443221BF0CC00982EE6 /* tankguns.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67445221BF0CC00982EE6 /* tankguns.json */; };
+		1DB67446221BF0D000982EE6 /* tankturrets.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67448221BF0D000982EE6 /* tankturrets.json */; };
+		1DB67449221BF0D400982EE6 /* tankchassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6744B221BF0D400982EE6 /* tankchassis.json */; };
+		1DB6744C221BF0D900982EE6 /* vehicleprofile.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6744E221BF0D900982EE6 /* vehicleprofile.json */; };
+		1DB6744F221BF0DE00982EE6 /* tankengines.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67451221BF0DE00982EE6 /* tankengines.json */; };
 		1DC07B331B3A9465002FAA72 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B321B3A9465002FAA72 /* Reachability.m */; };
 		1DC07BA31B3B003D002FAA72 /* Data-Flow-Chart-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */; };
 		1DC07BA41B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9B1B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png */; };
@@ -528,14 +529,15 @@
 		1DA1D74C1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankListSettingsDatasource+AvailableFields.h"; sourceTree = "<group>"; };
 		1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankListSettingsDatasource+AvailableFields.m"; sourceTree = "<group>"; };
 		1DA1D74F1B2B017C00C5C2FB /* WOTTankListSettingsAvailableFieldsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsAvailableFieldsProtocol.h; sourceTree = "<group>"; };
-		1DB57B1A20F772FB003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tanks.json; sourceTree = "<group>"; };
-		1DB57B1D20F77413003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankguns.json; sourceTree = "<group>"; };
-		1DB57B1F20F77414003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/chassis.json; sourceTree = "<group>"; };
-		1DB57B2120F77414003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankturrets.json; sourceTree = "<group>"; };
-		1DB57B2320F77414003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankengines.json; sourceTree = "<group>"; };
-		1DB57B2520F77415003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankradios.json; sourceTree = "<group>"; };
-		1DB57B2720F77415003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicles.json; sourceTree = "<group>"; };
-		1DB57B2F20F77797003FF3EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicleprofile.json; sourceTree = "<group>"; };
+		1DB67438221BF0B300982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/chassis.json; sourceTree = "<group>"; };
+		1DB6743B221BF0B800982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tanks.json; sourceTree = "<group>"; };
+		1DB6743E221BF0C300982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicles.json; sourceTree = "<group>"; };
+		1DB67441221BF0C700982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankradios.json; sourceTree = "<group>"; };
+		1DB67444221BF0CC00982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankguns.json; sourceTree = "<group>"; };
+		1DB67447221BF0D000982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankturrets.json; sourceTree = "<group>"; };
+		1DB6744A221BF0D400982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankchassis.json; sourceTree = "<group>"; };
+		1DB6744D221BF0D900982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicleprofile.json; sourceTree = "<group>"; };
+		1DB67450221BF0DE00982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankengines.json; sourceTree = "<group>"; };
 		1DC07B311B3A9465002FAA72 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		1DC07B321B3A9465002FAA72 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon.png"; sourceTree = "<group>"; };
@@ -1200,16 +1202,25 @@
 		1DB57B1620F771B9003FF3EC /* json */ = {
 			isa = PBXGroup;
 			children = (
-				1DB57B2E20F77797003FF3EC /* vehicleprofile.json */,
-				1DB57B1E20F77414003FF3EC /* chassis.json */,
-				1DB57B2220F77414003FF3EC /* tankengines.json */,
-				1DB57B1C20F77413003FF3EC /* tankguns.json */,
-				1DB57B2420F77415003FF3EC /* tankradios.json */,
-				1DB57B2020F77414003FF3EC /* tankturrets.json */,
-				1DB57B2620F77415003FF3EC /* vehicles.json */,
-				1DB57B1B20F772FB003FF3EC /* tanks.json */,
+				1DB67424221BF0A400982EE6 /* WOT */,
 			);
 			path = json;
+			sourceTree = "<group>";
+		};
+		1DB67424221BF0A400982EE6 /* WOT */ = {
+			isa = PBXGroup;
+			children = (
+				1DB67439221BF0B300982EE6 /* chassis.json */,
+				1DB6743C221BF0B800982EE6 /* tanks.json */,
+				1DB6743F221BF0C300982EE6 /* vehicles.json */,
+				1DB67442221BF0C700982EE6 /* tankradios.json */,
+				1DB67445221BF0CC00982EE6 /* tankguns.json */,
+				1DB67448221BF0D000982EE6 /* tankturrets.json */,
+				1DB6744B221BF0D400982EE6 /* tankchassis.json */,
+				1DB6744E221BF0D900982EE6 /* vehicleprofile.json */,
+				1DB67451221BF0DE00982EE6 /* tankengines.json */,
+			);
+			path = WOT;
 			sourceTree = "<group>";
 		};
 		1DC07B301B3A9465002FAA72 /* Reachability */ = {
@@ -1850,6 +1861,7 @@
 				1D65F8392216AEEA006A85E4 /* vehicleChassis.png in Resources */,
 				1D4C92421B25EBE400E320B5 /* WOTiPadMenuGear@2x.png in Resources */,
 				1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */,
+				1DB6744C221BF0D900982EE6 /* vehicleprofile.json in Resources */,
 				1DD46B8F1BA6DD6F00D3B3CE /* WOTTankDetailTextTableViewCell.xib in Resources */,
 				1DDEE3921B8F353200C90D4B /* WOTTankPivotDataCollectionViewCell~iphone.xib in Resources */,
 				1D4C92571B25F27200E320B5 /* WOTLanguageTableViewCell.xib in Resources */,
@@ -1857,13 +1869,13 @@
 				1D672B661B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png in Resources */,
 				1D672B4D1B60CC8700617E5C /* Firing Gun Yellow.png in Resources */,
 				1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */,
-				1DB57B2A20F77415003FF3EC /* tankturrets.json in Resources */,
 				1D672B261B60C86700617E5C /* Bulletproof Vest Gray.png in Resources */,
 				1DD46B3B1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib in Resources */,
 				DA522D281B6637630087D684 /* Search Gray.png in Resources */,
 				1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */,
 				1D4C92361B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png in Resources */,
 				1DC07BA81B3B003D002FAA72 /* Data-List-icon@3x.png in Resources */,
+				1DB67440221BF0C700982EE6 /* tankradios.json in Resources */,
 				1DC07BA71B3B003D002FAA72 /* Data-List-icon@2x.png in Resources */,
 				1DA1D7481B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib in Resources */,
 				1D4C92411B25EBE400E320B5 /* WOTiPadMenuGear.png in Resources */,
@@ -1878,7 +1890,6 @@
 				1DD46B341BA69CC900D3B3CE /* Radar Plot Yellow@2x.png in Resources */,
 				1D672B5C1B60D15C00617E5C /* Hourglass Sand Bottom Gray.png in Resources */,
 				1D4C92651B27085600E320B5 /* WOTTankListSortViewController.xib in Resources */,
-				1DB57B2820F77415003FF3EC /* tankguns.json in Resources */,
 				1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */,
 				1DD46B8D1BA6DD6F00D3B3CE /* WOTTankDetailProgressTableViewCell.xib in Resources */,
 				DA522D391B6649020087D684 /* Cancel Gray@3x.png in Resources */,
@@ -1904,6 +1915,7 @@
 				1D4C924D1B25EF2E00E320B5 /* WOTGlobe@2x.png in Resources */,
 				1D672B3E1B60CB7100617E5C /* Speedometer Gray.png in Resources */,
 				1D672B3F1B60CB7100617E5C /* Speedometer Gray@2x.png in Resources */,
+				1DB6743D221BF0C300982EE6 /* vehicles.json in Resources */,
 				1DA1D7421B2AF7D300C5C2FB /* WOTTankListSettingValueChangerViewController.xib in Resources */,
 				1D672B4F1B60CC8700617E5C /* Firing Gun Yellow@3x.png in Resources */,
 				1DCC7F291B2ED07F005FF193 /* WOTArrowUp@2x.png in Resources */,
@@ -1914,6 +1926,7 @@
 				1D6DD6C12124106B00498BEE /* WOTSplitViewController.xib in Resources */,
 				1DC07BA91B3B003D002FAA72 /* Messaging-Categorize-icon.png in Resources */,
 				1D672B411B60CB7100617E5C /* Speedometer Yellow.png in Resources */,
+				1DB67443221BF0CC00982EE6 /* tankguns.json in Resources */,
 				1D672B621B60D15C00617E5C /* Hourglass Sand Top Gray.png in Resources */,
 				1D4C92491B25ED0900E320B5 /* WOTLoggedInUser@3x.png in Resources */,
 				1D672B671B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png in Resources */,
@@ -1929,21 +1942,20 @@
 				1D6FF5122106FF85006C1328 /* WOTTankConfigurationItemHeaderFooter.xib in Resources */,
 				1D4C921E1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib in Resources */,
 				1D672B601B60D15C00617E5C /* Hourglass Sand Bottom Yellow@2x.png in Resources */,
-				1DB57B3020F77797003FF3EC /* vehicleprofile.json in Resources */,
 				1D6FF5032106FD7A006C1328 /* WOTTankModuleTreeViewController.xib in Resources */,
+				1DB67437221BF0B300982EE6 /* chassis.json in Resources */,
 				DA522D331B663C290087D684 /* WOTTankListSearchBar.xib in Resources */,
-				1DB57B2C20F77415003FF3EC /* tankradios.json in Resources */,
 				1DCC7F281B2ED07F005FF193 /* WOTArrowUp.png in Resources */,
 				1D4C92591B25F27200E320B5 /* WOTLanguageSelectorViewController.xib in Resources */,
 				1D672B2B1B60C86700617E5C /* Bulletproof Vest Yellow@3x.png in Resources */,
 				1DD646EA1B205D9300B0EC76 /* WOTPlayersListViewController.xib in Resources */,
 				1DC07BAB1B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png in Resources */,
+				1DB6743A221BF0B800982EE6 /* tanks.json in Resources */,
 				1D65F8352216AEEA006A85E4 /* vehicleEngine.png in Resources */,
 				1DCC7F261B2ED07F005FF193 /* WOTArrowDown@2x.png in Resources */,
 				1DD646CE1B1F378100B0EC76 /* WOTTankListViewController.xib in Resources */,
 				1D1795FB2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib in Resources */,
 				1D6FF4F82106FD7A006C1328 /* WOTTankTreeNodeCollectionViewCell.xib in Resources */,
-				1DB57B2B20F77415003FF3EC /* tankengines.json in Resources */,
 				1D672B401B60CB7100617E5C /* Speedometer Gray@3x.png in Resources */,
 				1D672B5E1B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png in Resources */,
 				1DD46B301BA69CC900D3B3CE /* Radar Plot.png in Resources */,
@@ -1955,10 +1967,8 @@
 				1DCC7F2A1B2ED07F005FF193 /* WOTArrowUp@3x.png in Resources */,
 				1DD46B471BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib in Resources */,
 				1DD46B2F1BA69CC900D3B3CE /* Activity Grid.png in Resources */,
-				1DB57B2920F77415003FF3EC /* chassis.json in Resources */,
 				1D672B5F1B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png in Resources */,
 				DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */,
-				1DB57B2D20F77415003FF3EC /* vehicles.json in Resources */,
 				1DD46B961BA6DD6F00D3B3CE /* WOTTankDetailViewController.xib in Resources */,
 				1DC07BA51B3B003D002FAA72 /* Data-Flow-Chart-icon@3x.png in Resources */,
 				DA522D2D1B6637630087D684 /* Search Yellow@3x.png in Resources */,
@@ -1974,6 +1984,7 @@
 				1D4C92471B25ED0900E320B5 /* WOTLoggedInUser.png in Resources */,
 				1DC07BA41B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png in Resources */,
 				1D672B4C1B60CC8700617E5C /* Firing Gun Gray@3x.png in Resources */,
+				1DB6744F221BF0DE00982EE6 /* tankengines.json in Resources */,
 				1D4C92341B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png in Resources */,
 				1D672B2A1B60C86700617E5C /* Bulletproof Vest Yellow@2x.png in Resources */,
 				1DD46B2E1BA69CC900D3B3CE /* Activity Grid@2x.png in Resources */,
@@ -1981,7 +1992,6 @@
 				1DC07BA61B3B003D002FAA72 /* Data-List-icon.png in Resources */,
 				1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */,
 				1D4C923D1B25EB1000E320B5 /* WOTBackIconGray@3x.png in Resources */,
-				1DB57B1920F772FB003FF3EC /* tanks.json in Resources */,
 				1D4C92481B25ED0900E320B5 /* WOTLoggedInUser@2x.png in Resources */,
 				1D672B371B60C9A100617E5C /* Opera Glasses Yellow@3x.png in Resources */,
 				1D672B331B60C9A100617E5C /* Opera Glasses Gray@2x.png in Resources */,
@@ -1996,6 +2006,8 @@
 				DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */,
 				1D5144E8212D8C58006FD577 /* WOTPivotConstructorViewController~ipad.xib in Resources */,
 				1DD646DD1B20533E00B0EC76 /* WOTMenuTableViewCell.xib in Resources */,
+				1DB67446221BF0D000982EE6 /* tankturrets.json in Resources */,
+				1DB67449221BF0D400982EE6 /* tankchassis.json in Resources */,
 				1D672B4B1B60CC8700617E5C /* Firing Gun Gray@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2244,68 +2256,76 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1DB57B1B20F772FB003FF3EC /* tanks.json */ = {
+		1DB67439221BF0B300982EE6 /* chassis.json */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1DB57B1A20F772FB003FF3EC /* en */,
-			);
-			name = tanks.json;
-			sourceTree = "<group>";
-		};
-		1DB57B1C20F77413003FF3EC /* tankguns.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB57B1D20F77413003FF3EC /* en */,
-			);
-			name = tankguns.json;
-			sourceTree = "<group>";
-		};
-		1DB57B1E20F77414003FF3EC /* chassis.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB57B1F20F77414003FF3EC /* en */,
+				1DB67438221BF0B300982EE6 /* en */,
 			);
 			name = chassis.json;
 			sourceTree = "<group>";
 		};
-		1DB57B2020F77414003FF3EC /* tankturrets.json */ = {
+		1DB6743C221BF0B800982EE6 /* tanks.json */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1DB57B2120F77414003FF3EC /* en */,
+				1DB6743B221BF0B800982EE6 /* en */,
 			);
-			name = tankturrets.json;
+			name = tanks.json;
 			sourceTree = "<group>";
 		};
-		1DB57B2220F77414003FF3EC /* tankengines.json */ = {
+		1DB6743F221BF0C300982EE6 /* vehicles.json */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1DB57B2320F77414003FF3EC /* en */,
-			);
-			name = tankengines.json;
-			sourceTree = "<group>";
-		};
-		1DB57B2420F77415003FF3EC /* tankradios.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB57B2520F77415003FF3EC /* en */,
-			);
-			name = tankradios.json;
-			sourceTree = "<group>";
-		};
-		1DB57B2620F77415003FF3EC /* vehicles.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB57B2720F77415003FF3EC /* en */,
+				1DB6743E221BF0C300982EE6 /* en */,
 			);
 			name = vehicles.json;
 			sourceTree = "<group>";
 		};
-		1DB57B2E20F77797003FF3EC /* vehicleprofile.json */ = {
+		1DB67442221BF0C700982EE6 /* tankradios.json */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1DB57B2F20F77797003FF3EC /* en */,
+				1DB67441221BF0C700982EE6 /* en */,
+			);
+			name = tankradios.json;
+			sourceTree = "<group>";
+		};
+		1DB67445221BF0CC00982EE6 /* tankguns.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DB67444221BF0CC00982EE6 /* en */,
+			);
+			name = tankguns.json;
+			sourceTree = "<group>";
+		};
+		1DB67448221BF0D000982EE6 /* tankturrets.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DB67447221BF0D000982EE6 /* en */,
+			);
+			name = tankturrets.json;
+			sourceTree = "<group>";
+		};
+		1DB6744B221BF0D400982EE6 /* tankchassis.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DB6744A221BF0D400982EE6 /* en */,
+			);
+			name = tankchassis.json;
+			sourceTree = "<group>";
+		};
+		1DB6744E221BF0D900982EE6 /* vehicleprofile.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DB6744D221BF0D900982EE6 /* en */,
 			);
 			name = vehicleprofile.json;
+			sourceTree = "<group>";
+		};
+		1DB67451221BF0DE00982EE6 /* tankengines.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DB67450221BF0DE00982EE6 /* en */,
+			);
+			name = tankengines.json;
 			sourceTree = "<group>";
 		};
 		1DD6471F1B20855400B0EC76 /* Localizable.strings */ = {

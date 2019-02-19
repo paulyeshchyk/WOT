@@ -73,6 +73,8 @@
 		1DA83CB4213563C50039CB4B /* NSBundle+LanguageBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CB2213563C50039CB4B /* NSBundle+LanguageBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DA83CB8213563F60039CB4B /* NSString+WOTValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83CB6213563F60039CB4B /* NSString+WOTValue.m */; };
 		1DA83CB9213563F60039CB4B /* NSString+WOTValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DB6741C221BE93B00982EE6 /* WOTWEBRequest+Stubs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB6741A221BE93B00982EE6 /* WOTWEBRequest+Stubs.h */; };
+		1DB6741D221BE93B00982EE6 /* WOTWEBRequest+Stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB6741B221BE93B00982EE6 /* WOTWEBRequest+Stubs.m */; };
 		1DC6D4A92125720E00A1C9C2 /* WOTPivotMetadataPermutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4A72125720E00A1C9C2 /* WOTPivotMetadataPermutator.swift */; };
 		1DC6D4AA2125721300A1C9C2 /* WOTPivotMetadataPermutatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4A62125720E00A1C9C2 /* WOTPivotMetadataPermutatorTest.swift */; };
 		1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */; };
@@ -186,6 +188,8 @@
 		1DA83CB2213563C50039CB4B /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
 		1DA83CB6213563F60039CB4B /* NSString+WOTValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WOTValue.m"; sourceTree = "<group>"; };
 		1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WOTValue.h"; sourceTree = "<group>"; };
+		1DB6741A221BE93B00982EE6 /* WOTWEBRequest+Stubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTWEBRequest+Stubs.h"; sourceTree = "<group>"; };
+		1DB6741B221BE93B00982EE6 /* WOTWEBRequest+Stubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTWEBRequest+Stubs.m"; sourceTree = "<group>"; };
 		1DC6D4A62125720E00A1C9C2 /* WOTPivotMetadataPermutatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutatorTest.swift; sourceTree = "<group>"; };
 		1DC6D4A72125720E00A1C9C2 /* WOTPivotMetadataPermutator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutator.swift; sourceTree = "<group>"; };
 		1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModel.swift; sourceTree = "<group>"; };
@@ -439,6 +443,8 @@
 		1DA83C89213558AB0039CB4B /* adapters */ = {
 			isa = PBXGroup;
 			children = (
+				1DB6741A221BE93B00982EE6 /* WOTWEBRequest+Stubs.h */,
+				1DB6741B221BE93B00982EE6 /* WOTWEBRequest+Stubs.m */,
 				1DA83C9721355A6D0039CB4B /* webRequest */,
 				1DA83C9021355A340039CB4B /* webResponse */,
 			);
@@ -719,6 +725,7 @@
 				1D8C293721357B9A00759C42 /* NSNumber+Randomizer.h in Headers */,
 				1DA83C9D21355A6D0039CB4B /* WOTRequestExecutor.h in Headers */,
 				1DA83C9521355A340039CB4B /* WOTWebResponseAdapter.h in Headers */,
+				1DB6741C221BE93B00982EE6 /* WOTWEBRequest+Stubs.h in Headers */,
 				1D8C298E21358B4200759C42 /* NSMutableArray+WOT.h in Headers */,
 				1D8C298C21358B4200759C42 /* NSArray+WOT.h in Headers */,
 				1D65F778221435E7006A85E4 /* NSString+UrlEncode.h in Headers */,
@@ -858,6 +865,7 @@
 				1D8C298521358ACA00759C42 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DE5591D212458E100576D41 /* WOTPivotNodeIndex.swift in Sources */,
 				1D65F8292216A7B8006A85E4 /* WOTDimensionColumnCalculator.swift in Sources */,
+				1DB6741D221BE93B00982EE6 /* WOTWEBRequest+Stubs.m in Sources */,
 				1D65F7F72216A60E006A85E4 /* WOTTankConfigurationFlowLayout.swift in Sources */,
 				1D65F779221435E7006A85E4 /* NSString+UrlEncode.m in Sources */,
 				1D126A5921A54E4E001AF67F /* PivotWireFrame.swift in Sources */,

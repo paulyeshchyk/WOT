@@ -21,7 +21,6 @@
 @property (nonatomic, readonly) NSDictionary *userInfo;
 @property (nonatomic, readonly) NSData *httpBodyData;
 
-@property (nonatomic, readonly) NSString *stubJSON;
 
 - (NSString *)queryIntoString;
 - (NSURL *)composedURL;

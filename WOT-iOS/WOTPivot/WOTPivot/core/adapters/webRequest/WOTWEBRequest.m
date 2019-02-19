@@ -13,13 +13,13 @@
 #import "WOTLogger.h"
 #import "NSString+UrlEncode.h"
 
+#import "WOTWEBRequest+Stubs.h"
+
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, strong) NSMutableData *data;
 @property (nonatomic, copy) NSURL *url;
-
-- (NSData *)stubs;
 
 @end
 
@@ -69,7 +69,7 @@
 }
 
 - (NSURLRequest *)proxy:(NSURLRequest *)request {
-
+//    return request;
     NSURL *url = request.URL;
 
     NSURLQueryItem *urlItem = [[NSURLQueryItem alloc] initWithName:@"url" value:url.absoluteString];
@@ -84,7 +84,7 @@
 }
 
 - (NSData *)dataFromProxyData:(NSData *)proxyData {
-
+//    return proxyData;
 
     NSError *serializationError = nil;
     NSString *iso = [[NSString alloc] initWithData:proxyData encoding:NSUTF8StringEncoding];
@@ -251,7 +251,6 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    
     NSData *clearData = [self dataFromProxyData:self.data];
     [self parseData:clearData error:nil];
     self.data = nil;
@@ -283,19 +282,6 @@
         [self parseData:nil error:error];
         self.data = nil;
     }
-}
-
-- (NSData *)stubs {
-    
-    NSData *result = nil;
-
-    NSString *filename = self.stubJSON;
-
-    if ([filename length] > 0) {
-        result = [NSData dataWithContentsOfFile: WOTResourcePath(filename)];
-    }
-
-    return result;
 }
 
 @end
