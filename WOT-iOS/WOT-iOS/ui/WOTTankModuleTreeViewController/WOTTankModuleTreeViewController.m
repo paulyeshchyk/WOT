@@ -22,11 +22,11 @@
 @implementation WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
-    if ([fetchedObject isKindOfClass: [Tanks class]]) {
+    if ([fetchedObject isKindOfClass: [Vehicles class]]) {
         //TODO: add WOTTankNode
-        return [[WOTNode alloc] initWithName:((Tanks *)fetchedObject).name_i18n];
+        return [[WOTNode alloc] initWithName:((Vehicles *)fetchedObject).name];
     } else if ([fetchedObject isKindOfClass: [ModulesTree class]]) {
-        return [[WOTTreeModuleNode alloc] initWithModuleTree: fetchedObject];
+        return [[WOTTreeModuleNode alloc] initWithModuleTree:(ModulesTree *)fetchedObject];
     } else  {
         return [self createNodeWithName:@""];
     }
@@ -48,7 +48,7 @@
 
 - (NSFetchRequest *)fetchRequest {
 
-    NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
+    NSFetchRequest * result = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
     result.sortDescriptors = [self sortDescriptors];
     result.predicate = [self fetchCustomPredicate];
     return result;

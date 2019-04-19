@@ -43,11 +43,11 @@ extension WOTTankPivotViewController: UICollectionViewDelegate {
     }
 
     private func openTankDetail(data: NSManagedObject?) {
-        guard let tank = data as? Tanks else {
+        guard let vehicle = data as? Vehicles else {
             return
         }
         let config = WOTTankModuleTreeViewController(nibName: String(describing: WOTTankModuleTreeViewController.self ), bundle: nil)
-        config.tank_Id = tank.tank_id
+        config.tank_Id = vehicle.tank_id
         config.cancelBlock = {
             self.navigationController?.popViewController(animated: true)
         }

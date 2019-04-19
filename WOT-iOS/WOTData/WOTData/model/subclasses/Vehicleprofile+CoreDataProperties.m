@@ -32,7 +32,7 @@
 @dynamic gun;
 @dynamic radio;
 @dynamic suspension;
-@dynamic tank;
 @dynamic turret;
+@dynamic modulesTree;
 
 @end

@@ -21,7 +21,6 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 //TODO: availableFields is internal method see nsmanagedobject+fillproperties
 #import "NSManagedObject+FillProperties.h"
-#import "Tanks+DPM.h"
 #import "ModulesTree+UI.h"
 #import "WOTWebResponseAdapterChassis.h"
 #import "WOTWebResponseAdapterRadios.h"
@@ -30,7 +29,6 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 #import "WOTWebResponseAdapterEngines.h"
 #import "WOTWebResponseAdapterTurrets.h"
 #import "WOTWebResponseAdapterVehicles.h"
-#import "WOTWebResponseAdapterTanks.h"
 #import "WOTWebResponseAdapterModulesTree.h"
 
 #import "WOTSessionManager.h"
@@ -69,4 +67,3 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 #import "Tankengines+FillProperties.h"
 #import "Tankturrets+FillProperties.h"
 #import "Tankguns+FillProperties.h"
-#import "Tanks+FillProperties.h"

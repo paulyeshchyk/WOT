@@ -31,7 +31,7 @@
 @dynamic guns;
 @dynamic radios;
 @dynamic suspensions;
-@dynamic tanks;
 @dynamic turrets;
+@dynamic modulesTree;
 
 @end

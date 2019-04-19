@@ -272,7 +272,7 @@
 - (id)filteredValue:(id)value forKey:(NSString *)key {
     
     id result = nil;
-    if ([key isEqualToString:WOTApiKeys.level]) {
+    if ([key isEqualToString:WOTApiKeys.tier]) {
         
         result = @([value integerValue]);
     } else if ([key isEqualToString: WOTApiKeys.is_premium]){

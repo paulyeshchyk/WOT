@@ -13,7 +13,7 @@ import CoreData
 extension NSManagedObject {
 
     @objc
-    public static func singleObject(predicate: NSPredicate, inManagedObjectContext context: NSManagedObjectContext, includeSubentities: Bool) -> NSManagedObject? {
+    public static func singleObject(predicate: NSPredicate?, inManagedObjectContext context: NSManagedObjectContext, includeSubentities: Bool) -> NSManagedObject? {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: self))
         request.fetchLimit = 1
         request.predicate = predicate

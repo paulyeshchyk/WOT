@@ -14,27 +14,27 @@
 
 + (NSArray *)fetchForTiers:(NSArray *)tiers nations:(NSArray *)nations types:(NSArray *)types {
     
-    NSPredicate *predicate = [WOTCoreDataPredicates tankIdsByTiers:tiers nations:nations tankTypes:types];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
-    [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]]];
-    [request setPredicate:predicate];
-    [request setPropertiesToFetch:@[WOTApiKeys.tank_id]];
-    [request setResultType:NSDictionaryResultType];
-
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
-    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-
-    NSError *error = nil;
-    [fetchedResultsController performFetch:&error];
-
-    NSArray *objs = [fetchedResultsController fetchedObjects];
+//    NSPredicate *predicate = [WOTCoreDataPredicates tankIdsByTiers:tiers nations:nations tankTypes:types];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
+//    [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]]];
+//    [request setPredicate:predicate];
+//    [request setPropertiesToFetch:@[WOTApiKeys.tank_id]];
+//    [request setResultType:NSDictionaryResultType];
+//
+//    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+//    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
+//    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+//
+//    NSError *error = nil;
+//    [fetchedResultsController performFetch:&error];
+//
+//    NSArray *objs = [fetchedResultsController fetchedObjects];
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
-    [objs enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-        
-        [result addObject:obj[WOTApiKeys.tank_id]];
-    }];
+//    [objs enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+//        
+//        [result addObject:obj[WOTApiKeys.tank_id]];
+//    }];
     
     return result;
 }

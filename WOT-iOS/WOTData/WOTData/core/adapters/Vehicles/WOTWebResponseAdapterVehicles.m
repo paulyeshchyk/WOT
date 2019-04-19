@@ -31,19 +31,19 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     
     WOTVehicleModuleType result = WOTVehicleModuleTypeUnknown;
 
-    if ([type isEqualToString:WOT_VALUE_VEHICLE_CHASSIS]) {
+    if ([type isEqualToString:@"vehicleChassis"]) {
 
         result = WOTVehicleModuleTypeChassis;
-    } else if ([type isEqualToString:WOT_VALUE_VEHICLE_GUN]) {
+    } else if ([type isEqualToString:@"vehicleGun"]) {
         
         result = WOTVehicleModuleTypeGun;
-    } else if ([type isEqualToString:WOT_VALUE_VEHICLE_ENGINE]) {
+    } else if ([type isEqualToString:@"vehicleEngine"]) {
         
         result = WOTVehicleModuleTypeEngine;
-    } else if ([type isEqualToString:WOT_VALUE_VEHICLE_TURRET]) {
+    } else if ([type isEqualToString:@"vehicleTurret"]) {
         
         result = WOTVehicleModuleTypeTurret;
-    } else if([type isEqualToString:WOT_VALUE_VEHICLE_RADIO]) {
+    } else if([type isEqualToString:@"vehicleRadio"]) {
         
         result = WOTVehicleModuleTypeRadio;
     };
@@ -124,47 +124,47 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 
 #warning should be refactored
     
-    NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tank_id, [key integerValue]];
-    Tanks *tank = (Tanks *)[Tanks findOrCreateObjectWithPredicate:tanksPredicate context:context];
-    [tank setVehicles:vehicle];
-    
+//    NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tank_id, [key integerValue]];
+//    Vehicles *tank = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:tanksPredicate context:context];
+////    [tank setVehicles:vehicle];
+//
     NSArray *availableLinks = [clazz availableLinks];
 
     for (WOTWebResponseLink *wotWebResponseLink in availableLinks) {
-        
+
         Class clazz = wotWebResponseLink.clazz;
         if (![clazz isSubclassOfClass:[NSManagedObject class]]) {
-            
+
             return result;
         }
-        
+
         if (!wotWebResponseLink.jsonKeyName) {
-            
+
             return result;
         }
 
         NSString *linkName = NSLocalizedString(wotWebResponseLink.jsonKeyName, nil);
         id jSONLink = jSON[linkName];
         if ([jSONLink isKindOfClass:[NSArray class]]) {
-            
+
             NSDictionary *requestsForLinks  = [self parseArrayLinkIDs:jSONLink
                                                    wotWebResponseLink:wotWebResponseLink
                                                               context:context
                                                               vehicle:vehicle];
             [result addEntriesFromDictionary:requestsForLinks];
-            
+
         } else if([jSONLink isKindOfClass:[NSDictionary class]]) {
-            
+
             NSDictionary *requestsForObjs = [self parseDictionaryLink:jSONLink
                                                    wotWebResponseLink:wotWebResponseLink
                                                               context:context
-                                                                 tank:tank];
+                                                              vehicle:vehicle];
             [result addEntriesFromDictionary:requestsForObjs];
         } else {
-            
+
         }
     }
-    
+
     return [result copy];
 }
 
@@ -215,7 +215,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 #pragma mark - modules
 
 
-- (NSDictionary *)parseDictionaryLink:(NSDictionary *)jSON wotWebResponseLink:(WOTWebResponseLink *)wotWebResponseLink context:(NSManagedObjectContext *)context tank:(Tanks *)tank{
+- (NSDictionary *)parseDictionaryLink:(NSDictionary *)jSON wotWebResponseLink:(WOTWebResponseLink *)wotWebResponseLink context:(NSManagedObjectContext *)context vehicle:(Vehicles *)tank{
     
     NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
     
@@ -226,13 +226,13 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     }
     
     Class clazz = wotWebResponseLink.clazz;
-    [self parseModulesJSON:jSON clazz:clazz keys:keys coreDataIdName:wotWebResponseLink.coredataIdName context:context tank:tank];
+    [self parseModulesJSON:jSON clazz:clazz keys:keys coreDataIdName:wotWebResponseLink.coredataIdName context:context vehicle:tank];
     
     return requests;
 }
 
 
-- (void)parseModulesJSON:(NSDictionary *)jSON clazz:(Class)clazz keys:(NSArray *)keys coreDataIdName:(id)coreDataIdName context:(NSManagedObjectContext *)context tank:(Tanks *)tank{
+- (void)parseModulesJSON:(NSDictionary *)jSON clazz:(Class)clazz keys:(NSArray *)keys coreDataIdName:(id)coreDataIdName context:(NSManagedObjectContext *)context vehicle:(Vehicles *)tank{
     
     if (!keys.hasItems) {
 
@@ -286,7 +286,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         }];
     }];
     
-    [self parseModulesJSON:jSON clazz:clazz keys:nextChildren coreDataIdName:coreDataIdName context:context tank:tank];
+    [self parseModulesJSON:jSON clazz:clazz keys:nextChildren coreDataIdName:coreDataIdName context:context vehicle:tank];
 }
 
 
@@ -301,16 +301,16 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         
         *returningModule = moduleTree;
 
-        NSArray *nextTanks = jSON[WOT_KEY_NEXT_TANKS];
-        if (nextTanks.hasItems) {
-            
-            [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
-                
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tank_id,nextTankId];
-                Tanks *tanks = (Tanks *)[Tanks findOrCreateObjectWithPredicate:predicate context:context];
-                [moduleTree addNextTanksObject:tanks];
-            }];
-        }
+//        NSArray *nextTanks = jSON[WOT_KEY_NEXT_TANKS];
+//        if (nextTanks.hasItems) {
+//            
+//            [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
+//                
+//                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tank_id,nextTankId];
+//                Tanks *tanks = (Tanks *)[Tanks findOrCreateObjectWithPredicate:predicate context:context];
+//                [moduleTree addNextTanksObject:tanks];
+//            }];
+//        }
 
         WOTVehicleModuleType moduleType = [WOTWebResponseAdapterVehicles moduleTypeFromString:jSON[WOTApiKeys.type]];
         switch (moduleType) {

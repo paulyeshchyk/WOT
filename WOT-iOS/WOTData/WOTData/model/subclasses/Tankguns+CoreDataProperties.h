@@ -19,9 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSDecimalNumber *level;
 @property (nullable, nonatomic, copy) NSDecimalNumber *module_id;
 @property (nullable, nonatomic, copy) NSString *name;
-@property (nullable, nonatomic, copy) NSString *name_i18n;
 @property (nullable, nonatomic, copy) NSString *nation;
-@property (nullable, nonatomic, copy) NSString *nation_i18n;
 @property (nullable, nonatomic, copy) NSDecimalNumber *price_credit;
 @property (nullable, nonatomic, copy) NSDecimalNumber *price_gold;
 @property (nullable, nonatomic, copy) NSDecimalNumber *rate;

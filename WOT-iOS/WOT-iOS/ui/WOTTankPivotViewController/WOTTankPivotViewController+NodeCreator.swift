@@ -31,7 +31,7 @@ extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
     }
 
     public func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
-        return WOTNodeFactory.pivotDataNode(for: byPredicate, andTanksObject: fetchedObject as Any)
+        return WOTNodeFactory.pivotDataNode(for: byPredicate, andVehicle: fetchedObject as Any)
     }
 
     public func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol] {

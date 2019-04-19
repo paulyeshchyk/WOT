@@ -26,8 +26,8 @@
 @dynamic nextGuns;
 @dynamic nextModules;
 @dynamic nextRadios;
-@dynamic nextTanks;
 @dynamic nextTurrets;
 @dynamic prevModules;
+@dynamic vehicles;
 
 @end

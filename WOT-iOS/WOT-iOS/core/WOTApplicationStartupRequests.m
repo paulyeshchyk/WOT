@@ -17,35 +17,8 @@
 
 + (void)executeAllStartupRequests {
     
-    [WOTApplicationStartupRequests executeTankListRequest];
+    [WOTApplicationStartupRequests executeVehiclesListRequest];
 }
-
-+ (void)executeTankListRequest {
-
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestCallback:^(id data, NSError *error) {
-        
-        if (!error) {
-            /*
-             * Vehicles
-             */
-            [self executeVehiclesListRequest];
-            
-        } else {
-            
-            debugError(@"request-fail:%@",error.localizedDescription);
-        }
-    }];
-
-    WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
-    //TODO: availableFields is internal method
-    [arguments setValues:[Tanks availableFields] forKey:WOTApiKeys.fields];
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTanks];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_TANK_LIST];
-    if (canAdd) {
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:arguments];
-    }
-}
-
 
 #pragma mark - private
 + (void)executeVehiclesListRequest {

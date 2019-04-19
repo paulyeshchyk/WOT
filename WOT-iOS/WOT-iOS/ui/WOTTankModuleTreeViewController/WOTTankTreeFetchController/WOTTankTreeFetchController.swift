@@ -29,27 +29,28 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
     }
 
     private func tankId(_ tank: AnyObject) -> NSDecimalNumber? {
-        guard let tanks = tank as? Tanks else {
+        guard let tanks = tank as? Vehicles else {
             return nil
         }
         return tanks.tank_id
     }
 
-    private func tankModules(_ tank: AnyObject) -> Set<ModulesTree>? {
-        guard let tanks = tank as? Tanks else {
+    private func vehicleModules(_ vehicle: AnyObject) -> Set<ModulesTree>? {
+        guard let vehicles = vehicle as? Vehicles else {
             return nil
         }
-        return tanks.modulesTree
+        return vehicles.modulesTree
     }
 
     private func transform(tank: AnyObject) -> [WOTNodeProtocol] {
+
         guard let tankId = self.tankId(tank) else {
             return []
         }
 
         let root = self.nodeCreator.createNode(fetchedObject: tank, byPredicate: nil)
 
-        guard let modules = self.tankModules(tank) else {
+        guard let modules = self.vehicleModules(tank) else {
             return [root]
         }
 
@@ -134,11 +135,14 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
         return self.module_id!.intValue
     }
 
+    #warning ("implement compatibility; otherwise module tree is not working")
     func isCompatible(forTankId: NSDecimalNumber) -> Bool {
-        let result = self.nextTanks?.filter({ (next) -> Bool in
-            return next.tank_id?.intValue == forTankId.intValue
-        })
-        return (result!.count != 0)
+        return true
+//        return false
+//        let result = self.nextTanks?.filter({ (next) -> Bool in
+//            return next.tank_id?.intValue == forTankId.intValue
+//        })
+//        return (result!.count != 0)
     }
 
     public func nestedModules() -> [WOTTreeModulesTreeProtocol]? {

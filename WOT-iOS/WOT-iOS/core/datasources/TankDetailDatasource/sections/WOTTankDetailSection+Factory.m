@@ -15,7 +15,7 @@
 
 + (WOTTankDetailSection *)engineSection {
     
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Engines" query: WOTApiKeys.engines metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name_i18n query: WOTApiKeys.engines],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Engines" query: WOTApiKeys.engines metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name query: WOTApiKeys.engines],
                                                                                                                               [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.price_credit query: WOTApiKeys.engines],
                                                                                                                               [WOTTankDetailFieldExpression enginePowerCompareFieldExpression],
                                                                                                                               [WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression]
@@ -25,7 +25,7 @@
 
 + (WOTTankDetailSection *)chassisSection {
 
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Suspensions" query: WOTApiKeys.suspensions metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name_i18n query: WOTApiKeys.suspensions],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Suspensions" query: WOTApiKeys.suspensions metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name query: WOTApiKeys.suspensions],
                                                                                                                                       [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.price_credit query: WOTApiKeys.suspensions],
                                                                                                                                       [WOTTankDetailFieldExpression suspensionRotationSpeedCompareFieldExpression]
                                                                                                                                       ]];
@@ -35,9 +35,9 @@
 + (WOTTankDetailSection *)gunsSection {
 
     WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Guns" query: WOTApiKeys.guns metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name query: WOTApiKeys.guns],
-                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name_i18n query: WOTApiKeys.guns],
+                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name query: WOTApiKeys.guns],
                                                                                                                         [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.price_credit query: WOTApiKeys.guns],
-                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.level query: WOTApiKeys.guns],
+                                                                                                                        [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.tier query: WOTApiKeys.guns],
                                                                                                                         [WOTTankDetailFieldExpression gunRateCompareFieldExpression]
                                                                                                                         ]];
     return result;
@@ -45,8 +45,8 @@
 
 + (WOTTankDetailSection *)turretsSection {
 
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Turrets" query: WOTApiKeys.turrets metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name_i18n query: WOTApiKeys.turrets],
-                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.level query: WOTApiKeys.turrets],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Turrets" query: WOTApiKeys.turrets metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name query: WOTApiKeys.turrets],
+                                                                                                                           [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.tier query: WOTApiKeys.turrets],
                                                                                                                            [WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression],
                                                                                                                            [WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression],
                                                                                                                            [WOTTankDetailFieldExpression turretsArmorForeheadCompareFieldExpression],
@@ -58,7 +58,7 @@
 
 + (WOTTankDetailSection *)radiosSection {
 
-    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Radios" query: WOTApiKeys.radios metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name_i18n query: WOTApiKeys.radios],
+    WOTTankDetailSection *result = [[WOTTankDetailSection alloc] initWithTitle:@"Radios" query: WOTApiKeys.radios metrics:@[[WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.name query: WOTApiKeys.radios],
                                                                                                                             [WOTTankDetailFieldKVO fieldWithFieldPath:WOTApiKeys.price_credit query: WOTApiKeys.radios],
                                                                                                                             [WOTTankDetailFieldExpression radiosDistanceCompareFieldExpression]
                                                                                                                             ]];

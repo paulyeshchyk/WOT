@@ -12,7 +12,7 @@ import WOTPivot
 extension WOTTankPivotViewController: WOTDataFetchControllerDelegateProtocol {
 
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
-        let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Tanks")
+        let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicles")
         result.sortDescriptors = self.sortDescriptors()
         result.predicate = self.fetchCustomPredicate()
         return result

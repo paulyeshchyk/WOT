@@ -33,8 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) VehicleprofileGun *gun;
 @property (nullable, nonatomic, retain) VehicleprofileRadio *radio;
 @property (nullable, nonatomic, retain) VehicleprofileSuspension *suspension;
-@property (nullable, nonatomic, retain) Tanks *tank;
 @property (nullable, nonatomic, retain) VehicleprofileTurret *turret;
+@property (nullable, nonatomic, retain) ModulesTree *modulesTree;
 
 @end
 

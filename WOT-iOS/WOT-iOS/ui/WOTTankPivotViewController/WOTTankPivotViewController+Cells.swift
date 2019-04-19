@@ -35,11 +35,11 @@ extension WOTTankPivotViewController {
         }
         cell.symbol = node.name
         cell.dataViewColor = node.dataColor
-        if let tank = node.data1 as? Tanks {
-            cell.dpm = tank.dpm.suffixNumber()
-            cell.mask = tank.invisibility
-            cell.visibility = tank.visionRadius.suffixNumber()
-        }
+//        if let vehicle = node.data1 as? Vehicles {
+//            cell.dpm = tank.dpm.suffixNumber()
+//            cell.mask = tank.invisibility
+//            cell.visibility = tank.visionRadius.suffixNumber()
+//        }
         return cell
     }
 

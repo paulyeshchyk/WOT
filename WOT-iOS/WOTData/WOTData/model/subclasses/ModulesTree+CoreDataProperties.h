@@ -27,9 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSSet<Tankguns *> *nextGuns;
 @property (nullable, nonatomic, retain) NSSet<ModulesTree *> *nextModules;
 @property (nullable, nonatomic, retain) NSSet<Tankradios *> *nextRadios;
-@property (nullable, nonatomic, retain) NSSet<Tanks *> *nextTanks;
 @property (nullable, nonatomic, retain) NSSet<Tankturrets *> *nextTurrets;
 @property (nullable, nonatomic, retain) ModulesTree *prevModules;
+@property (nullable, nonatomic, retain) Vehicles *vehicles;
 
 @end
 
@@ -59,11 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeNextRadiosObject:(Tankradios *)value;
 - (void)addNextRadios:(NSSet<Tankradios *> *)values;
 - (void)removeNextRadios:(NSSet<Tankradios *> *)values;
-
-- (void)addNextTanksObject:(Tanks *)value;
-- (void)removeNextTanksObject:(Tanks *)value;
-- (void)addNextTanks:(NSSet<Tanks *> *)values;
-- (void)removeNextTanks:(NSSet<Tanks *> *)values;
 
 - (void)addNextTurretsObject:(Tankturrets *)value;
 - (void)removeNextTurretsObject:(Tankturrets *)value;

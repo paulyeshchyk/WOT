@@ -19,7 +19,6 @@
 @dynamic level;
 @dynamic module_id;
 @dynamic name;
-@dynamic name_i18n;
 @dynamic nation;
 @dynamic power;
 @dynamic price_credit;

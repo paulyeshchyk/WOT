@@ -32,13 +32,13 @@
 #warning will recreate objects if user has deleted everything
     if ([[fetchedResultController fetchedObjects] count] == 0) {
         
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.nation_i18n ascending:NO orderBy:0 callback:NULL];
+        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.nation ascending:NO orderBy:0 callback:NULL];
         [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.type ascending:YES orderBy:1 callback:NULL];
         
         
-        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOTApiKeys.nation_i18n ascending:YES orderBy:0 callback:NULL];
+        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOTApiKeys.nation ascending:YES orderBy:0 callback:NULL];
         
-        [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.level value:@"6" callback:NULL];
+        [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.tier value:@"6" callback:NULL];
         
         if ([context hasChanges]) {
             
@@ -129,12 +129,6 @@
      * Clear Sassion
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdClearSession registerRequestClass:[WOTClearSessionRequest class]];
-
-    /**
-     * Tanks.Tanks
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerDataAdapterClass:[WOTWebResponseAdapterTanks class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTanks registerRequestClass:[WOTWEBRequestTanks class]];
 
     /**
      * Tanks.Chassis

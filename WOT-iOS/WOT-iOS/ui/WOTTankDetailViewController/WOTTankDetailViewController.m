@@ -160,7 +160,7 @@
     if (_vehicle != vehicle) {
         
         _vehicle = vehicle;
-        self.title = _vehicle.tanks.name_i18n;
+//        self.title = _vehicle.tanks.name_i18n;
 
         [self fetchPlayableVehiclesForTier:_vehicle.tier];
         [self fetchDefaultConfigurationForTankId:[_vehicle.tank_id stringValue]];

@@ -19,9 +19,7 @@
 @dynamic level;
 @dynamic module_id;
 @dynamic name;
-@dynamic name_i18n;
 @dynamic nation;
-@dynamic nation_i18n;
 @dynamic price_credit;
 @dynamic price_gold;
 @dynamic modulesTree;

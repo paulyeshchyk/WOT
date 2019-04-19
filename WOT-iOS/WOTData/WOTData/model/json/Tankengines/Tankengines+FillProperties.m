@@ -18,8 +18,7 @@
     self.name = jSON[WOTApiKeys.name];
     
     self.fire_starting_chance = jSON[WOTApiKeys.fire_starting_chance];
-    self.level = jSON[WOTApiKeys.level];
-    self.name_i18n = jSON[WOTApiKeys.name_i18n];
+    self.level = jSON[WOTApiKeys.tier];
     self.nation = jSON[WOTApiKeys.nation];
     self.power = jSON[WOTApiKeys.power];
     self.price_credit = jSON[WOTApiKeys.price_credit];
@@ -28,7 +27,7 @@
 
 
 + (NSArray *)availableFields {
-    return @[WOTApiKeys.name_i18n,WOTApiKeys.name,WOTApiKeys.price_gold, WOTApiKeys.level, WOTApiKeys.nation, WOTApiKeys.power, WOTApiKeys.price_credit, WOTApiKeys.fire_starting_chance, WOTApiKeys.module_id, WOTApiKeys.nation_i18n];
+    return @[WOTApiKeys.name, WOTApiKeys.price_gold, WOTApiKeys.tier, WOTApiKeys.nation, WOTApiKeys.power, WOTApiKeys.price_credit, WOTApiKeys.fire_starting_chance, WOTApiKeys.module_id];
 }
 
 @end

@@ -80,9 +80,9 @@
         id radio = [self context:context parseRadio:profile[@"radio"]];
         [vehicleProfile setRadio:radio];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tank_id,[key integerValue]];
-        Tanks *tank = (Tanks *)[Tanks findOrCreateObjectWithPredicate:predicate context:context];
-        [tank addVehicleprofilesObject:vehicleProfile];
+//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tank_id,[key integerValue]];
+//        Tanks *tank = (Tanks *)[Tanks findOrCreateObjectWithPredicate:predicate context:context];
+//        [tank addVehicleprofilesObject:vehicleProfile];
     }
 }
 

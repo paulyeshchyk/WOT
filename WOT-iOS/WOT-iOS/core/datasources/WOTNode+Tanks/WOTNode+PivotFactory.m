@@ -17,20 +17,17 @@
     return node;
 }
 
-+ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nullable)predicate andTanksObject:(id _Nonnull)tanksObject {
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nullable)predicate andVehicle:(id _Nonnull)vehicle {
     
-    Tanks *tanks = tanksObject;
-    id<WOTPivotNodeProtocol> node = [[WOTPivotDataNode alloc] initWithName:tanks.name_i18n];
+    Vehicles *vehicles = vehicle;
+    id<WOTPivotNodeProtocol> node = [[WOTPivotDataNode alloc] initWithName:vehicles.name];
 
     node.predicate = predicate;
-    node.imageURL = [NSURL URLWithString:tanks.image];
-    
-    node.dataColor = [UIColor whiteColor];
-    NSDictionary *colors = [WOTNodeFactory typeColors];
-    
-    node.dataColor = colors[tanks.type];
-    
-    [node setData1:tanks];
+//    node.imageURL = [NSURL URLWithString:tanks.image];
+//
+    node.dataColor = [WOTNodeFactory typeColors][vehicles.type];
+
+    [node setData1:vehicles];
     return node;
 }
 

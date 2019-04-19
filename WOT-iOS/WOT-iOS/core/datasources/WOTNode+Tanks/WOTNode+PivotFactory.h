@@ -14,7 +14,7 @@
 @interface WOTNodeFactory: NSObject
 
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotEmptyNode;
-+ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nullable)predicate andTanksObject:(id _Nonnull)tanksObject;
++ (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeForPredicate:(NSPredicate * _Nullable)predicate andVehicle:(id _Nonnull)vehicle;
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotDataNodeGroupForPredicate:(NSPredicate * _Nullable)predicate andTanksObjects:(NSArray* _Nonnull)tanksObjects;
 
 + (id<WOTPivotNodeProtocol> _Nonnull)pivotHPMetadataItemAsType:(PivotMetadataType)type;
