@@ -10,10 +10,6 @@
 
 @implementation VehicleprofileAmmo (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-    
-    self.ammoType = jSON[@"type"];
-}
 
 + (NSArray *)availableFields {
 

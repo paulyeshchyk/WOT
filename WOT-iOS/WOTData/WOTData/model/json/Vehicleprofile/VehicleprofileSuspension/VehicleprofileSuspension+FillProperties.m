@@ -10,16 +10,6 @@
 
 @implementation VehicleprofileSuspension (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-    
-    self.name = jSON[@"name"];
-    self.weight = jSON[@"weight"];
-    self.load_limit = jSON[@"load_limit"];
-    self.tag = jSON[@"tag"];
-    self.tier = jSON[@"tier"];
-    
-}
-
 + (NSArray *)availableFields {
     
     return @[@"name",@"weight",@"load_limit",@"tag",@"tier"];

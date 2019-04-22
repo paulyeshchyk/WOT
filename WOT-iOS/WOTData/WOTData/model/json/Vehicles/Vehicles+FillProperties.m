@@ -14,30 +14,21 @@
 
 @implementation Vehicles (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-    
-    self.name = jSON[WOTApiKeys.name];
-    self.nation = jSON[WOTApiKeys.nation];
-    self.price_credit = jSON[WOTApiKeys.price_credit];
-    self.price_gold = jSON[WOTApiKeys.price_gold];
-    self.is_premium = jSON[WOTApiKeys.is_premium];
-    self.short_name = jSON[WOTApiKeys.short_name];
-    self.tag = jSON[WOTApiKeys.tag];
-    self.tier = jSON[WOTApiKeys.tier];
-    /*
-     * can be
-     * lightTank, SPG, AT-SPG, heavyTank, mediumTank
-     */
-    self.type = jSON[WOTApiKeys.type];
-    self.tank_id = jSON[WOTApiKeys.tank_id];
-}
-
-
 + (NSArray *)availableFields {
 //, WOTApiKeys.price_gold, WOTApiKeys.short_name, WOT_KEY_PRICES_XP];
-    return @[WOTApiKeys.name,WOTApiKeys.nation, WOTApiKeys.type, WOTApiKeys.tag, WOTApiKeys.tier, WOTApiKeys.tank_id, WOTApiKeys.default_profile,
+    return @[WOTApiKeys.name,
+             WOTApiKeys.nation,
+             WOTApiKeys.type,
+             WOTApiKeys.tag,
+             WOTApiKeys.tier,
+             WOTApiKeys.tank_id,
+             WOTApiKeys.default_profile,
              WOTApiKeys.modules_tree,
-             WOTApiKeys.engines, WOTApiKeys.suspensions, WOTApiKeys.radios, WOTApiKeys.guns, WOTApiKeys.turrets];
+             WOTApiKeys.engines,
+             WOTApiKeys.suspensions,
+             WOTApiKeys.radios,
+             WOTApiKeys.guns,
+             WOTApiKeys.turrets];
 }
 
 

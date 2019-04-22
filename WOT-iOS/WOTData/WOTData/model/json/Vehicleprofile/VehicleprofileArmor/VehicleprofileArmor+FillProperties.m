@@ -10,13 +10,6 @@
 
 @implementation VehicleprofileArmor (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-
-    self.front = jSON[@"front"];
-    self.sides = jSON[@"sides"];
-    self.rear = jSON[@"rear"];
-}
-
 + (NSArray *)availableFields {
     
     return @[@"front",@"sides",@"rear"];

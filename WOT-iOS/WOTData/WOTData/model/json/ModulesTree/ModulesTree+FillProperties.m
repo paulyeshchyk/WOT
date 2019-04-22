@@ -13,22 +13,6 @@
 
 @implementation ModulesTree (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-    
-    self.module_id = jSON[WOTApiKeys.module_id];
-    self.name = jSON[WOTApiKeys.name];
-    
-    self.price_credit = jSON[WOTApiKeys.price_credit];
-    self.price_xp = jSON[WOTApiKeys.price_xp];
-    self.is_default = jSON[WOTApiKeys.is_default];
-
-    /**
-     *  availableTypes
-     *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
-     */
-    self.type = jSON[WOTApiKeys.type];
-}
-
 + (NSArray *)availableFields {
     
     return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.price_credit, WOTApiKeys.modules_tree];

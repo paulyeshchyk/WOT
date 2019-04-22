@@ -28,7 +28,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         return result
     }
 
-    private func tankId(_ tank: AnyObject) -> NSDecimalNumber? {
+    private func tankId(_ tank: AnyObject) -> NSNumber? {
         guard let tanks = tank as? Vehicles else {
             return nil
         }
@@ -87,7 +87,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
 
     typealias NodeCreateClosure = (Int, ModulesTree) -> Void
 
-    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber, nodeCreation: NodeCreateClosure) {
+    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
         modulesSet.forEach { (submodule) in
             if let moduleId = submodule.module_id?.intValue {
                 if submodule.isCompatible(forTankId: tankId) {
@@ -98,7 +98,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         }
     }
 
-    private func transform(module: ModulesTree, withId tankId: NSDecimalNumber, nodeCreation: NodeCreateClosure) {
+    private func transform(module: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
         guard let submodules = module.nextModules else {
             return
         }
@@ -136,9 +136,8 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     }
 
     #warning ("implement compatibility; otherwise module tree is not working")
-    func isCompatible(forTankId: NSDecimalNumber) -> Bool {
-        return true
-//        return false
+    func isCompatible(forTankId: NSNumber) -> Bool {
+        return self.vehicles?.tank_id?.intValue == forTankId.intValue
 //        let result = self.nextTanks?.filter({ (next) -> Bool in
 //            return next.tank_id?.intValue == forTankId.intValue
 //        })

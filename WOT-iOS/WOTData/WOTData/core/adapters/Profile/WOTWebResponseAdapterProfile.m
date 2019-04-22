@@ -57,7 +57,7 @@
         NSCAssert(vehicleProfile, @"vehicleProfile should not be nil");
         
         [vehicleProfile setHashName:[NSDecimalNumber decimalNumberWithString:hashNameStr]];
-        [vehicleProfile fillPropertiesFromDictionary:profile];
+        [vehicleProfile mappingFrom:profile];
 
         id ammo = [self context:context parseAmmo:profile[@"ammo"]];
         [vehicleProfile setAmmo:ammo];
@@ -89,14 +89,14 @@
 - (id)context:(NSManagedObjectContext *)context parseEngine:(NSDictionary *)engine {
     
     VehicleprofileEngine *result = (VehicleprofileEngine *)[VehicleprofileEngine insertNewObject:context];
-    [result fillPropertiesFromDictionary:engine];
+    [result mappingFrom:engine];
     return result;
 }
 
 - (id)context:(NSManagedObjectContext *)context parseSuspension:(NSDictionary *)suspension {
 
     VehicleprofileSuspension *result = (VehicleprofileSuspension *)[VehicleprofileSuspension insertNewObject:context];
-    [result fillPropertiesFromDictionary:suspension];
+    [result mappingFrom:suspension];
     return result;
 }
 
@@ -106,12 +106,12 @@
 
     id turretArmor = armor[@"turret"];
     VehicleprofileArmor *turret = (VehicleprofileArmor *)[VehicleprofileArmor insertNewObject:context];
-    [turret fillPropertiesFromDictionary:turretArmor];
+    [turret mappingFrom:turretArmor];
     [result setTurret:turret];
 
     id hullArmor = armor[@"hull"];
     VehicleprofileArmor *hull = (VehicleprofileArmor *)[VehicleprofileArmor insertNewObject:context];
-    [hull fillPropertiesFromDictionary:hullArmor];
+    [hull mappingFrom:hullArmor];
     [result setHull:hull];
     
     return result;
@@ -120,21 +120,21 @@
 - (id)context:(NSManagedObjectContext *)context parseGun:(NSDictionary *)gun {
     
     VehicleprofileGun *result = (VehicleprofileGun *)[VehicleprofileGun insertNewObject:context];
-    [result fillPropertiesFromDictionary:gun];
+    [result mappingFrom:gun];
     return result;
 }
 
 - (id)context:(NSManagedObjectContext *)context parseTurret:(NSDictionary *)turret {
     
     VehicleprofileTurret *result = (VehicleprofileTurret *)[VehicleprofileTurret insertNewObject:context];
-    [result fillPropertiesFromDictionary:turret];
+    [result mappingFrom:turret];
     return result;
 }
 
 - (id)context:(NSManagedObjectContext *)context parseRadio:(NSDictionary *)radio {
     
     VehicleprofileRadio *result = (VehicleprofileRadio *)[VehicleprofileRadio insertNewObject:context];
-    [result fillPropertiesFromDictionary:radio];
+    [result mappingFrom:radio];
     return result;
 }
 
@@ -145,14 +145,14 @@
     for(NSDictionary *ammoJSON in ammo) {
         
         VehicleprofileAmmo *ammoObject = (VehicleprofileAmmo *)[VehicleprofileAmmo insertNewObject:context];
-        [ammoObject fillPropertiesFromDictionary:ammoJSON];
+        [ammoObject mappingFrom:ammoJSON];
         
         VehicleprofileAmmoPenetration *ammoPenetration = (VehicleprofileAmmoPenetration *)[VehicleprofileAmmoPenetration insertNewObject:context];
-        [ammoPenetration fillPropertiesFromDictionary:ammoJSON[@"penetration"]];
+        [ammoPenetration mappingFrom:ammoJSON[@"penetration"]];
         [ammoObject setPenetration:ammoPenetration];
         
         VehicleprofileAmmoDamage *ammoDamage = (VehicleprofileAmmoDamage *)[VehicleprofileAmmoDamage insertNewObject:context];
-        [ammoDamage fillPropertiesFromDictionary:ammoJSON[@"damage"]];
+        [ammoDamage mappingFrom:ammoJSON[@"damage"]];
         [ammoObject setDamage:ammoDamage];
 
         [result addVehicleprofileAmmoObject:ammoObject];

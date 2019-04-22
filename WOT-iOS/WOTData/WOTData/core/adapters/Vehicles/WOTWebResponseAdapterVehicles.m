@@ -114,11 +114,11 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tag,jSON[WOTApiKeys.tag]];
     Vehicles *vehicle = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:predicate context:context];
-    [vehicle fillPropertiesFromDictionary:jSON];
+    [vehicle mappingFrom:jSON];
     
 #warning dirty code
     Vehicleprofile *defaultProfile = (Vehicleprofile *)[Vehicleprofile insertNewObject:context];
-    [defaultProfile fillPropertiesFromDictionary:jSON[WOTApiKeys.default_profile]];
+    [defaultProfile mappingFrom:jSON[WOTApiKeys.default_profile]];
     vehicle.default_profile = defaultProfile;
 
 
@@ -297,7 +297,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
         ModulesTree *moduleTree = (ModulesTree *)[clazz findOrCreateObjectWithPredicate:predicate context:context];
         [moduleTree setValue:jSONLinkId forKey:coreDataIdName];
-        [moduleTree fillPropertiesFromDictionary:jSON];
+        [moduleTree mappingFrom:jSON];
         
         *returningModule = moduleTree;
 

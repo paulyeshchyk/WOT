@@ -35,6 +35,7 @@ extension WOTTankPivotViewController {
         }
         cell.symbol = node.name
         cell.dataViewColor = node.dataColor
+        cell.uuid = node.index
 //        if let vehicle = node.data1 as? Vehicles {
 //            cell.dpm = tank.dpm.suffixNumber()
 //            cell.mask = tank.invisibility

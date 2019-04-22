@@ -2,8 +2,8 @@
 //  Vehicles+CoreDataProperties.h
 //  WOTData
 //
-//  Created on 8/28/18.
-//  Copyright © 2018. All rights reserved.
+//  Created by Pavel Yeshchyk on 4/22/19.
+//  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 //
 
@@ -30,10 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) Vehicleprofile *default_profile;
 @property (nullable, nonatomic, retain) NSSet<Tankengines *> *engines;
 @property (nullable, nonatomic, retain) NSSet<Tankguns *> *guns;
+@property (nullable, nonatomic, retain) NSSet<ModulesTree *> *modulesTree;
 @property (nullable, nonatomic, retain) NSSet<Tankradios *> *radios;
 @property (nullable, nonatomic, retain) NSSet<Tankchassis *> *suspensions;
 @property (nullable, nonatomic, retain) NSSet<Tankturrets *> *turrets;
-@property (nullable, nonatomic, retain) NSSet<ModulesTree *> *modulesTree;
 
 @end
 
@@ -49,6 +49,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addGuns:(NSSet<Tankguns *> *)values;
 - (void)removeGuns:(NSSet<Tankguns *> *)values;
 
+- (void)addModulesTreeObject:(ModulesTree *)value;
+- (void)removeModulesTreeObject:(ModulesTree *)value;
+- (void)addModulesTree:(NSSet<ModulesTree *> *)values;
+- (void)removeModulesTree:(NSSet<ModulesTree *> *)values;
+
 - (void)addRadiosObject:(Tankradios *)value;
 - (void)removeRadiosObject:(Tankradios *)value;
 - (void)addRadios:(NSSet<Tankradios *> *)values;
@@ -63,11 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeTurretsObject:(Tankturrets *)value;
 - (void)addTurrets:(NSSet<Tankturrets *> *)values;
 - (void)removeTurrets:(NSSet<Tankturrets *> *)values;
-
-- (void)addModulesTreeObject:(ModulesTree *)value;
-- (void)removeModulesTreeObject:(ModulesTree *)value;
-- (void)addModulesTree:(NSSet<ModulesTree *> *)values;
-- (void)removeModulesTree:(NSSet<ModulesTree *> *)values;
 
 @end
 

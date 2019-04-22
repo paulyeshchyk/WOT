@@ -10,12 +10,6 @@
 
 @implementation NSManagedObject (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-    
-    NSString *exceptionText = [NSString stringWithFormat:@"should be overriden %@:%s",NSStringFromClass([self class]), __FUNCTION__];
-    NSCAssert(NO, exceptionText);
-}
-
 + (NSArray *)availableFields {
     
     NSString *exceptionText = [NSString stringWithFormat:@"should be overriden %@:%s",NSStringFromClass([self class]), __FUNCTION__];

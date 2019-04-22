@@ -41,7 +41,7 @@
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", WOTApiKeys.module_id, tankTurretsJSON[WOTApiKeys.module_id]];
             Tankturrets *tankturrets = (Tankturrets *)[Tankturrets findOrCreateObjectWithPredicate:predicate context:context];
-            [tankturrets fillPropertiesFromDictionary:tankTurretsJSON];
+            [tankturrets mappingFrom:tankTurretsJSON];
         }];
         
         if ([context hasChanges]) {

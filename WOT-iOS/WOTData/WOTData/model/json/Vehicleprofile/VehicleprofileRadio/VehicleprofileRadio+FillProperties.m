@@ -10,15 +10,6 @@
 
 @implementation VehicleprofileRadio (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-    
-    self.tier = jSON[@"tier"];
-    self.signal_range = jSON[@"signal_range"];
-    self.tag = jSON[@"tag"];
-    self.weight = jSON[@"weight"];
-    self.name = jSON[@"name"];
-}
-
 + (NSArray *)availableFields {
     
     return @[@"tier",@"signal_range",@"tag",@"weight",@"name"];

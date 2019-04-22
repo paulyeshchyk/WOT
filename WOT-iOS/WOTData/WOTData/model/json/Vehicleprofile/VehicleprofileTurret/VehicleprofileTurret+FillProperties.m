@@ -10,10 +10,6 @@
 
 @implementation VehicleprofileTurret (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-
-}
-
 + (NSArray *)availableFields {
     
     return nil;

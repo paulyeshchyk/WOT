@@ -10,12 +10,6 @@
 
 @implementation VehicleprofileAmmoDamage (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)jSON {
-    
-    self.min_value = ((NSArray *)jSON)[0];
-    self.avg_value = ((NSArray *)jSON)[1];
-    self.max_value = ((NSArray *)jSON)[2];
-}
 
 + (NSArray *)availableFields {
     

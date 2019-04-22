@@ -10,8 +10,6 @@
 
 @interface NSManagedObject (FillProperties)
 
-- (void)fillPropertiesFromDictionary:(NSDictionary *)dictionary;
-
 + (NSArray *)availableFields;
 + (NSArray *)availableLinks;
 + (NSArray *)embeddedLinks;

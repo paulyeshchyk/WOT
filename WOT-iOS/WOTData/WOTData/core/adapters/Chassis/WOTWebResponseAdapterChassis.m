@@ -40,7 +40,7 @@
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankChassisJSON[WOTApiKeys.module_id]];
             Tankchassis *tankChasses = (Tankchassis *)[Tankchassis findOrCreateObjectWithPredicate:predicate context:context];
-            [tankChasses fillPropertiesFromDictionary:tankChassisJSON];
+            [tankChasses mappingFrom:tankChassisJSON];
         }];
         
         if ([context hasChanges]) {
