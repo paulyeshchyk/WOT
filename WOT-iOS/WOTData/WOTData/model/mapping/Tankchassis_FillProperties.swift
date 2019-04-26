@@ -14,7 +14,8 @@ extension Tankchassis: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
+    public func mapping(from jSON: Any){
+        guard let jSON = jSON as? [AnyHashable: Any] else { return }
         self.module_id = jSON[WOTApiKeys.module_id] as? NSDecimalNumber
         self.name = jSON[WOTApiKeys.name] as? String
         

@@ -17,12 +17,12 @@ extension VehicleprofileAmmoDamage: JSONMapperProtocol {
     public typealias Fields = FieldKeys
     
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
-        guard let array = jSON as? [NSDecimalNumber] else {
+    public func mapping(from jSON: Any){
+        guard let array = jSON as? [NSNumber] else {
             return
         }
-        self.min_value = array[0];
-        self.avg_value = array[1];
-        self.max_value = array[2];
+        self.min_value = NSDecimalNumber(value: array[0].floatValue);
+        self.avg_value = NSDecimalNumber(value: array[1].floatValue);
+        self.max_value = NSDecimalNumber(value: array[2].floatValue);
     }
 }

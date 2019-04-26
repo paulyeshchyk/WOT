@@ -12,7 +12,7 @@ extension VehicleprofileTurret: JSONMapperProtocol {
     public typealias Fields = Void
     
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
+    public func mapping(from jSON: Any){
         
     }
 }

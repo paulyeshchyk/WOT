@@ -17,10 +17,10 @@ extension VehicleprofileArmor: JSONMapperProtocol {
     public typealias Fields = FieldKeys
     
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
-        
-        self.front = jSON["front"] as? NSDecimalNumber
-        self.sides = jSON["sides"] as? NSDecimalNumber
-        self.rear = jSON["rear"] as? NSDecimalNumber
+    public func mapping(from jSON: Any){
+        guard let jSON = jSON as? [AnyHashable: NSDecimalNumber] else { return }
+        self.front = jSON["front"]
+        self.sides = jSON["sides"]
+        self.rear = jSON["rear"]
     }
 }

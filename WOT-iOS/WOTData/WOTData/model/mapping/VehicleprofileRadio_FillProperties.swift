@@ -7,7 +7,6 @@
 //
 
 extension VehicleprofileRadio: JSONMapperProtocol {
-    
     public enum FieldKeys: String, CodingKey {
         case tier
         case signal_range
@@ -19,7 +18,8 @@ extension VehicleprofileRadio: JSONMapperProtocol {
     public typealias Fields = FieldKeys
     
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
+    public func mapping(from jSON: Any){
+        guard let jSON = jSON as? [AnyHashable: Any] else { return }
         self.tier = jSON["tier"] as? NSDecimalNumber
         self.signal_range = jSON["signal_range"] as? NSDecimalNumber
         self.tag = jSON["tag"] as? String

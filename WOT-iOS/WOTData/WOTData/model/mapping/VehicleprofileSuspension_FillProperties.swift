@@ -19,7 +19,8 @@ extension VehicleprofileSuspension: JSONMapperProtocol {
     public typealias Fields = FieldKeys
     
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
+    public func mapping(from jSON: Any){
+        guard let jSON = jSON as? [AnyHashable: Any] else { return }
         self.name = jSON["name"] as? String
         self.weight = jSON["weight"] as? NSDecimalNumber
         self.load_limit = jSON["load_limit"] as? NSDecimalNumber

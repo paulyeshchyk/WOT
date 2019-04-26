@@ -24,7 +24,8 @@ extension Vehicleprofile: JSONMapperProtocol {
     public typealias Fields = FieldKeys
     
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
+    public func mapping(from jSON: Any){
+        guard let jSON = jSON as? [AnyHashable: Any] else { return }
         self.max_ammo = jSON["max_ammo"] as? NSDecimalNumber
         self.weight = jSON["weight"] as? NSDecimalNumber
         self.hp = jSON["hp"] as? NSDecimalNumber

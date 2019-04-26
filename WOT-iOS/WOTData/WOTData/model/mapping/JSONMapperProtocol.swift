@@ -8,6 +8,6 @@
 
 public protocol JSONMapperProtocol {
     associatedtype Fields
-    func mapping(from jSON: [AnyHashable: Any])
+    func mapping(from jSON: Any)
 }
 

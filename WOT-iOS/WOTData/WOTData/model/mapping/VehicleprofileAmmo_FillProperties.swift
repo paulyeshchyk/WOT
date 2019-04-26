@@ -15,8 +15,9 @@ extension VehicleprofileAmmo: JSONMapperProtocol {
     public typealias Fields = FieldKeys
     
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
-        
+    public func mapping(from jSON: Any){
+        guard let jSON = jSON as? [AnyHashable: Any] else { return }
+
         self.ammoType = jSON["type"] as? String
     }
 }

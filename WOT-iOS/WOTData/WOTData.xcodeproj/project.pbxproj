@@ -106,6 +106,8 @@
 		1DB67463221C05D500982EE6 /* NSManagedObject+CoreDataOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB67460221C05D500982EE6 /* NSManagedObject+CoreDataOperations.m */; };
 		1DB67464221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB67461221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DB67466221C06B700982EE6 /* WOTDataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB67465221C06B700982EE6 /* WOTDataAPI.swift */; };
+		1DBA9CF62273389800162DE1 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBA9CF42273389800162DE1 /* Coding.swift */; };
+		1DBA9CF72273389800162DE1 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBA9CF52273389800162DE1 /* AnyCodable.swift */; };
 		1DCCA7FA2269FC6D00D370E8 /* Tankchassis+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DCCA7A62269FC6C00D370E8 /* Tankchassis+CoreDataProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DCCA7FB2269FC6D00D370E8 /* Tankchassis+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DCCA7A72269FC6C00D370E8 /* Tankchassis+CoreDataClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DCCA7FC2269FC6D00D370E8 /* Tankchassis+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCCA7A82269FC6C00D370E8 /* Tankchassis+CoreDataClass.m */; };
@@ -326,6 +328,8 @@
 		1DB67460221C05D500982EE6 /* NSManagedObject+CoreDataOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreDataOperations.m"; sourceTree = "<group>"; };
 		1DB67461221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataOperations.h"; sourceTree = "<group>"; };
 		1DB67465221C06B700982EE6 /* WOTDataAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataAPI.swift; sourceTree = "<group>"; };
+		1DBA9CF42273389800162DE1 /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
+		1DBA9CF52273389800162DE1 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		1DCCA7A62269FC6C00D370E8 /* Tankchassis+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tankchassis+CoreDataProperties.h"; sourceTree = "<group>"; };
 		1DCCA7A72269FC6C00D370E8 /* Tankchassis+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tankchassis+CoreDataClass.h"; sourceTree = "<group>"; };
 		1DCCA7A82269FC6C00D370E8 /* Tankchassis+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Tankchassis+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -604,6 +608,7 @@
 		1D3DAEEC213416FD00368AFA /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1DBA9CF32273389800162DE1 /* codable */,
 				1D2564FB221C18800047E8E3 /* templates */,
 				1DB6745D221C05D500982EE6 /* categories */,
 				1D65F77D221552E6006A85E4 /* dataProvider */,
@@ -816,11 +821,11 @@
 			isa = PBXGroup;
 			children = (
 				1D8C28FD21357AD900759C42 /* ModulesTree+UI.h */,
-				1D8C28FE21357AD900759C42 /* ModulesTree+CustomName.h */,
-				1D8C28FF21357AD900759C42 /* ModulesTree+FillProperties.h */,
 				1D8C290021357AD900759C42 /* ModulesTree+UI.m */,
-				1D8C290121357AD900759C42 /* ModulesTree+CustomName.m */,
+				1D8C28FF21357AD900759C42 /* ModulesTree+FillProperties.h */,
 				1D8C290221357AD900759C42 /* ModulesTree+FillProperties.m */,
+				1D8C28FE21357AD900759C42 /* ModulesTree+CustomName.h */,
+				1D8C290121357AD900759C42 /* ModulesTree+CustomName.m */,
 			);
 			path = ModulesTree;
 			sourceTree = "<group>";
@@ -1060,6 +1065,15 @@
 				1DB67461221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h */,
 			);
 			path = NSManagedObject;
+			sourceTree = "<group>";
+		};
+		1DBA9CF32273389800162DE1 /* codable */ = {
+			isa = PBXGroup;
+			children = (
+				1DBA9CF42273389800162DE1 /* Coding.swift */,
+				1DBA9CF52273389800162DE1 /* AnyCodable.swift */,
+			);
+			path = codable;
 			sourceTree = "<group>";
 		};
 		1DCCA90C226DC50900D370E8 /* mapping */ = {
@@ -1342,6 +1356,7 @@
 				1DCCA7FD2269FC6D00D370E8 /* Tankchassis+CoreDataProperties.m in Sources */,
 				1DCCA8192269FC6D00D370E8 /* Tankturrets+CoreDataProperties.m in Sources */,
 				1DCCA8092269FC6D00D370E8 /* VehicleprofileAmmoList+CoreDataProperties.m in Sources */,
+				1DBA9CF62273389800162DE1 /* Coding.swift in Sources */,
 				1DCCA8112269FC6D00D370E8 /* Tankengines+CoreDataProperties.m in Sources */,
 				1DCCA962226DDB6300D370E8 /* VehicleprofileSuspension_FillProperties.swift in Sources */,
 				1D8C292F21357ADA00759C42 /* ModulesTree+CustomName.m in Sources */,
@@ -1361,6 +1376,7 @@
 				1DCCA95B226DDB6300D370E8 /* VehicleprofileAmmoPenetration_FillProperties.swift in Sources */,
 				1DCCA83C2269FC6D00D370E8 /* Tankradios+CoreDataClass.m in Sources */,
 				1D8C29D4213592B700759C42 /* WOTWebRequestTankRadios.m in Sources */,
+				1DBA9CF72273389800162DE1 /* AnyCodable.swift in Sources */,
 				1D8C291C21357ADA00759C42 /* VehicleprofileGun+FillProperties.m in Sources */,
 				1D8C291E21357ADA00759C42 /* VehicleprofileTurret+FillProperties.m in Sources */,
 				1DCCA961226DDB6300D370E8 /* VehicleprofileGun_FillProperties.swift in Sources */,

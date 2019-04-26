@@ -6,6 +6,23 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+
+class TestDecodeable: Codable {
+    
+    var ammo: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case ammo
+    }
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+ 
+    
+        ammo = try container.decodeIfPresent(.ammo)
+
+    }
+}
+
 extension Vehicles: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case name
@@ -23,7 +40,10 @@ extension Vehicles: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(from jSON: [AnyHashable: Any]){
+    public func mapping(from jSON: Any){
+        guard let jSON = jSON as? [AnyHashable: Any] else { return }
+        
+        
         self.name = jSON[WOTApiKeys.name] as? String
         self.nation = jSON[WOTApiKeys.nation] as? String
         self.price_credit = jSON[WOTApiKeys.price_credit] as? NSNumber

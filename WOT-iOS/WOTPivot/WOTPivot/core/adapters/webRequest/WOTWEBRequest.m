@@ -69,7 +69,7 @@
 }
 
 - (NSURLRequest *)proxy:(NSURLRequest *)request {
-//    return request;
+    return request;
     NSURL *url = request.URL;
 
     NSURLQueryItem *urlItem = [[NSURLQueryItem alloc] initWithName:@"url" value:url.absoluteString];
@@ -84,7 +84,7 @@
 }
 
 - (NSData *)dataFromProxyData:(NSData *)proxyData {
-//    return proxyData;
+    return proxyData;
 
     NSError *serializationError = nil;
     NSString *iso = [[NSString alloc] initWithData:proxyData encoding:NSUTF8StringEncoding];
