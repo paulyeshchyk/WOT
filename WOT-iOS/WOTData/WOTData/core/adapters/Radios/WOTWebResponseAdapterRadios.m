@@ -14,7 +14,7 @@
 
 @implementation WOTWebResponseAdapterRadios
 
-- (void)parseData:(id)data error:(NSError *)error {
+- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary {
    
     if (error) {
         

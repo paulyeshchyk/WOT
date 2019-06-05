@@ -30,9 +30,9 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Charts (3.1.1):
-    - Charts/Core (= 3.1.1)
-  - Charts/Core (3.1.1)
+  - Charts (3.3.0):
+    - Charts/Core (= 3.3.0)
+  - Charts/Core (3.3.0)
   - MMDrawerController (0.6.0):
     - MMDrawerController/Core (= 0.6.0)
     - MMDrawerController/MMDrawerBarButtonItem (= 0.6.0)
@@ -45,10 +45,10 @@ PODS:
     - MMDrawerController/Core
   - MMDrawerController/Subclass (0.6.0):
     - MMDrawerController/Core
-  - SDWebImage (4.4.1):
-    - SDWebImage/Core (= 4.4.1)
-  - SDWebImage/Core (4.4.1)
-  - SwiftGen (5.3.0)
+  - SDWebImage (5.0.2):
+    - SDWebImage/Core (= 5.0.2)
+  - SDWebImage/Core (5.0.2)
+  - SwiftGen (6.1.0)
   - WYPopoverController (0.3.9)
 
 DEPENDENCIES:
@@ -76,12 +76,12 @@ SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   ASProgressPopUpView: dfe44c9a0313ac93a8092bd361b59f52c83a7560
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
+  Charts: ec1f57f9340054155691e84d4544a1d239d382c5
   MMDrawerController: e3a54a5570388463ad3b36975251575b50c4e1a0
-  SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
-  SwiftGen: 4379bd3640b0a212a0f6ea3c494adba385513d10
+  SDWebImage: 6764b5fa0f73c203728052955dbefa2bf1f33282
+  SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   WYPopoverController: a9db25ac2841a686acdc0f3a99bdb21545db32f4
 
-PODFILE CHECKSUM: c98257cc57a252a727501d6df41a45d1b0dd470f
+PODFILE CHECKSUM: b5dc56f8c398cccb20f7b36b561bff2fea34a302
 
 COCOAPODS: 1.5.3

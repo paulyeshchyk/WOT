@@ -8,7 +8,7 @@
 
 #import "WOTRequestListener.h"
 
-typedef void(^WOTRequestCallback)(id data, NSError *error);
+typedef void(^WOTRequestCallback)(id data, NSError *error, NSData *binary);
 
 @interface WOTRequestArguments: NSObject
 - (id)init:(NSDictionary *)dictionary;

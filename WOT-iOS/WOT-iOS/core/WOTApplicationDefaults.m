@@ -55,7 +55,7 @@
      * Login
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestClass:[WOTWEBRequestLogin class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestCallback:^(id data, NSError *error) {
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestCallback:^(id data, NSError *error, NSData *binary) {
 
         if (error){
 
@@ -91,7 +91,7 @@
      * Logout
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestClass:[WOTWEBRequestLogout class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestCallback:^(id data, NSError *error) {
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestCallback:^(id data, NSError *error, NSData *binary) {
         
         if (error){
             
@@ -112,7 +112,7 @@
      * Save Sassion
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestClass:[WOTSaveSessionRequest class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCallback:^(id data, NSError *error) {
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCallback:^(id data, NSError *error, NSData *binary) {
         
         [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
             NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {

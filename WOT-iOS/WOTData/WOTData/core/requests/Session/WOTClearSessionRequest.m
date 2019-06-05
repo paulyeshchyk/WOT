@@ -27,7 +27,7 @@
         
         if (self.callback) {
             
-            self.callback(nil, error);
+            self.callback(nil, error, nil);
         }
     }];
 }

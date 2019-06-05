@@ -6,23 +6,6 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-
-class TestDecodeable: Codable {
-    
-    var ammo: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case ammo
-    }
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
- 
-    
-        ammo = try container.decodeIfPresent(.ammo)
-
-    }
-}
-
 extension Vehicles: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case name

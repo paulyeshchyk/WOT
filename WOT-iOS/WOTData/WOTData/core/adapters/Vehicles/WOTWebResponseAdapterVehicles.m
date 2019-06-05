@@ -53,14 +53,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
-- (void)parseData:(id)data error:(NSError *)error {
-    
-    if (error) {
-        
-        debugError(@"%@",error.localizedDescription);
-        return;
-    }
-    
+- (void)parse:(id)data binary:(NSData * _Nullable)binary {
     id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
@@ -105,6 +98,19 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
         }];
         
     }];
+}
+
+- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary {
+    
+    if (error) {
+        
+        debugError(@"%@",error.localizedDescription);
+        return;
+    }
+    
+    [WebLayerDecoder decodeVehiclesWithBinary: binary];
+    
+    [self parse:data binary:binary];
 }
 
 #pragma mark - private

@@ -14,7 +14,7 @@
 
 @implementation WOTWebResponseAdapterProfile
 
-- (void)parseData:(id)data error:(NSError *)error {
+- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary{
     
     if (error) {
         
@@ -147,12 +147,15 @@
         VehicleprofileAmmo *ammoObject = (VehicleprofileAmmo *)[VehicleprofileAmmo insertNewObject:context];
         [ammoObject mappingFrom:ammoJSON];
         
+        id penetration = ammoJSON[@"penetration"];
+        
         VehicleprofileAmmoPenetration *ammoPenetration = (VehicleprofileAmmoPenetration *)[VehicleprofileAmmoPenetration insertNewObject:context];
-        [ammoPenetration mappingFrom:ammoJSON[@"penetration"]];
+        [ammoPenetration mappingFrom:penetration];
         [ammoObject setPenetration:ammoPenetration];
         
+        id damage = ammoJSON[@"damage"];
         VehicleprofileAmmoDamage *ammoDamage = (VehicleprofileAmmoDamage *)[VehicleprofileAmmoDamage insertNewObject:context];
-        [ammoDamage mappingFrom:ammoJSON[@"damage"]];
+        [ammoDamage mappingFrom:damage];
         [ammoObject setDamage:ammoDamage];
 
         [result addVehicleprofileAmmoObject:ammoObject];

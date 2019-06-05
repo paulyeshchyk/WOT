@@ -10,5 +10,5 @@ import Foundation
 
 @objc
 public protocol WOTWebResponseAdapter: NSObjectProtocol {
-    func parseData(_ data: NSData, error: NSError?)
+    func parseData(_ data: NSData, error: NSError?, binary: NSData?)
 }

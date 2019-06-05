@@ -6,15 +6,15 @@
          contextName = "-[WOTTankGridViewController collectionView:numberOfItemsInSection:]:WOTTankGridViewController.m">
       </ContextState>
       <ContextState
-         contextName = "__53-[WOTTankMetricsList(ChartData) yValsForTanksIDList:]_block_invoke:WOTTankMetricsList+ChartData.m">
-      </ContextState>
-      <ContextState
          contextName = "-[WOTTankMetricsList(GridData) gridData]:WOTTankMetricsList+GridData.m">
          <PersistentStrings>
             <PersistentString
                value = "tree">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__53-[WOTTankMetricsList(ChartData) yValsForTanksIDList:]_block_invoke:WOTTankMetricsList+ChartData.m">
       </ContextState>
       <ContextState
          contextName = "-[WOTTankGridViewController collectionView:cellForItemAtIndexPath:]:WOTTankGridViewController.m">

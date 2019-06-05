@@ -194,12 +194,12 @@
 
     request.hostConfiguration = self.hostConfiguration;
 
-    [request setCallback:^(id data, NSError *error){
+    [request setCallback:^(id data, NSError *error, NSData *binary){
         
         //callbacks
         [weakSelf.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
             
-            obj(data, error);
+            obj(data, error, binary);
         }];
         
         //dataAdapters
@@ -219,7 +219,7 @@
                 } else {
                 
                     id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-                    [adapter parseData:data error:nil];
+                    [adapter parseData:data error:nil binary:binary];
                 }
             }
         }];

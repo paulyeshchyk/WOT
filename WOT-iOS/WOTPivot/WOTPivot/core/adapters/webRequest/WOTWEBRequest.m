@@ -159,13 +159,13 @@
     [self cancel];
 }
 
-- (void)finalizeWithData:(id)data error:(NSError *)error {
+- (void)finalizeWithData:(id)data error:(NSError *)error binary: (NSData *)binary {
     
     [[WOTRequestExecutor sharedInstance] removeRequest:self];
     
     if (self.callback) {
         
-        self.callback(data, error);
+        self.callback(data, error, binary);
     }
 }
 
@@ -176,7 +176,7 @@
     
     if (connectionError) {
         
-        [self finalizeWithData:nil error:connectionError];
+        [self finalizeWithData:nil error:connectionError binary: data];
     } else {
         
         NSError *serializationError = nil;
@@ -185,7 +185,7 @@
                                                                           error:&serializationError];
         if (serializationError) {
             
-            [self finalizeWithData:nil error:serializationError];
+            [self finalizeWithData:nil error:serializationError binary: data];
         } else {
 #warning make validator
             id status = jsonData[WOT_KEY_STATUS];
@@ -193,7 +193,7 @@
                 
 //                NSCAssert(NO, @"be sure that error was handled:%@",jsonData[WOT_KEY_ERROR]);
                 NSError *error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[WOT_KEY_ERROR]];
-                [self finalizeWithData:nil error:error];
+                [self finalizeWithData:nil error:error binary: data];
                 
             } else {
                 
@@ -209,7 +209,7 @@
                 [result clearNullValues];
                 
                 [result addEntriesFromDictionary:self.userInfo];
-                [self finalizeWithData:result error:nil];
+                [self finalizeWithData:result error:nil binary: data];
             }
         }
     }

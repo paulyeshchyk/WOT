@@ -8,7 +8,7 @@ target 'WOT-iOS' do
     pod 'BlocksKit'
     pod 'MMDrawerController'
     pod 'SDWebImage'
-    pod 'Charts'
+    #pod 'Charts'
     pod 'ASProgressPopUpView'
     pod 'WYPopoverController'
     pod 'SwiftGen'
