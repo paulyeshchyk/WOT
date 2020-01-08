@@ -26,7 +26,6 @@
 		1D047B631B331D8900B5B696 /* WOTLanguageDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B5B1B331D8900B5B696 /* WOTLanguageDatasource.m */; };
 		1D047B691B331DF000B5B696 /* WOTApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */; };
 		1D054A852118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D054A842118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift */; };
-		1D054A8721186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D054A8621186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift */; };
 		1D0F55011C91677600272B05 /* WOTTankMetricsList+ChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */; };
 		1D1795E9211D6DD800A0E42E /* WOTTankPivotViewController+Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1795E8211D6DD800A0E42E /* WOTTankPivotViewController+Cells.swift */; };
 		1D1795EB211D8A8300A0E42E /* WOTTankPivotViewController+UICollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1795EA211D8A8300A0E42E /* WOTTankPivotViewController+UICollectionViewDatasource.swift */; };
@@ -330,7 +329,6 @@
 		1D047B671B331DF000B5B696 /* WOTApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTApplicationDefaults.h; sourceTree = "<group>"; };
 		1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTApplicationDefaults.m; sourceTree = "<group>"; };
 		1D054A842118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift"; sourceTree = "<group>"; };
-		1D054A8621186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+WOTDataModelListener.swift"; sourceTree = "<group>"; };
 		1D0F54FF1C91677600272B05 /* WOTTankMetricsList+ChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankMetricsList+ChartData.h"; sourceTree = "<group>"; };
 		1D0F55001C91677600272B05 /* WOTTankMetricsList+ChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankMetricsList+ChartData.m"; sourceTree = "<group>"; };
 		1D1795E8211D6DD800A0E42E /* WOTTankPivotViewController+Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTTankPivotViewController+Cells.swift"; sourceTree = "<group>"; };
@@ -1671,7 +1669,6 @@
 				1D1795E8211D6DD800A0E42E /* WOTTankPivotViewController+Cells.swift */,
 				1D054A842118632D002D25EF /* WOTTankPivotViewController+WOTDataFetchControllerDelegateProtocol.swift */,
 				1D1795EA211D8A8300A0E42E /* WOTTankPivotViewController+UICollectionViewDatasource.swift */,
-				1D054A8621186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift */,
 				1D6426F92123070C003116E4 /* WOTPivotRefreshControl.swift */,
 				1D5D020D23C5EF59004B0314 /* WOTTankPivotNodeCreator.swift */,
 			);
@@ -2184,7 +2181,6 @@
 				1D6FF4F62106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
 				1DCC7F311B2EE974005FF193 /* NSString+RomanUtils.m in Sources */,
-				1D054A8721186529002D25EF /* WOTTankPivotViewController+WOTDataModelListener.swift in Sources */,
 				1D1795ED211D9ACA00A0E42E /* WOTTankPivotViewController.swift in Sources */,
 				1DD46B761BA6DC4100D3B3CE /* WOTTanksIDList.m in Sources */,
 				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,

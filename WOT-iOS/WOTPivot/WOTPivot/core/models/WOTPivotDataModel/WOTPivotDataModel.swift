@@ -24,8 +24,9 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
     public var shouldDisplayEmptyColumns: Bool
 
     private var listener: WOTDataModelListener?
-    private var fetchController: WOTDataFetchControllerProtocol
-    fileprivate var nodeCreator: WOTNodeCreatorProtocol
+    private var metadatasource: WOTDataModelMetadatasource
+    public var fetchController: WOTDataFetchControllerProtocol
+    public var nodeCreator: WOTNodeCreatorProtocol
 
     deinit {
         self.clearMetadataItems()
@@ -72,11 +73,12 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
     }
 
     @objc
-    required public init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol, enumerator: WOTNodeEnumeratorProtocol) {
+    required public init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol, metadatasource mds: WOTDataModelMetadatasource, enumerator: WOTNodeEnumeratorProtocol) {
         shouldDisplayEmptyColumns = false
         fetchController = fc
         listener = modelListener
         nodeCreator = nc
+        metadatasource = mds
 
         super.init(enumerator: enumerator)
 
@@ -153,9 +155,8 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
 
         self.clearMetadataItems()
 
-        if let items = self.listener?.metadataItems() {
-            self.add(metadataItems: items)
-        }
+        let items = self.metadatasource.metadataItems()
+        self.add(metadataItems: items)
 
         let metadataIndex = self.nodeIndex.doAutoincrementIndex(forNodes: [self.rootFilterNode, self.rootColsNode, self.rootRowsNode])
         self.dimension.reload(forIndex: metadataIndex)

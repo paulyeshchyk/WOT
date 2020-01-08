@@ -23,10 +23,15 @@ public protocol WOTNodeCreatorProtocol {
 }
 
 @objc
+public protocol WOTDataModelMetadatasource {
+    func metadataItems() -> [WOTNodeProtocol]
+    func filters () -> [WOTPivotNodeProtocol]
+}
+
+@objc
 public protocol WOTDataModelListener {
     func modelDidLoad()
     func modelDidFailLoad(error: Error)
-    func metadataItems() -> [WOTNodeProtocol]
     func modelHasNewDataItem()
 }
 

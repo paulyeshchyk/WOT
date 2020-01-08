@@ -27,21 +27,19 @@ class WOTTankPivotViewController: UIViewController {
 
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
 
-    lazy var nodeCreator: WOTNodeCreatorProtocol = {
-       return WOTTankPivotNodeCreator()
-    }()
-    
-    lazy var fetchController: WOTDataFetchControllerProtocol = {
-        let result = WOTDataTanksFetchController(nodeFetchRequestCreator: self)
-        result.nodeCreator = self.nodeCreator
-        return result
-    }()
-
     lazy var model: WOTPivotDataModel = {
-        return WOTPivotDataModel(fetchController: self.fetchController,
+        let nodeCreator = WOTTankPivotNodeCreator()
+        let fetchController = WOTDataTanksFetchController(nodeFetchRequestCreator: self)
+        fetchController.nodeCreator = nodeCreator
+        
+        let enumerator = WOTNodeEnumerator.sharedInstance
+        let metadatasource = WOTTankPivotMetadatasource()
+        
+        return WOTPivotDataModel(fetchController: fetchController,
                                  modelListener: self,
-                                 nodeCreator: self.nodeCreator,
-                                 enumerator: WOTNodeEnumerator.sharedInstance)
+                                 nodeCreator: nodeCreator,
+                                 metadatasource: metadatasource,
+                                 enumerator: enumerator)
     }()
 
     override func viewDidLoad() {
@@ -97,7 +95,8 @@ class WOTTankPivotViewController: UIViewController {
         self.model.loadModel()
     }
 
-    @objc func refresh(_ refreshControl: UIRefreshControl) {
+    @objc
+    func refresh(_ refreshControl: UIRefreshControl) {
         self.fullReload()
     }
 
@@ -106,5 +105,76 @@ class WOTTankPivotViewController: UIViewController {
 extension WOTTankPivotViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.refreshControl.contentOffset = scrollView.contentOffset
+    }
+}
+
+extension WOTTankPivotViewController: WOTDataModelListener {
+
+    func modelDidLoad() {
+        self.collectionView?.reloadData()
+        self.refreshControl.endRefreshing()
+    }
+
+    func modelHasNewDataItem() {
+
+    }
+
+    func modelDidFailLoad(error: Error) {
+
+        self.refreshControl.endRefreshing()
+    }
+}
+
+extension WOTTankPivotViewController: WOTDataFetchControllerDelegateProtocol {
+
+    var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
+        let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicles")
+        result.sortDescriptors = self.sortDescriptors()
+        result.predicate = self.fetchCustomPredicate()
+        return result
+    }
+
+    private func sortDescriptors() -> [NSSortDescriptor] {
+
+        let tankIdDescriptor = NSSortDescriptor(key: "tank_id", ascending: true)
+        var result = WOTTankListSettingsDatasource.sharedInstance().sortBy
+        result.append(tankIdDescriptor)
+        return result
+    }
+
+    //TODO: "TO BE RECACTORED"
+    private func fetchCustomPredicate() -> NSPredicate {
+        let fakePredicate = NSPredicate(format: "NOT(tank_id  = nil)")
+        return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])
+    }
+
+}
+
+class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
+
+    func metadataItems() -> [WOTNodeProtocol] {
+
+        var result = [WOTPivotNodeProtocol]()
+
+        var templates = WOTPivotTemplates()
+//        let levelPrem = templates.vehiclePremium
+        let levelNati = templates.vehicleNation
+        let levelType = templates.vehicleType
+        let levelTier = templates.vehicleTier
+
+        let permutator = WOTPivotMetadataPermutator()
+
+        let cols = permutator.permutate(templates: [levelType, levelNati], as: .column)
+        let rows = permutator.permutate(templates: [levelTier], as: .row)
+        let filt = self.filters()
+
+        result.append(contentsOf: cols)
+        result.append(contentsOf: rows)
+        result.append(contentsOf: filt)
+        return result
+    }
+
+    func filters () -> [WOTPivotNodeProtocol] {
+        return [WOTPivotFilterNode(name: "Filter")]
     }
 }
