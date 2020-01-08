@@ -11,7 +11,7 @@ import CoreData
 
 public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
     public var dataColor: UIColor?
-    public var data1: NSManagedObject?
+    public var data1: AnyObject?
     public var stickyType: PivotStickyType { return .float }
     public var cellType: WOTPivotCellType { return .data }
     public var predicate: NSPredicate?

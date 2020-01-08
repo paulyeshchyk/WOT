@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 public typealias WOTNodeComparator = (_ left: WOTNodeProtocol, _ right: WOTNodeProtocol) -> Bool
 

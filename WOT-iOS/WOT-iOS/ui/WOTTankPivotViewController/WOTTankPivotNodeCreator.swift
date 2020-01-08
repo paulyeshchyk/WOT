@@ -1,23 +1,26 @@
 //
-//  WOTTankPivotViewController+NodeCreator.swift
+//  WOTTankPivotNodeCreator.swift
 //  WOT-iOS
 //
-//  Created on 8/6/18.
-//  Copyright © 2018. All rights reserved.
+//  Created by Pavel Yeshchyk on 1/8/20.
+//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
 import Foundation
-import WOTPivot
+import WOTData
 
-class WOTTankPivotNodeCreator: WOTNodeCreatorProtocol {
+public class WOTTankPivotNodeCreator: WOTNodeCreatorProtocol {
 
-    var collapseToGroups: Bool { return true }
+    public var collapseToGroups: Bool { return true }
 
-    var useEmptyNode: Bool { return false }
+    public var useEmptyNode: Bool { return false }
 
-    func createEmptyNode() -> WOTNodeProtocol {
-
-        return WOTNodeFactory.pivotEmptyNode()
+    public init() {
+        
+    }
+    
+    public func createEmptyNode() -> WOTNodeProtocol {
+        return WOTPivotDataNode(name: "")
     }
 
     public func createNode(name: String) -> WOTNodeProtocol {
@@ -27,11 +30,20 @@ class WOTTankPivotNodeCreator: WOTNodeCreatorProtocol {
     }
 
     public func createNodeGroup(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol {
-        return WOTNodeFactory.pivotDataNodeGroup(for: byPredicate, andTanksObjects: fetchedObjects)
+        let result = WOTPivotDataGroupNode(name: "Group1")
+        result.fetchedObjects = fetchedObjects
+        return result
     }
 
     public func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
-        return WOTNodeFactory.pivotDataNode(for: byPredicate, andVehicle: fetchedObject as Any)
+        let name = (fetchedObject as? Vehicles)?.name ?? ""
+        let type = (fetchedObject as? Vehicles)?.type ?? ""
+        let color = WOTNodeFactory.typeColors()[type] as? UIColor
+        let result = WOTPivotDataNode(name: name)
+        result.predicate = byPredicate
+        result.data1 = fetchedObject
+        result.dataColor = color
+        return result
     }
 
     public func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol] {

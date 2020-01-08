@@ -21,7 +21,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
 
         let filtered = self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }
 
-        filtered?.forEach { (fetchedObject) in
+        filtered?.forEach { fetchedObject in
             let transformed = self.transform(tank: fetchedObject)
             result.append(contentsOf: transformed)
         }

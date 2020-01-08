@@ -34,8 +34,9 @@ extension WOTTankPivotViewController: UICollectionViewDelegate {
             return
         }
 
+        let fetchedObject = pivotNode.data1 as? NSManagedObject
         switch pivotNode.cellType {
-        case .data: openTankDetail(data: pivotNode.data1)
+        case .data: openTankDetail(data: fetchedObject)
         case .dataGroup: openPopover()
         default: break
         }

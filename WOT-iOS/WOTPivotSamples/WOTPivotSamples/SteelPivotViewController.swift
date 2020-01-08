@@ -90,7 +90,7 @@ extension SteelPivotViewController: WOTNodeCreatorProtocol {
         return WOTNode(name: name)
     }
     
-    func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
+    func createNode(fetchedObject: NSManagedObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
         return WOTNode(name: "Test")
     }
     

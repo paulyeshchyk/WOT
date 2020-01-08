@@ -38,7 +38,10 @@ class WOTTankPivotViewController: UIViewController {
     }()
 
     lazy var model: WOTPivotDataModel = {
-        return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self.nodeCreator, enumerator: WOTNodeEnumerator.sharedInstance)
+        return WOTPivotDataModel(fetchController: self.fetchController,
+                                 modelListener: self,
+                                 nodeCreator: self.nodeCreator,
+                                 enumerator: WOTNodeEnumerator.sharedInstance)
     }()
 
     override func viewDidLoad() {
@@ -71,7 +74,6 @@ class WOTTankPivotViewController: UIViewController {
     func openConstructor(_ sender: Any) {
 
         let vc = WOTPivotConstructorViewController(nibName: "WOTPivotConstructorViewController", bundle: Bundle.main)
-//        let nc = UINavigationController(rootViewController: vc)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
