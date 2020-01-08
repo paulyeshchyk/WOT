@@ -9,9 +9,9 @@
 import Foundation
 import WOTPivot
 
-extension WOTTankPivotViewController: WOTNodeCreatorProtocol {
+class WOTTankPivotNodeCreator: WOTNodeCreatorProtocol {
 
-    var collapseToGroups: Bool { return false }
+    var collapseToGroups: Bool { return true }
 
     var useEmptyNode: Bool { return false }
 

@@ -48,7 +48,9 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
             return []
         }
 
-        let root = self.nodeCreator.createNode(fetchedObject: tank, byPredicate: nil)
+        guard let root = self.nodeCreator?.createNode(fetchedObject: tank, byPredicate: nil) else {
+            return []
+        }
 
         guard let modules = self.vehicleModules(tank) else {
             return [root]
@@ -56,8 +58,9 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
 
         var temporaryList = [Int: WOTNodeProtocol]()
         let nodeCreation: NodeCreateClosure = { (id: Int, module: ModulesTree) in
-            let node = self.nodeCreator.createNode(fetchedObject: module, byPredicate: nil)
-            temporaryList[id] = node
+            if let node = self.nodeCreator?.createNode(fetchedObject: module, byPredicate: nil) {
+                temporaryList[id] = node
+            }
         }
 
         self.transform(modulesSet: modules, withId: tankId, nodeCreation: nodeCreation)

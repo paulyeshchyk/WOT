@@ -37,6 +37,7 @@ class SteelPivotFetchController: WOTDataFetchControllerProtocol {
     }
     
     func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
+        print(byPredicates)
         return []
     }
     
@@ -113,7 +114,6 @@ extension SteelPivotViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         return collectionView.dequeueReusableCell(withReuseIdentifier: "SteelCollectionViewCell", for: indexPath)
     }
     

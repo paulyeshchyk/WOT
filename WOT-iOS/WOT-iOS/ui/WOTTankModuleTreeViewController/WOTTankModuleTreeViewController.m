@@ -73,7 +73,7 @@
 @property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
-@property (nonatomic, strong) id<WOTDataFetchControllerProtocol> fetchController;
+@property (nonatomic, strong) WOTTankTreeFetchController *fetchController;
 
 @end
 
@@ -89,7 +89,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
 
-        self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self nodeCreator:self];
+        self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self];
+        self.fetchController.nodeCreator = self;
         self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController listener: self enumerator: [WOTNodeEnumerator sharedInstance]];
     }
     return self;

@@ -26,12 +26,13 @@ class WOTDataTanksFetchController: NSObject {
 
     var listener: WOTDataFetchControllerListenerProtocol?
     var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
-    var nodeCreator: WOTNodeCreatorProtocol
 
     @objc
-    init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, nodeCreator nc: WOTNodeCreatorProtocol) {
+    var nodeCreator: WOTNodeCreatorProtocol?
+
+    @objc
+    init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol) {
         nodeFetchRequestCreator = nfrc
-        nodeCreator = nc
     }
 
     deinit {
@@ -69,8 +70,9 @@ extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
             return result
         }
 
-        let nodes = self.nodeCreator.createNodes(fetchedObjects: filtered, byPredicate: predicate)
-        result.append(contentsOf: nodes)
+        if let nodes = self.nodeCreator?.createNodes(fetchedObjects: filtered, byPredicate: predicate) {
+            result.append(contentsOf: nodes)
+        }
 
         return result
     }

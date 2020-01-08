@@ -16,11 +16,11 @@ class ViewController: UIViewController {
     }
 
 
-    @IBAction func pushSteelPivot(_ sender: Any?) {
-         let storyBoard = UIStoryboard(name: "Main", bundle: Bundle(for: SteelPivotViewController.self))
-        let vc = storyBoard.instantiateViewController(withIdentifier: "SteelPivotViewController")
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    @IBAction func pushSteelPivot(_ sender: Any?) {
+//        let storyBoard = UIStoryboard(name: "Main", bundle: Bundle(for: SteelPivotViewController.self))
+//        let vc = storyBoard.instantiateViewController(withIdentifier: "SteelPivotViewController")
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
     
 }
 

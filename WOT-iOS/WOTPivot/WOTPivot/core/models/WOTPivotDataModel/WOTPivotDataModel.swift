@@ -23,7 +23,7 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
 
     public var shouldDisplayEmptyColumns: Bool
 
-    private var listener: WOTDataModelListener
+    private var listener: WOTDataModelListener?
     private var fetchController: WOTDataFetchControllerProtocol
     fileprivate var nodeCreator: WOTNodeCreatorProtocol
 
@@ -56,7 +56,7 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
 
     public func add(dataNode: WOTNodeProtocol) {
         self.rootDataNode.addChild(dataNode)
-        self.listener.modelHasNewDataItem()
+        self.listener?.modelHasNewDataItem()
     }
 
     override public var nodes: [WOTNodeProtocol] {
@@ -153,20 +153,22 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
 
         self.clearMetadataItems()
 
-        self.add(metadataItems: self.listener.metadataItems())
+        if let items = self.listener?.metadataItems() {
+            self.add(metadataItems: items)
+        }
 
         let metadataIndex = self.nodeIndex.doAutoincrementIndex(forNodes: [self.rootFilterNode, self.rootColsNode, self.rootRowsNode])
         self.dimension.reload(forIndex: metadataIndex)
     }
 
     fileprivate func failPivot(_ error: Error) {
-        listener.modelDidFailLoad(error: error)
+        listener?.modelDidFailLoad(error: error)
     }
 
 
     public func didLoad(dimension: WOTDimensionProtocol) {
         self.reindexNodes()
-        self.listener.modelDidLoad()
+        self.listener?.modelDidLoad()
     }
 }
 

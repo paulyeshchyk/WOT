@@ -8,8 +8,7 @@
 
 import Foundation
 
-@objc
-public protocol WOTPivotTemplateProtocol: NSObjectProtocol {
+public protocol WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol
 }
 

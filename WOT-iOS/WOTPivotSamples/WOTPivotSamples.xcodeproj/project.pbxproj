@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D5D020A23BF47E9004B0314 /* TankPivotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D020923BF47E9004B0314 /* TankPivotViewController.swift */; };
 		1D8ACEDA22A7E90000CF309B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACED922A7E90000CF309B /* AppDelegate.swift */; };
 		1D8ACEDC22A7E90000CF309B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACEDB22A7E90000CF309B /* ViewController.swift */; };
 		1D8ACEDF22A7E90000CF309B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8ACEDD22A7E90000CF309B /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D5D020923BF47E9004B0314 /* TankPivotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TankPivotViewController.swift; sourceTree = "<group>"; };
 		1D8ACED622A7E90000CF309B /* WOTPivotSamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WOTPivotSamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8ACED922A7E90000CF309B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D8ACEDB22A7E90000CF309B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				1D8ACED922A7E90000CF309B /* AppDelegate.swift */,
 				1D8ACEDB22A7E90000CF309B /* ViewController.swift */,
 				1D8ACEF922A7EA7300CF309B /* SteelPivotViewController.swift */,
+				1D5D020923BF47E9004B0314 /* TankPivotViewController.swift */,
 				1D8ACEDD22A7E90000CF309B /* Main.storyboard */,
 				1D8ACEE022A7E90100CF309B /* Assets.xcassets */,
 				1D8ACEE222A7E90100CF309B /* LaunchScreen.storyboard */,
@@ -227,6 +230,7 @@
 				1D8ACEFA22A7EA7300CF309B /* SteelPivotViewController.swift in Sources */,
 				1D8ACEDC22A7E90000CF309B /* ViewController.swift in Sources */,
 				1D8ACEDA22A7E90000CF309B /* AppDelegate.swift in Sources */,
+				1D5D020A23BF47E9004B0314 /* TankPivotViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

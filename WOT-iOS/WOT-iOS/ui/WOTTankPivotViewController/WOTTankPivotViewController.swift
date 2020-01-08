@@ -27,12 +27,18 @@ class WOTTankPivotViewController: UIViewController {
 
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
 
+    lazy var nodeCreator: WOTNodeCreatorProtocol = {
+       return WOTTankPivotNodeCreator()
+    }()
+    
     lazy var fetchController: WOTDataFetchControllerProtocol = {
-        return WOTDataTanksFetchController(nodeFetchRequestCreator: self, nodeCreator: self)
+        let result = WOTDataTanksFetchController(nodeFetchRequestCreator: self)
+        result.nodeCreator = self.nodeCreator
+        return result
     }()
 
     lazy var model: WOTPivotDataModel = {
-        return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, enumerator: WOTNodeEnumerator.sharedInstance)
+        return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self.nodeCreator, enumerator: WOTNodeEnumerator.sharedInstance)
     }()
 
     override func viewDidLoad() {
