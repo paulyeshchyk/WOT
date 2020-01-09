@@ -12,43 +12,100 @@ import WOTPivot
 typealias WOTTankPivotCompletionCancelBlock = () -> Void
 typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 
-@objc(WOTTankPivotViewController)
 
-class WOTTankPivotViewController: UIViewController {
+open class WOTPivotViewController: UIViewController {
+    
+    @IBOutlet open var collectionView: UICollectionView?
 
-    @IBOutlet var collectionView: UICollectionView?
-    @IBOutlet var flowLayout: WOTTankPivotLayout?
+    @IBOutlet open var flowLayout: WOTPivotLayout? {
+        didSet {
+            flowLayout?.relativeContentSizeBlock = { [weak self] in
+                let size = self?.model.contentSize
+                return size ?? CGSize.zero
+            }
+            flowLayout?.itemRelativeRectCallback = { [weak self] (indexPath) in
+                let itemRect = self?.model.itemRect(atIndexPath: indexPath  as NSIndexPath)
+                return itemRect ?? CGRect.zero
+            }
+            flowLayout?.itemLayoutStickyType = { [weak self] (indexPath) in
+                let node = self?.model.item(atIndexPath: indexPath as NSIndexPath)
+                return node?.stickyType ?? .float
+            }
+        }
+    }
 
-    var cancelBlock: WOTTankPivotCompletionCancelBlock?
-    var doneBlock: WOTTankPivotCompletionDoneBlock?
     lazy var refreshControl: WOTPivotRefreshControl = {
         return WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
     }()
 
-    var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
 
-    lazy var model: WOTPivotDataModel = {
-        let nodeCreator = WOTTankPivotNodeCreator()
-        let fetchController = WOTDataTanksFetchController(nodeFetchRequestCreator: self)
-        fetchController.nodeCreator = nodeCreator
-        
-        let enumerator = WOTNodeEnumerator.sharedInstance
-        let metadatasource = WOTTankPivotMetadatasource()
-        
-        return WOTPivotDataModel(fetchController: fetchController,
-                                 modelListener: self,
-                                 nodeCreator: nodeCreator,
-                                 metadatasource: metadatasource,
-                                 enumerator: enumerator)
+    open func pivotModel() -> WOTPivotDataModelProtocol {
+        //TODO: crash is possible here!!!
+        return WOTPivotDataModel(enumerator: WOTNodeEnumerator.sharedInstance)
+    }
+    
+    lazy var model: WOTPivotDataModelProtocol  = {
+        return pivotModel()
     }()
 
-    override func viewDidLoad() {
+    
+    static var openedPopoverKey: UInt8 = 0
+    var hasOpenedPopover: Bool {
+        get {
+            guard let result = objc_getAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey) as? Bool else {
+                return false
+            }
+            return result
+        }
+        set {
+            objc_setAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
+
+    func closePopover () {
+        self.hasOpenedPopover = false
+    }
+
+    func openPopover () {
+        self.hasOpenedPopover = true
+    }
+    
+    open func fullReload() {
+        self.model.loadModel()
+    }
+    
+    open func cell(forDataNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+    
+    open func cell(forNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        switch node.cellType {
+        case .column, .row:
+            return self.cell(forFixedNode: node, at: indexPath)
+        case .filter:
+            return self.cell(forFilterNode: node, at: indexPath)
+        case .data:
+            return self.cell(forDataNode: node, at: indexPath)
+        case .dataGroup:
+            return self.cell(forDataGroupNode: node, at: indexPath)
+        }
+    }
+    
+    open func cell(forFixedNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+
+    open  func cell(forFilterNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+
+    open func cell(forDataGroupNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+    
+    override open func viewDidLoad() {
 
         super.viewDidLoad()
-
-        let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
-        self.navigationItem.setRightBarButtonItems(items, animated: false)
-
 
         self.collectionView?.bounces = true
         self.collectionView?.alwaysBounceHorizontal = false
@@ -62,37 +119,101 @@ class WOTTankPivotViewController: UIViewController {
 
         self.navigationController?.navigationBar.setDarkStyle()
 
-        self.setupFlow()
-
         self.registerCells()
         self.fullReload()
+    }
+    
+    open func registerCells() {
+        
+    }
+}
+
+extension WOTPivotViewController: UICollectionViewDataSource {
+
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let node = self.model.item(atIndexPath: indexPath as NSIndexPath) else {
+            return UICollectionViewCell()
+        }
+        return self.cell(forNode: node, at: indexPath)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.model.itemsCount(section: section)
+    }
+}
+
+extension WOTPivotViewController: UICollectionViewDelegate {
+
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let pivotNode = self.model.item(atIndexPath: indexPath as NSIndexPath)  else {
+            return
+        }
+
+        guard self.hasOpenedPopover == false else {
+            self.closePopover()
+            return
+        }
+
+        let fetchedObject = pivotNode.data1 as? NSManagedObject
+        switch pivotNode.cellType {
+        case .data: openTankDetail(data: fetchedObject)
+        case .dataGroup: openPopover()
+        default: break
+        }
+
+    }
+
+    private func openTankDetail(data: NSManagedObject?) {
+        guard let vehicle = data as? Vehicles else {
+            return
+        }
+        let config = WOTTankModuleTreeViewController(nibName: String(describing: WOTTankModuleTreeViewController.self ), bundle: nil)
+        config.tank_Id = vehicle.tank_id
+        config.cancelBlock = {
+            self.navigationController?.popViewController(animated: true)
+        }
+        config.doneBlock = { (conf) in
+            self.navigationController?.popViewController(animated: true)
+        }
+        self.navigationController?.pushViewController(config, animated: true)
+    }
+}
+
+
+@objc(WOTTankPivotViewController)
+
+class WOTTankPivotViewController: WOTPivotViewController {
+
+    var cancelBlock: WOTTankPivotCompletionCancelBlock?
+    var doneBlock: WOTTankPivotCompletionDoneBlock?
+    var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
+
+    override func pivotModel() -> WOTPivotDataModelProtocol {
+        let nodeCreator = WOTTankPivotNodeCreator()
+        let fetchRequest = WOTTankPivotFetchRequest()
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest)
+        
+        let enumerator = WOTNodeEnumerator.sharedInstance
+        let metadatasource = WOTTankPivotMetadatasource()
+        
+        return WOTPivotDataModel(fetchController: fetchController,
+                                 modelListener: self,
+                                 nodeCreator: nodeCreator,
+                                 metadatasource: metadatasource,
+                                 enumerator: enumerator)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let items = [UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(WOTTankPivotViewController.openConstructor(_:)))]
+        self.navigationItem.setRightBarButtonItems(items, animated: false)
     }
 
     @objc
     func openConstructor(_ sender: Any) {
-
         let vc = WOTPivotConstructorViewController(nibName: "WOTPivotConstructorViewController", bundle: Bundle.main)
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func setupFlow() {
-
-        self.flowLayout?.relativeContentSizeBlock = {
-            return self.model.contentSize
-        }
-        self.flowLayout?.itemRelativeRectCallback = { (indexPath) in
-            return self.model.itemRect(atIndexPath: indexPath  as NSIndexPath)
-        }
-        self.flowLayout?.itemLayoutStickyType = { (indexPath) in
-            guard let node = self.model.item(atIndexPath: indexPath as NSIndexPath) else {
-                return .float
-            }
-            return node.stickyType
-        }
-    }
-
-    private func fullReload() {
-        self.model.loadModel()
     }
 
     @objc
@@ -100,6 +221,59 @@ class WOTTankPivotViewController: UIViewController {
         self.fullReload()
     }
 
+    
+    static var registeredCells: [UICollectionViewCell.Type] = {
+        return [WOTTankPivotDataCollectionViewCell.self,
+                WOTTankPivotFilterCollectionViewCell.self,
+                WOTTankPivotFixedCollectionViewCell.self,
+                WOTTankPivotEmptyCollectionViewCell.self,
+                WOTTankPivotDataGroupCollectionViewCell.self]
+    }()
+
+    @objc
+    override public func registerCells() {
+        WOTTankPivotViewController.registeredCells.forEach { (type) in
+            let clazzStr = String(describing: type)
+            let nib = UINib(nibName: clazzStr, bundle: nil)
+            self.collectionView?.register(nib, forCellWithReuseIdentifier: clazzStr)
+        }
+    }
+
+    override func cell(forDataNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        let ident = String(describing: WOTTankPivotDataCollectionViewCell.self)
+        guard let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.symbol = node.name
+        cell.dataViewColor = node.dataColor
+        cell.uuid = node.index
+        return cell
+    }
+
+    override func cell(forDataGroupNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        let ident = String(describing: WOTTankPivotDataGroupCollectionViewCell.self)
+        guard let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as? WOTTankPivotDataGroupCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        return cell
+    }
+
+    override public func cell(forFixedNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        let ident = String(describing: WOTTankPivotFixedCollectionViewCell.self)
+        guard let result = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) as?  WOTTankPivotFixedCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        result.textValue = node.name
+        return result
+    }
+
+    override public func cell(forFilterNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
+        let ident = String(describing: WOTTankPivotFilterCollectionViewCell.self)
+        guard let result = self.collectionView?.dequeueReusableCell(withReuseIdentifier: ident, for: indexPath) else {
+            return UICollectionViewCell()
+        }
+        return result
+    }
 }
 
 extension WOTTankPivotViewController {
@@ -115,66 +289,8 @@ extension WOTTankPivotViewController: WOTDataModelListener {
         self.refreshControl.endRefreshing()
     }
 
-    func modelHasNewDataItem() {
-
-    }
-
     func modelDidFailLoad(error: Error) {
 
         self.refreshControl.endRefreshing()
-    }
-}
-
-extension WOTTankPivotViewController: WOTDataFetchControllerDelegateProtocol {
-
-    var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
-        let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicles")
-        result.sortDescriptors = self.sortDescriptors()
-        result.predicate = self.fetchCustomPredicate()
-        return result
-    }
-
-    private func sortDescriptors() -> [NSSortDescriptor] {
-
-        let tankIdDescriptor = NSSortDescriptor(key: "tank_id", ascending: true)
-        var result = WOTTankListSettingsDatasource.sharedInstance().sortBy
-        result.append(tankIdDescriptor)
-        return result
-    }
-
-    //TODO: "TO BE RECACTORED"
-    private func fetchCustomPredicate() -> NSPredicate {
-        let fakePredicate = NSPredicate(format: "NOT(tank_id  = nil)")
-        return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])
-    }
-
-}
-
-class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
-
-    func metadataItems() -> [WOTNodeProtocol] {
-
-        var result = [WOTPivotNodeProtocol]()
-
-        var templates = WOTPivotTemplates()
-//        let levelPrem = templates.vehiclePremium
-        let levelNati = templates.vehicleNation
-        let levelType = templates.vehicleType
-        let levelTier = templates.vehicleTier
-
-        let permutator = WOTPivotMetadataPermutator()
-
-        let cols = permutator.permutate(templates: [levelType, levelNati], as: .column)
-        let rows = permutator.permutate(templates: [levelTier], as: .row)
-        let filt = self.filters()
-
-        result.append(contentsOf: cols)
-        result.append(contentsOf: rows)
-        result.append(contentsOf: filt)
-        return result
-    }
-
-    func filters () -> [WOTPivotNodeProtocol] {
-        return [WOTPivotFilterNode(name: "Filter")]
     }
 }

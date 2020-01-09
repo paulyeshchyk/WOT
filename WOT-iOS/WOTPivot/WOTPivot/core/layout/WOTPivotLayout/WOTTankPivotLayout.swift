@@ -1,5 +1,5 @@
 //
-//  WOTTankPivotLayout.swift
+//  WOTPivotLayout.swift
 //  WOT-iOS
 //
 //  Created on 7/25/18.
@@ -37,7 +37,7 @@ public class WOTColoredLayout: UICollectionViewFlowLayout {
 }
 
 
-public class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
+public class WOTPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     public var relativeContentSizeBlock: (() -> CGSize)?
     public var itemRelativeRectCallback: ((IndexPath) -> CGRect)?
     public var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)?
@@ -119,7 +119,7 @@ public class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     }
 }
 
-extension WOTTankPivotLayout {
+extension WOTPivotLayout {
 
     fileprivate struct Constants {
         static let ipadCellSize = CGSize(width: 88.0, height: 66.0)

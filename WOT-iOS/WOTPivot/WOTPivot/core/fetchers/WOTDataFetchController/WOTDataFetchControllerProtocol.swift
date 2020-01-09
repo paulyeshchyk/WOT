@@ -11,15 +11,15 @@ import CoreData
 
 @objc
 public protocol WOTDataFetchControllerProtocol {
-    func performFetch() throws
-    func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol]
+    func performFetch(nodeCreator: WOTNodeCreatorProtocol? ) throws
+    func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void)
     func fetchedObjects() -> [AnyObject]?
     func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?)
 }
 
 @objc
 public protocol WOTDataFetchControllerListenerProtocol {
-    func fetchPerformed(by: WOTDataFetchControllerProtocol)
+    func fetchPerformed(by: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?)
     func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error)
 }
 

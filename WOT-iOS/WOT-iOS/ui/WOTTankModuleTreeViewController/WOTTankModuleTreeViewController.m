@@ -90,10 +90,10 @@
     if (self){
 
         self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self];
-        self.fetchController.nodeCreator = self;
         self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController
                                                               listener: self
-                                                            enumerator: [WOTNodeEnumerator sharedInstance]];
+                                                            enumerator: [WOTNodeEnumerator sharedInstance]
+                                                           nodeCreator: self];
     }
     return self;
 }
@@ -239,10 +239,6 @@
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTDataModelListener)
-
-- (void)modelHasNewDataItem {
-
-}
 
 - (void)modelDidLoad {
     [self.collectionView reloadData];

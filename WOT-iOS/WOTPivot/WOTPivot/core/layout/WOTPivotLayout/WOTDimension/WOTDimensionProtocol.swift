@@ -23,5 +23,5 @@ public protocol WOTDimensionProtocol: NSObjectProtocol {
 
     func childrenMaxWidth(_ node: WOTNodeProtocol, orValue: Int) -> Int
 
-    func reload(forIndex: Int)
+    func reload(forIndex: Int, nodeCreator: WOTNodeCreatorProtocol?)
 }

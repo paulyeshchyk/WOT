@@ -59,7 +59,7 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     private var index: Int = 0
 
     //TODO: !!! TO BE refactored: too slow !!!
-    override public func reload(forIndex externalIndex: Int) {
+    override public func reload(forIndex externalIndex: Int, nodeCreator: WOTNodeCreatorProtocol?) {
 
         self.index = externalIndex
 
@@ -78,8 +78,15 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
                         let filterFullPredicate = (filterNode as? WOTPivotNodeProtocol)?.predicate
 
                         let predicates = [colFullPredicate, rowFullPredicate, filterFullPredicate].compactMap { $0 }
-                        let dataNodes = self.fetchController.fetchedNodes(byPredicates: predicates)
-                        self.updateDimensions(dataNodes: dataNodes, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+                        self.fetchController.fetchedNodes(byPredicates: predicates, nodeCreator: nodeCreator) {predicate, filtered in
+                            var dataNodes = [WOTNodeProtocol]()
+                            let compacted = filtered?.compactMap { $0 } ?? []
+                            if let nodes = nodeCreator?.createNodes(fetchedObjects: compacted, byPredicate: predicate) {
+                                dataNodes.append(contentsOf: nodes)
+                            }
+
+                            self.updateDimensions(dataNodes: dataNodes, colNode: colNode, rowNode: rowNode, filterNode: filterNode)
+                        }
                     })
                 })
                 self.listener?.didLoad(dimension: self)

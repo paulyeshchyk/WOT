@@ -39,25 +39,33 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
         self.add(rootNode: result)
         return result
     }()
+    
     lazy public var rootColsNode: WOTNodeProtocol = {
         let result = self.nodeCreator.createNode(name: "root cols")
         self.add(rootNode: result)
         return result
     }()
+    
     lazy public var rootRowsNode: WOTNodeProtocol = {
         let result = self.nodeCreator.createNode(name: "root rows")
         self.add(rootNode: result)
         return result
     }()
+    
     lazy public var rootDataNode: WOTNodeProtocol = {
         let result = self.nodeCreator.createNode(name: "root data")
+        self.add(rootNode: result)
+        return result
+    }()
+    
+    lazy public var rootNode: WOTNodeProtocol = {
+        let result = self.nodeCreator.createNode(name: "root")
         self.add(rootNode: result)
         return result
     }()
 
     public func add(dataNode: WOTNodeProtocol) {
         self.rootDataNode.addChild(dataNode)
-        self.listener?.modelHasNewDataItem()
     }
 
     override public var nodes: [WOTNodeProtocol] {
@@ -99,17 +107,13 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
         super.loadModel()
 
         do {
-            try self.fetchController.performFetch()
+            try self.fetchController.performFetch(nodeCreator: nodeCreator)
         } catch {
         }
     }
 
     public func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol? {
-        guard let result = self.nodeIndex.item(indexPath: atIndexPath) as? WOTPivotNodeProtocol else {
-            //            assert(false)
-            return nil
-        }
-        return result
+        return (self.nodeIndex.item(indexPath: atIndexPath) as? WOTPivotNodeProtocol)
     }
 
     public func itemRect(atIndexPath: NSIndexPath) -> CGRect {
@@ -159,7 +163,7 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
         self.add(metadataItems: items)
 
         let metadataIndex = self.nodeIndex.doAutoincrementIndex(forNodes: [self.rootFilterNode, self.rootColsNode, self.rootRowsNode])
-        self.dimension.reload(forIndex: metadataIndex)
+        self.dimension.reload(forIndex: metadataIndex, nodeCreator: nodeCreator)
     }
 
     fileprivate func failPivot(_ error: Error) {
@@ -178,12 +182,9 @@ extension WOTPivotDataModel: WOTTreeProtocol {
     public func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol {
         let roots = self.rootNodes.filter { _ in forPredicate.evaluate(with: nil) }
         if roots.count == 0 {
-            let root = self.nodeCreator.createNode(name: "root")
-            self.add(rootNode: root)
-            return root
+            return self.rootNode
         } else {
-            let root = roots.first
-            return root!
+            return roots.first!
         }
     }
 }
@@ -193,7 +194,7 @@ extension WOTPivotDataModel: WOTDataFetchControllerListenerProtocol {
         self.failPivot(withError)
     }
 
-    public func fetchPerformed(by: WOTDataFetchControllerProtocol) {
+    public func fetchPerformed(by: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?) {
         self.makePivot()
     }
 }

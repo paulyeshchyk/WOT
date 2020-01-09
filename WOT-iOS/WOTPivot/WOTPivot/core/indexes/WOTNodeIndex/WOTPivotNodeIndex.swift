@@ -12,7 +12,7 @@ class WOTPivotNodeIndex: WOTPivotNodeIndexProtocol {
 
     // contains node.index: node
     // where node.index - global autoincremented value
-    // used to get item by indexpath while iterating in  WOTTankPivotLayout::layoutAttributesForElementsInRect
+    // used to get item by indexpath while iterating in  WOTPivotLayout::layoutAttributesForElementsInRect
 
     private var index = [AnyHashable: Any] ()
 

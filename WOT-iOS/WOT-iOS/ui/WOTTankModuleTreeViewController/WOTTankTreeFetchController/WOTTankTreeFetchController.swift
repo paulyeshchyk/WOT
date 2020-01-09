@@ -11,9 +11,9 @@ import WOTPivot
 import WOTData
 
 @objc
-class WOTTankTreeFetchController: WOTDataTanksFetchController {
+class WOTTankTreeFetchController: WOTDataFetchController {
 
-    override func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
+    override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {
 
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
@@ -22,10 +22,10 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         let filtered = self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }
 
         filtered?.forEach { fetchedObject in
-            let transformed = self.transform(tank: fetchedObject)
+            let transformed = self.transform(tank: fetchedObject, nodeCreator: nodeCreator)
             result.append(contentsOf: transformed)
         }
-        return result
+        filteredCompletion(predicate, result)
     }
 
     private func tankId(_ tank: AnyObject) -> NSNumber? {
@@ -42,13 +42,13 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
         return vehicles.modulesTree
     }
 
-    private func transform(tank: AnyObject) -> [WOTNodeProtocol] {
+    private func transform(tank: AnyObject, nodeCreator: WOTNodeCreatorProtocol?) -> [WOTNodeProtocol] {
 
         guard let tankId = self.tankId(tank) else {
             return []
         }
 
-        guard let root = self.nodeCreator?.createNode(fetchedObject: tank, byPredicate: nil) else {
+        guard let root = nodeCreator?.createNode(fetchedObject: tank, byPredicate: nil) else {
             return []
         }
 
@@ -58,7 +58,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
 
         var temporaryList = [Int: WOTNodeProtocol]()
         let nodeCreation: NodeCreateClosure = { (id: Int, module: ModulesTree) in
-            if let node = self.nodeCreator?.createNode(fetchedObject: module, byPredicate: nil) {
+            if let node = nodeCreator?.createNode(fetchedObject: module, byPredicate: nil) {
                 temporaryList[id] = node
             }
         }

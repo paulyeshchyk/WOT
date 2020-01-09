@@ -32,7 +32,7 @@ class SteelPivotViewController: UIViewController {
 class SteelPivotFetchController: WOTDataFetchControllerProtocol {
     var listener: WOTDataFetchControllerListenerProtocol?
 
-    func performFetch() throws {
+    func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
         self.listener?.fetchPerformed(by: self)
     }
     
@@ -61,9 +61,6 @@ extension SteelPivotViewController: WOTDataModelListener {
     
     func metadataItems() -> [WOTNodeProtocol] {
         return []
-    }
-    
-    func modelHasNewDataItem() {
     }
 }
 

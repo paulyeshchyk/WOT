@@ -24,7 +24,7 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         self.reindexNodeConnectors()
 
         do {
-            try self.fetchController.performFetch()
+            try self.fetchController.performFetch(nodeCreator: nodeCreator)
         } catch let error {
             fetchFailed(by: self.fetchController, withError: error)
         }
@@ -32,10 +32,12 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
 
     var fetchController: WOTDataFetchControllerProtocol
     var listener: WOTDataModelListener
+    var nodeCreator: WOTNodeCreatorProtocol
 
-    required public init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener, enumerator: WOTNodeEnumeratorProtocol) {
+    required public init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener, enumerator: WOTNodeEnumeratorProtocol, nodeCreator nc: WOTNodeCreatorProtocol) {
         fetchController = fetch
         listener = list
+        nodeCreator = nc
         super.init(enumerator: enumerator)
 
         self.fetchController.setFetchListener(self)
@@ -84,10 +86,12 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         listener.modelDidFailLoad(error: error)
     }
 
-    fileprivate func makeTree(_ fetchController: WOTDataFetchControllerProtocol) {
-        let fetchedNodes = fetchController.fetchedNodes(byPredicates: [])
-        self.add(nodes: fetchedNodes)
-        self.listener.modelDidLoad()
+    fileprivate func makeTree(_ fetchController: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?) {
+        fetchController.fetchedNodes(byPredicates: [], nodeCreator: nodeCreator, filteredCompletion: { predicate, fetchedNodes in
+            let data = fetchedNodes?.compactMap { $0 as? WOTNode } ?? []
+            self.add(nodes: data)
+            self.listener.modelDidLoad()
+        })
     }
 }
 
@@ -102,8 +106,8 @@ extension WOTTreeDataModel {
 
 extension WOTTreeDataModel: WOTDataFetchControllerListenerProtocol {
 
-    public func fetchPerformed(by fetchController: WOTDataFetchControllerProtocol) {
-        self.makeTree(fetchController)
+    public func fetchPerformed(by fetchController: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?) {
+        self.makeTree(fetchController, nodeCreator: nodeCreator)
     }
 
     public func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error) {

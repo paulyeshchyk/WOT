@@ -19,7 +19,7 @@ public protocol WOTNodeCreatorProtocol {
     func createNode(name: String) -> WOTNodeProtocol
     func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol
     func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol]
-    func createNodeGroup(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol
+    func createNodeGroup(name: String, fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol
 }
 
 @objc
@@ -32,7 +32,6 @@ public protocol WOTDataModelMetadatasource {
 public protocol WOTDataModelListener {
     func modelDidLoad()
     func modelDidFailLoad(error: Error)
-    func modelHasNewDataItem()
 }
 
 @objc

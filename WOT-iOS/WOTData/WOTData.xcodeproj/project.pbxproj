@@ -29,6 +29,7 @@
 		1D52F76822786F0800419FBE /* ProfileAmmo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D52F75722786F0800419FBE /* ProfileAmmo.swift */; };
 		1D52F76922786F0800419FBE /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D52F75822786F0800419FBE /* Profile.swift */; };
 		1D52F76A22786F0900419FBE /* Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D52F75922786F0800419FBE /* Tier.swift */; };
+		1D5D021523C72ACB004B0314 /* WOTDataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D021423C72ACB004B0314 /* WOTDataFetchController.swift */; };
 		1D65F780221552E7006A85E4 /* WOTCoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F77E221552E6006A85E4 /* WOTCoreDataProvider.swift */; };
 		1D65F781221552E7006A85E4 /* WOTCoredataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F77F221552E6006A85E4 /* WOTCoredataProviderProtocol.swift */; };
 		1D8ACECC22A7CFC000CF309B /* WebLayerDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACECB22A7CFC000CF309B /* WebLayerDecoder.swift */; };
@@ -269,6 +270,8 @@
 		1D52F75722786F0800419FBE /* ProfileAmmo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileAmmo.swift; sourceTree = "<group>"; };
 		1D52F75822786F0800419FBE /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		1D52F75922786F0800419FBE /* Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tier.swift; sourceTree = "<group>"; };
+		1D5D021023C72903004B0314 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
+		1D5D021423C72ACB004B0314 /* WOTDataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataFetchController.swift; sourceTree = "<group>"; };
 		1D65F77E221552E6006A85E4 /* WOTCoreDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoreDataProvider.swift; sourceTree = "<group>"; };
 		1D65F77F221552E6006A85E4 /* WOTCoredataProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoredataProviderProtocol.swift; sourceTree = "<group>"; };
 		1D8ACECB22A7CFC000CF309B /* WebLayerDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLayerDecoder.swift; sourceTree = "<group>"; };
@@ -644,6 +647,7 @@
 		1D3DAEEC213416FD00368AFA /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1D5D020F23C728D8004B0314 /* fetchController */,
 				1DBA9CF32273389800162DE1 /* codable */,
 				1D2564FB221C18800047E8E3 /* templates */,
 				1DB6745D221C05D500982EE6 /* categories */,
@@ -655,6 +659,15 @@
 				1DB67465221C06B700982EE6 /* WOTDataAPI.swift */,
 			);
 			path = core;
+			sourceTree = "<group>";
+		};
+		1D5D020F23C728D8004B0314 /* fetchController */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D021423C72ACB004B0314 /* WOTDataFetchController.swift */,
+				1D5D021023C72903004B0314 /* WOTDataTanksFetchControllerTest.swift */,
+			);
+			path = fetchController;
 			sourceTree = "<group>";
 		};
 		1D65F77D221552E6006A85E4 /* dataProvider */ = {
@@ -1397,6 +1410,7 @@
 				1D52F76722786F0800419FBE /* ProfileEngine.swift in Sources */,
 				1DCCA8482269FC6D00D370E8 /* UserSession+CoreDataClass.m in Sources */,
 				1DCCA8142269FC6D00D370E8 /* VehicleprofileAmmo+CoreDataClass.m in Sources */,
+				1D5D021523C72ACB004B0314 /* WOTDataFetchController.swift in Sources */,
 				1DCCA8352269FC6D00D370E8 /* VehicleprofileTurret+CoreDataProperties.m in Sources */,
 				1DCCA8442269FC6D00D370E8 /* ListSetting+CoreDataClass.m in Sources */,
 				1D8C29702135821900759C42 /* WOTWebResponseAdapterModulesTree.m in Sources */,

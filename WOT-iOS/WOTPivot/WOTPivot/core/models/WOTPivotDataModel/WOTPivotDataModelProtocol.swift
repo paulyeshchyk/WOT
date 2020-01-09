@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol WOTPivotDataModelProtocol: NSObjectProtocol {
+public protocol WOTPivotDataModelProtocol: WOTDataModelProtocol {
     var contentSize: CGSize { get }
     var shouldDisplayEmptyColumns: Bool { get set }
     func itemRect(atIndexPath: NSIndexPath) -> CGRect

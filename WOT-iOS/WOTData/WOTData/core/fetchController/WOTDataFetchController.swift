@@ -8,9 +8,8 @@
 
 import Foundation
 import CoreData
-import WOTData
 
-class WOTDataTanksFetchController: NSObject {
+open class WOTDataFetchController: NSObject {
 
     private lazy var dataProvider: WOTCoredataProviderProtocol =  {
         return WOTCoreDataProvider.sharedInstance
@@ -24,14 +23,11 @@ class WOTDataTanksFetchController: NSObject {
         return result
     }()
 
-    var listener: WOTDataFetchControllerListenerProtocol?
-    var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
+    public var listener: WOTDataFetchControllerListenerProtocol?
+    public var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
 
     @objc
-    var nodeCreator: WOTNodeCreatorProtocol?
-
-    @objc
-    init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol) {
+    public init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol) {
         nodeFetchRequestCreator = nfrc
     }
 
@@ -40,45 +36,37 @@ class WOTDataTanksFetchController: NSObject {
     }
 }
 
-extension WOTDataTanksFetchController: WOTDataFetchControllerProtocol {
-    func performFetch() throws {
+extension WOTDataFetchController: WOTDataFetchControllerProtocol {
+
+    public func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
         self.fetchResultController.managedObjectContext.perform({
             do {
                 try self.fetchResultController.performFetch()
-                self.listener?.fetchPerformed(by: self)
+                self.listener?.fetchPerformed(by: self, nodeCreator: nodeCreator)
             } catch let error {
                 self.listener?.fetchFailed(by: self, withError: error)
             }
         })
     }
 
-    func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?) {
+    public func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?) {
         self.listener = listener
     }
 
-    func fetchedObjects() -> [AnyObject]? {
+    public func fetchedObjects() -> [AnyObject]? {
         return self.fetchResultController.fetchedObjects
     }
 
-    func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
-
-        var result = [WOTNodeProtocol]()
+    open func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {
 
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
-        guard let filtered = (self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }) else {
-            return result
-        }
-
-        if let nodes = self.nodeCreator?.createNodes(fetchedObjects: filtered, byPredicate: predicate) {
-            result.append(contentsOf: nodes)
-        }
-
-        return result
+        let filtered = (self.fetchedObjects()?.filter { predicate.evaluate(with: $0) })
+        filteredCompletion(predicate,filtered)
     }
 }
 
-extension WOTDataTanksFetchController: NSFetchedResultsControllerDelegate {
+extension WOTDataFetchController: NSFetchedResultsControllerDelegate {
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     }
