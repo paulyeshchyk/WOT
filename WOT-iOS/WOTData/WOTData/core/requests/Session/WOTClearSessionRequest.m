@@ -7,6 +7,7 @@
 //
 
 #import "WOTClearSessionRequest.h"
+#import <WOTPivot/WOTPivot-Swift.h>
 #import <WOTData/WOTData.h>
 #import <WOTData/WOTData-Swift.h>
 

@@ -29,7 +29,6 @@
 		1D52F76922786F0800419FBE /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D52F75822786F0800419FBE /* Profile.swift */; };
 		1D52F76A22786F0900419FBE /* Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D52F75922786F0800419FBE /* Tier.swift */; };
 		1D5D023523C868F8004B0314 /* WOTTankCoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D023423C868F8004B0314 /* WOTTankCoreDataProvider.swift */; };
-		1D65F780221552E7006A85E4 /* WOTCoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F77E221552E6006A85E4 /* WOTCoreDataProvider.swift */; };
 		1D8ACECC22A7CFC000CF309B /* WebLayerDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACECB22A7CFC000CF309B /* WebLayerDecoder.swift */; };
 		1D8C290321357ADA00759C42 /* Tankengines+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C28C121357AD900759C42 /* Tankengines+FillProperties.m */; };
 		1D8C290421357ADA00759C42 /* Tankengines+FillProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C28C221357AD900759C42 /* Tankengines+FillProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,16 +114,9 @@
 		1D8C29F1213592B700759C42 /* WOTClearSessionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C29C8213592B600759C42 /* WOTClearSessionRequest.m */; };
 		1D8C29FA21359C4600759C42 /* WOTSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C29F821359C4600759C42 /* WOTSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D8C29FB21359C4600759C42 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C29F921359C4600759C42 /* WOTSessionManager.m */; };
-		1DA83C87213558120039CB4B /* NSManagedObject+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83C85213558120039CB4B /* NSManagedObject+FillProperties.m */; };
-		1DA83C88213558120039CB4B /* NSManagedObject+FillProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83C86213558120039CB4B /* NSManagedObject+FillProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DB67420221BEC0900982EE6 /* WOTWEBRequest+Stubs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB6741E221BEC0900982EE6 /* WOTWEBRequest+Stubs.h */; };
 		1DB67421221BEC0900982EE6 /* WOTWEBRequest+Stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB6741F221BEC0900982EE6 /* WOTWEBRequest+Stubs.m */; };
-		1DB67462221C05D500982EE6 /* NSManagedObject+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB6745F221C05D500982EE6 /* NSManagedObject+Operations.swift */; };
-		1DB67463221C05D500982EE6 /* NSManagedObject+CoreDataOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB67460221C05D500982EE6 /* NSManagedObject+CoreDataOperations.m */; };
-		1DB67464221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB67461221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DB67466221C06B700982EE6 /* WOTDataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB67465221C06B700982EE6 /* WOTDataAPI.swift */; };
-		1DBA9CF62273389800162DE1 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBA9CF42273389800162DE1 /* Coding.swift */; };
-		1DBA9CF72273389800162DE1 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBA9CF52273389800162DE1 /* AnyCodable.swift */; };
 		1DCCA7FA2269FC6D00D370E8 /* Tankchassis+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DCCA7A62269FC6C00D370E8 /* Tankchassis+CoreDataProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DCCA7FB2269FC6D00D370E8 /* Tankchassis+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DCCA7A72269FC6C00D370E8 /* Tankchassis+CoreDataClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DCCA7FC2269FC6D00D370E8 /* Tankchassis+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCCA7A82269FC6C00D370E8 /* Tankchassis+CoreDataClass.m */; };
@@ -268,7 +260,6 @@
 		1D52F75822786F0800419FBE /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		1D52F75922786F0800419FBE /* Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tier.swift; sourceTree = "<group>"; };
 		1D5D023423C868F8004B0314 /* WOTTankCoreDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankCoreDataProvider.swift; sourceTree = "<group>"; };
-		1D65F77E221552E6006A85E4 /* WOTCoreDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoreDataProvider.swift; sourceTree = "<group>"; };
 		1D8ACECB22A7CFC000CF309B /* WebLayerDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLayerDecoder.swift; sourceTree = "<group>"; };
 		1D8C28C121357AD900759C42 /* Tankengines+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tankengines+FillProperties.m"; sourceTree = "<group>"; };
 		1D8C28C221357AD900759C42 /* Tankengines+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tankengines+FillProperties.h"; sourceTree = "<group>"; };
@@ -354,16 +345,9 @@
 		1D8C29C8213592B600759C42 /* WOTClearSessionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTClearSessionRequest.m; sourceTree = "<group>"; };
 		1D8C29F821359C4600759C42 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		1D8C29F921359C4600759C42 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
-		1DA83C85213558120039CB4B /* NSManagedObject+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FillProperties.m"; sourceTree = "<group>"; };
-		1DA83C86213558120039CB4B /* NSManagedObject+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FillProperties.h"; sourceTree = "<group>"; };
 		1DB6741E221BEC0900982EE6 /* WOTWEBRequest+Stubs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WOTWEBRequest+Stubs.h"; sourceTree = "<group>"; };
 		1DB6741F221BEC0900982EE6 /* WOTWEBRequest+Stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WOTWEBRequest+Stubs.m"; sourceTree = "<group>"; };
-		1DB6745F221C05D500982EE6 /* NSManagedObject+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Operations.swift"; sourceTree = "<group>"; };
-		1DB67460221C05D500982EE6 /* NSManagedObject+CoreDataOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+CoreDataOperations.m"; sourceTree = "<group>"; };
-		1DB67461221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+CoreDataOperations.h"; sourceTree = "<group>"; };
 		1DB67465221C06B700982EE6 /* WOTDataAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataAPI.swift; sourceTree = "<group>"; };
-		1DBA9CF42273389800162DE1 /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
-		1DBA9CF52273389800162DE1 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		1DCCA7A62269FC6C00D370E8 /* Tankchassis+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tankchassis+CoreDataProperties.h"; sourceTree = "<group>"; };
 		1DCCA7A72269FC6C00D370E8 /* Tankchassis+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tankchassis+CoreDataClass.h"; sourceTree = "<group>"; };
 		1DCCA7A82269FC6C00D370E8 /* Tankchassis+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Tankchassis+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -634,13 +618,10 @@
 		1D3DAEEC213416FD00368AFA /* core */ = {
 			isa = PBXGroup;
 			children = (
-				1DBA9CF32273389800162DE1 /* codable */,
-				1DB6745D221C05D500982EE6 /* categories */,
 				1D65F77D221552E6006A85E4 /* dataProvider */,
 				1D8C29F721359C4600759C42 /* session */,
 				1D8C2995213592B600759C42 /* requests */,
 				1D8C293F2135821900759C42 /* adapters */,
-				1DA83C84213558120039CB4B /* parser */,
 				1DB67465221C06B700982EE6 /* WOTDataAPI.swift */,
 			);
 			path = core;
@@ -650,7 +631,6 @@
 			isa = PBXGroup;
 			children = (
 				1D5D023423C868F8004B0314 /* WOTTankCoreDataProvider.swift */,
-				1D65F77E221552E6006A85E4 /* WOTCoreDataProvider.swift */,
 			);
 			path = dataProvider;
 			sourceTree = "<group>";
@@ -1065,42 +1045,6 @@
 			path = session;
 			sourceTree = "<group>";
 		};
-		1DA83C84213558120039CB4B /* parser */ = {
-			isa = PBXGroup;
-			children = (
-				1DA83C85213558120039CB4B /* NSManagedObject+FillProperties.m */,
-				1DA83C86213558120039CB4B /* NSManagedObject+FillProperties.h */,
-			);
-			path = parser;
-			sourceTree = "<group>";
-		};
-		1DB6745D221C05D500982EE6 /* categories */ = {
-			isa = PBXGroup;
-			children = (
-				1DB6745E221C05D500982EE6 /* NSManagedObject */,
-			);
-			path = categories;
-			sourceTree = "<group>";
-		};
-		1DB6745E221C05D500982EE6 /* NSManagedObject */ = {
-			isa = PBXGroup;
-			children = (
-				1DB6745F221C05D500982EE6 /* NSManagedObject+Operations.swift */,
-				1DB67460221C05D500982EE6 /* NSManagedObject+CoreDataOperations.m */,
-				1DB67461221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h */,
-			);
-			path = NSManagedObject;
-			sourceTree = "<group>";
-		};
-		1DBA9CF32273389800162DE1 /* codable */ = {
-			isa = PBXGroup;
-			children = (
-				1DBA9CF42273389800162DE1 /* Coding.swift */,
-				1DBA9CF52273389800162DE1 /* AnyCodable.swift */,
-			);
-			path = codable;
-			sourceTree = "<group>";
-		};
 		1DBA9DF52276D38700162DE1 /* decodable */ = {
 			isa = PBXGroup;
 			children = (
@@ -1174,7 +1118,6 @@
 				1DCCA8362269FC6D00D370E8 /* VehicleprofileAmmoDamage+CoreDataProperties.h in Headers */,
 				1DCCA80F2269FC6D00D370E8 /* Tankengines+CoreDataClass.h in Headers */,
 				1DCCA83A2269FC6D00D370E8 /* Tankradios+CoreDataProperties.h in Headers */,
-				1DA83C88213558120039CB4B /* NSManagedObject+FillProperties.h in Headers */,
 				1D8C299021358CA600759C42 /* WOTDataDefines.h in Headers */,
 				1D8C291321357ADA00759C42 /* VehicleprofileAmmoDamage+FillProperties.h in Headers */,
 				1D8C290821357ADA00759C42 /* Tankradios+FillProperties.h in Headers */,
@@ -1252,7 +1195,6 @@
 				1D8C295F2135821900759C42 /* WOTWebResponseAdapterChassis.h in Headers */,
 				1D8C29FA21359C4600759C42 /* WOTSessionManager.h in Headers */,
 				1D8C29622135821900759C42 /* WOTWebResponseAdapterGuns.h in Headers */,
-				1DB67464221C05D500982EE6 /* NSManagedObject+CoreDataOperations.h in Headers */,
 				1DCCA8172269FC6D00D370E8 /* Tankturrets+CoreDataClass.h in Headers */,
 				1DCCA8462269FC6D00D370E8 /* UserSession+CoreDataProperties.h in Headers */,
 				1DDC13772135364400B10A0B /* WOTData-Model.h in Headers */,
@@ -1402,7 +1344,6 @@
 				1D8ACECC22A7CFC000CF309B /* WebLayerDecoder.swift in Sources */,
 				1D52F75C22786F0800419FBE /* ProfileSuspension.swift in Sources */,
 				1DCCA8382269FC6D00D370E8 /* VehicleprofileAmmoDamage+CoreDataClass.m in Sources */,
-				1D65F780221552E7006A85E4 /* WOTCoreDataProvider.swift in Sources */,
 				1D8C290321357ADA00759C42 /* Tankengines+FillProperties.m in Sources */,
 				1D52F75D22786F0800419FBE /* ModulesTree.swift in Sources */,
 				1D8C290F21357ADA00759C42 /* VehicleprofileAmmo+FillProperties.m in Sources */,
@@ -1418,7 +1359,6 @@
 				1DCCA8192269FC6D00D370E8 /* Tankturrets+CoreDataProperties.m in Sources */,
 				1D52F75F22786F0800419FBE /* Vehicle.swift in Sources */,
 				1DCCA8092269FC6D00D370E8 /* VehicleprofileAmmoList+CoreDataProperties.m in Sources */,
-				1DBA9CF62273389800162DE1 /* Coding.swift in Sources */,
 				1DCCA8112269FC6D00D370E8 /* Tankengines+CoreDataProperties.m in Sources */,
 				1DCCA962226DDB6300D370E8 /* VehicleprofileSuspension_FillProperties.swift in Sources */,
 				1D52F76022786F0800419FBE /* Vehicles.swift in Sources */,
@@ -1440,14 +1380,12 @@
 				1D52F76322786F0800419FBE /* ProfileArmor.swift in Sources */,
 				1DCCA83C2269FC6D00D370E8 /* Tankradios+CoreDataClass.m in Sources */,
 				1D8C29D4213592B700759C42 /* WOTWebRequestTankRadios.m in Sources */,
-				1DBA9CF72273389800162DE1 /* AnyCodable.swift in Sources */,
 				1D8C291C21357ADA00759C42 /* VehicleprofileGun+FillProperties.m in Sources */,
 				1D8C291E21357ADA00759C42 /* VehicleprofileTurret+FillProperties.m in Sources */,
 				1DCCA961226DDB6300D370E8 /* VehicleprofileGun_FillProperties.swift in Sources */,
 				1DCCA8412269FC6D00D370E8 /* Vehicles+CoreDataProperties.m in Sources */,
 				1D52F76922786F0800419FBE /* Profile.swift in Sources */,
 				1D8C291421357ADA00759C42 /* VehicleprofileEngine+FillProperties.m in Sources */,
-				1DB67463221C05D500982EE6 /* NSManagedObject+CoreDataOperations.m in Sources */,
 				1DCCA8002269FC6D00D370E8 /* VehicleprofileSuspension+CoreDataClass.m in Sources */,
 				1D8C290A21357ADA00759C42 /* Tankguns+FillProperties.m in Sources */,
 				1DCCA95D226DDB6300D370E8 /* ModulesTree_FillProperties.swift in Sources */,
@@ -1459,7 +1397,6 @@
 				1DCCA912226DC54100D370E8 /* JSONMapperProtocol.swift in Sources */,
 				1DCCA95F226DDB6300D370E8 /* TankEngines_FillProperties.swift in Sources */,
 				1D52F76A22786F0900419FBE /* Tier.swift in Sources */,
-				1DB67462221C05D500982EE6 /* NSManagedObject+Operations.swift in Sources */,
 				1D8C296B2135821900759C42 /* WOTWebResponseAdapterVehicles.m in Sources */,
 				1D8C29EE213592B700759C42 /* WOTSaveSessionRequest.m in Sources */,
 				1D8C290921357ADA00759C42 /* Tankradios+FillProperties.m in Sources */,
@@ -1486,7 +1423,6 @@
 				1DCCA8102269FC6D00D370E8 /* Tankengines+CoreDataClass.m in Sources */,
 				1D52F76822786F0800419FBE /* ProfileAmmo.swift in Sources */,
 				1D8C292E21357ADA00759C42 /* ModulesTree+UI.m in Sources */,
-				1DA83C87213558120039CB4B /* NSManagedObject+FillProperties.m in Sources */,
 				1D52F75A22786F0800419FBE /* ModuleType.swift in Sources */,
 				1DCCA8082269FC6D00D370E8 /* VehicleprofileAmmoList+CoreDataClass.m in Sources */,
 				1DCCA967226DDB6300D370E8 /* VehicleprofileArmor_FillProperties.swift in Sources */,

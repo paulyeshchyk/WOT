@@ -160,7 +160,6 @@
 		1D9CAA22210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */; };
 		1D9CAA24210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */; };
 		1D9CAA362111A09700B6CA5A /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA352111A09600B6CA5A /* strings.swift */; };
-		1DA00C2F21009ACB004F9FDE /* NSManagedObjectContext+AllObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA00C2E21009ACB004F9FDE /* NSManagedObjectContext+AllObjects.swift */; };
 		1DA1D7351B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */; };
 		1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */; };
 		1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D7381B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m */; };
@@ -500,7 +499,6 @@
 		1D9CAA21210F065A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankTreeConnectorCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D9CAA23210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTTankTreeConnectorCollectionViewCell.xib; sourceTree = "<group>"; };
 		1D9CAA352111A09600B6CA5A /* strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = strings.swift; sourceTree = "<group>"; };
-		1DA00C2E21009ACB004F9FDE /* NSManagedObjectContext+AllObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+AllObjects.swift"; sourceTree = "<group>"; };
 		1DA1D7321B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingAddNewTableViewCell.h; sourceTree = "<group>"; };
 		1DA1D7331B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingAddNewTableViewCell.m; sourceTree = "<group>"; };
 		1DA1D7341B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingAddNewTableViewCell.xib; sourceTree = "<group>"; };
@@ -726,9 +724,7 @@
 		1D047B541B331D5100B5B696 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				1D5D023123C867D3004B0314 /* dataprovider */,
 				1D5A8E3D1B43F33000A8261E /* predicates */,
-				1DA00C2E21009ACB004F9FDE /* NSManagedObjectContext+AllObjects.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1004,13 +1000,6 @@
 				1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */,
 			);
 			path = TankIds;
-			sourceTree = "<group>";
-		};
-		1D5D023123C867D3004B0314 /* dataprovider */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = dataprovider;
 			sourceTree = "<group>";
 		};
 		1D65F82F2216AEE9006A85E4 /* TankDetails */ = {
@@ -2121,7 +2110,6 @@
 				1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */,
 				1D86DD022122DB4C00678E71 /* WOTMenuDatasource.swift in Sources */,
 				1D519D241B4EA20900D3A286 /* WOTTankDetailFieldExpression+Factory.m in Sources */,
-				1DA00C2F21009ACB004F9FDE /* NSManagedObjectContext+AllObjects.swift in Sources */,
 				1DCC7F321B2EE974005FF193 /* RomanNumber.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
 				1DD46B3A1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m in Sources */,

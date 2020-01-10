@@ -10,27 +10,20 @@ import Foundation
 import WOTPivot
 
 @objc
-public protocol WOTAPIProtocol: NSObjectProtocol {
-
-}
-
+public protocol WOTAPIProtocol: NSObjectProtocol { }
 
 @objc
-protocol WOTAPIDefaultsProtocol: NSObjectProtocol {
-
-}
+protocol WOTAPIDefaultsProtocol: NSObjectProtocol { }
 
 @objc
 public class WOTApiForeignKeys: NSObject, WOTAPIProtocol {
     @objc public static let vehicles_default_profile_hp: String = "vehicles.default_profile.hp"
     @objc public static let vehicles_default_profile_weight: String =  "vehicles.default_profile.weight"
     @objc public static let vehicles_default_profile_gun_fire_rate: String = "vehicles.default_profile.gun.fire_rate"
-
 }
 
 @objc
 public class WOTApiKeys: NSObject, WOTAPIProtocol {
-
     @objc public static let modules_tree: String = "modules_tree"
     @objc public static let modulestree: String = "modulestree"
     @objc public static let engines: String = "engines"
@@ -84,7 +77,6 @@ public class WOTApiTankType: NSObject, WOTAPIProtocol {
     @objc public static let mediumTank  = "mediumTank";
     @objc public static let heavyTank  = "heavyTank";
 }
-
 
 public class WOTApiDefaults: NSObject, WOTAPIDefaultsProtocol {
     @objc public static let languageRU: String = "ru"

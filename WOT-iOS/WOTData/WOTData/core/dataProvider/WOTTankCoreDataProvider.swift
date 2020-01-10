@@ -6,6 +6,8 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+import WOTPivot
+
 @objc
 public class WOTTankCoreDataProvider: WOTCoreDataProvider {
     

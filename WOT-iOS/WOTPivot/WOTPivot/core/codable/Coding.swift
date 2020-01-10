@@ -14,29 +14,29 @@ public struct CodingAPI {
 
 }
 
-struct StringCodingKey: CodingKey, ExpressibleByStringLiteral {
+public struct StringCodingKey: CodingKey, ExpressibleByStringLiteral {
     
     private let string: String
     private let int: Int?
     
-    var stringValue: String { return string }
+    public var stringValue: String { return string }
     
     init(string: String) {
         self.string = string
         int = nil
     }
-    init?(stringValue: String) {
+    public init?(stringValue: String) {
         string = stringValue
         int = nil
     }
     
-    var intValue: Int? { return int }
-    init?(intValue: Int) {
+    public var intValue: Int? { return int }
+    public init?(intValue: Int) {
         string = String(describing: intValue)
         int = intValue
     }
     
-    init(stringLiteral value: String) {
+    public init(stringLiteral value: String) {
         string = value
         int = nil
     }
@@ -56,14 +56,14 @@ extension JSONDecoder {
 // any decoding
 extension KeyedDecodingContainer {
     
-    func decodeAny<T>(_ type: T.Type, forKey key: K) throws -> T {
+    public func decodeAny<T>(_ type: T.Type, forKey key: K) throws -> T {
         guard let value = try decode(AnyCodable.self, forKey: key).value as? T else {
             throw DecodingError.typeMismatch(T.self, DecodingError.Context(codingPath: codingPath, debugDescription: "Decoding of \(T.self) failed"))
         }
         return value
     }
     
-    func decodeAnyIfPresent<T>(_ type: T.Type, forKey key: K) throws -> T? {
+    public func decodeAnyIfPresent<T>(_ type: T.Type, forKey key: K) throws -> T? {
         return try decodeOptional {
             guard let value = try decodeIfPresent(AnyCodable.self, forKey: key)?.value else { return nil }
             if let typedValue = value as? T {
@@ -74,7 +74,7 @@ extension KeyedDecodingContainer {
         }
     }
     
-    func toDictionary() throws -> [String: Any] {
+    public func toDictionary() throws -> [String: Any] {
         var dictionary: [String: Any] = [:]
         for key in allKeys {
             dictionary[key.stringValue] = try decodeAny(key)
@@ -82,21 +82,21 @@ extension KeyedDecodingContainer {
         return dictionary
     }
     
-    func decode<T>(_ key: KeyedDecodingContainer.Key) throws -> T where T: Decodable {
+    public func decode<T>(_ key: KeyedDecodingContainer.Key) throws -> T where T: Decodable {
         return try decode(T.self, forKey: key)
     }
     
-    func decodeIfPresent<T>(_ key: KeyedDecodingContainer.Key) throws -> T? where T: Decodable {
+    public func decodeIfPresent<T>(_ key: KeyedDecodingContainer.Key) throws -> T? where T: Decodable {
         return try decodeOptional {
             try decodeIfPresent(T.self, forKey: key)
         }
     }
     
-    func decodeAny<T>(_ key: K) throws -> T {
+    public func decodeAny<T>(_ key: K) throws -> T {
         return try decodeAny(T.self, forKey: key)
     }
     
-    func decodeAnyIfPresent<T>(_ key: K) throws -> T? {
+    public func decodeAnyIfPresent<T>(_ key: K) throws -> T? {
         return try decodeAnyIfPresent(T.self, forKey: key)
     }
     
@@ -145,12 +145,12 @@ extension KeyedDecodingContainer {
 // any encoding
 extension KeyedEncodingContainer {
     
-    mutating func encodeAnyIfPresent<T>(_ value: T?, forKey key: K) throws {
+    public mutating func encodeAnyIfPresent<T>(_ value: T?, forKey key: K) throws {
         guard let value = value else { return }
         try encodeIfPresent(AnyCodable(value), forKey: key)
     }
     
-    mutating func encodeAny<T>(_ value: T, forKey key: K) throws {
+    public mutating func encodeAny<T>(_ value: T, forKey key: K) throws {
         try encode(AnyCodable(value), forKey: key)
     }
 }

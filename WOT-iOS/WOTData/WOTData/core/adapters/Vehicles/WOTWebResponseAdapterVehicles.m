@@ -12,7 +12,6 @@
 
 #import "WOTWebResponseAdapterVehicles.h"
 #import "WOTWebResponseAdapterModulesTree.h"
-#import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
 typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {

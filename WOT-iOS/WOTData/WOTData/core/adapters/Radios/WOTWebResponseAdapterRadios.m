@@ -9,7 +9,6 @@
 #import "WOTWebResponseAdapterRadios.h"
 #import "WOTData.h"
 #import <WOTPivot/WOTPivot.h>
-#import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
 @implementation WOTWebResponseAdapterRadios

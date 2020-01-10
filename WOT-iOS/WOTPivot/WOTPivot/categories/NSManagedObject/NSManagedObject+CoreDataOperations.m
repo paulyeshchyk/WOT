@@ -7,7 +7,7 @@
 //
 
 #import "NSManagedObject+CoreDataOperations.h"
-#import <WOTData/WOTData-Swift.h>
+//#import <WOTData/WOTData-Swift.h>
 
 @implementation NSManagedObject (CoreDataOperations)
 

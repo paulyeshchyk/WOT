@@ -10,7 +10,6 @@
 #import "WOTData.h"
 #import <WOTPivot/WOTPivot.h>
 #import <WOTPivot/WOTPivot-Swift.h>
-#import "NSManagedObject+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
 
 @implementation WOTWebResponseAdapterTurrets

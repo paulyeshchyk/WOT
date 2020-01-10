@@ -13,7 +13,7 @@ import CoreData
 open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
-    public var applicationDocumentsDirectoryURL: URL? { return nil }
+    open var applicationDocumentsDirectoryURL: URL? { return nil }
 
     @objc lazy public var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
@@ -23,9 +23,9 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     }()
 
 
-    public var modelURL: URL? { return nil }
+    open var modelURL: URL? { return nil }
 
-    public var sqliteURL: URL? { return nil }
+    open var sqliteURL: URL? { return nil }
 
 
     @objc lazy public var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {

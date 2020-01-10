@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import WOTPivot
+
 extension WebLayer {
 
     public class ModulesTree: Codable {
