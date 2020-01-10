@@ -80,3 +80,24 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     }
 }
 
+
+public class WOTTankPivotModel: WOTPivotDataModel {
+
+    convenience init(modelListener: WOTDataModelListener) {
+        
+        let fetchRequest = WOTTankPivotFetchRequest()
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest)
+        
+        let metadatasource = WOTTankPivotMetadatasource()
+        let nodeCreator = WOTTankPivotNodeCreator()
+
+        self.init(fetchController: fetchController,
+                  modelListener: modelListener,
+                  nodeCreator: nodeCreator,
+                  metadatasource: metadatasource)
+        
+        self.enumerator = WOTNodeEnumerator.sharedInstance
+
+    }
+    
+}

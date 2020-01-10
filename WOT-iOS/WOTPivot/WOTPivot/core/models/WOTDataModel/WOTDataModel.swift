@@ -15,15 +15,13 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
     lazy public var rootNodes: [WOTNodeProtocol] = { return [] }()
     private var comparator: WOTNodeComparator = { (left, right) in return true }
 
-    public var endpointsCount: Int { return self.enumerator.endpoints(array: self.rootNodes).count }
+    public var endpointsCount: Int {
+        return self.enumerator?.endpoints(array: rootNodes).count ?? 0
+    }
 
     open var nodes: [WOTNodeProtocol] { return [] }
 
-    var enumerator: WOTNodeEnumeratorProtocol
-
-    public required init(enumerator enumer: WOTNodeEnumeratorProtocol) {
-        enumerator = enumer
-    }
+    public var enumerator: WOTNodeEnumeratorProtocol?
 
     open func loadModel() {
         self.reindexNodes()

@@ -67,18 +67,24 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         return result
     }
 
-    public func endpoints(node: WOTNodeProtocol) -> [WOTNodeProtocol] {
-        guard node.children.count > 0 else {
-            return [node]
+    public func endpoints(node: WOTNodeProtocol?) -> [WOTNodeProtocol]? {
+        guard let root = node else {
+            return nil
         }
-        return self.endpoints(array: node.children)
+
+        guard root.children.count > 0 else {
+            return [root]
+        }
+
+        return self.endpoints(array: root.children)
     }
 
     public func endpoints(array: [WOTNodeProtocol]) -> [WOTNodeProtocol] {
         var result = [WOTNodeProtocol]()
         array.forEach { (child) in
-            let childEndpoints = self.endpoints(node: child)
-            result.append(contentsOf: childEndpoints)
+            if let childEndpoints = self.endpoints(node: child) {
+                result.append(contentsOf: childEndpoints)
+            }
         }
         return result
     }
@@ -94,7 +100,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         for idx in 0 ..< indexOfNode {
             let child = parent.children[idx]
             let endpoints = self.endpoints(node: child)
-            endpoints.forEach { (_ ) in
+            endpoints?.forEach { (_ ) in
                 result += orValue
             }
         }
@@ -115,15 +121,15 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         for idx in 0 ..< index {
             let child = parent.children[idx]
             let endpoints = self.endpoints(node: child)
-            result += endpoints.count
+            result += endpoints?.count ?? 0
         }
         result += self.childrenCount(siblingNode: parent)
         return result
     }
 
-    public func depth(forChildren children: [WOTNodeProtocol], initialLevel: Int) -> Int {
+    public func depth(forChildren children: [WOTNodeProtocol]?, initialLevel: Int) -> Int {
         var result: Int = initialLevel
-        children.forEach { (child) in
+        children?.forEach { (child) in
             let resultFromChild = self.depth(forChildren: child.children, initialLevel: (initialLevel + 1))
             result = max(result, resultFromChild)
         }

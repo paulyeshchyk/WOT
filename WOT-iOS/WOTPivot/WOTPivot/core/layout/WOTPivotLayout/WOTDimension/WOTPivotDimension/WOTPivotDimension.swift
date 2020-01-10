@@ -13,19 +13,15 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     public var listener: WOTPivotDimensionListenerProtocol?
 
     private var rootNodeHolder: WOTPivotNodeHolderProtocol
-    required public init(rootNodeHolder: WOTPivotNodeHolderProtocol, fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol) {
+    required public init(rootNodeHolder: WOTPivotNodeHolderProtocol) {
         self.rootNodeHolder = rootNodeHolder
-        super.init(fetchController: fetchController, enumerator: enumerator)
+        super.init()
     }
-
-    required public init(fetchController: WOTDataFetchControllerProtocol) {
-        fatalError("init(fetchController:) has not been implemented")
+    
+    required public init(enumerator: WOTNodeEnumeratorProtocol) {
+        fatalError("init(enumerator:) has not been implemented")
     }
-
-    required public init(fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol) {
-        fatalError("init(fetchController:enumerator:) has not been implemented")
-    }
-
+    
     private var registeredCalculators = [AnyHashable: AnyClass]()
     public func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
         let hash = hashValue(type: forNodeClass)
@@ -41,13 +37,13 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     public var rootNodeWidth: Int {
         let rows = self.rootNodeHolder.rootRowsNode
         let level = rows.isVisible ? 1 : 0
-        return self.enumerator.depth(forChildren: rows.children, initialLevel: level)
+        return enumerator?.depth(forChildren: rows.children, initialLevel: level) ?? 0
     }
 
     public var rootNodeHeight: Int {
         let cols = self.rootNodeHolder.rootColsNode
         let level = cols.isVisible ? 1 : 0
-        return self.enumerator.depth(forChildren: cols.children, initialLevel: level)
+        return enumerator?.depth(forChildren: cols.children, initialLevel: level) ?? 0
     }
 
     override public var contentSize: CGSize {
@@ -63,14 +59,14 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
         self.index = externalIndex
 
-        let colNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootColsNode)
-        let rowNodeEndpoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootRowsNode)
-        let filterEndPoints = self.enumerator.endpoints(node: self.rootNodeHolder.rootFilterNode)
+        let colNodeEndpoints = enumerator?.endpoints(node: self.rootNodeHolder.rootColsNode)
+        let rowNodeEndpoints = enumerator?.endpoints(node: self.rootNodeHolder.rootRowsNode)
+        let filterEndPoints = enumerator?.endpoints(node: self.rootNodeHolder.rootFilterNode)
 
         DispatchQueue.main.async {
-            colNodeEndpoints.forEach { (colNode) in
-                rowNodeEndpoints.forEach({ (rowNode) in
-                    filterEndPoints.forEach({(filterNode) in
+            colNodeEndpoints?.forEach { (colNode) in
+                rowNodeEndpoints?.forEach({ (rowNode) in
+                    filterEndPoints?.forEach({(filterNode) in
 
                         //TODO: should we use predicate instead of fullPredicate ?
                         let colFullPredicate = (colNode as? WOTPivotNodeProtocol)?.predicate
@@ -78,7 +74,7 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
                         let filterFullPredicate = (filterNode as? WOTPivotNodeProtocol)?.predicate
 
                         let predicates = [colFullPredicate, rowFullPredicate, filterFullPredicate].compactMap { $0 }
-                        self.fetchController.fetchedNodes(byPredicates: predicates, nodeCreator: nodeCreator) {predicate, filtered in
+                        self.fetchController?.fetchedNodes(byPredicates: predicates, nodeCreator: nodeCreator) {predicate, filtered in
                             var dataNodes = [WOTNodeProtocol]()
                             let compacted = filtered?.compactMap { $0 } ?? []
                             if let nodes = nodeCreator?.createNodes(fetchedObjects: compacted, byPredicate: predicate) {
@@ -119,11 +115,11 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private func getWidth() -> Int {
         let rootCols = self.rootNodeHolder.rootColsNode
-        let columnEndpoints = self.enumerator.endpoints(node: rootCols)
-        let emptyDataColumnWidth = self.shouldDisplayEmptyColumns ? 1 : 0
+        let columnEndpoints = enumerator?.endpoints(node: rootCols)
+        let emptyDataColumnWidth = shouldDisplayEmptyColumns ? 1 : 0
 
         var maxWidth: Int = 0
-        columnEndpoints.forEach { (column) in
+        columnEndpoints?.forEach { (column) in
             let value = self.maxWidth(column, orValue: emptyDataColumnWidth)
             maxWidth += value
         }
@@ -132,7 +128,7 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     private func getHeight() -> Int {
         let rootRows = self.rootNodeHolder.rootRowsNode
-        let rowNodesEndpointsCount = self.enumerator.endpoints(node: rootRows).count
+        let rowNodesEndpointsCount = enumerator?.endpoints(node: rootRows)?.count ?? 0
         return self.rootNodeHeight + rowNodesEndpointsCount
     }
 

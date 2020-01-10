@@ -8,14 +8,22 @@
 
 import Foundation
 
-public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol, WOTPivotDimensionListenerProtocol {
+open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol {
 
     lazy public var dimension: WOTPivotDimensionProtocol = {
-        let result = WOTPivotDimension(rootNodeHolder: self, fetchController: self.fetchController, enumerator: self.enumerator)
+        let result = WOTPivotDimension(rootNodeHolder: self)
+        result.enumerator = enumerator
+        result.fetchController = fetchController
         result.listener = self
         return result
     }()
 
+    override public var enumerator: WOTNodeEnumeratorProtocol? {
+        didSet {
+            dimension.enumerator = enumerator
+        }
+    }
+    
     @objc
     public var contentSize: CGSize {
         return self.dimension.contentSize
@@ -25,12 +33,12 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
 
     private var listener: WOTDataModelListener?
     private var metadatasource: WOTDataModelMetadatasource
-    public var fetchController: WOTDataFetchControllerProtocol
+    public var fetchController: WOTDataFetchControllerProtocol?
     public var nodeCreator: WOTNodeCreatorProtocol
 
     deinit {
-        self.clearMetadataItems()
-        self.fetchController.setFetchListener(nil)
+        clearMetadataItems()
+        fetchController?.setFetchListener(nil)
     }
 
     //WOTPivotNodeHolderProtocol
@@ -81,16 +89,16 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
     }
 
     @objc
-    required public init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol, metadatasource mds: WOTDataModelMetadatasource, enumerator: WOTNodeEnumeratorProtocol) {
+    required public init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol, metadatasource mds: WOTDataModelMetadatasource) {
         shouldDisplayEmptyColumns = false
         fetchController = fc
         listener = modelListener
         nodeCreator = nc
         metadatasource = mds
+        
+        super.init()
 
-        super.init(enumerator: enumerator)
-
-        self.fetchController.setFetchListener(self)
+        fetchController?.setFetchListener(self)
 
         self.dimension.registerCalculatorClass(WOTDimensionColumnCalculator.self, forNodeClass: WOTPivotColNode.self)
         self.dimension.registerCalculatorClass(WOTDimensionRowCalculator.self, forNodeClass: WOTPivotRowNode.self)
@@ -107,7 +115,7 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
         super.loadModel()
 
         do {
-            try self.fetchController.performFetch(nodeCreator: nodeCreator)
+            try fetchController?.performFetch(nodeCreator: nodeCreator)
         } catch {
         }
     }
@@ -169,8 +177,10 @@ public class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivo
     fileprivate func failPivot(_ error: Error) {
         listener?.modelDidFailLoad(error: error)
     }
+}
 
-
+extension WOTPivotDataModel: WOTPivotDimensionListenerProtocol {
+    
     public func didLoad(dimension: WOTDimensionProtocol) {
         self.reindexNodes()
         self.listener?.modelDidLoad()
@@ -181,11 +191,8 @@ extension WOTPivotDataModel: WOTTreeProtocol {
 
     public func findOrCreateRootNode(forPredicate: NSPredicate) -> WOTNodeProtocol {
         let roots = self.rootNodes.filter { _ in forPredicate.evaluate(with: nil) }
-        if roots.count == 0 {
-            return self.rootNode
-        } else {
-            return roots.first!
-        }
+        let result = roots.first ?? self.rootNode
+        return result
     }
 }
 

@@ -22,12 +22,13 @@ public class WOTDimensionColumnCalculator: WOTDimensionCalculator {
 
     override class func width(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         let endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: forNode)
-        guard endpoints.count > 0 else {
+        let cnt = endpoints?.count ?? 0
+        guard cnt > 0 else {
             return 1
         }
 
         var result: Int = 0
-        endpoints.forEach { (node) in
+        endpoints?.forEach { (node) in
             result += dimension.maxWidth(node, orValue: 0)
         }
         return result

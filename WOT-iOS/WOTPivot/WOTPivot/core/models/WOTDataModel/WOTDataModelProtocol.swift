@@ -36,7 +36,6 @@ public protocol WOTDataModelListener {
 
 @objc
 public protocol WOTDataModelProtocol {
-    init(enumerator: WOTNodeEnumeratorProtocol)
     var rootNodes: [WOTNodeProtocol] { get }
     var endpointsCount: Int { get }
     func add(rootNode: WOTNodeProtocol)

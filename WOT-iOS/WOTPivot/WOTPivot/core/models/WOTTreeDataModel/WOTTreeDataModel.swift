@@ -38,9 +38,8 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         fetchController = fetch
         listener = list
         nodeCreator = nc
-        super.init(enumerator: enumerator)
-
-        self.fetchController.setFetchListener(self)
+        super.init()
+        fetchController.setFetchListener(self)
     }
 
     public required init(enumerator enumer: WOTNodeEnumeratorProtocol) {

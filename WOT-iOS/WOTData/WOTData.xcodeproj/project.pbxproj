@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D2564FD221C18800047E8E3 /* WOTPivotTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2564FC221C18800047E8E3 /* WOTPivotTemplates.swift */; };
 		1D3DAED42133FD5300368AFA /* WOTData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DAECA2133FD5300368AFA /* WOTData.framework */; };
 		1D3DAED92133FD5300368AFA /* WOTDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DAED82133FD5300368AFA /* WOTDataTests.swift */; };
 		1D3DAEDB2133FD5300368AFA /* WOTData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D3DAECD2133FD5300368AFA /* WOTData.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -245,7 +244,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D2564FC221C18800047E8E3 /* WOTPivotTemplates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotTemplates.swift; sourceTree = "<group>"; };
 		1D3DAECA2133FD5300368AFA /* WOTData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D3DAECD2133FD5300368AFA /* WOTData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTData.h; sourceTree = "<group>"; };
 		1D3DAECE2133FD5300368AFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -496,14 +494,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1D2564FB221C18800047E8E3 /* templates */ = {
-			isa = PBXGroup;
-			children = (
-				1D2564FC221C18800047E8E3 /* WOTPivotTemplates.swift */,
-			);
-			path = templates;
-			sourceTree = "<group>";
-		};
 		1D294B6622116B9A002DA600 /* subclasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,7 +639,6 @@
 			children = (
 				1D5D020F23C728D8004B0314 /* fetchController */,
 				1DBA9CF32273389800162DE1 /* codable */,
-				1D2564FB221C18800047E8E3 /* templates */,
 				1DB6745D221C05D500982EE6 /* categories */,
 				1D65F77D221552E6006A85E4 /* dataProvider */,
 				1D8C29F721359C4600759C42 /* session */,
@@ -1511,7 +1500,6 @@
 				1DCCA8102269FC6D00D370E8 /* Tankengines+CoreDataClass.m in Sources */,
 				1D52F76822786F0800419FBE /* ProfileAmmo.swift in Sources */,
 				1D8C292E21357ADA00759C42 /* ModulesTree+UI.m in Sources */,
-				1D2564FD221C18800047E8E3 /* WOTPivotTemplates.swift in Sources */,
 				1DA83C87213558120039CB4B /* NSManagedObject+FillProperties.m in Sources */,
 				1D52F75A22786F0800419FBE /* ModuleType.swift in Sources */,
 				1DCCA8082269FC6D00D370E8 /* VehicleprofileAmmoList+CoreDataClass.m in Sources */,

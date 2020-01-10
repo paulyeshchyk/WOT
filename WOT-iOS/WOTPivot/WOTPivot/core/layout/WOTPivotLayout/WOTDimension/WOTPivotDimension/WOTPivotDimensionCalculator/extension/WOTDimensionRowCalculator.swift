@@ -25,6 +25,6 @@ public class WOTDimensionRowCalculator: WOTDimensionCalculator {
     }
 
     override class func height(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
-        return WOTNodeEnumerator.sharedInstance.endpoints(node: forNode).count
+        return WOTNodeEnumerator.sharedInstance.endpoints(node: forNode)?.count ?? 0
     }
 }

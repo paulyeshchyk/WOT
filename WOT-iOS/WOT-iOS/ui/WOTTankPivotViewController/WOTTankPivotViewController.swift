@@ -189,18 +189,8 @@ class WOTTankPivotViewController: WOTPivotViewController {
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
 
     override func pivotModel() -> WOTPivotDataModelProtocol {
-        let nodeCreator = WOTTankPivotNodeCreator()
-        let fetchRequest = WOTTankPivotFetchRequest()
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest)
         
-        let enumerator = WOTNodeEnumerator.sharedInstance
-        let metadatasource = WOTTankPivotMetadatasource()
-        
-        return WOTPivotDataModel(fetchController: fetchController,
-                                 modelListener: self,
-                                 nodeCreator: nodeCreator,
-                                 metadatasource: metadatasource,
-                                 enumerator: enumerator)
+        return WOTTankPivotModel(modelListener: self)
     }
 
     override func viewDidLoad() {

@@ -10,11 +10,11 @@ import Foundation
 
 @objc
 public protocol WOTNodeEnumeratorProtocol: NSObjectProtocol {
-    func endpoints(node: WOTNodeProtocol) -> [WOTNodeProtocol]
+    func endpoints(node: WOTNodeProtocol?) -> [WOTNodeProtocol]?
     func endpoints(array: [WOTNodeProtocol]) -> [WOTNodeProtocol]
     func childrenWidth(siblingNode: WOTNodeProtocol, orValue: Int) -> Int
     func childrenCount(siblingNode: WOTNodeProtocol) -> Int
-    func depth(forChildren: [WOTNodeProtocol], initialLevel: Int) -> Int
+    func depth(forChildren: [WOTNodeProtocol]?, initialLevel: Int) -> Int
     func allItems(fromNode node: WOTNodeProtocol) -> [WOTNodeProtocol]
     func allItems(fromArray: [WOTNodeProtocol]) -> [WOTNodeProtocol]
     func parentsCount(node: WOTNodeProtocol) -> Int
