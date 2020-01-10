@@ -21,7 +21,7 @@
 //    [request setPropertiesToFetch:@[WOTApiKeys.tank_id]];
 //    [request setResultType:NSDictionaryResultType];
 //
-//    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+//    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
 //    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
 //    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
 //

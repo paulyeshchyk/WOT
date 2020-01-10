@@ -10,14 +10,10 @@ import Foundation
 import CoreData
 
 @objc
-public class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
-
-    @objc public static let sharedInstance = WOTCoreDataProvider()
+open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
-    private var applicationDocumentsDirectoryURL: URL? {
-        return FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).last
-    }
+    public var applicationDocumentsDirectoryURL: URL? { return nil }
 
     @objc lazy public var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
@@ -27,21 +23,9 @@ public class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     }()
 
 
-    private var modelURL: URL? {
-        let bundles = Bundle.allFrameworks.compactMap { $0.bundleIdentifier?.compare("com.epam.WOTData") == .orderedSame ? $0 : nil }
-        guard let bundle = bundles.last else {
-            return nil
-        }
-        return bundle.url(forResource: "WOT_iOS", withExtension: "momd")
-    }
+    public var modelURL: URL? { return nil }
 
-    private var sqliteURL: URL? {
-        guard var result = self.applicationDocumentsDirectoryURL else {
-            return nil
-        }
-        result.appendPathComponent("WOT_iOS.sqlite")
-        return result
-    }
+    public var sqliteURL: URL? { return nil }
 
 
     @objc lazy public var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {

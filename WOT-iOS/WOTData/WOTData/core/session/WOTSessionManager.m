@@ -26,7 +26,7 @@
 
 + (id)currentAccessToken {
 
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return session.access_token;
@@ -34,7 +34,7 @@
 
 + (NSString *)currentUserName {
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return session.nickname;
@@ -42,7 +42,7 @@
 
 + (NSTimeInterval)expirationTime {
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return [session.expires_at integerValue];
@@ -73,11 +73,8 @@
     
     id access_token = [self currentAccessToken];
     if (access_token){
-
         [self logout];
     } else {
-        
-
         [self login];
     }
 }

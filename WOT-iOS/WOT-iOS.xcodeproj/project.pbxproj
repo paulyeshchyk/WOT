@@ -726,6 +726,7 @@
 		1D047B541B331D5100B5B696 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				1D5D023123C867D3004B0314 /* dataprovider */,
 				1D5A8E3D1B43F33000A8261E /* predicates */,
 				1DA00C2E21009ACB004F9FDE /* NSManagedObjectContext+AllObjects.swift */,
 			);
@@ -1003,6 +1004,13 @@
 				1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */,
 			);
 			path = TankIds;
+			sourceTree = "<group>";
+		};
+		1D5D023123C867D3004B0314 /* dataprovider */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = dataprovider;
 			sourceTree = "<group>";
 		};
 		1D65F82F2216AEE9006A85E4 /* TankDetails */ = {

@@ -17,6 +17,9 @@ public enum WOTExecuteConcurency: Int {
 
 @objc
 public protocol WOTCoredataProviderProtocol: NSObjectProtocol {
+    @objc var sqliteURL: URL? { get }
+    @objc var modelURL: URL? { get }
+    @objc var applicationDocumentsDirectoryURL: URL? { get }
     @objc var mainManagedObjectContext: NSManagedObjectContext { get }
     @objc var workManagedObjectContext: NSManagedObjectContext { get }
     @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }

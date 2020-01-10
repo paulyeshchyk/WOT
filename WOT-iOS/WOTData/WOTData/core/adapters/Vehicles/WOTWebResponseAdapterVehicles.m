@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
 - (void)parse:(id)data binary:(NSData * _Nullable)binary {
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
         

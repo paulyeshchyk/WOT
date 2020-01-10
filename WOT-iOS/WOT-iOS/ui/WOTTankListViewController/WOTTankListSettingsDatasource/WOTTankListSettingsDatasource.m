@@ -53,7 +53,7 @@
 }
 
 - (NSManagedObjectContext *)context {
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     return [dataProvider mainManagedObjectContext];
 }
 

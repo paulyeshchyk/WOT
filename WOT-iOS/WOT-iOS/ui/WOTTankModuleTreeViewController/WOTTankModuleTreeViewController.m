@@ -89,7 +89,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
 
-        self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self dataprovider:[WOTCoreDataProvider sharedInstance]];
+        self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
+                                                                                      dataprovider:[WOTTankCoreDataProvider sharedInstance]];
         self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController
                                                               listener: self
                                                             enumerator: [WOTNodeEnumerator sharedInstance]

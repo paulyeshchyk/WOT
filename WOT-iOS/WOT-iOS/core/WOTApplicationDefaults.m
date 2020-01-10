@@ -19,7 +19,7 @@
 
 + (void)registerDefaultSettings {
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
 
     NSString *entityName = NSStringFromClass([ListSetting class]);

@@ -25,7 +25,7 @@
     NSDictionary *tankEnginessDictionary = data[WOTApiKeys.data];
     
     NSArray *tankEnginesArray = [tankEnginessDictionary allKeys];
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
         

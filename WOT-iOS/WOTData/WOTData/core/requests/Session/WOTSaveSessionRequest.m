@@ -17,7 +17,7 @@
     [super temp_executeWithArgs:args];
 
     NSDictionary *fields = args.asDictionary;
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     [context performBlock:^{
 

@@ -36,7 +36,7 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     }
 
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
-    var dataProvider = WOTCoreDataProvider.sharedInstance
+    var dataProvider = WOTTankCoreDataProvider.sharedInstance
 
     override init() {
         super.init()

@@ -24,7 +24,7 @@
     NSDictionary *tankRadiosDictionary = data[WOTApiKeys.data];
     
     NSArray *tankRadiosArray = [tankRadiosDictionary allKeys];
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
         

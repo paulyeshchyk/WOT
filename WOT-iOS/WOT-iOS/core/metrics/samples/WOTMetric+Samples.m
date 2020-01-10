@@ -25,7 +25,7 @@
         request.predicate = predicate;
         request.propertiesToFetch = [expression expressionDescriptions];
         request.resultType = NSDictionaryResultType;
-        id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+        id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
         NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
         id result = [context executeFetchRequest:request error:&error];
         

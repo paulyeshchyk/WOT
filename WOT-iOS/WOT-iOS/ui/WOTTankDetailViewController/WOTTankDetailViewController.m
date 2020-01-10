@@ -264,7 +264,7 @@
         fetchRequest.predicate = predicate;
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
-        id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
+        id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
         NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
 
         _fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
