@@ -11,10 +11,6 @@ import CoreData
 
 open class WOTDataFetchController: NSObject {
 
-    private lazy var dataProvider: WOTCoredataProviderProtocol =  {
-        return WOTCoreDataProvider.sharedInstance
-    } ()
-
     lazy fileprivate var fetchResultController: NSFetchedResultsController<NSFetchRequestResult> = {
         let context = self.dataProvider.mainManagedObjectContext
         let request = self.nodeFetchRequestCreator.fetchRequest
@@ -25,10 +21,12 @@ open class WOTDataFetchController: NSObject {
 
     public var listener: WOTDataFetchControllerListenerProtocol?
     public var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
+    public var dataProvider: WOTCoredataProviderProtocol
 
     @objc
-    public init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol) {
+    public init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTCoredataProviderProtocol) {
         nodeFetchRequestCreator = nfrc
+        dataProvider = dataprovider
     }
 
     deinit {

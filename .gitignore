@@ -4,3 +4,4 @@ WOT-iOS.xcworkspace/xcuserdata/pavel_yeshchyk.xcuserdatad/UserInterfaceState.xcu
 *.DS_Store
 *.xcuserstate
 *.xcbkptlist
+**/*.xcuserdatad/*

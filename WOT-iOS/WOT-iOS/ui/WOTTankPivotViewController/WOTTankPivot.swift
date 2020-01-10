@@ -86,7 +86,8 @@ public class WOTTankPivotModel: WOTPivotDataModel {
     convenience init(modelListener: WOTDataModelListener) {
         
         let fetchRequest = WOTTankPivotFetchRequest()
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest)
+        let dataProvider = WOTCoreDataProvider.sharedInstance
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: dataProvider)
         
         let metadatasource = WOTTankPivotMetadatasource()
         let nodeCreator = WOTTankPivotNodeCreator()
