@@ -99,6 +99,24 @@ public class WOTTankPivotModel: WOTPivotDataModel {
         
         self.enumerator = WOTNodeEnumerator.sharedInstance
 
+        let notificationName = NSNotification.Name(rawValue: WOTRequestExecutor.pendingRequestNotificationName())
+        NotificationCenter.default.addObserver(self, selector: #selector(pendingRequestCountChaged(notification:)), name: notificationName, object: nil)
+    }
+    
+    deinit {
+        let notificationName = NSNotification.Name(rawValue: WOTRequestExecutor.pendingRequestNotificationName())
+        NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
+    }
+    
+    @objc private func pendingRequestCountChaged(notification: NSNotification) {
+        guard let executor = notification.object as? WOTRequestExecutor else {
+            return
+        }
+        guard executor.pendingRequestsCount == 0 else {
+            return
+        }
+        
+        self.loadModel()
     }
     
 }

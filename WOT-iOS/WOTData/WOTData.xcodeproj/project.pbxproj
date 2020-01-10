@@ -29,6 +29,8 @@
 		1D52F76922786F0800419FBE /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D52F75822786F0800419FBE /* Profile.swift */; };
 		1D52F76A22786F0900419FBE /* Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D52F75922786F0800419FBE /* Tier.swift */; };
 		1D5D023523C868F8004B0314 /* WOTTankCoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D023423C868F8004B0314 /* WOTTankCoreDataProvider.swift */; };
+		1D5D029423C87AD5004B0314 /* WOTCoreDataPredicates.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D029223C87AD5004B0314 /* WOTCoreDataPredicates.m */; };
+		1D5D029523C87AD5004B0314 /* WOTCoreDataPredicates.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D029323C87AD5004B0314 /* WOTCoreDataPredicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D8ACECC22A7CFC000CF309B /* WebLayerDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8ACECB22A7CFC000CF309B /* WebLayerDecoder.swift */; };
 		1D8C290321357ADA00759C42 /* Tankengines+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C28C121357AD900759C42 /* Tankengines+FillProperties.m */; };
 		1D8C290421357ADA00759C42 /* Tankengines+FillProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C28C221357AD900759C42 /* Tankengines+FillProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -260,6 +262,8 @@
 		1D52F75822786F0800419FBE /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		1D52F75922786F0800419FBE /* Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tier.swift; sourceTree = "<group>"; };
 		1D5D023423C868F8004B0314 /* WOTTankCoreDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankCoreDataProvider.swift; sourceTree = "<group>"; };
+		1D5D029223C87AD5004B0314 /* WOTCoreDataPredicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTCoreDataPredicates.m; sourceTree = "<group>"; };
+		1D5D029323C87AD5004B0314 /* WOTCoreDataPredicates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTCoreDataPredicates.h; sourceTree = "<group>"; };
 		1D8ACECB22A7CFC000CF309B /* WebLayerDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLayerDecoder.swift; sourceTree = "<group>"; };
 		1D8C28C121357AD900759C42 /* Tankengines+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tankengines+FillProperties.m"; sourceTree = "<group>"; };
 		1D8C28C221357AD900759C42 /* Tankengines+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tankengines+FillProperties.h"; sourceTree = "<group>"; };
@@ -618,6 +622,7 @@
 		1D3DAEEC213416FD00368AFA /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1D5D029123C87AD5004B0314 /* predicates */,
 				1D65F77D221552E6006A85E4 /* dataProvider */,
 				1D8C29F721359C4600759C42 /* session */,
 				1D8C2995213592B600759C42 /* requests */,
@@ -625,6 +630,15 @@
 				1DB67465221C06B700982EE6 /* WOTDataAPI.swift */,
 			);
 			path = core;
+			sourceTree = "<group>";
+		};
+		1D5D029123C87AD5004B0314 /* predicates */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D029223C87AD5004B0314 /* WOTCoreDataPredicates.m */,
+				1D5D029323C87AD5004B0314 /* WOTCoreDataPredicates.h */,
+			);
+			path = predicates;
 			sourceTree = "<group>";
 		};
 		1D65F77D221552E6006A85E4 /* dataProvider */ = {
@@ -1197,6 +1211,7 @@
 				1D8C29622135821900759C42 /* WOTWebResponseAdapterGuns.h in Headers */,
 				1DCCA8172269FC6D00D370E8 /* Tankturrets+CoreDataClass.h in Headers */,
 				1DCCA8462269FC6D00D370E8 /* UserSession+CoreDataProperties.h in Headers */,
+				1D5D029523C87AD5004B0314 /* WOTCoreDataPredicates.h in Headers */,
 				1DDC13772135364400B10A0B /* WOTData-Model.h in Headers */,
 				1D3DAEDB2133FD5300368AFA /* WOTData.h in Headers */,
 				1DCCA80A2269FC6D00D370E8 /* VehicleprofileAmmoPenetration+CoreDataProperties.h in Headers */,
@@ -1383,6 +1398,7 @@
 				1D8C291C21357ADA00759C42 /* VehicleprofileGun+FillProperties.m in Sources */,
 				1D8C291E21357ADA00759C42 /* VehicleprofileTurret+FillProperties.m in Sources */,
 				1DCCA961226DDB6300D370E8 /* VehicleprofileGun_FillProperties.swift in Sources */,
+				1D5D029423C87AD5004B0314 /* WOTCoreDataPredicates.m in Sources */,
 				1DCCA8412269FC6D00D370E8 /* Vehicles+CoreDataProperties.m in Sources */,
 				1D52F76922786F0800419FBE /* Profile.swift in Sources */,
 				1D8C291421357ADA00759C42 /* VehicleprofileEngine+FillProperties.m in Sources */,

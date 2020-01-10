@@ -33,6 +33,8 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 #import "WOTSessionManager.h"
 
+#import "WOTCoreDataPredicates.h"
+
 #import "WOTWEBRequestTanks.h"
 #import "WOTWebRequestTankChassis.h"
 #import "WOTWebRequestTankRadios.h"

@@ -161,6 +161,8 @@
 
 - (void)finalizeWithData:(id)data error:(NSError *)error binary: (NSData *)binary {
     
+    [self notifyListenersAboutFinish];
+    
     [[WOTRequestExecutor sharedInstance] removeRequest:self];
     
     if (self.callback) {
