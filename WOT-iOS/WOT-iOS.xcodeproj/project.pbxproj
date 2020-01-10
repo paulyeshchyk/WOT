@@ -1390,16 +1390,16 @@
 		1DD6462A1B1C616A00B0EC76 = {
 			isa = PBXGroup;
 			children = (
-				1D3DAEE42133FDC800368AFA /* WOTData.framework */,
-				1D79EDD621243A97005FBA34 /* WOTPivot.framework */,
-				1D6E94E52100CA1200B65FC3 /* .swiftlint.yml */,
-				1DD647191B2084FF00B0EC76 /* podfile */,
-				1DD6467E1B1C990800B0EC76 /* WOTPrefixHeader.pch */,
 				1DD646351B1C616A00B0EC76 /* WOT-iOS */,
 				1DD646521B1C616A00B0EC76 /* WOT-iOSTests */,
 				1DD646341B1C616A00B0EC76 /* Products */,
 				73D1069022E23097C59EE24A /* Frameworks */,
 				3557967E5FF81E19F0783759 /* Pods */,
+				1D3DAEE42133FDC800368AFA /* WOTData.framework */,
+				1D79EDD621243A97005FBA34 /* WOTPivot.framework */,
+				1D6E94E52100CA1200B65FC3 /* .swiftlint.yml */,
+				1DD647191B2084FF00B0EC76 /* podfile */,
+				1DD6467E1B1C990800B0EC76 /* WOTPrefixHeader.pch */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;

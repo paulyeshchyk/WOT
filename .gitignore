@@ -1,7 +1,6 @@
-WOT-iOS.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
-WOT-iOS.xcworkspace/xcuserdata/pavel_yeshchyk.xcuserdatad/UserInterfaceState.xcuserstate
 *.zip
 *.DS_Store
 *.xcuserstate
 *.xcbkptlist
 **/*.xcuserdatad/*
+**/xcshareddata/*
