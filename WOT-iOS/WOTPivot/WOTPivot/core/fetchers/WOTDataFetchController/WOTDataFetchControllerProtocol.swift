@@ -19,7 +19,7 @@ public protocol WOTDataFetchControllerProtocol {
 
 @objc
 public protocol WOTDataFetchControllerListenerProtocol {
-    func fetchPerformed(by: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?)
+    func fetchPerformed(by: WOTDataFetchControllerProtocol)
     func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error)
 }
 

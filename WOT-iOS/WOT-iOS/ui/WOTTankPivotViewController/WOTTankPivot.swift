@@ -8,7 +8,7 @@
 
 import WOTPivot
 
-public class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
+class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
 
     override public var collapseToGroups: Bool { return false }
 
@@ -80,8 +80,7 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     }
 }
 
-
-public class WOTTankPivotModel: WOTPivotDataModel {
+class WOTTankPivotModel: WOTPivotDataModel {
 
     convenience init(modelListener: WOTDataModelListener) {
         
@@ -101,6 +100,8 @@ public class WOTTankPivotModel: WOTPivotDataModel {
 
         let notificationName = NSNotification.Name(rawValue: WOTRequestExecutor.pendingRequestNotificationName())
         NotificationCenter.default.addObserver(self, selector: #selector(pendingRequestCountChaged(notification:)), name: notificationName, object: nil)
+        
+        performWebRequest()
     }
     
     deinit {
@@ -118,5 +119,18 @@ public class WOTTankPivotModel: WOTPivotDataModel {
         
         self.loadModel()
     }
+
     
+    private func performWebRequest() {
+        
+        let arguments = WOTRequestArguments()
+        arguments.setValues(Vehicles.availableFields(), forKey: WOTApiKeys.fields)
+        
+        let request = WOTRequestExecutor.sharedInstance()?.createRequest(forId: WOTRequestId.tankVehicles.rawValue)
+        if let canAdd = WOTRequestExecutor.sharedInstance()?.add(request, byGroupId: "WOT_REQUEST_ID_VEHICLE_LIST") {
+            if canAdd {
+                WOTRequestExecutor.sharedInstance()?.run(request, withArgs: arguments)
+            }
+        }
+    }
 }

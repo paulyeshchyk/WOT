@@ -10,7 +10,6 @@
 
 #import "WOTDrawerViewController.h"
 #import "WOTApplicationDefaults.h"
-#import "WOTApplicationStartupRequests.h"
 #import "NSTimer+BlocksKit.h"
 
 @interface WOTWEBHostConfiguration: NSObject<WEBHostConfiguration>
@@ -50,9 +49,6 @@
     
     WOTWEBHostConfiguration *hostConfig = [[WOTWEBHostConfiguration alloc] init];
     [[WOTRequestExecutor sharedInstance] setHostConfiguration:hostConfig];
-
-
-    [WOTApplicationStartupRequests executeAllStartupRequests];
 
     [self initSessionTimer];
     

@@ -26,6 +26,8 @@
 		1D5D024623C872F5004B0314 /* NSManagedObject+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D024423C872F5004B0314 /* NSManagedObject+FillProperties.m */; };
 		1D5D024723C872F5004B0314 /* NSManagedObject+FillProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D024523C872F5004B0314 /* NSManagedObject+FillProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D5D024A23C87456004B0314 /* NSManagedObjectContext+AllObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D024923C87456004B0314 /* NSManagedObjectContext+AllObjects.swift */; };
+		1D5D039423CC5252004B0314 /* WOTWebProxyRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D039223CC5252004B0314 /* WOTWebProxyRequest.h */; };
+		1D5D039523CC5252004B0314 /* WOTWebProxyRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D039323CC5252004B0314 /* WOTWebProxyRequest.m */; };
 		1D65F778221435E7006A85E4 /* NSString+UrlEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D65F776221435E7006A85E4 /* NSString+UrlEncode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D65F779221435E7006A85E4 /* NSString+UrlEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F777221435E7006A85E4 /* NSString+UrlEncode.m */; };
 		1D65F77C221551C6006A85E4 /* NSError+Pivot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F77B221551C6006A85E4 /* NSError+Pivot.swift */; };
@@ -151,6 +153,8 @@
 		1D5D024423C872F5004B0314 /* NSManagedObject+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FillProperties.m"; sourceTree = "<group>"; };
 		1D5D024523C872F5004B0314 /* NSManagedObject+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FillProperties.h"; sourceTree = "<group>"; };
 		1D5D024923C87456004B0314 /* NSManagedObjectContext+AllObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+AllObjects.swift"; sourceTree = "<group>"; };
+		1D5D039223CC5252004B0314 /* WOTWebProxyRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTWebProxyRequest.h; sourceTree = "<group>"; };
+		1D5D039323CC5252004B0314 /* WOTWebProxyRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTWebProxyRequest.m; sourceTree = "<group>"; };
 		1D65F776221435E7006A85E4 /* NSString+UrlEncode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlEncode.h"; sourceTree = "<group>"; };
 		1D65F777221435E7006A85E4 /* NSString+UrlEncode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncode.m"; sourceTree = "<group>"; };
 		1D65F77B221551C6006A85E4 /* NSError+Pivot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+Pivot.swift"; sourceTree = "<group>"; };
@@ -544,6 +548,8 @@
 				1DA83C9B21355A6D0039CB4B /* WOTRequestListener.h */,
 				1DA83C9821355A6D0039CB4B /* WOTRequestExecutor.h */,
 				1DA83C9A21355A6D0039CB4B /* WOTRequestExecutor.m */,
+				1D5D039223CC5252004B0314 /* WOTWebProxyRequest.h */,
+				1D5D039323CC5252004B0314 /* WOTWebProxyRequest.m */,
 			);
 			path = webRequest;
 			sourceTree = "<group>";
@@ -802,6 +808,7 @@
 				1D8C293821357B9A00759C42 /* NSNumber+CustomFormatter.h in Headers */,
 				1D8C293721357B9A00759C42 /* NSNumber+Randomizer.h in Headers */,
 				1DA83C9D21355A6D0039CB4B /* WOTRequestExecutor.h in Headers */,
+				1D5D039423CC5252004B0314 /* WOTWebProxyRequest.h in Headers */,
 				1DB6741C221BE93B00982EE6 /* WOTWEBRequest+Stubs.h in Headers */,
 				1D8C298E21358B4200759C42 /* NSMutableArray+WOT.h in Headers */,
 				1D8C298C21358B4200759C42 /* NSArray+WOT.h in Headers */,
@@ -957,6 +964,7 @@
 				1D126A5921A54E4E001AF67F /* PivotWireFrame.swift in Sources */,
 				1D126A5A21A54E4E001AF67F /* VIPERView.swift in Sources */,
 				1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */,
+				1D5D039523CC5252004B0314 /* WOTWebProxyRequest.m in Sources */,
 				1D65F82A2216A7B8006A85E4 /* WOTDimensionCalculator.swift in Sources */,
 				1DA83CAE2135633F0039CB4B /* NSMutableDictionary+WOT.m in Sources */,
 				1D8C293621357B9A00759C42 /* NSNumber+CustomFormatter.m in Sources */,

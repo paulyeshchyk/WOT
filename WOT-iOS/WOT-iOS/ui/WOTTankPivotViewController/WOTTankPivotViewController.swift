@@ -38,7 +38,6 @@ open class WOTPivotViewController: UIViewController {
         return WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
     }()
 
-
     open func pivotModel() -> WOTPivotDataModelProtocol {
         //TODO: crash is possible here!!!
         return WOTPivotDataModel(enumerator: WOTNodeEnumerator.sharedInstance)
@@ -47,7 +46,6 @@ open class WOTPivotViewController: UIViewController {
     lazy var model: WOTPivotDataModelProtocol  = {
         return pivotModel()
     }()
-
     
     static var openedPopoverKey: UInt8 = 0
     var hasOpenedPopover: Bool {
@@ -179,9 +177,7 @@ extension WOTPivotViewController: UICollectionViewDelegate {
     }
 }
 
-
 @objc(WOTTankPivotViewController)
-
 class WOTTankPivotViewController: WOTPivotViewController {
 
     var cancelBlock: WOTTankPivotCompletionCancelBlock?
@@ -267,6 +263,7 @@ class WOTTankPivotViewController: WOTPivotViewController {
 }
 
 extension WOTTankPivotViewController {
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.refreshControl.contentOffset = scrollView.contentOffset
     }

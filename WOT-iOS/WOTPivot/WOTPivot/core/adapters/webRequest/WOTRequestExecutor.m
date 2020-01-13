@@ -133,7 +133,7 @@
         [requests addPointer:(__bridge void *)request];
     } else {
         
-        debugLog(@"request has not been added:%@",request.description);
+//        debugLog(@"request has not been added:%@",request.description);
     }
     return canAdd;
 }
@@ -234,26 +234,26 @@
 
     self.pendingRequestsCount -= 1;
     [(WOTRequest *)request removeListener:self];
-    debugError(@"webrequest-failture:%@",request);
+//    debugError(@"webrequest-failture:%@",request);
 }
 
 - (void)requestHasFinishedLoadData:(id)request {
     
     self.pendingRequestsCount -= 1;
-    debugLog(@"webrequest-finished:%@",request);
+//    debugLog(@"webrequest-finished:%@",request);
 }
 
 - (void)requestHasCanceled:(id)request {
     
     self.pendingRequestsCount -= 1;
     [(WOTRequest *)request removeListener:self];
-    debugLog(@"webrequest-canceled:%@",request);
+//    debugLog(@"webrequest-canceled:%@",request);
 }
 
 - (void)requestHasStarted:(id)request {
     
     self.pendingRequestsCount += 1;
-    debugLog(@"webrequest-start:%@",request);
+//    debugLog(@"webrequest-start:%@",request);
 }
 
 

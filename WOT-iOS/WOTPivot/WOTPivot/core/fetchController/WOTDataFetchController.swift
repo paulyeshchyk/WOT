@@ -40,7 +40,7 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
         self.fetchResultController.managedObjectContext.perform({
             do {
                 try self.fetchResultController.performFetch()
-                self.listener?.fetchPerformed(by: self, nodeCreator: nodeCreator)
+                self.listener?.fetchPerformed(by: self)
             } catch let error {
                 self.listener?.fetchFailed(by: self, withError: error)
             }

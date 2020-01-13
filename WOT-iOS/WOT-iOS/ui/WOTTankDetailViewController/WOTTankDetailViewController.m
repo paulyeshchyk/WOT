@@ -123,7 +123,7 @@
     if ([next count] == 0) {
         
         NSString *res = [self prevModuleNamesForModule:module];
-        debugLog(@"%@", res);
+//        debugLog(@"%@", res);
     }
     [next enumerateObjectsUsingBlock:^(ModulesTree *nextModule, BOOL *stop) {
         
@@ -343,7 +343,6 @@
 
 - (void)refetchTankID:(NSString *)tankID groupId:(id)groupId{
 
-    return;
     if (!([tankID integerValue] > 0)) {
         
         debugError(@"tankID should not be nil");

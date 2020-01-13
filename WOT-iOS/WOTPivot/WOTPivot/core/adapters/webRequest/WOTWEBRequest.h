@@ -20,9 +20,13 @@
 @property (nonatomic, copy) NSString *headers;
 @property (nonatomic, readonly) NSDictionary *userInfo;
 @property (nonatomic, readonly) NSData *httpBodyData;
+@property (nonatomic, strong) NSMutableData *data;
 
 
 - (NSString *)queryIntoString;
 - (NSURL *)composedURL;
+- (NSURLRequest *)finalRequest;
+- (void)parseData:(NSData *)data error:(NSError *)connectionError;
+- (void)notifyListenersAboutFinish;
 
 @end

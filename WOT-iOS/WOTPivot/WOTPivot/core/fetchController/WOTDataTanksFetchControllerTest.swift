@@ -32,7 +32,6 @@ class WOTRequestCountListener {
     func performExecution() {
         WOTApplicationDefaults.registerRequests()
         WOTApplicationDefaults.registerDefaultSettings()
-        WOTApplicationStartupRequests.executeAllStartupRequests()
     }
 
     private var triggered: Bool = false

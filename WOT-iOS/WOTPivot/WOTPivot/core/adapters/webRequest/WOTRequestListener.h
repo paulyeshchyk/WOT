@@ -21,13 +21,13 @@
 
 @required
 
-- (void)setHostConfiguration:(id<WEBHostConfiguration>)hostConfig;
+- (void)setHostConfiguration:(id<WEBHostConfiguration>_Nullable)hostConfig;
 
-- (void)requestHasFailed:(id)request;
-- (void)requestHasFinishedLoadData:(id)request;
-- (void)requestHasCanceled:(id)request;
-- (void)requestHasStarted:(id)request;
-- (void)removeRequest:(id)request;
+- (void)requestHasFailed:(id _Nullable )request;
+- (void)requestHasFinishedLoadData:(id _Nullable )request;
+- (void)requestHasCanceled:(id _Nullable )request;
+- (void)requestHasStarted:(id _Nullable )request;
+- (void)removeRequest:(id _Nullable )request;
 
 
 @end

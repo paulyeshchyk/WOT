@@ -30,7 +30,6 @@
 		1D1795F92121920400A0E42E /* WOTTankPivotDataGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1795F82121920400A0E42E /* WOTTankPivotDataGroupCollectionViewCell.swift */; };
 		1D1795FB2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1795FA2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib */; };
 		1D188FE11B9437460056D208 /* PivotTreeTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D188FE01B9437460056D208 /* PivotTreeTestCase.m */; };
-		1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */; };
 		1D3DAEE52133FDC800368AFA /* WOTData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DAEE42133FDC800368AFA /* WOTData.framework */; };
 		1D3DAEE62133FDC800368AFA /* WOTData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DAEE42133FDC800368AFA /* WOTData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D3DAEEB213400A600368AFA /* WOTTankPivotViewControllerUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DAEEA213400A600368AFA /* WOTTankPivotViewControllerUITest.swift */; };
@@ -329,8 +328,6 @@
 		1D1795F82121920400A0E42E /* WOTTankPivotDataGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankPivotDataGroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D1795FA2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTTankPivotDataGroupCollectionViewCell.xib; sourceTree = "<group>"; };
 		1D188FE01B9437460056D208 /* PivotTreeTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PivotTreeTestCase.m; sourceTree = "<group>"; };
-		1D1E26EF1BA155F200E5F220 /* WOTApplicationStartupRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTApplicationStartupRequests.h; sourceTree = "<group>"; };
-		1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTApplicationStartupRequests.m; sourceTree = "<group>"; };
 		1D3DAEE42133FDC800368AFA /* WOTData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D3DAEEA213400A600368AFA /* WOTTankPivotViewControllerUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankPivotViewControllerUITest.swift; sourceTree = "<group>"; };
 		1D4C920F1B25B39800E320B5 /* WOTMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTMacro.h; sourceTree = "<group>"; };
@@ -1466,8 +1463,6 @@
 				1D047B671B331DF000B5B696 /* WOTApplicationDefaults.h */,
 				1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */,
 				1D90695A1B412D6B00237852 /* WOTColors.h */,
-				1D1E26EF1BA155F200E5F220 /* WOTApplicationStartupRequests.h */,
-				1D1E26F01BA155F200E5F220 /* WOTApplicationStartupRequests.m */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -2095,7 +2090,6 @@
 				1DD46B8E1BA6DD6F00D3B3CE /* WOTTankDetailTextTableViewCell.m in Sources */,
 				1D519D0B1B4E9D2600D3A286 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
 				1D6FF4FA2106FD7A006C1328 /* WOTTankTreeFetchController.swift in Sources */,
-				1D1E26F11BA155F200E5F220 /* WOTApplicationStartupRequests.m in Sources */,
 				1D0F55011C91677600272B05 /* WOTTankMetricsList+ChartData.m in Sources */,
 				1DD46B941BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */,

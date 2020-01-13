@@ -42,12 +42,6 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: sqliteURL, options: nil)
         } catch let error {
-            //                // Report any error we got.
-            //                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            //                dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
-            //                dict[NSLocalizedFailureReasonErrorKey] = failureReason;
-            //                dict[NSUnderlyingErrorKey] = error;
-            //                error = [NSError errorWithDomain:@"WOTCOREDATA" code:9999 userInfo:dict];
             abort()
         }
         return coordinator
@@ -57,7 +51,6 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
         let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
-//        context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
         context.undoManager = nil
         return context
 
@@ -67,7 +60,6 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
         let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
-        //context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
         context.undoManager = nil
         NotificationCenter.default.addObserver(self, selector: #selector(WOTCoreDataProvider.mainContextDidSave(notification:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
         return context

@@ -18,7 +18,6 @@
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection *connection;
-@property (nonatomic, strong) NSMutableData *data;
 @property (nonatomic, copy) NSURL *url;
 
 @end
@@ -68,39 +67,6 @@
     return @"GET";
 }
 
-- (NSURLRequest *)proxy:(NSURLRequest *)request {
-    return request;
-    NSURL *url = request.URL;
-
-    NSURLQueryItem *urlItem = [[NSURLQueryItem alloc] initWithName:@"url" value:url.absoluteString];
-    NSURLQueryItem *toItem = [[NSURLQueryItem alloc] initWithName:@"to" value:@"to-txt"];
-
-    NSURLComponents *components = [[NSURLComponents alloc] initWithURL:[NSURL URLWithString:@"https://countwordsfree.com/loadweb"] resolvingAgainstBaseURL:NO];
-    [components setQueryItems:@[urlItem, toItem]];
-
-    NSMutableURLRequest *result = [[NSMutableURLRequest alloc] initWithURL:components.URL];
-    [result setHTTPMethod:@"POST"];
-    return result;
-}
-
-- (NSData *)dataFromProxyData:(NSData *)proxyData {
-    return proxyData;
-
-    NSError *serializationError = nil;
-    NSString *iso = [[NSString alloc] initWithData:proxyData encoding:NSUTF8StringEncoding];
-    NSString *unescaped = [iso stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSData *dutf8 = [unescaped dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:dutf8 options:NSJSONReadingMutableContainers error:&serializationError];
-    if (serializationError) {
-        return nil;
-    }
-
-    NSString *success = jsonData[@"Text"];
-    NSData *result = [success dataUsingEncoding:NSUTF8StringEncoding];
-
-    return result;
-}
-
 - (NSURL *)composedURL {
     
     NSURLComponents *components = [[NSURLComponents alloc] init];
@@ -120,13 +86,7 @@
     return self.url;
 }
 
-
-- (void)temp_executeWithArgs:(WOTRequestArguments *)args {
-    
-    [super temp_executeWithArgs:args];
-
-    NSCAssert(self.availableInGroups, @"execution group is unknown");
-    
+- (NSURLRequest *)finalRequest {
     NSURL *url = [self composedURL];
     NSData *bodyData = self.httpBodyData;
     
@@ -135,9 +95,17 @@
     [request setTimeoutInterval: 0];
     [request setHTTPMethod:self.method];
     
-    NSURLRequest *proxy = [self proxy:request];
+    return request;
+}
 
-    self.connection = [[NSURLConnection alloc] initWithRequest:proxy delegate:self];
+- (void)temp_executeWithArgs:(WOTRequestArguments *)args {
+    
+    [super temp_executeWithArgs:args];
+
+    NSCAssert(self.availableInGroups, @"execution group is unknown");
+    
+    NSURLRequest *request = [self finalRequest];
+    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [self.connection start];
 
     [self.listeners enumerateObjectsUsingBlock:^(id  _Nonnull listener, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -248,13 +216,11 @@
 #pragma mark - NSURLConnectionDataDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-//    debugLog(@"webrequest-received-data:%@",self);
     [self appendData: data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSData *clearData = [self dataFromProxyData:self.data];
-    [self parseData:clearData error:nil];
+    [self parseData:self.data error:nil];
     self.data = nil;
 
     [self notifyListenersAboutFinish];

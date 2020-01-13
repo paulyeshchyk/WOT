@@ -31,9 +31,7 @@ public class WOTPivotMetaTypeConverter: NSObject {
 
 public struct WOTPivotMetadataPermutator {
 
-    public init() {
-
-    }
+    public init() { }
 
     public func permutate(templates: [WOTPivotTemplateProtocol], as type: PivotMetadataType) -> [WOTPivotNodeProtocol] {
 

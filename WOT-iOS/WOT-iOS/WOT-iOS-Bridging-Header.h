@@ -4,7 +4,6 @@
 
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTApplicationDefaults.h"
-#import "WOTApplicationStartupRequests.h"
 #import "WOTTankModuleTreeViewController.h"
 #import "WOTTankPivotDataCollectionViewCell.h"
 #import "WOTTankPivotFilterCollectionViewCell.h"

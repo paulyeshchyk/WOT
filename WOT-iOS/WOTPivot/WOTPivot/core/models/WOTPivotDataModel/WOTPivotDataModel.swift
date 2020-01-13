@@ -197,11 +197,12 @@ extension WOTPivotDataModel: WOTTreeProtocol {
 }
 
 extension WOTPivotDataModel: WOTDataFetchControllerListenerProtocol {
+    
     public func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error) {
         self.failPivot(withError)
     }
 
-    public func fetchPerformed(by: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?) {
+    public func fetchPerformed(by: WOTDataFetchControllerProtocol) {
         self.makePivot()
     }
 }

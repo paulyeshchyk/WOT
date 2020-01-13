@@ -105,7 +105,7 @@ extension WOTTreeDataModel {
 
 extension WOTTreeDataModel: WOTDataFetchControllerListenerProtocol {
 
-    public func fetchPerformed(by fetchController: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?) {
+    public func fetchPerformed(by fetchController: WOTDataFetchControllerProtocol) {
         self.makeTree(fetchController, nodeCreator: nodeCreator)
     }
 
