@@ -234,28 +234,23 @@
 
     self.pendingRequestsCount -= 1;
     [(WOTRequest *)request removeListener:self];
-//    debugError(@"webrequest-failture:%@",request);
 }
 
 - (void)requestHasFinishedLoadData:(id)request {
     
     self.pendingRequestsCount -= 1;
-//    debugLog(@"webrequest-finished:%@",request);
 }
 
 - (void)requestHasCanceled:(id)request {
     
     self.pendingRequestsCount -= 1;
     [(WOTRequest *)request removeListener:self];
-//    debugLog(@"webrequest-canceled:%@",request);
 }
 
 - (void)requestHasStarted:(id)request {
     
     self.pendingRequestsCount += 1;
-//    debugLog(@"webrequest-start:%@",request);
 }
-
 
 - (void)removeRequest:(id)request {
     
@@ -269,6 +264,5 @@
     }];
     [request removeListener:self];
 }
-
 
 @end
