@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Tankchassis, Tankengines, Tankguns, Tankradios, Tankturrets, Vehicles;
+@class Tankchassis, Tankengines, Tankguns, Tankradios, Tankturrets, Vehicles, Vehicleprofile;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -29,5 +29,6 @@
 @dynamic nextTurrets;
 @dynamic prevModules;
 @dynamic vehicles;
+@dynamic defaultProfile;
 
 @end

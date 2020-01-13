@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSSet<Tankturrets *> *nextTurrets;
 @property (nullable, nonatomic, retain) ModulesTree *prevModules;
 @property (nullable, nonatomic, retain) Vehicles *vehicles;
+@property (nullable, nonatomic, retain) Vehicleprofile *defaultProfile;
 
 @end
 

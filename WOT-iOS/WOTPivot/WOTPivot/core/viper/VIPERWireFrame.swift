@@ -26,7 +26,7 @@ public class VIPERWireFrame: NSObject, VIPERWireFrameProtocol {
 
     public func build(configureCallback: ConfigureCallback) {
 
-        let module = VIPERModule.module(for: self)
+//        let module = VIPERModule.module(for: self)
 //        let initializedModule = VIPERModule.initialize(with: , interactor: <#T##VIPERInteractorProtocol#>, presenter: <#T##VIPERPresenterProtocol#>, wireFrame: <#T##VIPERWireFrameProtocol#>)
 //        configureCallback(initializedModule)
     }

@@ -34,5 +34,6 @@
 @dynamic suspension;
 @dynamic turret;
 @dynamic modulesTree;
+@dynamic vehicles;
 
 @end

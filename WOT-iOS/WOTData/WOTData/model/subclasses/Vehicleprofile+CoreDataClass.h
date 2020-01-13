@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ModulesTree, VehicleprofileAmmoList, VehicleprofileArmorList, VehicleprofileEngine, VehicleprofileGun, VehicleprofileRadio, VehicleprofileSuspension, VehicleprofileTurret;
+@class ModulesTree, VehicleprofileAmmoList, VehicleprofileArmorList, VehicleprofileEngine, VehicleprofileGun, VehicleprofileRadio, VehicleprofileSuspension, VehicleprofileTurret, Vehicles;
 
 NS_ASSUME_NONNULL_BEGIN
 

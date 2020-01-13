@@ -14,11 +14,11 @@ public extension NSError {
         static let WOT_ERROR_CODE_ENDPOINT_ERROR: Int = 1
     }
 
-    public static func loginError(code: Int, userInfo:[String: Any]) -> NSError {
+    static func loginError(code: Int, userInfo:[String: Any]) -> NSError {
         return NSError(domain: "WOTLOGIN", code: code, userInfo: userInfo)
     }
 
-    public static func coreDataError(code: Int, userInfo:[String: Any]) -> NSError {
+    static func coreDataError(code: Int, userInfo:[String: Any]) -> NSError {
         return NSError(domain: "WOTCOREDATA", code: code, userInfo: userInfo)
     }
 }

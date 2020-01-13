@@ -120,11 +120,11 @@
 - (void)printModule:(ModulesTree *)module level:(NSInteger)level{
 
     NSSet *next = module.nextModules;
-    if ([next count] == 0) {
+//    if ([next count] == 0) {
         
-        NSString *res = [self prevModuleNamesForModule:module];
+//        NSString *res = [self prevModuleNamesForModule:module];
 //        debugLog(@"%@", res);
-    }
+//    }
     [next enumerateObjectsUsingBlock:^(ModulesTree *nextModule, BOOL *stop) {
         
         [self printModule:nextModule level:(level+1)];
