@@ -53,9 +53,11 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
 
 class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 
+    private let permutator = WOTPivotMetadataPermutator()
+
     func metadataItems() -> [WOTNodeProtocol] {
 
-        var result = [WOTPivotNodeProtocol]()
+        var result = [WOTNodeProtocol]()
 
         var templates = WOTPivotTemplates()
 //        let levelPrem = templates.vehiclePremium
@@ -63,7 +65,6 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
         let levelType = templates.vehicleType
         let levelTier = templates.vehicleTier
 
-        let permutator = WOTPivotMetadataPermutator()
 
         let cols = permutator.permutate(templates: [levelType, levelNati], as: .column)
         let rows = permutator.permutate(templates: [levelTier], as: .row)
@@ -75,7 +76,7 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
         return result
     }
 
-    func filters () -> [WOTPivotNodeProtocol] {
+    func filters () -> [WOTNodeProtocol] {
         return [WOTPivotFilterNode(name: "Filter")]
     }
 }

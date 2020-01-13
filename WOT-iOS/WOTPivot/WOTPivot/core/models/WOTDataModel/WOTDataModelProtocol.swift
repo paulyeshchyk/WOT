@@ -25,7 +25,7 @@ public protocol WOTNodeCreatorProtocol {
 @objc
 public protocol WOTDataModelMetadatasource {
     func metadataItems() -> [WOTNodeProtocol]
-    func filters () -> [WOTPivotNodeProtocol]
+    func filters () -> [WOTNodeProtocol]
 }
 
 @objc

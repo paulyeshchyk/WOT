@@ -13,7 +13,7 @@
 #import "WOTLogger.h"
 #import "NSString+UrlEncode.h"
 
-#import "WOTWEBRequest+Stubs.h"
+//#import "WOTWEBRequest+Stubs.h"
 
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
@@ -236,20 +236,20 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 
-    NSData *stubs = [self stubs];
-    if ([stubs length] != 0) {
-
-        [self appendData: stubs];
-
-        [self notifyListenersAboutFinish];
-        [self parseData:self.data error:nil];
-        self.data = nil;
-    } else {
+//    NSData *stubs = [self stubs];
+//    if ([stubs length] != 0) {
+//
+//        [self appendData: stubs];
+//
+//        [self notifyListenersAboutFinish];
+//        [self parseData:self.data error:nil];
+//        self.data = nil;
+//    } else {
 
         [self notifyListenersAboutFail];
         [self parseData:nil error:error];
         self.data = nil;
-    }
+//    }
 }
 
 @end
