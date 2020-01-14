@@ -111,7 +111,7 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    override public func loadModel() {
+    override open func loadModel() {
         super.loadModel()
 
         do {

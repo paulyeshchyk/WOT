@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WOTTankMetricsList.h"
+
+@class WOTTankMetricsList;
 
 @interface NSObject (WOTTankGridValueData)
 + (NSString * _Nullable)gridValueData:(id _Nullable )node;

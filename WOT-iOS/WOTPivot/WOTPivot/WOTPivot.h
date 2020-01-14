@@ -27,8 +27,15 @@
 
 #import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
-
+#import "WOTMetric.h"
+#import "WOTTankMetricProtocol.h"
+#import "WOTTankMetricsList.h"
+#import "WOTTankEvalutionResult.h"
+#import "WOTTankMetricOptions.h"
+#import "WOTTankMetricsList+ChartData.h"
+#import "WOTTankEvalutionResult.h"
 #import "WOTLogger.h"
+#import "WOTWebProxyRequest.h"
 
 //! Project version number for WOTPivot.
 FOUNDATION_EXPORT double WOTPivotVersionNumber;

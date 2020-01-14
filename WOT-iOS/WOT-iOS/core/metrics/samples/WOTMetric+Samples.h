@@ -6,8 +6,8 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTMetric.h"
-#import "WOTTankMetricOptions.h"
+#import <Foundation/Foundation.h>
+#import <WOTPivot/WOTPivot-Swift.h>
 
 @interface WOTMetric (Samples)
 

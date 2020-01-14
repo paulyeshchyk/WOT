@@ -7,6 +7,8 @@
 //
 
 #import "WOTTankMetricsList+ChartData.h"
+#import <WOTPivot/WOTPivot.h>
+#import <WOTPivot/WOTPivot-Swift.h>
 
 @implementation WOTTankMetricsList (ChartData)
 

@@ -68,10 +68,6 @@ open class WOTPivotViewController: UIViewController {
         self.hasOpenedPopover = true
     }
     
-    open func fullReload() {
-        self.model.loadModel()
-    }
-    
     open func cell(forDataNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
@@ -118,7 +114,7 @@ open class WOTPivotViewController: UIViewController {
         self.navigationController?.navigationBar.setDarkStyle()
 
         self.registerCells()
-        self.fullReload()
+        self.model.loadModel()
     }
     
     open func registerCells() {
@@ -204,10 +200,9 @@ class WOTTankPivotViewController: WOTPivotViewController {
 
     @objc
     func refresh(_ refreshControl: UIRefreshControl) {
-        self.fullReload()
+        self.model.loadModel()
     }
 
-    
     static var registeredCells: [UICollectionViewCell.Type] = {
         return [WOTTankPivotDataCollectionViewCell.self,
                 WOTTankPivotFilterCollectionViewCell.self,

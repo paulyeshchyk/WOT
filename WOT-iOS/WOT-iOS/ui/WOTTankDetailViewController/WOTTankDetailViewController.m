@@ -9,31 +9,17 @@
 #import "WOTTankDetailViewController.h"
 #import <WOTData/WOTData.h>
 #import <WOTPivot/WOTPivot.h>
-
-
+#import <WOTPivot/WOTPivot-Swift.h>
 #import "WOTTankDetailDatasource.h"
 #import "WOTTankModuleTreeViewController.h"
-
 #import "WOTTankIdsDatasource.h"
-
 #import "WOTTankDetailSection+Factory.h"
-
 #import "WOTTankGridViewController.h"
-
-#import "WOTTankMetricsList.h"
-#import "WOTMetric.h"
-#import "WOTTanksIDList.h"
-#import "WOTTankMetricOptions.h"
-
 #import "WOTMetric+Samples.h"
-
 #import "WOTRadarViewController.h"
-
-#import "WOTTankMetricsList+ChartData.h"
 #import "NSObject+WOTTankGridValueData.h"
 #import "UIView+StretchingConstraints.h"
 #import "UIToolbar+WOT.h"
-
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate>
 

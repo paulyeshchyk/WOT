@@ -8,7 +8,6 @@
 
 #import "WOTMetric.h"
 
-
 @interface WOTMetric ()
 
 @property (nonatomic, readwrite, strong)NSString *metricName;

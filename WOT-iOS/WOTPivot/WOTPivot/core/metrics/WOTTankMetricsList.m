@@ -8,6 +8,8 @@
 
 #import "WOTTankMetricsList.h"
 #import "WOTTankMetricProtocol.h"
+#import <WOTPivot/WOTPivot.h>
+#import <WOTPivot/WOTPivot-Swift.h>
 
 @interface WOTTankMetricsList ()
 

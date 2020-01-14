@@ -5,15 +5,15 @@
       location = "group:WOTPivot/WOTPivot.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:WOTPivotSamples/WOTPivotSamples.xcodeproj">
+      location = "group:WOTData/WOTData.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:WOTData/WOTData.xcodeproj">
+      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:WOT-iOS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:WOTPivotSamples/WOTPivotSamples.xcodeproj">
    </FileRef>
 </Workspace>

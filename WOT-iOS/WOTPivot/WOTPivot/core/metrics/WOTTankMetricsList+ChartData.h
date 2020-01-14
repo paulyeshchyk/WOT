@@ -6,8 +6,9 @@
 //  Copyright © 2016. All rights reserved.
 //
 
-#import "WOTTankMetricsList.h"
 //#import "WOT_iOS-Swift.h"
+#import <Foundation/Foundation.h>
+#import "WOTTankMetricsList.h"
 
 @interface WOTTankMetricsList (ChartData)
 

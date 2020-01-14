@@ -101,14 +101,19 @@ class WOTTankPivotModel: WOTPivotDataModel {
 
         let notificationName = NSNotification.Name(rawValue: WOTRequestExecutor.pendingRequestNotificationName())
         NotificationCenter.default.addObserver(self, selector: #selector(pendingRequestCountChaged(notification:)), name: notificationName, object: nil)
-        
-        performWebRequest()
     }
     
     deinit {
         let notificationName = NSNotification.Name(rawValue: WOTRequestExecutor.pendingRequestNotificationName())
         NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
     }
+    
+    override func loadModel() {
+        super.loadModel()
+        
+        performWebRequest()
+    }
+    
     
     @objc private func pendingRequestCountChaged(notification: NSNotification) {
         guard let executor = notification.object as? WOTRequestExecutor else {
@@ -118,7 +123,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
             return
         }
         
-        self.loadModel()
+        super.loadModel()
     }
 
     

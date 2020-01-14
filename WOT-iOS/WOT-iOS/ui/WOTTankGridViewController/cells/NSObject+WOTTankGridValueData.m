@@ -7,6 +7,7 @@
 //
 
 #import "NSObject+WOTTankGridValueData.h"
+#import <WOTPivot/WOTPivot-Swift.h>
 
 @implementation NSObject (WOTTankGridValueData)
 
