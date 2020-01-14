@@ -12,8 +12,8 @@ import Foundation
 public class WOTWEBRequestTankVehicles: WOTWEBRequest {
     
     override public var query: [AnyHashable : Any]! {
-        return [WOTApiKeys.queryArgApplicationID: self.hostConfiguration.applicationID,
-                WOTApiKeys.queryArgFields: self.args.escapedValue(forKey: WOTApiKeys.queryArgFields)]
+        return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
+                WGWebQueryArgs.fields: self.args.escapedValue(forKey: WGWebQueryArgs.fields)]
     }
     
     override public var path: String! {

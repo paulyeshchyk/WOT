@@ -12,9 +12,9 @@ import Foundation
 public class WOTWEBRequestTankProfile: WOTWEBRequest {
     
     override public var query: [AnyHashable : Any]! {
-        return [WOTApiKeys.queryArgApplicationID: self.hostConfiguration.applicationID,
-                WOTApiKeys.queryArgFields: self.args.escapedValue(forKey: WOTApiKeys.queryArgFields),
-                WOTApiKeys.tank_id: self.args.escapedValue(forKey: WOTApiKeys.tank_id)]
+        return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
+                WGWebQueryArgs.fields: self.args.escapedValue(forKey: WGWebQueryArgs.fields),
+                WGWebQueryArgs.tank_id: self.args.escapedValue(forKey: WGWebQueryArgs.tank_id)]
     }
 
     override public var path: String! {

@@ -12,6 +12,7 @@
 #import "NSBundle+LanguageBundle.h"
 #import "WOTLogger.h"
 #import "NSString+UrlEncode.h"
+#import <WOTPivot/WOTPivot-Swift.h>
 
 //#import "WOTWEBRequest+Stubs.h"
 

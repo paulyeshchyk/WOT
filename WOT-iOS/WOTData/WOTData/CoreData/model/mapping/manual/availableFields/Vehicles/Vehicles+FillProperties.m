@@ -35,7 +35,7 @@
     
     WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]
                                                                   requestId:WOTRequestIdModulesTree
-                                                        argFieldNameToFetch:WOTApiKeys.queryArgFields
+                                                        argFieldNameToFetch:WGWebQueryArgs.fields
                                                       argFieldValuesToFetch:[ModulesTree availableFields]
                                                        argFieldNameToFilter:WOTApiKeys.module_id
                                                                 jsonKeyName:WOTApiKeys.modules_tree
@@ -50,7 +50,7 @@
     
     WOTWebResponseLink *enginesLink = [WOTWebResponseLink linkWithClass:[Tankengines class]
                                                               requestId:WOTRequestIdTankEngines
-                                                    argFieldNameToFetch:WOTApiKeys.queryArgFields
+                                                    argFieldNameToFetch:WGWebQueryArgs.fields
                                                   argFieldValuesToFetch:[Tankengines availableFields]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
                                                             jsonKeyName:WOTApiKeys.engines
@@ -64,7 +64,7 @@
 
     WOTWebResponseLink *chassisLink = [WOTWebResponseLink linkWithClass:[Tankchassis class]
                                                               requestId:WOTRequestIdTankChassis
-                                                    argFieldNameToFetch:WOTApiKeys.queryArgFields
+                                                    argFieldNameToFetch:WGWebQueryArgs.fields
                                                   argFieldValuesToFetch:[Tankchassis availableFields]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
                                                             jsonKeyName:WOTApiKeys.suspensions
@@ -78,7 +78,7 @@
     
     WOTWebResponseLink *radiosLink = [WOTWebResponseLink linkWithClass:[Tankradios class]
                                                              requestId:WOTRequestIdTankRadios
-                                                   argFieldNameToFetch:WOTApiKeys.queryArgFields
+                                                   argFieldNameToFetch:WGWebQueryArgs.fields
                                                  argFieldValuesToFetch:[Tankradios availableFields]
                                                   argFieldNameToFilter:WOTApiKeys.module_id
                                                            jsonKeyName:WOTApiKeys.radios
@@ -92,7 +92,7 @@
     
     WOTWebResponseLink *gunsLink = [WOTWebResponseLink linkWithClass:[Tankguns class]
                                                            requestId:WOTRequestIdTankGuns
-                                                 argFieldNameToFetch:WOTApiKeys.queryArgFields
+                                                 argFieldNameToFetch:WGWebQueryArgs.fields
                                                argFieldValuesToFetch:[Tankguns availableFields]
                                                 argFieldNameToFilter:WOTApiKeys.module_id
                                                          jsonKeyName:WOTApiKeys.guns
@@ -107,7 +107,7 @@
     
     WOTWebResponseLink *turretsLink = [WOTWebResponseLink linkWithClass:[Tankturrets class]
                                                               requestId:WOTRequestIdTankTurrets
-                                                    argFieldNameToFetch:WOTApiKeys.queryArgFields
+                                                    argFieldNameToFetch:WGWebQueryArgs.fields
                                                   argFieldValuesToFetch:[Tankturrets availableFields]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
                                                             jsonKeyName:WOTApiKeys.turrets

@@ -11,9 +11,9 @@ import Foundation
 @objc public class WOTWEBRequestTankRadios: WOTWEBRequest {
     
     override public var query: [AnyHashable : Any]! {
-        return [WOTApiKeys.queryArgApplicationID: self.hostConfiguration.applicationID,
-                WOTApiKeys.queryArgFields: self.args.escapedValue(forKey: WOTApiKeys.queryArgFields),
-                WOTApiKeys.module_id:self.args.escapedValue(forKey: WOTApiKeys.module_id)]
+        return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
+                WGWebQueryArgs.fields: self.args.escapedValue(forKey: WGWebQueryArgs.fields),
+                WGWebQueryArgs.module_id:self.args.escapedValue(forKey: WOTApiKeys.module_id)]
     }
     
     override public var path: String! {

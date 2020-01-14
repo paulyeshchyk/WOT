@@ -41,7 +41,7 @@
 
 - (NSDictionary *)query {
     
-    return @{WOTApiKeys.queryArgApplicationID:[NSString valueOrSpaceString:self.hostConfiguration.applicationID],
+    return @{WGWebQueryArgs.application_id:[NSString valueOrSpaceString:self.hostConfiguration.applicationID],
              WOTApiKeys.accessToken:[NSString valueOrSpaceString:self.access_token]};
 }
 
