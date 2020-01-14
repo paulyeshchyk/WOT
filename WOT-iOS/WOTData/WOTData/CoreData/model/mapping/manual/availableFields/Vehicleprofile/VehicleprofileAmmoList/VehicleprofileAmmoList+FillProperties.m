@@ -7,6 +7,7 @@
 //
 
 #import "VehicleprofileAmmoList+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation VehicleprofileAmmoList (FillProperties)
 

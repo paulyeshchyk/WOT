@@ -7,12 +7,12 @@
 //
 
 #import "VehicleprofileRadio+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation VehicleprofileRadio (FillProperties)
 
 + (NSArray *)availableFields {
-    
-    return @[@"tier",@"signal_range",@"tag",@"weight",@"name"];
+    return [VehicleprofileRadio keypaths];
 }
 
 @end

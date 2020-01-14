@@ -268,7 +268,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
             [childrenModuleIDs setObject:new forKey:key];
         }
 
-        [tank addModulesTreeObject:returningModule];
+        [tank addModules_treeObject:returningModule];
     }];
     
     NSMutableArray *nextChildren = [[NSMutableArray alloc] init];

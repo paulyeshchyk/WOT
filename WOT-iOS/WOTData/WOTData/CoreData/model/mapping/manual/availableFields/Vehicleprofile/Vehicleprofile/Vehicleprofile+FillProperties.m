@@ -7,12 +7,12 @@
 //
 
 #import "Vehicleprofile+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation Vehicleprofile (FillProperties)
 
-+ (NSArray *)availableFields {
-    
-    return @[@"max_ammo",@"weight",@"hp",@"is_default",@"speed_forward",@"hull_hp",@"speed_backward",@"tank_id",@"max_weight"];
++ (NSArray *)availableFields {    
+    return [Vehicleprofile keypaths];
 }
 
 @end

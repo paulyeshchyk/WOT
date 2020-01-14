@@ -33,7 +33,6 @@ public class WGWebQueryArgs: NSObject {
 @objc
 public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let modules_tree: String = "modules_tree"
-    @objc public static let modulestree: String = "modulestree"
     @objc public static let engines: String = "engines"
     @objc public static let suspensions: String = "suspensions"
     @objc public static let radios: String = "radios"

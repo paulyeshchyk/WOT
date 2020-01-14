@@ -11,8 +11,7 @@
 @implementation VehicleprofileArmor (FillProperties)
 
 + (NSArray *)availableFields {
-    
-    return @[@"front",@"sides",@"rear"];
+    return nil;   
 }
 
 @end

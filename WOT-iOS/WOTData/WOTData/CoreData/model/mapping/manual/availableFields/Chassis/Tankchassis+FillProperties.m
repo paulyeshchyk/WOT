@@ -13,7 +13,7 @@
 @implementation Tankchassis (FillProperties)
 
 + (NSArray *)availableFields {
-    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.max_load, WOTApiKeys.nation, WOTApiKeys.price_credit, WOTApiKeys.price_gold, WOTApiKeys.rotation_speed];
+    return [Tankchassis keypaths];
 }
 
 @end

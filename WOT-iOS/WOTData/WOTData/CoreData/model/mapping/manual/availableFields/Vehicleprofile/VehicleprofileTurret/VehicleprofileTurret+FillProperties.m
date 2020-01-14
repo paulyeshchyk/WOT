@@ -7,12 +7,12 @@
 //
 
 #import "VehicleprofileTurret+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation VehicleprofileTurret (FillProperties)
 
-+ (NSArray *)availableFields {
-    
-    return nil;
++ (NSArray *)availableFields {    
+    return [VehicleprofileTurret keypaths];
 }
 
 @end

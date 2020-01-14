@@ -14,20 +14,7 @@
 @implementation Vehicles (FillProperties)
 
 + (NSArray *)availableFields {
-//, WOTApiKeys.price_gold, WOTApiKeys.short_name, WOT_KEY_PRICES_XP];
-    return @[WOTApiKeys.name,
-             WOTApiKeys.nation,
-             WOTApiKeys.type,
-             WOTApiKeys.tag,
-             WOTApiKeys.tier,
-             WOTApiKeys.tank_id,
-             WOTApiKeys.default_profile,
-             WOTApiKeys.modules_tree,
-             WOTApiKeys.engines,
-             WOTApiKeys.suspensions,
-             WOTApiKeys.radios,
-             WOTApiKeys.guns,
-             WOTApiKeys.turrets];
+    return [Vehicles keypaths];
 }
 
 

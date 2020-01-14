@@ -2,8 +2,8 @@
 //  Vehicles+CoreDataProperties.m
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/22/19.
-//  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
+//  Created by Pavel Yeshchyk on 1/14/20.
+//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
 
@@ -29,7 +29,7 @@
 @dynamic default_profile;
 @dynamic engines;
 @dynamic guns;
-@dynamic modulesTree;
+@dynamic modules_tree;
 @dynamic radios;
 @dynamic suspensions;
 @dynamic turrets;

@@ -22,7 +22,7 @@
         <relationship name="nextRadios" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankradios" inverseName="modulesTree" inverseEntity="Tankradios" syncable="YES"/>
         <relationship name="nextTurrets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankturrets" inverseName="modulesTree" inverseEntity="Tankturrets" syncable="YES"/>
         <relationship name="prevModules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="nextModules" inverseEntity="ModulesTree" syncable="YES"/>
-        <relationship name="vehicles" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="modulesTree" inverseEntity="Vehicles" syncable="YES"/>
+        <relationship name="vehicles" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="modules_tree" inverseEntity="Vehicles" syncable="YES"/>
     </entity>
     <entity name="Tankchassis" representedClassName="Tankchassis" syncable="YES">
         <attribute name="level" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -217,7 +217,7 @@
         <relationship name="default_profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicleprofile" inverseName="vehicles" inverseEntity="Vehicleprofile" syncable="YES"/>
         <relationship name="engines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankengines" inverseName="vehicles" inverseEntity="Tankengines" syncable="YES"/>
         <relationship name="guns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankguns" inverseName="vehicles" inverseEntity="Tankguns" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="vehicles" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="modules_tree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="vehicles" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="radios" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankradios" inverseName="vehicles" inverseEntity="Tankradios" syncable="YES"/>
         <relationship name="suspensions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankchassis" inverseName="vehicles" inverseEntity="Tankchassis" syncable="YES"/>
         <relationship name="turrets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankturrets" inverseName="vehicles" inverseEntity="Tankturrets" syncable="YES"/>

@@ -7,12 +7,12 @@
 //
 
 #import "VehicleprofileGun+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation VehicleprofileGun (FillProperties)
 
-+ (NSArray *)availableFields {
-    
-    return @[@"move_down_arc",@"caliber",@"name",@"weight",@"move_up_arc",@"fire_rate",@"dispersion",@"tag",@"reload_time",@"tier",@"aim_time"];
++ (NSArray *)availableFields {    
+    return [VehicleprofileGun keypaths];
 }
 
 @end

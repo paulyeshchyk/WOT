@@ -7,12 +7,12 @@
 //
 
 #import "VehicleprofileEngine+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation VehicleprofileEngine (FillProperties)
 
 + (NSArray *)availableFields {
-    
-    return @[@"name",@"power",@"weight",@"tag",@"fire_chance",@"tier"];
+    return [VehicleprofileEngine keypaths];
 }
 
 @end

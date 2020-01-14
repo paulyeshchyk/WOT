@@ -7,12 +7,12 @@
 //
 
 #import "VehicleprofileAmmoPenetration+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation VehicleprofileAmmoPenetration (FillProperties)
 
 + (NSArray *)availableFields {
-    
-    return @[@"avg_value",@"max_value",@"min_value"];
+    return [VehicleprofileAmmoPenetration keypaths];    
 }
 
 @end

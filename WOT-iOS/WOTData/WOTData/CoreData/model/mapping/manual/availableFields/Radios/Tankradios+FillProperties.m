@@ -13,7 +13,7 @@
 @implementation Tankradios (FillProperties)
 
 + (NSArray *)availableFields {
-    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.distance, WOTApiKeys.nation, WOTApiKeys.price_credit, WOTApiKeys.price_gold];
+    return [Tankradios keypaths];
 }
 
 @end

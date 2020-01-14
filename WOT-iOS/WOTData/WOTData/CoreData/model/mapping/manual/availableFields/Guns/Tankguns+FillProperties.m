@@ -13,7 +13,7 @@
 @implementation Tankguns (FillProperties)
 
 + (NSArray *)availableFields {
-    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.nation, WOTApiKeys.price_credit, WOTApiKeys.price_gold, WOTApiKeys.rate];
+    return [Tankguns keypaths];
 }
 
 @end

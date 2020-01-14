@@ -7,12 +7,12 @@
 //
 
 #import "VehicleprofileSuspension+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation VehicleprofileSuspension (FillProperties)
 
 + (NSArray *)availableFields {
-    
-    return @[@"name",@"weight",@"load_limit",@"tag",@"tier"];
+    return [VehicleprofileSuspension keypaths];
 }
 
 

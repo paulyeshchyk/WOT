@@ -131,9 +131,6 @@
         [request addListener: self];
         [request addGroup:groupId];
         [requests addPointer:(__bridge void *)request];
-    } else {
-        
-//        debugLog(@"request has not been added:%@",request.description);
     }
     return canAdd;
 }
@@ -208,20 +205,17 @@
         [dataAdapters enumerateObjectsUsingBlock:^(Class class, BOOL *stop) {
             
             if (!([class conformsToProtocol:@protocol(WOTWebResponseAdapter) ])) {
-                
                 debugError(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
-            } else {
-                
-                if (![data isKindOfClass:[NSDictionary class]]) {
-                    
-                    debugError(@"%@\n%@\n\n in request:%@\n\n",error.localizedDescription,error.userInfo,weakRequest.description);
-
-                } else {
-                
-                    id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-                    [adapter parseData:data error:nil binary:binary];
-                }
+                return;
             }
+                
+            if (![data isKindOfClass:[NSDictionary class]]) {
+                debugError(@"%@\n%@\n\n in request:%@\n\n",error.localizedDescription,error.userInfo,weakRequest.description);
+                return;
+            }
+                
+            id<WOTWebResponseAdapter> adapter = [[class alloc] init];
+            [adapter parseData:data error:nil binary:binary];
         }];
     }];
     

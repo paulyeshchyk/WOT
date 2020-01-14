@@ -7,13 +7,12 @@
 //
 
 #import "VehicleprofileAmmo+FillProperties.h"
+#import <WOTData/WOTData-Swift.h>
 
 @implementation VehicleprofileAmmo (FillProperties)
 
-
 + (NSArray *)availableFields {
-
-    return @[@"ammoType"];
+    return [VehicleprofileAmmo keypaths];
 }
 
 @end
