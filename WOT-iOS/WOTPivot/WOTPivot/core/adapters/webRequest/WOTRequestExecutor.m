@@ -18,10 +18,10 @@
 @property (nonatomic, strong) NSMutableDictionary *grouppedRequests;
 @property (nonatomic, readwrite, assign) NSInteger pendingRequestsCount;
 @property (nonatomic, strong) id<WEBHostConfiguration> hostConfiguration;
+
 @end
 
 @implementation WOTRequestExecutor
-
 
 + (WOTRequestExecutor *)sharedInstance {
     

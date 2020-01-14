@@ -22,7 +22,7 @@
     
     WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]
                                                                   requestId:WOTRequestIdModulesTree
-                                                        argFieldNameToFetch:WOTApiKeys.fields
+                                                        argFieldNameToFetch:WOTApiKeys.queryArgFields
                                                       argFieldValuesToFetch:[ModulesTree availableFields]
                                                        argFieldNameToFilter:WOTApiKeys.module_id
                                                                 jsonKeyName:WOTApiKeys.modules_tree

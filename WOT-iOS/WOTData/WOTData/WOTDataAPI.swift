@@ -37,8 +37,8 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let contour_image: String = "contour_image"
 
     @objc public static let default_profile: String = "default_profile"
-    @objc public static let fields: String = "fields"
-    @objc public static let application_id: String = "application_id"
+    @objc public static let queryArgFields: String = "fields"
+    @objc public static let queryArgApplicationID: String = "application_id"
     @objc public static let redirectUri: String = "redirect_uri"
     @objc public static let nofollow: String = "nofollow"
     @objc public static let module_id: String = "module_id"

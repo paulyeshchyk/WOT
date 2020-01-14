@@ -23,10 +23,9 @@
 }
 
 - (NSDictionary *)query {
-    
 
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    result[WOTApiKeys.application_id] = [NSString valueOrSpaceString:self.applicationID];
+    result[WOTApiKeys.queryArgApplicationID] = [NSString valueOrSpaceString:self.applicationID];
     result[WOTApiKeys.nofollow] = [NSString valueOrSpaceString:self.noFollow];
     result[WOTApiKeys.redirectUri] = [NSString valueOrSpaceString:self.redirectURL];
     return result;

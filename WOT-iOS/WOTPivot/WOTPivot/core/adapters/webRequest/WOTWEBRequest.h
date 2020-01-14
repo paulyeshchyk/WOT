@@ -22,7 +22,6 @@
 @property (nonatomic, readonly) NSData *httpBodyData;
 @property (nonatomic, strong) NSMutableData *data;
 
-
 - (NSString *)queryIntoString;
 - (NSURL *)composedURL;
 - (NSURLRequest *)finalRequest;

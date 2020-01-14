@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
 - (void)parse:(id)data binary:(NSData * _Nullable)binary {
+    
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
@@ -219,7 +220,6 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 
 #pragma mark - modules
 
-
 - (NSDictionary *)parseDictionaryLink:(NSDictionary *)jSON wotWebResponseLink:(WOTWebResponseLink *)wotWebResponseLink context:(NSManagedObjectContext *)context vehicle:(Vehicles *)tank{
     
     NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
@@ -235,7 +235,6 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     
     return requests;
 }
-
 
 - (void)parseModulesJSON:(NSDictionary *)jSON clazz:(Class)clazz keys:(NSArray *)keys coreDataIdName:(id)coreDataIdName context:(NSManagedObjectContext *)context vehicle:(Vehicles *)tank{
     
@@ -293,7 +292,6 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
     
     [self parseModulesJSON:jSON clazz:clazz keys:nextChildren coreDataIdName:coreDataIdName context:context vehicle:tank];
 }
-
 
 - (NSArray *)parentModule:(ModulesTree *)parentModule addChildModuleFromJSON:(NSDictionary *)jSON coreDataIdName:(NSString *)coreDataIdName jSONLinkId:(id)jSONLinkId clazz:(Class)clazz context:(NSManagedObjectContext *)context returningModule:(ModulesTree * __autoreleasing *)returningModule{
     

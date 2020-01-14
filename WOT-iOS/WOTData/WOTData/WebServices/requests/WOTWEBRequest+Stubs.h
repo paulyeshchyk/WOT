@@ -8,16 +8,6 @@
 
 #import <WOTPivot/WOTPivot.h>
 
-#import "WOTWEBRequestTanks.h"
-#import "WOTWebRequestTankChassis.h"
-#import "WOTWebRequestTankRadios.h"
-#import "WOTWebRequestTankGuns.h"
-#import "WOTWEBRequestTankProfile.h"
-#import "WOTWebRequestTankTurrets.h"
-#import "WOTWEBRequestTankVehicles.h"
-#import "WOTWEBRequestTankEngines.h"
-
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WOTWEBRequest (Stubs)
@@ -28,28 +18,28 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface WOTWEBRequestTanks (Fake)
-@end
+//@interface WOTWEBRequestTanks (Fake)
+//@end
 
-@interface WOTWebRequestTankChassis (Fake)
-@end
+//@interface WOTWebRequestTankChassis (Fake)
+//@end
 
-@interface WOTWebRequestTankRadios (Fake)
-@end
+//@interface WOTWebRequestTankRadios (Fake)
+//@end
 
-@interface WOTWebRequestTankGuns (Fake)
-@end
+//@interface WOTWebRequestTankGuns (Fake)
+//@end
 
-@interface WOTWEBRequestTankProfile (Fake)
-@end
+//@interface WOTWEBRequestTankProfile (Fake)
+//@end
 
-@interface WOTWebRequestTankTurrets (Fake)
-@end
+//@interface WOTWebRequestTankTurrets (Fake)
+//@end
 
-@interface WOTWEBRequestTankVehicles (Fake)
-@end
+//@interface WOTWEBRequestTankVehicles (Fake)
+//@end
 
-@interface WOTWEBRequestTankEngines (Fake)
-@end
+//@interface WOTWEBRequestTankEngines (Fake)
+//@end
 
 NS_ASSUME_NONNULL_END
