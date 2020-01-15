@@ -13,11 +13,6 @@
 
 @implementation Vehicles (FillProperties)
 
-+ (NSArray *)availableFields {
-    return [Vehicles keypaths];
-}
-
-
 + (NSArray *)availableLinks {
     
     WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]

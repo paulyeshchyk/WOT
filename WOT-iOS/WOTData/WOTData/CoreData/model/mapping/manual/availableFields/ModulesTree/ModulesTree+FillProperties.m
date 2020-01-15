@@ -13,11 +13,6 @@
 
 @implementation ModulesTree (FillProperties)
 
-+ (NSArray *)availableFields {
-    
-    return [ModulesTree keypaths];
-}
-
 + (NSArray *)availableLinks {
     
     WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]
