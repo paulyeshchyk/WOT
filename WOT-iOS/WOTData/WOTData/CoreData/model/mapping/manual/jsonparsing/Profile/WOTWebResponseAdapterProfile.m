@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterProfile
 
-- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary{
+- (void)parseJSON:(NSDictionary *)data error:(NSError *)error {
     
     if (error) {
         

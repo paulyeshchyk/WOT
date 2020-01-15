@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterGuns
 
-- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary{
+- (void)parseJSON:(NSDictionary *)json error:(NSError *)error {
 
     if (error) {
         
@@ -21,7 +21,7 @@
         return;
     }
     
-    NSDictionary *tankGunsDictionary = [data[WOTApiKeys.data] copy];
+    NSDictionary *tankGunsDictionary = [json[WOTApiKeys.data] copy];
     
     NSArray *tankGunsArray = [tankGunsDictionary allKeys];
     

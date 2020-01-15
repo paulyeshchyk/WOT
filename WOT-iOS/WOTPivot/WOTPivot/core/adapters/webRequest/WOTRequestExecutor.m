@@ -191,12 +191,12 @@
 
     request.hostConfiguration = self.hostConfiguration;
 
-    [request setCallback:^(id data, NSError *error, NSData *binary){
+    [request setCallback:^(NSDictionary *json, NSError *error, NSData *binary){
         
         //callbacks
         [weakSelf.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
             
-            obj(data, error, binary);
+            obj(json, error, binary);
         }];
         
         //dataAdapters
@@ -209,13 +209,8 @@
                 return;
             }
                 
-            if (![data isKindOfClass:[NSDictionary class]]) {
-                debugError(@"%@\n%@\n\n in request:%@\n\n",error.localizedDescription,error.userInfo,weakRequest.description);
-                return;
-            }
-                
             id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-            [adapter parseData:data error:nil binary:binary];
+            [adapter parseJSON:json error:nil];
         }];
     }];
     

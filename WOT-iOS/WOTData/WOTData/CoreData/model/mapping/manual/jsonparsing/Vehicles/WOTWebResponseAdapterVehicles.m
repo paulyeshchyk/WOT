@@ -13,7 +13,7 @@
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
-- (void)parse:(id)data binary:(NSData * _Nullable)binary {
+- (void)parse:(NSDictionary *)json{
     
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
@@ -21,7 +21,7 @@
         
         NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
         
-        NSDictionary *objects = data[WOTApiKeys.data];
+        NSDictionary *objects = json[WOTApiKeys.data];
         for (id key in [objects allKeys]) {
             
             id jSON = objects[key];
@@ -61,17 +61,17 @@
     }];
 }
 
-- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary {
+- (void)parseJSON:(NSDictionary *)json error:(NSError *)error{
     
     if (error) {
         
         debugError(@"%@",error.localizedDescription);
         return;
     }
+// TODO: return back layer
+//    [WebLayerDecoder decodeVehiclesWithBinary: binary];
     
-    [WebLayerDecoder decodeVehiclesWithBinary: binary];
-    
-    [self parse:data binary:binary];
+    [self parse:json];
 }
 
 #pragma mark - private

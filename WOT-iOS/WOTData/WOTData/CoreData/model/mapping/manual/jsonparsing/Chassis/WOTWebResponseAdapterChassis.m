@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterChassis
 
-- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary{
+- (void)parseJSON:(NSDictionary *)json error:(NSError *)error {
 
     if (error) {
         
@@ -21,7 +21,7 @@
         return;
     }
     
-    NSDictionary *tankChassesDictionary = [data[WOTApiKeys.data] copy];
+    NSDictionary *tankChassesDictionary = [json[WOTApiKeys.data] copy];
     
     NSArray *tankChassisArray = [tankChassesDictionary allKeys];
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];

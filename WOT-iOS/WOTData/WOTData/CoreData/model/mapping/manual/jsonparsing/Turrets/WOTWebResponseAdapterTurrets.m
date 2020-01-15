@@ -14,7 +14,7 @@
 
 @implementation WOTWebResponseAdapterTurrets
 
-- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary{
+- (void)parseJSON:(NSDictionary *)json error:(NSError *)error {
     
     if (error) {
         
@@ -22,7 +22,7 @@
         return;
     }
     
-    NSDictionary *tankTurretsDictionary = data[WOTApiKeys.data];
+    NSDictionary *tankTurretsDictionary = json[WOTApiKeys.data];
     
     NSArray *tankTurretsArray = [tankTurretsDictionary allKeys];
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];

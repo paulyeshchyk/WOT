@@ -13,14 +13,14 @@
 
 @implementation WOTWebResponseAdapterRadios
 
-- (void)parseData:(id)data error:(NSError *)error binary:(NSData * _Nullable)binary {
+- (void)parseJSON:(NSDictionary *)json error:(NSError *)error {
    
     if (error) {
         
         debugError(@"%@",error.localizedDescription);
         return;
     }
-    NSDictionary *tankRadiosDictionary = data[WOTApiKeys.data];
+    NSDictionary *tankRadiosDictionary = json[WOTApiKeys.data];
     
     NSArray *tankRadiosArray = [tankRadiosDictionary allKeys];
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
