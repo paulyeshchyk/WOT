@@ -35,17 +35,4 @@
     return @[modulesTreeLink];
 }
 
-- (WOTModuleType)moduleType {
-    
-    WOTModuleType type = WOTModuleTypeUnknown;
-    
-    type |= self.nextEngines.hasItems ? WOTModuleTypeEngine : 0;
-    type |= self.nextChassis.hasItems ? WOTModuleTypeChassis : 0;
-    type |= self.nextGuns.hasItems ? WOTModuleTypeGuns : 0;
-    type |= self.nextRadios.hasItems ? WOTModuleTypeRadios : 0;
-    type |= self.nextTurrets.hasItems ? WOTModuleTypeTurrets : 0;
-    
-    return type;
-}
-
 @end

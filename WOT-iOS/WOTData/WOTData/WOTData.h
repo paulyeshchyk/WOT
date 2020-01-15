@@ -21,7 +21,7 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 //TODO: availableFields is internal method see nsmanagedobject+fillproperties
 
-#import "ModulesTree+UI.h"
+#import "WOTData-Model.h"
 #import "WOTData+Mapping.h"
 
 #import "WOTSessionManager.h"

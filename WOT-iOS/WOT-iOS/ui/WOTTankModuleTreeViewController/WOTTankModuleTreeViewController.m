@@ -197,7 +197,7 @@
 - (WOTTankConfigurationModuleMapping *)mappingForModuleType:(NSString *)moduleTypeStr {
 
     WOTTankConfigurationModuleMapping *result = nil;
-    WOTModuleType moduleType = [ModulesTree moduleTypeFromString:moduleTypeStr];
+    WOTModuleType moduleType = [WOTModuleTypeOBJcConverter fromString: moduleTypeStr];
     
     switch (moduleType) {
             

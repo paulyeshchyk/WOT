@@ -11,6 +11,4 @@
 
 @interface ModulesTree (FillProperties)
 
-- (WOTModuleType)moduleType;
-
 @end
