@@ -23,7 +23,7 @@
     WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]
                                                                   requestId:WOTRequestIdModulesTree
                                                         argFieldNameToFetch:WGWebQueryArgs.fields
-                                                      argFieldValuesToFetch:[ModulesTree availableFields]
+                                                      argFieldValuesToFetch:[ModulesTree keypaths]
                                                        argFieldNameToFilter:WOTApiKeys.module_id
                                                                 jsonKeyName:WOTApiKeys.modules_tree
                                                              coredataIdName:WOTApiKeys.module_id
@@ -38,7 +38,7 @@
     WOTWebResponseLink *enginesLink = [WOTWebResponseLink linkWithClass:[Tankengines class]
                                                               requestId:WOTRequestIdTankEngines
                                                     argFieldNameToFetch:WGWebQueryArgs.fields
-                                                  argFieldValuesToFetch:[Tankengines availableFields]
+                                                  argFieldValuesToFetch:[Tankengines keypaths]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
                                                             jsonKeyName:WOTApiKeys.engines
                                                          coredataIdName:WOTApiKeys.module_id
@@ -52,7 +52,7 @@
     WOTWebResponseLink *chassisLink = [WOTWebResponseLink linkWithClass:[Tankchassis class]
                                                               requestId:WOTRequestIdTankChassis
                                                     argFieldNameToFetch:WGWebQueryArgs.fields
-                                                  argFieldValuesToFetch:[Tankchassis availableFields]
+                                                  argFieldValuesToFetch:[Tankchassis keypaths]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
                                                             jsonKeyName:WOTApiKeys.suspensions
                                                          coredataIdName:WOTApiKeys.module_id
@@ -66,7 +66,7 @@
     WOTWebResponseLink *radiosLink = [WOTWebResponseLink linkWithClass:[Tankradios class]
                                                              requestId:WOTRequestIdTankRadios
                                                    argFieldNameToFetch:WGWebQueryArgs.fields
-                                                 argFieldValuesToFetch:[Tankradios availableFields]
+                                                 argFieldValuesToFetch:[Tankradios keypaths]
                                                   argFieldNameToFilter:WOTApiKeys.module_id
                                                            jsonKeyName:WOTApiKeys.radios
                                                         coredataIdName:WOTApiKeys.module_id
@@ -80,7 +80,7 @@
     WOTWebResponseLink *gunsLink = [WOTWebResponseLink linkWithClass:[Tankguns class]
                                                            requestId:WOTRequestIdTankGuns
                                                  argFieldNameToFetch:WGWebQueryArgs.fields
-                                               argFieldValuesToFetch:[Tankguns availableFields]
+                                               argFieldValuesToFetch:[Tankguns keypaths]
                                                 argFieldNameToFilter:WOTApiKeys.module_id
                                                          jsonKeyName:WOTApiKeys.guns
                                                       coredataIdName:WOTApiKeys.module_id
@@ -95,7 +95,7 @@
     WOTWebResponseLink *turretsLink = [WOTWebResponseLink linkWithClass:[Tankturrets class]
                                                               requestId:WOTRequestIdTankTurrets
                                                     argFieldNameToFetch:WGWebQueryArgs.fields
-                                                  argFieldValuesToFetch:[Tankturrets availableFields]
+                                                  argFieldValuesToFetch:[Tankturrets keypaths]
                                                    argFieldNameToFilter:WOTApiKeys.module_id
                                                             jsonKeyName:WOTApiKeys.turrets
                                                          coredataIdName:WOTApiKeys.module_id

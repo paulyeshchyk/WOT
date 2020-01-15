@@ -8,6 +8,14 @@
 
 import Foundation
 
+@objc extension ModulesTree {
+    public static func keypaths() -> [String] {
+        return [#keyPath(ModulesTree.name),
+                #keyPath(ModulesTree.module_id),
+                #keyPath(ModulesTree.price_credit)]
+    }
+}
+
 @objc extension Tankengines {
     public static func keypaths() -> [String] {
         return [#keyPath(Tankengines.name),

@@ -15,7 +15,7 @@
 
 + (NSArray *)availableFields {
     
-    return @[WOTApiKeys.name, WOTApiKeys.module_id, WOTApiKeys.price_credit, WOTApiKeys.modules_tree];
+    return [ModulesTree keypaths];
 }
 
 + (NSArray *)availableLinks {
@@ -23,7 +23,7 @@
     WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]
                                                                   requestId:WOTRequestIdModulesTree
                                                         argFieldNameToFetch:WGWebQueryArgs.fields
-                                                      argFieldValuesToFetch:[ModulesTree availableFields]
+                                                      argFieldValuesToFetch:[ModulesTree keypaths]
                                                        argFieldNameToFilter:WOTApiKeys.module_id
                                                                 jsonKeyName:WOTApiKeys.modules_tree
                                                              coredataIdName:WOTApiKeys.module_id

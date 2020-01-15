@@ -130,7 +130,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
     private func performWebRequest() {
         
         let arguments = WOTRequestArguments()
-        arguments.setValues(Vehicles.availableFields(), forKey: WGWebQueryArgs.fields)
+        arguments.setValues(Vehicles.keypaths(), forKey: WGWebQueryArgs.fields)
         
         let request = WOTRequestExecutor.sharedInstance()?.createRequest(forId: WOTRequestId.tankVehicles.rawValue)
         if let canAdd = WOTRequestExecutor.sharedInstance()?.add(request, byGroupId: "WOT_REQUEST_ID_VEHICLE_LIST") {

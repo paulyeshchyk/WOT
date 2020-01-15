@@ -338,7 +338,7 @@
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
     [args setValues:@[tankID]  forKey:WOTApiKeys.tank_id];
     //TODO: availableFields is internal method
-    [args setValues:@[[[Vehicles availableFields] componentsJoinedByString:@","]]  forKey:WGWebQueryArgs.fields];
+    [args setValues:@[[[Vehicles keypaths] componentsJoinedByString:@","]]  forKey:WGWebQueryArgs.fields];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:groupId];
