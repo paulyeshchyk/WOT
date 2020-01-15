@@ -14,41 +14,8 @@
 #import "WOTWebResponseAdapterModulesTree.h"
 #import <WOTData/WOTData-Swift.h>
 
-typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
-    WOTVehicleModuleTypeUnknown = 0,
-    WOTVehicleModuleTypeChassis,
-    WOTVehicleModuleTypeTurret,
-    WOTVehicleModuleTypeEngine,
-    WOTVehicleModuleTypeGun,
-    WOTVehicleModuleTypeRadio
-};
 
 @implementation WOTWebResponseAdapterVehicles
-
-
-+ (WOTVehicleModuleType)moduleTypeFromString:(NSString *)type {
-    
-    WOTVehicleModuleType result = WOTVehicleModuleTypeUnknown;
-
-    if ([type isEqualToString:@"vehicleChassis"]) {
-
-        result = WOTVehicleModuleTypeChassis;
-    } else if ([type isEqualToString:@"vehicleGun"]) {
-        
-        result = WOTVehicleModuleTypeGun;
-    } else if ([type isEqualToString:@"vehicleEngine"]) {
-        
-        result = WOTVehicleModuleTypeEngine;
-    } else if ([type isEqualToString:@"vehicleTurret"]) {
-        
-        result = WOTVehicleModuleTypeTurret;
-    } else if([type isEqualToString:@"vehicleRadio"]) {
-        
-        result = WOTVehicleModuleTypeRadio;
-    };
-
-    return result;
-}
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
@@ -315,7 +282,7 @@ typedef NS_ENUM(NSInteger, WOTVehicleModuleType) {
 //            }];
 //        }
 
-        WOTVehicleModuleType moduleType = [WOTWebResponseAdapterVehicles moduleTypeFromString:jSON[WOTApiKeys.type]];
+        WOTVehicleModuleType moduleType = [WOTVehicleModuleTypeeOBJcConverter fromString:jSON[WOTApiKeys.type]];
         switch (moduleType) {
             case WOTVehicleModuleTypeChassis: {
 

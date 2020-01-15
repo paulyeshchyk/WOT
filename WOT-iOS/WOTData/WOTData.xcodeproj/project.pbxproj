@@ -215,6 +215,7 @@
 		1D8B7AC423CE034600610751 /* Entities+Keypath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8B7AC323CE034600610751 /* Entities+Keypath.swift */; };
 		1D8B7AC723CEF37A00610751 /* WOTModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8B7AC623CEF37A00610751 /* WOTModuleType.swift */; };
 		1D8B7AC923CEFF5F00610751 /* ModulesTree+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8B7AC823CEFF5F00610751 /* ModulesTree+UI.swift */; };
+		1D8B7ACB23CF09DC00610751 /* WOTVehicleModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8B7ACA23CF09DC00610751 /* WOTVehicleModuleType.swift */; };
 		1D8C299021358CA600759C42 /* WOTDataDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C298F21358C6000759C42 /* WOTDataDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -440,6 +441,7 @@
 		1D8B7AC323CE034600610751 /* Entities+Keypath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entities+Keypath.swift"; sourceTree = "<group>"; };
 		1D8B7AC623CEF37A00610751 /* WOTModuleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTModuleType.swift; sourceTree = "<group>"; };
 		1D8B7AC823CEFF5F00610751 /* ModulesTree+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModulesTree+UI.swift"; sourceTree = "<group>"; };
+		1D8B7ACA23CF09DC00610751 /* WOTVehicleModuleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTVehicleModuleType.swift; sourceTree = "<group>"; };
 		1D8C298F21358C6000759C42 /* WOTDataDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTDataDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1061,6 +1063,7 @@
 			isa = PBXGroup;
 			children = (
 				1D8B7AC623CEF37A00610751 /* WOTModuleType.swift */,
+				1D8B7ACA23CF09DC00610751 /* WOTVehicleModuleType.swift */,
 			);
 			path = custom;
 			sourceTree = "<group>";
@@ -1325,6 +1328,7 @@
 				1D5D0A9E23CCAA78004B0314 /* VehicleprofileSuspension+CoreDataClass.m in Sources */,
 				1D8B7ABF23CE01C200610751 /* Tankturrets+JSONMapperProtocol.swift in Sources */,
 				1D5D0A2B23CCAA78004B0314 /* VehicleprofileGun+FillProperties.m in Sources */,
+				1D8B7ACB23CF09DC00610751 /* WOTVehicleModuleType.swift in Sources */,
 				1D8B7AB623CE01C200610751 /* VehicleprofileEngine+JSONMapperProtocol.swift in Sources */,
 				1D8B7AA523CE01C200610751 /* WebLayerDecoder.swift in Sources */,
 				1D8B7AB323CE01C200610751 /* VehicleprofileAmmoPenetration+JSONMapperProtocol.swift in Sources */,
