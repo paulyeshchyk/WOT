@@ -33,7 +33,7 @@ extension Vehicles: JSONMapperProtocol {
         self.price_gold = jSON[WOTApiKeys.price_gold] as? NSNumber
         self.is_premium = jSON[WOTApiKeys.is_premium] as? NSNumber
         self.short_name = jSON[WOTApiKeys.short_name] as? String
-        self.tag = jSON[WOTApiKeys.tag] as? String
+        self.tag = jSON[WGJsonFields.tag] as? String
         self.tier = NSDecimalNumber(value: jSON[WOTApiKeys.tier] as? Int ?? 0)
         /*
          * can be

@@ -23,7 +23,7 @@ extension ModulesTree: JSONMapperProtocol {
     public func mapping(from jSON: Any){
         guard let jSON = jSON as? [AnyHashable: Any] else { return }
 
-        self.module_id = NSDecimalNumber(value: jSON[WOTApiKeys.module_id] as? Int ?? 0)
+        self.module_id = NSDecimalNumber(value: jSON[WGJsonFields.module_id] as? Int ?? 0)
         self.name = jSON[WOTApiKeys.name] as? String
         
         self.price_credit = jSON[WOTApiKeys.price_credit] as? NSDecimalNumber

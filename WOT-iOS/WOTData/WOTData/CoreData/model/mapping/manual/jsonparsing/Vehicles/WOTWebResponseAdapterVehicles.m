@@ -13,7 +13,20 @@
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
-- (void)parse:(NSDictionary *)json{
+- (void)parseJSON:(NSDictionary *)json error:(NSError *)error{
+    
+    if (error) {
+        
+        debugError(@"%@",error.localizedDescription);
+        return;
+    }
+// TODO: return back layer
+//    [WebLayerDecoder decodeVehiclesWithBinary: binary];
+    
+    [self parseJSON:json];
+}
+
+- (void)parseJSON:(NSDictionary *)json{
     
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
@@ -21,13 +34,13 @@
         
         NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
         
-        NSDictionary *objects = json[WOTApiKeys.data];
+        NSDictionary *objects = json[WGJsonFields.data];
         for (id key in [objects allKeys]) {
             
             id jSON = objects[key];
             if ([jSON isKindOfClass:[NSDictionary class]]) {
                 
-                NSDictionary *requestsForSingleObj = [self parseVehicleObject:jSON class:[Vehicles class] context:context key:key];
+                NSDictionary *requestsForSingleObj = [self parseJSON:jSON context:context key:key];
                 [requests addEntriesFromDictionary:requestsForSingleObj];
             } else {
                 
@@ -61,25 +74,13 @@
     }];
 }
 
-- (void)parseJSON:(NSDictionary *)json error:(NSError *)error{
-    
-    if (error) {
-        
-        debugError(@"%@",error.localizedDescription);
-        return;
-    }
-// TODO: return back layer
-//    [WebLayerDecoder decodeVehiclesWithBinary: binary];
-    
-    [self parse:json];
-}
 
 #pragma mark - private
-- (NSDictionary *)parseVehicleObject:(NSDictionary *)jSON class:(Class)clazz context:(NSManagedObjectContext *)context key:(id)key{
+- (NSDictionary *)parseJSON:(NSDictionary *)jSON context:(NSManagedObjectContext *)context key:(id)key{
     
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tag,jSON[WOTApiKeys.tag]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.tag,jSON[WGJsonFields.tag]];
     Vehicles *vehicle = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:predicate context:context];
     [vehicle mappingFrom:jSON];
     
@@ -95,7 +96,7 @@
 //    Vehicles *tank = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:tanksPredicate context:context];
 ////    [tank setVehicles:vehicle];
 //
-    NSArray *availableLinks = [clazz availableLinks];
+    NSArray *availableLinks = [Vehicles availableLinks];
 
     for (WOTWebResponseLink *wotWebResponseLink in availableLinks) {
 

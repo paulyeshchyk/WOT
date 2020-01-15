@@ -13,7 +13,7 @@ import Foundation
     override public var query: [AnyHashable : Any]! {
         return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
                 WGWebQueryArgs.fields: self.args.escapedValue(forKey: WGWebQueryArgs.fields),
-                WGWebQueryArgs.module_id:self.args.escapedValue(forKey: WOTApiKeys.module_id)]
+                WGWebQueryArgs.module_id:self.args.escapedValue(forKey: WGWebQueryArgs.module_id)]
     }
     
     override public var path: String! {

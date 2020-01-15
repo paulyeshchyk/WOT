@@ -583,8 +583,8 @@
 		1D5D098023CCAA78004B0314 /* Chassis */ = {
 			isa = PBXGroup;
 			children = (
-				1D5D098123CCAA78004B0314 /* WOTWebResponseAdapterChassis.m */,
 				1D5D098223CCAA78004B0314 /* WOTWebResponseAdapterChassis.h */,
+				1D5D098123CCAA78004B0314 /* WOTWebResponseAdapterChassis.m */,
 			);
 			path = Chassis;
 			sourceTree = "<group>";
@@ -619,8 +619,8 @@
 		1D5D098D23CCAA78004B0314 /* Engines */ = {
 			isa = PBXGroup;
 			children = (
-				1D5D098E23CCAA78004B0314 /* WOTWebResponseAdapterEngines.m */,
 				1D5D098F23CCAA78004B0314 /* WOTWebResponseAdapterEngines.h */,
+				1D5D098E23CCAA78004B0314 /* WOTWebResponseAdapterEngines.m */,
 			);
 			path = Engines;
 			sourceTree = "<group>";
@@ -628,8 +628,8 @@
 		1D5D099023CCAA78004B0314 /* Turrets */ = {
 			isa = PBXGroup;
 			children = (
-				1D5D099123CCAA78004B0314 /* WOTWebResponseAdapterTurrets.m */,
 				1D5D099223CCAA78004B0314 /* WOTWebResponseAdapterTurrets.h */,
+				1D5D099123CCAA78004B0314 /* WOTWebResponseAdapterTurrets.m */,
 			);
 			path = Turrets;
 			sourceTree = "<group>";
@@ -646,8 +646,8 @@
 		1D5D099623CCAA78004B0314 /* ModulesTree */ = {
 			isa = PBXGroup;
 			children = (
-				1D5D099723CCAA78004B0314 /* WOTWebResponseAdapterModulesTree.m */,
 				1D5D099823CCAA78004B0314 /* WOTWebResponseAdapterModulesTree.h */,
+				1D5D099723CCAA78004B0314 /* WOTWebResponseAdapterModulesTree.m */,
 			);
 			path = ModulesTree;
 			sourceTree = "<group>";

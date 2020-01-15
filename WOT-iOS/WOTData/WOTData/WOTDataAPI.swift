@@ -31,6 +31,13 @@ public class WGWebQueryArgs: NSObject {
 }
 
 @objc
+public class WGJsonFields: NSObject {
+    @objc public static let tag: String = "tag"
+    @objc public static let data: String = "data"
+    @objc public static let module_id: String = "module_id"
+}
+
+@objc
 public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let modules_tree: String = "modules_tree"
     @objc public static let engines: String = "engines"
@@ -46,8 +53,6 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let default_profile: String = "default_profile"
     @objc public static let redirectUri: String = "redirect_uri"
     @objc public static let nofollow: String = "nofollow"
-    @objc public static let module_id: String = "module_id"
-    @objc public static let data: String = "data"
     @objc public static let accessToken: String = "access_token"
     @objc public static let name: String = "name"
     @objc public static let short_name: String = "short_name"
@@ -62,7 +67,6 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let image_small: String = "image_small"
     @objc public static let image: String = "image"
     @objc public static let tank_id: String = "tank_id"
-    @objc public static let tag: String = "tag"
     @objc public static let distance: String = "distance"
     @objc public static let price_gold: String = "price_gold"
     @objc public static let rate: String = "rate"

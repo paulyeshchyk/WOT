@@ -19,9 +19,9 @@
                                                                   requestId:WOTRequestIdModulesTree
                                                         argFieldNameToFetch:WGWebQueryArgs.fields
                                                       argFieldValuesToFetch:[ModulesTree keypaths]
-                                                       argFieldNameToFilter:WOTApiKeys.module_id
+                                                       argFieldNameToFilter:WGJsonFields.module_id
                                                                 jsonKeyName:WOTApiKeys.modules_tree
-                                                             coredataIdName:WOTApiKeys.module_id
+                                                             coredataIdName:WGJsonFields.module_id
                                                              linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                                  
                                                                  Vehicles *vehicles = (Vehicles *)entity;
@@ -34,9 +34,9 @@
                                                               requestId:WOTRequestIdTankEngines
                                                     argFieldNameToFetch:WGWebQueryArgs.fields
                                                   argFieldValuesToFetch:[Tankengines keypaths]
-                                                   argFieldNameToFilter:WOTApiKeys.module_id
+                                                   argFieldNameToFilter:WGJsonFields.module_id
                                                             jsonKeyName:WOTApiKeys.engines
-                                                         coredataIdName:WOTApiKeys.module_id
+                                                         coredataIdName:WGJsonFields.module_id
                                                          linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                              
                                                              Vehicles *vehicles = (Vehicles *)entity;
@@ -48,9 +48,9 @@
                                                               requestId:WOTRequestIdTankChassis
                                                     argFieldNameToFetch:WGWebQueryArgs.fields
                                                   argFieldValuesToFetch:[Tankchassis keypaths]
-                                                   argFieldNameToFilter:WOTApiKeys.module_id
+                                                   argFieldNameToFilter:WGJsonFields.module_id
                                                             jsonKeyName:WOTApiKeys.suspensions
-                                                         coredataIdName:WOTApiKeys.module_id
+                                                         coredataIdName:WGJsonFields.module_id
                                                          linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                              
                                                              Vehicles *vehicles = (Vehicles *)entity;
@@ -62,9 +62,9 @@
                                                              requestId:WOTRequestIdTankRadios
                                                    argFieldNameToFetch:WGWebQueryArgs.fields
                                                  argFieldValuesToFetch:[Tankradios keypaths]
-                                                  argFieldNameToFilter:WOTApiKeys.module_id
+                                                  argFieldNameToFilter:WGJsonFields.module_id
                                                            jsonKeyName:WOTApiKeys.radios
-                                                        coredataIdName:WOTApiKeys.module_id
+                                                        coredataIdName:WGJsonFields.module_id
                                                         linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                             
                                                              Vehicles *vehicles = (Vehicles *)entity;
@@ -76,9 +76,9 @@
                                                            requestId:WOTRequestIdTankGuns
                                                  argFieldNameToFetch:WGWebQueryArgs.fields
                                                argFieldValuesToFetch:[Tankguns keypaths]
-                                                argFieldNameToFilter:WOTApiKeys.module_id
+                                                argFieldNameToFilter:WGJsonFields.module_id
                                                          jsonKeyName:WOTApiKeys.guns
-                                                      coredataIdName:WOTApiKeys.module_id
+                                                      coredataIdName:WGJsonFields.module_id
                                                       linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                           
                                                           Vehicles *vehicles = (Vehicles *)entity;
@@ -91,9 +91,9 @@
                                                               requestId:WOTRequestIdTankTurrets
                                                     argFieldNameToFetch:WGWebQueryArgs.fields
                                                   argFieldValuesToFetch:[Tankturrets keypaths]
-                                                   argFieldNameToFilter:WOTApiKeys.module_id
+                                                   argFieldNameToFilter:WGJsonFields.module_id
                                                             jsonKeyName:WOTApiKeys.turrets
-                                                         coredataIdName:WOTApiKeys.module_id
+                                                         coredataIdName:WGJsonFields.module_id
                                                          linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                              
                                                              Vehicles *vehicles = (Vehicles *)entity;

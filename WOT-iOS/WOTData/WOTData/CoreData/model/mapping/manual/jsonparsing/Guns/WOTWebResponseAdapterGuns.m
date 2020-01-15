@@ -21,7 +21,7 @@
         return;
     }
     
-    NSDictionary *tankGunsDictionary = [json[WOTApiKeys.data] copy];
+    NSDictionary *tankGunsDictionary = json[WGJsonFields.data];
     
     NSArray *tankGunsArray = [tankGunsDictionary allKeys];
     
@@ -38,7 +38,7 @@
                 return;
             }
             
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankGunsJSON[WOTApiKeys.module_id]];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankGunsJSON[WGJsonFields.module_id]];
             Tankguns *tankGuns = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:predicate context:context];
             [tankGuns mappingFrom:tankGunsJSON];
         }];

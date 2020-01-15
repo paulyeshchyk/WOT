@@ -21,7 +21,7 @@
         return;
     }
     
-    NSDictionary *tankChassesDictionary = [json[WOTApiKeys.data] copy];
+    NSDictionary *tankChassesDictionary = json[WGJsonFields.data];
     
     NSArray *tankChassisArray = [tankChassesDictionary allKeys];
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
@@ -37,7 +37,7 @@
                 return;
             }
             
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankChassisJSON[WOTApiKeys.module_id]];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankChassisJSON[WGJsonFields.module_id]];
             Tankchassis *tankChasses = (Tankchassis *)[Tankchassis findOrCreateObjectWithPredicate:predicate context:context];
             [tankChasses mappingFrom:tankChassisJSON];
         }];

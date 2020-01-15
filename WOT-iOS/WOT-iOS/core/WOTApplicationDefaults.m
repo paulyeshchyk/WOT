@@ -64,7 +64,7 @@
             return;
         }
 
-        NSString *location = data[WOTApiKeys.data][WOT_KEY_LOCATION];
+        NSString *location = data[WGJsonFields.data][WOT_KEY_LOCATION];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
 
         UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];

@@ -21,13 +21,13 @@
         return;
     }
     
-    NSDictionary *profileJSON = data[WOTApiKeys.data];
+    NSDictionary *profileJSON = data[WGJsonFields.data];
 
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
     [context performBlock:^{
         
-        [self context:context parseProfile:profileJSON];
+        [self parseProfile:profileJSON context:context];
         
         if ([context hasChanges]) {
             
@@ -39,7 +39,7 @@
 
 #pragma mark - private
 
-- (void)context:(NSManagedObjectContext *)context parseProfile:(NSDictionary *)profileJSON {
+- (void)parseProfile:(NSDictionary *)profileJSON context:(NSManagedObjectContext *)context {
 
 //engine //suspension //gun //turret //radio
     

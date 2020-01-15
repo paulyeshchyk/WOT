@@ -25,7 +25,7 @@ extension Tankengines: JSONMapperProtocol {
     @objc
     public func mapping(from jSON: Any){
         guard let jSON = jSON as? [AnyHashable: Any] else { return }
-        self.module_id = jSON[WOTApiKeys.module_id] as? NSDecimalNumber
+        self.module_id = jSON[WGJsonFields.module_id] as? NSDecimalNumber
         self.name = jSON[WOTApiKeys.name] as? String
         
         self.fire_starting_chance = jSON[WOTApiKeys.fire_starting_chance] as? NSDecimalNumber

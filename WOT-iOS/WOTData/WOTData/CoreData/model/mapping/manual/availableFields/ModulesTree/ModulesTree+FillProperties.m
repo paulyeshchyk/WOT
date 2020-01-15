@@ -19,9 +19,9 @@
                                                                   requestId:WOTRequestIdModulesTree
                                                         argFieldNameToFetch:WGWebQueryArgs.fields
                                                       argFieldValuesToFetch:[ModulesTree keypaths]
-                                                       argFieldNameToFilter:WOTApiKeys.module_id
+                                                       argFieldNameToFilter:WGJsonFields.module_id
                                                                 jsonKeyName:WOTApiKeys.modules_tree
-                                                             coredataIdName:WOTApiKeys.module_id
+                                                             coredataIdName:WGJsonFields.module_id
                                                              linkItemsBlock:^(id entity, NSSet *items, id tag){
                                                                  //                                                                 Vehicles *vehicles = (Vehicles *)entity;
                                                                  //                                                                 [vehicles addTurrets:items];

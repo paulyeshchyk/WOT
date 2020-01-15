@@ -20,7 +20,7 @@
         debugError(@"%@",error.localizedDescription);
         return;
     }
-    NSDictionary *tankRadiosDictionary = json[WOTApiKeys.data];
+    NSDictionary *tankRadiosDictionary = json[WGJsonFields.data];
     
     NSArray *tankRadiosArray = [tankRadiosDictionary allKeys];
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
@@ -36,7 +36,7 @@
                 return;
             }
             
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.module_id,tankRadiosJSON[WOTApiKeys.module_id]];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankRadiosJSON[WGJsonFields.module_id]];
             Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
             [tankradios mappingFrom:tankRadiosJSON];
         }];
