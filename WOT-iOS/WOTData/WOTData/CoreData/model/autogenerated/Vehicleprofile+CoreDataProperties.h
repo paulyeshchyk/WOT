@@ -2,8 +2,8 @@
 //  Vehicleprofile+CoreDataProperties.h
 //  WOTData
 //
-//  Created on 8/28/18.
-//  Copyright © 2018. All rights reserved.
+//  Created by Pavel Yeshchyk on 1/16/20.
+//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
 
@@ -31,11 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) VehicleprofileArmorList *armor;
 @property (nullable, nonatomic, retain) VehicleprofileEngine *engine;
 @property (nullable, nonatomic, retain) VehicleprofileGun *gun;
+@property (nullable, nonatomic, retain) ModulesTree *modulesTree;
 @property (nullable, nonatomic, retain) VehicleprofileRadio *radio;
 @property (nullable, nonatomic, retain) VehicleprofileSuspension *suspension;
 @property (nullable, nonatomic, retain) VehicleprofileTurret *turret;
-@property (nullable, nonatomic, retain) ModulesTree *modulesTree;
 @property (nullable, nonatomic, retain) Vehicles *vehicles;
+@property (nullable, nonatomic, retain) VehicleprofileModule *modules;
 
 @end
 

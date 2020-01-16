@@ -35,6 +35,7 @@ public class WGJsonFields: NSObject {
     @objc public static let tag: String = "tag"
     @objc public static let data: String = "data"
     @objc public static let module_id: String = "module_id"
+    @objc public static let default_profile: String = "default_profile"
 }
 
 @objc
@@ -50,7 +51,6 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let power: String = "power"
     @objc public static let contour_image: String = "contour_image"
 
-    @objc public static let default_profile: String = "default_profile"
     @objc public static let redirectUri: String = "redirect_uri"
     @objc public static let nofollow: String = "nofollow"
     @objc public static let accessToken: String = "access_token"

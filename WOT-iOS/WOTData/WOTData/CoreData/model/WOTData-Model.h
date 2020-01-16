@@ -9,6 +9,8 @@
 #ifndef WOTData_Model_h
 #define WOTData_Model_h
 
+#import "VehicleprofileModule+CoreDataClass.h"
+#import "VehicleprofileModule+CoreDataProperties.h"
 #import "ListSetting+CoreDataClass.h"
 #import "ListSetting+CoreDataProperties.h"
 #import "ModulesTree+CoreDataClass.h"

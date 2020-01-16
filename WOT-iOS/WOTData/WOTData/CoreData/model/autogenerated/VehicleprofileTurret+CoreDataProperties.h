@@ -2,8 +2,8 @@
 //  VehicleprofileTurret+CoreDataProperties.h
 //  WOTData
 //
-//  Created on 8/28/18.
-//  Copyright © 2018. All rights reserved.
+//  Created by Pavel Yeshchyk on 1/16/20.
+//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
 
@@ -16,6 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<VehicleprofileTurret *> *)fetchRequest;
 
+@property (nullable, nonatomic, copy) NSDecimalNumber *view_range;
+@property (nullable, nonatomic, copy) NSDecimalNumber *tier;
+@property (nullable, nonatomic, copy) NSDecimalNumber *weight;
+@property (nullable, nonatomic, copy) NSString *tag;
+@property (nullable, nonatomic, copy) NSDecimalNumber *traverse_right_arc;
+@property (nullable, nonatomic, copy) NSDecimalNumber *traverse_left_arc;
+@property (nullable, nonatomic, copy) NSString *name;
+@property (nullable, nonatomic, copy) NSDecimalNumber *hp;
 @property (nullable, nonatomic, retain) Tankturrets *tankturrets;
 @property (nullable, nonatomic, retain) Vehicleprofile *vehicleprofile;
 

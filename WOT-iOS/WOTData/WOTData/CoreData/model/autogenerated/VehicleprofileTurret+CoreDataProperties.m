@@ -2,8 +2,8 @@
 //  VehicleprofileTurret+CoreDataProperties.m
 //  WOTData
 //
-//  Created on 8/28/18.
-//  Copyright © 2018. All rights reserved.
+//  Created by Pavel Yeshchyk on 1/16/20.
+//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
 
@@ -15,6 +15,14 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"VehicleprofileTurret"];
 }
 
+@dynamic view_range;
+@dynamic tier;
+@dynamic weight;
+@dynamic tag;
+@dynamic traverse_right_arc;
+@dynamic traverse_left_arc;
+@dynamic name;
+@dynamic hp;
 @dynamic tankturrets;
 @dynamic vehicleprofile;
 

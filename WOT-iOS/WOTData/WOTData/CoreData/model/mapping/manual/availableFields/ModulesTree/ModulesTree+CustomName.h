@@ -7,7 +7,6 @@
 //
 
 #import <WOTData/WOTData.h>
-#import "ModulesTree+CoreDataClass.h"
 
 @interface ModulesTree (CustomName)
 

@@ -2,8 +2,8 @@
 //  VehicleprofileAmmo+CoreDataProperties.h
 //  WOTData
 //
-//  Created on 8/28/18.
-//  Copyright © 2018. All rights reserved.
+//  Created by Pavel Yeshchyk on 1/16/20.
+//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<VehicleprofileAmmo *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSString *ammoType;
+@property (nullable, nonatomic, copy) NSString *type;
 @property (nullable, nonatomic, retain) VehicleprofileAmmoDamage *damage;
 @property (nullable, nonatomic, retain) VehicleprofileAmmoPenetration *penetration;
 @property (nullable, nonatomic, retain) VehicleprofileAmmoList *vehicleprofileAmmoList;

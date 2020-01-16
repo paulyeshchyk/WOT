@@ -40,7 +40,9 @@
             
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", WGJsonFields.module_id, tankTurretsJSON[WGJsonFields.module_id]];
             Tankturrets *tankturrets = (Tankturrets *)[Tankturrets findOrCreateObjectWithPredicate:predicate context:context];
-            [tankturrets mappingFrom:tankTurretsJSON];
+            [tankturrets mappingFromJSON:tankTurretsJSON into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+                //
+            }];
         }];
         
         if ([context hasChanges]) {

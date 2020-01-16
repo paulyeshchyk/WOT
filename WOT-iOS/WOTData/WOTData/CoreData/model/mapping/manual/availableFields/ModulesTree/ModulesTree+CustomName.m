@@ -9,6 +9,7 @@
 #import "ModulesTree+CustomName.h"
 #import "ModulesTree+FillProperties.h"
 #import <WOTData/WOTData-Swift.h>
+#import "ModulesTree+CoreDataClass.h"
 
 @implementation ModulesTree (CustomName)
 @dynamic customName;

@@ -1,15 +1,15 @@
 //
-//  WOTWebResponseAdapterVehicles.m
+//  Vehicles+WOTWebResponseAdapter.m
 //  WOT-iOS
 //
 //  Created on 6/19/15.
 //  Copyright (c) 2015. All rights reserved.
 //
-#import "WOTWebResponseAdapterVehicles.h"
+#import "Vehicles+WOTWebResponseAdapter.h"
 #import "WOTWebResponseAdapterModulesTree.h"
 #import <WOTData/WOTData-Swift.h>
 
-@implementation WOTWebResponseAdapterVehicles
+@implementation VehiclesWOTWebResponseAdapterObjC
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
@@ -40,7 +40,7 @@
             id jSON = objects[key];
             if ([jSON isKindOfClass:[NSDictionary class]]) {
                 
-                NSDictionary *requestsForSingleObj = [self parseJSON:jSON context:context key:key];
+                NSDictionary *requestsForSingleObj = [self parseRequestJSON:jSON context:context key:key];
                 [requests addEntriesFromDictionary:requestsForSingleObj];
             } else {
                 
@@ -76,17 +76,21 @@
 
 
 #pragma mark - private
-- (NSDictionary *)parseJSON:(NSDictionary *)jSON context:(NSManagedObjectContext *)context key:(id)key{
+- (NSDictionary *)parseRequestJSON:(NSDictionary *)jSON context:(NSManagedObjectContext *)context key:(id)key{
     
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.tag,jSON[WGJsonFields.tag]];
     Vehicles *vehicle = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:predicate context:context];
-    [vehicle mappingFrom:jSON];
+    [vehicle mappingFromJSON:jSON into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     
 #warning dirty code
     Vehicleprofile *defaultProfile = (Vehicleprofile *)[Vehicleprofile insertNewObject:context];
-    [defaultProfile mappingFrom:jSON[WOTApiKeys.default_profile]];
+    [defaultProfile mappingFromJSON:jSON[WGJsonFields.default_profile] into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     vehicle.default_profile = defaultProfile;
 
 
@@ -262,15 +266,17 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
         ModulesTree *moduleTree = (ModulesTree *)[clazz findOrCreateObjectWithPredicate:predicate context:context];
         [moduleTree setValue:jSONLinkId forKey:coreDataIdName];
-        [moduleTree mappingFrom:jSON];
+        [moduleTree mappingFromJSON:jSON into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+            
+        }];
         
         *returningModule = moduleTree;
 
 //        NSArray *nextTanks = jSON[WOT_KEY_NEXT_TANKS];
 //        if (nextTanks.hasItems) {
-//            
+//
 //            [nextTanks enumerateObjectsUsingBlock:^(NSString *nextTankId, NSUInteger idx, BOOL *stop) {
-//                
+//
 //                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.tank_id,nextTankId];
 //                Tanks *tanks = (Tanks *)[Tanks findOrCreateObjectWithPredicate:predicate context:context];
 //                [moduleTree addNextTanksObject:tanks];

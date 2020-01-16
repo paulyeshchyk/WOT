@@ -187,10 +187,7 @@
     __weak typeof(self)weakSelf = self;
     
     WOTRequest *request = [[RegisteredRequestClass alloc] init];
-    __weak typeof(request)weakRequest = request;
-
     request.hostConfiguration = self.hostConfiguration;
-
     [request setCallback:^(NSDictionary *json, NSError *error, NSData *binary){
         
         //callbacks

@@ -38,4 +38,14 @@ extension NSManagedObject {
         }
         return foundObject
     }
+
+
+    @objc
+    public static func findOrCreateObject(forClass: AnyClass, predicate: NSPredicate, context: NSManagedObjectContext) -> NSManagedObject? {
+        guard let foundObject = forClass.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
+            return forClass.insertNewObject(context)
+        }
+        return foundObject
+    }
+
 }

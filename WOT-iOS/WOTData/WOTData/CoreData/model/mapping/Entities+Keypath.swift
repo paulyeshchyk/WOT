@@ -97,7 +97,7 @@ import Foundation
 
 @objc extension VehicleprofileAmmo {
     public static func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileAmmo.ammoType)]
+        return [#keyPath(VehicleprofileAmmo.type)]
     }
 }
 

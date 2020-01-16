@@ -8,7 +8,9 @@
 
 import Foundation
 
+public typealias JSON = [AnyHashable: Any]
+
 @objc
 public protocol WOTWebResponseAdapter: NSObjectProtocol {
-    func parseJSON(_ json: NSDictionary, error: NSError?)
+    func parseJSON(_ json: JSON, error: NSError?)
 }

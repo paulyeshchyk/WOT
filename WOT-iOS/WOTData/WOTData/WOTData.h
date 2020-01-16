@@ -30,6 +30,3 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 #import "WOTWEBRequestLogin.h"
 #import "WOTSaveSessionRequest.h"
 #import "WOTClearSessionRequest.h"
-
-#import "Vehicles+FillProperties.h"
-#import "ModulesTree+CustomName.h"

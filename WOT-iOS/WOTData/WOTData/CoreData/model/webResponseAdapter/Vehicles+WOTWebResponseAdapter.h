@@ -1,5 +1,5 @@
 //
-//  WOTWebResponseAdapterVehicles.h
+//  Vehicles+WOTWebResponseAdapter.h
 //  WOT-iOS
 //
 //  Created on 6/19/15.
@@ -8,6 +8,6 @@
 
 #import <WOTPivot/WOTPivot.h>
 
-@interface WOTWebResponseAdapterVehicles : NSObject <WOTWebResponseAdapter>
+@interface VehiclesWOTWebResponseAdapterObjC : NSObject <WOTWebResponseAdapter>
 
 @end

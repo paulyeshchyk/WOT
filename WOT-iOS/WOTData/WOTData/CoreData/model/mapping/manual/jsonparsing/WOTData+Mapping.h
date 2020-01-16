@@ -9,13 +9,12 @@
 #ifndef WOTData_Mapping_h
 #define WOTData_Mapping_h
 
-#import "WOTWebResponseAdapterChassis.h"
 #import "WOTWebResponseAdapterRadios.h"
 #import "WOTWebResponseAdapterGuns.h"
 #import "WOTWebResponseAdapterProfile.h"
 #import "WOTWebResponseAdapterEngines.h"
 #import "WOTWebResponseAdapterTurrets.h"
-#import "WOTWebResponseAdapterVehicles.h"
+#import "Vehicles+WOTWebResponseAdapter.h"
 #import "WOTWebResponseAdapterModulesTree.h"
 
 #endif /* WOTData_Mapping_h */

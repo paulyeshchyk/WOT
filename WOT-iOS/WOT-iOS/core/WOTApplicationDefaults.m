@@ -165,13 +165,13 @@
      * Tanks.Vehicles
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[VehiclesAdapter class]];
     
     /**
      * Tanks.Modules
      **/
     [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestTankVehicles class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[VehiclesAdapter class]];
 
     /**
      * Tanks.Profile

@@ -2,8 +2,8 @@
 //  VehicleprofileAmmo+CoreDataProperties.m
 //  WOTData
 //
-//  Created on 8/28/18.
-//  Copyright © 2018. All rights reserved.
+//  Created by Pavel Yeshchyk on 1/16/20.
+//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
 
@@ -15,7 +15,7 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"VehicleprofileAmmo"];
 }
 
-@dynamic ammoType;
+@dynamic type;
 @dynamic damage;
 @dynamic penetration;
 @dynamic vehicleprofileAmmoList;

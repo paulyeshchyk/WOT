@@ -56,7 +56,9 @@
         NSCAssert(vehicleProfile, @"vehicleProfile should not be nil");
         
         [vehicleProfile setHashName:[NSDecimalNumber decimalNumberWithString:hashNameStr]];
-        [vehicleProfile mappingFrom:profile];
+        [vehicleProfile mappingFromJSON:profile into:context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+            
+        }];
 
         id ammo = [self context:context parseAmmo:profile[@"ammo"]];
         [vehicleProfile setAmmo:ammo];
@@ -88,14 +90,18 @@
 - (id)context:(NSManagedObjectContext *)context parseEngine:(NSDictionary *)engine {
     
     VehicleprofileEngine *result = (VehicleprofileEngine *)[VehicleprofileEngine insertNewObject:context];
-    [result mappingFrom:engine];
+    [result mappingFromJSON:engine into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     return result;
 }
 
 - (id)context:(NSManagedObjectContext *)context parseSuspension:(NSDictionary *)suspension {
 
     VehicleprofileSuspension *result = (VehicleprofileSuspension *)[VehicleprofileSuspension insertNewObject:context];
-    [result mappingFrom:suspension];
+    [result mappingFromJSON:suspension into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     return result;
 }
 
@@ -105,12 +111,16 @@
 
     id turretArmor = armor[@"turret"];
     VehicleprofileArmor *turret = (VehicleprofileArmor *)[VehicleprofileArmor insertNewObject:context];
-    [turret mappingFrom:turretArmor];
+    [turret mappingFromJSON:turretArmor into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     [result setTurret:turret];
 
     id hullArmor = armor[@"hull"];
     VehicleprofileArmor *hull = (VehicleprofileArmor *)[VehicleprofileArmor insertNewObject:context];
-    [hull mappingFrom:hullArmor];
+    [hull mappingFromJSON:hullArmor into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     [result setHull:hull];
     
     return result;
@@ -119,21 +129,27 @@
 - (id)context:(NSManagedObjectContext *)context parseGun:(NSDictionary *)gun {
     
     VehicleprofileGun *result = (VehicleprofileGun *)[VehicleprofileGun insertNewObject:context];
-    [result mappingFrom:gun];
+    [result mappingFromJSON:gun into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     return result;
 }
 
 - (id)context:(NSManagedObjectContext *)context parseTurret:(NSDictionary *)turret {
     
     VehicleprofileTurret *result = (VehicleprofileTurret *)[VehicleprofileTurret insertNewObject:context];
-    [result mappingFrom:turret];
+    [result mappingFromJSON:turret into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     return result;
 }
 
 - (id)context:(NSManagedObjectContext *)context parseRadio:(NSDictionary *)radio {
     
     VehicleprofileRadio *result = (VehicleprofileRadio *)[VehicleprofileRadio insertNewObject:context];
-    [result mappingFrom:radio];
+    [result mappingFromJSON:radio into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        
+    }];
     return result;
 }
 
@@ -144,17 +160,23 @@
     for(NSDictionary *ammoJSON in ammo) {
         
         VehicleprofileAmmo *ammoObject = (VehicleprofileAmmo *)[VehicleprofileAmmo insertNewObject:context];
-        [ammoObject mappingFrom:ammoJSON];
+        [ammoObject mappingFromJSON:ammoJSON into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+            
+        }];
         
         id penetration = ammoJSON[@"penetration"];
         
         VehicleprofileAmmoPenetration *ammoPenetration = (VehicleprofileAmmoPenetration *)[VehicleprofileAmmoPenetration insertNewObject:context];
-        [ammoPenetration mappingFrom:penetration];
+        [ammoPenetration mappingFromJSON:penetration into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+            
+        }];
         [ammoObject setPenetration:ammoPenetration];
         
         id damage = ammoJSON[@"damage"];
         VehicleprofileAmmoDamage *ammoDamage = (VehicleprofileAmmoDamage *)[VehicleprofileAmmoDamage insertNewObject:context];
-        [ammoDamage mappingFrom:damage];
+        [ammoDamage mappingFromJSON:damage into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+            
+        }];
         [ammoObject setDamage:ammoDamage];
 
         [result addVehicleprofileAmmoObject:ammoObject];
