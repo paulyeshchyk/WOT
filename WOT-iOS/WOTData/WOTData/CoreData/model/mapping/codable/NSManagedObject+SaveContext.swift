@@ -22,7 +22,7 @@ public extension NSManagedObjectContext {
     @discardableResult
     func tryToSave() -> Error? {
         
-        guard !self.hasChanges else { return nil }
+        guard self.hasChanges else { return nil }
 
         var result: Error? = nil
         do {

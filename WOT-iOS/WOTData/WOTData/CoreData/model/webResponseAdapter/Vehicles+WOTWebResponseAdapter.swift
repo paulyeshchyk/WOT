@@ -35,7 +35,6 @@ public class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
 
                 vehicle.mapping(fromJSON: vehiclesJSON, into: context, completion: nestedRequestsCallback)
             }
-            print("stores:\(context.persistentStoreCoordinator?.persistentStores)")
             context.tryToSave()
         }
     }

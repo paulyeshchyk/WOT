@@ -184,4 +184,8 @@
     return result;
 }
 
+- (void)parseJSON:(NSDictionary * _Nonnull)json error:(NSError * _Nullable)error nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
+    
+}
+
 @end
