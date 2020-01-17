@@ -87,6 +87,9 @@ import Foundation
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Vehicles.name),
+                #keyPath(Vehicles.short_name),
+                #keyPath(Vehicles.is_premium),
+                #keyPath(Vehicles.is_gift),
                 #keyPath(Vehicles.type),
                 #keyPath(Vehicles.nation),
                 #keyPath(Vehicles.tag),
@@ -148,6 +151,9 @@ import Foundation
                 #keyPath(Vehicleprofile.weight),
                 #keyPath(Vehicleprofile.hp),
                 #keyPath(Vehicleprofile.is_default),
+                #keyPath(Vehicleprofile.modules),
+                #keyPath(Vehicleprofile.modulesTree),
+                #keyPath(Vehicleprofile.vehicles),
                 #keyPath(Vehicleprofile.speed_forward),
                 #keyPath(Vehicleprofile.hull_hp),
                 #keyPath(Vehicleprofile.speed_backward),

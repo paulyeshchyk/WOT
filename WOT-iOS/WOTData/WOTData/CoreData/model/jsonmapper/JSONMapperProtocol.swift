@@ -1,12 +1,21 @@
 //
-//  NSManagedObject+SaveContext.swift
+//  JSONMapperProtocol.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/15/20.
+//  Created by Pavel Yeshchyk on 1/17/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
 import Foundation
+
+public protocol JSONMapperProtocol {
+    
+    associatedtype Fields
+
+    func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingCompletion?)
+    func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingCompletion?)
+}
+
 
 public extension NSManagedObject {
     

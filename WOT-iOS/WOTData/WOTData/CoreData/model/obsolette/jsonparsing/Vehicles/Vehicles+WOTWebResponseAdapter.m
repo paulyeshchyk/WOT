@@ -20,8 +20,6 @@
         debugError(@"%@",error.localizedDescription);
         return;
     }
-// TODO: return back layer
-//    [WebLayerDecoder decodeVehiclesWithBinary: binary];
     
     [self parseJSON:json];
 }

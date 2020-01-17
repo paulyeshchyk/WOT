@@ -2,13 +2,14 @@
 //  Tankradios+CoreDataProperties.h
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/16/20.
+//  Created by Pavel Yeshchyk on 1/17/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
 
 #import "Tankradios+CoreDataClass.h"
 
+@class VehicleprofileModule;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSSet<ModulesTree *> *modulesTree;
 @property (nullable, nonatomic, retain) NSSet<VehicleprofileRadio *> *vehicleprofileRadio;
 @property (nullable, nonatomic, retain) NSSet<Vehicles *> *vehicles;
+@property (nullable, nonatomic, retain) NSSet<VehicleprofileModule *> *profileModule;
 
 @end
 
@@ -45,6 +47,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeVehiclesObject:(Vehicles *)value;
 - (void)addVehicles:(NSSet<Vehicles *> *)values;
 - (void)removeVehicles:(NSSet<Vehicles *> *)values;
+
+- (void)addProfileModuleObject:(VehicleprofileModule *)value;
+- (void)removeProfileModuleObject:(VehicleprofileModule *)value;
+- (void)addProfileModule:(NSSet<VehicleprofileModule *> *)values;
+- (void)removeProfileModule:(NSSet<VehicleprofileModule *> *)values;
 
 @end
 

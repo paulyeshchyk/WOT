@@ -2,7 +2,7 @@
 //  Tankguns+CoreDataProperties.m
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/16/20.
+//  Created by Pavel Yeshchyk on 1/17/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -25,5 +25,6 @@
 @dynamic modulesTree;
 @dynamic vehicleprofileGun;
 @dynamic vehicles;
+@dynamic profileModule;
 
 @end
