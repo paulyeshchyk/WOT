@@ -12,5 +12,5 @@ public typealias JSON = [AnyHashable: Any]
 
 @objc
 public protocol WOTWebResponseAdapter: NSObjectProtocol {
-    func parseJSON(_ json: JSON, error: NSError?)
+    func parseJSON(_ json: JSON, error: NSError?, nestedRequestsCallback: JSONMappingCompletion?)
 }

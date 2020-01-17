@@ -206,13 +206,59 @@
                 return;
             }
                 
+            
             id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-            [adapter parseJSON:json error:nil];
+            [adapter parseJSON:json error:nil nestedRequestsCallback:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+                [self evaluateNestedRequests:requests];
+            }];
         }];
     }];
     
     return request;
 }
+
+- (NSArray *)requestIDsForClass:(NSString *)clazz {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    [self.registeredRequests.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+        Class request = self.registeredRequests[key];
+        NSString *registeredClazz = [request performSelector: @selector(instanceClassName)];
+        if ([registeredClazz compare:clazz] == NSOrderedSame) {
+            [result addObject:key];
+        }
+
+    }];
+    return result;
+}
+
+
+- (void)evaluateNestedRequests:(NSArray<JSONMappingNestedRequest *> * _Nullable) requests {
+
+    for (JSONMappingNestedRequest *request in requests) {
+        
+        NSString * clazz = NSStringFromClass(request.clazz);
+        NSArray<NSString *> *requestsIDForClass = [self requestIDsForClass:clazz];
+        [requestsIDForClass enumerateObjectsUsingBlock:^(NSString * _Nonnull requestID, NSUInteger idx, BOOL * _Nonnull stop) {
+            WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
+            NSArray* keypathsSwift = [request.clazz performSelector:@selector(keypaths)];
+            NSMutableArray<NSString *>* keypaths = [[NSMutableArray alloc] init];
+            [keypathsSwift enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *keypath = [NSString stringWithString:obj];
+                [keypaths addObject: keypath];
+            }];
+            [arguments setValues:keypaths forKey: @"fields"];
+            
+            
+            WOTRequest *wotRequest = [[WOTRequestExecutor sharedInstance] createRequestForId: [requestID integerValue] ];
+            BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:wotRequest byGroupId:@"Test"];
+            if ( canAdd ) {
+                [[WOTRequestExecutor sharedInstance] runRequest:wotRequest withArgs:arguments];
+            }
+            
+        }];
+    }
+    
+}
+
 
 #pragma mark - WOTRequestListener
 

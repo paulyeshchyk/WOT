@@ -9,7 +9,8 @@
 import Foundation
 
 @objc extension ModulesTree {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(ModulesTree.name),
                 #keyPath(ModulesTree.module_id),
                 #keyPath(ModulesTree.price_credit)]
@@ -17,7 +18,8 @@ import Foundation
 }
 
 @objc extension Tankengines {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(Tankengines.name),
                 #keyPath(Tankengines.price_gold),
                 #keyPath(Tankengines.nation),
@@ -29,7 +31,8 @@ import Foundation
 }
 
 @objc extension Tankchassis {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(Tankchassis.name),
                 #keyPath(Tankchassis.module_id),
                 #keyPath(Tankchassis.max_load),
@@ -41,7 +44,8 @@ import Foundation
 }
 
 @objc extension Tankradios {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(Tankradios.name),
                 #keyPath(Tankradios.module_id),
                 #keyPath(Tankradios.distance),
@@ -52,7 +56,8 @@ import Foundation
 }
 
 @objc extension Tankguns {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(Tankguns.name),
                 #keyPath(Tankguns.module_id),
                 #keyPath(Tankguns.nation),
@@ -63,7 +68,8 @@ import Foundation
 }
 
 @objc extension Tankturrets {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(Tankturrets.name),
                 #keyPath(Tankturrets.module_id),
                 #keyPath(Tankturrets.nation),
@@ -78,7 +84,8 @@ import Foundation
 }
 
 @objc extension Vehicles {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(Vehicles.name),
                 #keyPath(Vehicles.type),
                 #keyPath(Vehicles.nation),
@@ -96,13 +103,15 @@ import Foundation
 }
 
 @objc extension VehicleprofileAmmo {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileAmmo.type)]
     }
 }
 
 @objc extension VehicleprofileAmmoDamage {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileAmmoDamage.avg_value),
                 #keyPath(VehicleprofileAmmoDamage.max_value),
                 #keyPath(VehicleprofileAmmoDamage.min_value)]
@@ -110,7 +119,8 @@ import Foundation
 }
 
 @objc extension VehicleprofileEngine {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileEngine.name),
                 #keyPath(VehicleprofileEngine.power),
                 #keyPath(VehicleprofileEngine.weight),
@@ -121,8 +131,8 @@ import Foundation
 }
 
 @objc extension VehicleprofileSuspension {
-
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileSuspension.name),
                 #keyPath(VehicleprofileSuspension.weight),
                 #keyPath(VehicleprofileSuspension.load_limit),
@@ -132,7 +142,8 @@ import Foundation
 }
 
 @objc extension Vehicleprofile {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(Vehicleprofile.max_ammo),
                 #keyPath(Vehicleprofile.weight),
                 #keyPath(Vehicleprofile.hp),
@@ -146,7 +157,8 @@ import Foundation
 }
 
 @objc extension VehicleprofileRadio {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileRadio.tier),
                 #keyPath(VehicleprofileRadio.signal_range),
                 #keyPath(VehicleprofileRadio.tag),
@@ -156,7 +168,8 @@ import Foundation
 }
 
 @objc extension VehicleprofileGun {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileGun.move_down_arc),
                 #keyPath(VehicleprofileGun.caliber),
                 #keyPath(VehicleprofileGun.name),
@@ -172,12 +185,14 @@ import Foundation
 }
 
 @objc extension VehicleprofileTurret {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return []
     }
 }
 
 @objc extension VehicleprofileAmmoPenetration {
+    @objc
     public static func keypaths() -> [String] {
         return [#keyPath(VehicleprofileAmmoPenetration.avg_value),
                 #keyPath(VehicleprofileAmmoPenetration.max_value),
@@ -186,7 +201,8 @@ import Foundation
 }
 
 @objc extension VehicleprofileArmor {
-    public static func keypaths() -> [String] {
+    @objc
+    public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileArmor.front),
                 #keyPath(VehicleprofileArmor.sides),
                 #keyPath(VehicleprofileArmor.rear)]

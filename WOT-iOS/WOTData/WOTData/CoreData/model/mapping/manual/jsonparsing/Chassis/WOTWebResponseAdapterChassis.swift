@@ -11,7 +11,7 @@ import Foundation
 @objc
 public class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
     
-    public func parseJSON(_ json: JSON, error err: NSError?) {
+    public func parseJSON(_ json: JSON, error err: NSError?, nestedRequestsCallback: JSONMappingCompletion?) {
         if let error = err {
             print("\(#file) \(#function) at \(error.localizedDescription)")
             return
@@ -33,7 +33,7 @@ public class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), module_id)
                 guard let newObject = NSManagedObject.findOrCreateObject(forClass:Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else { return }
 
-                newObject.mapping(fromJSON: chassis, into: context, completion: nil)
+                newObject.mapping(fromJSON: chassis, into: context, completion: nestedRequestsCallback)
             }
             
             if context.hasChanges {

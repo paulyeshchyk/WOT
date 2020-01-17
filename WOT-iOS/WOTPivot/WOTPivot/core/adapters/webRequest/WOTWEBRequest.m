@@ -25,6 +25,8 @@
 
 @implementation WOTWEBRequest
 
+
+
 + (NSOperationQueue *)requestQueue {
 
     static NSOperationQueue *_requestQueue;
@@ -63,6 +65,10 @@
     return [NSString stringWithFormat:@"WOTWebRequest:%@",[self.url absoluteString]];
 }
 
++ (NSString *)instanceClassName {
+    return @"";
+}
+
 - (NSString *)method {
     
     return @"GET";
@@ -99,7 +105,7 @@
     return request;
 }
 
-- (void)temp_executeWithArgs:(WOTRequestArguments *)args {
+- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args {
     
     [super temp_executeWithArgs:args];
 

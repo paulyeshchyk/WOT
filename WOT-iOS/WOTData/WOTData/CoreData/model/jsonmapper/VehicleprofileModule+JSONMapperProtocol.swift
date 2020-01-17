@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WOTPivot
 
 extension VehicleprofileModule: JSONMapperProtocol {
     
@@ -22,7 +23,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
             context.tryToSave()
             
 
-            let requests = self.nestedRequests(context: context)
+            let requests: [JSONMappingNestedRequest]? = nil// self.nestedRequests(context: context)
             completion?(requests)
         }
 

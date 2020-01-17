@@ -11,10 +11,16 @@ import Foundation
 @objc
 public class WOTWEBRequestTankProfile: WOTWEBRequest {
     
+    public class func instanceClassName() -> String!  {
+        return NSStringFromClass(Vehicleprofile.self)
+    }
+
     override public var query: [AnyHashable : Any]! {
+        let fields = self.args?.escapedValue(forKey: WGWebQueryArgs.fields) ?? ""
+        let tank_id = self.args?.escapedValue(forKey: WGWebQueryArgs.tank_id) ?? ""
         return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
-                WGWebQueryArgs.fields: self.args.escapedValue(forKey: WGWebQueryArgs.fields),
-                WGWebQueryArgs.tank_id: self.args.escapedValue(forKey: WGWebQueryArgs.tank_id)]
+                WGWebQueryArgs.fields: fields,
+                WGWebQueryArgs.tank_id: tank_id]
     }
 
     override public var path: String! {

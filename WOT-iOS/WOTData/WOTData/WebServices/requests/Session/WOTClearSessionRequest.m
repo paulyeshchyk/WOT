@@ -13,7 +13,11 @@
 
 @implementation WOTClearSessionRequest
 
-- (void)temp_executeWithArgs:(WOTRequestArguments *)args {
++ (NSString *)instanceClassName {
+    return @"";
+}
+
+- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args {
 
     [super temp_executeWithArgs:args];
     

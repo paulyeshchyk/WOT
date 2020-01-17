@@ -26,7 +26,7 @@ typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *bi
 @property (nonatomic, weak) id<WEBHostConfiguration> hostConfiguration;
 
 @property (nonatomic, copy) WOTRequestCallback callback;
-@property (nonatomic, readonly) WOTRequestArguments *args;
+@property (nonatomic, readonly) WOTRequestArguments * _Nullable args;
 
 @property (nonatomic, readonly)NSArray *availableInGroups;
 @property (nonatomic, strong)NSMutableArray *listeners;
@@ -37,7 +37,7 @@ typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *bi
 - (void)addGroup:(NSString *)group;
 - (void)removeGroup:(NSString *)group;
 
-- (void)temp_executeWithArgs:(WOTRequestArguments *)args ;//DEPRECATED_ATTRIBUTE;
+- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args ;//DEPRECATED_ATTRIBUTE;
 - (void)cancel;
 - (void)cancelAndRemoveFromQueue;
 

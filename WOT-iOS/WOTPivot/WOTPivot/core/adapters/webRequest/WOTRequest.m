@@ -93,7 +93,7 @@
 }
 
 
-- (void)temp_executeWithArgs:(WOTRequestArguments *)args{
+- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args{
 
     self.args = args;
 }

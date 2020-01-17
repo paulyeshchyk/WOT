@@ -52,7 +52,7 @@
     return result;
 }
 
-- (void)temp_executeWithArgs:(WOTRequestArguments *)args{
+- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args{
     
     [super temp_executeWithArgs:args];
 

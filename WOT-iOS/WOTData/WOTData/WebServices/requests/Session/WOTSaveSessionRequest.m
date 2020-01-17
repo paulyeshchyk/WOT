@@ -11,8 +11,12 @@
 #import <WOTData/WOTData-Swift.h>
 
 @implementation WOTSaveSessionRequest
++ (NSString *)instanceClassName {
+    return @"";
+}
 
-- (void)temp_executeWithArgs:(WOTRequestArguments *)args{
+
+- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args{
 
     [super temp_executeWithArgs:args];
 

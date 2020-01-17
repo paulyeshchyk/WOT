@@ -11,7 +11,7 @@ import Foundation
 @objc
 public class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
     
-    public func parseJSON(_ json: JSON, error err: NSError?) {
+    public func parseJSON(_ json: JSON, error err: NSError?, nestedRequestsCallback: JSONMappingCompletion?) {
         if let error = err {
             print("\(#file) \(#function) at \(error.localizedDescription)")
             return
@@ -33,9 +33,7 @@ public class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(Vehicles.tag), tag)
                 guard let vehicle = NSManagedObject.findOrCreateObject(forClass:Vehicles.self, predicate: predicate, context: context) as? Vehicles else { return }
 
-                vehicle.mapping(fromJSON: vehiclesJSON, into: context, completion: { requests in
-                    print(requests)
-                })
+                vehicle.mapping(fromJSON: vehiclesJSON, into: context, completion: nestedRequestsCallback)
             }
             print("stores:\(context.persistentStoreCoordinator?.persistentStores)")
             context.tryToSave()

@@ -9,11 +9,17 @@
 import Foundation
 
 @objc public class WOTWEBRequestTankRadios: WOTWEBRequest {
-    
+    @objc
+    public class func instanceClassName() -> String! {
+        return NSStringFromClass(Tankradios.self)
+    }
+
     override public var query: [AnyHashable : Any]! {
+        let fields = self.args?.escapedValue(forKey: WGWebQueryArgs.fields) ?? ""
+        let module_id = self.args?.escapedValue(forKey: WGWebQueryArgs.module_id) ?? ""
         return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
-                WGWebQueryArgs.fields: self.args.escapedValue(forKey: WGWebQueryArgs.fields),
-                WGWebQueryArgs.module_id:self.args.escapedValue(forKey: WGWebQueryArgs.module_id)]
+                WGWebQueryArgs.fields: fields,
+                WGWebQueryArgs.module_id: module_id]
     }
     
     override public var path: String! {

@@ -10,11 +10,17 @@ import Foundation
 
 @objc
 public class WOTWEBRequestTankTurrets: WOTWEBRequest {
+    
+    public class func instanceClassName() -> String!  {
+        return NSStringFromClass(Tankturrets.self)
+    }
 
     override public var query: [AnyHashable : Any]! {
+        let fields = self.args?.escapedValue(forKey: WGWebQueryArgs.fields) ?? ""
+        let module_id = self.args?.escapedValue(forKey: WGWebQueryArgs.module_id) ?? ""
         return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
-                WGWebQueryArgs.fields: self.args.escapedValue(forKey: WGWebQueryArgs.fields),
-                WGWebQueryArgs.module_id: self.args.escapedValue(forKey: WGWebQueryArgs.module_id)]
+                WGWebQueryArgs.fields: fields,
+                WGWebQueryArgs.module_id: module_id]
         
     }
 

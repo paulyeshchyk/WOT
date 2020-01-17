@@ -11,9 +11,15 @@ import Foundation
 @objc
 public class WOTWEBRequestTanks: WOTWEBRequest {
     
+    public class func instanceClassName() -> String! {
+        
+        return ""
+    }
+
     override public var query: [AnyHashable : Any]! {
+        let fields = self.args?.escapedValue(forKey: WGWebQueryArgs.fields) ?? ""
         return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
-                WGWebQueryArgs.fields: self.args.escapedValue(forKey: WGWebQueryArgs.fields)]
+                WGWebQueryArgs.fields: fields]
     }
     
     override public var path: String! {
