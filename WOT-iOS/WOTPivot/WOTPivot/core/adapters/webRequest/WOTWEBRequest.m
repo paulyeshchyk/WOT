@@ -16,6 +16,10 @@
 
 //#import "WOTWEBRequest+Stubs.h"
 
+/**
+ description: interactive https://developers.wargaming.net/reference/all/wot/encyclopedia/tankradios/?application_id=e3a1e0889ff9c76fa503177f351b853c&fields=name%2Cmodule_id%2Cdistance%2Cnation%2Cprice_credit%2Cprice_gold&module_id=55&r_realm=ru&run=1
+ */
+
 @interface WOTWEBRequest () <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection *connection;

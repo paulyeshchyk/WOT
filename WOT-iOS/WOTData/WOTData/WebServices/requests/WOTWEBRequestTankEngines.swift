@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public class WOTWEBRequestTankEngines: WOTWEBRequest {
-
     @objc
     public class func instanceClassName() -> String! {
         return NSStringFromClass(Tankengines.self)

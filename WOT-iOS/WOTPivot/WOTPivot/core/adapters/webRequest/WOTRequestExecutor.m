@@ -238,6 +238,7 @@
         NSString * clazz = NSStringFromClass(request.clazz);
         NSArray<NSString *> *requestsIDForClass = [self requestIDsForClass:clazz];
         [requestsIDForClass enumerateObjectsUsingBlock:^(NSString * _Nonnull requestID, NSUInteger idx, BOOL * _Nonnull stop) {
+
             WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
             NSArray* keypathsSwift = [request.clazz performSelector:@selector(keypaths)];
             NSMutableArray<NSString *>* keypaths = [[NSMutableArray alloc] init];
@@ -246,10 +247,10 @@
                 [keypaths addObject: keypath];
             }];
             [arguments setValues:keypaths forKey: @"fields"];
-            
+            [arguments setValues:@[request.identifier] forKey:request.identifier_fieldname];
             
             WOTRequest *wotRequest = [[WOTRequestExecutor sharedInstance] createRequestForId: [requestID integerValue] ];
-            BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:wotRequest byGroupId:@"Test"];
+            BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:wotRequest byGroupId:@"NestedRequest"];
             if ( canAdd ) {
                 [[WOTRequestExecutor sharedInstance] runRequest:wotRequest withArgs:arguments];
             }

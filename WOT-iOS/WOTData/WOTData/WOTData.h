@@ -19,7 +19,6 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 #import "WOTDataDefines.h"
 
-#import "WOTData-Model.h"
 #import "WOTData+Mapping.h"
 
 #import "WOTSessionManager.h"

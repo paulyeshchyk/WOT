@@ -134,32 +134,32 @@
     /**
      * Tanks.Chassis
      **/
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerRequestClass:[WOTWEBRequestTankChassis class]];
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerDataAdapterClass:[WOTWebResponseAdapterChassis class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerRequestClass:[WOTWEBRequestTankChassis class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerDataAdapterClass:[WOTWebResponseAdapterChassis class]];
     
     /**
      * Tanks.Turrets
      **/
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerRequestClass:[WOTWEBRequestTankTurrets class]];
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerDataAdapterClass:[WOTWebResponseAdapterTurrets class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerRequestClass:[WOTWEBRequestTankTurrets class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerDataAdapterClass:[WOTWebResponseAdapterTurrets class]];
     
     /**
      * Tanks.Guns
      **/
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerRequestClass:[WOTWEBRequestTankGuns class]];
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerDataAdapterClass:[WOTWebResponseAdapterGuns class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerRequestClass:[WOTWEBRequestTankGuns class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerDataAdapterClass:[WOTWebResponseAdapterGuns class]];
     
     /**
      * Tanks.Radios
      **/
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWEBRequestTankRadios class]];
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWEBRequestTankRadios class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
     
     /**
      * Tanks.Engines
      **/
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
 
     /**
      * Tanks.Vehicles

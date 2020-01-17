@@ -36,27 +36,32 @@ extension VehicleprofileModule: JSONMapperProtocol {
     
     private func nestedRequests(context: NSManagedObjectContext) -> [JSONMappingNestedRequest] {
 
-        let requestRadio = JSONMappingNestedRequest(clazz: Tankradios.self, identifier: self.radio_id, completion: { json in
+        let radio_id = self.radio_id?.stringValue
+        let requestRadio = JSONMappingNestedRequest(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
             guard let tankRadios = Tankradios.insertNewObject(context) as? Tankradios else { return }
             tankRadios.mapping(fromJSON: json, into: context, completion: nil)
             self.tankradios = tankRadios
         })
-        let requestEngine = JSONMappingNestedRequest(clazz: Tankengines.self, identifier: self.engine_id, completion: { json in
+        let engine_id = self.engine_id?.stringValue ?? ""
+        let requestEngine = JSONMappingNestedRequest(clazz: Tankengines.self, identifier_fieldname: #keyPath(Tankengines.module_id), identifier: engine_id, completion: { json in
             guard let tankEngines = Tankengines.insertNewObject(context) as? Tankengines else { return }
             tankEngines.mapping(fromJSON: json, into: context, completion: nil)
             self.tankengines = tankEngines
         })
-        let requestGun = JSONMappingNestedRequest(clazz: Tankguns.self, identifier: self.gun_id, completion: { json in
+        let gun_id = self.gun_id?.stringValue ?? ""
+        let requestGun = JSONMappingNestedRequest(clazz: Tankguns.self, identifier_fieldname: #keyPath(Tankguns.module_id), identifier: gun_id, completion: { json in
             guard let tankGuns = Tankguns.insertNewObject(context) as? Tankguns else { return }
             tankGuns.mapping(fromJSON: json, into: context, completion: nil)
             self.tankguns = tankGuns
         })
-        let requestSuspension = JSONMappingNestedRequest(clazz: Tankchassis.self, identifier: self.suspension_id, completion: { json in
+        let suspension_id = self.suspension_id?.stringValue ?? ""
+        let requestSuspension = JSONMappingNestedRequest(clazz: Tankchassis.self, identifier_fieldname: #keyPath(Tankchassis.module_id), identifier: suspension_id, completion: { json in
             guard let tankChassis = Tankchassis.insertNewObject(context) as? Tankchassis else { return }
             tankChassis.mapping(fromJSON: json, into: context, completion: nil)
             self.tankchassis = tankChassis
         })
-        let requestTurret = JSONMappingNestedRequest(clazz: Tankturrets.self, identifier: self.turret_id, completion: { json in
+        let turret_id = self.turret_id?.stringValue ?? ""
+        let requestTurret = JSONMappingNestedRequest(clazz: Tankturrets.self, identifier_fieldname: #keyPath(Tankturrets.module_id), identifier: turret_id, completion: { json in
             guard let tankTurret = Tankturrets.insertNewObject(context) as? Tankturrets else { return }
             tankTurret.mapping(fromJSON: json, into: context, completion: nil)
             self.tankturrets = tankTurret

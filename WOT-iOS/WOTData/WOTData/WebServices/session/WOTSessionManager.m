@@ -10,7 +10,7 @@
 
 #import <WOTData/WOTData.h>
 
-#import "UserSession+CoreDataClass.h"
+//#import "UserSession+CoreDataClass.h"
 #import <WOTData/WOTData-Swift.h>
 
 #define WOT_REQUEST_ID_LOGIN @"WOT_REQUEST_ID_LOGIN"

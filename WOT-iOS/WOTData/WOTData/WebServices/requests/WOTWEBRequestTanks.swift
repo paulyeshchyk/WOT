@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public class WOTWEBRequestTanks: WOTWEBRequest {
-    
+    @objc
     public class func instanceClassName() -> String! {
         
         return ""

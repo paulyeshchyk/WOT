@@ -39,7 +39,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
         guard let vehicles = vehicle as? Vehicles else {
             return nil
         }
-        return vehicles.modules_tree
+        return vehicles.modules_tree as! Set<ModulesTree>
     }
 
     private func transform(tank: AnyObject, nodeCreator: WOTNodeCreatorProtocol?) -> [WOTNodeProtocol] {
@@ -106,11 +106,11 @@ class WOTTankTreeFetchController: WOTDataFetchController {
             return
         }
         submodules.forEach({ (submodule) in
-            if let moduleId = submodule.module_id?.intValue, submodule.isCompatible(forTankId: tankId) {
-                nodeCreation(moduleId, submodule)
-            }
-
-            self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
+//            if let moduleId = submodule.module_id.intValue, submodule.isCompatible(forTankId: tankId) {
+//                nodeCreation(moduleId, submodule)
+//            }
+//
+//            self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
         })
     }
 }

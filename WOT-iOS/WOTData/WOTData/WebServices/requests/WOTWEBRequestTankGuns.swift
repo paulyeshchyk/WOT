@@ -9,8 +9,7 @@
 import Foundation
 
 @objc
-public class WOTWEBRequestTankGuns: WOTWEBRequest {
-    
+public class WOTWEBRequestTankGuns: WOTWEBRequest {    
     @objc
     public class func instanceClassName() -> String! {
         return NSStringFromClass(Tankguns.self)

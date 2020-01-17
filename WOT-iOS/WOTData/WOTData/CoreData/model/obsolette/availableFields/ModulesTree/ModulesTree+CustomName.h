@@ -8,8 +8,3 @@
 
 #import <WOTData/WOTData.h>
 
-@interface ModulesTree (CustomName)
-
-@property (nonatomic, readonly) NSString *customName;
-
-@end

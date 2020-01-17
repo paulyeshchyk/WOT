@@ -13,6 +13,7 @@ extension Vehicles: JSONMapperProtocol {
         case price_credit
         case price_gold
         case is_premium
+        case is_gift
         case short_name
         case tag
         case tier
@@ -40,6 +41,7 @@ extension Vehicles: JSONMapperProtocol {
         self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Vehicles.price_credit)] as? Int ?? 0)
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Vehicles.price_gold)]  as? Int ?? 0)
         self.is_premium = NSDecimalNumber(value: jSON[#keyPath(Vehicles.is_premium)]  as? Int ?? 0)
+        self.is_gift = NSDecimalNumber(value: jSON[#keyPath(Vehicles.is_gift)]  as? Int ?? 0)
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
         

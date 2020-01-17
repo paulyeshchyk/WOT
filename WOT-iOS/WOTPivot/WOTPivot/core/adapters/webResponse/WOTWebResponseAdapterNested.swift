@@ -18,14 +18,18 @@ public class JSONMappingNestedRequest: NSObject {
     public var clazz: AnyClass
 
     @objc
-    public var identifier: AnyObject?
+    public var identifier: String?
+    
+    @objc
+    public var identifier_fieldname: String?
 
     @objc
     public var completion: (JSON) -> Void
     
-    public init(clazz clazzTo: AnyClass, identifier id: AnyObject?, completion block: @escaping (JSON) -> Void) {
+    public init(clazz clazzTo: AnyClass, identifier_fieldname id_fieldname: String, identifier id: String?, completion block: @escaping (JSON) -> Void) {
         clazz = clazzTo
         identifier = id
+        identifier_fieldname = id_fieldname
         completion = block
         super.init()
     }

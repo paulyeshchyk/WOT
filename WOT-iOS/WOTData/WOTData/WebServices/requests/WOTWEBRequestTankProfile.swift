@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public class WOTWEBRequestTankProfile: WOTWEBRequest {
-    
+    @objc
     public class func instanceClassName() -> String!  {
         return NSStringFromClass(Vehicleprofile.self)
     }

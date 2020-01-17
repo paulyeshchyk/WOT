@@ -11,23 +11,23 @@
 #import <WOTPivot/WOTPivot.h>
 #import <WOTData/WOTData-Swift.h>
 
-@implementation ModulesTree (FillProperties)
-
-+ (NSArray *)availableLinks {
-    
-    WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]
-                                                                  requestId:WOTRequestIdModulesTree
-                                                        argFieldNameToFetch:WGWebQueryArgs.fields
-                                                      argFieldValuesToFetch:[ModulesTree keypaths]
-                                                       argFieldNameToFilter:WGJsonFields.module_id
-                                                                jsonKeyName:WOTApiKeys.modules_tree
-                                                             coredataIdName:WGJsonFields.module_id
-                                                             linkItemsBlock:^(id entity, NSSet *items, id tag){
-                                                                 //                                                                 Vehicles *vehicles = (Vehicles *)entity;
-                                                                 //                                                                 [vehicles addTurrets:items];
-                                                             }
-                                           ];
-    return @[modulesTreeLink];
-}
-
-@end
+//@implementation ModulesTree (FillProperties)
+//
+//+ (NSArray *)availableLinks {
+//    
+//    WOTWebResponseLink *modulesTreeLink = [WOTWebResponseLink linkWithClass:[ModulesTree class]
+//                                                                  requestId:WOTRequestIdModulesTree
+//                                                        argFieldNameToFetch:WGWebQueryArgs.fields
+//                                                      argFieldValuesToFetch:[ModulesTree keypaths]
+//                                                       argFieldNameToFilter:WGJsonFields.module_id
+//                                                                jsonKeyName:WOTApiKeys.modules_tree
+//                                                             coredataIdName:WGJsonFields.module_id
+//                                                             linkItemsBlock:^(id entity, NSSet *items, id tag){
+//                                                                 //                                                                 Vehicles *vehicles = (Vehicles *)entity;
+//                                                                 //                                                                 [vehicles addTurrets:items];
+//                                                             }
+//                                           ];
+//    return @[modulesTreeLink];
+//}
+//
+//@end

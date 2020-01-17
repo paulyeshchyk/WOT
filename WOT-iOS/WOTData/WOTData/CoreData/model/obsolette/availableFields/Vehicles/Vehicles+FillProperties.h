@@ -6,8 +6,8 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "Vehicles+CoreDataClass.h"
+//#import "Vehicles+CoreDataClass.h"
 
-@interface Vehicles (FillProperties)
-
-@end
+//@interface Vehicles (FillProperties)
+//
+//@end

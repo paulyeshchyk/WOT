@@ -20,7 +20,7 @@ extension VehicleprofileAmmoList: JSONMapperProtocol {
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
             if let ammoObject = VehicleprofileAmmo.insertNewObject(context) as? VehicleprofileAmmo {
                 ammoObject.mapping(fromJSON: jSON, into: context, completion: nil)
-                self.addVehicleprofileAmmoObject(ammoObject)
+                self.addToVehicleprofileAmmo(ammoObject)
             }
         }
     }

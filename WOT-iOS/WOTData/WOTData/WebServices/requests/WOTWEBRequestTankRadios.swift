@@ -8,7 +8,8 @@
 
 import Foundation
 
-@objc public class WOTWEBRequestTankRadios: WOTWEBRequest {
+@objc
+public class WOTWEBRequestTankRadios: WOTWEBRequest {
     @objc
     public class func instanceClassName() -> String! {
         return NSStringFromClass(Tankradios.self)
