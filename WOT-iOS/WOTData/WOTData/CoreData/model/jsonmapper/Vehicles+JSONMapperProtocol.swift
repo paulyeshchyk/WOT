@@ -8,6 +8,8 @@
 
 extension Vehicles: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
+        case is_premium_igr
+        case is_wheeled
         case name
         case nation
         case price_credit
@@ -19,6 +21,7 @@ extension Vehicles: JSONMapperProtocol {
         case tier
         case type
         case tank_id
+        case modules_tree
     }
     
     public typealias Fields = FieldKeys
@@ -45,6 +48,17 @@ extension Vehicles: JSONMapperProtocol {
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
         
+        if let moduleTreeJSONArray = jSON[#keyPath(Vehicles.modules_tree)] as? JSON {
+            moduleTreeJSONArray.keys.forEach { (key) in
+                if let moduleTreeJSON = moduleTreeJSONArray[key] as? JSON {
+                    if let moduleTree = ModulesTree.insertNewObject(context) as? ModulesTree {
+                        moduleTree.mapping(fromJSON: moduleTreeJSON, into: context, completion: completion)
+                        self.addToModules_tree(moduleTree)
+                    }
+                }
+            }
+            
+        }
 
         if let profile = Vehicleprofile.insertNewObject(context) as? Vehicleprofile {
             if let json = jSON[#keyPath(Vehicles.default_profile)] as? JSON {

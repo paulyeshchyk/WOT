@@ -2,7 +2,7 @@
 //  Vehicles+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/17/20.
+//  Created by Pavel Yeshchyk on 1/20/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -28,6 +28,8 @@ extension Vehicles {
     @NSManaged public var tank_id: NSDecimalNumber?
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var type: String?
+    @NSManaged public var is_wheeled: NSNumber?
+    @NSManaged public var is_premium_igr: NSNumber?
     @NSManaged public var default_profile: Vehicleprofile?
     @NSManaged public var engines: NSSet?
     @NSManaged public var guns: NSSet?

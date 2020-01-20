@@ -2,7 +2,7 @@
 //  ModulesTree+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/17/20.
+//  Created by Pavel Yeshchyk on 1/20/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -31,7 +31,7 @@ extension ModulesTree {
     @NSManaged public var nextRadios: NSSet?
     @NSManaged public var nextTurrets: NSSet?
     @NSManaged public var prevModules: ModulesTree?
-    @NSManaged public var vehicles: Vehicles?
+    @NSManaged public var nextTanks: Vehicles?
 
 }
 

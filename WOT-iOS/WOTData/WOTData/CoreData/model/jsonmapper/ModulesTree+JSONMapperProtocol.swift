@@ -15,6 +15,14 @@ extension ModulesTree: JSONMapperProtocol {
         case price_xp
         case is_default
         case type
+        case nextChassis
+        case nextEngines
+        case nextGuns
+        case nextModules
+        case nextRadios
+        case nextTurrets
+        case nextTanks
+        case prevModules
     }
     
     public typealias Fields = FieldKeys
@@ -27,6 +35,8 @@ extension ModulesTree: JSONMapperProtocol {
         
         defer {
             context.tryToSave()
+            let requests: [JSONMappingNestedRequest]? = self.nestedRequests(context: context)
+            completion?(requests)
         }
 
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
@@ -40,5 +50,45 @@ extension ModulesTree: JSONMapperProtocol {
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
          */
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
+
+        
+        if let nextChassis = jSON[#keyPath(ModulesTree.nextChassis)] {
+            print(nextChassis)
+        }
+        if let nextEngines = jSON[#keyPath(ModulesTree.nextEngines)] {
+            print(nextEngines)
+        }
+        if let nextGuns = jSON[#keyPath(ModulesTree.nextGuns)] {
+            print(nextGuns)
+        }
+        if let nextModules = jSON[#keyPath(ModulesTree.nextModules)] {
+            print(nextModules)
+        }
+        if let nextRadios = jSON[#keyPath(ModulesTree.nextRadios)] {
+            print(nextRadios)
+        }
+        if let nextTurrets = jSON[#keyPath(ModulesTree.nextTurrets)] {
+            print(nextTurrets)
+        }
+        if let nextTanks = jSON[#keyPath(ModulesTree.nextTanks)] {
+            print(nextTanks)
+        }
+        if let prevModules = jSON[#keyPath(ModulesTree.prevModules)] {
+            print(prevModules)
+        }
+    }
+    
+    
+    
+    private func nestedRequests(context: NSManagedObjectContext) -> [JSONMappingNestedRequest] {
+
+//        let radio_id = self.radio_id?.stringValue
+//        let requestRadio = JSONMappingNestedRequest(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
+//            guard let tankRadios = Tankradios.insertNewObject(context) as? Tankradios else { return }
+//            tankRadios.mapping(fromJSON: json, into: context, completion: nil)
+//            self.tankradios = tankRadios
+//        })
+//        return [requestRadio, requestEngine, requestGun, requestSuspension, requestTurret]
+        return []
     }
 }
