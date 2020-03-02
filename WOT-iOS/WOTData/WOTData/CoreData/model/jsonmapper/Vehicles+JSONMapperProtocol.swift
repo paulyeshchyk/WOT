@@ -50,11 +50,15 @@ extension Vehicles: JSONMapperProtocol {
         
         if let moduleTreeJSONArray = jSON[#keyPath(Vehicles.modules_tree)] as? JSON {
             moduleTreeJSONArray.keys.forEach { (key) in
-                if let moduleTreeJSON = moduleTreeJSONArray[key] as? JSON {
-                    if let moduleTree = ModulesTree.insertNewObject(context) as? ModulesTree {
-                        moduleTree.mapping(fromJSON: moduleTreeJSON, into: context, completion: completion)
-                        self.addToModules_tree(moduleTree)
-                    }
+                guard let moduleTreeJSON = moduleTreeJSONArray[key] as? JSON else {
+                    return
+                }
+                    
+                let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as! NSNumber
+                let predicate = NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), module_id)
+                if let moduleTree = NSManagedObject.findOrCreateObject(forClass:ModulesTree.self, predicate: predicate, context: context) as? ModulesTree {
+                    moduleTree.mapping(fromJSON: moduleTreeJSON, into: context, completion: completion)
+                    self.addToModules_tree(moduleTree)
                 }
             }
             
