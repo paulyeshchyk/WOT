@@ -8,8 +8,11 @@
 
 import Foundation
 
-extension String {
-    public func urlEncoded() -> String? {
+@objc
+public extension NSString {
+    
+    @objc
+    func urlEncoded() -> String? {
         let customAllowedSet =  NSCharacterSet(charactersIn:"%;/?¿:@&=$+,[]#!'()*<> \"\n").inverted
         return self.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
     }

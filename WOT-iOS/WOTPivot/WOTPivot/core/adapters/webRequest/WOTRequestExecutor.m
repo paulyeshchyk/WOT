@@ -190,6 +190,8 @@
     request.hostConfiguration = self.hostConfiguration;
     [request setCallback:^(NSDictionary *json, NSError *error, NSData *binary){
         
+        //TODO: handle error here!!!
+        
         //callbacks
         [weakSelf.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
             
@@ -205,8 +207,7 @@
                 debugError(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
                 return;
             }
-                
-            
+
             id<WOTWebResponseAdapter> adapter = [[class alloc] init];
             [adapter parseJSON:json error:nil nestedRequestsCallback:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
                 [self evaluateNestedRequests:requests];

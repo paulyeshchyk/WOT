@@ -7,19 +7,9 @@
 //
 
 #import "WOTRequestListener.h"
+#import "WOTRequestArguments.h"
 
 typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
-
-@interface WOTRequestArguments: NSObject
-- (id)init:(NSDictionary *)dictionary;
-- (void)setValues:(NSArray *)values forKey:(NSString *)key;
-- (NSString *)escapedValueForKey:(NSString *)key;
-
-@property (nonatomic, readonly) NSDictionary* asDictionary;
-
-- (NSString *)composeQuery;
-
-@end
 
 @interface WOTRequest : NSObject
 

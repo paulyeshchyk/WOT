@@ -21,6 +21,13 @@
 #import "UIView+StretchingConstraints.h"
 #import "UIToolbar+WOT.h"
 
+typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
+    WOTTankDetailViewModeUnknown = 0,
+    WOTTankDetailViewModeRadar = 1,
+    WOTTankDetailViewModeGrid = 2
+};
+
+
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
@@ -48,7 +55,7 @@
 @property (nonatomic, strong) NSError *fetchError;
 
 @property (nonatomic, assign)WOTTankDetailViewMode viewMode;
-@property (nonatomic, assign)WOTTankMetricOptions metricOptions;
+@property (nonatomic, strong)WOTTankMetricOptions* metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, strong)NSMutableSet *runningRequestIDs;
 
@@ -106,38 +113,32 @@
 - (void)printModule:(ModulesTree *)module level:(NSInteger)level{
 
     NSSet *next = module.nextModules;
-//    if ([next count] == 0) {
-        
-//        NSString *res = [self prevModuleNamesForModule:module];
-//        debugLog(@"%@", res);
-//    }
     [next enumerateObjectsUsingBlock:^(ModulesTree *nextModule, BOOL *stop) {
         
         [self printModule:nextModule level:(level+1)];
     }];
-    
 }
 
-- (void)setMetricOptions:(WOTTankMetricOptions)metricOptions {
+- (void)setMetricOptions:(WOTTankMetricOptions *)metricOptions {
 
-    if (metricOptions == WOTTankMetricOptionsNone) {
+    if (metricOptions.rawValue == WOTTankMetricOptions.none.rawValue) {
         
-        if (_metricOptions == WOTTankMetricOptionsNone) {
+        if (_metricOptions.rawValue == WOTTankMetricOptions.none.rawValue) {
             
-            _metricOptions = WOTTankMetricOptionsArmor;
+            _metricOptions = [WOTTankMetricOptions armor];
         } else {
             
-            //do nothing; leave as is
+            _metricOptions = [WOTTankMetricOptions none];
         }
     } else {
         
         _metricOptions = metricOptions;
     }
     
-    self.propertyArmorButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsArmor];
-    self.propertyObserveButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsObserve];
-    self.propertyFireButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsFire];
-    self.propertyMobilityButton.selected = [WOTMetric options:self.metricOptions includesOption:WOTTankMetricOptionsMobility];
+    self.propertyArmorButton.selected = [self.metricOptions isInclude:WOTTankMetricOptions.armor];
+    self.propertyObserveButton.selected = [self.metricOptions isInclude:WOTTankMetricOptions.observe];
+    self.propertyFireButton.selected = [self.metricOptions isInclude:WOTTankMetricOptions.fire];
+    self.propertyMobilityButton.selected = [self.metricOptions isInclude:WOTTankMetricOptions.mobility];
     [self updateUINeedReset:YES];
 }
 
@@ -175,7 +176,7 @@
     self.gridViewController = [[WOTTankGridViewController alloc] initWithNibName:NSStringFromClass([WOTTankGridViewController class]) bundle:nil];
     [self.gridViewController setDelegate:self];
     
-    [self setMetricOptions: WOTTankMetricOptionsNone];
+    [self setMetricOptions: WOTTankMetricOptions.none];
     [self setViewMode: WOTTankDetailViewModeGrid];
 
     [self.configurationCustomButton setSelected:YES];
@@ -458,22 +459,22 @@
 
 - (IBAction)onPropertyArmorSelection:(id)sender {
     
-    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsArmor];
+    self.metricOptions = [self.metricOptions inverted: WOTTankMetricOptions.armor];
 }
 
 - (IBAction)onPropertyFireSelection:(id)sender {
 
-    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsFire];
+    self.metricOptions = [self.metricOptions inverted: WOTTankMetricOptions.fire];
 }
 
 - (IBAction)onPropertyMobilitySelection:(id)sender {
 
-    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsMobility];
+    self.metricOptions = [self.metricOptions inverted: WOTTankMetricOptions.mobility];
 }
 
 - (IBAction)onPropertyObserveSelection:(id)sender {
     
-    self.metricOptions = [WOTMetric options:self.metricOptions invertOption: WOTTankMetricOptionsObserve];
+    self.metricOptions = [self.metricOptions inverted: WOTTankMetricOptions.observe];
 }
 
 //#pragma mark - WOTRadarViewControllerDelegate
@@ -491,8 +492,8 @@
 - (WOTPivotDataModel *)gridData {
 
     WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
-    [sample addTankID:[[WOTTanksIDList alloc] initWithId:self.tankId]];
-    [sample addMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
+    [sample addWithTankId:[[WOTTanksIDList alloc] initWithTankID: [self.tankId stringValue]]];
+    [sample addWithMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
     return [NSObject gridData:sample];
 }
 

@@ -11,13 +11,13 @@
 
 @interface WOTMetric (Samples)
 
-+ (id<WOTTankMetricProtocol>)circularVisionCompareMetric;
-+ (id<WOTTankMetricProtocol>)armorBoardCompareMetric;
-+ (id<WOTTankMetricProtocol>)armorFeddCompareMetric;
-+ (id<WOTTankMetricProtocol>)armorForeheadCompareMetric;
-+ (id<WOTTankMetricProtocol>)fireStartingChanceCompareMetric;
-+ (id<WOTTankMetricProtocol>)suspensionRotationSpeedCompareMetric;
++ (id<WOTMetricProtocol>)circularVisionCompareMetric;
++ (id<WOTMetricProtocol>)armorBoardCompareMetric;
++ (id<WOTMetricProtocol>)armorFeddCompareMetric;
++ (id<WOTMetricProtocol>)armorForeheadCompareMetric;
++ (id<WOTMetricProtocol>)fireStartingChanceCompareMetric;
++ (id<WOTMetricProtocol>)suspensionRotationSpeedCompareMetric;
 
-+ (NSArray *)metricsForOptions:(WOTTankMetricOptions) option;
++ (NSArray *)metricsForOptions:(WOTTankMetricOptions *) option;
 
 @end

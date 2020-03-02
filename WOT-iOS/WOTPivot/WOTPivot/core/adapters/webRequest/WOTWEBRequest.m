@@ -11,10 +11,7 @@
 #import "NSMutableDictionary+WOT.h"
 #import "NSBundle+LanguageBundle.h"
 #import "WOTLogger.h"
-#import "NSString+UrlEncode.h"
 #import <WOTPivot/WOTPivot-Swift.h>
-
-//#import "WOTWEBRequest+Stubs.h"
 
 /**
  description: interactive https://developers.wargaming.net/reference/all/wot/encyclopedia/tankradios/?application_id=e3a1e0889ff9c76fa503177f351b853c&fields=name%2Cmodule_id%2Cdistance%2Cnation%2Cprice_credit%2Cprice_gold&module_id=55&r_realm=ru&run=1
@@ -28,8 +25,6 @@
 @end
 
 @implementation WOTWEBRequest
-
-
 
 + (NSOperationQueue *)requestQueue {
 
@@ -138,7 +133,22 @@
     [self cancel];
 }
 
-- (void)finalizeWithData:(id)data error:(NSError *)error binary: (NSData *)binary {
+#pragma mark -
+
+- (void)parseData:(NSData *)data error:(NSError *)connectionError {
+    
+    __block NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+    NSError *error = nil;
+
+    if (connectionError) {
+        error = connectionError;
+    } else {
+        
+        error = [self jsonFrom:data callback:^(NSDictionary * json) {
+            [result addEntriesFromDictionary:json];
+            [result addEntriesFromDictionary: self.userInfo];
+        }];
+    }
     
     [self notifyListenersAboutFinish];
     
@@ -146,54 +156,34 @@
     
     if (self.callback) {
         
-        self.callback(data, error, binary);
+        self.callback(result, error, data);
     }
 }
 
+- (NSError *)jsonFrom:(NSData *)data callback:(void (^)(NSDictionary *data))block{
 
-#pragma mark -
-
-- (void)parseData:(NSData *)data error:(NSError *)connectionError {
-    
-    if (connectionError) {
-        
-        [self finalizeWithData:nil error:connectionError binary: data];
+    NSMutableDictionary *result = nil;
+    NSError *serializationError = nil;
+    NSError *error = nil;
+    NSMutableDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                                    options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                                      error:&serializationError];
+    if (serializationError) {
+        error = serializationError;
     } else {
-        
-        NSError *serializationError = nil;
-        NSMutableDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
-                                                                        options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
-                                                                          error:&serializationError];
-        if (serializationError) {
-            
-            [self finalizeWithData:nil error:serializationError binary: data];
+    #warning make validator
+        id status = jsonData[WOT_KEY_STATUS];
+        if ([status isEqualToString:WOT_KEY_ERROR]) {
+            error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[WOT_KEY_ERROR]];
         } else {
-#warning make validator
-            id status = jsonData[WOT_KEY_STATUS];
-            if ([status isEqualToString:WOT_KEY_ERROR]) {
-                
-//                NSCAssert(NO, @"be sure that error was handled:%@",jsonData[WOT_KEY_ERROR]);
-                NSError *error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[WOT_KEY_ERROR]];
-                [self finalizeWithData:nil error:error binary: data];
-                
-            } else {
-                
-                NSMutableDictionary *result = nil;
-                if (jsonData) {
-                    
-                    result = [jsonData mutableCopy];
-                } else {
-                    
-                    result = [[NSMutableDictionary alloc] init];
-                }
-                
+            if (jsonData) {
+                result = [jsonData mutableCopy];
                 [result clearNullValues];
-                
-                [result addEntriesFromDictionary:self.userInfo];
-                [self finalizeWithData:result error:nil binary: data];
             }
         }
     }
+    block(result);
+    return error;
 }
 
 - (NSString *)queryIntoString {
@@ -202,7 +192,7 @@
     NSDictionary *query = self.query;
     for (NSString *key in [query allKeys]) {
         
-        NSString *arg = [NSString urlEncode:key];
+        NSString *arg = [key urlEncoded];
         NSString *value = query[key];
         [queryArgs addObject:[NSString stringWithFormat:@"%@=%@", arg, value]];
     }

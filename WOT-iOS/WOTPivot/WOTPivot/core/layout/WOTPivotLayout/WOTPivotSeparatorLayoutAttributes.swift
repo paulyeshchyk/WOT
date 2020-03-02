@@ -9,11 +9,10 @@
 import Foundation
 
 enum WOTPivotSeparatorKind: String {
-
-    case top = "WOTPivotSeparatorKind.top"
-    case bottom = "WOTPivotSeparatorKind.bottom"
-    case left = "WOTPivotSeparatorKind.left"
-    case right = "WOTPivotSeparatorKind.right"
+    case top
+    case bottom
+    case left
+    case right
 }
 
 class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {

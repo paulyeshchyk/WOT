@@ -170,20 +170,21 @@
     /**
      * Tanks.Modules
      **/
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestModulesTree class]];
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterModulesTree class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestModulesTree class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterModulesTree class]];
 
     /**
      * Tanks.Profile
      **/
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class]];
-//    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class]];
+    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
     
 }
 
 WOTLoginCallback loginCallback = ^(WOTLogin *wotLogin){
 
-    NSDictionary *args = [wotLogin asDictionary];
+    NSDictionary *argsDictionary = [wotLogin asDictionary];
+    WOTRequestArguments *args = [[WOTRequestArguments alloc] init:argsDictionary];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdSaveSession];
     [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
