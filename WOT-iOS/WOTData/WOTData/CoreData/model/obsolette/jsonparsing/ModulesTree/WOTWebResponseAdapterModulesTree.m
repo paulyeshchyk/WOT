@@ -10,7 +10,7 @@
 
 @implementation WOTWebResponseAdapterModulesTree
 
-- (void)parseJSON:(NSDictionary *)data error:(NSError *)error{
+- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
 }
 

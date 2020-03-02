@@ -13,18 +13,7 @@
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
-- (void)parseJSON:(NSDictionary *)json error:(NSError *)error{
-    
-    if (error) {
-        
-        debugError(@"%@",error.localizedDescription);
-        return;
-    }
-    
-    [self parseJSON:json];
-}
-
-- (void)parseJSON:(NSDictionary *)json{
+- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
@@ -72,7 +61,6 @@
     }];
 }
 
-
 #pragma mark - private
 - (NSDictionary *)parseRequestJSON:(NSDictionary *)jSON context:(NSManagedObjectContext *)context key:(id)key{
     
@@ -80,20 +68,15 @@
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.tag,jSON[WGJsonFields.tag]];
     Vehicles *vehicle = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:predicate context:context];
-    [vehicle mappingFromJSON:jSON into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
-        
-    }];
+    [vehicle mappingFromJSON:jSON into: context completion:nil];
     
 #warning dirty code
     Vehicleprofile *defaultProfile = (Vehicleprofile *)[Vehicleprofile insertNewObject:context];
-    [defaultProfile mappingFromJSON:jSON[WGJsonFields.default_profile] into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
-        
-    }];
+    [defaultProfile mappingFromJSON:jSON[WGJsonFields.default_profile] into: context completion:nil];
     vehicle.default_profile = defaultProfile;
 
 
 #warning should be refactored
-    
 //    NSPredicate *tanksPredicate = [NSPredicate predicateWithFormat:@"%K == %d",WOTApiKeys.tank_id, [key integerValue]];
 //    Vehicles *tank = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:tanksPredicate context:context];
 ////    [tank setVehicles:vehicle];

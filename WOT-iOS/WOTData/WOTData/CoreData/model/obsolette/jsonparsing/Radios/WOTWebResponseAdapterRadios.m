@@ -13,13 +13,8 @@
 
 @implementation WOTWebResponseAdapterRadios
 
-- (void)parseJSON:(NSDictionary *)json error:(NSError *)error {
+- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
    
-    if (error) {
-        
-        debugError(@"%@",error.localizedDescription);
-        return;
-    }
     NSDictionary *tankRadiosDictionary = json[WGJsonFields.data];
     
     NSArray *tankRadiosArray = [tankRadiosDictionary allKeys];

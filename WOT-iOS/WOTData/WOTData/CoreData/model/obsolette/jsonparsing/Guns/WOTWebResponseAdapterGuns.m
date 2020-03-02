@@ -13,14 +13,8 @@
 
 @implementation WOTWebResponseAdapterGuns
 
-- (void)parseJSON:(NSDictionary *)json error:(NSError *)error {
+- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
 
-    if (error) {
-        
-        debugError(@"%@",error.localizedDescription);
-        return;
-    }
-    
     NSDictionary *tankGunsDictionary = json[WGJsonFields.data];
     
     NSArray *tankGunsArray = [tankGunsDictionary allKeys];

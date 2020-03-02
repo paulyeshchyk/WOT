@@ -209,7 +209,7 @@
             }
 
             id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-            [adapter parseJSON:json error:nil nestedRequestsCallback:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+            [adapter parseJSON:json nestedRequestsCallback:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
                 [self evaluateNestedRequests:requests];
             }];
         }];

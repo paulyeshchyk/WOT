@@ -13,15 +13,9 @@
 
 @implementation WOTWebResponseAdapterProfile
 
-- (void)parseJSON:(NSDictionary *)data error:(NSError *)error {
+- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
-    if (error) {
-        
-        debugError(@"%@",error.localizedDescription);
-        return;
-    }
-    
-    NSDictionary *profileJSON = data[WGJsonFields.data];
+    NSDictionary *profileJSON = json[WGJsonFields.data];
 
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
@@ -182,10 +176,6 @@
         [result addVehicleprofileAmmoObject:ammoObject];
     }
     return result;
-}
-
-- (void)parseJSON:(NSDictionary * _Nonnull)json error:(NSError * _Nullable)error nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
-    
 }
 
 @end

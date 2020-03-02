@@ -13,13 +13,7 @@
 
 @implementation WOTWebResponseAdapterEngines
 
-- (void)parseJSON:(NSDictionary *)json error:(NSError *)error {
-    
-    if (error) {
-        
-        debugError(@"%@",error.localizedDescription);
-        return;
-    }
+- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
     NSDictionary *tankEnginessDictionary = json[WGJsonFields.data];
     

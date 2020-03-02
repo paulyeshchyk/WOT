@@ -11,11 +11,7 @@ import Foundation
 @objc
 public class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
     
-    public func parseJSON(_ json: JSON, error err: NSError?, nestedRequestsCallback: JSONMappingCompletion?) {
-        if let error = err {
-            print("\(#file) \(#function) at \(error.localizedDescription)")
-            return
-        }
+    public func parseJSON(_ json: JSON, nestedRequestsCallback: JSONMappingCompletion?) {
         guard let data = json[WGJsonFields.data] as? [AnyHashable: Any] else {
             return
         }
