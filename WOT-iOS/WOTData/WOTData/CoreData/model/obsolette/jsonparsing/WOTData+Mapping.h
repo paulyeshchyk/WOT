@@ -13,7 +13,6 @@
 #import "WOTWebResponseAdapterGuns.h"
 #import "WOTWebResponseAdapterProfile.h"
 #import "WOTWebResponseAdapterEngines.h"
-#import "WOTWebResponseAdapterTurrets.h"
 #import "Vehicles+WOTWebResponseAdapter.h"
 #import "WOTWebResponseAdapterModulesTree.h"
 
