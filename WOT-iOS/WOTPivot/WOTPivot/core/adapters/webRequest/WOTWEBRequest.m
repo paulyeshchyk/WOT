@@ -17,7 +17,7 @@
  description: interactive https://developers.wargaming.net/reference/all/wot/encyclopedia/tankradios/?application_id=e3a1e0889ff9c76fa503177f351b853c&fields=name%2Cmodule_id%2Cdistance%2Cnation%2Cprice_credit%2Cprice_gold&module_id=55&r_realm=ru&run=1
  */
 
-@interface WOTWEBRequest () <NSURLConnectionDataDelegate>
+@interface WOTWEBRequest ()
 
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, copy) NSURL *url;
@@ -92,7 +92,7 @@
     return self.url;
 }
 
-- (NSURLRequest *)finalRequest {
+- (NSURLRequest * __nullable)finalRequest {
     NSURL *url = [self composedURL];
     NSData *bodyData = self.httpBodyData;
     
@@ -134,58 +134,6 @@
 }
 
 #pragma mark -
-
-- (void)parseData:(NSData *)data error:(NSError *)connectionError {
-    
-    __block NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    NSError *error = nil;
-
-    if (connectionError) {
-        error = connectionError;
-    } else {
-        
-        error = [self jsonFrom:data callback:^(NSDictionary * json) {
-            [result addEntriesFromDictionary:json];
-            [result addEntriesFromDictionary: self.userInfo];
-        }];
-    }
-    
-    [self notifyListenersAboutFinish];
-    
-    [[WOTRequestExecutor sharedInstance] removeRequest:self];
-    
-    if (self.callback) {
-        
-        self.callback(result, error, data);
-    }
-}
-
-- (NSError *)jsonFrom:(NSData *)data callback:(void (^)(NSDictionary *data))block{
-
-    NSMutableDictionary *result = nil;
-    NSError *serializationError = nil;
-    NSError *error = nil;
-    NSMutableDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
-                                                                    options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
-                                                                      error:&serializationError];
-    if (serializationError) {
-        error = serializationError;
-    } else {
-    #warning make validator
-        id status = jsonData[WOT_KEY_STATUS];
-        if ([status isEqualToString:WOT_KEY_ERROR]) {
-            error = [NSError errorWithDomain:@"WOT" code:1 userInfo:jsonData[WOT_KEY_ERROR]];
-        } else {
-            if (jsonData) {
-                result = [jsonData mutableCopy];
-                [result clearNullValues];
-            }
-        }
-    }
-    block(result);
-    return error;
-}
-
 - (NSString *)queryIntoString {
 
     NSMutableArray *queryArgs = [[NSMutableArray alloc] init];
@@ -221,7 +169,7 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    [self parseData:self.data error:nil];
+    [self parseWithData:self.data];
     self.data = nil;
 
     [self notifyListenersAboutFinish];
@@ -248,7 +196,7 @@
 //    } else {
 
         [self notifyListenersAboutFail];
-        [self parseData:nil error:error];
+        [self parseWithData: nil];
         self.data = nil;
 //    }
 }

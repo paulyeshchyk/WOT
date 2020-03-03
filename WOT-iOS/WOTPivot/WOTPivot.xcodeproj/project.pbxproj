@@ -26,8 +26,6 @@
 		1D5D024623C872F5004B0314 /* NSManagedObject+FillProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D024423C872F5004B0314 /* NSManagedObject+FillProperties.m */; };
 		1D5D024723C872F5004B0314 /* NSManagedObject+FillProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D024523C872F5004B0314 /* NSManagedObject+FillProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D5D024A23C87456004B0314 /* NSManagedObjectContext+AllObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D024923C87456004B0314 /* NSManagedObjectContext+AllObjects.swift */; };
-		1D5D039423CC5252004B0314 /* WOTWebProxyRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D039223CC5252004B0314 /* WOTWebProxyRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1D5D039523CC5252004B0314 /* WOTWebProxyRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D039323CC5252004B0314 /* WOTWebProxyRequest.m */; };
 		1D5D0AFD23CCB012004B0314 /* WOTPivotMetadataPermutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AFB23CCB012004B0314 /* WOTPivotMetadataPermutator.swift */; };
 		1D5D0AFE23CCB02B004B0314 /* WOTPivotMetadataPermutatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AFA23CCB012004B0314 /* WOTPivotMetadataPermutatorTest.swift */; };
 		1D5D0B0223CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0B0023CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift */; };
@@ -100,6 +98,9 @@
 		1DBF89A8240D1E19007DF8B2 /* WOTTankMetricList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */; };
 		1DBF89AA240D27C9007DF8B2 /* WOTTankEvalutionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A9240D27C9007DF8B2 /* WOTTankEvalutionResult.swift */; };
 		1DBF89AC240D3137007DF8B2 /* WOTTankIDList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89AB240D3137007DF8B2 /* WOTTankIDList.swift */; };
+		1DBF89B4240E3BEE007DF8B2 /* WOTWebProxyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89B3240E3BEE007DF8B2 /* WOTWebProxyRequest.swift */; };
+		1DBF89B6240E4927007DF8B2 /* WOTWebRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */; };
+		1DBF89BA240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89B9240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift */; };
 		1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */; };
 		1DC6D4CA212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */; };
 		1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */; };
@@ -159,8 +160,6 @@
 		1D5D024423C872F5004B0314 /* NSManagedObject+FillProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FillProperties.m"; sourceTree = "<group>"; };
 		1D5D024523C872F5004B0314 /* NSManagedObject+FillProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FillProperties.h"; sourceTree = "<group>"; };
 		1D5D024923C87456004B0314 /* NSManagedObjectContext+AllObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+AllObjects.swift"; sourceTree = "<group>"; };
-		1D5D039223CC5252004B0314 /* WOTWebProxyRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTWebProxyRequest.h; sourceTree = "<group>"; };
-		1D5D039323CC5252004B0314 /* WOTWebProxyRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTWebProxyRequest.m; sourceTree = "<group>"; };
 		1D5D0AFA23CCB012004B0314 /* WOTPivotMetadataPermutatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutatorTest.swift; sourceTree = "<group>"; };
 		1D5D0AFB23CCB012004B0314 /* WOTPivotMetadataPermutator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutator.swift; sourceTree = "<group>"; };
 		1D5D0B0023CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumeratorProtocol.swift; sourceTree = "<group>"; };
@@ -236,6 +235,9 @@
 		1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankMetricList.swift; sourceTree = "<group>"; };
 		1DBF89A9240D27C9007DF8B2 /* WOTTankEvalutionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankEvalutionResult.swift; sourceTree = "<group>"; };
 		1DBF89AB240D3137007DF8B2 /* WOTTankIDList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankIDList.swift; sourceTree = "<group>"; };
+		1DBF89B3240E3BEE007DF8B2 /* WOTWebProxyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebProxyRequest.swift; sourceTree = "<group>"; };
+		1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebRequest.swift; sourceTree = "<group>"; };
+		1DBF89B9240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Meta+WOTWebResponseAdapter.swift"; sourceTree = "<group>"; };
 		1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModel.swift; sourceTree = "<group>"; };
 		1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModelProtocol.swift; sourceTree = "<group>"; };
 		1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeModuleNode.swift; sourceTree = "<group>"; };
@@ -583,17 +585,18 @@
 		1DA83C9721355A6D0039CB4B /* webRequest */ = {
 			isa = PBXGroup;
 			children = (
+				1DBF89B9240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift */,
+				1DA83C9B21355A6D0039CB4B /* WOTRequestListener.h */,
 				1DBF89A1240D0AB2007DF8B2 /* WOTRequestArguments.h */,
 				1DBF899F240D0A80007DF8B2 /* WOTRequestArguments.m */,
-				1DA83CA22135622B0039CB4B /* WOTWEBRequest.h */,
-				1DA83CA32135622B0039CB4B /* WOTWEBRequest.m */,
 				1DA83C9921355A6D0039CB4B /* WOTRequest.h */,
 				1DA83C9C21355A6D0039CB4B /* WOTRequest.m */,
-				1DA83C9B21355A6D0039CB4B /* WOTRequestListener.h */,
+				1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */,
+				1DA83CA22135622B0039CB4B /* WOTWEBRequest.h */,
+				1DA83CA32135622B0039CB4B /* WOTWEBRequest.m */,
+				1DBF89B3240E3BEE007DF8B2 /* WOTWebProxyRequest.swift */,
 				1DA83C9821355A6D0039CB4B /* WOTRequestExecutor.h */,
 				1DA83C9A21355A6D0039CB4B /* WOTRequestExecutor.m */,
-				1D5D039223CC5252004B0314 /* WOTWebProxyRequest.h */,
-				1D5D039323CC5252004B0314 /* WOTWebProxyRequest.m */,
 			);
 			path = webRequest;
 			sourceTree = "<group>";
@@ -811,7 +814,6 @@
 				1DA83CB4213563C50039CB4B /* NSBundle+LanguageBundle.h in Headers */,
 				1D8C298021358A4800759C42 /* NSSet+WOT.h in Headers */,
 				1D8C299221358CF700759C42 /* WOTPivotDefines.h in Headers */,
-				1D5D039423CC5252004B0314 /* WOTWebProxyRequest.h in Headers */,
 				1DA83CB9213563F60039CB4B /* NSString+WOTValue.h in Headers */,
 				1D5D024323C87033004B0314 /* NSManagedObject+CoreDataOperations.h in Headers */,
 				1D5D024723C872F5004B0314 /* NSManagedObject+FillProperties.h in Headers */,
@@ -935,8 +937,10 @@
 				1DE558E42124560500576D41 /* WOTPivotNodeProtocol.swift in Sources */,
 				1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */,
 				1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */,
+				1DBF89B6240E4927007DF8B2 /* WOTWebRequest.swift in Sources */,
 				1D65F7F22216A60E006A85E4 /* WOTTankPivotLayout.swift in Sources */,
 				1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */,
+				1DBF89B4240E3BEE007DF8B2 /* WOTWebProxyRequest.swift in Sources */,
 				1D5D0B0223CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift in Sources */,
 				1DE559072124571000576D41 /* WOTTreeDataModel.swift in Sources */,
 				1D5D0B0523CCB110004B0314 /* WOTDataFetchControllerProtocol.swift in Sources */,
@@ -963,7 +967,6 @@
 				1D126A5921A54E4E001AF67F /* PivotWireFrame.swift in Sources */,
 				1D126A5A21A54E4E001AF67F /* VIPERView.swift in Sources */,
 				1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */,
-				1D5D039523CC5252004B0314 /* WOTWebProxyRequest.m in Sources */,
 				1D65F82A2216A7B8006A85E4 /* WOTDimensionCalculator.swift in Sources */,
 				1DA83CAE2135633F0039CB4B /* NSMutableDictionary+WOT.m in Sources */,
 				1D8C293621357B9A00759C42 /* NSNumber+CustomFormatter.m in Sources */,
@@ -989,6 +992,7 @@
 				1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */,
 				1D5D024123C87033004B0314 /* NSManagedObject+Operations.swift in Sources */,
 				1D5D0AFD23CCB012004B0314 /* WOTPivotMetadataPermutator.swift in Sources */,
+				1DBF89BA240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift in Sources */,
 				1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */,
 				1D65F8262216A7B8006A85E4 /* WOTDimensionRowCalculator.swift in Sources */,
 				1D5D024623C872F5004B0314 /* NSManagedObject+FillProperties.m in Sources */,

@@ -15,7 +15,7 @@
 
 - (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
 
-    NSDictionary *tankGunsDictionary = json[WGJsonFields.data];
+    NSDictionary *tankGunsDictionary = json;
     
     NSArray *tankGunsArray = [tankGunsDictionary allKeys];
     

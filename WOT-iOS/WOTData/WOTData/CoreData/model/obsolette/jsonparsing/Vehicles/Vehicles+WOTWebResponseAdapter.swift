@@ -13,12 +13,7 @@ public class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
     
     public func parseJSON(_ json: JSON, nestedRequestsCallback: JSONMappingCompletion?) {
 
-        guard let data = json[WGJsonFields.data] as? [AnyHashable: Any] else {
-            print("\(#file) \(#function) at Invalid json")
-            return
-        }
-        
-        let keys = data.keys
+        let keys = json.keys
         guard keys.count != 0 else {
             print("\(#file) \(#function) at Invalid json: no keys")
             return
@@ -26,7 +21,7 @@ public class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
 
         let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
         keys.forEach { (key) in
-            guard let vehiclesJSON = data[key] as? JSON else { return }
+            guard let vehiclesJSON = json[key] as? JSON else { return }
             guard let tag = vehiclesJSON[#keyPath(Vehicles.tag)] as? String else { return }
 
             let predicate = NSPredicate(format: "%K == %@", #keyPath(Vehicles.tag), tag)

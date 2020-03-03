@@ -15,7 +15,7 @@
 
 - (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
-    NSDictionary *tankEnginessDictionary = json[WGJsonFields.data];
+    NSDictionary *tankEnginessDictionary = json;
     
     NSArray *tankEnginesArray = [tankEnginessDictionary allKeys];
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];

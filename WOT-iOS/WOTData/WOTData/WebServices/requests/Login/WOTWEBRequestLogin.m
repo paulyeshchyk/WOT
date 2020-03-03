@@ -46,7 +46,7 @@
     return @"1";
 }
 
-- (NSDictionary *)userInfo {
+- (NSDictionary * __nullable)userInfo {
     
     return @{WOTApiKeys.redirectUri:self.redirectURL};
 }

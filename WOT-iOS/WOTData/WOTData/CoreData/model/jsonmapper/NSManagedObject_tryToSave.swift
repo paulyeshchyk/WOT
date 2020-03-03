@@ -8,15 +8,6 @@
 
 import Foundation
 
-public protocol JSONMapperProtocol {
-    
-    associatedtype Fields
-
-    func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingCompletion?)
-    func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingCompletion?)
-}
-
-
 public extension NSManagedObject {
     
     @discardableResult

@@ -6,13 +6,11 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "WOTPivotDefines.h"
 #import "WOTWebResponseLink.h"
 #import "WOTRequestExecutor.h"
-#import "WOTWEBRequest.h"
 #import "WOTRequest.h"
-#import "WOTRequestListener.h"
+#import "WOTWEBRequest.h"
 #import "NSMutableDictionary+WOT.h"
 #import "NSDictionary+Hash.h"
 #import "NSBundle+LanguageBundle.h"
@@ -27,7 +25,6 @@
 #import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import "WOTLogger.h"
-#import "WOTWebProxyRequest.h"
 
 //! Project version number for WOTPivot.
 FOUNDATION_EXPORT double WOTPivotVersionNumber;

@@ -60,7 +60,7 @@
 		1DAD1B4023D0581B0050B5B7 /* VehicleprofileRadio+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2D23D0581B0050B5B7 /* VehicleprofileRadio+JSONMapperProtocol.swift */; };
 		1DAD1B4D23D072810050B5B7 /* Vehicles+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B4C23D072800050B5B7 /* Vehicles+JSONMapperProtocol.swift */; };
 		1DAD1B5123D1C28D0050B5B7 /* WOTWEBRequestModulesTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B5023D1C28D0050B5B7 /* WOTWEBRequestModulesTree.swift */; };
-		1DAD1B5323D1C6990050B5B7 /* JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B5223D1C6990050B5B7 /* JSONMapperProtocol.swift */; };
+		1DAD1B5323D1C6990050B5B7 /* NSManagedObject_tryToSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B5223D1C6990050B5B7 /* NSManagedObject_tryToSave.swift */; };
 		1DAD1B5C23D1C8750050B5B7 /* Entities+Keypath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B5B23D1C8750050B5B7 /* Entities+Keypath.swift */; };
 		1DAD1B8123D1C8C20050B5B7 /* WOTWebResponseAdapterChassis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B5F23D1C8C20050B5B7 /* WOTWebResponseAdapterChassis.swift */; };
 		1DAD1B8223D1C8C20050B5B7 /* WOTWebResponseAdapterRadios.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DAD1B6123D1C8C20050B5B7 /* WOTWebResponseAdapterRadios.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -198,7 +198,7 @@
 		1DAD1B2D23D0581B0050B5B7 /* VehicleprofileRadio+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B4C23D072800050B5B7 /* Vehicles+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B5023D1C28D0050B5B7 /* WOTWEBRequestModulesTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestModulesTree.swift; sourceTree = "<group>"; };
-		1DAD1B5223D1C6990050B5B7 /* JSONMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMapperProtocol.swift; sourceTree = "<group>"; };
+		1DAD1B5223D1C6990050B5B7 /* NSManagedObject_tryToSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObject_tryToSave.swift; sourceTree = "<group>"; };
 		1DAD1B5B23D1C8750050B5B7 /* Entities+Keypath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entities+Keypath.swift"; sourceTree = "<group>"; };
 		1DAD1B5F23D1C8C20050B5B7 /* WOTWebResponseAdapterChassis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebResponseAdapterChassis.swift; sourceTree = "<group>"; };
 		1DAD1B6123D1C8C20050B5B7 /* WOTWebResponseAdapterRadios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWebResponseAdapterRadios.h; sourceTree = "<group>"; };
@@ -518,7 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				1DAD1B5B23D1C8750050B5B7 /* Entities+Keypath.swift */,
-				1DAD1B5223D1C6990050B5B7 /* JSONMapperProtocol.swift */,
+				1DAD1B5223D1C6990050B5B7 /* NSManagedObject_tryToSave.swift */,
 				1DAD1B2723D0581B0050B5B7 /* ModulesTree+JSONMapperProtocol.swift */,
 				1DAD1B2A23D0581B0050B5B7 /* Tankchassis+JSONMapperProtocol.swift */,
 				1DAD1B1D23D0581B0050B5B7 /* TankEngines+JSONMapperProtocol.swift */,
@@ -813,7 +813,7 @@
 				1DAD1B8123D1C8C20050B5B7 /* WOTWebResponseAdapterChassis.swift in Sources */,
 				1DAD1BCF23D1D2CC0050B5B7 /* VehicleprofileAmmo+CoreDataClass.swift in Sources */,
 				1D8B786F23CDCCCC00610751 /* WOTWEBRequestTankChassis.swift in Sources */,
-				1DAD1B5323D1C6990050B5B7 /* JSONMapperProtocol.swift in Sources */,
+				1DAD1B5323D1C6990050B5B7 /* NSManagedObject_tryToSave.swift in Sources */,
 				1DAD1BD823D1D2CC0050B5B7 /* Vehicleprofile+CoreDataProperties.swift in Sources */,
 				1D8B787523CDD00D00610751 /* WOTWEBRequestTanks.swift in Sources */,
 				1DAD1B3723D0581B0050B5B7 /* VehicleprofileTurret+JSONMapperProtocol.swift in Sources */,

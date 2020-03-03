@@ -9,6 +9,8 @@
 #ifndef WOTPivotDefines_h
 #define WOTPivotDefines_h
 
+#import <Foundation/Foundation.h>
+
 typedef NS_ENUM(NSInteger, PivotMetadataType) {
     PivotMetadataTypeFilter = 0,
     PivotMetadataTypeColumn,

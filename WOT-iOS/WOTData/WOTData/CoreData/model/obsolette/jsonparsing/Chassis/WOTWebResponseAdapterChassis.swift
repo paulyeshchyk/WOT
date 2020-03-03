@@ -12,11 +12,8 @@ import Foundation
 public class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
     
     public func parseJSON(_ json: JSON, nestedRequestsCallback: JSONMappingCompletion?) {
-        guard let data = json[WGJsonFields.data] as? [AnyHashable: Any] else {
-            return
-        }
-        
-        let keys = data.keys
+
+        let keys = json.keys
         guard keys.count != 0 else {
             return
         }
@@ -24,7 +21,7 @@ public class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
         let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
         context.perform {
             keys.forEach { (key) in
-                guard let chassis = data[key] as? [AnyHashable: Any] else { return }
+                guard let chassis = json[key] as? [AnyHashable: Any] else { return }
                 guard let module_id = chassis[WGJsonFields.module_id] as? String else { return }
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), module_id)
                 guard let newObject = NSManagedObject.findOrCreateObject(forClass:Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else { return }

@@ -15,7 +15,7 @@
 
 - (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
-    NSDictionary *profileJSON = json[WGJsonFields.data];
+    NSDictionary *profileJSON = json;
 
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider workManagedObjectContext];

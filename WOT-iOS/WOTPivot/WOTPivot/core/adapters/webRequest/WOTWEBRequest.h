@@ -12,20 +12,20 @@
 #import "WOTRequest.h"
 
 
-@interface WOTWEBRequest : WOTRequest
+@interface WOTWEBRequest : WOTRequest <NSURLConnectionDataDelegate>
 
 @property (nonatomic, readonly) NSString *path;
 @property (nonatomic, readonly) NSDictionary *query;
 @property (nonatomic, readonly) NSString *method;
 @property (nonatomic, copy) NSString *headers;
-@property (nonatomic, readonly) NSDictionary *userInfo;
+@property (nonatomic, readonly, nullable) NSDictionary *userInfo;
 @property (nonatomic, readonly) NSData *httpBodyData;
 @property (nonatomic, strong) NSMutableData *data;
 
-- (NSString *)queryIntoString;
-- (NSURL *)composedURL;
-- (NSURLRequest *)finalRequest;
-- (void)parseData:(NSData *)data error:(NSError *)connectionError;
+- (NSString * __nullable)queryIntoString;
+- (NSURL * __nullable)composedURL;
+- (NSURLRequest * __nullable)finalRequest;
+//- (NSError * __nullable)parseData:(NSData *)data;
 - (void)notifyListenersAboutFinish;
 
 @end
