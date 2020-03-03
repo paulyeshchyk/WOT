@@ -27,7 +27,7 @@ typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *bi
 - (void)addGroup:(NSString *)group;
 - (void)removeGroup:(NSString *)group;
 
-- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args ;//DEPRECATED_ATTRIBUTE;
+- (void)start:(WOTRequestArguments * _Nonnull)args ;//DEPRECATED_ATTRIBUTE;
 - (void)cancel;
 - (void)cancelAndRemoveFromQueue;
 

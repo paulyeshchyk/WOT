@@ -17,9 +17,9 @@
     return @"";
 }
 
-- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args {
+- (void)start:(WOTRequestArguments * _Nonnull)args {
 
-    [super temp_executeWithArgs:args];
+    [super start:args];
     
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];

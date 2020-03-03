@@ -11,21 +11,22 @@ import Foundation
 @objc
 public class WOTWEBRequestModulesTree : WOTWEBRequest {
     
-    public class func instanceClassName() -> String! {
+    @objc
+    override public class var instanceClassName: String {
         return NSStringFromClass(ModulesTree.self)
     }
 
-    override public var query: [AnyHashable : Any]! {
+    override public var query: [AnyHashable : Any] {
         let fields = self.args?.escapedValue(forKey: WGWebQueryArgs.fields) ?? ""
         return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
                 WGWebQueryArgs.fields: fields]
     }
     
-    override public var path: String! {
+    override public var path: String {
         return "/wot/encyclopedia/modules/"
     }
     
-    override public var method: String! {
+    override public var method: String {
         return "POST"
     }
 }

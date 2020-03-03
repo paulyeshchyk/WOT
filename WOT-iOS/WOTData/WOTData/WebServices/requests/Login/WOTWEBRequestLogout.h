@@ -7,8 +7,8 @@
 //
 #import <WOTPivot/WOTPivot.h>
 
-@interface WOTWEBRequestLogout : WOTWEBRequest
-
-@property (nonatomic, readonly) NSString *access_token;
-
-@end
+//@interface WOTWEBRequestLogout : WOTWEBRequest
+//
+//@property (nonatomic, readonly) NSString *access_token;
+//
+//@end

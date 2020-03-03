@@ -10,12 +10,15 @@ import Foundation
 
 @objc
 public class WOTWEBRequestTankTurrets: WOTWEBRequest {
+    
+    override public var method: String { return "POST" }
+
     @objc
-    public class func instanceClassName() -> String!  {
+    override public class var instanceClassName: String {
         return NSStringFromClass(Tankturrets.self)
     }
 
-    override public var query: [AnyHashable : Any]! {
+    override public var query: [AnyHashable : Any] {
         let fields = self.args?.escapedValue(forKey: WGWebQueryArgs.fields) ?? ""
         let module_id = self.args?.escapedValue(forKey: WGWebQueryArgs.module_id) ?? ""
         return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
@@ -24,7 +27,7 @@ public class WOTWEBRequestTankTurrets: WOTWEBRequest {
         
     }
 
-    override public var path: String! {
+    override public var path: String {
         return "/wot/encyclopedia/tankturrets/"
     }
 }

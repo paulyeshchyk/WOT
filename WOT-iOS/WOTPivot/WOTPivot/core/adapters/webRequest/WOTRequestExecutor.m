@@ -137,7 +137,7 @@
 
 - (void)runRequest:(WOTRequest *)request withArgs:(WOTRequestArguments *)args {
 
-    [request temp_executeWithArgs:args];
+    [request start:args];
 }
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass {
@@ -264,15 +264,10 @@
 
 #pragma mark - WOTRequestListener
 
-- (void)requestHasFailed:(id)request {
+- (void)requestHasFinishedLoadData:(id)request error: (NSError *) error{
 
     self.pendingRequestsCount -= 1;
     [(WOTRequest *)request removeListener:self];
-}
-
-- (void)requestHasFinishedLoadData:(id)request {
-    
-    self.pendingRequestsCount -= 1;
 }
 
 - (void)requestHasCanceled:(id)request {

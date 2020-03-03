@@ -16,9 +16,9 @@
 }
 
 
-- (void)temp_executeWithArgs:(WOTRequestArguments * _Nonnull)args{
+- (void)start:(WOTRequestArguments * _Nonnull)args{
 
-    [super temp_executeWithArgs:args];
+    [super start:args];
 
     NSDictionary *fields = args.asDictionary;
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];

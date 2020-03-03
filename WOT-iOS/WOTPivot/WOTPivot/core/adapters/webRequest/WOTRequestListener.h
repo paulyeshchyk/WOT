@@ -23,8 +23,7 @@
 
 - (void)setHostConfiguration:(id<WEBHostConfiguration>_Nullable)hostConfig;
 
-- (void)requestHasFailed:(id _Nullable )request;
-- (void)requestHasFinishedLoadData:(id _Nullable )request;
+- (void)requestHasFinishedLoadData:(id)request error: (NSError *) error;
 - (void)requestHasCanceled:(id _Nullable )request;
 - (void)requestHasStarted:(id _Nullable )request;
 - (void)removeRequest:(id _Nullable )request;

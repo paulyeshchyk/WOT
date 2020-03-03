@@ -7,10 +7,10 @@
 //
 #import <WOTPivot/WOTPivot.h>
 
-@interface WOTWEBRequestLogin : WOTWEBRequest
-
-@property (nonatomic, readonly) NSString *applicationID;
-@property (nonatomic, readonly) NSString *noFollow;
-@property (nonatomic, readonly) NSString *redirectURL;
-
-@end
+//@interface WOTWEBRequestLogin : WOTWEBRequest
+//
+//@property (nonatomic, readonly) NSString *applicationID;
+//@property (nonatomic, readonly) NSString *noFollow;
+//@property (nonatomic, readonly) NSString *redirectURL;
+//
+//@end
