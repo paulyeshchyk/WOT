@@ -8,6 +8,7 @@
 
 #import "WOTRequestExecutor.h"
 #import "WOTLogger.h"
+#import <WOTPivot/WOTPivot.h>
 #import <WOTPivot/WOTPivot-Swift.h>
 
 @interface WOTRequestExecutor()
@@ -263,13 +264,13 @@
 - (void)requestHasFinishedLoadData:(id)request error: (NSError *) error{
 
     self.pendingRequestsCount -= 1;
-    [(WOTRequest *)request removeListener:self];
+    [self removeRequest:request];
 }
 
 - (void)requestHasCanceled:(id)request {
     
     self.pendingRequestsCount -= 1;
-    [(WOTRequest *)request removeListener:self];
+    [self removeRequest:request];
 }
 
 - (void)requestHasStarted:(id)request {

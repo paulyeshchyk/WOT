@@ -36,4 +36,19 @@ open class WOTRequestArguments: NSObject {
         return dictionary.asURLQueryString()
     }
     
+    @objc
+    public override var hash: Int {
+
+        do {
+            let data = try JSONSerialization.data(withJSONObject: dictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
+            
+            var hasher = Hasher()
+            hasher.combine(data)
+            return hasher.finalize()
+
+        } catch {
+            return 0
+        }
+    }
+    
 }

@@ -27,19 +27,19 @@ open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
     
 
     public func notifyListenersAboutStart() {
-        self.listeners.compactMap { $0 as? WOTRequestListener}.forEach {
+        self.listeners.compactMap { $0 as? WebRequestListenerProtocol}.forEach {
             $0.requestHasStarted(self)
         }
     }
 
     public func requestHasFinishedLoadData(error: Error?) {
-        self.listeners.compactMap { $0 as? WOTRequestListener}.forEach {
+        self.listeners.compactMap { $0 as? WebRequestListenerProtocol}.forEach {
             $0.requestHasFinishedLoadData(self, error: error)
         }
     }
     
     public override func cancel() {
-        self.listeners.compactMap { $0 as? WOTRequestListener}.forEach {
+        self.listeners.compactMap { $0 as? WebRequestListenerProtocol}.forEach {
             $0.requestHasCanceled(self)
         }
     }
@@ -65,7 +65,7 @@ open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
 
 class WOTWebRequestBuilder {
 
-    private func buildURL(path: String, hostConfiguration: WEBHostConfiguration, args: WOTRequestArguments, bodyData: Data?) -> URL {
+    private func buildURL(path: String, hostConfiguration: WebHostConfigurationProtocol, args: WOTRequestArguments, bodyData: Data?) -> URL {
         var components = URLComponents()
         components.scheme = hostConfiguration.scheme
         components.host = hostConfiguration.host
@@ -80,7 +80,7 @@ class WOTWebRequestBuilder {
 
     }
 
-    public func build(path: String, hostConfiguration: WEBHostConfiguration, args: WOTRequestArguments, bodyData: Data?, method: String) -> URLRequest {
+    public func build(path: String, hostConfiguration: WebHostConfigurationProtocol, args: WOTRequestArguments, bodyData: Data?, method: String) -> URLRequest {
         let url = buildURL(path: path, hostConfiguration: hostConfiguration, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
@@ -167,7 +167,6 @@ extension WOTWEBRequest: WOTWebRequestProtocol {
         }
         
         self.requestHasFinishedLoadData(error: nil)
-        WOTRequestExecutor.sharedInstance()?.removeRequest(self)
         self.callback(mutableData, error, data)
     }
     

@@ -32,11 +32,11 @@
     [self.listeners removeAllObjects];
 }
 
-- (void)addListener:(id<WOTRequestListener>)listener {
+- (void)addListener:(id<WebRequestListenerProtocol>)listener {
     [self.listeners addObject:listener];
 }
 
-- (void)removeListener:(id<WOTRequestListener>)listener {
+- (void)removeListener:(id<WebRequestListenerProtocol>)listener {
     [self.listeners removeObject:listener];
 }
 

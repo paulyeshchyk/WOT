@@ -53,15 +53,12 @@
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogout];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_LOGOUT];
     if (canAdd) {
-        
         [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
     }
 }
 
 + (void)login {
-
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_LOGIN];
     if (canAdd) {
         

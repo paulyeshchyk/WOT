@@ -226,13 +226,4 @@ static NSString *WOTWEBRequestDefaultLanguage;
     return WOTWEBRequestDefaultLanguage;
 }
 
-+ (NSString *)scheme {
-    return WOTApiDefaults.applicationScheme;
-}
-
-+ (NSString *)host {
-    
-    return [NSString stringWithFormat:@"%@.%@", WOTApiDefaults.applicationHost, [self language]];
-}
-
 @end

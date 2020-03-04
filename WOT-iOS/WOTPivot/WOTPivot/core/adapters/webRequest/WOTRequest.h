@@ -7,13 +7,18 @@
 //
 
 #import "WOTRequestListener.h"
-@class WOTRequestArguments;
 
 typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
 
+
+@class WOTRequestArguments;
+@protocol WOTWebRequestProtocol;
+@protocol WebHostConfigurationProtocol;
+@protocol WebRequestListenerProtocol;
+
 @interface WOTRequest : NSObject
 
-@property (nonatomic, weak) id<WEBHostConfiguration> hostConfiguration;
+@property (nonatomic, weak) id<WebHostConfigurationProtocol> hostConfiguration;
 
 @property (nonatomic, copy) WOTRequestCallback callback;
 @property (nonatomic, readonly) WOTRequestArguments * _Nullable args;
@@ -21,8 +26,8 @@ typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *bi
 @property (nonatomic, readonly)NSArray *availableInGroups;
 @property (nonatomic, strong)NSMutableArray *listeners;
 
-- (void)addListener:(id<WOTRequestListener>)listener;
-- (void)removeListener:(id<WOTRequestListener>)listener;
+- (void)addListener:(id<WebRequestListenerProtocol>)listener;
+- (void)removeListener:(id<WebRequestListenerProtocol>)listener;
 
 - (void)addGroup:(NSString *)group;
 - (void)removeGroup:(NSString *)group;

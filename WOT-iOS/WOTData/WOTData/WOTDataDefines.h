@@ -25,9 +25,6 @@ typedef NS_ENUM(NSInteger, WOTRequestId) {
     WOTRequestIdModulesTree
 };
 
-#define WOT_VALUE_APPLICATION_ID_EU @"e3a1e0889ff9c76fa503177f351b853c"
-#define WOT_VALUE_APPLICATION_ID_RU @"e3a1e0889ff9c76fa503177f351b853c"
-
 #define WOT_KEY_ACCOUNT_ID @"account_id"
 #define WOT_KEY_CODE @"code"
 #define WOT_KEY_EXPIRES_AT @"expires_at"

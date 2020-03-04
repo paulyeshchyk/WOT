@@ -7,14 +7,15 @@
 //
 
 #import "WOTRequest.h"
-#import "WOTRequestListener.h"
 
-@interface WOTRequestExecutor : NSObject <WOTRequestListener>
+@protocol WebRequestListenerProtocol;
+
+@interface WOTRequestExecutor : NSObject <WebRequestListenerProtocol>
 + (NSString *)pendingRequestNotificationName;
 + (WOTRequestExecutor *)sharedInstance;
 
 @property (nonatomic, readonly)NSInteger pendingRequestsCount;
-@property (nonatomic, strong) id<WEBHostConfiguration> hostConfiguration;
+@property (nonatomic, strong) id<WebHostConfigurationProtocol> hostConfiguration;
 
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass;

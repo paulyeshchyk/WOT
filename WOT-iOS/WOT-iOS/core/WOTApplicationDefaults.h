@@ -15,8 +15,5 @@
 
 + (NSString *)language;
 + (void)setLanguage:(NSString *)language;
-+ (NSString *)host;
-+ (NSString *)scheme;
-
 
 @end

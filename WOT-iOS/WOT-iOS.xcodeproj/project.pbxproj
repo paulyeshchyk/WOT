@@ -176,6 +176,7 @@
 		1DB67449221BF0D400982EE6 /* tankchassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6744B221BF0D400982EE6 /* tankchassis.json */; };
 		1DB6744C221BF0D900982EE6 /* vehicleprofile.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6744E221BF0D900982EE6 /* vehicleprofile.json */; };
 		1DB6744F221BF0DE00982EE6 /* tankengines.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67451221BF0DE00982EE6 /* tankengines.json */; };
+		1DBF89C2240FC340007DF8B2 /* WOTWebHostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89C1240FC340007DF8B2 /* WOTWebHostConfiguration.swift */; };
 		1DC07B331B3A9465002FAA72 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B321B3A9465002FAA72 /* Reachability.m */; };
 		1DC07BA31B3B003D002FAA72 /* Data-Flow-Chart-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */; };
 		1DC07BA41B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9B1B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png */; };
@@ -514,6 +515,7 @@
 		1DB6744A221BF0D400982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankchassis.json; sourceTree = "<group>"; };
 		1DB6744D221BF0D900982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicleprofile.json; sourceTree = "<group>"; };
 		1DB67450221BF0DE00982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankengines.json; sourceTree = "<group>"; };
+		1DBF89C1240FC340007DF8B2 /* WOTWebHostConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebHostConfiguration.swift; sourceTree = "<group>"; };
 		1DC07B311B3A9465002FAA72 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		1DC07B321B3A9465002FAA72 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon.png"; sourceTree = "<group>"; };
@@ -1434,6 +1436,7 @@
 				1D047B671B331DF000B5B696 /* WOTApplicationDefaults.h */,
 				1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */,
 				1D90695A1B412D6B00237852 /* WOTColors.h */,
+				1DBF89C1240FC340007DF8B2 /* WOTWebHostConfiguration.swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -2058,6 +2061,7 @@
 				1DCC7F321B2EE974005FF193 /* RomanNumber.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
 				1DD46B3A1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m in Sources */,
+				1DBF89C2240FC340007DF8B2 /* WOTWebHostConfiguration.swift in Sources */,
 				1DD46B8E1BA6DD6F00D3B3CE /* WOTTankDetailTextTableViewCell.m in Sources */,
 				1D519D0B1B4E9D2600D3A286 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
 				1D6FF4FA2106FD7A006C1328 /* WOTTankTreeFetchController.swift in Sources */,
