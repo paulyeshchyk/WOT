@@ -13,7 +13,7 @@
 
 @implementation WOTClearSessionRequest
 
-+ (NSString *)instanceClassName {
++ (NSString *)modelClassName {
     return @"";
 }
 

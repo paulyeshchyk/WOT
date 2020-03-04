@@ -21,7 +21,7 @@
 
 @required
 
-- (void)setHostConfiguration:(id<WEBHostConfiguration>_Nullable)hostConfig;
+@property (nonatomic, strong) id<WEBHostConfiguration> hostConfiguration;
 
 - (void)requestHasFinishedLoadData:(id)request error: (NSError *) error;
 - (void)requestHasCanceled:(id _Nullable )request;

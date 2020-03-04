@@ -11,7 +11,7 @@
 #import <WOTData/WOTData-Swift.h>
 
 @implementation WOTSaveSessionRequest
-+ (NSString *)instanceClassName {
++ (NSString *)modelClassName {
     return @"";
 }
 
@@ -20,7 +20,7 @@
 
     [super start:args];
 
-    NSDictionary *fields = args.asDictionary;
+    NSDictionary *fields = args.dictionary;
     id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     [context performBlock:^{

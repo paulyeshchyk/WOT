@@ -17,10 +17,9 @@ public protocol WOTWebRequestProtocol {
 open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
 
     @objc
-    open class var instanceClassName: String { fatalError("shouldBeOverriden") }
+    open class var modelClassName: String { fatalError("shouldBeOverriden") }
     open var method: String { fatalError("shouldBeOverriden") }
     open var path: String { fatalError("shouldBeOverriden") }
-    open var query: [AnyHashable: Any] { fatalError("shouldBeOverriden")}
     public var uniqueDescription: String { fatalError("shouldBeOverriden") }
 
     public var userInfo: [AnyHashable: Any]?
@@ -45,11 +44,11 @@ open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
         }
     }
 
-    override public func start(_ args: WOTRequestArguments) {
-        super.start(args)
+    public override func start(_ args: WOTRequestArguments) {
+//        super.start(args)
 
         let requestBuilder = WOTWebRequestBuilder()
-        let request = requestBuilder.build(path: path, hostConfiguration: hostConfiguration, queryItems: query, bodyData: httpBodyData, method: method)
+        let request = requestBuilder.build(path: path, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData, method: method)
         let pumper = WOTWebDataPumper(request: request) {[weak self] (data, error) in
             guard let self = self else { return }
             
@@ -66,24 +65,13 @@ open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
 
 class WOTWebRequestBuilder {
 
-    private func queryIntoString(queryItems: [AnyHashable: Any]) -> String {
-        var queryArgs = [String]()
-        queryItems.keys.compactMap{$0 as? String }.forEach {
-            if let arg = $0.urlEncoded(), let value = queryItems[$0] as? String  {
-                let queryArg = String(format:"%@=%@", arg, value)
-                queryArgs.append(queryArg)
-            }
-        }
-        return queryArgs.joined(separator: "&")
-    }
-
-    private func buildURL(path: String, hostConfiguration: WEBHostConfiguration, queryItems:[AnyHashable: Any], bodyData: Data?) -> URL {
+    private func buildURL(path: String, hostConfiguration: WEBHostConfiguration, args: WOTRequestArguments, bodyData: Data?) -> URL {
         var components = URLComponents()
         components.scheme = hostConfiguration.scheme
         components.host = hostConfiguration.host
         components.path = path
         if bodyData == nil {
-            components.query = queryIntoString(queryItems: queryItems)
+            components.query = args.buildQuery()
         }
         guard let result = components.url else {
             fatalError("url not created")
@@ -92,8 +80,8 @@ class WOTWebRequestBuilder {
 
     }
 
-    public func build(path: String, hostConfiguration: WEBHostConfiguration, queryItems:[AnyHashable: Any], bodyData: Data?, method: String) -> URLRequest {
-        let url = buildURL(path: path, hostConfiguration: hostConfiguration, queryItems: queryItems, bodyData: bodyData)
+    public func build(path: String, hostConfiguration: WEBHostConfiguration, args: WOTRequestArguments, bodyData: Data?, method: String) -> URLRequest {
+        let url = buildURL(path: path, hostConfiguration: hostConfiguration, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
         result.httpBody = bodyData
@@ -122,8 +110,9 @@ class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
     }
     
     public func start() {
-        
-        connection?.start()
+        DispatchQueue.global().sync {
+            connection?.start()
+        }
     }
     
     func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
@@ -148,6 +137,7 @@ class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
 }
 
 extension WOTWEBRequest {
+    
     @objc
     public override func cancelAndRemoveFromQueue() {
         self.cancel()

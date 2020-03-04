@@ -131,6 +131,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
         
         let arguments = WOTRequestArguments()
         arguments.setValues(Vehicles.keypaths(), forKey: WGWebQueryArgs.fields)
+        arguments.setValues([WOTRequestExecutor.sharedInstance()?.hostConfiguration.applicationID], forKey: WGWebQueryArgs.application_id)
         
         let request = WOTRequestExecutor.sharedInstance()?.createRequest(forId: WOTRequestId.tankVehicles.rawValue)
         if let canAdd = WOTRequestExecutor.sharedInstance()?.add(request, byGroupId: "WOT_REQUEST_ID_VEHICLE_LIST") {

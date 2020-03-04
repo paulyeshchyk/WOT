@@ -14,6 +14,8 @@
 + (WOTRequestExecutor *)sharedInstance;
 
 @property (nonatomic, readonly)NSInteger pendingRequestsCount;
+@property (nonatomic, strong) id<WEBHostConfiguration> hostConfiguration;
+
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass;
 - (void)requestId:(NSInteger)requestId registerDataAdapterClass:(Class)dataProviderClass;

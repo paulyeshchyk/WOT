@@ -17,7 +17,6 @@
 @property (nonatomic, strong) NSMutableDictionary *registeredDataAdapters;
 @property (nonatomic, strong) NSMutableDictionary *grouppedRequests;
 @property (nonatomic, readwrite, assign) NSInteger pendingRequestsCount;
-@property (nonatomic, strong) id<WEBHostConfiguration> hostConfiguration;
 
 @end
 
@@ -58,10 +57,6 @@
         self.grouppedRequests = [[NSMutableDictionary alloc] init];
     }
     return self;
-}
-
-- (void)setHostConfig:(id<WEBHostConfiguration>)config {
-    self.hostConfiguration = config;
 }
 
 - (void)setPendingRequestsCount:(NSInteger)pendingRequestsCount {
@@ -222,7 +217,7 @@
     NSMutableArray *result = [[NSMutableArray alloc] init];
     [self.registeredRequests.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
         Class request = self.registeredRequests[key];
-        NSString *registeredClazz = [request performSelector: @selector(instanceClassName)];
+        NSString *registeredClazz = [request performSelector: @selector(modelClassName)];
         if ([registeredClazz compare:clazz] == NSOrderedSame) {
             [result addObject:key];
         }
@@ -248,7 +243,8 @@
                 [keypaths addObject: keypath];
             }];
             [arguments setValues:keypaths forKey: @"fields"];
-            [arguments setValues:@[request.identifier] forKey:request.identifier_fieldname];
+            [arguments setValues:@[request.identifier] forKey:request.identifier_fieldname];//TODO: refectoring
+            [arguments setValues:@[self.hostConfiguration.applicationID] forKey:@"application_id"];
             
             WOTRequest *wotRequest = [[WOTRequestExecutor sharedInstance] createRequestForId: [requestID integerValue] ];
             BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:wotRequest byGroupId:@"NestedRequest"];

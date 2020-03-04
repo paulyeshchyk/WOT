@@ -48,7 +48,7 @@
     [WOTApplicationDefaults registerDefaultSettings];
     
     WOTWEBHostConfiguration *hostConfig = [[WOTWEBHostConfiguration alloc] init];
-    [[WOTRequestExecutor sharedInstance] setHostConfiguration:hostConfig];
+    [WOTRequestExecutor sharedInstance].hostConfiguration = hostConfig;
 
     [self initSessionTimer];
     

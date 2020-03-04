@@ -14,16 +14,8 @@ public class WOTWEBRequestTankRadios: WOTWEBRequest {
     override public var method: String { return "POST" }
     
     @objc
-    override public class var instanceClassName: String {
+    override public class var modelClassName: String {
         return NSStringFromClass(Tankradios.self)
-    }
-
-    override public var query: [AnyHashable : Any] {
-        let fields = self.args?.escapedValue(forKey: WGWebQueryArgs.fields) ?? ""
-        let module_id = self.args?.escapedValue(forKey: WGWebQueryArgs.module_id) ?? ""
-        return [WGWebQueryArgs.application_id: self.hostConfiguration.applicationID,
-                WGWebQueryArgs.fields: fields,
-                WGWebQueryArgs.module_id: module_id]
     }
     
     override public var path: String {

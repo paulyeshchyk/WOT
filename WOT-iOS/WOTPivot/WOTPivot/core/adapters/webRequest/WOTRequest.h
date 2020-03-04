@@ -7,7 +7,7 @@
 //
 
 #import "WOTRequestListener.h"
-#import "WOTRequestArguments.h"
+@class WOTRequestArguments;
 
 typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
 

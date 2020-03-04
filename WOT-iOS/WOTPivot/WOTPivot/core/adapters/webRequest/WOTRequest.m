@@ -7,11 +7,13 @@
 //
 
 #import "WOTRequest.h"
+#import <WOTPivot/WOTPivot.h>
+#import <WOTPivot/WOTPivot-Swift.h>
 
 @interface WOTRequest ()
 
-@property (nonatomic, readwrite)WOTRequestArguments *args;
 @property (nonatomic, strong)NSMutableArray *groups;
+
 @end
 
 @implementation WOTRequest
@@ -28,8 +30,6 @@
 
 - (void)dealloc {
     [self.listeners removeAllObjects];
-//    NSCAssert(self.listener == nil, @"listener should be nilled before");
-//    self.listener = nil;
 }
 
 - (void)addListener:(id<WOTRequestListener>)listener {
@@ -41,9 +41,8 @@
 }
 
 
-- (void)start:(WOTRequestArguments * _Nonnull)args{
-
-    self.args = args;
+- (void)start:(WOTRequestArguments * _Nonnull)args {
+    NSCAssert(NO, @"should be overriden");
 }
 
 - (void)cancel {
@@ -52,7 +51,6 @@
 }
 
 - (void)cancelAndRemoveFromQueue {
-    
     NSCAssert(NO, @"should be overriden");
 }
 
@@ -95,7 +93,5 @@
     }
     
 }
-
-#pragma mark -
 
 @end

@@ -89,8 +89,6 @@
 		1DA83CB9213563F60039CB4B /* NSString+WOTValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DAD1B4F23D09CEF0050B5B7 /* WOTWebResponseAdapterNested.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B4E23D09CEF0050B5B7 /* WOTWebResponseAdapterNested.swift */; };
 		1DB67455221C01E100982EE6 /* WOTWebResponseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB67454221C01E100982EE6 /* WOTWebResponseAdapter.swift */; };
-		1DBF89A0240D0A80007DF8B2 /* WOTRequestArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF899F240D0A80007DF8B2 /* WOTRequestArguments.m */; };
-		1DBF89A2240D0AFC007DF8B2 /* WOTRequestArguments.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DBF89A1240D0AB2007DF8B2 /* WOTRequestArguments.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DBF89A4240D0F08007DF8B2 /* WOTTankMetricOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */; };
 		1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */; };
 		1DBF89A8240D1E19007DF8B2 /* WOTTankMetricList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */; };
@@ -99,6 +97,8 @@
 		1DBF89B4240E3BEE007DF8B2 /* WOTWebProxyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89B3240E3BEE007DF8B2 /* WOTWebProxyRequest.swift */; };
 		1DBF89B6240E4927007DF8B2 /* WOTWebRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */; };
 		1DBF89BA240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89B9240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift */; };
+		1DBF89BC240F9D06007DF8B2 /* Dictionary_URLQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89BB240F9D06007DF8B2 /* Dictionary_URLQuery.swift */; };
+		1DBF89BE240FAE8C007DF8B2 /* WOTRequestArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89BD240FAE8C007DF8B2 /* WOTRequestArguments.swift */; };
 		1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */; };
 		1DC6D4CA212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */; };
 		1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */; };
@@ -224,8 +224,6 @@
 		1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WOTValue.h"; sourceTree = "<group>"; };
 		1DAD1B4E23D09CEF0050B5B7 /* WOTWebResponseAdapterNested.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebResponseAdapterNested.swift; sourceTree = "<group>"; };
 		1DB67454221C01E100982EE6 /* WOTWebResponseAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebResponseAdapter.swift; sourceTree = "<group>"; };
-		1DBF899F240D0A80007DF8B2 /* WOTRequestArguments.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTRequestArguments.m; sourceTree = "<group>"; };
-		1DBF89A1240D0AB2007DF8B2 /* WOTRequestArguments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTRequestArguments.h; sourceTree = "<group>"; };
 		1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankMetricOptions.swift; sourceTree = "<group>"; };
 		1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMetric.swift; sourceTree = "<group>"; };
 		1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankMetricList.swift; sourceTree = "<group>"; };
@@ -234,6 +232,8 @@
 		1DBF89B3240E3BEE007DF8B2 /* WOTWebProxyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebProxyRequest.swift; sourceTree = "<group>"; };
 		1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebRequest.swift; sourceTree = "<group>"; };
 		1DBF89B9240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Meta+WOTWebResponseAdapter.swift"; sourceTree = "<group>"; };
+		1DBF89BB240F9D06007DF8B2 /* Dictionary_URLQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary_URLQuery.swift; sourceTree = "<group>"; };
+		1DBF89BD240FAE8C007DF8B2 /* WOTRequestArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestArguments.swift; sourceTree = "<group>"; };
 		1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModel.swift; sourceTree = "<group>"; };
 		1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModelProtocol.swift; sourceTree = "<group>"; };
 		1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeModuleNode.swift; sourceTree = "<group>"; };
@@ -583,8 +583,7 @@
 			children = (
 				1DBF89B9240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift */,
 				1DA83C9B21355A6D0039CB4B /* WOTRequestListener.h */,
-				1DBF89A1240D0AB2007DF8B2 /* WOTRequestArguments.h */,
-				1DBF899F240D0A80007DF8B2 /* WOTRequestArguments.m */,
+				1DBF89BD240FAE8C007DF8B2 /* WOTRequestArguments.swift */,
 				1DA83C9921355A6D0039CB4B /* WOTRequest.h */,
 				1DA83C9C21355A6D0039CB4B /* WOTRequest.m */,
 				1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */,
@@ -622,6 +621,7 @@
 				1DA83CA92135633F0039CB4B /* NSDictionary+Hash.h */,
 				1DA83CAB2135633F0039CB4B /* NSDictionary+Hash.m */,
 				1D65F7BD2215795F006A85E4 /* Dictionary_Merge.swift */,
+				1DBF89BB240F9D06007DF8B2 /* Dictionary_URLQuery.swift */,
 			);
 			path = NSDictionary;
 			sourceTree = "<group>";
@@ -795,7 +795,6 @@
 				1DA83C9E21355A6D0039CB4B /* WOTRequest.h in Headers */,
 				1DA83CAC2135633F0039CB4B /* NSMutableDictionary+WOT.h in Headers */,
 				1DA83CAD2135633F0039CB4B /* NSDictionary+Hash.h in Headers */,
-				1DBF89A2240D0AFC007DF8B2 /* WOTRequestArguments.h in Headers */,
 				1D8C293821357B9A00759C42 /* NSNumber+CustomFormatter.h in Headers */,
 				1D8C293721357B9A00759C42 /* NSNumber+Randomizer.h in Headers */,
 				1DA83C9D21355A6D0039CB4B /* WOTRequestExecutor.h in Headers */,
@@ -941,7 +940,6 @@
 				1DE5595921255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift in Sources */,
 				1DAD1B4F23D09CEF0050B5B7 /* WOTWebResponseAdapterNested.swift in Sources */,
 				1D65F8252216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift in Sources */,
-				1DBF89A0240D0A80007DF8B2 /* WOTRequestArguments.m in Sources */,
 				1D294B6522116856002DA600 /* String_UrlEncode.swift in Sources */,
 				1D65F8272216A7B8006A85E4 /* WOTDimensionFilterCalculator.swift in Sources */,
 				1DE558E12124560500576D41 /* WOTPivotDataNode.swift in Sources */,
@@ -951,6 +949,7 @@
 				1DA83CA121355A6D0039CB4B /* WOTRequest.m in Sources */,
 				1D5D024A23C87456004B0314 /* NSManagedObjectContext+AllObjects.swift in Sources */,
 				1D8C298521358ACA00759C42 /* NSThread+ExecutionOnMain.m in Sources */,
+				1DBF89BC240F9D06007DF8B2 /* Dictionary_URLQuery.swift in Sources */,
 				1DE5591D212458E100576D41 /* WOTPivotNodeIndex.swift in Sources */,
 				1D65F8292216A7B8006A85E4 /* WOTDimensionColumnCalculator.swift in Sources */,
 				1D5D023C23C86B75004B0314 /* AnyCodable.swift in Sources */,
@@ -980,6 +979,7 @@
 				1D8C297F21358A4800759C42 /* NSSet+WOT.m in Sources */,
 				1D65F7BE2215795F006A85E4 /* Dictionary_Merge.swift in Sources */,
 				1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */,
+				1DBF89BE240FAE8C007DF8B2 /* WOTRequestArguments.swift in Sources */,
 				1DE558E02124560500576D41 /* WOTPivotDataGroupNode.swift in Sources */,
 				1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */,
 				1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */,
