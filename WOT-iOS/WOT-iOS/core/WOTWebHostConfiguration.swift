@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class WOTWebHostConfiguration: NSObject, WebHostConfigurationProtocol {
+public class WOTWebHostConfiguration: NSObject, WOTHostConfigurationProtocol {
     
     public var applicationID: String {
         return "e3a1e0889ff9c76fa503177f351b853c"

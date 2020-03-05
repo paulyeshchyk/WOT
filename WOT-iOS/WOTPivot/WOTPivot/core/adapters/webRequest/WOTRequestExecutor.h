@@ -6,10 +6,10 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTRequest.h"
+#import <Foundation/Foundation.h>
 
 @protocol WebRequestListenerProtocol;
-@protocol WebHostConfigurationProtocol;
+@protocol WOTHostConfigurationProtocol;
 @class WOTRequest;
 @class WOTRequestArguments;
 
@@ -20,7 +20,7 @@ typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *bi
 + (WOTRequestExecutor *)sharedInstance;
 
 @property (nonatomic, readonly)NSInteger pendingRequestsCount;
-@property (nonatomic, strong) id<WebHostConfigurationProtocol> hostConfiguration;
+@property (nonatomic, strong) id<WOTHostConfigurationProtocol> hostConfiguration;
 
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass;

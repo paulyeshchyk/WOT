@@ -16,7 +16,7 @@ public typealias WOTRequestCallback = ( (JSON?, Error?, Data?) -> Void )
 open class WOTRequest: NSObject {
 
     @objc
-    public var hostConfiguration: WebHostConfigurationProtocol?
+    public var hostConfiguration: WOTHostConfigurationProtocol?
 
     @objc
     public var args: WOTRequestArguments?

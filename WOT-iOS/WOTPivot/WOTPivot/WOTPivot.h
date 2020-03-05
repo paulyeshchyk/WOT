@@ -9,7 +9,6 @@
 #import "WOTPivotDefines.h"
 #import "WOTWebResponseLink.h"
 #import "WOTRequestExecutor.h"
-#import "WOTRequest.h"
 #import "NSMutableDictionary+WOT.h"
 #import "NSDictionary+Hash.h"
 #import "NSBundle+LanguageBundle.h"

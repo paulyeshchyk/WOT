@@ -16,7 +16,7 @@ public protocol WebRequestListenerProtocol {
     var hash: Int { get }
     
     @objc
-    var hostConfiguration: WebHostConfigurationProtocol { get set }
+    var hostConfiguration: WOTHostConfigurationProtocol { get set }
     
     @objc
     func requestHasFinishedLoadData(_ request: Any, error: Error?)

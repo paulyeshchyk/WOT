@@ -1,5 +1,5 @@
 //
-//  WebHostConfigurationProtocol.swift
+//  WOTHostConfigurationProtocol.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 3/4/20.
@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol WebHostConfigurationProtocol {
+public protocol WOTHostConfigurationProtocol {
 
     @objc
     var applicationID: String { get }

@@ -13,18 +13,28 @@ public protocol WOTWebRequestProtocol {
     func parse(data: Data?)
 }
 
+@objc protocol WOTWebServiceProtocol {
+    var method: String { get }
+    var path: String { get }
+    var uniqueDescription: String? { get }
+    func notifyListenersAboutStart()
+    func requestHasFinishedLoadData(error: Error?)
+}
+
 @objc
-open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
+open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
 
     @objc
-    open class var modelClassName: String { return "" }
-    open var method: String { fatalError("shouldBeOverriden") }
-    open var path: String { fatalError("shouldBeOverriden") }
-    public var uniqueDescription: String { fatalError("shouldBeOverriden") }
+    public var uniqueDescription: String? = nil
 
     public var userInfo: [AnyHashable: Any]?
     public var httpBodyData: Data?
     
+
+    open class var modelClassName: String { return "" }
+    open var method: String { return "POST" }
+    open var path: String { return ""}
+
 
     public func notifyListenersAboutStart() {
         self.listeners.compactMap { $0 }.forEach {
@@ -67,10 +77,9 @@ open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
 
 }
 
-
 class WOTWebRequestBuilder {
 
-    private func buildURL(path: String, hostConfiguration: WebHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?) -> URL {
+    private func buildURL(path: String, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?) -> URL {
         var components = URLComponents()
         components.scheme = hostConfiguration?.scheme
         components.host = hostConfiguration?.host
@@ -85,7 +94,7 @@ class WOTWebRequestBuilder {
 
     }
 
-    public func build(path: String, hostConfiguration: WebHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?, method: String) -> URLRequest {
+    public func build(path: String, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?, method: String) -> URLRequest {
         let url = buildURL(path: path, hostConfiguration: hostConfiguration, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
