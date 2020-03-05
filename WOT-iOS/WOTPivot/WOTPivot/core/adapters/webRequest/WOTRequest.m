@@ -7,91 +7,91 @@
 //
 
 #import "WOTRequest.h"
-#import <WOTPivot/WOTPivot.h>
-#import <WOTPivot/WOTPivot-Swift.h>
+//#import <WOTPivot/WOTPivot.h>
+//#import <WOTPivot/WOTPivot-Swift.h>
 
-@interface WOTRequest ()
-
-@property (nonatomic, strong)NSMutableArray *groups;
-
-@end
-
-@implementation WOTRequest
-
-- (id)init {
-    
-    self = [super init];
-    if (self){
-        
-        self.listeners = [[NSMutableArray alloc] init];
-    }
-    return self;
-}
-
-- (void)dealloc {
-    [self.listeners removeAllObjects];
-}
-
-- (void)addListener:(id<WebRequestListenerProtocol>)listener {
-    [self.listeners addObject:listener];
-}
-
-- (void)removeListener:(id<WebRequestListenerProtocol>)listener {
-    [self.listeners removeObject:listener];
-}
-
-
-- (void)start:(WOTRequestArguments * _Nonnull)args {
-    NSCAssert(NO, @"should be overriden");
-}
-
-- (void)cancel {
-    
-    NSCAssert(NO, @"should be overriden");
-}
-
-- (void)cancelAndRemoveFromQueue {
-    NSCAssert(NO, @"should be overriden");
-}
-
-- (BOOL)isEqual:(id)object {
-
-    BOOL result = [NSStringFromClass([object class]) isEqualToString:NSStringFromClass([self class])];
-    NSUInteger selfHash = [self hash];
-    NSUInteger objectHash = [(WOTRequest *)object hash];
-    result &= (selfHash == objectHash);
-    
-    return result;
-}
-
-- (NSUInteger)hash {
-    
-    return [self.args hash];
-}
-
-- (NSArray *)availableInGroups {
- 
-    return self.groups;
-}
-
-- (void)addGroup:(NSString *)group {
-    
-    if (!self.groups) {
-        
-        self.groups = [[NSMutableArray alloc] init];
-    }
-    
-    [self.groups addObject:group];
-    
-}
-
-- (void)removeGroup:(NSString *)group {
-    
-    if (self.groups) {
-        
-        [self.groups removeObject:group];
-    }
-    
-}
-
-@end
+//@interface WOTRequest ()
+//
+//@property (nonatomic, strong)NSMutableArray *groups;
+//
+//@end
+//
+//@implementation WOTRequest
+//
+//- (id)init {
+//
+//    self = [super init];
+//    if (self){
+//
+//        self.listeners = [[NSMutableArray alloc] init];
+//    }
+//    return self;
+//}
+//
+//- (void)dealloc {
+//    [self.listeners removeAllObjects];
+//}
+//
+//- (void)addListener:(id<WebRequestListenerProtocol>)listener {
+//    [self.listeners addObject:listener];
+//}
+//
+//- (void)removeListener:(id<WebRequestListenerProtocol>)listener {
+//    [self.listeners removeObject:listener];
+//}
+//
+//
+//- (void)start:(WOTRequestArguments * _Nonnull)args {
+//    NSCAssert(NO, @"should be overriden");
+//}
+//
+//- (void)cancel {
+//
+//    NSCAssert(NO, @"should be overriden");
+//}
+//
+//- (void)cancelAndRemoveFromQueue {
+//    NSCAssert(NO, @"should be overriden");
+//}
+//
+//- (BOOL)isEqual:(id)object {
+//
+//    BOOL result = [NSStringFromClass([object class]) isEqualToString:NSStringFromClass([self class])];
+//    NSUInteger selfHash = [self hash];
+//    NSUInteger objectHash = [(WOTRequest *)object hash];
+//    result &= (selfHash == objectHash);
+//
+//    return result;
+//}
+//
+//- (NSUInteger)hash {
+//
+//    return [self.args hash];
+//}
+//
+//- (NSArray *)availableInGroups {
+//
+//    return self.groups;
+//}
+//
+//- (void)addGroup:(NSString *)group {
+//
+//    if (!self.groups) {
+//
+//        self.groups = [[NSMutableArray alloc] init];
+//    }
+//
+//    [self.groups addObject:group];
+//
+//}
+//
+//- (void)removeGroup:(NSString *)group {
+//
+//    if (self.groups) {
+//
+//        [self.groups removeObject:group];
+//    }
+//
+//}
+//
+//@end

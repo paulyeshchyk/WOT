@@ -13,6 +13,9 @@ import Foundation
 public protocol WebRequestListenerProtocol {
     
     @objc
+    var hash: Int { get }
+    
+    @objc
     var hostConfiguration: WebHostConfigurationProtocol { get set }
     
     @objc

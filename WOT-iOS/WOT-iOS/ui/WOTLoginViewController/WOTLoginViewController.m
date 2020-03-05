@@ -100,9 +100,7 @@
     if (language) {
 
         [WOTApplicationDefaults setLanguage:language];
-
-        WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
+        [WOTSessionManager login];
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];

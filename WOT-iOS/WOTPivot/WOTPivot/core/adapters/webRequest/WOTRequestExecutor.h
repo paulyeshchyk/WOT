@@ -9,6 +9,11 @@
 #import "WOTRequest.h"
 
 @protocol WebRequestListenerProtocol;
+@protocol WebHostConfigurationProtocol;
+@class WOTRequest;
+@class WOTRequestArguments;
+
+typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
 
 @interface WOTRequestExecutor : NSObject <WebRequestListenerProtocol>
 + (NSString *)pendingRequestNotificationName;

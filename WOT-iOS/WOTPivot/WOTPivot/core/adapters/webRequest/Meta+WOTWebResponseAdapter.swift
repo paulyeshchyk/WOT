@@ -13,7 +13,7 @@ public protocol JSONMapperProtocol {
     
     associatedtype Fields
 
-    func mapping(fromJSON jSON: JSON)
+    mutating func mapping(fromJSON jSON: JSON)
     func mapping(fromArray array: [Any])
 
     func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingCompletion?)

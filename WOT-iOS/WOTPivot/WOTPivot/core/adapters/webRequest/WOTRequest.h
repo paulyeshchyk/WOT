@@ -6,34 +6,35 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTRequestListener.h"
+#import <Foundation/Foundation.h>
 
-typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
-
-
-@class WOTRequestArguments;
-@protocol WOTWebRequestProtocol;
-@protocol WebHostConfigurationProtocol;
-@protocol WebRequestListenerProtocol;
-
-@interface WOTRequest : NSObject
-
-@property (nonatomic, weak) id<WebHostConfigurationProtocol> hostConfiguration;
-
-@property (nonatomic, copy) WOTRequestCallback callback;
-@property (nonatomic, readonly) WOTRequestArguments * _Nullable args;
-
-@property (nonatomic, readonly)NSArray *availableInGroups;
-@property (nonatomic, strong)NSMutableArray *listeners;
-
-- (void)addListener:(id<WebRequestListenerProtocol>)listener;
-- (void)removeListener:(id<WebRequestListenerProtocol>)listener;
-
-- (void)addGroup:(NSString *)group;
-- (void)removeGroup:(NSString *)group;
-
-- (void)start:(WOTRequestArguments * _Nonnull)args ;//DEPRECATED_ATTRIBUTE;
-- (void)cancel;
-- (void)cancelAndRemoveFromQueue;
-
-@end
+//@class WOTRequestArguments;
+//
+//@protocol WebHostConfigurationProtocol;
+//@protocol WOTWebRequestProtocol;
+//@protocol WebRequestListenerProtocol;
+//
+//typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
+//
+//
+//@interface WOTRequest : NSObject
+//
+//@property (nonatomic, weak) id<WebHostConfigurationProtocol> hostConfiguration;
+//
+//@property (nonatomic, copy) WOTRequestCallback callback;
+//@property (nonatomic, readonly) WOTRequestArguments * _Nullable args;
+//
+//@property (nonatomic, readonly)NSArray *availableInGroups;
+//@property (nonatomic, strong)NSMutableArray *listeners;
+//
+//- (void)addListener:(id<WebRequestListenerProtocol>)listener;
+//- (void)removeListener:(id<WebRequestListenerProtocol>)listener;
+//
+//- (void)addGroup:(NSString *)group;
+//- (void)removeGroup:(NSString *)group;
+//
+//- (void)start:(WOTRequestArguments * _Nonnull)args ;//DEPRECATED_ATTRIBUTE;
+//- (void)cancel;
+//- (void)cancelAndRemoveFromQueue;
+//
+//@end

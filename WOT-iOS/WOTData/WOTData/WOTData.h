@@ -27,5 +27,3 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 #import "WOTWEBRequestLogout.h"
 #import "WOTWEBRequestLogin.h"
-#import "WOTSaveSessionRequest.h"
-#import "WOTClearSessionRequest.h"

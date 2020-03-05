@@ -58,11 +58,20 @@
 }
 
 + (void)login {
+
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
     BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_LOGIN];
     if (canAdd) {
         
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
+        NSString *appId = [WOTRequestExecutor sharedInstance].hostConfiguration.applicationID;
+        NSString *noFollow = @"1";
+        NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",[WOTRequestExecutor sharedInstance].hostConfiguration.host];
+        WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
+        [args setValues:@[appId] forKey: WGWebQueryArgs.application_id];
+        [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
+        [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
+        
+        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
     }
 }
 

@@ -76,11 +76,11 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
         self.rootDataNode.addChild(dataNode)
     }
 
-    override public var nodes: [WOTNodeProtocol] {
+    override open var nodes: [WOTNodeProtocol] {
         return [self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode]
     }
 
-    override public func clearRootNodes() {
+    override open func clearRootNodes() {
         self.rootDataNode.removeChildren(completion: { _ in })
         self.rootRowsNode.removeChildren(completion: { _ in })
         self.rootColsNode.removeChildren(completion: { _ in })

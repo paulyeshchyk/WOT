@@ -17,7 +17,7 @@ public protocol WOTWebRequestProtocol {
 open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
 
     @objc
-    open class var modelClassName: String { fatalError("shouldBeOverriden") }
+    open class var modelClassName: String { return "" }
     open var method: String { fatalError("shouldBeOverriden") }
     open var path: String { fatalError("shouldBeOverriden") }
     public var uniqueDescription: String { fatalError("shouldBeOverriden") }
@@ -27,25 +27,24 @@ open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
     
 
     public func notifyListenersAboutStart() {
-        self.listeners.compactMap { $0 as? WebRequestListenerProtocol}.forEach {
+        self.listeners.compactMap { $0 }.forEach {
             $0.requestHasStarted(self)
         }
     }
 
     public func requestHasFinishedLoadData(error: Error?) {
-        self.listeners.compactMap { $0 as? WebRequestListenerProtocol}.forEach {
+        self.listeners.compactMap { $0 }.forEach {
             $0.requestHasFinishedLoadData(self, error: error)
         }
     }
     
-    public override func cancel() {
-        self.listeners.compactMap { $0 as? WebRequestListenerProtocol}.forEach {
+    open override func cancel() {
+        self.listeners.compactMap { $0 }.forEach {
             $0.requestHasCanceled(self)
         }
     }
 
-    public override func start(_ args: WOTRequestArguments) {
-//        super.start(args)
+    open override func start(_ args: WOTRequestArguments) {
 
         let requestBuilder = WOTWebRequestBuilder()
         let request = requestBuilder.build(path: path, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData, method: method)
@@ -60,15 +59,21 @@ open class WOTWEBRequest: WOTRequest, NSURLConnectionDataDelegate {
         pumper.start()
         self.notifyListenersAboutStart()
     }
+    
+    @objc
+    open override func cancelAndRemoveFromQueue() {
+        self.cancel()
+    }
+
 }
 
 
 class WOTWebRequestBuilder {
 
-    private func buildURL(path: String, hostConfiguration: WebHostConfigurationProtocol, args: WOTRequestArguments, bodyData: Data?) -> URL {
+    private func buildURL(path: String, hostConfiguration: WebHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?) -> URL {
         var components = URLComponents()
-        components.scheme = hostConfiguration.scheme
-        components.host = hostConfiguration.host
+        components.scheme = hostConfiguration?.scheme
+        components.host = hostConfiguration?.host
         components.path = path
         if bodyData == nil {
             components.query = args.buildQuery()
@@ -80,7 +85,7 @@ class WOTWebRequestBuilder {
 
     }
 
-    public func build(path: String, hostConfiguration: WebHostConfigurationProtocol, args: WOTRequestArguments, bodyData: Data?, method: String) -> URLRequest {
+    public func build(path: String, hostConfiguration: WebHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?, method: String) -> URLRequest {
         let url = buildURL(path: path, hostConfiguration: hostConfiguration, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
@@ -136,14 +141,6 @@ class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
     }
 }
 
-extension WOTWEBRequest {
-    
-    @objc
-    public override func cancelAndRemoveFromQueue() {
-        self.cancel()
-    }
-}
-
 extension WOTWEBRequest: WOTWebRequestProtocol {
     
     struct WOTWEBRequestError: Error {
@@ -167,7 +164,7 @@ extension WOTWEBRequest: WOTWebRequestProtocol {
         }
         
         self.requestHasFinishedLoadData(error: nil)
-        self.callback(mutableData, error, data)
+        self.callback?(mutableData, error, data)
     }
     
     private func json(from data: Data?, completion: ( ( JSON? ) -> Void )? ) -> Error? {

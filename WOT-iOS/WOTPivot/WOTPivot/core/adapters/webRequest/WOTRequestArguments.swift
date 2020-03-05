@@ -37,7 +37,7 @@ open class WOTRequestArguments: NSObject {
     }
     
     @objc
-    public override var hash: Int {
+    open override var hash: Int {
 
         do {
             let data = try JSONSerialization.data(withJSONObject: dictionary, options: JSONSerialization.WritingOptions.prettyPrinted)

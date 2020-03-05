@@ -24,7 +24,6 @@ extension NSString: URLEncodedProtocol {
     }
 }
 
-
 extension Array: URLEncodedProtocol {
     
     public func urlEncoded() -> String? {
