@@ -10,6 +10,7 @@ import Foundation
 
 @objc
 open class WOTRequestArguments: NSObject {
+    
     @objc
     public private(set) var dictionary = [AnyHashable: Any]()
     

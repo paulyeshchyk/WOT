@@ -9,10 +9,10 @@
 import Foundation
 
 @objc
-public class WOTWEBRequestModulesTree : WOTWEBRequest {
+public class WOTWEBRequestModulesTree : WOTWEBRequest, WOTModelServiceProtocol {
     
     @objc
-    override public class var modelClassName: String {
+    public class func modelClassName() -> String {
         return NSStringFromClass(ModulesTree.self)
     }
 

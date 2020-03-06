@@ -217,12 +217,15 @@
 - (NSArray *)requestIDsForClass:(NSString *)clazz {
     NSMutableArray *result = [[NSMutableArray alloc] init];
     [self.registeredRequests.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
-        Class request = self.registeredRequests[key];
-        NSString *registeredClazz = [request performSelector: @selector(modelClassName)];
-        if ([registeredClazz compare:clazz] == NSOrderedSame) {
-            [result addObject:key];
+        id request = self.registeredRequests[key];
+        if ([request conformsToProtocol:@protocol(WOTModelServiceProtocol)]) {
+            id<WOTModelServiceProtocol> modelService = (id<WOTModelServiceProtocol>)request;
+            
+            NSString *registeredClazz = [modelService modelClassName];
+            if ([registeredClazz compare:clazz] == NSOrderedSame) {
+                [result addObject:key];
+            }
         }
-
     }];
     return result;
 }

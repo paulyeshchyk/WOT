@@ -20,10 +20,6 @@
 		1D5D0AAC23CCAB06004B0314 /* WOTCoreDataPredicates.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D0AAA23CCAB06004B0314 /* WOTCoreDataPredicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D5D0AD723CCAB7B004B0314 /* WOTWEBRequest+Stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AB523CCAB7B004B0314 /* WOTWEBRequest+Stubs.m */; };
 		1D5D0AE223CCAB7B004B0314 /* WOTWEBRequest+Stubs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D0AC523CCAB7B004B0314 /* WOTWEBRequest+Stubs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1D5D0AE523CCAB7B004B0314 /* WOTWEBRequestLogin.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D0ACA23CCAB7B004B0314 /* WOTWEBRequestLogin.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1D5D0AE623CCAB7B004B0314 /* WOTWEBRequestLogout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0ACB23CCAB7B004B0314 /* WOTWEBRequestLogout.m */; };
-		1D5D0AE723CCAB7B004B0314 /* WOTWEBRequestLogout.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D0ACC23CCAB7B004B0314 /* WOTWEBRequestLogout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1D5D0AE823CCAB7B004B0314 /* WOTWEBRequestLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0ACD23CCAB7B004B0314 /* WOTWEBRequestLogin.m */; };
 		1D5D0AF023CCABD2004B0314 /* WOTSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D5D0AEE23CCABD2004B0314 /* WOTSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D5D0AF123CCABD2004B0314 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AEF23CCABD2004B0314 /* WOTSessionManager.m */; };
 		1D5D0AF323CCAC05004B0314 /* WOTDataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AF223CCAC05004B0314 /* WOTDataAPI.swift */; };
@@ -158,10 +154,6 @@
 		1D5D0AAA23CCAB06004B0314 /* WOTCoreDataPredicates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTCoreDataPredicates.h; sourceTree = "<group>"; };
 		1D5D0AB523CCAB7B004B0314 /* WOTWEBRequest+Stubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTWEBRequest+Stubs.m"; sourceTree = "<group>"; };
 		1D5D0AC523CCAB7B004B0314 /* WOTWEBRequest+Stubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTWEBRequest+Stubs.h"; sourceTree = "<group>"; };
-		1D5D0ACA23CCAB7B004B0314 /* WOTWEBRequestLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestLogin.h; sourceTree = "<group>"; };
-		1D5D0ACB23CCAB7B004B0314 /* WOTWEBRequestLogout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestLogout.m; sourceTree = "<group>"; };
-		1D5D0ACC23CCAB7B004B0314 /* WOTWEBRequestLogout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWEBRequestLogout.h; sourceTree = "<group>"; };
-		1D5D0ACD23CCAB7B004B0314 /* WOTWEBRequestLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWEBRequestLogin.m; sourceTree = "<group>"; };
 		1D5D0AEE23CCABD2004B0314 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		1D5D0AEF23CCABD2004B0314 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
 		1D5D0AF223CCAC05004B0314 /* WOTDataAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataAPI.swift; sourceTree = "<group>"; };
@@ -479,10 +471,6 @@
 			children = (
 				1D98DA4C240FEEC900E258E5 /* WOTWEBRequestLogin.swift */,
 				1D2612112410DC7500CFEB16 /* WOTWEBRequestLogout.swift */,
-				1D5D0ACA23CCAB7B004B0314 /* WOTWEBRequestLogin.h */,
-				1D5D0ACD23CCAB7B004B0314 /* WOTWEBRequestLogin.m */,
-				1D5D0ACB23CCAB7B004B0314 /* WOTWEBRequestLogout.m */,
-				1D5D0ACC23CCAB7B004B0314 /* WOTWEBRequestLogout.h */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -669,7 +657,6 @@
 			files = (
 				1D8C299021358CA600759C42 /* WOTDataDefines.h in Headers */,
 				1D5D0AE223CCAB7B004B0314 /* WOTWEBRequest+Stubs.h in Headers */,
-				1D5D0AE523CCAB7B004B0314 /* WOTWEBRequestLogin.h in Headers */,
 				1DAD1B8623D1C8C20050B5B7 /* WOTData+Mapping.h in Headers */,
 				1DAD1B9123D1C8C30050B5B7 /* WOTWebResponseAdapterModulesTree.h in Headers */,
 				1DAD1B8423D1C8C20050B5B7 /* WOTWebResponseAdapterGuns.h in Headers */,
@@ -680,7 +667,6 @@
 				1DAD1B8E23D1C8C30050B5B7 /* Vehicles+WOTWebResponseAdapter.h in Headers */,
 				1DAD1B9623D1C8C30050B5B7 /* ModulesTree+FillProperties.h in Headers */,
 				1DAD1B9523D1C8C30050B5B7 /* ModulesTree+CustomName.h in Headers */,
-				1D5D0AE723CCAB7B004B0314 /* WOTWEBRequestLogout.h in Headers */,
 				1D5D0AF023CCABD2004B0314 /* WOTSessionManager.h in Headers */,
 				1D5D0AAC23CCAB06004B0314 /* WOTCoreDataPredicates.h in Headers */,
 				1D3DAEDB2133FD5300368AFA /* WOTData.h in Headers */,
@@ -800,7 +786,6 @@
 				1DAD1BCD23D1D2CC0050B5B7 /* VehicleprofileGun+CoreDataClass.swift in Sources */,
 				1DAD1B3623D0581B0050B5B7 /* VehicleprofileGun+JSONMapperProtocol.swift in Sources */,
 				1D8B7AC723CEF37A00610751 /* WOTModuleType.swift in Sources */,
-				1D5D0AE823CCAB7B004B0314 /* WOTWEBRequestLogin.m in Sources */,
 				1DAD1B3E23D0581B0050B5B7 /* VehicleprofileAmmo+JSONMapperProtocol.swift in Sources */,
 				1DAD1B3D23D0581B0050B5B7 /* Tankchassis+JSONMapperProtocol.swift in Sources */,
 				1DBF89AE240D3C36007DF8B2 /* WOTWebResponseAdapter.swift in Sources */,
@@ -869,7 +854,6 @@
 				1DAD1BDE23D1D2CC0050B5B7 /* VehicleprofileModule+CoreDataProperties.swift in Sources */,
 				1DAD1BEF23D1D2CC0050B5B7 /* VehicleprofileAmmoPenetration+CoreDataClass.swift in Sources */,
 				1DAD1BEA23D1D2CC0050B5B7 /* VehicleprofileAmmoList+CoreDataProperties.swift in Sources */,
-				1D5D0AE623CCAB7B004B0314 /* WOTWEBRequestLogout.m in Sources */,
 				1DAD1BE023D1D2CC0050B5B7 /* VehicleprofileTurret+CoreDataProperties.swift in Sources */,
 				1D5D0A4E23CCAA78004B0314 /* WOT_iOS.xcdatamodeld in Sources */,
 				1D8B787223CDCCCC00610751 /* WOTWEBRequestTankRadios.swift in Sources */,

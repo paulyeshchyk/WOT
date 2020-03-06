@@ -9,12 +9,12 @@
 import Foundation
 
 @objc
-public class WOTWEBRequestTanks: WOTWEBRequest {
+public class WOTWEBRequestTanks: WOTWEBRequest, WOTModelServiceProtocol {
 
     override public var method: String { return "POST" }
 
     @objc
-    override public class var modelClassName: String {
+    public static func modelClassName() -> String {
         return NSStringFromClass(Vehicles.self)
     }
 

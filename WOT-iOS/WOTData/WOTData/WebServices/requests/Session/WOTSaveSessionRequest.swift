@@ -11,8 +11,6 @@ import Foundation
 @objc
 public class WOTSaveSessionRequest : WOTWEBRequest {
 
-    @objc
-    override public class var modelClassName: String {        return ""    }
     //- (void)start:(WOTRequestArguments * _Nonnull)args{
     //
     //    //[super start:args];

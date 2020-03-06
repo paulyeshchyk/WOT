@@ -13,12 +13,18 @@ public protocol WOTWebRequestProtocol {
     func parse(data: Data?)
 }
 
-@objc protocol WOTWebServiceProtocol {
+@objc(WOTWebServiceProtocol)
+public protocol WOTWebServiceProtocol {
     var method: String { get }
     var path: String { get }
     var uniqueDescription: String? { get }
     func notifyListenersAboutStart()
     func requestHasFinishedLoadData(error: Error?)
+}
+
+@objc(WOTModelServiceProtocol)
+public protocol WOTModelServiceProtocol {
+    @objc static func modelClassName() -> String
 }
 
 @objc
@@ -29,12 +35,9 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
 
     public var userInfo: [AnyHashable: Any]?
     public var httpBodyData: Data?
-    
 
-    open class var modelClassName: String { return "" }
     open var method: String { return "POST" }
     open var path: String { return ""}
-
 
     public func notifyListenersAboutStart() {
         self.listeners.compactMap { $0 }.forEach {
@@ -53,11 +56,16 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
             $0.requestHasCanceled(self)
         }
     }
+    
+    open func urlRequest(with args: WOTRequestArguments) -> URLRequest {
+
+        let requestBuilder = WOTWebRequestBuilder()
+        return requestBuilder.build(service: self, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
+    }
 
     open override func start(_ args: WOTRequestArguments) {
 
-        let requestBuilder = WOTWebRequestBuilder()
-        let request = requestBuilder.build(path: path, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData, method: method)
+        let request = urlRequest(with: args)
         let pumper = WOTWebDataPumper(request: request) {[weak self] (data, error) in
             guard let self = self else { return }
             
@@ -74,7 +82,6 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     open override func cancelAndRemoveFromQueue() {
         self.cancel()
     }
-
 }
 
 class WOTWebRequestBuilder {
@@ -94,15 +101,14 @@ class WOTWebRequestBuilder {
 
     }
 
-    public func build(path: String, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?, method: String) -> URLRequest {
-        let url = buildURL(path: path, hostConfiguration: hostConfiguration, args: args, bodyData: bodyData)
+    public func build(service: WOTWebServiceProtocol, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?) -> URLRequest {
+        let url = buildURL(path: service.path, hostConfiguration: hostConfiguration, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
         result.httpBody = bodyData
         result.timeoutInterval = 0
-        result.httpMethod = method
+        result.httpMethod = service.method
         return result
-
     }
 }
 

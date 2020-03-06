@@ -12,14 +12,25 @@ import Foundation
 
 public typealias WOTRequestCallback = ( (JSON?, Error?, Data?) -> Void )
 
+
 @objc
-open class WOTRequest: NSObject {
+public protocol WOTRequestProtocol {
+    
+    @objc
+    func cancel()
+    
+    @objc
+    func start(_ args: WOTRequestArguments)
+    
+    @objc
+    func cancelAndRemoveFromQueue()
+}
+
+@objc
+open class WOTRequest: NSObject, WOTRequestProtocol {
 
     @objc
     public var hostConfiguration: WOTHostConfigurationProtocol?
-
-    @objc
-    public var args: WOTRequestArguments?
 
     @objc
     public var availableInGroups = [Int]()
@@ -32,8 +43,6 @@ open class WOTRequest: NSObject {
     
     private var groups = [String]()
 
-    
-    
     @objc
     open func addGroup(_ group: String ) {
         groups.append(group)
@@ -57,20 +66,14 @@ open class WOTRequest: NSObject {
             listeners.remove(at: index)
         }
     }
+    
+    @objc
+    open func cancel() { }
+    
+    @objc
+    open func start(_ args: WOTRequestArguments) { }
+    
+    @objc
+    open func cancelAndRemoveFromQueue() { }
 
-    @objc
-    open func cancel() {
-        
-    }
-    
-    @objc
-    open func start(_ args: WOTRequestArguments) {
-        
-    }
-    
-    @objc
-    open func cancelAndRemoveFromQueue() {
-        
-    }
-    
 }

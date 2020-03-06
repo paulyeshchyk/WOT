@@ -13,9 +13,6 @@ public class WOTClearSessionRequest : WOTWEBRequest {
 
     override public var method: String { return "POST" }
     
-    @objc
-    override public class var modelClassName: String {        return ""    }
-
     //- (void)start:(WOTRequestArguments * _Nonnull)args {
     //
     //    [super start:args];

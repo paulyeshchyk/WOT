@@ -9,12 +9,12 @@
 import Foundation
 
 @objc
-public class WOTWEBRequestTankRadios: WOTWEBRequest {
+public class WOTWEBRequestTankRadios: WOTWEBRequest, WOTModelServiceProtocol {
 
     override public var method: String { return "POST" }
     
     @objc
-    override public class var modelClassName: String {
+    public class func modelClassName() -> String {
         return NSStringFromClass(Tankradios.self)
     }
     
