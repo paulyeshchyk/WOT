@@ -180,38 +180,34 @@
         return nil;
     }
     
-    __weak typeof(self)weakSelf = self;
-    
     WOTRequest *request = [[RegisteredRequestClass alloc] init];
     request.hostConfiguration = self.hostConfiguration;
-    [request setCallback:^(NSDictionary *json, NSError *error, NSData *binary){
-        
-        //TODO: handle error here!!!
-        
-        //callbacks
-        [weakSelf.registeredRequestCallbacks[@(requestId)] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
-            
-            obj(json, error, binary);
-        }];
-        
-        //dataAdapters
-        NSSet *dataAdapters = weakSelf.registeredDataAdapters[@(requestId)];
-        
-        [dataAdapters enumerateObjectsUsingBlock:^(Class class, BOOL *stop) {
-            
-            if (!([class conformsToProtocol:@protocol(WOTWebResponseAdapter) ])) {
-                debugError(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
-                return;
-            }
 
-            id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-            [adapter parseJSON:json nestedRequestsCallback:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
-                [self evaluateNestedRequests:requests];
-            }];
-        }];
+    return request;
+}
+
+- (void)processRequestId:(NSNumber *)requestId json:(NSDictionary *)json error:(NSError *) error binary: (NSData *)binary {
+
+    [self.registeredRequestCallbacks[requestId] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
+        
+        obj(json, error, binary);
     }];
     
-    return request;
+    //dataAdapters
+    NSSet *dataAdapters = self.registeredDataAdapters[requestId];
+    
+    [dataAdapters enumerateObjectsUsingBlock:^(Class class, BOOL *stop) {
+        
+        if (!([class conformsToProtocol:@protocol(WOTWebResponseAdapter) ])) {
+            debugError(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
+            return;
+        }
+        
+        id<WOTWebResponseAdapter> adapter = [[class alloc] init];
+        [adapter parseJSON:json nestedRequestsCallback:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+            [self evaluateNestedRequests:requests];
+        }];
+    }];
 }
 
 - (NSArray *)requestIDsForClass:(NSString *)clazz {
@@ -264,7 +260,20 @@
 
 #pragma mark - WOTRequestListener
 
-- (void)requestHasFinishedLoadData:(id)request error: (NSError *) error{
+- (void)request:(id)request finishedLoadData:(NSData *)data json:(NSDictionary *)json error:(NSError *)error {
+
+    Class clazz = [request class];
+    
+    if ([clazz conformsToProtocol:@protocol(WOTModelServiceProtocol)]) {
+        id<WOTModelServiceProtocol> modelService = (id<WOTModelServiceProtocol>)clazz;
+        
+        NSString *modelClassName = [modelService modelClassName];
+        NSArray* requestIds = [self requestIDsForClass: modelClassName];
+        
+        for (NSNumber* requestId in requestIds) {
+            [self processRequestId:requestId json:json error:error binary:data];
+        }
+    }
 
     self.pendingRequestsCount -= 1;
     [self removeRequest:request];

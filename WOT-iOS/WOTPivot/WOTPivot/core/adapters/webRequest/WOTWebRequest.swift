@@ -19,7 +19,7 @@ public protocol WOTWebServiceProtocol {
     var path: String { get }
     var uniqueDescription: String? { get }
     func notifyListenersAboutStart()
-    func requestHasFinishedLoadData(error: Error?)
+    func requestHasFinishedLoad(data: Data?, json: JSON?, error: Error?)
 }
 
 @objc(WOTModelServiceProtocol)
@@ -45,9 +45,9 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         }
     }
 
-    public func requestHasFinishedLoadData(error: Error?) {
+    public func requestHasFinishedLoad(data: Data?, json: JSON?, error: Error?) {
         self.listeners.compactMap { $0 }.forEach {
-            $0.requestHasFinishedLoadData(self, error: error)
+            $0.request(self, finishedLoadData: data, json: json, error: error)
         }
     }
     
@@ -71,7 +71,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
             
             self.parse(data: data)
 
-            self.requestHasFinishedLoadData(error: error)
+            self.requestHasFinishedLoad(data: nil, json: nil, error: error)
         }
         
         pumper.start()
@@ -172,14 +172,13 @@ extension WOTWEBRequest: WOTWebRequestProtocol {
     
     public func parse(data: Data?) {
         
-        var mutableData: JSON = .init()
+        var jsonResult: JSON = .init()
         let error = json(from: data) { (json) in
-            mutableData.append(with: self.userInfo ?? [:])
-            mutableData.append(with: json ?? [:])
+            jsonResult.append(with: self.userInfo ?? [:])
+            jsonResult.append(with: json ?? [:])
         }
         
-        self.requestHasFinishedLoadData(error: nil)
-        self.callback?(mutableData, error, data)
+        self.requestHasFinishedLoad(data: data, json: jsonResult, error: error)
     }
     
     private func json(from data: Data?, completion: ( ( JSON? ) -> Void )? ) -> Error? {

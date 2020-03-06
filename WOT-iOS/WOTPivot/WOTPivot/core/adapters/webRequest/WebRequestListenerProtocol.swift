@@ -19,7 +19,7 @@ public protocol WebRequestListenerProtocol {
     var hostConfiguration: WOTHostConfigurationProtocol { get set }
     
     @objc
-    func requestHasFinishedLoadData(_ request: Any, error: Error?)
+    func request(_ request: Any, finishedLoadData data:Data?, json:JSON?, error: Error?)
 
     @objc
     func requestHasCanceled(_ request: Any)

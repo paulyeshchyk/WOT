@@ -8,11 +8,6 @@
 
 import Foundation
 
-//typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
-
-public typealias WOTRequestCallback = ( (JSON?, Error?, Data?) -> Void )
-
-
 @objc
 public protocol WOTRequestProtocol {
     
@@ -38,9 +33,6 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
     @objc
     public var listeners = [WebRequestListenerProtocol]()
 
-    @objc
-    public var callback: WOTRequestCallback?
-    
     private var groups = [String]()
 
     @objc
