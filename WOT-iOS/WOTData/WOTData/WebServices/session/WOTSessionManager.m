@@ -50,17 +50,17 @@
 
 + (void)logout {
     
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogout];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_LOGOUT];
+    id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogout];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:WOT_REQUEST_ID_LOGOUT];
     if (canAdd) {
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
+        [request start:nil];
     }
 }
 
 + (void)login {
 
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_LOGIN];
+    id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:WOT_REQUEST_ID_LOGIN];
     if (canAdd) {
         
         NSString *appId = [WOTRequestExecutor sharedInstance].hostConfiguration.applicationID;
@@ -70,8 +70,7 @@
         [args setValues:@[appId] forKey: WGWebQueryArgs.application_id];
         [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
         [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
-        
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+        [request start:args];
     }
 }
 

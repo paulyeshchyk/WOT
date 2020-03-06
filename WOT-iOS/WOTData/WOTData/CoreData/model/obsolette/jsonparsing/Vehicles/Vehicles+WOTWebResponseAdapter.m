@@ -46,13 +46,12 @@
             [NSThread executeOnMainThread:^{
                 
                 WOTRequestArguments *args = [[WOTRequestArguments alloc] init:requests[requestId]];
-                WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:[requestId integerValue]];
+                id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:[requestId integerValue]];
                 
                 NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
-                BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:groupId];
+                BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:groupId];
                 if (canAdd) {
-                    
-                    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+                    [request start:args];
                 }
             }];
             

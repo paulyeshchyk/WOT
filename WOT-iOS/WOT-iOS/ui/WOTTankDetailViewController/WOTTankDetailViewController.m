@@ -300,11 +300,10 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
     [arguments setValues:@[tankId] forKey:WOTApiKeys.tank_id];
 
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+    id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
     if (canAdd) {
-
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:arguments];
+        [request start:arguments];
     }
 }
 
@@ -341,13 +340,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [args setValues:@[[[Vehicles keypaths] componentsJoinedByString:@","]]  forKey:WGWebQueryArgs.fields];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:groupId];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:groupId];
     if (canAdd) {
-        
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+        [request start:args];
     }
 }
-
 
 - (void)executeDefaultProfileRequestForTankId:(id)tankId {
     
@@ -355,15 +352,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [args setValues:@[tankId]  forKey:WOTApiKeys.tank_id];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
     if (canAdd) {
-        
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+        [request start:args];
     }
 }
-
-
-
 
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {

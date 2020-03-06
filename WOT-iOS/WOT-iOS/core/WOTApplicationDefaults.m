@@ -101,10 +101,10 @@
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WOT_NOTIFICATION_LOGOUT object:nil userInfo:nil];
             WOTRequest *clearSessionRequest = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdClearSession];
-            [[WOTRequestExecutor sharedInstance] runRequest:clearSessionRequest withArgs:nil];
+            [clearSessionRequest start:nil];
             
             WOTRequest *loginRequest = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-            [[WOTRequestExecutor sharedInstance] runRequest:loginRequest withArgs:nil];
+            [loginRequest start:nil];
         }
         
     }];
@@ -187,7 +187,7 @@ WOTLoginCallback loginCallback = ^(WOTLogin *wotLogin){
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init:argsDictionary];
 
     WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdSaveSession];
-    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
+    [request start:args];
 
     UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
     [rootViewController dismissViewControllerAnimated:YES completion:NULL];

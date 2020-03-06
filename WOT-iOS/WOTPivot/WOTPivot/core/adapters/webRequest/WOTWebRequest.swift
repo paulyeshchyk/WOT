@@ -63,8 +63,13 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         return requestBuilder.build(service: self, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
     }
 
-    open override func start(_ args: WOTRequestArguments) {
+    @discardableResult
+    open override func start(_ args: WOTRequestArguments?) -> Bool {
 
+        guard let args = args else {
+            return false
+        }
+        
         let request = urlRequest(with: args)
         let pumper = WOTWebDataPumper(request: request) {[weak self] (data, error) in
             guard let self = self else { return }
@@ -76,11 +81,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         
         pumper.start()
         self.notifyListenersAboutStart()
-    }
-    
-    @objc
-    open override func cancelAndRemoveFromQueue() {
-        self.cancel()
+        return true
     }
 }
 

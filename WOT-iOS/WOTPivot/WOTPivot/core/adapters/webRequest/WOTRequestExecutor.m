@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSMutableDictionary *grouppedRequests;
 @property (nonatomic, readwrite, assign) NSInteger pendingRequestsCount;
 
+@property (nonatomic, strong) WOTRequestReception *collection;
+
 @end
 
 @implementation WOTRequestExecutor
@@ -51,6 +53,8 @@
     self = [super init];
     if (self){
         
+        self.collection = [[WOTRequestReception alloc] init];
+        
         self.pendingRequestsCount = 0;
         self.registeredRequests = [[NSMutableDictionary alloc] init];
         self.registeredRequestCallbacks = [[NSMutableDictionary alloc] init];
@@ -79,13 +83,12 @@
         
         WOTRequest *request = [requests pointerAtIndex:idx];
         [request cancel];
-        [requests removePointerAtIndex:idx];
     }
     
     NSCAssert(([requests count] == 0), @"requestsArray is not empty after cancelation");
 }
 
-- (void)requestsArray:(NSPointerArray *)requests removeRequest:(WOTRequest *)request {
+- (void)requestsArray:(NSPointerArray *)requests removeRequest:(id<WOTRequestProtocol>)request {
     
     [requests compact];
     
@@ -101,7 +104,7 @@
     }
 }
 
-- (BOOL)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId {
+- (BOOL)add:(id<WOTRequestProtocol>)request byGroupId:(NSString *)groupId {
     
     NSPointerArray *requests = self.grouppedRequests[groupId];
     [requests compact];
@@ -129,11 +132,6 @@
         [requests addPointer:(__bridge void *)request];
     }
     return canAdd;
-}
-
-- (void)runRequest:(WOTRequest *)request withArgs:(WOTRequestArguments *)args {
-
-    [request start:args];
 }
 
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass {
@@ -170,7 +168,7 @@
     self.registeredDataAdapters[@(requestId)] = providers;
 }
 
-- (WOTRequest *)createRequestForId:(NSInteger)requestId {
+- (id<WOTRequestProtocol>)createRequestForId:(NSInteger)requestId {
     
     Class RegisteredRequestClass = self.registeredRequests[@(requestId)];
     
@@ -246,15 +244,13 @@
             [arguments setValues:@[request.identifier] forKey:request.identifier_fieldname];//TODO: refectoring
             [arguments setValues:@[self.hostConfiguration.applicationID] forKey:@"application_id"];
             
-            WOTRequest *wotRequest = [[WOTRequestExecutor sharedInstance] createRequestForId: [requestID integerValue] ];
-            BOOL canAdd = [[WOTRequestExecutor sharedInstance] addRequest:wotRequest byGroupId:@"NestedRequest"];
+            id<WOTRequestProtocol> wotRequest = [[WOTRequestExecutor sharedInstance] createRequestForId: [requestID integerValue] ];
+            BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:wotRequest byGroupId:@"NestedRequest"];
             if ( canAdd ) {
-                [[WOTRequestExecutor sharedInstance] runRequest:wotRequest withArgs:arguments];
+                [wotRequest start:arguments];
             }
-            
         }];
     }
-    
 }
 
 
@@ -279,22 +275,20 @@
     [self removeRequest:request];
 }
 
-- (void)requestHasCanceled:(id)request {
+- (void)requestHasCanceled:(id<WOTRequestProtocol>)request {
     
     self.pendingRequestsCount -= 1;
     [self removeRequest:request];
 }
 
-- (void)requestHasStarted:(id)request {
+- (void)requestHasStarted:(id<WOTRequestProtocol>)request {
     
     self.pendingRequestsCount += 1;
 }
 
-- (void)removeRequest:(id)request {
+- (void)removeRequest:(id<WOTRequestProtocol>)request {
     
-    NSCAssert([[request class] isSubclassOfClass:[WOTRequest class]], @"request is not subclass of WOTRequest class");
-
-    NSArray *groups = [(WOTRequest *)request availableInGroups];
+    NSArray *groups = [request availableInGroups];
     [groups enumerateObjectsUsingBlock:^(id group, NSUInteger idx, BOOL *stop) {
         
         NSPointerArray *requests = self.grouppedRequests[group];

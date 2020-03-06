@@ -8,14 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol WebRequestListenerProtocol;
+@protocol WOTRequestProtocol;
+@protocol WOTRequestListenerProtocol;
 @protocol WOTHostConfigurationProtocol;
 @class WOTRequest;
 @class WOTRequestArguments;
 
 typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
 
-@interface WOTRequestExecutor : NSObject <WebRequestListenerProtocol>
+@interface WOTRequestExecutor : NSObject <WOTRequestListenerProtocol>
 + (NSString *)pendingRequestNotificationName;
 + (WOTRequestExecutor *)sharedInstance;
 
@@ -26,10 +27,9 @@ typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *bi
 - (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass;
 - (void)requestId:(NSInteger)requestId registerDataAdapterClass:(Class)dataProviderClass;
 - (void)requestId:(NSInteger)requestId registerRequestCallback:(WOTRequestCallback)callback;
-- (WOTRequest *)createRequestForId:(NSInteger)requestId;
+- (id<WOTRequestProtocol>)createRequestForId:(NSInteger)requestId;
 
-- (BOOL)addRequest:(WOTRequest *)request byGroupId:(NSString *)groupId ;//DEPRECATED_ATTRIBUTE;
-- (void)runRequest:(WOTRequest *)request withArgs:(WOTRequestArguments *)args ;//DEPRECATED_ATTRIBUTE;
+- (BOOL)add:(id<WOTRequestProtocol>)request byGroupId:(NSString *)groupId ;//DEPRECATED_ATTRIBUTE;
 
 - (void)cancelRequestsByGroupId:(NSString *)groupId;
 
