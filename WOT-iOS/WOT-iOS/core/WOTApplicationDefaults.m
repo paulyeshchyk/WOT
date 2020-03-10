@@ -103,11 +103,17 @@
             [[[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo description] delegate:nil cancelButtonTitle:@"DISMISS" otherButtonTitles:nil] show];
         } else {
             
+            id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
+
             [[NSNotificationCenter defaultCenter] postNotificationName:WOT_NOTIFICATION_LOGOUT object:nil userInfo:nil];
-            WOTRequest *clearSessionRequest = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdClearSession];
+
+            WOTRequest *clearSessionRequest = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdClearSession];
+            clearSessionRequest.hostConfiguration = hostOwner.hostConfiguration;
             [clearSessionRequest start:nil];
             
-            WOTRequest *loginRequest = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
+            
+            WOTRequest *loginRequest = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogin];
+            loginRequest.hostConfiguration = hostOwner.hostConfiguration;
             [loginRequest start:nil];
         }
         
@@ -190,7 +196,9 @@ WOTLoginCallback loginCallback = ^(WOTLogin *wotLogin){
     NSDictionary *argsDictionary = [wotLogin asDictionary];
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init:argsDictionary];
 
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdSaveSession];
+    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
+    WOTRequest *request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdSaveSession];
+    request.hostConfiguration = hostOwner.hostConfiguration;
     [request start:args];
 
     UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];

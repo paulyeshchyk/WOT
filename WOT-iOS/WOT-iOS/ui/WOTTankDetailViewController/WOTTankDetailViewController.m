@@ -70,11 +70,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
-    [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:requestId];
+    [[WOTRequestExecutorSwift sharedInstance] cancelRequestsWithGroupId:requestId];
     
     [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
         
-        [[WOTRequestExecutor sharedInstance] cancelRequestsByGroupId:requestID];
+        [[WOTRequestExecutorSwift sharedInstance] cancelRequestsWithGroupId:requestID];
     }];
     
     [self.runningRequestIDs removeAllObjects];
@@ -297,14 +297,14 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 - (void)fetchDefaultConfigurationForTankId:(id)tankId {
 
     return;
-    WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
-    [arguments setValues:@[tankId] forKey:WOTApiKeys.tank_id];
-
-    id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
-    if (canAdd) {
-        [request start:arguments];
-    }
+//    WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
+//    [arguments setValues:@[tankId] forKey:WOTApiKeys.tank_id];
+//
+//    id<WOTRequestProtocol> request = [[WOTRequestExecutorSwift sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+//    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] add:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+//    if (canAdd) {
+//        [request start:arguments];
+//    }
 }
 
 #define WOT_REQUEST_ID_VEHICLE_BY_TIER @"WOT_REQUEST_ID_VEHICLE_BY_TIER"
@@ -339,8 +339,10 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [args setValues:@[tankID]  forKey:WOTApiKeys.tank_id];
     [args setValues:@[[[Vehicles keypaths] componentsJoinedByString:@","]]  forKey:WGWebQueryArgs.fields];
 
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankVehicles];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:groupId];
+    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
+    id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdTankVehicles];
+    request.hostConfiguration = hostOwner.hostConfiguration;
+    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:groupId];
     if (canAdd) {
         [request start:args];
     }
@@ -351,8 +353,10 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
     [args setValues:@[tankId]  forKey:WOTApiKeys.tank_id];
 
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdTankProfile];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
+    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
+    id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdTankProfile];
+    request.hostConfiguration = hostOwner.hostConfiguration;
+    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WOT_REQUEST_ID_VEHICLE_PROFILE];
     if (canAdd) {
         [request start:args];
     }

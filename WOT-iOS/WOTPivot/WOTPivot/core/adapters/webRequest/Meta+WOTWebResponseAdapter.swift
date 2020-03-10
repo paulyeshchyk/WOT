@@ -91,6 +91,7 @@ public class WOTWebResponse: NSObject, JSONMapperProtocol {
     public var status: WOTWebResponseStatus = .unknown
     public var meta: WOTWebResponseMeta?
     public var data: [AnyHashable: Any]?
+    public var error: [AnyHashable: Any]?
 
     public enum FieldKeys: String, CodingKey {
         case status
@@ -102,6 +103,7 @@ public class WOTWebResponse: NSObject, JSONMapperProtocol {
     public func mapping(fromJSON jSON: JSON) {
         self.status = WOTWebResponseStatus(rawValue: (jSON["status"] as? String) ?? ""  ) ?? .unknown
         self.data = jSON["data"] as? [AnyHashable: Any]
+        self.error = jSON["error"] as? [AnyHashable: Any]
         
         let meta = WOTWebResponseMeta(count: 0, page_total: 0, total: 0, limit: 0, page: nil)
         if let metaJSON = jSON["meta"] as? [AnyHashable: Any] {
@@ -118,13 +120,31 @@ public class WOTWebResponse: NSObject, JSONMapperProtocol {
 struct WOTWEBRequestError: Error {
     
     enum ErrorKind {
+        
         case dataIsNull
         case emptyJSON
         case invalidStatus
         case parseError
+        case requestError([AnyHashable: Any]?)
+        
+        var description: String {
+            switch self {
+            case .dataIsNull: return "dataIsNull"
+            case .emptyJSON: return "emptyJSON"
+            case .invalidStatus: return "invalidStatus"
+            case .parseError: return "parseError"
+            case .requestError(let dict): return "requestError:(\(dict.debugDescription))"
+            }
+        }
     }
     
     let kind: ErrorKind
+    
+    var description: String {
+        get {
+            return kind.description
+        }
+    }
 }
 
 
@@ -147,6 +167,7 @@ extension NSData {
             response.mapping(fromJSON: json)
             switch response.status {
             case .ok: completion?(response.data)
+            case .error: return WOTWEBRequestError(kind: WOTWEBRequestError.ErrorKind.requestError(response.error))
             default: return WOTWEBRequestError(kind: .invalidStatus)
             }
             

@@ -12,23 +12,29 @@
 #import "WOTApplicationDefaults.h"
 #import "NSTimer+BlocksKit.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <WOTHostConfigurationOwner>
 
 @property (nonatomic, strong) WOTDrawerViewController *wotDrawerViewController;
 
 @end
 
-@implementation AppDelegate
 
+@implementation AppDelegate
+@synthesize hostConfiguration;
+
+- (WOTWebHostConfiguration *)hostConfiguration {
+    if (hostConfiguration == nil) {
+        hostConfiguration = [[WOTWebHostConfiguration alloc] init];
+    }
+    return hostConfiguration;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 
     [WOTApplicationDefaults registerRequests];
     [WOTApplicationDefaults registerDefaultSettings];
-    
-    WOTWebHostConfiguration *hostConfig = [[WOTWebHostConfiguration alloc] init];
-    [WOTRequestExecutor sharedInstance].hostConfiguration = hostConfig;
+   
 
     [self initSessionTimer];
     

@@ -13,9 +13,16 @@ public class WOTWEBRequestTanks: WOTWEBRequest, WOTModelServiceProtocol {
 
     override public var method: String { return "POST" }
 
+    @available(*, deprecated, message: "TO be refactored")
     @objc
     public static func modelClassName() -> String {
         return NSStringFromClass(Vehicles.self)
+    }
+
+    @available(*, deprecated, message: "TO be refactored")
+    @objc
+    public func instanceModelClass() -> AnyClass? {
+        return NSClassFromString( type(of: self).modelClassName() )
     }
 
     override public var path: String {

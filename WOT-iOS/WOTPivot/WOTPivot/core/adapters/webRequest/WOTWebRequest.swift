@@ -17,22 +17,23 @@ public protocol WOTWebRequestProtocol {
 public protocol WOTWebServiceProtocol {
     var method: String { get }
     var path: String { get }
-    var uniqueDescription: String? { get }
     func notifyListenersAboutStart()
     func requestHasFinishedLoad(data: Data?, error: Error?)
 }
 
 @objc(WOTModelServiceProtocol)
-public protocol WOTModelServiceProtocol {
+public protocol WOTModelServiceProtocol: class {
     @available(*, deprecated, message: "TO be refactored")
-    @objc static func modelClassName() -> String
+    @objc
+    static func modelClassName() -> String
+    
+    @available(*, deprecated, message: "TO be refactored")
+    @objc
+    func instanceModelClass() -> AnyClass?
 }
 
 @objc
 open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
-
-    @objc
-    public var uniqueDescription: String? = nil
 
     public var userInfo: [AnyHashable: Any]?
     public var httpBodyData: Data?

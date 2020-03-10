@@ -20,3 +20,12 @@ public protocol WOTHostConfigurationProtocol {
     @objc
     var scheme: String { get }
 }
+
+
+@objc
+public protocol WOTHostConfigurationOwner {
+
+    @objc
+    var hostConfiguration: WOTHostConfigurationProtocol? { get set }
+}
+

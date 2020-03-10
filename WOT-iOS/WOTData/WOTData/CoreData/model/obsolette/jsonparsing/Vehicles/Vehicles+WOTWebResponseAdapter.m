@@ -47,10 +47,15 @@
                 [NSThread executeOnMainThread:^{
                     
                     WOTRequestArguments *args = [[WOTRequestArguments alloc] init:requests[requestId]];
-                    id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:[requestId integerValue]];
+                    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
+                    id<WOTHostConfigurationProtocol> hostConfiguration = hostOwner.hostConfiguration;
                     
+                    id<WOTRequestProtocol> request =  [[WOTRequestReception sharedInstance] createRequestForRequestId:[requestId integerValue]];
+                    request.hostConfiguration = hostConfiguration;
+
                     NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
-                    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:groupId];
+
+                    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:groupId];
                     if (canAdd) {
                         [request start:args];
                     }

@@ -99,12 +99,12 @@ class WOTTankPivotModel: WOTPivotDataModel {
         
         self.enumerator = WOTNodeEnumerator.sharedInstance
 
-        let notificationName = NSNotification.Name(rawValue: WOTRequestExecutor.pendingRequestNotificationName())
+        let notificationName = NSNotification.Name(rawValue: WOTRequestExecutorSwift.pendingRequestNotificationName)
         NotificationCenter.default.addObserver(self, selector: #selector(pendingRequestCountChaged(notification:)), name: notificationName, object: nil)
     }
     
     deinit {
-        let notificationName = NSNotification.Name(rawValue: WOTRequestExecutor.pendingRequestNotificationName())
+        let notificationName = NSNotification.Name(rawValue: WOTRequestExecutorSwift.pendingRequestNotificationName)
         NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
     }
     
@@ -116,7 +116,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
     
     
     @objc private func pendingRequestCountChaged(notification: NSNotification) {
-        guard let executor = notification.object as? WOTRequestExecutor else {
+        guard let executor = notification.object as? WOTRequestExecutorSwift else {
             return
         }
         guard executor.pendingRequestsCount == 0 else {
@@ -128,14 +128,20 @@ class WOTTankPivotModel: WOTPivotDataModel {
 
     
     private func performWebRequest() {
-        
-        let arguments = WOTRequestArguments()
-        arguments.setValues(Vehicles.keypaths(), forKey: WGWebQueryArgs.fields)
-        arguments.setValues([WOTRequestExecutor.sharedInstance()?.hostConfiguration.applicationID], forKey: WGWebQueryArgs.application_id)
-        
-        let request = WOTRequestExecutor.sharedInstance()?.createRequest(forId: WOTRequestId.tankVehicles.rawValue)
-        if let canAdd = WOTRequestExecutor.sharedInstance()?.add(request, byGroupId: "WOT_REQUEST_ID_VEHICLE_LIST"), canAdd == true {
-            request?.start(arguments)
+        let hostOwner = UIApplication.shared.delegate as? WOTHostConfigurationOwner
+        if let hostConfiguration = hostOwner?.hostConfiguration {
+
+            let arguments = WOTRequestArguments()
+            arguments.setValues(Vehicles.keypaths(), forKey: WGWebQueryArgs.fields)
+            arguments.setValues([hostConfiguration.applicationID], forKey: WGWebQueryArgs.application_id)
+            
+            if let request = WOTRequestReception.sharedInstance.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
+                request.hostConfiguration = hostConfiguration
+                let canAdd = WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: "WOT_REQUEST_ID_VEHICLE_LIST")
+                if canAdd == true {
+                    request.start(arguments)
+                }
+            }
         }
     }
 }

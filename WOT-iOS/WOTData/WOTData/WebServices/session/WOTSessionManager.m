@@ -49,9 +49,11 @@
 }
 
 + (void)logout {
+    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
     
-    id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogout];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:WOT_REQUEST_ID_LOGOUT];
+    id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogout];
+    request.hostConfiguration = hostOwner.hostConfiguration;
+    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WOT_REQUEST_ID_LOGOUT];
     if (canAdd) {
         [request start:nil];
     }
@@ -59,13 +61,17 @@
 
 + (void)login {
 
-    id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:WOT_REQUEST_ID_LOGIN];
+    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
+    id<WOTHostConfigurationProtocol> hostConfiguration = hostOwner.hostConfiguration;
+
+    id<WOTRequestProtocol> request =  [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogout];
+    request.hostConfiguration = hostConfiguration;
+    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WOT_REQUEST_ID_LOGIN];
     if (canAdd) {
         
-        NSString *appId = [WOTRequestExecutor sharedInstance].hostConfiguration.applicationID;
+        NSString *appId = hostOwner.hostConfiguration.applicationID;
         NSString *noFollow = @"1";
-        NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",[WOTRequestExecutor sharedInstance].hostConfiguration.host];
+        NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",hostConfiguration.host];
         WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
         [args setValues:@[appId] forKey: WGWebQueryArgs.application_id];
         [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];

@@ -30,13 +30,15 @@ public protocol WOTRequestProtocol: class {
     func removeListener(_ listener: WOTRequestListenerProtocol)
     
     @objc
-    var availableInGroups: [Int] { get }
+    var availableInGroups: [String] { get }
     
     @objc
     func addGroup(_ group: String)
     
     @objc
     func removeGroup(_ group: String)
+    
+    var hash: Int { get }
     
 }
 
@@ -45,12 +47,9 @@ public protocol WOTRequestListenerProtocol {
     
     @objc
     var hash: Int { get }
-    
+
     @objc
-    var hostConfiguration: WOTHostConfigurationProtocol { get set }
-    
-    @objc
-    func request(_ request: Any, finishedLoadData data:Data?, error: Error?)
+    func request(_ request: AnyObject, finishedLoadData data:Data?, error: Error?)
     
     @objc
     func requestHasCanceled(_ request: WOTRequestProtocol)
@@ -81,7 +80,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     public var hostConfiguration: WOTHostConfigurationProtocol?
     
     @objc
-    public var availableInGroups = [Int]()
+    public var availableInGroups = [String]()
 
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
@@ -111,6 +110,12 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
             listeners.remove(at: index)
         }
     }
+    //TODO: refactoring
+    override open var hash: Int {
+        
+        return NSStringFromClass(type(of:self)).hash
+    }
+    
     
     @objc
     open func cancel() { }

@@ -20,7 +20,7 @@ class WOTRequestCountListener {
 
     var asyncExpectation: XCTestExpectation?
 
-    static let notificationName = NSNotification.Name(rawValue: WOTRequestExecutor.pendingRequestNotificationName())
+    static let notificationName = NSNotification.Name(rawValue: WOTRequestExecutorSwift.pendingRequestNotificationName())
 
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(pendingRequestCountChaged(notification:)), name: WOTRequestCountListener.notificationName, object: nil)
@@ -39,7 +39,7 @@ class WOTRequestCountListener {
     @objc
     func pendingRequestCountChaged(notification: Notification) {
 
-        guard let executor = notification.object as? WOTRequestExecutor else {
+        guard let executor = notification.object as? WOTRequestExecutorSwift else {
             return
         }
 

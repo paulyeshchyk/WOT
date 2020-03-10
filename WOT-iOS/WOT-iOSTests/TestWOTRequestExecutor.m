@@ -29,13 +29,13 @@
 
 - (void)testSharedInstanceIsNotNull {
     
-    WOTRequestExecutor *sharedInstance = [WOTRequestExecutor sharedInstance];
+    WOTRequestExecutorSwift *sharedInstance = [WOTRequestExecutorSwift sharedInstance];
     XCTAssertNotNil(sharedInstance);
 }
 
 - (void)testSharedInstanceInitiallyHasNoPendingRequests {
     
-    WOTRequestExecutor *sharedInstance = [WOTRequestExecutor sharedInstance];
+    WOTRequestExecutorSwift *sharedInstance = [WOTRequestExecutorSwift sharedInstance];
     XCTAssertEqual(sharedInstance.pendingRequestsCount, 0);
 }
 

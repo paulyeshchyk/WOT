@@ -30,6 +30,7 @@ public typealias WOTRequestIdType = Int
 
  */
 
+public typealias  WOTRequestCallback = (Data?, Error?) -> Void
 
 @objc
 public protocol WOTRequestReceptionProtocol {
@@ -188,9 +189,12 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
         adapters.forEach { AdapterType in
             if let Clazz = AdapterType as? NSObject.Type {
                 if let adapter = Clazz.init() as? WOTWebResponseAdapter {
-                    adapter.parseData(binary, error: error, nestedRequestsCallback: {[weak self] nestedRequests in
+                    let error = adapter.parseData(binary, error: error, nestedRequestsCallback: {[weak self] nestedRequests in
                         self?.evaluate(nestedRequests: nestedRequests)
                     })
+                    if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
+                        print("\(NSStringFromClass(Clazz)) raized:\(text)")
+                    }
                 }
             }
         }
@@ -217,8 +221,8 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
 //                 [arguments setValues:@[request.identifier] forKey:request.identifier_fieldname];//TODO: refectoring
 //                 [arguments setValues:@[self.hostConfiguration.applicationID] forKey:@"application_id"];
 //
-//                 id<WOTRequestProtocol> wotRequest = [[WOTRequestExecutor sharedInstance] createRequestForId: [requestID integerValue] ];
-//                 BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:wotRequest byGroupId:@"NestedRequest"];
+//                 id<WOTRequestProtocol> wotRequest = [[WOTRequestExecutorSwift sharedInstance] createRequestForId: [requestID integerValue] ];
+//                 BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] add:wotRequest byGroupId:@"NestedRequest"];
 //                 if ( canAdd ) {
 //                 [wotRequest start:arguments];
 //                 }
