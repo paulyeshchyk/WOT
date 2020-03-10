@@ -116,19 +116,10 @@
 }
 
 - (id<WOTRequestProtocol>)createRequestForId:(NSInteger)requestId {
-    
-    Class registeredRequestClass = [[WOTRequestReception sharedInstance] requestFor:requestId];
 
-    if (!([[registeredRequestClass class] isSubclassOfClass:[WOTRequest class]])) {
-        
-        debugError(@"Request %ld is not registered",(long)requestId);
-        return nil;
-    }
-    
-    WOTRequest *request = [[registeredRequestClass alloc] init];
-    request.hostConfiguration = self.hostConfiguration;
-
-    return request;
+    id<WOTRequestProtocol> result =  [[WOTRequestReception sharedInstance] createRequestForRequestId:requestId];
+    result.hostConfiguration = self.hostConfiguration;
+    return result;
 }
 
 #pragma mark - WOTRequestListener

@@ -12,6 +12,9 @@ import Foundation
 public protocol WOTRequestProtocol: class {
     
     @objc
+    var hostConfiguration: WOTHostConfigurationProtocol? { get set }
+    
+    @objc
     func cancel()
     
     @objc
@@ -76,7 +79,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
 
     @objc
     public var hostConfiguration: WOTHostConfigurationProtocol?
-
+    
     @objc
     public var availableInGroups = [Int]()
 

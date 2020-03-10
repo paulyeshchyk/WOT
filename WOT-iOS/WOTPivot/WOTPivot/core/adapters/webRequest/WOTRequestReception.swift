@@ -87,7 +87,13 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
     
     @objc
     public func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol? {
-        return nil
+        guard let Clazz = request(for: forRequestId) as? NSObject.Type, Clazz.isSubclass(of: WOTRequest.self) else {
+            return nil
+        }
+        guard let result = Clazz.init() as? WOTRequest else {
+            return nil
+        }
+        return result
     }
     
     @objc
