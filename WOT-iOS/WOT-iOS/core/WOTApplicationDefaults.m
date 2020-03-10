@@ -56,7 +56,7 @@
      * Login
      **/
     [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogin registerRequestClass:[WOTWEBRequestLogin class]];
-    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogin registerRequestCompletion:^(NSError *error, NSData *binary) {
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogin registerRequestCompletion:^(NSData *binary, NSError *error) {
 
         if (error){
 
@@ -96,7 +96,7 @@
      * Logout
      **/
     [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogout registerRequestClass:[WOTWEBRequestLogout class]];
-    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogout registerRequestCompletion:^(NSError *error, NSData *binary) {
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogout registerRequestCompletion:^(NSData *binary, NSError *error) {
         
         if (error){
             
@@ -117,7 +117,7 @@
      * Save Sassion
      **/
     [[WOTRequestReception sharedInstance] requestId:WOTRequestIdSaveSession registerRequestClass:[WOTSaveSessionRequest class]];
-    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCompletion:^(NSError *error, NSData *binary) {
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCompletion:^(NSData *binary, NSError *error) {
         
         [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
             NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
@@ -175,7 +175,7 @@
      * Tanks.Modules
      **/
     [[WOTRequestReception sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestModulesTree class]];
-    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterModulesTree class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterModuleTree class]];
 
     /**
      * Tanks.Profile

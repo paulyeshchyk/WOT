@@ -16,5 +16,5 @@ public typealias JSON = [AnyHashable: Any]
 @objc
 public protocol WOTWebResponseAdapter: NSObjectProtocol {
     @discardableResult
-    func parseData(_ data: Data?, nestedRequestsCallback: JSONMappingCompletion?) -> Error?
+    func parseData(_ data: Data?, error: Error?, nestedRequestsCallback: JSONMappingCompletion?) -> Error?
 }

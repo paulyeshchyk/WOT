@@ -14,7 +14,7 @@
 @class WOTRequest;
 @class WOTRequestArguments;
 
-typedef void(^WOTRequestCallback)(NSError *error, NSData *binary);
+typedef void(^WOTRequestCallback)(NSData *binary, NSError *error);
 
 @interface WOTRequestExecutor : NSObject <WOTRequestListenerProtocol>
 + (NSString *)pendingRequestNotificationName;

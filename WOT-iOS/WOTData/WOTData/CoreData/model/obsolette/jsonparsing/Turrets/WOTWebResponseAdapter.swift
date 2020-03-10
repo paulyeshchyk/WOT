@@ -11,7 +11,7 @@ import Foundation
 @objc
 public class WOTWebResponseAdapterTurrets: NSObject, WOTWebResponseAdapter {
 
-    public func parseData(_ binary: Data?, nestedRequestsCallback: JSONMappingCompletion?) -> Error? {
+    public func parseData(_ binary: Data?, error: Error?, nestedRequestsCallback: JSONMappingCompletion?) -> Error? {
 
         return (binary as? NSData)?.parseAsJSON { (json) in
 

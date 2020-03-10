@@ -6,14 +6,13 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 #import "Vehicles+WOTWebResponseAdapter.h"
-#import "WOTWebResponseAdapterModulesTree.h"
 #import <WOTData/WOTData-Swift.h>
 
 @implementation VehiclesWOTWebResponseAdapterObjC
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
-- (NSError *)parseData:(NSData *)data nestedRequestsCallback:(void (^)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data error:(NSError *) error nestedRequestsCallback:(void (^)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 

@@ -172,7 +172,7 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
 
         let callbacks = self.registeredCallbacks[requestId]
         callbacks?.forEach({ callback in
-            callback(error, binary)
+            callback(binary, error)
         })
         
         guard let adapters = self.dataAdapter(for: requestId) else {
@@ -182,7 +182,7 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
         adapters.forEach { AdapterType in
             if let Clazz = AdapterType as? NSObject.Type {
                 if let adapter = Clazz.init() as? WOTWebResponseAdapter {
-                    adapter.parseData(binary, nestedRequestsCallback: {[weak self] nestedRequests in
+                    adapter.parseData(binary, error: error, nestedRequestsCallback: {[weak self] nestedRequests in
                         self?.evaluate(nestedRequests: nestedRequests)
                     })
                 }

@@ -115,10 +115,6 @@
     return canAdd;
 }
 
-- (void)unregisterDataProviderClass:(Class)dataProviderClass forRequestId:(NSInteger)requestId {
-    [[WOTRequestReception sharedInstance] unregisterWithDataAdaprterClass:dataProviderClass forRequestId:requestId];
-}
-
 - (id<WOTRequestProtocol>)createRequestForId:(NSInteger)requestId {
     
     Class registeredRequestClass = [[WOTRequestReception sharedInstance] requestFor:requestId];

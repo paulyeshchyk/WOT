@@ -14,6 +14,5 @@
 #import "WOTWebResponseAdapterProfile.h"
 #import "WOTWebResponseAdapterEngines.h"
 #import "Vehicles+WOTWebResponseAdapter.h"
-#import "WOTWebResponseAdapterModulesTree.h"
 
 #endif /* WOTData_Mapping_h */
