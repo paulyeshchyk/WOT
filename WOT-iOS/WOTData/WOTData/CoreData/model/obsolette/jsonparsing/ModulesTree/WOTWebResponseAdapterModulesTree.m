@@ -10,8 +10,10 @@
 
 @implementation WOTWebResponseAdapterModulesTree
 
-- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data nestedRequestsCallback:(void (^)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
+    return [data parseAsJSON:^(NSDictionary * _Nullable json) {
+    }];
 }
 
 

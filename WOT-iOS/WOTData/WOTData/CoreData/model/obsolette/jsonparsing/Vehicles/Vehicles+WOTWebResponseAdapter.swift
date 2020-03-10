@@ -9,29 +9,29 @@
 import Foundation
 
 @objc
-public class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
+open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
     
-    public func parseJSON(_ json: JSON, nestedRequestsCallback: JSONMappingCompletion?) {
+    public func parseData(_ binary: Data?, nestedRequestsCallback: JSONMappingCompletion?) -> Error? {
 
-        let keys = json.keys
-        guard keys.count != 0 else {
-            print("\(#file) \(#function) at Invalid json: no keys")
-            return
-        }
+        return (binary as? NSData)?.parseAsJSON({ json in
 
-        let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
-        keys.forEach { (key) in
-            guard let vehiclesJSON = json[key] as? JSON else { return }
-            guard let tag = vehiclesJSON[#keyPath(Vehicles.tag)] as? String else { return }
-
-            let predicate = NSPredicate(format: "%K == %@", #keyPath(Vehicles.tag), tag)
-            context.perform {
-                guard let vehicle = NSManagedObject.findOrCreateObject(forClass:Vehicles.self, predicate: predicate, context: context) as? Vehicles else { return }
-
-                vehicle.mapping(fromJSON: vehiclesJSON, into: context, completion: nestedRequestsCallback)
-                context.tryToSave()
+            guard let keys = json?.keys, keys.count != 0 else {
+                return
             }
-        }
 
+            let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
+            keys.forEach { (key) in
+                guard let vehiclesJSON = json?[key] as? JSON else { return }
+                guard let tag = vehiclesJSON[#keyPath(Vehicles.tag)] as? String else { return }
+
+                let predicate = NSPredicate(format: "%K == %@", #keyPath(Vehicles.tag), tag)
+                context.perform {
+                    guard let vehicle = NSManagedObject.findOrCreateObject(forClass:Vehicles.self, predicate: predicate, context: context) as? Vehicles else { return }
+
+                    vehicle.mapping(fromJSON: vehiclesJSON, into: context, completion: nestedRequestsCallback)
+                    context.tryToSave()
+                }
+            }
+        })
     }
 }

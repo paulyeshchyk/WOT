@@ -55,44 +55,48 @@
     /**
      * Login
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestClass:[WOTWEBRequestLogin class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestCallback:^(id data, NSError *error, NSData *binary) {
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogin registerRequestClass:[WOTWEBRequestLogin class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogin registerRequestCompletion:^(NSError *error, NSData *binary) {
 
         if (error){
 
             [[[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo description] delegate:nil cancelButtonTitle:@"DISMISS" otherButtonTitles:nil] show];
             return;
         }
+        
+        [binary parseAsJSON:^(NSDictionary * _Nullable data) {
 
-        NSString *location = data[WGJsonFields.data][WOT_KEY_LOCATION];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
+            NSString *location = data[WGJsonFields.data][WOT_KEY_LOCATION];
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
 
-        UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
-        UIViewController *presentedViewController = [[rootViewController.presentedViewController childViewControllers] firstObject];
-        if ([presentedViewController isKindOfClass:[WOTLoginViewController class]]){
+            UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+            UIViewController *presentedViewController = [[rootViewController.presentedViewController childViewControllers] firstObject];
+            if ([presentedViewController isKindOfClass:[WOTLoginViewController class]]){
 
-            WOTLoginViewController *loginController = (WOTLoginViewController *)presentedViewController;
-            loginController.request = request;
-            [loginController reloadData];
+                WOTLoginViewController *loginController = (WOTLoginViewController *)presentedViewController;
+                loginController.request = request;
+                [loginController reloadData];
 
-        } else {
+            } else {
 
-            WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:NSStringFromClass([WOTLoginViewController class]) bundle:nil];
-            loginController.request = request;
-            loginController.redirectUrlPath = data[WOTApiKeys.redirectUri];
-            [loginController setCallback:loginCallback];
+                WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:NSStringFromClass([WOTLoginViewController class]) bundle:nil];
+                loginController.request = request;
+                loginController.redirectUrlPath = data[WOTApiKeys.redirectUri];
+                [loginController setCallback:loginCallback];
 
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
 
-            [rootViewController presentViewController:nav animated:YES completion:NULL];
-        }
+                [rootViewController presentViewController:nav animated:YES completion:NULL];
+            }
+        }];
+
     }];
 
     /**
      * Logout
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestClass:[WOTWEBRequestLogout class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestCallback:^(id data, NSError *error, NSData *binary) {
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogout registerRequestClass:[WOTWEBRequestLogout class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdLogout registerRequestCompletion:^(NSError *error, NSData *binary) {
         
         if (error){
             
@@ -112,8 +116,8 @@
     /**
      * Save Sassion
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestClass:[WOTSaveSessionRequest class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCallback:^(id data, NSError *error, NSData *binary) {
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdSaveSession registerRequestClass:[WOTSaveSessionRequest class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCompletion:^(NSError *error, NSData *binary) {
         
         [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
             NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
@@ -129,55 +133,55 @@
     /**
      * Clear Sassion
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdClearSession registerRequestClass:[WOTClearSessionRequest class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdClearSession registerRequestClass:[WOTClearSessionRequest class]];
 
     /**
      * Tanks.Chassis
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerRequestClass:[WOTWEBRequestTankChassis class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerDataAdapterClass:[WOTWebResponseAdapterChassis class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankChassis registerRequestClass:[WOTWEBRequestTankChassis class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankChassis registerDataAdapterClass:[WOTWebResponseAdapterChassis class]];
     
     /**
      * Tanks.Turrets
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerRequestClass:[WOTWEBRequestTankTurrets class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerDataAdapterClass:[WOTWebResponseAdapterTurrets class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankTurrets registerRequestClass:[WOTWEBRequestTankTurrets class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankTurrets registerDataAdapterClass:[WOTWebResponseAdapterTurrets class]];
     
     /**
      * Tanks.Guns
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerRequestClass:[WOTWEBRequestTankGuns class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerDataAdapterClass:[WOTWebResponseAdapterGuns class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankGuns registerRequestClass:[WOTWEBRequestTankGuns class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankGuns registerDataAdapterClass:[WOTWebResponseAdapterGuns class]];
     
     /**
      * Tanks.Radios
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWEBRequestTankRadios class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWEBRequestTankRadios class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankRadios registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
     
     /**
      * Tanks.Engines
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
 
     /**
      * Tanks.Vehicles
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[VehiclesAdapter class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[VehiclesAdapter class]];
     
     /**
      * Tanks.Modules
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestModulesTree class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterModulesTree class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestModulesTree class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterModulesTree class]];
 
     /**
      * Tanks.Profile
      **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class]];
+    [[WOTRequestReception sharedInstance] requestId:WOTRequestIdTankProfile registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
     
 }
 

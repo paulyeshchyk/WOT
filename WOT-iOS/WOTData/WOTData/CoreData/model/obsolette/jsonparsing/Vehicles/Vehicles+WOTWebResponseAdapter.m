@@ -13,50 +13,53 @@
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
-- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data nestedRequestsCallback:(void (^)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
-    NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
-    [context performBlock:^{
-        
-        NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
-        
-        NSDictionary *objects = json[WGJsonFields.data];
-        for (id key in [objects allKeys]) {
+    return [data parseAsJSON:^(NSDictionary * _Nullable json) {
+
+        id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
+        NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
+        [context performBlock:^{
             
-            id jSON = objects[key];
-            if ([jSON isKindOfClass:[NSDictionary class]]) {
-                
-                NSDictionary *requestsForSingleObj = [self parseRequestJSON:jSON context:context key:key];
-                [requests addEntriesFromDictionary:requestsForSingleObj];
-            } else {
-                
-                debugError(@"json is not valid; jSON class is %@",NSStringFromClass([jSON class]));
-            }
-        }
-        
-        if ([context hasChanges]) {
+            NSMutableDictionary *requests = [[NSMutableDictionary alloc] init];
             
-            NSError *error = nil;
-            [context save:&error];
-        }
-        
-        [requests enumerateKeysAndObjectsUsingBlock:^(NSNumber *requestId, id obj, BOOL *stop) {
-            
-            [NSThread executeOnMainThread:^{
+            NSDictionary *objects = json[WGJsonFields.data];
+            for (id key in [objects allKeys]) {
                 
-                WOTRequestArguments *args = [[WOTRequestArguments alloc] init:requests[requestId]];
-                id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:[requestId integerValue]];
-                
-                NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
-                BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:groupId];
-                if (canAdd) {
-                    [request start:args];
+                id jSON = objects[key];
+                if ([jSON isKindOfClass:[NSDictionary class]]) {
+                    
+                    NSDictionary *requestsForSingleObj = [self parseRequestJSON:jSON context:context key:key];
+                    [requests addEntriesFromDictionary:requestsForSingleObj];
+                } else {
+                    
+                    debugError(@"json is not valid; jSON class is %@",NSStringFromClass([jSON class]));
                 }
+            }
+            
+            if ([context hasChanges]) {
+                
+                NSError *error = nil;
+                [context save:&error];
+            }
+            
+            [requests enumerateKeysAndObjectsUsingBlock:^(NSNumber *requestId, id obj, BOOL *stop) {
+                
+                [NSThread executeOnMainThread:^{
+                    
+                    WOTRequestArguments *args = [[WOTRequestArguments alloc] init:requests[requestId]];
+                    id<WOTRequestProtocol> request = [[WOTRequestExecutor sharedInstance] createRequestForId:[requestId integerValue]];
+                    
+                    NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
+                    BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:request byGroupId:groupId];
+                    if (canAdd) {
+                        [request start:args];
+                    }
+                }];
+                
             }];
             
         }];
-        
     }];
 }
 

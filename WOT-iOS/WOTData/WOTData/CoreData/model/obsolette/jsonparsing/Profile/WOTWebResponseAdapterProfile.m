@@ -13,21 +13,22 @@
 
 @implementation WOTWebResponseAdapterProfile
 
-- (void)parseJSON:(NSDictionary * __nonnull)json nestedRequestsCallback:(void (^ _Nullable)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
-    
-    NSDictionary *profileJSON = json;
+- (NSError *)parseData:(NSData *)data nestedRequestsCallback:(void (^)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
 
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
-    NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
-    [context performBlock:^{
+    return [data parseAsJSON:^(NSDictionary * _Nullable json) {
         
-        [self parseProfile:profileJSON context:context];
-        
-        if ([context hasChanges]) {
+        id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
+        NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
+        [context performBlock:^{
             
-            NSError *error = nil;
-            [context save:&error];
-        }
+            [self parseProfile:json context:context];
+            
+            if ([context hasChanges]) {
+                
+                NSError *error = nil;
+                [context save:&error];
+            }
+        }];
     }];
 }
 

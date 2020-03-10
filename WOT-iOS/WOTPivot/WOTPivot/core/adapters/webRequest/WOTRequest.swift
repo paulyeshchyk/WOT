@@ -47,7 +47,7 @@ public protocol WOTRequestListenerProtocol {
     var hostConfiguration: WOTHostConfigurationProtocol { get set }
     
     @objc
-    func request(_ request: Any, finishedLoadData data:Data?, json:JSON?, error: Error?)
+    func request(_ request: Any, finishedLoadData data:Data?, error: Error?)
     
     @objc
     func requestHasCanceled(_ request: WOTRequestProtocol)

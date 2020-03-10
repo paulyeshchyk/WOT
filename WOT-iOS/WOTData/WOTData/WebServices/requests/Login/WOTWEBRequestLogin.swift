@@ -18,4 +18,9 @@ public class WOTWEBRequestLogin: WOTWEBRequest {
     override public var path: String {
         return "wot/auth/login/"
     }
+    
+    @objc
+    public static func modelClassName() -> String {
+        return ""
+    }
 }

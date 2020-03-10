@@ -114,3 +114,48 @@ public class WOTWebResponse: NSObject, JSONMapperProtocol {
     
     }
 }
+
+struct WOTWEBRequestError: Error {
+    
+    enum ErrorKind {
+        case dataIsNull
+        case emptyJSON
+        case invalidStatus
+        case parseError
+    }
+    
+    let kind: ErrorKind
+}
+
+
+public typealias JSONParseCompletion = ( JSON? ) -> Void
+
+@objc
+extension NSData {
+    
+    @objc
+    @discardableResult
+    public func parseAsJSON(_ completion: JSONParseCompletion? ) -> Error? {
+        do {
+            let jsonObject = try JSONSerialization.jsonObject(with: self as Data, options: [.mutableLeaves, .mutableContainers])
+            guard let json = jsonObject as? JSON else {
+                return WOTWEBRequestError(kind: .emptyJSON)
+                
+            }
+    
+            let response = WOTWebResponse()
+            response.mapping(fromJSON: json)
+            switch response.status {
+            case .ok: completion?(response.data)
+            default: return WOTWEBRequestError(kind: .invalidStatus)
+            }
+            
+        } catch {
+            return WOTWEBRequestError(kind: .parseError)
+        }
+    
+        return nil
+
+    }
+}
+

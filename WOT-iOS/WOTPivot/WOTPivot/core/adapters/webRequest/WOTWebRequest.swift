@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public protocol WOTWebRequestProtocol {
-    func parse(data: Data?)
+//    func parse(data: Data?)
 }
 
 @objc(WOTWebServiceProtocol)
@@ -19,11 +19,12 @@ public protocol WOTWebServiceProtocol {
     var path: String { get }
     var uniqueDescription: String? { get }
     func notifyListenersAboutStart()
-    func requestHasFinishedLoad(data: Data?, json: JSON?, error: Error?)
+    func requestHasFinishedLoad(data: Data?, error: Error?)
 }
 
 @objc(WOTModelServiceProtocol)
 public protocol WOTModelServiceProtocol {
+    @available(*, deprecated, message: "TO be refactored")
     @objc static func modelClassName() -> String
 }
 
@@ -45,9 +46,9 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         }
     }
 
-    public func requestHasFinishedLoad(data: Data?, json: JSON?, error: Error?) {
+    public func requestHasFinishedLoad(data: Data?, error: Error?) {
         self.listeners.compactMap { $0 }.forEach {
-            $0.request(self, finishedLoadData: data, json: json, error: error)
+            $0.request(self, finishedLoadData: data, error: error)
         }
     }
     
@@ -74,9 +75,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         let pumper = WOTWebDataPumper(request: request) {[weak self] (data, error) in
             guard let self = self else { return }
             
-            self.parse(data: data)
-
-            self.requestHasFinishedLoad(data: nil, json: nil, error: error)
+            self.requestHasFinishedLoad(data: data, error: error)
         }
         
         pumper.start()
@@ -159,50 +158,4 @@ class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
 
 extension WOTWEBRequest: WOTWebRequestProtocol {
     
-    struct WOTWEBRequestError: Error {
-
-        enum ErrorKind {
-            case dataIsNull
-            case emptyJSON
-            case invalidStatus
-            case parseError
-        }
-        
-        let kind: ErrorKind
-    }
-    
-    public func parse(data: Data?) {
-        
-        var jsonResult: JSON = .init()
-        let error = json(from: data) { (json) in
-            jsonResult.append(with: self.userInfo ?? [:])
-            jsonResult.append(with: json ?? [:])
-        }
-        
-        self.requestHasFinishedLoad(data: data, json: jsonResult, error: error)
-    }
-    
-    private func json(from data: Data?, completion: ( ( JSON? ) -> Void )? ) -> Error? {
-
-        guard let data = data else {
-            return WOTWEBRequestError(kind: .dataIsNull)
-        }
-        do {
-            let jsonObject = try JSONSerialization.jsonObject(with: data, options: [.mutableLeaves, .mutableContainers])
-            guard let json = jsonObject as? JSON else {
-                return WOTWEBRequestError(kind: .emptyJSON)
-            }
-            
-            let response = WOTWebResponse()
-            response.mapping(fromJSON: json)
-            switch response.status {
-            case .ok: completion?(response.data)
-            default: return WOTWEBRequestError(kind: .invalidStatus)
-            }
-        } catch {
-            return WOTWEBRequestError(kind: .parseError)
-        }
-        
-        return nil
-    }
 }

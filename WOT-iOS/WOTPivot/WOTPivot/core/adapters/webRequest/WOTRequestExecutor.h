@@ -14,7 +14,7 @@
 @class WOTRequest;
 @class WOTRequestArguments;
 
-typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *binary);
+typedef void(^WOTRequestCallback)(NSError *error, NSData *binary);
 
 @interface WOTRequestExecutor : NSObject <WOTRequestListenerProtocol>
 + (NSString *)pendingRequestNotificationName;
@@ -24,9 +24,6 @@ typedef void(^WOTRequestCallback)(NSDictionary *json, NSError *error, NSData *bi
 @property (nonatomic, strong) id<WOTHostConfigurationProtocol> hostConfiguration;
 
 
-- (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass;
-- (void)requestId:(NSInteger)requestId registerDataAdapterClass:(Class)dataProviderClass;
-- (void)requestId:(NSInteger)requestId registerRequestCallback:(WOTRequestCallback)callback;
 - (id<WOTRequestProtocol>)createRequestForId:(NSInteger)requestId;
 
 - (BOOL)add:(id<WOTRequestProtocol>)request byGroupId:(NSString *)groupId ;//DEPRECATED_ATTRIBUTE;

@@ -10,7 +10,11 @@ import Foundation
 
 public typealias JSON = [AnyHashable: Any]
 
+
+//TODO: transform an conforming class to Future/Promise
+
 @objc
 public protocol WOTWebResponseAdapter: NSObjectProtocol {
-    func parseJSON(_ json: JSON, nestedRequestsCallback: JSONMappingCompletion?)
+    @discardableResult
+    func parseData(_ data: Data?, nestedRequestsCallback: JSONMappingCompletion?) -> Error?
 }

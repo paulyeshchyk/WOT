@@ -13,13 +13,8 @@
 
 @interface WOTRequestExecutor()
 
-@property (nonatomic, strong) NSMutableDictionary *registeredRequests;
-@property (nonatomic, strong) NSMutableDictionary *registeredRequestCallbacks;
-@property (nonatomic, strong) NSMutableDictionary *registeredDataAdapters;
 @property (nonatomic, strong) NSMutableDictionary *grouppedRequests;
 @property (nonatomic, readwrite, assign) NSInteger pendingRequestsCount;
-
-@property (nonatomic, strong) WOTRequestReception *collection;
 
 @end
 
@@ -41,24 +36,12 @@
     return @"WOTRequestExecutorPendingRequestNotificationName";
 }
 
-- (void)dealloc {
-    
-    [self.registeredRequests removeAllObjects];
-    [self.registeredDataAdapters removeAllObjects];
-    [self.registeredRequestCallbacks removeAllObjects];
-}
-
 - (id)init {
     
     self = [super init];
     if (self){
         
-        self.collection = [[WOTRequestReception alloc] init];
-        
         self.pendingRequestsCount = 0;
-        self.registeredRequests = [[NSMutableDictionary alloc] init];
-        self.registeredRequestCallbacks = [[NSMutableDictionary alloc] init];
-        self.registeredDataAdapters = [[NSMutableDictionary alloc] init];
         self.grouppedRequests = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -96,10 +79,8 @@
     
     NSInteger requestIndex = [[requests allObjects] indexOfObject:request];
     if (requestIndex != NSNotFound) {
-        
         [requests removePointerAtIndex:requestIndex];
     } else {
-        
         debugError(@"attempting to remove unknown request:%@",request);
     }
 }
@@ -134,129 +115,29 @@
     return canAdd;
 }
 
-- (void)requestId:(NSInteger)requestId registerRequestClass:(Class)requestClass {
-    
-    [self.registeredRequests setObject:requestClass forKey:@(requestId)];
-}
-
-- (void)requestId:(NSInteger)requestId registerRequestCallback:(WOTRequestCallback)callback {
-    
-    NSMutableSet *callbacks = [self.registeredRequestCallbacks[@(requestId)] mutableCopy];
-    if (!callbacks){
-        
-        callbacks = [[NSMutableSet alloc] init];
-    }
-    [callbacks addObject:callback];
-    self.registeredRequestCallbacks[@(requestId)] = callbacks;
-}
-
-- (void)requestId:(NSInteger)requestId registerDataAdapterClass:(Class)dataProviderClass {
-    
-    NSMutableSet *providers = self.registeredDataAdapters[@(requestId)];
-    if (!providers) {
-        
-        providers = [[NSMutableSet alloc] init];
-    }
-    [providers addObject:dataProviderClass];
-    self.registeredDataAdapters[@(requestId)] = providers;
-}
-
 - (void)unregisterDataProviderClass:(Class)dataProviderClass forRequestId:(NSInteger)requestId {
-    
-    NSMutableArray *providers = self.registeredDataAdapters[@(requestId)];
-    [providers removeObject:dataProviderClass];
-    self.registeredDataAdapters[@(requestId)] = providers;
+    [[WOTRequestReception sharedInstance] unregisterWithDataAdaprterClass:dataProviderClass forRequestId:requestId];
 }
 
 - (id<WOTRequestProtocol>)createRequestForId:(NSInteger)requestId {
     
-    Class RegisteredRequestClass = self.registeredRequests[@(requestId)];
-    
-    if (!([[RegisteredRequestClass class] isSubclassOfClass:[WOTRequest class]])) {
+    Class registeredRequestClass = [[WOTRequestReception sharedInstance] requestFor:requestId];
+
+    if (!([[registeredRequestClass class] isSubclassOfClass:[WOTRequest class]])) {
         
         debugError(@"Request %ld is not registered",(long)requestId);
         return nil;
     }
     
-    WOTRequest *request = [[RegisteredRequestClass alloc] init];
+    WOTRequest *request = [[registeredRequestClass alloc] init];
     request.hostConfiguration = self.hostConfiguration;
 
     return request;
 }
 
-- (void)processRequestId:(NSNumber *)requestId json:(NSDictionary *)json error:(NSError *) error binary: (NSData *)binary {
-
-    [self.registeredRequestCallbacks[requestId] enumerateObjectsUsingBlock:^(WOTRequestCallback obj, NSUInteger idx, BOOL *stop) {
-        
-        obj(json, error, binary);
-    }];
-    
-    //dataAdapters
-    NSSet *dataAdapters = self.registeredDataAdapters[requestId];
-    
-    [dataAdapters enumerateObjectsUsingBlock:^(Class class, BOOL *stop) {
-        
-        if (!([class conformsToProtocol:@protocol(WOTWebResponseAdapter) ])) {
-            debugError(@"Class %@ is not conforming protocol %@",NSStringFromClass(class),NSStringFromProtocol(@protocol(WOTWebResponseAdapter)));
-            return;
-        }
-        
-        id<WOTWebResponseAdapter> adapter = [[class alloc] init];
-        [adapter parseJSON:json nestedRequestsCallback:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
-            [self evaluateNestedRequests:requests];
-        }];
-    }];
-}
-
-- (NSArray *)requestIDsForClass:(NSString *)clazz {
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    [self.registeredRequests.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
-        id request = self.registeredRequests[key];
-        if ([request conformsToProtocol:@protocol(WOTModelServiceProtocol)]) {
-            id<WOTModelServiceProtocol> modelService = (id<WOTModelServiceProtocol>)request;
-            
-            NSString *registeredClazz = [modelService modelClassName];
-            if ([registeredClazz compare:clazz] == NSOrderedSame) {
-                [result addObject:key];
-            }
-        }
-    }];
-    return result;
-}
-
-
-- (void)evaluateNestedRequests:(NSArray<JSONMappingNestedRequest *> * _Nullable) requests {
-
-    for (JSONMappingNestedRequest *request in requests) {
-        
-        NSString * clazz = NSStringFromClass(request.clazz);
-        NSArray<NSString *> *requestsIDForClass = [self requestIDsForClass:clazz];
-        [requestsIDForClass enumerateObjectsUsingBlock:^(NSString * _Nonnull requestID, NSUInteger idx, BOOL * _Nonnull stop) {
-
-            WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
-            NSArray* keypathsSwift = [request.clazz performSelector:@selector(keypaths)];
-            NSMutableArray<NSString *>* keypaths = [[NSMutableArray alloc] init];
-            [keypathsSwift enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSString *keypath = [NSString stringWithString:obj];
-                [keypaths addObject: keypath];
-            }];
-            [arguments setValues:keypaths forKey: @"fields"];
-            [arguments setValues:@[request.identifier] forKey:request.identifier_fieldname];//TODO: refectoring
-            [arguments setValues:@[self.hostConfiguration.applicationID] forKey:@"application_id"];
-            
-            id<WOTRequestProtocol> wotRequest = [[WOTRequestExecutor sharedInstance] createRequestForId: [requestID integerValue] ];
-            BOOL canAdd = [[WOTRequestExecutor sharedInstance] add:wotRequest byGroupId:@"NestedRequest"];
-            if ( canAdd ) {
-                [wotRequest start:arguments];
-            }
-        }];
-    }
-}
-
-
 #pragma mark - WOTRequestListener
 
-- (void)request:(id)request finishedLoadData:(NSData *)data json:(NSDictionary *)json error:(NSError *)error {
+- (void)request:(id)request finishedLoadData:(NSData *)data error:(NSError *)error {
 
     Class clazz = [request class];
     
@@ -264,10 +145,10 @@
         id<WOTModelServiceProtocol> modelService = (id<WOTModelServiceProtocol>)clazz;
         
         NSString *modelClassName = [modelService modelClassName];
-        NSArray* requestIds = [self requestIDsForClass: modelClassName];
-        
+        NSArray* requestIds = [[WOTRequestReception sharedInstance] requestIdsForClass: NSClassFromString(modelClassName)];
+
         for (NSNumber* requestId in requestIds) {
-            [self processRequestId:requestId json:json error:error binary:data];
+            [[WOTRequestReception sharedInstance] requestId:[requestId integerValue] processBinary:data error:error];
         }
     }
 
@@ -282,7 +163,6 @@
 }
 
 - (void)requestHasStarted:(id<WOTRequestProtocol>)request {
-    
     self.pendingRequestsCount += 1;
 }
 
