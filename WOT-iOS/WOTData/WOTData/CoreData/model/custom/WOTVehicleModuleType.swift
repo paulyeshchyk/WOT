@@ -36,7 +36,7 @@ public enum WOTVehicleModuleType: Int {
         case "vehicleRadio":return .radio
         case "vehicleTurret":return .turret
         case "vehicleGun":return .gun
-        //TODO: WTF
+        #warning("WTF")
         default: return .unknown
         }
     }

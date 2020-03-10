@@ -33,8 +33,10 @@ open class WOTRequestArguments: NSObject {
     }
     
     @objc
-    public func buildQuery() -> String {
-        return dictionary.asURLQueryString()
+    public func buildQuery(_ custom: [AnyHashable: Any] = [:]) -> String {
+        var mixture = custom
+        mixture.append(with: dictionary)
+        return mixture.asURLQueryString()
     }
     
     @objc

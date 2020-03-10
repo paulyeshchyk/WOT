@@ -39,7 +39,7 @@ public enum WOTModuleType: Int {
         case "turrets":return .turrets
         case "guns":return .guns
         case "tank":return .tank
-        //TODO: WTF
+        #warning("WTF")
         default: return .unknown
         }
     }

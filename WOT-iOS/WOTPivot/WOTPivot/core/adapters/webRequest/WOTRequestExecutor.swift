@@ -66,7 +66,7 @@ extension WOTRequestExecutorSwift: WOTRequestListenerProtocol {
             }
         }
         pendingRequestsCount -= 1
-        //TODO: force cast
+        #warning ("force cast")
         self.removeRequest(request as! WOTRequestProtocol)
     }
     

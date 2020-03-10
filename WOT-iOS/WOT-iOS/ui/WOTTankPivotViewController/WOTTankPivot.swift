@@ -43,7 +43,7 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
         return result
     }
 
-    //TODO: "TO BE RECACTORED"
+#warning ("TO BE RECACTORED")
     private func fetchCustomPredicate() -> NSPredicate {
         let fakePredicate = NSPredicate(format: "NOT(tank_id  = nil)")
         return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])
@@ -133,11 +133,10 @@ class WOTTankPivotModel: WOTPivotDataModel {
 
             let arguments = WOTRequestArguments()
             arguments.setValues(Vehicles.keypaths(), forKey: WGWebQueryArgs.fields)
-            arguments.setValues([hostConfiguration.applicationID], forKey: WGWebQueryArgs.application_id)
             
             if let request = WOTRequestReception.sharedInstance.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
                 request.hostConfiguration = hostConfiguration
-                let canAdd = WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: "WOT_REQUEST_ID_VEHICLE_LIST")
+                let canAdd = WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: WGWebRequestGroups.vehicle_list)
                 if canAdd == true {
                     request.start(arguments)
                 }

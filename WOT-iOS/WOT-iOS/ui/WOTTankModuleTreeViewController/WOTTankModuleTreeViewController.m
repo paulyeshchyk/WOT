@@ -23,7 +23,7 @@
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
     if ([fetchedObject isKindOfClass: [Vehicles class]]) {
-        //TODO: add WOTTankNode
+#warning("add WOTTankNode")
         return [[WOTNode alloc] initWithName:((Vehicles *)fetchedObject).name];
     } else if ([fetchedObject isKindOfClass: [ModulesTree class]]) {
         return [[WOTTreeModuleNode alloc] initWithModuleTree:(ModulesTree *)fetchedObject];

@@ -18,10 +18,18 @@ public class WOTWEBRequestLogout: WOTWEBRequest {
     override public var path: String {
         return "wot/auth/logout/"
     }
+}
 
+extension WOTWEBRequestLogout: WOTModelServiceProtocol {
+    
     @objc
-    public class func modelClassName() -> String {
-        return ""
+    public static func modelClass() -> AnyClass? {
+        return nil
     }
-
+    
+    @objc
+    public func instanceModelClass() -> AnyClass? {
+        return type(of: self).modelClass()
+    }
+    
 }

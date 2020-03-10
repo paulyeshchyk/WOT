@@ -19,8 +19,18 @@ public class WOTWEBRequestLogin: WOTWEBRequest {
         return "wot/auth/login/"
     }
     
+}
+
+extension WOTWEBRequestLogin: WOTModelServiceProtocol {
+    
     @objc
-    public static func modelClassName() -> String {
-        return ""
+    public static func modelClass() -> AnyClass? {
+        return nil
     }
+    
+    @objc
+    public func instanceModelClass() -> AnyClass? {
+        return type(of: self).modelClass()
+    }
+    
 }

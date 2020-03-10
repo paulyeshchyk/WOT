@@ -65,7 +65,7 @@ class WOTConnectorNodeIndex: NSObject, WOTConnectorNodeIndexProtocol {
         return itemsAtSection?[indexPath.row]
     }
 
-    //TODO: simplify it
+    #warning("simplify it")
     func indexPath(forNode: WOTNodeProtocol) -> IndexPath? {
         var indexPath: IndexPath? = nil
         self.levelIndex.keys.forEach { (key) in

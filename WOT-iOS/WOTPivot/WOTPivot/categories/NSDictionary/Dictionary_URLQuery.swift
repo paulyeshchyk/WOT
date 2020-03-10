@@ -63,6 +63,7 @@ extension Dictionary where Key == AnyHashable {
         }
         
         guard let urlCodable = obj as? URLEncodedProtocol else {
+            print("\(NSStringFromClass(type(of: obj) as! AnyClass)) is not supporting URLEncodedProtocol")
             return nil
         }
         return urlCodable.urlEncoded()

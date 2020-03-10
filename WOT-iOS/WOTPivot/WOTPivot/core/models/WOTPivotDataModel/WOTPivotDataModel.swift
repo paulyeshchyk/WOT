@@ -137,11 +137,11 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
     }
 
     public func itemsCount(section: Int) -> Int {
+        #warning("currently not used")
         /*
-         * TODO: be sure section is used
+         * be sure section is used
          * i.e. for case when two or more section displayed
          *
-         * currently not used
          */
         let cnt = self.nodeIndex.count
         return cnt

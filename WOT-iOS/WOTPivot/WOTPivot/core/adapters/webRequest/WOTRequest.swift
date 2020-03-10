@@ -111,7 +111,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
             listeners.remove(at: index)
         }
     }
-    //TODO: refactoring
+    #warning(" refactoring ")
     override open var hash: Int {
         
         return NSStringFromClass(type(of:self)).hash

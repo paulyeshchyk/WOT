@@ -223,12 +223,7 @@ import Foundation
     }
 }
 
-/*
- TODO: Try KeyPathListable
- i.e. extension Vehiles:KeyPathListable {
-      }
- */
-
+#warning("Try KeyPathListable; //extension Vehiles:KeyPathListable {}")
 
 protocol KeyPathListable {
     associatedtype AnyOldObject

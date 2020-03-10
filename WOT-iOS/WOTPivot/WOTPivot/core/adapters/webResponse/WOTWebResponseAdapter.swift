@@ -11,7 +11,7 @@ import Foundation
 public typealias JSON = [AnyHashable: Any]
 
 
-//TODO: transform an conforming class to Future/Promise
+#warning("transform an conforming class to Future/Promise")
 
 @objc
 public protocol WOTWebResponseAdapter: NSObjectProtocol {

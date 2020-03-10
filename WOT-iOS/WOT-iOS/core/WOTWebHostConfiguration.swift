@@ -22,4 +22,11 @@ public class WOTWebHostConfiguration: NSObject, WOTHostConfigurationProtocol {
     public var scheme: String {
         return WOTApiDefaults.applicationScheme
     }
+    
+    @objc
+    public func urlQuery(with: WOTRequestArguments) -> String {
+        let custom = ["application_id": applicationID]
+        return with.buildQuery(custom)
+    }
+
 }

@@ -87,12 +87,15 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
 class WOTWebRequestBuilder {
 
     private func buildURL(path: String, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?) -> URL {
+
+        let urlQuery: String? = hostConfiguration?.urlQuery(with: args)
+        
         var components = URLComponents()
         components.scheme = hostConfiguration?.scheme
         components.host = hostConfiguration?.host
         components.path = path
         if bodyData == nil {
-            components.query = args.buildQuery()
+            components.query = urlQuery
         }
         guard let result = components.url else {
             fatalError("url not created")

@@ -339,7 +339,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
     [args setValues:@[tankID]  forKey:WOTApiKeys.tank_id];
     [args setValues:[Vehicles keypaths]  forKey:WGWebQueryArgs.fields];
-    [args setValues:@[hostOwner.hostConfiguration.applicationID] forKey: WGWebQueryArgs.application_id];
 
     id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdTankVehicles];
     request.hostConfiguration = hostOwner.hostConfiguration;

@@ -121,9 +121,11 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
     public func requestIds(forClass: AnyClass) -> [WOTRequestIdType]? {
         var result = [WOTRequestIdType]()
         self.registeredRequests.keys.forEach { (key) in
-            if let requestClass = self.registeredRequests[key], let requestModelClass = requestClass.modelClass() {
-                if forClass == requestModelClass {
-                    result.append(key)
+            if let requestClass = self.registeredRequests[key], requestClass.conforms(to: WOTModelServiceProtocol.self) {
+                if let requestModelClass = requestClass.modelClass() {
+                    if forClass == requestModelClass {
+                        result.append(key)
+                    }
                 }
             }
         }
@@ -217,7 +219,6 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
 //                 }];
 //                 [arguments setValues:keypaths forKey: @"fields"];
 //                 [arguments setValues:@[request.identifier] forKey:request.identifier_fieldname];//TODO: refectoring
-//                 [arguments setValues:@[self.hostConfiguration.applicationID] forKey:@"application_id"];
 //
 //                 id<WOTRequestProtocol> wotRequest = [[WOTRequestExecutorSwift sharedInstance] createRequestForId: [requestID integerValue] ];
 //                 BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] add:wotRequest byGroupId:@"NestedRequest"];

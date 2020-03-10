@@ -33,6 +33,7 @@ public class WGWebQueryArgs: NSObject {
 @objc
 public class WGWebRequestGroups: NSObject {
     @objc public static let vehicle_profile: String = "vehicle_profile"
+    @objc public static let vehicle_list: String = "vehicle_list"
     @objc public static let login: String = "login"
     @objc public static let logout: String = "logout"
 }

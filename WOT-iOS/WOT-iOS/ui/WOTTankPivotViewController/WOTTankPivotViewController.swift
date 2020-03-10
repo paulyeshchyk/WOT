@@ -39,7 +39,7 @@ open class WOTPivotViewController: UIViewController {
     }()
 
     open func pivotModel() -> WOTPivotDataModelProtocol {
-        //TODO: crash is possible here!!!
+        #warning("crash is possible here!!!")
         return WOTPivotDataModel(enumerator: WOTNodeEnumerator.sharedInstance)
     }
     

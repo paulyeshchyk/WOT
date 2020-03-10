@@ -19,6 +19,13 @@ extension NSString: URLEncodedProtocol {
     
     @objc
     public func urlEncoded() -> String? {
+        return (self as? String)?.urlEncoded()
+    }
+}
+
+
+extension String: URLEncodedProtocol {
+    public func urlEncoded() -> String? {
         let customAllowedSet =  NSCharacterSet(charactersIn:"%;/?¿:@&=$+,[]#!'()*<> \"\n").inverted
         return self.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
     }

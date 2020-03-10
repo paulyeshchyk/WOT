@@ -70,7 +70,6 @@
         NSString *noFollow = @"1";
         NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",hostConfiguration.host];
         WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
-        [args setValues:@[appId] forKey: WGWebQueryArgs.application_id];
         [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
         [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
         [request start:args];
