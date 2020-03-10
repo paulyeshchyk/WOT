@@ -78,7 +78,7 @@
         return nil;
     } else {
     
-#warning think about or / and predicates
+#warning think about "or / and" predicates
         return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
     }
 }

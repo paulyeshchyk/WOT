@@ -17,7 +17,7 @@
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.power, WOTApiKeys.fire_starting_chance] forSection:@"Характеристика"];
     [result setExtractor:^(ModulesTree *moduleTree){
         
-        NSSet *setOfObjs = moduleTree.nextEngines;
+        NSSet *setOfObjs = moduleTree.next_engines;
         return [setOfObjs anyObject];
     }];
     return result;
@@ -29,7 +29,7 @@
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.distance] forSection:@"Характеристика"];
     [result setExtractor:^(ModulesTree *moduleTree){
 
-        NSSet *setOfObjs = moduleTree.nextRadios;
+        NSSet *setOfObjs = moduleTree.next_radios;
         return [setOfObjs anyObject];
     }];
     return result;
@@ -41,7 +41,7 @@
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.armor_board, WOTApiKeys.armor_forehead, WOTApiKeys.armor_fedd, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
     [result setExtractor:^(ModulesTree *moduleTree){
 
-        NSSet *setOfObjs = moduleTree.nextTurrets;
+        NSSet *setOfObjs = moduleTree.next_turrets;
         return [setOfObjs anyObject];
     }];
     return result;
@@ -53,7 +53,7 @@
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.max_load, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
     [result setExtractor:^(ModulesTree *moduleTree){
 
-        NSSet *setOfObjs = moduleTree.nextChassis;
+        NSSet *setOfObjs = moduleTree.next_chassis;
         return [setOfObjs anyObject];
     }];
     return result;
@@ -65,7 +65,7 @@
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.rate] forSection:@"Характеристика"];
     [result setExtractor:^(ModulesTree *moduleTree){
         
-        NSSet *setOfObjs = moduleTree.nextGuns;
+        NSSet *setOfObjs = moduleTree.next_guns;
         return [setOfObjs anyObject];
     }];
     return result;

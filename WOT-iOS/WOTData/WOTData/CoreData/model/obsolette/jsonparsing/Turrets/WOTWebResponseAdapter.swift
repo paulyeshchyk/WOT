@@ -13,7 +13,7 @@ public class WOTWebResponseAdapterTurrets: NSObject, WOTWebResponseAdapter {
 
     public func parseData(_ binary: Data?, error: Error?, nestedRequestsCallback: JSONMappingCompletion?) -> Error? {
 
-        return (binary as? NSData)?.parseAsJSON { (json) in
+        return binary?.parseAsJSON { (json) in
 
             guard let tankTurretsDictionary = json?[WGJsonFields.data] as? Dictionary<AnyHashable, Any> else {
                 return

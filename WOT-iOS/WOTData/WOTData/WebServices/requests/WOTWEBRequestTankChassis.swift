@@ -9,23 +9,25 @@
 import Foundation
 
 @objc
-public class WOTWEBRequestTankChassis: WOTWEBRequest, WOTModelServiceProtocol {
+public class WOTWEBRequestTankChassis: WOTWEBRequest {
     
     override public var method: String { return "POST" }
-
-    @available(*, deprecated, message: "TO be refactored")
-    @objc
-    public static func modelClassName() -> String {
-        return NSStringFromClass(Tankchassis.self)
-    }
-
-    @available(*, deprecated, message: "TO be refactored")
-    @objc
-    public func instanceModelClass() -> AnyClass? {
-        return NSClassFromString( type(of: self).modelClassName() )
-    }
 
     override public var path: String {
         return "/wot/encyclopedia/tankchassis/"
     }
+}
+
+
+extension WOTWEBRequestTankChassis: WOTModelServiceProtocol {
+    
+    @objc
+    public static func modelClass() -> AnyClass? {
+        return Tankchassis.self
+    }
+    
+    @objc
+    public func instanceModelClass() -> AnyClass? {
+        return type(of: self).modelClass()
+    }    
 }

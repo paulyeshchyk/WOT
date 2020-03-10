@@ -275,31 +275,31 @@
             case WOTVehicleModuleTypeChassis: {
 
                 Tankchassis *chassis = (Tankchassis *)[Tankchassis findOrCreateObjectWithPredicate:predicate context:context];
-                [moduleTree addNextChassisObject:chassis];
+                [moduleTree addNext_chassisObject:chassis];
                 break;
             }
             case WOTVehicleModuleTypeEngine: {
                 
                 Tankengines *engine = (Tankengines *)[Tankengines findOrCreateObjectWithPredicate:predicate context:context];
-                [moduleTree addNextEnginesObject:engine];
+                [moduleTree addNext_enginesObject:engine];
                 break;
             }
             case WOTVehicleModuleTypeGun: {
 
                 Tankguns *gun = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:predicate context:context];
-                [moduleTree addNextGunsObject:gun];
+                [moduleTree addNext_gunsObject:gun];
                 break;
             }
             case WOTVehicleModuleTypeTurret: {
                 
                 Tankturrets *turrets = (Tankturrets *)[Tankturrets findOrCreateObjectWithPredicate:predicate context:context];
-                [moduleTree addNextTurretsObject:turrets];
+                [moduleTree addNext_turretsObject:turrets];
                 break;
             }
             case WOTVehicleModuleTypeRadio: {
 
                 Tankradios *radios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
-                [moduleTree addNextRadiosObject:radios];
+                [moduleTree addNext_radiosObject:radios];
                 break;
             }
             default: {
@@ -309,7 +309,7 @@
         
         if (parentModule) {
             
-            [parentModule addNextModulesObject:moduleTree];
+            [parentModule addNext_modulesObject:moduleTree];
         }
         
     }];

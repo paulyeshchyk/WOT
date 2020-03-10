@@ -18,6 +18,7 @@ public protocol WOTRequestProtocol: class {
     func cancel()
     
     @objc
+    @discardableResult
     func start(_ args: WOTRequestArguments?) -> Bool
     
     @objc

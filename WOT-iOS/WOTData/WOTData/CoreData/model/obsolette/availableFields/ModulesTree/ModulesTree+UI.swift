@@ -21,19 +21,19 @@ extension ModulesTree {
     @objc
     public func moduleType() -> WOTModuleType {
         
-        if let next = self.nextEngines, next.count > 0 {
+        if let next = self.next_engines, next.count > 0 {
             return .engine
         }
-        if let next = self.nextChassis, next.count > 0 {
+        if let next = self.next_chassis, next.count > 0 {
             return .chassis
         }
-        if let next = self.nextGuns, next.count > 0 {
+        if let next = self.next_guns, next.count > 0 {
             return .guns
         }
-        if let next = self.nextRadios, next.count > 0 {
+        if let next = self.next_radios, next.count > 0 {
             return .radios
         }
-        if let next = self.nextTurrets, next.count > 0 {
+        if let next = self.next_turrets, next.count > 0 {
             return .turrets
         }
         return .unknown

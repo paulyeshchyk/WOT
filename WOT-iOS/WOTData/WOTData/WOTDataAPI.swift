@@ -31,6 +31,14 @@ public class WGWebQueryArgs: NSObject {
 }
 
 @objc
+public class WGWebRequestGroups: NSObject {
+    @objc public static let vehicle_profile: String = "vehicle_profile"
+    @objc public static let login: String = "login"
+    @objc public static let logout: String = "logout"
+}
+
+
+@objc
 public class WGJsonFields: NSObject {
     @objc public static let tag: String = "tag"
     @objc public static let data: String = "data"

@@ -13,7 +13,7 @@ open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
     
     public func parseData(_ binary: Data?, error: Error?, nestedRequestsCallback: JSONMappingCompletion?) -> Error? {
 
-        return (binary as? NSData)?.parseAsJSON({ json in
+        return binary?.parseAsJSON({ json in
 
             guard let keys = json?.keys, keys.count != 0 else {
                 return

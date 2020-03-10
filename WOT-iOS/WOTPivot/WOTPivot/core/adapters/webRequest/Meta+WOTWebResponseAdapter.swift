@@ -156,13 +156,21 @@ extension NSData {
     @objc
     @discardableResult
     public func parseAsJSON(_ completion: JSONParseCompletion? ) -> Error? {
+        return (self as Data).parseAsJSON(completion)
+    }
+}
+
+
+extension Data {
+
+    @discardableResult
+    public func parseAsJSON(_ completion: JSONParseCompletion? ) -> Error? {
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: self as Data, options: [.mutableLeaves, .mutableContainers])
             guard let json = jsonObject as? JSON else {
                 return WOTWEBRequestError(kind: .emptyJSON)
-                
             }
-    
+            
             let response = WOTWebResponse()
             response.mapping(fromJSON: json)
             switch response.status {
@@ -174,9 +182,9 @@ extension NSData {
         } catch {
             return WOTWEBRequestError(kind: .parseError)
         }
-    
+        
         return nil
-
+        
     }
-}
 
+}

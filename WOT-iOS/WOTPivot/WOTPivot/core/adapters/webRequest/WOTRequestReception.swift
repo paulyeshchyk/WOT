@@ -121,10 +121,8 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
     public func requestIds(forClass: AnyClass) -> [WOTRequestIdType]? {
         var result = [WOTRequestIdType]()
         self.registeredRequests.keys.forEach { (key) in
-            if let requestClass = self.registeredRequests[key] {
-                let requestClassName = requestClass.modelClassName()
-                let forClassClassName = NSStringFromClass(forClass)
-                if requestClassName.compare(forClassClassName) == .orderedSame {
+            if let requestClass = self.registeredRequests[key], let requestModelClass = requestClass.modelClass() {
+                if forClass == requestModelClass {
                     result.append(key)
                 }
             }

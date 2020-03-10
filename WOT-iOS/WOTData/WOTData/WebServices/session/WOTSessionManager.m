@@ -13,9 +13,6 @@
 //#import "UserSession+CoreDataClass.h"
 #import <WOTData/WOTData-Swift.h>
 
-#define WOT_REQUEST_ID_LOGIN @"WOT_REQUEST_ID_LOGIN"
-#define WOT_REQUEST_ID_LOGOUT @"WOT_REQUEST_ID_LOGOUT"
-
 @interface WOTSessionManager ()
 
 @property (nonatomic, strong)NSTimer *timer;
@@ -53,7 +50,7 @@
     
     id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogout];
     request.hostConfiguration = hostOwner.hostConfiguration;
-    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WOT_REQUEST_ID_LOGOUT];
+    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WGWebRequestGroups.logout];
     if (canAdd) {
         [request start:nil];
     }
@@ -66,7 +63,7 @@
 
     id<WOTRequestProtocol> request =  [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogout];
     request.hostConfiguration = hostConfiguration;
-    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WOT_REQUEST_ID_LOGIN];
+    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WGWebRequestGroups.login];
     if (canAdd) {
         
         NSString *appId = hostOwner.hostConfiguration.applicationID;

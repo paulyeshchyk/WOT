@@ -13,7 +13,15 @@ import Foundation
     public class func keypaths() -> [String] {
         return [#keyPath(ModulesTree.name),
                 #keyPath(ModulesTree.module_id),
-                #keyPath(ModulesTree.price_credit)]
+                #keyPath(ModulesTree.price_credit),
+                #keyPath(ModulesTree.next_guns),
+                #keyPath(ModulesTree.next_tanks),
+                #keyPath(ModulesTree.next_radios),
+                #keyPath(ModulesTree.next_chassis),
+                #keyPath(ModulesTree.next_engines),
+                #keyPath(ModulesTree.next_modules),
+                #keyPath(ModulesTree.next_turrets)
+        ]
     }
 }
 

@@ -23,11 +23,10 @@ public protocol WOTWebServiceProtocol {
 
 @objc(WOTModelServiceProtocol)
 public protocol WOTModelServiceProtocol: class {
-    @available(*, deprecated, message: "TO be refactored")
+
     @objc
-    static func modelClassName() -> String
+    static func modelClass() -> AnyClass?
     
-    @available(*, deprecated, message: "TO be refactored")
     @objc
     func instanceModelClass() -> AnyClass?
 }

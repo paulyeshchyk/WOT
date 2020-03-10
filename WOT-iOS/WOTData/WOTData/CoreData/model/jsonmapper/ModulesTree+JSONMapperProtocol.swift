@@ -15,13 +15,13 @@ extension ModulesTree: JSONMapperProtocol {
         case price_xp
         case is_default
         case type
-        case nextChassis
-        case nextEngines
-        case nextGuns
-        case nextModules
-        case nextRadios
-        case nextTurrets
-        case nextTanks
+        case next_chassis
+        case next_engines
+        case next_guns
+        case next_modules
+        case next_radios
+        case next_turrets
+        case next_tanks
         case prevModules
     }
     
@@ -51,31 +51,14 @@ extension ModulesTree: JSONMapperProtocol {
          */
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
 
-        
-        if let nextChassis = jSON[#keyPath(ModulesTree.nextChassis)] {
-            print(nextChassis)
-        }
-        if let nextEngines = jSON[#keyPath(ModulesTree.nextEngines)] {
-            print(nextEngines)
-        }
-        if let nextGuns = jSON[#keyPath(ModulesTree.nextGuns)] {
-            print(nextGuns)
-        }
-        if let nextModules = jSON[#keyPath(ModulesTree.nextModules)] {
-            print(nextModules)
-        }
-        if let nextRadios = jSON[#keyPath(ModulesTree.nextRadios)] {
-            print(nextRadios)
-        }
-        if let nextTurrets = jSON[#keyPath(ModulesTree.nextTurrets)] {
-            print(nextTurrets)
-        }
-        if let nextTanks = jSON[#keyPath(ModulesTree.nextTanks)] {
-            print(nextTanks)
-        }
-        if let prevModules = jSON[#keyPath(ModulesTree.prevModules)] {
-            print(prevModules)
-        }
+//        print("jSON[#keyPath(ModulesTree.next_chassis)]: \(jSON[#keyPath(ModulesTree.next_chassis)] ?? "")")
+//        print("jSON[#keyPath(ModulesTree.next_engines)]: \(jSON[#keyPath(ModulesTree.next_engines)] ?? "")")
+//        print("jSON[#keyPath(ModulesTree.next_guns)]: \(jSON[#keyPath(ModulesTree.next_guns)] ?? "")")
+//        print("jSON[#keyPath(ModulesTree.next_modules)]: \(jSON[#keyPath(ModulesTree.next_modules)] ?? "")")
+//        print("jSON[#keyPath(ModulesTree.next_radios)]: \(jSON[#keyPath(ModulesTree.next_radios)] ?? "")")
+//        print("jSON[#keyPath(ModulesTree.next_turrets)]: \(jSON[#keyPath(ModulesTree.next_turrets)] ?? "")")
+//        print("jSON[#keyPath(ModulesTree.next_tanks)]: \(jSON[#keyPath(ModulesTree.next_tanks)] ?? "")")
+//        print("jSON[#keyPath(ModulesTree.prevModules)]: \(jSON[#keyPath(ModulesTree.prevModules)] ?? "")")
     }
     
     

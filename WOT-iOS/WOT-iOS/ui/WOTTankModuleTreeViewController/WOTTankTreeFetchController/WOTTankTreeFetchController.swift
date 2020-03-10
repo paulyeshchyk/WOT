@@ -102,7 +102,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func transform(module: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
-        guard let submodules = module.nextModules else {
+        guard let submodules = module.next_modules else {
             return
         }
         submodules.forEach({ (submodule) in
@@ -140,7 +140,7 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
 
     #warning ("implement compatibility; otherwise module tree is not working")
     func isCompatible(forTankId: NSNumber) -> Bool {
-        return self.nextTanks?.tank_id?.intValue == forTankId.intValue
+        return self.next_tanks?.tank_id?.intValue == forTankId.intValue
 //        let result = self.nextTanks?.filter({ (next) -> Bool in
 //            return next.tank_id?.intValue == forTankId.intValue
 //        })

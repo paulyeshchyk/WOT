@@ -2,7 +2,7 @@
 //  ModulesTree+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/20/20.
+//  Created by Pavel Yeshchyk on 3/10/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -24,115 +24,115 @@ extension ModulesTree {
     @NSManaged public var price_xp: NSDecimalNumber?
     @NSManaged public var type: String?
     @NSManaged public var defaultProfile: Vehicleprofile?
-    @NSManaged public var nextChassis: NSSet?
-    @NSManaged public var nextEngines: NSSet?
-    @NSManaged public var nextGuns: NSSet?
-    @NSManaged public var nextModules: NSSet?
-    @NSManaged public var nextRadios: NSSet?
-    @NSManaged public var nextTurrets: NSSet?
+    @NSManaged public var next_chassis: NSSet?
+    @NSManaged public var next_engines: NSSet?
+    @NSManaged public var next_guns: NSSet?
+    @NSManaged public var next_modules: NSSet?
+    @NSManaged public var next_radios: NSSet?
+    @NSManaged public var next_tanks: Vehicles?
+    @NSManaged public var next_turrets: NSSet?
     @NSManaged public var prevModules: ModulesTree?
-    @NSManaged public var nextTanks: Vehicles?
 
 }
 
-// MARK: Generated accessors for nextChassis
+// MARK: Generated accessors for next_chassis
 extension ModulesTree {
 
-    @objc(addNextChassisObject:)
-    @NSManaged public func addToNextChassis(_ value: Tankchassis)
+    @objc(addNext_chassisObject:)
+    @NSManaged public func addToNext_chassis(_ value: Tankchassis)
 
-    @objc(removeNextChassisObject:)
-    @NSManaged public func removeFromNextChassis(_ value: Tankchassis)
+    @objc(removeNext_chassisObject:)
+    @NSManaged public func removeFromNext_chassis(_ value: Tankchassis)
 
-    @objc(addNextChassis:)
-    @NSManaged public func addToNextChassis(_ values: NSSet)
+    @objc(addNext_chassis:)
+    @NSManaged public func addToNext_chassis(_ values: NSSet)
 
-    @objc(removeNextChassis:)
-    @NSManaged public func removeFromNextChassis(_ values: NSSet)
+    @objc(removeNext_chassis:)
+    @NSManaged public func removeFromNext_chassis(_ values: NSSet)
 
 }
 
-// MARK: Generated accessors for nextEngines
+// MARK: Generated accessors for next_engines
 extension ModulesTree {
 
-    @objc(addNextEnginesObject:)
-    @NSManaged public func addToNextEngines(_ value: Tankengines)
+    @objc(addNext_enginesObject:)
+    @NSManaged public func addToNext_engines(_ value: Tankengines)
 
-    @objc(removeNextEnginesObject:)
-    @NSManaged public func removeFromNextEngines(_ value: Tankengines)
+    @objc(removeNext_enginesObject:)
+    @NSManaged public func removeFromNext_engines(_ value: Tankengines)
 
-    @objc(addNextEngines:)
-    @NSManaged public func addToNextEngines(_ values: NSSet)
+    @objc(addNext_engines:)
+    @NSManaged public func addToNext_engines(_ values: NSSet)
 
-    @objc(removeNextEngines:)
-    @NSManaged public func removeFromNextEngines(_ values: NSSet)
+    @objc(removeNext_engines:)
+    @NSManaged public func removeFromNext_engines(_ values: NSSet)
 
 }
 
-// MARK: Generated accessors for nextGuns
+// MARK: Generated accessors for next_guns
 extension ModulesTree {
 
-    @objc(addNextGunsObject:)
-    @NSManaged public func addToNextGuns(_ value: Tankguns)
+    @objc(addNext_gunsObject:)
+    @NSManaged public func addToNext_guns(_ value: Tankguns)
 
-    @objc(removeNextGunsObject:)
-    @NSManaged public func removeFromNextGuns(_ value: Tankguns)
+    @objc(removeNext_gunsObject:)
+    @NSManaged public func removeFromNext_guns(_ value: Tankguns)
 
-    @objc(addNextGuns:)
-    @NSManaged public func addToNextGuns(_ values: NSSet)
+    @objc(addNext_guns:)
+    @NSManaged public func addToNext_guns(_ values: NSSet)
 
-    @objc(removeNextGuns:)
-    @NSManaged public func removeFromNextGuns(_ values: NSSet)
+    @objc(removeNext_guns:)
+    @NSManaged public func removeFromNext_guns(_ values: NSSet)
 
 }
 
-// MARK: Generated accessors for nextModules
+// MARK: Generated accessors for next_modules
 extension ModulesTree {
 
-    @objc(addNextModulesObject:)
-    @NSManaged public func addToNextModules(_ value: ModulesTree)
+    @objc(addNext_modulesObject:)
+    @NSManaged public func addToNext_modules(_ value: ModulesTree)
 
-    @objc(removeNextModulesObject:)
-    @NSManaged public func removeFromNextModules(_ value: ModulesTree)
+    @objc(removeNext_modulesObject:)
+    @NSManaged public func removeFromNext_modules(_ value: ModulesTree)
 
-    @objc(addNextModules:)
-    @NSManaged public func addToNextModules(_ values: NSSet)
+    @objc(addNext_modules:)
+    @NSManaged public func addToNext_modules(_ values: NSSet)
 
-    @objc(removeNextModules:)
-    @NSManaged public func removeFromNextModules(_ values: NSSet)
+    @objc(removeNext_modules:)
+    @NSManaged public func removeFromNext_modules(_ values: NSSet)
 
 }
 
-// MARK: Generated accessors for nextRadios
+// MARK: Generated accessors for next_radios
 extension ModulesTree {
 
-    @objc(addNextRadiosObject:)
-    @NSManaged public func addToNextRadios(_ value: Tankradios)
+    @objc(addNext_radiosObject:)
+    @NSManaged public func addToNext_radios(_ value: Tankradios)
 
-    @objc(removeNextRadiosObject:)
-    @NSManaged public func removeFromNextRadios(_ value: Tankradios)
+    @objc(removeNext_radiosObject:)
+    @NSManaged public func removeFromNext_radios(_ value: Tankradios)
 
-    @objc(addNextRadios:)
-    @NSManaged public func addToNextRadios(_ values: NSSet)
+    @objc(addNext_radios:)
+    @NSManaged public func addToNext_radios(_ values: NSSet)
 
-    @objc(removeNextRadios:)
-    @NSManaged public func removeFromNextRadios(_ values: NSSet)
+    @objc(removeNext_radios:)
+    @NSManaged public func removeFromNext_radios(_ values: NSSet)
 
 }
 
-// MARK: Generated accessors for nextTurrets
+// MARK: Generated accessors for next_turrets
 extension ModulesTree {
 
-    @objc(addNextTurretsObject:)
-    @NSManaged public func addToNextTurrets(_ value: Tankturrets)
+    @objc(addNext_turretsObject:)
+    @NSManaged public func addToNext_turrets(_ value: Tankturrets)
 
-    @objc(removeNextTurretsObject:)
-    @NSManaged public func removeFromNextTurrets(_ value: Tankturrets)
+    @objc(removeNext_turretsObject:)
+    @NSManaged public func removeFromNext_turrets(_ value: Tankturrets)
 
-    @objc(addNextTurrets:)
-    @NSManaged public func addToNextTurrets(_ values: NSSet)
+    @objc(addNext_turrets:)
+    @NSManaged public func addToNext_turrets(_ values: NSSet)
 
-    @objc(removeNextTurrets:)
-    @NSManaged public func removeFromNextTurrets(_ values: NSSet)
+    @objc(removeNext_turrets:)
+    @NSManaged public func removeFromNext_turrets(_ values: NSSet)
 
 }
