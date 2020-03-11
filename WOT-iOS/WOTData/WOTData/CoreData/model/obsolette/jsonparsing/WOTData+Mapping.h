@@ -11,7 +11,6 @@
 
 #import "WOTWebResponseAdapterRadios.h"
 #import "WOTWebResponseAdapterGuns.h"
-#import "WOTWebResponseAdapterProfile.h"
 #import "WOTWebResponseAdapterEngines.h"
 #import "Vehicles+WOTWebResponseAdapter.h"
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias JSONMappingCompletion = ([JSONMappingNestedRequest]?) -> Void
+public typealias JSONMappingNestedRequestsCallback = ([JSONMappingNestedRequest]?) -> Void
 
 
 @objc

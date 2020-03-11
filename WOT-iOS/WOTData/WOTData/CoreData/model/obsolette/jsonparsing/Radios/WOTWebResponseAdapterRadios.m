@@ -33,9 +33,7 @@
                 
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankRadiosJSON[WGJsonFields.module_id]];
                 Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
-                [tankradios mappingFromJSON:tankRadiosJSON into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
-                    
-                }];
+                [tankradios mappingFromJSON:tankRadiosJSON into: context completion: nestedRequestsCallback];
             }];
             
             if ([context hasChanges]) {

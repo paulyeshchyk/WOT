@@ -107,14 +107,14 @@
 
             [[NSNotificationCenter defaultCenter] postNotificationName:WOT_NOTIFICATION_LOGOUT object:nil userInfo:nil];
 
-            WOTRequest *clearSessionRequest = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdClearSession];
+            id<WOTRequestProtocol> clearSessionRequest = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdClearSession];
             clearSessionRequest.hostConfiguration = hostOwner.hostConfiguration;
-            [clearSessionRequest start:nil];
+            [clearSessionRequest start:nil invokedBy: nil];
             
             
-            WOTRequest *loginRequest = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogin];
+            id<WOTRequestProtocol> loginRequest = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogin];
             loginRequest.hostConfiguration = hostOwner.hostConfiguration;
-            [loginRequest start:nil];
+            [loginRequest start:nil invokedBy: nil];
         }
         
     }];
@@ -197,9 +197,9 @@ WOTLoginCallback loginCallback = ^(WOTLogin *wotLogin){
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init:argsDictionary];
 
     id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
-    WOTRequest *request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdSaveSession];
+    id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdSaveSession];
     request.hostConfiguration = hostOwner.hostConfiguration;
-    [request start:args];
+    [request start:args invokedBy: nil];
 
     UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
     [rootViewController dismissViewControllerAnimated:YES completion:NULL];

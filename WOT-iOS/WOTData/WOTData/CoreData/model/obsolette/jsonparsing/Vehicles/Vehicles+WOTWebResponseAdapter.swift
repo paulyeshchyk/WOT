@@ -11,7 +11,7 @@ import Foundation
 @objc
 open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
     
-    public func parseData(_ binary: Data?, error: Error?, nestedRequestsCallback: JSONMappingCompletion?) -> Error? {
+    public func parseData(_ binary: Data?, error: Error?, nestedRequestsCallback: JSONMappingNestedRequestsCallback?) -> Error? {
 
         return binary?.parseAsJSON({ json in
 

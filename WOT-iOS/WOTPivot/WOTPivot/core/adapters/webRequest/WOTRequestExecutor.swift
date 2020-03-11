@@ -60,7 +60,9 @@ extension WOTRequestExecutorSwift: WOTRequestListenerProtocol {
                 if let modelClass = instance.instanceModelClass() {
                     let requestIds = WOTRequestReception.sharedInstance.requestIds(forClass: modelClass)
                     requestIds?.forEach({ requestId in
-                        WOTRequestReception.sharedInstance.requestId(requestId, processBinary: data, error: error)
+                        WOTRequestReception.sharedInstance.requestId(requestId, processBinary: data, error: error, nestedRequestCallback: { [weak self] requests in
+                            self?.evaluate(nestedRequests: requests, forRequest: request)
+                        })
                     })
                 }
             }
@@ -80,7 +82,6 @@ extension WOTRequestExecutorSwift: WOTRequestListenerProtocol {
     }
     
     public func removeRequest(_ request: WOTRequestProtocol) {
-     
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
                 grouppedRequests.removeAll(where: { $0.hash == request.hash })
@@ -90,5 +91,10 @@ extension WOTRequestExecutorSwift: WOTRequestListenerProtocol {
         }
         request.removeListener(self)
     }
-    
+
+    private func evaluate(nestedRequests:[JSONMappingNestedRequest]?, forRequest: AnyObject) {
+        if let startable = forRequest as? WOTStartableProtocol, let invoker = startable.invoker {
+            invoker.evaluate(nestedRequests: nestedRequests)
+        }
+    }
 }

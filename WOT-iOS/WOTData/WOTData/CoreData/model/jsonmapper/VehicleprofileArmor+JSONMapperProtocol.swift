@@ -17,10 +17,10 @@ extension VehicleprofileArmor: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingCompletion?){ }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?){ }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingCompletion?){
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?){
         
         defer {
             context.tryToSave()

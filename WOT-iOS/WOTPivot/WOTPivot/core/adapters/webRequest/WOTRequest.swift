@@ -9,17 +9,33 @@
 import Foundation
 
 @objc
-public protocol WOTRequestProtocol: class {
+public protocol WOTNestedRequestsEvaluatorProtocol {
     
     @objc
-    var hostConfiguration: WOTHostConfigurationProtocol? { get set }
+    func evaluate(nestedRequests: [JSONMappingNestedRequest]?)
+}
+
+@objc
+public protocol WOTStartableProtocol {
+    
+    @objc
+    var invoker: WOTNestedRequestsEvaluatorProtocol? { get set }
     
     @objc
     func cancel()
     
     @objc
     @discardableResult
-    func start(_ args: WOTRequestArguments?) -> Bool
+    func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol?) -> Bool
+    
+}
+
+
+@objc
+public protocol WOTRequestProtocol: WOTStartableProtocol {
+    
+    @objc
+    var hostConfiguration: WOTHostConfigurationProtocol? { get set }
     
     @objc
     var listeners:[WOTRequestListenerProtocol] { get }
@@ -62,21 +78,13 @@ public protocol WOTRequestListenerProtocol {
     func removeRequest(_ request: WOTRequestProtocol)
 }
 
-@objc
-public protocol WOTStartableProtocol {
-
-    @objc
-    func cancel()
-    
-    @objc
-    @discardableResult
-    func start(_ args: WOTRequestArguments?) -> Bool
-    
-}
 
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
 
+    @objc
+    public weak var invoker: WOTNestedRequestsEvaluatorProtocol?
+    
     @objc
     public var hostConfiguration: WOTHostConfigurationProtocol?
     
@@ -123,6 +131,5 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     
     @objc
     @discardableResult
-    open func start(_ args: WOTRequestArguments?) -> Bool { return false }
-    
+    open func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol?) -> Bool { return false }
 }

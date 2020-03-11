@@ -59,6 +59,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, strong)NSMutableSet *runningRequestIDs;
 
+@property (nonatomic, strong)id<WOTNestedRequestsEvaluatorProtocol> nestedRequestsEvaluator;
+
 @end
 
 @implementation WOTTankDetailViewController
@@ -83,6 +85,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     
     self.radarViewController.delegate = nil;
     self.radarViewController = nil;
+    self.nestedRequestsEvaluator = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -169,6 +172,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.nestedRequestsEvaluator = [[WOTNestedRequestEvaluator alloc] init];
 
     self.radarViewController = [[WOTRadarViewController alloc] initWithNibName:NSStringFromClass([WOTRadarViewController class]) bundle:nil];
     [self.radarViewController setDelegate:self];
@@ -267,7 +272,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         _tankId = [tankId copy];
         
         NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
-        [self refetchTankID:[_tankId stringValue] groupId:requestId];
+        [self refetchTankID:[_tankId integerValue] groupId:requestId];
 
         NSError *error = nil;
         [self.fetchedResultController performFetch:&error];
@@ -279,8 +284,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         /*
          * Default Profile
          */
-        [self executeDefaultProfileRequestForTankId:[tankId stringValue]];
-        
+        id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
+        [WOTWEBRequestFactory performTankProfileRequestWithTankId: [tankId integerValue] hostConfiguration:hostOwner.hostConfiguration invokedBy: self.nestedRequestsEvaluator];
     }
 }
 
@@ -321,47 +326,14 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
             self.runningRequestIDs = [[NSMutableSet alloc] init];
         }
         [self.runningRequestIDs addObject:groupId];
-        [self refetchTankID:[tankId stringValue] groupId:groupId];
+        [self refetchTankID:[tankId integerValue] groupId:groupId];
     }];
 }
 
-- (void)refetchTankID:(NSString *)tankID groupId:(id)groupId{
-
-    if (!([tankID integerValue] > 0)) {
-        
-        debugError(@"tankID should not be nil");
-        return;
-    }
+- (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
     id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
-
-    
-    WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
-    [args setValues:@[tankID]  forKey:WOTApiKeys.tank_id];
-    [args setValues:[Vehicles keypaths]  forKey:WGWebQueryArgs.fields];
-
-    id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdTankVehicles];
-    request.hostConfiguration = hostOwner.hostConfiguration;
-    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:groupId];
-    if (canAdd) {
-        [request start:args];
-    }
-}
-
-- (void)executeDefaultProfileRequestForTankId:(id)tankId {
-
-    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
-
-    WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
-    [args setValues:@[tankId]  forKey:WOTApiKeys.tank_id];
-    [args setValues:@[hostOwner.hostConfiguration.applicationID] forKey: WGWebQueryArgs.application_id];
-
-    id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdTankProfile];
-    request.hostConfiguration = hostOwner.hostConfiguration;
-    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WGWebRequestGroups.vehicle_profile];
-    if (canAdd) {
-        [request start:args];
-    }
+    [WOTWEBRequestFactory performVehicleRequestWithVehicleId:tankID hostConfiguration:hostOwner.hostConfiguration invokedBy: self.nestedRequestsEvaluator];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -495,5 +467,4 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [sample addWithMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
     return [NSObject gridData:sample];
 }
-
 @end

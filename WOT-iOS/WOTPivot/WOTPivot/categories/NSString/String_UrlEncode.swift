@@ -14,6 +14,13 @@ public protocol URLEncodedProtocol {
     func urlEncoded() -> String?
 }
 
+extension Int: URLEncodedProtocol {
+    
+    public func urlEncoded() -> String? {
+        return "\(self)".urlEncoded()
+    }
+}
+
 @objc
 extension NSString: URLEncodedProtocol {
     
@@ -36,7 +43,7 @@ extension Array: URLEncodedProtocol {
     public func urlEncoded() -> String? {
         var resultArray = [String]()
         self.forEach { element in
-            if let text = element as? String, let encoded = text.urlEncoded() {
+            if let text = element as? URLEncodedProtocol, let encoded = text.urlEncoded() {
                 resultArray.append(encoded)
             }
         }

@@ -22,7 +22,7 @@
 @implementation AppDelegate
 @synthesize hostConfiguration;
 
-- (WOTWebHostConfiguration *)hostConfiguration {
+- (id<WOTHostConfigurationProtocol>)hostConfiguration {
     if (hostConfiguration == nil) {
         hostConfiguration = [[WOTWebHostConfiguration alloc] init];
     }

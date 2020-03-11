@@ -65,11 +65,13 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     }
 
     @discardableResult
-    open override func start(_ args: WOTRequestArguments?) -> Bool {
+    open override func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol?) -> Bool {
 
         guard let args = args else {
             return false
         }
+        
+        invoker = invokedBy
         
         let request = urlRequest(with: args)
         let pumper = WOTWebDataPumper(request: request) {[weak self] (data, error) in

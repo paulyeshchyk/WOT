@@ -33,9 +33,7 @@
 
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankEngineJSON[WGJsonFields.module_id]];
                 Tankengines *tankEngines = (Tankengines *)[Tankengines findOrCreateObjectWithPredicate:predicate context:context];
-                [tankEngines mappingFromJSON: tankEngineJSON into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
-                    
-                }];
+                [tankEngines mappingFromJSON: tankEngineJSON into: context completion:nestedRequestsCallback];
             }];
             
             if ([context hasChanges]) {

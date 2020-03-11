@@ -52,7 +52,7 @@
     request.hostConfiguration = hostOwner.hostConfiguration;
     BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WGWebRequestGroups.logout];
     if (canAdd) {
-        [request start:nil];
+        [request start:nil invokedBy: self];
     }
 }
 
@@ -72,7 +72,7 @@
         WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
         [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
         [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
-        [request start:args];
+        [request start:args invokedBy:self];
     }
 }
 

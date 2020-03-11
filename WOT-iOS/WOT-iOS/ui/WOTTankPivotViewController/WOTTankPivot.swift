@@ -43,7 +43,7 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
         return result
     }
 
-#warning ("TO BE RECACTORED")
+#warning ("TO BE REFACTORED")
     private func fetchCustomPredicate() -> NSPredicate {
         let fakePredicate = NSPredicate(format: "NOT(tank_id  = nil)")
         return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])
@@ -126,21 +126,59 @@ class WOTTankPivotModel: WOTPivotDataModel {
         super.loadModel()
     }
 
+    private let nestedRequestsEvaluator: WOTNestedRequestsEvaluatorProtocol = WOTNestedRequestEvaluator()
     
     private func performWebRequest() {
         let hostOwner = UIApplication.shared.delegate as? WOTHostConfigurationOwner
         if let hostConfiguration = hostOwner?.hostConfiguration {
 
             let arguments = WOTRequestArguments()
-            arguments.setValues(Vehicles.keypaths(), forKey: WGWebQueryArgs.fields)
+            arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
             
             if let request = WOTRequestReception.sharedInstance.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
                 request.hostConfiguration = hostConfiguration
                 let canAdd = WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: WGWebRequestGroups.vehicle_list)
                 if canAdd == true {
-                    request.start(arguments)
+                    request.start(arguments, invokedBy: nestedRequestsEvaluator)
                 }
             }
         }
     }
 }
+
+@objc
+public class WOTNestedRequestEvaluator: NSObject, WOTNestedRequestsEvaluatorProtocol {
+
+    public func evaluate(nestedRequests: [JSONMappingNestedRequest]?) {
+        
+        let hostOwner = UIApplication.shared.delegate as? WOTHostConfigurationOwner
+        guard let hostConfiguration = hostOwner?.hostConfiguration else {
+            return
+        }
+        
+        nestedRequests?.forEach( { request in
+            let requestIDs = WOTRequestReception.sharedInstance.requestIds(forClass: request.clazz)
+            requestIDs?.forEach({ (requestId) in
+                let arguments = WOTRequestArguments()
+                if let clazz = request.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) {
+                    if let obj = clazz.init() as? KeypathProtocol {
+                        let keyPaths = obj.instanceKeypaths()
+                        #warning("forKey: fields should be refactored")
+                        arguments.setValues(keyPaths, forKey: "fields")
+                        if let ident = request.identifier, let ident_fieldName = request.identifier_fieldname {
+                            arguments.setValues([ident], forKey: ident_fieldName)
+                        }
+                        if let request = WOTRequestReception.sharedInstance.createRequest(forRequestId: requestId) {
+                            if WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: "Nested") {
+                                request.hostConfiguration = hostConfiguration
+                                request.start(arguments, invokedBy: self)
+                            }
+                            
+                        }
+                    }
+                }
+            })
+        })
+    }
+}
+

@@ -8,6 +8,16 @@
 
 import Foundation
 
+@objc
+public protocol KeypathProtocol: class {
+    
+    @objc
+    static func keypaths() -> [String]
+    
+    @objc
+    func instanceKeypaths() -> [String]
+}
+
 public typealias WOTRequestCompletion = () -> Void
 public typealias WOTRequestIdType = Int
 
@@ -68,7 +78,7 @@ public protocol WOTRequestReceptionProtocol {
     func requestId(_ requestId: WOTRequestIdType, registerRequestCompletion: @escaping WOTRequestCallback)
     
     @objc
-    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?)
+    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, nestedRequestCallback: JSONMappingNestedRequestsCallback?)
 }
 
 @objc
@@ -88,10 +98,10 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
     
     @objc
     public func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol? {
-        guard let Clazz = request(for: forRequestId) as? NSObject.Type, Clazz.isSubclass(of: WOTRequest.self) else {
+        guard let Clazz = request(for: forRequestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self) else {
             return nil
         }
-        guard let result = Clazz.init() as? WOTRequest else {
+        guard let result = Clazz.init() as? WOTRequestProtocol else {
             return nil
         }
         return result
@@ -175,7 +185,7 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
     }
 
     @objc
-    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?) {
+    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, nestedRequestCallback: JSONMappingNestedRequestsCallback?) {
 
         let callbacks = self.registeredCallbacks[requestId]
         callbacks?.forEach({ callback in
@@ -189,45 +199,12 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
         adapters.forEach { AdapterType in
             if let Clazz = AdapterType as? NSObject.Type {
                 if let adapter = Clazz.init() as? WOTWebResponseAdapter {
-                    let error = adapter.parseData(binary, error: error, nestedRequestsCallback: {[weak self] nestedRequests in
-                        self?.evaluate(nestedRequests: nestedRequests)
-                    })
+                    let error = adapter.parseData(binary, error: error, nestedRequestsCallback: nestedRequestCallback)
                     if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
                         print("\(NSStringFromClass(Clazz)) raized:\(text)")
                     }
                 }
             }
         }
-    }
-    
-    
-    private func evaluate(nestedRequests:[JSONMappingNestedRequest]?) {
-//        nestedRequests?.forEach( { request in
-//            let requestIDs = self.requestIds(forClass: request.clazz)
-//            requestIDs?.forEach({ (requestId) in
-//                let arguments = WOTRequestArguments()
-//                /*
-//                 WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
-//
-//                 NSArray* keypathsSwift = [request.clazz performSelector:@selector(keypaths)];
-//
-//                 NSMutableArray<NSString *>* keypaths = [[NSMutableArray alloc] init];
-//
-//                 [keypathsSwift enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//                 NSString *keypath = [NSString stringWithString:obj];
-//                 [keypaths addObject: keypath];
-//                 }];
-//                 [arguments setValues:keypaths forKey: @"fields"];
-//                 [arguments setValues:@[request.identifier] forKey:request.identifier_fieldname];//TODO: refectoring
-//
-//                 id<WOTRequestProtocol> wotRequest = [[WOTRequestExecutorSwift sharedInstance] createRequestForId: [requestID integerValue] ];
-//                 BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] add:wotRequest byGroupId:@"NestedRequest"];
-//                 if ( canAdd ) {
-//                 [wotRequest start:arguments];
-//                 }
-//
-//                 */
-//            })
-//        })
     }
 }

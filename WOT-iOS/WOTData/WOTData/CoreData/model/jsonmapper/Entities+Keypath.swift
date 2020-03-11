@@ -8,7 +8,9 @@
 
 import Foundation
 
-@objc extension ModulesTree {
+@objc
+extension ModulesTree: KeypathProtocol {
+
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(ModulesTree.name),
@@ -23,9 +25,14 @@ import Foundation
                 #keyPath(ModulesTree.next_turrets)
         ]
     }
+    
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return ModulesTree.keypaths()
+    }
 }
 
-@objc extension Tankengines {
+@objc extension Tankengines: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Tankengines.name),
@@ -36,9 +43,14 @@ import Foundation
                 #keyPath(Tankengines.fire_starting_chance),
                 #keyPath(Tankengines.module_id)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankengines.keypaths()
+    }
 }
 
-@objc extension Tankchassis {
+@objc extension Tankchassis: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Tankchassis.name),
@@ -49,9 +61,14 @@ import Foundation
                 #keyPath(Tankchassis.price_gold),
                 #keyPath(Tankchassis.rotation_speed)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankchassis.keypaths()
+    }
 }
 
-@objc extension Tankradios {
+@objc extension Tankradios: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Tankradios.name),
@@ -61,9 +78,14 @@ import Foundation
                 #keyPath(Tankradios.price_credit),
                 #keyPath(Tankradios.price_gold)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankradios.keypaths()
+    }
 }
 
-@objc extension Tankguns {
+@objc extension Tankguns: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Tankguns.name),
@@ -73,9 +95,14 @@ import Foundation
                 #keyPath(Tankguns.price_gold),
                 #keyPath(Tankguns.rate)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankguns.keypaths()
+    }
 }
 
-@objc extension Tankturrets {
+@objc extension Tankturrets: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Tankturrets.name),
@@ -89,9 +116,27 @@ import Foundation
                 #keyPath(Tankturrets.price_gold),
                 #keyPath(Tankturrets.rotation_speed)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankturrets.keypaths()
+    }
 }
 
-@objc extension Vehicles {
+@objc extension Vehicles: KeypathProtocol {
+
+    @objc
+    public class func keypathsLight() -> [String] {
+        return [#keyPath(Vehicles.name),
+                #keyPath(Vehicles.short_name),
+                #keyPath(Vehicles.type),
+                #keyPath(Vehicles.nation),
+                #keyPath(Vehicles.tag),
+                #keyPath(Vehicles.tier),
+                #keyPath(Vehicles.tank_id)
+        ]
+    }
+    
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Vehicles.name),
@@ -111,25 +156,40 @@ import Foundation
                 #keyPath(Vehicles.guns),
                 #keyPath(Vehicles.turrets)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Vehicles.keypaths()
+    }
 }
 
-@objc extension VehicleprofileAmmo {
+@objc extension VehicleprofileAmmo: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileAmmo.type)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileAmmo.keypaths()
+    }
 }
 
-@objc extension VehicleprofileAmmoDamage {
+@objc extension VehicleprofileAmmoDamage: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileAmmoDamage.avg_value),
                 #keyPath(VehicleprofileAmmoDamage.max_value),
                 #keyPath(VehicleprofileAmmoDamage.min_value)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileAmmoDamage.keypaths()
+    }
 }
 
-@objc extension VehicleprofileEngine {
+@objc extension VehicleprofileEngine: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileEngine.name),
@@ -139,9 +199,14 @@ import Foundation
                 #keyPath(VehicleprofileEngine.fire_chance),
                 #keyPath(VehicleprofileEngine.tier)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileEngine.keypaths()
+    }
 }
 
-@objc extension VehicleprofileSuspension {
+@objc extension VehicleprofileSuspension: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileSuspension.name),
@@ -150,9 +215,14 @@ import Foundation
                 #keyPath(VehicleprofileSuspension.tag),
                 #keyPath(VehicleprofileSuspension.tier)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileSuspension.keypaths()
+    }
 }
 
-@objc extension Vehicleprofile {
+@objc extension Vehicleprofile: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Vehicleprofile.max_ammo),
@@ -160,17 +230,22 @@ import Foundation
                 #keyPath(Vehicleprofile.hp),
                 #keyPath(Vehicleprofile.is_default),
                 #keyPath(Vehicleprofile.modules),
-                #keyPath(Vehicleprofile.modulesTree),
-                #keyPath(Vehicleprofile.vehicles),
+//                #keyPath(Vehicleprofile.modulesTree),
+//                #keyPath(Vehicleprofile.vehicles),
                 #keyPath(Vehicleprofile.speed_forward),
                 #keyPath(Vehicleprofile.hull_hp),
                 #keyPath(Vehicleprofile.speed_backward),
                 #keyPath(Vehicleprofile.tank_id),
                 #keyPath(Vehicleprofile.max_weight)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Vehicleprofile.keypaths()
+    }
 }
 
-@objc extension VehicleprofileRadio {
+@objc extension VehicleprofileRadio: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileRadio.tier),
@@ -179,9 +254,14 @@ import Foundation
                 #keyPath(VehicleprofileRadio.weight),
                 #keyPath(VehicleprofileRadio.name)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileRadio.keypaths()
+    }
 }
 
-@objc extension VehicleprofileGun {
+@objc extension VehicleprofileGun: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileGun.move_down_arc),
@@ -196,30 +276,50 @@ import Foundation
                 #keyPath(VehicleprofileGun.tier),
                 #keyPath(VehicleprofileGun.aim_time)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileGun.keypaths()
+    }
 }
 
-@objc extension VehicleprofileTurret {
+@objc extension VehicleprofileTurret: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return []
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileTurret.keypaths()
+    }
 }
 
-@objc extension VehicleprofileAmmoPenetration {
+@objc extension VehicleprofileAmmoPenetration: KeypathProtocol {
     @objc
     public static func keypaths() -> [String] {
         return [#keyPath(VehicleprofileAmmoPenetration.avg_value),
                 #keyPath(VehicleprofileAmmoPenetration.max_value),
                 #keyPath(VehicleprofileAmmoPenetration.min_value)]
     }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileAmmoPenetration.keypaths()
+    }
 }
 
-@objc extension VehicleprofileArmor {
+@objc extension VehicleprofileArmor: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileArmor.front),
                 #keyPath(VehicleprofileArmor.sides),
                 #keyPath(VehicleprofileArmor.rear)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileArmor.keypaths()
     }
 }
 

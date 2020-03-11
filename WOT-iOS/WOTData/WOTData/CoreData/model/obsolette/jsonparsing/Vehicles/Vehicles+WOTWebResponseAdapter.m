@@ -57,7 +57,7 @@
 
                     BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:groupId];
                     if (canAdd) {
-                        [request start:args];
+                        [request start:args invokedBy:self];
                     }
                 }];
                 
