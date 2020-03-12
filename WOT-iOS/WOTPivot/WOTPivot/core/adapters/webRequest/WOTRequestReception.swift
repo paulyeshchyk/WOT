@@ -78,7 +78,7 @@ public protocol WOTRequestReceptionProtocol {
     func requestId(_ requestId: WOTRequestIdType, registerRequestCompletion: @escaping WOTRequestCallback)
     
     @objc
-    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol)
+    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, completion: (([JSONLinkedObjectRequest]?)->Void)? )
 }
 
 @objc
@@ -86,13 +86,11 @@ public class WOTRequestReception: NSObject {
     
     private var registeredRequests: [WOTRequestIdType: AnyClass] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: [AnyClass]] = .init()
-    private var registeredCallbacks: [WOTRequestIdType: [WOTRequestCallback]] = .init()
 
-    @objc
-    public static let sharedInstance1 = WOTRequestReception()
+    @available(*, deprecated, message: "use dataadapters instead")
+    private var registeredCallbacks: [WOTRequestIdType: [WOTRequestCallback]] = .init()
     
 }
-
 
 extension WOTRequestReception: WOTRequestReceptionProtocol {
     
@@ -129,15 +127,11 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
     
     @objc
     public func requestIds(forClass: AnyClass) -> [WOTRequestIdType]? {
-        var result = [WOTRequestIdType]()
-        self.registeredRequests.keys.forEach { (key) in
-            if let requestClass = self.registeredRequests[key], requestClass.conforms(to: WOTModelServiceProtocol.self) {
-                if let requestModelClass = requestClass.modelClass() {
-                    if forClass == requestModelClass {
-                        result.append(key)
-                    }
-                }
-            }
+        let result =  self.registeredRequests.keys.filter { key in
+            guard let requestClass = self.registeredRequests[key], requestClass.conforms(to: WOTModelServiceProtocol.self) else { return false }
+            guard let requestModelClass = requestClass.modelClass() else { return false }
+            guard forClass == requestModelClass else { return false }
+            return true
         }
         return result
     }
@@ -185,7 +179,7 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
     }
 
     @objc
-    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol) {
+    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, completion: (([JSONLinkedObjectRequest]?)->Void)? ){
 
         let callbacks = self.registeredCallbacks[requestId]
         callbacks?.forEach({ callback in
@@ -197,16 +191,16 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
         }
         
         adapters.forEach { AdapterType in
-            if let Clazz = AdapterType as? NSObject.Type {
-                if let adapter = Clazz.init() as? WOTWebResponseAdapter {
-                    let error = adapter.parseData(binary, error: error, linkedObjectsRequestsCallback: { linkedRequests in
-                        invokedBy.evaluate(nestedRequests: linkedRequests)
-                    })
-                    if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
-                        print("\(NSStringFromClass(Clazz)) raized:\(text)")
-                    }
-                }
+            guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapter else {
+                return
+            }
+            let error = adapter.parseData(binary, error: error, linkedObjectsRequestsCallback: { linkedRequests in
+                completion?(linkedRequests)
+            })
+            if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
+                print("\(NSStringFromClass(Clazz)) raized:\(text)")
             }
         }
+        return
     }
 }

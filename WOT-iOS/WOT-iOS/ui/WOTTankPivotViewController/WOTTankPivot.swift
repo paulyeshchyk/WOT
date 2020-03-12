@@ -99,12 +99,12 @@ class WOTTankPivotModel: WOTPivotDataModel {
         
         self.enumerator = WOTNodeEnumerator.sharedInstance
 
-        let notificationName = NSNotification.Name(rawValue: WOTRequestExecutorSwift.pendingRequestNotificationName)
+        let notificationName = NSNotification.Name(rawValue: WOTRequestManager.pendingRequestNotificationName)
         NotificationCenter.default.addObserver(self, selector: #selector(pendingRequestCountChaged(notification:)), name: notificationName, object: nil)
     }
     
     deinit {
-        let notificationName = NSNotification.Name(rawValue: WOTRequestExecutorSwift.pendingRequestNotificationName)
+        let notificationName = NSNotification.Name(rawValue: WOTRequestManager.pendingRequestNotificationName)
         NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
     }
     
@@ -116,7 +116,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
     
     
     @objc private func pendingRequestCountChaged(notification: NSNotification) {
-        guard let executor = notification.object as? WOTRequestExecutorSwift else {
+        guard let executor = notification.object as? WOTRequestManager else {
             return
         }
         guard executor.pendingRequestsCount == 0 else {
@@ -139,10 +139,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
             
             if let request = requestManager?.requestReception.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
                 request.hostConfiguration = hostConfiguration
-                let canAdd = requestManager?.addRequest(request, forGroupId: WGWebRequestGroups.vehicle_list)
-                if canAdd == true {
-                    request.start(arguments, invokedBy: nestedRequestsEvaluator)
-                }
+                requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list)
             }
         }
     }
@@ -156,16 +153,6 @@ public class WOTNestedRequestEvaluator: NSObject {
         return appManager?.hostConfiguration
     }
     
-//    fileprivate var requestReception: WOTRequestReceptionProtocol? {
-//        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
-//        return appManager?.requestReception
-//    }
-//
-    fileprivate var requestEvaluator: WOTNestedRequestsEvaluatorProtocol? {
-        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
-        return appManager?.nestedRequestEvaluator
-    }
-    
     fileprivate var requestManager: WOTRequestManagerProtocol? {
         let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
         return appManager?.requestManager
@@ -174,39 +161,42 @@ public class WOTNestedRequestEvaluator: NSObject {
 
 extension WOTNestedRequestEvaluator: WOTNestedRequestsEvaluatorProtocol {
 
+    @discardableResult
+    private func queueRequest(for requestId: WOTRequestIdType, nestedRequest: JSONLinkedObjectRequest) -> Bool {
+
+        guard let requestManager = self.requestManager else { return false }
+        guard let clazz = nestedRequest.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
+        guard let obj = clazz.init() as? KeypathProtocol else { return false }
+        guard let request = requestManager.requestReception.createRequest(forRequestId: requestId) else { return false }
+
+        let keyPaths = obj.instanceKeypaths()
+
+        let arguments = WOTRequestArguments()
+        #warning("forKey: fields should be refactored")
+        arguments.setValues(keyPaths, forKey: "fields")
+        if let ident = nestedRequest.identifier, let ident_fieldName = nestedRequest.identifier_fieldname {
+            arguments.setValues([ident], forKey: ident_fieldName)
+        }
+
+        request.hostConfiguration = hostConfiguration
+
+        let groupId = "Nested\(String(describing: clazz))-\(nestedRequest.identifier ?? "")"
+
+        return requestManager.start(request, with: arguments, forGroupId: groupId)
+    }
+    
     public func evaluate(nestedRequests: [JSONLinkedObjectRequest]?) {
         
         DispatchQueue.main.async { [weak self] in
 
-            guard  let hostConfiguration = self?.hostConfiguration,
-                let requestEvaluator = self?.requestEvaluator,
-                let requestManager = self?.requestManager else {
+            guard let requestManager = self?.requestManager else {
                 return
             }
 
-            nestedRequests?.forEach( { request in
-                let requestIDs = requestManager.requestReception.requestIds(forClass: request.clazz)
+            nestedRequests?.forEach( { nestedRequest in
+                let requestIDs = requestManager.requestReception.requestIds(forClass: nestedRequest.clazz)
                 requestIDs?.forEach({ (requestId) in
-                    let arguments = WOTRequestArguments()
-                    if let clazz = request.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) {
-                        if let obj = clazz.init() as? KeypathProtocol {
-                            let keyPaths = obj.instanceKeypaths()
-                            #warning("forKey: fields should be refactored")
-                            arguments.setValues(keyPaths, forKey: "fields")
-                            if let ident = request.identifier, let ident_fieldName = request.identifier_fieldname {
-                                arguments.setValues([ident], forKey: ident_fieldName)
-                            }
-                            
-                            let groupId = "Nested\(String(describing: clazz))-\(request.identifier ?? "")"
-                            if let request = requestManager.requestReception.createRequest(forRequestId: requestId) {
-                                if requestManager.addRequest(request, forGroupId: groupId) {
-                                    request.hostConfiguration = hostConfiguration
-                                    request.start(arguments, invokedBy: requestEvaluator)
-                                }
-                                
-                            }
-                        }
-                    }
+                    self?.queueRequest(for: requestId, nestedRequest: nestedRequest)
                 })
             })
         }

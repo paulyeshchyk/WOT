@@ -24,7 +24,7 @@ public class WOTWebHostConfiguration: NSObject, WOTHostConfigurationProtocol {
     }
     
     @objc
-    public func urlQuery(with: WOTRequestArguments) -> String {
+    public func urlQuery(with: WOTRequestArgumentsProtocol) -> String {
         let custom = ["application_id": applicationID]
         return with.buildQuery(custom)
     }

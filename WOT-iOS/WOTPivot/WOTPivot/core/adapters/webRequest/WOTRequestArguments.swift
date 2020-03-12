@@ -9,13 +9,26 @@
 import Foundation
 
 @objc
-open class WOTRequestArguments: NSObject {
+public protocol WOTRequestArgumentsProtocol {
+    
+    @objc
+    init(_ dictionary: [AnyHashable: Any])
+    
+    @objc
+    func setValues(_ values: Any, forKey: AnyHashable)
+    
+    @objc
+    func buildQuery(_ custom: [AnyHashable: Any]) -> String
+}
+
+@objc
+open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
     
     @objc
     public private(set) var dictionary = [AnyHashable: Any]()
     
     @objc
-    convenience public init(_ dictionary: [AnyHashable: Any]) {
+    required convenience public init(_ dictionary: [AnyHashable: Any]) {
 
         self.init()
 

@@ -21,7 +21,7 @@ public protocol WOTHostConfigurationProtocol {
     var scheme: String { get }
     
     @objc
-    func urlQuery(with: WOTRequestArguments) -> String
+    func urlQuery(with: WOTRequestArgumentsProtocol) -> String
 }
 
 

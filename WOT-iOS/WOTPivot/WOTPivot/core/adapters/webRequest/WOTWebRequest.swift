@@ -18,7 +18,7 @@ public protocol WOTWebServiceProtocol {
     var method: String { get }
     var path: String { get }
     func notifyListenersAboutStart()
-    func requestHasFinishedLoad(data: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol)
+    func requestHasFinishedLoad(data: Data?, error: Error?)
 }
 
 @objc(WOTModelServiceProtocol)
@@ -46,9 +46,9 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         }
     }
 
-    public func requestHasFinishedLoad(data: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol) {
+    public func requestHasFinishedLoad(data: Data?, error: Error?) {
         self.listeners.compactMap { $0 }.forEach {
-            $0.request(self, finishedLoadData: data, error: error, invokedBy: invokedBy)
+            $0.request(self, finishedLoadData: data, error: error)
         }
     }
     
@@ -58,26 +58,23 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         }
     }
     
-    open func urlRequest(with args: WOTRequestArguments) -> URLRequest {
+    open func urlRequest(with args: WOTRequestArgumentsProtocol) -> URLRequest {
 
         let requestBuilder = WOTWebRequestBuilder()
         return requestBuilder.build(service: self, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
     }
 
     @discardableResult
-    open override func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol) -> Bool {
+    open override func start(_ args: WOTRequestArgumentsProtocol) -> Bool {
 
-        guard let args = args else {
-            return false
-        }
-        
-        invoker = invokedBy
-        
         let request = urlRequest(with: args)
         let pumper = WOTWebDataPumper(request: request) {[weak self] (data, error) in
 
-            self?.requestHasFinishedLoad(data: data, error: error, invokedBy: invokedBy)
+            self?.requestHasFinishedLoad(data: data, error: error)
+            print("ended request:\(request.url?.absoluteString ?? "??")")
         }
+        
+        print("started request:\(request.url?.absoluteString ?? "??")")
         
         pumper.start()
         self.notifyListenersAboutStart()
@@ -87,7 +84,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
 
 class WOTWebRequestBuilder {
 
-    private func buildURL(path: String, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?) -> URL {
+    private func buildURL(path: String, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URL {
 
         let urlQuery: String? = hostConfiguration?.urlQuery(with: args)
         
@@ -105,7 +102,7 @@ class WOTWebRequestBuilder {
 
     }
 
-    public func build(service: WOTWebServiceProtocol, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArguments, bodyData: Data?) -> URLRequest {
+    public func build(service: WOTWebServiceProtocol, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URLRequest {
         let url = buildURL(path: service.path, hostConfiguration: hostConfiguration, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
@@ -122,6 +119,10 @@ class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
     let completion: ((Data?, Error?) -> Void)
     private var data: Data?
     private var connection: NSURLConnection?
+    
+    deinit {
+        print("deinit WOTWebDataPumper")
+    }
     
     required init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void) ) {
         
@@ -151,12 +152,16 @@ class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
 
     func connectionDidFinishLoading(_ connection: NSURLConnection) {
 
-        completion(self.data, nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.completion(self?.data, nil)
+        }
     }
 
     func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
 
-        completion(nil, error)
+        DispatchQueue.main.async { [weak self] in
+            self?.completion(nil, error)
+        }
     }
 }
 

@@ -34,8 +34,9 @@
 
     id<WOTRequestReceptionProtocol> requestReception = [[WOTRequestReception alloc] init];
 
-    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestExecutorSwift alloc] initWithRequestReception:requestReception];
     id<WOTHostConfigurationProtocol> hostConfiguration = [[WOTWebHostConfiguration alloc] init];
+
+    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestExecutorSwift alloc] initWithRequestReception:requestReception hostConfiguration:hostConfiguration];
     id<WOTNestedRequestsEvaluatorProtocol> evaluator = [[WOTNestedRequestEvaluator alloc] init];
     
     self.appManager = [[WOTPivotAppManager alloc] init];

@@ -19,14 +19,11 @@ public protocol WOTNestedRequestsEvaluatorProtocol {
 public protocol WOTStartableProtocol {
     
     @objc
-    var invoker: WOTNestedRequestsEvaluatorProtocol? { get set }
-    
-    @objc
     func cancel()
     
     @objc
     @discardableResult
-    func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol) -> Bool
+    func start(_ args: WOTRequestArgumentsProtocol) -> Bool
     
 }
 
@@ -37,7 +34,7 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
     
     @objc
-    var listeners:[WOTRequestListenerProtocol] { get }
+    var listeners: [WOTRequestListenerProtocol] { get }
     
     @objc
     func addListener(_ listener: WOTRequestListenerProtocol)
@@ -65,13 +62,17 @@ public protocol WOTRequestManagerProtocol {
     var pendingRequestsCount: Int { get }
     
     @objc
-    func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool
+    @discardableResult
+    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool
     
     @objc
     func cancelRequests(groupId: String)
 
     @objc
     var requestReception: WOTRequestReceptionProtocol { get set }
+
+    @objc
+    var hostConfiguration: WOTHostConfigurationProtocol { get set }
 }
 
 @objc
@@ -81,7 +82,7 @@ public protocol WOTRequestListenerProtocol {
     var hash: Int { get }
 
     @objc
-    func request(_ request: AnyObject, finishedLoadData data:Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol)
+    func request(_ request: AnyObject, finishedLoadData data:Data?, error: Error?)
     
     @objc
     func requestHasCanceled(_ request: WOTRequestProtocol)
@@ -96,9 +97,6 @@ public protocol WOTRequestListenerProtocol {
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
 
-    @objc
-    public weak var invoker: WOTNestedRequestsEvaluatorProtocol?
-    
     @objc
     public var hostConfiguration: WOTHostConfigurationProtocol?
     
@@ -145,5 +143,5 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     
     @objc
     @discardableResult
-    open func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol) -> Bool { return false }
+    open func start(_ args: WOTRequestArgumentsProtocol) -> Bool { return false }
 }

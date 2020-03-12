@@ -110,12 +110,12 @@
 
             id<WOTRequestProtocol> clearSessionRequest = [reception createRequestForRequestId:WOTRequestIdClearSession];
             clearSessionRequest.hostConfiguration = manager.hostConfiguration;
-            [clearSessionRequest start:nil invokedBy: nil];
+            [clearSessionRequest start: [[WOTRequestArguments alloc] init]];
             
             
             id<WOTRequestProtocol> loginRequest = [reception createRequestForRequestId:WOTRequestIdLogin];
             loginRequest.hostConfiguration = manager.hostConfiguration;
-            [loginRequest start:nil invokedBy: nil];
+            [loginRequest start: [[WOTRequestArguments alloc] init] ];
         }
         
     }];
@@ -203,7 +203,7 @@ WOTLoginCallback loginCallback = ^(WOTLogin *wotLogin){
     id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
     id<WOTRequestProtocol> request = [requestReception createRequestForRequestId:WOTRequestIdSaveSession];
     request.hostConfiguration = hostOwner.hostConfiguration;
-    [request start:args invokedBy: nil];
+    [request start:args];
 
     UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
     [rootViewController dismissViewControllerAnimated:YES completion:NULL];

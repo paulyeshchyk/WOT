@@ -314,8 +314,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
          */
         [WOTWEBRequestFactory performTankProfileRequestWithRequestManager: self.requestManager
                                                                    tankId: [tankId integerValue]
-                                                        hostConfiguration: self.hostConfiguration
-                                                                invokedBy: self.nestedRequestsEvaluator];
+                                                        hostConfiguration: self.hostConfiguration];
     }
 }
 
@@ -364,8 +363,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
     [WOTWEBRequestFactory performVehicleRequestWithRequestManager: self.requestManager
                                                         vehicleId: tankID
-                                                hostConfiguration: self.hostConfiguration
-                                                        invokedBy: self.nestedRequestsEvaluator];
+                                                hostConfiguration: self.hostConfiguration];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

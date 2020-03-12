@@ -49,27 +49,22 @@
 
     id<WOTRequestProtocol> request = [requestManager.requestReception createRequestForRequestId:WOTRequestIdLogout];
     request.hostConfiguration = hostConfiguration;
-    BOOL canAdd = [requestManager addRequest:request forGroupId:WGWebRequestGroups.logout];
-    if (canAdd) {
-        [request start:nil invokedBy: self];
-    }
+    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout];
 }
 
 + (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
 
     id<WOTRequestProtocol> request =  [requestManager.requestReception createRequestForRequestId:WOTRequestIdLogout];
     request.hostConfiguration = hostConfiguration;
-    BOOL canAdd = [requestManager addRequest:request forGroupId:WGWebRequestGroups.login];
-    if (canAdd) {
         
-        NSString *appId = hostConfiguration.applicationID;
-        NSString *noFollow = @"1";
-        NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",hostConfiguration.host];
-        WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
-        [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
-        [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
-        [request start:args invokedBy:self];
-    }
+    NSString *appId = hostConfiguration.applicationID;
+    NSString *noFollow = @"1";
+    NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",hostConfiguration.host];
+    WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
+    [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
+    [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
+    
+    [requestManager start:request with:args forGroupId:WGWebRequestGroups.login];
 }
 
 + (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
