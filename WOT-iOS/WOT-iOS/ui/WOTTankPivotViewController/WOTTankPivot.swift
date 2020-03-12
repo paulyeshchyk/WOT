@@ -129,15 +129,17 @@ class WOTTankPivotModel: WOTPivotDataModel {
     private let nestedRequestsEvaluator: WOTNestedRequestsEvaluatorProtocol = WOTNestedRequestEvaluator()
     
     private func performWebRequest() {
-        let hostOwner = UIApplication.shared.delegate as? WOTHostConfigurationOwner
-        if let hostConfiguration = hostOwner?.hostConfiguration {
+        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
+        let requestManager = appManager?.requestManager
+        
+        if let hostConfiguration = appManager?.hostConfiguration {
 
             let arguments = WOTRequestArguments()
             arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
             
-            if let request = WOTRequestReception.sharedInstance.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
+            if let request = requestManager?.requestReception.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
                 request.hostConfiguration = hostConfiguration
-                let canAdd = WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: WGWebRequestGroups.vehicle_list)
+                let canAdd = requestManager?.addRequest(request, forGroupId: WGWebRequestGroups.vehicle_list)
                 if canAdd == true {
                     request.start(arguments, invokedBy: nestedRequestsEvaluator)
                 }
@@ -147,38 +149,67 @@ class WOTTankPivotModel: WOTPivotDataModel {
 }
 
 @objc
-public class WOTNestedRequestEvaluator: NSObject, WOTNestedRequestsEvaluatorProtocol {
+public class WOTNestedRequestEvaluator: NSObject {
 
-    public func evaluate(nestedRequests: [JSONMappingNestedRequest]?) {
+    fileprivate var hostConfiguration: WOTHostConfigurationProtocol? {
+        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
+        return appManager?.hostConfiguration
+    }
+    
+//    fileprivate var requestReception: WOTRequestReceptionProtocol? {
+//        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
+//        return appManager?.requestReception
+//    }
+//
+    fileprivate var requestEvaluator: WOTNestedRequestsEvaluatorProtocol? {
+        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
+        return appManager?.nestedRequestEvaluator
+    }
+    
+    fileprivate var requestManager: WOTRequestManagerProtocol? {
+        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
+        return appManager?.requestManager
+    }
+}
+
+extension WOTNestedRequestEvaluator: WOTNestedRequestsEvaluatorProtocol {
+
+    public func evaluate(nestedRequests: [JSONLinkedObjectRequest]?) {
         
-        let hostOwner = UIApplication.shared.delegate as? WOTHostConfigurationOwner
-        guard let hostConfiguration = hostOwner?.hostConfiguration else {
-            return
-        }
-        
-        nestedRequests?.forEach( { request in
-            let requestIDs = WOTRequestReception.sharedInstance.requestIds(forClass: request.clazz)
-            requestIDs?.forEach({ (requestId) in
-                let arguments = WOTRequestArguments()
-                if let clazz = request.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) {
-                    if let obj = clazz.init() as? KeypathProtocol {
-                        let keyPaths = obj.instanceKeypaths()
-                        #warning("forKey: fields should be refactored")
-                        arguments.setValues(keyPaths, forKey: "fields")
-                        if let ident = request.identifier, let ident_fieldName = request.identifier_fieldname {
-                            arguments.setValues([ident], forKey: ident_fieldName)
-                        }
-                        if let request = WOTRequestReception.sharedInstance.createRequest(forRequestId: requestId) {
-                            if WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: "Nested") {
-                                request.hostConfiguration = hostConfiguration
-                                request.start(arguments, invokedBy: self)
+        DispatchQueue.main.async { [weak self] in
+
+            guard  let hostConfiguration = self?.hostConfiguration,
+                let requestEvaluator = self?.requestEvaluator,
+                let requestManager = self?.requestManager else {
+                return
+            }
+
+            nestedRequests?.forEach( { request in
+                let requestIDs = requestManager.requestReception.requestIds(forClass: request.clazz)
+                requestIDs?.forEach({ (requestId) in
+                    let arguments = WOTRequestArguments()
+                    if let clazz = request.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) {
+                        if let obj = clazz.init() as? KeypathProtocol {
+                            let keyPaths = obj.instanceKeypaths()
+                            #warning("forKey: fields should be refactored")
+                            arguments.setValues(keyPaths, forKey: "fields")
+                            if let ident = request.identifier, let ident_fieldName = request.identifier_fieldname {
+                                arguments.setValues([ident], forKey: ident_fieldName)
                             }
                             
+                            let groupId = "Nested\(String(describing: clazz))-\(request.identifier ?? "")"
+                            if let request = requestManager.requestReception.createRequest(forRequestId: requestId) {
+                                if requestManager.addRequest(request, forGroupId: groupId) {
+                                    request.hostConfiguration = hostConfiguration
+                                    request.start(arguments, invokedBy: requestEvaluator)
+                                }
+                                
+                            }
                         }
                     }
-                }
+                })
             })
-        })
+        }
     }
 }
 

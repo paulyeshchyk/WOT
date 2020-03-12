@@ -100,7 +100,9 @@
     if (language) {
 
         [WOTApplicationDefaults setLanguage:language];
-        [WOTSessionManager login];
+        id<WOTPivotAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+        
+        [WOTSessionManager loginWithRequestManager:manager.requestManager hostConfiguration: manager.hostConfiguration];
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];

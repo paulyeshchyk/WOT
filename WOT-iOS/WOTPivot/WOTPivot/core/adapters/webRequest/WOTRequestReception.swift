@@ -78,7 +78,7 @@ public protocol WOTRequestReceptionProtocol {
     func requestId(_ requestId: WOTRequestIdType, registerRequestCompletion: @escaping WOTRequestCallback)
     
     @objc
-    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, nestedRequestCallback: JSONMappingNestedRequestsCallback?)
+    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol)
 }
 
 @objc
@@ -89,7 +89,7 @@ public class WOTRequestReception: NSObject {
     private var registeredCallbacks: [WOTRequestIdType: [WOTRequestCallback]] = .init()
 
     @objc
-    public static let sharedInstance = WOTRequestReception()
+    public static let sharedInstance1 = WOTRequestReception()
     
 }
 
@@ -185,7 +185,7 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
     }
 
     @objc
-    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, nestedRequestCallback: JSONMappingNestedRequestsCallback?) {
+    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol) {
 
         let callbacks = self.registeredCallbacks[requestId]
         callbacks?.forEach({ callback in
@@ -199,7 +199,9 @@ extension WOTRequestReception: WOTRequestReceptionProtocol {
         adapters.forEach { AdapterType in
             if let Clazz = AdapterType as? NSObject.Type {
                 if let adapter = Clazz.init() as? WOTWebResponseAdapter {
-                    let error = adapter.parseData(binary, error: error, nestedRequestsCallback: nestedRequestCallback)
+                    let error = adapter.parseData(binary, error: error, linkedObjectsRequestsCallback: { linkedRequests in
+                        invokedBy.evaluate(nestedRequests: linkedRequests)
+                    })
                     if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
                         print("\(NSStringFromClass(Clazz)) raized:\(text)")
                     }

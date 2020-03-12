@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterGuns
 
-- (NSError *)parseData:(NSData *)data error:(NSError *) error nestedRequestsCallback:(void (^)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data error:(NSError *) error linkedObjectsRequestsCallback:(void (^)(NSArray<JSONLinkedObjectRequest *> * _Nullable))nestedRequestsCallback {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 
@@ -26,15 +26,11 @@
             [tankGunsArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
                 
                 NSDictionary *tankGunsJSON = json[key];
-                if (![tankGunsJSON isKindOfClass:[NSDictionary class]]) {
-                    
-                    debugError(@"error while parsing");
-                    return;
+                if ([tankGunsJSON isKindOfClass:[NSDictionary class]]) {
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankGunsJSON[WGJsonFields.module_id]];
+                    Tankguns *tankGuns = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:predicate context:context];
+                    [tankGuns mappingFromJSON:tankGunsJSON into: context completion:nestedRequestsCallback];
                 }
-                
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankGunsJSON[WGJsonFields.module_id]];
-                Tankguns *tankGuns = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:predicate context:context];
-                [tankGuns mappingFromJSON:tankGunsJSON into: context completion:nestedRequestsCallback];
             }];
             
             if ([context hasChanges]) {

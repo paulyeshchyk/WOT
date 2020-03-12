@@ -12,7 +12,7 @@ import Foundation
 public protocol WOTNestedRequestsEvaluatorProtocol {
     
     @objc
-    func evaluate(nestedRequests: [JSONMappingNestedRequest]?)
+    func evaluate(nestedRequests: [JSONLinkedObjectRequest]?)
 }
 
 @objc
@@ -26,10 +26,9 @@ public protocol WOTStartableProtocol {
     
     @objc
     @discardableResult
-    func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol?) -> Bool
+    func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol) -> Bool
     
 }
-
 
 @objc
 public protocol WOTRequestProtocol: WOTStartableProtocol {
@@ -60,13 +59,29 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
 }
 
 @objc
+public protocol WOTRequestManagerProtocol {
+    
+    @objc
+    var pendingRequestsCount: Int { get }
+    
+    @objc
+    func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool
+    
+    @objc
+    func cancelRequests(groupId: String)
+
+    @objc
+    var requestReception: WOTRequestReceptionProtocol { get set }
+}
+
+@objc
 public protocol WOTRequestListenerProtocol {
     
     @objc
     var hash: Int { get }
 
     @objc
-    func request(_ request: AnyObject, finishedLoadData data:Data?, error: Error?)
+    func request(_ request: AnyObject, finishedLoadData data:Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol)
     
     @objc
     func requestHasCanceled(_ request: WOTRequestProtocol)
@@ -77,7 +92,6 @@ public protocol WOTRequestListenerProtocol {
     @objc
     func removeRequest(_ request: WOTRequestProtocol)
 }
-
 
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
@@ -131,5 +145,5 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     
     @objc
     @discardableResult
-    open func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol?) -> Bool { return false }
+    open func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol) -> Bool { return false }
 }

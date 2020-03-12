@@ -45,28 +45,24 @@
     return [session.expires_at integerValue];
 }
 
-+ (void)logout {
-    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
-    
-    id<WOTRequestProtocol> request = [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogout];
-    request.hostConfiguration = hostOwner.hostConfiguration;
-    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WGWebRequestGroups.logout];
++ (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
+
+    id<WOTRequestProtocol> request = [requestManager.requestReception createRequestForRequestId:WOTRequestIdLogout];
+    request.hostConfiguration = hostConfiguration;
+    BOOL canAdd = [requestManager addRequest:request forGroupId:WGWebRequestGroups.logout];
     if (canAdd) {
         [request start:nil invokedBy: self];
     }
 }
 
-+ (void)login {
++ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
 
-    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
-    id<WOTHostConfigurationProtocol> hostConfiguration = hostOwner.hostConfiguration;
-
-    id<WOTRequestProtocol> request =  [[WOTRequestReception sharedInstance] createRequestForRequestId:WOTRequestIdLogout];
+    id<WOTRequestProtocol> request =  [requestManager.requestReception createRequestForRequestId:WOTRequestIdLogout];
     request.hostConfiguration = hostConfiguration;
-    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:WGWebRequestGroups.login];
+    BOOL canAdd = [requestManager addRequest:request forGroupId:WGWebRequestGroups.login];
     if (canAdd) {
         
-        NSString *appId = hostOwner.hostConfiguration.applicationID;
+        NSString *appId = hostConfiguration.applicationID;
         NSString *noFollow = @"1";
         NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",hostConfiguration.host];
         WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
@@ -76,13 +72,13 @@
     }
 }
 
-+ (void)switchUser {
++ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
     
     id access_token = [self currentAccessToken];
     if (access_token){
-        [self logout];
+        [self logoutWithRequestManager:requestManager hostConfiguration:hostConfiguration];
     } else {
-        [self login];
+        [self loginWithRequestManager:requestManager hostConfiguration:hostConfiguration];
     }
 }
 

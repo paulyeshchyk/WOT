@@ -8,11 +8,11 @@
 
 import Foundation
 
-public typealias JSONMappingNestedRequestsCallback = ([JSONMappingNestedRequest]?) -> Void
+public typealias JSONLinkedObjectsRequestsCallback = ([JSONLinkedObjectRequest]?) -> Void
 
 
 @objc
-public class JSONMappingNestedRequest: NSObject {
+public class JSONLinkedObjectRequest: NSObject {
     
     @objc
     public var clazz: AnyClass

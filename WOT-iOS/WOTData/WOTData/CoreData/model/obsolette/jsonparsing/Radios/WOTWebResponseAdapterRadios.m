@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterRadios
 
-- (NSError *)parseData:(NSData *)data error:(NSError *) error nestedRequestsCallback:(void (^)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data error:(NSError *) error linkedObjectsRequestsCallback:(void (^)(NSArray<JSONLinkedObjectRequest *> * _Nullable))nestedRequestsCallback {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 
@@ -25,15 +25,11 @@
             [tankRadiosArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
                 
                 NSDictionary *tankRadiosJSON = json[key];
-                if (![tankRadiosJSON isKindOfClass:[NSDictionary class]]) {
-                    
-                    debugError(@"error while parsing");
-                    return;
+                if ([tankRadiosJSON isKindOfClass:[NSDictionary class]]) {
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankRadiosJSON[WGJsonFields.module_id]];
+                    Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
+                    [tankradios mappingFromJSON:tankRadiosJSON into: context completion: nestedRequestsCallback];
                 }
-                
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankRadiosJSON[WGJsonFields.module_id]];
-                Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
-                [tankradios mappingFromJSON:tankRadiosJSON into: context completion: nestedRequestsCallback];
             }];
             
             if ([context hasChanges]) {

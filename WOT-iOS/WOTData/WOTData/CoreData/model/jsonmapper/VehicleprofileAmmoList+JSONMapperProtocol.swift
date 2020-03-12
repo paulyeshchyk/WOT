@@ -11,7 +11,7 @@ extension VehicleprofileAmmoList: JSONMapperProtocol {
     public typealias Fields = Void
     
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?) {
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) {
 
         defer {
             context.tryToSave()
@@ -26,5 +26,5 @@ extension VehicleprofileAmmoList: JSONMapperProtocol {
     }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?) { }
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
 }

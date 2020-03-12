@@ -15,6 +15,7 @@
 		1D126A5A21A54E4E001AF67F /* VIPERView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5521A54E4E001AF67F /* VIPERView.swift */; };
 		1D2612182410DEE500CFEB16 /* WOTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2612172410DEE500CFEB16 /* WOTRequest.swift */; };
 		1D294B6522116856002DA600 /* String_UrlEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D294B6422116856002DA600 /* String_UrlEncode.swift */; };
+		1D3005C4241A241C00E453B9 /* WOTPivotAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */; };
 		1D5D021823C7334F004B0314 /* WOTTankPivotNodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */; };
 		1D5D022C23C8623D004B0314 /* WOTDataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D022A23C8623D004B0314 /* WOTDataFetchController.swift */; };
 		1D5D023023C86299004B0314 /* WOTCoredataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D022F23C86299004B0314 /* WOTCoredataProviderProtocol.swift */; };
@@ -145,6 +146,7 @@
 		1D126A5521A54E4E001AF67F /* VIPERView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERView.swift; sourceTree = "<group>"; };
 		1D2612172410DEE500CFEB16 /* WOTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequest.swift; sourceTree = "<group>"; };
 		1D294B6422116856002DA600 /* String_UrlEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_UrlEncode.swift; sourceTree = "<group>"; };
+		1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotAppManager.swift; sourceTree = "<group>"; };
 		1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotNodeCreator.swift; sourceTree = "<group>"; };
 		1D5D022A23C8623D004B0314 /* WOTDataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataFetchController.swift; sourceTree = "<group>"; };
 		1D5D022B23C8623D004B0314 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
@@ -665,6 +667,7 @@
 		1DE558CB2124560500576D41 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */,
 				1D5D0B0623CDA129004B0314 /* metrics */,
 				1D5D023823C86B75004B0314 /* codable */,
 				1D5D022923C8623D004B0314 /* fetchController */,
@@ -967,6 +970,7 @@
 				1DE558E52124560500576D41 /* WOTNodeProtocol.swift in Sources */,
 				1D65F7F82216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift in Sources */,
 				1DA83C9421355A340039CB4B /* WOTWebResponseLink.m in Sources */,
+				1D3005C4241A241C00E453B9 /* WOTPivotAppManager.swift in Sources */,
 				1DE5595B21255AE400576D41 /* WOTNodeIndexProtocol.swift in Sources */,
 				1DE558E72124560500576D41 /* WOTNode.swift in Sources */,
 				1DC6D4CF212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift in Sources */,

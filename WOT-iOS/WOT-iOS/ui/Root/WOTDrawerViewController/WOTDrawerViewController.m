@@ -129,10 +129,12 @@
 }
 
 - (void)loginPressedOnMenu:(id<WOTMenuProtocol>)menu {
- 
+
+    id<WOTPivotAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+
     [self closeDrawerAnimated:YES completion:NULL];
     
-    [WOTSessionManager switchUser];
+    [WOTSessionManager switchUserWithRequestManager:manager.requestManager hostConfiguration:manager.hostConfiguration];
 }
 
 #pragma mark - private

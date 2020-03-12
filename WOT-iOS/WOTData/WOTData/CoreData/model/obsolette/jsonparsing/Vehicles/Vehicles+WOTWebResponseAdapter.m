@@ -12,7 +12,7 @@
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
-- (NSError *)parseData:(NSData *)data error:(NSError *) error nestedRequestsCallback:(void (^)(NSArray<JSONMappingNestedRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data error:(NSError *) error linkedObjectsRequestsCallback:(void (^)(NSArray<JSONLinkedObjectRequest *> * _Nullable))nestedRequestsCallback {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 
@@ -31,8 +31,7 @@
                     NSDictionary *requestsForSingleObj = [self parseRequestJSON:jSON context:context key:key];
                     [requests addEntriesFromDictionary:requestsForSingleObj];
                 } else {
-                    
-                    debugError(@"json is not valid; jSON class is %@",NSStringFromClass([jSON class]));
+                    NSLog(@"error while parsing %@",NSStringFromClass([jSON class]));
                 }
             }
             
@@ -42,26 +41,26 @@
                 [context save:&error];
             }
             
-            [requests enumerateKeysAndObjectsUsingBlock:^(NSNumber *requestId, id obj, BOOL *stop) {
-                
-                [NSThread executeOnMainThread:^{
-                    
-                    WOTRequestArguments *args = [[WOTRequestArguments alloc] init:requests[requestId]];
-                    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
-                    id<WOTHostConfigurationProtocol> hostConfiguration = hostOwner.hostConfiguration;
-                    
-                    id<WOTRequestProtocol> request =  [[WOTRequestReception sharedInstance] createRequestForRequestId:[requestId integerValue]];
-                    request.hostConfiguration = hostConfiguration;
-
-                    NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
-
-                    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] addRequest:request forGroupId:groupId];
-                    if (canAdd) {
-                        [request start:args invokedBy:self];
-                    }
-                }];
-                
-            }];
+//            [requests enumerateKeysAndObjectsUsingBlock:^(NSNumber *requestId, id obj, BOOL *stop) {
+//
+//                [NSThread executeOnMainThread:^{
+//
+//                    WOTRequestArguments *args = [[WOTRequestArguments alloc] init:requests[requestId]];
+//                    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
+//                    id<WOTHostConfigurationProtocol> hostConfiguration = hostOwner.hostConfiguration;
+//
+//                    id<WOTRequestProtocol> request =  [[WOTRequestReception sharedInstance] createRequestForRequestId:[requestId integerValue]];
+//                    request.hostConfiguration = hostConfiguration;
+//
+//                    NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
+//
+//                    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance1] addRequest:request forGroupId:groupId];
+//                    if (canAdd) {
+//                        [request start:args invokedBy:self];
+//                    }
+//                }];
+//
+//            }];
             
         }];
     }];
@@ -253,7 +252,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
         ModulesTree *moduleTree = (ModulesTree *)[clazz findOrCreateObjectWithPredicate:predicate context:context];
         [moduleTree setValue:jSONLinkId forKey:coreDataIdName];
-        [moduleTree mappingFromJSON:jSON into: context completion:^(NSArray<JSONMappingNestedRequest *> * _Nullable requests) {
+        [moduleTree mappingFromJSON:jSON into: context completion:^(NSArray<JSONLinkedObjectRequest *> * _Nullable requests) {
             
         }];
         

@@ -28,14 +28,14 @@ extension ModulesTree: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?){
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?){
         
         defer {
             context.tryToSave()
-            let requests: [JSONMappingNestedRequest]? = self.nestedRequests(context: context)
+            let requests: [JSONLinkedObjectRequest]? = self.nestedRequests(context: context)
             completion?(requests)
         }
 
@@ -63,8 +63,9 @@ extension ModulesTree: JSONMapperProtocol {
     
     
     
-    private func nestedRequests(context: NSManagedObjectContext) -> [JSONMappingNestedRequest] {
+    private func nestedRequests(context: NSManagedObjectContext) -> [JSONLinkedObjectRequest]? {
 
+        return nil
 //        let radio_id = self.radio_id?.stringValue
 //        let requestRadio = JSONMappingNestedRequest(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
 //            guard let tankRadios = Tankradios.insertNewObject(context) as? Tankradios else { return }
@@ -72,6 +73,5 @@ extension ModulesTree: JSONMapperProtocol {
 //            self.tankradios = tankRadios
 //        })
 //        return [requestRadio, requestEngine, requestGun, requestSuspension, requestTurret]
-        return []
     }
 }

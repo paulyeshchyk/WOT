@@ -11,7 +11,7 @@ import Foundation
 @objc
 open class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
     
-    public func parseData(_ binary: Data?, error: Error?, nestedRequestsCallback: JSONMappingNestedRequestsCallback?) -> Error? {
+    public func parseData(_ binary: Data?, error: Error?, linkedObjectsRequestsCallback: JSONLinkedObjectsRequestsCallback?) -> Error? {
         
         return binary?.parseAsJSON { (json) in
 
@@ -27,7 +27,7 @@ open class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
                     let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), module_id)
                     guard let newObject = NSManagedObject.findOrCreateObject(forClass:Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else { return }
                     
-                    newObject.mapping(fromJSON: chassis, into: context, completion: nestedRequestsCallback)
+                    newObject.mapping(fromJSON: chassis, into: context, completion: linkedObjectsRequestsCallback)
                 }
                 
                 if context.hasChanges {

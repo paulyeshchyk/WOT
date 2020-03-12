@@ -14,10 +14,10 @@ extension VehicleprofileModule: JSONMapperProtocol {
     public typealias Fields = Void
     
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?) {
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) {
 
         defer {
             context.tryToSave()
@@ -34,10 +34,10 @@ extension VehicleprofileModule: JSONMapperProtocol {
         self.turret_id = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.turret_id)] as? Int ?? 0)
     }
     
-    private func nestedRequests(context: NSManagedObjectContext) -> [JSONMappingNestedRequest] {
+    private func nestedRequests(context: NSManagedObjectContext) -> [JSONLinkedObjectRequest] {
 
         let radio_id = self.radio_id?.stringValue
-        let requestRadio = JSONMappingNestedRequest(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
+        let requestRadio = JSONLinkedObjectRequest(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
             guard let module_id = json[#keyPath(Tankradios.module_id)] as? NSNumber else {
                 return
             }
@@ -50,7 +50,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
         })
 
         let engine_id = self.engine_id?.stringValue ?? ""
-        let requestEngine = JSONMappingNestedRequest(clazz: Tankengines.self, identifier_fieldname: #keyPath(Tankengines.module_id), identifier: engine_id, completion: { json in
+        let requestEngine = JSONLinkedObjectRequest(clazz: Tankengines.self, identifier_fieldname: #keyPath(Tankengines.module_id), identifier: engine_id, completion: { json in
             guard let module_id = json[#keyPath(Tankengines.module_id)] as? NSNumber else {
                 return
             }
@@ -63,7 +63,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
         })
 
         let gun_id = self.gun_id?.stringValue ?? ""
-        let requestGun = JSONMappingNestedRequest(clazz: Tankguns.self, identifier_fieldname: #keyPath(Tankguns.module_id), identifier: gun_id, completion: { json in
+        let requestGun = JSONLinkedObjectRequest(clazz: Tankguns.self, identifier_fieldname: #keyPath(Tankguns.module_id), identifier: gun_id, completion: { json in
             guard let module_id = json[#keyPath(Tankguns.module_id)] as? NSNumber else {
                 return
             }
@@ -76,7 +76,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
         })
 
         let suspension_id = self.suspension_id?.stringValue ?? ""
-        let requestSuspension = JSONMappingNestedRequest(clazz: Tankchassis.self, identifier_fieldname: #keyPath(Tankchassis.module_id), identifier: suspension_id, completion: { json in
+        let requestSuspension = JSONLinkedObjectRequest(clazz: Tankchassis.self, identifier_fieldname: #keyPath(Tankchassis.module_id), identifier: suspension_id, completion: { json in
             guard let module_id = json[#keyPath(Tankchassis.module_id)] as? NSNumber else {
                 return
             }
@@ -89,7 +89,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
         })
 
         let turret_id = self.turret_id?.stringValue ?? ""
-        let requestTurret = JSONMappingNestedRequest(clazz: Tankturrets.self, identifier_fieldname: #keyPath(Tankturrets.module_id), identifier: turret_id, completion: { json in
+        let requestTurret = JSONLinkedObjectRequest(clazz: Tankturrets.self, identifier_fieldname: #keyPath(Tankturrets.module_id), identifier: turret_id, completion: { json in
             guard let module_id = json[#keyPath(Tankturrets.module_id)] as? NSNumber else {
                 return
             }

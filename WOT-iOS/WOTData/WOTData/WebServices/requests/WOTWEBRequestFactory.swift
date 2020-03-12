@@ -13,14 +13,14 @@ public class WOTWEBRequestFactory: NSObject {
     
     @objc
     @discardableResult
-    public static func performVehicleRequest(vehicleId: Int, hostConfiguration: WOTHostConfigurationProtocol, invokedBy: WOTNestedRequestsEvaluatorProtocol?) -> Bool {
+    public static func performVehicleRequest(requestManager: WOTRequestManagerProtocol, vehicleId: Int, hostConfiguration: WOTHostConfigurationProtocol, invokedBy: WOTNestedRequestsEvaluatorProtocol) -> Bool {
         
-        guard let request = WOTRequestReception.sharedInstance.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) else {
+        guard let request = requestManager.requestReception.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) else {
             return false
         }
 
         let groupId = "WOT_REQUEST_ID_VEHICLE_BY_TIER:\(vehicleId)"
-        guard WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: groupId) else {
+        guard requestManager.addRequest(request, forGroupId: groupId) else {
             return false
         }
 
@@ -35,14 +35,14 @@ public class WOTWEBRequestFactory: NSObject {
 
     @objc
     @discardableResult
-    public static func performTankProfileRequest(tankId: Int, hostConfiguration: WOTHostConfigurationProtocol, invokedBy: WOTNestedRequestsEvaluatorProtocol?) -> Bool {
+    public static func performTankProfileRequest(requestManager: WOTRequestManagerProtocol, tankId: Int, hostConfiguration: WOTHostConfigurationProtocol, invokedBy: WOTNestedRequestsEvaluatorProtocol) -> Bool {
         
-        guard let request = WOTRequestReception.sharedInstance.createRequest(forRequestId: WOTRequestId.tankProfile.rawValue) else {
+        guard let request = requestManager.requestReception.createRequest(forRequestId: WOTRequestId.tankProfile.rawValue) else {
             return false
         }
         
         let groupId = "\(WGWebRequestGroups.vehicle_profile):\(tankId)"
-        guard WOTRequestExecutorSwift.sharedInstance.addRequest(request, forGroupId: groupId) else {
+        guard requestManager.addRequest(request, forGroupId: groupId) else {
             return false
         }
         

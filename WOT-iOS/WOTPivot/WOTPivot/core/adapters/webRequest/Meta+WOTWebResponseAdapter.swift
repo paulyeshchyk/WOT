@@ -17,16 +17,16 @@ public protocol JSONMapperProtocol {
     mutating func mapping(fromJSON jSON: JSON)
     func mapping(fromArray array: [Any])
 
-    func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?)
-    func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?)
+    func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?)
+    func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?)
 }
 
 extension JSONMapperProtocol {
     
     public func mapping(fromJSON jSON: JSON) { }
     public func mapping(fromArray array: [Any]) { }
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?) { }
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?) { }
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
 }
 
 public enum WOTWebResponseStatus: String {

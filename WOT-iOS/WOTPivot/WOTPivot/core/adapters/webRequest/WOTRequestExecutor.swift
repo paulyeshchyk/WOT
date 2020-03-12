@@ -9,18 +9,27 @@
 import Foundation
 
 @objc(WOTRequestExecutorSwift)
-public class WOTRequestExecutorSwift: NSObject {
+public class WOTRequestExecutorSwift: NSObject, WOTRequestManagerProtocol {
     
     @objc
-    public static let sharedInstance = WOTRequestExecutorSwift()
+    required public  init(requestReception: WOTRequestReceptionProtocol) {
+        reception = requestReception
+        super.init()
+    }
     
     @objc
     public static let pendingRequestNotificationName: String = "WOTRequestExecutorPendingRequestNotificationName"
     
+    fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
+    
+    @objc
+    public var reception: WOTRequestReceptionProtocol
+
+// WOTRequestExecutorSwift
+
     @objc
     public var pendingRequestsCount: Int = 0
-    fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
- 
+
     @objc
     public func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool {
         var grouppedRequests: [WOTRequestProtocol] = []
@@ -54,15 +63,18 @@ public class WOTRequestExecutorSwift: NSObject {
 
 extension WOTRequestExecutorSwift: WOTRequestListenerProtocol {
     
-    public func request(_ request: AnyObject, finishedLoadData data: Data?, error: Error?) {
+    public var requestReception: WOTRequestReceptionProtocol {
+        get { return reception }
+        set { reception = newValue }
+    }
+
+    public func request(_ request: AnyObject, finishedLoadData data: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol) {
         if let clazz = type(of: request) as? NSObject.Type {
             if let instance = clazz.init() as? WOTModelServiceProtocol {
                 if let modelClass = instance.instanceModelClass() {
-                    let requestIds = WOTRequestReception.sharedInstance.requestIds(forClass: modelClass)
+                    let requestIds = requestReception.requestIds(forClass: modelClass)
                     requestIds?.forEach({ requestId in
-                        WOTRequestReception.sharedInstance.requestId(requestId, processBinary: data, error: error, nestedRequestCallback: { [weak self] requests in
-                            self?.evaluate(nestedRequests: requests, forRequest: request)
-                        })
+                        requestReception.requestId(requestId, processBinary: data, error: error, invokedBy: invokedBy)
                     })
                 }
             }
@@ -90,11 +102,5 @@ extension WOTRequestExecutorSwift: WOTRequestListenerProtocol {
             
         }
         request.removeListener(self)
-    }
-
-    private func evaluate(nestedRequests:[JSONMappingNestedRequest]?, forRequest: AnyObject) {
-        if let startable = forRequest as? WOTStartableProtocol, let invoker = startable.invoker {
-            invoker.evaluate(nestedRequests: nestedRequests)
-        }
     }
 }

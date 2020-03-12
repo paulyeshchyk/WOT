@@ -12,7 +12,7 @@
 #import "WOTApplicationDefaults.h"
 #import "NSTimer+BlocksKit.h"
 
-@interface AppDelegate () <WOTHostConfigurationOwner>
+@interface AppDelegate () <WOTHostConfigurationOwner, WOTAppDelegateProtocol>
 
 @property (nonatomic, strong) WOTDrawerViewController *wotDrawerViewController;
 
@@ -21,6 +21,7 @@
 
 @implementation AppDelegate
 @synthesize hostConfiguration;
+@synthesize appManager;
 
 - (id<WOTHostConfigurationProtocol>)hostConfiguration {
     if (hostConfiguration == nil) {
@@ -31,6 +32,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    id<WOTRequestReceptionProtocol> requestReception = [[WOTRequestReception alloc] init];
+
+    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestExecutorSwift alloc] initWithRequestReception:requestReception];
+    id<WOTHostConfigurationProtocol> hostConfiguration = [[WOTWebHostConfiguration alloc] init];
+    id<WOTNestedRequestsEvaluatorProtocol> evaluator = [[WOTNestedRequestEvaluator alloc] init];
+    
+    self.appManager = [[WOTPivotAppManager alloc] init];
+    self.appManager.hostConfiguration = hostConfiguration;
+//    self.appManager.requestReception = requestReception;
+    self.appManager.requestManager = requestManager;
+    self.appManager.requestListener = requestManager;
+    self.appManager.nestedRequestEvaluator = evaluator;
 
     [WOTApplicationDefaults registerRequests];
     [WOTApplicationDefaults registerDefaultSettings];
@@ -46,10 +59,11 @@
 }
 
 - (void)initSessionTimer {
+
     [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
         NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
-
-            [WOTSessionManager logout];
+            
+            [WOTSessionManager logoutWithRequestManager:appManager.requestManager hostConfiguration:appManager.hostConfiguration];
         } repeats:NO];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
         return timer;

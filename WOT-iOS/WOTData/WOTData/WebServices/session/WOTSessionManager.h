@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <WOTPivot/WOTPivot-Swift.h>
 
 typedef NSTimer*(^WOTSessionManagerInvalidateTimeCompletion)(NSTimeInterval interval);
 
@@ -15,9 +16,9 @@ typedef NSTimer*(^WOTSessionManagerInvalidateTimeCompletion)(NSTimeInterval inte
 + (id)currentAccessToken;
 + (NSString *)currentUserName;
 
-+ (void)switchUser;
-+ (void)logout;
-+ (void)login;
++ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration;
++ (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration;
++ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration;
 + (BOOL)sessionHasBeenExpired;
 
 + (WOTSessionManager *)sharedInstance;

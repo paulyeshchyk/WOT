@@ -18,10 +18,10 @@ extension VehicleprofileRadio: JSONMapperProtocol {
     public typealias Fields = FieldKeys
     
     @objc
-    public func mapping(fromArray jSON: [Any], into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?) { }
+    public func mapping(fromArray jSON: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONMappingNestedRequestsCallback?){
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?){
 
         defer {
             context.tryToSave()

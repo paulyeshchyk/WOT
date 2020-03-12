@@ -18,7 +18,7 @@ public protocol WOTWebServiceProtocol {
     var method: String { get }
     var path: String { get }
     func notifyListenersAboutStart()
-    func requestHasFinishedLoad(data: Data?, error: Error?)
+    func requestHasFinishedLoad(data: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol)
 }
 
 @objc(WOTModelServiceProtocol)
@@ -46,9 +46,9 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         }
     }
 
-    public func requestHasFinishedLoad(data: Data?, error: Error?) {
+    public func requestHasFinishedLoad(data: Data?, error: Error?, invokedBy: WOTNestedRequestsEvaluatorProtocol) {
         self.listeners.compactMap { $0 }.forEach {
-            $0.request(self, finishedLoadData: data, error: error)
+            $0.request(self, finishedLoadData: data, error: error, invokedBy: invokedBy)
         }
     }
     
@@ -65,7 +65,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     }
 
     @discardableResult
-    open override func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol?) -> Bool {
+    open override func start(_ args: WOTRequestArguments?, invokedBy: WOTNestedRequestsEvaluatorProtocol) -> Bool {
 
         guard let args = args else {
             return false
@@ -75,9 +75,8 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         
         let request = urlRequest(with: args)
         let pumper = WOTWebDataPumper(request: request) {[weak self] (data, error) in
-            guard let self = self else { return }
-            
-            self.requestHasFinishedLoad(data: data, error: error)
+
+            self?.requestHasFinishedLoad(data: data, error: error, invokedBy: invokedBy)
         }
         
         pumper.start()
