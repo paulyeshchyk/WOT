@@ -13,10 +13,10 @@ public class WOTWEBRequestFactory: NSObject {
     
     @objc
     @discardableResult
-    public static func performVehicleRequest(requestManager: WOTRequestManagerProtocol, vehicleId: Int, hostConfiguration: WOTHostConfigurationProtocol) -> Bool {
+    public static func fetchData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, hostConfiguration: WOTHostConfigurationProtocol) -> WOTRequestProtocol? {
         
-        guard let request = requestManager.requestReception.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) else {
-            return false
+        guard let request = requestManager.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) else {
+            return nil
         }
 
         let groupId = "WOT_REQUEST_ID_VEHICLE_BY_TIER:\(vehicleId)"
@@ -27,21 +27,22 @@ public class WOTWEBRequestFactory: NSObject {
         
         request.hostConfiguration = hostConfiguration
 
-        return requestManager.start(request, with: args, forGroupId: groupId)
+        let started = requestManager.start(request, with: args, forGroupId: groupId)
+        return started ? request : nil
     }
 
     @objc
     @discardableResult
-    public static func performTankProfileRequest(requestManager: WOTRequestManagerProtocol, tankId: Int, hostConfiguration: WOTHostConfigurationProtocol) -> Bool {
+    public static func fetchData(profileTankId: Int, requestManager: WOTRequestManagerProtocol, hostConfiguration: WOTHostConfigurationProtocol) -> Bool {
         
-        guard let request = requestManager.requestReception.createRequest(forRequestId: WOTRequestId.tankProfile.rawValue) else {
+        guard let request = requestManager.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankProfile.rawValue) else {
             return false
         }
         
-        let groupId = "\(WGWebRequestGroups.vehicle_profile):\(tankId)"
+        let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
 
         let args = WOTRequestArguments()
-        args.setValues([tankId], forKey: WOTApiKeys.tank_id)
+        args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicleprofile.keypaths()], forKey: WGWebQueryArgs.fields)
         
         request.hostConfiguration = hostConfiguration

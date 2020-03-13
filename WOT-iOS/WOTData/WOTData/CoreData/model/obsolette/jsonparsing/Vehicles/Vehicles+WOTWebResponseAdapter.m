@@ -49,7 +49,7 @@
 //                    id<WOTHostConfigurationOwner> hostOwner = (id<WOTHostConfigurationOwner>) [UIApplication sharedApplication].delegate;
 //                    id<WOTHostConfigurationProtocol> hostConfiguration = hostOwner.hostConfiguration;
 //
-//                    id<WOTRequestProtocol> request =  [[WOTRequestReception sharedInstance] createRequestForRequestId:[requestId integerValue]];
+//                    id<WOTRequestProtocol> request =  [[WOTRequestCoordinator sharedInstance] createRequestForRequestId:[requestId integerValue]];
 //                    request.hostConfiguration = hostConfiguration;
 //
 //                    NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];

@@ -12,8 +12,8 @@ import Foundation
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     
     @objc
-    required public init(requestReception: WOTRequestReceptionProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
-        reception = requestReception
+    required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
+        coordinator = requestCoordinator
         hostConfig = hostConfiguration
 
         super.init()
@@ -25,7 +25,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
     
     @objc
-    private var reception: WOTRequestReceptionProtocol
+    private var coordinator: WOTRequestCoordinatorProtocol
     
     @objc
     private var hostConfig: WOTHostConfigurationProtocol
@@ -72,7 +72,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     
     fileprivate func startRequests(from: [JSONLinkedObjectRequest?]) {
         from.compactMap { $0 }.forEach { (linkedObjectRequest) in
-            let requestIDs = requestReception.requestIds(forClass: linkedObjectRequest.clazz)
+            let requestIDs = requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz)
             requestIDs?.forEach({ (requestId) in
                 queueRequest(for: requestId, nestedRequest: linkedObjectRequest)
             })
@@ -85,7 +85,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
         guard let clazz = nestedRequest.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
-        guard let request = requestReception.createRequest(forRequestId: requestId) else { return false }
+        guard let request = requestCoordinator.createRequest(forRequestId: requestId) else { return false }
 
         let keyPaths = obj.instanceKeypaths()
 
@@ -108,9 +108,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
     
-    public var requestReception: WOTRequestReceptionProtocol {
-        get { return reception }
-        set { reception = newValue }
+    public var requestCoordinator: WOTRequestCoordinatorProtocol {
+        get { return coordinator }
+        set { coordinator = newValue }
     }
 
     public var hostConfiguration: WOTHostConfigurationProtocol {
@@ -129,9 +129,9 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         guard let instance = clazz.init() as? WOTModelServiceProtocol else { return }
         guard let modelClass = instance.instanceModelClass() else { return }
 
-        let requestIds = requestReception.requestIds(forClass: modelClass)
+        let requestIds = requestCoordinator.requestIds(forClass: modelClass)
         requestIds?.forEach({ requestId in
-            requestReception.requestId(requestId, processBinary: data, error: error, completion: { [weak self] nextPortionOfRequests in
+            requestCoordinator.requestId(requestId, processBinary: data, error: error, completion: { [weak self] nextPortionOfRequests in
                 
                 self?.startRequests(from: nextPortionOfRequests ?? [])
             })

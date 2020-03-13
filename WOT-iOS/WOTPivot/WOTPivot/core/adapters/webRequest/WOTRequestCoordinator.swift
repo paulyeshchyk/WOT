@@ -1,5 +1,5 @@
 //
-//  WOTRequestReception.swift
+//  WOTRequestCoordinator.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 3/6/20.
@@ -43,7 +43,7 @@ public typealias WOTRequestIdType = Int
 public typealias  WOTRequestCallback = (Data?, Error?) -> Void
 
 @objc
-public protocol WOTRequestReceptionProtocol {
+public protocol WOTRequestCoordinatorProtocol {
     @objc
     func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol?
 
@@ -82,7 +82,7 @@ public protocol WOTRequestReceptionProtocol {
 }
 
 @objc
-public class WOTRequestReception: NSObject {
+public class WOTRequestCoordinator: NSObject {
     
     private var registeredRequests: [WOTRequestIdType: AnyClass] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: [AnyClass]] = .init()
@@ -92,7 +92,7 @@ public class WOTRequestReception: NSObject {
     
 }
 
-extension WOTRequestReception: WOTRequestReceptionProtocol {
+extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     
     @objc
     public func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol? {

@@ -47,14 +47,14 @@
 
 + (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
 
-    id<WOTRequestProtocol> request = [requestManager.requestReception createRequestForRequestId:WOTRequestIdLogout];
+    id<WOTRequestProtocol> request = [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
     request.hostConfiguration = hostConfiguration;
     [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout];
 }
 
 + (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
 
-    id<WOTRequestProtocol> request =  [requestManager.requestReception createRequestForRequestId:WOTRequestIdLogout];
+    id<WOTRequestProtocol> request =  [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
     request.hostConfiguration = hostConfiguration;
         
     NSString *appId = hostConfiguration.applicationID;

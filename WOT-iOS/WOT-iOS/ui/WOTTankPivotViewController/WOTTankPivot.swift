@@ -137,7 +137,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
             let arguments = WOTRequestArguments()
             arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
             
-            if let request = requestManager?.requestReception.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
+            if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
                 request.hostConfiguration = hostConfiguration
                 requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list)
             }
@@ -167,7 +167,7 @@ extension WOTNestedRequestEvaluator: WOTNestedRequestsEvaluatorProtocol {
         guard let requestManager = self.requestManager else { return false }
         guard let clazz = nestedRequest.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
-        guard let request = requestManager.requestReception.createRequest(forRequestId: requestId) else { return false }
+        guard let request = requestManager.requestCoordinator.createRequest(forRequestId: requestId) else { return false }
 
         let keyPaths = obj.instanceKeypaths()
 
@@ -194,7 +194,7 @@ extension WOTNestedRequestEvaluator: WOTNestedRequestsEvaluatorProtocol {
             }
 
             nestedRequests?.forEach( { nestedRequest in
-                let requestIDs = requestManager.requestReception.requestIds(forClass: nestedRequest.clazz)
+                let requestIDs = requestManager.requestCoordinator.requestIds(forClass: nestedRequest.clazz)
                 requestIDs?.forEach({ (requestId) in
                     self?.queueRequest(for: requestId, nestedRequest: nestedRequest)
                 })

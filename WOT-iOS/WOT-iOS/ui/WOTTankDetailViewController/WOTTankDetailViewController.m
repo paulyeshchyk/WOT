@@ -62,7 +62,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 @property (nonatomic, strong)id<WOTNestedRequestsEvaluatorProtocol> nestedRequestsEvaluator;
 
 @property (nonatomic, strong) id<WOTRequestManagerProtocol> requestManager;
-//@property (nonatomic, strong) id<WOTRequestReceptionProtocol> requestReception;
 @property (nonatomic, strong) id<WOTHostConfigurationProtocol> hostConfiguration;
 
 @end
@@ -70,27 +69,13 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 @implementation WOTTankDetailViewController
 
 - (id<WOTRequestManagerProtocol>) requestManager {
-    if (_requestManager == nil ) {
-        id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-        _requestManager = ((id<WOTAppDelegateProtocol>) delegate).appManager.requestManager;
-    }
-    return _requestManager;
+    id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
+    return ((id<WOTAppDelegateProtocol>) delegate).appManager.requestManager;
 }
-//
-//- (id<WOTRequestReceptionProtocol>) requestReception {
-//    if (_requestReception == nil ) {
-//        id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-//        _requestReception = ((id<WOTAppDelegateProtocol>) delegate).appManager.requestReception;
-//    }
-//    return _requestReception;
-//}
 
 - (id<WOTHostConfigurationProtocol>) hostConfiguration {
-    if (_hostConfiguration == nil ) {
-        id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-        _hostConfiguration = ((id<WOTAppDelegateProtocol>) delegate).appManager.hostConfiguration;
-    }
-    return _hostConfiguration;
+    id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
+    return ((id<WOTAppDelegateProtocol>) delegate).appManager.hostConfiguration;
 }
 
 #define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
@@ -312,9 +297,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         /*
          * Default Profile
          */
-        [WOTWEBRequestFactory performTankProfileRequestWithRequestManager: self.requestManager
-                                                                   tankId: [tankId integerValue]
-                                                        hostConfiguration: self.hostConfiguration];
+        [WOTWEBRequestFactory fetchDataWithProfileTankId: [tankId integerValue]
+                                          requestManager: self.requestManager
+                                       hostConfiguration: self.hostConfiguration];
     }
 }
 
@@ -361,9 +346,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
-    [WOTWEBRequestFactory performVehicleRequestWithRequestManager: self.requestManager
-                                                        vehicleId: tankID
-                                                hostConfiguration: self.hostConfiguration];
+    [WOTWEBRequestFactory fetchDataWithVehicleId: tankID
+                                  requestManager: self.requestManager
+                               hostConfiguration: self.hostConfiguration];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

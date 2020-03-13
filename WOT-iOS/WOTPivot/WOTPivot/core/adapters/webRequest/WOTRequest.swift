@@ -69,7 +69,7 @@ public protocol WOTRequestManagerProtocol {
     func cancelRequests(groupId: String)
 
     @objc
-    var requestReception: WOTRequestReceptionProtocol { get set }
+    var requestCoordinator: WOTRequestCoordinatorProtocol { get set }
 
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol { get set }

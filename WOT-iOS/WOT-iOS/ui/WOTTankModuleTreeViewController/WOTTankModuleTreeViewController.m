@@ -17,6 +17,8 @@
 #import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
+@property (nonatomic, strong) id<WOTRequestManagerProtocol> requestManager;
+@property (nonatomic, strong) id<WOTHostConfigurationProtocol> hostConfiguration;
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)
@@ -68,7 +70,7 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTRequestListenerProtocol>
 
 @property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
@@ -82,6 +84,16 @@
 - (void)dealloc {
     
     self.model = nil;
+}
+
+- (id<WOTHostConfigurationProtocol>) hostConfiguration {
+        id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
+        return ((id<WOTAppDelegateProtocol>) delegate).appManager.hostConfiguration;
+}
+
+- (id<WOTRequestManagerProtocol>) requestManager {
+    id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
+    return ((id<WOTAppDelegateProtocol>) delegate).appManager.requestManager;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -147,6 +159,13 @@
 
 - (void)reloadModel {
     if ( [self isViewLoaded] ){
+
+        
+        id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchDataWithVehicleId:[_tank_Id integerValue]
+                                                                       requestManager: self.requestManager
+                                                                    hostConfiguration: self.hostConfiguration];
+        [request addListener:self];
+
         [self.model loadModel];
     }
 }
@@ -234,6 +253,21 @@
     }
     return result;
 }
+
+//WOTRequestListenerProtocol
+
+- (void)requestHasStarted:(id<WOTRequestProtocol>)request {
+    
+}
+
+- (void)request:(id)request finishedLoadData:(NSData *)data error:(NSError *)error {
+    [self.model loadModel];
+}
+
+- (void)requestHasCanceled:(id<WOTRequestProtocol>)request {
+    
+}
+
 @end
 
 @interface WOTTankModuleTreeViewController(WOTDataModelListener) <WOTDataModelListener>
