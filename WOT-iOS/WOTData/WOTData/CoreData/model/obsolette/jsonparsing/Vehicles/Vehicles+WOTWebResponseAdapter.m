@@ -54,7 +54,7 @@
 //
 //                    NSString *groupId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ADOPT,requestId];
 //
-//                    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance1] addRequest:request forGroupId:groupId];
+//                    BOOL canAdd = [[WOTRequestManager sharedInstance1] addRequest:request forGroupId:groupId];
 //                    if (canAdd) {
 //                        [request start:args invokedBy:self];
 //                    }

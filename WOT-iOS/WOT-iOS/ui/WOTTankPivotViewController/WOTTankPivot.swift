@@ -48,7 +48,6 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
         let fakePredicate = NSPredicate(format: "NOT(tank_id  = nil)")
         return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])
     }
-
 }
 
 class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
@@ -125,8 +124,6 @@ class WOTTankPivotModel: WOTPivotDataModel {
         
         super.loadModel()
     }
-
-    private let nestedRequestsEvaluator: WOTNestedRequestsEvaluatorProtocol = WOTNestedRequestEvaluator()
     
     private func performWebRequest() {
         let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
@@ -158,48 +155,3 @@ public class WOTNestedRequestEvaluator: NSObject {
         return appManager?.requestManager
     }
 }
-
-extension WOTNestedRequestEvaluator: WOTNestedRequestsEvaluatorProtocol {
-
-    @discardableResult
-    private func queueRequest(for requestId: WOTRequestIdType, nestedRequest: WOTJSONLink) -> Bool {
-
-        guard let requestManager = self.requestManager else { return false }
-        guard let clazz = nestedRequest.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
-        guard let obj = clazz.init() as? KeypathProtocol else { return false }
-        guard let request = requestManager.requestCoordinator.createRequest(forRequestId: requestId) else { return false }
-
-        let keyPaths = obj.instanceKeypaths()
-
-        let arguments = WOTRequestArguments()
-        #warning("forKey: fields should be refactored")
-        arguments.setValues(keyPaths, forKey: "fields")
-        if let ident = nestedRequest.identifier, let ident_fieldName = nestedRequest.identifier_fieldname {
-            arguments.setValues([ident], forKey: ident_fieldName)
-        }
-
-        request.hostConfiguration = hostConfiguration
-
-        let groupId = "Nested\(String(describing: clazz))-\(nestedRequest.identifier ?? "")"
-
-        return requestManager.start(request, with: arguments, forGroupId: groupId)
-    }
-    
-    public func evaluate(nestedRequests: [WOTJSONLink]?) {
-        
-        DispatchQueue.main.async { [weak self] in
-
-            guard let requestManager = self?.requestManager else {
-                return
-            }
-
-            nestedRequests?.forEach( { nestedRequest in
-                let requestIDs = requestManager.requestCoordinator.requestIds(forClass: nestedRequest.clazz)
-                requestIDs?.forEach({ (requestId) in
-                    self?.queueRequest(for: requestId, nestedRequest: nestedRequest)
-                })
-            })
-        }
-    }
-}
-

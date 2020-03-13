@@ -10,13 +10,13 @@ import Foundation
 
 public typealias WOTJSONLinksCallback = ([WOTJSONLink]?) -> Void
 
-@objc
-public protocol WOTNestedRequestsEvaluatorProtocol {
-    
-    @objc
-    func evaluate(nestedRequests: [WOTJSONLink]?)
-}
-
+//@objc
+//public protocol WOTNestedRequestsEvaluatorProtocol {
+//    
+//    @objc
+//    func evaluate(nestedRequests: [WOTJSONLink]?)
+//}
+//
 
 
 @objc

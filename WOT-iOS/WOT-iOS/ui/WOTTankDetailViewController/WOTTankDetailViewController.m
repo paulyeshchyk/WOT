@@ -58,9 +58,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 @property (nonatomic, strong)WOTTankMetricOptions* metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, strong)NSMutableSet *runningRequestIDs;
-
-@property (nonatomic, strong)id<WOTNestedRequestsEvaluatorProtocol> nestedRequestsEvaluator;
-
 @property (nonatomic, strong) id<WOTRequestManagerProtocol> requestManager;
 
 @end
@@ -92,16 +89,13 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     
     self.radarViewController.delegate = nil;
     self.radarViewController = nil;
-    self.nestedRequestsEvaluator = nil;
+//    self.nestedRequestsEvaluator = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
-        
-        self.nestedRequestsEvaluator = [[WOTNestedRequestEvaluator alloc] init];
-        
     }
     return self;
 }
@@ -310,8 +304,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 //    WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
 //    [arguments setValues:@[tankId] forKey:WOTApiKeys.tank_id];
 //
-//    id<WOTRequestProtocol> request = [[WOTRequestExecutorSwift sharedInstance] createRequestForId:WOTRequestIdTankProfile];
-//    BOOL canAdd = [[WOTRequestExecutorSwift sharedInstance] add:request byGroupId:WGWebRequestGroups.vehicle_profile];
+//    id<WOTRequestProtocol> request = [[WOTRequestManager sharedInstance] createRequestForId:WOTRequestIdTankProfile];
+//    BOOL canAdd = [[WOTRequestManager sharedInstance] add:request byGroupId:WGWebRequestGroups.vehicle_profile];
 //    if (canAdd) {
 //        [request start:arguments];
 //    }

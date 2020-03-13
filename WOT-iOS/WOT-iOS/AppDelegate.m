@@ -23,27 +23,19 @@
 @synthesize hostConfiguration;
 @synthesize appManager;
 
-- (id<WOTHostConfigurationProtocol>)hostConfiguration {
-    if (hostConfiguration == nil) {
-        hostConfiguration = [[WOTWebHostConfiguration alloc] init];
-    }
-    return hostConfiguration;
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];
 
     id<WOTHostConfigurationProtocol> hostConfiguration = [[WOTWebHostConfiguration alloc] init];
 
-    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestExecutorSwift alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration];
-    id<WOTNestedRequestsEvaluatorProtocol> evaluator = [[WOTNestedRequestEvaluator alloc] init];
+    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration];
+//    id<WOTNestedRequestsEvaluatorProtocol> evaluator = [[WOTNestedRequestEvaluator alloc] init];
     
     self.appManager = [[WOTPivotAppManager alloc] init];
     self.appManager.hostConfiguration = hostConfiguration;
     self.appManager.requestManager = requestManager;
     self.appManager.requestListener = requestManager;
-    self.appManager.nestedRequestEvaluator = evaluator;
 
     [WOTApplicationDefaults registerRequests];
     [WOTApplicationDefaults registerDefaultSettings];

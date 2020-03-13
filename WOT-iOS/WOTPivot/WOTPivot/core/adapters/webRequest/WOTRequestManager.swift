@@ -8,11 +8,12 @@
 
 import Foundation
 
-@objc(WOTRequestExecutorSwift)
+@objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     
     @objc
     required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
+        
         coordinator = requestCoordinator
         hostConfig = hostConfiguration
 
@@ -65,26 +66,24 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     @objc
     public func cancelRequests(groupId: String) {
-
         grouppedRequests[groupId]?.forEach { request in
             request.cancel()
         }
     }
     
-    fileprivate func startRequests(from: [WOTJSONLink?]) {
-        from.compactMap { $0 }.forEach { (linkedObjectRequest) in
+    fileprivate func queue(jsonLinks: ([WOTJSONLink?])?) {
+        jsonLinks?.compactMap { $0 }.forEach { (linkedObjectRequest) in
             let requestIDs = requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz)
             requestIDs?.forEach({ (requestId) in
-                queueRequest(for: requestId, nestedRequest: linkedObjectRequest)
+                queue(requestId: requestId, jsonLink: linkedObjectRequest)
             })
         }
     }
     
-    
     @discardableResult
-    private func queueRequest(for requestId: WOTRequestIdType, nestedRequest: WOTJSONLink) -> Bool {
+    private func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONLink) -> Bool {
 
-        guard let clazz = nestedRequest.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
+        guard let clazz = jsonLink.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
         guard let request = requestCoordinator.createRequest(forRequestId: requestId) else { return false }
 
@@ -93,19 +92,17 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         let arguments = WOTRequestArguments()
         #warning("forKey: fields should be refactored")
         arguments.setValues(keyPaths, forKey: "fields")
-        if let ident = nestedRequest.identifier, let ident_fieldName = nestedRequest.identifier_fieldname {
+        if let ident = jsonLink.identifier, let ident_fieldName = jsonLink.identifier_fieldname {
             arguments.setValues([ident], forKey: ident_fieldName)
         }
 
         request.hostConfiguration = hostConfiguration
 
-        let groupId = "Nested\(String(describing: clazz))-\(nestedRequest.identifier ?? "")"
+        let groupId = "Nested\(String(describing: clazz))-\(jsonLink.identifier ?? "")"
 
         return start(request, with: arguments, forGroupId: groupId)
     }
-
 }
-
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
     
@@ -132,13 +129,11 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
         let requestIds = requestCoordinator.requestIds(forClass: modelClass)
         requestIds?.forEach({ requestId in
-            requestCoordinator.requestId(requestId, processBinary: data, error: error, completion: { [weak self] nextPortionOfRequests in
+            requestCoordinator.requestId(requestId, processBinary: data, error: error, jsonLinksCallback: { [weak self] jsonLinks in
                 
-                self?.startRequests(from: nextPortionOfRequests ?? [])
+                self?.queue(jsonLinks: jsonLinks)
             })
         })
-        
-        
     }
     
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
