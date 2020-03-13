@@ -11,7 +11,7 @@ import Foundation
 @objc
 public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
     
-    public func parseData(_ data: Data?, error: Error?, linkedObjectsRequestsCallback: JSONLinkedObjectsRequestsCallback?) -> Error? {
+    public func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         
         return  data?.parseAsJSON({ (json) in
 
@@ -29,7 +29,7 @@ public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
                     let predicate = NSPredicate(format: "%K = %d", WOT_KEY_HASHNAME, profilehash)
                     if let vehicleProfile = NSManagedObject.findOrCreateObject(forClass:Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile {
                         vehicleProfile.hashName = NSDecimalNumber(value: profilehash)
-                        vehicleProfile.mapping(fromJSON: profile, into: context, completion: linkedObjectsRequestsCallback)
+                        vehicleProfile.mapping(fromJSON: profile, into: context, jsonLinksCallback: jsonLinksCallback)
                     }
                 }
 

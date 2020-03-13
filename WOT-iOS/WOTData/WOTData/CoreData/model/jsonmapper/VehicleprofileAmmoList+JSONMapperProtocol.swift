@@ -11,7 +11,7 @@ extension VehicleprofileAmmoList: JSONMapperProtocol {
     public typealias Fields = Void
     
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) {
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
 
         defer {
             context.tryToSave()
@@ -19,12 +19,12 @@ extension VehicleprofileAmmoList: JSONMapperProtocol {
 
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
             if let ammoObject = VehicleprofileAmmo.insertNewObject(context) as? VehicleprofileAmmo {
-                ammoObject.mapping(fromJSON: jSON, into: context, completion: nil)
+                ammoObject.mapping(fromJSON: jSON, into: context, jsonLinksCallback: nil)
                 self.addToVehicleprofileAmmo(ammoObject)
             }
         }
     }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
 }

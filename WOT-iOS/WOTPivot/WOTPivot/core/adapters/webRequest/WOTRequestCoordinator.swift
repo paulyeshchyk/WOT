@@ -78,7 +78,7 @@ public protocol WOTRequestCoordinatorProtocol {
     func requestId(_ requestId: WOTRequestIdType, registerRequestCompletion: @escaping WOTRequestCallback)
     
     @objc
-    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, completion: (([JSONLinkedObjectRequest]?)->Void)? )
+    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, completion: (WOTJSONLinksCallback)? )
 }
 
 @objc
@@ -179,7 +179,7 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, completion: (([JSONLinkedObjectRequest]?)->Void)? ){
+    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, completion: (WOTJSONLinksCallback)? ){
 
         let callbacks = self.registeredCallbacks[requestId]
         callbacks?.forEach({ callback in
@@ -194,7 +194,7 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
             guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapter else {
                 return
             }
-            let error = adapter.parseData(binary, error: error, linkedObjectsRequestsCallback: { linkedRequests in
+            let error = adapter.parseData(binary, error: error, jsonLinksCallback: { linkedRequests in
                 completion?(linkedRequests)
             })
             if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {

@@ -40,6 +40,11 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     open var method: String { return "POST" }
     open var path: String { return ""}
 
+    private var completeHash: Int = 0
+    override open var hash: Int {
+        return completeHash
+    }
+
     public func notifyListenersAboutStart() {
         self.listeners.compactMap { $0 }.forEach {
             $0.requestHasStarted(self)
@@ -74,6 +79,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
             print("ended request:\(request.url?.absoluteString ?? "??")")
         }
         
+        completeHash = request.hashValue
         print("started request:\(request.url?.absoluteString ?? "??")")
         
         pumper.start()

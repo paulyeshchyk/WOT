@@ -134,7 +134,7 @@
 
     [self closeDrawerAnimated:YES completion:NULL];
     
-    [WOTSessionManager switchUserWithRequestManager:manager.requestManager hostConfiguration:manager.hostConfiguration];
+    [WOTSessionManager switchUserWithRequestManager:manager.requestManager];
 }
 
 #pragma mark - private

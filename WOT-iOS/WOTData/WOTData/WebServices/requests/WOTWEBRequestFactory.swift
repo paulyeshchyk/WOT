@@ -13,7 +13,7 @@ public class WOTWEBRequestFactory: NSObject {
     
     @objc
     @discardableResult
-    public static func fetchData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, hostConfiguration: WOTHostConfigurationProtocol) -> WOTRequestProtocol? {
+    public static func fetchData(vehicleId: Int, requestManager: WOTRequestManagerProtocol) -> WOTRequestProtocol? {
         
         guard let request = requestManager.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) else {
             return nil
@@ -25,15 +25,13 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicles.keypaths()], forKey: WGWebQueryArgs.fields)
         
-        request.hostConfiguration = hostConfiguration
-
         let started = requestManager.start(request, with: args, forGroupId: groupId)
         return started ? request : nil
     }
 
     @objc
     @discardableResult
-    public static func fetchData(profileTankId: Int, requestManager: WOTRequestManagerProtocol, hostConfiguration: WOTHostConfigurationProtocol) -> Bool {
+    public static func fetchData(profileTankId: Int, requestManager: WOTRequestManagerProtocol) -> Bool {
         
         guard let request = requestManager.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankProfile.rawValue) else {
             return false
@@ -44,8 +42,6 @@ public class WOTWEBRequestFactory: NSObject {
         let args = WOTRequestArguments()
         args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicleprofile.keypaths()], forKey: WGWebQueryArgs.fields)
-        
-        request.hostConfiguration = hostConfiguration
         
         return requestManager.start(request, with: args, forGroupId: groupId)
     }

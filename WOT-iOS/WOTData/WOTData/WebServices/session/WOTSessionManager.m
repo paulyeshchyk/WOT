@@ -45,21 +45,20 @@
     return [session.expires_at integerValue];
 }
 
-+ (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
++ (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
 
     id<WOTRequestProtocol> request = [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
-    request.hostConfiguration = hostConfiguration;
     [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout];
 }
 
-+ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
++ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
 
     id<WOTRequestProtocol> request =  [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
-    request.hostConfiguration = hostConfiguration;
         
-    NSString *appId = hostConfiguration.applicationID;
+    NSString *appId = requestManager.hostConfiguration.applicationID;
+    NSString *host = requestManager.hostConfiguration.host;
     NSString *noFollow = @"1";
-    NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/",hostConfiguration.host];
+    NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/", host];
     WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
     [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
     [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
@@ -67,13 +66,13 @@
     [requestManager start:request with:args forGroupId:WGWebRequestGroups.login];
 }
 
-+ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager hostConfiguration:(id<WOTHostConfigurationProtocol>) hostConfiguration {
++ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager {
     
     id access_token = [self currentAccessToken];
     if (access_token){
-        [self logoutWithRequestManager:requestManager hostConfiguration:hostConfiguration];
+        [self logoutWithRequestManager:requestManager];
     } else {
-        [self loginWithRequestManager:requestManager hostConfiguration:hostConfiguration];
+        [self loginWithRequestManager:requestManager];
     }
 }
 

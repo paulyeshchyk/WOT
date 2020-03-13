@@ -11,7 +11,7 @@ import Foundation
 @objc
 public class WOTWebResponseAdapterTurrets: NSObject, WOTWebResponseAdapter {
 
-    public func parseData(_ binary: Data?, error: Error?, linkedObjectsRequestsCallback: JSONLinkedObjectsRequestsCallback?) -> Error? {
+    public func parseData(_ binary: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
 
         return binary?.parseAsJSON { (json) in
 
@@ -25,7 +25,7 @@ public class WOTWebResponseAdapterTurrets: NSObject, WOTWebResponseAdapter {
                     if let json = tankTurretsDictionary[$0] as? Dictionary<AnyHashable, Any> {
                         let predicate = NSPredicate(format: "%K == %@", WGJsonFields.module_id, json[WGJsonFields.module_id] as? String ?? "")
                         if let turrets = Tankturrets.findOrCreateObject(predicate: predicate, context: context) as? Tankturrets {
-                            turrets.mapping(fromJSON: json, into: context, completion: linkedObjectsRequestsCallback)
+                            turrets.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
                         }
                     }
                 }

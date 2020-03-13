@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterGuns
 
-- (NSError *)parseData:(NSData *)data error:(NSError *) error linkedObjectsRequestsCallback:(void (^)(NSArray<JSONLinkedObjectRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data error:(NSError *) error jsonLinksCallback:(void (^)(NSArray<WOTJSONLink *> * _Nullable))nestedRequestsCallback {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 
@@ -29,7 +29,7 @@
                 if ([tankGunsJSON isKindOfClass:[NSDictionary class]]) {
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankGunsJSON[WGJsonFields.module_id]];
                     Tankguns *tankGuns = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:predicate context:context];
-                    [tankGuns mappingFromJSON:tankGunsJSON into: context completion:nestedRequestsCallback];
+                    [tankGuns mappingFromJSON:tankGunsJSON into: context jsonLinksCallback:nestedRequestsCallback];
                 }
             }];
             

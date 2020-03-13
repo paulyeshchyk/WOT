@@ -27,10 +27,10 @@ extension Vehicles: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray jSON: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
+    public func mapping(fromArray jSON: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?){
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
         
         defer {
             context.tryToSave()
@@ -57,7 +57,7 @@ extension Vehicles: JSONMapperProtocol {
                 let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as! NSNumber
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), module_id)
                 if let moduleTree = NSManagedObject.findOrCreateObject(forClass:ModulesTree.self, predicate: predicate, context: context) as? ModulesTree {
-                    moduleTree.mapping(fromJSON: moduleTreeJSON, into: context, completion: completion)
+                    moduleTree.mapping(fromJSON: moduleTreeJSON, into: context, jsonLinksCallback: jsonLinksCallback)
                     self.addToModules_tree(moduleTree)
                 }
             }
@@ -66,7 +66,7 @@ extension Vehicles: JSONMapperProtocol {
 
         if let profile = Vehicleprofile.insertNewObject(context) as? Vehicleprofile {
             if let json = jSON[#keyPath(Vehicles.default_profile)] as? JSON {
-                profile.mapping(fromJSON: json, into: context, completion: completion)
+                profile.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
             }
             self.default_profile = profile
         }

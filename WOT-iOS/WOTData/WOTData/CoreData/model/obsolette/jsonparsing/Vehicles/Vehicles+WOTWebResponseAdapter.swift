@@ -11,7 +11,7 @@ import Foundation
 @objc
 open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
     
-    public func parseData(_ binary: Data?, error: Error?, linkedObjectsRequestsCallback: JSONLinkedObjectsRequestsCallback?) -> Error? {
+    public func parseData(_ binary: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
 
         return binary?.parseAsJSON({ json in
 
@@ -28,7 +28,7 @@ open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
                 context.perform {
                     guard let vehicle = NSManagedObject.findOrCreateObject(forClass:Vehicles.self, predicate: predicate, context: context) as? Vehicles else { return }
 
-                    vehicle.mapping(fromJSON: vehiclesJSON, into: context, completion: linkedObjectsRequestsCallback)
+                    vehicle.mapping(fromJSON: vehiclesJSON, into: context, jsonLinksCallback: jsonLinksCallback)
                     context.tryToSave()
                 }
             }

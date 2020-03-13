@@ -129,7 +129,7 @@
         [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
             NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
 
-                [WOTSessionManager logoutWithRequestManager:manager.requestManager hostConfiguration:manager.hostConfiguration];
+                [WOTSessionManager logoutWithRequestManager:manager.requestManager];
             } repeats:NO];
             [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
             return timer;

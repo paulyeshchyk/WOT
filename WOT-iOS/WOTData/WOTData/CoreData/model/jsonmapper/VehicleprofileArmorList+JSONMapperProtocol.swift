@@ -17,10 +17,10 @@ extension VehicleprofileArmorList: JSONMapperProtocol {
     public typealias Fields = FieldKeys
     
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?){
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
 
         defer {
             context.tryToSave()
@@ -28,14 +28,14 @@ extension VehicleprofileArmorList: JSONMapperProtocol {
 
         if let hullJSON = jSON[#keyPath(VehicleprofileArmorList.hull)] as? JSON {
             if let hullObject = VehicleprofileArmor.insertNewObject(context) as? VehicleprofileArmor {
-                hullObject.mapping(fromJSON: hullJSON, into: context, completion: completion)
+                hullObject.mapping(fromJSON: hullJSON, into: context, jsonLinksCallback: jsonLinksCallback)
                 self.hull = hullObject
             }
         }
 
         if let turretJSON = jSON[#keyPath(VehicleprofileArmorList.turret)] as? JSON {
             if let turretObject = VehicleprofileArmor.insertNewObject(context) as? VehicleprofileArmor {
-                turretObject.mapping(fromJSON: turretJSON, into: context, completion: completion)
+                turretObject.mapping(fromJSON: turretJSON, into: context, jsonLinksCallback: jsonLinksCallback)
                 self.turret = turretObject
             }
         }

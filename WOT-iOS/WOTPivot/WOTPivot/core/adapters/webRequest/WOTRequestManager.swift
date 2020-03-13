@@ -59,6 +59,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
         if (!addRequest(request, forGroupId: forGroupId)) { return false }
         
+        request.hostConfiguration = hostConfig
         return request.start(arguments)
     }
 
@@ -70,7 +71,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
     
-    fileprivate func startRequests(from: [JSONLinkedObjectRequest?]) {
+    fileprivate func startRequests(from: [WOTJSONLink?]) {
         from.compactMap { $0 }.forEach { (linkedObjectRequest) in
             let requestIDs = requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz)
             requestIDs?.forEach({ (requestId) in
@@ -81,7 +82,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     
     
     @discardableResult
-    private func queueRequest(for requestId: WOTRequestIdType, nestedRequest: JSONLinkedObjectRequest) -> Bool {
+    private func queueRequest(for requestId: WOTRequestIdType, nestedRequest: WOTJSONLink) -> Bool {
 
         guard let clazz = nestedRequest.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }

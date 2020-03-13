@@ -62,7 +62,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 @property (nonatomic, strong)id<WOTNestedRequestsEvaluatorProtocol> nestedRequestsEvaluator;
 
 @property (nonatomic, strong) id<WOTRequestManagerProtocol> requestManager;
-@property (nonatomic, strong) id<WOTHostConfigurationProtocol> hostConfiguration;
 
 @end
 
@@ -71,11 +70,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 - (id<WOTRequestManagerProtocol>) requestManager {
     id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
     return ((id<WOTAppDelegateProtocol>) delegate).appManager.requestManager;
-}
-
-- (id<WOTHostConfigurationProtocol>) hostConfiguration {
-    id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-    return ((id<WOTAppDelegateProtocol>) delegate).appManager.hostConfiguration;
 }
 
 #define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
@@ -298,8 +292,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
          * Default Profile
          */
         [WOTWEBRequestFactory fetchDataWithProfileTankId: [tankId integerValue]
-                                          requestManager: self.requestManager
-                                       hostConfiguration: self.hostConfiguration];
+                                          requestManager: self.requestManager];
     }
 }
 
@@ -347,8 +340,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
     [WOTWEBRequestFactory fetchDataWithVehicleId: tankID
-                                  requestManager: self.requestManager
-                               hostConfiguration: self.hostConfiguration];
+                                  requestManager: self.requestManager];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

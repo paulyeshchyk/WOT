@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterRadios
 
-- (NSError *)parseData:(NSData *)data error:(NSError *) error linkedObjectsRequestsCallback:(void (^)(NSArray<JSONLinkedObjectRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data error:(NSError *) error jsonLinksCallback:(void (^)(NSArray<WOTJSONLink *> * _Nullable))nestedRequestsCallback {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 
@@ -28,7 +28,7 @@
                 if ([tankRadiosJSON isKindOfClass:[NSDictionary class]]) {
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankRadiosJSON[WGJsonFields.module_id]];
                     Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
-                    [tankradios mappingFromJSON:tankRadiosJSON into: context completion: nestedRequestsCallback];
+                    [tankradios mappingFromJSON:tankRadiosJSON into: context jsonLinksCallback: nestedRequestsCallback];
                 }
             }];
             

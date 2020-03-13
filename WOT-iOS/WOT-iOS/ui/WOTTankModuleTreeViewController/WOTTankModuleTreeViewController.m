@@ -162,8 +162,7 @@
 
         
         id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchDataWithVehicleId:[_tank_Id integerValue]
-                                                                       requestManager: self.requestManager
-                                                                    hostConfiguration: self.hostConfiguration];
+                                                                       requestManager: self.requestManager];
         [request addListener:self];
 
         [self.model loadModel];

@@ -12,7 +12,7 @@
 
 #define WOT_REQUEST_ID_VEHICLE_ADOPT @"WOT_REQUEST_ID_VEHICLE_ADOPT"
 
-- (NSError *)parseData:(NSData *)data error:(NSError *) error linkedObjectsRequestsCallback:(void (^)(NSArray<JSONLinkedObjectRequest *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data error:(NSError *) error jsonLinksCallback:(void (^)(NSArray<WOTJSONLink *> * _Nullable))nestedRequestsCallback {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 
@@ -73,11 +73,11 @@
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.tag,jSON[WGJsonFields.tag]];
     Vehicles *vehicle = (Vehicles *)[Vehicles findOrCreateObjectWithPredicate:predicate context:context];
-    [vehicle mappingFromJSON:jSON into: context completion:nil];
+    [vehicle mappingFromJSON:jSON into: context jsonLinksCallback:nil];
     
 #warning dirty code
     Vehicleprofile *defaultProfile = (Vehicleprofile *)[Vehicleprofile insertNewObject:context];
-    [defaultProfile mappingFromJSON:jSON[WGJsonFields.default_profile] into: context completion:nil];
+    [defaultProfile mappingFromJSON:jSON[WGJsonFields.default_profile] into: context jsonLinksCallback:nil];
     vehicle.default_profile = defaultProfile;
 
 
@@ -252,7 +252,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",coreDataIdName,jSONLinkId];
         ModulesTree *moduleTree = (ModulesTree *)[clazz findOrCreateObjectWithPredicate:predicate context:context];
         [moduleTree setValue:jSONLinkId forKey:coreDataIdName];
-        [moduleTree mappingFromJSON:jSON into: context completion:^(NSArray<JSONLinkedObjectRequest *> * _Nullable requests) {
+        [moduleTree mappingFromJSON:jSON into: context jsonLinksCallback:^(NSArray<WOTJSONLink *> * _Nullable requests) {
             
         }];
         

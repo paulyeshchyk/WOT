@@ -11,7 +11,7 @@ import Foundation
 @objc
 open class WOTWebResponseAdapterModuleTree: NSObject, WOTWebResponseAdapter {
     
-    public func parseData(_ binary: Data?, error: Error?, linkedObjectsRequestsCallback: JSONLinkedObjectsRequestsCallback?) -> Error? {
+    public func parseData(_ binary: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return binary?.parseAsJSON { (_) in
         }
     }

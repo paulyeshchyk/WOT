@@ -28,15 +28,15 @@ extension ModulesTree: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?){
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
         
         defer {
             context.tryToSave()
-            let requests: [JSONLinkedObjectRequest]? = self.nestedRequests(context: context)
-            completion?(requests)
+            let requests: [WOTJSONLink]? = self.nestedRequests(context: context)
+            jsonLinksCallback?(requests)
         }
 
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
@@ -63,7 +63,7 @@ extension ModulesTree: JSONMapperProtocol {
     
     
     
-    private func nestedRequests(context: NSManagedObjectContext) -> [JSONLinkedObjectRequest]? {
+    private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink]? {
 
         return nil
 //        let radio_id = self.radio_id?.stringValue

@@ -15,10 +15,10 @@ extension VehicleprofileAmmo: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, completion: JSONLinkedObjectsRequestsCallback?) {
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
         
         defer {
             context.tryToSave()
@@ -27,13 +27,13 @@ extension VehicleprofileAmmo: JSONMapperProtocol {
         self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
         if let penetrationjSON = jSON[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
             if let penetrationsObject = VehicleprofileAmmoPenetration.insertNewObject(context) as? VehicleprofileAmmoPenetration {
-                penetrationsObject.mapping(fromArray: penetrationjSON, into: context, completion: nil)
+                penetrationsObject.mapping(fromArray: penetrationjSON, into: context, jsonLinksCallback: nil)
                 self.penetration = penetrationsObject
             }
         }
         if let damageJSON = jSON[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
             if let damageObject = VehicleprofileAmmoDamage.insertNewObject(context) as? VehicleprofileAmmoDamage {
-                damageObject.mapping(fromArray: damageJSON, into: context, completion: nil)
+                damageObject.mapping(fromArray: damageJSON, into: context, jsonLinksCallback: nil)
                 self.damage = damageObject
             }
         }

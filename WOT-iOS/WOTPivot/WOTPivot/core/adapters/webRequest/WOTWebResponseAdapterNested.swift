@@ -8,11 +8,19 @@
 
 import Foundation
 
-public typealias JSONLinkedObjectsRequestsCallback = ([JSONLinkedObjectRequest]?) -> Void
+public typealias WOTJSONLinksCallback = ([WOTJSONLink]?) -> Void
+
+@objc
+public protocol WOTNestedRequestsEvaluatorProtocol {
+    
+    @objc
+    func evaluate(nestedRequests: [WOTJSONLink]?)
+}
+
 
 
 @objc
-public class JSONLinkedObjectRequest: NSObject {
+public class WOTJSONLink: NSObject {
     
     @objc
     public var clazz: AnyClass

@@ -9,13 +9,6 @@
 import Foundation
 
 @objc
-public protocol WOTNestedRequestsEvaluatorProtocol {
-    
-    @objc
-    func evaluate(nestedRequests: [JSONLinkedObjectRequest]?)
-}
-
-@objc
 public protocol WOTStartableProtocol {
     
     @objc

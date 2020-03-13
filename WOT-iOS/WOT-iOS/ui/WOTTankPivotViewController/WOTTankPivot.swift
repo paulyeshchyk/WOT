@@ -162,7 +162,7 @@ public class WOTNestedRequestEvaluator: NSObject {
 extension WOTNestedRequestEvaluator: WOTNestedRequestsEvaluatorProtocol {
 
     @discardableResult
-    private func queueRequest(for requestId: WOTRequestIdType, nestedRequest: JSONLinkedObjectRequest) -> Bool {
+    private func queueRequest(for requestId: WOTRequestIdType, nestedRequest: WOTJSONLink) -> Bool {
 
         guard let requestManager = self.requestManager else { return false }
         guard let clazz = nestedRequest.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
@@ -185,7 +185,7 @@ extension WOTNestedRequestEvaluator: WOTNestedRequestsEvaluatorProtocol {
         return requestManager.start(request, with: arguments, forGroupId: groupId)
     }
     
-    public func evaluate(nestedRequests: [JSONLinkedObjectRequest]?) {
+    public func evaluate(nestedRequests: [WOTJSONLink]?) {
         
         DispatchQueue.main.async { [weak self] in
 
