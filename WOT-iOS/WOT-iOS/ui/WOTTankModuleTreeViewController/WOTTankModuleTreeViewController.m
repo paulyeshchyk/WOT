@@ -281,7 +281,9 @@
 }
 
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest finished:(BOOL)finished {
-       [self reloadModel];
+    if (finished) {
+        [self reloadModel];
+    }
 }
 
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<WOTRequestProtocol> _Nonnull)didStartRequest {

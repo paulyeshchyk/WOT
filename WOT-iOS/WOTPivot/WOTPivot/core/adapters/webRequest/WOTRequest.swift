@@ -46,7 +46,9 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
     
     var hash: Int { get }
     
+    var parentRequest: WOTRequestProtocol? { get set }
 }
+
 
 @objc
 public protocol WOTRequestManagerListenerProtocol {
@@ -156,4 +158,8 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     @objc
     @discardableResult
     open func start(_ args: WOTRequestArgumentsProtocol) -> Bool { return false }
+
+    @objc
+    public var parentRequest: WOTRequestProtocol?
+    
 }

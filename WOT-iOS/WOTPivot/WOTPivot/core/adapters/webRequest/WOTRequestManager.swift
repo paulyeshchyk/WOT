@@ -90,17 +90,17 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
     
-    fileprivate func queue(jsonLinks: ([WOTJSONLink?])?) {
+    fileprivate func queue(parentRequest: WOTRequestProtocol?, jsonLinks: ([WOTJSONLink?])?) {
         jsonLinks?.compactMap { $0 }.forEach { (linkedObjectRequest) in
             let requestIDs = requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz)
             requestIDs?.forEach({ (requestId) in
-                queue(requestId: requestId, jsonLink: linkedObjectRequest)
+                queue(parentRequest: parentRequest, requestId: requestId, jsonLink: linkedObjectRequest)
             })
         }
     }
     
     @discardableResult
-    private func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONLink) -> Bool {
+    private func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink) -> Bool {
 
         guard let clazz = jsonLink.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
@@ -116,6 +116,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
 
         request.hostConfiguration = hostConfiguration
+        request.parentRequest = parentRequest
 
         let groupId = "Nested\(String(describing: clazz))-\(jsonLink.identifier ?? "")"
 
@@ -151,8 +152,9 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             requestCoordinator.requestId(requestId, processBinary: data, error: error, jsonLinksCallback: { [weak self] jsonLinks in
                 guard let self = self else { return }
                 let count = jsonLinks?.count ?? 0
+                #warning("infinite loop")
                 self.listeners.forEach { $0.requestManager(self, didParseDataForRequest: request, finished: (count == 0))}
-                self.queue(jsonLinks: jsonLinks)
+                self.queue(parentRequest: request, jsonLinks: jsonLinks)
             })
         })
     }
