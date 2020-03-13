@@ -286,7 +286,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
          * Default Profile
          */
         [WOTWEBRequestFactory fetchDataWithProfileTankId: [tankId integerValue]
-                                          requestManager: self.requestManager];
+                                          requestManager: self.requestManager
+                                                listener: self];
     }
 }
 
@@ -334,7 +335,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
     [WOTWEBRequestFactory fetchDataWithVehicleId: tankID
-                                  requestManager: self.requestManager];
+                                  requestManager: self.requestManager
+                                        listener: self];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -468,4 +470,25 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [sample addWithMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
     return [NSObject gridData:sample];
 }
+
+@end
+
+
+@interface WOTTankDetailViewController(WOTRequestManagerListener) <WOTRequestManagerListenerProtocol>
+@end
+
+@implementation WOTTankDetailViewController(WOTRequestManagerListener)
+
+- (NSUInteger)hashData {
+    return [@"WOTTankDetailViewController" hash];
+}
+
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest finished:(BOOL)finished {
+    [self updateUINeedReset: YES];
+}
+
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<WOTRequestProtocol> _Nonnull)didStartRequest {
+    //
+}
+
 @end

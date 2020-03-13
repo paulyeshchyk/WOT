@@ -49,6 +49,19 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
 }
 
 @objc
+public protocol WOTRequestManagerListenerProtocol {
+    
+    @objc
+    var hashData: Int { get }
+    
+    @objc
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, finished: Bool)
+
+    @objc
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol)
+}
+
+@objc
 public protocol WOTRequestManagerProtocol {
     
     @objc
@@ -57,6 +70,12 @@ public protocol WOTRequestManagerProtocol {
     @objc
     @discardableResult
     func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool
+    
+    @objc
+    func addListener(_ listener: WOTRequestManagerListenerProtocol, forRequest: WOTRequestProtocol)
+    
+    @objc
+    func removeListener(_ listener: WOTRequestManagerListenerProtocol)
     
     @objc
     func cancelRequests(groupId: String)
@@ -75,7 +94,7 @@ public protocol WOTRequestListenerProtocol {
     var hash: Int { get }
 
     @objc
-    func request(_ request: AnyObject, finishedLoadData data:Data?, error: Error?)
+    func request(_ request: WOTRequestProtocol, finishedLoadData data:Data?, error: Error?)
     
     @objc
     func requestHasCanceled(_ request: WOTRequestProtocol)

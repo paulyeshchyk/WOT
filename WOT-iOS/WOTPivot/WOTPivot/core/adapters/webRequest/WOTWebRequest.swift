@@ -41,6 +41,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     open var path: String { return ""}
 
     private var completeHash: Int = 0
+
     override open var hash: Int {
         return completeHash
     }

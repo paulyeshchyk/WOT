@@ -11,6 +11,9 @@ import Foundation
 @objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     
+    public var listeners = [WOTRequestManagerListenerProtocol]()
+
+    
     @objc
     required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
         
@@ -21,6 +24,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
     
     @objc
+    @available(*, deprecated, message: "use listener instead")
     public static let pendingRequestNotificationName: String = "WOTRequestExecutorPendingRequestNotificationName"
     
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
@@ -32,6 +36,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     private var hostConfig: WOTHostConfigurationProtocol
 
     @objc
+    @available(*, deprecated, message: "use listener instead")
     public var pendingRequestsCount: Int = 0
 
     @objc
@@ -55,13 +60,27 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
     
     @objc
+    public func addListener(_ listener: WOTRequestManagerListenerProtocol, forRequest: WOTRequestProtocol) {
+        listeners.append(listener)
+    }
+    
+    @objc
+    public func removeListener(_ listener: WOTRequestManagerListenerProtocol) {
+        listeners.removeAll { $0.hashData == listener.hashData }
+    }
+
+    @objc
     @discardableResult
     public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool {
 
         if (!addRequest(request, forGroupId: forGroupId)) { return false }
         
         request.hostConfiguration = hostConfig
-        return request.start(arguments)
+        let result = request.start(arguments)
+        if (result) {
+            listeners.forEach { $0.requestManager(self, didStartRequest: request)}
+        }
+        return result
     }
 
     @objc
@@ -116,11 +135,11 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         set { hostConfig = newValue }
     }
 
-    public func request(_ request: AnyObject, finishedLoadData data: Data?, error: Error?) {
+    public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
             pendingRequestsCount -= 1
-            #warning ("force cast")
-            self.removeRequest(request as! WOTRequestProtocol)
+            
+            self.removeRequest(request)
         }
         
         guard let clazz = type(of: request) as? NSObject.Type else { return }
@@ -130,8 +149,10 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         let requestIds = requestCoordinator.requestIds(forClass: modelClass)
         requestIds?.forEach({ requestId in
             requestCoordinator.requestId(requestId, processBinary: data, error: error, jsonLinksCallback: { [weak self] jsonLinks in
-                
-                self?.queue(jsonLinks: jsonLinks)
+                guard let self = self else { return }
+                let count = jsonLinks?.count ?? 0
+                self.listeners.forEach { $0.requestManager(self, didParseDataForRequest: request, finished: (count == 0))}
+                self.queue(jsonLinks: jsonLinks)
             })
         })
     }

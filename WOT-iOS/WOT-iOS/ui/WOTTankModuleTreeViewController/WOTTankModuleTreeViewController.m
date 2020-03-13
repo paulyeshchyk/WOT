@@ -161,8 +161,9 @@
     if ( [self isViewLoaded] ){
 
         
-        id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchDataWithVehicleId:[_tank_Id integerValue]
-                                                                       requestManager: self.requestManager];
+        id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchDataWithVehicleId: [_tank_Id integerValue]
+                                                                       requestManager: self.requestManager
+                                                                             listener: self];
         [request addListener:self];
 
         [self.model loadModel];
@@ -260,11 +261,31 @@
 }
 
 - (void)request:(id)request finishedLoadData:(NSData *)data error:(NSError *)error {
-    [self.model loadModel];
+    [self reloadModel];
 }
 
 - (void)requestHasCanceled:(id<WOTRequestProtocol>)request {
     
+}
+
+@end
+
+
+@interface WOTTankModuleTreeViewController(WOTRequestManagerListener) <WOTRequestManagerListenerProtocol>
+@end
+
+@implementation WOTTankModuleTreeViewController(WOTRequestManagerListener)
+
+- (NSInteger)hashData {
+    return [@"WOTTankModuleTreeViewController" hash];
+}
+
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest finished:(BOOL)finished {
+       [self reloadModel];
+}
+
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<WOTRequestProtocol> _Nonnull)didStartRequest {
+    //
 }
 
 @end

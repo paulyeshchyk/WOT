@@ -30,7 +30,6 @@
     id<WOTHostConfigurationProtocol> hostConfiguration = [[WOTWebHostConfiguration alloc] init];
 
     id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration];
-//    id<WOTNestedRequestsEvaluatorProtocol> evaluator = [[WOTNestedRequestEvaluator alloc] init];
     
     self.appManager = [[WOTPivotAppManager alloc] init];
     self.appManager.hostConfiguration = hostConfiguration;

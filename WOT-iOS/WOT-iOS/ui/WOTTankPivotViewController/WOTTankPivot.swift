@@ -113,7 +113,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
         performWebRequest()
     }
     
-    
+    @available(*, deprecated, message: "use listener instead")
     @objc private func pendingRequestCountChaged(notification: NSNotification) {
         guard let executor = notification.object as? WOTRequestManager else {
             return
@@ -129,29 +129,36 @@ class WOTTankPivotModel: WOTPivotDataModel {
         let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
         let requestManager = appManager?.requestManager
         
-        if let hostConfiguration = appManager?.hostConfiguration {
-
-            let arguments = WOTRequestArguments()
-            arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
-            
-            if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
-                request.hostConfiguration = hostConfiguration
-                requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list)
-            }
+        let arguments = WOTRequestArguments()
+        arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
+        
+        if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
+            requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list)
+            requestManager?.addListener(self, forRequest: request)
         }
     }
 }
 
-@objc
-public class WOTNestedRequestEvaluator: NSObject {
-
-    fileprivate var hostConfiguration: WOTHostConfigurationProtocol? {
-        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
-        return appManager?.hostConfiguration
+extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
+    var hashData: Int {
+        return "WOTTankPivotModel".hashValue
     }
     
-    fileprivate var requestManager: WOTRequestManagerProtocol? {
-        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
-        return appManager?.requestManager
+
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, finished: Bool) {
+        defer {
+            if finished {
+                requestManager.removeListener(self)
+            }
+        }
+        
+        
+        super.loadModel()
+
     }
+
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol) {
+        
+    }
+
 }
