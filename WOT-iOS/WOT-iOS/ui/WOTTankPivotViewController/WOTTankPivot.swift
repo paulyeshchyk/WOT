@@ -97,32 +97,15 @@ class WOTTankPivotModel: WOTPivotDataModel {
                   metadatasource: metadatasource)
         
         self.enumerator = WOTNodeEnumerator.sharedInstance
-
-        let notificationName = NSNotification.Name(rawValue: WOTRequestManager.pendingRequestNotificationName)
-        NotificationCenter.default.addObserver(self, selector: #selector(pendingRequestCountChaged(notification:)), name: notificationName, object: nil)
     }
     
     deinit {
-        let notificationName = NSNotification.Name(rawValue: WOTRequestManager.pendingRequestNotificationName)
-        NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
     }
     
     override func loadModel() {
         super.loadModel()
         
         performWebRequest()
-    }
-    
-    @available(*, deprecated, message: "use listener instead")
-    @objc private func pendingRequestCountChaged(notification: NSNotification) {
-        guard let executor = notification.object as? WOTRequestManager else {
-            return
-        }
-        guard executor.pendingRequestsCount == 0 else {
-            return
-        }
-        
-        super.loadModel()
     }
     
     private func performWebRequest() {
@@ -133,8 +116,8 @@ class WOTTankPivotModel: WOTPivotDataModel {
         arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
         
         if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
-            requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list)
             requestManager?.addListener(self, forRequest: request)
+            requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list)
         }
     }
 }
@@ -151,10 +134,7 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
                 requestManager.removeListener(self)
             }
         }
-        
-        
         super.loadModel()
-
     }
 
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol) {

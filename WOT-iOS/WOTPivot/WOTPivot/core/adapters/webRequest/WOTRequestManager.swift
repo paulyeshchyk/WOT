@@ -13,7 +13,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     
     public var listeners = [WOTRequestManagerListenerProtocol]()
 
-    
     @objc
     required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
         
@@ -23,10 +22,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         super.init()
     }
     
-    @objc
-    @available(*, deprecated, message: "use listener instead")
-    public static let pendingRequestNotificationName: String = "WOTRequestExecutorPendingRequestNotificationName"
-    
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
     
     @objc
@@ -34,10 +29,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     
     @objc
     private var hostConfig: WOTHostConfigurationProtocol
-
-    @objc
-    @available(*, deprecated, message: "use listener instead")
-    public var pendingRequestsCount: Int = 0
 
     @objc
     private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool {
@@ -85,9 +76,8 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     @objc
     public func cancelRequests(groupId: String) {
-        grouppedRequests[groupId]?.forEach { request in
-            request.cancel()
-        }
+        
+        grouppedRequests[groupId]?.forEach { $0.cancel() }
     }
     
     fileprivate func queue(parentRequest: WOTRequestProtocol?, jsonLinks: ([WOTJSONLink?])?) {
@@ -138,11 +128,11 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            pendingRequestsCount -= 1
-            
             self.removeRequest(request)
         }
-        
+
+        print("\nended request:\n\(request.description)")
+
         guard let clazz = type(of: request) as? NSObject.Type else { return }
         guard let instance = clazz.init() as? WOTModelServiceProtocol else { return }
         guard let modelClass = instance.instanceModelClass() else { return }
@@ -153,19 +143,22 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                 guard let self = self else { return }
                 let count = jsonLinks?.count ?? 0
                 #warning("infinite loop")
-                self.listeners.forEach { $0.requestManager(self, didParseDataForRequest: request, finished: (count == 0))}
-                self.queue(parentRequest: request, jsonLinks: jsonLinks)
+                self.listeners.forEach {
+                    let finished = (count == 0)
+                    let theRequest = request.parentRequest ?? request
+                    $0.requestManager(self, didParseDataForRequest: theRequest, finished: finished)
+                }
+                self.queue(parentRequest: request.parentRequest ?? request, jsonLinks: jsonLinks)
             })
         })
     }
     
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
-        pendingRequestsCount -= 1
         removeRequest(request)
     }
     
     public func requestHasStarted(_ request: WOTRequestProtocol) {
-        pendingRequestsCount += 1
+        print("\nstarted request:\n\(request.description)")
     }
     
     public func removeRequest(_ request: WOTRequestProtocol) {

@@ -24,6 +24,9 @@ public protocol WOTStartableProtocol {
 public protocol WOTRequestProtocol: WOTStartableProtocol {
     
     @objc
+    var description:String { get }
+    
+    @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
     
     @objc
@@ -65,9 +68,6 @@ public protocol WOTRequestManagerListenerProtocol {
 
 @objc
 public protocol WOTRequestManagerProtocol {
-    
-    @objc
-    var pendingRequestsCount: Int { get }
     
     @objc
     @discardableResult

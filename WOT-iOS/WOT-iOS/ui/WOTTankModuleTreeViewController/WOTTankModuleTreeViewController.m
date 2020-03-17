@@ -70,16 +70,19 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTRequestListenerProtocol>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTRequestListenerProtocol, WOTRequestManagerListenerProtocol, WOTDataModelListener>
 
 @property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 @property (nonatomic, strong) WOTTankTreeFetchController *fetchController;
+@property (nonatomic, strong) UIImageView *connectorsImageView;
 
 @end
 
 @implementation WOTTankModuleTreeViewController
+@synthesize hashData;
+
 
 - (void)dealloc {
     
@@ -154,17 +157,11 @@
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeConnectorCollectionViewCell class])];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class])];
 
-    [self reloadModel];
+//    [self reloadModel];
 }
 
 - (void)reloadModel {
     if ( [self isViewLoaded] ){
-
-        
-        id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchDataWithVehicleId: [_tank_Id integerValue]
-                                                                       requestManager: self.requestManager
-                                                                             listener: self];
-        [request addListener:self];
 
         [self.model loadModel];
     }
@@ -173,7 +170,11 @@
 - (void)setTank_Id:(NSNumber *)value {
 
     _tank_Id = [value copy];
-    [self reloadModel];
+
+    id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchDataWithVehicleId: [_tank_Id integerValue]
+                                                                   requestManager: self.requestManager
+                                                                         listener: self];
+    [request addListener:self];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -256,7 +257,7 @@
 
 //WOTRequestListenerProtocol
 
-- (void)requestHasStarted:(id<WOTRequestProtocol>)request {
+- (void)requestHasStarted:(id<WOTRequestProtocol>)request pumper: (NSObject *) pumper{
     
 }
 
@@ -268,34 +269,22 @@
     
 }
 
-@end
-
-
-@interface WOTTankModuleTreeViewController(WOTRequestManagerListener) <WOTRequestManagerListenerProtocol>
-@end
-
-@implementation WOTTankModuleTreeViewController(WOTRequestManagerListener)
-
 - (NSInteger)hashData {
     return [@"WOTTankModuleTreeViewController" hash];
 }
 
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest finished:(BOOL)finished {
-    if (finished) {
-        [self reloadModel];
+
+    if (finished && didParseDataForRequest.parentRequest == nil && didParseDataForRequest != didParseDataForRequest.parentRequest) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self reloadModel];
+        });
     }
 }
 
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<WOTRequestProtocol> _Nonnull)didStartRequest {
     //
 }
-
-@end
-
-@interface WOTTankModuleTreeViewController(WOTDataModelListener) <WOTDataModelListener>
-@end
-
-@implementation WOTTankModuleTreeViewController(WOTDataModelListener)
 
 - (void)modelDidLoad {
     [self.collectionView reloadData];
@@ -308,14 +297,18 @@
 - (void) modelDidFailLoadWithError:(NSError *)error {
 
 }
+
 - (NSArray *)metadataItems {
     return [[NSArray alloc] init];
 }
 
 //-------
 - (void)addConnectorsLayer {
+    [self.connectorsImageView removeFromSuperview];
+    
     UIImage *img = [WOTTankModuleTreeNodeConnectorLayer connectorsForModel:self.model byFrame:self.collectionView.frame flowLayout:self.flowLayout];
-    [self.collectionView addSubview: [[UIImageView alloc] initWithImage:img]];
+    self.connectorsImageView = [[UIImageView alloc] initWithImage:img];
+    [self.collectionView addSubview: self.connectorsImageView];
 }
 
 @end

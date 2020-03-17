@@ -17,7 +17,6 @@ public protocol WOTWebRequestProtocol {
 public protocol WOTWebServiceProtocol {
     var method: String { get }
     var path: String { get }
-    func notifyListenersAboutStart()
     func requestHasFinishedLoad(data: Data?, error: Error?)
 }
 
@@ -34,22 +33,18 @@ public protocol WOTModelServiceProtocol: class {
 @objc
 open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
 
+    override public var description: String {
+        return pumper?.description ?? "-"
+    }
+    
     public var userInfo: [AnyHashable: Any]?
     public var httpBodyData: Data?
 
     open var method: String { return "POST" }
     open var path: String { return ""}
 
-    private var completeHash: Int = 0
-
     override open var hash: Int {
-        return completeHash
-    }
-
-    public func notifyListenersAboutStart() {
-        self.listeners.compactMap { $0 }.forEach {
-            $0.requestHasStarted(self)
-        }
+        return (pumper as? NSObject)?.hash ?? 0
     }
 
     public func requestHasFinishedLoad(data: Data?, error: Error?) {
@@ -63,28 +58,18 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
             $0.requestHasCanceled(self)
         }
     }
+
+    var pumper: WOTWebDataPumperProtocol? = nil
     
-    open func urlRequest(with args: WOTRequestArgumentsProtocol) -> URLRequest {
-
-        let requestBuilder = WOTWebRequestBuilder()
-        return requestBuilder.build(service: self, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
-    }
-
     @discardableResult
     open override func start(_ args: WOTRequestArgumentsProtocol) -> Bool {
 
-        let request = urlRequest(with: args)
-        let pumper = WOTWebDataPumper(request: request) {[weak self] (data, error) in
+        self.pumper = WOTWebDataPumper(hostConfiguration: hostConfiguration, args: args, httpBodyData: httpBodyData, service: self, completion: requestHasFinishedLoad(data:error:))
+        self.pumper?.start()
 
-            self?.requestHasFinishedLoad(data: data, error: error)
-            print("ended request:\(request.url?.absoluteString ?? "??")")
+        self.listeners.compactMap { $0 }.forEach {
+            $0.requestHasStarted(self)
         }
-        
-        completeHash = request.hashValue
-        print("started request:\(request.url?.absoluteString ?? "??")")
-        
-        pumper.start()
-        self.notifyListenersAboutStart()
         return true
     }
 }
@@ -120,15 +105,39 @@ class WOTWebRequestBuilder {
     }
 }
 
-class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
+@objc
+public protocol WOTWebDataPumperProtocol {
+
+    var completion: ((Data?, Error?) -> Void) { get }
+    var description: String { get }
+
+    init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void) )
+    func start()
+}
+
+class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataDelegate {
     
     let request: URLRequest
-    let completion: ((Data?, Error?) -> Void)
+    public private(set) var completion: ((Data?, Error?) -> Void)
     private var data: Data?
     private var connection: NSURLConnection?
     
     deinit {
         print("deinit WOTWebDataPumper")
+    }
+
+    override var hash: Int {
+        return request.url?.absoluteString.hashValue ?? 0
+    }
+    
+    override var description: String {
+        return request.url?.absoluteString ?? "-"
+    }
+    
+    convenience init(hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: (@escaping (Data?, Error?) -> Void) ) {
+        let requestBuilder = WOTWebRequestBuilder()
+        let urlRequest = requestBuilder.build(service: service, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
+        self.init(request: urlRequest, completion: completion)
     }
     
     required init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void) ) {
@@ -138,13 +147,11 @@ class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
         
         super.init()
         
-        connection = NSURLConnection(request: request, delegate: self)
+        connection = NSURLConnection(request: request, delegate: self, startImmediately: false)
     }
     
     public func start() {
-        DispatchQueue.global().sync {
-            connection?.start()
-        }
+        connection?.start()
     }
     
     func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
@@ -159,9 +166,7 @@ class WOTWebDataPumper: NSObject, NSURLConnectionDataDelegate {
 
     func connectionDidFinishLoading(_ connection: NSURLConnection) {
 
-        DispatchQueue.main.async { [weak self] in
-            self?.completion(self?.data, nil)
-        }
+        self.completion(self.data, nil)
     }
 
     func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
