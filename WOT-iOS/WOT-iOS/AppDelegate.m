@@ -11,6 +11,7 @@
 #import "WOTDrawerViewController.h"
 #import "WOTApplicationDefaults.h"
 #import "NSTimer+BlocksKit.h"
+#import "WOTSessionManager.h"
 
 @interface AppDelegate () <WOTHostConfigurationOwner, WOTAppDelegateProtocol>
 

@@ -87,7 +87,10 @@
 		1D519D281B4EA44900D3A286 /* WOTTankDetailSection+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D271B4EA44900D3A286 /* WOTTankDetailSection+Factory.m */; };
 		1D519D2C1B4EAD7F00D3A286 /* WOTEnginePowerCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D2B1B4EAD7F00D3A286 /* WOTEnginePowerCompareFieldExpression.m */; };
 		1D519D3A1B4FD42000D3A286 /* WOTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D391B4FD42000D3A286 /* WOTProgressView.m */; };
-		1D5668F32424BE8E008458AF /* WOTWebSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5668F22424BE8E008458AF /* WOTWebSessionManager.swift */; };
+		1D56692D2424D121008458AF /* WOTWebHostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669262424D121008458AF /* WOTWebHostConfiguration.swift */; };
+		1D56692E2424D121008458AF /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669282424D121008458AF /* WOTSessionManager.m */; };
+		1D56692F2424D121008458AF /* WOTWebSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D56692A2424D121008458AF /* WOTWebSessionManager.swift */; };
+		1D5669302424D121008458AF /* WOTSaveSessionResponseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D56692C2424D121008458AF /* WOTSaveSessionResponseAdapter.swift */; };
 		1D5A8E441B4401FB00A8261E /* WOTTankIdsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */; };
 		1D5D021A23C73376004B0314 /* WOTTankPivot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D021923C73376004B0314 /* WOTTankPivot.swift */; };
 		1D5D021E23C85CD0004B0314 /* WOTTankTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D021D23C85CD0004B0314 /* WOTTankTemplates.swift */; };
@@ -178,7 +181,6 @@
 		1DB67449221BF0D400982EE6 /* tankchassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6744B221BF0D400982EE6 /* tankchassis.json */; };
 		1DB6744C221BF0D900982EE6 /* vehicleprofile.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6744E221BF0D900982EE6 /* vehicleprofile.json */; };
 		1DB6744F221BF0DE00982EE6 /* tankengines.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67451221BF0DE00982EE6 /* tankengines.json */; };
-		1DBF89C2240FC340007DF8B2 /* WOTWebHostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89C1240FC340007DF8B2 /* WOTWebHostConfiguration.swift */; };
 		1DC07B331B3A9465002FAA72 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC07B321B3A9465002FAA72 /* Reachability.m */; };
 		1DC07BA31B3B003D002FAA72 /* Data-Flow-Chart-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */; };
 		1DC07BA41B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9B1B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png */; };
@@ -411,7 +413,11 @@
 		1D519D2B1B4EAD7F00D3A286 /* WOTEnginePowerCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTEnginePowerCompareFieldExpression.m; sourceTree = "<group>"; };
 		1D519D381B4FD42000D3A286 /* WOTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProgressView.h; sourceTree = "<group>"; };
 		1D519D391B4FD42000D3A286 /* WOTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProgressView.m; sourceTree = "<group>"; };
-		1D5668F22424BE8E008458AF /* WOTWebSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManager.swift; sourceTree = "<group>"; };
+		1D5669252424D121008458AF /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
+		1D5669262424D121008458AF /* WOTWebHostConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebHostConfiguration.swift; sourceTree = "<group>"; };
+		1D5669282424D121008458AF /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
+		1D56692A2424D121008458AF /* WOTWebSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManager.swift; sourceTree = "<group>"; };
+		1D56692C2424D121008458AF /* WOTSaveSessionResponseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTSaveSessionResponseAdapter.swift; sourceTree = "<group>"; };
 		1D5A8E421B4401FB00A8261E /* WOTTankIdsDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankIdsDatasource.h; sourceTree = "<group>"; };
 		1D5A8E431B4401FB00A8261E /* WOTTankIdsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankIdsDatasource.m; sourceTree = "<group>"; };
 		1D5D021923C73376004B0314 /* WOTTankPivot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankPivot.swift; sourceTree = "<group>"; };
@@ -519,7 +525,6 @@
 		1DB6744A221BF0D400982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankchassis.json; sourceTree = "<group>"; };
 		1DB6744D221BF0D900982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicleprofile.json; sourceTree = "<group>"; };
 		1DB67450221BF0DE00982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankengines.json; sourceTree = "<group>"; };
-		1DBF89C1240FC340007DF8B2 /* WOTWebHostConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebHostConfiguration.swift; sourceTree = "<group>"; };
 		1DC07B311B3A9465002FAA72 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		1DC07B321B3A9465002FAA72 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon.png"; sourceTree = "<group>"; };
@@ -957,6 +962,42 @@
 				1D519D391B4FD42000D3A286 /* WOTProgressView.m */,
 			);
 			path = UIProgressView;
+			sourceTree = "<group>";
+		};
+		1D5669242424D121008458AF /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				1D5669252424D121008458AF /* WOTSessionManager.h */,
+				1D5669282424D121008458AF /* WOTSessionManager.m */,
+				1D56692A2424D121008458AF /* WOTWebSessionManager.swift */,
+				1D5669262424D121008458AF /* WOTWebHostConfiguration.swift */,
+				1D5669272424D121008458AF /* Logout */,
+				1D5669292424D121008458AF /* Login */,
+				1D56692B2424D121008458AF /* Session */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		1D5669272424D121008458AF /* Logout */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Logout;
+			sourceTree = "<group>";
+		};
+		1D5669292424D121008458AF /* Login */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1D56692B2424D121008458AF /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				1D56692C2424D121008458AF /* WOTSaveSessionResponseAdapter.swift */,
+			);
+			path = Session;
 			sourceTree = "<group>";
 		};
 		1D5A8E411B4401DE00A8261E /* TankIds */ = {
@@ -1434,6 +1475,7 @@
 		1DD6468C1B1D9A7000B0EC76 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1D5669242424D121008458AF /* Session */,
 				1DD46B611BA6DC4100D3B3CE /* metrics */,
 				1DCC7F2B1B2EE974005FF193 /* 3rdParty */,
 				1DD6469C1B1DC42100B0EC76 /* Categories */,
@@ -1441,8 +1483,6 @@
 				1D047B671B331DF000B5B696 /* WOTApplicationDefaults.h */,
 				1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */,
 				1D90695A1B412D6B00237852 /* WOTColors.h */,
-				1DBF89C1240FC340007DF8B2 /* WOTWebHostConfiguration.swift */,
-				1D5668F22424BE8E008458AF /* WOTWebSessionManager.swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -2059,7 +2099,6 @@
 				1D6426FA2123070C003116E4 /* WOTPivotRefreshControl.swift in Sources */,
 				1DEEAC6420FF1ABF0072E099 /* WOTNode+DetailGrid.m in Sources */,
 				1DCC7F4D1B2F0619005FF193 /* UIView+StretchingConstraints.m in Sources */,
-				1D5668F32424BE8E008458AF /* WOTWebSessionManager.swift in Sources */,
 				1D519D1A1B4E9F5400D3A286 /* WOTTurretsRotationSpeedCompareFieldExpression.m in Sources */,
 				1DD46B951BA6DD6F00D3B3CE /* WOTTankDetailViewController.m in Sources */,
 				1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */,
@@ -2068,13 +2107,13 @@
 				1DCC7F321B2EE974005FF193 /* RomanNumber.m in Sources */,
 				1D4C92681B2709D800E320B5 /* WOTTankListSortHeaderView.m in Sources */,
 				1DD46B3A1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m in Sources */,
-				1DBF89C2240FC340007DF8B2 /* WOTWebHostConfiguration.swift in Sources */,
 				1DD46B8E1BA6DD6F00D3B3CE /* WOTTankDetailTextTableViewCell.m in Sources */,
 				1D519D0B1B4E9D2600D3A286 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
 				1D6FF4FA2106FD7A006C1328 /* WOTTankTreeFetchController.swift in Sources */,
 				1DD46B941BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */,
 				1D79C78420F5D40600FFAF02 /* AppDelegateTest.swift in Sources */,
+				1D56692E2424D121008458AF /* WOTSessionManager.m in Sources */,
 				1D9CAA20210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m in Sources */,
 				1D4C92561B25F27200E320B5 /* WOTLanguageTableViewCell.m in Sources */,
 				1DD46B921BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewCell.m in Sources */,
@@ -2108,10 +2147,12 @@
 				1D6FF4F62106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
 				1DCC7F311B2EE974005FF193 /* NSString+RomanUtils.m in Sources */,
+				1D56692D2424D121008458AF /* WOTWebHostConfiguration.swift in Sources */,
 				1D1795ED211D9ACA00A0E42E /* WOTTankPivotViewController.swift in Sources */,
 				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,
 				1D5D021E23C85CD0004B0314 /* WOTTankTemplates.swift in Sources */,
+				1D56692F2424D121008458AF /* WOTWebSessionManager.swift in Sources */,
 				1DD46B3F1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */,
@@ -2134,6 +2175,7 @@
 				1DDEE3931B8F353200C90D4B /* WOTTankPivotEmptyCollectionViewCell.m in Sources */,
 				1D4C92581B25F27200E320B5 /* WOTLanguageSelectorViewController.m in Sources */,
 				1D519D1E1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m in Sources */,
+				1D5669302424D121008458AF /* WOTSaveSessionResponseAdapter.swift in Sources */,
 				1D86DD042122F89A00678E71 /* WOTMenuItem.swift in Sources */,
 				1D9069601B4161F300237852 /* UIToolbar+WOT.m in Sources */,
 				1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */,

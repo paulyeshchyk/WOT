@@ -12,6 +12,7 @@
 #import "UINavigationBar+WOT.h"
 #import "UIImage+Resize.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "WOTSessionManager.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 

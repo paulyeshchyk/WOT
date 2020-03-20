@@ -21,6 +21,4 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 #import "WOTData+Mapping.h"
 
-#import "WOTSessionManager.h"
-
 #import "WOTCoreDataPredicates.h"

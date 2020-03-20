@@ -7,10 +7,7 @@
 //
 
 #import "WOTSessionManager.h"
-
 #import <WOTData/WOTData.h>
-
-//#import "UserSession+CoreDataClass.h"
 #import <WOTData/WOTData-Swift.h>
 
 @interface WOTSessionManager ()
