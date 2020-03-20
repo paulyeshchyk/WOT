@@ -66,5 +66,4 @@ open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
             return 0
         }
     }
-    
 }

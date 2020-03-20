@@ -12,10 +12,10 @@ import Foundation
 public enum WOTVehicleModuleType: Int {
     case unknown
     case chassis
-    case turret
     case engine
-    case gun
     case radio
+    case turret
+    case gun
     
     var stringValue: String {
         switch self {

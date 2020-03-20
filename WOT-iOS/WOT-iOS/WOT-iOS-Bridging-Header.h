@@ -18,3 +18,4 @@
 #import "WOTSessionManager.h"
 #import <WOTPivot/WOTPivot.h>
 #import <WOTData/WOTData.h>
+#import "WOTRequestIds.h"

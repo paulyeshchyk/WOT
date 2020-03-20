@@ -15,6 +15,7 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "NSTimer+BlocksKit.h"
 #import "WOTLoginViewController.h"
+#import "WOTRequestIds.h"
 
 @implementation WOTApplicationDefaults
 

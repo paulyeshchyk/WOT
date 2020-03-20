@@ -21,25 +21,6 @@ public protocol KeypathProtocol: class {
 public typealias WOTRequestCompletion = () -> Void
 public typealias WOTRequestIdType = Int
 
-/*
- typedef NS_ENUM(NSInteger, WOTRequestId) {
-     WOTRequestIdLogin = 0,
-     WOTRequestIdSaveSession,
-     WOTRequestIdLogout,
-     WOTRequestIdClearSession,
-     WOTRequestIdTanks,
-     WOTRequestIdTankEngines,
-     WOTRequestIdTankChassis,
-     WOTRequestIdTankTurrets,
-     WOTRequestIdTankGuns,
-     WOTRequestIdTankRadios,
-     WOTRequestIdTankVehicles,
-     WOTRequestIdTankProfile,
-     WOTRequestIdModulesTree
- };
-
- */
-
 public typealias  WOTRequestCallback = (Data?, Error?) -> Void
 
 @objc

@@ -112,8 +112,6 @@ internal enum L10n {
   internal static let wotKeyCode = L10n.tr("Localizable", "WOT_KEY_CODE")
   /// contour_image
   internal static let wotKeyContourImage = L10n.tr("Localizable", "WOT_KEY_CONTOUR_IMAGE")
-  /// dpm
-  internal static let wotKeyDpm = L10n.tr("Localizable", "WOT_KEY_DPM")
   /// expires_at
   internal static let wotKeyExpiresAt = L10n.tr("Localizable", "WOT_KEY_EXPIRES_AT")
   /// hashName
@@ -124,14 +122,10 @@ internal enum L10n {
   internal static let wotKeyLocation = L10n.tr("Localizable", "WOT_KEY_LOCATION")
   /// message
   internal static let wotKeyMessage = L10n.tr("Localizable", "WOT_KEY_MESSAGE")
-  /// next_tanks
-  internal static let wotKeyNextTanks = L10n.tr("Localizable", "WOT_KEY_NEXT_TANKS")
   /// nickname
   internal static let wotKeyNickname = L10n.tr("Localizable", "WOT_KEY_NICKNAME")
   /// orderBy
   internal static let wotKeyOrderby = L10n.tr("Localizable", "WOT_KEY_ORDERBY")
-  /// prices_xp
-  internal static let wotKeyPricesXp = L10n.tr("Localizable", "WOT_KEY_PRICES_XP")
   /// Filter
   internal static let wotKeySettingTypeFilter = L10n.tr("Localizable", "WOT_KEY_SETTING_TYPE_FILTER")
   /// Groupping
@@ -142,10 +136,6 @@ internal enum L10n {
   internal static let wotKeyUserId = L10n.tr("Localizable", "WOT_KEY_USER_ID")
   /// values
   internal static let wotKeyValues = L10n.tr("Localizable", "WOT_KEY_VALUES")
-  /// vehicles
-  internal static let wotKeyVehicles = L10n.tr("Localizable", "WOT_KEY_VEHICLES")
-  /// weight
-  internal static let wotKeyWeight = L10n.tr("Localizable", "WOT_KEY_WEIGHT")
   /// Anonymous user
   internal static let wotStringAnonymousUser = L10n.tr("Localizable", "WOT_STRING_ANONYMOUS_USER")
   /// Apply

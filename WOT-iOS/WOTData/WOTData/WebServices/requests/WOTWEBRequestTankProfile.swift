@@ -16,7 +16,6 @@ public class WOTWEBRequestTankProfile: WOTWEBRequest {
     override public var path: String {
         return "/wot/encyclopedia/vehicleprofile/"
     }
-
 }
 
 extension WOTWEBRequestTankProfile: WOTModelServiceProtocol {

@@ -13,14 +13,14 @@ public protocol WOTWebRequestProtocol {
 //    func parse(data: Data?)
 }
 
-@objc(WOTWebServiceProtocol)
+@objc
 public protocol WOTWebServiceProtocol {
     var method: String { get }
     var path: String { get }
     func requestHasFinishedLoad(data: Data?, error: Error?)
 }
 
-@objc(WOTModelServiceProtocol)
+@objc
 public protocol WOTModelServiceProtocol: class {
 
     @objc

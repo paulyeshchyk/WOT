@@ -10,6 +10,8 @@
 #import <WOTData/WOTData.h>
 #import <WOTData/WOTData-Swift.h>
 
+#import "WOTRequestIds.h"
+
 @interface WOTSessionManager ()
 
 @property (nonatomic, strong)NSTimer *timer;

@@ -18,7 +18,6 @@ public class WOTWEBRequestTankChassis: WOTWEBRequest {
     }
 }
 
-
 extension WOTWEBRequestTankChassis: WOTModelServiceProtocol {
     
     @objc

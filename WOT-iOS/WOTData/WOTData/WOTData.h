@@ -19,6 +19,6 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 #import "WOTDataDefines.h"
 
-#import "WOTData+Mapping.h"
-
-#import "WOTCoreDataPredicates.h"
+#import "WOTWebResponseAdapterRadios.h"
+#import "WOTWebResponseAdapterGuns.h"
+#import "WOTWebResponseAdapterEngines.h"

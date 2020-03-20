@@ -150,8 +150,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
         
         return NSStringFromClass(type(of:self)).hash
     }
-    
-    
+
     @objc
     open func cancel() { }
     
