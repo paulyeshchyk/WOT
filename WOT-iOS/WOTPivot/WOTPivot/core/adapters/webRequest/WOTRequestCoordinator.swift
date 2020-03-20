@@ -57,7 +57,7 @@ public protocol WOTRequestCoordinatorProtocol {
     func cancelRequests(byGroupId: String) -> Bool
 
     @objc
-    func requestId(_ requiestId:WOTRequestIdType, registerRequestClass requestClass: AnyClass)
+    func requestId(_ requiestId:WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
 
     @objc
     func request(for requestId: WOTRequestIdType) -> AnyClass?
@@ -66,17 +66,11 @@ public protocol WOTRequestCoordinatorProtocol {
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]?
 
     @objc
-    func requestId(_ requiestId:WOTRequestIdType, registerDataAdapterClass dataAdapterClass: AnyClass)
-
-    @objc
     func unregister(dataAdaprterClass: AnyClass, forRequestId: WOTRequestIdType)
     
     @objc
     func dataAdapter(for requestId: WOTRequestIdType) -> [AnyClass]?
 
-    @objc
-    func requestId(_ requestId: WOTRequestIdType, registerRequestCompletion: @escaping WOTRequestCallback)
-    
     @objc
     func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)? )
 }
@@ -86,10 +80,6 @@ public class WOTRequestCoordinator: NSObject {
     
     private var registeredRequests: [WOTRequestIdType: AnyClass] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: [AnyClass]] = .init()
-
-    @available(*, deprecated, message: "use dataadapters instead")
-    private var registeredCallbacks: [WOTRequestIdType: [WOTRequestCallback]] = .init()
-    
 }
 
 extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
@@ -121,8 +111,16 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     }
     
     @objc
-    public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass) {
+    public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass) {
+
         self.registeredRequests[requiestId] = requestClass
+
+        var array: [AnyClass] = .init()
+        if let existance = self.registeredDataAdapters[requiestId] {
+            array.append(contentsOf: existance)
+        }
+        array.append(dataAdapterClass)
+        self.registeredDataAdapters[requiestId] = array
     }
     
     @objc
@@ -142,16 +140,6 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     }
     
     @objc
-    public func requestId(_ requiestId: WOTRequestIdType, registerDataAdapterClass dataAdapterClass: AnyClass) {
-        var array: [AnyClass] = .init()
-        if let existance = self.registeredDataAdapters[requiestId] {
-            array.append(contentsOf: existance)
-        }
-        array.append(dataAdapterClass)
-        self.registeredDataAdapters[requiestId] = array
-    }
-    
-    @objc
     public func unregister(dataAdaprterClass: AnyClass, forRequestId: WOTRequestIdType) {
         guard var array = self.registeredDataAdapters[forRequestId] else {
             return
@@ -162,17 +150,6 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
         self.registeredDataAdapters[forRequestId] = array
     }
 
-    
-    @objc
-    public func requestId(_ requestId: WOTRequestIdType, registerRequestCompletion completion: @escaping WOTRequestCallback ) {
-        var array: [WOTRequestCallback] = .init()
-        if let existance = self.registeredCallbacks[requestId] {
-            array.append(contentsOf: existance)
-        }
-        array.append(completion)
-        self.registeredCallbacks[requestId] = array
-    }
-
     @objc
     public func dataAdapter(for requestId: WOTRequestIdType) -> [AnyClass]? {
         return self.registeredDataAdapters[requestId]
@@ -181,11 +158,6 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     @objc
     public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)? ){
 
-        let callbacks = self.registeredCallbacks[requestId]
-        callbacks?.forEach({ callback in
-            callback(binary, error)
-        })
-        
         guard let adapters = self.dataAdapter(for: requestId) else {
             return
         }

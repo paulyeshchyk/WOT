@@ -95,6 +95,7 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
 }
 
 extension WOTTreeDataModel {
+    
     func reindexNodeConnectors() {
         self.nodeConnectorIndex.reset()
 

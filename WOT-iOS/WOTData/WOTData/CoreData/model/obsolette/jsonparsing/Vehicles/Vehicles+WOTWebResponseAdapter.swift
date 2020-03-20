@@ -32,9 +32,6 @@ open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
                     context.tryToSave()
                 }
             }
-            
-            
-            
         })
     }
 }

@@ -31,10 +31,13 @@
 
     id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration];
     
+    id<WOTWebSessionManagerProtocol> sessionManager = [[WOTWebSessionManager alloc] init];
+    
     self.appManager = [[WOTPivotAppManager alloc] init];
     self.appManager.hostConfiguration = hostConfiguration;
     self.appManager.requestManager = requestManager;
     self.appManager.requestListener = requestManager;
+    self.appManager.sessionManager = sessionManager;
 
     [WOTApplicationDefaults registerRequests];
     [WOTApplicationDefaults registerDefaultSettings];

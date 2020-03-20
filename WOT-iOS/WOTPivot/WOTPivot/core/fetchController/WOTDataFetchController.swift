@@ -37,6 +37,7 @@ open class WOTDataFetchController: NSObject {
 extension WOTDataFetchController: WOTDataFetchControllerProtocol {
 
     public func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
+        
         self.fetchResultController.managedObjectContext.perform({
             do {
                 try self.fetchResultController.performFetch()

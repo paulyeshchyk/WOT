@@ -33,7 +33,7 @@ public protocol WOTModelServiceProtocol: class {
 @objc
 open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
 
-    override public var description: String {
+    override open var description: String {
         return pumper?.description ?? "-"
     }
     
@@ -141,7 +141,7 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
     }
     
     required init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void) ) {
-        
+
         self.request = request
         self.completion = completion
         

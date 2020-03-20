@@ -19,6 +19,9 @@ public protocol WOTPivotAppManagerProtocol {
     
     @objc
     var requestListener: WOTRequestListenerProtocol? { get set }
+    
+    @objc
+    var sessionManager: WOTWebSessionManagerProtocol? { get set }
 }
 
 
@@ -33,4 +36,7 @@ public class WOTPivotAppManager: NSObject, WOTPivotAppManagerProtocol {
     
     @objc
     public var requestListener: WOTRequestListenerProtocol?
+
+    @objc
+    public var sessionManager: WOTWebSessionManagerProtocol?
 }
