@@ -30,9 +30,6 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Charts (3.3.0):
-    - Charts/Core (= 3.3.0)
-  - Charts/Core (3.3.0)
   - MMDrawerController (0.6.0):
     - MMDrawerController/Core (= 0.6.0)
     - MMDrawerController/MMDrawerBarButtonItem (= 0.6.0)
@@ -45,43 +42,48 @@ PODS:
     - MMDrawerController/Core
   - MMDrawerController/Subclass (0.6.0):
     - MMDrawerController/Core
-  - SDWebImage (5.0.2):
-    - SDWebImage/Core (= 5.0.2)
-  - SDWebImage/Core (5.0.2)
+  - SDWebImage (5.6.1):
+    - SDWebImage/Core (= 5.6.1)
+  - SDWebImage/Core (5.6.1)
+  - SwiftFormat/CLI (0.44.6)
   - SwiftGen (6.1.0)
+  - SwiftLint (0.39.1)
   - WYPopoverController (0.3.9)
 
 DEPENDENCIES:
   - AFNetworking
   - ASProgressPopUpView
   - BlocksKit
-  - Charts
   - MMDrawerController
   - SDWebImage
+  - SwiftFormat/CLI
   - SwiftGen
+  - SwiftLint
   - WYPopoverController
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - ASProgressPopUpView
     - BlocksKit
-    - Charts
     - MMDrawerController
     - SDWebImage
+    - SwiftFormat
     - SwiftGen
+    - SwiftLint
     - WYPopoverController
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   ASProgressPopUpView: dfe44c9a0313ac93a8092bd361b59f52c83a7560
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  Charts: ec1f57f9340054155691e84d4544a1d239d382c5
   MMDrawerController: e3a54a5570388463ad3b36975251575b50c4e1a0
-  SDWebImage: 6764b5fa0f73c203728052955dbefa2bf1f33282
+  SDWebImage: 7edb9c3ea661e77a66661f7f044de8c1b55d1120
+  SwiftFormat: 226f259067268a452772fc2bd635bbcecb5ecb09
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
+  SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
   WYPopoverController: a9db25ac2841a686acdc0f3a99bdb21545db32f4
 
-PODFILE CHECKSUM: b5dc56f8c398cccb20f7b36b561bff2fea34a302
+PODFILE CHECKSUM: 0bcc076d55dd2996d868cd72574f8ff8ed5082cf
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4

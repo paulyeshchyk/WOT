@@ -177,6 +177,7 @@
 		1DA1D7481B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DA1D7461B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib */; };
 		1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74A1B2B005F00C5C2FB /* WOTTankListSettingField.m */; };
 		1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */; };
+		1DB5FB542428AC1100413F41 /* .swiftformat.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1DB5FB532428AC1000413F41 /* .swiftformat.yml */; };
 		1DB67437221BF0B300982EE6 /* chassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67439221BF0B300982EE6 /* chassis.json */; };
 		1DB6743A221BF0B800982EE6 /* tanks.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6743C221BF0B800982EE6 /* tanks.json */; };
 		1DB6743D221BF0C300982EE6 /* vehicles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6743F221BF0C300982EE6 /* vehicles.json */; };
@@ -527,6 +528,7 @@
 		1DA1D74C1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankListSettingsDatasource+AvailableFields.h"; sourceTree = "<group>"; };
 		1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankListSettingsDatasource+AvailableFields.m"; sourceTree = "<group>"; };
 		1DA1D74F1B2B017C00C5C2FB /* WOTTankListSettingsAvailableFieldsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsAvailableFieldsProtocol.h; sourceTree = "<group>"; };
+		1DB5FB532428AC1000413F41 /* .swiftformat.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftformat.yml; sourceTree = "<group>"; };
 		1DB67438221BF0B300982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/chassis.json; sourceTree = "<group>"; };
 		1DB6743B221BF0B800982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tanks.json; sourceTree = "<group>"; };
 		1DB6743E221BF0C300982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicles.json; sourceTree = "<group>"; };
@@ -1436,6 +1438,7 @@
 				1D3DAEE42133FDC800368AFA /* WOTData.framework */,
 				1D79EDD621243A97005FBA34 /* WOTPivot.framework */,
 				1D6E94E52100CA1200B65FC3 /* .swiftlint.yml */,
+				1DB5FB532428AC1000413F41 /* .swiftformat.yml */,
 				1DD647191B2084FF00B0EC76 /* podfile */,
 				1DD6467E1B1C990800B0EC76 /* WOTPrefixHeader.pch */,
 			);
@@ -1768,6 +1771,7 @@
 			buildPhases = (
 				A70D0AFA5460D30E17BC9F18 /* [CP] Check Pods Manifest.lock */,
 				1D9CAA3421119BD300B6CA5A /* Swiftgen */,
+				1DB5FB4E2428A2B400413F41 /* Swiftformat */,
 				1D6E94E42100C9CC00B65FC3 /* Swiftlint */,
 				1DD6462F1B1C616A00B0EC76 /* Sources */,
 				1DD646301B1C616A00B0EC76 /* Frameworks */,
@@ -1963,6 +1967,7 @@
 				1D672B5F1B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png in Resources */,
 				DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */,
 				1DD46B961BA6DD6F00D3B3CE /* WOTTankDetailViewController.xib in Resources */,
+				1DB5FB542428AC1100413F41 /* .swiftformat.yml in Resources */,
 				1DC07BA51B3B003D002FAA72 /* Data-Flow-Chart-icon@3x.png in Resources */,
 				DA522D2D1B6637630087D684 /* Search Yellow@3x.png in Resources */,
 				1DC07BA31B3B003D002FAA72 /* Data-Flow-Chart-icon.png in Resources */,
@@ -2040,7 +2045,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if which swiftlint >/dev/null; then\n#    swiftlint\n#else\n#    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n";
+			shellScript = "#${PODS_ROOT}/SwiftLint/swiftlint .\n";
 		};
 		1D9CAA3421119BD300B6CA5A /* Swiftgen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2056,17 +2061,34 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/SwiftGen/bin/swiftgen strings -p $PODS_ROOT/SwiftGen/templates/strings/flat-swift3.stencil --output ${SRCROOT}/WOT-iOS/resources/strings.swift ${SRCROOT}/WOT-iOS/resources/en.lproj/Localizable.strings\n";
 		};
+		1DB5FB4E2428A2B400413F41 /* Swiftformat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftformat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\"\n";
+		};
 		6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/ASProgressPopUpView/ASProgressPopUpView.framework",
 				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/MMDrawerController/MMDrawerController.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/WYPopoverController/WYPopoverController.framework",
@@ -2076,14 +2098,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ASProgressPopUpView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMDrawerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WYPopoverController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A70D0AFA5460D30E17BC9F18 /* [CP] Check Pods Manifest.lock */ = {

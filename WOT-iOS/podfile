@@ -12,4 +12,6 @@ target 'WOT-iOS' do
     pod 'ASProgressPopUpView'
     pod 'WYPopoverController'
     pod 'SwiftGen'
+    pod 'SwiftLint'
+    pod 'SwiftFormat/CLI'
 end

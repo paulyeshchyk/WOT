@@ -4,3 +4,4 @@
 *.xcbkptlist
 **/*.xcuserdatad/*
 **/xcshareddata/*
+WOT-iOS/Pods/*
