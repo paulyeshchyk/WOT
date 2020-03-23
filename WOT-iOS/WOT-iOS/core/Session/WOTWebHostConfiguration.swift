@@ -15,7 +15,7 @@ public class WOTWebHostConfiguration: NSObject, WOTHostConfigurationProtocol {
     }
 
     public var host: String {
-        return String(format:"%@.%@", WOTApiDefaults.applicationHost, WOTApplicationDefaults.language())
+        return String(format: "%@.%@", WOTApiDefaults.applicationHost, WOTApplicationDefaults.language())
     }
 
     public var scheme: String {

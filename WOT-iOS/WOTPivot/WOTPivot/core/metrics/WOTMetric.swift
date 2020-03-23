@@ -16,8 +16,8 @@ public protocol WOTTankMetricEvaluatorProtocol: NSObjectProtocol {
 @objc
 public protocol WOTMetricProtocol: NSObjectProtocol {
     var metricName: String? { get set }
-    var evaluator: WOTTankMetricEvaluatorProtocol?  { get set }
-    var grouppingName: String?  { get set }
+    var evaluator: WOTTankMetricEvaluatorProtocol? { get set }
+    var grouppingName: String? { get set }
 }
 
 @objc public class WOTMetric: NSObject, WOTMetricProtocol {

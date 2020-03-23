@@ -21,7 +21,7 @@ public protocol WOTStartableProtocol {
 @objc
 public protocol WOTRequestProtocol: WOTStartableProtocol {
     @objc
-    var description:String { get }
+    var description: String { get }
 
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
@@ -89,7 +89,7 @@ public protocol WOTRequestListenerProtocol {
     var hash: Int { get }
 
     @objc
-    func request(_ request: WOTRequestProtocol, finishedLoadData data:Data?, error: Error?)
+    func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?)
 
     @objc
     func requestHasCanceled(_ request: WOTRequestProtocol)
@@ -140,7 +140,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
 
     #warning(" refactoring ")
     override open var hash: Int {
-        return NSStringFromClass(type(of:self)).hash
+        return NSStringFromClass(type(of: self)).hash
     }
 
     @objc

@@ -39,7 +39,7 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     override init() {
         super.init()
 
-        VIPERModule.Pivot.wireFrame?.build(configureCallback: { (module) in
+        VIPERModule.Pivot.wireFrame?.build(configureCallback: { (_) in
 
         })
 

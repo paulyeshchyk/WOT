@@ -60,11 +60,11 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     @objc
     @discardableResult
     public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool {
-        if (!addRequest(request, forGroupId: forGroupId)) { return false }
+        if !addRequest(request, forGroupId: forGroupId) { return false }
 
         request.hostConfiguration = hostConfig
         let result = request.start(arguments)
-        if (result) {
+        if result {
             listeners.forEach { $0.requestManager(self, didStartRequest: request)}
         }
         return result

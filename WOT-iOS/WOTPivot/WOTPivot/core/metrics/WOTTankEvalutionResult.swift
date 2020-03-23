@@ -16,7 +16,7 @@ public protocol WOTTankEvaluationResultProtocol {
 }
 
 @objc
-public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol{
+public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol {
     @objc
     public var thisValue: CGFloat
 

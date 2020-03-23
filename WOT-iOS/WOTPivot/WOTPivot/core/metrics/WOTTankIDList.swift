@@ -11,7 +11,7 @@ import Foundation
 @objc
 public protocol WOTTanksIDListProtocol: NSObjectProtocol {
     var label: String { get }
-    var allObjects : [String] { get }
+    var allObjects: [String] { get }
 
     func addObject(_ object: String)
     func addObjects(_ objects: [String])

@@ -38,7 +38,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
                 return
             }
             let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankradios.module_id), module_id)
-            guard let tankRadios = NSManagedObject.findOrCreateObject(forClass:Tankradios.self, predicate: predicate, context: context) as? Tankradios else {
+            guard let tankRadios = NSManagedObject.findOrCreateObject(forClass: Tankradios.self, predicate: predicate, context: context) as? Tankradios else {
                 return
             }
             tankRadios.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
@@ -51,7 +51,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
                 return
             }
             let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankengines.module_id), module_id)
-            guard let tankEngines = NSManagedObject.findOrCreateObject(forClass:Tankradios.self, predicate: predicate, context: context) as? Tankengines else {
+            guard let tankEngines = NSManagedObject.findOrCreateObject(forClass: Tankradios.self, predicate: predicate, context: context) as? Tankengines else {
                 return
             }
             tankEngines.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
@@ -64,7 +64,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
                 return
             }
             let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankguns.module_id), module_id)
-            guard let tankGuns = NSManagedObject.findOrCreateObject(forClass:Tankradios.self, predicate: predicate, context: context) as? Tankguns else {
+            guard let tankGuns = NSManagedObject.findOrCreateObject(forClass: Tankradios.self, predicate: predicate, context: context) as? Tankguns else {
                 return
             }
             tankGuns.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
@@ -77,7 +77,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
                 return
             }
             let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), module_id)
-            guard let tankChassis = NSManagedObject.findOrCreateObject(forClass:Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else {
+            guard let tankChassis = NSManagedObject.findOrCreateObject(forClass: Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else {
                 return
             }
             tankChassis.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
@@ -90,7 +90,7 @@ extension VehicleprofileModule: JSONMapperProtocol {
                 return
             }
             let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankturrets.module_id), module_id)
-            guard let tankTurret = NSManagedObject.findOrCreateObject(forClass:Tankturrets.self, predicate: predicate, context: context) as? Tankturrets else {
+            guard let tankTurret = NSManagedObject.findOrCreateObject(forClass: Tankturrets.self, predicate: predicate, context: context) as? Tankturrets else {
                 return
             }
             tankTurret.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)

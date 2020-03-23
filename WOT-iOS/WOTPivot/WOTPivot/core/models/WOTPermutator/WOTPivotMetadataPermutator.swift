@@ -39,7 +39,7 @@ public struct WOTPivotMetadataPermutator {
             mutableTemplates.append(templateNode)
         }
 
-        var endpoints: [WOTPivotNodeProtocol]? = nil
+        var endpoints: [WOTPivotNodeProtocol]?
         if let nextPivotNode = mutableTemplates.popLast() {
             endpoints = WOTNodeEnumerator.sharedInstance.endpoints(node: nextPivotNode) as? [WOTPivotNodeProtocol]
         }
@@ -50,7 +50,7 @@ public struct WOTPivotMetadataPermutator {
     private func iterateMiddle(templates: [WOTPivotNodeProtocol], endpoints: [WOTPivotNodeProtocol]?) -> [WOTPivotNodeProtocol] {
         var resultArray = [WOTPivotNodeProtocol]()
         var mutablePivotNodes = templates
-        var nextEndPoints: [WOTPivotNodeProtocol]? = nil
+        var nextEndPoints: [WOTPivotNodeProtocol]?
         if let nextPivotNode = mutablePivotNodes.popLast() {
             nextEndPoints = WOTNodeEnumerator.sharedInstance.endpoints(node: nextPivotNode) as? [WOTPivotNodeProtocol]
         }

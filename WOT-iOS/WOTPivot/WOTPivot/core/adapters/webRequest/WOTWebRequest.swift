@@ -57,7 +57,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         }
     }
 
-    var pumper: WOTWebDataPumperProtocol? = nil
+    var pumper: WOTWebDataPumperProtocol?
 
     @discardableResult
     open override func start(_ args: WOTRequestArgumentsProtocol) -> Bool {

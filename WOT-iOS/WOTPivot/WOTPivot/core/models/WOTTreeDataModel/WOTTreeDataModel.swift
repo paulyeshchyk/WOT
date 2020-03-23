@@ -86,7 +86,7 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
     }
 
     fileprivate func makeTree(_ fetchController: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?) {
-        fetchController.fetchedNodes(byPredicates: [], nodeCreator: nodeCreator, filteredCompletion: { predicate, fetchedNodes in
+        fetchController.fetchedNodes(byPredicates: [], nodeCreator: nodeCreator, filteredCompletion: { _, fetchedNodes in
             let data = fetchedNodes?.compactMap { $0 as? WOTNode } ?? []
             self.add(nodes: data)
             self.listener.modelDidLoad()

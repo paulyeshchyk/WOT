@@ -89,10 +89,10 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
 
 public class WOTApiTankType: NSObject, WOTAPIProtocol {
     @objc public static let at_spg: String = "AT-SPG"
-    @objc public static let spg  = "SPG";
-    @objc public static let lightTank  = "lightTank";
-    @objc public static let mediumTank  = "mediumTank";
-    @objc public static let heavyTank  = "heavyTank";
+    @objc public static let spg  = "SPG"
+    @objc public static let lightTank  = "lightTank"
+    @objc public static let mediumTank  = "mediumTank"
+    @objc public static let heavyTank  = "heavyTank"
 }
 
 public class WOTApiDefaults: NSObject, WOTAPIDefaultsProtocol {

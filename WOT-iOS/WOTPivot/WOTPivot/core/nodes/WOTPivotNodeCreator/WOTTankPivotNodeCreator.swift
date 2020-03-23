@@ -59,7 +59,7 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
             return result
         } else {
             let hasMoreThenOne = (cnt > 1)
-            if self.collapseToGroups && hasMoreThenOne  {
+            if self.collapseToGroups && hasMoreThenOne {
                 let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)
                 result.append(node)
                 return result

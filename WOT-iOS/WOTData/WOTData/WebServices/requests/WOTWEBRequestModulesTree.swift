@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class WOTWEBRequestModulesTree : WOTWEBRequest {
+public class WOTWEBRequestModulesTree: WOTWEBRequest {
     override public var path: String {
         return "/wot/encyclopedia/modules/"
     }

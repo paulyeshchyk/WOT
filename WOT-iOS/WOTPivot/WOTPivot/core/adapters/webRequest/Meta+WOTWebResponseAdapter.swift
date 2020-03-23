@@ -130,9 +130,7 @@ struct WOTWEBRequestError: Error {
     let kind: ErrorKind
 
     var description: String {
-        get {
-            return kind.description
-        }
+        return kind.description
     }
 }
 

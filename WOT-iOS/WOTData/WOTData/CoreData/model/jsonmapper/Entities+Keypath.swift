@@ -331,7 +331,7 @@ protocol KeyPathListable {
     init()
 
     var keyPathReadableFormat: [String: Any] { get }
-    var allKeyPaths: [String:KeyPath<AnyOldObject, Any?>] { get }
+    var allKeyPaths: [String: KeyPath<AnyOldObject, Any?>] { get }
 }
 
 extension KeyPathListable {
@@ -344,8 +344,8 @@ extension KeyPathListable {
         return description
     }
 
-    var allKeyPaths: [String:KeyPath<Self, Any?>] {
-        var membersTokeyPaths: [String:KeyPath<Self, Any?>] = [:]
+    var allKeyPaths: [String: KeyPath<Self, Any?>] {
+        var membersTokeyPaths: [String: KeyPath<Self, Any?>] = [:]
         let instance = Self() // @@@^^^@@@
         for (key, _) in instance.keyPathReadableFormat {
             membersTokeyPaths[key] = \Self.keyPathReadableFormat[key]

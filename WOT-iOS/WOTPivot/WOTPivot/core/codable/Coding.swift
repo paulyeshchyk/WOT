@@ -163,7 +163,7 @@ public struct DateTime: Codable, Comparable {
             "yyyy-MM-dd'T'HH:mm:ss.ZZZZZ",
             "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ",
             "yyyy-MM-dd'T'HH:mm:ss'Z'",
-            "yyyy-MM-dd",
+            "yyyy-MM-dd"
         ].map { (format: String) -> DateFormatter in
             let formatter = DateFormatter()
             formatter.dateFormat = format

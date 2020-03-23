@@ -12,7 +12,7 @@ import Foundation
 public class WOTWebProxyRequest: WOTWEBRequest {
     public func dataFrom(proxyData: NSData?) -> NSData? {
         guard let proxyData = proxyData else { return nil }
-        var result: Data? = nil
+        var result: Data?
         let iso = String(data: proxyData as Data, encoding: String.Encoding.utf8)
         let unescaped = iso?.removingPercentEncoding
         let dutf8 = unescaped?.data(using: String.Encoding.utf8)

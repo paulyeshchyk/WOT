@@ -131,7 +131,7 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)? ){
+    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)? ) {
         guard let adapters = self.dataAdapter(for: requestId) else {
             return
         }

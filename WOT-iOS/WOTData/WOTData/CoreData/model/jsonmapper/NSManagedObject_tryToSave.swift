@@ -20,7 +20,7 @@ public extension NSManagedObjectContext {
     func tryToSave() -> Error? {
         guard self.hasChanges else { return nil }
 
-        var result: Error? = nil
+        var result: Error?
         do {
             try save()
         } catch {

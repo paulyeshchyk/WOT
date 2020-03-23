@@ -30,7 +30,7 @@ extension Vehicles: JSONMapperProtocol {
     public func mapping(fromArray jSON: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
         }
@@ -53,9 +53,9 @@ extension Vehicles: JSONMapperProtocol {
                     return
                 }
 
-                let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as! NSNumber
+                guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), module_id)
-                if let moduleTree = NSManagedObject.findOrCreateObject(forClass:ModulesTree.self, predicate: predicate, context: context) as? ModulesTree {
+                if let moduleTree = NSManagedObject.findOrCreateObject(forClass: ModulesTree.self, predicate: predicate, context: context) as? ModulesTree {
                     moduleTree.mapping(fromJSON: moduleTreeJSON, into: context, jsonLinksCallback: jsonLinksCallback)
                     self.addToModules_tree(moduleTree)
                 }

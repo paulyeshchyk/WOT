@@ -1,6 +1,10 @@
 warning_threshold: 197
 
 disabled_rules:
+- redundant_objc_attribute
+- unused_setter_value
+- syntactic_sugar
+- comma
 - line_length
 - trailing_newline
 - todo
