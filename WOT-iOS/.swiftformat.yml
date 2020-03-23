@@ -1,9 +1,10 @@
 # file options
 
---exclude Tests/XCTestManifests.swift,Snapshots, Pods
+--exclude Tests/XCTestManifests.swift,Snapshots, Pods, Generated
 
 # format options
---rules indent,linebreaks
+--rules indent, linebreakAtEndOfFile, consecutiveBlankLines
+--rules blankLinesAtEndOfScope, blankLinesBetweenScopes, blankLinesAtStartOfScope, emptyBraces
 --allman false
 --binarygrouping 4,8
 --commas always
