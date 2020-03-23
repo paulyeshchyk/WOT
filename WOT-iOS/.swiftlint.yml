@@ -1,4 +1,4 @@
-warning_threshold: 1
+warning_threshold: 197
 
 disabled_rules:
 - line_length
@@ -11,8 +11,8 @@ disabled_rules:
 #- weak_delegate
 
 type_body_length:
-- 250 # warning
-- 300 # error
+- 2250 # warning
+- 2300 # error
 
 function_body_length:
 - 20 # warning
@@ -21,8 +21,10 @@ cyclomatic_complexity:
 - 5 # warning
 
 file_length:
-- 220 # warning
-- 250 # error
+- 2220 # warning
+- 2250 # error
+
+force_cast: warning
 
 excluded:
 - Pods

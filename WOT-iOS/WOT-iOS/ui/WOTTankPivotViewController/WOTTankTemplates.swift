@@ -23,16 +23,16 @@ class WOTPivotTemplateVehicleTier: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.tier)
-        result.addChild(pivotNodeClass.init(name: "I",    predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "1")))
-        result.addChild(pivotNodeClass.init(name: "II",   predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "2")))
-        result.addChild(pivotNodeClass.init(name: "III",  predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "3")))
-        result.addChild(pivotNodeClass.init(name: "IV",   predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "4")))
-        result.addChild(pivotNodeClass.init(name: "V",    predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "5")))
-        result.addChild(pivotNodeClass.init(name: "VI",   predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "6")))
-        result.addChild(pivotNodeClass.init(name: "VII",  predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "7")))
+        result.addChild(pivotNodeClass.init(name: "I", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "1")))
+        result.addChild(pivotNodeClass.init(name: "II", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "2")))
+        result.addChild(pivotNodeClass.init(name: "III", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "3")))
+        result.addChild(pivotNodeClass.init(name: "IV", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "4")))
+        result.addChild(pivotNodeClass.init(name: "V", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "5")))
+        result.addChild(pivotNodeClass.init(name: "VI", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "6")))
+        result.addChild(pivotNodeClass.init(name: "VII", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "7")))
         result.addChild(pivotNodeClass.init(name: "VIII", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "8")))
-        result.addChild(pivotNodeClass.init(name: "IX",   predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "9")))
-        result.addChild(pivotNodeClass.init(name: "X",    predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "10")))
+        result.addChild(pivotNodeClass.init(name: "IX", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "9")))
+        result.addChild(pivotNodeClass.init(name: "X", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "10")))
 
         return result
     }

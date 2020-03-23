@@ -4,7 +4,7 @@
 
 # format options
 --rules indent, linebreakAtEndOfFile, consecutiveBlankLines
---rules blankLinesAtEndOfScope, blankLinesBetweenScopes, blankLinesAtStartOfScope, emptyBraces
+--rules blankLinesAtEndOfScope, blankLinesBetweenScopes, blankLinesAtStartOfScope, emptyBraces, trailingSpace
 --allman false
 --binarygrouping 4,8
 --commas always

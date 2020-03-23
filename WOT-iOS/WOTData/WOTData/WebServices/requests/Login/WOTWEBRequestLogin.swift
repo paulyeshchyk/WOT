@@ -16,7 +16,7 @@ public class WOTWEBRequestLogin: WOTWEBRequest {
 
     override public var path: String {
         return "wot/auth/login/"
-    }    
+    }
 }
 
 extension WOTWEBRequestLogin: WOTModelServiceProtocol {

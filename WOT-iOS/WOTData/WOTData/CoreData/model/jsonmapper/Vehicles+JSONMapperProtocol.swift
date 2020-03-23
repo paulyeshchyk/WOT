@@ -23,18 +23,18 @@ extension Vehicles: JSONMapperProtocol {
         case tank_id
         case modules_tree
     }
-    
+
     public typealias Fields = FieldKeys
-    
+
     @objc
     public func mapping(fromArray jSON: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
-    
+
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
         defer {
             context.tryToSave()
         }
-        
+
         self.name = jSON[#keyPath(Vehicles.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(Vehicles.tier)]  as? Int ?? 0)
         self.tag = jSON[#keyPath(Vehicles.tag)] as? String
@@ -46,13 +46,13 @@ extension Vehicles: JSONMapperProtocol {
         self.is_gift = NSDecimalNumber(value: jSON[#keyPath(Vehicles.is_gift)]  as? Int ?? 0)
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
-        
+
         if let moduleTreeJSONArray = jSON[#keyPath(Vehicles.modules_tree)] as? JSON {
             moduleTreeJSONArray.keys.forEach { (key) in
                 guard let moduleTreeJSON = moduleTreeJSONArray[key] as? JSON else {
                     return
                 }
-                
+
                 let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as! NSNumber
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), module_id)
                 if let moduleTree = NSManagedObject.findOrCreateObject(forClass:ModulesTree.self, predicate: predicate, context: context) as? ModulesTree {
@@ -61,7 +61,7 @@ extension Vehicles: JSONMapperProtocol {
                 }
             }
         }
-        
+
         if let profile = Vehicleprofile.insertNewObject(context) as? Vehicleprofile {
             if let json = jSON[#keyPath(Vehicles.default_profile)] as? JSON {
                 profile.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)

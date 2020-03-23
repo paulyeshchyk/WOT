@@ -8,7 +8,7 @@ import Foundation
 public struct CodingAPI {
     /// Whether to discard any errors when decoding optional properties
     public static var safeOptionalDecoding = true
-    
+
     /// Whether to remove invalid elements instead of throwing when decoding arrays
     public static var safeArrayDecoding = true
 }
@@ -16,25 +16,25 @@ public struct CodingAPI {
 public struct StringCodingKey: CodingKey, ExpressibleByStringLiteral {
     private let string: String
     private let int: Int?
-    
+
     public var stringValue: String { return string }
-    
+
     init(string: String) {
         self.string = string
         int = nil
     }
-    
+
     public init?(stringValue: String) {
         string = stringValue
         int = nil
     }
-    
+
     public var intValue: Int? { return int }
     public init?(intValue: Int) {
         string = String(describing: intValue)
         int = intValue
     }
-    
+
     public init(stringLiteral value: String) {
         string = value
         int = nil
@@ -59,7 +59,7 @@ extension KeyedDecodingContainer {
         }
         return value
     }
-    
+
     public func decodeAnyIfPresent<T>(_ type: T.Type, forKey key: K) throws -> T? {
         return try decodeOptional {
             guard let value = try decodeIfPresent(AnyCodable.self, forKey: key)?.value else { return nil }
@@ -70,7 +70,7 @@ extension KeyedDecodingContainer {
             }
         }
     }
-    
+
     public func toDictionary() throws -> [String: Any] {
         var dictionary: [String: Any] = [:]
         for key in allKeys {
@@ -78,25 +78,25 @@ extension KeyedDecodingContainer {
         }
         return dictionary
     }
-    
+
     public func decode<T>(_ key: KeyedDecodingContainer.Key) throws -> T where T: Decodable {
         return try decode(T.self, forKey: key)
     }
-    
+
     public func decodeIfPresent<T>(_ key: KeyedDecodingContainer.Key) throws -> T? where T: Decodable {
         return try decodeOptional {
             try decodeIfPresent(T.self, forKey: key)
         }
     }
-    
+
     public func decodeAny<T>(_ key: K) throws -> T {
         return try decodeAny(T.self, forKey: key)
     }
-    
+
     public func decodeAnyIfPresent<T>(_ key: K) throws -> T? {
         return try decodeAnyIfPresent(T.self, forKey: key)
     }
-    
+
     public func decodeArray<T: Decodable>(_ key: K) throws -> [T] {
         var container = try nestedUnkeyedContainer(forKey: key)
         var array: [T] = []
@@ -115,7 +115,7 @@ extension KeyedDecodingContainer {
         }
         return array
     }
-    
+
     public func decodeArrayIfPresent<T: Decodable>(_ key: K) throws -> [T]? {
         return try decodeOptional {
             if contains(key) {
@@ -125,7 +125,7 @@ extension KeyedDecodingContainer {
             }
         }
     }
-    
+
     fileprivate func decodeOptional<T>(_ closure: () throws -> T?) throws -> T? {
         if CodingAPI.safeOptionalDecoding {
             do {
@@ -145,7 +145,7 @@ extension KeyedEncodingContainer {
         guard let value = value else { return }
         try encodeIfPresent(AnyCodable(value), forKey: key)
     }
-    
+
     public mutating func encodeAny<T>(_ value: T, forKey key: K) throws {
         try encode(AnyCodable(value), forKey: key)
     }
@@ -155,7 +155,7 @@ extension KeyedEncodingContainer {
 
 public struct DateTime: Codable, Comparable {
     public var date: Date
-    
+
     /// The date formatters used for decoding. They will be tried in order
     public static var dateDecodingFormatters: [DateFormatter] = {
         return [
@@ -170,29 +170,29 @@ public struct DateTime: Codable, Comparable {
             return formatter
         }
     }()
-    
+
     /// The date formatter used for encoding
     public static let dateEncodingFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.Z"
         return formatter
     }()
-    
+
     public init(date: Date = Date()) {
         self.date = date
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
-        
+
         for formatter in DateTime.dateDecodingFormatters {
             if let date = formatter.iso8601.date(from: string) {
                 self.init(date: date)
                 return
             }
         }
-        
+
         // Support parsing old date time strings saved using 12 hour time.
         for formatter in DateTime.dateDecodingFormatters {
             if let date = formatter.date(from: string) {
@@ -202,17 +202,17 @@ public struct DateTime: Codable, Comparable {
         }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "Date not in correct format")
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         let string = DateTime.dateEncodingFormatter.iso8601.string(from: date)
         try container.encode(string)
     }
-    
+
     public static func == (lhs: DateTime, rhs: DateTime) -> Bool {
         return lhs.date == rhs.date
     }
-    
+
     public static func < (lhs: DateTime, rhs: DateTime) -> Bool {
         return lhs.date < rhs.date
     }
@@ -226,12 +226,12 @@ public struct DateDay: Codable, Comparable {
         formatter.calendar = .current
         return formatter
     }()
-    
+
     public let date: Date
     public let year: Int
     public let month: Int
     public let day: Int
-    
+
     public init(date: Date = Date()) {
         self.date = date
         let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
@@ -244,7 +244,7 @@ public struct DateDay: Codable, Comparable {
         self.month = month
         self.day = day
     }
-    
+
     public init(year: Int, month: Int, day: Int) {
         let dateComponents = DateComponents(calendar: .current, year: year, month: month, day: day)
         guard let date = dateComponents.date else {
@@ -255,7 +255,7 @@ public struct DateDay: Codable, Comparable {
         self.month = month
         self.day = day
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
@@ -264,19 +264,19 @@ public struct DateDay: Codable, Comparable {
         }
         self.init(date: date)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         let string = DateDay.dateFormatter.string(from: date)
         try container.encode(string)
     }
-    
+
     public static func == (lhs: DateDay, rhs: DateDay) -> Bool {
         return lhs.year == rhs.year &&
             lhs.month == rhs.month &&
             lhs.day == rhs.day
     }
-    
+
     public static func < (lhs: DateDay, rhs: DateDay) -> Bool {
         return lhs.date < rhs.date
     }
@@ -286,11 +286,11 @@ extension DateFormatter {
     public func string(from dateTime: DateTime) -> String {
         return string(from: dateTime.date)
     }
-    
+
     public func string(from dateDay: DateDay) -> String {
         return string(from: dateDay.date)
     }
-    
+
     public var iso8601: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")

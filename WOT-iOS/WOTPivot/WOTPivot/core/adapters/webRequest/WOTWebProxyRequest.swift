@@ -19,27 +19,27 @@ public class WOTWebProxyRequest: WOTWEBRequest {
         guard let data = dutf8 else {
             return result as NSData?
         }
-        
+
         do {
             if let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [AnyHashable: Any] {
                 if let success = json["Text"] as? String {
                     result = success.data(using: String.Encoding.utf8)
                 }
             }
-            
+
         } catch {}
         return result as NSData?
     }
-    
+
     public func proxyRequest(for request: NSURLRequest) -> URLRequest? {
         let url = request.url
         let urlItem = URLQueryItem(name: "url", value: url?.absoluteString)
         let toItem = URLQueryItem(name: "to", value: "to-txt")
-        
+
         guard let proxyURL = URL(string: "https://countwordsfree.com/loadweb") else {
             return nil
         }
-        
+
         var components = URLComponents(url: proxyURL, resolvingAgainstBaseURL: false)
         components?.queryItems = [urlItem, toItem]
         guard let finalUrl = components?.url else {
@@ -49,7 +49,7 @@ public class WOTWebProxyRequest: WOTWEBRequest {
         result.httpMethod = "POST"
         return result
     }
-    
+
 //    override public var request: URLRequest {
 //        guard let url = self.composedURL() else {
 //            fatalError("request not created")
@@ -64,20 +64,20 @@ public class WOTWebProxyRequest: WOTWEBRequest {
 //        }
 //        return result
 //    }
-    
+
 //    override public func connectionDidFinishLoading(_ connection: NSURLConnection) {
 //        let clearData = self.dataFrom(proxyData: self.data as NSData?)
 //        self.parse(data: clearData as! Data)
 //        self.data = nil
 //        self.notifyListenersAboutFinish()
 //    }
-    
+
     /*
      NSData *clearData = [self dataFromProxyData:self.data];
      [self parseData:clearData];
      self.data = nil;
-     
+
      [self notifyListenersAboutFinish];
-     
+
      */
 }

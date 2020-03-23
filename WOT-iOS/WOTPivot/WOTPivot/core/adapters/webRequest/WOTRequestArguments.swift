@@ -12,10 +12,10 @@ import Foundation
 public protocol WOTRequestArgumentsProtocol {
     @objc
     init(_ dictionary: [AnyHashable: Any])
-    
+
     @objc
     func setValues(_ values: Any, forKey: AnyHashable)
-    
+
     @objc
     func buildQuery(_ custom: [AnyHashable: Any]) -> String
 }
@@ -24,11 +24,11 @@ public protocol WOTRequestArgumentsProtocol {
 open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
     @objc
     public private(set) var dictionary = [AnyHashable: Any]()
-    
+
     @objc
     required convenience public init(_ dictionary: [AnyHashable: Any]) {
         self.init()
-        
+
         dictionary.keys.forEach {
             if let plainArray = dictionary[$0] as? String {
                 let joinedString = plainArray.components(separatedBy: ",")
@@ -36,28 +36,28 @@ open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
             }
         }
     }
-    
+
     @objc
     public func setValues(_ values: Any, forKey: AnyHashable) {
         dictionary[forKey] = values
     }
-    
+
     @objc
     public func buildQuery(_ custom: [AnyHashable: Any] = [:]) -> String {
         var mixture = custom
         mixture.append(with: dictionary)
         return mixture.asURLQueryString()
     }
-    
+
     @objc
     open override var hash: Int {
         do {
             let data = try JSONSerialization.data(withJSONObject: dictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
-            
+
             var hasher = Hasher()
             hasher.combine(data)
             return hasher.finalize()
-            
+
         } catch {
             return 0
         }

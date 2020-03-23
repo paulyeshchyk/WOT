@@ -26,5 +26,5 @@ extension WOTWEBRequestTankChassis: WOTModelServiceProtocol {
     @objc
     public func instanceModelClass() -> AnyClass? {
         return type(of: self).modelClass()
-    }    
+    }
 }

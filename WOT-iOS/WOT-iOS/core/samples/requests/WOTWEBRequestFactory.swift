@@ -44,5 +44,5 @@ public class WOTWEBRequestFactory: NSObject {
         let started = requestManager.start(request, with: args, forGroupId: groupId)
         requestManager.addListener(listener, forRequest: request)
         return started
-    }    
+    }
 }
