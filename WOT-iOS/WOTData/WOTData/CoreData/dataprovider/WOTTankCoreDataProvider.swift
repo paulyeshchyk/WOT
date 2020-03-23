@@ -10,7 +10,6 @@ import WOTPivot
 
 @objc
 public class WOTTankCoreDataProvider: WOTCoreDataProvider {
-    
     @objc public static let sharedInstance = WOTTankCoreDataProvider()
 
     override public var applicationDocumentsDirectoryURL: URL? {
@@ -32,5 +31,4 @@ public class WOTTankCoreDataProvider: WOTCoreDataProvider {
         result.appendPathComponent("WOT_iOS.sqlite")
         return result
     }
-
 }

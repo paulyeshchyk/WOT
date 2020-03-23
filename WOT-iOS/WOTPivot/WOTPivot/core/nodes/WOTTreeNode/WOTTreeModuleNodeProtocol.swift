@@ -19,7 +19,6 @@ public protocol WOTTreeModulesTreeProtocol: NSObjectProtocol {
 
 @objc
 public protocol WOTTreeModuleNodeProtocol: WOTNodeProtocol {
-
     var modulesTree: WOTTreeModulesTreeProtocol { get }
     var imageURL: URL? { get }
 }

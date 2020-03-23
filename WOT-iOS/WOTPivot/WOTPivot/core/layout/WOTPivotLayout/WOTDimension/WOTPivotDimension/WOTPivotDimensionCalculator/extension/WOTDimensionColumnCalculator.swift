@@ -9,7 +9,6 @@
 import Foundation
 
 public class WOTDimensionColumnCalculator: WOTDimensionCalculator {
-
     override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         var result: Int = dimension.childrenMaxWidth(forNode, orValue: 0)
         result += dimension.rootNodeWidth

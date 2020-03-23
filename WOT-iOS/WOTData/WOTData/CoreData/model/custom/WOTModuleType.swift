@@ -17,7 +17,7 @@ public enum WOTModuleType: Int {
     case turrets
     case guns
     case tank
-    
+
     var stringValue: String {
         switch self {
         case .unknown: return "unknown"
@@ -29,7 +29,7 @@ public enum WOTModuleType: Int {
         case .tank: return "tank"
         }
     }
-    
+
     static func fromString(stringValue: String) -> WOTModuleType {
         switch stringValue.lowercased() {
         case "unknown":return .unknown
@@ -39,7 +39,7 @@ public enum WOTModuleType: Int {
         case "turrets":return .turrets
         case "guns":return .guns
         case "tank":return .tank
-        #warning("WTF")
+            #warning("WTF")
         default: return .unknown
         }
     }
@@ -47,7 +47,6 @@ public enum WOTModuleType: Int {
 
 @objc
 public class WOTModuleTypeOBJcConverter: NSObject {
-
     @objc
     public static func fromString(_ string: String) -> WOTModuleType {
         return WOTModuleType.fromString(stringValue: string)

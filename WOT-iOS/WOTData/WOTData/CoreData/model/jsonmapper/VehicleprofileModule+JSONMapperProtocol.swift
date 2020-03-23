@@ -10,18 +10,15 @@ import Foundation
 import WOTPivot
 
 extension VehicleprofileModule: JSONMapperProtocol {
-    
     public typealias Fields = Void
-    
+
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
 
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
-
         defer {
             context.tryToSave()
-            
 
             let requests = self.nestedRequests(context: context)
             jsonLinksCallback?(requests)
@@ -33,9 +30,8 @@ extension VehicleprofileModule: JSONMapperProtocol {
         self.gun_id = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.gun_id)] as? Int ?? 0)
         self.turret_id = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.turret_id)] as? Int ?? 0)
     }
-    
-    private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink] {
 
+    private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink] {
         let radio_id = self.radio_id?.stringValue
         let requestRadio = WOTJSONLink(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
             guard let module_id = json[#keyPath(Tankradios.module_id)] as? NSNumber else {

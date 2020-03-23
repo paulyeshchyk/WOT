@@ -10,7 +10,6 @@ import XCTest
 //@testable import WOTPivot
 
 class WOTNodePivotFactoryTest: XCTestCase {
-
 //    override func setUp() {
 //        super.setUp()
 //        // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,28 +21,28 @@ class WOTNodePivotFactoryTest: XCTestCase {
 //    }
 //
 //    func testNation() {
-////        let node = WOTPivotTemplateVehicleNation().asType(PivotMetadataType.column)
-////        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
-////        XCTAssert(depth == 1)
+    ////        let node = WOTPivotTemplateVehicleNation().asType(PivotMetadataType.column)
+    ////        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
+    ////        XCTAssert(depth == 1)
 //    }
 //
 //    func testTier() {
-////        let node = WOTPivotTemplateVehicleTier().asType(PivotMetadataType.column)
-////        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
-////        XCTAssert(depth == 1)
+    ////        let node = WOTPivotTemplateVehicleTier().asType(PivotMetadataType.column)
+    ////        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
+    ////        XCTAssert(depth == 1)
 //    }
 //
 //    func testType() {
-////        let node = WOTPivotTemplateVehicleType().asType(PivotMetadataType.column)
-////        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
-////        XCTAssert(depth == 1)
+    ////        let node = WOTPivotTemplateVehicleType().asType(PivotMetadataType.column)
+    ////        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: node.children, initialLevel: 0)
+    ////        XCTAssert(depth == 1)
 //    }
 //
 //    func testPrem() {
-////        let node = WOTPivotTemplateVehiclePremium().asType(.column)
-////        let children = node.children
-////        XCTAssert(children.count == 2)
-////        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: children, initialLevel: 0)
-////        XCTAssert(depth == 1)
+    ////        let node = WOTPivotTemplateVehiclePremium().asType(.column)
+    ////        let children = node.children
+    ////        XCTAssert(children.count == 2)
+    ////        let depth = WOTNodeEnumerator.sharedInstance.depth(forChildren: children, initialLevel: 0)
+    ////        XCTAssert(depth == 1)
 //    }
 }

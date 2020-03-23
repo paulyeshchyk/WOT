@@ -22,12 +22,10 @@ protocol WOTMenuDatasourceProtocol: NSObjectProtocol {
     func object(at index: Int) -> WOTMenuItem?
     func objectsCount() -> Int
     func rebuild()
-
 }
 
 @objc
 class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
-
     var availableViewControllers: [WOTMenuItem] = []
     var visibleViewControllers: [WOTMenuItem]? = nil {
         didSet {
@@ -41,11 +39,9 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     override init() {
         super.init()
 
-
         VIPERModule.Pivot.wireFrame?.build(configureCallback: { (module) in
-            
-        })
 
+        })
 
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankPivotViewController.self, controllerTitle: L10n.wotStringTankdeleyev, icon: UIImage(), userDependence: false))
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankListViewController.self, controllerTitle: L10n.wotStringTankopedia, icon: UIImage(), userDependence: false))
@@ -60,10 +56,7 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
         self.fetchedResultController = fetchedResultController
         do {
             try fetchedResultController.performFetch()
-        } catch {
-
-        }
-
+        } catch {}
     }
 
     weak var delegate: WOTMenuDatasourceDelegate?
@@ -84,7 +77,6 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
             visibleViewControllers.append(contentsOf: self.availableViewControllers)
             self.visibleViewControllers = visibleViewControllers
         }
-
     }
 }
 

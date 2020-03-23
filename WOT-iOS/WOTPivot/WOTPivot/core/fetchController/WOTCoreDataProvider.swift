@@ -11,7 +11,6 @@ import CoreData
 
 @objc
 open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
-
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { return nil }
 
@@ -22,14 +21,11 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         return NSManagedObjectModel(contentsOf: modelURL)
     }()
 
-
     open var modelURL: URL? { return nil }
 
     open var sqliteURL: URL? { return nil }
 
-
     @objc lazy public var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
-
         guard let sqliteURL = self.sqliteURL else {
             abort()
         }
@@ -48,7 +44,6 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     }()
 
     @objc public lazy var workManagedObjectContext: NSManagedObjectContext  = {
-
         let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
         context.undoManager = nil
@@ -57,7 +52,6 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     }()
 
     @objc public lazy var mainManagedObjectContext: NSManagedObjectContext  = {
-
         let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
         context.undoManager = nil
@@ -65,7 +59,6 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         return context
 
     }()
-
 
     @objc private func mainContextDidSave(notification: Notification) {
         self.workManagedObjectContext.perform {
@@ -100,15 +93,11 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
         if toContext.hasChanges {
             do {
-             try toContext.save()
-            } catch {
-
-            }
+                try toContext.save()
+            } catch {}
         }
         toContext.processPendingChanges()
     }
 
-    public func executeRequest(by predicate: NSPredicate , concurency: WOTExecuteConcurency) {
-
-    }
+    public func executeRequest(by predicate: NSPredicate , concurency: WOTExecuteConcurency) {}
 }

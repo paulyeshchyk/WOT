@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(Tankguns)
-public class Tankguns: NSManagedObject {
-
-}
+public class Tankguns: NSManagedObject {}

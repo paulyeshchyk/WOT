@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 extension ModulesTree {
-    
     @objc
     public func localImageURL() -> URL? {
         let type = self.moduleType()
@@ -20,7 +19,6 @@ extension ModulesTree {
 
     @objc
     public func moduleType() -> WOTModuleType {
-        
         if let next = self.next_engines, next.count > 0 {
             return .engine
         }

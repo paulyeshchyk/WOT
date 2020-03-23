@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(Tankengines)
-public class Tankengines: NSManagedObject {
-
-}
+public class Tankengines: NSManagedObject {}

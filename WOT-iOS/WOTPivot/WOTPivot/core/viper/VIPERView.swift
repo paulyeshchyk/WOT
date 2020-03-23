@@ -10,6 +10,4 @@ import Foundation
 
 class VIPERView: VIPERViewProtocol {
     var presenter: VIPERPresenterProtocol?
-
-
 }

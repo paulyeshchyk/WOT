@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public protocol WOTDimensionProtocol: NSObjectProtocol {
-
     var fetchController: WOTDataFetchControllerProtocol? { get set }
 
     var enumerator: WOTNodeEnumeratorProtocol? { get set }

@@ -38,7 +38,6 @@ public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
 
     @objc
     public required init(name nameValue: String) {
-
         super.init(name: nameValue)
     }
 
@@ -50,5 +49,4 @@ public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
         result.imageURL = self.imageURL?.copy(with: zone) as? NSURL
         return result
     }
-
 }

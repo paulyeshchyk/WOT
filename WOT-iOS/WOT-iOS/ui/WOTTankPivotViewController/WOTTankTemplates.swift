@@ -10,9 +10,7 @@ import Foundation
 import WOTPivot
 
 class WOTPivotTemplateVehicleTankID: WOTPivotTemplateProtocol {
-
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
-
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.tank_id)
         result.addChild(pivotNodeClass.init(name: "X", predicate: NSPredicate(format: "%K > 0", WOTApiKeys.tank_id)))
@@ -22,9 +20,7 @@ class WOTPivotTemplateVehicleTankID: WOTPivotTemplateProtocol {
 }
 
 class WOTPivotTemplateVehicleTier: WOTPivotTemplateProtocol {
-
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
-
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.tier)
         result.addChild(pivotNodeClass.init(name: "I",    predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "1")))
@@ -43,7 +39,6 @@ class WOTPivotTemplateVehicleTier: WOTPivotTemplateProtocol {
 }
 
 class WOTPivotTemplateVehiclePremium: WOTPivotTemplateProtocol {
-
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.is_premium)
@@ -54,7 +49,6 @@ class WOTPivotTemplateVehiclePremium: WOTPivotTemplateProtocol {
 }
 
 class WOTPivotTemplateVehicleType: WOTPivotTemplateProtocol {
-
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.type)
@@ -68,7 +62,6 @@ class WOTPivotTemplateVehicleType: WOTPivotTemplateProtocol {
 }
 
 class WOTPivotTemplateVehicleNation: WOTPivotTemplateProtocol {
-
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.nation)
@@ -88,7 +81,6 @@ class WOTPivotTemplateVehicleNation: WOTPivotTemplateProtocol {
 }
 
 class WOTPivotTemplateVehicleDPM: WOTPivotTemplateProtocol {
-
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: "DPM")
@@ -111,9 +103,8 @@ class WOTPivotTemplateVehicleDPM: WOTPivotTemplateProtocol {
 }
 
 public struct WOTPivotTemplates {
-    
-    public init() { }
-    
+    public init() {}
+
     public lazy var tankID: WOTPivotTemplateProtocol = {
         return WOTPivotTemplateVehicleTankID()
     }()

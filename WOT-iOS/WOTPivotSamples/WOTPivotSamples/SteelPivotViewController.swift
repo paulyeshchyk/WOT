@@ -11,7 +11,6 @@ import WOTPivot
 import CoreData
 
 class SteelPivotViewController: UIViewController {
-    
     @IBOutlet var collectionView: UICollectionView?
     lazy var model: WOTPivotDataModel = {
         return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, enumerator: WOTNodeEnumerator.sharedInstance)
@@ -21,7 +20,7 @@ class SteelPivotViewController: UIViewController {
         //return SteelPivotFetchController(nodeFetchRequestCreator: self, nodeCreator: self)
         return SteelPivotFetchController()
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,7 +30,7 @@ class SteelPivotViewController: UIViewController {
 
 class SteelPivotFetchController: WOTDataFetchControllerProtocol {
     var listener: WOTDataFetchControllerListenerProtocol?
-
+    
     func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
         self.listener?.fetchPerformed(by: self)
     }
@@ -100,10 +99,7 @@ extension SteelPivotViewController: WOTNodeCreatorProtocol {
     }
 }
 
-
-extension SteelPivotViewController: UICollectionViewDelegate {
-    
-}
+extension SteelPivotViewController: UICollectionViewDelegate {}
 
 extension SteelPivotViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -113,6 +109,4 @@ extension SteelPivotViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return collectionView.dequeueReusableCell(withReuseIdentifier: "SteelCollectionViewCell", for: indexPath)
     }
-    
-    
 }

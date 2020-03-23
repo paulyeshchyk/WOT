@@ -7,7 +7,6 @@
 //
 
 extension ModulesTree: JSONMapperProtocol {
-
     public enum FieldKeys: String, CodingKey {
         case module_id
         case name
@@ -24,15 +23,14 @@ extension ModulesTree: JSONMapperProtocol {
         case next_tanks
         case prevModules
     }
-    
+
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
 
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
-        
         defer {
             context.tryToSave()
             let requests: [WOTJSONLink]? = self.nestedRequests(context: context)
@@ -44,7 +42,7 @@ extension ModulesTree: JSONMapperProtocol {
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
         self.price_credit = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_credit)] as? Int ?? 0)
         self.price_xp = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_xp)] as? Int ?? 0)
-        
+
         /**
          *  availableTypes
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
@@ -60,11 +58,8 @@ extension ModulesTree: JSONMapperProtocol {
 //        print("jSON[#keyPath(ModulesTree.next_tanks)]: \(jSON[#keyPath(ModulesTree.next_tanks)] ?? "")")
 //        print("jSON[#keyPath(ModulesTree.prevModules)]: \(jSON[#keyPath(ModulesTree.prevModules)] ?? "")")
     }
-    
-    
-    
-    private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink]? {
 
+    private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink]? {
         return nil
 //        let radio_id = self.radio_id?.stringValue
 //        let requestRadio = JSONMappingNestedRequest(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in

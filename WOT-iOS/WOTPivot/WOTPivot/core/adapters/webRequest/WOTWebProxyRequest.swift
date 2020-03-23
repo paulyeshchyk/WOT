@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public class WOTWebProxyRequest: WOTWEBRequest {
-    
     public func dataFrom(proxyData: NSData?) -> NSData? {
         guard let proxyData = proxyData else { return nil }
         var result: Data? = nil
@@ -20,7 +19,7 @@ public class WOTWebProxyRequest: WOTWEBRequest {
         guard let data = dutf8 else {
             return result as NSData?
         }
-
+        
         do {
             if let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [AnyHashable: Any] {
                 if let success = json["Text"] as? String {
@@ -28,9 +27,7 @@ public class WOTWebProxyRequest: WOTWEBRequest {
                 }
             }
             
-        } catch {
-            
-        }
+        } catch {}
         return result as NSData?
     }
     
@@ -79,8 +76,8 @@ public class WOTWebProxyRequest: WOTWEBRequest {
      NSData *clearData = [self dataFromProxyData:self.data];
      [self parseData:clearData];
      self.data = nil;
-
+     
      [self notifyListenersAboutFinish];
-
+     
      */
 }

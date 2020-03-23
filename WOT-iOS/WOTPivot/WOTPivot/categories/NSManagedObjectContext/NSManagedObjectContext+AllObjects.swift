@@ -10,12 +10,9 @@ import Foundation
 import CoreData
 
 extension NSManagedObjectContext {
-
     @objc
     func deleteAllObjects() throws {
-
         if let entitesByName = persistentStoreCoordinator?.managedObjectModel.entitiesByName {
-
             for (_, entityDescription) in entitesByName {
                 try deleteAllObjectsForEntity(entity: entityDescription)
             }
@@ -33,6 +30,5 @@ extension NSManagedObjectContext {
                 delete(object)
             }
         }
-
     }
 }

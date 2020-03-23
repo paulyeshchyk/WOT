@@ -10,9 +10,7 @@ import Foundation
 
 @objc
 public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
-    
     public func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
-        
         return  data?.parseAsJSON({ (json) in
 
             guard let keys = json?.keys, keys.count != 0 else {
@@ -21,7 +19,6 @@ public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
 
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
             context.perform {
-
                 keys.forEach { (key) in
 
                     guard let profile = json?[key] as? [AnyHashable: Any] else { return }

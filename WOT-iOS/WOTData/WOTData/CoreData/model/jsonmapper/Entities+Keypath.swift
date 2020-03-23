@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 extension ModulesTree: KeypathProtocol {
-
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(ModulesTree.name),
@@ -25,7 +24,7 @@ extension ModulesTree: KeypathProtocol {
                 #keyPath(ModulesTree.next_turrets)
         ]
     }
-    
+
     @objc
     public func instanceKeypaths() -> [String] {
         return ModulesTree.keypaths()
@@ -124,7 +123,6 @@ extension ModulesTree: KeypathProtocol {
 }
 
 @objc extension Vehicles: KeypathProtocol {
-
     @objc
     public class func keypathsLight() -> [String] {
         return [#keyPath(Vehicles.name),
@@ -136,7 +134,7 @@ extension ModulesTree: KeypathProtocol {
                 #keyPath(Vehicles.tank_id)
         ]
     }
-    
+
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(Vehicles.name),
@@ -336,9 +334,7 @@ protocol KeyPathListable {
     var allKeyPaths: [String:KeyPath<AnyOldObject, Any?>] { get }
 }
 
-
 extension KeyPathListable {
-
     var keyPathReadableFormat: [String: Any] {
         var description: [String: Any] = [:]
         let mirror = Mirror(reflecting: self)
@@ -356,5 +352,4 @@ extension KeyPathListable {
         }
         return membersTokeyPaths
     }
-
 }

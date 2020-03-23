@@ -7,18 +7,16 @@
 //
 
 extension VehicleprofileAmmoDamage: JSONMapperProtocol {
-    
     public enum FieldKeys: String, CodingKey {
         case min_value
         case avg_value
         case max_value
     }
-    
+
     public typealias Fields = FieldKeys
-    
+
     @objc
     public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
-        
         defer {
             context.tryToSave()
         }
@@ -29,5 +27,5 @@ extension VehicleprofileAmmoDamage: JSONMapperProtocol {
     }
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {  }
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
 }

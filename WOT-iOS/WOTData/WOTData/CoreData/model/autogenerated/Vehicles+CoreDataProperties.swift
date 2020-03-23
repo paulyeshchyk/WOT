@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension Vehicles {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Vehicles> {
         return NSFetchRequest<Vehicles>(entityName: "Vehicles")
     }
@@ -37,12 +35,10 @@ extension Vehicles {
     @NSManaged public var radios: NSSet?
     @NSManaged public var suspensions: NSSet?
     @NSManaged public var turrets: NSSet?
-
 }
 
 // MARK: Generated accessors for engines
 extension Vehicles {
-
     @objc(addEnginesObject:)
     @NSManaged public func addToEngines(_ value: Tankengines)
 
@@ -54,12 +50,10 @@ extension Vehicles {
 
     @objc(removeEngines:)
     @NSManaged public func removeFromEngines(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for guns
 extension Vehicles {
-
     @objc(addGunsObject:)
     @NSManaged public func addToGuns(_ value: Tankguns)
 
@@ -71,12 +65,10 @@ extension Vehicles {
 
     @objc(removeGuns:)
     @NSManaged public func removeFromGuns(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for modules_tree
 extension Vehicles {
-
     @objc(addModules_treeObject:)
     @NSManaged public func addToModules_tree(_ value: ModulesTree)
 
@@ -88,12 +80,10 @@ extension Vehicles {
 
     @objc(removeModules_tree:)
     @NSManaged public func removeFromModules_tree(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for radios
 extension Vehicles {
-
     @objc(addRadiosObject:)
     @NSManaged public func addToRadios(_ value: Tankradios)
 
@@ -105,12 +95,10 @@ extension Vehicles {
 
     @objc(removeRadios:)
     @NSManaged public func removeFromRadios(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for suspensions
 extension Vehicles {
-
     @objc(addSuspensionsObject:)
     @NSManaged public func addToSuspensions(_ value: Tankchassis)
 
@@ -122,12 +110,10 @@ extension Vehicles {
 
     @objc(removeSuspensions:)
     @NSManaged public func removeFromSuspensions(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for turrets
 extension Vehicles {
-
     @objc(addTurretsObject:)
     @NSManaged public func addToTurrets(_ value: Tankturrets)
 
@@ -139,5 +125,4 @@ extension Vehicles {
 
     @objc(removeTurrets:)
     @NSManaged public func removeFromTurrets(_ values: NSSet)
-
 }

@@ -19,7 +19,6 @@ protocol WOTMenuItemProtocol: NSObjectProtocol {
 
 @objc
 class WOTMenuItem: NSObject {
-
     @objc private(set)var controllerClass: AnyClass
     @objc private(set)var controllerTitle: String
     @objc private(set)var icon: UIImage
@@ -31,5 +30,4 @@ class WOTMenuItem: NSObject {
         icon = image
         userDependence = dependence
     }
-
 }

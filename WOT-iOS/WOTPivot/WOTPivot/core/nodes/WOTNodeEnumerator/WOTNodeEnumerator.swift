@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
-
     @objc
     public static let sharedInstance = WOTNodeEnumerator()
 
@@ -33,7 +32,6 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
     }
 
     public func visibleParentsCount(node: WOTNodeProtocol) -> Int {
-
         guard let parent = node.parent, parent.isVisible else {
             return 0
         }
@@ -135,5 +133,4 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         }
         return result
     }
-
 }

@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(UserSession)
-public class UserSession: NSManagedObject {
-
-}
+public class UserSession: NSManagedObject {}

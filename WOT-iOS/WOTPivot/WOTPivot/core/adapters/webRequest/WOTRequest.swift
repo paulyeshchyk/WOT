@@ -10,19 +10,16 @@ import Foundation
 
 @objc
 public protocol WOTStartableProtocol {
-    
     @objc
     func cancel()
     
     @objc
     @discardableResult
     func start(_ args: WOTRequestArgumentsProtocol) -> Bool
-    
 }
 
 @objc
 public protocol WOTRequestProtocol: WOTStartableProtocol {
-    
     @objc
     var description:String { get }
     
@@ -52,23 +49,20 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
     var parentRequest: WOTRequestProtocol? { get set }
 }
 
-
 @objc
 public protocol WOTRequestManagerListenerProtocol {
-    
     @objc
     var hashData: Int { get }
     
     @objc
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, finished: Bool)
-
+    
     @objc
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol)
 }
 
 @objc
 public protocol WOTRequestManagerProtocol {
-    
     @objc
     @discardableResult
     func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool
@@ -81,20 +75,19 @@ public protocol WOTRequestManagerProtocol {
     
     @objc
     func cancelRequests(groupId: String)
-
+    
     @objc
     var requestCoordinator: WOTRequestCoordinatorProtocol { get set }
-
+    
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol { get set }
 }
 
 @objc
 public protocol WOTRequestListenerProtocol {
-    
     @objc
     var hash: Int { get }
-
+    
     @objc
     func request(_ request: WOTRequestProtocol, finishedLoadData data:Data?, error: Error?)
     
@@ -110,18 +103,17 @@ public protocol WOTRequestListenerProtocol {
 
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
-
     @objc
     public var hostConfiguration: WOTHostConfigurationProtocol?
     
     @objc
     public var availableInGroups = [String]()
-
+    
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
-
+    
     private var groups = [String]()
-
+    
     @objc
     open func addGroup(_ group: String ) {
         groups.append(group)
@@ -145,20 +137,19 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
             listeners.remove(at: index)
         }
     }
+    
     #warning(" refactoring ")
     override open var hash: Int {
-        
         return NSStringFromClass(type(of:self)).hash
     }
-
+    
     @objc
-    open func cancel() { }
+    open func cancel() {}
     
     @objc
     @discardableResult
     open func start(_ args: WOTRequestArgumentsProtocol) -> Bool { return false }
-
+    
     @objc
     public var parentRequest: WOTRequestProtocol?
-    
 }

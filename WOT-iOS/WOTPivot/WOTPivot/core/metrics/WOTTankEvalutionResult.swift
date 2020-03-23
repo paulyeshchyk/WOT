@@ -19,13 +19,13 @@ public protocol WOTTankEvaluationResultProtocol {
 public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol{
     @objc
     public var thisValue: CGFloat
-    
+
     @objc
     public var maxValue: CGFloat
-    
+
     @objc
     public var averageValue: CGFloat
-    
+
     @objc
     required
     public init (thisValue: CGFloat, maxValue: CGFloat, averageValue: CGFloat) {
@@ -34,5 +34,4 @@ public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol{
         self.averageValue = averageValue
         super.init()
     }
-
 }

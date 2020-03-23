@@ -30,11 +30,9 @@ public class WOTPivotMetaTypeConverter: NSObject {
 }
 
 public struct WOTPivotMetadataPermutator {
-
-    public init() { }
+    public init() {}
 
     public func permutate(templates: [WOTPivotTemplateProtocol], as type: PivotMetadataType) -> [WOTPivotNodeProtocol] {
-
         var mutableTemplates = [WOTPivotNodeProtocol]()
         templates.forEach { (template) in
             let templateNode = template.asType(type)
@@ -50,7 +48,6 @@ public struct WOTPivotMetadataPermutator {
     }
 
     private func iterateMiddle(templates: [WOTPivotNodeProtocol], endpoints: [WOTPivotNodeProtocol]?) -> [WOTPivotNodeProtocol] {
-
         var resultArray = [WOTPivotNodeProtocol]()
         var mutablePivotNodes = templates
         var nextEndPoints: [WOTPivotNodeProtocol]? = nil
@@ -61,7 +58,6 @@ public struct WOTPivotMetadataPermutator {
         endpoints?.forEach { (endpoint) in
 
             if let result: WOTPivotNodeProtocol = endpoint.copy(with: nil) as? WOTPivotNodeProtocol {
-
                 resultArray.append(result)
 
                 if mutablePivotNodes.count > 0 {
@@ -78,7 +74,6 @@ public struct WOTPivotMetadataPermutator {
     }
 
     private func iterateLast(endpoints: [WOTPivotNodeProtocol]?, predicates: [NSPredicate?]) -> [WOTPivotNodeProtocol] {
-
         var resultArray = [WOTPivotNodeProtocol]()
         endpoints?.forEach({ (endpoint) in
             var subpredicates = predicates.compactMap { $0 }

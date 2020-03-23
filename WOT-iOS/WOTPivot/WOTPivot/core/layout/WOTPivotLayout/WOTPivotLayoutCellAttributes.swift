@@ -16,7 +16,6 @@ protocol WOTPivotLayoutCellAttributesProtocol {
 }
 
 struct WOTPivotLayoutCellAttributes: WOTPivotLayoutCellAttributesProtocol {
-
     var rect: CGRect
     var zIndex: Int
     var indexPath: IndexPath

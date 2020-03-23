@@ -11,7 +11,6 @@ import CoreData
 
 @objc
 extension NSManagedObject {
-
     @objc
     public static func singleObject(predicate: NSPredicate?, inManagedObjectContext context: NSManagedObjectContext, includeSubentities: Bool) -> NSManagedObject? {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: self))
@@ -39,7 +38,6 @@ extension NSManagedObject {
         return foundObject
     }
 
-
     @objc
     public static func findOrCreateObject(forClass: AnyClass, predicate: NSPredicate, context: NSManagedObjectContext) -> NSManagedObject? {
         guard let foundObject = forClass.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
@@ -47,5 +45,4 @@ extension NSManagedObject {
         }
         return foundObject
     }
-
 }

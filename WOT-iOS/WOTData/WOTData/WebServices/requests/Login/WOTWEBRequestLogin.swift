@@ -10,26 +10,23 @@ import Foundation
 
 @objc
 public class WOTWEBRequestLogin: WOTWEBRequest {
-
     override public var method: String {
         return "POST"
     }
-    
+
     override public var path: String {
         return "wot/auth/login/"
     }    
 }
 
 extension WOTWEBRequestLogin: WOTModelServiceProtocol {
-    
     @objc
     public static func modelClass() -> AnyClass? {
         return nil
     }
-    
+
     @objc
     public func instanceModelClass() -> AnyClass? {
         return type(of: self).modelClass()
     }
-    
 }

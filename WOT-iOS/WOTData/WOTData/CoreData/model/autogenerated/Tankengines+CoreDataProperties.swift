@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension Tankengines {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Tankengines> {
         return NSFetchRequest<Tankengines>(entityName: "Tankengines")
     }
@@ -29,12 +27,10 @@ extension Tankengines {
     @NSManaged public var vehicleprofileEngines: NSSet?
     @NSManaged public var vehicles: NSSet?
     @NSManaged public var profileModule: NSSet?
-
 }
 
 // MARK: Generated accessors for modulesTree
 extension Tankengines {
-
     @objc(addModulesTreeObject:)
     @NSManaged public func addToModulesTree(_ value: ModulesTree)
 
@@ -46,12 +42,10 @@ extension Tankengines {
 
     @objc(removeModulesTree:)
     @NSManaged public func removeFromModulesTree(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for vehicleprofileEngines
 extension Tankengines {
-
     @objc(addVehicleprofileEnginesObject:)
     @NSManaged public func addToVehicleprofileEngines(_ value: VehicleprofileEngine)
 
@@ -63,12 +57,10 @@ extension Tankengines {
 
     @objc(removeVehicleprofileEngines:)
     @NSManaged public func removeFromVehicleprofileEngines(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for vehicles
 extension Tankengines {
-
     @objc(addVehiclesObject:)
     @NSManaged public func addToVehicles(_ value: Vehicles)
 
@@ -80,12 +72,10 @@ extension Tankengines {
 
     @objc(removeVehicles:)
     @NSManaged public func removeFromVehicles(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for profileModule
 extension Tankengines {
-
     @objc(addProfileModuleObject:)
     @NSManaged public func addToProfileModule(_ value: VehicleprofileModule)
 
@@ -97,5 +87,4 @@ extension Tankengines {
 
     @objc(removeProfileModule:)
     @NSManaged public func removeFromProfileModule(_ values: NSSet)
-
 }

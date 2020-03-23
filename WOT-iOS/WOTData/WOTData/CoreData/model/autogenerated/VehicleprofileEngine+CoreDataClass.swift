@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(VehicleprofileEngine)
-public class VehicleprofileEngine: NSManagedObject {
-
-}
+public class VehicleprofileEngine: NSManagedObject {}

@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension Tankturrets {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Tankturrets> {
         return NSFetchRequest<Tankturrets>(entityName: "Tankturrets")
     }
@@ -32,12 +30,10 @@ extension Tankturrets {
     @NSManaged public var vehicleprofileTurrets: VehicleprofileTurret?
     @NSManaged public var vehicles: NSSet?
     @NSManaged public var profileModule: NSSet?
-
 }
 
 // MARK: Generated accessors for modulesTree
 extension Tankturrets {
-
     @objc(addModulesTreeObject:)
     @NSManaged public func addToModulesTree(_ value: ModulesTree)
 
@@ -49,12 +45,10 @@ extension Tankturrets {
 
     @objc(removeModulesTree:)
     @NSManaged public func removeFromModulesTree(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for vehicles
 extension Tankturrets {
-
     @objc(addVehiclesObject:)
     @NSManaged public func addToVehicles(_ value: Vehicles)
 
@@ -66,12 +60,10 @@ extension Tankturrets {
 
     @objc(removeVehicles:)
     @NSManaged public func removeFromVehicles(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for profileModule
 extension Tankturrets {
-
     @objc(addProfileModuleObject:)
     @NSManaged public func addToProfileModule(_ value: VehicleprofileModule)
 
@@ -83,5 +75,4 @@ extension Tankturrets {
 
     @objc(removeProfileModule:)
     @NSManaged public func removeFromProfileModule(_ values: NSSet)
-
 }

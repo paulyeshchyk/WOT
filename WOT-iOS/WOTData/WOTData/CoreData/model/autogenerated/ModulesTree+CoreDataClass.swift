@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(ModulesTree)
-public class ModulesTree: NSManagedObject {
-
-}
+public class ModulesTree: NSManagedObject {}

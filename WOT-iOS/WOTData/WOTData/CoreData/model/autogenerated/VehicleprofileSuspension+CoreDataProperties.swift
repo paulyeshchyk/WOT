@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension VehicleprofileSuspension {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<VehicleprofileSuspension> {
         return NSFetchRequest<VehicleprofileSuspension>(entityName: "VehicleprofileSuspension")
     }
@@ -25,5 +23,4 @@ extension VehicleprofileSuspension {
     @NSManaged public var weight: NSDecimalNumber?
     @NSManaged public var tankchassis: Tankchassis?
     @NSManaged public var vehicleprofile: Vehicleprofile?
-
 }

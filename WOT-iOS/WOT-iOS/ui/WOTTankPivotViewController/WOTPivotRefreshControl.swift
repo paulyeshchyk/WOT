@@ -9,7 +9,6 @@
 import Foundation
 
 @objc class WOTPivotRefreshControl: UIRefreshControl {
-
     var contentOffset: CGPoint = CGPoint(x: 0, y: 0) {
         didSet {
             self.setNeedsLayout()
@@ -33,4 +32,3 @@ import Foundation
         }
     }
 }
-

@@ -9,13 +9,12 @@
 import CoreData
 
 open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
-    
     open var collapseToGroups: Bool { return false }
 
     open var useEmptyNode: Bool { return false }
 
-    public init() { }
-    
+    public init() {}
+
     open func createEmptyNode() -> WOTNodeProtocol {
         return WOTPivotDataNode(name: "")
     }
@@ -31,11 +30,11 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
         result.fetchedObjects = fetchedObjects
         return result
     }
-    
+
     open func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
         return WOTPivotDataNode(name: "noname")
     }
-    
+
     open func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol] {
         var result = [WOTNodeProtocol]()
         let cnt = fetchedObjects.count
@@ -59,7 +58,6 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
             }
             return result
         } else {
-            
             let hasMoreThenOne = (cnt > 1)
             if self.collapseToGroups && hasMoreThenOne  {
                 let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)

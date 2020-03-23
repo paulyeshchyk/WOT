@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnectorLayerProtocol {
-
     @objc
     public static func connectors(forModel: WOTTreeDataModelProtocol, byFrame: CGRect, flowLayout: WOTTankConfigurationFlowCellLayoutProtocol) -> UIImage? {
         UIGraphicsBeginImageContext(byFrame.size)

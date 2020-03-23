@@ -10,10 +10,10 @@ import Foundation
 import WOTPivot
 
 @objc
-public protocol WOTAPIProtocol: NSObjectProtocol { }
+public protocol WOTAPIProtocol: NSObjectProtocol {}
 
 @objc
-protocol WOTAPIDefaultsProtocol: NSObjectProtocol { }
+protocol WOTAPIDefaultsProtocol: NSObjectProtocol {}
 
 @objc
 public class WOTApiForeignKeys: NSObject, WOTAPIProtocol {
@@ -37,7 +37,6 @@ public class WGWebRequestGroups: NSObject {
     @objc public static let login: String = "login"
     @objc public static let logout: String = "logout"
 }
-
 
 @objc
 public class WGJsonFields: NSObject {

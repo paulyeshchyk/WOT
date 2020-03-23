@@ -10,7 +10,6 @@ import XCTest
 @testable import WOTPivot
 
 class WOTPivotMetadataPermutatorTest: XCTestCase {
-
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -30,7 +29,6 @@ class WOTPivotMetadataPermutatorTest: XCTestCase {
     }
 
     func test3LevelColumns() {
-
 //        let templates = WOTPivotTemplates()
 //        let levelPrem = templates.vehiclePremium
 //        let levelNation = templates.vehicleNation
@@ -45,5 +43,4 @@ class WOTPivotMetadataPermutatorTest: XCTestCase {
 //        let columnTier = columnPrem.children[0]
 //        XCTAssert(columnTier.children.count == 10)
     }
-
 }

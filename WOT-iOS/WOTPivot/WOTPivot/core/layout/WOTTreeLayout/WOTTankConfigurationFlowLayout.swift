@@ -24,9 +24,7 @@ public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTank
         get {
             return Constants.itemSize
         }
-        set {
-
-        }
+        set {}
     }
 
     override open var collectionViewContentSize: CGSize {
@@ -37,9 +35,7 @@ public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTank
             let width = relativeSize.height * itemSize.height
             return CGSize(width: width, height: depth)
         }
-        set {
-
-        }
+        set {}
     }
 
     override open func initialLayoutAttributesForAppearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -60,7 +56,6 @@ public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTank
 }
 
 extension WOTTankConfigurationFlowLayout {
-
     public func layoutAttributes(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = self.collectionView else {
             return nil
@@ -98,7 +93,6 @@ extension WOTTankConfigurationFlowLayout {
 }
 
 extension WOTTankConfigurationFlowLayout {
-
     fileprivate struct Constants {
         static let itemSize = CGSize(width: 44, height: 88)
     }
@@ -131,6 +125,7 @@ extension WOTTankConfigurationFlowLayout {
         return block(indexPath)
     }
 }
+
 /*
  see: https://goo.gl/zNUcS1
 

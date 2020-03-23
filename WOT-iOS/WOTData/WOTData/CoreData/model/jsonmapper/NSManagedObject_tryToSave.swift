@@ -9,19 +9,15 @@
 import Foundation
 
 public extension NSManagedObject {
-    
     @discardableResult
     func tryToSave() -> Error? {
-        
         return self.managedObjectContext?.tryToSave()
     }
 }
 
 public extension NSManagedObjectContext {
-    
     @discardableResult
     func tryToSave() -> Error? {
-        
         guard self.hasChanges else { return nil }
 
         var result: Error? = nil

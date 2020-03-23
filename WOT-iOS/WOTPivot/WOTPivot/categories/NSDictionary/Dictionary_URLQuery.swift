@@ -8,12 +8,9 @@
 
 import Foundation
 
-
 extension NSDictionary {
-
     @objc
     public func asURLQueryString() -> String {
-
         var result = [String]()
         self.keyEnumerator().map{ $0 as? String }.compactMap{ $0 }.forEach {
             if let escapedValue = self.escapedValue(key: $0) {
@@ -25,13 +22,12 @@ extension NSDictionary {
 
     @objc
     public func escapedValue(key: AnyHashable) -> String? {
-
         guard let obj = self.object(forKey: key) else { return nil }
-        
+
         if  let array = obj as? Array<URLEncodedProtocol> {
             return array.urlEncoded()
         }
-        
+
         guard let urlCodable = obj as? URLEncodedProtocol else {
             return nil
         }
@@ -40,10 +36,7 @@ extension NSDictionary {
 }
 
 extension Dictionary where Key == AnyHashable {
-    
-    
     public func asURLQueryString() -> String {
-
         var result = [String]()
         self.keys.map{ $0 as? String }.compactMap{ $0 }.forEach {
             if let escapedValue = self.escapedValue(key: $0) {
@@ -53,15 +46,13 @@ extension Dictionary where Key == AnyHashable {
         return result.joined(separator: "&")
     }
 
-    
     public func escapedValue(key: AnyHashable) -> String? {
-
         guard let obj = self[key] else { return nil }
-        
+
         if  let array = obj as? Array<URLEncodedProtocol> {
             return array.urlEncoded()
         }
-        
+
         guard let urlCodable = obj as? URLEncodedProtocol else {
             print("obj is not confrming URLEncodedProtocol")
             return nil

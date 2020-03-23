@@ -7,7 +7,6 @@
 //
 
 extension Tankengines: JSONMapperProtocol {
-
     public enum FieldKeys: String, CodingKey {
         case module_id
         case name
@@ -20,13 +19,12 @@ extension Tankengines: JSONMapperProtocol {
     }
 
     public typealias Fields = FieldKeys
-    
+
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
 
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
-        
         defer {
             context.tryToSave()
         }

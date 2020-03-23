@@ -7,7 +7,6 @@
 //
 
 extension VehicleprofileGun: JSONMapperProtocol {
-    
     public enum FieldKeys: String, CodingKey {
         case move_down_arc
         case caliber
@@ -21,15 +20,14 @@ extension VehicleprofileGun: JSONMapperProtocol {
         case tier
         case aim_time
     }
-    
+
     public typealias Fields = FieldKeys
-    
+
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){ }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){}
 
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
-
         defer {
             context.tryToSave()
         }
@@ -47,5 +45,3 @@ extension VehicleprofileGun: JSONMapperProtocol {
         self.aim_time = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileGun.aim_time)] as? Double ?? 0)
     }
 }
-
-

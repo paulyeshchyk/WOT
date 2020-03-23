@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension Tankradios {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Tankradios> {
         return NSFetchRequest<Tankradios>(entityName: "Tankradios")
     }
@@ -28,12 +26,10 @@ extension Tankradios {
     @NSManaged public var vehicleprofileRadio: NSSet?
     @NSManaged public var vehicles: NSSet?
     @NSManaged public var profileModule: NSSet?
-
 }
 
 // MARK: Generated accessors for modulesTree
 extension Tankradios {
-
     @objc(addModulesTreeObject:)
     @NSManaged public func addToModulesTree(_ value: ModulesTree)
 
@@ -45,12 +41,10 @@ extension Tankradios {
 
     @objc(removeModulesTree:)
     @NSManaged public func removeFromModulesTree(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for vehicleprofileRadio
 extension Tankradios {
-
     @objc(addVehicleprofileRadioObject:)
     @NSManaged public func addToVehicleprofileRadio(_ value: VehicleprofileRadio)
 
@@ -62,12 +56,10 @@ extension Tankradios {
 
     @objc(removeVehicleprofileRadio:)
     @NSManaged public func removeFromVehicleprofileRadio(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for vehicles
 extension Tankradios {
-
     @objc(addVehiclesObject:)
     @NSManaged public func addToVehicles(_ value: Vehicles)
 
@@ -79,12 +71,10 @@ extension Tankradios {
 
     @objc(removeVehicles:)
     @NSManaged public func removeFromVehicles(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for profileModule
 extension Tankradios {
-
     @objc(addProfileModuleObject:)
     @NSManaged public func addToProfileModule(_ value: VehicleprofileModule)
 
@@ -96,5 +86,4 @@ extension Tankradios {
 
     @objc(removeProfileModule:)
     @NSManaged public func removeFromProfileModule(_ values: NSSet)
-
 }

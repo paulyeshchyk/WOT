@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension ModulesTree {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ModulesTree> {
         return NSFetchRequest<ModulesTree>(entityName: "ModulesTree")
     }
@@ -32,12 +30,10 @@ extension ModulesTree {
     @NSManaged public var next_tanks: Vehicles?
     @NSManaged public var next_turrets: NSSet?
     @NSManaged public var prevModules: ModulesTree?
-
 }
 
 // MARK: Generated accessors for next_chassis
 extension ModulesTree {
-
     @objc(addNext_chassisObject:)
     @NSManaged public func addToNext_chassis(_ value: Tankchassis)
 
@@ -49,12 +45,10 @@ extension ModulesTree {
 
     @objc(removeNext_chassis:)
     @NSManaged public func removeFromNext_chassis(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for next_engines
 extension ModulesTree {
-
     @objc(addNext_enginesObject:)
     @NSManaged public func addToNext_engines(_ value: Tankengines)
 
@@ -66,12 +60,10 @@ extension ModulesTree {
 
     @objc(removeNext_engines:)
     @NSManaged public func removeFromNext_engines(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for next_guns
 extension ModulesTree {
-
     @objc(addNext_gunsObject:)
     @NSManaged public func addToNext_guns(_ value: Tankguns)
 
@@ -83,12 +75,10 @@ extension ModulesTree {
 
     @objc(removeNext_guns:)
     @NSManaged public func removeFromNext_guns(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for next_modules
 extension ModulesTree {
-
     @objc(addNext_modulesObject:)
     @NSManaged public func addToNext_modules(_ value: ModulesTree)
 
@@ -100,12 +90,10 @@ extension ModulesTree {
 
     @objc(removeNext_modules:)
     @NSManaged public func removeFromNext_modules(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for next_radios
 extension ModulesTree {
-
     @objc(addNext_radiosObject:)
     @NSManaged public func addToNext_radios(_ value: Tankradios)
 
@@ -117,12 +105,10 @@ extension ModulesTree {
 
     @objc(removeNext_radios:)
     @NSManaged public func removeFromNext_radios(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for next_turrets
 extension ModulesTree {
-
     @objc(addNext_turretsObject:)
     @NSManaged public func addToNext_turrets(_ value: Tankturrets)
 
@@ -134,5 +120,4 @@ extension ModulesTree {
 
     @objc(removeNext_turrets:)
     @NSManaged public func removeFromNext_turrets(_ values: NSSet)
-
 }

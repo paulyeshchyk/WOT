@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(VehicleprofileRadio)
-public class VehicleprofileRadio: NSManagedObject {
-
-}
+public class VehicleprofileRadio: NSManagedObject {}

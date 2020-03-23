@@ -9,7 +9,6 @@
 import Foundation
 
 public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
-
     public var listener: WOTPivotDimensionListenerProtocol?
 
     private var rootNodeHolder: WOTPivotNodeHolderProtocol
@@ -17,11 +16,11 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         self.rootNodeHolder = rootNodeHolder
         super.init()
     }
-    
+
     required public init(enumerator: WOTNodeEnumeratorProtocol) {
         fatalError("init(enumerator:) has not been implemented")
     }
-    
+
     private var registeredCalculators = [AnyHashable: AnyClass]()
     public func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass) {
         let hash = hashValue(type: forNodeClass)
@@ -56,7 +55,6 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
 
     #warning (" !!! TO BE refactored: too slow !!! ")
     override public func reload(forIndex externalIndex: Int, nodeCreator: WOTNodeCreatorProtocol?) {
-
         self.index = externalIndex
 
         let colNodeEndpoints = enumerator?.endpoints(node: self.rootNodeHolder.rootColsNode)
@@ -90,7 +88,6 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     }
 
     private func updateDimensions(dataNodes: [WOTNodeProtocol], colNode: WOTNodeProtocol, rowNode: WOTNodeProtocol, filterNode: WOTNodeProtocol) {
-
         var result = self.index
 
         self.setMaxWidth(dataNodes.count, forNode: colNode, byKey: String(format: "%d", rowNode.hash))

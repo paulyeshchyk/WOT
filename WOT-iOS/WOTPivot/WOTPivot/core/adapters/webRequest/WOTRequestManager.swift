@@ -10,29 +10,26 @@ import Foundation
 
 @objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-    
     public var listeners = [WOTRequestManagerListenerProtocol]()
 
     @objc
     required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
-        
         coordinator = requestCoordinator
         hostConfig = hostConfiguration
 
         super.init()
     }
-    
+
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
-    
+
     @objc
     private var coordinator: WOTRequestCoordinatorProtocol
-    
+
     @objc
     private var hostConfig: WOTHostConfigurationProtocol
 
     @objc
     private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool {
-
         var grouppedRequests: [WOTRequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
             grouppedRequests.append(contentsOf: available)
@@ -49,12 +46,12 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         self.grouppedRequests[groupId] = grouppedRequests
         return result
     }
-    
+
     @objc
     public func addListener(_ listener: WOTRequestManagerListenerProtocol, forRequest: WOTRequestProtocol) {
         listeners.append(listener)
     }
-    
+
     @objc
     public func removeListener(_ listener: WOTRequestManagerListenerProtocol) {
         listeners.removeAll { $0.hashData == listener.hashData }
@@ -63,9 +60,8 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     @objc
     @discardableResult
     public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool {
-
         if (!addRequest(request, forGroupId: forGroupId)) { return false }
-        
+
         request.hostConfiguration = hostConfig
         let result = request.start(arguments)
         if (result) {
@@ -76,10 +72,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     @objc
     public func cancelRequests(groupId: String) {
-        
         grouppedRequests[groupId]?.forEach { $0.cancel() }
     }
-    
+
     fileprivate func queue(parentRequest: WOTRequestProtocol?, jsonLinks: ([WOTJSONLink?])?) {
         jsonLinks?.compactMap { $0 }.forEach { (linkedObjectRequest) in
             let requestIDs = requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz)
@@ -88,10 +83,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             })
         }
     }
-    
+
     @discardableResult
     private func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink) -> Bool {
-
         guard let clazz = jsonLink.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
         guard let request = requestCoordinator.createRequest(forRequestId: requestId) else { return false }
@@ -115,7 +109,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 }
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
-    
     public var requestCoordinator: WOTRequestCoordinatorProtocol {
         get { return coordinator }
         set { coordinator = newValue }
@@ -152,15 +145,15 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             })
         })
     }
-    
+
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
         removeRequest(request)
     }
-    
+
     public func requestHasStarted(_ request: WOTRequestProtocol) {
         print("\nstarted request:\n\(request.description)")
     }
-    
+
     public func removeRequest(_ request: WOTRequestProtocol) {
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {

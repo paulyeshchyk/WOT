@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public class WOTTreeModuleNode: WOTNode, WOTTreeModuleNodeProtocol {
-
     private(set)public var modulesTree: WOTTreeModulesTreeProtocol
     public var imageURL: URL? {
         return self.modulesTree.moduleLocalImageURL()

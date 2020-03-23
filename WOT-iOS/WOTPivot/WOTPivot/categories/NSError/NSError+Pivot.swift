@@ -9,7 +9,6 @@
 import Foundation
 
 public extension NSError {
-
     struct ErrorCodes {
         static let WOT_ERROR_CODE_ENDPOINT_ERROR: Int = 1
     }

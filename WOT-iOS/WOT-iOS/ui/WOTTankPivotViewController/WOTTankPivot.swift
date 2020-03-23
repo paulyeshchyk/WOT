@@ -9,7 +9,6 @@
 import WOTPivot
 
 class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
-
     override public var collapseToGroups: Bool { return false }
 
     override public var useEmptyNode: Bool { return false }
@@ -27,7 +26,6 @@ class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
 }
 
 class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
-
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
         let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicles")
         result.sortDescriptors = sortDescriptors()
@@ -36,14 +34,13 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
     }
 
     private func sortDescriptors() -> [NSSortDescriptor] {
-
         let tankIdDescriptor = NSSortDescriptor(key: "tank_id", ascending: true)
         var result = WOTTankListSettingsDatasource.sharedInstance().sortBy
         result.append(tankIdDescriptor)
         return result
     }
 
-#warning ("TO BE REFACTORED")
+    #warning ("TO BE REFACTORED")
     private func fetchCustomPredicate() -> NSPredicate {
         let fakePredicate = NSPredicate(format: "NOT(tank_id  = nil)")
         return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])
@@ -51,11 +48,9 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
 }
 
 class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
-
     private let permutator = WOTPivotMetadataPermutator()
 
     func metadataItems() -> [WOTNodeProtocol] {
-
         var result = [WOTNodeProtocol]()
 
         var templates = WOTPivotTemplates()
@@ -63,7 +58,6 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
         let levelNati = templates.vehicleNation
         let levelType = templates.vehicleType
         let levelTier = templates.vehicleTier
-
 
         let cols = permutator.permutate(templates: [levelType, levelNati], as: .column)
         let rows = permutator.permutate(templates: [levelTier], as: .row)
@@ -81,13 +75,11 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class WOTTankPivotModel: WOTPivotDataModel {
-
     convenience init(modelListener: WOTDataModelListener) {
-        
         let fetchRequest = WOTTankPivotFetchRequest()
         let dataProvider = WOTTankCoreDataProvider.sharedInstance
         let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: dataProvider)
-        
+
         let metadatasource = WOTTankPivotMetadatasource()
         let nodeCreator = WOTTankPivotNodeCreator()
 
@@ -95,26 +87,25 @@ class WOTTankPivotModel: WOTPivotDataModel {
                   modelListener: modelListener,
                   nodeCreator: nodeCreator,
                   metadatasource: metadatasource)
-        
+
         self.enumerator = WOTNodeEnumerator.sharedInstance
     }
-    
-    deinit {
-    }
-    
+
+    deinit {}
+
     override func loadModel() {
         super.loadModel()
-        
+
         performWebRequest()
     }
-    
+
     private func performWebRequest() {
         let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
         let requestManager = appManager?.requestManager
-        
+
         let arguments = WOTRequestArguments()
         arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
-        
+
         if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
             requestManager?.addListener(self, forRequest: request)
             requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list)
@@ -126,7 +117,6 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
     var hashData: Int {
         return "WOTTankPivotModel".hashValue
     }
-    
 
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, finished: Bool) {
         defer {
@@ -137,8 +127,5 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         super.loadModel()
     }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol) {
-        
-    }
-
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol) {}
 }

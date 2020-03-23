@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public class WOTWEBRequestTankEngines: WOTWEBRequest {
-    
     override public var method: String { return "POST" }
 
     override public var path: String {
@@ -19,12 +18,11 @@ public class WOTWEBRequestTankEngines: WOTWEBRequest {
 }
 
 extension WOTWEBRequestTankEngines: WOTModelServiceProtocol {
-    
     @objc
     public static func modelClass() -> AnyClass? {
         return nil
     }
-    
+
     @objc
     public func instanceModelClass() -> AnyClass? {
         return type(of: self).modelClass()

@@ -10,30 +10,22 @@ import Foundation
 
 @objc
 class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
+    @objc
+    func login() {}
     
     @objc
-    func login() {
-        
-    }
-    
-    @objc
-    func logout() {
-        
-    }
-
+    func logout() {}
 }
 
 class WOTWebSessionClearResponseAdapter: NSObject, WOTWebResponseAdapter {
-    
     func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return nil
     }
 }
 
 class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapter {
-    
     func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
-/*
+        /*
          ^(NSData *binary, NSError *error) {
          
          [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
@@ -46,15 +38,14 @@ class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapter {
          }];
          
          }
- */
+         */
         return nil
     }
 }
 
 class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapter {
-    
     func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
-/*
+        /*
          ^(NSData *binary, NSError *error) {
          
          if (error){
@@ -91,8 +82,6 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapter {
          
          }
          
-         
-         
          WOTLoginCallback loginCallback = ^(WOTLogin *wotLogin){
          
          id<WOTPivotAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
@@ -110,18 +99,15 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapter {
          [rootViewController dismissViewControllerAnimated:YES completion:NULL];
          };
          
-         
-
- */
-
+         */
+        
         return nil
     }
 }
 
 class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapter {
-    
     func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
-/*
+        /*
          ^(NSData *binary, NSError *error) {
          
          if (error){
@@ -135,15 +121,14 @@ class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapter {
          clearSessionRequest.hostConfiguration = manager.hostConfiguration;
          [clearSessionRequest start: [[WOTRequestArguments alloc] init]];
          
-         
          id<WOTRequestProtocol> loginRequest = [coordinator createRequestForRequestId:WOTRequestIdLogin];
          loginRequest.hostConfiguration = manager.hostConfiguration;
          [loginRequest start: [[WOTRequestArguments alloc] init] ];
          }
          
          }
- */
-
+         */
+        
         return nil
     }
 }

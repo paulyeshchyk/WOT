@@ -10,10 +10,9 @@ import Foundation
 
 @objc
 public protocol WOTWebSessionManagerProtocol {
-
     @objc
     func login()
-    
+
     @objc
     func logout()
 }

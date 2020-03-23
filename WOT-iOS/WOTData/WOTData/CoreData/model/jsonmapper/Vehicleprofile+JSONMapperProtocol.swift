@@ -7,7 +7,6 @@
 //
 
 extension Vehicleprofile: JSONMapperProtocol {
-    
     public enum FieldKeys: String, CodingKey {
         case max_ammo
         case weight
@@ -22,17 +21,16 @@ extension Vehicleprofile: JSONMapperProtocol {
     }
     
     public typealias Fields = FieldKeys
-
+    
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){ }
-
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){}
+    
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
-
         defer {
             context.tryToSave()
         }
-
+        
         self.tank_id = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.tank_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.is_default)] as? Int ?? 0)
         self.max_ammo = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.max_ammo)] as? Int ?? 0)
@@ -43,7 +41,7 @@ extension Vehicleprofile: JSONMapperProtocol {
         self.hull_weight = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.hull_weight)] as? Int ?? 0)
         self.speed_backward = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.speed_backward)] as? Int ?? 0)
         self.speed_forward = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.speed_forward)] as? Int ?? 0)
-
+        
         if let ammoJSON = jSON[#keyPath(Vehicleprofile.ammo)]  as? [Any] {
             if let ammoObject = VehicleprofileAmmoList.insertNewObject(context) as? VehicleprofileAmmoList {
                 ammoObject.mapping(fromArray: ammoJSON, into: context, jsonLinksCallback: jsonLinksCallback)
@@ -101,4 +99,3 @@ extension Vehicleprofile: JSONMapperProtocol {
         }
     }
 }
-

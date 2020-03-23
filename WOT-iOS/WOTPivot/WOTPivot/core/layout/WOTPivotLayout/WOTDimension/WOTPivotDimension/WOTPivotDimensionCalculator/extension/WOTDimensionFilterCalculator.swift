@@ -9,7 +9,6 @@
 import Foundation
 
 public class WOTDimensionFilterCalculator: WOTDimensionCalculator {
-
     override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         return 0
     }

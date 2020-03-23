@@ -12,7 +12,6 @@ typealias TNodeSize = [String: Int]
 typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
 public class WOTDimension: NSObject, WOTDimensionProtocol {
-
     public var fetchController: WOTDataFetchControllerProtocol?
     public var enumerator: WOTNodeEnumeratorProtocol?
 
@@ -100,5 +99,4 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
     public func reload(forIndex externalIndex: Int, nodeCreator: WOTNodeCreatorProtocol?) {
         preconditionFailure("This method must be overridden")
     }
-
 }

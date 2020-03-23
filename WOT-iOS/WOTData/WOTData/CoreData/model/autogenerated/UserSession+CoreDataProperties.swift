@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension UserSession {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<UserSession> {
         return NSFetchRequest<UserSession>(entityName: "UserSession")
     }
@@ -23,5 +21,4 @@ extension UserSession {
     @NSManaged public var expires_at: NSNumber?
     @NSManaged public var isCurrent: NSNumber?
     @NSManaged public var nickname: String?
-
 }

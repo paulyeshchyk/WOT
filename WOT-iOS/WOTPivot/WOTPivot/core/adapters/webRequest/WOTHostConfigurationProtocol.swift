@@ -10,25 +10,21 @@ import Foundation
 
 @objc
 public protocol WOTHostConfigurationProtocol {
-
     @objc
     var applicationID: String { get }
-    
+
     @objc
     var host: String { get }
-    
+
     @objc
     var scheme: String { get }
-    
+
     @objc
     func urlQuery(with: WOTRequestArgumentsProtocol) -> String
 }
 
-
 @objc
 public protocol WOTHostConfigurationOwner {
-
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
 }
-

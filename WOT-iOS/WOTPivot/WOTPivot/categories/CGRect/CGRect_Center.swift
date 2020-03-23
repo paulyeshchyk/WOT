@@ -20,6 +20,4 @@ extension CGRect {
     public func centerHorizontalTopVertical() -> CGPoint {
         return CGPoint(x: self.midX, y: self.origin.y)
     }
-
-
 }

@@ -8,14 +8,11 @@
 
 import Foundation
 
-
 public protocol URLEncodedProtocol {
-
     func urlEncoded() -> String?
 }
 
 extension Int: URLEncodedProtocol {
-    
     public func urlEncoded() -> String? {
         return "\(self)".urlEncoded()
     }
@@ -23,13 +20,11 @@ extension Int: URLEncodedProtocol {
 
 @objc
 extension NSString: URLEncodedProtocol {
-    
     @objc
     public func urlEncoded() -> String? {
         return (self as? String)?.urlEncoded()
     }
 }
-
 
 extension String: URLEncodedProtocol {
     public func urlEncoded() -> String? {
@@ -39,7 +34,6 @@ extension String: URLEncodedProtocol {
 }
 
 extension Array: URLEncodedProtocol {
-    
     public func urlEncoded() -> String? {
         var resultArray = [String]()
         self.forEach { element in
@@ -47,7 +41,7 @@ extension Array: URLEncodedProtocol {
                 resultArray.append(encoded)
             }
         }
-        
+
         return resultArray.joined(separator: ",")
     }
 }

@@ -12,9 +12,7 @@ import WOTData
 
 @objc
 class WOTTankTreeFetchController: WOTDataFetchController {
-
     override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {
-
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
         var result = [WOTNodeProtocol]()
@@ -43,7 +41,6 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func transform(tank: AnyObject, nodeCreator: WOTNodeCreatorProtocol?) -> [WOTNodeProtocol] {
-
         guard let tankId = self.tankId(tank) else {
             return []
         }
@@ -148,7 +145,6 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     }
 
     public func nestedModules() -> [WOTTreeModulesTreeProtocol]? {
-
         guard let modules = self.prevModules else {
             return nil
         }
@@ -157,4 +153,3 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
         return result
     }
 }
-

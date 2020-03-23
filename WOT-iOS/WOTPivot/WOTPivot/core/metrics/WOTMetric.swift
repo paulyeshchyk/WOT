@@ -21,11 +21,10 @@ public protocol WOTMetricProtocol: NSObjectProtocol {
 }
 
 @objc public class WOTMetric: NSObject, WOTMetricProtocol {
-
     public var metricName: String?
     public var evaluator: WOTTankMetricEvaluatorProtocol?
     public var grouppingName: String?
-    
+
     @objc
     public required init(metricName: String?, grouppingName: String?, evaluator: WOTTankMetricEvaluatorProtocol?) {
         self.metricName = metricName

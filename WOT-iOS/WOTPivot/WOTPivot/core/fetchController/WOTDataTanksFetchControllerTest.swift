@@ -10,14 +10,12 @@ import XCTest
 @testable import WOTPivot
 
 class WOTDataTanksFetchControllerTest: XCTestCase {
-
     override func setUp() {
         super.setUp()
     }
 }
 
 class WOTRequestCountListener {
-
     var asyncExpectation: XCTestExpectation?
 
     static let notificationName = NSNotification.Name(rawValue: WOTRequestManager.pendingRequestNotificationName())
@@ -25,6 +23,7 @@ class WOTRequestCountListener {
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(pendingRequestCountChaged(notification:)), name: WOTRequestCountListener.notificationName, object: nil)
     }
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: WOTRequestCountListener.notificationName, object: nil)
     }
@@ -38,7 +37,6 @@ class WOTRequestCountListener {
 
     @objc
     func pendingRequestCountChaged(notification: Notification) {
-
         guard let executor = notification.object as? WOTRequestManagerProtocol else {
             return
         }
@@ -51,7 +49,6 @@ class WOTRequestCountListener {
         }
 
         guard !self.triggered else {
-
             guard let expectation = self.asyncExpectation else {
                 XCTFail("missing expectation")
                 return
@@ -66,7 +63,6 @@ class WOTRequestCountListener {
 }
 
 class TESTWOTDataTanksFetchControllerListener: WOTDataFetchControllerListenerProtocol {
-
     var asyncExpectation: XCTestExpectation?
     var result: [WOTNodeProtocol]?
     var error: Error?
@@ -98,5 +94,4 @@ class TESTWOTDataTanksFetchControllerListener: WOTDataFetchControllerListenerPro
         self.error = withError
         expectation.fulfill()
     }
-
 }

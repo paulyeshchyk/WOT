@@ -22,21 +22,19 @@ public protocol WOTWebServiceProtocol {
 
 @objc
 public protocol WOTModelServiceProtocol: class {
-
     @objc
     static func modelClass() -> AnyClass?
-    
+
     @objc
     func instanceModelClass() -> AnyClass?
 }
 
 @objc
 open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
-
     override open var description: String {
         return pumper?.description ?? "-"
     }
-    
+
     public var userInfo: [AnyHashable: Any]?
     public var httpBodyData: Data?
 
@@ -52,7 +50,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
             $0.request(self, finishedLoadData: data, error: error)
         }
     }
-    
+
     open override func cancel() {
         self.listeners.compactMap { $0 }.forEach {
             $0.requestHasCanceled(self)
@@ -60,10 +58,9 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     }
 
     var pumper: WOTWebDataPumperProtocol? = nil
-    
+
     @discardableResult
     open override func start(_ args: WOTRequestArgumentsProtocol) -> Bool {
-
         self.pumper = WOTWebDataPumper(hostConfiguration: hostConfiguration, args: args, httpBodyData: httpBodyData, service: self, completion: requestHasFinishedLoad(data:error:))
         self.pumper?.start()
 
@@ -75,11 +72,9 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
 }
 
 class WOTWebRequestBuilder {
-
     private func buildURL(path: String, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URL {
-
         let urlQuery: String? = hostConfiguration?.urlQuery(with: args)
-        
+
         var components = URLComponents()
         components.scheme = hostConfiguration?.scheme
         components.host = hostConfiguration?.host
@@ -91,7 +86,6 @@ class WOTWebRequestBuilder {
             fatalError("url not created")
         }
         return result
-
     }
 
     public func build(service: WOTWebServiceProtocol, hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URLRequest {
@@ -107,7 +101,6 @@ class WOTWebRequestBuilder {
 
 @objc
 public protocol WOTWebDataPumperProtocol {
-
     var completion: ((Data?, Error?) -> Void) { get }
     var description: String { get }
 
@@ -116,12 +109,11 @@ public protocol WOTWebDataPumperProtocol {
 }
 
 class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataDelegate {
-    
     let request: URLRequest
     public private(set) var completion: ((Data?, Error?) -> Void)
     private var data: Data?
     private var connection: NSURLConnection?
-    
+
     deinit {
         print("deinit WOTWebDataPumper")
     }
@@ -129,54 +121,47 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
     override var hash: Int {
         return request.url?.absoluteString.hashValue ?? 0
     }
-    
+
     override var description: String {
         return request.url?.absoluteString ?? "-"
     }
-    
+
     convenience init(hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: (@escaping (Data?, Error?) -> Void) ) {
         let requestBuilder = WOTWebRequestBuilder()
         let urlRequest = requestBuilder.build(service: service, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
         self.init(request: urlRequest, completion: completion)
     }
-    
-    required init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void) ) {
 
+    required init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void) ) {
         self.request = request
         self.completion = completion
-        
+
         super.init()
-        
+
         connection = NSURLConnection(request: request, delegate: self, startImmediately: false)
     }
-    
+
     public func start() {
         connection?.start()
     }
-    
+
     func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
-        
         self.data = Data()
     }
-    
+
     func connection(_ connection: NSURLConnection, didReceive data: Data) {
-        
         self.data?.append(data)
     }
 
     func connectionDidFinishLoading(_ connection: NSURLConnection) {
-
         self.completion(self.data, nil)
     }
 
     func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
-
         DispatchQueue.main.async { [weak self] in
             self?.completion(nil, error)
         }
     }
 }
 
-extension WOTWEBRequest: WOTWebRequestProtocol {
-    
-}
+extension WOTWEBRequest: WOTWebRequestProtocol {}

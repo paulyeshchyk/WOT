@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(Tankchassis)
-public class Tankchassis: NSManagedObject {
-
-}
+public class Tankchassis: NSManagedObject {}

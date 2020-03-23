@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension ListSetting {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ListSetting> {
         return NSFetchRequest<ListSetting>(entityName: "ListSetting")
     }
@@ -22,5 +20,4 @@ extension ListSetting {
     @NSManaged public var orderBy: NSNumber?
     @NSManaged public var type: String?
     @NSManaged public var values: String?
-
 }

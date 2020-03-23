@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public class WOTSaveSessionRequest : WOTWEBRequest {
-
     @objc
     public class func modelClassName() -> String {
         return ""

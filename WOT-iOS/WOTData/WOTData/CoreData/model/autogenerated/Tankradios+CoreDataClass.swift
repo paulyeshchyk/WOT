@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(Tankradios)
-public class Tankradios: NSManagedObject {
-
-}
+public class Tankradios: NSManagedObject {}

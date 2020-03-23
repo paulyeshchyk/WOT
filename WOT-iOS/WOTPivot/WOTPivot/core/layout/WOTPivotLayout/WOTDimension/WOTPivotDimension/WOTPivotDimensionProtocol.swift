@@ -38,7 +38,6 @@ public protocol WOTPivotDimensionListenerProtocol {
 }
 
 public protocol WOTPivotDimensionProtocol: WOTDimensionProtocol {
-
     init(rootNodeHolder: WOTPivotNodeHolderProtocol)
 
     func registerCalculatorClass(_ calculatorClass: WOTDimensionCalculator.Type, forNodeClass: AnyClass)
@@ -46,7 +45,7 @@ public protocol WOTPivotDimensionProtocol: WOTDimensionProtocol {
     func calculatorClass(forNodeClass: AnyClass) -> WOTDimensionCalculator.Type?
 
     var listener: WOTPivotDimensionListenerProtocol? { get set }
-    
+
     var enumerator: WOTNodeEnumeratorProtocol? { get set }
 
     /**

@@ -7,7 +7,6 @@
 //
 
 extension VehicleprofileEngine: JSONMapperProtocol {
-    
     public enum FieldKeys: String, CodingKey {
         case name
         case power
@@ -16,18 +15,18 @@ extension VehicleprofileEngine: JSONMapperProtocol {
         case fire_chance
         case tier
     }
+
     public typealias Fields = FieldKeys
-    
+
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) { }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
 
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
-
         defer {
             context.tryToSave()
         }
-        
+
         self.name = jSON[#keyPath(VehicleprofileEngine.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.tier)]  as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileEngine.tag)] as? String

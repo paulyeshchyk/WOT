@@ -9,7 +9,6 @@
 import Foundation
 
 public class WOTPivotColNode: WOTPivotNode {
-
     override public var stickyType: PivotStickyType {
         return PivotStickyType.vertical
     }
@@ -17,5 +16,4 @@ public class WOTPivotColNode: WOTPivotNode {
     override public var cellType: WOTPivotCellType {
         return .column
     }
-
 }

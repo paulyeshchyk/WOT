@@ -14,9 +14,7 @@ struct WOTSplitBehaviour: OptionSet {
 }
 
 @objc
-protocol WOTMasterControllerProtocol: NSObjectProtocol {
-
-}
+protocol WOTMasterControllerProtocol: NSObjectProtocol {}
 
 @objc
 protocol WOTDetailControllerProtocol: NSObjectProtocol {
@@ -40,7 +38,6 @@ extension WOTMasterDetailBehaviour {
 
 @objc
 class WOTSplitViewController: UISplitViewController, WOTMasterControllerProtocol {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.preferredDisplayMode = .allVisible
@@ -49,6 +46,5 @@ class WOTSplitViewController: UISplitViewController, WOTMasterControllerProtocol
         let right = WOTTankModuleTreeViewController(nibName: "WOTTankModuleTreeViewController", bundle: nil)
         let rightNC = UINavigationController(rootViewController: right)
         self.viewControllers = [leftNC, rightNC]
-
     }
 }

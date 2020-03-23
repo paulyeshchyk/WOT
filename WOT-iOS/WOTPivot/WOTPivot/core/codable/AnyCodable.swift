@@ -9,7 +9,6 @@ public struct AnyCodable {
 }
 
 extension AnyCodable: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
 
@@ -153,7 +152,6 @@ extension AnyCodable: CustomDebugStringConvertible {
 }
 
 extension AnyCodable: ExpressibleByNilLiteral, ExpressibleByBooleanLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral, ExpressibleByStringLiteral, ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral {
-
     public init(nilLiteral: ()) {
         self.init(nil as Any?)
     }

@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(Tankturrets)
-public class Tankturrets: NSManagedObject {
-
-}
+public class Tankturrets: NSManagedObject {}

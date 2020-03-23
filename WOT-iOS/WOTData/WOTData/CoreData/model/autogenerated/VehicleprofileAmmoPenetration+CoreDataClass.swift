@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(VehicleprofileAmmoPenetration)
-public class VehicleprofileAmmoPenetration: NSManagedObject {
-
-}
+public class VehicleprofileAmmoPenetration: NSManagedObject {}

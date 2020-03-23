@@ -7,7 +7,6 @@
 //
 
 extension VehicleprofileSuspension: JSONMapperProtocol {
-    
     public enum FieldKeys: String, CodingKey {
         case name
         case weight
@@ -15,15 +14,14 @@ extension VehicleprofileSuspension: JSONMapperProtocol {
         case tag
         case tier
     }
-    
+
     public typealias Fields = FieldKeys
-    
+
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){ }
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){}
 
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?){
-
         defer {
             context.tryToSave()
         }
@@ -33,6 +31,5 @@ extension VehicleprofileSuspension: JSONMapperProtocol {
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.tier)] as? Int ?? 0)
         self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.weight)] as? Int ?? 0)
         self.load_limit = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.load_limit)] as? Int ?? 0)
-
     }
 }

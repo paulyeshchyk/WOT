@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension VehicleprofileRadio {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<VehicleprofileRadio> {
         return NSFetchRequest<VehicleprofileRadio>(entityName: "VehicleprofileRadio")
     }
@@ -24,5 +22,4 @@ extension VehicleprofileRadio {
     @NSManaged public var weight: NSDecimalNumber?
     @NSManaged public var tankradio: Tankradios?
     @NSManaged public var vehicleprofile: Vehicleprofile?
-
 }

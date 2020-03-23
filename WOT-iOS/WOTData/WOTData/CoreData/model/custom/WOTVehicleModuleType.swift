@@ -16,7 +16,7 @@ public enum WOTVehicleModuleType: Int {
     case radio
     case turret
     case gun
-    
+
     var stringValue: String {
         switch self {
         case .unknown: return "unknown"
@@ -27,7 +27,7 @@ public enum WOTVehicleModuleType: Int {
         case .radio: return "vehicleRadio"
         }
     }
-    
+
     static func fromString(stringValue: String) -> WOTVehicleModuleType {
         switch stringValue.lowercased() {
         case "unknown":return .unknown
@@ -36,7 +36,7 @@ public enum WOTVehicleModuleType: Int {
         case "vehicleRadio":return .radio
         case "vehicleTurret":return .turret
         case "vehicleGun":return .gun
-        #warning("WTF")
+            #warning("WTF")
         default: return .unknown
         }
     }
@@ -44,7 +44,6 @@ public enum WOTVehicleModuleType: Int {
 
 @objc
 public class WOTVehicleModuleTypeeOBJcConverter: NSObject {
-
     @objc
     public static func fromString(_ string: String) -> WOTVehicleModuleType {
         return WOTVehicleModuleType.fromString(stringValue: string)

@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 open class WOTDataModel: NSObject, WOTDataModelProtocol {
-
     lazy public var nodeIndex: WOTPivotNodeIndexProtocol = { return WOTPivotNodeIndex() }()
     lazy public var rootNodes: [WOTNodeProtocol] = { return [] }()
     private var comparator: WOTNodeComparator = { (left, right) in return true }
@@ -72,5 +71,4 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
     public func indexPath(forNode: WOTNodeProtocol?) -> IndexPath? {
         return nil
     }
-
 }

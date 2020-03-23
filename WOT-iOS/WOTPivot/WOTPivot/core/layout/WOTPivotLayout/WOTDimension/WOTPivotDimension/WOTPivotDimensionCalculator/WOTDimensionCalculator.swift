@@ -19,6 +19,7 @@ public class WOTDimensionCalculator: WOTDimensionCalculatorProtocol {
                       width: self.width(forNode: node, dimension: dimension),
                       height: self.height(forNode: node, dimension: dimension))
     }
+
     class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int { return 0 }
     class func y(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int { return 0 }
     class func width(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int { return 0 }

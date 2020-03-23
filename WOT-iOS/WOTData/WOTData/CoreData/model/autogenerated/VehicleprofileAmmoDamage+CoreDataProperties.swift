@@ -10,9 +10,7 @@
 import Foundation
 import CoreData
 
-
 extension VehicleprofileAmmoDamage {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<VehicleprofileAmmoDamage> {
         return NSFetchRequest<VehicleprofileAmmoDamage>(entityName: "VehicleprofileAmmoDamage")
     }
@@ -21,5 +19,4 @@ extension VehicleprofileAmmoDamage {
     @NSManaged public var max_value: NSDecimalNumber?
     @NSManaged public var min_value: NSDecimalNumber?
     @NSManaged public var vehicleprofileAmmo: VehicleprofileAmmo?
-
 }

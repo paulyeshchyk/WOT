@@ -10,7 +10,6 @@ import XCTest
 @testable import WOTPivot
 
 class WOTDataModelTest: XCTestCase {
-
 //    lazy var model: WOTDataModelProtocol = {
 //        let enumerator = WOTNodeEnumerator()
 //        return WOTDataModel(enumerator: enumerator)

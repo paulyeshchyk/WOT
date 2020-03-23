@@ -10,7 +10,6 @@ import Foundation
 import ObjectiveC
 
 open class WOTNode: NSObject, WOTNodeProtocol {
-
     @objc
     public required init(name nameValue: String) {
         super.init()
@@ -108,7 +107,6 @@ open class WOTNode: NSObject, WOTNodeProtocol {
         }
         self.parent = nil
         parent.removeChild(self) { (_ ) in
-
         }
     }
 

@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(ListSetting)
-public class ListSetting: NSManagedObject {
-
-}
+public class ListSetting: NSManagedObject {}
