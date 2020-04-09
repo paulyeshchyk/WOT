@@ -65,7 +65,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         request.hostConfiguration = hostConfig
         let result = request.start(arguments)
         if result {
-            listeners.forEach { $0.requestManager(self, didStartRequest: request)}
+            listeners.forEach { $0.requestManager(self, didStartRequest: request) }
         }
         return result
     }

@@ -30,12 +30,12 @@ public enum WOTVehicleModuleType: Int {
 
     static func fromString(stringValue: String) -> WOTVehicleModuleType {
         switch stringValue.lowercased() {
-        case "unknown":return .unknown
-        case "vehicleChassis":return .chassis
-        case "vehicleEngine":return .engine
-        case "vehicleRadio":return .radio
-        case "vehicleTurret":return .turret
-        case "vehicleGun":return .gun
+        case "unknown": return .unknown
+        case "vehicleChassis": return .chassis
+        case "vehicleEngine": return .engine
+        case "vehicleRadio": return .radio
+        case "vehicleTurret": return .turret
+        case "vehicleGun": return .gun
             #warning("WTF")
         default: return .unknown
         }

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-//@testable import WOTPivot
+// @testable import WOTPivot
 
 class WOTNodePivotFactoryTest: XCTestCase {
 //    override func setUp() {

@@ -40,7 +40,7 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
         return result
     }
 
-    #warning ("TO BE REFACTORED")
+    #warning("TO BE REFACTORED")
     private func fetchCustomPredicate() -> NSPredicate {
         let fakePredicate = NSPredicate(format: "NOT(tank_id  = nil)")
         return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])
@@ -69,7 +69,7 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
         return result
     }
 
-    func filters () -> [WOTNodeProtocol] {
+    func filters() -> [WOTNodeProtocol] {
         return [WOTPivotFilterNode(name: "Filter")]
     }
 }

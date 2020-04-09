@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WOTData
 import WOTPivot
 
 class WOTPivotTemplateVehicleTankID: WOTPivotTemplateProtocol {
@@ -42,7 +43,7 @@ class WOTPivotTemplateVehiclePremium: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.is_premium)
-        result.addChild(pivotNodeClass.init(name: "Is Premium", predicate: NSPredicate(format: "%K == %@", WOTApiKeys.is_premium, NSNumber(value: 1))))
+        result.addChild(pivotNodeClass.init(name: "Is Premium",       predicate: NSPredicate(format: "%K == %@", WOTApiKeys.is_premium, NSNumber(value: 1))))
         result.addChild(pivotNodeClass.init(name: "Is not Premium", predicate: NSPredicate(format: "%K == %@", WOTApiKeys.is_premium, NSNumber(value: 0))))
         return result
     }
@@ -65,17 +66,17 @@ class WOTPivotTemplateVehicleNation: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiKeys.nation)
-        result.addChild(pivotNodeClass.init(name: "china",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation     , "china")))
-        result.addChild(pivotNodeClass.init(name: "czech",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation     , "czech")))
-        result.addChild(pivotNodeClass.init(name: "france",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation    , "france")))
-        result.addChild(pivotNodeClass.init(name: "germany", predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation   , "germany")))
-        result.addChild(pivotNodeClass.init(name: "italy",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation     , "italy")))
-        result.addChild(pivotNodeClass.init(name: "japan",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation     , "japan")))
-        result.addChild(pivotNodeClass.init(name: "poland",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation    , "poland")))
-        result.addChild(pivotNodeClass.init(name: "sweden",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation    , "sweden")))
-        result.addChild(pivotNodeClass.init(name: "uk",      predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation        , "uk")))
-        result.addChild(pivotNodeClass.init(name: "usa",     predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation       , "usa")))
-        result.addChild(pivotNodeClass.init(name: "ussr",    predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation      , "ussr")))
+        result.addChild(pivotNodeClass.init(name: "china",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "china")))
+        result.addChild(pivotNodeClass.init(name: "czech",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "czech")))
+        result.addChild(pivotNodeClass.init(name: "france",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "france")))
+        result.addChild(pivotNodeClass.init(name: "germany", predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "germany")))
+        result.addChild(pivotNodeClass.init(name: "italy",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "italy")))
+        result.addChild(pivotNodeClass.init(name: "japan",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "japan")))
+        result.addChild(pivotNodeClass.init(name: "poland",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "poland")))
+        result.addChild(pivotNodeClass.init(name: "sweden",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "sweden")))
+        result.addChild(pivotNodeClass.init(name: "uk",      predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "uk")))
+        result.addChild(pivotNodeClass.init(name: "usa",     predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "usa")))
+        result.addChild(pivotNodeClass.init(name: "ussr",    predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "ussr")))
         return result
     }
 }
@@ -91,12 +92,12 @@ class WOTPivotTemplateVehicleDPM: WOTPivotTemplateProtocol {
         let predicateLess2000 = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "%K >= CAST(%d, 'NSDecimalNumber')", WOTApiForeignKeys.vehicles_default_profile_gun_fire_rate, 1000), NSPredicate(format: "%K < CAST(%d, 'NSDecimalNumber')", WOTApiForeignKeys.vehicles_default_profile_gun_fire_rate, 2000)])
         let predicateLess3000 = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "%K >= CAST(%d, 'NSDecimalNumber')", WOTApiForeignKeys.vehicles_default_profile_gun_fire_rate, 2000), NSPredicate(format: "%K < CAST(%d, 'NSDecimalNumber')", WOTApiForeignKeys.vehicles_default_profile_gun_fire_rate, 3000)])
         let predicateGr3000   = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "%K >= CAST(%d, 'NSDecimalNumber')", WOTApiForeignKeys.vehicles_default_profile_gun_fire_rate, 3000)])
-        result.addChild(pivotNodeClass.init(name: "<100"  , predicate: predicateLess100))
-        result.addChild(pivotNodeClass.init(name: "<200"  , predicate: predicateLess200))
-        result.addChild(pivotNodeClass.init(name: "<500"  , predicate: predicateLess500))
-        result.addChild(pivotNodeClass.init(name: "<1000" , predicate: predicateLess1000))
-        result.addChild(pivotNodeClass.init(name: "<2000" , predicate: predicateLess2000))
-        result.addChild(pivotNodeClass.init(name: "<3000" , predicate: predicateLess3000))
+        result.addChild(pivotNodeClass.init(name: "<100", predicate: predicateLess100))
+        result.addChild(pivotNodeClass.init(name: "<200", predicate: predicateLess200))
+        result.addChild(pivotNodeClass.init(name: "<500", predicate: predicateLess500))
+        result.addChild(pivotNodeClass.init(name: "<1000", predicate: predicateLess1000))
+        result.addChild(pivotNodeClass.init(name: "<2000", predicate: predicateLess2000))
+        result.addChild(pivotNodeClass.init(name: "<3000", predicate: predicateLess3000))
         result.addChild(pivotNodeClass.init(name: ">=3000", predicate: predicateGr3000))
         return result
     }

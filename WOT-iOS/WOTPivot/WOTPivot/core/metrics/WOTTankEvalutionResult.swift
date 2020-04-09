@@ -28,7 +28,7 @@ public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol {
 
     @objc
     required
-    public init (thisValue: CGFloat, maxValue: CGFloat, averageValue: CGFloat) {
+    public init(thisValue: CGFloat, maxValue: CGFloat, averageValue: CGFloat) {
         self.thisValue = thisValue
         self.maxValue = maxValue
         self.averageValue = averageValue

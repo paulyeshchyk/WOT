@@ -115,7 +115,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     private var groups = [String]()
 
     @objc
-    open func addGroup(_ group: String ) {
+    open func addGroup(_ group: String) {
         groups.append(group)
     }
 

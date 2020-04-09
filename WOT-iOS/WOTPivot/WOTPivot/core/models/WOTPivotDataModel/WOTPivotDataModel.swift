@@ -40,7 +40,7 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
         fetchController?.setFetchListener(nil)
     }
 
-    //WOTPivotNodeHolderProtocol
+    // WOTPivotNodeHolderProtocol
     lazy public var rootFilterNode: WOTNodeProtocol = {
         let result = self.nodeCreator.createNode(name: "root filters")
         self.add(rootNode: result)
@@ -126,7 +126,7 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
         guard let node = self.item(atIndexPath: atIndexPath) else {
             return .zero
         }
-        //FIXME: node.relativeRect should be optimized
+        // FIXME: node.relativeRect should be optimized
         guard let relativeRectValue = node.relativeRect else {
             return self.dimension.pivotRect(forNode: node)
         }

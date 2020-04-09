@@ -100,5 +100,5 @@ public class WOTApiDefaults: NSObject, WOTAPIDefaultsProtocol {
     @objc public static let languageEU: String = "eu"
     @objc public static let applicationScheme: String = "https"
     @objc public static let applicationHost: String = "api.worldoftanks"
-    @objc public static let applicationRedirectURI: String = "https://api.worldoftanks.ru/wot/blank/"; //"https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/";
+    @objc public static let applicationRedirectURI: String = "https://api.worldoftanks.ru/wot/blank/"; // "https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/";
 }

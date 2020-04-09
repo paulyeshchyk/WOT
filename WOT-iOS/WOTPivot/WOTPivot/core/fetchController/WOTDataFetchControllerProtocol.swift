@@ -11,7 +11,7 @@ import CoreData
 
 @objc
 public protocol WOTDataFetchControllerProtocol {
-    func performFetch(nodeCreator: WOTNodeCreatorProtocol? ) throws
+    func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws
     func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void)
     func fetchedObjects() -> [AnyObject]?
     func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?)

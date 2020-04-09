@@ -75,9 +75,9 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol {
     }
 
     fileprivate func redrawNavigationBar() {
-        self.navigationController?.navigationBar .setDarkStyle()
+        self.navigationController?.navigationBar.setDarkStyle()
         let image = UIImage(named: L10n.wotImageUser)
-        let backButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.done, target: self, action: #selector(WOTMenuViewController.loginPressed(_ :)))
+        let backButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.done, target: self, action: #selector(WOTMenuViewController.loginPressed(_:)))
         self.navigationItem.leftBarButtonItems = [backButton]
         self.navigationItem.title = self.delegate?.currentUserName
     }

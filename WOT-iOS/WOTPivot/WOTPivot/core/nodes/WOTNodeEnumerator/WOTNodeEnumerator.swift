@@ -17,11 +17,11 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         super.init()
     }
 
-    public func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping(WOTNodeProtocol) -> Void) {
+    public func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping (WOTNodeProtocol) -> Void) {
         self.enumerateAll(children: node.children, comparator: comparator, childCompletion: childCompletion)
     }
 
-    public func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping(WOTNodeProtocol) -> Void) {
+    public func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping (WOTNodeProtocol) -> Void) {
         let sortedItems = children.sorted { (obj1, obj2) -> Bool in
             return comparator(obj1, obj2, -1) == .orderedSame
         }
@@ -98,7 +98,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         for idx in 0 ..< indexOfNode {
             let child = parent.children[idx]
             let endpoints = self.endpoints(node: child)
-            endpoints?.forEach { (_ ) in
+            endpoints?.forEach { (_) in
                 result += orValue
             }
         }

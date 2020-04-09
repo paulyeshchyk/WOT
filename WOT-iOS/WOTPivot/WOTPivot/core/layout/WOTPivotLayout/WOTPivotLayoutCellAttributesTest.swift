@@ -6,10 +6,10 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-//import XCTest
-//@testable import WOTPivot
+// import XCTest
+// @testable import WOTPivot
 //
-//class WOTPivotLayoutCellAttributesTest: XCTestCase {
+// class WOTPivotLayoutCellAttributesTest: XCTestCase {
 //
 //    override func setUp() {
 //        super.setUp()
@@ -50,4 +50,4 @@
 //        XCTAssert(result != nil)
 //    }
 //
-//}
+// }

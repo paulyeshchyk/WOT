@@ -94,7 +94,7 @@ public class WOTWebResponse: NSObject, JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     public func mapping(fromJSON jSON: JSON) {
-        self.status = WOTWebResponseStatus(rawValue: (jSON["status"] as? String) ?? ""  ) ?? .unknown
+        self.status = WOTWebResponseStatus(rawValue: (jSON["status"] as? String) ?? "") ?? .unknown
         self.data = jSON["data"] as? [AnyHashable: Any]
         self.error = jSON["error"] as? [AnyHashable: Any]
 
@@ -134,20 +134,20 @@ struct WOTWEBRequestError: Error {
     }
 }
 
-public typealias JSONParseCompletion = ( JSON? ) -> Void
+public typealias JSONParseCompletion = (JSON?) -> Void
 
 @objc
 extension NSData {
     @objc
     @discardableResult
-    public func parseAsJSON(_ completion: JSONParseCompletion? ) -> Error? {
+    public func parseAsJSON(_ completion: JSONParseCompletion?) -> Error? {
         return (self as Data).parseAsJSON(completion)
     }
 }
 
 extension Data {
     @discardableResult
-    public func parseAsJSON(_ completion: JSONParseCompletion? ) -> Error? {
+    public func parseAsJSON(_ completion: JSONParseCompletion?) -> Error? {
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: self as Data, options: [.mutableLeaves, .mutableContainers])
             guard let json = jsonObject as? JSON else {

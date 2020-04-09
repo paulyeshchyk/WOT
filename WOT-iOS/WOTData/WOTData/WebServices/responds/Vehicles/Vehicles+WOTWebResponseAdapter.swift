@@ -24,7 +24,7 @@ open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
 
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(Vehicles.tag), tag)
                 context.perform {
-                    guard let vehicle = NSManagedObject.findOrCreateObject(forClass:Vehicles.self, predicate: predicate, context: context) as? Vehicles else { return }
+                    guard let vehicle = NSManagedObject.findOrCreateObject(forClass: Vehicles.self, predicate: predicate, context: context) as? Vehicles else { return }
 
                     vehicle.mapping(fromJSON: vehiclesJSON, into: context, jsonLinksCallback: jsonLinksCallback)
                     context.tryToSave()

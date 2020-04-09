@@ -8,7 +8,7 @@
 
 import Foundation
 
-#warning ("use WOTMetricProtocol instead of WOTMetric")
+#warning("use WOTMetricProtocol instead of WOTMetric")
 
 @objc
 public protocol WOTTankMetricsListProtocol {

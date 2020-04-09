@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class WOTClearSessionRequest : WOTWEBRequest {
+public class WOTClearSessionRequest: WOTWEBRequest {
     override public var method: String { return "POST" }
 
     @objc
@@ -17,7 +17,7 @@ public class WOTClearSessionRequest : WOTWEBRequest {
         return ""
     }
 
-    //- (void)start:(WOTRequestArguments * _Nonnull)args {
+    // - (void)start:(WOTRequestArguments * _Nonnull)args {
     //
     //    [super start:args];
     //
@@ -35,5 +35,5 @@ public class WOTClearSessionRequest : WOTWEBRequest {
     //            self.callback(nil, error, nil);
     //        }
     //    }];
-    //}
+    // }
 }

@@ -37,7 +37,7 @@ public protocol WOTRequestCoordinatorProtocol {
     func cancelRequests(byGroupId: String) -> Bool
 
     @objc
-    func requestId(_ requiestId:WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
+    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
 
     @objc
     func request(for requestId: WOTRequestIdType) -> AnyClass?
@@ -52,7 +52,7 @@ public protocol WOTRequestCoordinatorProtocol {
     func dataAdapter(for requestId: WOTRequestIdType) -> [AnyClass]?
 
     @objc
-    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)? )
+    func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)?)
 }
 
 @objc
@@ -131,7 +131,7 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)? ) {
+    public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)?) {
         guard let adapters = self.dataAdapter(for: requestId) else {
             return
         }

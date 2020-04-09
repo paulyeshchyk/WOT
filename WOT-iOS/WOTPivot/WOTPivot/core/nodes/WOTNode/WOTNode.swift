@@ -106,7 +106,7 @@ open class WOTNode: NSObject, WOTNodeProtocol {
             return
         }
         self.parent = nil
-        parent.removeChild(self) { (_ ) in
+        parent.removeChild(self) { (_) in
         }
     }
 

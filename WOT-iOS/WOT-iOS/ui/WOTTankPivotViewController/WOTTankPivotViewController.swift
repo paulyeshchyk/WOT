@@ -36,8 +36,8 @@ open class WOTPivotViewController: UIViewController {
         return WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
     }()
 
+    #warning("crash is possible here!!!")
     open func pivotModel() -> WOTPivotDataModelProtocol {
-        #warning("crash is possible here!!!")
         return WOTPivotDataModel(enumerator: WOTNodeEnumerator.sharedInstance)
     }
 
@@ -58,11 +58,11 @@ open class WOTPivotViewController: UIViewController {
         }
     }
 
-    func closePopover () {
+    func closePopover() {
         self.hasOpenedPopover = false
     }
 
-    func openPopover () {
+    func openPopover() {
         self.hasOpenedPopover = true
     }
 
@@ -72,14 +72,10 @@ open class WOTPivotViewController: UIViewController {
 
     open func cell(forNode node: WOTPivotNodeProtocol, at indexPath: IndexPath) -> UICollectionViewCell {
         switch node.cellType {
-        case .column, .row:
-            return self.cell(forFixedNode: node, at: indexPath)
-        case .filter:
-            return self.cell(forFilterNode: node, at: indexPath)
-        case .data:
-            return self.cell(forDataNode: node, at: indexPath)
-        case .dataGroup:
-            return self.cell(forDataGroupNode: node, at: indexPath)
+        case .column, .row: return self.cell(forFixedNode: node, at: indexPath)
+        case .filter:       return self.cell(forFilterNode: node, at: indexPath)
+        case .data:         return self.cell(forDataNode: node, at: indexPath)
+        case .dataGroup:    return self.cell(forDataGroupNode: node, at: indexPath)
         }
     }
 
@@ -153,7 +149,7 @@ extension WOTPivotViewController: UICollectionViewDelegate {
         guard let vehicle = data as? Vehicles else {
             return
         }
-        let config = WOTTankModuleTreeViewController(nibName: String(describing: WOTTankModuleTreeViewController.self ), bundle: nil)
+        let config = WOTTankModuleTreeViewController(nibName: String(describing: WOTTankModuleTreeViewController.self), bundle: nil)
         config.tank_Id = vehicle.tank_id
         config.cancelBlock = {
             self.navigationController?.popViewController(animated: true)

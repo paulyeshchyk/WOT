@@ -135,7 +135,7 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
         return self.module_id!.intValue
     }
 
-    #warning ("implement compatibility; otherwise module tree is not working")
+    #warning("implement compatibility; otherwise module tree is not working")
     func isCompatible(forTankId: NSNumber) -> Bool {
         return self.next_tanks?.tank_id?.intValue == forTankId.intValue
 //        let result = self.nextTanks?.filter({ (next) -> Bool in

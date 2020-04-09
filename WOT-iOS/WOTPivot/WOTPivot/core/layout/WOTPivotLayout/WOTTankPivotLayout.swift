@@ -164,7 +164,7 @@ extension WOTPivotLayout {
             cellZIndex += 2
         }
         let approxRect = CGRect(x: x, y: y, width: width, height: height)
-        let cellRect = approxRect//.integral
+        let cellRect = approxRect // .integral
         return WOTPivotLayoutCellAttributes(cellRect: cellRect, cellZIndex: cellZIndex, cellIndexPath: indexPath)
     }
 }

@@ -24,5 +24,5 @@ public protocol WOTCoredataProviderProtocol: NSObjectProtocol {
     @objc var workManagedObjectContext: NSManagedObjectContext { get }
     @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }
 
-    @objc func executeRequest(by predicate: NSPredicate , concurency: WOTExecuteConcurency)
+    @objc func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency)
 }

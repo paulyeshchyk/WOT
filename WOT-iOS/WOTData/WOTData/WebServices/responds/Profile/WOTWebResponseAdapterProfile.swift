@@ -24,7 +24,7 @@ public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
                     guard let profile = json?[key] as? [AnyHashable: Any] else { return }
                     let profilehash = profile.asURLQueryString().hashValue
                     let predicate = NSPredicate(format: "%K = %d", WOT_KEY_HASHNAME, profilehash)
-                    if let vehicleProfile = NSManagedObject.findOrCreateObject(forClass:Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile {
+                    if let vehicleProfile = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile {
                         vehicleProfile.hashName = NSDecimalNumber(value: profilehash)
                         vehicleProfile.mapping(fromJSON: profile, into: context, jsonLinksCallback: jsonLinksCallback)
                     }

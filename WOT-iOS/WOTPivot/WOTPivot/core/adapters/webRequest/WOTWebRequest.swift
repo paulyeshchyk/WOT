@@ -39,7 +39,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     public var httpBodyData: Data?
 
     open var method: String { return "POST" }
-    open var path: String { return ""}
+    open var path: String { return "" }
 
     override open var hash: Int {
         return (pumper as? NSObject)?.hash ?? 0
@@ -104,7 +104,7 @@ public protocol WOTWebDataPumperProtocol {
     var completion: ((Data?, Error?) -> Void) { get }
     var description: String { get }
 
-    init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void) )
+    init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void))
     func start()
 }
 
@@ -126,13 +126,13 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
         return request.url?.absoluteString ?? "-"
     }
 
-    convenience init(hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: (@escaping (Data?, Error?) -> Void) ) {
+    convenience init(hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: (@escaping (Data?, Error?) -> Void)) {
         let requestBuilder = WOTWebRequestBuilder()
         let urlRequest = requestBuilder.build(service: service, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
         self.init(request: urlRequest, completion: completion)
     }
 
-    required init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void) ) {
+    required init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void)) {
         self.request = request
         self.completion = completion
 

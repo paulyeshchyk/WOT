@@ -38,7 +38,7 @@ class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
 
     private var bottomSeparatorFrame: CGRect {
         let customFrame = self.customFrame ?? CGRect.zero
-        return CGRect(x: customFrame.minX ,
+        return CGRect(x: customFrame.minX,
                       y: customFrame.maxY - self.separatorWidth,
                       width: customFrame.width,
                       height: self.separatorWidth)
@@ -49,7 +49,7 @@ class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
         return CGRect(x: customFrame.maxX,
                       y: customFrame.minY - self.separatorWidth,
                       width: self.separatorWidth,
-                      height: customFrame.height + self.separatorWidth )
+                      height: customFrame.height + self.separatorWidth)
     }
 
     private func invalidateFrame(kind: WOTPivotSeparatorKind) {

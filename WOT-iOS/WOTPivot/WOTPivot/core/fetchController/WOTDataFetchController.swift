@@ -57,7 +57,7 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
         let filtered = (self.fetchedObjects()?.filter { predicate.evaluate(with: $0) })
-        filteredCompletion(predicate,filtered)
+        filteredCompletion(predicate, filtered)
     }
 }
 

@@ -99,5 +99,5 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         toContext.processPendingChanges()
     }
 
-    public func executeRequest(by predicate: NSPredicate , concurency: WOTExecuteConcurency) {}
+    public func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency) {}
 }

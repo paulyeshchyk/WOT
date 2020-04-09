@@ -48,12 +48,12 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
     override public var contentSize: CGSize {
         let height = self.getHeight()
         let width = self.getWidth()
-        return CGSize(width: width, height: height)//156:11
+        return CGSize(width: width, height: height) // 156:11
     }
 
     private var index: Int = 0
 
-    #warning (" !!! TO BE refactored: too slow !!! ")
+    #warning(" !!! TO BE refactored: too slow !!! ")
     override public func reload(forIndex externalIndex: Int, nodeCreator: WOTNodeCreatorProtocol?) {
         self.index = externalIndex
 
@@ -64,7 +64,7 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
         DispatchQueue.main.async {
             colNodeEndpoints?.forEach { (colNode) in
                 rowNodeEndpoints?.forEach({ (rowNode) in
-                    filterEndPoints?.forEach({(filterNode) in
+                    filterEndPoints?.forEach({ (filterNode) in
 
                         #warning("should we use predicate instead of fullPredicate ?")
                         let colFullPredicate = (colNode as? WOTPivotNodeProtocol)?.predicate
@@ -72,7 +72,7 @@ public class WOTPivotDimension: WOTDimension, WOTPivotDimensionProtocol {
                         let filterFullPredicate = (filterNode as? WOTPivotNodeProtocol)?.predicate
 
                         let predicates = [colFullPredicate, rowFullPredicate, filterFullPredicate].compactMap { $0 }
-                        self.fetchController?.fetchedNodes(byPredicates: predicates, nodeCreator: nodeCreator) {predicate, filtered in
+                        self.fetchController?.fetchedNodes(byPredicates: predicates, nodeCreator: nodeCreator) { predicate, filtered in
                             var dataNodes = [WOTNodeProtocol]()
                             let compacted = filtered?.compactMap { $0 } ?? []
                             if let nodes = nodeCreator?.createNodes(fetchedObjects: compacted, byPredicate: predicate) {

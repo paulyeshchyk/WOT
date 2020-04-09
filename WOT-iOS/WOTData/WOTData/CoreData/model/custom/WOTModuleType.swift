@@ -32,13 +32,13 @@ public enum WOTModuleType: Int {
 
     static func fromString(stringValue: String) -> WOTModuleType {
         switch stringValue.lowercased() {
-        case "unknown":return .unknown
-        case "chassis":return .chassis
-        case "engine":return .engine
-        case "radios":return .radios
-        case "turrets":return .turrets
-        case "guns":return .guns
-        case "tank":return .tank
+        case "unknown": return .unknown
+        case "chassis": return .chassis
+        case "engine": return .engine
+        case "radios": return .radios
+        case "turrets": return .turrets
+        case "guns": return .guns
+        case "tank": return .tank
             #warning("WTF")
         default: return .unknown
         }

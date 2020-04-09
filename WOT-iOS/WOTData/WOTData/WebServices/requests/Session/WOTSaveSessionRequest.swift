@@ -9,13 +9,13 @@
 import Foundation
 
 @objc
-public class WOTSaveSessionRequest : WOTWEBRequest {
+public class WOTSaveSessionRequest: WOTWEBRequest {
     @objc
     public class func modelClassName() -> String {
         return ""
     }
 
-    //- (void)start:(WOTRequestArguments * _Nonnull)args{
+    // - (void)start:(WOTRequestArguments * _Nonnull)args{
     //
     //    //[super start:args];
     //
@@ -38,5 +38,5 @@ public class WOTSaveSessionRequest : WOTWEBRequest {
     //        }
     //    }];
     //
-    //}
+    // }
 }
