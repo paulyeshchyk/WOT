@@ -42,7 +42,7 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
     }
 
     public func remove(rootNode: WOTNodeProtocol) {
-        guard let index = (self.rootNodes.index { $0 === rootNode }) else {
+        guard let index = (self.rootNodes.firstIndex { $0 === rootNode }) else {
             return
         }
         self.rootNodes.remove(at: index)

@@ -473,7 +473,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 //MARK: WOTRequestManagerListenerProtocol
 
-- (NSUInteger)hashData {
+- (NSInteger)hashData {
     return [@"WOTTankDetailViewController" hash];
 }
 

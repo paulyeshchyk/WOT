@@ -72,7 +72,7 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
         guard let parent = node.parent else {
             return 0
         }
-        guard let indexOfNode = (parent.children.index { $0 === node }) else {
+        guard let indexOfNode = (parent.children.firstIndex { $0 === node }) else {
             return 0
         }
 

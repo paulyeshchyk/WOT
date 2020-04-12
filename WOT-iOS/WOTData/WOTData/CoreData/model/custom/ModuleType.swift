@@ -20,7 +20,7 @@ public enum ModuleType: String {
     private static var allTypes: [ModuleType] = [.unknown, .chassis, .engine, .radios, .turrets, .guns, .tank]
 
     var index: Int {
-        guard let result = ModuleType.allTypes.index(of: self) else { fatalError("ModuleType.alltypes has no value:\(self)")}
+        guard let result = ModuleType.allTypes.firstIndex(of: self) else { fatalError("ModuleType.alltypes has no value:\(self)")}
         return result
     }
 

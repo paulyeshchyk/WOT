@@ -69,7 +69,7 @@ class WOTConnectorNodeIndex: NSObject, WOTConnectorNodeIndexProtocol {
             if let section = self.levelIndex[key] {
                 section.forEach({ (node) in
                     if node === forNode {
-                        if let row = section.index(where: { $0 === forNode }) {
+                        if let row = section.firstIndex(where: { $0 === forNode }) {
                             indexPath = IndexPath(row: row, section: key)
                         }
                     }

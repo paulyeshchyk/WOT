@@ -75,7 +75,7 @@ open class WOTNode: NSObject, WOTNodeProtocol {
     }
 
     open func removeChild(_ child: WOTNodeProtocol, completion: @escaping (WOTNodeProtocol) -> Void) {
-        guard let index = (self.children.index { $0 === child }) else {
+        guard let index = (self.children.firstIndex { $0 === child }) else {
             return
         }
         child.removeParent()
@@ -111,7 +111,7 @@ open class WOTNode: NSObject, WOTNodeProtocol {
     }
 
     open func unlinkChild(_ child: WOTNodeProtocol) {
-        guard let index = (self.children.index { $0 === child }) else {
+        guard let index = (self.children.firstIndex { $0 === child }) else {
             return
         }
         child.removeParent()

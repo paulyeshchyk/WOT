@@ -205,11 +205,11 @@
 
     if ([node conformsToProtocol:@protocol(WOTTreeModuleNodeProtocol)]) {
         id<WOTTreeModuleNodeProtocol> treeNode = (id<WOTTreeModuleNodeProtocol>) node;
-        ModulesTree *moduleTree = treeNode.modulesTree;
+        id<WOTTreeModulesTreeProtocol> moduleTree = treeNode.modulesTree;
 
         WOTTankConfigurationItemViewController *itemViewController = [[WOTTankConfigurationItemViewController alloc] initWithNibName:NSStringFromClass([WOTTankConfigurationItemViewController class]) bundle:nil];
         itemViewController.moduleTree = moduleTree;
-        itemViewController.mapping = [self mappingForModuleType:moduleTree.type];
+        itemViewController.mapping = [self mappingForModuleType:moduleTree.moduleType];
         [self.navigationController pushViewController:itemViewController animated:YES];
     }
 }

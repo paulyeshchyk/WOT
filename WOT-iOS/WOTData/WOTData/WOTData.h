@@ -22,3 +22,4 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 #import "WOTWebResponseAdapterRadios.h"
 #import "WOTWebResponseAdapterGuns.h"
 #import "WOTWebResponseAdapterEngines.h"
+#import "WOTWEBRequest+Stubs.h"

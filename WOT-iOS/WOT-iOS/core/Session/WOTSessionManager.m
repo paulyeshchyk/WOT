@@ -54,7 +54,6 @@
 
     id<WOTRequestProtocol> request =  [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
         
-    NSString *appId = requestManager.hostConfiguration.applicationID;
     NSString *host = requestManager.hostConfiguration.host;
     NSString *noFollow = @"1";
     NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/", host];

@@ -92,7 +92,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         guard let parent = siblingNode.parent else {
             return result
         }
-        guard let indexOfNode = (parent.children.index { $0 === siblingNode }) else {
+        guard let indexOfNode = (parent.children.firstIndex { $0 === siblingNode }) else {
             return result
         }
         for idx in 0 ..< indexOfNode {
@@ -112,7 +112,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
             return result
         }
 
-        guard let index = (parent.children.index { $0 === siblingNode }) else {
+        guard let index = (parent.children.firstIndex { $0 === siblingNode }) else {
             return result
         }
 

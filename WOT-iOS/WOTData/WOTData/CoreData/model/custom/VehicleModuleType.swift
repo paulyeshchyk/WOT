@@ -20,7 +20,7 @@ public enum VehicleModuleType: String {
     private static var allTypes: [VehicleModuleType] = [.unknown, .vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun, .tank]
 
     var index: Int {
-        guard let result = VehicleModuleType.allTypes.index(of: self) else { fatalError("VehicleModuleType.alltypes has no value:\(self)")}
+        guard let result = VehicleModuleType.allTypes.firstIndex(of: self) else { fatalError("VehicleModuleType.alltypes has no value:\(self)")}
         return result
     }
 
@@ -51,9 +51,9 @@ public enum ObjCVehicleModuleType: Int {
 }
 
 @objc
+@available(*, deprecated, message: "Use swift VehicleModuleType")
 public class ObjCVehicleModuleTypeConverter: NSObject {
     @objc
-    @available(*, deprecated, message: "Use swift VehicleModuleType")
     public static func fromString(_ string: String) -> ObjCVehicleModuleType {
         return ObjCVehicleModuleType.fromString(stringValue: string)
     }

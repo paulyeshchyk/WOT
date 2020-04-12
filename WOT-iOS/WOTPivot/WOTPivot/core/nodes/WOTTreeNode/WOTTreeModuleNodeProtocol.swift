@@ -12,6 +12,7 @@ import Foundation
 public protocol WOTTreeModulesTreeProtocol: NSObjectProtocol {
     func moduleIdInt() -> Int
     func moduleName() -> String
+    func moduleType() -> String?
     func moduleLocalImageURL() -> URL?
     func moduleValue(forKey: String) -> Any?
     func nestedModules() -> [WOTTreeModulesTreeProtocol]?
