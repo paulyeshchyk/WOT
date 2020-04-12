@@ -23,17 +23,13 @@ extension VehicleprofileAmmo: JSONMapperProtocol {
         }
 
         self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
-        if let penetrationjSON = jSON[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
-            if let penetrationsObject = VehicleprofileAmmoPenetration.insertNewObject(context) as? VehicleprofileAmmoPenetration {
-                penetrationsObject.mapping(fromArray: penetrationjSON, into: context, jsonLinksCallback: nil)
-                self.penetration = penetrationsObject
-            }
-        }
-        if let damageJSON = jSON[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
-            if let damageObject = VehicleprofileAmmoDamage.insertNewObject(context) as? VehicleprofileAmmoDamage {
-                damageObject.mapping(fromArray: damageJSON, into: context, jsonLinksCallback: nil)
-                self.damage = damageObject
-            }
-        }
+        self.penetration = VehicleprofileAmmoPenetration(array: jSON[#keyPath(VehicleprofileAmmo.penetration)], into: context, jsonLinksCallback: jsonLinksCallback)
+        self.damage = VehicleprofileAmmoDamage(array: jSON[#keyPath(VehicleprofileAmmo.damage)], into: context, jsonLinksCallback: jsonLinksCallback)
+    }
+
+    convenience init?(json: JSON?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let json = json, let entityDescription = VehicleprofileAmmo.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
     }
 }

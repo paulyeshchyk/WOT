@@ -27,4 +27,10 @@ extension VehicleprofileTurret: JSONMapperProtocol {
         self.traverse_right_arc = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileTurret.traverse_right_arc)] as? Int ?? 0)
         self.hp = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileTurret.hp)] as? Int ?? 0)
     }
+
+    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let json = json as? JSON, let entityDescription = VehicleprofileTurret.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+    }
 }

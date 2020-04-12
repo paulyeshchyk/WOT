@@ -32,4 +32,10 @@ extension VehicleprofileSuspension: JSONMapperProtocol {
         self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.weight)] as? Int ?? 0)
         self.load_limit = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.load_limit)] as? Int ?? 0)
     }
+
+    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let json = json as? JSON, let entityDescription = VehicleprofileSuspension.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+    }
 }

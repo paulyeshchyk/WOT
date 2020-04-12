@@ -46,27 +46,36 @@ extension Vehicles: JSONMapperProtocol {
         self.is_gift = NSDecimalNumber(value: jSON[#keyPath(Vehicles.is_gift)]  as? Int ?? 0)
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
+        self.default_profile = Vehicleprofile(json: jSON[#keyPath(Vehicles.default_profile)], into: context, jsonLinksCallback: jsonLinksCallback)
 
-        if let moduleTreeJSONArray = jSON[#keyPath(Vehicles.modules_tree)] as? JSON {
-            moduleTreeJSONArray.keys.forEach { (key) in
-                guard let moduleTreeJSON = moduleTreeJSONArray[key] as? JSON else {
-                    return
-                }
-
-                guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
-                let predicate = NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), module_id)
-                if let moduleTree = NSManagedObject.findOrCreateObject(forClass: ModulesTree.self, predicate: predicate, context: context) as? ModulesTree {
-                    moduleTree.mapping(fromJSON: moduleTreeJSON, into: context, jsonLinksCallback: jsonLinksCallback)
-                    self.addToModules_tree(moduleTree)
-                }
-            }
+        let module_tree = mapping(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], inContext: context, jsonLinksCallback: jsonLinksCallback)
+        module_tree?.forEach {
+            self.addToModules_tree($0)
         }
+    }
 
-        if let profile = Vehicleprofile.insertNewObject(context) as? Vehicleprofile {
-            if let json = jSON[#keyPath(Vehicles.default_profile)] as? JSON {
-                profile.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+    func mapping(modulestreeJson json: Any?, inContext context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) -> [ModulesTree]? {
+        guard let moduleTreeJSONArray = json  as? JSON else { return nil }
+
+        var result = [ModulesTree]()
+        moduleTreeJSONArray.keys.forEach { (key) in
+            guard let moduleTreeJSON = moduleTreeJSONArray[key] as? JSON,
+                let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else {
+                return
             }
-            self.default_profile = profile
+
+            guard let moduleTree = mapping(moduletreeJson: moduleTreeJSON, module_id: module_id, into: context, jsonLinksCallback: jsonLinksCallback) else { return }
+            result.append(moduleTree)
         }
+        return result
+    }
+
+    func mapping(moduletreeJson json: Any?, module_id: NSNumber, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) -> ModulesTree? {
+        guard let json = json as? JSON else { return nil }
+        let predicate = NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), module_id)
+        guard let result = NSManagedObject.findOrCreateObject(forClass: ModulesTree.self, predicate: predicate, context: context) as? ModulesTree else { return nil }
+
+        result.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+        return result
     }
 }

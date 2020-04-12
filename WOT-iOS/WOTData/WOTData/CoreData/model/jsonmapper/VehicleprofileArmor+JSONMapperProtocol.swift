@@ -28,4 +28,10 @@ extension VehicleprofileArmor: JSONMapperProtocol {
         self.sides = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileArmor.sides)] as? Int ?? 0)
         self.rear = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileArmor.rear)] as? Int ?? 0)
     }
+
+    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let json = json as? JSON, let entityDescription = VehicleprofileArmor.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+    }
 }

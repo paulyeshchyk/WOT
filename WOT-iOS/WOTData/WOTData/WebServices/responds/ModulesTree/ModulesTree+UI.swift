@@ -18,7 +18,7 @@ extension ModulesTree {
     }
 
     @objc
-    public func moduleType() -> WOTModuleType {
+    public func moduleType() -> ObjCVehicleModuleType {
         if let next = self.next_engines, next.count > 0 {
             return .engine
         }

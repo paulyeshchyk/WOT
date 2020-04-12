@@ -16,8 +16,8 @@ extension VehicleprofileAmmoList: JSONMapperProtocol {
         }
 
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
-            if let ammoObject = VehicleprofileAmmo.insertNewObject(context) as? VehicleprofileAmmo {
-                ammoObject.mapping(fromJSON: jSON, into: context, jsonLinksCallback: nil)
+
+            if let ammoObject = VehicleprofileAmmo(json: jSON, into: context, jsonLinksCallback: jsonLinksCallback) {
                 self.addToVehicleprofileAmmo(ammoObject)
             }
         }
@@ -25,4 +25,10 @@ extension VehicleprofileAmmoList: JSONMapperProtocol {
 
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
+
+    convenience init?(array: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoList.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromArray: array, into: context, jsonLinksCallback: jsonLinksCallback)
+    }
 }

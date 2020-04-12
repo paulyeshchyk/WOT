@@ -30,4 +30,10 @@ extension Tankguns: JSONMapperProtocol {
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Tankguns.price_gold)] as? Int ?? 0)
         self.rate = NSDecimalNumber(value: jSON[#keyPath(Tankguns.rate)] as? Int ?? 0)
     }
+
+    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let json = json as? JSON, let entityDescription = Tankguns.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+    }
 }

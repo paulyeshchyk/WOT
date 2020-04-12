@@ -115,4 +115,10 @@ extension VehicleprofileModule: JSONMapperProtocol {
             self.tankturrets = tankTurret
         })
     }
+
+    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let json = json as? JSON, let entityDescription = VehicleprofileModule.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+    }
 }

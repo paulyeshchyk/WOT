@@ -31,6 +31,11 @@ extension NSManagedObject {
     }
 
     @objc
+    public static func entityDescription(_ context: NSManagedObjectContext) -> NSEntityDescription? {
+        return NSEntityDescription.entity(forEntityName: String(describing: self), in: context)
+    }
+
+    @objc
     public static func findOrCreateObject(predicate: NSPredicate, context: NSManagedObjectContext) -> NSManagedObject? {
         guard let foundObject = self.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
             return self.insertNewObject(context)

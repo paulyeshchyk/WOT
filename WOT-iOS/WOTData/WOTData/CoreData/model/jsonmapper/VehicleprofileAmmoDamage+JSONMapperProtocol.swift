@@ -28,4 +28,10 @@ extension VehicleprofileAmmoDamage: JSONMapperProtocol {
 
     @objc
     public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
+
+    convenience init?(array: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoDamage.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromArray: array, into: context, jsonLinksCallback: jsonLinksCallback)
+    }
 }

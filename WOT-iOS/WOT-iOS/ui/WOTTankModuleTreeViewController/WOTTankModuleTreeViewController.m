@@ -217,32 +217,32 @@
 - (WOTTankConfigurationModuleMapping *)mappingForModuleType:(NSString *)moduleTypeStr {
 
     WOTTankConfigurationModuleMapping *result = nil;
-    WOTModuleType moduleType = [WOTModuleTypeOBJcConverter fromString: moduleTypeStr];
+    ObjCVehicleModuleType moduleType = [ObjCVehicleModuleTypeConverter fromString: moduleTypeStr];
     
     switch (moduleType) {
             
-        case WOTModuleTypeEngine: {
+        case ObjCModuleTypeEngine: {
             
             result = [WOTTankConfigurationModuleMapping engineMapping];
             break;
         }
-        case WOTModuleTypeRadios: {
+        case ObjCModuleTypeRadios: {
             
             result = [WOTTankConfigurationModuleMapping radiosMapping];
             break;
         }
-        case WOTModuleTypeTurrets :{
+        case ObjCModuleTypeTurrets :{
             
             result = [WOTTankConfigurationModuleMapping turretMapping];
             break;
         }
             
-        case WOTModuleTypeChassis: {
+        case ObjCModuleTypeChassis: {
             
             result = [WOTTankConfigurationModuleMapping chassisMapping];
             break;
         }
-        case WOTModuleTypeGuns: {
+        case ObjCModuleTypeGuns: {
             
             result = [WOTTankConfigurationModuleMapping gunMapping];
             break;

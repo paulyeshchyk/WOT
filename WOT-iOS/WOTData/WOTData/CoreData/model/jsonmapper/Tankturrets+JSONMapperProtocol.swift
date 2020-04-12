@@ -34,4 +34,10 @@ extension Tankturrets: JSONMapperProtocol {
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Tankturrets.price_gold)] as? Int ?? 0)
         self.rotation_speed = NSDecimalNumber(value: jSON[#keyPath(Tankturrets.rotation_speed)] as? Int ?? 0)
     }
+
+    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+        guard let json = json as? JSON, let entityDescription = Tankturrets.entityDescription(context) else { return nil }
+        self.init(entity: entityDescription, insertInto: context)
+        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+    }
 }
