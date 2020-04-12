@@ -1,3 +1,5 @@
+// swiftlint:disable all
+
 import Foundation
 
 public struct AnyCodable {
@@ -184,3 +186,5 @@ extension AnyCodable: ExpressibleByNilLiteral, ExpressibleByBooleanLiteral, Expr
         self.init(Dictionary<AnyHashable, Any>(elements, uniquingKeysWith: { first, _ in first }))
     }
 }
+
+// swiftlint:enable all

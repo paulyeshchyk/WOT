@@ -1830,12 +1830,12 @@
 			};
 			buildConfigurationList = 1DD6462E1B1C616A00B0EC76 /* Build configuration list for PBXProject "WOT-iOS" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				ru,
+				Base,
 			);
 			mainGroup = 1DD6462A1B1C616A00B0EC76;
 			productRefGroup = 1DD646341B1C616A00B0EC76 /* Products */;

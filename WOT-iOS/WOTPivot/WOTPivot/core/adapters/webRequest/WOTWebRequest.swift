@@ -142,7 +142,6 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
     }
 
     public func start() {
-
         connection?.start()
     }
 

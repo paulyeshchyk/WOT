@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 };
 
 
-@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate>
+@interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate, WOTRequestManagerListenerProtocol>
 
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
 @property (nonatomic, weak) IBOutlet UIToolbar *topBar;
@@ -471,13 +471,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     return [NSObject gridData:sample];
 }
 
-@end
-
-
-@interface WOTTankDetailViewController(WOTRequestManagerListener) <WOTRequestManagerListenerProtocol>
-@end
-
-@implementation WOTTankDetailViewController(WOTRequestManagerListener)
+//MARK: WOTRequestManagerListenerProtocol
 
 - (NSUInteger)hashData {
     return [@"WOTTankDetailViewController" hash];
