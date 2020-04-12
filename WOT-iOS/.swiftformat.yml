@@ -3,8 +3,7 @@
 --exclude Tests/XCTestManifests.swift,Snapshots, Pods, Generated
 
 # format options
---rules indent, linebreakAtEndOfFile, consecutiveBlankLines,
---rules spaceAroundBraces, spaceAroundBrackets, spaceAroundComments, spaceAroundGenerics, spaceAroundOperators, spaceAroundParens, spaceInsideBraces, spaceInsideBrackets, spaceInsideComments, spaceInsideGenerics, spaceInsideParens
+--rules indent, linebreakAtEndOfFile, consecutiveBlankLines, spaceAroundBraces
 --rules blankLinesAtEndOfScope, blankLinesBetweenScopes, blankLinesAtStartOfScope, emptyBraces, trailingSpace
 --allman false
 --binarygrouping 4,8

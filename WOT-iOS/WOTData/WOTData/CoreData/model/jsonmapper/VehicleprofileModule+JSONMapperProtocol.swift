@@ -32,8 +32,18 @@ extension VehicleprofileModule: JSONMapperProtocol {
     }
 
     private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink] {
-        let radio_id = self.radio_id?.stringValue
-        let requestRadio = WOTJSONLink(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
+        let requestRadio = radioRequest(for: self.radio_id, inContext: context)
+        let requestEngine = engineRequest(for: self.engine_id, inContext: context)
+        let requestGun = gunRequest(for: self.gun_id, inContext: context)
+        let requestSuspension = suspensionRequest(for: self.suspension_id, inContext: context)
+        let requestTurret = turretRequest(for: self.turret_id, inContext: context)
+
+        return [requestRadio, requestEngine, requestGun, requestSuspension, requestTurret]
+    }
+
+    func radioRequest(for radio_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
+        return WOTJSONLink(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id?.stringValue, completion: { [weak self] json in
+            guard let self = self else { return }
             guard let module_id = json[#keyPath(Tankradios.module_id)] as? NSNumber else {
                 return
             }
@@ -44,9 +54,11 @@ extension VehicleprofileModule: JSONMapperProtocol {
             tankRadios.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
             self.tankradios = tankRadios
         })
+    }
 
-        let engine_id = self.engine_id?.stringValue ?? ""
-        let requestEngine = WOTJSONLink(clazz: Tankengines.self, identifier_fieldname: #keyPath(Tankengines.module_id), identifier: engine_id, completion: { json in
+    func engineRequest(for engine_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
+        return WOTJSONLink(clazz: Tankengines.self, identifier_fieldname: #keyPath(Tankengines.module_id), identifier: engine_id?.stringValue, completion: { [weak self]  json in
+            guard let self = self else { return }
             guard let module_id = json[#keyPath(Tankengines.module_id)] as? NSNumber else {
                 return
             }
@@ -57,9 +69,11 @@ extension VehicleprofileModule: JSONMapperProtocol {
             tankEngines.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
             self.tankengines = tankEngines
         })
+    }
 
-        let gun_id = self.gun_id?.stringValue ?? ""
-        let requestGun = WOTJSONLink(clazz: Tankguns.self, identifier_fieldname: #keyPath(Tankguns.module_id), identifier: gun_id, completion: { json in
+    func gunRequest(for gun_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
+        return WOTJSONLink(clazz: Tankguns.self, identifier_fieldname: #keyPath(Tankguns.module_id), identifier: gun_id?.stringValue, completion: { [weak self]  json in
+            guard let self = self else { return }
             guard let module_id = json[#keyPath(Tankguns.module_id)] as? NSNumber else {
                 return
             }
@@ -70,9 +84,11 @@ extension VehicleprofileModule: JSONMapperProtocol {
             tankGuns.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
             self.tankguns = tankGuns
         })
+    }
 
-        let suspension_id = self.suspension_id?.stringValue ?? ""
-        let requestSuspension = WOTJSONLink(clazz: Tankchassis.self, identifier_fieldname: #keyPath(Tankchassis.module_id), identifier: suspension_id, completion: { json in
+    func suspensionRequest(for suspension_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
+        return WOTJSONLink(clazz: Tankchassis.self, identifier_fieldname: #keyPath(Tankchassis.module_id), identifier: suspension_id?.stringValue, completion: { [weak self]  json in
+            guard let self = self else { return }
             guard let module_id = json[#keyPath(Tankchassis.module_id)] as? NSNumber else {
                 return
             }
@@ -83,9 +99,11 @@ extension VehicleprofileModule: JSONMapperProtocol {
             tankChassis.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
             self.tankchassis = tankChassis
         })
+    }
 
-        let turret_id = self.turret_id?.stringValue ?? ""
-        let requestTurret = WOTJSONLink(clazz: Tankturrets.self, identifier_fieldname: #keyPath(Tankturrets.module_id), identifier: turret_id, completion: { json in
+    func turretRequest(for turret_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
+        return WOTJSONLink(clazz: Tankturrets.self, identifier_fieldname: #keyPath(Tankturrets.module_id), identifier: turret_id?.stringValue, completion: { [weak self]  json in
+            guard let self = self else { return }
             guard let module_id = json[#keyPath(Tankturrets.module_id)] as? NSNumber else {
                 return
             }
@@ -96,7 +114,5 @@ extension VehicleprofileModule: JSONMapperProtocol {
             tankTurret.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
             self.tankturrets = tankTurret
         })
-
-        return [requestRadio, requestEngine, requestGun, requestSuspension, requestTurret]
     }
 }

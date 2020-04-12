@@ -43,7 +43,7 @@ extension ModulesTree: JSONMapperProtocol {
         self.price_credit = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_credit)] as? Int ?? 0)
         self.price_xp = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_xp)] as? Int ?? 0)
 
-        /**
+        /*
          *  availableTypes
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
          */

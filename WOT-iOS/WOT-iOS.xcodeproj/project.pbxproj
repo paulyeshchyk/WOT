@@ -2045,7 +2045,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint\n";
+			shellScript = "#SwiftLint\n#TODO: build SwiftLint from PODS folder, using: make install\n/usr/local/bin/swiftlint lint\n";
 		};
 		1D9CAA3421119BD300B6CA5A /* Swiftgen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2059,7 +2059,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/SwiftGen/bin/swiftgen strings -p $PODS_ROOT/SwiftGen/templates/strings/flat-swift3.stencil --output ${SRCROOT}/WOT-iOS/resources/strings.swift ${SRCROOT}/WOT-iOS/resources/en.lproj/Localizable.strings\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/SwiftGen/bin/swiftgen.app/Contents/MacOS/swiftgen strings -p $PODS_ROOT/SwiftGen/templates/strings/flat-swift3.stencil --output ${SRCROOT}/WOT-iOS/resources/strings.swift ${SRCROOT}/WOT-iOS/resources/en.lproj/Localizable.strings\n";
 		};
 		1DB5FB4E2428A2B400413F41 /* Swiftformat */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2091,6 +2091,7 @@
 				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
 				"${BUILT_PRODUCTS_DIR}/MMDrawerController/MMDrawerController.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftFormat/SwiftFormat.framework",
 				"${BUILT_PRODUCTS_DIR}/WYPopoverController/WYPopoverController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2100,6 +2101,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMDrawerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftFormat.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WYPopoverController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

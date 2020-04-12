@@ -80,7 +80,7 @@ class TESTWOTDataTanksFetchControllerListener: WOTDataFetchControllerListenerPro
             XCTFail("missing expectation")
             return
         }
-        by.fetchedNodes(byPredicates: self.predicates, filteredCompletion: { predicate, data in
+        by.fetchedNodes(byPredicates: self.predicates, filteredCompletion: { _, data in
             self.result = data
             expectation.fulfill()
         })

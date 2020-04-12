@@ -39,39 +39,50 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
         var result = [WOTNodeProtocol]()
         let cnt = fetchedObjects.count
 
-        if cnt == 0 {
+        switch cnt.asIntEnum() {
+        case .zero:
             if useEmptyNode {
                 let node = self.createEmptyNode()
                 result.append(node)
-                return result
-            } else {
-                return result
             }
-        }
-
-        if cnt == 1 {
+        case .single:
             fetchedObjects.forEach { (fetchedObject) in
                 if let fetchObj = fetchedObject as? NSFetchRequestResult {
                     let node = self.createNode(fetchedObject: fetchObj, byPredicate: byPredicate)
                     result.append(node)
                 }
             }
-            return result
-        } else {
-            let hasMoreThenOne = (cnt > 1)
-            if self.collapseToGroups && hasMoreThenOne {
+        case .multiple:
+            if self.collapseToGroups {
                 let node = self.createNodeGroup(fetchedObjects: fetchedObjects, byPredicate: byPredicate)
                 result.append(node)
-                return result
-            }
-
-            fetchedObjects.forEach { (fetchedObject) in
-                if let fetchObj = fetchedObject as? NSFetchRequestResult {
-                    let node = self.createNode(fetchedObject: fetchObj, byPredicate: byPredicate)
-                    result.append(node)
+            } else {
+                fetchedObjects.forEach { (fetchedObject) in
+                    if let fetchObj = fetchedObject as? NSFetchRequestResult {
+                        let node = self.createNode(fetchedObject: fetchObj, byPredicate: byPredicate)
+                        result.append(node)
+                    }
                 }
             }
-            return result
+        case .negative: fatalError("negative value found")
         }
+
+        return result
+    }
+}
+
+extension Int {
+    enum IntEnum {
+        case negative
+        case zero
+        case single
+        case multiple
+    }
+
+    func asIntEnum() -> IntEnum {
+        if self < 0 { return .negative}
+        if self == 0 { return .zero }
+        if self == 1 { return .single}
+        return .multiple
     }
 }
