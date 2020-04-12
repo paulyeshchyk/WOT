@@ -6,6 +6,45 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension Vehicles: KeypathProtocol {
+    @objc
+    public class func keypathsLight() -> [String] {
+        return [#keyPath(Vehicles.name),
+                #keyPath(Vehicles.short_name),
+                #keyPath(Vehicles.type),
+                #keyPath(Vehicles.nation),
+                #keyPath(Vehicles.tag),
+                #keyPath(Vehicles.tier),
+                #keyPath(Vehicles.tank_id)
+        ]
+    }
+
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(Vehicles.name),
+                #keyPath(Vehicles.short_name),
+                #keyPath(Vehicles.is_premium),
+                #keyPath(Vehicles.is_gift),
+                #keyPath(Vehicles.type),
+                #keyPath(Vehicles.nation),
+                #keyPath(Vehicles.tag),
+                #keyPath(Vehicles.tier),
+                #keyPath(Vehicles.tank_id),
+                #keyPath(Vehicles.default_profile),
+                #keyPath(Vehicles.modules_tree),
+                #keyPath(Vehicles.engines),
+                #keyPath(Vehicles.suspensions),
+                #keyPath(Vehicles.radios),
+                #keyPath(Vehicles.guns),
+                #keyPath(Vehicles.turrets)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Vehicles.keypaths()
+    }
+}
+
 extension Vehicles: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case is_premium_igr

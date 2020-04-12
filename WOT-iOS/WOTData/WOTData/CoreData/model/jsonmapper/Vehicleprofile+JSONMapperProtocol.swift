@@ -6,6 +6,29 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension Vehicleprofile: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(Vehicleprofile.max_ammo),
+                #keyPath(Vehicleprofile.weight),
+                #keyPath(Vehicleprofile.hp),
+                #keyPath(Vehicleprofile.is_default),
+                #keyPath(Vehicleprofile.modules),
+//                #keyPath(Vehicleprofile.modulesTree),
+//                #keyPath(Vehicleprofile.vehicles),
+                #keyPath(Vehicleprofile.speed_forward),
+                #keyPath(Vehicleprofile.hull_hp),
+                #keyPath(Vehicleprofile.speed_backward),
+                #keyPath(Vehicleprofile.tank_id),
+                #keyPath(Vehicleprofile.max_weight)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Vehicleprofile.keypaths()
+    }
+}
+
 extension Vehicleprofile: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case max_ammo

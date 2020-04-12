@@ -16,6 +16,7 @@
 		1D2612182410DEE500CFEB16 /* WOTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2612172410DEE500CFEB16 /* WOTRequest.swift */; };
 		1D294B6522116856002DA600 /* String_UrlEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D294B6422116856002DA600 /* String_UrlEncode.swift */; };
 		1D3005C4241A241C00E453B9 /* WOTPivotAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */; };
+		1D4ACF34244373C400C6CBE0 /* KeyPathListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4ACF33244373C400C6CBE0 /* KeyPathListable.swift */; };
 		1D5668F12424BD54008458AF /* WOTWebSessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5668F02424BD54008458AF /* WOTWebSessionManagerProtocol.swift */; };
 		1D5D021823C7334F004B0314 /* WOTTankPivotNodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */; };
 		1D5D022C23C8623D004B0314 /* WOTDataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D022A23C8623D004B0314 /* WOTDataFetchController.swift */; };
@@ -146,6 +147,7 @@
 		1D2612172410DEE500CFEB16 /* WOTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequest.swift; sourceTree = "<group>"; };
 		1D294B6422116856002DA600 /* String_UrlEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_UrlEncode.swift; sourceTree = "<group>"; };
 		1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotAppManager.swift; sourceTree = "<group>"; };
+		1D4ACF33244373C400C6CBE0 /* KeyPathListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathListable.swift; sourceTree = "<group>"; };
 		1D5668F02424BD54008458AF /* WOTWebSessionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManagerProtocol.swift; sourceTree = "<group>"; };
 		1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotNodeCreator.swift; sourceTree = "<group>"; };
 		1D5D022A23C8623D004B0314 /* WOTDataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataFetchController.swift; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 			children = (
 				1D73BB7724436936004B720A /* Coding.swift */,
 				1D73BB7824436936004B720A /* AnyCodable.swift */,
+				1D4ACF33244373C400C6CBE0 /* KeyPathListable.swift */,
 			);
 			path = codable;
 			sourceTree = "<group>";
@@ -973,6 +976,7 @@
 				1D8C298B21358B4200759C42 /* NSMutableArray+WOT.m in Sources */,
 				1D5D023023C86299004B0314 /* WOTCoredataProviderProtocol.swift in Sources */,
 				1DA83CB3213563C50039CB4B /* NSBundle+LanguageBundle.m in Sources */,
+				1D4ACF34244373C400C6CBE0 /* KeyPathListable.swift in Sources */,
 				1DE558E52124560500576D41 /* WOTNodeProtocol.swift in Sources */,
 				1D65F7F82216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift in Sources */,
 				1D3005C4241A241C00E453B9 /* WOTPivotAppManager.swift in Sources */,

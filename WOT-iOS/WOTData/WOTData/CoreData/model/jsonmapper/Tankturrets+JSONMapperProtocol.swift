@@ -6,6 +6,27 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension Tankturrets: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(Tankturrets.name),
+                #keyPath(Tankturrets.module_id),
+                #keyPath(Tankturrets.nation),
+                #keyPath(Tankturrets.armor_board),
+                #keyPath(Tankturrets.armor_fedd),
+                #keyPath(Tankturrets.armor_forehead),
+                #keyPath(Tankturrets.circular_vision_radius),
+                #keyPath(Tankturrets.price_credit),
+                #keyPath(Tankturrets.price_gold),
+                #keyPath(Tankturrets.rotation_speed)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankturrets.keypaths()
+    }
+}
+
 extension Tankturrets: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case name

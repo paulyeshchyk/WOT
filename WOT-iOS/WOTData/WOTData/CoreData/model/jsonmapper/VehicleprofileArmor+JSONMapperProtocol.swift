@@ -6,6 +6,20 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension VehicleprofileArmor: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(VehicleprofileArmor.front),
+                #keyPath(VehicleprofileArmor.sides),
+                #keyPath(VehicleprofileArmor.rear)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileArmor.keypaths()
+    }
+}
+
 extension VehicleprofileArmor: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case front

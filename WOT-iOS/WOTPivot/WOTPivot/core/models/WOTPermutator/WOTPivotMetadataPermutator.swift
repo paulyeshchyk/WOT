@@ -25,6 +25,8 @@ public class WOTPivotMetaTypeConverter: NSObject {
             return WOTPivotRowNode.self
         case .data:
             return WOTPivotDataNode.self
+        @unknown default:
+            fatalError("unknown pivotnode type")
         }
     }
 }

@@ -16,10 +16,6 @@ open class WOTNode: NSObject, WOTNodeProtocol {
         self.name = nameValue
     }
 
-//    override open var hashValue: Int {
-//        return self.fullName.hashValue
-//    }
-
     override open var hash: Int {
         return self.fullName.hashValue
     }

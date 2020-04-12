@@ -6,6 +6,28 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension VehicleprofileGun: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(VehicleprofileGun.move_down_arc),
+                #keyPath(VehicleprofileGun.caliber),
+                #keyPath(VehicleprofileGun.name),
+                #keyPath(VehicleprofileGun.weight),
+                #keyPath(VehicleprofileGun.move_up_arc),
+                #keyPath(VehicleprofileGun.fire_rate),
+                #keyPath(VehicleprofileGun.dispersion),
+                #keyPath(VehicleprofileGun.tag),
+                #keyPath(VehicleprofileGun.reload_time),
+                #keyPath(VehicleprofileGun.tier),
+                #keyPath(VehicleprofileGun.aim_time)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileGun.keypaths()
+    }
+}
+
 extension VehicleprofileGun: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case move_down_arc

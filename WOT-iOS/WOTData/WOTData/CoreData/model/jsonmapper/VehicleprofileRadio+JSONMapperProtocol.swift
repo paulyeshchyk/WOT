@@ -6,6 +6,22 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension VehicleprofileRadio: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(VehicleprofileRadio.tier),
+                #keyPath(VehicleprofileRadio.signal_range),
+                #keyPath(VehicleprofileRadio.tag),
+                #keyPath(VehicleprofileRadio.weight),
+                #keyPath(VehicleprofileRadio.name)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileRadio.keypaths()
+    }
+}
+
 extension VehicleprofileRadio: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case tier

@@ -8,15 +8,6 @@
 
 import Foundation
 
-@objc
-public protocol KeypathProtocol: class {
-    @objc
-    static func keypaths() -> [String]
-
-    @objc
-    func instanceKeypaths() -> [String]
-}
-
 public typealias WOTRequestCompletion = () -> Void
 public typealias WOTRequestIdType = Int
 

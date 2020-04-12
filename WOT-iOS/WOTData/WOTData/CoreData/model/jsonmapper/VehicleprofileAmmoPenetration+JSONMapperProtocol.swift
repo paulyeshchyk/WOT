@@ -6,6 +6,20 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension VehicleprofileAmmoPenetration: KeypathProtocol {
+    @objc
+    public static func keypaths() -> [String] {
+        return [#keyPath(VehicleprofileAmmoPenetration.avg_value),
+                #keyPath(VehicleprofileAmmoPenetration.max_value),
+                #keyPath(VehicleprofileAmmoPenetration.min_value)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileAmmoPenetration.keypaths()
+    }
+}
+
 extension VehicleprofileAmmoPenetration: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case min_value

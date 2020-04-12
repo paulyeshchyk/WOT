@@ -6,6 +6,23 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension Tankguns: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(Tankguns.name),
+                #keyPath(Tankguns.module_id),
+                #keyPath(Tankguns.nation),
+                #keyPath(Tankguns.price_credit),
+                #keyPath(Tankguns.price_gold),
+                #keyPath(Tankguns.rate)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankguns.keypaths()
+    }
+}
+
 extension Tankguns: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case name

@@ -6,6 +6,23 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension Tankradios: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(Tankradios.name),
+                #keyPath(Tankradios.module_id),
+                #keyPath(Tankradios.distance),
+                #keyPath(Tankradios.nation),
+                #keyPath(Tankradios.price_credit),
+                #keyPath(Tankradios.price_gold)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankradios.keypaths()
+    }
+}
+
 extension Tankradios: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case name

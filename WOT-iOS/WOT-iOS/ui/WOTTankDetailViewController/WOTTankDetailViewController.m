@@ -380,10 +380,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
      */
 
     [self updateUINeedReset:NO];
-    
 }
-
-
 
 #pragma mark - IBActions
 - (IBAction)onConfigurationCustomSelection:(id)sender {

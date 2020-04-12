@@ -6,6 +6,18 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension VehicleprofileTurret: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return []
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileTurret.keypaths()
+    }
+}
+
 extension VehicleprofileTurret: JSONMapperProtocol {
     public typealias Fields = Void
 

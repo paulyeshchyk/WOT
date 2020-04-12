@@ -6,6 +6,24 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension Tankchassis: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(Tankchassis.name),
+                #keyPath(Tankchassis.module_id),
+                #keyPath(Tankchassis.max_load),
+                #keyPath(Tankchassis.nation),
+                #keyPath(Tankchassis.price_credit),
+                #keyPath(Tankchassis.price_gold),
+                #keyPath(Tankchassis.rotation_speed)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Tankchassis.keypaths()
+    }
+}
+
 extension Tankchassis: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case name

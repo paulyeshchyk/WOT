@@ -6,6 +6,23 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension VehicleprofileEngine: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(VehicleprofileEngine.name),
+                #keyPath(VehicleprofileEngine.power),
+                #keyPath(VehicleprofileEngine.weight),
+                #keyPath(VehicleprofileEngine.tag),
+                #keyPath(VehicleprofileEngine.fire_chance),
+                #keyPath(VehicleprofileEngine.tier)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileEngine.keypaths()
+    }
+}
+
 extension VehicleprofileEngine: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case name

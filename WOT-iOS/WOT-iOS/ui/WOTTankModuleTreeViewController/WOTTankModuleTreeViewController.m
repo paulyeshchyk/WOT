@@ -35,9 +35,7 @@
 }
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
-   id<WOTNodeProtocol> result = [[WOTNode alloc] initWithName: name];
-    result.isVisible = true;
-    return result;
+   return [[WOTNode alloc] initWithName: name];
 }
 
 @end
@@ -82,7 +80,6 @@
 
 @implementation WOTTankModuleTreeViewController
 @synthesize hashData;
-
 
 - (void)dealloc {
     

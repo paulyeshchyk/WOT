@@ -60,7 +60,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     @objc
     @discardableResult
     public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool {
-        if !addRequest(request, forGroupId: forGroupId) { return false }
+        guard addRequest(request, forGroupId: forGroupId) else { return false }
 
         request.hostConfiguration = hostConfig
         let result = request.start(arguments)

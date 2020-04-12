@@ -10,7 +10,6 @@ import Foundation
 
 #warning("use WOTMetricProtocol instead of WOTMetric")
 
-@objc
 public protocol WOTTankMetricsListProtocol {
     var sortedMetrics: [WOTMetric] { get }
     func add(tankId: WOTTanksIDList)
@@ -20,7 +19,6 @@ public protocol WOTTankMetricsListProtocol {
     func remove(metric: WOTMetric)
 }
 
-@objc
 public class WOTTankMetricsList: NSObject {
     public var sortedMetrics: [WOTMetric] {
         return self.metrics.sorted { (obj1, obj2) -> Bool in

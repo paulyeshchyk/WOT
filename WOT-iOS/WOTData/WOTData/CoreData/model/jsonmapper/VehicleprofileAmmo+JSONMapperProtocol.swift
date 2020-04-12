@@ -6,6 +6,18 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc extension VehicleprofileAmmo: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(VehicleprofileAmmo.type)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileAmmo.keypaths()
+    }
+}
+
 extension VehicleprofileAmmo: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case type
