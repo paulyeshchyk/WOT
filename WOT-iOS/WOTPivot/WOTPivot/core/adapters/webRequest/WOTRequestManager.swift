@@ -140,7 +140,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
         let requestIds = requestCoordinator.requestIds(forClass: modelClass)
         requestIds?.forEach({ requestId in
-            requestCoordinator.requestId(requestId, processBinary: data, error: error, jsonLinksCallback: { [weak self] jsonLinks in
+            requestCoordinator.processBinary(data, forRequestId: requestId, error: error, jsonLinksCallback: { [weak self] jsonLinks in
                 guard let self = self else { return }
                 guard let links = jsonLinks else {
 //                    print("no links found for: \(request.description)")

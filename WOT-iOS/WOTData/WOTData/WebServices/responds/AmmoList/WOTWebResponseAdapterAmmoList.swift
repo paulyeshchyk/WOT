@@ -11,12 +11,12 @@ import Foundation
 @objc
 public class WOTWebResponseAdapterAmmoList: NSObject, WOTWebResponseAdapter {
     @objc
-    public func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    public func parseData(_ data: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return nil
     }
 
     @objc
-    public func parseJSON(_ json: JSON?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    public func parseJSON(_ json: JSON?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return nil
     }
 }

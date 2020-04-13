@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public class WOTWebResponseAdapterTurrets: NSObject, WOTWebResponseAdapter {
-    public func parseData(_ binary: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    public func parseData(_ binary: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return binary?.parseAsJSON { (json) in
 
             guard let tankTurretsDictionary = json?[WGJsonFields.data] as? Dictionary<AnyHashable, Any> else {

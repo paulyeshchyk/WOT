@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
-    public func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    public func parseData(_ data: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return  data?.parseAsJSON({ (json) in
 
             guard let keys = json?.keys, keys.count != 0 else {

@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
-    public func parseData(_ binary: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    public func parseData(_ binary: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return binary?.parseAsJSON({ json in
 
             guard let keys = json?.keys, keys.count != 0 else {

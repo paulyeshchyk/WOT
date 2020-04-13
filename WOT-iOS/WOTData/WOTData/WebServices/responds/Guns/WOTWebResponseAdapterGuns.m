@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterGuns
 
-- (NSError *)parseData:(NSData *)data error:(NSError *) error jsonLinksCallback:(void (^)(NSArray<WOTJSONLink *> * _Nullable))nestedRequestsCallback {
+- (NSError *)parseData:(NSData *)data jsonLinksCallback:(void (^)(NSArray<WOTJSONLink *> * _Nullable))nestedRequestsCallback {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 

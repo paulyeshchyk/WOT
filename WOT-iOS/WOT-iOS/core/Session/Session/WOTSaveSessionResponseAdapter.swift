@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public class WOTSaveSessionResponseAdapter: NSObject, WOTWebResponseAdapter {
-    public func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    public func parseData(_ data: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
 //        WOTSessionManager.sharedInstance()?.invalidateTimer({ (interval) -> Timer? in
 //            if #available(iOS 10.0, *) {
 //                let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { _ in

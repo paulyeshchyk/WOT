@@ -18,13 +18,13 @@ class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
 }
 
 class WOTWebSessionClearResponseAdapter: NSObject, WOTWebResponseAdapter {
-    func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    func parseData(_ data: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return nil
     }
 }
 
 class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapter {
-    func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    func parseData(_ data: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 
@@ -44,7 +44,7 @@ class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapter {
 }
 
 class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapter {
-    func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    func parseData(_ data: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 
@@ -106,7 +106,7 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapter {
 }
 
 class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapter {
-    func parseData(_ data: Data?, error: Error?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    func parseData(_ data: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 
