@@ -165,6 +165,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     private func jsonLinksCallback(_ jsonLinks: [WOTJSONLink]?) {}
 
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
+        print("\ncenceled request:\n\(request.description)")
         removeRequest(request)
     }
 

@@ -79,6 +79,12 @@
 		1D8C299221358CF700759C42 /* WOTPivotDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C299121358CF700759C42 /* WOTPivotDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D8C299421358DB600759C42 /* WOTLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C299321358DB600759C42 /* WOTLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D9340F824179BF400B18F42 /* WOTRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9340F724179BF400B18F42 /* WOTRequestManager.swift */; };
+		1DA1539E2444CDC700FB3C89 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153972444CDC700FB3C89 /* Reachability.m */; };
+		1DA1539F2444CDC700FB3C89 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA153982444CDC700FB3C89 /* Reachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA153A02444CDC700FB3C89 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1539A2444CDC700FB3C89 /* NSString+RomanUtils.m */; };
+		1DA153A12444CDC700FB3C89 /* RomanNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA1539B2444CDC700FB3C89 /* RomanNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA153A22444CDC700FB3C89 /* NSString+RomanUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA1539C2444CDC700FB3C89 /* NSString+RomanUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA153A32444CDC700FB3C89 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1539D2444CDC700FB3C89 /* RomanNumber.m */; };
 		1DA83CAC2135633F0039CB4B /* NSMutableDictionary+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CA82135633F0039CB4B /* NSMutableDictionary+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DA83CAD2135633F0039CB4B /* NSDictionary+Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CA92135633F0039CB4B /* NSDictionary+Hash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DA83CAE2135633F0039CB4B /* NSMutableDictionary+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83CAA2135633F0039CB4B /* NSMutableDictionary+WOT.m */; };
@@ -214,6 +220,12 @@
 		1D8C299121358CF700759C42 /* WOTPivotDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPivotDefines.h; sourceTree = "<group>"; };
 		1D8C299321358DB600759C42 /* WOTLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTLogger.h; sourceTree = "<group>"; };
 		1D9340F724179BF400B18F42 /* WOTRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestManager.swift; sourceTree = "<group>"; };
+		1DA153972444CDC700FB3C89 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		1DA153982444CDC700FB3C89 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		1DA1539A2444CDC700FB3C89 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
+		1DA1539B2444CDC700FB3C89 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
+		1DA1539C2444CDC700FB3C89 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
+		1DA1539D2444CDC700FB3C89 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
 		1DA83CA82135633F0039CB4B /* NSMutableDictionary+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+WOT.h"; sourceTree = "<group>"; };
 		1DA83CA92135633F0039CB4B /* NSDictionary+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Hash.h"; sourceTree = "<group>"; };
 		1DA83CAA2135633F0039CB4B /* NSMutableDictionary+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+WOT.m"; sourceTree = "<group>"; };
@@ -471,6 +483,8 @@
 		1D73BB7524436936004B720A /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				1DA153962444CDC700FB3C89 /* Reachability */,
+				1DA153992444CDC700FB3C89 /* RomanNumber */,
 				1D73BB7624436936004B720A /* codable */,
 			);
 			name = ThirdParty;
@@ -567,6 +581,26 @@
 				1D8C298921358B4200759C42 /* NSArray+WOT.m */,
 			);
 			path = NSArray;
+			sourceTree = "<group>";
+		};
+		1DA153962444CDC700FB3C89 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				1DA153972444CDC700FB3C89 /* Reachability.m */,
+				1DA153982444CDC700FB3C89 /* Reachability.h */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		1DA153992444CDC700FB3C89 /* RomanNumber */ = {
+			isa = PBXGroup;
+			children = (
+				1DA1539B2444CDC700FB3C89 /* RomanNumber.h */,
+				1DA1539D2444CDC700FB3C89 /* RomanNumber.m */,
+				1DA1539C2444CDC700FB3C89 /* NSString+RomanUtils.h */,
+				1DA1539A2444CDC700FB3C89 /* NSString+RomanUtils.m */,
+			);
+			path = RomanNumber;
 			sourceTree = "<group>";
 		};
 		1DA83C89213558AB0039CB4B /* adapters */ = {
@@ -811,8 +845,11 @@
 				1D8C299421358DB600759C42 /* WOTLogger.h in Headers */,
 				1D8C298421358ACA00759C42 /* NSThread+ExecutionOnMain.h in Headers */,
 				1DA83CB4213563C50039CB4B /* NSBundle+LanguageBundle.h in Headers */,
+				1DA153A22444CDC700FB3C89 /* NSString+RomanUtils.h in Headers */,
+				1DA153A12444CDC700FB3C89 /* RomanNumber.h in Headers */,
 				1D8C298021358A4800759C42 /* NSSet+WOT.h in Headers */,
 				1D8C299221358CF700759C42 /* WOTPivotDefines.h in Headers */,
+				1DA1539F2444CDC700FB3C89 /* Reachability.h in Headers */,
 				1DA83CB9213563F60039CB4B /* NSString+WOTValue.h in Headers */,
 				1D5D024323C87033004B0314 /* NSManagedObject+CoreDataOperations.h in Headers */,
 				1D5D024723C872F5004B0314 /* NSManagedObject+FillProperties.h in Headers */,
@@ -949,6 +986,7 @@
 				1D294B6522116856002DA600 /* String_UrlEncode.swift in Sources */,
 				1D65F8272216A7B8006A85E4 /* WOTDimensionFilterCalculator.swift in Sources */,
 				1D7A424A241B5FBA004F0996 /* WOTWebResponseAdapterNested.swift in Sources */,
+				1DA1539E2444CDC700FB3C89 /* Reachability.m in Sources */,
 				1DE558E12124560500576D41 /* WOTPivotDataNode.swift in Sources */,
 				1DBF89A8240D1E19007DF8B2 /* WOTTankMetricList.swift in Sources */,
 				1D5D024223C87033004B0314 /* NSManagedObject+CoreDataOperations.m in Sources */,
@@ -984,11 +1022,13 @@
 				1DE558E72124560500576D41 /* WOTNode.swift in Sources */,
 				1DC6D4CF212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift in Sources */,
 				1D65F7F62216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift in Sources */,
+				1DA153A02444CDC700FB3C89 /* NSString+RomanUtils.m in Sources */,
 				1D8C297F21358A4800759C42 /* NSSet+WOT.m in Sources */,
 				1D65F7BE2215795F006A85E4 /* Dictionary_Merge.swift in Sources */,
 				1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */,
 				1DBF89BE240FAE8C007DF8B2 /* WOTRequestArguments.swift in Sources */,
 				1DE558E02124560500576D41 /* WOTPivotDataGroupNode.swift in Sources */,
+				1DA153A32444CDC700FB3C89 /* RomanNumber.m in Sources */,
 				1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */,
 				1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */,
 				1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */,

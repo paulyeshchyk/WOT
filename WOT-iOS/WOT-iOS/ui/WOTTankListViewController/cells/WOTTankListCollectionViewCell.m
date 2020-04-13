@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankListCollectionViewCell.h"
-#import "RomanNumber.h"
+#import <WOTPivot/WOTPivot.h>
 #import "UIImageView+WebCache.h"
 
 @interface WOTTankListCollectionViewCell()

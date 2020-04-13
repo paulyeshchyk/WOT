@@ -22,6 +22,9 @@
 #import "NSManagedObject+CoreDataOperations.h"
 #import "NSManagedObject+FillProperties.h"
 #import "WOTLogger.h"
+#import "NSString+RomanUtils.h"
+#import "RomanNumber.h"
+
 
 //! Project version number for WOTPivot.
 FOUNDATION_EXPORT double WOTPivotVersionNumber;
