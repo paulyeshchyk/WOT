@@ -29,7 +29,7 @@
     }
 }
 
-extension Vehicleprofile: JSONMapperProtocol {
+extension Vehicleprofile {
     public enum FieldKeys: String, CodingKey {
         case max_ammo
         case weight
@@ -46,7 +46,7 @@ extension Vehicleprofile: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
             jsonLinksCallback?(nil)

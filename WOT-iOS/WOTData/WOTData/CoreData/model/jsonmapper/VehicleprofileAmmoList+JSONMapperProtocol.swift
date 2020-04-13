@@ -6,11 +6,11 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-extension VehicleprofileAmmoList: JSONMapperProtocol {
+extension VehicleprofileAmmoList {
     public typealias Fields = Void
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public override func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
             jsonLinksCallback?(nil)

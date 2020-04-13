@@ -124,7 +124,9 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
                 requestManager.removeListener(self)
             }
         }
-        super.loadModel()
+        DispatchQueue.main.async {
+            super.loadModel()
+        }
     }
 
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol) {}

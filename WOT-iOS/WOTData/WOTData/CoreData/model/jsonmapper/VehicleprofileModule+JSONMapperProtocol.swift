@@ -9,11 +9,11 @@
 import Foundation
 import WOTPivot
 
-extension VehicleprofileModule: JSONMapperProtocol {
+extension VehicleprofileModule {
     public typealias Fields = Void
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
 

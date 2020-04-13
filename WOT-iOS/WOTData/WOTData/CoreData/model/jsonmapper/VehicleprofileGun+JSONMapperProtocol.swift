@@ -28,7 +28,7 @@
     }
 }
 
-extension VehicleprofileGun: JSONMapperProtocol {
+extension VehicleprofileGun {
     public enum FieldKeys: String, CodingKey {
         case move_down_arc
         case caliber
@@ -46,7 +46,7 @@ extension VehicleprofileGun: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
             jsonLinksCallback?(nil)

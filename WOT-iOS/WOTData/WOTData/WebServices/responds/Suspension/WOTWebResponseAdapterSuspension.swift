@@ -13,19 +13,20 @@ open class WOTWebResponseAdapterSuspension: NSObject, WOTWebResponseAdapter {
     public func parseData(_ binary: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
         return binary?.parseAsJSON { (json) in
 
-            guard let keys = json?.keys, keys.count != 0 else {
+            guard let json = json, json.keys.count != 0 else {
+                print("no json for \(type(of: self))")
                 return
             }
 
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
             context.perform {
-                keys.forEach { (key) in
-                    guard let suspension = json?[key] as? [AnyHashable: Any] else { return }
+                json.keys.forEach { (key) in
+                    guard let suspension = json[key] as? [AnyHashable: Any] else { return }
                     guard let tag = suspension[#keyPath(VehicleprofileSuspension.tag)] as? String else { return }
-                    let predicate = NSPredicate(format: "%K == %@", #keyPath(VehicleprofileSuspension.tag), tag)
-                    guard let newObject = NSManagedObject.findOrCreateObject(forClass: VehicleprofileSuspension.self, predicate: predicate, context: context) as? VehicleprofileSuspension else { return }
                     let suspensionPK = PrimaryKey(name: #keyPath(VehicleprofileSuspension.tag), value: tag as AnyObject, predicateFormat: "%K == %@")
-                    newObject.mapping(fromJSON: suspension, into: context, parentPrimaryKey: suspensionPK, jsonLinksCallback: jsonLinksCallback)
+                    let predicate = NSPredicate(format: "%K == %@", #keyPath(VehicleprofileSuspension.tag), tag)
+                    let newObject = NSManagedObject.findOrCreateObject(forClass: VehicleprofileSuspension.self, predicate: predicate, context: context)
+                    newObject?.mapping(fromJSON: suspension, into: context, parentPrimaryKey: suspensionPK, jsonLinksCallback: jsonLinksCallback)
                 }
 
                 if context.hasChanges {

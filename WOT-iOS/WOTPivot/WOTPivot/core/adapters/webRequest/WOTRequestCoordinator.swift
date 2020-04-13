@@ -14,12 +14,27 @@ public typealias WOTRequestIdType = Int
 public typealias  WOTRequestCallback = (Data?, Error?) -> Void
 
 @objc
-public protocol WOTRequestCoordinatorProtocol {
+public protocol WOTRequestDataBindingProtocol {
     @objc
-    func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol?
+    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
 
     @objc
+    func unregisterDataAdapter(for requestId: WOTRequestIdType)
+
+    @objc
+    func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass?
+
+    @objc
+    func request(for requestId: WOTRequestIdType) -> AnyClass?
+}
+
+@objc
+public protocol WOTRequestDatasourceProtocol {
+    @objc
     func register(_ request: Any)
+
+    @objc
+    func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol?
 
     @objc
     func add(request: WOTRequestProtocol, byGroupId: String) -> Bool
@@ -28,31 +43,48 @@ public protocol WOTRequestCoordinatorProtocol {
     func cancelRequests(byGroupId: String) -> Bool
 
     @objc
-    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
-
-    @objc
-    func request(for requestId: WOTRequestIdType) -> AnyClass?
-
-    @objc
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]?
-
-    @objc
-    func unregister(dataAdaprterClass: AnyClass, forRequestId: WOTRequestIdType)
-
-    @objc
-    func dataAdapter(for requestId: WOTRequestIdType) -> [AnyClass]?
-
-    @objc
-    func processBinary(_ binary: Data?, forRequestId requestId: WOTRequestIdType, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)?)
 }
+
+@objc
+public protocol WOTRequestDataParserProtocol {
+    @objc
+    func processBinary(_ binary: Data?, fromRequest request: WOTRequestProtocol, error: Error?, completion: WOTJSONLinksCallback?)
+}
+
+@objc
+public protocol WOTRequestCoordinatorProtocol: WOTRequestDataBindingProtocol, WOTRequestDatasourceProtocol, WOTRequestDataParserProtocol {}
 
 @objc
 public class WOTRequestCoordinator: NSObject {
     private var registeredRequests: [WOTRequestIdType: AnyClass] = .init()
-    private var registeredDataAdapters: [WOTRequestIdType: [AnyClass]] = .init()
+    private var registeredDataAdapters: [WOTRequestIdType: AnyClass] = .init()
 }
 
-extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
+extension WOTRequestCoordinator: WOTRequestDataBindingProtocol {
+    @objc
+    public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass) {
+        self.registeredRequests[requiestId] = requestClass
+        self.registeredDataAdapters[requiestId] = dataAdapterClass
+    }
+
+    @objc
+    public func unregisterDataAdapter(for requestId: WOTRequestIdType) {
+        self.registeredDataAdapters.removeValue(forKey: requestId)
+    }
+
+    @objc
+    public func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass? {
+        return self.registeredDataAdapters[requestId]
+    }
+
+    @objc
+    public func request(for requestId: WOTRequestIdType) -> AnyClass? {
+        return self.registeredRequests[requestId]
+    }
+}
+
+extension WOTRequestCoordinator: WOTRequestDatasourceProtocol {
     @objc
     public func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol? {
         guard let Clazz = request(for: forRequestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self) else {
@@ -78,18 +110,6 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass) {
-        self.registeredRequests[requiestId] = requestClass
-
-        var array: [AnyClass] = .init()
-        if let existance = self.registeredDataAdapters[requiestId] {
-            array.append(contentsOf: existance)
-        }
-        array.append(dataAdapterClass)
-        self.registeredDataAdapters[requiestId] = array
-    }
-
-    @objc
     public func requestIds(forClass: AnyClass) -> [WOTRequestIdType]? {
         let result =  self.registeredRequests.keys.filter { key in
             guard let requestClass = self.registeredRequests[key], requestClass.conforms(to: WOTModelServiceProtocol.self) else { return false }
@@ -99,46 +119,35 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
         }
         return result
     }
+}
 
+extension WOTRequestCoordinator: WOTRequestDataParserProtocol {
     @objc
-    public func request(for requestId: WOTRequestIdType) -> AnyClass? {
-        return self.registeredRequests[requestId]
+    public func processBinary(_ binary: Data?, fromRequest request: WOTRequestProtocol, error: Error?, completion: WOTJSONLinksCallback?) {
+        guard let clazz = type(of: request) as? NSObject.Type else { return }
+        guard let instance = clazz.init() as? WOTModelServiceProtocol else { return }
+        guard let modelClass = instance.instanceModelClass() else { return }
+
+        let requestIds = self.requestIds(forClass: modelClass)
+        requestIds?.forEach({ requestId in
+            processBinary(binary, requestId: requestId, completion: completion)
+        })
     }
 
-    @objc
-    public func unregister(dataAdaprterClass: AnyClass, forRequestId: WOTRequestIdType) {
-        guard var array = self.registeredDataAdapters[forRequestId] else {
-            return
-        }
-        array.removeAll { (existedAdaprterClass) -> Bool in
-            existedAdaprterClass == dataAdaprterClass
-        }
-        self.registeredDataAdapters[forRequestId] = array
-    }
-
-    @objc
-    public func dataAdapter(for requestId: WOTRequestIdType) -> [AnyClass]? {
-        return self.registeredDataAdapters[requestId]
-    }
-
-    @objc
-    public func processBinary(_ binary: Data?, forRequestId requestId: WOTRequestIdType, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)?) {
-        guard let adapters = self.dataAdapter(for: requestId) else {
+    private func processBinary(_ binary: Data?, requestId: WOTRequestIdType, completion: WOTJSONLinksCallback?) {
+        guard let AdapterType = self.dataAdapter(for: requestId) else {
             print("dataadapter not found")
             return
         }
 
-        adapters.forEach { AdapterType in
-            guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapter else {
-                print("adapter is not WOTWebResponseAdapter")
-                return
-            }
-
-            let error = adapter.parseData(binary, jsonLinksCallback: jsonLinksCallback)
-            if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
-                print("\(NSStringFromClass(Clazz)) raized:\(text)")
-            }
+        guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapter else {
+            print("adapter is not WOTWebResponseAdapter")
+            return
         }
-        return
+
+        let error = adapter.parseData(binary, jsonLinksCallback: completion)
+        if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
+            print("\(NSStringFromClass(Clazz)) raized:\(text)")
+        }
     }
 }

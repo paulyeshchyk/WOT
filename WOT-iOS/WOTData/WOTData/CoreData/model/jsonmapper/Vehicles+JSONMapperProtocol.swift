@@ -45,7 +45,7 @@
     }
 }
 
-extension Vehicles: JSONMapperProtocol {
+extension Vehicles {
     public enum FieldKeys: String, CodingKey {
         case is_premium_igr
         case is_wheeled
@@ -66,7 +66,7 @@ extension Vehicles: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
             jsonLinksCallback?(nil)

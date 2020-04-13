@@ -20,7 +20,7 @@
     }
 }
 
-extension VehicleprofileAmmoDamage: JSONMapperProtocol {
+extension VehicleprofileAmmoDamage {
     public enum FieldKeys: String, CodingKey {
         case min_value
         case avg_value

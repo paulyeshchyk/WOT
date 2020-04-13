@@ -78,14 +78,22 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         grouppedRequests[groupId]?.forEach { $0.cancel() }
     }
 
-    fileprivate func queue(parentRequest: WOTRequestProtocol?, jsonLinks: ([WOTJSONLink?])?) {
-        jsonLinks?.compactMap { $0 }.forEach { (linkedObjectRequest) in
-            if let requestIDs = requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz) {
-                requestIDs.forEach({ (requestId) in
-                    queue(parentRequest: parentRequest, requestId: requestId, jsonLink: linkedObjectRequest)
-                })
-            } else {
-                print("requests not parsed")
+    fileprivate func request(_ parentRequest: WOTRequestProtocol?, queueJsonLinks jsonLinks: ([WOTJSONLink?])?) {
+        guard let jsonLinks = jsonLinks, jsonLinks.count != 0 else {
+            return
+        }
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            jsonLinks.compactMap { $0 }.forEach { (linkedObjectRequest) in
+                if let requestIDs = self.requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz) {
+                    requestIDs.forEach({ (requestId) in
+                        self.queue(parentRequest: parentRequest, requestId: requestId, jsonLink: linkedObjectRequest)
+                    })
+                } else {
+                    print("requests not parsed")
+                }
             }
         }
     }
@@ -128,36 +136,30 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
-        defer {
-            self.removeRequest(request)
+        //
+        print("\nfinished load data for request:\n\(request.description)")
+        requestCoordinator.processBinary(data, fromRequest: request, error: error) {  [weak self] jsonLinks in
+
+            let theRequest = request.parentRequest ?? request
+
+            guard let self = self else { return }
+            guard let jsonLinks = jsonLinks else {
+                self.request(theRequest, didCompleteParsing: true)
+                return
+            }
+
+            let completed = (jsonLinks.count == 0)
+            self.request(theRequest, queueJsonLinks: jsonLinks)
+            self.request(theRequest, didCompleteParsing: completed)
         }
 
-        print("\nended request:\n\(request.description)")
+        self.removeRequest(request)
+    }
 
-        guard let clazz = type(of: request) as? NSObject.Type else { return }
-        guard let instance = clazz.init() as? WOTModelServiceProtocol else { return }
-        guard let modelClass = instance.instanceModelClass() else { return }
-
-        let requestIds = requestCoordinator.requestIds(forClass: modelClass)
-        requestIds?.forEach({ requestId in
-            requestCoordinator.processBinary(data, forRequestId: requestId, error: error, jsonLinksCallback: { [weak self] jsonLinks in
-                guard let self = self else { return }
-                guard let links = jsonLinks else {
-//                    print("no links found for: \(request.description)")
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.listeners.forEach {
-                        let finished = (links.count == 0)
-                        let theRequest = request.parentRequest ?? request
-                        if finished {
-                            $0.requestManager(self, didParseDataForRequest: theRequest, finished: finished)
-                        }
-                    }
-                    self.queue(parentRequest: request.parentRequest ?? request, jsonLinks: jsonLinks)
-                }
-            })
-        })
+    private func request(_ request: WOTRequestProtocol, didCompleteParsing complete: Bool ) {
+        listeners.forEach {
+            $0.requestManager(self, didParseDataForRequest: request, finished: complete)
+        }
     }
 
     private func jsonLinksCallback(_ jsonLinks: [WOTJSONLink]?) {}

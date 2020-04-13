@@ -51,3 +51,20 @@ extension NSManagedObject {
         return foundObject
     }
 }
+
+extension NSManagedObject: JSONMapperProtocol {
+    public enum FieldKeys: String, CodingKey {
+        case hasChanges
+    }
+
+    public typealias Fields = FieldKeys
+
+    @objc
+    open func mapping(fromArray array: [Any]) { fatalError("not implemented")}
+
+    @objc
+    open func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) { fatalError("not implemented")}
+
+    @objc
+    open func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) { fatalError("not implemented")}
+}
