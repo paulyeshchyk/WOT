@@ -124,11 +124,13 @@ extension WOTRequestCoordinator: WOTRequestCoordinatorProtocol {
     @objc
     public func requestId(_ requestId: WOTRequestIdType, processBinary binary: Data?, error: Error?, jsonLinksCallback: (WOTJSONLinksCallback)?) {
         guard let adapters = self.dataAdapter(for: requestId) else {
+            print("dataadapter not found")
             return
         }
 
         adapters.forEach { AdapterType in
             guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapter else {
+                print("adapter is not WOTWebResponseAdapter")
                 return
             }
 

@@ -49,10 +49,7 @@ extension ModulesTree: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
-
-    @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
             let requests: [WOTJSONLink]? = self.nestedRequests(context: context)
@@ -70,15 +67,6 @@ extension ModulesTree: JSONMapperProtocol {
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
          */
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
-
-//        print("jSON[#keyPath(ModulesTree.next_chassis)]: \(jSON[#keyPath(ModulesTree.next_chassis)] ?? "")")
-//        print("jSON[#keyPath(ModulesTree.next_engines)]: \(jSON[#keyPath(ModulesTree.next_engines)] ?? "")")
-//        print("jSON[#keyPath(ModulesTree.next_guns)]: \(jSON[#keyPath(ModulesTree.next_guns)] ?? "")")
-//        print("jSON[#keyPath(ModulesTree.next_modules)]: \(jSON[#keyPath(ModulesTree.next_modules)] ?? "")")
-//        print("jSON[#keyPath(ModulesTree.next_radios)]: \(jSON[#keyPath(ModulesTree.next_radios)] ?? "")")
-//        print("jSON[#keyPath(ModulesTree.next_turrets)]: \(jSON[#keyPath(ModulesTree.next_turrets)] ?? "")")
-//        print("jSON[#keyPath(ModulesTree.next_tanks)]: \(jSON[#keyPath(ModulesTree.next_tanks)] ?? "")")
-//        print("jSON[#keyPath(ModulesTree.prevModules)]: \(jSON[#keyPath(ModulesTree.prevModules)] ?? "")")
     }
 
     private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink]? {
@@ -92,9 +80,9 @@ extension ModulesTree: JSONMapperProtocol {
 //        return [requestRadio, requestEngine, requestGun, requestSuspension, requestTurret]
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = ModulesTree.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback)
     }
 }

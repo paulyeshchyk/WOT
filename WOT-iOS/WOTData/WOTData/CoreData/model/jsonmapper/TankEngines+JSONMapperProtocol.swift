@@ -39,12 +39,10 @@ extension Tankengines: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
-
-    @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
+            jsonLinksCallback?(nil)
         }
 
         self.name = jSON[#keyPath(Tankengines.name)] as? String
@@ -57,16 +55,20 @@ extension Tankengines: JSONMapperProtocol {
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Tankengines.price_gold)] as? Int ?? 0)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Tankengines.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback)
     }
 }
 
 extension Tankengines {
-    public static func linkRequest(for engine_id: NSDecimalNumber?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
-        return WOTJSONLink(clazz: Tankengines.self, identifier_fieldname: #keyPath(Tankengines.module_id), identifier: engine_id?.stringValue, completion: { json in
+    public static func linkRequest(for engine_id: NSDecimalNumber, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+        var primaryKeys = [PrimaryKey]()
+        let enginePK = PrimaryKey(name: #keyPath(Tankengines.module_id), value: engine_id, predicateFormat: "%K == %@")
+        primaryKeys.append(enginePK)
+
+        return WOTJSONLink(clazz: Tankengines.self, primaryKeys: primaryKeys, keypathPrefix: nil, completion: { json in
 
             guard let module_id = json[#keyPath(Tankengines.module_id)] as? NSNumber else {
                 return
@@ -76,7 +78,7 @@ extension Tankengines {
                 return
             }
             onSuccess(tankEngines)
-            tankEngines.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
+            tankEngines.mapping(fromJSON: json, into: context, parentPrimaryKey: enginePK, jsonLinksCallback: nil)
         })
     }
 }

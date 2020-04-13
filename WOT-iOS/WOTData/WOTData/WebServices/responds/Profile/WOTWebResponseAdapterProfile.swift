@@ -26,7 +26,9 @@ public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
                     let predicate = NSPredicate(format: "%K = %d", WOT_KEY_HASHNAME, profilehash)
                     if let vehicleProfile = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile {
                         vehicleProfile.hashName = NSDecimalNumber(value: profilehash)
-                        vehicleProfile.mapping(fromJSON: profile, into: context, jsonLinksCallback: jsonLinksCallback)
+                        #warning("wrong PK")
+                        let primaryKey = PrimaryKey(name: WOT_KEY_HASHNAME, value: String(profilehash) as AnyObject, predicateFormat: "%K == %@")
+                        vehicleProfile.mapping(fromJSON: profile, into: context, parentPrimaryKey: primaryKey, jsonLinksCallback: jsonLinksCallback)
                     }
                 }
 

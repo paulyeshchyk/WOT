@@ -80,10 +80,13 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     fileprivate func queue(parentRequest: WOTRequestProtocol?, jsonLinks: ([WOTJSONLink?])?) {
         jsonLinks?.compactMap { $0 }.forEach { (linkedObjectRequest) in
-            let requestIDs = requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz)
-            requestIDs?.forEach({ (requestId) in
-                queue(parentRequest: parentRequest, requestId: requestId, jsonLink: linkedObjectRequest)
-            })
+            if let requestIDs = requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz) {
+                requestIDs.forEach({ (requestId) in
+                    queue(parentRequest: parentRequest, requestId: requestId, jsonLink: linkedObjectRequest)
+                })
+            } else {
+                print("requests not parsed")
+            }
         }
     }
 
@@ -93,20 +96,21 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
         guard let request = requestCoordinator.createRequest(forRequestId: requestId) else { return false }
 
-        let keyPaths = obj.instanceKeypaths()
+        let keyPaths = obj.instanceKeypaths().compactMap {
+            jsonLink.addPreffix(to: $0)
+        }
 
         let arguments = WOTRequestArguments()
         #warning("forKey: fields should be refactored")
         arguments.setValues(keyPaths, forKey: "fields")
-        if let identifier_fieldname = jsonLink.identifier_fieldname {
-            let ident = jsonLink.identifier
-            arguments.setValues([ident], forKey: identifier_fieldname)
+        jsonLink.primaryKeys?.forEach {
+            arguments.setValues([$0.value], forKey: $0.name)
         }
 
         request.hostConfiguration = hostConfiguration
         request.parentRequest = parentRequest
 
-        let groupId = "Nested\(String(describing: clazz))-\(jsonLink.identifier)"
+        let groupId = "Nested\(String(describing: clazz))-\(String(describing: jsonLink.primaryKeys))"
 
         return start(request, with: arguments, forGroupId: groupId)
     }
@@ -138,16 +142,20 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         requestIds?.forEach({ requestId in
             requestCoordinator.requestId(requestId, processBinary: data, error: error, jsonLinksCallback: { [weak self] jsonLinks in
                 guard let self = self else { return }
-                let count = jsonLinks?.count ?? 0
-                #warning("infinite loop")
-                self.listeners.forEach {
-                    let finished = (count == 0)
-                    let theRequest = request.parentRequest ?? request
-                    if finished {
-                        $0.requestManager(self, didParseDataForRequest: theRequest, finished: finished)
-                    }
+                guard let links = jsonLinks else {
+//                    print("no links found for: \(request.description)")
+                    return
                 }
-                self.queue(parentRequest: request.parentRequest ?? request, jsonLinks: jsonLinks)
+                DispatchQueue.main.async {
+                    self.listeners.forEach {
+                        let finished = (links.count == 0)
+                        let theRequest = request.parentRequest ?? request
+                        if finished {
+                            $0.requestManager(self, didParseDataForRequest: theRequest, finished: finished)
+                        }
+                    }
+                    self.queue(parentRequest: request.parentRequest ?? request, jsonLinks: jsonLinks)
+                }
             })
         })
     }

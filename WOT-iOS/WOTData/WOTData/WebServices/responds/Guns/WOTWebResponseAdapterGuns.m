@@ -27,9 +27,9 @@
                 
                 NSDictionary *tankGunsJSON = json[key];
                 if ([tankGunsJSON isKindOfClass:[NSDictionary class]]) {
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankGunsJSON[WGJsonFields.module_id]];
-                    Tankguns *tankGuns = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:predicate context:context];
-                    [tankGuns mappingFromJSON:tankGunsJSON into: context jsonLinksCallback:nestedRequestsCallback];
+                    PrimaryKey *pk = [[PrimaryKey alloc] initWithName:WGJsonFields.module_id value:tankGunsJSON[WGJsonFields.module_id] predicateFormat:@"%K == %@"];
+                    Tankguns *tankGuns = (Tankguns *)[Tankguns findOrCreateObjectWithPredicate:pk.predicate context:context];
+                    [tankGuns mappingFromJSON:tankGunsJSON into: context parentPrimaryKey: pk jsonLinksCallback:nestedRequestsCallback];
                 }
             }];
             

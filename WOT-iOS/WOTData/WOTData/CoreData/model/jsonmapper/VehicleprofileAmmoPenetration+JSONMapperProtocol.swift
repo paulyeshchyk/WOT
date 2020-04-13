@@ -33,15 +33,13 @@ extension VehicleprofileAmmoPenetration: JSONMapperProtocol {
     public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
+            jsonLinksCallback?(nil)
         }
 
         self.min_value = NSDecimalNumber(value: array[0] as? Float ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Float ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Float ?? 0)
     }
-
-    @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
 
     convenience init?(array: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoPenetration.entityDescription(context) else { return nil }

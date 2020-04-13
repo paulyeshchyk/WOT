@@ -31,12 +31,10 @@ extension Tankradios: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
-
-    @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
+            jsonLinksCallback?(nil)
         }
 
         self.name = jSON[#keyPath(Tankradios.name)] as? String
@@ -48,16 +46,24 @@ extension Tankradios: JSONMapperProtocol {
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Tankradios.price_gold)] as? Int ?? 0)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Tankradios.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback)
     }
 }
 
 extension Tankradios {
     public static func linkRequest(for radio_id: NSDecimalNumber?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
-        return WOTJSONLink(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id?.stringValue, completion: { json in
+        guard let radio_id = radio_id else {
+            return nil
+        }
+
+        var primaryKeys = [PrimaryKey]()
+        let radioPK = PrimaryKey(name: #keyPath(Tankradios.module_id), value: radio_id, predicateFormat: "%K == %@")
+        primaryKeys.append(radioPK)
+
+        return WOTJSONLink(clazz: Tankradios.self, primaryKeys: primaryKeys, keypathPrefix: nil, completion: { json in
 
             guard let module_id = json[#keyPath(Tankradios.module_id)] as? NSNumber else {
                 return
@@ -67,7 +73,7 @@ extension Tankradios {
                 return
             }
             onSuccess(tankRadios)
-            tankRadios.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
+            tankRadios.mapping(fromJSON: json, into: context, parentPrimaryKey: radioPK, jsonLinksCallback: nil)
         })
     }
 }

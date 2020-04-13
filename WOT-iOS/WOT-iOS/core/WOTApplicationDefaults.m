@@ -68,6 +68,7 @@
     [coordinator requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class] registerDataAdapterClass:[VehiclesAdapter class]];
     [coordinator requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestModulesTree class] registerDataAdapterClass:[WOTWebResponseAdapterModuleTree class]];
     [coordinator requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class] registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
+    [coordinator requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestSuspension class] registerDataAdapterClass:[WOTWebResponseAdapterSuspension class]];
     
 }
 

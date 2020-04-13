@@ -66,12 +66,10 @@ extension Vehicles: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray jSON: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
-
-    @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
+            jsonLinksCallback?(nil)
         }
 
         self.name = jSON[#keyPath(Vehicles.name)] as? String
@@ -85,15 +83,21 @@ extension Vehicles: JSONMapperProtocol {
         self.is_gift = NSDecimalNumber(value: jSON[#keyPath(Vehicles.is_gift)]  as? Int ?? 0)
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
-        self.default_profile = Vehicleprofile(json: jSON[#keyPath(Vehicles.default_profile)], into: context, jsonLinksCallback: jsonLinksCallback)
 
-        let module_tree = mapping(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], inContext: context, jsonLinksCallback: jsonLinksCallback)
-        module_tree?.forEach {
-            self.addToModules_tree($0)
+        if let intID = jSON[#keyPath(Vehicles.tank_id)] as? Int {
+            let pk = PrimaryKey(name: #keyPath(Vehicles.tank_id), value: String(intID) as AnyObject, predicateFormat: "%K = %d")
+            self.default_profile = Vehicleprofile(json: jSON[#keyPath(Vehicles.default_profile)], into: context, parentPrimaryKey: pk, jsonLinksCallback: jsonLinksCallback)
+
+            let module_tree = mapping(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], inContext: context, parentPrimaryKey: pk, jsonLinksCallback: jsonLinksCallback)
+            module_tree?.forEach {
+                self.addToModules_tree($0)
+            }
+        } else {
+            fatalError("wrong id")
         }
     }
 
-    func mapping(modulestreeJson json: Any?, inContext context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) -> [ModulesTree]? {
+    func mapping(modulestreeJson json: Any?, inContext context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) -> [ModulesTree]? {
         guard let moduleTreeJSONArray = json  as? JSON else { return nil }
 
         var result = [ModulesTree]()
@@ -103,18 +107,18 @@ extension Vehicles: JSONMapperProtocol {
                 return
             }
 
-            guard let moduleTree = mapping(moduletreeJson: moduleTreeJSON, module_id: module_id, into: context, jsonLinksCallback: jsonLinksCallback) else { return }
+            guard let moduleTree = mapping(moduletreeJson: moduleTreeJSON, module_id: module_id, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback) else { return }
             result.append(moduleTree)
         }
         return result
     }
 
-    func mapping(moduletreeJson json: Any?, module_id: NSNumber, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) -> ModulesTree? {
+    func mapping(moduletreeJson json: Any?, module_id: NSNumber, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) -> ModulesTree? {
         guard let json = json as? JSON else { return nil }
         let predicate = NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), module_id)
         guard let result = NSManagedObject.findOrCreateObject(forClass: ModulesTree.self, predicate: predicate, context: context) as? ModulesTree else { return nil }
 
-        result.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+        result.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback)
         return result
     }
 }

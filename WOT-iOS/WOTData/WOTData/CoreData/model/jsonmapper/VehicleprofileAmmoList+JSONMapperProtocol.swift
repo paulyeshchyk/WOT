@@ -10,25 +10,23 @@ extension VehicleprofileAmmoList: JSONMapperProtocol {
     public typealias Fields = Void
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
+            jsonLinksCallback?(nil)
         }
 
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
-            if let ammoObject = VehicleprofileAmmo(json: jSON, into: context, jsonLinksCallback: jsonLinksCallback) {
+            if let ammoObject = VehicleprofileAmmo(json: jSON, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback) {
                 self.addToVehicleprofileAmmo(ammoObject)
             }
         }
     }
 
-    @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
-
-    convenience init?(array: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    convenience init?(array: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoList.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromArray: array, into: context, jsonLinksCallback: jsonLinksCallback)
+        self.mapping(fromArray: array, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback)
     }
 }

@@ -49,12 +49,16 @@ extension Dictionary where Key == AnyHashable {
     public func escapedValue(key: AnyHashable) -> String? {
         guard let obj = self[key] else { return nil }
 
-        if  let array = obj as? Array<URLEncodedProtocol> {
+        if let array = obj as? Array<URLEncodedProtocol> {
             return array.urlEncoded()
         }
 
+        if let dict = obj as? Dictionary {
+            return dict.asURLQueryString()
+        }
+
         guard let urlCodable = obj as? URLEncodedProtocol else {
-            print("obj is not confrming URLEncodedProtocol")
+            print("obj is not conforming to URLEncodedProtocol:\(obj)")
             return nil
         }
         return urlCodable.urlEncoded()

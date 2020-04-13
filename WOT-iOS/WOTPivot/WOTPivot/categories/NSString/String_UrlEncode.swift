@@ -18,6 +18,12 @@ extension Int: URLEncodedProtocol {
     }
 }
 
+extension NSNumber: URLEncodedProtocol {
+    public func urlEncoded() -> String? {
+        return "\(self)".urlEncoded()
+    }
+}
+
 @objc
 extension NSString: URLEncodedProtocol {
     @objc
@@ -41,7 +47,6 @@ extension Array: URLEncodedProtocol {
                 resultArray.append(encoded)
             }
         }
-
         return resultArray.joined(separator: ",")
     }
 }

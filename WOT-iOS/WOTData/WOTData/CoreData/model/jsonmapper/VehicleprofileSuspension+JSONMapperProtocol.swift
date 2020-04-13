@@ -34,12 +34,10 @@ extension VehicleprofileSuspension: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {}
-
-    @objc
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         defer {
             context.tryToSave()
+            jsonLinksCallback?(nil)
         }
 
         self.name = jSON[#keyPath(VehicleprofileSuspension.name)] as? String
@@ -49,9 +47,31 @@ extension VehicleprofileSuspension: JSONMapperProtocol {
         self.load_limit = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.load_limit)] as? Int ?? 0)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileSuspension.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
+        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback)
+    }
+}
+
+extension VehicleprofileSuspension {
+    public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: PrimaryKey, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+        guard let suspension_id = suspension_id else {
+            return nil
+        }
+
+        var primaryKeys = [PrimaryKey]()
+        #warning("wrong key module_id, should be tag")
+        let suspensionPK = PrimaryKey(name: "module_id", value: suspension_id, predicateFormat: "%K == %@")
+        primaryKeys.append(suspensionPK)
+        primaryKeys.append(parentPrimaryKey)
+
+        return WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: primaryKeys, keypathPrefix: "suspension.", completion: { json in
+            guard let suspension = NSManagedObject.findOrCreateObject(forClass: VehicleprofileSuspension.self, predicate: suspensionPK.predicate, context: context) as? VehicleprofileSuspension else {
+                return
+            }
+            onSuccess(suspension)
+            suspension.mapping(fromJSON: json, into: context, parentPrimaryKey: suspensionPK, jsonLinksCallback: nil)
+        })
     }
 }

@@ -26,9 +26,9 @@
                 
                 NSDictionary *tankRadiosJSON = json[key];
                 if ([tankRadiosJSON isKindOfClass:[NSDictionary class]]) {
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankRadiosJSON[WGJsonFields.module_id]];
-                    Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:predicate context:context];
-                    [tankradios mappingFromJSON:tankRadiosJSON into: context jsonLinksCallback: nestedRequestsCallback];
+                    PrimaryKey *pk = [[PrimaryKey alloc] initWithName:WGJsonFields.module_id value:tankRadiosJSON[WGJsonFields.module_id] predicateFormat:@"%K == %@"];
+                    Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:pk.predicate context:context];
+                    [tankradios mappingFromJSON: tankRadiosJSON into: context parentPrimaryKey: pk jsonLinksCallback: nestedRequestsCallback];
                 }
             }];
             

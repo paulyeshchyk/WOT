@@ -26,9 +26,9 @@
                 
                 NSDictionary *tankEngineJSON = json[key];
                 if ([tankEngineJSON isKindOfClass:[NSDictionary class]]) {
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WGJsonFields.module_id,tankEngineJSON[WGJsonFields.module_id]];
-                    Tankengines *tankEngines = (Tankengines *)[Tankengines findOrCreateObjectWithPredicate:predicate context:context];
-                    [tankEngines mappingFromJSON: tankEngineJSON into: context jsonLinksCallback:nestedRequestsCallback];
+                    PrimaryKey *pk = [[PrimaryKey alloc] initWithName:@"module_id" value:tankEngineJSON[WGJsonFields.module_id] predicateFormat:@"%K == %@"];
+                    Tankengines *tankEngines = (Tankengines *)[Tankengines findOrCreateObjectWithPredicate:pk.predicate context:context];
+                    [tankEngines mappingFromJSON: tankEngineJSON into: context parentPrimaryKey:pk jsonLinksCallback:nestedRequestsCallback];
                 }
             }];
             
