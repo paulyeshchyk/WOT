@@ -20,12 +20,12 @@ open class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
             context.perform {
                 keys.forEach { (key) in
-                    guard let chassis = json?[key] as? [AnyHashable: Any] else { return }
-                    guard let module_id = chassis[WGJsonFields.module_id] as? String else { return }
+                    guard let suspension = json?[key] as? [AnyHashable: Any] else { return }
+                    guard let module_id = suspension[WGJsonFields.module_id] as? String else { return }
                     let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), module_id)
                     guard let newObject = NSManagedObject.findOrCreateObject(forClass: Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else { return }
 
-                    newObject.mapping(fromJSON: chassis, into: context, jsonLinksCallback: jsonLinksCallback)
+                    newObject.mapping(fromJSON: suspension, into: context, jsonLinksCallback: jsonLinksCallback)
                 }
 
                 if context.hasChanges {

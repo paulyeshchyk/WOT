@@ -20,100 +20,44 @@ extension VehicleprofileModule: JSONMapperProtocol {
         defer {
             context.tryToSave()
 
-            let requests = self.nestedRequests(context: context)
+            let requests = self.nestedRequests(context: context, jsonLinksCallback: jsonLinksCallback)
             jsonLinksCallback?(requests)
         }
 
-        self.radio_id = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.radio_id)] as? Int ?? 0)
-        self.suspension_id = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.suspension_id)] as? Int ?? 0)
-        self.engine_id = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.engine_id)] as? Int ?? 0)
-        self.gun_id = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.gun_id)] as? Int ?? 0)
-        self.turret_id = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.turret_id)] as? Int ?? 0)
+        let jsonRadioId = jSON[#keyPath(VehicleprofileModule.radio_id)] as? Int
+        self.radio_id = (jsonRadioId != nil) ? NSDecimalNumber(value: jsonRadioId!) : nil
+
+        let chassisId = jSON[#keyPath(VehicleprofileModule.suspension_id)] as? Int
+        self.suspension_id = (chassisId != nil) ? NSDecimalNumber(value: chassisId!) : nil
+
+        let engineId = jSON[#keyPath(VehicleprofileModule.engine_id)] as? Int
+        self.engine_id = (engineId != nil) ? NSDecimalNumber(value: engineId!) : nil
+
+        let gunId = jSON[#keyPath(VehicleprofileModule.gun_id)] as? Int
+        self.gun_id = (gunId != nil) ? NSDecimalNumber(value: gunId!) : nil
+
+        let turretId = jSON[#keyPath(VehicleprofileModule.turret_id)] as? Int
+        self.turret_id = ( turretId != nil ) ? NSDecimalNumber(value: turretId!) : nil
     }
 
-    private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink] {
-        let requestRadio = radioRequest(for: self.radio_id, inContext: context)
-        let requestEngine = engineRequest(for: self.engine_id, inContext: context)
-        let requestGun = gunRequest(for: self.gun_id, inContext: context)
-        let requestSuspension = suspensionRequest(for: self.suspension_id, inContext: context)
-        let requestTurret = turretRequest(for: self.turret_id, inContext: context)
+    private func nestedRequests(context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) -> [WOTJSONLink] {
+//        let requestRadio = Tankradios.linkRequest(for: self.radio_id, inContext: context) { [weak self] result in
+//            self?.tankradios = result as? Tankradios
+//        }
+//        let requestEngine = Tankengines.linkRequest(for: self.engine_id, inContext: context) { [weak self] result in
+//            self?.tankengines = result as? Tankengines
+//        }
+//        let requestGun = Tankguns.linkRequest(for: self.gun_id, inContext: context) { [weak self] result in
+//            self?.tankguns = result as? Tankguns
+//        }
+        let requestSuspension = Tankchassis.linkRequest(for: self.suspension_id, inContext: context) { [weak self] result in
+            self?.tankchassis = result as? Tankchassis
+        }
+//        let requestTurret = Tankturrets.linkRequest(for: self.turret_id, inContext: context) { [weak self] result in
+//            self?.tankturrets = result as? Tankturrets
+//        }
 
-        return [requestRadio, requestEngine, requestGun, requestSuspension, requestTurret]
-    }
-
-    func radioRequest(for radio_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
-        return WOTJSONLink(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id?.stringValue, completion: { [weak self] json in
-            guard let self = self else { return }
-            guard let module_id = json[#keyPath(Tankradios.module_id)] as? NSNumber else {
-                return
-            }
-            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankradios.module_id), module_id)
-            guard let tankRadios = NSManagedObject.findOrCreateObject(forClass: Tankradios.self, predicate: predicate, context: context) as? Tankradios else {
-                return
-            }
-            tankRadios.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
-            self.tankradios = tankRadios
-        })
-    }
-
-    func engineRequest(for engine_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
-        return WOTJSONLink(clazz: Tankengines.self, identifier_fieldname: #keyPath(Tankengines.module_id), identifier: engine_id?.stringValue, completion: { [weak self]  json in
-            guard let self = self else { return }
-            guard let module_id = json[#keyPath(Tankengines.module_id)] as? NSNumber else {
-                return
-            }
-            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankengines.module_id), module_id)
-            guard let tankEngines = NSManagedObject.findOrCreateObject(forClass: Tankradios.self, predicate: predicate, context: context) as? Tankengines else {
-                return
-            }
-            tankEngines.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
-            self.tankengines = tankEngines
-        })
-    }
-
-    func gunRequest(for gun_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
-        return WOTJSONLink(clazz: Tankguns.self, identifier_fieldname: #keyPath(Tankguns.module_id), identifier: gun_id?.stringValue, completion: { [weak self]  json in
-            guard let self = self else { return }
-            guard let module_id = json[#keyPath(Tankguns.module_id)] as? NSNumber else {
-                return
-            }
-            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankguns.module_id), module_id)
-            guard let tankGuns = NSManagedObject.findOrCreateObject(forClass: Tankradios.self, predicate: predicate, context: context) as? Tankguns else {
-                return
-            }
-            tankGuns.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
-            self.tankguns = tankGuns
-        })
-    }
-
-    func suspensionRequest(for suspension_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
-        return WOTJSONLink(clazz: Tankchassis.self, identifier_fieldname: #keyPath(Tankchassis.module_id), identifier: suspension_id?.stringValue, completion: { [weak self]  json in
-            guard let self = self else { return }
-            guard let module_id = json[#keyPath(Tankchassis.module_id)] as? NSNumber else {
-                return
-            }
-            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), module_id)
-            guard let tankChassis = NSManagedObject.findOrCreateObject(forClass: Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else {
-                return
-            }
-            tankChassis.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
-            self.tankchassis = tankChassis
-        })
-    }
-
-    func turretRequest(for turret_id: NSDecimalNumber?, inContext context: NSManagedObjectContext) -> WOTJSONLink {
-        return WOTJSONLink(clazz: Tankturrets.self, identifier_fieldname: #keyPath(Tankturrets.module_id), identifier: turret_id?.stringValue, completion: { [weak self]  json in
-            guard let self = self else { return }
-            guard let module_id = json[#keyPath(Tankturrets.module_id)] as? NSNumber else {
-                return
-            }
-            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankturrets.module_id), module_id)
-            guard let tankTurret = NSManagedObject.findOrCreateObject(forClass: Tankturrets.self, predicate: predicate, context: context) as? Tankturrets else {
-                return
-            }
-            tankTurret.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
-            self.tankturrets = tankTurret
-        })
+        return [requestSuspension/*, requestRadio, requestEngine, requestGun, requestTurret*/].compactMap { $0 }
     }
 
     convenience init?(json: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {

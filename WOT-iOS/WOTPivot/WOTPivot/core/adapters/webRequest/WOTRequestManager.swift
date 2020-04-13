@@ -44,6 +44,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             grouppedRequests.append(request)
         }
         self.grouppedRequests[groupId] = grouppedRequests
+        print("\nadded request:[\(groupId)]")
         return result
     }
 
@@ -65,7 +66,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         request.hostConfiguration = hostConfig
         let result = request.start(arguments)
         if result {
-            listeners.forEach { $0.requestManager(self, didStartRequest: request) }
+            listeners.forEach {
+                $0.requestManager(self, didStartRequest: request)
+            }
         }
         return result
     }
@@ -95,14 +98,15 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         let arguments = WOTRequestArguments()
         #warning("forKey: fields should be refactored")
         arguments.setValues(keyPaths, forKey: "fields")
-        if let ident = jsonLink.identifier, let ident_fieldName = jsonLink.identifier_fieldname {
-            arguments.setValues([ident], forKey: ident_fieldName)
+        if let identifier_fieldname = jsonLink.identifier_fieldname {
+            let ident = jsonLink.identifier
+            arguments.setValues([ident], forKey: identifier_fieldname)
         }
 
         request.hostConfiguration = hostConfiguration
         request.parentRequest = parentRequest
 
-        let groupId = "Nested\(String(describing: clazz))-\(jsonLink.identifier ?? "")"
+        let groupId = "Nested\(String(describing: clazz))-\(jsonLink.identifier)"
 
         return start(request, with: arguments, forGroupId: groupId)
     }
@@ -139,12 +143,16 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                 self.listeners.forEach {
                     let finished = (count == 0)
                     let theRequest = request.parentRequest ?? request
-                    $0.requestManager(self, didParseDataForRequest: theRequest, finished: finished)
+                    if finished {
+                        $0.requestManager(self, didParseDataForRequest: theRequest, finished: finished)
+                    }
                 }
                 self.queue(parentRequest: request.parentRequest ?? request, jsonLinks: jsonLinks)
             })
         })
     }
+
+    private func jsonLinksCallback(_ jsonLinks: [WOTJSONLink]?) {}
 
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
         removeRequest(request)

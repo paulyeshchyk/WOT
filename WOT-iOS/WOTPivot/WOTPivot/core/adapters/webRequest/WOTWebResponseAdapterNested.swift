@@ -16,7 +16,7 @@ public class WOTJSONLink: NSObject {
     public var clazz: AnyClass
 
     @objc
-    public var identifier: String?
+    public var identifier: String
 
     @objc
     public var identifier_fieldname: String?
@@ -24,7 +24,10 @@ public class WOTJSONLink: NSObject {
     @objc
     public var completion: (JSON) -> Void
 
-    public init(clazz clazzTo: AnyClass, identifier_fieldname id_fieldname: String, identifier id: String?, completion block: @escaping (JSON) -> Void) {
+    public init?(clazz clazzTo: AnyClass, identifier_fieldname id_fieldname: String, identifier id: String?, completion block: @escaping (JSON) -> Void) {
+        guard let id = id else {
+            return nil
+        }
         clazz = clazzTo
         identifier = id
         identifier_fieldname = id_fieldname

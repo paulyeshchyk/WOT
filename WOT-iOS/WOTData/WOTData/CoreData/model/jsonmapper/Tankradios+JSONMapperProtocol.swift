@@ -54,3 +54,20 @@ extension Tankradios: JSONMapperProtocol {
         self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
     }
 }
+
+extension Tankradios {
+    public static func linkRequest(for radio_id: NSDecimalNumber?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+        return WOTJSONLink(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id?.stringValue, completion: { json in
+
+            guard let module_id = json[#keyPath(Tankradios.module_id)] as? NSNumber else {
+                return
+            }
+            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankradios.module_id), module_id)
+            guard let tankRadios = NSManagedObject.findOrCreateObject(forClass: Tankradios.self, predicate: predicate, context: context) as? Tankradios else {
+                return
+            }
+            onSuccess(tankRadios)
+            tankRadios.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
+        })
+    }
+}

@@ -56,3 +56,19 @@ extension Tankchassis: JSONMapperProtocol {
         self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
     }
 }
+
+extension Tankchassis {
+    public static func linkRequest(for suspension_id: NSDecimalNumber?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+        return WOTJSONLink(clazz: Tankchassis.self, identifier_fieldname: #keyPath(Tankchassis.module_id), identifier: suspension_id?.stringValue, completion: { json in
+            guard let module_id = json[#keyPath(Tankchassis.module_id)] as? NSNumber else {
+                return
+            }
+            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), module_id)
+            guard let tankChassis = NSManagedObject.findOrCreateObject(forClass: Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else {
+                return
+            }
+            onSuccess(tankChassis)
+            tankChassis.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
+        })
+    }
+}

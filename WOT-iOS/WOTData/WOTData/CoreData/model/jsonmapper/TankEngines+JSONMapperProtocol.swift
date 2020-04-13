@@ -63,3 +63,20 @@ extension Tankengines: JSONMapperProtocol {
         self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
     }
 }
+
+extension Tankengines {
+    public static func linkRequest(for engine_id: NSDecimalNumber?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+        return WOTJSONLink(clazz: Tankengines.self, identifier_fieldname: #keyPath(Tankengines.module_id), identifier: engine_id?.stringValue, completion: { json in
+
+            guard let module_id = json[#keyPath(Tankengines.module_id)] as? NSNumber else {
+                return
+            }
+            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankengines.module_id), module_id)
+            guard let tankEngines = NSManagedObject.findOrCreateObject(forClass: Tankradios.self, predicate: predicate, context: context) as? Tankengines else {
+                return
+            }
+            onSuccess(tankEngines)
+            tankEngines.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
+        })
+    }
+}

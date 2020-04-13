@@ -54,3 +54,19 @@ extension Tankguns: JSONMapperProtocol {
         self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
     }
 }
+
+extension Tankguns {
+    public static func linkRequest(for gun_id: NSDecimalNumber?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+        return WOTJSONLink(clazz: Tankguns.self, identifier_fieldname: #keyPath(Tankguns.module_id), identifier: gun_id?.stringValue, completion: { json in
+            guard let module_id = json[#keyPath(Tankguns.module_id)] as? NSNumber else {
+                return
+            }
+            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankguns.module_id), module_id)
+            guard let tankGuns = NSManagedObject.findOrCreateObject(forClass: Tankguns.self, predicate: predicate, context: context) as? Tankguns else {
+                return
+            }
+            onSuccess(tankGuns)
+            tankGuns.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
+        })
+    }
+}

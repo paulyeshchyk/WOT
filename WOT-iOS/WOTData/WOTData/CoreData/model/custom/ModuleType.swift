@@ -10,14 +10,14 @@ import Foundation
 
 public enum ModuleType: String {
     case unknown
-    case chassis
+    case suspension
     case engine
     case radios
     case turrets
     case guns
     case tank
 
-    private static var allTypes: [ModuleType] = [.unknown, .chassis, .engine, .radios, .turrets, .guns, .tank]
+    private static var allTypes: [ModuleType] = [.unknown, .suspension, .engine, .radios, .turrets, .guns, .tank]
 
     var index: Int {
         guard let result = ModuleType.allTypes.firstIndex(of: self) else { fatalError("ModuleType.alltypes has no value:\(self)")}

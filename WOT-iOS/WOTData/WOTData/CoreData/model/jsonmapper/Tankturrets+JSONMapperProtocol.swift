@@ -62,3 +62,19 @@ extension Tankturrets: JSONMapperProtocol {
         self.mapping(fromJSON: json, into: context, jsonLinksCallback: jsonLinksCallback)
     }
 }
+
+extension Tankturrets {
+    public static func linkRequest(for turret_id: NSDecimalNumber?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+        return WOTJSONLink(clazz: Tankturrets.self, identifier_fieldname: #keyPath(Tankturrets.module_id), identifier: turret_id?.stringValue, completion: { json in
+            guard let module_id = json[#keyPath(Tankturrets.module_id)] as? NSNumber else {
+                return
+            }
+            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankturrets.module_id), module_id)
+            guard let tankTurret = NSManagedObject.findOrCreateObject(forClass: Tankturrets.self, predicate: predicate, context: context) as? Tankturrets else {
+                return
+            }
+            onSuccess(tankTurret)
+            tankTurret.mapping(fromJSON: json, into: context, jsonLinksCallback: nil)
+        })
+    }
+}
