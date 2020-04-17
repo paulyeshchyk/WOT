@@ -22,7 +22,7 @@ open class VehiclesAdapter: NSObject, WOTWebResponseAdapter {
                 guard let vehiclesJSON = json?[key] as? JSON else { return }
                 guard let tag = vehiclesJSON[#keyPath(Vehicles.tag)] as? String else { return }
 
-                let vehiclesPK = PrimaryKey(name: #keyPath(Vehicles.tag), value: tag as AnyObject, predicateFormat: "%K == %@")
+                let vehiclesPK = WOTPrimaryKey(name: #keyPath(Vehicles.tag), value: tag as AnyObject, predicateFormat: "%K == %@")
                 context.perform {
                     guard let vehicle = NSManagedObject.findOrCreateObject(forClass: Vehicles.self, predicate: vehiclesPK.predicate, context: context) as? Vehicles else { return }
                     vehicle.mapping(fromJSON: vehiclesJSON, into: context, parentPrimaryKey: vehiclesPK, linksCallback: { links in

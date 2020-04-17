@@ -31,7 +31,7 @@ extension Tankradios {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(Tankradios.name)] as? String
         self.level = NSDecimalNumber(value: jSON[#keyPath(Tankradios.level)] as? Int ?? 0)
         self.nation = jSON[#keyPath(Tankradios.nation)] as? String
@@ -43,7 +43,7 @@ extension Tankradios {
         linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = Tankradios.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
@@ -56,8 +56,8 @@ extension Tankradios {
             return nil
         }
 
-        var primaryKeys = [PrimaryKey]()
-        let radioPK = PrimaryKey(name: #keyPath(Tankradios.module_id), value: radio_id, predicateFormat: "%K == %@")
+        var primaryKeys = [WOTPrimaryKey]()
+        let radioPK = WOTPrimaryKey(name: #keyPath(Tankradios.module_id), value: radio_id, predicateFormat: "%K == %@")
         primaryKeys.append(radioPK)
 
         return WOTJSONLink(clazz: Tankradios.self, primaryKeys: primaryKeys, keypathPrefix: nil, completion: { json in

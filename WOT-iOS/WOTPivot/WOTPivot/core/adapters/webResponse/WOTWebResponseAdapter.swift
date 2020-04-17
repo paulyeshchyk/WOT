@@ -17,3 +17,8 @@ public protocol WOTWebResponseAdapter: NSObjectProtocol {
     @discardableResult
     func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error?
 }
+
+@objc
+public protocol JSONLinksAdapter {
+    func request(_ request: WOTRequestProtocol, adoptJsonLinks: [WOTJSONLink]?)
+}

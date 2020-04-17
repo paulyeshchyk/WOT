@@ -26,7 +26,7 @@
                 
                 NSDictionary *tankRadiosJSON = json[key];
                 if ([tankRadiosJSON isKindOfClass:[NSDictionary class]]) {
-                    PrimaryKey *pk = [[PrimaryKey alloc] initWithName:WGJsonFields.module_id value:tankRadiosJSON[WGJsonFields.module_id] predicateFormat:@"%K == %@"];
+                    WOTPrimaryKey *pk = [[WOTPrimaryKey alloc] initWithName:WGJsonFields.module_id value:tankRadiosJSON[WGJsonFields.module_id] predicateFormat:@"%K == %@"];
                     Tankradios *tankradios = (Tankradios *)[Tankradios findOrCreateObjectWithPredicate:pk.predicate context:context];
                     [tankradios mappingFromJSON: tankRadiosJSON into: context parentPrimaryKey: pk linksCallback:^(NSArray<WOTJSONLink *> * _Nullable links) {
                         [jsonLinkAdapter request:request adoptJsonLinks:links];

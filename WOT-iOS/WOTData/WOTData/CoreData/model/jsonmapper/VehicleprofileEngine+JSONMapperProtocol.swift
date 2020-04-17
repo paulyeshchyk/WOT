@@ -36,7 +36,7 @@ extension VehicleprofileEngine {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(VehicleprofileEngine.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.tier)]  as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileEngine.tag)] as? String
@@ -47,7 +47,7 @@ extension VehicleprofileEngine {
         linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileEngine.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)

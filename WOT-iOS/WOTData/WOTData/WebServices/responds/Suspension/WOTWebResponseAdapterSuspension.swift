@@ -23,7 +23,7 @@ open class WOTWebResponseAdapterSuspension: NSObject, WOTWebResponseAdapter {
                 json.keys.forEach { (key) in
                     guard let suspension = json[key] as? [AnyHashable: Any] else { return }
                     guard let tag = suspension[#keyPath(VehicleprofileSuspension.tag)] as? String else { return }
-                    let suspensionPK = PrimaryKey(name: #keyPath(VehicleprofileSuspension.tag), value: tag as AnyObject, predicateFormat: "%K == %@")
+                    let suspensionPK = WOTPrimaryKey(name: #keyPath(VehicleprofileSuspension.tag), value: tag as AnyObject, predicateFormat: "%K == %@")
                     let predicate = NSPredicate(format: "%K == %@", #keyPath(VehicleprofileSuspension.tag), tag)
                     let newObject = NSManagedObject.findOrCreateObject(forClass: VehicleprofileSuspension.self, predicate: predicate, context: context)
                     newObject?.mapping(fromJSON: suspension, into: context, parentPrimaryKey: suspensionPK, linksCallback: { links in

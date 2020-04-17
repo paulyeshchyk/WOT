@@ -34,7 +34,7 @@ extension VehicleprofileSuspension {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(VehicleprofileSuspension.name)] as? String
         self.tag = jSON[#keyPath(VehicleprofileSuspension.tag)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.tier)] as? Int ?? 0)
@@ -44,7 +44,7 @@ extension VehicleprofileSuspension {
         linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileSuspension.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
@@ -52,14 +52,14 @@ extension VehicleprofileSuspension {
 }
 
 extension VehicleprofileSuspension {
-    public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: PrimaryKey, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+    public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: WOTPrimaryKey, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
         guard let suspension_id = suspension_id else {
             return nil
         }
 
-        var primaryKeys = [PrimaryKey]()
+        var primaryKeys = [WOTPrimaryKey]()
         #warning("wrong key module_id, should be tag")
-        let suspensionPK = PrimaryKey(name: "module_id", value: suspension_id, predicateFormat: "%K == %@")
+        let suspensionPK = WOTPrimaryKey(name: "module_id", value: suspension_id, predicateFormat: "%K == %@")
         primaryKeys.append(suspensionPK)
         primaryKeys.append(parentPrimaryKey)
 

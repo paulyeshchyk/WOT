@@ -39,7 +39,7 @@ extension Tankengines {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(Tankengines.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(Tankengines.module_id)] as? Int ?? 0)
         self.level = NSDecimalNumber(value: jSON[#keyPath(Tankengines.level)] as? Int ?? 0)
@@ -52,7 +52,7 @@ extension Tankengines {
         linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = Tankengines.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
@@ -61,8 +61,8 @@ extension Tankengines {
 
 extension Tankengines {
     public static func linkRequest(for engine_id: NSDecimalNumber, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
-        var primaryKeys = [PrimaryKey]()
-        let enginePK = PrimaryKey(name: #keyPath(Tankengines.module_id), value: engine_id, predicateFormat: "%K == %@")
+        var primaryKeys = [WOTPrimaryKey]()
+        let enginePK = WOTPrimaryKey(name: #keyPath(Tankengines.module_id), value: engine_id, predicateFormat: "%K == %@")
         primaryKeys.append(enginePK)
 
         return WOTJSONLink(clazz: Tankengines.self, primaryKeys: primaryKeys, keypathPrefix: nil, completion: { json in

@@ -26,7 +26,7 @@
                 
                 NSDictionary *tankEngineJSON = json[key];
                 if ([tankEngineJSON isKindOfClass:[NSDictionary class]]) {
-                    PrimaryKey *pk = [[PrimaryKey alloc] initWithName:@"module_id" value:tankEngineJSON[WGJsonFields.module_id] predicateFormat:@"%K == %@"];
+                    WOTPrimaryKey *pk = [[WOTPrimaryKey alloc] initWithName:@"module_id" value:tankEngineJSON[WGJsonFields.module_id] predicateFormat:@"%K == %@"];
                     Tankengines *tankEngines = (Tankengines *)[Tankengines findOrCreateObjectWithPredicate:pk.predicate context:context];
                     [tankEngines mappingFromJSON: tankEngineJSON into: context parentPrimaryKey:pk linksCallback:^(NSArray<WOTJSONLink *> * _Nullable links) {
                         [jsonLinkAdapter request:request adoptJsonLinks:links];

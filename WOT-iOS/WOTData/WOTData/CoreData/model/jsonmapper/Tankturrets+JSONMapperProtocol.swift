@@ -35,7 +35,7 @@ extension Tankturrets {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(Tankturrets.name)] as? String
         self.nation = jSON[#keyPath(Tankturrets.nation)] as? String
         self.level = NSDecimalNumber(value: jSON[#keyPath(Tankturrets.level)] as? Int ?? 0)
@@ -51,7 +51,7 @@ extension Tankturrets {
         linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = Tankturrets.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
@@ -60,8 +60,8 @@ extension Tankturrets {
 
 extension Tankturrets {
     public static func linkRequest(for turret_id: NSDecimalNumber, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
-        var primaryKeys = [PrimaryKey]()
-        let turretPK = PrimaryKey(name: #keyPath(Tankturrets.module_id), value: turret_id, predicateFormat: "%K == %@")
+        var primaryKeys = [WOTPrimaryKey]()
+        let turretPK = WOTPrimaryKey(name: #keyPath(Tankturrets.module_id), value: turret_id, predicateFormat: "%K == %@")
         primaryKeys.append(turretPK)
 
         return WOTJSONLink(clazz: Tankturrets.self, primaryKeys: primaryKeys, keypathPrefix: nil, completion: { json in

@@ -47,11 +47,6 @@ public protocol WOTRequestDatasourceProtocol {
 }
 
 @objc
-public protocol JSONLinksAdapter {
-    func request(_ request: WOTRequestProtocol, adoptJsonLinks: [WOTJSONLink]?)
-}
-
-@objc
 public protocol WOTRequestDataParserProtocol {
     @objc
     func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapter)
@@ -127,11 +122,30 @@ extension WOTRequestCoordinator: WOTRequestDatasourceProtocol {
 }
 
 extension WOTRequestCoordinator: WOTRequestDataParserProtocol {
+    static func modelClass(for request: WOTRequestProtocol) -> AnyClass? {
+        guard let clazz = type(of: request) as? NSObject.Type else { return nil }
+        guard let instance = clazz.init() as? WOTModelServiceProtocol else { return nil}
+        guard let modelClass = instance.instanceModelClass() else { return nil}
+        return modelClass
+    }
+
+    #warning("make static")
+    func adapterInstance(for requestIdType: WOTRequestIdType) -> WOTWebResponseAdapter? {
+        guard let AdapterType = self.dataAdapter(for: requestIdType) else {
+            print("dataadapter not found")
+            return nil
+        }
+
+        guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapter else {
+            print("adapter is not WOTWebResponseAdapter")
+            return nil
+        }
+        return adapter
+    }
+
     @objc
     public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapter) {
-        guard let clazz = type(of: request) as? NSObject.Type else { return }
-        guard let instance = clazz.init() as? WOTModelServiceProtocol else { return }
-        guard let modelClass = instance.instanceModelClass() else { return }
+        guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else { return }
 
         let requestIdTypes = self.requestIds(forClass: modelClass)
         requestIdTypes?.forEach({ (idType) in
@@ -140,19 +154,11 @@ extension WOTRequestCoordinator: WOTRequestDataParserProtocol {
     }
 
     func request(_ request: WOTRequestProtocol, processBinary binary: Data?, requestIdType: WOTRequestIdType, jsonLinkAdapter: JSONLinksAdapter) {
-        guard let AdapterType = self.dataAdapter(for: requestIdType) else {
-            print("dataadapter not found")
-            return
-        }
-
-        guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapter else {
-            print("adapter is not WOTWebResponseAdapter")
-            return
-        }
+        guard let adapter = self.adapterInstance(for: requestIdType) else { return }
 
         let error = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter)
         if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
-            print("\(NSStringFromClass(Clazz)) raized:\(text)")
+            print("raized:\(text)")
         }
     }
 }

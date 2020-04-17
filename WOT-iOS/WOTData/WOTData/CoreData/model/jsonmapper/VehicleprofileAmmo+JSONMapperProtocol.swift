@@ -26,7 +26,7 @@ extension VehicleprofileAmmo {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
         self.penetration = VehicleprofileAmmoPenetration(array: jSON[#keyPath(VehicleprofileAmmo.penetration)], into: context, linksCallback: linksCallback)
         self.damage = VehicleprofileAmmoDamage(array: jSON[#keyPath(VehicleprofileAmmo.damage)], into: context, linksCallback: linksCallback)
@@ -34,7 +34,7 @@ extension VehicleprofileAmmo {
         linksCallback(nil)
     }
 
-    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json, let entityDescription = VehicleprofileAmmo.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)

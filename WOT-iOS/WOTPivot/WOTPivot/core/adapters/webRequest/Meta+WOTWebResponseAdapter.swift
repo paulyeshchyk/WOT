@@ -15,15 +15,15 @@ public protocol JSONMapperProtocol {
     mutating func mapping(fromJSON jSON: JSON)
     func mapping(fromArray array: [Any])
 
-    func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void)
-    func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void)
+    func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void)
+    func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void)
 }
 
 extension JSONMapperProtocol {
     public func mapping(fromJSON jSON: JSON) {}
     public func mapping(fromArray array: [Any]) {}
-    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {}
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {}
+    public func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {}
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {}
 }
 
 public enum WOTWebResponseStatus: String {
@@ -136,8 +136,8 @@ struct WOTWEBRequestError: Error {
 
 public typealias JSONParseCompletion = (JSON?) -> Void
 
-@objc
-extension NSData {
+@objc extension NSData {
+    @available(*, deprecated, message: "Use Data.parseAsJSON(:) instead")
     @objc
     @discardableResult
     public func parseAsJSON(_ completion: JSONParseCompletion?) -> Error? {

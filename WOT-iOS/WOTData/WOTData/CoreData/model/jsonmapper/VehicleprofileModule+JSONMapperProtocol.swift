@@ -13,7 +13,7 @@ extension VehicleprofileModule {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         let jsonRadioId = jSON[#keyPath(VehicleprofileModule.radio_id)] as? Int
         self.radio_id = (jsonRadioId != nil) ? NSDecimalNumber(value: jsonRadioId!) : nil
 
@@ -35,7 +35,7 @@ extension VehicleprofileModule {
         linksCallback(requests)
     }
 
-    private func nestedRequests(context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey) -> [WOTJSONLink] {
+    private func nestedRequests(context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey) -> [WOTJSONLink] {
 //        let requestRadio = VehicleprofileRadio.linkRequest(for: self.radio_id, inContext: context) { [weak self] result in
 //            self?.tankradios = result as? VehicleprofileRadio
 //        }
@@ -55,7 +55,7 @@ extension VehicleprofileModule {
         return [requestSuspension/*, requestRadio, requestEngine, requestGun, requestTurret*/].compactMap { $0 }
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileModule.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)

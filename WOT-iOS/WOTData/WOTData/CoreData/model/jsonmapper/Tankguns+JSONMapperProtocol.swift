@@ -31,7 +31,7 @@ extension Tankguns {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(Tankguns.name)] as? String
         self.level = NSDecimalNumber(value: jSON[#keyPath(Tankguns.level)] as? Int ?? 0)
         self.nation = jSON[#keyPath(Tankguns.nation)] as? String
@@ -43,7 +43,7 @@ extension Tankguns {
         linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = Tankguns.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
@@ -52,8 +52,8 @@ extension Tankguns {
 
 extension Tankguns {
     public static func linkRequest(for gun_id: NSDecimalNumber, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
-        var primaryKeys = [PrimaryKey]()
-        let gunsPK = PrimaryKey(name: #keyPath(Tankguns.module_id), value: gun_id, predicateFormat: "%K == %@")
+        var primaryKeys = [WOTPrimaryKey]()
+        let gunsPK = WOTPrimaryKey(name: #keyPath(Tankguns.module_id), value: gun_id, predicateFormat: "%K == %@")
         primaryKeys.append(gunsPK)
 
         return WOTJSONLink(clazz: Tankguns.self, primaryKeys: primaryKeys, keypathPrefix: nil, completion: { json in

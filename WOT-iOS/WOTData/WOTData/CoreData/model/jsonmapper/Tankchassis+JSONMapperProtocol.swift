@@ -32,7 +32,7 @@ extension Tankchassis {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(Tankchassis.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(Tankchassis.module_id)] as? Int ?? 0)
         self.level = jSON[#keyPath(Tankchassis.level)] as? NSDecimalNumber
@@ -45,7 +45,7 @@ extension Tankchassis {
         linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = Tankchassis.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
@@ -53,13 +53,13 @@ extension Tankchassis {
 }
 
 extension Tankchassis {
-    public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: PrimaryKey, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+    public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: WOTPrimaryKey, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
         guard let suspension_id = suspension_id else {
             return nil
         }
 
-        var primaryKeys = [PrimaryKey]()
-        let suspensionPK = PrimaryKey(name: #keyPath(Tankchassis.module_id), value: suspension_id, predicateFormat: "%K == %@")
+        var primaryKeys = [WOTPrimaryKey]()
+        let suspensionPK = WOTPrimaryKey(name: #keyPath(Tankchassis.module_id), value: suspension_id, predicateFormat: "%K == %@")
         primaryKeys.append(suspensionPK)
         primaryKeys.append(parentPrimaryKey)
 
