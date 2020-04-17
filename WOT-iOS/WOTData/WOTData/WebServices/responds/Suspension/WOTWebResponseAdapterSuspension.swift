@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 open class WOTWebResponseAdapterSuspension: NSObject, WOTWebResponseAdapter {
-    public func parseData(_ binary: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
         return binary?.parseAsJSON { (json) in
 
             guard let json = json, json.keys.count != 0 else {
@@ -26,7 +26,9 @@ open class WOTWebResponseAdapterSuspension: NSObject, WOTWebResponseAdapter {
                     let suspensionPK = PrimaryKey(name: #keyPath(VehicleprofileSuspension.tag), value: tag as AnyObject, predicateFormat: "%K == %@")
                     let predicate = NSPredicate(format: "%K == %@", #keyPath(VehicleprofileSuspension.tag), tag)
                     let newObject = NSManagedObject.findOrCreateObject(forClass: VehicleprofileSuspension.self, predicate: predicate, context: context)
-                    newObject?.mapping(fromJSON: suspension, into: context, parentPrimaryKey: suspensionPK, jsonLinksCallback: jsonLinksCallback)
+                    newObject?.mapping(fromJSON: suspension, into: context, parentPrimaryKey: suspensionPK, linksCallback: { links in
+                        jsonLinkAdapter.request(request, adoptJsonLinks: links)
+                    })
                 }
 
                 if context.hasChanges {

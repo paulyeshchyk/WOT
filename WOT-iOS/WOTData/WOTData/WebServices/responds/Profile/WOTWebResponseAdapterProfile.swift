@@ -10,8 +10,8 @@ import Foundation
 
 @objc
 public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
-    public func parseData(_ data: Data?, jsonLinksCallback: WOTJSONLinksCallback?) -> Error? {
-        return  data?.parseAsJSON({ (json) in
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+        return  binary?.parseAsJSON({ (json) in
 
             guard let keys = json?.keys, keys.count != 0 else {
                 return
@@ -27,7 +27,9 @@ public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
                     if let vehicleProfile = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile {
                         vehicleProfile.hashName = NSDecimalNumber(value: profilehash)
                         let primaryKey = PrimaryKey(name: WOT_KEY_HASHNAME, value: String(profilehash) as AnyObject, predicateFormat: "%K == %@")
-                        vehicleProfile.mapping(fromJSON: profile, into: context, parentPrimaryKey: primaryKey, jsonLinksCallback: jsonLinksCallback)
+                        vehicleProfile.mapping(fromJSON: profile, into: context, parentPrimaryKey: primaryKey, linksCallback: { links in
+                            jsonLinkAdapter.request(request, adoptJsonLinks: links)
+                        })
                     }
                 }
 

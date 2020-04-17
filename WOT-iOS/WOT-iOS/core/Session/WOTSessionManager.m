@@ -47,7 +47,7 @@
 + (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
 
     id<WOTRequestProtocol> request = [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
-    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout];
+    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout jsonLink: NULL];
 }
 
 + (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
@@ -61,7 +61,7 @@
     [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
     [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
     
-    [requestManager start:request with:args forGroupId:WGWebRequestGroups.login];
+    [requestManager start:request with:args forGroupId:WGWebRequestGroups.login jsonLink: NULL];
 }
 
 + (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager {

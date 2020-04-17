@@ -23,7 +23,7 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicles.keypaths()], forKey: WGWebQueryArgs.fields)
 
-        let started = requestManager.start(request, with: args, forGroupId: groupId)
+        let started = requestManager.start(request, with: args, forGroupId: groupId, jsonLink: nil)
         requestManager.addListener(listener, forRequest: request)
         return started ? request : nil
     }
@@ -41,7 +41,7 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicleprofile.keypaths()], forKey: WGWebQueryArgs.fields)
 
-        let started = requestManager.start(request, with: args, forGroupId: groupId)
+        let started = requestManager.start(request, with: args, forGroupId: groupId, jsonLink: nil)
         requestManager.addListener(listener, forRequest: request)
         return started
     }

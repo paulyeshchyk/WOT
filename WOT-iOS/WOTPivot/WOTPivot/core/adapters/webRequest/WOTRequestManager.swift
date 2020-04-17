@@ -29,7 +29,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     private var hostConfig: WOTHostConfigurationProtocol
 
     @objc
-    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool {
+    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String, jsonLink: WOTJSONLink?) -> Bool {
+//        fatalError("applyjsonlink here")
+
         var grouppedRequests: [WOTRequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
             grouppedRequests.append(contentsOf: available)
@@ -60,8 +62,8 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     @objc
     @discardableResult
-    public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool {
-        guard addRequest(request, forGroupId: forGroupId) else { return false }
+    public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?) -> Bool {
+        guard addRequest(request, forGroupId: forGroupId, jsonLink: jsonLink) else { return false }
 
         request.hostConfiguration = hostConfig
         let result = request.start(arguments)
@@ -86,11 +88,11 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
-            jsonLinks.compactMap { $0 }.forEach { (linkedObjectRequest) in
-                if let requestIDs = self.requestCoordinator.requestIds(forClass: linkedObjectRequest.clazz) {
-                    requestIDs.forEach({ (requestId) in
-                        self.queue(parentRequest: parentRequest, requestId: requestId, jsonLink: linkedObjectRequest)
-                    })
+            jsonLinks.compactMap { $0 }.forEach { jsonLink in
+                if let requestIDs = self.requestCoordinator.requestIds(forClass: jsonLink.clazz) {
+                    requestIDs.forEach {
+                        self.queue(parentRequest: parentRequest, requestId: $0, jsonLink: jsonLink)
+                    }
                 } else {
                     print("requests not parsed")
                 }
@@ -120,7 +122,17 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
         let groupId = "Nested\(String(describing: clazz))-\(String(describing: jsonLink.primaryKeys))"
 
-        return start(request, with: arguments, forGroupId: groupId)
+        return start(request, with: arguments, forGroupId: groupId, jsonLink: jsonLink)
+    }
+}
+
+extension WOTRequestManager: JSONLinksAdapter {
+    public func request(_ request: WOTRequestProtocol, adoptJsonLinks jsonLinks: [WOTJSONLink]?) {
+        let theRequest = request.parentRequest ?? request
+        let links = jsonLinks?.compactMap { $0 } ?? []
+        let completed = (links.count == 0)
+        self.request(theRequest, queueJsonLinks: jsonLinks)
+        self.request(theRequest, didCompleteParsing: completed)
     }
 }
 
@@ -136,22 +148,10 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
+//        fatalError("get applied json link and run completion")
         //
         print("\nfinished load data for request:\n\(request.description)")
-        requestCoordinator.processBinary(data, fromRequest: request, error: error) {  [weak self] jsonLinks in
-
-            let theRequest = request.parentRequest ?? request
-
-            guard let self = self else { return }
-            guard let jsonLinks = jsonLinks else {
-                self.request(theRequest, didCompleteParsing: true)
-                return
-            }
-
-            let completed = (jsonLinks.count == 0)
-            self.request(theRequest, queueJsonLinks: jsonLinks)
-            self.request(theRequest, didCompleteParsing: completed)
-        }
+        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self)
 
         self.removeRequest(request)
     }

@@ -30,20 +30,17 @@ extension VehicleprofileAmmoPenetration {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
-        defer {
-            context.tryToSave()
-            jsonLinksCallback?(nil)
-        }
-
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.min_value = NSDecimalNumber(value: array[0] as? Float ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Float ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Float ?? 0)
+        context.tryToSave()
+        linksCallback(nil)
     }
 
-    convenience init?(array: Any?, into context: NSManagedObjectContext, jsonLinksCallback: WOTJSONLinksCallback?) {
+    convenience init?(array: Any?, into context: NSManagedObjectContext, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoPenetration.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromArray: array, into: context, jsonLinksCallback: jsonLinksCallback)
+        self.mapping(fromArray: array, into: context, linksCallback: linksCallback)
     }
 }

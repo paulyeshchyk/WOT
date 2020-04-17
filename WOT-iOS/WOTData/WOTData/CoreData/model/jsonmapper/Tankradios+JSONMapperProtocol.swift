@@ -31,12 +31,7 @@ extension Tankradios {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
-        defer {
-            context.tryToSave()
-            jsonLinksCallback?(nil)
-        }
-
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(Tankradios.name)] as? String
         self.level = NSDecimalNumber(value: jSON[#keyPath(Tankradios.level)] as? Int ?? 0)
         self.nation = jSON[#keyPath(Tankradios.nation)] as? String
@@ -44,12 +39,14 @@ extension Tankradios {
         self.distance = NSDecimalNumber(value: jSON[#keyPath(Tankradios.distance)] as? Int ?? 0)
         self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Tankradios.price_credit)] as? Int ?? 0)
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Tankradios.price_gold)] as? Int ?? 0)
+        context.tryToSave()
+        linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = Tankradios.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback)
+        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
     }
 }
 
@@ -73,7 +70,9 @@ extension Tankradios {
                 return
             }
             onSuccess(tankRadios)
-            tankRadios.mapping(fromJSON: json, into: context, parentPrimaryKey: radioPK, jsonLinksCallback: nil)
+            tankRadios.mapping(fromJSON: json, into: context, parentPrimaryKey: radioPK, linksCallback: { _ in
+                //
+            })
         })
     }
 }

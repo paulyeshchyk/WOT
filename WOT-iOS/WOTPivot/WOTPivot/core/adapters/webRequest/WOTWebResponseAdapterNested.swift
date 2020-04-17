@@ -8,8 +8,6 @@
 
 import Foundation
 
-public typealias WOTJSONLinksCallback = ([WOTJSONLink]?) -> Void
-
 @objc
 public class PrimaryKey: NSObject {
     var name: String

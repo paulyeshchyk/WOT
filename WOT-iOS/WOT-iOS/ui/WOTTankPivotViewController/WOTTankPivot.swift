@@ -108,7 +108,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
 
         if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
             requestManager?.addListener(self, forRequest: request)
-            requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list)
+            requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonLink: nil)
         }
     }
 }

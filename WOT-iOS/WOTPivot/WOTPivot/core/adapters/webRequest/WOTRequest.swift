@@ -65,7 +65,7 @@ public protocol WOTRequestManagerListenerProtocol {
 public protocol WOTRequestManagerProtocol {
     @objc
     @discardableResult
-    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String) -> Bool
+    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?) -> Bool
 
     @objc
     func addListener(_ listener: WOTRequestManagerListenerProtocol, forRequest: WOTRequestProtocol)

@@ -63,8 +63,8 @@ extension NSManagedObject: JSONMapperProtocol {
     open func mapping(fromArray array: [Any]) { fatalError("not implemented")}
 
     @objc
-    open func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) { fatalError("not implemented")}
+    open func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) { fatalError("not implemented")}
 
     @objc
-    open func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) { fatalError("not implemented")}
+    open func mapping(fromArray array: [Any], into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) { fatalError("not implemented")}
 }

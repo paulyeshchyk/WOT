@@ -13,7 +13,7 @@
 
 @implementation WOTWebResponseAdapterEngines
 
-- (NSError *)parseData:(NSData *)data jsonLinksCallback:(void (^)(NSArray<WOTJSONLink *> * _Nullable))nestedRequestsCallback {
+- (NSError *)request:(id<WOTRequestProtocol>)request parseData:(NSData *)data jsonLinkAdapter:(id<JSONLinksAdapter>)jsonLinkAdapter {
     
     return [data parseAsJSON:^(NSDictionary * _Nullable json) {
 
@@ -28,7 +28,9 @@
                 if ([tankEngineJSON isKindOfClass:[NSDictionary class]]) {
                     PrimaryKey *pk = [[PrimaryKey alloc] initWithName:@"module_id" value:tankEngineJSON[WGJsonFields.module_id] predicateFormat:@"%K == %@"];
                     Tankengines *tankEngines = (Tankengines *)[Tankengines findOrCreateObjectWithPredicate:pk.predicate context:context];
-                    [tankEngines mappingFromJSON: tankEngineJSON into: context parentPrimaryKey:pk jsonLinksCallback:nestedRequestsCallback];
+                    [tankEngines mappingFromJSON: tankEngineJSON into: context parentPrimaryKey:pk linksCallback:^(NSArray<WOTJSONLink *> * _Nullable links) {
+                        [jsonLinkAdapter request:request adoptJsonLinks:links];
+                    }];
                 }
             }];
             

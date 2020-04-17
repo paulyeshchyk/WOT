@@ -32,12 +32,7 @@ extension Tankchassis {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
-        defer {
-            context.tryToSave()
-            jsonLinksCallback?(nil)
-        }
-
+    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         self.name = jSON[#keyPath(Tankchassis.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(Tankchassis.module_id)] as? Int ?? 0)
         self.level = jSON[#keyPath(Tankchassis.level)] as? NSDecimalNumber
@@ -46,12 +41,14 @@ extension Tankchassis {
         self.price_credit = jSON[#keyPath(Tankchassis.price_credit)] as? NSDecimalNumber
         self.price_gold = jSON[#keyPath(Tankchassis.price_gold)] as? NSDecimalNumber
         self.rotation_speed = jSON[#keyPath(Tankchassis.rotation_speed)] as? NSDecimalNumber
+        context.tryToSave()
+        linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, jsonLinksCallback: WOTJSONLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: PrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
         guard let json = json as? JSON, let entityDescription = Tankchassis.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, jsonLinksCallback: jsonLinksCallback)
+        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
     }
 }
 
@@ -75,7 +72,9 @@ extension Tankchassis {
                 return
             }
             onSuccess(tankChassis)
-            tankChassis.mapping(fromJSON: json, into: context, parentPrimaryKey: suspensionPK, jsonLinksCallback: nil)
+            tankChassis.mapping(fromJSON: json, into: context, parentPrimaryKey: suspensionPK, linksCallback: { _ in
+                //
+            })
         })
     }
 }
