@@ -40,7 +40,7 @@
     self.appManager.requestListener = requestManager;
     self.appManager.sessionManager = sessionManager;
 
-    [WOTApplicationDefaults registerRequests];
+    [AppDefaults registerRequestsFor:requestCoordinator];
     [WOTApplicationDefaults registerDefaultSettings];
    
 

@@ -11,7 +11,6 @@
 @interface WOTApplicationDefaults : NSObject
 
 + (void)registerDefaultSettings;
-+ (void)registerRequests;
 
 + (NSString *)language;
 + (void)setLanguage:(NSString *)language;

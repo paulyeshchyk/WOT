@@ -13,7 +13,7 @@ public class WOTWEBRequestFactory: NSObject {
     @objc
     @discardableResult
     public static func fetchData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) -> WOTRequestProtocol? {
-        guard let request = requestManager.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) else {
+        guard let request = requestManager.requestCoordinator.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             return nil
         }
 
@@ -31,7 +31,7 @@ public class WOTWEBRequestFactory: NSObject {
     @objc
     @discardableResult
     public static func fetchData(profileTankId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) -> Bool {
-        guard let request = requestManager.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankProfile.rawValue) else {
+        guard let request = requestManager.requestCoordinator.createRequest(forRequestId: WebRequestType.tankProfile.rawValue) else {
             return false
         }
 

@@ -106,7 +106,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
         let arguments = WOTRequestArguments()
         arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
 
-        if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WOTRequestId.tankVehicles.rawValue) {
+        if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WebRequestType.vehicles.rawValue) {
             requestManager?.addListener(self, forRequest: request)
             requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonLink: nil)
         }

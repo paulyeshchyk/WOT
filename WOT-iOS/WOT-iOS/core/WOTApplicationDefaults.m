@@ -51,27 +51,6 @@
     
 }
 
-+ (void)registerRequests {
-
-    id<WOTPivotAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
-    id<WOTRequestCoordinatorProtocol> coordinator = manager.requestManager.requestCoordinator;
-
-    [coordinator requestId:WOTRequestIdLogin registerRequestClass:[WOTWEBRequestLogin class] registerDataAdapterClass:[WOTWebSessionLoginResponseAdapter class]];
-    [coordinator requestId:WOTRequestIdLogout registerRequestClass:[WOTWEBRequestLogout class] registerDataAdapterClass:[WOTWebSessionLogoutResponseAdapter class]];
-    [coordinator requestId:WOTRequestIdSaveSession registerRequestClass:[WOTSaveSessionRequest class] registerDataAdapterClass:[WOTWebSessionSaveResponseAdapter class]];
-    [coordinator requestId:WOTRequestIdClearSession registerRequestClass:[WOTClearSessionRequest class] registerDataAdapterClass:[WOTWebSessionClearResponseAdapter class]];
-    [coordinator requestId:WOTRequestIdTankChassis registerRequestClass:[WOTWEBRequestTankChassis class] registerDataAdapterClass:[WOTWebResponseAdapterChassis class]];
-    [coordinator requestId:WOTRequestIdTankTurrets registerRequestClass:[WOTWEBRequestTankTurrets class] registerDataAdapterClass:[WOTWebResponseAdapterTurrets class]];
-    [coordinator requestId:WOTRequestIdTankGuns registerRequestClass:[WOTWEBRequestTankGuns class] registerDataAdapterClass:[WOTWebResponseAdapterGuns class]];
-    [coordinator requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWEBRequestTankRadios class] registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
-    [coordinator requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class] registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
-    [coordinator requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class] registerDataAdapterClass:[VehiclesAdapter class]];
-    [coordinator requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestModulesTree class] registerDataAdapterClass:[WOTWebResponseAdapterModuleTree class]];
-    [coordinator requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class] registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
-    [coordinator requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestSuspension class] registerDataAdapterClass:[WOTWebResponseAdapterSuspension class]];
-    
-}
-
 static NSString *WOTWEBRequestDefaultLanguage;
 
 + (void)setLanguage:(NSString *)language {

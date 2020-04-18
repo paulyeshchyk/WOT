@@ -9,7 +9,7 @@
 import Foundation
 
 public typealias WOTRequestCompletion = () -> Void
-public typealias WOTRequestIdType = Int
+public typealias WOTRequestIdType = String
 
 public typealias  WOTRequestCallback = (Data?, Error?) -> Void
 
@@ -19,10 +19,10 @@ public protocol WOTRequestDataBindingProtocol {
     func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
 
     @objc
-    func unregisterDataAdapter(for requestId: WOTRequestIdType)
+    static func unregisterDataAdapter(for requestId: WOTRequestIdType)
 
     @objc
-    func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass?
+    static func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass?
 
     @objc
     func request(for requestId: WOTRequestIdType) -> AnyClass?
@@ -56,35 +56,33 @@ public protocol WOTRequestDataParserProtocol {
 public protocol WOTRequestCoordinatorProtocol: WOTRequestDataBindingProtocol, WOTRequestDatasourceProtocol, WOTRequestDataParserProtocol {}
 
 @objc
-public class WOTRequestCoordinator: NSObject {
-    private var registeredRequests: [WOTRequestIdType: AnyClass] = .init()
-    private var registeredDataAdapters: [WOTRequestIdType: AnyClass] = .init()
-}
+public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
+    private static var registeredRequests: [WOTRequestIdType: AnyClass] = .init()
+    private static var registeredDataAdapters: [WOTRequestIdType: AnyClass] = .init()
 
-extension WOTRequestCoordinator: WOTRequestDataBindingProtocol {
+    // MARK: - WOTRequestDataBindingProtocol
     @objc
     public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass) {
-        self.registeredRequests[requiestId] = requestClass
-        self.registeredDataAdapters[requiestId] = dataAdapterClass
+        WOTRequestCoordinator.registeredRequests[requiestId] = requestClass
+        WOTRequestCoordinator.registeredDataAdapters[requiestId] = dataAdapterClass
     }
 
     @objc
-    public func unregisterDataAdapter(for requestId: WOTRequestIdType) {
-        self.registeredDataAdapters.removeValue(forKey: requestId)
+    public static func unregisterDataAdapter(for requestId: WOTRequestIdType) {
+        WOTRequestCoordinator.registeredDataAdapters.removeValue(forKey: requestId)
     }
 
     @objc
-    public func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass? {
-        return self.registeredDataAdapters[requestId]
+    public static func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass? {
+        return WOTRequestCoordinator.registeredDataAdapters[requestId]
     }
 
     @objc
     public func request(for requestId: WOTRequestIdType) -> AnyClass? {
-        return self.registeredRequests[requestId]
+        return WOTRequestCoordinator.registeredRequests[requestId]
     }
-}
 
-extension WOTRequestCoordinator: WOTRequestDatasourceProtocol {
+    // MARK: - WOTRequestDatasourceProtocol
     @objc
     public func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol? {
         guard let Clazz = request(for: forRequestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self) else {
@@ -111,17 +109,16 @@ extension WOTRequestCoordinator: WOTRequestDatasourceProtocol {
 
     @objc
     public func requestIds(forClass: AnyClass) -> [WOTRequestIdType]? {
-        let result =  self.registeredRequests.keys.filter { key in
-            guard let requestClass = self.registeredRequests[key], requestClass.conforms(to: WOTModelServiceProtocol.self) else { return false }
+        let result =  WOTRequestCoordinator.registeredRequests.keys.filter { key in
+            guard let requestClass = WOTRequestCoordinator.registeredRequests[key], requestClass.conforms(to: WOTModelServiceProtocol.self) else { return false }
             guard let requestModelClass = requestClass.modelClass() else { return false }
             guard forClass == requestModelClass else { return false }
             return true
         }
         return result
     }
-}
 
-extension WOTRequestCoordinator: WOTRequestDataParserProtocol {
+    // MARK: - WOTRequestDataParserProtocol
     static func modelClass(for request: WOTRequestProtocol) -> AnyClass? {
         guard let clazz = type(of: request) as? NSObject.Type else { return nil }
         guard let instance = clazz.init() as? WOTModelServiceProtocol else { return nil}
@@ -129,9 +126,8 @@ extension WOTRequestCoordinator: WOTRequestDataParserProtocol {
         return modelClass
     }
 
-    #warning("make static")
-    func adapterInstance(for requestIdType: WOTRequestIdType) -> WOTWebResponseAdapter? {
-        guard let AdapterType = self.dataAdapter(for: requestIdType) else {
+    static func adapterInstance(for requestIdType: WOTRequestIdType) -> WOTWebResponseAdapter? {
+        guard let AdapterType = WOTRequestCoordinator.dataAdapter(for: requestIdType) else {
             print("dataadapter not found")
             return nil
         }
@@ -148,17 +144,13 @@ extension WOTRequestCoordinator: WOTRequestDataParserProtocol {
         guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else { return }
 
         let requestIdTypes = self.requestIds(forClass: modelClass)
-        requestIdTypes?.forEach({ (idType) in
-            self.request(request, processBinary: binary, requestIdType: idType, jsonLinkAdapter: jsonLinkAdapter)
+        requestIdTypes?.forEach({ requestIdType in
+            if let adapter = WOTRequestCoordinator.adapterInstance(for: requestIdType) {
+                let error = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter)
+                if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
+                    print("raized:\(text)")
+                }
+            }
         })
-    }
-
-    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, requestIdType: WOTRequestIdType, jsonLinkAdapter: JSONLinksAdapter) {
-        guard let adapter = self.adapterInstance(for: requestIdType) else { return }
-
-        let error = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter)
-        if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
-            print("raized:\(text)")
-        }
     }
 }
