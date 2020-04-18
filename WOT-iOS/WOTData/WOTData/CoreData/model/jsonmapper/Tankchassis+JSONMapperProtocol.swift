@@ -32,7 +32,7 @@ extension Tankchassis {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(Tankchassis.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(Tankchassis.module_id)] as? Int ?? 0)
         self.level = jSON[#keyPath(Tankchassis.level)] as? NSDecimalNumber
@@ -41,40 +41,50 @@ extension Tankchassis {
         self.price_credit = jSON[#keyPath(Tankchassis.price_credit)] as? NSDecimalNumber
         self.price_gold = jSON[#keyPath(Tankchassis.price_gold)] as? NSDecimalNumber
         self.rotation_speed = jSON[#keyPath(Tankchassis.rotation_speed)] as? NSDecimalNumber
-        context.tryToSave()
-        linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Tankchassis.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension Tankchassis {
     public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: WOTPrimaryKey, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
-        guard let suspension_id = suspension_id else {
+        guard let suspensionPK = Tankchassis.primaryKey(for: suspension_id) else {
             return nil
         }
 
         var primaryKeys = [WOTPrimaryKey]()
-        let suspensionPK = WOTPrimaryKey(name: #keyPath(Tankchassis.module_id), value: suspension_id, predicateFormat: "%K == %@")
+
         primaryKeys.append(suspensionPK)
         primaryKeys.append(parentPrimaryKey)
 
         return WOTJSONLink(clazz: Tankchassis.self, primaryKeys: primaryKeys, keypathPrefix: nil, completion: { json in
-            guard let module_id = json[#keyPath(Tankchassis.module_id)] as? NSNumber else {
-                return
-            }
-            let predicate = NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), module_id)
-            guard let tankChassis = NSManagedObject.findOrCreateObject(forClass: Tankchassis.self, predicate: predicate, context: context) as? Tankchassis else {
+            guard
+                let module_id = json[#keyPath(Tankchassis.module_id)] as? NSNumber,
+                let predicate = Tankchassis.predicate(for: module_id),
+                let tankChassis = NSManagedObject.findOrCreateObject(forClass: Tankchassis.self, predicate: predicate, context: context) as? Tankchassis
+            else {
                 return
             }
             onSuccess(tankChassis)
-            tankChassis.mapping(fromJSON: json, into: context, parentPrimaryKey: suspensionPK, linksCallback: { _ in
+            tankChassis.mapping(fromJSON: json, parentPrimaryKey: suspensionPK, onSubordinateCreate: nil, linksCallback: { _ in
                 //
             })
         })
+    }
+}
+
+extension Tankchassis {
+    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? NSDecimalNumber else { return nil }
+        return NSPredicate(format: "%K == %@", #keyPath(Tankchassis.module_id), ident)
+    }
+
+    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        return WOTPrimaryKey(name: #keyPath(Tankchassis.module_id), value: ident, predicateFormat: "%K == %@")
     }
 }

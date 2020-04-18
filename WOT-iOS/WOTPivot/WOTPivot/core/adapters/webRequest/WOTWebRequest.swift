@@ -37,7 +37,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     open var path: String { return "" }
 
     override open var hash: Int {
-        return (pumper as? NSObject)?.hash ?? 0
+        return (pumper as? NSObject)?.hash ?? path.hashValue
     }
 
     public func requestHasFinishedLoad(data: Data?, error: Error?) {

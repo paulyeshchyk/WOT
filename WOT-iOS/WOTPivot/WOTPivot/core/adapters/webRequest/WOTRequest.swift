@@ -138,7 +138,6 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
         }
     }
 
-    #warning(" refactoring ")
     override open var hash: Int {
         return NSStringFromClass(type(of: self)).hash
     }

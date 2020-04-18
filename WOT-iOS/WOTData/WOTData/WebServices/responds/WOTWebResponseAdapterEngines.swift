@@ -1,35 +1,35 @@
 //
-//  WOTWebResponseAdapterSuspension.swift
+//  WOTWebResponseAdapterEngines.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/13/20.
+//  Created by Pavel Yeshchyk on 4/18/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
 import Foundation
 
-public class WOTWebResponseAdapterSuspension: NSObject, WOTWebResponseAdapter {
-    public let Clazz: AnyClass = VehicleprofileSuspension.self
-    public let PrimaryKeypath: String  = #keyPath(VehicleprofileSuspension.tag)
+public class WOTWebResponseAdapterEngines: NSObject, WOTWebResponseAdapter {
+    public let Clazz: AnyClass = Tankengines.self
+    public let PrimaryKeypath: String  = #keyPath(Tankengines.module_id)
 
     public func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        return VehicleprofileSuspension.primaryKey(for: ident)
+        return Tankengines.primaryKey(for: ident)
     }
 
     public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
         return binary?.parseAsJSON({ json in
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
-            json?.keys.forEach { (ident) in
+            json?.keys.forEach { (key) in
                 guard
-                    let objectById = json?[ident] as? JSON,
-                    let objectJson = objectById["suspension"] as? JSON
+                    let objectJson = json?[key] as? JSON,
+                    let ident = objectJson[self.PrimaryKeypath]
                 else {
                     return
                 }
                 context.perform {
                     if
                         let primaryKey = self.primaryKey(for: ident as AnyObject),
-                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context) {
+                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context)                         {
                         managedObject.mapping(fromJSON: objectJson, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                     })

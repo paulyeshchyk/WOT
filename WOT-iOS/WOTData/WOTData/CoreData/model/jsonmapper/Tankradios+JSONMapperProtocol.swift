@@ -31,7 +31,7 @@ extension Tankradios {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(Tankradios.name)] as? String
         self.level = NSDecimalNumber(value: jSON[#keyPath(Tankradios.level)] as? Int ?? 0)
         self.nation = jSON[#keyPath(Tankradios.nation)] as? String
@@ -39,14 +39,12 @@ extension Tankradios {
         self.distance = NSDecimalNumber(value: jSON[#keyPath(Tankradios.distance)] as? Int ?? 0)
         self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Tankradios.price_credit)] as? Int ?? 0)
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Tankradios.price_gold)] as? Int ?? 0)
-        context.tryToSave()
-        linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Tankradios.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
@@ -70,9 +68,21 @@ extension Tankradios {
                 return
             }
             onSuccess(tankRadios)
-            tankRadios.mapping(fromJSON: json, into: context, parentPrimaryKey: radioPK, linksCallback: { _ in
+            tankRadios.mapping(fromJSON: json, parentPrimaryKey: radioPK, onSubordinateCreate: nil, linksCallback: { _ in
                 //
             })
         })
+    }
+}
+
+extension Tankradios {
+    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? NSDecimalNumber else { return nil }
+        return NSPredicate(format: "%K == %@", #keyPath(Tankradios.module_id), ident)
+    }
+
+    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        return WOTPrimaryKey(name: #keyPath(Tankradios.module_id), value: ident as AnyObject, predicateFormat: "%K == %@")
     }
 }

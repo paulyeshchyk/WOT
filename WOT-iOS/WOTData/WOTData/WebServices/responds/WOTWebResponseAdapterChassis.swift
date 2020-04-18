@@ -8,35 +8,33 @@
 
 import Foundation
 
-@objc
-open class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
+public class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
+    public let Clazz: AnyClass = Tankchassis.self
+    public let PrimaryKeypath: String  = #keyPath(Tankchassis.module_id)
+
+    public func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        return Tankchassis.primaryKey(for: ident)
+    }
+
     public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
-        return binary?.parseAsJSON { (json) in
-
-            guard let json = json, json.keys.count != 0 else {
-                return
-            }
-
+        return binary?.parseAsJSON({ json in
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
-            context.perform {
-                json.keys.forEach { (key) in
-                    guard let suspension = json[key] as? JSON else { return }
-                    guard let module_id = suspension[WGJsonFields.module_id] else { return }
-                    let suspensionPK = WOTPrimaryKey(name: #keyPath(Tankchassis.module_id), value: module_id as AnyObject, predicateFormat: "%K == %@")
-                    guard let newObject = NSManagedObject.findOrCreateObject(forClass: Tankchassis.self, predicate: suspensionPK.predicate, context: context) as? Tankchassis else { return }
-                    newObject.mapping(fromJSON: suspension, into: context, parentPrimaryKey: suspensionPK, linksCallback: { links in
+            json?.keys.forEach { (key) in
+                guard
+                    let objectJson = json?[key] as? JSON,
+                    let ident = objectJson[self.PrimaryKeypath],
+                    let primaryKey = self.primaryKey(for: ident as AnyObject)
+                else {
+                    return
+                }
+                context.perform {
+                    guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context) else { return }
+                    managedObject.mapping(fromJSON: objectJson, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
                         jsonLinkAdapter.request(request, adoptJsonLinks: links)
                     })
-                }
-
-                if context.hasChanges {
-                    do {
-                        try context.save()
-                    } catch {
-                        print("\(#file) \(#function) at \(error.localizedDescription)")
-                    }
+                    context.tryToSave()
                 }
             }
-        }
+        })
     }
 }

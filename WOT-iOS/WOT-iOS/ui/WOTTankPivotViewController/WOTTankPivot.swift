@@ -104,7 +104,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
         let requestManager = appManager?.requestManager
 
         let arguments = WOTRequestArguments()
-        arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
+        arguments.setValues(Vehicles.keypaths(), forKey: WGWebQueryArgs.fields)
 
         if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WebRequestType.vehicles.rawValue) {
             requestManager?.addListener(self, forRequest: request)

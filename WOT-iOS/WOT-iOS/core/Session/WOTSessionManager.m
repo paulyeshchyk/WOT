@@ -44,24 +44,24 @@
     return [session.expires_at integerValue];
 }
 
-+ (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
 
-    id<WOTRequestProtocol> request = [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
-    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout jsonLink: NULL];
++ (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
+//    id<WOTRequestProtocol> request = [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
+//    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout jsonLink: NULL];
 }
 
 + (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
 
-    id<WOTRequestProtocol> request =  [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
-        
-    NSString *host = requestManager.hostConfiguration.host;
-    NSString *noFollow = @"1";
-    NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/", host];
-    WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
-    [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
-    [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
-    
-    [requestManager start:request with:args forGroupId:WGWebRequestGroups.login jsonLink: NULL];
+//    id<WOTRequestProtocol> request =  [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
+//
+//    NSString *host = requestManager.hostConfiguration.host;
+//    NSString *noFollow = @"1";
+//    NSString *redirectUri = [NSString stringWithFormat:@"%@/developers/api_explorer/wot/auth/login/complete/", host];
+//    WOTRequestArguments *args = [[WOTRequestArguments alloc] init];
+//    [args setValues:@[noFollow] forKey: WOTApiKeys.nofollow];
+//    [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
+//
+//    [requestManager start:request with:args forGroupId:WGWebRequestGroups.login jsonLink: NULL];
 }
 
 + (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager {

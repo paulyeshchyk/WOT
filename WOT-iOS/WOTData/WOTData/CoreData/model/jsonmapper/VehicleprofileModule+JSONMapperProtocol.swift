@@ -13,7 +13,7 @@ extension VehicleprofileModule {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         let jsonRadioId = jSON[#keyPath(VehicleprofileModule.radio_id)] as? Int
         self.radio_id = (jsonRadioId != nil) ? NSDecimalNumber(value: jsonRadioId!) : nil
 
@@ -29,13 +29,12 @@ extension VehicleprofileModule {
         let turretId = jSON[#keyPath(VehicleprofileModule.turret_id)] as? Int
         self.turret_id = ( turretId != nil ) ? NSDecimalNumber(value: turretId!) : nil
 
-        context.tryToSave()
-
-        let requests = self.nestedRequests(context: context, parentPrimaryKey: parentPrimaryKey)
-        linksCallback(requests)
+        let requests = self.nestedRequests(parentPrimaryKey: parentPrimaryKey)
+        linksCallback?(requests)
     }
 
-    private func nestedRequests(context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey) -> [WOTJSONLink] {
+    private func nestedRequests(parentPrimaryKey: WOTPrimaryKey) -> [WOTJSONLink] {
+        #warning("refactor then from here")
 //        let requestRadio = VehicleprofileRadio.linkRequest(for: self.radio_id, inContext: context) { [weak self] result in
 //            self?.tankradios = result as? VehicleprofileRadio
 //        }
@@ -45,19 +44,19 @@ extension VehicleprofileModule {
 //        let requestGun = Tankguns.linkRequest(for: self.gun_id, inContext: context) { [weak self] result in
 //            self?.tankguns = result as? Tankguns
 //        }
-        let requestSuspension = VehicleprofileSuspension.linkRequest(for: self.suspension_id, parentPrimaryKey: parentPrimaryKey, inContext: context) { [weak self] result in
-            self?.tankchassis = result as? Tankchassis
-        }
+//        let requestSuspension = VehicleprofileSuspension.linkRequest(for: self.suspension_id, parentPrimaryKey: parentPrimaryKey, inContext: context) { [weak self] result in
+//            self?.tankchassis = result as? Tankchassis
+//        }
 //        let requestTurret = Tankturrets.linkRequest(for: self.turret_id, inContext: context) { [weak self] result in
 //            self?.tankturrets = result as? Tankturrets
 //        }
 
-        return [requestSuspension/*, requestRadio, requestEngine, requestGun, requestTurret*/].compactMap { $0 }
+        return [/*requestSuspension, requestRadio, requestEngine, requestGun, requestTurret*/].compactMap { $0 }
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileModule.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }

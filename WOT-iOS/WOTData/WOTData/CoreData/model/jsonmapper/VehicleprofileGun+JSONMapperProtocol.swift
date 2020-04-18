@@ -46,7 +46,7 @@ extension VehicleprofileGun {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileGun.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileGun.tier)] as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileGun.tag)] as? String
@@ -58,13 +58,11 @@ extension VehicleprofileGun {
         self.dispersion = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileGun.dispersion)] as? Double ?? 0)
         self.reload_time = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileGun.reload_time)] as? Double ?? 0)
         self.aim_time = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileGun.aim_time)] as? Double ?? 0)
-        context.tryToSave()
-        linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileGun.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey,onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }

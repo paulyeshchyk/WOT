@@ -8,37 +8,37 @@
 
 import Foundation
 
-@objc
 public class WOTWebResponseAdapterProfile: NSObject, WOTWebResponseAdapter {
+    public let Clazz: AnyClass = Vehicleprofile.self
+    public let PrimaryKeypath: String  = #keyPath(Vehicleprofile.hashName)
+
+    public func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        return Vehicleprofile.primaryKey(for: ident)
+    }
+
     public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
-        return  binary?.parseAsJSON({ (json) in
-
-            guard let keys = json?.keys, keys.count != 0 else {
-                return
-            }
-
+        return binary?.parseAsJSON({ (json) in
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
-            context.perform {
-                keys.forEach { (key) in
+            json?.keys.forEach { (key) in
+                guard
+                    let objectJson = json?[key] as? [AnyHashable: Any] else { return }
+                let ident = objectJson.asURLQueryString().hashValue
+                guard
+                    let predicate = Vehicleprofile.predicate(for: ident as AnyObject)
+                else {
+                    return
+                }
+                context.perform {
+                    if
+                        let managedObject = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile,
+                        let primaryKey = Vehicleprofile.primaryKey(for: ident as AnyObject) {
+                        managedObject.hashName = NSDecimalNumber(value: ident)
 
-                    guard let profile = json?[key] as? [AnyHashable: Any] else { return }
-                    let profilehash = profile.asURLQueryString().hashValue
-                    let predicate = NSPredicate(format: "%K = %d", WOT_KEY_HASHNAME, profilehash)
-                    if let vehicleProfile = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile {
-                        vehicleProfile.hashName = NSDecimalNumber(value: profilehash)
-                        let primaryKey = WOTPrimaryKey(name: WOT_KEY_HASHNAME, value: String(profilehash) as AnyObject, predicateFormat: "%K == %@")
-                        vehicleProfile.mapping(fromJSON: profile, into: context, parentPrimaryKey: primaryKey, linksCallback: { links in
+                        managedObject.mapping(fromJSON: objectJson, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                         })
                     }
-                }
-
-                if context.hasChanges {
-                    do {
-                        try context.save()
-                    } catch {
-                        print("\(#file) \(#function) at \(error.localizedDescription)")
-                    }
+                    context.tryToSave()
                 }
             }
         })

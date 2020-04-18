@@ -49,13 +49,7 @@ extension ModulesTree {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
-        defer {
-            context.tryToSave()
-            let requests: [WOTJSONLink]? = self.nestedRequests(context: context)
-            linksCallback(requests)
-        }
-
+    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
@@ -67,9 +61,12 @@ extension ModulesTree {
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
          */
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
+
+        let requests: [WOTJSONLink]? = self.nestedRequests()
+        linksCallback?(requests)
     }
 
-    private func nestedRequests(context: NSManagedObjectContext) -> [WOTJSONLink]? {
+    private func nestedRequests() -> [WOTJSONLink]? {
         return nil
 //        let radio_id = self.radio_id?.stringValue
 //        let requestRadio = JSONMappingNestedRequest(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
@@ -80,9 +77,21 @@ extension ModulesTree {
 //        return [requestRadio, requestEngine, requestGun, requestSuspension, requestTurret]
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = ModulesTree.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+    }
+}
+
+extension ModulesTree {
+    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? NSDecimalNumber else { return nil }
+        return NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), ident)
+    }
+
+    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        return WOTPrimaryKey(name: #keyPath(ModulesTree.module_id), value: ident, predicateFormat: "%K == %@")
     }
 }

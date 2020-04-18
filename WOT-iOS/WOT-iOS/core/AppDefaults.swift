@@ -21,7 +21,7 @@ public class AppDefaults: NSObject {
         coordinator.requestId(WebRequestType.guns.rawValue, registerRequestClass: WOTWEBRequestTankGuns.self, registerDataAdapterClass: WOTWebResponseAdapterGuns.self)
         coordinator.requestId(WebRequestType.radios.rawValue, registerRequestClass: WOTWEBRequestTankRadios.self, registerDataAdapterClass: WOTWebResponseAdapterRadios.self)
         coordinator.requestId(WebRequestType.engines.rawValue, registerRequestClass: WOTWEBRequestTankEngines.self, registerDataAdapterClass: WOTWebResponseAdapterEngines.self)
-        coordinator.requestId(WebRequestType.vehicles.rawValue, registerRequestClass: WOTWEBRequestTankVehicles.self, registerDataAdapterClass: VehiclesAdapter.self)
+        coordinator.requestId(WebRequestType.vehicles.rawValue, registerRequestClass: WOTWEBRequestTankVehicles.self, registerDataAdapterClass: WOTWebResponseAdapterVehicles.self)
         coordinator.requestId(WebRequestType.moduleTree.rawValue, registerRequestClass: WOTWEBRequestModulesTree.self, registerDataAdapterClass: WOTWebResponseAdapterModuleTree.self)
         coordinator.requestId(WebRequestType.tankProfile.rawValue, registerRequestClass: WOTWEBRequestTankProfile.self, registerDataAdapterClass: WOTWebResponseAdapterProfile.self)
         coordinator.requestId(WebRequestType.tankProfile.rawValue, registerRequestClass: WOTWEBRequestSuspension.self, registerDataAdapterClass: WOTWebResponseAdapterSuspension.self)

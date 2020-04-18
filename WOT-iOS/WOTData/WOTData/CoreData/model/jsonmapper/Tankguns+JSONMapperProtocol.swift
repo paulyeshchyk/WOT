@@ -31,7 +31,7 @@ extension Tankguns {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(Tankguns.name)] as? String
         self.level = NSDecimalNumber(value: jSON[#keyPath(Tankguns.level)] as? Int ?? 0)
         self.nation = jSON[#keyPath(Tankguns.nation)] as? String
@@ -39,14 +39,12 @@ extension Tankguns {
         self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Tankguns.price_credit)] as? Int ?? 0)
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Tankguns.price_gold)] as? Int ?? 0)
         self.rate = NSDecimalNumber(value: jSON[#keyPath(Tankguns.rate)] as? Int ?? 0)
-        context.tryToSave()
-        linksCallback(nil)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Tankguns.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, into: context, parentPrimaryKey: parentPrimaryKey, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
@@ -65,9 +63,21 @@ extension Tankguns {
                 return
             }
             onSuccess(tankGuns)
-            tankGuns.mapping(fromJSON: json, into: context, parentPrimaryKey: gunsPK, linksCallback: { _ in
+            tankGuns.mapping(fromJSON: json, parentPrimaryKey: gunsPK, onSubordinateCreate: nil, linksCallback: { _ in
                 //
             })
         })
+    }
+}
+
+extension Tankguns {
+    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? NSDecimalNumber else { return nil }
+        return NSPredicate(format: "%K == %@", #keyPath(Tankguns.module_id), ident)
+    }
+
+    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        return WOTPrimaryKey(name: #keyPath(Tankguns.module_id), value: ident as AnyObject, predicateFormat: "%K == %@")
     }
 }

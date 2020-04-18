@@ -30,15 +30,15 @@ extension VehicleprofileAmmoDamage {
     public typealias Fields = FieldKeys
 
     @objc
-    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    public func mapping(fromArray array: [Any], into context: NSManagedObjectContext, linksCallback: OnLinksCallback?) {
         self.min_value = NSDecimalNumber(value: array[0] as? Int ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Int ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Int ?? 0)
+        #warning("refactoring")
         context.tryToSave()
-        linksCallback(nil)
     }
 
-    convenience init?(array: Any?, into context: NSManagedObjectContext, linksCallback: @escaping ([WOTJSONLink]?) -> Void) {
+    convenience init?(array: Any?, into context: NSManagedObjectContext, linksCallback: OnLinksCallback?) {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoDamage.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromArray: array, into: context, linksCallback: linksCallback)
