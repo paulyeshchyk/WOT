@@ -54,7 +54,7 @@ extension Vehicles {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(Vehicles.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(Vehicles.tier)]  as? Int ?? 0)
         self.tag = jSON[#keyPath(Vehicles.tag)] as? String
@@ -86,7 +86,7 @@ extension Vehicles {
         }
     }
 
-    func mapping(modulestreeJson json: Any?, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> [ModulesTree]? {
+    func mapping(modulestreeJson json: Any?, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> [ModulesTree]? {
         guard let json = json as? JSON else { return nil }
 
         var result = [ModulesTree]()
@@ -102,7 +102,7 @@ extension Vehicles {
         return result
     }
 
-    func mapping(moduletreeJson json: Any?, module_id: NSNumber, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> ModulesTree? {
+    func mapping(moduletreeJson json: Any?, module_id: NSNumber, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> ModulesTree? {
         guard let json = json as? JSON else { return nil }
         guard
             let pk = ModulesTree.primaryKey(for: module_id),

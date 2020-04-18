@@ -2,7 +2,7 @@
 //  VehicleprofileSuspension+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/20/20.
+//  Created by Pavel Yeshchyk on 4/18/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -21,6 +21,7 @@ extension VehicleprofileSuspension {
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var traverse_speed: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
+    @NSManaged public var steering_lock_angle: NSDecimalNumber?
     @NSManaged public var tankchassis: Tankchassis?
     @NSManaged public var vehicleprofile: Vehicleprofile?
 }

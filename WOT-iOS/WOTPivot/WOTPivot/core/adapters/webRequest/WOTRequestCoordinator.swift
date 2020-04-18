@@ -49,7 +49,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapter)
+    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol)
 }
 
 @objc
@@ -126,13 +126,13 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return modelClass
     }
 
-    static func adapterInstance(for requestIdType: WOTRequestIdType) -> WOTWebResponseAdapter? {
+    static func adapterInstance(for requestIdType: WOTRequestIdType) -> WOTWebResponseAdapterProtocol? {
         guard let AdapterType = WOTRequestCoordinator.dataAdapter(for: requestIdType) else {
             print("dataadapter not found")
             return nil
         }
 
-        guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapter else {
+        guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapterProtocol else {
             print("adapter is not WOTWebResponseAdapter")
             return nil
         }
@@ -140,7 +140,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapter) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) {
         guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else { return }
 
         let requestIdTypes = self.requestIds(forClass: modelClass)

@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-public typealias OnSubordinateCreateCallback = (AnyClass, WOTPrimaryKey) -> NSManagedObject?
+public typealias OnSubordinateCreateCallback = (AnyClass, WOTPrimaryKey?) -> NSManagedObject?
 public typealias OnLinksCallback = ([WOTJSONLink]?) -> Void
 
 public protocol JSONMapperProtocol {
@@ -18,15 +18,15 @@ public protocol JSONMapperProtocol {
     mutating func mapping(fromJSON jSON: JSON)
     func mapping(fromArray array: [Any])
 
-    func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?)
-    func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?)
+    func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?)
+    func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?)
 }
 
 extension JSONMapperProtocol {
     public func mapping(fromJSON jSON: JSON) {}
     public func mapping(fromArray array: [Any]) {}
-    public func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {}
-    public func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {}
+    public func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {}
+    public func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {}
 }
 
 public enum WOTWebResponseStatus: String {

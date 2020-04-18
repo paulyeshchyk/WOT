@@ -32,7 +32,7 @@ extension Tankchassis {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(Tankchassis.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(Tankchassis.module_id)] as? Int ?? 0)
         self.level = jSON[#keyPath(Tankchassis.level)] as? NSDecimalNumber
@@ -43,7 +43,7 @@ extension Tankchassis {
         self.rotation_speed = jSON[#keyPath(Tankchassis.rotation_speed)] as? NSDecimalNumber
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey, linksCallback: OnLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Tankchassis.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
         self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
@@ -51,7 +51,7 @@ extension Tankchassis {
 }
 
 extension Tankchassis {
-    public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: WOTPrimaryKey, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+    public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: WOTPrimaryKey?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
         guard let suspensionPK = Tankchassis.primaryKey(for: suspension_id) else {
             return nil
         }
@@ -59,7 +59,9 @@ extension Tankchassis {
         var primaryKeys = [WOTPrimaryKey]()
 
         primaryKeys.append(suspensionPK)
-        primaryKeys.append(parentPrimaryKey)
+        if let parentPrimaryKey = parentPrimaryKey {
+            primaryKeys.append(parentPrimaryKey)
+        }
 
         return WOTJSONLink(clazz: Tankchassis.self, primaryKeys: primaryKeys, keypathPrefix: nil, completion: { json in
             guard

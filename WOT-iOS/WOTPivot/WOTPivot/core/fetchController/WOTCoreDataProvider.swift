@@ -48,7 +48,6 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
         context.undoManager = nil
         return context
-
     }()
 
     @objc public lazy var mainManagedObjectContext: NSManagedObjectContext  = {

@@ -8,8 +8,8 @@
 
 import Foundation
 
-public class WOTWebResponseAdapterModuleTree: NSObject, WOTWebResponseAdapter {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+public class WOTWebResponseAdapterModuleTree: WOTWebResponseAdapter {
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         return binary?.parseAsJSON { (_) in
         }
     }

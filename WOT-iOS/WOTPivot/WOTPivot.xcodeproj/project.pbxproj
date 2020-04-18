@@ -96,7 +96,7 @@
 		1DA83CB4213563C50039CB4B /* NSBundle+LanguageBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CB2213563C50039CB4B /* NSBundle+LanguageBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DA83CB8213563F60039CB4B /* NSString+WOTValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83CB6213563F60039CB4B /* NSString+WOTValue.m */; };
 		1DA83CB9213563F60039CB4B /* NSString+WOTValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1DB67455221C01E100982EE6 /* WOTWebResponseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB67454221C01E100982EE6 /* WOTWebResponseAdapter.swift */; };
+		1DB67455221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB67454221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift */; };
 		1DBF89A4240D0F08007DF8B2 /* WOTTankMetricOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */; };
 		1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */; };
 		1DBF89A8240D1E19007DF8B2 /* WOTTankMetricList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */; };
@@ -240,7 +240,7 @@
 		1DA83CB2213563C50039CB4B /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
 		1DA83CB6213563F60039CB4B /* NSString+WOTValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WOTValue.m"; sourceTree = "<group>"; };
 		1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WOTValue.h"; sourceTree = "<group>"; };
-		1DB67454221C01E100982EE6 /* WOTWebResponseAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebResponseAdapter.swift; sourceTree = "<group>"; };
+		1DB67454221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebResponseAdapterProtocol.swift; sourceTree = "<group>"; };
 		1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankMetricOptions.swift; sourceTree = "<group>"; };
 		1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMetric.swift; sourceTree = "<group>"; };
 		1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankMetricList.swift; sourceTree = "<group>"; };
@@ -621,7 +621,7 @@
 		1DA83C9021355A340039CB4B /* webResponse */ = {
 			isa = PBXGroup;
 			children = (
-				1DB67454221C01E100982EE6 /* WOTWebResponseAdapter.swift */,
+				1DB67454221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift */,
 				1DA153AC244A431900FB3C89 /* WOTPrimaryKey.swift */,
 				1DA153AE244A433700FB3C89 /* WOTJSONLink.swift */,
 			);
@@ -973,7 +973,7 @@
 				1DA153AF244A433700FB3C89 /* WOTJSONLink.swift in Sources */,
 				1D65F82B2216A7B8006A85E4 /* WOTPivotNodeHolderProtocol.swift in Sources */,
 				1D65F8282216A7B8006A85E4 /* WOTDimensionDataCalculator.swift in Sources */,
-				1DB67455221C01E100982EE6 /* WOTWebResponseAdapter.swift in Sources */,
+				1DB67455221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift in Sources */,
 				1DC6D4CA212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift in Sources */,
 				1D5D023723C86AC5004B0314 /* WOTCoreDataProvider.swift in Sources */,
 				1DE558DF2124560500576D41 /* WOTPivotColNode.swift in Sources */,

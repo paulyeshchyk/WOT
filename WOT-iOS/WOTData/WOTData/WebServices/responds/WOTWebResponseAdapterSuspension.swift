@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class WOTWebResponseAdapterSuspension: NSObject, WOTWebResponseAdapter {
+public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
     public let Clazz: AnyClass = VehicleprofileSuspension.self
     public let PrimaryKeypath: String  = #keyPath(VehicleprofileSuspension.tag)
 
@@ -16,7 +16,7 @@ public class WOTWebResponseAdapterSuspension: NSObject, WOTWebResponseAdapter {
         return VehicleprofileSuspension.primaryKey(for: ident)
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         return binary?.parseAsJSON({ json in
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
             json?.keys.forEach { (ident) in

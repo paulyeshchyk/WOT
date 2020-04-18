@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
+public class WOTWebResponseAdapterChassis: WOTWebResponseAdapter {
     public let Clazz: AnyClass = Tankchassis.self
     public let PrimaryKeypath: String  = #keyPath(Tankchassis.module_id)
 
@@ -16,7 +16,7 @@ public class WOTWebResponseAdapterChassis: NSObject, WOTWebResponseAdapter {
         return Tankchassis.primaryKey(for: ident)
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         return binary?.parseAsJSON({ json in
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
             json?.keys.forEach { (key) in

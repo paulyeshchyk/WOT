@@ -126,7 +126,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 }
 
-extension WOTRequestManager: JSONLinksAdapter {
+extension WOTRequestManager: JSONLinksAdapterProtocol {
     public func request(_ request: WOTRequestProtocol, adoptJsonLinks jsonLinks: [WOTJSONLink]?) {
         let theRequest = request.parentRequest ?? request
         let links = jsonLinks?.compactMap { $0 } ?? []

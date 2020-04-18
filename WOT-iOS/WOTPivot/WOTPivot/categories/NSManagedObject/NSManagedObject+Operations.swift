@@ -36,7 +36,7 @@ extension NSManagedObject {
     }
 
     @objc
-    public static func findOrCreateObject(predicate: NSPredicate, context: NSManagedObjectContext) -> NSManagedObject? {
+    public static func findOrCreateObject(predicate: NSPredicate?, context: NSManagedObjectContext) -> NSManagedObject? {
         guard let foundObject = self.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
             return self.insertNewObject(context)
         }
@@ -44,7 +44,7 @@ extension NSManagedObject {
     }
 
     @objc
-    public static func findOrCreateObject(forClass: AnyClass, predicate: NSPredicate, context: NSManagedObjectContext) -> NSManagedObject? {
+    public static func findOrCreateObject(forClass: AnyClass, predicate: NSPredicate?, context: NSManagedObjectContext) -> NSManagedObject? {
         guard let foundObject = forClass.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
             return forClass.insertNewObject(context)
         }
@@ -63,8 +63,8 @@ extension NSManagedObject: JSONMapperProtocol {
     open func mapping(fromArray array: [Any]) { fatalError("not implemented")}
 
     @objc
-    open func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) { fatalError("not implemented")}
+    open func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) { fatalError("not implemented")}
 
     @objc
-    open func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) { fatalError("not implemented")}
+    open func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) { fatalError("not implemented")}
 }

@@ -10,9 +10,18 @@ import Foundation
 
 @objc
 public class WOTPrimaryKey: NSObject {
-    var name: String
-    var value: AnyObject
+    public var name: String
+    public var value: AnyObject
     private var predicateFormat: String = "%K = %@"
+
+    override public var description: String {
+        set {}
+        get {
+            let predicateDescription = predicate.description
+            let nameValue = "\(name) - \(String(describing: value))"
+            return "\(nameValue): \(predicateDescription)"
+        }
+    }
 
     @objc
     public required init(name: String, value: AnyObject, predicateFormat: String) {

@@ -17,14 +17,14 @@ class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
     func logout() {}
 }
 
-class WOTWebSessionClearResponseAdapter: NSObject, WOTWebResponseAdapter {
-    func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+class WOTWebSessionClearResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+    func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         return nil
     }
 }
 
-class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapter {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 
@@ -43,8 +43,8 @@ class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapter {
     }
 }
 
-class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapter {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 
@@ -105,8 +105,8 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapter {
     }
 }
 
-class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapter {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 

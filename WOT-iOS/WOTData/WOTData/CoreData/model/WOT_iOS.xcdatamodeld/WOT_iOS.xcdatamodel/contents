@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G95" minimumToolsVersion="Xcode 4.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Xcode 4.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ListSetting" representedClassName="ListSetting" syncable="YES">
         <attribute name="ascending" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
@@ -210,6 +210,7 @@
     <entity name="VehicleprofileSuspension" representedClassName="VehicleprofileSuspension" syncable="YES">
         <attribute name="load_limit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="steering_lock_angle" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tier" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="traverse_speed" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -224,6 +225,7 @@
         <attribute name="tier" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="traverse_left_arc" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="traverse_right_arc" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="traverse_speed" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="view_range" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <relationship name="tankturrets" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tankturrets" inverseName="vehicleprofileTurrets" inverseEntity="Tankturrets" syncable="YES"/>
@@ -271,8 +273,8 @@
         <element name="VehicleprofileGun" positionX="-1467" positionY="-270" width="128" height="240"/>
         <element name="VehicleprofileModule" positionX="-1494" positionY="-297" width="128" height="28"/>
         <element name="VehicleprofileRadio" positionX="-1476" positionY="-279" width="128" height="150"/>
-        <element name="VehicleprofileSuspension" positionX="-1476" positionY="-279" width="128" height="165"/>
-        <element name="VehicleprofileTurret" positionX="-1449" positionY="-252" width="128" height="193"/>
+        <element name="VehicleprofileSuspension" positionX="-1476" positionY="-279" width="128" height="178"/>
+        <element name="VehicleprofileTurret" positionX="-1449" positionY="-252" width="128" height="208"/>
         <element name="Vehicles" positionX="-675" positionY="-18" width="128" height="343"/>
     </elements>
 </model>

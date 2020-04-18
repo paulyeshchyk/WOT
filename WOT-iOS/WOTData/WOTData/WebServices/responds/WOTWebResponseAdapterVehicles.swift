@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class WOTWebResponseAdapterVehicles: NSObject, WOTWebResponseAdapter {
+public class WOTWebResponseAdapterVehicles: WOTWebResponseAdapter {
     public let Clazz: AnyClass = Vehicles.self
     public let PrimaryKeypath: String  = #keyPath(Vehicles.tag)
 
@@ -17,9 +17,14 @@ public class WOTWebResponseAdapterVehicles: NSObject, WOTWebResponseAdapter {
         return Vehicles.primaryKey(for: ident)
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+    private lazy var currentContext: NSManagedObjectContext  = {
+        let coordinator = WOTTankCoreDataProvider.sharedInstance.persistentStoreCoordinator
+        return self.workManagedObjectContext(coordinator: coordinator)
+    }()
+
+    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         return binary?.parseAsJSON({ json in
-            let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
+            let context = self.currentContext
             json?.keys.forEach { (key) in
                 guard
                     let objectJson = json?[key] as? JSON,
@@ -29,7 +34,7 @@ public class WOTWebResponseAdapterVehicles: NSObject, WOTWebResponseAdapter {
                 }
 
                 let onSubordinateCreate: OnSubordinateCreateCallback = { clazz, primaryKey in
-                    let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey.predicate, context: context)
+                    let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: context)
                     return managedObject
                 }
 

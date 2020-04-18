@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class WOTWebResponseAdapterTurrets: NSObject, WOTWebResponseAdapter {
+public class WOTWebResponseAdapterTurrets: WOTWebResponseAdapter {
     public let Clazz: AnyClass = Tankturrets.self
     public let PrimaryKeypath: String  = #keyPath(Tankturrets.module_id)
 
@@ -16,9 +16,14 @@ public class WOTWebResponseAdapterTurrets: NSObject, WOTWebResponseAdapter {
         return Tankturrets.primaryKey(for: ident)
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapter) -> Error? {
+    private lazy var currentContext: NSManagedObjectContext  = {
+        let coordinator = WOTTankCoreDataProvider.sharedInstance.persistentStoreCoordinator
+        return self.workManagedObjectContext(coordinator: coordinator)
+    }()
+
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         return binary?.parseAsJSON({ json in
-            let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
+            let context = self.currentContext
             json?.keys.forEach { (key) in
                 guard
                     let objectJson = json?[key] as? JSON,
