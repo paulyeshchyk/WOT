@@ -57,3 +57,5 @@ extension VehicleprofileRadio {
         return result
     }
 }
+
+#warning("add PrimaryKeypathProtocol support")

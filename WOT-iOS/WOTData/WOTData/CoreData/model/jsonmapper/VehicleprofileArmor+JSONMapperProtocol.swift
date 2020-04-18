@@ -42,3 +42,5 @@ extension VehicleprofileArmor {
         self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
+
+#warning("add PrimaryKeypathProtocol support")

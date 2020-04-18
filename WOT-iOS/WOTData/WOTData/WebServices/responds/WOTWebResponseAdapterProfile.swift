@@ -25,14 +25,9 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
         return binary?.parseAsJSON({ (json) in
             let context = self.currentContext
             json?.keys.forEach { (key) in
-                guard
-                    let objectJson = json?[key] as? [AnyHashable: Any] else { return }
+                guard let objectJson = json?[key] as? [AnyHashable: Any] else { return }
                 let ident = objectJson.asURLQueryString().hashValue
-                guard
-                    let predicate = Vehicleprofile.predicate(for: ident as AnyObject)
-                else {
-                    return
-                }
+                guard let predicate = Vehicleprofile.predicate(for: ident as AnyObject) else { return }
                 context.perform {
                     if
                         let managedObject = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile,

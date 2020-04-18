@@ -48,6 +48,7 @@ extension Tankguns {
     }
 }
 
+#warning("add PrimaryKeypathProtocol support")
 extension Tankguns {
     public static func linkRequest(for gun_id: NSDecimalNumber, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
         var primaryKeys = [WOTPrimaryKey]()

@@ -47,3 +47,5 @@ extension VehicleprofileArmorList {
         return result
     }
 }
+
+#warning("add PrimaryKeypathProtocol support")

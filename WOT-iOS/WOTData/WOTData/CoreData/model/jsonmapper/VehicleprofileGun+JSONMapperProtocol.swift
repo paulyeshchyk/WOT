@@ -75,3 +75,5 @@ extension VehicleprofileGun {
         return result
     }
 }
+
+#warning("add PrimaryKeypathProtocol support")

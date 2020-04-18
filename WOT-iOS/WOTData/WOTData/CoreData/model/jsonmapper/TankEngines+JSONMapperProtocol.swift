@@ -57,6 +57,7 @@ extension Tankengines {
     }
 }
 
+#warning("add PrimaryKeypathProtocol support")
 extension Tankengines {
     public static func linkRequest(for engine_id: NSDecimalNumber, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
         var primaryKeys = [WOTPrimaryKey]()

@@ -75,6 +75,7 @@ extension Vehicleprofile {
     }
 }
 
+#warning("add PrimaryKeypathProtocol support")
 extension Vehicleprofile {
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? String else { return nil }
@@ -85,7 +86,9 @@ extension Vehicleprofile {
         guard let ident = ident else { return nil }
         return WOTPrimaryKey(name: #keyPath(Vehicleprofile.hashName), value: ident as AnyObject, predicateFormat: "%K == %@")
     }
+}
 
+extension Vehicleprofile {
     public static func profile(from json: Any?, primaryKey pkProfile: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> Vehicleprofile? {
         guard let json = json as? JSON else { return  nil }
         guard let result = onSubordinateCreate?(Vehicleprofile.self, pkProfile) as? Vehicleprofile else { return nil }

@@ -23,34 +23,8 @@ public class WOTWebResponseAdapterVehicles: WOTWebResponseAdapter {
     }()
 
     override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
-        return binary?.parseAsJSON({ json in
-            let context = self.currentContext
-            json?.keys.forEach { (key) in
-                guard
-                    let objectJson = json?[key] as? JSON,
-                    let ident = objectJson[self.PrimaryKeypath]
-                else {
-                    return
-                }
-
-                let onSubordinateCreate: OnSubordinateCreateCallback = { clazz, primaryKey in
-                    let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: context)
-                    return managedObject
-                }
-
-                let onLinksCallback: OnLinksCallback = { links in
-                    jsonLinkAdapter.request(request, adoptJsonLinks: links)
-                }
-
-                context.perform {
-                    if
-                        let primaryKey = self.primaryKey(for: ident as AnyObject),
-                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context) {
-                        managedObject.mapping(fromJSON: objectJson, parentPrimaryKey: primaryKey, onSubordinateCreate: onSubordinateCreate, linksCallback: onLinksCallback)
-                        context.tryToSave()
-                    }
-                }
-            }
-        })
+        let store = CoreDataStore(Clazz: Vehicles.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext)
+        store.perform()
+        return nil
     }
 }

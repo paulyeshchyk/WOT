@@ -84,6 +84,7 @@ extension ModulesTree {
     }
 }
 
+#warning("add PrimaryKeypathProtocol support")
 extension ModulesTree {
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? NSDecimalNumber else { return nil }

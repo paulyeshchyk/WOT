@@ -58,3 +58,5 @@ extension VehicleprofileTurret {
         return result
     }
 }
+
+#warning("add PrimaryKeypathProtocol support")

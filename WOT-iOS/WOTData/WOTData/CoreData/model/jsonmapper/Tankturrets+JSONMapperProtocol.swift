@@ -78,6 +78,7 @@ extension Tankturrets {
     }
 }
 
+#warning("add PrimaryKeypathProtocol support")
 extension Tankturrets {
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? NSDecimalNumber else { return nil }

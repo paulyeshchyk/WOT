@@ -115,14 +115,20 @@ extension Vehicles {
     }
 }
 
-extension Vehicles {
+extension Vehicles: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(Vehicles.tag)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", #keyPath(Vehicles.tag), ident)
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
     }
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: #keyPath(Vehicles.tag), value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
     }
 }

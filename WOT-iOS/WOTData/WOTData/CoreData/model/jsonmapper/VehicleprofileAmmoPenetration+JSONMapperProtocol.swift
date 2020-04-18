@@ -51,3 +51,5 @@ extension VehicleprofileAmmoPenetration {
         return result
     }
 }
+
+#warning("add PrimaryKeypathProtocol support")

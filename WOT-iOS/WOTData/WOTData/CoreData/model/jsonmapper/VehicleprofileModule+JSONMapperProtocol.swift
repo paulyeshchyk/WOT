@@ -20,7 +20,7 @@ extension VehicleprofileModule {
         let chassisId = jSON[#keyPath(VehicleprofileModule.suspension_id)] as? Int
         self.suspension_id = (chassisId != nil) ? NSDecimalNumber(value: chassisId!) : nil
         let suspensionPK = VehicleprofileSuspension.primaryKey(for: self.suspension_id)!
-        #warning("refactor then from here")
+        #warning("refactor from here")
 //        let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: "suspension.") { json in
 //            if let tankchassisObject = onSubordinateCreate?(Tankchassis.self, nil) as? Tankchassis {
 //                tankchassisObject.mapping(fromJSON: json, parentPrimaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
@@ -77,3 +77,5 @@ extension VehicleprofileModule {
         return result
     }
 }
+
+#warning("add PrimaryKeypathProtocol support")

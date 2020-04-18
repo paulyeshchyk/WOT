@@ -79,6 +79,7 @@ extension Tankchassis {
     }
 }
 
+#warning("add PrimaryKeypathProtocol support")
 extension Tankchassis {
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? NSDecimalNumber else { return nil }

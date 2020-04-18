@@ -60,3 +60,5 @@ extension VehicleprofileEngine {
         return result
     }
 }
+
+#warning("add PrimaryKeypathProtocol support")

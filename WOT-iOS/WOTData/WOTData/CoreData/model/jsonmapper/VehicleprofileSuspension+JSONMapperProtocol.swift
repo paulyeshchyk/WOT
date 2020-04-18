@@ -88,6 +88,7 @@ extension VehicleprofileSuspension {
     }
 }
 
+#warning("add PrimaryKeypathProtocol support")
 extension VehicleprofileSuspension {
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? String else { return nil }
