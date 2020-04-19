@@ -45,5 +45,3 @@ extension VehicleprofileAmmo {
         self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
-
-#warning("add PrimaryKeypathProtocol support")

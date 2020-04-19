@@ -51,12 +51,34 @@ extension VehicleprofileTurret {
 }
 
 extension VehicleprofileTurret {
-    public static func turret(fromJSON json: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileTurret? {
-        guard let json = json as? JSON else { return  nil }
-        guard let result = onSubordinateCreate?(VehicleprofileTurret.self, pkProfile) as? VehicleprofileTurret else { return nil }
-        result.mapping(fromJSON: json, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+    public static func turret(fromJSON jSON: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileTurret? {
+        guard let jSON = jSON as? JSON else { return  nil }
+
+        let tag = jSON[#keyPath(VehicleprofileTurret.tag)]
+        let pk = VehicleprofileTurret.primaryKey(for: tag as AnyObject?)
+
+        guard let result = onSubordinateCreate?(VehicleprofileTurret.self, pk) as? VehicleprofileTurret else {
+            fatalError("Turret is not created")
+        }
+        result.mapping(fromJSON: jSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }
 
-#warning("add PrimaryKeypathProtocol support")
+extension VehicleprofileTurret: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(VehicleprofileTurret.tag)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
+    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? String else { return nil }
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
+    }
+
+    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+    }
+}

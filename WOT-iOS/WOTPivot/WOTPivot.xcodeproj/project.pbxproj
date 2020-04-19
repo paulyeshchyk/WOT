@@ -57,6 +57,7 @@
 		1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8212216A7B8006A85E4 /* WOTPivotDimension.swift */; };
 		1D65F82D2216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8222216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift */; };
 		1D65F82E2216A7B8006A85E4 /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8232216A7B8006A85E4 /* WOTDimensionProtocol.swift */; };
+		1D695C79244CB01700650F95 /* AnyConvertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D695C78244CB01700650F95 /* AnyConvertable.swift */; };
 		1D73BB7924436936004B720A /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7724436936004B720A /* Coding.swift */; };
 		1D73BB7A24436936004B720A /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7824436936004B720A /* AnyCodable.swift */; };
 		1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */; };
@@ -198,6 +199,7 @@
 		1D65F8212216A7B8006A85E4 /* WOTPivotDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDimension.swift; sourceTree = "<group>"; };
 		1D65F8222216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDimensionProtocol.swift; sourceTree = "<group>"; };
 		1D65F8232216A7B8006A85E4 /* WOTDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionProtocol.swift; sourceTree = "<group>"; };
+		1D695C78244CB01700650F95 /* AnyConvertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyConvertable.swift; sourceTree = "<group>"; };
 		1D73BB7724436936004B720A /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		1D73BB7824436936004B720A /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestCoordinator.swift; sourceTree = "<group>"; };
@@ -486,6 +488,14 @@
 			path = extension;
 			sourceTree = "<group>";
 		};
+		1D695C77244CB00A00650F95 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				1D695C78244CB01700650F95 /* AnyConvertable.swift */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
 		1D73BB7524436936004B720A /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,6 +659,7 @@
 		1DA83CA62135633F0039CB4B /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				1D695C77244CB00A00650F95 /* JSON */,
 				1D65F7D22215AF4D006A85E4 /* CGContext */,
 				1D65F7D52215B0B8006A85E4 /* CGRect */,
 				1D8C298621358B4200759C42 /* NSArray */,
@@ -1043,6 +1054,7 @@
 				1DA153A32444CDC700FB3C89 /* RomanNumber.m in Sources */,
 				1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */,
 				1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */,
+				1D695C79244CB01700650F95 /* AnyConvertable.swift in Sources */,
 				1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */,
 				1D5D024123C87033004B0314 /* NSManagedObject+Operations.swift in Sources */,
 				1D5D0AFD23CCB012004B0314 /* WOTPivotMetadataPermutator.swift in Sources */,

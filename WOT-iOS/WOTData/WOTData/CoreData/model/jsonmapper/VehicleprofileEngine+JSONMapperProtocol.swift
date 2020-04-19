@@ -60,7 +60,7 @@ extension VehicleprofileEngine {
         guard let result = onSubordinateCreate?(VehicleprofileEngine.self, pk) as? VehicleprofileEngine else {
             fatalError("Engine not created")
         }
-        result.mapping(fromJSON: jSON, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        result.mapping(fromJSON: jSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }

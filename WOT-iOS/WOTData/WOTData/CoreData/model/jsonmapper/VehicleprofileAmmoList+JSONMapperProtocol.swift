@@ -34,5 +34,3 @@ extension VehicleprofileAmmoList {
         return result
     }
 }
-
-#warning("add PrimaryKeypathProtocol support")

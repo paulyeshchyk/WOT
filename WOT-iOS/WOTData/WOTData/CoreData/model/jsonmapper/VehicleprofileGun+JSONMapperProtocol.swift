@@ -68,12 +68,34 @@ extension VehicleprofileGun {
 }
 
 extension VehicleprofileGun {
-    public static func gun(fromJSON json: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileGun? {
-        guard let json = json as? JSON else { return  nil }
-        guard let result = onSubordinateCreate?(VehicleprofileGun.self, pkProfile) as? VehicleprofileGun else { return nil }
-        result.mapping(fromJSON: json, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+    public static func gun(fromJSON jSON: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileGun? {
+        guard let jSON = jSON as? JSON else { return  nil }
+
+        let tag = jSON[#keyPath(VehicleprofileGun.tag)]
+        let pk = VehicleprofileGun.primaryKey(for: tag as AnyObject?)
+
+        guard let result = onSubordinateCreate?(VehicleprofileGun.self, pk) as? VehicleprofileGun else {
+            fatalError("gun not created")
+        }
+        result.mapping(fromJSON: jSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }
 
-#warning("add PrimaryKeypathProtocol support")
+extension VehicleprofileGun: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(VehicleprofileGun.tag)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
+    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? String else { return nil }
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
+    }
+
+    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+    }
+}

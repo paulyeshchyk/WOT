@@ -44,7 +44,7 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
     @objc
     func removeGroup(_ group: String)
 
-    var hash: Int { get }
+    var uuid: UUID { get }
 
     var parentRequest: WOTRequestProtocol? { get set }
 }
@@ -103,6 +103,8 @@ public protocol WOTRequestListenerProtocol {
 
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
+    public let uuid: UUID = UUID()
+
     @objc
     public var hostConfiguration: WOTHostConfigurationProtocol?
 

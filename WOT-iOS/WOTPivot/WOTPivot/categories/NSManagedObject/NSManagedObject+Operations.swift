@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-@objc
 extension NSManagedObject {
     @objc
     public static func singleObject(predicate: NSPredicate?, inManagedObjectContext context: NSManagedObjectContext, includeSubentities: Bool) -> NSManagedObject? {
@@ -18,11 +17,11 @@ extension NSManagedObject {
         request.predicate = predicate
         request.includesSubentities = includeSubentities
         do {
-            let result = try context.fetch(request)
-            return result.last as? NSManagedObject
+            return try context.fetch(request).last as? NSManagedObject
         } catch {
-            return nil
+            print("singleObject error:\(error)")
         }
+        return nil
     }
 
     @objc

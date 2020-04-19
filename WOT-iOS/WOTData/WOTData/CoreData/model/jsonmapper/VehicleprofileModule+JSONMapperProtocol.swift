@@ -14,12 +14,27 @@ extension VehicleprofileModule {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
-        let jsonRadioId = jSON[#keyPath(VehicleprofileModule.radio_id)] as? Int
-        self.radio_id = (jsonRadioId != nil) ? NSDecimalNumber(value: jsonRadioId!) : nil
+        self.radio_id = AnyConvertable(#keyPath(VehicleprofileModule.radio_id)).asNSDecimal
 
-        let chassisId = jSON[#keyPath(VehicleprofileModule.suspension_id)] as? Int
-        self.suspension_id = (chassisId != nil) ? NSDecimalNumber(value: chassisId!) : nil
-        let suspensionPK = VehicleprofileSuspension.primaryKey(for: self.suspension_id)!
+        var links: [WOTJSONLink] = .init()
+        self.suspension_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.suspension_id)]).asNSDecimal
+        if let suspensionPK = Tankchassis.primaryKey(for: suspension_id?.intValue as AnyObject?) {
+            if let suspensionLink = WOTJSONLink(clazz: Tankchassis.self, primaryKeys: [suspensionPK], keypathPrefix: nil, completion: { json in //"suspension."
+                print(json)
+                }) {
+                links.append(suspensionLink)
+            }
+        }
+
+        self.engine_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.engine_id)]).asNSDecimal
+        let enginePK = Tankchassis.primaryKey(for: engine_id?.intValue as AnyObject?)
+
+        self.gun_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.gun_id)]).asNSDecimal
+        let gunPK = Tankchassis.primaryKey(for: gun_id?.intValue as AnyObject?)
+
+        self.turret_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.turret_id)]).asNSDecimal
+        let turretPK = Tankchassis.primaryKey(for: turret_id?.intValue as AnyObject?)
+
         #warning("refactor from here")
 //        let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: "suspension.") { json in
 //            if let tankchassisObject = onSubordinateCreate?(Tankchassis.self, nil) as? Tankchassis {
@@ -28,18 +43,7 @@ extension VehicleprofileModule {
 //            }
 //        }
 
-        let engineId = jSON[#keyPath(VehicleprofileModule.engine_id)] as? Int
-        self.engine_id = (engineId != nil) ? NSDecimalNumber(value: engineId!) : nil
-
-        let gunId = jSON[#keyPath(VehicleprofileModule.gun_id)] as? Int
-        self.gun_id = (gunId != nil) ? NSDecimalNumber(value: gunId!) : nil
-
-        let turretId = jSON[#keyPath(VehicleprofileModule.turret_id)] as? Int
-        self.turret_id = ( turretId != nil ) ? NSDecimalNumber(value: turretId!) : nil
-
-//        let links: [WOTJSONLink] = [suspensionLink].compactMap { $0 }
-        ////        let requests = self.nestedRequests(parentPrimaryKey: parentPrimaryKey)
-//        linksCallback?(links)
+        linksCallback?(links)
     }
 
     private func nestedRequests(parentPrimaryKey: WOTPrimaryKey?) -> [WOTJSONLink] {
@@ -70,12 +74,10 @@ extension VehicleprofileModule {
 }
 
 extension VehicleprofileModule {
-    public static func module(fromJSON json: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileModule? {
+    public static func module(fromJSON json: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileModule? {
         guard let json = json as? JSON else { return  nil }
-        guard let result = onSubordinateCreate?(VehicleprofileModule.self, pkProfile) as? VehicleprofileModule else { return nil }
+        guard let result = onSubordinateCreate?(VehicleprofileModule.self, externalPK) as? VehicleprofileModule else { return nil }
         result.mapping(fromJSON: json, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }
-
-#warning("add PrimaryKeypathProtocol support")

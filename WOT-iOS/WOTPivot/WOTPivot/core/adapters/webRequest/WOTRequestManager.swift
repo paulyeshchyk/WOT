@@ -21,22 +21,22 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
-    fileprivate var subordinateLinks: [Int: [WOTJSONLink]] = [:]
+    fileprivate var subordinateLinks: [AnyHashable: [WOTJSONLink]] = [:]
 
     private func request(_ request: WOTRequestProtocol, addSubordinateLink link: WOTJSONLink?) {
         guard let link = link else { return }
-        if var linksForRequest = subordinateLinks[request.hash] {
+        if var linksForRequest = subordinateLinks[request.uuid.uuidString] {
             if linksForRequest.firstIndex(of: link) == nil {
                 linksForRequest.append(link)
-                subordinateLinks[request.hash] = linksForRequest
+                subordinateLinks[request.uuid.uuidString] = linksForRequest
             }
         } else {
-            subordinateLinks[request.hash] = [link]
+            subordinateLinks[request.uuid.uuidString] = [link]
         }
     }
 
     private func request(_ request: WOTRequestProtocol, removeSubordinateLink link: WOTJSONLink) {
-        if var linksForRequest = subordinateLinks[request.hash] {
+        if var linksForRequest = subordinateLinks[request.uuid.uuidString] {
             if let index = linksForRequest.firstIndex(of: link) {
                 linksForRequest.remove(at: index)
             }
@@ -56,7 +56,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             grouppedRequests.append(contentsOf: available)
         }
         let filtered = grouppedRequests.filter { (availableRequest) -> Bool in
-            availableRequest.hash == request.hash
+            availableRequest.uuid.uuidString == request.uuid.uuidString
         }
         let result: Bool = (filtered.count == 0)
         if result {
@@ -182,7 +182,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         //
         print("\nfinished load data for request:\n\(request.description)")
 
-        let subordinateLinks = self.subordinateLinks[request.hash]
+        let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks)
 
         self.removeRequest(request)
@@ -208,11 +208,11 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     public func removeRequest(_ request: WOTRequestProtocol) {
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
-                grouppedRequests.removeAll(where: { $0.hash == request.hash })
+                grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })
                 self.grouppedRequests[group] = grouppedRequests
             }
         }
-        subordinateLinks[request.hash] = nil
+        subordinateLinks[request.uuid.uuidString] = nil
         request.removeListener(self)
     }
 }

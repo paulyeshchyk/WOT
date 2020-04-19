@@ -56,10 +56,16 @@ extension VehicleprofileSuspension {
 }
 
 extension VehicleprofileSuspension {
-    public static func suspension(fromJSON json: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileSuspension? {
-        guard let json = json as? JSON else { return  nil }
-        guard let result = onSubordinateCreate?(VehicleprofileSuspension.self, pkProfile) as? VehicleprofileSuspension else { return nil }
-        result.mapping(fromJSON: json, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+    public static func suspension(fromJSON jSON: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileSuspension? {
+        guard let jSON = jSON as? JSON else { return  nil }
+
+        let tag = jSON[#keyPath(VehicleprofileSuspension.tag)]
+        let pk = VehicleprofileSuspension.primaryKey(for: tag as AnyObject?)
+
+        guard let result = onSubordinateCreate?(VehicleprofileSuspension.self, pk) as? VehicleprofileSuspension else {
+            fatalError("Suspension is not created")
+        }
+        result.mapping(fromJSON: jSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 
@@ -88,15 +94,20 @@ extension VehicleprofileSuspension {
     }
 }
 
-#warning("add PrimaryKeypathProtocol support")
-extension VehicleprofileSuspension {
+extension VehicleprofileSuspension: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(VehicleprofileSuspension.tag)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", #keyPath(VehicleprofileSuspension.tag), ident)
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
     }
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: #keyPath(VehicleprofileSuspension.tag), value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
     }
 }
