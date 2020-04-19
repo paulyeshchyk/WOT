@@ -62,19 +62,27 @@ extension ModulesTree {
          */
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
 
-        let requests: [WOTJSONLink]? = self.nestedRequests()
+        var requests = [WOTJSONLink]()
+
+        let nextModuleLinks = self.nextModuleLinks(idents: jSON[#keyPath(ModulesTree.next_modules)] as? [Any]) ?? []
+        requests.append(contentsOf: nextModuleLinks)
+
         linksCallback?(requests)
     }
 
-    private func nestedRequests() -> [WOTJSONLink]? {
-        return nil
-//        let radio_id = self.radio_id?.stringValue
-//        let requestRadio = JSONMappingNestedRequest(clazz: Tankradios.self, identifier_fieldname: #keyPath(Tankradios.module_id), identifier: radio_id, completion: { json in
-//            guard let tankRadios = Tankradios.insertNewObject(context) as? Tankradios else { return }
-//            tankRadios.mapping(fromJSON: json, into: context, completion: nil)
-//            self.tankradios = tankRadios
-//        })
-//        return [requestRadio, requestEngine, requestGun, requestSuspension, requestTurret]
+    private func nextModuleLinks(idents: [Any]?) -> [WOTJSONLink]? {
+        var result = [WOTJSONLink?]()
+        idents?.forEach {
+            if let pk = ModulesTree.primaryKey(for: $0 as AnyObject) {
+                let link = WOTJSONLink(clazz: ModulesTree.self, primaryKeys: [pk], keypathPrefix: nil, completion: self.linkNextModule(_:))
+                result.append(link)
+            }
+        }
+        return result.compactMap { $0 }
+    }
+
+    private func linkNextModule(_ from: JSON) {
+        print(from)
     }
 
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
@@ -84,15 +92,29 @@ extension ModulesTree {
     }
 }
 
-#warning("add PrimaryKeypathProtocol support")
-extension ModulesTree {
+extension ModulesTree: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(ModulesTree.module_id)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
-        guard let ident = ident as? NSDecimalNumber else { return nil }
-        return NSPredicate(format: "%K == %@", #keyPath(ModulesTree.module_id), ident)
+        guard let ident = ident as? String else { return nil }
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
     }
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: #keyPath(ModulesTree.module_id), value: ident, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+    }
+}
+
+extension ModulesTree {
+    public static func nextModules(fromJSON json: Any?, primaryKey pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> NSSet? {
+        guard let json = json as? JSON else { return nil }
+        guard let result = onSubordinateCreate?(ModulesTree.self, pkProfile) as? ModulesTree else { return nil }
+        result.mapping(fromJSON: json, parentPrimaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        return [result]
     }
 }

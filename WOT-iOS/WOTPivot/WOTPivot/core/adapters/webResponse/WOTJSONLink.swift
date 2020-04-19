@@ -22,6 +22,19 @@ public class WOTJSONLink: NSObject {
     @objc
     public var keypathPrefix: String?
 
+    public override var description: String {
+        get {
+            var result: String = "WOTJSONLink: \(String(describing: clazz))"
+            if let clearPK = primaryKeys?.compactMap {$0} {
+                clearPK.forEach {
+                    result += " key:\($0)"
+                }
+            }
+            return result
+        }
+        set {}
+    }
+
     @objc
     public func addPreffix(to: String) -> String {
         guard let preffix = keypathPrefix else {

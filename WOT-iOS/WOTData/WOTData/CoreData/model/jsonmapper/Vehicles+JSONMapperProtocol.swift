@@ -91,26 +91,16 @@ extension Vehicles {
 
         var result = [ModulesTree]()
         json.keys.forEach { (key) in
-            guard let moduleTreeJSON = json[key] as? JSON,
-                let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else {
-                return
-            }
+            guard
+                let moduleTreeJSON = json[key] as? JSON,
+                let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber,
+                let pk = ModulesTree.primaryKey(for: module_id),
+                let moduleTree = onSubordinateCreate?(ModulesTree.self, nil) as? ModulesTree
+            else { return }
 
-            guard let moduleTree = mapping(moduletreeJson: moduleTreeJSON, module_id: module_id, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback) else { return }
+            moduleTree.mapping(fromJSON: moduleTreeJSON, parentPrimaryKey: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
             result.append(moduleTree)
         }
-        return result
-    }
-
-    func mapping(moduletreeJson json: Any?, module_id: NSNumber, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> ModulesTree? {
-        guard let json = json as? JSON else { return nil }
-        guard
-            let pk = ModulesTree.primaryKey(for: module_id),
-            let result = onSubordinateCreate?(ModulesTree.self, pk) as? ModulesTree
-        else {
-            return nil
-        }
-        result.mapping(fromJSON: json, parentPrimaryKey: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }

@@ -30,8 +30,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     @objc
     private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String, jsonLink: WOTJSONLink?) -> Bool {
-//        fatalError("applyjsonlink here")
-
         var grouppedRequests: [WOTRequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
             grouppedRequests.append(contentsOf: available)
@@ -120,7 +118,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         request.hostConfiguration = hostConfiguration
         request.parentRequest = parentRequest
 
-        let groupId = "Nested\(String(describing: clazz))-\(String(describing: jsonLink.primaryKeys))"
+        let groupId = "Nested\(String(describing: clazz))-\(jsonLink)"
 
         return start(request, with: arguments, forGroupId: groupId, jsonLink: jsonLink)
     }
