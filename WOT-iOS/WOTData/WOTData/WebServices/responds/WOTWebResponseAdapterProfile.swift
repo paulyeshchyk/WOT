@@ -33,7 +33,7 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
                         let primaryKey = Vehicleprofile.primaryKey(for: ident as AnyObject) {
                         managedObject.hashName = NSDecimalNumber(value: ident)
 
-                        managedObject.mapping(fromJSON: objectJson, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
+                        managedObject.mapping(fromJSON: objectJson, externalPK: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                         })
                     }

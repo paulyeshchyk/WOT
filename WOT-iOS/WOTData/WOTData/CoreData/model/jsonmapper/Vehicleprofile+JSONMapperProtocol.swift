@@ -46,7 +46,7 @@ extension Vehicleprofile {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.tank_id = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.tank_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.is_default)] as? Int ?? 0)
         self.max_ammo = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.max_ammo)] as? Int ?? 0)
@@ -58,20 +58,20 @@ extension Vehicleprofile {
         self.speed_backward = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.speed_backward)] as? Int ?? 0)
         self.speed_forward = NSDecimalNumber(value: jSON[#keyPath(Vehicleprofile.speed_forward)] as? Int ?? 0)
 
-        self.ammo = VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.armor = VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.engine = VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.gun = VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.radio = VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.suspension = VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.turret = VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.modules = VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.ammo = VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.armor = VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.engine = VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.gun = VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.radio = VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.suspension = VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.turret = VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.modules = VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
     }
 
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Vehicleprofile.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
@@ -94,11 +94,11 @@ extension Vehicleprofile: PrimaryKeypathProtocol {
 }
 
 extension Vehicleprofile {
-    public static func profile(from json: Any?, primaryKey pkProfile: WOTPrimaryKey, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> Vehicleprofile? {
-        guard let json = json as? JSON else { return  nil }
-        guard let result = onSubordinateCreate?(Vehicleprofile.self, pkProfile) as? Vehicleprofile else { return nil }
+    public static func profile(from jSON: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> Vehicleprofile? {
+        guard let jSON = jSON as? JSON else { return  nil }
+        guard let result = onSubordinateCreate?(Vehicleprofile.self, externalPK) as? Vehicleprofile else { return nil }
 
-        result.mapping(fromJSON: json, parentPrimaryKey: pkProfile, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        result.mapping(fromJSON: jSON, externalPK: externalPK, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }

@@ -31,7 +31,7 @@ extension Tankradios {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(Tankradios.name)] as? String
         self.level = NSDecimalNumber(value: jSON[#keyPath(Tankradios.level)] as? Int ?? 0)
         self.nation = jSON[#keyPath(Tankradios.nation)] as? String
@@ -44,7 +44,7 @@ extension Tankradios {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Tankradios.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
@@ -68,7 +68,7 @@ extension Tankradios {
                 return
             }
             onSuccess(tankRadios)
-            tankRadios.mapping(fromJSON: json, parentPrimaryKey: radioPK, onSubordinateCreate: nil, linksCallback: { _ in
+            tankRadios.mapping(fromJSON: json, externalPK: radioPK, onSubordinateCreate: nil, linksCallback: { _ in
                 //
             })
         })

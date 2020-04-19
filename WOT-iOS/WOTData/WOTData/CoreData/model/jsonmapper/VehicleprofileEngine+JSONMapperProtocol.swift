@@ -36,7 +36,7 @@ extension VehicleprofileEngine {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileEngine.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.tier)]  as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileEngine.tag)] as? String
@@ -48,17 +48,37 @@ extension VehicleprofileEngine {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileEngine.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileEngine {
-    public static func engine(fromJSON json: Any?, primaryKey pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileEngine? {
-        guard let json = json as? JSON else { return  nil }
-        guard let result = onSubordinateCreate?(VehicleprofileEngine.self, pkProfile) as? VehicleprofileEngine else { return nil }
-        result.mapping(fromJSON: json, parentPrimaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+    public static func engine(fromJSON jSON: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileEngine? {
+        guard let jSON = jSON as? JSON else { return  nil }
+        let tag = jSON[#keyPath(VehicleprofileEngine.tag)]
+        let pk = VehicleprofileEngine.primaryKey(for: tag as AnyObject?)
+        guard let result = onSubordinateCreate?(VehicleprofileEngine.self, pk) as? VehicleprofileEngine else {
+            fatalError("Engine not created")
+        }
+        result.mapping(fromJSON: jSON, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }
 
-#warning("add PrimaryKeypathProtocol support")
+extension VehicleprofileEngine: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(VehicleprofileEngine.tag)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
+    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? String else { return nil }
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
+    }
+
+    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+    }
+}

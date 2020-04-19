@@ -34,7 +34,7 @@ public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
                 context.perform {
                     if
                         let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey?.predicate, context: context) {
-                        managedObject.mapping(fromJSON: objectJson1, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
+                        managedObject.mapping(fromJSON: objectJson1, externalPK: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                     })
                         context.tryToSave()

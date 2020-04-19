@@ -33,7 +33,7 @@ public class WOTWebResponseAdapterChassis: WOTWebResponseAdapter {
                 }
                 context.perform {
                     guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context) else { return }
-                    managedObject.mapping(fromJSON: objectJson, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
+                    managedObject.mapping(fromJSON: objectJson, externalPK: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
                         jsonLinkAdapter.request(request, adoptJsonLinks: links)
                     })
                     context.tryToSave()

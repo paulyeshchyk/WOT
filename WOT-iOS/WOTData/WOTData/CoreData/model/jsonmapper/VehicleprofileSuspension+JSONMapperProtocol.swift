@@ -39,7 +39,7 @@ extension VehicleprofileSuspension {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileSuspension.name)] as? String
         self.tag = jSON[#keyPath(VehicleprofileSuspension.tag)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.tier)] as? Int ?? 0)
@@ -51,15 +51,15 @@ extension VehicleprofileSuspension {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileSuspension.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileSuspension {
-    public static func suspension(fromJSON json: Any?, primaryKey pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileSuspension? {
+    public static func suspension(fromJSON json: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileSuspension? {
         guard let json = json as? JSON else { return  nil }
         guard let result = onSubordinateCreate?(VehicleprofileSuspension.self, pkProfile) as? VehicleprofileSuspension else { return nil }
-        result.mapping(fromJSON: json, parentPrimaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        result.mapping(fromJSON: json, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 
@@ -81,7 +81,7 @@ extension VehicleprofileSuspension {
                 return
             }
             onSuccess(suspension)
-            suspension.mapping(fromJSON: json, parentPrimaryKey: suspensionPK, onSubordinateCreate: nil, linksCallback: { _ in
+            suspension.mapping(fromJSON: json, externalPK: suspensionPK, onSubordinateCreate: nil, linksCallback: { _ in
                 //
             })
         })

@@ -32,7 +32,7 @@ extension Tankchassis {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(Tankchassis.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(Tankchassis.module_id)] as? Int ?? 0)
         self.level = jSON[#keyPath(Tankchassis.level)] as? NSDecimalNumber
@@ -46,7 +46,7 @@ extension Tankchassis {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Tankchassis.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
@@ -72,7 +72,7 @@ extension Tankchassis {
                 return
             }
             onSuccess(tankChassis)
-            tankChassis.mapping(fromJSON: json, parentPrimaryKey: suspensionPK, onSubordinateCreate: nil, linksCallback: { _ in
+            tankChassis.mapping(fromJSON: json, externalPK: suspensionPK, onSubordinateCreate: nil, linksCallback: { _ in
                 //
             })
         })

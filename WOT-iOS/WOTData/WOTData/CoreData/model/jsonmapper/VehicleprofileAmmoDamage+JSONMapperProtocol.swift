@@ -30,7 +30,7 @@ extension VehicleprofileAmmoDamage {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromArray array: [Any], externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.min_value = NSDecimalNumber(value: array[0] as? Int ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Int ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Int ?? 0)
@@ -39,7 +39,7 @@ extension VehicleprofileAmmoDamage {
     convenience init?(array: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoPenetration.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromArray: array, parentPrimaryKey: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromArray: array, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
@@ -47,7 +47,7 @@ extension VehicleprofileAmmoDamage {
     public static func damage(fromArray array: Any?, primaryKey pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileAmmoDamage? {
         guard let array = array as? [Any] else { return  nil }
         guard let result = onSubordinateCreate?(VehicleprofileAmmoDamage.self, pkProfile) as? VehicleprofileAmmoDamage else { return nil }
-        result.mapping(fromArray: array, parentPrimaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        result.mapping(fromArray: array, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }

@@ -49,16 +49,18 @@ extension Vehicles {
         case type
         case tank_id
         case modules_tree
+        case default_profile
     }
 
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+        let tankID = jSON[#keyPath(Vehicles.tank_id)]
         self.name = jSON[#keyPath(Vehicles.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(Vehicles.tier)]  as? Int ?? 0)
         self.tag = jSON[#keyPath(Vehicles.tag)] as? String
-        self.tank_id = NSDecimalNumber(value: jSON[#keyPath(Vehicles.tank_id)] as? Int ?? 0)
+        self.tank_id = NSDecimalNumber(value: tankID as? Int ?? 0)
         self.nation = jSON[#keyPath(Vehicles.nation)] as? String
         self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Vehicles.price_credit)] as? Int ?? 0)
         self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Vehicles.price_gold)]  as? Int ?? 0)
@@ -67,26 +69,18 @@ extension Vehicles {
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
 
-        guard let intID = jSON[#keyPath(Vehicles.tank_id)] as? Int else { return }
-        if let pkProfile = Vehicleprofile.primaryKey(for: String(intID) as AnyObject) {
-            self.default_profile = Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], primaryKey: pkProfile, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        }
+        self.default_profile = Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], externalPK: Vehicleprofile.primaryKey(for: tankID as AnyObject), onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
 
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
-
-        if let pkModulesTree = ModulesTree.primaryKey(for: String(intID) as AnyObject) {
-            if let modulesTreeJSON = jSON[#keyPath(Vehicles.modules_tree)] {
-                let module_tree = mapping(modulestreeJson: modulesTreeJSON, parentPrimaryKey: pkModulesTree, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-                module_tree?.forEach {
-                    self.addToModules_tree($0)
-                }
-            }
+        let module_tree = mapping(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], externalPK: ModulesTree.primaryKey(for: tankID as AnyObject), onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        module_tree?.forEach {
+            self.addToModules_tree($0)
         }
     }
 
-    func mapping(modulestreeJson json: Any?, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> [ModulesTree]? {
+    func mapping(modulestreeJson json: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> [ModulesTree]? {
         guard let json = json as? JSON else { return nil }
 
         var result = [ModulesTree]()
@@ -98,7 +92,7 @@ extension Vehicles {
                 let moduleTree = onSubordinateCreate?(ModulesTree.self, nil) as? ModulesTree
             else { return }
 
-            moduleTree.mapping(fromJSON: moduleTreeJSON, parentPrimaryKey: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+            moduleTree.mapping(fromJSON: moduleTreeJSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
             result.append(moduleTree)
         }
         return result

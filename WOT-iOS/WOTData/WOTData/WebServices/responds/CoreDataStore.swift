@@ -46,7 +46,7 @@ public struct CoreDataStore {
     private func perform(primaryKey: WOTPrimaryKey?, json: JSON) {
         context.perform {
             if let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey?.predicate, context: self.context) {
-                managedObject.mapping(fromJSON: json, parentPrimaryKey: primaryKey, onSubordinateCreate: self.onSubordinate(_:_:), linksCallback: self.onLinks(_:))
+                managedObject.mapping(fromJSON: json, externalPK: primaryKey, onSubordinateCreate: self.onSubordinate(_:_:), linksCallback: self.onLinks(_:))
                 self.context.tryToSave()
             }
         }
