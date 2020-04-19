@@ -21,13 +21,15 @@ public class WOTWebProxyRequest: WOTWEBRequest {
         }
 
         do {
-            if let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [AnyHashable: Any] {
+            if let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? JSON {
                 if let success = json["Text"] as? String {
                     result = success.data(using: String.Encoding.utf8)
                 }
             }
 
-        } catch {}
+        } catch {
+            fatalError("unable to parse json")
+        }
         return result as NSData?
     }
 

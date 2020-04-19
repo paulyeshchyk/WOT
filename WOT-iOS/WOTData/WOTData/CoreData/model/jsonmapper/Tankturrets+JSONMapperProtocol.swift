@@ -78,15 +78,20 @@ extension Tankturrets {
     }
 }
 
-#warning("add PrimaryKeypathProtocol support")
-extension Tankturrets {
+extension Tankturrets: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(Tankturrets.module_id)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
-        guard let ident = ident as? NSDecimalNumber else { return nil }
-        return NSPredicate(format: "%K == %@", #keyPath(Tankturrets.module_id), ident)
+        guard let ident = ident as? String else { return nil }
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
     }
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: #keyPath(Tankturrets.module_id), value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
     }
 }

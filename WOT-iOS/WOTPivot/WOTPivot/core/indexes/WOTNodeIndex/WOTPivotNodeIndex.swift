@@ -13,7 +13,7 @@ class WOTPivotNodeIndex: WOTPivotNodeIndexProtocol {
     // where node.index - global autoincremented value
     // used to get item by indexpath while iterating in  WOTPivotLayout::layoutAttributesForElementsInRect
 
-    private var index = [AnyHashable: Any]()
+    private var index = JSON()
 
     func reset() {
         index.removeAll()

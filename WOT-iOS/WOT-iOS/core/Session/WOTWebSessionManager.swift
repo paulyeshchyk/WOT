@@ -18,13 +18,13 @@ class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
 }
 
 class WOTWebSessionClearResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         return nil
     }
 }
 
 class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 
@@ -44,7 +44,7 @@ class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol 
 }
 
 class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 
@@ -106,7 +106,7 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol
 }
 
 class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         /*
          ^(NSData *binary, NSError *error) {
 

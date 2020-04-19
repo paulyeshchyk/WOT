@@ -53,8 +53,9 @@ extension ModulesTree {
 
         var requests = [WOTJSONLink]()
 
-        let nextModuleLinks = self.nextModuleLinks(idents: jSON[#keyPath(ModulesTree.next_modules)] as? [Any]) ?? []
-        requests.append(contentsOf: nextModuleLinks)
+        #warning("remove comment")
+//        let nextModuleLinks = self.nextModuleLinks(idents: jSON[#keyPath(ModulesTree.next_modules)] as? [Any]) ?? []
+//        requests.append(contentsOf: nextModuleLinks)
 
         linksCallback?(requests)
     }
@@ -70,8 +71,8 @@ extension ModulesTree {
         return result.compactMap { $0 }
     }
 
-    private func linkNextModule(_ from: JSON) {
-        print(from)
+    private func linkNextModule(_ json: JSON) {
+        print(json)
     }
 
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {

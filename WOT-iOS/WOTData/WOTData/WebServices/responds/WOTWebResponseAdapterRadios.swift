@@ -16,9 +16,13 @@ public class WOTWebResponseAdapterRadios: WOTWebResponseAdapter {
         return Tankradios.primaryKey(for: ident)
     }
 
-    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    private lazy var currentContext: NSManagedObjectContext  = {
+        return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
+    }()
+
+    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         return binary?.parseAsJSON({ json in
-            let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
+            let context = self.currentContext
             json?.keys.forEach { (key) in
                 guard
                     let objectJson = json?[key] as? JSON,

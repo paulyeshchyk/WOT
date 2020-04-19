@@ -17,11 +17,10 @@ public class WOTWebResponseAdapterTurrets: WOTWebResponseAdapter {
     }
 
     private lazy var currentContext: NSManagedObjectContext  = {
-        let coordinator = WOTTankCoreDataProvider.sharedInstance.persistentStoreCoordinator
-        return self.workManagedObjectContext(coordinator: coordinator)
+        return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
     }()
 
-    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         return binary?.parseAsJSON({ json in
             let context = self.currentContext
             json?.keys.forEach { (key) in

@@ -21,6 +21,27 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
+    fileprivate var subordinateLinks: [Int: [WOTJSONLink]] = [:]
+
+    private func request(_ request: WOTRequestProtocol, addSubordinateLink link: WOTJSONLink?) {
+        guard let link = link else { return }
+        if var linksForRequest = subordinateLinks[request.hash] {
+            if linksForRequest.firstIndex(of: link) == nil {
+                linksForRequest.append(link)
+                subordinateLinks[request.hash] = linksForRequest
+            }
+        } else {
+            subordinateLinks[request.hash] = [link]
+        }
+    }
+
+    private func request(_ request: WOTRequestProtocol, removeSubordinateLink link: WOTJSONLink) {
+        if var linksForRequest = subordinateLinks[request.hash] {
+            if let index = linksForRequest.firstIndex(of: link) {
+                linksForRequest.remove(at: index)
+            }
+        }
+    }
 
     @objc
     private var coordinator: WOTRequestCoordinatorProtocol
@@ -44,6 +65,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             grouppedRequests.append(request)
         }
         self.grouppedRequests[groupId] = grouppedRequests
+
+        self.request(request, addSubordinateLink: jsonLink)
+
         print("\nadded request:[\(groupId)]")
         return result
     }
@@ -78,13 +102,17 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         grouppedRequests[groupId]?.forEach { $0.cancel() }
     }
 
-    fileprivate func request(_ parentRequest: WOTRequestProtocol?, queueJsonLinks jsonLinks: ([WOTJSONLink?])?) {
+    fileprivate func request(_ parentRequest: WOTRequestProtocol?, queueJsonLinks jsonLinks: ([WOTJSONLink?])?, onComplete: (() -> Void)? ) {
         guard let jsonLinks = jsonLinks, jsonLinks.count != 0 else {
+            onComplete?()
             return
         }
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self = self else {
+                onComplete?()
+                return
+            }
 
             jsonLinks.compactMap { $0 }.forEach { jsonLink in
                 if let requestIDs = self.requestCoordinator.requestIds(forClass: jsonLink.clazz) {
@@ -95,6 +123,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
                     print("requests not parsed")
                 }
             }
+            onComplete?()
         }
     }
 
@@ -126,11 +155,14 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
 extension WOTRequestManager: JSONLinksAdapterProtocol {
     public func request(_ request: WOTRequestProtocol, adoptJsonLinks jsonLinks: [WOTJSONLink]?) {
-        let theRequest = request.parentRequest ?? request
-        let links = jsonLinks?.compactMap { $0 } ?? []
-        let completed = (links.count == 0)
-        self.request(theRequest, queueJsonLinks: jsonLinks)
-        self.request(theRequest, didCompleteParsing: completed)
+        DispatchQueue.global().async {
+            let theRequest = request.parentRequest ?? request
+            let links = jsonLinks?.compactMap { $0 } ?? []
+            let completed = (links.count == 0)
+            self.request(theRequest, queueJsonLinks: jsonLinks) {
+                self.request(theRequest, didCompleteParsing: completed)
+            }
+        }
     }
 }
 
@@ -149,7 +181,9 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 //        fatalError("get applied json link and run completion")
         //
         print("\nfinished load data for request:\n\(request.description)")
-        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self)
+
+        let subordinateLinks = self.subordinateLinks[request.hash]
+        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks)
 
         self.removeRequest(request)
     }
@@ -178,6 +212,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                 self.grouppedRequests[group] = grouppedRequests
             }
         }
+        subordinateLinks[request.hash] = nil
         request.removeListener(self)
     }
 }

@@ -9,7 +9,11 @@
 import Foundation
 
 public class WOTWebResponseAdapterModuleTree: WOTWebResponseAdapter {
-    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    private lazy var currentContext: NSManagedObjectContext  = {
+        return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
+    }()
+
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         return binary?.parseAsJSON { (_) in
         }
     }

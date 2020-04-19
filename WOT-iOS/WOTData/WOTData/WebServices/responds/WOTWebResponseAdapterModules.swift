@@ -10,11 +10,10 @@ import Foundation
 
 public class WOTWebResponseAdapterModules: WOTWebResponseAdapter {
     private lazy var currentContext: NSManagedObjectContext  = {
-        let coordinator = WOTTankCoreDataProvider.sharedInstance.persistentStoreCoordinator
-        return self.workManagedObjectContext(coordinator: coordinator)
+        return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
     }()
 
-    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         var store = CoreDataStore(Clazz: Module.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext)
         store.onGetIdent = { Clazz, json, key in
             let primaryKeyPath = Clazz.primaryKeyPath()

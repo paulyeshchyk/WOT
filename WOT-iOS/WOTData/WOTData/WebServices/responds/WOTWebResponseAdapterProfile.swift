@@ -17,15 +17,14 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
     }
 
     private lazy var currentContext: NSManagedObjectContext  = {
-        let coordinator = WOTTankCoreDataProvider.sharedInstance.persistentStoreCoordinator
-        return self.workManagedObjectContext(coordinator: coordinator)
+        return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
     }()
 
-    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         return binary?.parseAsJSON({ (json) in
             let context = self.currentContext
             json?.keys.forEach { (key) in
-                guard let objectJson = json?[key] as? [AnyHashable: Any] else { return }
+                guard let objectJson = json?[key] as? JSON else { return }
                 let ident = objectJson.asURLQueryString().hashValue
                 guard let predicate = Vehicleprofile.predicate(for: ident as AnyObject) else { return }
                 context.perform {

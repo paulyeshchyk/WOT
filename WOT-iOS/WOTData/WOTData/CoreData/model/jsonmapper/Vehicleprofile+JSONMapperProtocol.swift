@@ -75,16 +75,21 @@ extension Vehicleprofile {
     }
 }
 
-#warning("add PrimaryKeypathProtocol support")
-extension Vehicleprofile {
+extension Vehicleprofile: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(Vehicleprofile.hashName)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
     public static func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", #keyPath(Vehicleprofile.hashName), ident)
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
     }
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: #keyPath(Vehicleprofile.hashName), value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
     }
 }
 

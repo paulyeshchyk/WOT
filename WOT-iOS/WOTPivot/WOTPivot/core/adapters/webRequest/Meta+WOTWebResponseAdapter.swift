@@ -85,8 +85,8 @@ extension WOTWebResponseMeta: JSONMapperProtocol {
 public class WOTWebResponse: NSObject, JSONMapperProtocol {
     public var status: WOTWebResponseStatus = .unknown
     public var meta: WOTWebResponseMeta?
-    public var data: [AnyHashable: Any]?
-    public var error: [AnyHashable: Any]?
+    public var data: JSON?
+    public var error: JSON?
 
     public enum FieldKeys: String, CodingKey {
         case status
@@ -98,11 +98,11 @@ public class WOTWebResponse: NSObject, JSONMapperProtocol {
 
     public func mapping(fromJSON jSON: JSON) {
         self.status = WOTWebResponseStatus(rawValue: (jSON["status"] as? String) ?? "") ?? .unknown
-        self.data = jSON["data"] as? [AnyHashable: Any]
-        self.error = jSON["error"] as? [AnyHashable: Any]
+        self.data = jSON["data"] as? JSON
+        self.error = jSON["error"] as? JSON
 
         let meta = WOTWebResponseMeta(count: 0, page_total: 0, total: 0, limit: 0, page: nil)
-        if let metaJSON = jSON["meta"] as? [AnyHashable: Any] {
+        if let metaJSON = jSON["meta"] as? JSON {
             meta.mapping(fromJSON: metaJSON)
         }
         self.meta = meta
@@ -117,7 +117,7 @@ struct WOTWEBRequestError: Error {
         case emptyJSON
         case invalidStatus
         case parseError
-        case requestError([AnyHashable: Any]?)
+        case requestError(JSON?)
 
         var description: String {
             switch self {

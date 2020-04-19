@@ -67,7 +67,7 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
     }
 
     func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.global().async { [weak self] in
             self?.completion(nil, error)
         }
     }

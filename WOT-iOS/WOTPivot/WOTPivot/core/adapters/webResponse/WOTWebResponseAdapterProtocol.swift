@@ -8,6 +8,8 @@
 
 import Foundation
 
+extension AnyHashable {}
+
 public typealias JSON = [AnyHashable: Any]
 
 #warning("transform an conforming class to Future/Promise")
@@ -15,12 +17,12 @@ public typealias JSON = [AnyHashable: Any]
 @objc
 public protocol WOTWebResponseAdapterProtocol: NSObjectProtocol {
     @discardableResult
-    func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error?
+    func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error?
 }
 
 @objc
 open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         fatalError("should be overriden")
     }
 

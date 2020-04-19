@@ -16,9 +16,13 @@ public class WOTWebResponseAdapterEngines: WOTWebResponseAdapter {
         return Tankengines.primaryKey(for: ident)
     }
 
-    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
+    private lazy var currentContext: NSManagedObjectContext  = {
+        return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
+    }()
+
+    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
         return binary?.parseAsJSON({ json in
-            let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
+            let context = self.currentContext
             json?.keys.forEach { (key) in
                 guard
                     let objectJson = json?[key] as? JSON,

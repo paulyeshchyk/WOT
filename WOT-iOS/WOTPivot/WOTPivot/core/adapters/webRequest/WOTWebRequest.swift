@@ -30,7 +30,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
         return pumper?.description ?? "-"
     }
 
-    public var userInfo: [AnyHashable: Any]?
+    public var userInfo: JSON?
     public var httpBodyData: Data?
 
     open var method: String { return "POST" }

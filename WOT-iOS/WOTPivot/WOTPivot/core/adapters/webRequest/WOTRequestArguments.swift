@@ -11,22 +11,22 @@ import Foundation
 @objc
 public protocol WOTRequestArgumentsProtocol {
     @objc
-    init(_ dictionary: [AnyHashable: Any])
+    init(_ dictionary: JSON)
 
     @objc
     func setValues(_ values: Any, forKey: AnyHashable)
 
     @objc
-    func buildQuery(_ custom: [AnyHashable: Any]) -> String
+    func buildQuery(_ custom: JSON) -> String
 }
 
 @objc
 open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
     @objc
-    public private(set) var dictionary = [AnyHashable: Any]()
+    public private(set) var dictionary = JSON()
 
     @objc
-    required convenience public init(_ dictionary: [AnyHashable: Any]) {
+    required convenience public init(_ dictionary: JSON) {
         self.init()
 
         dictionary.keys.forEach {
@@ -43,7 +43,7 @@ open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
     }
 
     @objc
-    public func buildQuery(_ custom: [AnyHashable: Any] = [:]) -> String {
+    public func buildQuery(_ custom: JSON = [:]) -> String {
         var mixture = custom
         mixture.append(with: dictionary)
         return mixture.asURLQueryString()

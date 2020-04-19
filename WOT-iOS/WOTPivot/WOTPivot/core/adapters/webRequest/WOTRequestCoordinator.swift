@@ -49,7 +49,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol)
+    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?)
 }
 
 @objc
@@ -140,13 +140,13 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) {
         guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else { return }
 
         let requestIdTypes = self.requestIds(forClass: modelClass)
         requestIdTypes?.forEach({ requestIdType in
             if let adapter = WOTRequestCoordinator.adapterInstance(for: requestIdType) {
-                let error = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter)
+                let error = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks)
                 if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
                     print("raized:\(text)")
                 }
