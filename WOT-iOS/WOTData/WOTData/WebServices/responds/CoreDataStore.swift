@@ -14,6 +14,8 @@ public struct CoreDataStore {
     let binary: Data?
     let linkAdapter: JSONLinksAdapterProtocol
     let context: NSManagedObjectContext
+    var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
+    var onGetObjectJSON: ((JSON) -> JSON)?
 
     func perform() {
         if let error = binary?.parseAsJSON(onReceivedJSON(_:)) {
@@ -23,16 +25,25 @@ public struct CoreDataStore {
 
     private func onReceivedJSON(_ json: JSON?) {
         json?.keys.forEach { (key) in
-            let primaryKeyPath = Clazz.primaryKeyPath()
-            guard let objectJson = json?[key] as? JSON, let ident = objectJson[primaryKeyPath] else { return }
+            guard let jsonByKey = json?[key] as? JSON else {
+                fatalError("invalid json for key")
+            }
+            let objectJson: JSON
+            if let jsonExtractor = onGetObjectJSON {
+                objectJson = jsonExtractor(jsonByKey)
+            } else {
+                objectJson = jsonByKey
+            }
+            guard let ident = onGetIdent?(Clazz, objectJson, key) else {
+                fatalError("onGetIdent not defined")
+            }
 
-            perform(ident: ident, json: objectJson)
+            let primaryKey = Clazz.primaryKey(for: ident as AnyObject)
+            perform(primaryKey: primaryKey, json: objectJson)
         }
     }
 
-    private func perform(ident: Any, json: JSON) {
-        let primaryKey = Clazz.primaryKey(for: ident as AnyObject)
-
+    private func perform(primaryKey: WOTPrimaryKey?, json: JSON) {
         context.perform {
             if let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey?.predicate, context: self.context) {
                 managedObject.mapping(fromJSON: json, parentPrimaryKey: primaryKey, onSubordinateCreate: self.onSubordinate(_:_:), linksCallback: self.onLinks(_:))
@@ -47,6 +58,6 @@ public struct CoreDataStore {
     }
 
     private func onLinks(_ links: [WOTJSONLink]?) {
-        self.linkAdapter.request(self.request, adoptJsonLinks: links)
+        linkAdapter.request(request, adoptJsonLinks: links)
     }
 }

@@ -116,7 +116,7 @@ extension Vehicles {
 }
 
 extension Vehicles: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(Vehicles.tag)
+    private static let pkey: String = #keyPath(Vehicles.tank_id)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey

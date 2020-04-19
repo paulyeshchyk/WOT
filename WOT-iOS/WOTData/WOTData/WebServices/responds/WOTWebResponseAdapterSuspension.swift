@@ -19,18 +19,18 @@ public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
     public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol) -> Error? {
         return binary?.parseAsJSON({ json in
             let context = WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
-            json?.keys.forEach { (ident) in
+            json?.keys.forEach { (key) in
                 guard
-                    let objectById = json?[ident] as? JSON,
-                    let objectJson = objectById["suspension"] as? JSON
+                    let objectJson = json?[key] as? JSON,
+                    let objectJson1 = objectJson["suspension"] as? JSON
                 else {
                     return
                 }
+                let primaryKey = self.primaryKey(for: key as AnyObject)
                 context.perform {
                     if
-                        let primaryKey = self.primaryKey(for: ident as AnyObject),
-                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context) {
-                        managedObject.mapping(fromJSON: objectJson, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
+                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey?.predicate, context: context) {
+                        managedObject.mapping(fromJSON: objectJson1, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                     })
                         context.tryToSave()

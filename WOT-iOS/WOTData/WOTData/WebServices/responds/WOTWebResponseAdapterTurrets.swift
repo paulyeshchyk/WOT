@@ -34,7 +34,7 @@ public class WOTWebResponseAdapterTurrets: WOTWebResponseAdapter {
                 context.perform {
                     if
                         let primaryKey = self.primaryKey(for: ident as AnyObject),
-                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context)                         {
+                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context) {
                         managedObject.mapping(fromJSON: objectJson, parentPrimaryKey: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                     })
