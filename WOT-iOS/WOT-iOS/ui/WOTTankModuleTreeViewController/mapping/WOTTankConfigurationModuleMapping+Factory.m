@@ -15,11 +15,6 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.power, WOTApiKeys.fire_starting_chance] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-        
-        NSSet *setOfObjs = moduleTree.next_engines;
-        return [setOfObjs anyObject];
-    }];
     return result;
 }
 
@@ -27,11 +22,6 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.distance] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-
-        NSSet *setOfObjs = moduleTree.next_radios;
-        return [setOfObjs anyObject];
-    }];
     return result;
 }
 
@@ -39,11 +29,6 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.armor_board, WOTApiKeys.armor_forehead, WOTApiKeys.armor_fedd, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-
-        NSSet *setOfObjs = moduleTree.next_turrets;
-        return [setOfObjs anyObject];
-    }];
     return result;
 }
 
@@ -51,11 +36,6 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.max_load, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-
-        NSSet *setOfObjs = moduleTree.next_chassis;
-        return [setOfObjs anyObject];
-    }];
     return result;
 }
 
@@ -63,11 +43,6 @@
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
     [result addFields:@[WGJsonFields.module_id, WOTApiKeys.rate] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-        
-        NSSet *setOfObjs = moduleTree.next_guns;
-        return [setOfObjs anyObject];
-    }];
     return result;
 }
 @end

@@ -26,25 +26,9 @@ extension Tankturrets {
     @NSManaged public var price_credit: NSDecimalNumber?
     @NSManaged public var price_gold: NSDecimalNumber?
     @NSManaged public var rotation_speed: NSDecimalNumber?
-    @NSManaged public var modulesTree: NSSet?
     @NSManaged public var profileModule: NSSet?
     @NSManaged public var vehicleprofileTurrets: VehicleprofileTurret?
     @NSManaged public var vehicles: NSSet?
-}
-
-// MARK: Generated accessors for modulesTree
-extension Tankturrets {
-    @objc(addModulesTreeObject:)
-    @NSManaged public func addToModulesTree(_ value: ModulesTree)
-
-    @objc(removeModulesTreeObject:)
-    @NSManaged public func removeFromModulesTree(_ value: ModulesTree)
-
-    @objc(addModulesTree:)
-    @NSManaged public func addToModulesTree(_ values: NSSet)
-
-    @objc(removeModulesTree:)
-    @NSManaged public func removeFromModulesTree(_ values: NSSet)
 }
 
 // MARK: Generated accessors for profileModule

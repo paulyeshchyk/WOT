@@ -19,21 +19,6 @@ extension ModulesTree {
 
     @objc
     public func moduleType() -> ObjCVehicleModuleType {
-        if let next = self.next_engines, next.count > 0 {
-            return .engine
-        }
-        if let next = self.next_chassis, next.count > 0 {
-            return .chassis
-        }
-        if let next = self.next_guns, next.count > 0 {
-            return .guns
-        }
-        if let next = self.next_radios, next.count > 0 {
-            return .radios
-        }
-        if let next = self.next_turrets, next.count > 0 {
-            return .turrets
-        }
         return .unknown
     }
 }

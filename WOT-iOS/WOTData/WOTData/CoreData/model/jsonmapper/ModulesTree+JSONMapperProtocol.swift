@@ -12,13 +12,8 @@
         return [#keyPath(ModulesTree.name),
                 #keyPath(ModulesTree.module_id),
                 #keyPath(ModulesTree.price_credit),
-                #keyPath(ModulesTree.next_guns),
                 #keyPath(ModulesTree.next_tanks),
-                #keyPath(ModulesTree.next_radios),
-                #keyPath(ModulesTree.next_chassis),
-                #keyPath(ModulesTree.next_engines),
-                #keyPath(ModulesTree.next_modules),
-                #keyPath(ModulesTree.next_turrets)
+                #keyPath(ModulesTree.next_modules)
         ]
     }
 
@@ -36,14 +31,8 @@ extension ModulesTree {
         case price_xp
         case is_default
         case type
-        case next_chassis
-        case next_engines
-        case next_guns
         case next_modules
-        case next_radios
-        case next_turrets
         case next_tanks
-        case prevModules
     }
 
     public typealias Fields = FieldKeys

@@ -100,22 +100,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     return self;
 }
 
-- (NSString *)prevModuleNamesForModule:(ModulesTree *)moduleTree {
-    
-    NSString *result = nil;
-    NSString *name = moduleTree.name;
-    if (moduleTree.prevModules) {
-        
-        NSString *prevModule = [self prevModuleNamesForModule:moduleTree.prevModules];
-        result = [NSString stringWithFormat:@"%@ - %@",prevModule,name];
-    } else {
-        
-        result = [NSString stringWithFormat:@"%@",name];
-    }
-    return result;
-    
-}
-
 - (void)printModule:(ModulesTree *)module level:(NSInteger)level{
 
     NSSet *next = module.next_modules;

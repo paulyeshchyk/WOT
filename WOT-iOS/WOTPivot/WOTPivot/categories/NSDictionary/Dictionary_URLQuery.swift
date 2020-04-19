@@ -12,11 +12,14 @@ extension NSDictionary {
     @objc
     public func asURLQueryString() -> String {
         var result = [String]()
-        self.keyEnumerator().map { $0 as? String }.compactMap { $0 }.forEach {
-            if let escapedValue = self.escapedValue(key: $0) {
-                result.append(String(format: "%@=%@", $0, escapedValue))
+        self.keyEnumerator()
+            .compactMap { $0 as? String }
+            .sorted(by: < )
+            .forEach {
+                if let escapedValue = self.escapedValue(key: $0) {
+                    result.append(String(format: "%@=%@", $0, escapedValue))
+                }
             }
-        }
         return result.joined(separator: "&")
     }
 
@@ -38,7 +41,7 @@ extension NSDictionary {
 extension Dictionary where Key == AnyHashable {
     public func asURLQueryString() -> String {
         var result = [String]()
-        self.keys.map { $0 as? String }.compactMap { $0 }.forEach {
+        self.keys.compactMap { $0 as? String }.sorted(by: <).forEach {
             if let escapedValue = self.escapedValue(key: $0) {
                 result.append(String(format: "%@=%@", $0, escapedValue))
             }

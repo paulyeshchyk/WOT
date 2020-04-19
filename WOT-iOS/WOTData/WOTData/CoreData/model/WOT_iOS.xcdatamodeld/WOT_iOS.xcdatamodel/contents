@@ -27,14 +27,8 @@
         <attribute name="price_xp" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="defaultProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicleprofile" inverseName="modulesTree" inverseEntity="Vehicleprofile" syncable="YES"/>
-        <relationship name="next_chassis" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankchassis" inverseName="modulesTree" inverseEntity="Tankchassis" syncable="YES"/>
-        <relationship name="next_engines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankengines" inverseName="modulesTree" inverseEntity="Tankengines" syncable="YES"/>
-        <relationship name="next_guns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankguns" inverseName="modulesTree" inverseEntity="Tankguns" syncable="YES"/>
         <relationship name="next_modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="moduleTree" inverseEntity="Module" syncable="YES"/>
-        <relationship name="next_radios" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankradios" inverseName="modulesTree" inverseEntity="Tankradios" syncable="YES"/>
         <relationship name="next_tanks" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="modules_tree" inverseEntity="Vehicles" syncable="YES"/>
-        <relationship name="next_turrets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankturrets" inverseName="modulesTree" inverseEntity="Tankturrets" syncable="YES"/>
-        <relationship name="prevModules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModulesTree" syncable="YES"/>
     </entity>
     <entity name="Tankchassis" representedClassName="Tankchassis" syncable="YES">
         <attribute name="level" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -45,7 +39,6 @@
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rotation_speed" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_chassis" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="profileModule" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileModule" inverseName="tankchassis" inverseEntity="VehicleprofileModule" syncable="YES"/>
         <relationship name="vehicleprofileSuspension" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileSuspension" inverseName="tankchassis" inverseEntity="VehicleprofileSuspension" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="suspensions" inverseEntity="Vehicles" syncable="YES"/>
@@ -59,7 +52,6 @@
         <attribute name="power" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_engines" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="profileModule" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileModule" inverseName="tankengines" inverseEntity="VehicleprofileModule" syncable="YES"/>
         <relationship name="vehicleprofileEngines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileEngine" inverseName="tankengine" inverseEntity="VehicleprofileEngine" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="engines" inverseEntity="Vehicles" syncable="YES"/>
@@ -72,7 +64,6 @@
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rate" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_guns" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="profileModule" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileModule" inverseName="tankguns" inverseEntity="VehicleprofileModule" syncable="YES"/>
         <relationship name="vehicleprofileGun" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileGun" inverseName="tankgun" inverseEntity="VehicleprofileGun" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="guns" inverseEntity="Vehicles" syncable="YES"/>
@@ -85,7 +76,6 @@
         <attribute name="nation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_radios" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="profileModule" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileModule" inverseName="tankradios" inverseEntity="VehicleprofileModule" syncable="YES"/>
         <relationship name="vehicleprofileRadio" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileRadio" inverseName="tankradio" inverseEntity="VehicleprofileRadio" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="radios" inverseEntity="Vehicles" syncable="YES"/>
@@ -102,7 +92,6 @@
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="price_gold" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rotation_speed" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_turrets" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="profileModule" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileModule" inverseName="tankturrets" inverseEntity="VehicleprofileModule" syncable="YES"/>
         <relationship name="vehicleprofileTurrets" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileTurret" inverseName="tankturrets" inverseEntity="VehicleprofileTurret" syncable="YES"/>
         <relationship name="vehicles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="turrets" inverseEntity="Vehicles" syncable="YES"/>
@@ -268,12 +257,12 @@
     </entity>
     <elements>
         <element name="ListSetting" positionX="-342" positionY="-288" width="128" height="120"/>
-        <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="268"/>
-        <element name="Tankchassis" positionX="-1305" positionY="-439" width="128" height="28"/>
-        <element name="Tankengines" positionX="-1305" positionY="575" width="128" height="28"/>
-        <element name="Tankguns" positionX="-1305" positionY="342" width="128" height="28"/>
-        <element name="Tankradios" positionX="-1305" positionY="-189" width="128" height="28"/>
-        <element name="Tankturrets" positionX="-1305" positionY="54" width="128" height="28"/>
+        <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="178"/>
+        <element name="Tankchassis" positionX="-1305" positionY="-439" width="128" height="208"/>
+        <element name="Tankengines" positionX="-1305" positionY="575" width="128" height="208"/>
+        <element name="Tankguns" positionX="-1305" positionY="342" width="128" height="193"/>
+        <element name="Tankradios" positionX="-1305" positionY="-189" width="128" height="193"/>
+        <element name="Tankturrets" positionX="-1305" positionY="54" width="128" height="253"/>
         <element name="UserSession" positionX="-117" positionY="-369" width="128" height="135"/>
         <element name="Vehicleprofile" positionX="-1494" positionY="-297" width="128" height="358"/>
         <element name="VehicleprofileAmmo" positionX="-1485" positionY="-288" width="128" height="103"/>
