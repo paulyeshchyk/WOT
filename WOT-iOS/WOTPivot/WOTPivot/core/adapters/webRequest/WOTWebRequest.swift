@@ -34,7 +34,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionData
     public var httpBodyData: Data?
 
     open var method: String { return "POST" }
-    open var path: String { return "" }
+    open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
 
     override open var hash: Int {
         return (pumper as? NSObject)?.hash ?? path.hashValue

@@ -23,6 +23,7 @@ public class AppDefaults: NSObject {
         coordinator.requestId(WebRequestType.engines.rawValue, registerRequestClass: WOTWEBRequestTankEngines.self, registerDataAdapterClass: WOTWebResponseAdapterEngines.self)
         coordinator.requestId(WebRequestType.vehicles.rawValue, registerRequestClass: WOTWEBRequestTankVehicles.self, registerDataAdapterClass: WOTWebResponseAdapterVehicles.self)
         coordinator.requestId(WebRequestType.moduleTree.rawValue, registerRequestClass: WOTWEBRequestModulesTree.self, registerDataAdapterClass: WOTWebResponseAdapterModuleTree.self)
+        coordinator.requestId(WebRequestType.modules.rawValue, registerRequestClass: WOTWEBRequestModules.self, registerDataAdapterClass: WOTWebResponseAdapterModules.self)
         coordinator.requestId(WebRequestType.tankProfile.rawValue, registerRequestClass: WOTWEBRequestTankProfile.self, registerDataAdapterClass: WOTWebResponseAdapterProfile.self)
         coordinator.requestId(WebRequestType.tankProfile.rawValue, registerRequestClass: WOTWEBRequestSuspension.self, registerDataAdapterClass: WOTWebResponseAdapterSuspension.self)
     }

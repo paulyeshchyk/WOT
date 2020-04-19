@@ -7,6 +7,18 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="values" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Module" representedClassName=".Module" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="module_id" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="tier" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="moduleTree" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_modules" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="tanks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="modules" inverseEntity="Vehicles" syncable="YES"/>
+    </entity>
     <entity name="ModulesTree" representedClassName="ModulesTree" syncable="YES">
         <attribute name="is_default" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="module_id" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -18,11 +30,11 @@
         <relationship name="next_chassis" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankchassis" inverseName="modulesTree" inverseEntity="Tankchassis" syncable="YES"/>
         <relationship name="next_engines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankengines" inverseName="modulesTree" inverseEntity="Tankengines" syncable="YES"/>
         <relationship name="next_guns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankguns" inverseName="modulesTree" inverseEntity="Tankguns" syncable="YES"/>
-        <relationship name="next_modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="prevModules" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="next_modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="moduleTree" inverseEntity="Module" syncable="YES"/>
         <relationship name="next_radios" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankradios" inverseName="modulesTree" inverseEntity="Tankradios" syncable="YES"/>
         <relationship name="next_tanks" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="modules_tree" inverseEntity="Vehicles" syncable="YES"/>
         <relationship name="next_turrets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankturrets" inverseName="modulesTree" inverseEntity="Tankturrets" syncable="YES"/>
-        <relationship name="prevModules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_modules" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="prevModules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModulesTree" syncable="YES"/>
     </entity>
     <entity name="Tankchassis" representedClassName="Tankchassis" syncable="YES">
         <attribute name="level" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -248,6 +260,7 @@
         <relationship name="default_profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicleprofile" inverseName="vehicles" inverseEntity="Vehicleprofile" syncable="YES"/>
         <relationship name="engines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankengines" inverseName="vehicles" inverseEntity="Tankengines" syncable="YES"/>
         <relationship name="guns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankguns" inverseName="vehicles" inverseEntity="Tankguns" syncable="YES"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="tanks" inverseEntity="Module" syncable="YES"/>
         <relationship name="modules_tree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_tanks" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="radios" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankradios" inverseName="vehicles" inverseEntity="Tankradios" syncable="YES"/>
         <relationship name="suspensions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tankchassis" inverseName="vehicles" inverseEntity="Tankchassis" syncable="YES"/>
@@ -255,7 +268,7 @@
     </entity>
     <elements>
         <element name="ListSetting" positionX="-342" positionY="-288" width="128" height="120"/>
-        <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="270"/>
+        <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="268"/>
         <element name="Tankchassis" positionX="-1305" positionY="-439" width="128" height="28"/>
         <element name="Tankengines" positionX="-1305" positionY="575" width="128" height="28"/>
         <element name="Tankguns" positionX="-1305" positionY="342" width="128" height="28"/>
@@ -275,6 +288,7 @@
         <element name="VehicleprofileRadio" positionX="-1476" positionY="-279" width="128" height="150"/>
         <element name="VehicleprofileSuspension" positionX="-1476" positionY="-279" width="128" height="178"/>
         <element name="VehicleprofileTurret" positionX="-1449" positionY="-252" width="128" height="208"/>
-        <element name="Vehicles" positionX="-675" positionY="-18" width="128" height="343"/>
+        <element name="Vehicles" positionX="-675" positionY="-18" width="128" height="358"/>
+        <element name="Module" positionX="-1494" positionY="-297" width="128" height="193"/>
     </elements>
 </model>

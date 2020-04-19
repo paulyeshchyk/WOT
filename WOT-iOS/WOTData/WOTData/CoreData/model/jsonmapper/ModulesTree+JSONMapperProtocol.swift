@@ -73,8 +73,8 @@ extension ModulesTree {
     private func nextModuleLinks(idents: [Any]?) -> [WOTJSONLink]? {
         var result = [WOTJSONLink?]()
         idents?.forEach {
-            if let pk = ModulesTree.primaryKey(for: $0 as AnyObject) {
-                let link = WOTJSONLink(clazz: ModulesTree.self, primaryKeys: [pk], keypathPrefix: nil, completion: self.linkNextModule(_:))
+            if let pk = Module.primaryKey(for: $0 as AnyObject) {
+                let link = WOTJSONLink(clazz: Module.self, primaryKeys: [pk], keypathPrefix: nil, completion: self.linkNextModule(_:))
                 result.append(link)
             }
         }

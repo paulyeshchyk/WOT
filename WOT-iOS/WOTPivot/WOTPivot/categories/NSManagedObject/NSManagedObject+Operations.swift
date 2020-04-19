@@ -60,11 +60,17 @@ extension NSManagedObject: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    open func mapping(fromArray array: [Any]) { fatalError("not implemented")}
+    open func mapping(fromArray array: [Any]) {
+        fatalError("not implemented")
+    }
 
     @objc
-    open func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) { fatalError("not implemented")}
+    open func mapping(fromJSON jSON: JSON, parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+        fatalError("not implemented")
+    }
 
     @objc
-    open func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) { fatalError("not implemented")}
+    open func mapping(fromArray array: [Any], parentPrimaryKey: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+        fatalError("not implemented")
+    }
 }

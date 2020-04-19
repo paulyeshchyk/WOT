@@ -20,10 +20,11 @@ public enum WebRequestType: String {
     case radios
     case engines
     case vehicles
+    case modules
     case moduleTree
     case tankProfile
 
-    private static var allTypes: [WebRequestType] = [.unknown, .login, .logout, .sessionSave, .sessionClear, .suspension, .turrets, .guns, .radios, .engines, .vehicles, .moduleTree, .tankProfile]
+    private static var allTypes: [WebRequestType] = [.unknown, .login, .logout, .sessionSave, .sessionClear, .suspension, .turrets, .guns, .radios, .engines, .vehicles, .moduleTree, .tankProfile, .modules]
 
     var index: Int {
         guard let result = WebRequestType.allTypes.firstIndex(of: self) else { fatalError("WebRequestType.alltypes has no value:\(self)")}
@@ -49,6 +50,7 @@ public enum ObjCWebRequestType: Int {
     case engines
     case vehicles
     case moduleTree
+    case modules
     case tankProfile
 
     var stringValue: String {
