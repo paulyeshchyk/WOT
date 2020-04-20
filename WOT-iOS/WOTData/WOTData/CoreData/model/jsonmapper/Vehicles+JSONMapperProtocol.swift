@@ -72,26 +72,27 @@ extension Vehicles {
         subordinator?.willRequestLinks()
 
         #warning("do not parse on application startup")
+        /*
+         let vehicleProfileCase = PKCase()
+         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
 
-        let vehicleProfileCase = PKCase()
-        vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
+         Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+             self.default_profile = newObject as? Vehicleprofile
+         }
 
-        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-            self.default_profile = newObject as? Vehicleprofile
-        }
+         if let set = self.modules_tree {
+             self.removeFromModules_tree(set)
+         }
 
-        if let set = self.modules_tree {
-            self.removeFromModules_tree(set)
-        }
-
-        let modulesTreeCase = PKCase()
-        modulesTreeCase[.primary] = pkCase[.primary]?
-            .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
-            .foreignKey(byInsertingComponent: #keyPath(ModulesTree.defaultProfile))
-        ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-            guard let module_tree = newObject as? ModulesTree else { return }
-            self.addToModules_tree(module_tree)
-        }
+         let modulesTreeCase = PKCase()
+         modulesTreeCase[.primary] = pkCase[.primary]?
+             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
+             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.defaultProfile))
+         ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+             guard let module_tree = newObject as? ModulesTree else { return }
+             self.addToModules_tree(module_tree)
+         }
+         */
     }
 }
 

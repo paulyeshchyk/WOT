@@ -103,9 +103,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         grouppedRequests[groupId]?.forEach { $0.cancel() }
     }
 
-    fileprivate func request(_ parentRequest: WOTRequestProtocol?, queueJsonLinks jsonLinks: ([WOTJSONLink?])?, onComplete: (() -> Void)? ) {
+    fileprivate func request(_ parentRequest: WOTRequestProtocol, queueJsonLinks jsonLinks: ([WOTJSONLink?])?) {
         guard let jsonLinks = jsonLinks, jsonLinks.count != 0 else {
-            onComplete?()
+            self.request(parentRequest, didCompleteParsing: true)
             return
         }
 
@@ -118,7 +118,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
                 print("requests not parsed")
             }
         }
-        onComplete?()
     }
 
     @discardableResult
@@ -150,11 +149,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 extension WOTRequestManager: JSONLinksAdapterProtocol {
     public func request(_ request: WOTRequestProtocol, adoptJsonLinks jsonLinks: [WOTJSONLink]?) {
         let theRequest = request.parentRequest ?? request
-        let links = jsonLinks?.compactMap { $0 } ?? []
-        let completed = (links.count == 0)
-        self.request(theRequest, queueJsonLinks: jsonLinks) {
-            self.request(theRequest, didCompleteParsing: completed)
-        }
+        self.request(theRequest, queueJsonLinks: jsonLinks)
     }
 }
 
@@ -170,12 +165,11 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
-//        fatalError("get applied json link and run completion")
-        //
-        request.log(action: .finish)
-
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
-        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks)
+        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] _ in
+            request.log(action: .finish)
+            self?.request(request, didCompleteParsing: true)
+        })
 
         self.removeRequest(request)
     }

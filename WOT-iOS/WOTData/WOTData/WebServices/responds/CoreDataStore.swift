@@ -32,13 +32,14 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
         }
     }
 
-    private func perform(pkCase: PKCase, json: JSON) {
+    private func perform(pkCase: PKCase, json: JSON, completion: @escaping ()->Void ) {
         context.perform {
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: self.context) else {
                 fatalError("Managed object is not created")
             }
             managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, subordinator: self, linker: self)
             self.context.tryToSave()
+            completion()
         }
     }
 
@@ -76,7 +77,9 @@ extension CoreDataStore: CoreDataLinkerProtocol {
 
 extension CoreDataStore {
     func onReceivedJSON(_ json: JSON?) {
-        json?.keys.forEach { (key) in
+        let keys = json?.keys
+        var mutatingKeysCounter = keys?.count ?? 0
+        keys?.forEach { (key) in
             guard let jsonByKey = json?[key] as? JSON else {
                 fatalError("invalid json for key")
             }
@@ -93,8 +96,12 @@ extension CoreDataStore {
             let pkCase = PKCase()
             pkCase[.primary] = Clazz.primaryKey(for: ident as AnyObject)
             print("[JSON][START][\(pkCase)]")
-            perform(pkCase: pkCase, json: objectJson)
+            perform(pkCase: pkCase, json: objectJson) {
+                mutatingKeysCounter -= 1
+                if mutatingKeysCounter <= 0 {
+                    self.onFinishJSONParse?(nil)
+                }
+            }
         }
-        onFinishJSONParse?(nil)
     }
 }
