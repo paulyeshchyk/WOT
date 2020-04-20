@@ -26,6 +26,7 @@ extension Vehicleprofile {
     @NSManaged public var speed_forward: NSDecimalNumber?
     @NSManaged public var tank_id: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
+    @NSManaged public var profile_id: NSDecimalNumber?
     @NSManaged public var ammo: VehicleprofileAmmoList?
     @NSManaged public var armor: VehicleprofileArmorList?
     @NSManaged public var engine: VehicleprofileEngine?

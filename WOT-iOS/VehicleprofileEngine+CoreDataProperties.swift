@@ -21,6 +21,22 @@ extension VehicleprofileEngine {
     @NSManaged public var tag: String?
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
-    @NSManaged public var tankengine: Tankengines?
+    @NSManaged public var engine_id: NSDecimalNumber?
     @NSManaged public var vehicleprofile: Vehicleprofile?
+    @NSManaged public var vehicle: NSSet?
+}
+
+// MARK: Generated accessors for vehicle
+extension VehicleprofileEngine {
+    @objc(addVehicleObject:)
+    @NSManaged public func addToVehicle(_ value: Vehicles)
+
+    @objc(removeVehicleObject:)
+    @NSManaged public func removeFromVehicle(_ value: Vehicles)
+
+    @objc(addVehicle:)
+    @NSManaged public func addToVehicle(_ values: NSSet)
+
+    @objc(removeVehicle:)
+    @NSManaged public func removeFromVehicle(_ values: NSSet)
 }

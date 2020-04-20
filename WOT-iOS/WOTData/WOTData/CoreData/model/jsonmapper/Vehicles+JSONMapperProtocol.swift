@@ -55,7 +55,7 @@ extension Vehicles {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         let tankID = jSON[#keyPath(Vehicles.tank_id)]
         self.name = jSON[#keyPath(Vehicles.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(Vehicles.tier)]  as? Int ?? 0)
@@ -70,7 +70,11 @@ extension Vehicles {
         self.type = jSON[#keyPath(Vehicles.type)] as? String
 
         let vehiclePK = Vehicles.foreingKey(for: jSON[#keyPath(Vehicles.tag)] as AnyObject?, foreignPaths: ["vehicles"])
-        self.default_profile = Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], externalPK: vehiclePK, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["vehiclePK"] = [vehiclePK].compactMap {$0}
+
+        self.default_profile = Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
 
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
@@ -84,16 +88,23 @@ extension Vehicles {
     func mapping(modulestreeJson json: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> [ModulesTree]? {
         guard let json = json as? JSON else { return nil }
 
+        var pkCase = PKCase()
+        pkCase["primary"] = [externalPK].compactMap { $0 }
+
         var result = [ModulesTree]()
         json.keys.forEach { (key) in
             guard
                 let moduleTreeJSON = json[key] as? JSON,
                 let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber,
                 let pk = ModulesTree.primaryKey(for: module_id),
-                let moduleTree = onSubordinateCreate?(ModulesTree.self, nil) as? ModulesTree
+                let moduleTree = onSubordinateCreate?(ModulesTree.self, pkCase) as? ModulesTree
             else { return }
 
-            moduleTree.mapping(fromJSON: moduleTreeJSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+            #warning("check nextCase vs pkCase")
+            var nextCase = PKCase()
+            nextCase["primary"] = [pk].compactMap {$0}
+
+            moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: nextCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
             result.append(moduleTree)
         }
         return result

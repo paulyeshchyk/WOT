@@ -59,75 +59,75 @@
     return [[WOTMetric alloc] initWithMetricName:name grouppingName:groupName evaluator: standard];
 }
 
-+ (id<WOTMetricProtocol>)suspensionRotationSpeedCompareMetric {
-    
-    return [self standardCompareMetricForClass:[Tankchassis class]
-                                  byExpression:[WOTTankDetailFieldExpression suspensionRotationSpeedCompareFieldExpression]
-                                      withName:WOTString(WOTApiKeys.rotation_speed)
-                                     groupName:WOTString(WOT_STRING_MOBI)];
-}
-
-+ (id<WOTMetricProtocol>)fireStartingChanceCompareMetric {
-    
-    return [self standardCompareMetricForClass:[Tankengines class]
-                                  byExpression:[WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression]
-                                      withName:WOTString(WOTApiKeys.fire_starting_chance)
-                                     groupName:WOTString(WOT_STRING_MOBI)];
-}
-
-+ (id<WOTMetricProtocol>)circularVisionCompareMetric {
-    
-    return [self standardCompareMetricForClass:[Tankturrets class]
-                                  byExpression:[WOTTankDetailFieldExpression turretsCircularVisionRadiusCompareFieldExpression]
-                                      withName:WOTString(WOTApiKeys.circular_vision_radius)
-                                     groupName:WOTString(WOT_STRING_OBSERVE)];
-
-}
-
-+ (id<WOTMetricProtocol>)armorBoardCompareMetric {
-    
-    return [self standardCompareMetricForClass:[Tankturrets class]
-                                  byExpression:[WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression]
-                                      withName:WOTString(WOTApiKeys.armor_board)
-                                     groupName:WOTString(WOT_STRING_ARMOR)];
-}
-
-+ (id<WOTMetricProtocol>)armorFeddCompareMetric {
-
-    return [self standardCompareMetricForClass:[Tankturrets class]
-                                  byExpression:[WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression]
-                                      withName:WOTString(WOTApiKeys.armor_fedd)
-                                     groupName:WOTString(WOT_STRING_ARMOR)];
-}
-
-+ (id<WOTMetricProtocol>)armorForeheadCompareMetric {
-    
-    
-    return [self standardCompareMetricForClass:[Tankturrets class]
-                                  byExpression:[WOTTankDetailFieldExpression turretsArmorForeheadCompareFieldExpression]
-                                      withName:WOTString(WOTApiKeys.armor_forehead)
-                                     groupName:WOTString(WOT_STRING_ARMOR)];
-}
+//+ (id<WOTMetricProtocol>)suspensionRotationSpeedCompareMetric {
+//
+//    return [self standardCompareMetricForClass:[Tankchassis class]
+//                                  byExpression:[WOTTankDetailFieldExpression suspensionRotationSpeedCompareFieldExpression]
+//                                      withName:WOTString(WOTApiKeys.rotation_speed)
+//                                     groupName:WOTString(WOT_STRING_MOBI)];
+//}
+//
+//+ (id<WOTMetricProtocol>)fireStartingChanceCompareMetric {
+//
+//    return [self standardCompareMetricForClass:[Tankengines class]
+//                                  byExpression:[WOTTankDetailFieldExpression engineFireStartingChanceCompareFieldExpression]
+//                                      withName:WOTString(WOTApiKeys.fire_starting_chance)
+//                                     groupName:WOTString(WOT_STRING_MOBI)];
+//}
+//
+//+ (id<WOTMetricProtocol>)circularVisionCompareMetric {
+//
+//    return [self standardCompareMetricForClass:[Tankturrets class]
+//                                  byExpression:[WOTTankDetailFieldExpression turretsCircularVisionRadiusCompareFieldExpression]
+//                                      withName:WOTString(WOTApiKeys.circular_vision_radius)
+//                                     groupName:WOTString(WOT_STRING_OBSERVE)];
+//
+//}
+//
+//+ (id<WOTMetricProtocol>)armorBoardCompareMetric {
+//
+//    return [self standardCompareMetricForClass:[Tankturrets class]
+//                                  byExpression:[WOTTankDetailFieldExpression turretsArmorBoardCompareFieldExpression]
+//                                      withName:WOTString(WOTApiKeys.armor_board)
+//                                     groupName:WOTString(WOT_STRING_ARMOR)];
+//}
+//
+//+ (id<WOTMetricProtocol>)armorFeddCompareMetric {
+//
+//    return [self standardCompareMetricForClass:[Tankturrets class]
+//                                  byExpression:[WOTTankDetailFieldExpression turretsArmorFeddCompareFieldExpression]
+//                                      withName:WOTString(WOTApiKeys.armor_fedd)
+//                                     groupName:WOTString(WOT_STRING_ARMOR)];
+//}
+//
+//+ (id<WOTMetricProtocol>)armorForeheadCompareMetric {
+//
+//
+//    return [self standardCompareMetricForClass:[Tankturrets class]
+//                                  byExpression:[WOTTankDetailFieldExpression turretsArmorForeheadCompareFieldExpression]
+//                                      withName:WOTString(WOTApiKeys.armor_forehead)
+//                                     groupName:WOTString(WOT_STRING_ARMOR)];
+//}
 
 + (NSArray *)metricsForOptions:(WOTTankMetricOptions *) option {
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
     if ([option isInclude:WOTTankMetricOptions.armor]) {
         
-        [result addObject:[WOTMetric armorBoardCompareMetric]];
-        [result addObject:[WOTMetric armorFeddCompareMetric]];
-        [result addObject:[WOTMetric armorForeheadCompareMetric]];
+//        [result addObject:[WOTMetric armorBoardCompareMetric]];
+//        [result addObject:[WOTMetric armorFeddCompareMetric]];
+//        [result addObject:[WOTMetric armorForeheadCompareMetric]];
     }
     
     if ([option isInclude:WOTTankMetricOptions.mobility]) {
         
-        [result addObject:[WOTMetric fireStartingChanceCompareMetric]];
-        [result addObject:[WOTMetric suspensionRotationSpeedCompareMetric]];
+//        [result addObject:[WOTMetric fireStartingChanceCompareMetric]];
+//        [result addObject:[WOTMetric suspensionRotationSpeedCompareMetric]];
     }
     
     if ([option isInclude:WOTTankMetricOptions.observe]) {
         
-        [result addObject:[WOTMetric circularVisionCompareMetric]];
+//        [result addObject:[WOTMetric circularVisionCompareMetric]];
     }
     return result;
 }

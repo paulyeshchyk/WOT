@@ -64,12 +64,12 @@ extension NSManagedObject: JSONMapperProtocol {
     }
 
     @objc
-    open func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         fatalError("not implemented")
     }
 
     @objc
-    open func mapping(fromArray array: [Any], externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    open func mapping(fromArray array: [Any], pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         fatalError("not implemented")
     }
 }

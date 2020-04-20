@@ -38,7 +38,7 @@ extension ModulesTree {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
@@ -78,7 +78,11 @@ extension ModulesTree {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = ModulesTree.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+
+        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
@@ -101,10 +105,10 @@ extension ModulesTree: PrimaryKeypathProtocol {
 }
 
 extension ModulesTree {
-    public static func nextModules(fromJSON json: Any?, primaryKey pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> NSSet? {
+    public static func nextModules(fromJSON json: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> NSSet? {
         guard let json = json as? JSON else { return nil }
-        guard let result = onSubordinateCreate?(ModulesTree.self, pkProfile) as? ModulesTree else { return nil }
-        result.mapping(fromJSON: json, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        guard let result = onSubordinateCreate?(ModulesTree.self, pkCase) as? ModulesTree else { return nil }
+        result.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return [result]
     }
 }

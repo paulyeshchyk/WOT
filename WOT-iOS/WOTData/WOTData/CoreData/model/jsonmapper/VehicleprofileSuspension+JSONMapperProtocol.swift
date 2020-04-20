@@ -9,7 +9,8 @@
 @objc extension VehicleprofileSuspension: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileSuspension.tier),
+        return [#keyPath(VehicleprofileSuspension.suspension_id),
+                #keyPath(VehicleprofileSuspension.tier),
                 #keyPath(VehicleprofileSuspension.traverse_speed),
                 #keyPath(VehicleprofileSuspension.name),
                 #keyPath(VehicleprofileSuspension.load_limit),
@@ -27,6 +28,7 @@
 
 extension VehicleprofileSuspension {
     public enum FieldKeys: String, CodingKey {
+        case suspension_id
         case tier
         case traverse_speed
         case name
@@ -39,7 +41,7 @@ extension VehicleprofileSuspension {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileSuspension.name)] as? String
         self.tag = jSON[#keyPath(VehicleprofileSuspension.tag)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.tier)] as? Int ?? 0)
@@ -51,21 +53,29 @@ extension VehicleprofileSuspension {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileSuspension.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["primary"] = [parentPrimaryKey].compactMap {$0}
+
+        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileSuspension {
-    public static func suspension(fromJSON jSON: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileSuspension? {
+    public static func suspension(fromJSON jSON: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileSuspension? {
         guard let jSON = jSON as? JSON else { return  nil }
 
         let tag = jSON[#keyPath(VehicleprofileSuspension.tag)]
         let pk = VehicleprofileSuspension.primaryKey(for: tag as AnyObject?)
 
-        guard let result = onSubordinateCreate?(VehicleprofileSuspension.self, pk) as? VehicleprofileSuspension else {
+        var pkCase = PKCase()
+        pkCase["primary"] = [pk].compactMap { $0 }
+
+        guard let result = onSubordinateCreate?(VehicleprofileSuspension.self, pkCase) as? VehicleprofileSuspension else {
             fatalError("Suspension is not created")
         }
-        result.mapping(fromJSON: jSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+        result.mapping(fromJSON: jSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 
@@ -87,7 +97,11 @@ extension VehicleprofileSuspension {
                 return
             }
             onSuccess(suspension)
-            suspension.mapping(fromJSON: json, externalPK: suspensionPK, onSubordinateCreate: nil, linksCallback: { _ in
+
+            var pkCase = PKCase()
+            pkCase["primary"] = [suspensionPK].compactMap {$0}
+
+            suspension.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: { _ in
                 //
             })
         })
@@ -95,7 +109,7 @@ extension VehicleprofileSuspension {
 }
 
 extension VehicleprofileSuspension: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileSuspension.tag)
+    private static let pkey: String = #keyPath(VehicleprofileSuspension.suspension_id)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey

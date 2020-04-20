@@ -26,6 +26,37 @@ extension VehicleprofileGun {
     @NSManaged public var tag: String?
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
-    @NSManaged public var tankgun: Tankguns?
-    @NSManaged public var vehicleprofile: Vehicleprofile?
+    @NSManaged public var gun_id: NSDecimalNumber?
+    @NSManaged public var vehicleprofile: NSSet?
+    @NSManaged public var vehicle: NSSet?
+}
+
+// MARK: Generated accessors for vehicleprofile
+extension VehicleprofileGun {
+    @objc(addVehicleprofileObject:)
+    @NSManaged public func addToVehicleprofile(_ value: Vehicleprofile)
+
+    @objc(removeVehicleprofileObject:)
+    @NSManaged public func removeFromVehicleprofile(_ value: Vehicleprofile)
+
+    @objc(addVehicleprofile:)
+    @NSManaged public func addToVehicleprofile(_ values: NSSet)
+
+    @objc(removeVehicleprofile:)
+    @NSManaged public func removeFromVehicleprofile(_ values: NSSet)
+}
+
+// MARK: Generated accessors for vehicle
+extension VehicleprofileGun {
+    @objc(addVehicleObject:)
+    @NSManaged public func addToVehicle(_ value: Vehicles)
+
+    @objc(removeVehicleObject:)
+    @NSManaged public func removeFromVehicle(_ value: Vehicles)
+
+    @objc(addVehicle:)
+    @NSManaged public func addToVehicle(_ values: NSSet)
+
+    @objc(removeVehicle:)
+    @NSManaged public func removeFromVehicle(_ values: NSSet)
 }

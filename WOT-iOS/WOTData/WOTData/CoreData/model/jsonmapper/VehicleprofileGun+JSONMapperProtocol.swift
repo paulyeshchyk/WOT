@@ -9,7 +9,8 @@
 @objc extension VehicleprofileGun: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileGun.move_down_arc),
+        return [#keyPath(VehicleprofileGun.gun_id),
+                #keyPath(VehicleprofileGun.move_down_arc),
                 #keyPath(VehicleprofileGun.caliber),
                 #keyPath(VehicleprofileGun.name),
                 #keyPath(VehicleprofileGun.weight),
@@ -30,6 +31,7 @@
 
 extension VehicleprofileGun {
     public enum FieldKeys: String, CodingKey {
+        case gun_id
         case move_down_arc
         case caliber
         case name
@@ -46,7 +48,7 @@ extension VehicleprofileGun {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileGun.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileGun.tier)] as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileGun.tag)] as? String
@@ -63,27 +65,34 @@ extension VehicleprofileGun {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileGun.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, externalPK: parentPrimaryKey,onSubordinateCreate: nil, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+
+        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileGun {
-    public static func gun(fromJSON jSON: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileGun? {
+    public static func gun(fromJSON jSON: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileGun? {
         guard let jSON = jSON as? JSON else { return  nil }
 
         let tag = jSON[#keyPath(VehicleprofileGun.tag)]
         let pk = VehicleprofileGun.primaryKey(for: tag as AnyObject?)
+        var pkCase = PKCase()
+        pkCase["primary"] = [pk].compactMap { $0 }
 
-        guard let result = onSubordinateCreate?(VehicleprofileGun.self, pk) as? VehicleprofileGun else {
+        guard let result = onSubordinateCreate?(VehicleprofileGun.self, pkCase) as? VehicleprofileGun else {
             fatalError("gun not created")
         }
-        result.mapping(fromJSON: jSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+        result.mapping(fromJSON: jSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }
 
 extension VehicleprofileGun: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileGun.tag)
+    private static let pkey: String = #keyPath(VehicleprofileGun.gun_id)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey

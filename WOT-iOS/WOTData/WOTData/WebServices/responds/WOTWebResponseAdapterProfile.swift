@@ -26,14 +26,17 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
             json?.keys.forEach { (key) in
                 guard let objectJson = json?[key] as? JSON else { return }
                 let ident = objectJson.asURLQueryString().hashValue
-                guard let predicate = Vehicleprofile.predicate(for: ident as AnyObject) else { return }
+
+                let primaryKey = Vehicleprofile.primaryKey(for: ident as AnyObject)
+                var pkCase = PKCase()
+                pkCase["primary"] = [primaryKey].compactMap {$0}
+
                 context.perform {
-                    if
-                        let managedObject = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile,
-                        let primaryKey = Vehicleprofile.primaryKey(for: ident as AnyObject) {
+                    if  let predicate = primaryKey?.predicate,
+                        let managedObject = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile {
                         managedObject.hashName = NSDecimalNumber(value: ident)
 
-                        managedObject.mapping(fromJSON: objectJson, externalPK: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
+                        managedObject.mapping(fromJSON: objectJson, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                         })
                     }

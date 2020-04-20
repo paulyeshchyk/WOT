@@ -10,10 +10,11 @@ extension VehicleprofileAmmoList {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromArray array: [Any], externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
-            if let ammoObject = onSubordinateCreate?(VehicleprofileAmmo.self, externalPK) as? VehicleprofileAmmo {
-                ammoObject.mapping(fromJSON: jSON, externalPK: externalPK, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+            if let ammoObject = onSubordinateCreate?(VehicleprofileAmmo.self, pkCase) as? VehicleprofileAmmo {
+                ammoObject.mapping(fromJSON: jSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
                 self.addToVehicleprofileAmmo(ammoObject)
             }
         }
@@ -22,15 +23,21 @@ extension VehicleprofileAmmoList {
     convenience init?(array: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoList.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromArray: array, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+
+        self.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileAmmoList {
-    public static func list(fromArray array: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileAmmoList? {
+    public static func list(fromArray array: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileAmmoList? {
         guard let array = array as? [Any] else { return  nil }
-        guard let result = onSubordinateCreate?(VehicleprofileAmmoList.self, pkProfile) as? VehicleprofileAmmoList else { return nil }
-        result.mapping(fromArray: array, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+        guard let result = onSubordinateCreate?(VehicleprofileAmmoList.self, pkCase) as? VehicleprofileAmmoList else { return nil }
+
+        result.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }

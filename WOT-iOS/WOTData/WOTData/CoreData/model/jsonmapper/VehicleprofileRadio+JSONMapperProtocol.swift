@@ -9,7 +9,8 @@
 @objc extension VehicleprofileRadio: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileRadio.tier),
+        return [#keyPath(VehicleprofileRadio.radio_id),
+                #keyPath(VehicleprofileRadio.tier),
                 #keyPath(VehicleprofileRadio.signal_range),
                 #keyPath(VehicleprofileRadio.tag),
                 #keyPath(VehicleprofileRadio.weight),
@@ -24,6 +25,7 @@
 
 extension VehicleprofileRadio {
     public enum FieldKeys: String, CodingKey {
+        case radio_id
         case tier
         case signal_range
         case tag
@@ -34,7 +36,7 @@ extension VehicleprofileRadio {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileRadio.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileRadio.tier)] as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileRadio.tag)] as? String
@@ -45,27 +47,35 @@ extension VehicleprofileRadio {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileRadio.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["primary"] = [parentPrimaryKey].compactMap {$0}
+
+        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileRadio {
-    public static func radio(fromJSON jSON: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileRadio? {
+    public static func radio(fromJSON jSON: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileRadio? {
         guard let jSON = jSON as? JSON else { return  nil }
 
         let tag = jSON[#keyPath(VehicleprofileRadio.tag)]
         let pk = VehicleprofileRadio.primaryKey(for: tag as AnyObject?)
 
-        guard let result = onSubordinateCreate?(VehicleprofileRadio.self, pkProfile) as? VehicleprofileRadio else {
+        var pkCase = PKCase()
+        pkCase["primary"] = [pk].compactMap { $0 }
+
+        guard let result = onSubordinateCreate?(VehicleprofileRadio.self, pkCase) as? VehicleprofileRadio else {
             fatalError("radio is not created")
         }
-        result.mapping(fromJSON: jSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+        result.mapping(fromJSON: jSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }
 
 extension VehicleprofileRadio: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileRadio.tag)
+    private static let pkey: String = #keyPath(VehicleprofileRadio.radio_id)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey

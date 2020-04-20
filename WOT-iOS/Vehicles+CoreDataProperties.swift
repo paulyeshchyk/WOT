@@ -41,10 +41,10 @@ extension Vehicles {
 // MARK: Generated accessors for engines
 extension Vehicles {
     @objc(addEnginesObject:)
-    @NSManaged public func addToEngines(_ value: Tankengines)
+    @NSManaged public func addToEngines(_ value: VehicleprofileEngine)
 
     @objc(removeEnginesObject:)
-    @NSManaged public func removeFromEngines(_ value: Tankengines)
+    @NSManaged public func removeFromEngines(_ value: VehicleprofileEngine)
 
     @objc(addEngines:)
     @NSManaged public func addToEngines(_ values: NSSet)
@@ -56,10 +56,10 @@ extension Vehicles {
 // MARK: Generated accessors for guns
 extension Vehicles {
     @objc(addGunsObject:)
-    @NSManaged public func addToGuns(_ value: Tankguns)
+    @NSManaged public func addToGuns(_ value: VehicleprofileGun)
 
     @objc(removeGunsObject:)
-    @NSManaged public func removeFromGuns(_ value: Tankguns)
+    @NSManaged public func removeFromGuns(_ value: VehicleprofileGun)
 
     @objc(addGuns:)
     @NSManaged public func addToGuns(_ values: NSSet)
@@ -86,10 +86,10 @@ extension Vehicles {
 // MARK: Generated accessors for radios
 extension Vehicles {
     @objc(addRadiosObject:)
-    @NSManaged public func addToRadios(_ value: Tankradios)
+    @NSManaged public func addToRadios(_ value: VehicleprofileRadio)
 
     @objc(removeRadiosObject:)
-    @NSManaged public func removeFromRadios(_ value: Tankradios)
+    @NSManaged public func removeFromRadios(_ value: VehicleprofileRadio)
 
     @objc(addRadios:)
     @NSManaged public func addToRadios(_ values: NSSet)
@@ -101,10 +101,10 @@ extension Vehicles {
 // MARK: Generated accessors for suspensions
 extension Vehicles {
     @objc(addSuspensionsObject:)
-    @NSManaged public func addToSuspensions(_ value: Tankchassis)
+    @NSManaged public func addToSuspensions(_ value: VehicleprofileSuspension)
 
     @objc(removeSuspensionsObject:)
-    @NSManaged public func removeFromSuspensions(_ value: Tankchassis)
+    @NSManaged public func removeFromSuspensions(_ value: VehicleprofileSuspension)
 
     @objc(addSuspensions:)
     @NSManaged public func addToSuspensions(_ values: NSSet)
@@ -116,10 +116,10 @@ extension Vehicles {
 // MARK: Generated accessors for turrets
 extension Vehicles {
     @objc(addTurretsObject:)
-    @NSManaged public func addToTurrets(_ value: Tankturrets)
+    @NSManaged public func addToTurrets(_ value: VehicleprofileTurret)
 
     @objc(removeTurretsObject:)
-    @NSManaged public func removeFromTurrets(_ value: Tankturrets)
+    @NSManaged public func removeFromTurrets(_ value: VehicleprofileTurret)
 
     @objc(addTurrets:)
     @NSManaged public func addToTurrets(_ values: NSSet)

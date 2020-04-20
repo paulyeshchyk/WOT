@@ -13,14 +13,14 @@ public class WOTWEBRequestTankGuns: WOTWEBRequest {
     override public var method: String { return "POST" }
 
     override public var path: String {
-        return "/wot/encyclopedia/tankguns/"
+        return "/wot/encyclopedia/vehicleprofile/"
     }
 }
 
 extension WOTWEBRequestTankGuns: WOTModelServiceProtocol {
     @objc
     public class func modelClass() -> AnyClass? {
-        return Tankguns.self
+        return VehicleprofileGun.self
     }
 
     @objc

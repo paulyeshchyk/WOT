@@ -46,7 +46,7 @@ extension Vehicleprofile {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase parentCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.tank_id = AnyConvertable(jSON[#keyPath(Vehicleprofile.tank_id)]).asNSDecimal
         self.is_default = AnyConvertable(jSON[#keyPath(Vehicleprofile.is_default)]).asNSDecimal
         self.max_ammo = AnyConvertable(jSON[#keyPath(Vehicleprofile.max_ammo)]).asNSDecimal
@@ -58,22 +58,33 @@ extension Vehicleprofile {
         self.speed_backward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_backward)]).asNSDecimal
         self.speed_forward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_forward)]).asNSDecimal
 
-        self.ammo = VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.armor = VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.engine = VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.gun = VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.radio = VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.suspension = VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.turret = VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        let pkTankID = WOTPrimaryKey(name: #keyPath(Vehicleprofile.tank_id), value: self.tank_id?.intValue as AnyObject, predicateFormat: "%K == %@")
+        var pkCase = PKCase()
+        pkCase["tank_id"] = [pkTankID].compactMap { $0 }
 
-        let profileModulePK = externalPK?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))
+        self.ammo = VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.armor = VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.engine = VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.gun = VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.radio = VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.suspension = VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        self.turret = VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+        pkCase["primary"] = parentCase["primary"]
+        let pk = pkCase["primary"]?.first
+
+        let profileModulePK = pk?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))
         self.modules = VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], externalPK: profileModulePK, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
     }
 
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = Vehicleprofile.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+
+        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
@@ -96,13 +107,18 @@ extension Vehicleprofile: PrimaryKeypathProtocol {
 }
 
 extension Vehicleprofile {
-    public static func profile(from jSON: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> Vehicleprofile? {
+    public static func profile(from jSON: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> Vehicleprofile? {
         guard let jSON = jSON as? JSON else { return  nil }
-        guard let result = onSubordinateCreate?(Vehicleprofile.self, externalPK) as? Vehicleprofile else {
+
+        #warning("refactor this")
+        var nextCase = PKCase()
+        nextCase["primary"] = [pkCase["vehiclePK"]?.first].compactMap { $0 }
+
+        guard let result = onSubordinateCreate?(Vehicleprofile.self, nextCase) as? Vehicleprofile else {
             fatalError("Vehicle profile is not created")
         }
-
-        result.mapping(fromJSON: jSON, externalPK: externalPK, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        #warning("pkCase = vehiclePK")
+        result.mapping(fromJSON: jSON, pkCase: nextCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }

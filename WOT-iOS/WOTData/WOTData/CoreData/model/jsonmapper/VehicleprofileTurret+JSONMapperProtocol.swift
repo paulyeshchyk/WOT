@@ -9,7 +9,8 @@
 @objc extension VehicleprofileTurret: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileTurret.traverse_left_arc),
+        return [#keyPath(VehicleprofileTurret.turret_id),
+                #keyPath(VehicleprofileTurret.traverse_left_arc),
                 #keyPath(VehicleprofileTurret.traverse_speed),
                 #keyPath(VehicleprofileTurret.weight),
                 #keyPath(VehicleprofileTurret.view_range),
@@ -28,10 +29,21 @@
 }
 
 extension VehicleprofileTurret {
-    public typealias Fields = Void
+    public enum FieldKeys: String, CodingKey {
+        case turret_id
+        case traverse_left_arc
+        case traverse_speed
+        case weight
+        case view_range
+        case hp
+        case tier
+        case name
+        case tag
+        case traverse_right_arc
+    }
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileTurret.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileTurret.tier)] as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileTurret.tag)] as? String
@@ -46,27 +58,34 @@ extension VehicleprofileTurret {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileTurret.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["primary"] = [parentPrimaryKey].compactMap {$0}
+
+        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileTurret {
-    public static func turret(fromJSON jSON: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileTurret? {
+    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileTurret? {
         guard let jSON = jSON as? JSON else { return  nil }
 
         let tag = jSON[#keyPath(VehicleprofileTurret.tag)]
         let pk = VehicleprofileTurret.primaryKey(for: tag as AnyObject?)
+        var pkCase = PKCase()
+        pkCase["primary"] = [pk].compactMap { $0 }
 
-        guard let result = onSubordinateCreate?(VehicleprofileTurret.self, pk) as? VehicleprofileTurret else {
+        guard let result = onSubordinateCreate?(VehicleprofileTurret.self, pkCase) as? VehicleprofileTurret else {
             fatalError("Turret is not created")
         }
-        result.mapping(fromJSON: jSON, externalPK: pk, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+        result.mapping(fromJSON: jSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }
 
 extension VehicleprofileTurret: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileTurret.tag)
+    private static let pkey: String = #keyPath(VehicleprofileTurret.turret_id)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey

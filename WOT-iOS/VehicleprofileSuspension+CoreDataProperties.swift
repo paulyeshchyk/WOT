@@ -22,6 +22,23 @@ extension VehicleprofileSuspension {
     @NSManaged public var traverse_speed: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
     @NSManaged public var steering_lock_angle: NSDecimalNumber?
-    @NSManaged public var tankchassis: Tankchassis?
+    @NSManaged public var suspension_id: NSDecimalNumber?
+    @NSManaged public var module: VehicleprofileModule?
     @NSManaged public var vehicleprofile: Vehicleprofile?
+    @NSManaged public var vehicle: NSSet?
+}
+
+// MARK: Generated accessors for vehicle
+extension VehicleprofileSuspension {
+    @objc(addVehicleObject:)
+    @NSManaged public func addToVehicle(_ value: Vehicles)
+
+    @objc(removeVehicleObject:)
+    @NSManaged public func removeFromVehicle(_ value: Vehicles)
+
+    @objc(addVehicle:)
+    @NSManaged public func addToVehicle(_ values: NSSet)
+
+    @objc(removeVehicle:)
+    @NSManaged public func removeFromVehicle(_ values: NSSet)
 }

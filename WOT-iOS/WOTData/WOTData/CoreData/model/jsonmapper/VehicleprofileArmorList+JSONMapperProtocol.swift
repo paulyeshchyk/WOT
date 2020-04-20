@@ -16,17 +16,17 @@ extension VehicleprofileArmorList {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
         if let hullJSON = jSON[#keyPath(VehicleprofileArmorList.hull)] as? JSON {
-            if let hullObject = onSubordinateCreate?(VehicleprofileArmor.self, nil) as? VehicleprofileArmor {
-                hullObject.mapping(fromJSON: hullJSON, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+            if let hullObject = onSubordinateCreate?(VehicleprofileArmor.self, pkCase) as? VehicleprofileArmor {
+                hullObject.mapping(fromJSON: hullJSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
                 self.hull = hullObject
             }
         }
 
         if let turretJSON = jSON[#keyPath(VehicleprofileArmorList.turret)] as? JSON {
-            if let turretObject = onSubordinateCreate?(VehicleprofileArmor.self, nil) as? VehicleprofileArmor {
-                turretObject.mapping(fromJSON: turretJSON, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+            if let turretObject = onSubordinateCreate?(VehicleprofileArmor.self, pkCase) as? VehicleprofileArmor {
+                turretObject.mapping(fromJSON: turretJSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
                 self.turret = turretObject
             }
         }
@@ -35,15 +35,21 @@ extension VehicleprofileArmorList {
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileArmorList.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-        self.mapping(fromJSON: json, externalPK: parentPrimaryKey, onSubordinateCreate: nil, linksCallback: linksCallback)
+
+        var pkCase = PKCase()
+        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+
+        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileArmorList {
-    public static func list(fromJSON json: Any?, externalPK pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileArmorList? {
+    public static func list(fromJSON json: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileArmorList? {
         guard let json = json as? JSON else { return  nil }
-        guard let result = onSubordinateCreate?(VehicleprofileArmorList.self, pkProfile) as? VehicleprofileArmorList else { return nil }
-        result.mapping(fromJSON: json, externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+
+        guard let result = onSubordinateCreate?(VehicleprofileArmorList.self, pkCase) as? VehicleprofileArmorList else { return nil }
+
+        result.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         return result
     }
 }

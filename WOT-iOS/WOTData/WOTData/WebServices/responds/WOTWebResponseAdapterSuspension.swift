@@ -31,10 +31,13 @@ public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
                     return
                 }
                 let primaryKey = self.primaryKey(for: key as AnyObject)
+                var pkCase = PKCase()
+                pkCase["primary"] = [primaryKey].compactMap {$0}
+
                 context.perform {
                     if
                         let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey?.predicate, context: context) {
-                        managedObject.mapping(fromJSON: objectJson1, externalPK: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
+                        managedObject.mapping(fromJSON: objectJson1, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                     })
                         context.tryToSave()

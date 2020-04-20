@@ -9,11 +9,11 @@
 import Foundation
 
 public class WOTWebResponseAdapterEngines: WOTWebResponseAdapter {
-    public let Clazz: AnyClass = Tankengines.self
-    public let PrimaryKeypath: String  = #keyPath(Tankengines.module_id)
+    public let Clazz: AnyClass = VehicleprofileEngine.self
+    public let PrimaryKeypath: String  = #keyPath(VehicleprofileEngine.tag)
 
     public func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        return Tankengines.primaryKey(for: ident)
+        return VehicleprofileEngine.primaryKey(for: ident)
     }
 
     private lazy var currentContext: NSManagedObjectContext  = {
@@ -30,11 +30,16 @@ public class WOTWebResponseAdapterEngines: WOTWebResponseAdapter {
                 else {
                     return
                 }
+
+                let primaryKey = self.primaryKey(for: ident as AnyObject)
+                var pkCase = PKCase()
+                pkCase["primary"] = [primaryKey].compactMap {$0}
+
                 context.perform {
                     if
-                        let primaryKey = self.primaryKey(for: ident as AnyObject),
-                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey.predicate, context: context)                         {
-                        managedObject.mapping(fromJSON: objectJson, externalPK: primaryKey, onSubordinateCreate: nil, linksCallback: { links in
+                        let predicate = primaryKey?.predicate,
+                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: predicate, context: context) {
+                        managedObject.mapping(fromJSON: objectJson, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                     })
                         context.tryToSave()

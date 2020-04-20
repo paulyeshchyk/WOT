@@ -50,3 +50,28 @@ public class WOTPrimaryKey: NSObject {
         return WOTPrimaryKey(components: newComponents, value: self.value, predicateFormat: predicateFormat)
     }
 }
+
+public typealias PKCase = Dictionary<AnyHashable, [WOTPrimaryKey]>
+
+@objc
+public class PKCase2: NSObject {
+    private var keys: [String: Set<WOTPrimaryKey>] = .init()
+
+    public subscript(clazz: AnyClass) -> WOTPrimaryKey? {
+        get {
+            return keys[String(describing: clazz)]?.first
+        }
+        set {
+            if let value = newValue {
+                let key = String(describing: clazz)
+                var updatedSet: Set<WOTPrimaryKey> = keys[key] ?? Set<WOTPrimaryKey>()
+                updatedSet.insert(value)
+                keys[key] = updatedSet
+            }
+        }
+    }
+
+    public func allValues(clazz: AnyClass) -> Set<WOTPrimaryKey>? {
+        return keys[String(describing: clazz)]
+    }
+}

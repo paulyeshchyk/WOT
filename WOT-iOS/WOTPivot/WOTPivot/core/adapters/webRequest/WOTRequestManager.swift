@@ -68,7 +68,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
         self.request(request, addSubordinateLink: jsonLink)
 
-        print("\nadded request:[\(groupId)]")
+        print("[NEW]:[\(groupId)]")
         return result
     }
 
@@ -180,7 +180,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
 //        fatalError("get applied json link and run completion")
         //
-        print("\nfinished load data for request:\n\(request.description)")
+        print("[END]:\(request.description)")
 
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks)
@@ -197,12 +197,12 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     private func jsonLinksCallback(_ jsonLinks: [WOTJSONLink]?) {}
 
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
-        print("\ncenceled request:\n\(request.description)")
+        print("[CANCEL]:\(request.description)")
         removeRequest(request)
     }
 
     public func requestHasStarted(_ request: WOTRequestProtocol) {
-        print("\nstarted request:\n\(request.description)")
+        print("[RUN]:\(request.description)")
     }
 
     public func removeRequest(_ request: WOTRequestProtocol) {

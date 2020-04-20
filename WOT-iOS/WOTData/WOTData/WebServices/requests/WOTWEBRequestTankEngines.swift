@@ -13,7 +13,7 @@ public class WOTWEBRequestTankEngines: WOTWEBRequest {
     override public var method: String { return "POST" }
 
     override public var path: String {
-        return "/wot/encyclopedia/tankengines/"
+        return "/wot/encyclopedia/vehicleprofile/"
     }
 }
 

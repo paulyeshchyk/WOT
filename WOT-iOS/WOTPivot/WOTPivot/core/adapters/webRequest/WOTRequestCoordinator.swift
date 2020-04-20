@@ -148,7 +148,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
             if let adapter = WOTRequestCoordinator.adapterInstance(for: requestIdType) {
                 let error = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks)
                 if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
-                    print("raized:\(text)")
+                    print("[ERR]:\(request.description)\n\(text) for: \(requestIdType) \n")
                 }
             }
         })
