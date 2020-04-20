@@ -2,7 +2,7 @@
 //  VehicleprofileGun+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/19/20.
+//  Created by Pavel Yeshchyk on 4/20/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -19,6 +19,7 @@ extension VehicleprofileGun {
     @NSManaged public var caliber: NSDecimalNumber?
     @NSManaged public var dispersion: NSDecimalNumber?
     @NSManaged public var fire_rate: NSDecimalNumber?
+    @NSManaged public var gun_id: NSDecimalNumber?
     @NSManaged public var move_down_arc: NSDecimalNumber?
     @NSManaged public var move_up_arc: NSDecimalNumber?
     @NSManaged public var name: String?
@@ -26,24 +27,9 @@ extension VehicleprofileGun {
     @NSManaged public var tag: String?
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
-    @NSManaged public var gun_id: NSDecimalNumber?
-    @NSManaged public var vehicleprofile: NSSet?
     @NSManaged public var vehicle: NSSet?
-}
-
-// MARK: Generated accessors for vehicleprofile
-extension VehicleprofileGun {
-    @objc(addVehicleprofileObject:)
-    @NSManaged public func addToVehicleprofile(_ value: Vehicleprofile)
-
-    @objc(removeVehicleprofileObject:)
-    @NSManaged public func removeFromVehicleprofile(_ value: Vehicleprofile)
-
-    @objc(addVehicleprofile:)
-    @NSManaged public func addToVehicleprofile(_ values: NSSet)
-
-    @objc(removeVehicleprofile:)
-    @NSManaged public func removeFromVehicleprofile(_ values: NSSet)
+    @NSManaged public var vehicleprofile: NSSet?
+    @NSManaged public var vehicleprofileModule: VehicleprofileModule?
 }
 
 // MARK: Generated accessors for vehicle
@@ -59,4 +45,19 @@ extension VehicleprofileGun {
 
     @objc(removeVehicle:)
     @NSManaged public func removeFromVehicle(_ values: NSSet)
+}
+
+// MARK: Generated accessors for vehicleprofile
+extension VehicleprofileGun {
+    @objc(addVehicleprofileObject:)
+    @NSManaged public func addToVehicleprofile(_ value: Vehicleprofile)
+
+    @objc(removeVehicleprofileObject:)
+    @NSManaged public func removeFromVehicleprofile(_ value: Vehicleprofile)
+
+    @objc(addVehicleprofile:)
+    @NSManaged public func addToVehicleprofile(_ values: NSSet)
+
+    @objc(removeVehicleprofile:)
+    @NSManaged public func removeFromVehicleprofile(_ values: NSSet)
 }

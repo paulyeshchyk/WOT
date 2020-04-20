@@ -8,13 +8,6 @@
 
 import Foundation
 
-public extension NSManagedObject {
-    @discardableResult
-    func tryToSave() -> Error? {
-        return self.managedObjectContext?.tryToSave()
-    }
-}
-
 public extension NSManagedObjectContext {
     @discardableResult
     func tryToSave() -> Error? {

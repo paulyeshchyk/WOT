@@ -2,7 +2,7 @@
 //  Module+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/19/20.
+//  Created by Pavel Yeshchyk on 4/20/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -15,16 +15,16 @@ extension Module {
         return NSFetchRequest<Module>(entityName: "Module")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var weight: NSDecimalNumber?
     @NSManaged public var image: String?
+    @NSManaged public var module_id: NSDecimalNumber?
+    @NSManaged public var name: String?
     @NSManaged public var nation: String?
     @NSManaged public var price_credit: NSDecimalNumber?
     @NSManaged public var tier: NSDecimalNumber?
-    @NSManaged public var module_id: NSDecimalNumber?
     @NSManaged public var type: String?
-    @NSManaged public var tanks: NSSet?
+    @NSManaged public var weight: NSDecimalNumber?
     @NSManaged public var moduleTree: ModulesTree?
+    @NSManaged public var tanks: NSSet?
 }
 
 // MARK: Generated accessors for tanks

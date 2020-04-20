@@ -2,7 +2,7 @@
 //  VehicleprofileEngine+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/19/20.
+//  Created by Pavel Yeshchyk on 4/20/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -15,15 +15,16 @@ extension VehicleprofileEngine {
         return NSFetchRequest<VehicleprofileEngine>(entityName: "VehicleprofileEngine")
     }
 
+    @NSManaged public var engine_id: NSDecimalNumber?
     @NSManaged public var fire_chance: NSDecimalNumber?
     @NSManaged public var name: String?
     @NSManaged public var power: NSDecimalNumber?
     @NSManaged public var tag: String?
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
-    @NSManaged public var engine_id: NSDecimalNumber?
-    @NSManaged public var vehicleprofile: Vehicleprofile?
     @NSManaged public var vehicle: NSSet?
+    @NSManaged public var vehicleprofile: Vehicleprofile?
+    @NSManaged public var vehicleprofileModule: VehicleprofileModule?
 }
 
 // MARK: Generated accessors for vehicle

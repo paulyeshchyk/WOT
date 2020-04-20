@@ -28,12 +28,9 @@ extension VehicleprofileAmmoList {
         }
     }
 
-    convenience init?(array: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+    convenience init?(array: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoList.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-
-        let pkCase = PKCase()
-        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
     }

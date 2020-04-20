@@ -63,12 +63,9 @@ extension VehicleprofileGun {
         subordinator?.willRequestLinks()
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         guard let json = json as? JSON, let entityDescription = VehicleprofileGun.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
-
-        let pkCase = PKCase()
-        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
     }

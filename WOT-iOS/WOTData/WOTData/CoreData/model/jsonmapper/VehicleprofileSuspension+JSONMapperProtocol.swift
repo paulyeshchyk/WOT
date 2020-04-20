@@ -79,30 +79,35 @@ extension VehicleprofileSuspension {
         }
     }
 
-    public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol, linker: CoreDataLinkerProtocol, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
-        guard let suspension_id = suspension_id else {
-            return nil
-        }
+    public static func linkRequest(for suspension_id: NSDecimalNumber?, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol, linker: CoreDataLinkerProtocol, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
+        #warning("refactor from here")
+        return nil
 
-        var primaryKeys = [WOTPrimaryKey]()
-        #warning("wrong key module_id, should be tag")
-        let suspensionPK = WOTPrimaryKey(name: "module_id", value: suspension_id, predicateFormat: "%K == %@")
-        primaryKeys.append(suspensionPK)
-        if let parentPrimaryKey = parentPrimaryKey {
-            primaryKeys.append(parentPrimaryKey)
-        }
+        /*
+         guard let suspension_id = suspension_id else {
+             return nil
+         }
 
-        return WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: primaryKeys, keypathPrefix: "suspension.", completion: { json in
-            guard let suspension = NSManagedObject.findOrCreateObject(forClass: VehicleprofileSuspension.self, predicate: suspensionPK.predicate, context: context) as? VehicleprofileSuspension else {
-                return
-            }
-            onSuccess(suspension)
+         var primaryKeys = [WOTPrimaryKey]()
+         #warning("wrong key module_id, should be tag")
+         let suspensionPK = WOTPrimaryKey(name: "module_id", value: suspension_id, predicateFormat: "%K == %@")
+         primaryKeys.append(suspensionPK)
+         if let parentPrimaryKey = parentPrimaryKey {
+             primaryKeys.append(parentPrimaryKey)
+         }
 
-            let pkCase = PKCase()
-            pkCase[.primary] = suspensionPK
+         return WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: primaryKeys, keypathPrefix: "suspension.", completion: { json in
+             guard let suspension = NSManagedObject.findOrCreateObject(forClass: VehicleprofileSuspension.self, predicate: suspensionPK.predicate, context: context) as? VehicleprofileSuspension else {
+                 return
+             }
+             onSuccess(suspension)
 
-            suspension.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
-        })
+             let pkCase = PKCase()
+             pkCase[.primary] = suspensionPK
+
+             suspension.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
+         })
+         */
     }
 }
 

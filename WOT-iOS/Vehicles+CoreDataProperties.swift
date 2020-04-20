@@ -2,7 +2,7 @@
 //  Vehicles+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/19/20.
+//  Created by Pavel Yeshchyk on 4/20/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -31,11 +31,11 @@ extension Vehicles {
     @NSManaged public var default_profile: Vehicleprofile?
     @NSManaged public var engines: NSSet?
     @NSManaged public var guns: NSSet?
+    @NSManaged public var modules: NSSet?
     @NSManaged public var modules_tree: NSSet?
     @NSManaged public var radios: NSSet?
     @NSManaged public var suspensions: NSSet?
     @NSManaged public var turrets: NSSet?
-    @NSManaged public var modules: NSSet?
 }
 
 // MARK: Generated accessors for engines
@@ -66,6 +66,21 @@ extension Vehicles {
 
     @objc(removeGuns:)
     @NSManaged public func removeFromGuns(_ values: NSSet)
+}
+
+// MARK: Generated accessors for modules
+extension Vehicles {
+    @objc(addModulesObject:)
+    @NSManaged public func addToModules(_ value: Module)
+
+    @objc(removeModulesObject:)
+    @NSManaged public func removeFromModules(_ value: Module)
+
+    @objc(addModules:)
+    @NSManaged public func addToModules(_ values: NSSet)
+
+    @objc(removeModules:)
+    @NSManaged public func removeFromModules(_ values: NSSet)
 }
 
 // MARK: Generated accessors for modules_tree
@@ -126,19 +141,4 @@ extension Vehicles {
 
     @objc(removeTurrets:)
     @NSManaged public func removeFromTurrets(_ values: NSSet)
-}
-
-// MARK: Generated accessors for modules
-extension Vehicles {
-    @objc(addModulesObject:)
-    @NSManaged public func addToModules(_ value: Module)
-
-    @objc(removeModulesObject:)
-    @NSManaged public func removeFromModules(_ value: Module)
-
-    @objc(addModules:)
-    @NSManaged public func addToModules(_ values: NSSet)
-
-    @objc(removeModules:)
-    @NSManaged public func removeFromModules(_ values: NSSet)
 }

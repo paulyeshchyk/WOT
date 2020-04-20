@@ -2,7 +2,7 @@
 //  Vehicleprofile+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/19/20.
+//  Created by Pavel Yeshchyk on 4/20/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -22,11 +22,11 @@ extension Vehicleprofile {
     @NSManaged public var is_default: NSNumber?
     @NSManaged public var max_ammo: NSDecimalNumber?
     @NSManaged public var max_weight: NSDecimalNumber?
+    @NSManaged public var profile_id: NSDecimalNumber?
     @NSManaged public var speed_backward: NSDecimalNumber?
     @NSManaged public var speed_forward: NSDecimalNumber?
     @NSManaged public var tank_id: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
-    @NSManaged public var profile_id: NSDecimalNumber?
     @NSManaged public var ammo: VehicleprofileAmmoList?
     @NSManaged public var armor: VehicleprofileArmorList?
     @NSManaged public var engine: VehicleprofileEngine?
