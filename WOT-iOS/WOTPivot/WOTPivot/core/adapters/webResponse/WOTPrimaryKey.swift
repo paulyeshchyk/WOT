@@ -15,12 +15,7 @@ public class WOTPrimaryKey: NSObject {
     public var name: String { return components.joined(separator: ".")}
 
     override public var description: String {
-        set {}
-        get {
-            let predicateDescription = predicate.description
-            let nameValue = "\(name) - \(String(describing: value))"
-            return "\(nameValue): \(predicateDescription)"
-        }
+        return "\(predicate.description)"
     }
 
     private var predicateFormat: String = "%K = %@"
@@ -62,27 +57,51 @@ public enum PKType: Hashable {
         case .custom(let customType): return customType
         }
     }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.identifier)
+    }
 }
 
 @objc
 public class PKCase: NSObject {
-    private var keys: [PKType: Set<WOTPrimaryKey>] = .init()
+    public override var description: String {
+        guard let objects = allValues(), !objects.isEmpty else {
+            return "empty case"
+        }
+        var result: String = ""
+        objects.forEach {
+            result += "key: \($0.description)\n"
+        }
+        return result
+    }
 
-    public subscript(clazz: PKType) -> WOTPrimaryKey? {
+    private var values: [PKType: Set<WOTPrimaryKey>] = .init()
+
+    public subscript(pkType: PKType) -> WOTPrimaryKey? {
         get {
-            return keys[clazz]?.first
+            return values[pkType]?.first
         }
         set {
             if let value = newValue {
-                let key = clazz
-                var updatedSet: Set<WOTPrimaryKey> = keys[key] ?? Set<WOTPrimaryKey>()
+                var updatedSet: Set<WOTPrimaryKey> = values[pkType] ?? Set<WOTPrimaryKey>()
                 updatedSet.insert(value)
-                keys[key] = updatedSet
+                values[pkType] = updatedSet
             }
         }
     }
 
-    public func allValues(clazz: PKType) -> Set<WOTPrimaryKey>? {
-        return keys[clazz]
+    public func allValues(_ pkType: PKType? = nil) -> Set<WOTPrimaryKey>? {
+        if let pkType = pkType {
+            return values[pkType]
+        } else {
+            var updatedSet = Set<WOTPrimaryKey>()
+            values.keys.forEach {
+                values[$0]?.forEach({ key in
+                    updatedSet.insert(key)
+                })
+            }
+            return updatedSet
+        }
     }
 }
