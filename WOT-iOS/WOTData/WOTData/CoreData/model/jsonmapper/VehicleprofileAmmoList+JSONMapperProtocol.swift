@@ -11,13 +11,18 @@ extension VehicleprofileAmmoList {
 
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+        subordinator?.willRequestLinks()
+
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
-            subordinator?.requestNewSubordinate(VehicleprofileAmmo.self, pkCase) { [weak self] newObject in
+            let vehicleprofileAmmoCase = PKCase()
+            vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+            vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject)
+            subordinator?.requestNewSubordinate(VehicleprofileAmmo.self, vehicleprofileAmmoCase) { [weak self] newObject in
                 guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
                     return
                 }
-                ammo.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
+                ammo.mapping(fromJSON: jSON, pkCase: vehicleprofileAmmoCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
                 self.addToVehicleprofileAmmo(ammo)
             }
         }

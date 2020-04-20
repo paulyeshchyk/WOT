@@ -48,6 +48,8 @@ extension VehicleprofileSuspension {
         self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.weight)] as? Int ?? 0)
         self.load_limit = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.load_limit)] as? Int ?? 0)
         self.steering_lock_angle = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.steering_lock_angle)] as? Int ?? 0)
+
+        subordinator?.willRequestLinks()
     }
 
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {

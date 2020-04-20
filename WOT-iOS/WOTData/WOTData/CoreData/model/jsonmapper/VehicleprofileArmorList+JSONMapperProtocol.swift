@@ -17,6 +17,8 @@ extension VehicleprofileArmorList {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+        subordinator?.willRequestLinks()
+
         #warning("use subordinator")
         /*
          if let hullJSON = jSON[#keyPath(VehicleprofileArmorList.hull)] as? JSON {

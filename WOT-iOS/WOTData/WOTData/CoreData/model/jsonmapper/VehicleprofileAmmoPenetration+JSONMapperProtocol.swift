@@ -34,6 +34,7 @@ extension VehicleprofileAmmoPenetration {
         self.min_value = NSDecimalNumber(value: array[0] as? Float ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Float ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Float ?? 0)
+        subordinator?.willRequestLinks()
     }
 
     convenience init?(array: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
@@ -48,11 +49,8 @@ extension VehicleprofileAmmoPenetration {
 }
 
 extension VehicleprofileAmmoPenetration {
-    public static func penetration(fromArray array: Any?, primaryKey pkProfile: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func penetration(fromArray array: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let array = array as? [Any] else { return }
-
-        let pkCase = PKCase()
-        pkCase[.primary] = pkProfile
 
         subordinator?.requestNewSubordinate(VehicleprofileAmmoPenetration.self, pkCase) { newObject in
             newObject?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)

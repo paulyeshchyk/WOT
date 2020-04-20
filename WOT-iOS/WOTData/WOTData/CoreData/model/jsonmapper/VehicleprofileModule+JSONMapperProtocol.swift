@@ -15,9 +15,14 @@ extension VehicleprofileModule {
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         self.radio_id = AnyConvertable(#keyPath(VehicleprofileModule.radio_id)).asNSDecimal
+        self.suspension_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.suspension_id)]).asNSDecimal
+        self.engine_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.engine_id)]).asNSDecimal
+        self.gun_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.gun_id)]).asNSDecimal
+        self.turret_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.turret_id)]).asNSDecimal
+
+        subordinator?.willRequestLinks()
 
         var links: [WOTJSONLink] = .init()
-        self.suspension_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.suspension_id)]).asNSDecimal
         if let suspensionPK = VehicleprofileSuspension.primaryKey(for: suspension_id?.intValue as AnyObject?) {
             if let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: nil, completion: { json in //"suspension."
                 print(json)
@@ -26,13 +31,10 @@ extension VehicleprofileModule {
             }
         }
 
-        self.engine_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.engine_id)]).asNSDecimal
         let enginePK = VehicleprofileEngine.primaryKey(for: engine_id?.intValue as AnyObject?)
 
-        self.gun_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.gun_id)]).asNSDecimal
         let gunPK = VehicleprofileGun.primaryKey(for: gun_id?.intValue as AnyObject?)
 
-        self.turret_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.turret_id)]).asNSDecimal
         let turretPK = VehicleprofileTurret.primaryKey(for: turret_id?.intValue as AnyObject?)
 
         #warning("refactor from here")

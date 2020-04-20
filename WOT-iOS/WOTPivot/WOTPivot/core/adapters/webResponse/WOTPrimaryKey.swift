@@ -104,4 +104,10 @@ public class PKCase: NSObject {
             return updatedSet
         }
     }
+
+    public var predicate: NSPredicate? {
+        let allPredicates = self.allValues()?.compactMap { $0.predicate }
+        guard let predicates = allPredicates else { return nil }
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+    }
 }

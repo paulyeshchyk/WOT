@@ -13,7 +13,18 @@ public typealias OnLinksCallback = ([WOTJSONLink]?) -> Void
 
 @objc
 public protocol CoreDataSubordinatorProtocol {
+    /**
+     Asks NSManagedObjectContext to find/create object by predicate
+     - Parameter clazz: Type of requested object
+     - Parameter pkCase: Set of predicates available for this request
+     - Parameter callback: -
+     */
     func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback )
+
+    /**
+     Asks Subordinator to save context before running links mapping
+     */
+    func willRequestLinks()
 }
 
 @objc

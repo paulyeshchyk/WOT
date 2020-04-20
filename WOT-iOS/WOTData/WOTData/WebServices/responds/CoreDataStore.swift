@@ -44,11 +44,19 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
 
     // MARK: - CoreDataSubordinatorProtocol
     public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+        guard let predicate = pkCase.predicate else {
+            print("[COREDATA][SEARCH] no key defined for class: \(String(describing: clazz))")
+            return
+        }
         context.perform {
-            let primaryKey = pkCase[.primary]
-            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: self.context)
+            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: self.context)
             callback(managedObject)
         }
+    }
+
+    public func willRequestLinks() {
+        #warning("not thread safe")
+        context.tryToSave()
     }
 }
 

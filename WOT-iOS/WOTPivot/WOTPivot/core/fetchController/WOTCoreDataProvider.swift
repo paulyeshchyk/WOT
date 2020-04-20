@@ -45,7 +45,8 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
     @objc public lazy var workManagedObjectContext: NSManagedObjectContext  = {
         let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
-        context.persistentStoreCoordinator = self.persistentStoreCoordinator
+//        context.persistentStoreCoordinator = self.persistentStoreCoordinator
+        context.parent = self.mainManagedObjectContext
         context.undoManager = nil
         return context
     }()
