@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct CoreDataStore {
+public class CoreDataStore: CoreDataSubordinatorProtocol {
     let Clazz: PrimaryKeypathProtocol.Type
     let request: WOTRequestProtocol
     let binary: Data?
@@ -18,13 +18,57 @@ public struct CoreDataStore {
     var onGetObjectJSON: ((JSON) -> JSON)?
     var onFinishJSONParse: ((Error?) -> Void)?
 
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, context: NSManagedObjectContext) {
+        self.Clazz = clazz
+        self.request = request
+        self.binary = binary
+        self.linkAdapter = linkAdapter
+        self.context = context
+    }
+
     func perform() {
         if let error = binary?.parseAsJSON(onReceivedJSON(_:)) {
             print(error)
         }
     }
 
-    private func onReceivedJSON(_ json: JSON?) {
+    private func perform(pkCase: PKCase, json: JSON) {
+        context.perform {
+            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: self.context) else {
+                fatalError("Managed object is not created")
+            }
+            managedObject.mapping(fromJSON: json, pkCase: pkCase, subordinator: self, linksCallback: self.onLinks(_:))
+            self.context.tryToSave()
+        }
+    }
+
+    // MARK: - CoreDataSubordinatorProtocol
+    public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+        context.perform { [weak self] in
+            guard let self = self else { return }
+            let primaryKey = pkCase[.primary]
+            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: self.context)
+            callback(managedObject)
+        }
+    }
+}
+
+extension CoreDataStore {
+    func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase) -> NSManagedObject? {
+        let primaryKey = pkCase[.primary]
+        let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: self.context)
+        return managedObject
+    }
+}
+
+extension CoreDataStore {
+    func onLinks(_ links: [WOTJSONLink]?) {
+        linkAdapter.request(request, adoptJsonLinks: links)
+    }
+}
+
+extension CoreDataStore {
+    func onReceivedJSON(_ json: JSON?) {
         json?.keys.forEach { (key) in
             guard let jsonByKey = json?[key] as? JSON else {
                 fatalError("invalid json for key")
@@ -39,31 +83,10 @@ public struct CoreDataStore {
                 fatalError("onGetIdent not defined")
             }
 
-            let primaryKey = Clazz.primaryKey(for: ident as AnyObject)
             let pkCase = PKCase()
-            pkCase[.primary] = primaryKey
+            pkCase[.primary] = Clazz.primaryKey(for: ident as AnyObject)
             perform(pkCase: pkCase, json: objectJson)
         }
         onFinishJSONParse?(nil)
-    }
-
-    private func perform(pkCase: PKCase, json: JSON) {
-        context.perform {
-            let primaryKey = pkCase[.primary]
-            if let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey?.predicate, context: self.context) {
-                managedObject.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: self.onSubordinate(_:_:), linksCallback: self.onLinks(_:))
-                self.context.tryToSave()
-            }
-        }
-    }
-
-    private func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase) -> NSManagedObject? {
-        let primaryKey = pkCase[.primary]
-        let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: self.context)
-        return managedObject
-    }
-
-    private func onLinks(_ links: [WOTJSONLink]?) {
-        linkAdapter.request(request, adoptJsonLinks: links)
     }
 }

@@ -55,7 +55,7 @@ extension Vehicles {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         let tankID = jSON[#keyPath(Vehicles.tank_id)]
         self.name = jSON[#keyPath(Vehicles.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(Vehicles.tier)]  as? Int ?? 0)
@@ -69,47 +69,26 @@ extension Vehicles {
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
 
-        /* do not parse on application startup
+        #warning("do not parse on application startup")
+        /*
          let vehiclePK = Vehicles.foreingKey(for: jSON[#keyPath(Vehicles.tag)] as AnyObject?, foreignPaths: ["vehicles"])
 
          let pkCase = PKCase()
          pkCase[.custom("vehiclePK")] = vehiclePK
 
-         self.default_profile = Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+         Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
+             self.default_profile = newObject as? Vehicleprofile
+         }
 
          if let set = self.modules_tree {
              self.removeFromModules_tree(set)
          }
-         let module_tree = mapping(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-         module_tree?.forEach {
-             self.addToModules_tree($0)
+         ModulesTree.set(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], externalPK: nil, subordinator: subordinator, linksCallback: linksCallback) {[weak self] newObject in
+             guard let self = self else { return }
+             guard let module_tree = newObject as? ModulesTree else { return }
+             self.addToModules_tree(module_tree)
          }
          */
-    }
-
-    func mapping(modulestreeJson json: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> [ModulesTree]? {
-        guard let json = json as? JSON else { return nil }
-
-        let pkCase = PKCase()
-        pkCase[.primary] = externalPK
-
-        var result = [ModulesTree]()
-        json.keys.forEach { (key) in
-            guard
-                let moduleTreeJSON = json[key] as? JSON,
-                let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber,
-                let pk = ModulesTree.primaryKey(for: module_id),
-                let moduleTree = onSubordinateCreate?(ModulesTree.self, pkCase) as? ModulesTree
-            else { return }
-
-            #warning("check nextCase vs pkCase")
-            let nextCase = PKCase()
-            nextCase[.primary] = pk
-
-            moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: nextCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-            result.append(moduleTree)
-        }
-        return result
     }
 }
 

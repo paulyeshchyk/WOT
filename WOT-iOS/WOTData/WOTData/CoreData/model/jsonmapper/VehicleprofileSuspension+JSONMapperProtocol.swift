@@ -41,7 +41,7 @@ extension VehicleprofileSuspension {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileSuspension.name)] as? String
         self.tag = jSON[#keyPath(VehicleprofileSuspension.tag)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.tier)] as? Int ?? 0)
@@ -57,13 +57,13 @@ extension VehicleprofileSuspension {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileSuspension {
-    public static func suspension(fromJSON jSON: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileSuspension? {
-        guard let jSON = jSON as? JSON else { return  nil }
+    public static func suspension(fromJSON jSON: Any?, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+        guard let jSON = jSON as? JSON else { return }
 
         let tag = jSON[#keyPath(VehicleprofileSuspension.tag)]
         let pk = VehicleprofileSuspension.primaryKey(for: tag as AnyObject?)
@@ -71,12 +71,10 @@ extension VehicleprofileSuspension {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        guard let result = onSubordinateCreate?(VehicleprofileSuspension.self, pkCase) as? VehicleprofileSuspension else {
-            fatalError("Suspension is not created")
+        subordinator?.requestNewSubordinate(VehicleprofileSuspension.self, pkCase) { newObject in
+            newObject?.mapping(fromJSON: jSON, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
+            callback(newObject)
         }
-
-        result.mapping(fromJSON: jSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        return result
     }
 
     public static func linkRequest(for suspension_id: NSDecimalNumber?, parentPrimaryKey: WOTPrimaryKey?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
@@ -101,7 +99,7 @@ extension VehicleprofileSuspension {
             let pkCase = PKCase()
             pkCase[.primary] = suspensionPK
 
-            suspension.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: { json in
+            suspension.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: { json in
                 print(json)
             })
         })

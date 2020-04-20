@@ -30,7 +30,7 @@ extension VehicleprofileAmmoPenetration {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         self.min_value = NSDecimalNumber(value: array[0] as? Float ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Float ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Float ?? 0)
@@ -43,21 +43,21 @@ extension VehicleprofileAmmoPenetration {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromArray: array, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileAmmoPenetration {
-    public static func penetration(fromArray array: Any?, primaryKey pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileAmmoPenetration? {
-        guard let array = array as? [Any] else { return  nil }
+    public static func penetration(fromArray array: Any?, primaryKey pkProfile: WOTPrimaryKey?, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+        guard let array = array as? [Any] else { return }
 
         let pkCase = PKCase()
         pkCase[.primary] = pkProfile
 
-        guard let result = onSubordinateCreate?(VehicleprofileAmmoPenetration.self, pkCase) as? VehicleprofileAmmoPenetration else { return nil }
-
-        result.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        return result
+        subordinator?.requestNewSubordinate(VehicleprofileAmmoPenetration.self, pkCase) { newObject in
+            newObject?.mapping(fromArray: array, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
+            callback(newObject)
+        }
     }
 }
 

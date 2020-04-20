@@ -33,10 +33,14 @@ extension VehicleprofileAmmo {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
-        self.penetration = VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)],primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        self.damage = VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], primaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+        VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)],primaryKey: nil, subordinator: subordinator, linksCallback: linksCallback) { newObject in
+            self.penetration = newObject as? VehicleprofileAmmoPenetration
+        }
+        VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], primaryKey: nil, subordinator: subordinator, linksCallback: linksCallback) { newObject in
+            self.damage = newObject as? VehicleprofileAmmoDamage
+        }
     }
 
     convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
@@ -46,6 +50,6 @@ extension VehicleprofileAmmo {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
     }
 }

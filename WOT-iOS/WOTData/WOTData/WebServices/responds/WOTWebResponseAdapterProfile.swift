@@ -36,7 +36,7 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
                         let managedObject = NSManagedObject.findOrCreateObject(forClass: Vehicleprofile.self, predicate: predicate, context: context) as? Vehicleprofile {
                         managedObject.hashName = NSDecimalNumber(value: ident)
 
-                        managedObject.mapping(fromJSON: objectJson, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: { links in
+                        managedObject.mapping(fromJSON: objectJson, pkCase: pkCase, subordinator: nil, linksCallback: { links in
                             jsonLinkAdapter.request(request, adoptJsonLinks: links)
                         })
                     }

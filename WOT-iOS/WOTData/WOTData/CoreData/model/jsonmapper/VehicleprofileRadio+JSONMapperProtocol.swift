@@ -36,7 +36,7 @@ extension VehicleprofileRadio {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileRadio.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileRadio.tier)] as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileRadio.tag)] as? String
@@ -51,13 +51,13 @@ extension VehicleprofileRadio {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileRadio {
-    public static func radio(fromJSON jSON: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileRadio? {
-        guard let jSON = jSON as? JSON else { return  nil }
+    public static func radio(fromJSON jSON: Any?, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+        guard let jSON = jSON as? JSON else { return }
 
         let tag = jSON[#keyPath(VehicleprofileRadio.tag)]
         let pk = VehicleprofileRadio.primaryKey(for: tag as AnyObject?)
@@ -65,12 +65,10 @@ extension VehicleprofileRadio {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        guard let result = onSubordinateCreate?(VehicleprofileRadio.self, pkCase) as? VehicleprofileRadio else {
-            fatalError("radio is not created")
+        subordinator?.requestNewSubordinate(VehicleprofileRadio.self, pkCase) { newObject in
+            newObject?.mapping(fromJSON: jSON, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
+            callback(newObject)
         }
-
-        result.mapping(fromJSON: jSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        return result
     }
 }
 

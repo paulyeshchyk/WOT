@@ -43,7 +43,7 @@ extension VehicleprofileTurret {
     }
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(VehicleprofileTurret.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileTurret.tier)] as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileTurret.tag)] as? String
@@ -62,25 +62,23 @@ extension VehicleprofileTurret {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileTurret {
-    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileTurret? {
-        guard let jSON = jSON as? JSON else { return  nil }
+    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+        guard let jSON = jSON as? JSON else { return }
 
         let tag = jSON[#keyPath(VehicleprofileTurret.tag)]
         let pk = VehicleprofileTurret.primaryKey(for: tag as AnyObject?)
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        guard let result = onSubordinateCreate?(VehicleprofileTurret.self, pkCase) as? VehicleprofileTurret else {
-            fatalError("Turret is not created")
+        subordinator?.requestNewSubordinate(VehicleprofileTurret.self, pkCase) { newObject in
+            newObject?.mapping(fromJSON: jSON, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
+            callback(newObject)
         }
-
-        result.mapping(fromJSON: jSON, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        return result
     }
 }
 

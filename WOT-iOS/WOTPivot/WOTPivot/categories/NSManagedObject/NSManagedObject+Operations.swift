@@ -51,6 +51,9 @@ extension NSManagedObject {
     }
 }
 
+public typealias NSManagedObjectCallback = (NSManagedObject?) -> Void
+public typealias NSManagedObjectSetCallback = ([NSManagedObject?]?) -> Void
+
 extension NSManagedObject: JSONMapperProtocol {
     public enum FieldKeys: String, CodingKey {
         case hasChanges
@@ -64,12 +67,12 @@ extension NSManagedObject: JSONMapperProtocol {
     }
 
     @objc
-    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         fatalError("not implemented")
     }
 
     @objc
-    open func mapping(fromArray array: [Any], pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    open func mapping(fromArray array: [Any], pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         fatalError("not implemented")
     }
 }

@@ -13,7 +13,7 @@ extension VehicleprofileModule {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         self.radio_id = AnyConvertable(#keyPath(VehicleprofileModule.radio_id)).asNSDecimal
 
         var links: [WOTJSONLink] = .init()
@@ -37,8 +37,8 @@ extension VehicleprofileModule {
 
         #warning("refactor from here")
 //        let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: "suspension.") { json in
-//            if let tankchassisObject = onSubordinateCreate?(Tankchassis.self, nil) as? Tankchassis {
-//                tankchassisObject.mapping(fromJSON: json, parentPrimaryKey: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+//            if let tankchassisObject = subordinator?(Tankchassis.self, nil) as? Tankchassis {
+//                tankchassisObject.mapping(fromJSON: json, parentPrimaryKey: nil, subordinator: subordinator, linksCallback: linksCallback)
 //                self.tankchassis = tankchassisObject
 //            }
 //        }
@@ -73,20 +73,20 @@ extension VehicleprofileModule {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileModule {
-    public static func module(fromJSON json: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileModule? {
-        guard let json = json as? JSON else { return  nil }
+    public static func module(fromJSON json: Any?, externalPK: WOTPrimaryKey?, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+        guard let json = json as? JSON else { return }
 
         let pkCase = PKCase()
         pkCase[.primary] = externalPK
 
-        guard let result = onSubordinateCreate?(VehicleprofileModule.self, pkCase) as? VehicleprofileModule else { return nil }
-
-        result.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        return result
+        subordinator?.requestNewSubordinate(VehicleprofileModule.self, pkCase) { newObject in
+            newObject?.mapping(fromJSON: json, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
+            callback(newObject)
+        }
     }
 }

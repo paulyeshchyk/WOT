@@ -15,7 +15,7 @@ public class WOTWebResponseAdapterVehicles: WOTWebResponseAdapter {
     }()
 
     override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
-        var store = CoreDataStore(Clazz: Vehicles.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext)
+        let store = CoreDataStore(Clazz: Vehicles.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext)
         store.onGetIdent = { Clazz, json, key in
             let ident: Any
             if let primaryKeyPath = Clazz.primaryKeyPath() {

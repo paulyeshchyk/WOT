@@ -30,7 +30,7 @@ extension VehicleprofileAmmoDamage {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         self.min_value = NSDecimalNumber(value: array[0] as? Int ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Int ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Int ?? 0)
@@ -43,19 +43,20 @@ extension VehicleprofileAmmoDamage {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromArray: array, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
     }
 }
 
 extension VehicleprofileAmmoDamage {
-    public static func damage(fromArray array: Any?, primaryKey pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileAmmoDamage? {
-        guard let array = array as? [Any] else { return  nil }
+    public static func damage(fromArray array: Any?, primaryKey pkProfile: WOTPrimaryKey?, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+        guard let array = array as? [Any] else { return }
 
         let pkCase = PKCase()
         pkCase[.primary] = pkProfile
 
-        guard let result = onSubordinateCreate?(VehicleprofileAmmoDamage.self, pkCase) as? VehicleprofileAmmoDamage else { return nil }
-        result.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        return result
+        subordinator?.requestNewSubordinate(VehicleprofileAmmoDamage.self, pkCase) { newObject in
+            newObject?.mapping(fromArray: array, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
+            callback(newObject)
+        }
     }
 }

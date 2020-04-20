@@ -38,7 +38,7 @@ extension ModulesTree {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
@@ -82,7 +82,34 @@ extension ModulesTree {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
+    }
+}
+
+extension ModulesTree {
+    public static func set(modulestreeJson json: Any?, externalPK: WOTPrimaryKey?, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+        guard let json = json as? JSON else { return }
+
+        let pkCase = PKCase()
+        pkCase[.primary] = externalPK
+
+        let staticKeyArray = json.keys
+
+        staticKeyArray.forEach { (key) in
+            guard let moduleTreeJSON = json[key] as? JSON else { return }
+            guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber  else { return }
+            guard let pk = ModulesTree.primaryKey(for: module_id) else { return }
+
+            subordinator?.requestNewSubordinate(ModulesTree.self, pkCase) { newObject in
+                guard let moduleTree = newObject as? ModulesTree else { return }
+
+                #warning("check nextCase vs pkCase")
+                let nextCase = PKCase()
+                nextCase[.primary] = pk
+                moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: nextCase, subordinator: subordinator, linksCallback: linksCallback)
+                callback(moduleTree)
+            }
+        }
     }
 }
 
@@ -105,10 +132,11 @@ extension ModulesTree: PrimaryKeypathProtocol {
 }
 
 extension ModulesTree {
-    public static func nextModules(fromJSON json: Any?, pkCase: PKCase, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> NSSet? {
-        guard let json = json as? JSON else { return nil }
-        guard let result = onSubordinateCreate?(ModulesTree.self, pkCase) as? ModulesTree else { return nil }
-        result.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        return [result]
+    public static func nextModules(fromJSON json: Any?, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectSetCallback ) {
+        guard let json = json as? JSON else { return }
+        subordinator?.requestNewSubordinate(ModulesTree.self, pkCase) { newObject in
+            newObject?.mapping(fromJSON: json, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
+            callback([newObject])
+        }
     }
 }
