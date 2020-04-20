@@ -16,6 +16,7 @@ public struct CoreDataStore {
     let context: NSManagedObjectContext
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     var onGetObjectJSON: ((JSON) -> JSON)?
+    var onFinishJSONParse: ((Error?) -> Void)?
 
     func perform() {
         if let error = binary?.parseAsJSON(onReceivedJSON(_:)) {
@@ -43,6 +44,7 @@ public struct CoreDataStore {
             pkCase[.primary] = primaryKey
             perform(pkCase: pkCase, json: objectJson)
         }
+        onFinishJSONParse?(nil)
     }
 
     private func perform(pkCase: PKCase, json: JSON) {

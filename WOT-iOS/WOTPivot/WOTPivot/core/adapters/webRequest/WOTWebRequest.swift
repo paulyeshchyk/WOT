@@ -27,7 +27,7 @@ public protocol WOTModelServiceProtocol: class {
 @objc
 open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
     override open var description: String {
-        return pumper?.description ?? "-"
+        return pumper?.description ?? ""
     }
 
     public var userInfo: JSON?

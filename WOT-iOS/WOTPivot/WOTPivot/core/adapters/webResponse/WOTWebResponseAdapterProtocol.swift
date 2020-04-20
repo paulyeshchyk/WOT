@@ -16,13 +16,12 @@ public typealias JSON = [AnyHashable: Any]
 
 @objc
 public protocol WOTWebResponseAdapterProtocol: NSObjectProtocol {
-    @discardableResult
-    func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error?
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) )
 }
 
 @objc
 open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void )) {
         fatalError("should be overriden")
     }
 

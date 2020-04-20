@@ -13,14 +13,14 @@ public class WOTWebResponseAdapterModules: WOTWebResponseAdapter {
         return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
     }()
 
-    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
+    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
         var store = CoreDataStore(Clazz: Module.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext)
         store.onGetIdent = { Clazz, json, key in
             let primaryKeyPath = Clazz.primaryKeyPath()
             let ident = json[primaryKeyPath] ?? key
             return ident
         }
+        store.onFinishJSONParse = onFinish
         store.perform()
-        return nil
     }
 }

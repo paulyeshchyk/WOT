@@ -13,8 +13,8 @@ public class WOTWebResponseAdapterAmmoList: WOTWebResponseAdapter {
         return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
     }()
 
-    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
-        return nil
+    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
+        fatalError("should be implemented")
     }
 
     public func parseJSON(_ json: JSON?, linksCallback: OnLinksCallback?) -> Error? {

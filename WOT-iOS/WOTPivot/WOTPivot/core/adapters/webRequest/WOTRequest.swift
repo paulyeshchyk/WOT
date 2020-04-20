@@ -18,6 +18,30 @@ public protocol WOTStartableProtocol {
     func start(_ args: WOTRequestArgumentsProtocol) -> Bool
 }
 
+public enum WOTRequestAction {
+    case new
+    case start
+    case finish
+    case cancel
+    case error(String)
+    public var description: String {
+        switch self {
+        case .cancel: return "[CANCEL]:"
+        case .start: return "[RUN]:"
+        case .finish: return "[END]:"
+        case .new: return "[NEW]:"
+        case .error( _): return "[ERR]:"
+        }
+    }
+
+    public var details: String {
+        switch self {
+        case .error(let error): return error
+        default: return ""
+        }
+    }
+}
+
 @objc
 public protocol WOTRequestProtocol: WOTStartableProtocol {
     @objc
@@ -47,6 +71,13 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
     var uuid: UUID { get }
 
     var parentRequest: WOTRequestProtocol? { get set }
+}
+
+public extension WOTRequestProtocol {
+    func log(action: WOTRequestAction) {//  -
+        let result = "[\(type(of: self))]\(action.description) \(action.details)\(self.description)"
+        print(result)
+    }
 }
 
 @objc

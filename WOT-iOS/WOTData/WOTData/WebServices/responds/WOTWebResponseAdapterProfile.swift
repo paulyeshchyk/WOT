@@ -20,8 +20,8 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
         return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
     }()
 
-    public override func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
-        return binary?.parseAsJSON({ (json) in
+    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
+        let error = binary?.parseAsJSON({ (json) in
             let context = self.currentContext
             json?.keys.forEach { (key) in
                 guard let objectJson = json?[key] as? JSON else { return }
@@ -44,5 +44,6 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
                 }
             }
         })
+        onFinish(error)
     }
 }

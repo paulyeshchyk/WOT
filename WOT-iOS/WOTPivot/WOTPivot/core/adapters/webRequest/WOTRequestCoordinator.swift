@@ -146,10 +146,11 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         let requestIdTypes = self.requestIds(forClass: modelClass)
         requestIdTypes?.forEach({ requestIdType in
             if let adapter = WOTRequestCoordinator.adapterInstance(for: requestIdType) {
-                let error = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks)
-                if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
-                    print("[ERR]:\(request.description)\n\(text) for: \(requestIdType) \n")
-                }
+                adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, onFinish: { error in
+                    if let text = (error as? WOTWEBRequestError)?.description ?? error?.localizedDescription {
+                        request.log(action: .error("\(requestIdType): \(text)"))
+                    }
+                })
             }
         })
     }

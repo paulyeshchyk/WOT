@@ -14,7 +14,7 @@ public class WOTWebResponseAdapterVehicles: WOTWebResponseAdapter {
         return WOTTankCoreDataProvider.sharedInstance.workManagedObjectContext
     }()
 
-    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?) -> Error? {
+    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
         var store = CoreDataStore(Clazz: Vehicles.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext)
         store.onGetIdent = { Clazz, json, key in
             let ident: Any
@@ -25,7 +25,7 @@ public class WOTWebResponseAdapterVehicles: WOTWebResponseAdapter {
             }
             return ident
         }
+        store.onFinishJSONParse = onFinish
         store.perform()
-        return nil
     }
 }

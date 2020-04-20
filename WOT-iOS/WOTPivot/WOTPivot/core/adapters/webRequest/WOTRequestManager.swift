@@ -68,7 +68,8 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
         self.request(request, addSubordinateLink: jsonLink)
 
-        print("[NEW]:[\(groupId)]")
+        request.log(action: WOTRequestAction.new)
+
         return result
     }
 
@@ -155,13 +156,11 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
 extension WOTRequestManager: JSONLinksAdapterProtocol {
     public func request(_ request: WOTRequestProtocol, adoptJsonLinks jsonLinks: [WOTJSONLink]?) {
-        DispatchQueue.global().async {
-            let theRequest = request.parentRequest ?? request
-            let links = jsonLinks?.compactMap { $0 } ?? []
-            let completed = (links.count == 0)
-            self.request(theRequest, queueJsonLinks: jsonLinks) {
-                self.request(theRequest, didCompleteParsing: completed)
-            }
+        let theRequest = request.parentRequest ?? request
+        let links = jsonLinks?.compactMap { $0 } ?? []
+        let completed = (links.count == 0)
+        self.request(theRequest, queueJsonLinks: jsonLinks) {
+            self.request(theRequest, didCompleteParsing: completed)
         }
     }
 }
@@ -180,7 +179,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
 //        fatalError("get applied json link and run completion")
         //
-        print("[END]:\(request.description)")
+        request.log(action: .finish)
 
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks)
@@ -197,12 +196,12 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     private func jsonLinksCallback(_ jsonLinks: [WOTJSONLink]?) {}
 
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
-        print("[CANCEL]:\(request.description)")
+        request.log(action: .cancel)
         removeRequest(request)
     }
 
     public func requestHasStarted(_ request: WOTRequestProtocol) {
-        print("[RUN]:\(request.description)")
+        request.log(action: .start)
     }
 
     public func removeRequest(_ request: WOTRequestProtocol) {

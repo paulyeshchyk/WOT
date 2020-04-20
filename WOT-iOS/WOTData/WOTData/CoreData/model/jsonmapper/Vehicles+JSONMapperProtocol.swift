@@ -69,20 +69,22 @@ extension Vehicles {
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
 
-        let vehiclePK = Vehicles.foreingKey(for: jSON[#keyPath(Vehicles.tag)] as AnyObject?, foreignPaths: ["vehicles"])
+        /* do not parse on application startup
+         let vehiclePK = Vehicles.foreingKey(for: jSON[#keyPath(Vehicles.tag)] as AnyObject?, foreignPaths: ["vehicles"])
 
-        let pkCase = PKCase()
-        pkCase[.custom("vehiclePK")] = vehiclePK
+         let pkCase = PKCase()
+         pkCase[.custom("vehiclePK")] = vehiclePK
 
-        self.default_profile = Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+         self.default_profile = Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
 
-        if let set = self.modules_tree {
-            self.removeFromModules_tree(set)
-        }
-        let module_tree = mapping(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
-        module_tree?.forEach {
-            self.addToModules_tree($0)
-        }
+         if let set = self.modules_tree {
+             self.removeFromModules_tree(set)
+         }
+         let module_tree = mapping(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], externalPK: nil, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
+         module_tree?.forEach {
+             self.addToModules_tree($0)
+         }
+         */
     }
 
     func mapping(modulestreeJson json: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> [ModulesTree]? {
