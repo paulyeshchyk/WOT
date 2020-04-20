@@ -51,8 +51,8 @@ extension VehicleprofileEngine {
         guard let json = json as? JSON, let entityDescription = VehicleprofileEngine.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
@@ -63,8 +63,8 @@ extension VehicleprofileEngine {
         guard let jSON = jSON as? JSON else { return  nil }
         let tag = jSON[#keyPath(VehicleprofileEngine.tag)]
         let pk = VehicleprofileEngine.primaryKey(for: tag as AnyObject?)
-        var pkCase = PKCase()
-        pkCase["primary"] = [pk].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = pk
 
         guard let result = onSubordinateCreate?(VehicleprofileEngine.self, pkCase) as? VehicleprofileEngine else {
             fatalError("Engine not created")

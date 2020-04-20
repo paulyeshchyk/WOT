@@ -31,8 +31,8 @@ public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
                     return
                 }
                 let primaryKey = self.primaryKey(for: key as AnyObject)
-                var pkCase = PKCase()
-                pkCase["primary"] = [primaryKey].compactMap {$0}
+                let pkCase = PKCase()
+                pkCase[.primary] = primaryKey
 
                 context.perform {
                     if

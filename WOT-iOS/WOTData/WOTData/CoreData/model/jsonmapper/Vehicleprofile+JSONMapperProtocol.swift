@@ -59,8 +59,8 @@ extension Vehicleprofile {
         self.speed_forward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_forward)]).asNSDecimal
 
         let pkTankID = WOTPrimaryKey(name: #keyPath(Vehicleprofile.tank_id), value: self.tank_id?.intValue as AnyObject, predicateFormat: "%K == %@")
-        var pkCase = PKCase()
-        pkCase["tank_id"] = [pkTankID].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.custom("tank_id")] = pkTankID
 
         self.ammo = VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         self.armor = VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
@@ -70,8 +70,8 @@ extension Vehicleprofile {
         self.suspension = VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
         self.turret = VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
 
-        pkCase["primary"] = parentCase["primary"]
-        let pk = pkCase["primary"]?.first
+        pkCase[.primary] = parentCase[.primary]
+        let pk = pkCase[.primary]
 
         let profileModulePK = pk?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))
         self.modules = VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], externalPK: profileModulePK, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
@@ -81,8 +81,8 @@ extension Vehicleprofile {
         guard let json = json as? JSON, let entityDescription = Vehicleprofile.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
@@ -111,8 +111,8 @@ extension Vehicleprofile {
         guard let jSON = jSON as? JSON else { return  nil }
 
         #warning("refactor this")
-        var nextCase = PKCase()
-        nextCase["primary"] = [pkCase["vehiclePK"]?.first].compactMap { $0 }
+        let nextCase = PKCase()
+        nextCase[.primary] = pkCase[.custom("vehiclePK")]
 
         guard let result = onSubordinateCreate?(Vehicleprofile.self, nextCase) as? Vehicleprofile else {
             fatalError("Vehicle profile is not created")

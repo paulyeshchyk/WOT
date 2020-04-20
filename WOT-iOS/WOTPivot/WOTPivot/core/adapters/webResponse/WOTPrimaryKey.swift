@@ -51,19 +51,30 @@ public class WOTPrimaryKey: NSObject {
     }
 }
 
-public typealias PKCase = Dictionary<AnyHashable, [WOTPrimaryKey]>
+public enum PKType: Hashable {
+    case primary
+    case secondary
+    case custom(String)
+    public var identifier: String {
+        switch self {
+        case .primary: return "primary"
+        case .secondary: return "secondary"
+        case .custom(let customType): return customType
+        }
+    }
+}
 
 @objc
-public class PKCase2: NSObject {
-    private var keys: [String: Set<WOTPrimaryKey>] = .init()
+public class PKCase: NSObject {
+    private var keys: [PKType: Set<WOTPrimaryKey>] = .init()
 
-    public subscript(clazz: AnyClass) -> WOTPrimaryKey? {
+    public subscript(clazz: PKType) -> WOTPrimaryKey? {
         get {
-            return keys[String(describing: clazz)]?.first
+            return keys[clazz]?.first
         }
         set {
             if let value = newValue {
-                let key = String(describing: clazz)
+                let key = clazz
                 var updatedSet: Set<WOTPrimaryKey> = keys[key] ?? Set<WOTPrimaryKey>()
                 updatedSet.insert(value)
                 keys[key] = updatedSet
@@ -71,7 +82,7 @@ public class PKCase2: NSObject {
         }
     }
 
-    public func allValues(clazz: AnyClass) -> Set<WOTPrimaryKey>? {
-        return keys[String(describing: clazz)]
+    public func allValues(clazz: PKType) -> Set<WOTPrimaryKey>? {
+        return keys[clazz]
     }
 }

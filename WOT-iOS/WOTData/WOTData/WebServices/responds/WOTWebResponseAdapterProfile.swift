@@ -28,8 +28,8 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
                 let ident = objectJson.asURLQueryString().hashValue
 
                 let primaryKey = Vehicleprofile.primaryKey(for: ident as AnyObject)
-                var pkCase = PKCase()
-                pkCase["primary"] = [primaryKey].compactMap {$0}
+                let pkCase = PKCase()
+                pkCase[.primary] = primaryKey
 
                 context.perform {
                     if  let predicate = primaryKey?.predicate,

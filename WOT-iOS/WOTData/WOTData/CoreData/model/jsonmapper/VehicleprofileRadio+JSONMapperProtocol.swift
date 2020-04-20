@@ -48,8 +48,8 @@ extension VehicleprofileRadio {
         guard let json = json as? JSON, let entityDescription = VehicleprofileRadio.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap {$0}
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
@@ -62,8 +62,8 @@ extension VehicleprofileRadio {
         let tag = jSON[#keyPath(VehicleprofileRadio.tag)]
         let pk = VehicleprofileRadio.primaryKey(for: tag as AnyObject?)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [pk].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = pk
 
         guard let result = onSubordinateCreate?(VehicleprofileRadio.self, pkCase) as? VehicleprofileRadio else {
             fatalError("radio is not created")

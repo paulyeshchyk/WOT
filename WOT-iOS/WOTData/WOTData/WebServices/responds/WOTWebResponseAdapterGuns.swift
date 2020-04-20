@@ -32,8 +32,8 @@ public class WOTWebResponseAdapterGuns: WOTWebResponseAdapter {
                 }
 
                 let primaryKey = self.primaryKey(for: ident as AnyObject)
-                var pkCase = PKCase()
-                pkCase["primary"] = [primaryKey].compactMap {$0}
+                let pkCase = PKCase()
+                pkCase[.primary] = primaryKey
 
                 context.perform {
                     if

@@ -66,8 +66,8 @@ extension VehicleprofileGun {
         guard let json = json as? JSON, let entityDescription = VehicleprofileGun.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
@@ -79,8 +79,8 @@ extension VehicleprofileGun {
 
         let tag = jSON[#keyPath(VehicleprofileGun.tag)]
         let pk = VehicleprofileGun.primaryKey(for: tag as AnyObject?)
-        var pkCase = PKCase()
-        pkCase["primary"] = [pk].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = pk
 
         guard let result = onSubordinateCreate?(VehicleprofileGun.self, pkCase) as? VehicleprofileGun else {
             fatalError("gun not created")

@@ -39,15 +39,15 @@ public struct CoreDataStore {
             }
 
             let primaryKey = Clazz.primaryKey(for: ident as AnyObject)
-            var pkCase = PKCase()
-            pkCase["primary"] = [primaryKey].compactMap {$0}
+            let pkCase = PKCase()
+            pkCase[.primary] = primaryKey
             perform(pkCase: pkCase, json: objectJson)
         }
     }
 
     private func perform(pkCase: PKCase, json: JSON) {
         context.perform {
-            let primaryKey = pkCase["primary"]?.first
+            let primaryKey = pkCase[.primary]
             if let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey?.predicate, context: self.context) {
                 managedObject.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: self.onSubordinate(_:_:), linksCallback: self.onLinks(_:))
                 self.context.tryToSave()
@@ -56,7 +56,7 @@ public struct CoreDataStore {
     }
 
     private func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase) -> NSManagedObject? {
-        let primaryKey = pkCase["primary"]?.first
+        let primaryKey = pkCase[.primary]
         let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: self.context)
         return managedObject
     }

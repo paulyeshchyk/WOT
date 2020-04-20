@@ -40,8 +40,8 @@ extension VehicleprofileAmmoDamage {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoPenetration.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
@@ -51,8 +51,8 @@ extension VehicleprofileAmmoDamage {
     public static func damage(fromArray array: Any?, primaryKey pkProfile: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileAmmoDamage? {
         guard let array = array as? [Any] else { return  nil }
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [pkProfile].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = pkProfile
 
         guard let result = onSubordinateCreate?(VehicleprofileAmmoDamage.self, pkCase) as? VehicleprofileAmmoDamage else { return nil }
         result.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)

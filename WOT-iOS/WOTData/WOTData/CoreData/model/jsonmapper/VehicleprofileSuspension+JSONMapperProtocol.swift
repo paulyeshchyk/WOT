@@ -54,8 +54,8 @@ extension VehicleprofileSuspension {
         guard let json = json as? JSON, let entityDescription = VehicleprofileSuspension.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap {$0}
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
@@ -68,8 +68,8 @@ extension VehicleprofileSuspension {
         let tag = jSON[#keyPath(VehicleprofileSuspension.tag)]
         let pk = VehicleprofileSuspension.primaryKey(for: tag as AnyObject?)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [pk].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = pk
 
         guard let result = onSubordinateCreate?(VehicleprofileSuspension.self, pkCase) as? VehicleprofileSuspension else {
             fatalError("Suspension is not created")
@@ -98,11 +98,11 @@ extension VehicleprofileSuspension {
             }
             onSuccess(suspension)
 
-            var pkCase = PKCase()
-            pkCase["primary"] = [suspensionPK].compactMap {$0}
+            let pkCase = PKCase()
+            pkCase[.primary] = suspensionPK
 
-            suspension.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: { _ in
-                //
+            suspension.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: { json in
+                print(json)
             })
         })
     }

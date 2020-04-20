@@ -70,8 +70,8 @@ extension VehicleprofileModule {
         guard let json = json as? JSON, let entityDescription = VehicleprofileModule.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
@@ -81,8 +81,8 @@ extension VehicleprofileModule {
     public static func module(fromJSON json: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> VehicleprofileModule? {
         guard let json = json as? JSON else { return  nil }
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [externalPK].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = externalPK
 
         guard let result = onSubordinateCreate?(VehicleprofileModule.self, pkCase) as? VehicleprofileModule else { return nil }
 

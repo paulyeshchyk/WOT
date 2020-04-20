@@ -24,8 +24,8 @@ extension VehicleprofileAmmoList {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoList.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromArray: array, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }

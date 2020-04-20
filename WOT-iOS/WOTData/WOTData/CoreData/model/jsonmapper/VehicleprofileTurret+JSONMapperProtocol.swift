@@ -59,8 +59,8 @@ extension VehicleprofileTurret {
         guard let json = json as? JSON, let entityDescription = VehicleprofileTurret.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [parentPrimaryKey].compactMap {$0}
+        let pkCase = PKCase()
+        pkCase[.primary] = parentPrimaryKey
 
         self.mapping(fromJSON: json, pkCase: pkCase, onSubordinateCreate: nil, linksCallback: linksCallback)
     }
@@ -72,8 +72,8 @@ extension VehicleprofileTurret {
 
         let tag = jSON[#keyPath(VehicleprofileTurret.tag)]
         let pk = VehicleprofileTurret.primaryKey(for: tag as AnyObject?)
-        var pkCase = PKCase()
-        pkCase["primary"] = [pk].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = pk
 
         guard let result = onSubordinateCreate?(VehicleprofileTurret.self, pkCase) as? VehicleprofileTurret else {
             fatalError("Turret is not created")

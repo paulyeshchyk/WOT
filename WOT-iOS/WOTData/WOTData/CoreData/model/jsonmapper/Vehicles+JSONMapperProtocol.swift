@@ -71,8 +71,8 @@ extension Vehicles {
 
         let vehiclePK = Vehicles.foreingKey(for: jSON[#keyPath(Vehicles.tag)] as AnyObject?, foreignPaths: ["vehicles"])
 
-        var pkCase = PKCase()
-        pkCase["vehiclePK"] = [vehiclePK].compactMap {$0}
+        let pkCase = PKCase()
+        pkCase[.custom("vehiclePK")] = vehiclePK
 
         self.default_profile = Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], pkCase: pkCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
 
@@ -88,8 +88,8 @@ extension Vehicles {
     func mapping(modulestreeJson json: Any?, externalPK: WOTPrimaryKey?, onSubordinateCreate: OnSubordinateCreateCallback?, linksCallback: OnLinksCallback?) -> [ModulesTree]? {
         guard let json = json as? JSON else { return nil }
 
-        var pkCase = PKCase()
-        pkCase["primary"] = [externalPK].compactMap { $0 }
+        let pkCase = PKCase()
+        pkCase[.primary] = externalPK
 
         var result = [ModulesTree]()
         json.keys.forEach { (key) in
@@ -101,8 +101,8 @@ extension Vehicles {
             else { return }
 
             #warning("check nextCase vs pkCase")
-            var nextCase = PKCase()
-            nextCase["primary"] = [pk].compactMap {$0}
+            let nextCase = PKCase()
+            nextCase[.primary] = pk
 
             moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: nextCase, onSubordinateCreate: onSubordinateCreate, linksCallback: linksCallback)
             result.append(moduleTree)
