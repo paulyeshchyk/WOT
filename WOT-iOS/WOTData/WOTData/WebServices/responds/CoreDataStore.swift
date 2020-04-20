@@ -28,7 +28,7 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
 
     func perform() {
         if let error = binary?.parseAsJSON(onReceivedJSON(_:)) {
-            print(error)
+            onFinishJSONParse?(error)
         }
     }
 
@@ -37,15 +37,14 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: self.context) else {
                 fatalError("Managed object is not created")
             }
-            managedObject.mapping(fromJSON: json, pkCase: pkCase, subordinator: self, linksCallback: self.onLinks(_:))
+            managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, subordinator: self, linker: self)
             self.context.tryToSave()
         }
     }
 
     // MARK: - CoreDataSubordinatorProtocol
     public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
-        context.perform { [weak self] in
-            guard let self = self else { return }
+        context.perform {
             let primaryKey = pkCase[.primary]
             let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: self.context)
             callback(managedObject)
@@ -61,8 +60,8 @@ extension CoreDataStore {
     }
 }
 
-extension CoreDataStore {
-    func onLinks(_ links: [WOTJSONLink]?) {
+extension CoreDataStore: CoreDataLinkerProtocol {
+    public func onLinks(_ links: [WOTJSONLink]?) {
         linkAdapter.request(request, adoptJsonLinks: links)
     }
 }
@@ -85,6 +84,7 @@ extension CoreDataStore {
 
             let pkCase = PKCase()
             pkCase[.primary] = Clazz.primaryKey(for: ident as AnyObject)
+            print("[JSON][START][\(pkCase)]")
             perform(pkCase: pkCase, json: objectJson)
         }
         onFinishJSONParse?(nil)

@@ -39,7 +39,7 @@ extension Module {
 }
 
 extension Module {
-    override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
+    override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         self.name = jSON[#keyPath(Module.name)] as? String
         self.nation = jSON[#keyPath(Module.nation)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(Module.tier)] as? Int ?? 0)

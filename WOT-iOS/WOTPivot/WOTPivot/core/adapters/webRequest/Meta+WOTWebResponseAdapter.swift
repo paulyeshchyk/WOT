@@ -16,21 +16,26 @@ public protocol CoreDataSubordinatorProtocol {
     func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback )
 }
 
+@objc
+public protocol CoreDataLinkerProtocol {
+    func onLinks(_ links: [WOTJSONLink]?)
+}
+
 public protocol JSONMapperProtocol {
     associatedtype Fields
 
     mutating func mapping(fromJSON jSON: JSON)
     func mapping(fromArray array: [Any])
 
-    func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?)
-    func mapping(fromArray array: [Any], pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?)
+    func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?)
+    func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?)
 }
 
 extension JSONMapperProtocol {
     public func mapping(fromJSON jSON: JSON) {}
     public func mapping(fromArray array: [Any]) {}
-    public func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {}
-    public func mapping(fromArray array: [Any], pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {}
+    public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {}
+    public func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {}
 }
 
 public enum WOTWebResponseStatus: String {

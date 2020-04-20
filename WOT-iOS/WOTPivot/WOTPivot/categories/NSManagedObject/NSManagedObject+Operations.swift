@@ -45,8 +45,12 @@ extension NSManagedObject {
     @objc
     public static func findOrCreateObject(forClass: AnyClass, predicate: NSPredicate?, context: NSManagedObjectContext) -> NSManagedObject? {
         guard let foundObject = forClass.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
+            let logText = predicate?.description ?? "unknown predicate"
+            print("[COREDATA][CREATE][\(logText)]")
             return forClass.insertNewObject(context)
         }
+        let logText = predicate?.description ?? "unknown predicate"
+        print("[COREDATA][FOUND][\(logText)]")
         return foundObject
     }
 }
@@ -67,12 +71,12 @@ extension NSManagedObject: JSONMapperProtocol {
     }
 
     @objc
-    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
+    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         fatalError("not implemented")
     }
 
     @objc
-    open func mapping(fromArray array: [Any], pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
+    open func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         fatalError("not implemented")
     }
 }

@@ -17,7 +17,7 @@ public class WOTWebResponseAdapterAmmoList: WOTWebResponseAdapter {
         fatalError("should be implemented")
     }
 
-    public func parseJSON(_ json: JSON?, linksCallback: OnLinksCallback?) -> Error? {
+    public func parseJSON(_ json: JSON?, linker: CoreDataLinkerProtocol?) -> Error? {
         return nil
     }
 }

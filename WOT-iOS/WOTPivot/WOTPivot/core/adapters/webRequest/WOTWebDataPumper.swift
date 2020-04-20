@@ -51,7 +51,9 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
     }
 
     public func start() {
-        connection?.start()
+        DispatchQueue.main.async { [weak self] in
+            self?.connection?.start()
+        }
     }
 
     func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
@@ -63,11 +65,13 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
     }
 
     func connectionDidFinishLoading(_ connection: NSURLConnection) {
-        self.completion(self.data, nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.completion(self?.data, nil)
+        }
     }
 
     func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
-        DispatchQueue.global().async { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.completion(nil, error)
         }
     }

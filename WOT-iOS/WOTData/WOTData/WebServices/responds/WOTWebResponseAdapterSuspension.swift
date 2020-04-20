@@ -21,30 +21,17 @@ public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
     }()
 
     override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
-        let error = binary?.parseAsJSON({ json in
-            let context = self.currentContext
-            json?.keys.forEach { (key) in
-                guard
-                    let objectJson = json?[key] as? JSON,
-                    let objectJson1 = objectJson["suspension"] as? JSON
-                else {
-                    return
-                }
-                let primaryKey = self.primaryKey(for: key as AnyObject)
-                let pkCase = PKCase()
-                pkCase[.primary] = primaryKey
-
-                context.perform {
-                    if
-                        let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: primaryKey?.predicate, context: context) {
-                        managedObject.mapping(fromJSON: objectJson1, pkCase: pkCase, subordinator: nil, linksCallback: { links in
-                            jsonLinkAdapter.request(request, adoptJsonLinks: links)
-                    })
-                        context.tryToSave()
-                    }
-                }
+        let store = CoreDataStore(Clazz: VehicleprofileRadio.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext)
+        store.onGetIdent = { Clazz, json, key in
+            let ident: Any
+            if let primaryKeyPath = Clazz.primaryKeyPath() {
+                ident = json[primaryKeyPath] ?? key //json[primaryKeyPath].objectJson["suspension"]
+            } else {
+                ident = key
             }
-        })
-        onFinish(error)
+            return ident
+        }
+        store.onFinishJSONParse = onFinish
+        store.perform()
     }
 }

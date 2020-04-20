@@ -109,23 +109,16 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             return
         }
 
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
-                onComplete?()
-                return
-            }
-
-            jsonLinks.compactMap { $0 }.forEach { jsonLink in
-                if let requestIDs = self.requestCoordinator.requestIds(forClass: jsonLink.clazz) {
-                    requestIDs.forEach {
-                        self.queue(parentRequest: parentRequest, requestId: $0, jsonLink: jsonLink)
-                    }
-                } else {
-                    print("requests not parsed")
+        jsonLinks.compactMap { $0 }.forEach { jsonLink in
+            if let requestIDs = self.requestCoordinator.requestIds(forClass: jsonLink.clazz) {
+                requestIDs.forEach {
+                    self.queue(parentRequest: parentRequest, requestId: $0, jsonLink: jsonLink)
                 }
+            } else {
+                print("requests not parsed")
             }
-            onComplete?()
         }
+        onComplete?()
     }
 
     @discardableResult

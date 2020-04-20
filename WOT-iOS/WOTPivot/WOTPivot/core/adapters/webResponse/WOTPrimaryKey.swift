@@ -69,11 +69,11 @@ public class PKCase: NSObject {
         guard let objects = allValues(), !objects.isEmpty else {
             return "empty case"
         }
-        var result: String = ""
+        var result = [String]()
         objects.forEach {
-            result += "key: \($0.description)\n"
+            result.append("key:`\($0.description)`")
         }
-        return result
+        return result.joined(separator: ";")
     }
 
     private var values: [PKType: Set<WOTPrimaryKey>] = .init()

@@ -14,8 +14,17 @@ public class WOTWebResponseAdapterModuleTree: WOTWebResponseAdapter {
     }()
 
     override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
-        let error = binary?.parseAsJSON { (_) in
+        let store = CoreDataStore(Clazz: ModulesTree.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext)
+        store.onGetIdent = { Clazz, json, key in
+            let ident: Any
+            if let primaryKeyPath = Clazz.primaryKeyPath() {
+                ident = json[primaryKeyPath] ?? key
+            } else {
+                ident = key
+            }
+            return ident
         }
-        onFinish(error)
+        store.onFinishJSONParse = onFinish
+        store.perform()
     }
 }

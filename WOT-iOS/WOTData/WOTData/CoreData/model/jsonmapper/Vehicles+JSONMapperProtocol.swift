@@ -55,7 +55,7 @@ extension Vehicles {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         let tankID = jSON[#keyPath(Vehicles.tank_id)]
         self.name = jSON[#keyPath(Vehicles.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(Vehicles.tier)]  as? Int ?? 0)
@@ -70,25 +70,23 @@ extension Vehicles {
         self.type = jSON[#keyPath(Vehicles.type)] as? String
 
         #warning("do not parse on application startup")
-        /*
-         let vehiclePK = Vehicles.foreingKey(for: jSON[#keyPath(Vehicles.tag)] as AnyObject?, foreignPaths: ["vehicles"])
 
-         let pkCase = PKCase()
-         pkCase[.custom("vehiclePK")] = vehiclePK
+        let vehiclePK = Vehicles.foreingKey(for: jSON[#keyPath(Vehicles.tag)] as AnyObject?, foreignPaths: ["vehicles"])
 
-         Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
-             self.default_profile = newObject as? Vehicleprofile
-         }
+        let pkCase = PKCase()
+        pkCase[.custom("vehiclePK")] = vehiclePK
 
-         if let set = self.modules_tree {
-             self.removeFromModules_tree(set)
-         }
-         ModulesTree.set(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], externalPK: nil, subordinator: subordinator, linksCallback: linksCallback) {[weak self] newObject in
-             guard let self = self else { return }
-             guard let module_tree = newObject as? ModulesTree else { return }
-             self.addToModules_tree(module_tree)
-         }
-         */
+        Vehicleprofile.profile(from: jSON[#keyPath(Vehicles.default_profile)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.default_profile = newObject as? Vehicleprofile
+        }
+
+        if let set = self.modules_tree {
+            self.removeFromModules_tree(set)
+        }
+        ModulesTree.set(modulestreeJson: jSON[#keyPath(Vehicles.modules_tree)], externalPK: nil, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            guard let module_tree = newObject as? ModulesTree else { return }
+            self.addToModules_tree(module_tree)
+        }
     }
 }
 

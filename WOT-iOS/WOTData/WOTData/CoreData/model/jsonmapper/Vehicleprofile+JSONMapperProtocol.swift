@@ -46,7 +46,7 @@ extension Vehicleprofile {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase parentCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase parentCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         self.tank_id = AnyConvertable(jSON[#keyPath(Vehicleprofile.tank_id)]).asNSDecimal
         self.is_default = AnyConvertable(jSON[#keyPath(Vehicleprofile.is_default)]).asNSDecimal
         self.max_ammo = AnyConvertable(jSON[#keyPath(Vehicleprofile.max_ammo)]).asNSDecimal
@@ -62,45 +62,44 @@ extension Vehicleprofile {
         let pkCase = PKCase()
         pkCase[.custom("tank_id")] = pkTankID
 
-        VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
-            self.ammo = newObject as? VehicleprofileAmmoList
-        }
-        VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
-            self.armor = newObject as? VehicleprofileArmorList
-        }
-        VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
-            self.engine = newObject as? VehicleprofileEngine
-        }
-        VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
-            self.gun = newObject as? VehicleprofileGun
-        }
-        VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
-            self.radio = newObject as? VehicleprofileRadio
-        }
-        VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
-            self.suspension = newObject as? VehicleprofileSuspension
-        }
-        VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback) { newObject in
-            self.turret = newObject as? VehicleprofileTurret
-        }
+//        VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//            self.ammo = newObject as? VehicleprofileAmmoList
+//        }
+//        VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//            self.armor = newObject as? VehicleprofileArmorList
+//        }
+//        VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//            self.engine = newObject as? VehicleprofileEngine
+//        }
+//        VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//            self.gun = newObject as? VehicleprofileGun
+//        }
+//        VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//            self.radio = newObject as? VehicleprofileRadio
+//        }
+//        VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//            self.suspension = newObject as? VehicleprofileSuspension
+//        }
+//        VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//            self.turret = newObject as? VehicleprofileTurret
+//        }
 
         pkCase[.primary] = parentCase[.primary]
         let pk = pkCase[.primary]
 
         let profileModulePK = pk?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))
-        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], externalPK: profileModulePK, subordinator: subordinator, linksCallback: linksCallback) { newObject in
+        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], externalPK: profileModulePK, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
             self.modules = newObject as? VehicleprofileModule
         }
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol, linker: CoreDataLinkerProtocol?) {
         guard let json = json as? JSON, let entityDescription = Vehicleprofile.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
-
-        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
     }
 }
 
@@ -123,7 +122,7 @@ extension Vehicleprofile: PrimaryKeypathProtocol {
 }
 
 extension Vehicleprofile {
-    public static func profile(from jSON: Any?, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+    public static func profile(from jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
 
         #warning("refactor this")
@@ -132,7 +131,7 @@ extension Vehicleprofile {
 
         subordinator?.requestNewSubordinate(Vehicleprofile.self, nextCase) { newObject in
             #warning("pkCase = vehiclePK")
-            newObject?.mapping(fromJSON: jSON, pkCase: nextCase, subordinator: subordinator, linksCallback: linksCallback)
+            newObject?.mapping(fromJSON: jSON, pkCase: nextCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
             callback(newObject)
         }
     }

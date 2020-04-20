@@ -33,23 +33,23 @@ extension VehicleprofileAmmo {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
-        VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)],primaryKey: nil, subordinator: subordinator, linksCallback: linksCallback) { newObject in
+        VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)],primaryKey: nil, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
             self.penetration = newObject as? VehicleprofileAmmoPenetration
         }
-        VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], primaryKey: nil, subordinator: subordinator, linksCallback: linksCallback) { newObject in
+        VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], primaryKey: nil, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
             self.damage = newObject as? VehicleprofileAmmoDamage
         }
     }
 
-    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
+    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         guard let json = json, let entityDescription = VehicleprofileAmmo.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
     }
 }

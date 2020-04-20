@@ -38,7 +38,7 @@ extension ModulesTree {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
@@ -57,7 +57,7 @@ extension ModulesTree {
 //        let nextModuleLinks = self.nextModuleLinks(idents: jSON[#keyPath(ModulesTree.next_modules)] as? [Any]) ?? []
 //        requests.append(contentsOf: nextModuleLinks)
 
-        linksCallback?(requests)
+        linker?.onLinks(requests)
     }
 
     private func nextModuleLinks(idents: [Any]?) -> [WOTJSONLink]? {
@@ -75,19 +75,19 @@ extension ModulesTree {
         print(json)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, linksCallback: OnLinksCallback?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
         guard let json = json as? JSON, let entityDescription = ModulesTree.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, subordinator: nil, linksCallback: linksCallback)
+        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
     }
 }
 
 extension ModulesTree {
-    public static func set(modulestreeJson json: Any?, externalPK: WOTPrimaryKey?, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectCallback) {
+    public static func set(modulestreeJson json: Any?, externalPK: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
         let pkCase = PKCase()
@@ -106,7 +106,7 @@ extension ModulesTree {
                 #warning("check nextCase vs pkCase")
                 let nextCase = PKCase()
                 nextCase[.primary] = pk
-                moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: nextCase, subordinator: subordinator, linksCallback: linksCallback)
+                moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: nextCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
                 callback(moduleTree)
             }
         }
@@ -132,10 +132,10 @@ extension ModulesTree: PrimaryKeypathProtocol {
 }
 
 extension ModulesTree {
-    public static func nextModules(fromJSON json: Any?, pkCase: PKCase, subordinator: CoreDataSubordinatorProtocol?, linksCallback: OnLinksCallback?, callback: @escaping NSManagedObjectSetCallback ) {
+    public static func nextModules(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectSetCallback ) {
         guard let json = json as? JSON else { return }
         subordinator?.requestNewSubordinate(ModulesTree.self, pkCase) { newObject in
-            newObject?.mapping(fromJSON: json, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
+            newObject?.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
             callback([newObject])
         }
     }
