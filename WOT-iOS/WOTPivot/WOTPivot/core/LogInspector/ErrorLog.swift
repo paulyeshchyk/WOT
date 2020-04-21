@@ -21,7 +21,7 @@ public class ErrorLog: LogMessageTypeProtocol {
         message = text
     }
 
-    convenience public init?(_ error: Any, details: Any?) {
+    convenience public init?(_ error: Any?, details: Any?) {
         var messages: [String] = .init()
         if let wotError = error as? WOTErrorProtocol {
             messages.append(wotError.wotDescription)

@@ -31,10 +31,12 @@ extension VehicleprofileAmmoPenetration {
 
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+        defer {
+            subordinator?.stash()
+        }
         self.min_value = NSDecimalNumber(value: array[0] as? Float ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Float ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Float ?? 0)
-        subordinator?.willRequestLinks()
     }
 
     convenience init?(array: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {

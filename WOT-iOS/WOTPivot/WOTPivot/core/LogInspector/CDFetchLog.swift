@@ -1,5 +1,5 @@
 //
-//  JSONParseLog.swift
+//  CDFetchLog.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/21/20.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class JSONParseLog: LogMessageTypeProtocol {
+public class CDFetchLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .minor }
-    public var logeventType: String { return "JSONParse"}
+    public var priorityType: LogMessagePriorityType { return .normal }
+    public var logeventType: String { return "CDFetch"}
 
     public init() {
         message = ""
@@ -19,5 +19,9 @@ public class JSONParseLog: LogMessageTypeProtocol {
 
     required public init?(_ text: String) {
         message = text
+    }
+
+    public init?(error: Error) {
+        message = error.localizedDescription
     }
 }

@@ -34,15 +34,18 @@ extension VehicleprofileAmmo {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
-        self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
+        defer {
+            subordinator?.stash()
+        }
 
-        subordinator?.willRequestLinks()
+        self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
 
         let vehicleprofileAmmoPenetrationCase = PKCase()
         vehicleprofileAmmoPenetrationCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)], pkCase: vehicleprofileAmmoPenetrationCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
             self.penetration = newObject as? VehicleprofileAmmoPenetration
+            subordinator?.stash()
         }
 
         let vehicleprofileAmmoDamageCase = PKCase()
@@ -50,6 +53,7 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], pkCase: vehicleprofileAmmoDamageCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
             self.damage = newObject as? VehicleprofileAmmoDamage
+            subordinator?.stash()
         }
     }
 

@@ -1,5 +1,5 @@
 //
-//  FinishLog.swift
+//  JSONFinishLog.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/21/20.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class FinishLog: LogMessageTypeProtocol {
+public class JSONFinishLog: LogMessageTypeProtocol {
     public private(set) var message: String
     public var priorityType: LogMessagePriorityType { return .minor }
-    public var logeventType: String { return "END"}
+    public var logeventType: String { return "JSONFinish"}
 
     public init() {
         message = ""

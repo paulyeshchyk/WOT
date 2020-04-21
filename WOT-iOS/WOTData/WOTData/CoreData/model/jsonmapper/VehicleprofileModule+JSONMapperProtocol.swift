@@ -14,38 +14,39 @@ extension VehicleprofileModule {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+        defer {
+            subordinator?.stash()
+        }
         self.radio_id = AnyConvertable(#keyPath(VehicleprofileModule.radio_id)).asNSDecimal
         self.suspension_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.suspension_id)]).asNSDecimal
         self.engine_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.engine_id)]).asNSDecimal
         self.gun_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.gun_id)]).asNSDecimal
         self.turret_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.turret_id)]).asNSDecimal
 
-        subordinator?.willRequestLinks()
-
-        var links: [WOTJSONLink] = .init()
-        if let suspensionPK = VehicleprofileSuspension.primaryKey(for: suspension_id?.intValue as AnyObject?) {
-            if let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: nil, completion: { json in //"suspension."
-                print(json)
-                }) {
-                links.append(suspensionLink)
-            }
-        }
-
-        let enginePK = VehicleprofileEngine.primaryKey(for: engine_id?.intValue as AnyObject?)
-
-        let gunPK = VehicleprofileGun.primaryKey(for: gun_id?.intValue as AnyObject?)
-
-        let turretPK = VehicleprofileTurret.primaryKey(for: turret_id?.intValue as AnyObject?)
-
         #warning("refactor from here")
+
+//        var links: [WOTJSONLink] = .init()
+//        if let suspensionPK = VehicleprofileSuspension.primaryKey(for: suspension_id?.intValue as AnyObject?) {
+//            if let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: nil, completion: { json in //"suspension."
+//                print(json)
+//                }) {
+//                links.append(suspensionLink)
+//            }
+//        }
+//
+//        let enginePK = VehicleprofileEngine.primaryKey(for: engine_id?.intValue as AnyObject?)
+//
+//        let gunPK = VehicleprofileGun.primaryKey(for: gun_id?.intValue as AnyObject?)
+//
+//        let turretPK = VehicleprofileTurret.primaryKey(for: turret_id?.intValue as AnyObject?)
+
 //        let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: "suspension.") { json in
 //            if let tankchassisObject = subordinator?(Tankchassis.self, nil) as? Tankchassis {
 //                tankchassisObject.mapping(fromJSON: json, parentPrimaryKey: nil, subordinator: subordinator, linksCallback: linksCallback)
 //                self.tankchassis = tankchassisObject
 //            }
 //        }
-
-        linker?.onLinks(links)
+//        linker?.onLinks(links)
     }
 
     private func nestedRequests(parentPrimaryKey: WOTPrimaryKey?) -> [WOTJSONLink] {

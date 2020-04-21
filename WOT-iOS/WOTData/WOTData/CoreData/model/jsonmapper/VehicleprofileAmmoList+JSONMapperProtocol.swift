@@ -11,7 +11,9 @@ extension VehicleprofileAmmoList {
 
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
-        subordinator?.willRequestLinks()
+        defer {
+            subordinator?.stash()
+        }
 
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
@@ -24,6 +26,7 @@ extension VehicleprofileAmmoList {
                 }
                 ammo.mapping(fromJSON: jSON, pkCase: vehicleprofileAmmoCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
                 self.addToVehicleprofileAmmo(ammo)
+                subordinator?.stash()
             }
         }
     }

@@ -50,7 +50,7 @@ extension ModulesTree {
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
          */
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
-        subordinator?.willRequestLinks()
+        subordinator?.stash()
 
         var requests = [WOTJSONLink]()
 

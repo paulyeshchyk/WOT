@@ -1,5 +1,5 @@
 //
-//  JSONParseLog.swift
+//  JSONStartLog.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/21/20.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class JSONParseLog: LogMessageTypeProtocol {
+public class JSONStartLog: LogMessageTypeProtocol {
     public private(set) var message: String
     public var priorityType: LogMessagePriorityType { return .minor }
-    public var logeventType: String { return "JSONParse"}
+    public var logeventType: String { return "JSONStart"}
 
     public init() {
         message = ""

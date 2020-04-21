@@ -24,7 +24,7 @@ public protocol CoreDataSubordinatorProtocol {
     /**
      Asks Subordinator to save context before running links mapping
      */
-    func willRequestLinks()
+    func stash()
 }
 
 @objc

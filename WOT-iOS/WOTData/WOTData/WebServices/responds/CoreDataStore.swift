@@ -45,34 +45,38 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
 
         context.perform {
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: self.context) else {
-                fatalError("Managed object is not created")
+                fatalError("Managed object is not created:\(pkCase.description)")
             }
 
-            let logEvent: LogMessageTypeProtocol = managedObject.isInserted ? CreateLog("\(pkCase.description)") as! LogMessageTypeProtocol : UpdateLog("\(pkCase.description)") as! LogMessageTypeProtocol
-            self.logInspector.log(logEvent, sender: self)
-
             managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, subordinator: self, linker: self)
-            self.context.tryToSave()
+            let status = managedObject.isInserted ? "created" : "located"
+            self.logInspector.log(CDFetchLog("\(String(describing: self.Clazz)) \(pkCase.description); status: \(status)"), sender: self)
+
             completion()
         }
     }
 
     // MARK: - CoreDataSubordinatorProtocol
     public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
-        self.logInspector.log(CreateLog("new subordinate of:\(String(describing: clazz))"), sender: self)
         guard let predicate = pkCase.predicate else {
             self.logInspector.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
             return
         }
         context.perform {
-            self.logInspector.log(CreateLog("\(String(describing: clazz))"), sender: self)
-            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: self.context)
+            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: self.context) else {
+                fatalError("Managed object is not created:\(pkCase.description)")
+            }
+            let status = managedObject.isInserted ? "created" : "located"
+            self.logInspector.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
             callback(managedObject)
         }
     }
 
-    public func willRequestLinks() {
-        #warning("not thread safe")
+    public func stash() {
+        if Thread.current.isMainThread {
+            fatalError("should not be executed on main")
+        }
+        self.logInspector.log(CDStashLog("\(request.description)"), sender: self)
         context.tryToSave()
     }
 }
@@ -105,14 +109,18 @@ extension CoreDataStore: CoreDataLinkerProtocol {
 
 extension CoreDataStore {
     func onReceivedJSON(_ json: JSON?, _ error: Error?) {
-        guard let json = json else {
+        guard error == nil, let json = json else {
+            self.logInspector.log(ErrorLog(error, details: request), sender: self)
+            self.logInspector.log(JSONFinishLog(""), sender: self)
             onFinishJSONParse?(error)
             return
         }
 
+        self.logInspector.log(JSONStartLog(""), sender: self)
         let keys = json.keys
         var mutatingKeysCounter = keys.count
         keys.forEach { (key) in
+
             guard let jsonByKey = json[key] as? JSON else {
                 fatalError("invalid json for key")
             }
@@ -132,6 +140,7 @@ extension CoreDataStore {
             perform(pkCase: pkCase, json: objectJson) {
                 mutatingKeysCounter -= 1
                 if mutatingKeysCounter <= 0 {
+                    self.logInspector.log(JSONFinishLog("\(pkCase)"), sender: self)
                     self.onFinishJSONParse?(nil)
                 }
             }

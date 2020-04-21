@@ -58,7 +58,7 @@ extension Vehicleprofile {
         self.speed_backward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_backward)]).asNSDecimal
         self.speed_forward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_forward)]).asNSDecimal
 
-        subordinator?.willRequestLinks()
+        subordinator?.stash()
 
         let vehicleprofileAmmoListCase = PKCase()
         vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))

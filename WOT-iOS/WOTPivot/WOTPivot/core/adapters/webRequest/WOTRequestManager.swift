@@ -182,11 +182,6 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] error in
             DispatchQueue.main.async {
-                if let error = error {
-                    self?.logInspector.log(ErrorLog(error, details: request), sender: self)
-                } else {
-                    self?.logInspector.log(FinishLog(request.description), sender: self)
-                }
                 self?.request(request, didCompleteParsing: true)
             }
         })
