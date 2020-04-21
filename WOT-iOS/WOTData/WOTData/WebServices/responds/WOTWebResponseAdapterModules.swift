@@ -20,6 +20,7 @@ public class WOTWebResponseAdapterModules: WOTWebResponseAdapter {
             let ident = json[primaryKeyPath] ?? key
             return ident
         }
+        store.logInspector = self.logInspector
         store.onFinishJSONParse = onFinish
         store.perform()
     }

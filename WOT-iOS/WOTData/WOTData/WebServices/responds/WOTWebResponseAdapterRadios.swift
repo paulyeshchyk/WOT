@@ -31,6 +31,7 @@ public class WOTWebResponseAdapterRadios: WOTWebResponseAdapter {
             }
             return ident
         }
+        store.logInspector = self.logInspector
         store.onFinishJSONParse = onFinish
         store.perform()
     }

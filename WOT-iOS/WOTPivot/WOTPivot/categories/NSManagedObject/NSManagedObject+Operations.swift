@@ -45,12 +45,8 @@ extension NSManagedObject {
     @objc
     public static func findOrCreateObject(forClass: AnyClass, predicate: NSPredicate?, context: NSManagedObjectContext) -> NSManagedObject? {
         guard let foundObject = forClass.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
-            let logText = predicate?.description ?? "unknown predicate"
-            print("[COREDATA][CREATE][\(String(describing: forClass))][\(logText)]")
             return forClass.insertNewObject(context)
         }
-        let logText = predicate?.description ?? "unknown predicate"
-        print("[COREDATA][FOUND][\(String(describing: forClass))][\(logText)]")
         return foundObject
     }
 }

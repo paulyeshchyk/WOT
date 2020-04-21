@@ -31,6 +31,7 @@ public class WOTWebResponseAdapterGuns: WOTWebResponseAdapter {
             }
             return ident
         }
+        store.logInspector = self.logInspector
         store.onFinishJSONParse = onFinish
         store.perform()
     }

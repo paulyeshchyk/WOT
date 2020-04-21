@@ -17,6 +17,7 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     var onGetObjectJSON: ((JSON) -> JSON)?
     var onFinishJSONParse: ((Error?) -> Void)?
+    weak var logInspector: LogInspectorProtocol?
 
     public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, context: NSManagedObjectContext) {
         self.Clazz = clazz
@@ -30,11 +31,15 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
         binary?.parseAsJSON(onReceivedJSON(_:_:))
     }
 
-    private func perform(pkCase: PKCase, json: JSON, completion: @escaping ()->Void ) {
+    private func perform(pkCase: PKCase, json: JSON, completion: @escaping () -> Void ) {
         context.perform {
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: self.context) else {
                 fatalError("Managed object is not created")
             }
+
+            let logMessage: LogMessageTypeProtocol = managedObject.isInserted ? CreateLog("\(pkCase.description)") as! LogMessageTypeProtocol : UpdateLog("\(pkCase.description)") as! LogMessageTypeProtocol
+            self.logInspector?.log(logMessage, sender: self)
+
             managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, subordinator: self, linker: self)
             self.context.tryToSave()
             completion()
@@ -43,11 +48,13 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
 
     // MARK: - CoreDataSubordinatorProtocol
     public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+        logInspector?.log(CreateLog("new subordinate of:\(String(describing: clazz))"), sender: self)
         guard let predicate = pkCase.predicate else {
-            print("[COREDATA][SEARCH] no key defined for class: \(String(describing: clazz))")
+            logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
             return
         }
         context.perform {
+            self.logInspector?.log(StartLog("\(String(describing: clazz))"), sender: self)
             let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: self.context)
             callback(managedObject)
         }
@@ -56,6 +63,12 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
     public func willRequestLinks() {
         #warning("not thread safe")
         context.tryToSave()
+    }
+}
+
+extension CoreDataStore: LogMessageSender {
+    public var logSenderDescription: String {
+        return "Storage:\(String(describing: type(of: request)))"
     }
 }
 
@@ -98,7 +111,7 @@ extension CoreDataStore {
 
             let pkCase = PKCase()
             pkCase[.primary] = Clazz.primaryKey(for: ident as AnyObject)
-            print("[JSON][START][\(pkCase)]")
+            logInspector?.log(JSONParseLog("\(pkCase)"), sender: self)
             perform(pkCase: pkCase, json: objectJson) {
                 mutatingKeysCounter -= 1
                 if mutatingKeysCounter <= 0 {

@@ -68,7 +68,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
         self.request(request, addSubordinateLink: jsonLink)
 
-        request.log(action: WOTRequestAction.new)
+        request.logInspector.log(AddLog("\(request.description)"), sender: self)
 
         return result
     }
@@ -153,6 +153,12 @@ extension WOTRequestManager: JSONLinksAdapterProtocol {
     }
 }
 
+extension WOTRequestManager: LogMessageSender {
+    public var logSenderDescription: String {
+        return String(describing: type(of: self))
+    }
+}
+
 extension WOTRequestManager: WOTRequestListenerProtocol {
     public var requestCoordinator: WOTRequestCoordinatorProtocol {
         get { return coordinator }
@@ -168,9 +174,9 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] error in
             if let error = error {
-                request.log(action: .error(error))
+                request.logInspector.log(ErrorLog(error), sender: self)
             } else {
-                request.log(action: .finish)
+                request.logInspector.log(FinishLog(request.description), sender: self)
             }
             self?.request(request, didCompleteParsing: true)
         })
@@ -187,15 +193,16 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     private func jsonLinksCallback(_ jsonLinks: [WOTJSONLink]?) {}
 
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
-        request.log(action: .cancel)
+        request.logInspector.log(CancelLog(request.description))
         removeRequest(request)
     }
 
     public func requestHasStarted(_ request: WOTRequestProtocol) {
-        request.log(action: .start)
+        request.logInspector.log(StartLog(request.description), sender: self)
     }
 
     public func removeRequest(_ request: WOTRequestProtocol) {
+        request.logInspector.log(RemoveLog("\(request.description)"), sender: self)
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
                 grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })

@@ -18,37 +18,37 @@ public protocol WOTStartableProtocol {
     func start(_ args: WOTRequestArgumentsProtocol) -> Bool
 }
 
-public enum WOTRequestAction {
-    case new
-    case start
-    case finish
-    case cancel
-    case errorText(String)
-    case error(Error)
-    public var description: String {
-        switch self {
-        case .cancel: return "[CANCEL]:"
-        case .start: return "[RUN]:"
-        case .finish: return "[END]:"
-        case .new: return "[NEW]:"
-        case .errorText( _): return "[ERR]:"
-        case .error( _): return "[ERR]:"
-        }
-    }
-
-    public var details: String {
-        switch self {
-        case .errorText(let error): return error
-        case .error(let error):
-            if let error = error as? WOTWEBRequestError {
-                return error.description
-            } else {
-                return error.localizedDescription
-            }
-        default: return ""
-        }
-    }
-}
+//public enum WOTRequestAction {
+//    case new
+//    case start
+//    case finish
+//    case cancel
+//    case errorText(String)
+//    case error(Error)
+//    public var description: String {
+//        switch self {
+//        case .cancel: return "[CANCEL]:"
+//        case .start: return "[RUN]:"
+//        case .finish: return "[END]:"
+//        case .new: return "[NEW]:"
+//        case .errorText( _): return "[ERR]:"
+//        case .error( _): return "[ERR]:"
+//        }
+//    }
+//
+//    public var details: String {
+//        switch self {
+//        case .errorText(let error): return error
+//        case .error(let error):
+//            if let error = error as? WOTWEBRequestError {
+//                return error.description
+//            } else {
+//                return error.localizedDescription
+//            }
+//        default: return ""
+//        }
+//    }
+//}
 
 @objc
 public protocol WOTRequestProtocol: WOTStartableProtocol {
@@ -79,14 +79,16 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
     var uuid: UUID { get }
 
     var parentRequest: WOTRequestProtocol? { get set }
+
+    var logInspector: LogInspectorProtocol { get }
 }
 
-public extension WOTRequestProtocol {
-    func log(action: WOTRequestAction) {//  -
-        let result = "[\(type(of: self))]\(action.description) \(action.details) \(self.description)"
-        print(result)
-    }
-}
+//public extension WOTRequestProtocol {
+//    func log(action: WOTRequestAction) {//  -
+//        let result = "[\(type(of: self))]\(action.description) \(action.details) \(self.description)"
+//        print(result)
+//    }
+//}
 
 @objc
 public protocol WOTRequestManagerListenerProtocol {
@@ -178,6 +180,10 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
             listeners.remove(at: index)
         }
     }
+
+    public lazy var logInspector: LogInspectorProtocol = {
+        return LogInspector()
+    }()
 
     override open var hash: Int {
         return NSStringFromClass(type(of: self)).hash
