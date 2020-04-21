@@ -10,7 +10,7 @@ import Foundation
 
 public class ErrorLog: LogMessageTypeProtocol {
     public private(set) var message: String
-
+    public var priorityType: LogMessagePriorityType { return .critical }
     public var logeventType: String { return "ERROR"}
 
     public init() {
@@ -21,7 +21,22 @@ public class ErrorLog: LogMessageTypeProtocol {
         message = text
     }
 
-    convenience public init?(_ error: Error) {
-        self.init(error.localizedDescription)
+    convenience public init?(_ error: Any, details: Any?) {
+        var messages: [String] = .init()
+        if let wotError = error as? WOTErrorProtocol {
+            messages.append(wotError.wotDescription)
+        } else if let swiftError = error as? Error {
+            messages.append(swiftError.localizedDescription)
+        } else {
+            messages.append("Unknown error")
+        }
+
+        if let describable = details as? WOTDescribable {
+            if describable.description.count > 0 {
+                messages.append(describable.description)
+            }
+        }
+
+        self.init(messages.joined(separator: "; details: "))
     }
 }

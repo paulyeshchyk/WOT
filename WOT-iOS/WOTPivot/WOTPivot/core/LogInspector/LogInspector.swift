@@ -9,10 +9,19 @@
 import Foundation
 
 @objc
+public enum LogMessagePriorityType: Int {
+    case minor
+    case normal
+    case critical
+    case debug
+}
+
+@objc
 public protocol LogMessageTypeProtocol {
     var message: String { get }
     var logeventType: String { get }
-    init?(_ text: String)
+    var priorityType: LogMessagePriorityType { get }
+//    init?(_ text: String)
 }
 
 @objc
@@ -31,7 +40,21 @@ public protocol LogMessageSender {
 
 @objc
 public class LogInspector: NSObject, LogInspectorProtocol {
+    private var prioritiesToLog: [LogMessagePriorityType] = []
+
+    convenience init(priorities: [LogMessagePriorityType]) {
+        self.init()
+        self.prioritiesToLog = priorities
+    }
+
     public func log(_ type: LogMessageTypeProtocol?, sender: LogMessageSender?) {
+        if
+            let eventPriority = type?.priorityType,
+            prioritiesToLog.count > 0,
+            !prioritiesToLog.contains(eventPriority) {
+            return
+        }
+
         let senderMessage: String
         if let logSenderDescription = sender?.logSenderDescription {
             senderMessage = "<\(logSenderDescription)>"

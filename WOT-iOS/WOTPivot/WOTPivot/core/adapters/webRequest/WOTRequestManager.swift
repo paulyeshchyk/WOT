@@ -174,7 +174,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] error in
             if let error = error {
-                request.logInspector.log(ErrorLog(error), sender: self)
+                request.logInspector.log(ErrorLog(error, details: request), sender: self)
             } else {
                 request.logInspector.log(FinishLog(request.description), sender: self)
             }

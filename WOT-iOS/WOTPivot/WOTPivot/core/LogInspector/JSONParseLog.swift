@@ -10,7 +10,7 @@ import Foundation
 
 public class JSONParseLog: LogMessageTypeProtocol {
     public private(set) var message: String
-
+    public var priorityType: LogMessagePriorityType { return .minor }
     public var logeventType: String { return "JSON"}
 
     public init() {

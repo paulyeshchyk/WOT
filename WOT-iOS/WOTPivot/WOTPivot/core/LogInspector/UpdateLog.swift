@@ -10,7 +10,7 @@ import Foundation
 
 public class UpdateLog: LogMessageTypeProtocol {
     public private(set) var message: String
-
+    public var priorityType: LogMessagePriorityType { return .normal }
     public var logeventType: String { return "UPDATE"}
 
     public init() {

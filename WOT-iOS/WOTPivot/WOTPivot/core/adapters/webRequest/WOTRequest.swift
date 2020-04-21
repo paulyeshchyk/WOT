@@ -51,10 +51,13 @@ public protocol WOTStartableProtocol {
 //}
 
 @objc
-public protocol WOTRequestProtocol: WOTStartableProtocol {
+public protocol WOTDescribable {
     @objc
     var description: String { get }
+}
 
+@objc
+public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
 
@@ -182,7 +185,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     }
 
     public lazy var logInspector: LogInspectorProtocol = {
-        return LogInspector()
+        return LogInspector(priorities: [.critical, .debug])
     }()
 
     override open var hash: Int {

@@ -32,7 +32,11 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
     }
 
     private func perform(pkCase: PKCase, json: JSON, completion: @escaping () -> Void ) {
+        logInspector?.log(CurrentThreadLog(), sender: self)
+
         context.perform {
+            self.logInspector?.log(CurrentThreadLog(), sender: self)
+
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: self.context) else {
                 fatalError("Managed object is not created")
             }

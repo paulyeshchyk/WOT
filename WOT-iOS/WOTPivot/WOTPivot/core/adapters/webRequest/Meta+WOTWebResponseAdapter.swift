@@ -131,7 +131,11 @@ public class WOTWebResponse: NSObject, JSONMapperProtocol {
     public func mapping(fromArray array: [Any]) {}
 }
 
-struct WOTWEBRequestError: Error {
+public protocol WOTErrorProtocol {
+    var wotDescription: String { get }
+}
+
+struct WOTWEBRequestError: Error, WOTErrorProtocol {
     enum ErrorKind {
         case dataIsNull
         case emptyJSON
@@ -162,6 +166,10 @@ struct WOTWEBRequestError: Error {
     let kind: ErrorKind
 
     var description: String {
+        return kind.description
+    }
+
+    var wotDescription: String {
         return kind.description
     }
 }

@@ -22,7 +22,7 @@ public protocol WOTWebResponseAdapterProtocol: NSObjectProtocol {
 @objc
 open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
     public lazy var logInspector: LogInspectorProtocol = {
-        return LogInspector()
+        return LogInspector(priorities: [.critical, .debug])
     }()
 
     open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void )) {

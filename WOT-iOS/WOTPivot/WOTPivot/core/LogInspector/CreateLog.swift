@@ -10,7 +10,7 @@ import Foundation
 
 public class CreateLog: LogMessageTypeProtocol {
     public private(set) var message: String
-
+    public var priorityType: LogMessagePriorityType { return .normal }
     public var logeventType: String { return "NEW"}
 
     public init() {

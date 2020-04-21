@@ -70,6 +70,8 @@
 		1D70CD81244EEA800031CBFE /* UpdateLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD80244EEA800031CBFE /* UpdateLog.swift */; };
 		1D70CD83244EEEB60031CBFE /* AddLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD82244EEEB60031CBFE /* AddLog.swift */; };
 		1D70CD85244EEF110031CBFE /* RemoveLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD84244EEF110031CBFE /* RemoveLog.swift */; };
+		1D70CD87244EF88F0031CBFE /* CurrentThreadLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD86244EF88F0031CBFE /* CurrentThreadLog.swift */; };
+		1D70CD89244EFC730031CBFE /* CustomThreadLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD88244EFC730031CBFE /* CustomThreadLog.swift */; };
 		1D73BB7924436936004B720A /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7724436936004B720A /* Coding.swift */; };
 		1D73BB7A24436936004B720A /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7824436936004B720A /* AnyCodable.swift */; };
 		1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */; };
@@ -224,6 +226,8 @@
 		1D70CD80244EEA800031CBFE /* UpdateLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateLog.swift; sourceTree = "<group>"; };
 		1D70CD82244EEEB60031CBFE /* AddLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLog.swift; sourceTree = "<group>"; };
 		1D70CD84244EEF110031CBFE /* RemoveLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveLog.swift; sourceTree = "<group>"; };
+		1D70CD86244EF88F0031CBFE /* CurrentThreadLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentThreadLog.swift; sourceTree = "<group>"; };
+		1D70CD88244EFC730031CBFE /* CustomThreadLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomThreadLog.swift; sourceTree = "<group>"; };
 		1D73BB7724436936004B720A /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		1D73BB7824436936004B720A /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestCoordinator.swift; sourceTree = "<group>"; };
@@ -535,6 +539,8 @@
 				1D70CD80244EEA800031CBFE /* UpdateLog.swift */,
 				1D70CD82244EEEB60031CBFE /* AddLog.swift */,
 				1D70CD84244EEF110031CBFE /* RemoveLog.swift */,
+				1D70CD86244EF88F0031CBFE /* CurrentThreadLog.swift */,
+				1D70CD88244EFC730031CBFE /* CustomThreadLog.swift */,
 			);
 			path = LogInspector;
 			sourceTree = "<group>";
@@ -1118,6 +1124,7 @@
 				1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */,
 				1D65F8262216A7B8006A85E4 /* WOTDimensionRowCalculator.swift in Sources */,
 				1D5D024623C872F5004B0314 /* NSManagedObject+FillProperties.m in Sources */,
+				1D70CD89244EFC730031CBFE /* CustomThreadLog.swift in Sources */,
 				1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */,
 				1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */,
 				1D73BB7924436936004B720A /* Coding.swift in Sources */,
@@ -1131,6 +1138,7 @@
 				1DBF89A4240D0F08007DF8B2 /* WOTTankMetricOptions.swift in Sources */,
 				1D65F7F52216A60E006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift in Sources */,
 				1DA83CAF213563400039CB4B /* NSDictionary+Hash.m in Sources */,
+				1D70CD87244EF88F0031CBFE /* CurrentThreadLog.swift in Sources */,
 				1DBF89AC240D3137007DF8B2 /* WOTTankIDList.swift in Sources */,
 				1D65F77C221551C6006A85E4 /* NSError+Pivot.swift in Sources */,
 				1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */,
