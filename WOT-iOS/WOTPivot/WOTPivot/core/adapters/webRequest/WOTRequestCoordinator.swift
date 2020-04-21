@@ -53,12 +53,16 @@ public protocol WOTRequestDataParserProtocol {
 }
 
 @objc
-public protocol WOTRequestCoordinatorProtocol: WOTRequestDataBindingProtocol, WOTRequestDatasourceProtocol, WOTRequestDataParserProtocol {}
+public protocol WOTRequestCoordinatorProtocol: WOTRequestDataBindingProtocol, WOTRequestDatasourceProtocol, WOTRequestDataParserProtocol {
+    @objc
+    static var logInspector: LogInspectorProtocol? { get set }
+}
 
 @objc
 public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     private static var registeredRequests: [WOTRequestIdType: AnyClass] = .init()
     private static var registeredDataAdapters: [WOTRequestIdType: AnyClass] = .init()
+    public static var logInspector: LogInspectorProtocol?
 
     // MARK: - WOTRequestDataBindingProtocol
     @objc
@@ -79,16 +83,22 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 
     @objc
     public func request(for requestId: WOTRequestIdType) -> AnyClass? {
-        return WOTRequestCoordinator.registeredRequests[requestId]
+        let result: AnyClass? = WOTRequestCoordinator.registeredRequests[requestId]
+        if result == nil {
+            WOTRequestCoordinator.logInspector?.log(ErrorLog("request not found:\(requestId)"), sender: self)
+        }
+        return result
     }
 
     // MARK: - WOTRequestDatasourceProtocol
     @objc
-    public func createRequest(forRequestId: WOTRequestIdType) -> WOTRequestProtocol? {
-        guard let Clazz = request(for: forRequestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self) else {
+    public func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol? {
+        guard let Clazz = request(for: requestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self) else {
+            WOTRequestCoordinator.logInspector?.log(ErrorLog("request clazz not found:\(requestId)"), sender: self)
             return nil
         }
         guard let result = Clazz.init() as? WOTRequestProtocol else {
+            WOTRequestCoordinator.logInspector?.log(ErrorLog("request not created:\(String(describing: Clazz))"), sender: self)
             return nil
         }
         return result
@@ -128,12 +138,12 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 
     static func adapterInstance(for requestIdType: WOTRequestIdType) -> WOTWebResponseAdapterProtocol? {
         guard let AdapterType = WOTRequestCoordinator.dataAdapter(for: requestIdType) else {
-            print("dataadapter not found")
+            WOTRequestCoordinator.logInspector?.log(ErrorLog("dataadapter not found for :\(requestIdType)"))
             return nil
         }
 
         guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapterProtocol else {
-            print("adapter is not WOTWebResponseAdapter")
+            WOTRequestCoordinator.logInspector?.log(ErrorLog("adapter is not conforming protocol WOTWebResponseAdapter :\(requestIdType)"))
             return nil
         }
         return adapter
@@ -151,5 +161,11 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
                 })
             }
         })
+    }
+}
+
+extension WOTRequestCoordinator: LogMessageSender {
+    public var logSenderDescription: String {
+        return String(describing: type(of: self))
     }
 }

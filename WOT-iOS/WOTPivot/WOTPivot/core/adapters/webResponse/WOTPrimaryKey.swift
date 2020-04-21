@@ -64,7 +64,7 @@ public enum PKType: Hashable {
 }
 
 @objc
-public class PKCase: NSObject {
+public class PKCase: NSObject, WOTDescribable {
     public override var description: String {
         guard let objects = allValues(), !objects.isEmpty else {
             return "empty case"

@@ -31,6 +31,7 @@ public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
             }
             return ident
         }
+        store.logInspector = logInspector
         store.onFinishJSONParse = onFinish
         store.perform()
     }

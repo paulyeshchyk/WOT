@@ -25,7 +25,7 @@ public class WOTWebResponseAdapterVehicles: WOTWebResponseAdapter {
             }
             return ident
         }
-        store.logInspector = self.logInspector
+        store.logInspector = logInspector
         store.onFinishJSONParse = onFinish
         store.perform()
     }

@@ -21,6 +21,9 @@ public protocol WOTPivotAppManagerProtocol {
 
     @objc
     var sessionManager: WOTWebSessionManagerProtocol? { get set }
+
+    @objc
+    var logInspector: LogInspectorProtocol? { get set }
 }
 
 @objc
@@ -36,4 +39,7 @@ public class WOTPivotAppManager: NSObject, WOTPivotAppManagerProtocol {
 
     @objc
     public var sessionManager: WOTWebSessionManagerProtocol?
+
+    @objc
+    public var logInspector: LogInspectorProtocol?
 }

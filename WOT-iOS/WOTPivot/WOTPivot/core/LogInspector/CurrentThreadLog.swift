@@ -13,13 +13,21 @@ public class CurrentThreadLog: LogMessageTypeProtocol {
     public var priorityType: LogMessagePriorityType { return .debug }
     public var logeventType: String { return "THREAD"}
 
-    public init() {
+    private static var threadMessage: String {
         let thread = Thread.current
-        if let name = thread.name,
-            name.count > 0 {
-            message = name
+        if let name = thread.name, name.count > 0 {
+            return name
         } else {
-            message = thread.isMainThread ? "Main" : "thread has no name"
+            return thread.isMainThread ? "Main" : "thread has no name"
         }
+    }
+
+    public init() {
+        message = CurrentThreadLog.threadMessage
+    }
+
+    public convenience init?(details: WOTDescribable) {
+        self.init()
+        message += "; details: \(details.description)"
     }
 }

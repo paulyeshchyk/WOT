@@ -32,17 +32,17 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
     }
 
     private func perform(pkCase: PKCase, json: JSON, completion: @escaping () -> Void ) {
-        logInspector?.log(CurrentThreadLog(), sender: self)
+        guard Thread.current.isMainThread else {
+            fatalError("Current thread is not main")
+        }
 
         context.perform {
-            self.logInspector?.log(CurrentThreadLog(), sender: self)
-
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: self.context) else {
                 fatalError("Managed object is not created")
             }
 
-            let logMessage: LogMessageTypeProtocol = managedObject.isInserted ? CreateLog("\(pkCase.description)") as! LogMessageTypeProtocol : UpdateLog("\(pkCase.description)") as! LogMessageTypeProtocol
-            self.logInspector?.log(logMessage, sender: self)
+            let logEvent: LogMessageTypeProtocol = managedObject.isInserted ? CreateLog("\(pkCase.description)") as! LogMessageTypeProtocol : UpdateLog("\(pkCase.description)") as! LogMessageTypeProtocol
+            self.logInspector?.log(logEvent, sender: self)
 
             managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, subordinator: self, linker: self)
             self.context.tryToSave()
@@ -86,7 +86,13 @@ extension CoreDataStore {
 
 extension CoreDataStore: CoreDataLinkerProtocol {
     public func onLinks(_ links: [WOTJSONLink]?) {
-        linkAdapter.request(request, adoptJsonLinks: links)
+        DispatchQueue.main.async { [weak self] in
+            guard let selfrequest = self?.request else {
+                self?.logInspector?.log(ErrorLog("request was removed from memory"), sender: self)
+                return
+            }
+            self?.linkAdapter.request(selfrequest, adoptJsonLinks: links)
+        }
     }
 }
 

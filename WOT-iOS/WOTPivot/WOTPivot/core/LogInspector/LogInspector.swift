@@ -10,10 +10,10 @@ import Foundation
 
 @objc
 public enum LogMessagePriorityType: Int {
-    case minor
-    case normal
-    case critical
-    case debug
+    case minor = 0
+    case normal = 1
+    case critical = 2
+    case debug = 3
 }
 
 @objc
@@ -27,6 +27,9 @@ public protocol LogMessageTypeProtocol {
 @objc
 public protocol LogInspectorProtocol: class {
     func log(_ type: LogMessageTypeProtocol?, sender: LogMessageSender?)
+
+    @available(*, deprecated, message: "objC only")
+    func objcOnlyAddpriority(_ priority: LogMessagePriorityType)
 }
 
 extension LogInspectorProtocol {
@@ -45,6 +48,12 @@ public class LogInspector: NSObject, LogInspectorProtocol {
     convenience init(priorities: [LogMessagePriorityType]) {
         self.init()
         self.prioritiesToLog = priorities
+    }
+
+    @available(*, deprecated, message: "objC only")
+    @objc
+    public func objcOnlyAddpriority(_ priority: LogMessagePriorityType) {
+        self.prioritiesToLog.append( priority)
     }
 
     public func log(_ type: LogMessageTypeProtocol?, sender: LogMessageSender?) {

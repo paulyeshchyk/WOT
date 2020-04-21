@@ -13,10 +13,10 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     public var listeners = [WOTRequestManagerListenerProtocol]()
 
     @objc
-    required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
+    required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol, logInspector inspector: LogInspectorProtocol) {
         coordinator = requestCoordinator
         hostConfig = hostConfiguration
-
+        logInspector = inspector
         super.init()
     }
 
@@ -50,6 +50,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     private var hostConfig: WOTHostConfigurationProtocol
 
     @objc
+    private var logInspector: LogInspectorProtocol
+
+    @objc
     private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String, jsonLink: WOTJSONLink?) -> Bool {
         var grouppedRequests: [WOTRequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
@@ -68,7 +71,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
         self.request(request, addSubordinateLink: jsonLink)
 
-        request.logInspector.log(AddLog("\(request.description)"), sender: self)
+        logInspector.log(AddLog("\(request.description)"), sender: self)
 
         return result
     }
@@ -171,20 +174,31 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
+        guard Thread.current.isMainThread else {
+            fatalError("Current thread is not main")
+        }
+
+        #warning("sometimes crashing")
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] error in
-            if let error = error {
-                request.logInspector.log(ErrorLog(error, details: request), sender: self)
-            } else {
-                request.logInspector.log(FinishLog(request.description), sender: self)
+            DispatchQueue.main.async {
+                if let error = error {
+                    self?.logInspector.log(ErrorLog(error, details: request), sender: self)
+                } else {
+                    self?.logInspector.log(FinishLog(request.description), sender: self)
+                }
+                self?.request(request, didCompleteParsing: true)
             }
-            self?.request(request, didCompleteParsing: true)
         })
 
         self.removeRequest(request)
     }
 
     private func request(_ request: WOTRequestProtocol, didCompleteParsing complete: Bool ) {
+        guard Thread.current.isMainThread else {
+            fatalError("Current thread is not main")
+        }
+
         listeners.forEach {
             $0.requestManager(self, didParseDataForRequest: request, finished: complete)
         }
@@ -193,16 +207,25 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     private func jsonLinksCallback(_ jsonLinks: [WOTJSONLink]?) {}
 
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
-        request.logInspector.log(CancelLog(request.description))
+        guard Thread.current.isMainThread else {
+            fatalError("Current thread is not main")
+        }
+        logInspector.log(CancelLog(request.description))
         removeRequest(request)
     }
 
     public func requestHasStarted(_ request: WOTRequestProtocol) {
-        request.logInspector.log(StartLog(request.description), sender: self)
+        guard Thread.current.isMainThread else {
+            fatalError("Current thread is not main")
+        }
+        logInspector.log(StartLog(request.description), sender: self)
     }
 
     public func removeRequest(_ request: WOTRequestProtocol) {
-        request.logInspector.log(RemoveLog("\(request.description)"), sender: self)
+        guard Thread.current.isMainThread else {
+            fatalError("Current thread is not main")
+        }
+        logInspector.log(RemoveLog("\(request.description)"), sender: self)
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
                 grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })

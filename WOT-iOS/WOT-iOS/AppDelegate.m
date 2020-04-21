@@ -26,19 +26,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    id<LogInspectorProtocol> logInspector = [[LogInspector alloc] init];
+    [logInspector objcOnlyAddpriority: 2];//critical
+    [logInspector objcOnlyAddpriority: 3];//debug
+
     id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];
 
     id<WOTHostConfigurationProtocol> hostConfiguration = [[WOTWebHostConfiguration alloc] init];
 
-    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration];
+    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration logInspector:logInspector];
     
     id<WOTWebSessionManagerProtocol> sessionManager = [[WOTWebSessionManager alloc] init];
-    
+
     self.appManager = [[WOTPivotAppManager alloc] init];
     self.appManager.hostConfiguration = hostConfiguration;
     self.appManager.requestManager = requestManager;
     self.appManager.requestListener = requestManager;
     self.appManager.sessionManager = sessionManager;
+    self.appManager.logInspector = logInspector;
 
     [AppDefaults registerRequestsFor:requestCoordinator];
     [WOTApplicationDefaults registerDefaultSettings];
