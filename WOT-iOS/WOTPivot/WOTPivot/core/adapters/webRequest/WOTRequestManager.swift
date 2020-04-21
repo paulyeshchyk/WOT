@@ -166,8 +166,12 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
-        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] _ in
-            request.log(action: .finish)
+        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] error in
+            if let error = error {
+                request.log(action: .error(error))
+            } else {
+                request.log(action: .finish)
+            }
             self?.request(request, didCompleteParsing: true)
         })
 

@@ -27,9 +27,7 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
     }
 
     func perform() {
-        if let error = binary?.parseAsJSON(onReceivedJSON(_:)) {
-            onFinishJSONParse?(error)
-        }
+        binary?.parseAsJSON(onReceivedJSON(_:_:))
     }
 
     private func perform(pkCase: PKCase, json: JSON, completion: @escaping ()->Void ) {
@@ -76,11 +74,16 @@ extension CoreDataStore: CoreDataLinkerProtocol {
 }
 
 extension CoreDataStore {
-    func onReceivedJSON(_ json: JSON?) {
-        let keys = json?.keys
-        var mutatingKeysCounter = keys?.count ?? 0
-        keys?.forEach { (key) in
-            guard let jsonByKey = json?[key] as? JSON else {
+    func onReceivedJSON(_ json: JSON?, _ error: Error?) {
+        guard let json = json else {
+            onFinishJSONParse?(error)
+            return
+        }
+
+        let keys = json.keys
+        var mutatingKeysCounter = keys.count
+        keys.forEach { (key) in
+            guard let jsonByKey = json[key] as? JSON else {
                 fatalError("invalid json for key")
             }
             let objectJson: JSON

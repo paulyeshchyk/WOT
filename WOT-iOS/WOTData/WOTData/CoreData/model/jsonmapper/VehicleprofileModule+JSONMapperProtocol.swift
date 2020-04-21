@@ -77,11 +77,8 @@ extension VehicleprofileModule {
 }
 
 extension VehicleprofileModule {
-    public static func module(fromJSON json: Any?, externalPK: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func module(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
-
-        let pkCase = PKCase()
-        pkCase[.primary] = externalPK
 
         subordinator?.requestNewSubordinate(VehicleprofileModule.self, pkCase) { newObject in
             newObject?.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)

@@ -72,14 +72,14 @@ extension Vehicles {
         subordinator?.willRequestLinks()
 
         #warning("do not parse on application startup")
+        let vehicleProfileCase = PKCase()
+        vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
+
+        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.default_profile = newObject as? Vehicleprofile
+        }
+
         /*
-         let vehicleProfileCase = PKCase()
-         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-
-         Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-             self.default_profile = newObject as? Vehicleprofile
-         }
-
          if let set = self.modules_tree {
              self.removeFromModules_tree(set)
          }

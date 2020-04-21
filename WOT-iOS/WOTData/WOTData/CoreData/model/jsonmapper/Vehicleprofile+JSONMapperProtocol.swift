@@ -60,12 +60,12 @@ extension Vehicleprofile {
 
         subordinator?.willRequestLinks()
 
-        let vehicleprofileAmmoListCase = PKCase()
-        vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
-
-        VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: vehicleprofileAmmoListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-            self.ammo = newObject as? VehicleprofileAmmoList
-        }
+//        let vehicleprofileAmmoListCase = PKCase()
+//        vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+//
+//        VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: vehicleprofileAmmoListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//            self.ammo = newObject as? VehicleprofileAmmoList
+//        }
 //        VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
 //            self.armor = newObject as? VehicleprofileArmorList
 //        }
@@ -85,10 +85,11 @@ extension Vehicleprofile {
 //            self.turret = newObject as? VehicleprofileTurret
 //        }
 
-//        let profileModulePK = pk?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))
-//        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], externalPK: profileModulePK, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-//            self.modules = newObject as? VehicleprofileModule
-//        }
+        let vehicleprofileModuleCase = PKCase()
+        vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))
+        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], pkCase: vehicleprofileModuleCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.modules = newObject as? VehicleprofileModule
+        }
     }
 
     convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol, linker: CoreDataLinkerProtocol?) {

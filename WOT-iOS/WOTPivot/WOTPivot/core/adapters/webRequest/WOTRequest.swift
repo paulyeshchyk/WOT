@@ -23,20 +23,28 @@ public enum WOTRequestAction {
     case start
     case finish
     case cancel
-    case error(String)
+    case errorText(String)
+    case error(Error)
     public var description: String {
         switch self {
         case .cancel: return "[CANCEL]:"
         case .start: return "[RUN]:"
         case .finish: return "[END]:"
         case .new: return "[NEW]:"
+        case .errorText( _): return "[ERR]:"
         case .error( _): return "[ERR]:"
         }
     }
 
     public var details: String {
         switch self {
-        case .error(let error): return error
+        case .errorText(let error): return error
+        case .error(let error):
+            if let error = error as? WOTWEBRequestError {
+                return error.description
+            } else {
+                return error.localizedDescription
+            }
         default: return ""
         }
     }
@@ -75,7 +83,7 @@ public protocol WOTRequestProtocol: WOTStartableProtocol {
 
 public extension WOTRequestProtocol {
     func log(action: WOTRequestAction) {//  -
-        let result = "[\(type(of: self))]\(action.description) \(action.details)\(self.description)"
+        let result = "[\(type(of: self))]\(action.description) \(action.details) \(self.description)"
         print(result)
     }
 }
