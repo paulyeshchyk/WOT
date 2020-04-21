@@ -12,20 +12,25 @@ extension AnyHashable {}
 
 public typealias JSON = [AnyHashable: Any]
 
+@objc
+public protocol CoreDataStoreProtocol: class {
+    func perform()
+}
+
 #warning("transform an conforming class to Future/Promise")
 
 @objc
 public protocol WOTWebResponseAdapterProtocol: NSObjectProtocol {
-    func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) )
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol
 }
 
 @objc
 open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
     public lazy var logInspector: LogInspectorProtocol = {
-        return LogInspector(priorities: [.critical, .debug])
+        return LogInspector(priorities: [.minor, .normal, .critical, .debug])
     }()
 
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void )) {
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ))  -> CoreDataStoreProtocol {
         fatalError("should be overriden")
     }
 

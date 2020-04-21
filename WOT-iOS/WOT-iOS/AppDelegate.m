@@ -27,8 +27,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     id<LogInspectorProtocol> logInspector = [[LogInspector alloc] init];
-    [logInspector objcOnlyAddpriority: 2];//critical
-    [logInspector objcOnlyAddpriority: 3];//debug
+    [logInspector objcOnlyAddpriority: 0];
+    [logInspector objcOnlyAddpriority: 1];
+    [logInspector objcOnlyAddpriority: 2];
+    [logInspector objcOnlyAddpriority: 3];
 
     id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];
 

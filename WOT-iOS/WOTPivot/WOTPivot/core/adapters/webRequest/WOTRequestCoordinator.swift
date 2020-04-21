@@ -153,14 +153,20 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ((Error?) -> Void) ) {
         guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else { return }
 
+        var coreDataStoreStack: [CoreDataStoreProtocol] = .init()
         let requestIdTypes = self.requestIds(forClass: modelClass)
         requestIdTypes?.forEach({ requestIdType in
             if let adapter = WOTRequestCoordinator.adapterInstance(for: requestIdType) {
-                adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, onFinish: { error in
+                let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, onFinish: {error in
                     onFinish(error)
                 })
+                coreDataStoreStack.append(store)
             }
         })
+
+        coreDataStoreStack.forEach { (store) in
+            store.perform()
+        }
     }
 }
 

@@ -60,30 +60,47 @@ extension Vehicleprofile {
 
         subordinator?.willRequestLinks()
 
-//        let vehicleprofileAmmoListCase = PKCase()
-//        vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
-//
-//        VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: vehicleprofileAmmoListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-//            self.ammo = newObject as? VehicleprofileAmmoList
-//        }
-//        VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-//            self.armor = newObject as? VehicleprofileArmorList
-//        }
-//        VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-//            self.engine = newObject as? VehicleprofileEngine
-//        }
-//        VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-//            self.gun = newObject as? VehicleprofileGun
-//        }
-//        VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-//            self.radio = newObject as? VehicleprofileRadio
-//        }
-//        VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-//            self.suspension = newObject as? VehicleprofileSuspension
-//        }
-//        VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
-//            self.turret = newObject as? VehicleprofileTurret
-//        }
+        let vehicleprofileAmmoListCase = PKCase()
+        vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+        VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: vehicleprofileAmmoListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.ammo = newObject as? VehicleprofileAmmoList
+        }
+
+        let vehicleprofileArmorListCase = PKCase()
+        vehicleprofileArmorListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+        VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: vehicleprofileArmorListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.armor = newObject as? VehicleprofileArmorList
+        }
+
+        let vehicleprofileEngineListCase = PKCase()
+        vehicleprofileEngineListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+        VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], pkCase: vehicleprofileEngineListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.engine = newObject as? VehicleprofileEngine
+        }
+
+        let vehicleprofileGunListCase = PKCase()
+        vehicleprofileGunListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+        VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], pkCase: vehicleprofileGunListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.gun = newObject as? VehicleprofileGun
+        }
+
+        let vehicleprofileRadioListCase = PKCase()
+        vehicleprofileRadioListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+        VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], pkCase: vehicleprofileRadioListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.radio = newObject as? VehicleprofileRadio
+        }
+
+        let vehicleprofileSuspensionListCase = PKCase()
+        vehicleprofileSuspensionListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+        VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: vehicleprofileSuspensionListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.suspension = newObject as? VehicleprofileSuspension
+        }
+
+        let vehicleprofileTurretListCase = PKCase()
+        vehicleprofileTurretListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+        VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: vehicleprofileTurretListCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+            self.turret = newObject as? VehicleprofileTurret
+        }
 
         let vehicleprofileModuleCase = PKCase()
         vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))

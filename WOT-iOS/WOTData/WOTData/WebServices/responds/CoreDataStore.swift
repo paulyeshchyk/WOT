@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CoreDataStore: CoreDataSubordinatorProtocol {
+public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol {
     let Clazz: PrimaryKeypathProtocol.Type
     let request: WOTRequestProtocol
     let binary: Data?
@@ -17,20 +17,27 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     var onGetObjectJSON: ((JSON) -> JSON)?
     var onFinishJSONParse: ((Error?) -> Void)?
-    weak var logInspector: LogInspectorProtocol?
+    var logInspector: LogInspectorProtocol
 
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, context: NSManagedObjectContext) {
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, context: NSManagedObjectContext, logInspector: LogInspectorProtocol) {
         self.Clazz = clazz
         self.request = request
         self.binary = binary
         self.linkAdapter = linkAdapter
         self.context = context
+        self.logInspector = logInspector
     }
 
-    func perform() {
+    deinit {
+        self.logInspector.log(DeinitLog(String(describing: type(of: self))), sender: self)
+    }
+
+    // MARK: - CoreDataStoreProtocol
+    public func perform() {
         binary?.parseAsJSON(onReceivedJSON(_:_:))
     }
 
+    // MARK: - private
     private func perform(pkCase: PKCase, json: JSON, completion: @escaping () -> Void ) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
@@ -42,7 +49,7 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
             }
 
             let logEvent: LogMessageTypeProtocol = managedObject.isInserted ? CreateLog("\(pkCase.description)") as! LogMessageTypeProtocol : UpdateLog("\(pkCase.description)") as! LogMessageTypeProtocol
-            self.logInspector?.log(logEvent, sender: self)
+            self.logInspector.log(logEvent, sender: self)
 
             managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, subordinator: self, linker: self)
             self.context.tryToSave()
@@ -52,13 +59,13 @@ public class CoreDataStore: CoreDataSubordinatorProtocol {
 
     // MARK: - CoreDataSubordinatorProtocol
     public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
-        logInspector?.log(CreateLog("new subordinate of:\(String(describing: clazz))"), sender: self)
+        self.logInspector.log(CreateLog("new subordinate of:\(String(describing: clazz))"), sender: self)
         guard let predicate = pkCase.predicate else {
-            logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
+            self.logInspector.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
             return
         }
         context.perform {
-            self.logInspector?.log(StartLog("\(String(describing: clazz))"), sender: self)
+            self.logInspector.log(CreateLog("\(String(describing: clazz))"), sender: self)
             let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: self.context)
             callback(managedObject)
         }
@@ -88,7 +95,7 @@ extension CoreDataStore: CoreDataLinkerProtocol {
     public func onLinks(_ links: [WOTJSONLink]?) {
         DispatchQueue.main.async { [weak self] in
             guard let selfrequest = self?.request else {
-                self?.logInspector?.log(ErrorLog("request was removed from memory"), sender: self)
+                self?.logInspector.log(ErrorLog("request was removed from memory"), sender: self)
                 return
             }
             self?.linkAdapter.request(selfrequest, adoptJsonLinks: links)
@@ -121,7 +128,7 @@ extension CoreDataStore {
 
             let pkCase = PKCase()
             pkCase[.primary] = Clazz.primaryKey(for: ident as AnyObject)
-            logInspector?.log(JSONParseLog("\(pkCase)"), sender: self)
+            logInspector.log(JSONParseLog("\(pkCase)"), sender: self)
             perform(pkCase: pkCase, json: objectJson) {
                 mutatingKeysCounter -= 1
                 if mutatingKeysCounter <= 0 {

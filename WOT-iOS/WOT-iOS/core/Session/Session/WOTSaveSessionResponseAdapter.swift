@@ -10,7 +10,8 @@ import Foundation
 
 @objc
 public class WOTSaveSessionResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ((Error?) -> Void) ) {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ((Error?) -> Void) )  -> CoreDataStoreProtocol {
+        fatalError("not implemented")
 //        WOTSessionManager.sharedInstance()?.invalidateTimer({ (interval) -> Timer? in
 //            if #available(iOS 10.0, *) {
 //                let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { _ in
@@ -22,6 +23,6 @@ public class WOTSaveSessionResponseAdapter: NSObject, WOTWebResponseAdapterProto
 //            }
 //        })
 //
-        onFinish(nil)
+//        onFinish(nil)
     }
 }

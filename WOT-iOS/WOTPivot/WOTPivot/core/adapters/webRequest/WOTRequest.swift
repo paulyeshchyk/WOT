@@ -185,7 +185,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     }
 
     public lazy var logInspector: LogInspectorProtocol = {
-        return LogInspector(priorities: [.critical, .debug])
+        return LogInspector(priorities: [.minor, .normal, .critical, .debug])
     }()
 
     override open var hash: Int {

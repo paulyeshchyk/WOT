@@ -18,14 +18,14 @@ class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
 }
 
 class WOTWebSessionClearResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
         fatalError("should be implemented")
     }
 }
 
 class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
-        fatalError("should be impletmted")
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
+        fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
 
@@ -44,7 +44,7 @@ class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol 
 }
 
 class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) )  -> CoreDataStoreProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
@@ -105,7 +105,7 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol
 }
 
 class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) )  -> CoreDataStoreProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
