@@ -28,7 +28,7 @@ public protocol WOTModelServiceProtocol: class {
 open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
     override open var description: String {
         let pumperDescription = pumper?.description ?? ""
-        return String(describing: type(of: self)) + pumperDescription
+        return "\(String(describing: type(of: self))) \(pumperDescription)"
     }
 
     public var userInfo: JSON?
