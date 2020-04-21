@@ -17,14 +17,15 @@ public class WOTWebResponseAdapterModules: WOTWebResponseAdapter {
         self.logInspector.log(CreateLog("CoreDataStore for: \(request.description)"), sender: nil)
 
         let store = CoreDataStore(Clazz: Module.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext, logInspector: logInspector)
-        store.onGetIdent = { Clazz, json, key in
-            let primaryKeyPath = Clazz.primaryKeyPath()
-            let ident = json[primaryKeyPath] ?? key
-            return ident
-        }
+        store.onGetIdent = onGetIdent(_:_:_:)
         store.logInspector = self.logInspector
         store.onFinishJSONParse = onFinish
-//        store.perform()
         return store
+    }
+
+    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
+        let primaryKeyPath = Clazz.primaryKeyPath()
+        let ident = json[primaryKeyPath] ?? key
+        return ident
     }
 }

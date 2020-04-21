@@ -39,6 +39,8 @@
     id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration logInspector:logInspector];
     
     id<WOTWebSessionManagerProtocol> sessionManager = [[WOTWebSessionManager alloc] init];
+    
+    id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTTankCoreDataProvider alloc] init];
 
     self.appManager = [[WOTPivotAppManager alloc] init];
     self.appManager.hostConfiguration = hostConfiguration;
@@ -46,6 +48,7 @@
     self.appManager.requestListener = requestManager;
     self.appManager.sessionManager = sessionManager;
     self.appManager.logInspector = logInspector;
+    self.appManager.coreDataProvider = coreDataProvider;
 
     [AppDefaults registerRequestsFor:requestCoordinator];
     [WOTApplicationDefaults registerDefaultSettings];

@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol WOTPivotAppManagerProtocol {
+public protocol WOTAppManagerProtocol {
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
 
@@ -24,22 +24,40 @@ public protocol WOTPivotAppManagerProtocol {
 
     @objc
     var logInspector: LogInspectorProtocol? { get set }
+
+    @objc
+    var coreDataProvider: WOTCoredataProviderProtocol? { get set }
 }
 
 @objc
-public class WOTPivotAppManager: NSObject, WOTPivotAppManagerProtocol {
+public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
     @objc
     public var hostConfiguration: WOTHostConfigurationProtocol?
 
     @objc
-    public var requestManager: WOTRequestManagerProtocol?
+    public var requestManager: WOTRequestManagerProtocol? {
+        didSet {
+            requestManager?.appManager = self
+        }
+    }
 
     @objc
     public var requestListener: WOTRequestListenerProtocol?
 
     @objc
-    public var sessionManager: WOTWebSessionManagerProtocol?
+    public var sessionManager: WOTWebSessionManagerProtocol? {
+        didSet {
+            sessionManager?.appManager = self
+        }
+    }
 
     @objc
     public var logInspector: LogInspectorProtocol?
+
+    @objc
+    public var coreDataProvider: WOTCoredataProviderProtocol? {
+        didSet {
+            coreDataProvider?.appManager = self
+        }
+    }
 }

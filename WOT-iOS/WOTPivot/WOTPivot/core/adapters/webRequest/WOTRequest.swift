@@ -125,6 +125,9 @@ public protocol WOTRequestManagerProtocol {
 
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol { get set }
+
+    @objc
+    var appManager: WOTAppManagerProtocol? { get set }
 }
 
 @objc

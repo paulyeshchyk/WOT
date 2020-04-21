@@ -101,7 +101,7 @@
     if (language) {
 
         [WOTApplicationDefaults setLanguage:language];
-        id<WOTPivotAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+        id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
         
         [WOTSessionManager loginWithRequestManager:manager.requestManager];
     }

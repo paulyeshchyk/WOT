@@ -24,18 +24,19 @@ public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
         self.logInspector.log(CreateLog("CoreDataStore for: \(request.description)"), sender: nil)
 
         let store = CoreDataStore(Clazz: VehicleprofileRadio.self, request: request, binary: binary, linkAdapter: jsonLinkAdapter, context: currentContext, logInspector: logInspector)
-        store.onGetIdent = { Clazz, json, key in
-            let ident: Any
-            if let primaryKeyPath = Clazz.primaryKeyPath() {
-                ident = json[primaryKeyPath] ?? key //json[primaryKeyPath].objectJson["suspension"]
-            } else {
-                ident = key
-            }
-            return ident
-        }
+        store.onGetIdent = onGetIdent(_:_:_:)
         store.logInspector = self.logInspector
         store.onFinishJSONParse = onFinish
-//        store.perform()
         return store
+    }
+
+    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
+        let ident: Any
+        if let primaryKeyPath = Clazz.primaryKeyPath() {
+            ident = json[primaryKeyPath] ?? key //json[primaryKeyPath].objectJson["suspension"]
+        } else {
+            ident = key
+        }
+        return ident
     }
 }

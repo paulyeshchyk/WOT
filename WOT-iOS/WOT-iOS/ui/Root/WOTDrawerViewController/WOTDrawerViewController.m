@@ -131,7 +131,7 @@
 
 - (void)loginPressedOnMenu:(id<WOTMenuProtocol>)menu {
 
-    id<WOTPivotAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+    id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
 
     [self closeDrawerAnimated:YES completion:NULL];
     

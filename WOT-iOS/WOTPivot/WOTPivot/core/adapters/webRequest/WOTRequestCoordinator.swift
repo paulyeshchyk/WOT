@@ -56,6 +56,9 @@ public protocol WOTRequestDataParserProtocol {
 public protocol WOTRequestCoordinatorProtocol: WOTRequestDataBindingProtocol, WOTRequestDatasourceProtocol, WOTRequestDataParserProtocol {
     @objc
     static var logInspector: LogInspectorProtocol? { get set }
+
+    @objc
+    var appManager: WOTAppManagerProtocol? { get set }
 }
 
 @objc
@@ -63,6 +66,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     private static var registeredRequests: [WOTRequestIdType: AnyClass] = .init()
     private static var registeredDataAdapters: [WOTRequestIdType: AnyClass] = .init()
     public static var logInspector: LogInspectorProtocol?
+    public var appManager: WOTAppManagerProtocol?
 
     // MARK: - WOTRequestDataBindingProtocol
     @objc
@@ -156,12 +160,12 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         var coreDataStoreStack: [CoreDataStoreProtocol] = .init()
         let requestIdTypes = self.requestIds(forClass: modelClass)
         requestIdTypes?.forEach({ requestIdType in
-            if let adapter = WOTRequestCoordinator.adapterInstance(for: requestIdType) {
-                let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, onFinish: {error in
-                    onFinish(error)
-                })
-                coreDataStoreStack.append(store)
+            guard let adapter = WOTRequestCoordinator.adapterInstance(for: requestIdType) else {
+                WOTRequestCoordinator.logInspector?.log(ErrorLog("Adapter not found for :\(requestIdType)"), sender: self)
+                return
             }
+            let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, onFinish: onFinish)
+            coreDataStoreStack.append(store)
         })
 
         coreDataStoreStack.forEach { (store) in

@@ -34,14 +34,8 @@ open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
         fatalError("should be overriden")
     }
 
-    @objc public func workManagedObjectContext(coordinator: NSPersistentStoreCoordinator?) -> NSManagedObjectContext {
-        guard let coordinator = coordinator else {
-            fatalError("coodinator not defined")
-        }
-        let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
-        context.persistentStoreCoordinator = coordinator
-        context.undoManager = nil
-        return context
+    override public init() {
+        super.init()
     }
 }
 

@@ -13,6 +13,13 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     public var listeners = [WOTRequestManagerListenerProtocol]()
 
     @objc
+    public var appManager: WOTAppManagerProtocol? {
+        didSet {
+            coordinator.appManager = appManager
+        }
+    }
+
+    @objc
     required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol, logInspector inspector: LogInspectorProtocol) {
         coordinator = requestCoordinator
         hostConfig = hostConfiguration
@@ -178,7 +185,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             fatalError("Current thread is not main")
         }
 
-        #warning("sometimes crashing")
+        logInspector.log(WebFinishLog(request.description))
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] error in
             DispatchQueue.main.async {
@@ -205,7 +212,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
-        logInspector.log(CancelLog(request.description))
+        logInspector.log(WebCancelLog(request.description))
         removeRequest(request)
     }
 
@@ -213,14 +220,14 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
-        logInspector.log(StartLog(request.description), sender: self)
+        logInspector.log(WebStartLog(request.description), sender: self)
     }
 
     public func removeRequest(_ request: WOTRequestProtocol) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
-        logInspector.log(RemoveLog("\(request.description)"), sender: self)
+        logInspector.log(WebDeinitLog(request.description), sender: self)
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
                 grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })

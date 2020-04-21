@@ -11,6 +11,9 @@ import Foundation
 @objc
 class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
     @objc
+    var appManager: WOTAppManagerProtocol?
+
+    @objc
     func login() {}
 
     @objc

@@ -14,6 +14,9 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { return nil }
 
+    @objc
+    public var appManager: WOTAppManagerProtocol?
+
     @objc lazy public var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
             return nil

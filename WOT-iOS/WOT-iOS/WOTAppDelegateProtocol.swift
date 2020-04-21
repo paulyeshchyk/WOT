@@ -11,5 +11,5 @@ import Foundation
 @objc
 public protocol WOTAppDelegateProtocol {
     @objc
-    var appManager: WOTPivotAppManagerProtocol { get set }
+    var appManager: WOTAppManagerProtocol { get set }
 }
