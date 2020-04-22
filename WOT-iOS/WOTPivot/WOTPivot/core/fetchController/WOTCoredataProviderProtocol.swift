@@ -23,12 +23,14 @@ public protocol WOTCoredataProviderProtocol: NSObjectProtocol {
     @objc var applicationDocumentsDirectoryURL: URL? { get }
     @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }
 
-    @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
-    @objc func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency)
     @objc func perform(_ block: @escaping (NSManagedObjectContext) -> Void)
     @objc func performMain(_ block: @escaping (NSManagedObjectContext) -> Void)
     @objc func stash(_ block: @escaping (Error?) -> Void)
+    @objc func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping (NSManagedObject) -> Void )
+
+    @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>
+    @objc func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency)
 
     @available(*, deprecated, message:"not to be used")
     @objc var mainManagedObjectContext: NSManagedObjectContext { get }

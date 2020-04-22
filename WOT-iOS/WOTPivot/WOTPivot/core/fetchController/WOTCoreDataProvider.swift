@@ -75,6 +75,16 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         }
     }
 
+    @objc
+    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping (NSManagedObject) -> Void ) {
+        perform { context in
+            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) else {
+                fatalError("Managed object is not created:\(predicate?.description ?? "<Unknown predicate>")")
+            }
+            callback(managedObject)
+        }
+    }
+
     private func mergeChanges(notification: Notification, toContext: NSManagedObjectContext) {
         if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? [NSManagedObject] {
             mergeObjects(updatedObjects, toContext: toContext, fromNotification: notification)

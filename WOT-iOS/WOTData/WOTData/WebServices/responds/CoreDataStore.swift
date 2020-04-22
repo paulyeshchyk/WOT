@@ -41,10 +41,7 @@ public class CoreDataStore {
         pkCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
         appManager?.logInspector?.log(JSONParseLog("\(pkCase)"), sender: self)
 
-        appManager?.coreDataProvider?.perform({ context in
-            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: context) else {
-                fatalError("Managed object is not created:\(pkCase.description)")
-            }
+        appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: pkCase[.primary]?.predicate, callback: { (managedObject) in
 
             managedObject.mapping(fromJSON: jsonExtraction.json, pkCase: pkCase, forRequest: self.request, coreDataMapping: self)
             let status = managedObject.isInserted ? "created" : "located"
@@ -75,6 +72,7 @@ extension CoreDataStore: CoreDataStoreProtocol {
     /**
 
      */
+
     public func perform() {
         binary?.parseAsJSON(onReceivedJSON(_:_:))
     }
@@ -120,9 +118,8 @@ extension CoreDataStore: CoreDataStoreProtocol {
 // MARK: - CoreDataMappingProtocol
 extension CoreDataStore: CoreDataMappingProtocol {
     func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, block: @escaping (NSManagedObject?) -> Void) {
-        let primaryKey = pkCase[.primary]
-        appManager?.coreDataProvider?.perform({ (context) in
-            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: context)
+        //
+        appManager?.coreDataProvider?.findOrCreateObject(by: clazz, andPredicate: pkCase[.primary]?.predicate, callback: { (managedObject) in
             block(managedObject)
         })
     }
