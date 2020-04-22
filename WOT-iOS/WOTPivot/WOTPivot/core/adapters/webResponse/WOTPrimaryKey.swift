@@ -71,6 +71,8 @@ public class PKCase: NSObject, WOTDescribable {
         case and = 1
     }
 
+    public override var debugDescription: String { return description }
+
     public override var description: String {
         guard let objects = allValues(), !objects.isEmpty else {
             return "empty case"

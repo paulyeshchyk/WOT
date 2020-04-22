@@ -17,6 +17,7 @@ public enum LogMessagePriorityType: Int {
     case json = 4
     case coredata = 5
     case info = 6
+    case performance = 7
 }
 
 @objc

@@ -34,13 +34,14 @@
      case json = 4
      case coredata = 5
      case info = 6
-
+     case performance = 7
      */
     
     id<LogInspectorProtocol> logInspector = [[LogInspector alloc] init];
     [logInspector objcOnlyAddpriority: 0];
     [logInspector objcOnlyAddpriority: 1];
     [logInspector objcOnlyAddpriority: 3];
+    [logInspector objcOnlyAddpriority: 7];
 
     id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];
 

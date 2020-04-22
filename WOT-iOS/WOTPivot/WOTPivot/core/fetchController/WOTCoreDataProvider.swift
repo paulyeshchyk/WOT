@@ -159,8 +159,16 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
     @objc
     public func stash(_ block: @escaping (Error?) -> Void) {
+        let uuid = UUID()
+        let customBlock: ((Error?) -> Void ) = { error in
+            block(error)
+            self.appManager?.logInspector?.log(TIMEMeasureLog("Context save end", uuid: uuid))
+        }
+
+        appManager?.logInspector?.log(TIMEMeasureLog("Context save start", uuid: uuid))
+
         guard workManagedObjectContext.hasChanges else {
-            block(nil)
+            customBlock(nil)
             return
         }
         workManagedObjectContext.perform {
@@ -169,13 +177,13 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
                 self.mainManagedObjectContext.performAndWait {
                     do {
                         try self.mainManagedObjectContext.save()
-                        block(nil)
+                        customBlock(nil)
                     } catch let error {
-                        block(error)
+                        customBlock(error)
                     }
                 }
             } catch let error {
-                block(error)
+                customBlock(error)
             }
         }
     }

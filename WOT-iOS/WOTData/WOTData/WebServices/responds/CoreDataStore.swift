@@ -34,7 +34,7 @@ public class CoreDataStore {
 
     // MARK: - private
 
-    private func findOrCreateObject(from jsonExtraction: JSONExtraction, callback: @escaping () -> Void) {
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, callback: @escaping () -> Void) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
@@ -107,7 +107,7 @@ extension CoreDataStore: CoreDataStoreProtocol {
         for (idx, key) in keys.enumerated() {
             //
             let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(from: extraction) {
+            findOrCreateObject(for: extraction) {
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
                     self.onFinishJSONParse?(nil)

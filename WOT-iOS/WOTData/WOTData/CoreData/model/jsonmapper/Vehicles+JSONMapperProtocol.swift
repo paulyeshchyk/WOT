@@ -28,6 +28,19 @@
     }
 
     @objc
+    public class func keypathsLight() -> [String] {
+        return [#keyPath(Vehicles.name),
+                #keyPath(Vehicles.short_name),
+                #keyPath(Vehicles.is_premium),
+                #keyPath(Vehicles.is_gift),
+                #keyPath(Vehicles.type),
+                #keyPath(Vehicles.nation),
+                #keyPath(Vehicles.tag),
+                #keyPath(Vehicles.tier),
+                #keyPath(Vehicles.tank_id)]
+    }
+
+    @objc
     public func instanceKeypaths() -> [String] {
         return Vehicles.keypaths()
     }

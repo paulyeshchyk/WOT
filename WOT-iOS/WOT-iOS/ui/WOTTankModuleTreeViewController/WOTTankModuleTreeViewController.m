@@ -168,7 +168,7 @@
 
     _tank_Id = [value copy];
 
-    id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchDataWithVehicleId: [_tank_Id integerValue]
+    id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
                                                                    requestManager: self.requestManager
                                                                          listener: self];
     [request addListener:self];

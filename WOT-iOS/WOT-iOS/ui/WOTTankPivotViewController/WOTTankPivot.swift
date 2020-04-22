@@ -101,14 +101,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
     private func performWebRequest() {
         let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
         let requestManager = appManager?.requestManager
-
-        let arguments = WOTRequestArguments()
-        arguments.setValues(Vehicles.keypaths(), forKey: WGWebQueryArgs.fields)
-
-        if let request = requestManager?.requestCoordinator.createRequest(forRequestId: WebRequestType.vehicles.rawValue) {
-            requestManager?.addListener(self, forRequest: request)
-            requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonLink: nil)
-        }
+        WOTWEBRequestFactory.fetchVehiclePivotData(requestManager, listener: self)
     }
 }
 
