@@ -22,7 +22,7 @@
 
 + (id)currentAccessToken {
 
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return session.access_token;
@@ -30,7 +30,7 @@
 
 + (NSString *)currentUserName {
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return session.nickname;
@@ -38,7 +38,7 @@
 
 + (NSTimeInterval)expirationTime {
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
     return [session.expires_at integerValue];

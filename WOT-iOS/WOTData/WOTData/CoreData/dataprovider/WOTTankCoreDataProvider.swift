@@ -10,8 +10,6 @@ import WOTPivot
 
 @objc
 public class WOTTankCoreDataProvider: WOTCoreDataProvider {
-    @objc public static let sharedInstance = WOTTankCoreDataProvider()
-
     override public var applicationDocumentsDirectoryURL: URL? {
         return FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).last
     }

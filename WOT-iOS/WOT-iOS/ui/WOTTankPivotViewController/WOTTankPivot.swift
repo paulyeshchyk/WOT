@@ -75,9 +75,8 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class WOTTankPivotModel: WOTPivotDataModel {
-    convenience init(modelListener: WOTDataModelListener) {
+    convenience init(modelListener: WOTDataModelListener, dataProvider: WOTCoredataProviderProtocol?) {
         let fetchRequest = WOTTankPivotFetchRequest()
-        let dataProvider = WOTTankCoreDataProvider.sharedInstance
         let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: dataProvider)
 
         let metadatasource = WOTTankPivotMetadatasource()
@@ -119,13 +118,11 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
     }
 
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, finished: Bool) {
-        defer {
+        DispatchQueue.main.async {
+            super.loadModel()
             if finished {
                 requestManager.removeListener(self)
             }
-        }
-        DispatchQueue.main.async {
-            super.loadModel()
         }
     }
 

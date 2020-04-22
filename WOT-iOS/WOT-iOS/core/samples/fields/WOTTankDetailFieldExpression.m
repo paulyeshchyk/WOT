@@ -65,7 +65,7 @@
     request.propertiesToFetch = expressionsForRequest;
 
     NSError *error = nil;
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     NSArray *objects = [context executeFetchRequest:request error:&error];
     NSDictionary *requestValues = [objects lastObject];

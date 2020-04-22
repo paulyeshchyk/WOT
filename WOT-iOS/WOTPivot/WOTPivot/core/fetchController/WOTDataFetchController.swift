@@ -10,39 +10,56 @@ import Foundation
 import CoreData
 
 open class WOTDataFetchController: NSObject {
-    lazy fileprivate var fetchResultController: NSFetchedResultsController<NSFetchRequestResult> = {
-        let context = self.dataProvider.mainManagedObjectContext
-        let request = self.nodeFetchRequestCreator.fetchRequest
-        let result = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        result.delegate = self
-        return result
-    }()
+    typealias WOTDataFetchedResultController = NSFetchedResultsController<NSFetchRequestResult>
+
+    private var fetchResultController: WOTDataFetchedResultController?
+
+    private func initFetchController( block: @escaping (WOTDataFetchedResultController) -> Void ) throws {
+        self.dataProvider?.performMain({ context in
+
+            let request = self.nodeFetchRequestCreator.fetchRequest
+            guard let result = self.dataProvider?.fetchResultController(for: request, andContext: context) else {
+                fatalError("no FetchResultController created")
+            }
+            result.delegate = self
+            block(result)
+        })
+    }
 
     public var listener: WOTDataFetchControllerListenerProtocol?
     public var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
-    public var dataProvider: WOTCoredataProviderProtocol
+    public var dataProvider: WOTCoredataProviderProtocol?
 
     @objc
-    public init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTCoredataProviderProtocol) {
+    required public init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTCoredataProviderProtocol?) {
         nodeFetchRequestCreator = nfrc
         dataProvider = dataprovider
     }
 
     deinit {
-        self.fetchResultController.delegate = nil
+        self.fetchResultController?.delegate = nil
     }
 }
 
 extension WOTDataFetchController: WOTDataFetchControllerProtocol {
     public func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
-        self.fetchResultController.managedObjectContext.perform({
-            do {
-                try self.fetchResultController.performFetch()
-                self.listener?.fetchPerformed(by: self)
-            } catch let error {
-                self.listener?.fetchFailed(by: self, withError: error)
+        if let fetch = self.fetchResultController {
+            try performFetch(with: fetch, nodeCreator: nodeCreator)
+        } else {
+            try initFetchController { fetch in
+                self.fetchResultController = fetch
+                try? self.performFetch(with: fetch, nodeCreator: nodeCreator)
             }
-        })
+        }
+    }
+
+    private func performFetch(with fetchResultController: WOTDataFetchedResultController, nodeCreator: WOTNodeCreatorProtocol? ) throws {
+        do {
+            try fetchResultController.performFetch()
+            self.listener?.fetchPerformed(by: self)
+        } catch let error {
+            self.listener?.fetchFailed(by: self, withError: error)
+        }
     }
 
     public func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?) {
@@ -50,7 +67,7 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
     }
 
     public func fetchedObjects() -> [AnyObject]? {
-        return self.fetchResultController.fetchedObjects
+        return self.fetchResultController?.fetchedObjects
     }
 
     open func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {

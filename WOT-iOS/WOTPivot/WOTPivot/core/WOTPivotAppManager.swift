@@ -27,10 +27,19 @@ public protocol WOTAppManagerProtocol {
 
     @objc
     var coreDataProvider: WOTCoredataProviderProtocol? { get set }
+
+    @objc
+    var shared: WOTAppManagerProtocol { get }
 }
 
 @objc
 public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
+    @objc
+    public static let sharedInstance = WOTPivotAppManager()
+
+    @objc
+    public var shared: WOTAppManagerProtocol { return WOTPivotAppManager.sharedInstance }
+
     @objc
     public var hostConfiguration: WOTHostConfigurationProtocol?
 

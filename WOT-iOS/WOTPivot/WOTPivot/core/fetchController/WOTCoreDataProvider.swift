@@ -48,9 +48,9 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
     @objc public lazy var workManagedObjectContext: NSManagedObjectContext  = {
         let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
-//        context.persistentStoreCoordinator = self.persistentStoreCoordinator
         context.parent = self.mainManagedObjectContext
         context.undoManager = nil
+        NotificationCenter.default.addObserver(self, selector: #selector(WOTCoreDataProvider.workContextDidSave(notification:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
         return context
     }()
 
@@ -70,25 +70,39 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     }
 
     @objc private func workContextDidSave(notification: Notification) {
-        self.mainManagedObjectContext.perform {
+        self.mainManagedObjectContext.performAndWait {
             self.mergeChanges(notification: notification, toContext: self.mainManagedObjectContext)
         }
     }
 
     private func mergeChanges(notification: Notification, toContext: NSManagedObjectContext) {
-        guard let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? [NSManagedObject] else {
-            return
+        if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? [NSManagedObject] {
+            mergeObjects(updatedObjects, toContext: toContext, fromNotification: notification)
+        }
+        if let updatedObject = notification.userInfo?[NSUpdatedObjectsKey] as? NSManagedObject {
+            mergeObjects([updatedObject], toContext: toContext, fromNotification: notification)
         }
 
+        if let insertedObjects = notification.userInfo?[NSInsertedObjectsKey] as? [NSManagedObject] {
+            mergeObjects(insertedObjects, toContext: toContext, fromNotification: notification)
+        }
+
+        if let insertedObject = notification.userInfo?[NSInsertedObjectsKey] as? NSManagedObject {
+            mergeObjects([insertedObject], toContext: toContext, fromNotification: notification)
+        }
+    }
+
+    private func mergeObjects(_ objects: [NSManagedObject], toContext: NSManagedObjectContext, fromNotification: Notification) {
+        appManager?.logInspector?.log(CDMergeLog())
         var updatedObjectsInCurrentContext = Set<NSManagedObject>()
 
-        updatedObjects.forEach { (updatedObject) in
+        objects.forEach { (updatedObject) in
             let objectFromContext = toContext.object(with: updatedObject.objectID)
             objectFromContext.willAccessValue(forKey: nil)
             updatedObjectsInCurrentContext.insert(objectFromContext)
         }
 
-        toContext.mergeChanges(fromContextDidSave: notification)
+        toContext.mergeChanges(fromContextDidSave: fromNotification)
         let setOfUpdatedObjects = updatedObjectsInCurrentContext.intersection(toContext.updatedObjects)
         setOfUpdatedObjects.forEach { (obj) in
             toContext.refresh(obj, mergeChanges: true)
@@ -103,4 +117,48 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     }
 
     public func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency) {}
+
+    private func tryToSave(_ context: NSManagedObjectContext, block: @escaping (Error?) -> Void) {
+        guard context.hasChanges else {
+            block(nil)
+            return
+        }
+        do {
+            try context.save()
+            block(nil)
+        } catch let error {
+            block(error)
+        }
+    }
+
+    private func perform(inContext: NSManagedObjectContext, block: @escaping (NSManagedObjectContext) -> Void) {
+        inContext.perform {
+            block(inContext)
+        }
+    }
+
+    @objc
+    public func perform(_ block: @escaping (NSManagedObjectContext) -> Void) {
+        perform(inContext: workManagedObjectContext, block: block)
+    }
+
+    @objc
+    public func performMain(_ block: @escaping (NSManagedObjectContext) -> Void) {
+        perform(inContext: mainManagedObjectContext, block: block)
+    }
+
+    @objc
+    public func stash(_ block: @escaping (Error?) -> Void) {
+        tryToSave(workManagedObjectContext, block: block)
+    }
+
+    @objc
+    public func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult> {
+        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: andContext, sectionNameKeyPath: nil, cacheName: nil)
+    }
+
+    @objc
+    public func mainFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>) -> NSFetchedResultsController<NSFetchRequestResult> {
+        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainManagedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+    }
 }

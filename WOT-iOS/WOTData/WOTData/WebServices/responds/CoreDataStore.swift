@@ -17,9 +17,6 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
     var onGetObjectJSON: ((JSON) -> JSON)?
     var onFinishJSONParse: ((Error?) -> Void)?
     let appManager: WOTAppManagerProtocol?
-    private var context: NSManagedObjectContext? {
-        return appManager?.coreDataProvider?.workManagedObjectContext
-    }
 
     public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, appManager: WOTAppManagerProtocol?) {
         self.Clazz = clazz
@@ -44,8 +41,7 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
             fatalError("Current thread is not main")
         }
 
-        let context = appManager?.coreDataProvider?.workManagedObjectContext
-        context?.perform {
+        appManager?.coreDataProvider?.perform({ context in
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: context) else {
                 fatalError("Managed object is not created:\(pkCase.description)")
             }
@@ -55,7 +51,7 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
             self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(pkCase.description); status: \(status)"), sender: self)
 
             completion()
-        }
+        })
     }
 
     // MARK: - CoreDataSubordinatorProtocol
@@ -64,22 +60,27 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
             return
         }
-        context?.perform {
-            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: self.context) else {
+        appManager?.coreDataProvider?.perform({ context in
+            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) else {
                 fatalError("Managed object is not created:\(pkCase.description)")
             }
             let status = managedObject.isInserted ? "created" : "located"
             self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
             callback(managedObject)
-        }
+        })
     }
 
     public func stash() {
         if Thread.current.isMainThread {
             fatalError("should not be executed on main")
         }
-        appManager?.logInspector?.log(CDStashLog("\(request.description)"), sender: self)
-        context?.tryToSave()
+        appManager?.coreDataProvider?.stash({ (error) in
+            if let error = error {
+                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
+            } else {
+                self.appManager?.logInspector?.log(CDStashLog("\(self.request.description)"), sender: self)
+            }
+        })
     }
 }
 
@@ -90,10 +91,12 @@ extension CoreDataStore: LogMessageSender {
 }
 
 extension CoreDataStore {
-    func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase) -> NSManagedObject? {
+    func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, block: @escaping (NSManagedObject?) -> Void) {
         let primaryKey = pkCase[.primary]
-        let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: self.context)
-        return managedObject
+        appManager?.coreDataProvider?.perform({ (context) in
+            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: context)
+            block(managedObject)
+        })
     }
 }
 

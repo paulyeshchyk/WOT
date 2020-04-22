@@ -34,7 +34,6 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     }
 
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
-    var dataProvider = WOTTankCoreDataProvider.sharedInstance
 
     override init() {
         super.init()
@@ -48,15 +47,16 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: L10n.wotStringProfile, icon: UIImage(), userDependence: false))
 
-        let context = self.dataProvider.mainManagedObjectContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: UserSession.self))
-        request.sortDescriptors = [NSSortDescriptor(key: L10n.wotKeyExpiresAt, ascending: false)]
-        let fetchedResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultController.delegate = self
-        self.fetchedResultController = fetchedResultController
-        do {
-            try fetchedResultController.performFetch()
-        } catch {}
+        WOTPivotAppManager.sharedInstance.coreDataProvider?.perform({ (context) in
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: UserSession.self))
+            request.sortDescriptors = [NSSortDescriptor(key: L10n.wotKeyExpiresAt, ascending: false)]
+            let fetchedResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            fetchedResultController.delegate = self
+            self.fetchedResultController = fetchedResultController
+            do {
+                try fetchedResultController.performFetch()
+            } catch {}
+        })
     }
 
     weak var delegate: WOTMenuDatasourceDelegate?

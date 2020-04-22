@@ -21,34 +21,34 @@
 
 + (void)registerDefaultSettings {
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
-    NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
+    [dataProvider perform:^(NSManagedObjectContext * _Nonnull context) {
 
-    NSString *entityName = NSStringFromClass([ListSetting class]);
-    NSError *error = nil;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
-    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
-    NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    [fetchedResultController performFetch:&error];
-    
-#warning will recreate objects if user has deleted everything
-    if ([[fetchedResultController fetchedObjects] count] == 0) {
+        NSString *entityName = NSStringFromClass([ListSetting class]);
+        NSError *error = nil;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
+        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
+        NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+        [fetchedResultController performFetch:&error];
         
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.nation ascending:NO orderBy:0 callback:NULL];
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.type ascending:YES orderBy:1 callback:NULL];
-        
-        
-        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOTApiKeys.nation ascending:YES orderBy:0 callback:NULL];
-        
-        [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.tier value:@"6" callback:NULL];
-        
-        if ([context hasChanges]) {
+        #warning will recreate objects if user has deleted everything
+        if ([[fetchedResultController fetchedObjects] count] == 0) {
             
-            NSError *error = nil;
-            [context save:&error];
+            [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.nation ascending:NO orderBy:0 callback:NULL];
+            [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.type ascending:YES orderBy:1 callback:NULL];
+            
+            
+            [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOTApiKeys.nation ascending:YES orderBy:0 callback:NULL];
+            
+            [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.tier value:@"6" callback:NULL];
+            
+            if ([context hasChanges]) {
+                
+                NSError *error = nil;
+                [context save:&error];
+            }
         }
-    }
-    
+    }];
 }
 
 static NSString *WOTWEBRequestDefaultLanguage;

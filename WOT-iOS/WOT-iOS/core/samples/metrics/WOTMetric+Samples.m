@@ -28,7 +28,7 @@
     request.predicate = predicate;
     request.propertiesToFetch = [self.expression expressionDescriptions];
     request.resultType = NSDictionaryResultType;
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTTankCoreDataProvider sharedInstance];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
     NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
     id result = [context executeFetchRequest:request error:&error];
     

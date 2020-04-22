@@ -42,7 +42,7 @@
     
     id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTTankCoreDataProvider alloc] init];
 
-    self.appManager = [[WOTPivotAppManager alloc] init];
+    self.appManager = [WOTPivotAppManager sharedInstance];
     self.appManager.hostConfiguration = hostConfiguration;
     self.appManager.requestManager = requestManager;
     self.appManager.requestListener = requestManager;

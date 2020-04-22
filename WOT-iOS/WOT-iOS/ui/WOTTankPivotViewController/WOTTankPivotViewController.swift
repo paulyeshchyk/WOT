@@ -168,7 +168,7 @@ class WOTTankPivotViewController: WOTPivotViewController {
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
 
     override func pivotModel() -> WOTPivotDataModelProtocol {
-        return WOTTankPivotModel(modelListener: self)
+        return WOTTankPivotModel(modelListener: self, dataProvider: WOTPivotAppManager.sharedInstance.coreDataProvider)
     }
 
     override func viewDidLoad() {
