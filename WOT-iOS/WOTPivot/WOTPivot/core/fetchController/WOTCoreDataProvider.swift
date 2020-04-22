@@ -46,12 +46,13 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         return coordinator
     }()
 
-    @objc public lazy var workManagedObjectContext: NSManagedObjectContext  = {
-        let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
-        context.parent = self.mainManagedObjectContext
-        context.undoManager = nil
-        NotificationCenter.default.addObserver(self, selector: #selector(WOTCoreDataProvider.workContextDidSave(notification:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
-        return context
+    @objc private lazy var workManagedObjectContext: NSManagedObjectContext  = {
+        return mainManagedObjectContext
+//        let context = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
+//        context.parent = self.mainManagedObjectContext
+//        context.undoManager = nil
+//        NotificationCenter.default.addObserver(self, selector: #selector(WOTCoreDataProvider.workContextDidSave(notification:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
+//        return context
     }()
 
     @objc public lazy var mainManagedObjectContext: NSManagedObjectContext  = {

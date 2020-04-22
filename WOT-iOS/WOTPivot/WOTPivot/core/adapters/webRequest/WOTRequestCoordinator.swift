@@ -152,18 +152,27 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 
     @objc
     public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ((Error?) -> Void) ) {
-        guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else { return }
+        guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else {
+            appManager?.logInspector?.log(ErrorLog("model class not found for request\(request.description)"), sender: self)
+            onFinish(nil)
+            return
+        }
 
         var coreDataStoreStack: [CoreDataStoreProtocol] = .init()
         let requestIdTypes = self.requestIds(forClass: modelClass)
         requestIdTypes?.forEach({ requestIdType in
-            guard let adapter = adapterInstance(for: requestIdType) else {
-                appManager?.logInspector?.log(ErrorLog("Adapter not found for :\(requestIdType)"), sender: self)
-                return
+
+            if let adapter = adapterInstance(for: requestIdType) {
+                let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, onFinish: onFinish)
+                coreDataStoreStack.append(store)
+            } else {
+                appManager?.logInspector?.log(ErrorLog("Adapter not found for \(requestIdType)"), sender: self)
             }
-            let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, onFinish: onFinish)
-            coreDataStoreStack.append(store)
         })
+
+        if coreDataStoreStack.count == 0 {
+            onFinish(nil)
+        }
 
         coreDataStoreStack.forEach { (store) in
             store.perform()

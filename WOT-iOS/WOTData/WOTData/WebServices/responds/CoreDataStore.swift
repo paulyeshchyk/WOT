@@ -162,9 +162,9 @@ extension CoreDataStore: CoreDataMappingProtocol {
 
      */
     public func stash(_ pkCase: PKCase) {
-        if Thread.current.isMainThread {
-            fatalError("should not be executed on main")
-        }
+//        if Thread.current.isMainThread {
+//            fatalError("should not be executed on main")
+//        }
         guard let provider = appManager?.coreDataProvider else {
             fatalError("provider was released")
         }
