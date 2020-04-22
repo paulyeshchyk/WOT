@@ -39,6 +39,9 @@ extension ModulesTree {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+        defer {
+            coreDataMapping?.stash()
+        }
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
@@ -50,7 +53,6 @@ extension ModulesTree {
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
          */
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
-        coreDataMapping?.stash()
 
         var requests = [WOTJSONLink]()
 

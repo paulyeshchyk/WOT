@@ -149,7 +149,25 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
     @objc
     public func stash(_ block: @escaping (Error?) -> Void) {
-        tryToSave(workManagedObjectContext, block: block)
+        guard workManagedObjectContext.hasChanges else {
+            block(nil)
+            return
+        }
+        workManagedObjectContext.perform {
+            do {
+                try self.workManagedObjectContext.save()
+                self.mainManagedObjectContext.performAndWait {
+                    do {
+                        try self.mainManagedObjectContext.save()
+                        block(nil)
+                    } catch let error {
+                        block(error)
+                    }
+                }
+            } catch let error {
+                block(error)
+            }
+        }
     }
 
     @objc

@@ -31,23 +31,31 @@ public class CoreDataStore {
     }
 
     // MARK: - private
-    private func perform(pkCase: PKCase, json: JSON, completion: @escaping () -> Void ) {
+
+    private func findOrCreateObject(from jsonExtraction: JSONExtraction, callback: @escaping () -> Void) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
+        //
+        let pkCase = PKCase()
+        pkCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
+        appManager?.logInspector?.log(JSONParseLog("\(pkCase)"), sender: self)
 
         appManager?.coreDataProvider?.perform({ context in
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: context) else {
                 fatalError("Managed object is not created:\(pkCase.description)")
             }
 
-            managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, coreDataMapping: self)
+            managedObject.mapping(fromJSON: jsonExtraction.json, pkCase: pkCase, forRequest: self.request, coreDataMapping: self)
             let status = managedObject.isInserted ? "created" : "located"
             self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(pkCase.description); status: \(status)"), sender: self)
+            self.appManager?.logInspector?.log(JSONFinishLog("\(pkCase)"), sender: self)
 
-            completion()
+            callback()
         })
     }
+
+    private func perform(pkCase: PKCase, json: JSON, completion: @escaping () -> Void ) {}
 }
 
 // MARK: - LogMessageSender
@@ -59,11 +67,32 @@ extension CoreDataStore: LogMessageSender {
 
 // MARK: - CoreDataStoreProtocol
 extension CoreDataStore: CoreDataStoreProtocol {
+    private struct JSONExtraction {
+        let identifier: Any
+        let json: JSON
+    }
+
     /**
 
      */
     public func perform() {
         binary?.parseAsJSON(onReceivedJSON(_:_:))
+    }
+
+    private func extractSubJSON(from json: JSON, by key: AnyHashable ) -> JSONExtraction {
+        guard let jsonByKey = json[key] as? JSON else {
+            fatalError("invalid json for key")
+        }
+        let objectJson: JSON
+        if let jsonExtractor = onGetObjectJSON {
+            objectJson = jsonExtractor(jsonByKey)
+        } else {
+            objectJson = jsonByKey
+        }
+        guard let ident = onGetIdent?(Clazz, objectJson, key) else {
+            fatalError("onGetIdent not defined")
+        }
+        return JSONExtraction(identifier: ident, json: objectJson)
     }
 
     private func onReceivedJSON(_ json: JSON?, _ error: Error?) {
@@ -76,29 +105,11 @@ extension CoreDataStore: CoreDataStoreProtocol {
 
         appManager?.logInspector?.log(JSONStartLog(""), sender: self)
         let keys = json.keys
-        var mutatingKeysCounter = keys.count
-        keys.forEach { (key) in
-
-            guard let jsonByKey = json[key] as? JSON else {
-                fatalError("invalid json for key")
-            }
-            let objectJson: JSON
-            if let jsonExtractor = onGetObjectJSON {
-                objectJson = jsonExtractor(jsonByKey)
-            } else {
-                objectJson = jsonByKey
-            }
-            guard let ident = onGetIdent?(Clazz, objectJson, key) else {
-                fatalError("onGetIdent not defined")
-            }
-
-            let pkCase = PKCase()
-            pkCase[.primary] = Clazz.primaryKey(for: ident as AnyObject)
-            appManager?.logInspector?.log(JSONParseLog("\(pkCase)"), sender: self)
-            perform(pkCase: pkCase, json: objectJson) {
-                mutatingKeysCounter -= 1
-                if mutatingKeysCounter <= 0 {
-                    self.appManager?.logInspector?.log(JSONFinishLog("\(pkCase)"), sender: self)
+        for (idx, key) in keys.enumerated() {
+            //
+            let extraction = extractSubJSON(from: json, by: key)
+            findOrCreateObject(from: extraction) {
+                if idx == (keys.count - 1) {
                     self.onFinishJSONParse?(nil)
                 }
             }
@@ -135,6 +146,7 @@ extension CoreDataStore: CoreDataMappingProtocol {
     public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
+            callback(nil)
             return
         }
         appManager?.coreDataProvider?.perform({ context in
@@ -154,7 +166,11 @@ extension CoreDataStore: CoreDataMappingProtocol {
         if Thread.current.isMainThread {
             fatalError("should not be executed on main")
         }
-        appManager?.coreDataProvider?.stash({ (error) in
+        guard let provider = appManager?.coreDataProvider else {
+            fatalError("provider was released")
+        }
+
+        provider.stash({ (error) in
             if let error = error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
             } else {

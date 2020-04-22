@@ -47,6 +47,9 @@ extension Vehicleprofile {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+        defer {
+            coreDataMapping?.stash()
+        }
         self.tank_id = AnyConvertable(jSON[#keyPath(Vehicleprofile.tank_id)]).asNSDecimal
         self.is_default = AnyConvertable(jSON[#keyPath(Vehicleprofile.is_default)]).asNSDecimal
         self.max_ammo = AnyConvertable(jSON[#keyPath(Vehicleprofile.max_ammo)]).asNSDecimal
@@ -57,8 +60,6 @@ extension Vehicleprofile {
         self.hull_weight = AnyConvertable(jSON[#keyPath(Vehicleprofile.hull_weight)]).asNSDecimal
         self.speed_backward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_backward)]).asNSDecimal
         self.speed_forward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_forward)]).asNSDecimal
-
-        coreDataMapping?.stash()
 
         let vehicleprofileAmmoListCase = PKCase()
         vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
@@ -139,7 +140,10 @@ extension Vehicleprofile: PrimaryKeypathProtocol {
 
 extension Vehicleprofile {
     public static func profile(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
-        guard let jSON = jSON as? JSON else { return }
+        guard let jSON = jSON as? JSON else {
+            callback(nil)
+            return
+        }
 
         coreDataMapping?.requestNewSubordinate(Vehicleprofile.self, pkCase) { newObject in
             newObject?.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)

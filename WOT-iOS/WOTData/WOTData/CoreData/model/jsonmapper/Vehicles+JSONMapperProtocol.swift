@@ -73,13 +73,13 @@ extension Vehicles {
         self.type = jSON[#keyPath(Vehicles.type)] as? String
 
         #warning("do not parse on application startup")
-//        let vehicleProfileCase = PKCase()
-//        vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-//
-//        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
-//            self.default_profile = newObject as? Vehicleprofile
-//            coreDataMapping?.stash()
-//        }
+        let vehicleProfileCase = PKCase()
+        vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
+
+        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+            self.default_profile = newObject as? Vehicleprofile
+            coreDataMapping?.stash()
+        }
 
         /*
          if let set = self.modules_tree {
