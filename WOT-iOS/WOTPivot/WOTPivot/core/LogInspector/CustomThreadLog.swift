@@ -10,8 +10,8 @@ import Foundation
 
 public class CustomThreadLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .debug }
-    public var logeventType: String { return "THREAD"}
+    public var priorityType: LogMessagePriorityType { return .threads }
+    public var logeventType: String { return "THREADCustom"}
 
     public init() {
         message = ""

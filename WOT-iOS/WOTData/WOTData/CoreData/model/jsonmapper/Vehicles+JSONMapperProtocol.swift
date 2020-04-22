@@ -57,7 +57,7 @@ extension Vehicles {
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         defer {
-            coreDataMapping?.stash()
+            coreDataMapping?.stash(pkCase)
         }
         let tankID = jSON[#keyPath(Vehicles.tank_id)]
         self.name = jSON[#keyPath(Vehicles.name)] as? String
@@ -78,7 +78,7 @@ extension Vehicles {
 
         Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.default_profile = newObject as? Vehicleprofile
-            coreDataMapping?.stash()
+            coreDataMapping?.stash(vehicleProfileCase)
         }
 
         /*

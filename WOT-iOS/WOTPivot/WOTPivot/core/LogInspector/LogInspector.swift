@@ -10,10 +10,13 @@ import Foundation
 
 @objc
 public enum LogMessagePriorityType: Int {
-    case minor = 0
-    case normal = 1
-    case critical = 2
-    case debug = 3
+    case error = 0
+    case lifeCycle = 1
+    case threads = 2
+    case web = 3
+    case json = 4
+    case coredata = 5
+    case info = 6
 }
 
 @objc
@@ -21,7 +24,6 @@ public protocol LogMessageTypeProtocol {
     var message: String { get }
     var logeventType: String { get }
     var priorityType: LogMessagePriorityType { get }
-//    init?(_ text: String)
 }
 
 @objc

@@ -10,7 +10,7 @@ import Foundation
 
 public class ErrorLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .critical }
+    public var priorityType: LogMessagePriorityType { return .error }
     public var logeventType: String { return "ERROR"}
 
     public init() {

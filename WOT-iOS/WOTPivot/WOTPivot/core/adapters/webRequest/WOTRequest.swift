@@ -82,16 +82,7 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
     var uuid: UUID { get }
 
     var parentRequest: WOTRequestProtocol? { get set }
-
-    var logInspector: LogInspectorProtocol { get }
 }
-
-//public extension WOTRequestProtocol {
-//    func log(action: WOTRequestAction) {//  -
-//        let result = "[\(type(of: self))]\(action.description) \(action.details) \(self.description)"
-//        print(result)
-//    }
-//}
 
 @objc
 public protocol WOTRequestManagerListenerProtocol {
@@ -186,10 +177,6 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
             listeners.remove(at: index)
         }
     }
-
-    public lazy var logInspector: LogInspectorProtocol = {
-        return LogInspector(priorities: [.minor, .normal, .critical, .debug])
-    }()
 
     override open var hash: Int {
         return NSStringFromClass(type(of: self)).hash

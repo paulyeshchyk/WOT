@@ -10,7 +10,7 @@ import Foundation
 
 public class JSONStartLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .minor }
+    public var priorityType: LogMessagePriorityType { return .json }
     public var logeventType: String { return "JSONStart"}
 
     public init() {

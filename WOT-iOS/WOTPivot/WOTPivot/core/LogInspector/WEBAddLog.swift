@@ -1,5 +1,5 @@
 //
-//  StartLog.swift
+//  AddLog.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/21/20.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class StartLog: LogMessageTypeProtocol {
+public class WEBAddLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .minor }
-    public var logeventType: String { return "START"}
+    public var priorityType: LogMessagePriorityType { return .web }
+    public var logeventType: String { return "WEBAdd"}
 
     public init() {
         message = ""

@@ -26,8 +26,10 @@ public protocol CoreDataMappingProtocol {
 
     /**
      Asks Subordinator to save context before running links mapping
+        - Parameter pkCase: just informative
+
      */
-    func stash()
+    func stash(_ pkCase: PKCase)
 }
 
 public protocol JSONMapperProtocol {

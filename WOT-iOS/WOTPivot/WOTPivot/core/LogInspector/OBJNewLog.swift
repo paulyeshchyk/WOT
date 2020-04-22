@@ -1,5 +1,5 @@
 //
-//  CancelLog.swift
+//  CreateLog.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/21/20.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class CancelLog: LogMessageTypeProtocol {
+public class OBJNewLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .minor }
-    public var logeventType: String { return "CANCEL"}
+    public var priorityType: LogMessagePriorityType { return .lifeCycle }
+    public var logeventType: String { return "OBJNew"}
 
     public init() {
         message = ""
@@ -19,5 +19,9 @@ public class CancelLog: LogMessageTypeProtocol {
 
     required public init?(_ text: String) {
         message = text
+    }
+
+    public init?(error: Error) {
+        message = error.localizedDescription
     }
 }

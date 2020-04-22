@@ -10,7 +10,7 @@ import Foundation
 
 public class CurrentThreadLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .debug }
+    public var priorityType: LogMessagePriorityType { return .threads }
     public var logeventType: String { return "THREAD"}
 
     private static var threadMessage: String {

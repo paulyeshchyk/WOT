@@ -10,7 +10,7 @@ import Foundation
 
 public class CDFetchLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .normal }
+    public var priorityType: LogMessagePriorityType { return .coredata }
     public var logeventType: String { return "CDFetch"}
 
     public init() {

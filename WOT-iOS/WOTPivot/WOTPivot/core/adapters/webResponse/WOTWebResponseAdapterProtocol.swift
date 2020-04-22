@@ -31,11 +31,7 @@ public protocol WOTWebResponseAdapterProtocol: NSObjectProtocol {
 open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
     public var appManager: WOTAppManagerProtocol?
 
-    public lazy var logInspector: LogInspectorProtocol = {
-        return LogInspector(priorities: [.minor, .normal, .critical, .debug])
-    }()
-
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ))  -> CoreDataStoreProtocol {
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void )) -> CoreDataStoreProtocol {
         fatalError("should be overriden")
     }
 

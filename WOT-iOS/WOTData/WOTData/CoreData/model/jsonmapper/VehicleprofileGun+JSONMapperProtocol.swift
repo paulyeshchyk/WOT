@@ -50,7 +50,7 @@ extension VehicleprofileGun {
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         defer {
-            coreDataMapping?.stash()
+            coreDataMapping?.stash(pkCase)
         }
         self.name = jSON[#keyPath(VehicleprofileGun.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileGun.tier)] as? Int ?? 0)

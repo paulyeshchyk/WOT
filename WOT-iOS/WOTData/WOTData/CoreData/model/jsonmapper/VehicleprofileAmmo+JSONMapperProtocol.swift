@@ -35,7 +35,7 @@ extension VehicleprofileAmmo {
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         defer {
-            coreDataMapping?.stash()
+            coreDataMapping?.stash(pkCase)
         }
 
         self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
@@ -45,7 +45,7 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)], pkCase: vehicleprofileAmmoPenetrationCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.penetration = newObject as? VehicleprofileAmmoPenetration
-            coreDataMapping?.stash()
+            coreDataMapping?.stash(vehicleprofileAmmoPenetrationCase)
         }
 
         let vehicleprofileAmmoDamageCase = PKCase()
@@ -53,7 +53,7 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], pkCase: vehicleprofileAmmoDamageCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.damage = newObject as? VehicleprofileAmmoDamage
-            coreDataMapping?.stash()
+            coreDataMapping?.stash(vehicleprofileAmmoDamageCase)
         }
     }
 

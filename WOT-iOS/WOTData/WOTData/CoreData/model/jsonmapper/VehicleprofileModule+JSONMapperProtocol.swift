@@ -15,7 +15,7 @@ extension VehicleprofileModule {
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         defer {
-            coreDataMapping?.stash()
+            coreDataMapping?.stash(pkCase)
         }
         self.radio_id = AnyConvertable(#keyPath(VehicleprofileModule.radio_id)).asNSDecimal
         self.suspension_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.suspension_id)]).asNSDecimal

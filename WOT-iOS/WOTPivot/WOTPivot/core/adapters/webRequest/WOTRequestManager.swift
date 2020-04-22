@@ -74,7 +74,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
         self.request(request, addSubordinateLink: jsonLink)
 
-        appManager?.logInspector?.log(AddLog("\(request.description)"), sender: self)
+        appManager?.logInspector?.log(WEBAddLog("\(request.description)"), sender: self)
 
         return result
     }
@@ -181,7 +181,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             fatalError("Current thread is not main")
         }
 
-        appManager?.logInspector?.log(WebFinishLog(request.description))
+        appManager?.logInspector?.log(WEBFinishLog(request.description))
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] error in
             DispatchQueue.main.async {
@@ -208,7 +208,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
-        appManager?.logInspector?.log(WebCancelLog(request.description))
+        appManager?.logInspector?.log(WEBCancelLog(request.description))
         removeRequest(request)
     }
 
@@ -216,14 +216,14 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
-        appManager?.logInspector?.log(WebStartLog(request.description), sender: self)
+        appManager?.logInspector?.log(WEBStartLog(request.description), sender: self)
     }
 
     public func removeRequest(_ request: WOTRequestProtocol) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
-        appManager?.logInspector?.log(WebDeinitLog(request.description), sender: self)
+        appManager?.logInspector?.log(WEBDeinitLog(request.description), sender: self)
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
                 grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })

@@ -10,7 +10,7 @@ import Foundation
 
 public class CDStashLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .normal }
+    public var priorityType: LogMessagePriorityType { return .coredata }
     public var logeventType: String { return "CDStash"}
 
     public init() {

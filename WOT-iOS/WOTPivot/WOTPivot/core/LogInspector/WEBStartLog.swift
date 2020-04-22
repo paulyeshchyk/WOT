@@ -1,5 +1,5 @@
 //
-//  MappingLog.swift
+//  WebStartLog.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/21/20.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class MappingLog: LogMessageTypeProtocol {
+public class WEBStartLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .minor }
-    public var logeventType: String { return "MAPPING"}
+    public var priorityType: LogMessagePriorityType { return .web }
+    public var logeventType: String { return "WEBStart"}
 
     public init() {
         message = ""

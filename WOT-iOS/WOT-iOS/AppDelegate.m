@@ -26,10 +26,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    /*
+     case error = 0
+     case lifeCycle = 1
+     case threads = 2
+     case web = 3
+     case json = 4
+     case coredata = 5
+     case info = 6
+
+     */
+    
     id<LogInspectorProtocol> logInspector = [[LogInspector alloc] init];
     [logInspector objcOnlyAddpriority: 0];
     [logInspector objcOnlyAddpriority: 1];
-    [logInspector objcOnlyAddpriority: 2];
     [logInspector objcOnlyAddpriority: 3];
 
     id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];

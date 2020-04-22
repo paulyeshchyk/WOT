@@ -25,11 +25,11 @@ public class CoreDataStore {
         self.linkAdapter = linkAdapter
         self.appManager = appManager
 
-        appManager?.logInspector?.log(CreateLog(request.description), sender: self)
+        appManager?.logInspector?.log(OBJNewLog(request.description), sender: self)
     }
 
     deinit {
-        appManager?.logInspector?.log(DeinitLog(request.description), sender: self)
+        appManager?.logInspector?.log(OBJFreeLog(request.description), sender: self)
     }
 
     // MARK: - private
@@ -41,7 +41,7 @@ public class CoreDataStore {
         //
         let pkCase = PKCase()
         pkCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
-        appManager?.logInspector?.log(JSONParseLog("\(pkCase)"), sender: self)
+        appManager?.logInspector?.log(JSONStartLog("\(pkCase)"), sender: self)
 
         appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: pkCase[.primary]?.predicate, callback: { (managedObject) in
 
@@ -98,7 +98,6 @@ extension CoreDataStore: CoreDataStoreProtocol {
     private func onReceivedJSON(_ json: JSON?, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
-            appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
             onFinishJSONParse?(error)
             return
         }
@@ -110,6 +109,7 @@ extension CoreDataStore: CoreDataStoreProtocol {
             let extraction = extractSubJSON(from: json, by: key)
             findOrCreateObject(from: extraction) {
                 if idx == (keys.count - 1) {
+                    self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
                     self.onFinishJSONParse?(nil)
                 }
             }
@@ -161,7 +161,7 @@ extension CoreDataStore: CoreDataMappingProtocol {
     /**
 
      */
-    public func stash() {
+    public func stash(_ pkCase: PKCase) {
         if Thread.current.isMainThread {
             fatalError("should not be executed on main")
         }
@@ -173,7 +173,7 @@ extension CoreDataStore: CoreDataMappingProtocol {
             if let error = error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
             } else {
-                self.appManager?.logInspector?.log(CDStashLog("\(self.request.description)"), sender: self)
+                self.appManager?.logInspector?.log(CDStashLog("\(String(describing: self.Clazz)) \(pkCase.description)"), sender: self)
             }
         })
     }

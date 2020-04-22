@@ -32,7 +32,7 @@ extension VehicleprofileAmmoDamage {
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         defer {
-            coreDataMapping?.stash()
+            coreDataMapping?.stash(pkCase)
         }
         self.min_value = NSDecimalNumber(value: array[0] as? Int ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Int ?? 0)

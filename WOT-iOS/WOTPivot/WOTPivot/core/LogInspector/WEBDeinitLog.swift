@@ -8,9 +8,9 @@
 
 import Foundation
 
-public class WebDeinitLog: LogMessageTypeProtocol {
+public class WEBDeinitLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .minor }
+    public var priorityType: LogMessagePriorityType { return .web }
     public var logeventType: String { return "WEBDeinit"}
 
     public init() {
