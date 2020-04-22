@@ -17,35 +17,20 @@ extension VehicleprofileArmorList {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(pkCase)
+        let hullCase = PKCase()
+        hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
+
+        VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+            self.hull = newObject as? VehicleprofileArmor
+            coreDataMapping?.stash(hullCase)
         }
-        #warning("use subordinator")
-        /*
-         if let hullJSON = jSON[#keyPath(VehicleprofileArmorList.hull)] as? JSON {
-             if let hullObject = subordinator?(VehicleprofileArmor.self, pkCase) as? VehicleprofileArmor {
-                 hullObject.mapping(fromJSON: hullJSON, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
-                 self.hull = hullObject
-             }
-         }
 
-         if let turretJSON = jSON[#keyPath(VehicleprofileArmorList.turret)] as? JSON {
-             if let turretObject = subordinator?(VehicleprofileArmor.self, pkCase) as? VehicleprofileArmor {
-                 turretObject.mapping(fromJSON: turretJSON, pkCase: pkCase, subordinator: subordinator, linksCallback: linksCallback)
-                 self.turret = turretObject
-             }
-         }
-         */
-    }
-
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        guard let json = json as? JSON, let entityDescription = VehicleprofileArmorList.entityDescription(context) else { return nil }
-        self.init(entity: entityDescription, insertInto: context)
-
-        let pkCase = PKCase()
-        pkCase[.primary] = parentPrimaryKey
-
-        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+        let turretCase = PKCase()
+        turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
+        VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+            self.turret = newObject as? VehicleprofileArmor
+            coreDataMapping?.stash(hullCase)
+        }
     }
 }
 
@@ -54,7 +39,7 @@ extension VehicleprofileArmorList {
         guard let json = json as? JSON else { return }
 
         coreDataMapping?.requestNewSubordinate(VehicleprofileArmorList.self, pkCase) { newObject in
-            newObject?.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+            coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

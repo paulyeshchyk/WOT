@@ -39,23 +39,12 @@ extension VehicleprofileEngine {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(pkCase)
-        }
-
         self.name = jSON[#keyPath(VehicleprofileEngine.name)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.tier)]  as? Int ?? 0)
         self.tag = jSON[#keyPath(VehicleprofileEngine.tag)] as? String
         self.power = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.power)] as? Int ?? 0)
         self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.weight)]  as? Int ?? 0)
         self.fire_chance = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.fire_chance)] as? Int ?? 0)
-    }
-
-    convenience init?(json: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        guard let json = json as? JSON, let entityDescription = VehicleprofileEngine.entityDescription(context) else { return nil }
-        self.init(entity: entityDescription, insertInto: context)
-
-        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
     }
 }
 
@@ -68,7 +57,7 @@ extension VehicleprofileEngine {
         pkCase[.primary] = pk
 
         coreDataMapping?.requestNewSubordinate(VehicleprofileEngine.self, pkCase) { newObject in
-            newObject?.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+            coreDataMapping?.mapping(object: newObject,fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

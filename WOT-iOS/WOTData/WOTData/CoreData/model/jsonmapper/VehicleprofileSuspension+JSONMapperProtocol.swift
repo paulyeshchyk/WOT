@@ -42,25 +42,12 @@ extension VehicleprofileSuspension {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(pkCase)
-        }
         self.name = jSON[#keyPath(VehicleprofileSuspension.name)] as? String
         self.tag = jSON[#keyPath(VehicleprofileSuspension.tag)] as? String
         self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.tier)] as? Int ?? 0)
         self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.weight)] as? Int ?? 0)
         self.load_limit = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.load_limit)] as? Int ?? 0)
         self.steering_lock_angle = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileSuspension.steering_lock_angle)] as? Int ?? 0)
-    }
-
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        guard let json = json as? JSON, let entityDescription = VehicleprofileSuspension.entityDescription(context) else { return nil }
-        self.init(entity: entityDescription, insertInto: context)
-
-        let pkCase = PKCase()
-        pkCase[.primary] = parentPrimaryKey
-
-        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
     }
 }
 
@@ -75,40 +62,9 @@ extension VehicleprofileSuspension {
         pkCase[.primary] = pk
 
         coreDataMapping?.requestNewSubordinate(VehicleprofileSuspension.self, pkCase) { newObject in
-            newObject?.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+            coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
-    }
-
-    public static func linkRequest(for suspension_id: NSDecimalNumber?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, inContext context: NSManagedObjectContext, onSuccess: @escaping (NSManagedObject) -> Void) -> WOTJSONLink? {
-        #warning("refactor from here")
-        return nil
-
-        /*
-         guard let suspension_id = suspension_id else {
-             return nil
-         }
-
-         var primaryKeys = [WOTPrimaryKey]()
-         #warning("wrong key module_id, should be tag")
-         let suspensionPK = WOTPrimaryKey(name: "module_id", value: suspension_id, predicateFormat: "%K == %@")
-         primaryKeys.append(suspensionPK)
-         if let parentPrimaryKey = parentPrimaryKey {
-             primaryKeys.append(parentPrimaryKey)
-         }
-
-         return WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: primaryKeys, keypathPrefix: "suspension.", completion: { json in
-             guard let suspension = NSManagedObject.findOrCreateObject(forClass: VehicleprofileSuspension.self, predicate: suspensionPK.predicate, context: context) as? VehicleprofileSuspension else {
-                 return
-             }
-             onSuccess(suspension)
-
-             let pkCase = PKCase()
-             pkCase[.primary] = suspensionPK
-
-             suspension.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
-         })
-         */
     }
 }
 

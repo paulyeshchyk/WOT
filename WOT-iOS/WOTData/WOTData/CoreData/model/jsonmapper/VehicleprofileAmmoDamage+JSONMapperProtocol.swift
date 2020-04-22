@@ -31,19 +31,9 @@ extension VehicleprofileAmmoDamage {
 
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(pkCase)
-        }
         self.min_value = NSDecimalNumber(value: array[0] as? Int ?? 0)
         self.avg_value = NSDecimalNumber(value: array[1] as? Int ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Int ?? 0)
-    }
-
-    convenience init?(array: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoPenetration.entityDescription(context) else { return nil }
-        self.init(entity: entityDescription, insertInto: context)
-
-        self.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
     }
 }
 
@@ -52,7 +42,7 @@ extension VehicleprofileAmmoDamage {
         guard let array = array as? [Any] else { return }
 
         coreDataMapping?.requestNewSubordinate(VehicleprofileAmmoDamage.self, pkCase) { newObject in
-            newObject?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+            coreDataMapping?.mapping(object: newObject, fromArray: array, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

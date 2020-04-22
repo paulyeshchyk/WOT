@@ -38,13 +38,6 @@ extension VehicleprofileAmmoPenetration {
         self.avg_value = NSDecimalNumber(value: array[1] as? Float ?? 0)
         self.max_value = NSDecimalNumber(value: array[2] as? Float ?? 0)
     }
-
-    convenience init?(array: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoPenetration.entityDescription(context) else { return nil }
-        self.init(entity: entityDescription, insertInto: context)
-
-        self.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
-    }
 }
 
 extension VehicleprofileAmmoPenetration {
@@ -52,7 +45,7 @@ extension VehicleprofileAmmoPenetration {
         guard let array = array as? [Any] else { return }
 
         coreDataMapping?.requestNewSubordinate(VehicleprofileAmmoPenetration.self, pkCase) { newObject in
-            newObject?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+            coreDataMapping?.mapping(object: newObject, fromArray: array, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

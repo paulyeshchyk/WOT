@@ -423,8 +423,8 @@
 			children = (
 				1DAD1B5223D1C6990050B5B7 /* NSManagedObject_tryToSave.swift */,
 				1D695C11244B9CCA00650F95 /* PrimaryKeypathProtocol.swift */,
-				1D695C71244C416B00650F95 /* Module+JSONMapperProtocol.swift */,
 				1DA153C8244AE6C000FB3C89 /* ModulesTree+UI.swift */,
+				1D695C71244C416B00650F95 /* Module+JSONMapperProtocol.swift */,
 				1DAD1B2723D0581B0050B5B7 /* ModulesTree+JSONMapperProtocol.swift */,
 				1DAD1B4C23D072800050B5B7 /* Vehicles+JSONMapperProtocol.swift */,
 				1DAD1B2823D0581B0050B5B7 /* Vehicleprofile+JSONMapperProtocol.swift */,

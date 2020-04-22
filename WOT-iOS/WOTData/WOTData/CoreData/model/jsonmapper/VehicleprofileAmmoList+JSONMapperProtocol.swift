@@ -11,10 +11,6 @@ extension VehicleprofileAmmoList {
 
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(pkCase)
-        }
-
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
             let vehicleprofileAmmoCase = PKCase()
@@ -24,18 +20,11 @@ extension VehicleprofileAmmoList {
                 guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
                     return
                 }
-                ammo.mapping(fromJSON: jSON, pkCase: vehicleprofileAmmoCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+                coreDataMapping?.mapping(object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase, forRequest: forRequest)
                 self.addToVehicleprofileAmmo(ammo)
                 coreDataMapping?.stash(vehicleprofileAmmoCase)
             }
         }
-    }
-
-    convenience init?(array: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoList.entityDescription(context) else { return nil }
-        self.init(entity: entityDescription, insertInto: context)
-
-        self.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
     }
 }
 
@@ -44,7 +33,7 @@ extension VehicleprofileAmmoList {
         guard let array = array as? [Any] else { return }
 
         coreDataMapping?.requestNewSubordinate(VehicleprofileAmmoList.self, pkCase) { newObject in
-            newObject?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+            coreDataMapping?.mapping(object: newObject, fromArray: array, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

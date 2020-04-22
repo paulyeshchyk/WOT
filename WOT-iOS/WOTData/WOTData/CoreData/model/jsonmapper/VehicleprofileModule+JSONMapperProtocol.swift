@@ -14,9 +14,6 @@ extension VehicleprofileModule {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(pkCase)
-        }
         self.radio_id = AnyConvertable(#keyPath(VehicleprofileModule.radio_id)).asNSDecimal
         self.suspension_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.suspension_id)]).asNSDecimal
         self.engine_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.engine_id)]).asNSDecimal
@@ -42,7 +39,7 @@ extension VehicleprofileModule {
 
 //        let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: "suspension.") { json in
 //            if let tankchassisObject = subordinator?(Tankchassis.self, nil) as? Tankchassis {
-//                tankchassisObject.mapping(fromJSON: json, parentPrimaryKey: nil, subordinator: subordinator, linksCallback: linksCallback)
+//                coreDataMapping?.mapping(object: tankchassisObject, fromJSON: json, parentPrimaryKey: nil, subordinator: subordinator)
 //                self.tankchassis = tankchassisObject
 //            }
 //        }
@@ -68,13 +65,6 @@ extension VehicleprofileModule {
 
         return [/*requestSuspension, requestRadio, requestEngine, requestGun, requestTurret*/].compactMap { $0 }
     }
-
-    convenience init?(json: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        guard let json = json as? JSON, let entityDescription = VehicleprofileModule.entityDescription(context) else { return nil }
-        self.init(entity: entityDescription, insertInto: context)
-
-        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
-    }
 }
 
 extension VehicleprofileModule {
@@ -82,7 +72,7 @@ extension VehicleprofileModule {
         guard let json = json as? JSON else { return }
 
         coreDataMapping?.requestNewSubordinate(VehicleprofileModule.self, pkCase) { newObject in
-            newObject?.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+            coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

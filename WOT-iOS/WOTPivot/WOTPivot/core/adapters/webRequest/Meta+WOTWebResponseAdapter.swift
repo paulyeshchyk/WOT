@@ -30,6 +30,9 @@ public protocol CoreDataMappingProtocol {
 
      */
     func stash(_ pkCase: PKCase)
+
+    func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol)
+    func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol)
 }
 
 public protocol JSONMapperProtocol {

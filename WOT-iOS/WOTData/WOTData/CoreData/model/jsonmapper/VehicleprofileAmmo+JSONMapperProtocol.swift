@@ -34,10 +34,6 @@ extension VehicleprofileAmmo {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(pkCase)
-        }
-
         self.type = jSON[#keyPath(VehicleprofileAmmo.type)] as? String
 
         let vehicleprofileAmmoPenetrationCase = PKCase()
@@ -64,7 +60,7 @@ extension VehicleprofileAmmo {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+        coreDataMapping?.mapping(object: self, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
     }
 }
 

@@ -39,9 +39,6 @@ extension ModulesTree {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(pkCase)
-        }
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
@@ -77,16 +74,6 @@ extension ModulesTree {
     private func linkNextModule(_ json: JSON) {
         print(json)
     }
-
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        guard let json = json as? JSON, let entityDescription = ModulesTree.entityDescription(context) else { return nil }
-        self.init(entity: entityDescription, insertInto: context)
-
-        let pkCase = PKCase()
-        pkCase[.primary] = parentPrimaryKey
-
-        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
-    }
 }
 
 extension ModulesTree: PrimaryKeypathProtocol {
@@ -121,10 +108,8 @@ extension ModulesTree {
             submodulesCase[.secondary] = pkCase[.primary]
 
             coreDataMapping?.requestNewSubordinate(ModulesTree.self, submodulesCase) { newObject in
-                guard let moduleTree = newObject as? ModulesTree else { return }
-
-                moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
-                callback(moduleTree)
+                coreDataMapping?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest)
+                callback(newObject)
             }
         }
     }
@@ -132,7 +117,7 @@ extension ModulesTree {
     public static func nextModules(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectSetCallback ) {
         guard let json = json as? JSON else { return }
         coreDataMapping?.requestNewSubordinate(ModulesTree.self, pkCase) { newObject in
-            newObject?.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
+            coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback([newObject])
         }
     }
