@@ -22,7 +22,7 @@ function_parameter_count:
 - 12
 
 function_body_length:
-- 40 # warning
+- 60 # warning
 
 cyclomatic_complexity:
 - 5 # warning

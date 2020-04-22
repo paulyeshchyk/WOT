@@ -19,11 +19,16 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
+    deinit {
+        appManager?.logInspector?.log(OBJFreeLog(), sender: self)
+    }
+
     @objc
     required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
         coordinator = requestCoordinator
         hostConfig = hostConfiguration
         super.init()
+        appManager?.logInspector?.log(OBJNewLog(), sender: self)
     }
 
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
@@ -71,10 +76,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             grouppedRequests.append(request)
         }
         self.grouppedRequests[groupId] = grouppedRequests
-
         self.request(request, addSubordinateLink: jsonLink)
-
-        appManager?.logInspector?.log(WEBAddLog("\(request.description)"), sender: self)
 
         return result
     }
@@ -181,14 +183,14 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             fatalError("Current thread is not main")
         }
 
-        appManager?.logInspector?.log(WEBFinishLog(request.description))
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
-        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: {[weak self] error in
+        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, onFinish: { [weak self] error in
             DispatchQueue.main.async {
                 self?.request(request, didCompleteParsing: true)
             }
         })
 
+        appManager?.logInspector?.log(WEBFinishLog(request.description), sender: self)
         self.removeRequest(request)
     }
 
@@ -223,7 +225,6 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
-        appManager?.logInspector?.log(WEBDeinitLog(request.description), sender: self)
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
                 grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })
