@@ -73,6 +73,7 @@
 		1D70CD99244F8C680031CBFE /* WEBFinishLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD98244F8C680031CBFE /* WEBFinishLog.swift */; };
 		1D70CD9D245029AD0031CBFE /* CDMergeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD9C245029AC0031CBFE /* CDMergeLog.swift */; };
 		1D70CD9F24508E9D0031CBFE /* TIMEMeasureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD9E24508E9D0031CBFE /* TIMEMeasureLog.swift */; };
+		1D70CDA12450AC820031CBFE /* LogicLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CDA02450AC820031CBFE /* LogicLog.swift */; };
 		1D73BB7924436936004B720A /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7724436936004B720A /* Coding.swift */; };
 		1D73BB7A24436936004B720A /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7824436936004B720A /* AnyCodable.swift */; };
 		1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */; };
@@ -230,6 +231,7 @@
 		1D70CD98244F8C680031CBFE /* WEBFinishLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WEBFinishLog.swift; sourceTree = "<group>"; };
 		1D70CD9C245029AC0031CBFE /* CDMergeLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDMergeLog.swift; sourceTree = "<group>"; };
 		1D70CD9E24508E9D0031CBFE /* TIMEMeasureLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TIMEMeasureLog.swift; sourceTree = "<group>"; };
+		1D70CDA02450AC820031CBFE /* LogicLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicLog.swift; sourceTree = "<group>"; };
 		1D73BB7724436936004B720A /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		1D73BB7824436936004B720A /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestCoordinator.swift; sourceTree = "<group>"; };
@@ -544,6 +546,7 @@
 				1D70CD94244F8BBE0031CBFE /* WEBCancelLog.swift */,
 				1D70CD98244F8C680031CBFE /* WEBFinishLog.swift */,
 				1D70CD9E24508E9D0031CBFE /* TIMEMeasureLog.swift */,
+				1D70CDA02450AC820031CBFE /* LogicLog.swift */,
 			);
 			path = LogInspector;
 			sourceTree = "<group>";
@@ -1099,6 +1102,7 @@
 				1D8C298B21358B4200759C42 /* NSMutableArray+WOT.m in Sources */,
 				1D5D023023C86299004B0314 /* WOTCoredataProviderProtocol.swift in Sources */,
 				1DA83CB3213563C50039CB4B /* NSBundle+LanguageBundle.m in Sources */,
+				1D70CDA12450AC820031CBFE /* LogicLog.swift in Sources */,
 				1D70CD6F244ED46A0031CBFE /* LogInspector.swift in Sources */,
 				1D4ACF34244373C400C6CBE0 /* KeyPathListable.swift in Sources */,
 				1DE558E52124560500576D41 /* WOTNodeProtocol.swift in Sources */,

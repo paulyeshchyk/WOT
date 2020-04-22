@@ -143,6 +143,7 @@ extension CoreDataStore: CoreDataMappingProtocol {
 
      */
     public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+        appManager?.logInspector?.log(LogicLog("\(#function)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
             callback(nil)
