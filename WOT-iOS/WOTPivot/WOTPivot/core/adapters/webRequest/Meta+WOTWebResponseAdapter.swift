@@ -12,7 +12,10 @@ import CoreData
 public typealias OnLinksCallback = ([WOTJSONLink]?) -> Void
 
 @objc
-public protocol CoreDataSubordinatorProtocol {
+public protocol CoreDataMappingProtocol {
+    /**
+     */
+    func onLinks(_ links: [WOTJSONLink]?)
     /**
      Asks NSManagedObjectContext to find/create object by predicate
      - Parameter clazz: Type of requested object
@@ -27,26 +30,21 @@ public protocol CoreDataSubordinatorProtocol {
     func stash()
 }
 
-@objc
-public protocol CoreDataLinkerProtocol {
-    func onLinks(_ links: [WOTJSONLink]?)
-}
-
 public protocol JSONMapperProtocol {
     associatedtype Fields
 
     mutating func mapping(fromJSON jSON: JSON)
     func mapping(fromArray array: [Any])
 
-    func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?)
-    func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?)
+    func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?)
+    func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?)
 }
 
 extension JSONMapperProtocol {
     public func mapping(fromJSON jSON: JSON) {}
     public func mapping(fromArray array: [Any]) {}
-    public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {}
-    public func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {}
+    public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {}
+    public func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {}
 }
 
 public enum WOTWebResponseStatus: String {

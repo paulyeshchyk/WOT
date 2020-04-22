@@ -38,7 +38,7 @@ extension ModulesTree {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
@@ -50,7 +50,7 @@ extension ModulesTree {
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
          */
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
-        subordinator?.stash()
+        coreDataMapping?.stash()
 
         var requests = [WOTJSONLink]()
 
@@ -58,7 +58,7 @@ extension ModulesTree {
 //        let nextModuleLinks = self.nextModuleLinks(idents: jSON[#keyPath(ModulesTree.next_modules)] as? [Any]) ?? []
 //        requests.append(contentsOf: nextModuleLinks)
 
-        linker?.onLinks(requests)
+        coreDataMapping?.onLinks(requests)
     }
 
     private func nextModuleLinks(idents: [Any]?) -> [WOTJSONLink]? {
@@ -76,14 +76,14 @@ extension ModulesTree {
         print(json)
     }
 
-    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+    convenience init?(json: Any?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         guard let json = json as? JSON, let entityDescription = ModulesTree.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
+        self.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
     }
 }
 
@@ -106,7 +106,7 @@ extension ModulesTree: PrimaryKeypathProtocol {
 }
 
 extension ModulesTree {
-    public static func modulesTree(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func modulesTree(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
         json.keys.forEach { (key) in
@@ -118,19 +118,19 @@ extension ModulesTree {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = pkCase[.primary]
 
-            subordinator?.requestNewSubordinate(ModulesTree.self, submodulesCase) { newObject in
+            coreDataMapping?.requestNewSubordinate(ModulesTree.self, submodulesCase) { newObject in
                 guard let moduleTree = newObject as? ModulesTree else { return }
 
-                moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
+                moduleTree.mapping(fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
                 callback(moduleTree)
             }
         }
     }
 
-    public static func nextModules(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback: @escaping NSManagedObjectSetCallback ) {
+    public static func nextModules(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectSetCallback ) {
         guard let json = json as? JSON else { return }
-        subordinator?.requestNewSubordinate(ModulesTree.self, pkCase) { newObject in
-            newObject?.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
+        coreDataMapping?.requestNewSubordinate(ModulesTree.self, pkCase) { newObject in
+            newObject?.mapping(fromJSON: json, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
             callback([newObject])
         }
     }

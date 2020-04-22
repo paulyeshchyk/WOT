@@ -65,6 +65,12 @@ public enum PKType: Hashable {
 
 @objc
 public class PKCase: NSObject, WOTDescribable {
+    @objc
+    public enum PredicateCompoundType: Int {
+        case or = 0
+        case and = 1
+    }
+
     public override var description: String {
         guard let objects = allValues(), !objects.isEmpty else {
             return "empty case"
@@ -105,9 +111,12 @@ public class PKCase: NSObject, WOTDescribable {
         }
     }
 
-    public var predicate: NSPredicate? {
+    public func compoundPredicate(_ byType: PredicateCompoundType = .and) -> NSPredicate? {
         let allPredicates = self.allValues()?.compactMap { $0.predicate }
         guard let predicates = allPredicates else { return nil }
-        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        switch byType {
+        case .and: return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        case .or: return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+        }
     }
 }

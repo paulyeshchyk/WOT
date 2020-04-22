@@ -55,9 +55,9 @@ extension Vehicles {
     public typealias Fields = FieldKeys
 
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         defer {
-            subordinator?.stash()
+            coreDataMapping?.stash()
         }
         let tankID = jSON[#keyPath(Vehicles.tank_id)]
         self.name = jSON[#keyPath(Vehicles.name)] as? String
@@ -76,9 +76,9 @@ extension Vehicles {
 //        let vehicleProfileCase = PKCase()
 //        vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
 //
-//        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+//        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
 //            self.default_profile = newObject as? Vehicleprofile
-//            subordinator?.stash()
+//            coreDataMapping?.stash()
 //        }
 
         /*
@@ -90,7 +90,7 @@ extension Vehicles {
          modulesTreeCase[.primary] = pkCase[.primary]?
              .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
              .foreignKey(byInsertingComponent: #keyPath(ModulesTree.defaultProfile))
-         ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, subordinator: subordinator, linker: linker) { newObject in
+         ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
              guard let module_tree = newObject as? ModulesTree else { return }
              self.addToModules_tree(module_tree)
          }

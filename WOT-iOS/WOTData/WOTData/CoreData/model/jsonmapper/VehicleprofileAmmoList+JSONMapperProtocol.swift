@@ -10,9 +10,9 @@ extension VehicleprofileAmmoList {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         defer {
-            subordinator?.stash()
+            coreDataMapping?.stash()
         }
 
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
@@ -20,31 +20,31 @@ extension VehicleprofileAmmoList {
             let vehicleprofileAmmoCase = PKCase()
             vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject)
-            subordinator?.requestNewSubordinate(VehicleprofileAmmo.self, vehicleprofileAmmoCase) { [weak self] newObject in
+            coreDataMapping?.requestNewSubordinate(VehicleprofileAmmo.self, vehicleprofileAmmoCase) { [weak self] newObject in
                 guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
                     return
                 }
-                ammo.mapping(fromJSON: jSON, pkCase: vehicleprofileAmmoCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
+                ammo.mapping(fromJSON: jSON, pkCase: vehicleprofileAmmoCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
                 self.addToVehicleprofileAmmo(ammo)
-                subordinator?.stash()
+                coreDataMapping?.stash()
             }
         }
     }
 
-    convenience init?(array: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?) {
+    convenience init?(array: Any?, into context: NSManagedObjectContext, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         guard let array = array as? [Any], let entityDescription = VehicleprofileAmmoList.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        self.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
+        self.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
     }
 }
 
 extension VehicleprofileAmmoList {
-    public static func list(fromArray array: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, subordinator: CoreDataSubordinatorProtocol?, linker: CoreDataLinkerProtocol?, callback:  @escaping NSManagedObjectCallback ) {
+    public static func list(fromArray array: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback:  @escaping NSManagedObjectCallback ) {
         guard let array = array as? [Any] else { return }
 
-        subordinator?.requestNewSubordinate(VehicleprofileAmmoList.self, pkCase) { newObject in
-            newObject?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, subordinator: subordinator, linker: linker)
+        coreDataMapping?.requestNewSubordinate(VehicleprofileAmmoList.self, pkCase) { newObject in
+            newObject?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: coreDataMapping)
             callback(newObject)
         }
     }

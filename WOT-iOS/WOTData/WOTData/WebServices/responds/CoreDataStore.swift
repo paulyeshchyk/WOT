@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol {
+public class CoreDataStore {
     let Clazz: PrimaryKeypathProtocol.Type
     let request: WOTRequestProtocol
     let binary: Data?
@@ -30,11 +30,6 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
         appManager?.logInspector?.log(DeinitLog(String(describing: type(of: self))), sender: self)
     }
 
-    // MARK: - CoreDataStoreProtocol
-    public func perform() {
-        binary?.parseAsJSON(onReceivedJSON(_:_:))
-    }
-
     // MARK: - private
     private func perform(pkCase: PKCase, json: JSON, completion: @escaping () -> Void ) {
         guard Thread.current.isMainThread else {
@@ -46,74 +41,32 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
                 fatalError("Managed object is not created:\(pkCase.description)")
             }
 
-            managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, subordinator: self, linker: self)
+            managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, coreDataMapping: self)
             let status = managedObject.isInserted ? "created" : "located"
             self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(pkCase.description); status: \(status)"), sender: self)
 
             completion()
         })
     }
-
-    // MARK: - CoreDataSubordinatorProtocol
-    public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
-        guard let predicate = pkCase.predicate else {
-            appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
-            return
-        }
-        appManager?.coreDataProvider?.perform({ context in
-            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) else {
-                fatalError("Managed object is not created:\(pkCase.description)")
-            }
-            let status = managedObject.isInserted ? "created" : "located"
-            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
-            callback(managedObject)
-        })
-    }
-
-    public func stash() {
-        if Thread.current.isMainThread {
-            fatalError("should not be executed on main")
-        }
-        appManager?.coreDataProvider?.stash({ (error) in
-            if let error = error {
-                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
-            } else {
-                self.appManager?.logInspector?.log(CDStashLog("\(self.request.description)"), sender: self)
-            }
-        })
-    }
 }
 
+// MARK: - LogMessageSender
 extension CoreDataStore: LogMessageSender {
     public var logSenderDescription: String {
         return "Storage:\(String(describing: type(of: request)))"
     }
 }
 
-extension CoreDataStore {
-    func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, block: @escaping (NSManagedObject?) -> Void) {
-        let primaryKey = pkCase[.primary]
-        appManager?.coreDataProvider?.perform({ (context) in
-            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: context)
-            block(managedObject)
-        })
-    }
-}
+// MARK: - CoreDataStoreProtocol
+extension CoreDataStore: CoreDataStoreProtocol {
+    /**
 
-extension CoreDataStore: CoreDataLinkerProtocol {
-    public func onLinks(_ links: [WOTJSONLink]?) {
-        DispatchQueue.main.async { [weak self] in
-            guard let selfrequest = self?.request else {
-                self?.appManager?.logInspector?.log(ErrorLog("request was removed from memory"), sender: self)
-                return
-            }
-            self?.linkAdapter.request(selfrequest, adoptJsonLinks: links)
-        }
+     */
+    public func perform() {
+        binary?.parseAsJSON(onReceivedJSON(_:_:))
     }
-}
 
-extension CoreDataStore {
-    func onReceivedJSON(_ json: JSON?, _ error: Error?) {
+    private func onReceivedJSON(_ json: JSON?, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
             appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
@@ -150,5 +103,63 @@ extension CoreDataStore {
                 }
             }
         }
+    }
+}
+
+// MARK: - CoreDataMappingProtocol
+extension CoreDataStore: CoreDataMappingProtocol {
+    func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, block: @escaping (NSManagedObject?) -> Void) {
+        let primaryKey = pkCase[.primary]
+        appManager?.coreDataProvider?.perform({ (context) in
+            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: primaryKey?.predicate, context: context)
+            block(managedObject)
+        })
+    }
+
+    /**
+
+     */
+    public func onLinks(_ links: [WOTJSONLink]?) {
+        DispatchQueue.main.async { [weak self] in
+            guard let selfrequest = self?.request else {
+                self?.appManager?.logInspector?.log(ErrorLog("request was removed from memory"), sender: self)
+                return
+            }
+            self?.linkAdapter.request(selfrequest, adoptJsonLinks: links)
+        }
+    }
+
+    /**
+
+     */
+    public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+        guard let predicate = pkCase.compoundPredicate(.and) else {
+            appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
+            return
+        }
+        appManager?.coreDataProvider?.perform({ context in
+            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) else {
+                fatalError("Managed object is not created:\(pkCase.description)")
+            }
+            let status = managedObject.isInserted ? "created" : "located"
+            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
+            callback(managedObject)
+        })
+    }
+
+    /**
+
+     */
+    public func stash() {
+        if Thread.current.isMainThread {
+            fatalError("should not be executed on main")
+        }
+        appManager?.coreDataProvider?.stash({ (error) in
+            if let error = error {
+                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
+            } else {
+                self.appManager?.logInspector?.log(CDStashLog("\(self.request.description)"), sender: self)
+            }
+        })
     }
 }
