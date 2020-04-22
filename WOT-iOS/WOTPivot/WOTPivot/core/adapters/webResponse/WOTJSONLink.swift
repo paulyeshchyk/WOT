@@ -25,7 +25,7 @@ public class WOTJSONLink: NSObject {
     public override var description: String {
         get {
             var result: String = "WOTJSONLink: \(String(describing: clazz))"
-            if let clearPK = primaryKeys?.compactMap {$0} {
+            if let clearPK = primaryKeys?.compactMap { $0 } {
                 clearPK.forEach {
                     result += " key:\($0)"
                 }

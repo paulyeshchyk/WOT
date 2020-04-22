@@ -158,7 +158,7 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     }
 
     @objc
-    public func mainFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>) -> NSFetchedResultsController<NSFetchRequestResult> {
+    public func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult> {
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainManagedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
     }
 }

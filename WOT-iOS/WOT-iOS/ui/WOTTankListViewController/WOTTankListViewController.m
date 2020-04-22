@@ -188,8 +188,7 @@
     [fetchRequest setPredicate:self.filterByPredicate];
     
     id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:self.groupByField cacheName:nil];
+    self.fetchedResultController = [dataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
     self.fetchedResultController.delegate = self;
     
     NSError *error = nil;

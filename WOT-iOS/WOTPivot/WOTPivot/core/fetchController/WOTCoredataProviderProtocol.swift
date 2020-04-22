@@ -21,17 +21,21 @@ public protocol WOTCoredataProviderProtocol: NSObjectProtocol {
     @objc var sqliteURL: URL? { get }
     @objc var modelURL: URL? { get }
     @objc var applicationDocumentsDirectoryURL: URL? { get }
-    @objc var mainManagedObjectContext: NSManagedObjectContext { get }
-//    @objc var workManagedObjectContext: NSManagedObjectContext { get }
     @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }
 
-//    @objc func mainFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
-
     @objc func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency)
-
     @objc func perform(_ block: @escaping (NSManagedObjectContext) -> Void)
     @objc func performMain(_ block: @escaping (NSManagedObjectContext) -> Void)
-
     @objc func stash(_ block: @escaping (Error?) -> Void)
+    @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>
+
+    @available(*, deprecated, message:"not to be used")
+    @objc var mainManagedObjectContext: NSManagedObjectContext { get }
+}
+
+extension WOTCoredataProviderProtocol {
+    func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>) -> NSFetchedResultsController<NSFetchRequestResult> {
+        return self.mainContextFetchResultController(for: request, sectionNameKeyPath: nil, cacheName: nil)
+    }
 }

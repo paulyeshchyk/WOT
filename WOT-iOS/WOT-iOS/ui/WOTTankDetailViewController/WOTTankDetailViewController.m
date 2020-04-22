@@ -242,9 +242,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
         id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-        NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-
-        _fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+        _fetchedResultController = [dataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
     }
     return _fetchedResultController;

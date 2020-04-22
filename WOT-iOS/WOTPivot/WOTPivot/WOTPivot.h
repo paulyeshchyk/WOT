@@ -24,6 +24,8 @@
 #import "WOTLogger.h"
 #import "NSString+RomanUtils.h"
 #import "RomanNumber.h"
+#import "Reachability.h"
+
 
 
 //! Project version number for WOTPivot.
