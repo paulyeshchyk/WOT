@@ -13,23 +13,24 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
     let request: WOTRequestProtocol
     let binary: Data?
     let linkAdapter: JSONLinksAdapterProtocol
-    let context: NSManagedObjectContext
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     var onGetObjectJSON: ((JSON) -> JSON)?
     var onFinishJSONParse: ((Error?) -> Void)?
-    var logInspector: LogInspectorProtocol
+    let appManager: WOTAppManagerProtocol?
+    private var context: NSManagedObjectContext? {
+        return appManager?.coreDataProvider?.workManagedObjectContext
+    }
 
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, context: NSManagedObjectContext, logInspector: LogInspectorProtocol) {
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, appManager: WOTAppManagerProtocol?) {
         self.Clazz = clazz
         self.request = request
         self.binary = binary
         self.linkAdapter = linkAdapter
-        self.context = context
-        self.logInspector = logInspector
+        self.appManager = appManager
     }
 
     deinit {
-        self.logInspector.log(DeinitLog(String(describing: type(of: self))), sender: self)
+        appManager?.logInspector?.log(DeinitLog(String(describing: type(of: self))), sender: self)
     }
 
     // MARK: - CoreDataStoreProtocol
@@ -43,14 +44,15 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
             fatalError("Current thread is not main")
         }
 
-        context.perform {
-            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: self.context) else {
+        let context = appManager?.coreDataProvider?.workManagedObjectContext
+        context?.perform {
+            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: self.Clazz, predicate: pkCase[.primary]?.predicate, context: context) else {
                 fatalError("Managed object is not created:\(pkCase.description)")
             }
 
             managedObject.mapping(fromJSON: json, pkCase: pkCase, forRequest: self.request, subordinator: self, linker: self)
             let status = managedObject.isInserted ? "created" : "located"
-            self.logInspector.log(CDFetchLog("\(String(describing: self.Clazz)) \(pkCase.description); status: \(status)"), sender: self)
+            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(pkCase.description); status: \(status)"), sender: self)
 
             completion()
         }
@@ -59,15 +61,15 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
     // MARK: - CoreDataSubordinatorProtocol
     public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
         guard let predicate = pkCase.predicate else {
-            self.logInspector.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
+            appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
             return
         }
-        context.perform {
+        context?.perform {
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: self.context) else {
                 fatalError("Managed object is not created:\(pkCase.description)")
             }
             let status = managedObject.isInserted ? "created" : "located"
-            self.logInspector.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
+            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
             callback(managedObject)
         }
     }
@@ -76,8 +78,8 @@ public class CoreDataStore: CoreDataStoreProtocol, CoreDataSubordinatorProtocol 
         if Thread.current.isMainThread {
             fatalError("should not be executed on main")
         }
-        self.logInspector.log(CDStashLog("\(request.description)"), sender: self)
-        context.tryToSave()
+        appManager?.logInspector?.log(CDStashLog("\(request.description)"), sender: self)
+        context?.tryToSave()
     }
 }
 
@@ -99,7 +101,7 @@ extension CoreDataStore: CoreDataLinkerProtocol {
     public func onLinks(_ links: [WOTJSONLink]?) {
         DispatchQueue.main.async { [weak self] in
             guard let selfrequest = self?.request else {
-                self?.logInspector.log(ErrorLog("request was removed from memory"), sender: self)
+                self?.appManager?.logInspector?.log(ErrorLog("request was removed from memory"), sender: self)
                 return
             }
             self?.linkAdapter.request(selfrequest, adoptJsonLinks: links)
@@ -110,13 +112,13 @@ extension CoreDataStore: CoreDataLinkerProtocol {
 extension CoreDataStore {
     func onReceivedJSON(_ json: JSON?, _ error: Error?) {
         guard error == nil, let json = json else {
-            self.logInspector.log(ErrorLog(error, details: request), sender: self)
-            self.logInspector.log(JSONFinishLog(""), sender: self)
+            appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
+            appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
             onFinishJSONParse?(error)
             return
         }
 
-        self.logInspector.log(JSONStartLog(""), sender: self)
+        appManager?.logInspector?.log(JSONStartLog(""), sender: self)
         let keys = json.keys
         var mutatingKeysCounter = keys.count
         keys.forEach { (key) in
@@ -136,11 +138,11 @@ extension CoreDataStore {
 
             let pkCase = PKCase()
             pkCase[.primary] = Clazz.primaryKey(for: ident as AnyObject)
-            logInspector.log(JSONParseLog("\(pkCase)"), sender: self)
+            appManager?.logInspector?.log(JSONParseLog("\(pkCase)"), sender: self)
             perform(pkCase: pkCase, json: objectJson) {
                 mutatingKeysCounter -= 1
                 if mutatingKeysCounter <= 0 {
-                    self.logInspector.log(JSONFinishLog("\(pkCase)"), sender: self)
+                    self.appManager?.logInspector?.log(JSONFinishLog("\(pkCase)"), sender: self)
                     self.onFinishJSONParse?(nil)
                 }
             }

@@ -36,7 +36,7 @@
 
     id<WOTHostConfigurationProtocol> hostConfiguration = [[WOTWebHostConfiguration alloc] init];
 
-    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration logInspector:logInspector];
+    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration];
     
     id<WOTWebSessionManagerProtocol> sessionManager = [[WOTWebSessionManager alloc] init];
     

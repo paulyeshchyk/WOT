@@ -21,11 +21,16 @@ public protocol CoreDataStoreProtocol: class {
 
 @objc
 public protocol WOTWebResponseAdapterProtocol: NSObjectProtocol {
+    @objc
+    var appManager: WOTAppManagerProtocol? { get set }
+
     func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol
 }
 
 @objc
 open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+    public var appManager: WOTAppManagerProtocol?
+
     public lazy var logInspector: LogInspectorProtocol = {
         return LogInspector(priorities: [.minor, .normal, .critical, .debug])
     }()

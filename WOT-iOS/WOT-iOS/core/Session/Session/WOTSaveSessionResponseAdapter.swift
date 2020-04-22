@@ -10,6 +10,9 @@ import Foundation
 
 @objc
 public class WOTSaveSessionResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+    @objc
+    public var appManager: WOTAppManagerProtocol?
+
     public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ((Error?) -> Void) )  -> CoreDataStoreProtocol {
         fatalError("not implemented")
 //        WOTSessionManager.sharedInstance()?.invalidateTimer({ (interval) -> Timer? in
