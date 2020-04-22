@@ -24,10 +24,12 @@ public class CoreDataStore {
         self.binary = binary
         self.linkAdapter = linkAdapter
         self.appManager = appManager
+
+        appManager?.logInspector?.log(CreateLog(request.description), sender: self)
     }
 
     deinit {
-        appManager?.logInspector?.log(DeinitLog(String(describing: type(of: self))), sender: self)
+        appManager?.logInspector?.log(DeinitLog(request.description), sender: self)
     }
 
     // MARK: - private

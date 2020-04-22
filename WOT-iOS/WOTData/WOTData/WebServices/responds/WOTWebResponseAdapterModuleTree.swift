@@ -13,8 +13,6 @@ public class WOTWebResponseAdapterModuleTree: WOTWebResponseAdapter {
     public let Clazz: PrimaryKeypathProtocol.Type = ModulesTree.self
 
     override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
-        self.logInspector.log(CreateLog("CoreDataStore for: \(request.description)"), sender: nil)
-
         let store = CoreDataStore(Clazz: Clazz, request: request, binary: binary, linkAdapter: jsonLinkAdapter, appManager: appManager)
         store.onGetIdent = onGetIdent(_:_:_:)
         store.onFinishJSONParse = onFinish
