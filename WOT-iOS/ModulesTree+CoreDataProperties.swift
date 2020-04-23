@@ -23,7 +23,7 @@ extension ModulesTree {
     @NSManaged public var type: String?
     @NSManaged public var defaultProfile: Vehicleprofile?
     @NSManaged public var next_modules: NSSet?
-    @NSManaged public var next_tanks: Vehicles?
+    @NSManaged public var next_tanks: NSSet?
 }
 
 // MARK: Generated accessors for next_modules
@@ -39,4 +39,19 @@ extension ModulesTree {
 
     @objc(removeNext_modules:)
     @NSManaged public func removeFromNext_modules(_ values: NSSet)
+}
+
+// MARK: Generated accessors for next_tanks
+extension ModulesTree {
+    @objc(addNext_tanksObject:)
+    @NSManaged public func addToNext_tanks(_ value: Vehicles)
+
+    @objc(removeNext_tanksObject:)
+    @NSManaged public func removeFromNext_tanks(_ value: Vehicles)
+
+    @objc(addNext_tanks:)
+    @NSManaged public func addToNext_tanks(_ values: NSSet)
+
+    @objc(removeNext_tanks:)
+    @NSManaged public func removeFromNext_tanks(_ values: NSSet)
 }

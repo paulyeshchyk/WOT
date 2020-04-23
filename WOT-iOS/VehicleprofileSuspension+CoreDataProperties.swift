@@ -23,9 +23,10 @@ extension VehicleprofileSuspension {
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var traverse_speed: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
-    @NSManaged public var module: VehicleprofileModule?
     @NSManaged public var vehicle: NSSet?
     @NSManaged public var vehicleprofile: Vehicleprofile?
+    @NSManaged public var modules: NSSet?
+    @NSManaged public var vehicleProfileModule: VehicleprofileModule?
 }
 
 // MARK: Generated accessors for vehicle
@@ -41,4 +42,19 @@ extension VehicleprofileSuspension {
 
     @objc(removeVehicle:)
     @NSManaged public func removeFromVehicle(_ values: NSSet)
+}
+
+// MARK: Generated accessors for modules
+extension VehicleprofileSuspension {
+    @objc(addModulesObject:)
+    @NSManaged public func addToModules(_ value: Module)
+
+    @objc(removeModulesObject:)
+    @NSManaged public func removeFromModules(_ value: Module)
+
+    @objc(addModules:)
+    @NSManaged public func addToModules(_ values: NSSet)
+
+    @objc(removeModules:)
+    @NSManaged public func removeFromModules(_ values: NSSet)
 }

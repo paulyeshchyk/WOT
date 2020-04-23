@@ -19,7 +19,7 @@ public protocol CoreDataMappingProtocol {
      - Parameter pkCase: Set of predicates available for this request
      - Parameter callback: -
      */
-    func pullLocalSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback )
+    func pullLocalSubordinate(for clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback )
     /**
      Asks Remote storage to find/create object by predicate
      - Parameter clazz: Type of requested object

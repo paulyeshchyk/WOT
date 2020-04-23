@@ -70,7 +70,7 @@ extension VehicleprofileModule {
     public static func module(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
-        coreDataMapping?.pullLocalSubordinate(VehicleprofileModule.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileModule.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

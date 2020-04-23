@@ -106,7 +106,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
 }
 
 extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
-    var hashData: Int {
+    var uuidHash: Int {
         return "WOTTankPivotModel".hashValue
     }
 

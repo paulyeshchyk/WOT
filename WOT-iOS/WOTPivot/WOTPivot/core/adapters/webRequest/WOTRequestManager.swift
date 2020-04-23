@@ -10,8 +10,6 @@ import Foundation
 
 @objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-    public var listeners = [WOTRequestManagerListenerProtocol]()
-
     @objc
     public var appManager: WOTAppManagerProtocol? {
         didSet {
@@ -31,6 +29,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         appManager?.logInspector?.log(OBJNewLog(), sender: self)
     }
 
+    fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
     fileprivate var subordinateLinks: [AnyHashable: [WOTJSONLink]] = [:]
     fileprivate var externalCallbacks: [AnyHashable: NSManagedObjectCallback] = [:]
@@ -90,16 +89,27 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     @objc
     public func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol) {
-        guard let listener = listener else {
-            //
-            return
+        guard let listener = listener else { return }
+        let uuid = forRequest.uuid.uuidString
+        if var listeners = grouppedListeners[uuid] {
+            let filtered = listeners.filter { (availableListener) -> Bool in availableListener.uuidHash == listener.uuidHash }
+            if filtered.count == 0 {
+                listeners.append(listener)
+                grouppedListeners[uuid] = listeners
+            }
+        } else {
+            grouppedListeners[uuid] = [listener]
         }
-        listeners.append(listener)
     }
 
     @objc
     public func removeListener(_ listener: WOTRequestManagerListenerProtocol) {
-        listeners.removeAll { $0.hashData == listener.hashData }
+        grouppedListeners.keys.forEach {
+            if var listeners = grouppedListeners[$0] {
+                listeners.removeAll { $0.uuidHash == listener.uuidHash }
+                grouppedListeners[$0] = listeners
+            }
+        }
     }
 
     @objc
@@ -108,13 +118,11 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         guard addRequest(request, forGroupId: forGroupId, jsonLink: jsonLink, externalCallback: externalCallback) else { return false }
 
         request.hostConfiguration = hostConfig
-        let result = request.start(arguments)
-        if result {
-            listeners.forEach {
-                $0.requestManager(self, didStartRequest: request)
-            }
+        guard request.start(arguments) == true else { return false }
+        grouppedListeners[request.uuid.uuidString]?.forEach {
+            $0.requestManager(self, didStartRequest: request)
         }
-        return result
+        return true
     }
 
     @objc
@@ -214,7 +222,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             fatalError("Current thread is not main")
         }
 
-        listeners.forEach {
+        grouppedListeners[request.uuid.uuidString]?.forEach {
             $0.requestManager(self, didParseDataForRequest: request, completionResultType: complete)
         }
     }

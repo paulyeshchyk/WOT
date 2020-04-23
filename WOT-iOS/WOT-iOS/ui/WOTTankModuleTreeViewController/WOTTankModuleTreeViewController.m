@@ -79,7 +79,7 @@
 @end
 
 @implementation WOTTankModuleTreeViewController
-@synthesize hashData;
+@synthesize uuidHash;
 
 - (void)dealloc {
     
@@ -266,13 +266,13 @@
     
 }
 
-- (NSInteger)hashData {
+- (NSInteger)uuidHash {
     return [@"WOTTankModuleTreeViewController" hash];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(BOOL)finished {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
 
-    if (finished && didParseDataForRequest.parentRequest == nil && didParseDataForRequest != didParseDataForRequest.parentRequest) {
+    if (completionResultType == WOTRequestManagerCompletionResultTypeFinished && didParseDataForRequest.parentRequest == nil && didParseDataForRequest != didParseDataForRequest.parentRequest) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self reloadModel];
         });

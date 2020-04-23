@@ -25,6 +25,7 @@ extension VehicleprofileEngine {
     @NSManaged public var vehicle: NSSet?
     @NSManaged public var vehicleprofile: Vehicleprofile?
     @NSManaged public var vehicleprofileModule: VehicleprofileModule?
+    @NSManaged public var modules: NSSet?
 }
 
 // MARK: Generated accessors for vehicle
@@ -40,4 +41,19 @@ extension VehicleprofileEngine {
 
     @objc(removeVehicle:)
     @NSManaged public func removeFromVehicle(_ values: NSSet)
+}
+
+// MARK: Generated accessors for modules
+extension VehicleprofileEngine {
+    @objc(addModulesObject:)
+    @NSManaged public func addToModules(_ value: Module)
+
+    @objc(removeModulesObject:)
+    @NSManaged public func removeFromModules(_ value: Module)
+
+    @objc(addModules:)
+    @NSManaged public func addToModules(_ values: NSSet)
+
+    @objc(removeModules:)
+    @NSManaged public func removeFromModules(_ values: NSSet)
 }

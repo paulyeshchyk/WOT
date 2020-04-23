@@ -25,6 +25,11 @@ extension Module {
     @NSManaged public var weight: NSDecimalNumber?
     @NSManaged public var moduleTree: ModulesTree?
     @NSManaged public var tanks: NSSet?
+    @NSManaged public var vehicleRadio: VehicleprofileRadio?
+    @NSManaged public var vehicleEngine: VehicleprofileEngine?
+    @NSManaged public var vehicleGun: VehicleprofileGun?
+    @NSManaged public var vehicleChassis: VehicleprofileSuspension?
+    @NSManaged public var vehicleTurret: VehicleprofileTurret?
 }
 
 // MARK: Generated accessors for tanks

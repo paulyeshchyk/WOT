@@ -46,18 +46,24 @@ extension ModulesTree {
         self.price_xp = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_xp)] as? Int ?? 0)
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
 
-        /*
-         *  availableTypes
-         *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
-         */
-
-        let idents = jSON[#keyPath(ModulesTree.next_modules)] as? [Any]
-        coreDataMapping?.pullRemoteSubordinate(for: Module.self, byIdents: idents, completion: { managedObject in
+        let nextModulesIdents = jSON[#keyPath(ModulesTree.next_modules)] as? [Any]
+        coreDataMapping?.pullRemoteSubordinate(for: Module.self, byIdents: nextModulesIdents, completion: { managedObject in
             if let module = managedObject as? Module {
                 self.addToNext_modules(module)
                 coreDataMapping?.stash(pkCase)
             }
         })
+
+        #warning("recursion")
+        /*
+         let nextTanksIdents = jSON[#keyPath(ModulesTree.next_tanks)] as? [Any]
+         coreDataMapping?.pullRemoteSubordinate(for: Vehicles.self, byIdents: nextTanksIdents, completion: { managedObject in
+             if let vehicle = managedObject as? Vehicles {
+                 self.addToNext_tanks(vehicle)
+                 coreDataMapping?.stash(pkCase)
+             }
+         })
+         */
     }
 }
 
@@ -92,7 +98,7 @@ extension ModulesTree {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = pkCase[.primary]
 
-            coreDataMapping?.pullLocalSubordinate(ModulesTree.self, submodulesCase) { newObject in
+            coreDataMapping?.pullLocalSubordinate(for: ModulesTree.self, submodulesCase) { newObject in
                 coreDataMapping?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest)
                 callback(newObject)
             }
@@ -101,7 +107,7 @@ extension ModulesTree {
 
     public static func nextModules(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectSetCallback ) {
         guard let json = json as? JSON else { return }
-        coreDataMapping?.pullLocalSubordinate(ModulesTree.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(for: ModulesTree.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback([newObject])
         }

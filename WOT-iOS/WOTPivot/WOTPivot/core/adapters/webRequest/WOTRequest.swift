@@ -93,7 +93,7 @@ public enum WOTRequestManagerCompletionResultType: Int {
 @objc
 public protocol WOTRequestManagerListenerProtocol {
     @objc
-    var hashData: Int { get }
+    var uuidHash: Int { get }
 
     @objc
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)

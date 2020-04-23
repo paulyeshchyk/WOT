@@ -55,7 +55,7 @@ extension VehicleprofileRadio {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.pullLocalSubordinate(VehicleprofileRadio.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileRadio.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

@@ -148,7 +148,10 @@ extension CoreDataStore: CoreDataMappingProtocol {
         stash(pkCase)
     }
 
-    public func pullLocalSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+    /**
+
+     */
+    public func pullLocalSubordinate(for clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
         appManager?.logInspector?.log(LogicLog("pullLocalSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
@@ -163,6 +166,22 @@ extension CoreDataStore: CoreDataMappingProtocol {
             self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
             callback(managedObject)
         })
+    }
+
+    /**
+
+     */
+    public func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
+        appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(Clazz)"), sender: self)
+        var result = [WOTJSONLink]()
+        idents?.forEach {
+            if let pk = Clazz.primaryKey(for: $0 as AnyObject) {
+                if let link = WOTJSONLink(clazz: Clazz, primaryKeys: [pk], keypathPrefix: nil, completion: nil) {
+                    result.append(link)
+                }
+            }
+        }
+        self.linkAdapter.request(self.request, adaptExternalLinks: result, externalCallback: completion)
     }
 
     /**
@@ -183,18 +202,5 @@ extension CoreDataStore: CoreDataMappingProtocol {
                 self.appManager?.logInspector?.log(CDStashLog("\(String(describing: self.Clazz)) \(pkCase.description)"), sender: self)
             }
         })
-    }
-
-    public func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
-        appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(Clazz)"), sender: self)
-        var result = [WOTJSONLink]()
-        idents?.forEach {
-            if let pk = Clazz.primaryKey(for: $0 as AnyObject) {
-                if let link = WOTJSONLink(clazz: Clazz, primaryKeys: [pk], keypathPrefix: nil, completion: nil) {
-                    result.append(link)
-                }
-            }
-        }
-        self.linkAdapter.request(self.request, adaptExternalLinks: result, externalCallback: completion)
     }
 }
