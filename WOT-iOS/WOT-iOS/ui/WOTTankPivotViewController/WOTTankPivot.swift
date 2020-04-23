@@ -110,10 +110,10 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         return "WOTTankPivotModel".hashValue
     }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, finished: Bool) {
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         DispatchQueue.main.async {
             super.loadModel()
-            if finished {
+            if completionResultType == .finished || completionResultType == .noData  {
                 requestManager.removeListener(self)
             }
         }

@@ -270,7 +270,7 @@
     return [@"WOTTankModuleTreeViewController" hash];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest finished:(BOOL)finished {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(BOOL)finished {
 
     if (finished && didParseDataForRequest.parentRequest == nil && didParseDataForRequest != didParseDataForRequest.parentRequest) {
         dispatch_async(dispatch_get_main_queue(), ^{

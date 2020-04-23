@@ -74,6 +74,7 @@
 		1D70CD9D245029AD0031CBFE /* CDMergeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD9C245029AC0031CBFE /* CDMergeLog.swift */; };
 		1D70CD9F24508E9D0031CBFE /* TIMEMeasureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD9E24508E9D0031CBFE /* TIMEMeasureLog.swift */; };
 		1D70CDA12450AC820031CBFE /* LogicLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CDA02450AC820031CBFE /* LogicLog.swift */; };
+		1D70CDA52450E0EE0031CBFE /* PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CDA42450E0ED0031CBFE /* PrimaryKeypathProtocol.swift */; };
 		1D73BB7924436936004B720A /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7724436936004B720A /* Coding.swift */; };
 		1D73BB7A24436936004B720A /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7824436936004B720A /* AnyCodable.swift */; };
 		1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */; };
@@ -232,6 +233,7 @@
 		1D70CD9C245029AC0031CBFE /* CDMergeLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDMergeLog.swift; sourceTree = "<group>"; };
 		1D70CD9E24508E9D0031CBFE /* TIMEMeasureLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TIMEMeasureLog.swift; sourceTree = "<group>"; };
 		1D70CDA02450AC820031CBFE /* LogicLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicLog.swift; sourceTree = "<group>"; };
+		1D70CDA42450E0ED0031CBFE /* PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryKeypathProtocol.swift; sourceTree = "<group>"; };
 		1D73BB7724436936004B720A /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		1D73BB7824436936004B720A /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestCoordinator.swift; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 		1DA83C9721355A6D0039CB4B /* webRequest */ = {
 			isa = PBXGroup;
 			children = (
+				1D70CDA42450E0ED0031CBFE /* PrimaryKeypathProtocol.swift */,
 				1DBF89B9240E56B9007DF8B2 /* Meta+WOTWebResponseAdapter.swift */,
 				1DBF89BF240FC12B007DF8B2 /* WOTHostConfigurationProtocol.swift */,
 				1D5668F02424BD54008458AF /* WOTWebSessionManagerProtocol.swift */,
@@ -1114,6 +1117,7 @@
 				1DC6D4CF212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift in Sources */,
 				1D65F7F62216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift in Sources */,
 				1DA153A02444CDC700FB3C89 /* NSString+RomanUtils.m in Sources */,
+				1D70CDA52450E0EE0031CBFE /* PrimaryKeypathProtocol.swift in Sources */,
 				1D8C297F21358A4800759C42 /* NSSet+WOT.m in Sources */,
 				1D65F7BE2215795F006A85E4 /* Dictionary_Merge.swift in Sources */,
 				1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */,

@@ -85,12 +85,18 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
 }
 
 @objc
+public enum WOTRequestManagerCompletionResultType: Int {
+    case finished
+    case noData
+}
+
+@objc
 public protocol WOTRequestManagerListenerProtocol {
     @objc
     var hashData: Int { get }
 
     @objc
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, finished: Bool)
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
 
     @objc
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol)
@@ -100,10 +106,10 @@ public protocol WOTRequestManagerListenerProtocol {
 public protocol WOTRequestManagerProtocol {
     @objc
     @discardableResult
-    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?) -> Bool
+    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, externalCallback: NSManagedObjectCallback?) -> Bool
 
     @objc
-    func addListener(_ listener: WOTRequestManagerListenerProtocol, forRequest: WOTRequestProtocol)
+    func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
 
     @objc
     func removeListener(_ listener: WOTRequestManagerListenerProtocol)

@@ -91,20 +91,22 @@ extension Vehicles {
             coreDataMapping?.stash(vehicleProfileCase)
         }
 
-        /*
-         if let set = self.modules_tree {
-             self.removeFromModules_tree(set)
-         }
+        if let set = self.modules_tree {
+            self.removeFromModules_tree(set)
+        }
 
-         let modulesTreeCase = PKCase()
-         modulesTreeCase[.primary] = pkCase[.primary]?
-             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
-             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.defaultProfile))
-         ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
-             guard let module_tree = newObject as? ModulesTree else { return }
-             self.addToModules_tree(module_tree)
-         }
-         */
+        let modulesTreeCase = PKCase()
+        modulesTreeCase[.primary] = pkCase[.primary]?
+            .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
+            .foreignKey(byInsertingComponent: #keyPath(ModulesTree.defaultProfile))
+        ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+            guard let module_tree = newObject as? ModulesTree else {
+//
+                return
+            }
+            self.addToModules_tree(module_tree)
+            coreDataMapping?.stash(modulesTreeCase)
+        }
     }
 }
 

@@ -13,17 +13,20 @@ public class CoreDataStore {
     let request: WOTRequestProtocol
     let binary: Data?
     let linkAdapter: JSONLinksAdapterProtocol
+    var extenalLinks: [WOTJSONLink]?
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     var onGetObjectJSON: ((JSON) -> JSON)?
     var onFinishJSONParse: ((Error?) -> Void)?
+    var onCreateNSManagedObject: NSManagedObjectCallback?
     let appManager: WOTAppManagerProtocol?
 
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, appManager: WOTAppManagerProtocol?) {
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, appManager: WOTAppManagerProtocol?, extenalLinks: [WOTJSONLink]?) {
         self.Clazz = clazz
         self.request = request
         self.binary = binary
         self.linkAdapter = linkAdapter
         self.appManager = appManager
+        self.extenalLinks = extenalLinks
 
         appManager?.logInspector?.log(OBJNewLog(request.description), sender: self)
     }
@@ -34,7 +37,7 @@ public class CoreDataStore {
 
     // MARK: - private
 
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, callback: @escaping () -> Void) {
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, callback: @escaping NSManagedObjectCallback) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
@@ -50,7 +53,8 @@ public class CoreDataStore {
             self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(pkCase.description); status: \(status)"), sender: self)
             self.appManager?.logInspector?.log(JSONFinishLog("\(pkCase)"), sender: self)
 
-            callback()
+            // managedObject should be send as a result of external links parse flow
+            callback(managedObject)
         })
     }
 
@@ -107,7 +111,10 @@ extension CoreDataStore: CoreDataStoreProtocol {
         for (idx, key) in keys.enumerated() {
             //
             let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(for: extraction) {
+            findOrCreateObject(for: extraction) { managedObject in
+
+                self.onCreateNSManagedObject?(managedObject)
+
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
                     self.onFinishJSONParse?(nil)
@@ -129,20 +136,6 @@ extension CoreDataStore: CoreDataMappingProtocol {
     /**
 
      */
-    public func onLinks(_ links: [WOTJSONLink]?) {
-        DispatchQueue.main.async { [weak self] in
-            guard let selfrequest = self?.request else {
-                self?.appManager?.logInspector?.log(ErrorLog("request was removed from memory"), sender: self)
-                return
-            }
-            self?.linkAdapter.request(selfrequest, adoptJsonLinks: links)
-        }
-    }
-
-    /**
-
-     */
-
     public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol) {
         appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         object?.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, coreDataMapping: self)
@@ -190,5 +183,25 @@ extension CoreDataStore: CoreDataMappingProtocol {
                 self.appManager?.logInspector?.log(CDStashLog("\(String(describing: self.Clazz)) \(pkCase.description)"), sender: self)
             }
         })
+    }
+
+    public func requestExternals(_ Clazz: PrimaryKeypathProtocol.Type, idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
+        appManager?.logInspector?.log(LogicLog("requestExternals:\(Clazz)"), sender: self)
+        var result = [WOTJSONLink]()
+        idents?.forEach {
+            if let pk = Clazz.primaryKey(for: $0 as AnyObject) {
+                if let link = WOTJSONLink(clazz: Clazz, primaryKeys: [pk], keypathPrefix: nil, completion: nil) {
+                    result.append(link)
+                }
+            }
+        }
+        self.linkAdapter.request(self.request, adaptExternalLinks: result, externalCallback: completion)
+    }
+
+    /**
+
+     */
+    public func onLinks(_ links: [WOTJSONLink]?) {
+        fatalError("use externalCallback instead")
     }
 }

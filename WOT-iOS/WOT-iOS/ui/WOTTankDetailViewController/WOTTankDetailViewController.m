@@ -456,7 +456,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     return [@"WOTTankDetailViewController" hash];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest finished:(BOOL)finished {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(BOOL)finished {
     [self updateUINeedReset: YES];
 }
 

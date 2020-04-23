@@ -44,35 +44,20 @@ extension ModulesTree {
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
         self.price_credit = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_credit)] as? Int ?? 0)
         self.price_xp = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_xp)] as? Int ?? 0)
+        self.type = jSON[#keyPath(ModulesTree.type)] as? String
 
         /*
          *  availableTypes
          *  vehicleRadio, vehicleChassis, vehicleTurret, vehicleEngine, vehicleGun
          */
-        self.type = jSON[#keyPath(ModulesTree.type)] as? String
 
-        var requests = [WOTJSONLink]()
-
-        #warning("remove comment")
-//        let nextModuleLinks = self.nextModuleLinks(idents: jSON[#keyPath(ModulesTree.next_modules)] as? [Any]) ?? []
-//        requests.append(contentsOf: nextModuleLinks)
-
-        coreDataMapping?.onLinks(requests)
-    }
-
-    private func nextModuleLinks(idents: [Any]?) -> [WOTJSONLink]? {
-        var result = [WOTJSONLink?]()
-        idents?.forEach {
-            if let pk = Module.primaryKey(for: $0 as AnyObject) {
-                let link = WOTJSONLink(clazz: Module.self, primaryKeys: [pk], keypathPrefix: nil, completion: self.linkNextModule(_:))
-                result.append(link)
+        let idents = jSON[#keyPath(ModulesTree.next_modules)] as? [Any]
+        coreDataMapping?.requestExternals(Module.self, idents: idents, completion: { managedObject in
+            if let module = managedObject as? Module {
+                self.addToNext_modules(module)
+                coreDataMapping?.stash(pkCase)
             }
-        }
-        return result.compactMap { $0 }
-    }
-
-    private func linkNextModule(_ json: JSON) {
-        print(json)
+        })
     }
 }
 

@@ -49,7 +49,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ((Error?) -> Void))
+    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void))
 }
 
 @objc
@@ -151,7 +151,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, onFinish: @escaping ((Error?) -> Void) ) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void) ) {
         guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else {
             appManager?.logInspector?.log(ErrorLog("model class not found for request\(request.description)"), sender: self)
             onFinish(nil)
@@ -163,7 +163,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         requestIdTypes?.forEach({ requestIdType in
 
             if let adapter = adapterInstance(for: requestIdType) {
-                let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, onFinish: onFinish)
+                let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: onFinish)
                 coreDataStoreStack.append(store)
             } else {
                 appManager?.logInspector?.log(ErrorLog("Adapter not found for \(requestIdType)"), sender: self)

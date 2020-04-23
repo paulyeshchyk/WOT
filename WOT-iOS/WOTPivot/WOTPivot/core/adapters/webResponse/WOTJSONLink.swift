@@ -17,7 +17,7 @@ public class WOTJSONLink: NSObject {
     public var primaryKeys: [WOTPrimaryKey]?
 
     @objc
-    public var completion: (JSON) -> Void
+    public var completion: ((JSON) -> Void)?
 
     @objc
     public var keypathPrefix: String?
@@ -43,7 +43,7 @@ public class WOTJSONLink: NSObject {
         return String(format: "%@%@", preffix, to)
     }
 
-    public init?(clazz clazzTo: AnyClass, primaryKeys keys: [WOTPrimaryKey], keypathPrefix kp: String?, completion block: @escaping (JSON) -> Void) {
+    public init?(clazz clazzTo: AnyClass, primaryKeys keys: [WOTPrimaryKey], keypathPrefix kp: String?, completion block: ((JSON) -> Void)?) {
         clazz = clazzTo
         primaryKeys = keys
         completion = block

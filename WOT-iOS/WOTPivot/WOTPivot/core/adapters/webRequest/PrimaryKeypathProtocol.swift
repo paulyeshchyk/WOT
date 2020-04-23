@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objc
 public protocol PrimaryKeypathProtocol: class {
     static func primaryKeyPath() -> String?
     static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey?
