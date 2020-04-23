@@ -67,7 +67,7 @@ extension VehicleprofileGun {
     public static func gun(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
 
-        let tag = jSON[#keyPath(VehicleprofileGun.tag)]
+        let tag = jSON[VehicleprofileGun.primaryKeyPath()]
         let pk = VehicleprofileGun.primaryKey(for: tag as AnyObject?)
         let pkCase = PKCase()
         pkCase[.primary] = pk

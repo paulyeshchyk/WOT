@@ -55,7 +55,7 @@ extension VehicleprofileSuspension {
     public static func suspension(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
 
-        let tag = jSON[#keyPath(VehicleprofileSuspension.tag)]
+        let tag = jSON[VehicleprofileSuspension.primaryKeyPath()]
         let pk = VehicleprofileSuspension.primaryKey(for: tag as AnyObject?)
 
         let pkCase = PKCase()

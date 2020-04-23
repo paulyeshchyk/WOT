@@ -56,7 +56,7 @@
         <relationship name="engine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileEngine" inverseName="vehicleprofile" inverseEntity="VehicleprofileEngine" syncable="YES"/>
         <relationship name="gun" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileGun" inverseName="vehicleprofile" inverseEntity="VehicleprofileGun" syncable="YES"/>
         <relationship name="modules" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileModule" inverseName="vehicleProfile" inverseEntity="VehicleprofileModule" syncable="YES"/>
-        <relationship name="modulesTree" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="defaultProfile" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="defaultProfile" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="radio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileRadio" inverseName="vehicleprofile" inverseEntity="VehicleprofileRadio" syncable="YES"/>
         <relationship name="suspension" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileSuspension" inverseName="vehicleprofile" inverseEntity="VehicleprofileSuspension" syncable="YES"/>
         <relationship name="turret" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileTurret" inverseName="vehicleprofile" inverseEntity="VehicleprofileTurret" syncable="YES"/>

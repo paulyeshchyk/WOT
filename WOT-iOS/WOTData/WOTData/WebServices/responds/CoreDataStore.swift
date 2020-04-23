@@ -185,7 +185,7 @@ extension CoreDataStore: CoreDataMappingProtocol {
         })
     }
 
-    public func requestExternals(_ Clazz: PrimaryKeypathProtocol.Type, idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
+    public func requestExternals(for Clazz: PrimaryKeypathProtocol.Type, byIdents idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
         appManager?.logInspector?.log(LogicLog("requestExternals:\(Clazz)"), sender: self)
         var result = [WOTJSONLink]()
         idents?.forEach {

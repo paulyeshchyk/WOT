@@ -69,25 +69,31 @@ extension Vehicles {
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        let tankID = jSON[#keyPath(Vehicles.tank_id)]
         self.name = jSON[#keyPath(Vehicles.name)] as? String
-        self.tier = NSDecimalNumber(value: jSON[#keyPath(Vehicles.tier)]  as? Int ?? 0)
-        self.tag = jSON[#keyPath(Vehicles.tag)] as? String
-        self.tank_id = NSDecimalNumber(value: tankID as? Int ?? 0)
+        self.tier = AnyConvertable(jSON[#keyPath(Vehicles.tier)]).asNSDecimal
+        self.tag = AnyConvertable(jSON[#keyPath(Vehicles.tag)]).asString
+        self.tank_id = AnyConvertable(jSON[#keyPath(Vehicles.tank_id)]).asNSDecimal
         self.nation = jSON[#keyPath(Vehicles.nation)] as? String
-        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Vehicles.price_credit)] as? Int ?? 0)
-        self.price_gold = NSDecimalNumber(value: jSON[#keyPath(Vehicles.price_gold)]  as? Int ?? 0)
-        self.is_premium = NSDecimalNumber(value: jSON[#keyPath(Vehicles.is_premium)]  as? Int ?? 0)
-        self.is_gift = NSDecimalNumber(value: jSON[#keyPath(Vehicles.is_gift)]  as? Int ?? 0)
+        self.price_credit = AnyConvertable(jSON[#keyPath(Vehicles.price_credit)]).asNSDecimal
+        self.price_gold = AnyConvertable(jSON[#keyPath(Vehicles.price_gold)]).asNSDecimal
+        self.is_premium = AnyConvertable(jSON[#keyPath(Vehicles.is_premium)]).asNSDecimal
+        self.is_gift = AnyConvertable(jSON[#keyPath(Vehicles.is_gift)]).asNSDecimal
         self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
         self.type = jSON[#keyPath(Vehicles.type)] as? String
 
-        #warning("do not parse on application startup")
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
 
         Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
-            self.default_profile = newObject as? Vehicleprofile
+            guard let defaultProfile = newObject as? Vehicleprofile else {
+                return
+            }
+            self.default_profile = defaultProfile
+            self.modules_tree?.forEach({ (element) in
+                if let modules_tree = element as? ModulesTree {
+                    modules_tree.defaultProfile = defaultProfile
+                }
+            })
             coreDataMapping?.stash(vehicleProfileCase)
         }
 
@@ -101,9 +107,9 @@ extension Vehicles {
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.defaultProfile))
         ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             guard let module_tree = newObject as? ModulesTree else {
-//
                 return
             }
+            module_tree.defaultProfile = self.default_profile
             self.addToModules_tree(module_tree)
             coreDataMapping?.stash(modulesTreeCase)
         }

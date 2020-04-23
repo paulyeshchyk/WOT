@@ -51,7 +51,7 @@ extension VehicleprofileEngine {
 extension VehicleprofileEngine {
     public static func engine(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
-        let tag = jSON[#keyPath(VehicleprofileEngine.tag)]
+        let tag = jSON[VehicleprofileEngine.primaryKeyPath()]
         let pk = VehicleprofileEngine.primaryKey(for: tag as AnyObject?)
         let pkCase = PKCase()
         pkCase[.primary] = pk

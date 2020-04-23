@@ -33,7 +33,7 @@ public protocol CoreDataMappingProtocol {
 
     func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol)
     func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol)
-    func requestExternals(_ clazz: PrimaryKeypathProtocol.Type, idents: [Any]?, completion: @escaping NSManagedObjectCallback)
+    func requestExternals(for Clazz: PrimaryKeypathProtocol.Type, byIdents: [Any]?, completion: @escaping NSManagedObjectCallback)
 }
 
 public protocol JSONMapperProtocol {

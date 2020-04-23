@@ -52,7 +52,7 @@ extension ModulesTree {
          */
 
         let idents = jSON[#keyPath(ModulesTree.next_modules)] as? [Any]
-        coreDataMapping?.requestExternals(Module.self, idents: idents, completion: { managedObject in
+        coreDataMapping?.requestExternals(for: Module.self, byIdents: idents, completion: { managedObject in
             if let module = managedObject as? Module {
                 self.addToNext_modules(module)
                 coreDataMapping?.stash(pkCase)

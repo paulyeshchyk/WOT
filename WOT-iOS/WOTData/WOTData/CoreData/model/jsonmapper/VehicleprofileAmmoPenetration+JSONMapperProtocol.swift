@@ -34,9 +34,9 @@ extension VehicleprofileAmmoPenetration {
         defer {
             coreDataMapping?.stash(pkCase)
         }
-        self.min_value = NSDecimalNumber(value: array[0] as? Float ?? 0)
-        self.avg_value = NSDecimalNumber(value: array[1] as? Float ?? 0)
-        self.max_value = NSDecimalNumber(value: array[2] as? Float ?? 0)
+        self.min_value = AnyConvertable(array[0]).asNSDecimal
+        self.avg_value = AnyConvertable(array[1]).asNSDecimal
+        self.max_value = AnyConvertable(array[2]).asNSDecimal
     }
 }
 

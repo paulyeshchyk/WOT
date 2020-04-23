@@ -60,7 +60,7 @@ extension VehicleprofileTurret {
     public static func turret(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
 
-        let tag = jSON[#keyPath(VehicleprofileTurret.tag)]
+        let tag = jSON[VehicleprofileTurret.primaryKeyPath()]
         let pk = VehicleprofileTurret.primaryKey(for: tag as AnyObject?)
         let pkCase = PKCase()
         pkCase[.primary] = pk

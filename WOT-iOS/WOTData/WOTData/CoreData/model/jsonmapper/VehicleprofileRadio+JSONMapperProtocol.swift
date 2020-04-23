@@ -49,7 +49,7 @@ extension VehicleprofileRadio {
     public static func radio(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
 
-        let tag = jSON[#keyPath(VehicleprofileRadio.tag)]
+        let tag = jSON[VehicleprofileRadio.primaryKeyPath()]
         let pk = VehicleprofileRadio.primaryKey(for: tag as AnyObject?)
 
         let pkCase = PKCase()

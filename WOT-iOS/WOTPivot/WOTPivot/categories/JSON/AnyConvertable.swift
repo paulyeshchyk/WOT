@@ -15,25 +15,14 @@ public struct AnyConvertable {
     }
 
     public var asNSDecimal: NSDecimalNumber? {
-        guard let any = anyValue else { return nil }
-        if let int = any as? Int { return NSDecimalNumber(value: int) }
+        guard let nonNil = anyValue else { return nil }
+        if let float = nonNil as? Float { return NSDecimalNumber(value: float) }
+        if let int = nonNil as? Int { return NSDecimalNumber(value: int) }
         return nil
     }
-}
 
-//extension Any {
-//    var stringValue: String? {
-//        guard let string = self as? String else { return nil }
-//        return string
-//    }
-//
-//    var intValue: Int? {
-//        guard let intValue = self as? Int else { return nil }
-//        return intValue
-//    }
-//
-//    var nsDecimalValue: NSDecimalNumber? {
-//        guard let intValue = self as? Int else { return nil }
-//        return NSDecimalNumber(value: intValue)
-//    }
-//}
+    public var asString: String? {
+        guard let string = anyValue as? String else { return nil }
+        return string
+    }
+}
