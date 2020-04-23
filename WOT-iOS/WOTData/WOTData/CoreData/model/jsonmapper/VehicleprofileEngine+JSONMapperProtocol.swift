@@ -56,7 +56,7 @@ extension VehicleprofileEngine {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.requestNewSubordinate(VehicleprofileEngine.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(VehicleprofileEngine.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject,fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

@@ -72,7 +72,7 @@ extension VehicleprofileGun {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.requestNewSubordinate(VehicleprofileGun.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(VehicleprofileGun.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

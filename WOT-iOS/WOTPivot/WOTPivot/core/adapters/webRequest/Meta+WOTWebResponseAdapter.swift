@@ -14,15 +14,19 @@ public typealias OnLinksCallback = ([WOTJSONLink]?) -> Void
 @objc
 public protocol CoreDataMappingProtocol {
     /**
-     */
-    func onLinks(_ links: [WOTJSONLink]?)
-    /**
      Asks NSManagedObjectContext to find/create object by predicate
      - Parameter clazz: Type of requested object
      - Parameter pkCase: Set of predicates available for this request
      - Parameter callback: -
      */
-    func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback )
+    func pullLocalSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback )
+    /**
+     Asks Remote storage to find/create object by predicate
+     - Parameter clazz: Type of requested object
+     - Parameter pkCase: Set of predicates available for this request
+     - Parameter callback: -
+     */
+    func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents: [Any]?, completion: @escaping NSManagedObjectCallback)
 
     /**
      Asks Subordinator to save context before running links mapping
@@ -33,7 +37,6 @@ public protocol CoreDataMappingProtocol {
 
     func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol)
     func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol)
-    func requestExternals(for Clazz: PrimaryKeypathProtocol.Type, byIdents: [Any]?, completion: @escaping NSManagedObjectCallback)
 }
 
 public protocol JSONMapperProtocol {

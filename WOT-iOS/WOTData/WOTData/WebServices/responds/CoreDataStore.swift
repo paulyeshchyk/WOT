@@ -148,8 +148,8 @@ extension CoreDataStore: CoreDataMappingProtocol {
         stash(pkCase)
     }
 
-    public func requestNewSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
-        appManager?.logInspector?.log(LogicLog("Subordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
+    public func pullLocalSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+        appManager?.logInspector?.log(LogicLog("pullLocalSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
             callback(nil)
@@ -185,8 +185,8 @@ extension CoreDataStore: CoreDataMappingProtocol {
         })
     }
 
-    public func requestExternals(for Clazz: PrimaryKeypathProtocol.Type, byIdents idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
-        appManager?.logInspector?.log(LogicLog("requestExternals:\(Clazz)"), sender: self)
+    public func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
+        appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(Clazz)"), sender: self)
         var result = [WOTJSONLink]()
         idents?.forEach {
             if let pk = Clazz.primaryKey(for: $0 as AnyObject) {
@@ -196,12 +196,5 @@ extension CoreDataStore: CoreDataMappingProtocol {
             }
         }
         self.linkAdapter.request(self.request, adaptExternalLinks: result, externalCallback: completion)
-    }
-
-    /**
-
-     */
-    public func onLinks(_ links: [WOTJSONLink]?) {
-        fatalError("use externalCallback instead")
     }
 }

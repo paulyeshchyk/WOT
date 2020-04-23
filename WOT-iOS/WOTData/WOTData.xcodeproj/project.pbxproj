@@ -95,7 +95,6 @@
 		1DAD1B4023D0581B0050B5B7 /* VehicleprofileRadio+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2D23D0581B0050B5B7 /* VehicleprofileRadio+JSONMapperProtocol.swift */; };
 		1DAD1B4D23D072810050B5B7 /* Vehicles+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B4C23D072800050B5B7 /* Vehicles+JSONMapperProtocol.swift */; };
 		1DAD1B5123D1C28D0050B5B7 /* WOTWEBRequestModulesTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B5023D1C28D0050B5B7 /* WOTWEBRequestModulesTree.swift */; };
-		1DAD1B5323D1C6990050B5B7 /* NSManagedObject_tryToSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B5223D1C6990050B5B7 /* NSManagedObject_tryToSave.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,7 +199,6 @@
 		1DAD1B2D23D0581B0050B5B7 /* VehicleprofileRadio+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B4C23D072800050B5B7 /* Vehicles+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B5023D1C28D0050B5B7 /* WOTWEBRequestModulesTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestModulesTree.swift; sourceTree = "<group>"; };
-		1DAD1B5223D1C6990050B5B7 /* NSManagedObject_tryToSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObject_tryToSave.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,7 +417,6 @@
 		1DAD1B1A23D057D80050B5B7 /* jsonmapper */ = {
 			isa = PBXGroup;
 			children = (
-				1DAD1B5223D1C6990050B5B7 /* NSManagedObject_tryToSave.swift */,
 				1DA153C8244AE6C000FB3C89 /* ModulesTree+UI.swift */,
 				1D695C71244C416B00650F95 /* Module+JSONMapperProtocol.swift */,
 				1DAD1B2723D0581B0050B5B7 /* ModulesTree+JSONMapperProtocol.swift */,
@@ -571,7 +568,6 @@
 				1D695CA6244CC52900650F95 /* UserSession+CoreDataClass.swift in Sources */,
 				1D2612162410DD3C00CFEB16 /* WOTSaveSessionRequest.swift in Sources */,
 				1DA153C9244AE6C100FB3C89 /* ModulesTree+UI.swift in Sources */,
-				1DAD1B5323D1C6990050B5B7 /* NSManagedObject_tryToSave.swift in Sources */,
 				1D695CAF244CC52900650F95 /* Vehicleprofile+CoreDataProperties.swift in Sources */,
 				1D2612142410DD0800CFEB16 /* WOTClearSessionRequest.swift in Sources */,
 				1D695C9E244CC52900650F95 /* VehicleprofileEngine+CoreDataClass.swift in Sources */,

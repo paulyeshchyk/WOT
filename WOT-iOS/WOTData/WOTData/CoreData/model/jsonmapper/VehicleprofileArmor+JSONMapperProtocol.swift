@@ -44,7 +44,7 @@ extension VehicleprofileArmor {
             return
         }
 
-        coreDataMapping?.requestNewSubordinate(VehicleprofileArmor.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(VehicleprofileArmor.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
@@ -56,7 +56,7 @@ extension VehicleprofileArmor {
             return
         }
 
-        coreDataMapping?.requestNewSubordinate(VehicleprofileArmor.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(VehicleprofileArmor.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

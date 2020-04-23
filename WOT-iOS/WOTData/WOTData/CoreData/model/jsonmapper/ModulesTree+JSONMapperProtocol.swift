@@ -52,7 +52,7 @@ extension ModulesTree {
          */
 
         let idents = jSON[#keyPath(ModulesTree.next_modules)] as? [Any]
-        coreDataMapping?.requestExternals(for: Module.self, byIdents: idents, completion: { managedObject in
+        coreDataMapping?.pullRemoteSubordinate(for: Module.self, byIdents: idents, completion: { managedObject in
             if let module = managedObject as? Module {
                 self.addToNext_modules(module)
                 coreDataMapping?.stash(pkCase)
@@ -92,7 +92,7 @@ extension ModulesTree {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = pkCase[.primary]
 
-            coreDataMapping?.requestNewSubordinate(ModulesTree.self, submodulesCase) { newObject in
+            coreDataMapping?.pullLocalSubordinate(ModulesTree.self, submodulesCase) { newObject in
                 coreDataMapping?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest)
                 callback(newObject)
             }
@@ -101,7 +101,7 @@ extension ModulesTree {
 
     public static func nextModules(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectSetCallback ) {
         guard let json = json as? JSON else { return }
-        coreDataMapping?.requestNewSubordinate(ModulesTree.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(ModulesTree.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback([newObject])
         }

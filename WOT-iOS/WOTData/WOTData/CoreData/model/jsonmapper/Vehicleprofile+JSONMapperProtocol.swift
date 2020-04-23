@@ -141,7 +141,7 @@ extension Vehicleprofile {
             return
         }
 
-        coreDataMapping?.requestNewSubordinate(Vehicleprofile.self, pkCase) { newObject in
+        coreDataMapping?.pullLocalSubordinate(Vehicleprofile.self, pkCase) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
