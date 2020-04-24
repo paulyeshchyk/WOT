@@ -30,6 +30,9 @@ public class WOTJSONLink: NSObject {
                     result += " key:\($0)"
                 }
             }
+            if let prefix = keypathPrefix {
+                result += " prefix:\(prefix)"
+            }
             return result
         }
         set {}
@@ -46,6 +49,14 @@ public class WOTJSONLink: NSObject {
     public init?(clazz clazzTo: AnyClass, primaryKeys keys: [WOTPrimaryKey], keypathPrefix kp: String?, completion block: ((JSON) -> Void)?) {
         clazz = clazzTo
         primaryKeys = keys
+        completion = block
+        keypathPrefix = kp
+        super.init()
+    }
+
+    public init?(clazz clazzTo: AnyClass, pkCase: PKCase, keypathPrefix kp: String?, completion block: ((JSON) -> Void)?) {
+        clazz = clazzTo
+        primaryKeys = pkCase.allValues()?.compactMap { $0 }
         completion = block
         keypathPrefix = kp
         super.init()

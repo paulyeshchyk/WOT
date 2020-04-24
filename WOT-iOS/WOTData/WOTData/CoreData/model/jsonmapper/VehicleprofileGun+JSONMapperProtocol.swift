@@ -72,7 +72,7 @@ extension VehicleprofileGun {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileGun.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileGun.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
@@ -93,6 +93,6 @@ extension VehicleprofileGun: PrimaryKeypathProtocol {
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 }

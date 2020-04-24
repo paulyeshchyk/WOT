@@ -12,6 +12,12 @@ import CoreData
 public typealias OnLinksCallback = ([WOTJSONLink]?) -> Void
 
 @objc
+public enum SubordinateRequestType: Int {
+    case local = 0
+    case remote = 1
+}
+
+@objc
 public protocol CoreDataMappingProtocol {
     /**
      Asks NSManagedObjectContext to find/create object by predicate
@@ -19,13 +25,14 @@ public protocol CoreDataMappingProtocol {
      - Parameter pkCase: Set of predicates available for this request
      - Parameter callback: -
      */
-    func pullLocalSubordinate(for clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback )
+    func requestSubordinate(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback )
     /**
      Asks Remote storage to find/create object by predicate
      - Parameter clazz: Type of requested object
      - Parameter pkCase: Set of predicates available for this request
      - Parameter callback: -
      */
+    @available(*, deprecated, message: "use requestSubordinate(_:_:.remote:)")
     func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents: [Any]?, completion: @escaping NSManagedObjectCallback)
 
     /**

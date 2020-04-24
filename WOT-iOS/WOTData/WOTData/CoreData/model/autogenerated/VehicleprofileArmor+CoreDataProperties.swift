@@ -1,9 +1,8 @@
 //
 //  VehicleprofileArmor+CoreDataProperties.swift
-//  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/20/20.
-//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
+//
+//  Created by Pavel Yeshchyk on 4/23/20.
 //
 //
 

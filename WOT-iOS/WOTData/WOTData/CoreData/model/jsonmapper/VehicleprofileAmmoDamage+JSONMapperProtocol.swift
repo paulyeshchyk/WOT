@@ -41,7 +41,7 @@ extension VehicleprofileAmmoDamage {
     public static func damage(fromArray array: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let array = array as? [Any] else { return }
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileAmmoDamage.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileAmmoDamage.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromArray: array, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

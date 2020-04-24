@@ -55,7 +55,7 @@ extension VehicleprofileRadio {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileRadio.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileRadio.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
@@ -76,6 +76,6 @@ extension VehicleprofileRadio: PrimaryKeypathProtocol {
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 }

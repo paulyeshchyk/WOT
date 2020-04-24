@@ -1,9 +1,8 @@
 //
 //  VehicleprofileModule+CoreDataProperties.swift
-//  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/20/20.
-//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
+//
+//  Created by Pavel Yeshchyk on 4/23/20.
 //
 //
 
@@ -15,15 +14,35 @@ extension VehicleprofileModule {
         return NSFetchRequest<VehicleprofileModule>(entityName: "VehicleprofileModule")
     }
 
-    @NSManaged public var engine_id: NSDecimalNumber?
-    @NSManaged public var gun_id: NSDecimalNumber?
-    @NSManaged public var radio_id: NSDecimalNumber?
-    @NSManaged public var suspension_id: NSDecimalNumber?
-    @NSManaged public var turret_id: NSDecimalNumber?
-    @NSManaged public var vehicleProfile: Vehicleprofile?
-    @NSManaged public var tankradios: Tankradios?
-    @NSManaged public var tankguns: Tankguns?
-    @NSManaged public var tankengines: Tankengines?
-    @NSManaged public var tankchassis: Tankchassis?
-    @NSManaged public var tankturrets: Tankturrets?
+    @NSManaged public var image: String?
+    @NSManaged public var module_id: NSDecimalNumber?
+    @NSManaged public var name: String?
+    @NSManaged public var nation: String?
+    @NSManaged public var price_credit: NSDecimalNumber?
+    @NSManaged public var tier: NSDecimalNumber?
+    @NSManaged public var type: String?
+    @NSManaged public var weight: NSDecimalNumber?
+    @NSManaged public var moduleTree: ModulesTree?
+    @NSManaged public var tanks: NSSet?
+    @NSManaged public var vehicleRadio: VehicleprofileRadio?
+    @NSManaged public var vehicleEngine: VehicleprofileEngine?
+    @NSManaged public var vehicleGun: VehicleprofileGun?
+    @NSManaged public var vehicleChassis: VehicleprofileSuspension?
+    @NSManaged public var vehicleTurret: VehicleprofileTurret?
+    @NSManaged public var vehicleprofile: Vehicleprofile?
+}
+
+// MARK: Generated accessors for tanks
+extension VehicleprofileModule {
+    @objc(addTanksObject:)
+    @NSManaged public func addToTanks(_ value: Vehicles)
+
+    @objc(removeTanksObject:)
+    @NSManaged public func removeFromTanks(_ value: Vehicles)
+
+    @objc(addTanks:)
+    @NSManaged public func addToTanks(_ values: NSSet)
+
+    @objc(removeTanks:)
+    @NSManaged public func removeFromTanks(_ values: NSSet)
 }

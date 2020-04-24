@@ -30,6 +30,12 @@ public protocol WOTAppManagerProtocol {
 
     @objc
     var shared: WOTAppManagerProtocol { get }
+
+    @objc
+    var mappingCoordinator: WOTMappingCoordinatorProtocol? { get set }
+
+    @objc
+    var jsonLinksAdapter: JSONLinksAdapterProtocol? { get set }
 }
 
 @objc
@@ -49,6 +55,16 @@ public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
             requestManager?.appManager = self
         }
     }
+
+    @objc
+    public var jsonLinksAdapter: JSONLinksAdapterProtocol? {
+        didSet {
+            jsonLinksAdapter?.appManager = self
+        }
+    }
+
+    @objc
+    public var mappingCoordinator: WOTMappingCoordinatorProtocol?
 
     @objc
     public var requestListener: WOTRequestListenerProtocol?

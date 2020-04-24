@@ -109,6 +109,9 @@ public protocol WOTRequestManagerProtocol {
     func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, externalCallback: NSManagedObjectCallback?) -> Bool
 
     @objc
+    func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol?
+
+    @objc
     func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
 
     @objc
@@ -118,14 +121,23 @@ public protocol WOTRequestManagerProtocol {
     func cancelRequests(groupId: String)
 
     @objc
-    var requestCoordinator: WOTRequestCoordinatorProtocol { get set }
+    func setRequestCoordinator(coordinator: WOTRequestCoordinatorProtocol)
 
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol { get set }
 
     @objc
     var appManager: WOTAppManagerProtocol? { get set }
+
+    @objc
+    var coordinator: WOTRequestCoordinatorProtocol { get }
+
+    @objc
+    @discardableResult
+    func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink, externalCallback: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) -> Bool
 }
+
+public extension WOTRequestManagerProtocol {}
 
 @objc
 public protocol WOTRequestListenerProtocol {

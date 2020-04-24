@@ -12,7 +12,7 @@ public class CoreDataStore {
     let Clazz: PrimaryKeypathProtocol.Type
     let request: WOTRequestProtocol
     let binary: Data?
-    let linkAdapter: JSONLinksAdapterProtocol
+    let linkAdapter: JSONLinksAdapterProtocol?
     var extenalLinks: [WOTJSONLink]?
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     var onGetObjectJSON: ((JSON) -> JSON)?
@@ -20,7 +20,7 @@ public class CoreDataStore {
     var onCreateNSManagedObject: NSManagedObjectCallback?
     let appManager: WOTAppManagerProtocol?
 
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol, appManager: WOTAppManagerProtocol?, extenalLinks: [WOTJSONLink]?) {
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol?, appManager: WOTAppManagerProtocol?, extenalLinks: [WOTJSONLink]?) {
         self.Clazz = clazz
         self.request = request
         self.binary = binary
@@ -110,6 +110,8 @@ extension CoreDataStore: CoreDataStoreProtocol {
         let keys = json.keys
         for (idx, key) in keys.enumerated() {
             //
+            #warning("not working for case data->7473->modules_tree->... because CoreDataStore uses Wrong class. It operates with Vehicles instead of using Module_Tree")
+
             let extraction = extractSubJSON(from: json, by: key)
             findOrCreateObject(for: extraction) { managedObject in
 
@@ -151,8 +153,15 @@ extension CoreDataStore: CoreDataMappingProtocol {
     /**
 
      */
-    public func pullLocalSubordinate(for clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
-        appManager?.logInspector?.log(LogicLog("pullLocalSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
+    public func requestSubordinate(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
+        switch subordinateRequestType {
+        case .local: localSubordinate(for: clazz, pkCase, callback: callback)
+        case .remote: remoteSubordinate(for: clazz, pkCase,  keypathPrefix: keyPathPrefix, callback: callback)
+        }
+    }
+
+    private func localSubordinate(for clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+        appManager?.logInspector?.log(LogicLog("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
             callback(nil)
@@ -168,9 +177,20 @@ extension CoreDataStore: CoreDataMappingProtocol {
         })
     }
 
+    #warning("to be done")
+    private func remoteSubordinate(for clazz: AnyClass, _ pkCase: PKCase,  keypathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
+        appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
+        var result = [WOTJSONLink]()
+        if let link = WOTJSONLink(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix, completion: nil) {
+            result.append(link)
+        }
+        self.linkAdapter?.request(self.request, adaptExternalLinks: result, externalCallback: callback, adaptCallback: { _ in})
+    }
+
     /**
 
      */
+    @available(*, deprecated, message: "use requestSubordinate(_:_:.remote:)")
     public func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(Clazz)"), sender: self)
         var result = [WOTJSONLink]()
@@ -181,7 +201,7 @@ extension CoreDataStore: CoreDataMappingProtocol {
                 }
             }
         }
-        self.linkAdapter.request(self.request, adaptExternalLinks: result, externalCallback: completion)
+        self.linkAdapter?.request(self.request, adaptExternalLinks: result, externalCallback: completion, adaptCallback: { _ in})
     }
 
     /**

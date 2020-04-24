@@ -14,8 +14,7 @@
                 #keyPath(Vehicleprofile.hp),
                 #keyPath(Vehicleprofile.is_default),
                 #keyPath(Vehicleprofile.modules),
-//                #keyPath(Vehicleprofile.modulesTree),
-//                #keyPath(Vehicleprofile.vehicles),
+                #keyPath(Vehicleprofile.modulesTree),
                 #keyPath(Vehicleprofile.speed_forward),
                 #keyPath(Vehicleprofile.hull_hp),
                 #keyPath(Vehicleprofile.speed_backward),
@@ -108,7 +107,7 @@ extension Vehicleprofile {
         }
 
         let vehicleprofileModuleCase = PKCase()
-        vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))
+        vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
         VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], pkCase: vehicleprofileModuleCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.modules = newObject as? VehicleprofileModule
             coreDataMapping?.stash(vehicleprofileModuleCase)
@@ -130,7 +129,7 @@ extension Vehicleprofile: PrimaryKeypathProtocol {
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 }
 
@@ -141,7 +140,7 @@ extension Vehicleprofile {
             return
         }
 
-        coreDataMapping?.pullLocalSubordinate(for: Vehicleprofile.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: Vehicleprofile.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

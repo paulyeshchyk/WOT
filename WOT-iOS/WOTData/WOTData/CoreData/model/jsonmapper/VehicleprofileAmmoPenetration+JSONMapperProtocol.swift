@@ -44,7 +44,7 @@ extension VehicleprofileAmmoPenetration {
     public static func penetration(fromArray array: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let array = array as? [Any] else { return }
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileAmmoPenetration.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileAmmoPenetration.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromArray: array, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

@@ -57,17 +57,14 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
         return Array(self.rootNodes).sorted(by: comparator)
     }
 
-    #warning("check")
     public func nodesCount(section: Int) -> Int {
         return 0
     }
 
-    #warning("check")
     public func node(atIndexPath indexPath: NSIndexPath) -> WOTNodeProtocol? {
         return self.nodeIndex.item(indexPath: indexPath)
     }
 
-    #warning("check")
     public func indexPath(forNode: WOTNodeProtocol?) -> IndexPath? {
         return nil
     }

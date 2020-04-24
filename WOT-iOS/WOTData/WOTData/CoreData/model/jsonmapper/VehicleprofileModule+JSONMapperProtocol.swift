@@ -1,68 +1,115 @@
 //
-//  VehicleprofileModule+JSONMapperProtocol.swift
+//  VehicleProfileModule+JSONMapperProtocol.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/16/20.
+//  Created by Pavel Yeshchyk on 4/19/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
 import Foundation
-import WOTPivot
 
-extension VehicleprofileModule {
-    public typealias Fields = Void
-
+@objc extension VehicleprofileModule: KeypathProtocol {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.radio_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.radio_id)]).asNSDecimal
-        self.suspension_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.suspension_id)]).asNSDecimal
-        self.engine_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.engine_id)]).asNSDecimal
-        self.gun_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.gun_id)]).asNSDecimal
-        self.turret_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.turret_id)]).asNSDecimal
-
-        #warning("refactor from here")
-
-//        var links: [WOTJSONLink] = .init()
-//        if let suspensionPK = VehicleprofileSuspension.primaryKey(for: suspension_id?.intValue as AnyObject?) {
-//            if let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: nil, completion: { json in //"suspension."
-//                print(json)
-//                }) {
-//                links.append(suspensionLink)
-//            }
-//        }
-//
-//        let enginePK = VehicleprofileEngine.primaryKey(for: engine_id?.intValue as AnyObject?)
-//
-//        let gunPK = VehicleprofileGun.primaryKey(for: gun_id?.intValue as AnyObject?)
-//
-//        let turretPK = VehicleprofileTurret.primaryKey(for: turret_id?.intValue as AnyObject?)
-
-//        let suspensionLink = WOTJSONLink(clazz: VehicleprofileSuspension.self, primaryKeys: [suspensionPK], keypathPrefix: "suspension.") { json in
-//            if let tankchassisObject = subordinator?(Tankchassis.self, nil) as? Tankchassis {
-//                coreDataMapping?.mapping(object: tankchassisObject, fromJSON: json, parentPrimaryKey: nil, subordinator: subordinator)
-//                self.tankchassis = tankchassisObject
-//            }
-//        }
+    public class func keypaths() -> [String] {
+        return [#keyPath(VehicleprofileModule.name),
+                #keyPath(VehicleprofileModule.nation),
+                #keyPath(VehicleprofileModule.tier),
+                #keyPath(VehicleprofileModule.type),
+                #keyPath(VehicleprofileModule.price_credit),
+                #keyPath(VehicleprofileModule.weight),
+                #keyPath(VehicleprofileModule.tanks),
+                #keyPath(VehicleprofileModule.image),
+                #keyPath(VehicleprofileModule.module_id)]
     }
 
-    private func nestedRequests(parentPrimaryKey: WOTPrimaryKey?) -> [WOTJSONLink] {
-//        let requestRadio = VehicleprofileRadio.linkRequest(for: self.radio_id, inContext: nil) { [weak self] result in
-//            self?.tankradios = result as? VehicleprofileRadio
-//        }
-//        let requestEngine = Tankengines.linkRequest(for: self.engine_id, inContext: context) { [weak self] result in
-//            self?.tankengines = result as? Tankengines
-//        }
-//        let requestGun = Tankguns.linkRequest(for: self.gun_id, inContext: context) { [weak self] result in
-//            self?.tankguns = result as? Tankguns
-//        }
-//        let requestSuspension = VehicleprofileSuspension.linkRequest(for: self.suspension_id, parentPrimaryKey: parentPrimaryKey, inContext: context) { [weak self] result in
-//            self?.tankchassis = result as? Tankchassis
-//        }
-//        let requestTurret = Tankturrets.linkRequest(for: self.turret_id, inContext: context) { [weak self] result in
-//            self?.tankturrets = result as? Tankturrets
-//        }
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileModule.keypaths()
+    }
+}
 
-        return [/*requestSuspension, requestRadio, requestEngine, requestGun, requestTurret*/].compactMap { $0 }
+extension VehicleprofileModule {
+    public enum FieldKeys: String, CodingKey {
+        case name
+        case nation
+        case tier
+        case module_id
+    }
+
+    public typealias Fields = FieldKeys
+}
+
+extension VehicleprofileModule {
+    override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+        self.name = jSON[#keyPath(VehicleprofileModule.name)] as? String
+        self.nation = jSON[#keyPath(VehicleprofileModule.nation)] as? String
+        self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.tier)] as? Int ?? 0)
+        self.type = jSON[#keyPath(VehicleprofileModule.type)] as? String
+        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.price_credit)] as? Int ?? 0)
+        self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.weight)] as? Int ?? 0)
+        self.module_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.module_id)]).asNSDecimal
+        self.image = jSON[#keyPath(VehicleprofileModule.image)] as? String
+
+        let idents = [self.module_id?.stringValue].compactMap { $0 }
+        if type == "vehicleRadio" {
+            #warning("tank_id is expected")
+            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileRadio.self, byIdents: idents, completion: { managedObject in
+                if let radio = managedObject as? VehicleprofileRadio {
+                    self.vehicleRadio = radio
+                    coreDataMapping?.stash(pkCase)
+                }
+            })
+        } else if type == "vehicleEngine" {
+            #warning("tank_id is expected")
+            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileEngine.self, byIdents: idents, completion: { managedObject in
+                if let engine = managedObject as? VehicleprofileEngine {
+                    self.vehicleEngine = engine
+                    coreDataMapping?.stash(pkCase)
+                }
+            })
+        } else if type == "vehicleGun" {
+            #warning("tank_id is expected")
+            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileGun.self, byIdents: idents, completion: { managedObject in
+                if let gun = managedObject as? VehicleprofileGun {
+                    self.vehicleGun = gun
+                    coreDataMapping?.stash(pkCase)
+                }
+            })
+        } else if type == "vehicleChassis" {
+            #warning("tank_id is expected")
+            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileSuspension.self, byIdents: idents, completion: { managedObject in
+                if let suspension = managedObject as? VehicleprofileSuspension {
+                    self.vehicleChassis = suspension
+                    coreDataMapping?.stash(pkCase)
+                }
+            })
+        } else if type == "vehicleTurret" {
+            #warning("tank_id is expected")
+            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileTurret.self, byIdents: idents, completion: { managedObject in
+                if let turret = managedObject as? VehicleprofileTurret {
+                    self.vehicleTurret = turret
+                    coreDataMapping?.stash(pkCase)
+                }
+            })
+        }
+    }
+}
+
+extension VehicleprofileModule: PrimaryKeypathProtocol {
+    private static let pkey: String = #keyPath(VehicleprofileModule.module_id)
+
+    public static func primaryKeyPath() -> String? {
+        return self.pkey
+    }
+
+    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? String else { return nil }
+        return NSPredicate(format: "%K == %@", self.pkey, ident)
+    }
+
+    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 }
 
@@ -70,7 +117,7 @@ extension VehicleprofileModule {
     public static func module(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileModule.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileModule.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

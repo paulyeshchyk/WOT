@@ -10,10 +10,13 @@
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(ModulesTree.name),
-                #keyPath(ModulesTree.module_id),
-                #keyPath(ModulesTree.price_credit),
+                //recursion                #keyPath(ModulesTree.next_modules),
                 #keyPath(ModulesTree.next_tanks),
-                #keyPath(ModulesTree.next_modules)
+                #keyPath(ModulesTree.is_default),
+                #keyPath(ModulesTree.price_xp),
+                #keyPath(ModulesTree.price_credit),
+                #keyPath(ModulesTree.module_id),
+                #keyPath(ModulesTree.type)
         ]
     }
 
@@ -40,30 +43,38 @@ extension ModulesTree {
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.name = jSON[#keyPath(ModulesTree.name)] as? String
-        self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
-        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_credit)] as? Int ?? 0)
         self.price_xp = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_xp)] as? Int ?? 0)
+        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_credit)] as? Int ?? 0)
+        self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
 
-        let nextModulesIdents = jSON[#keyPath(ModulesTree.next_modules)] as? [Any]
-        coreDataMapping?.pullRemoteSubordinate(for: Module.self, byIdents: nextModulesIdents, completion: { managedObject in
-            if let module = managedObject as? Module {
-                self.addToNext_modules(module)
-                coreDataMapping?.stash(pkCase)
-            }
-        })
+        //#warning("tank_id is expected: self.defaultProfile?.vehicles?.tank_id")
+        //#warning("prefix is expected: instead of name, use modules_tree.name")
+//        let nextModules = jSON[#keyPath(ModulesTree.next_modules)]
+//        (nextModules as? [AnyObject])?.forEach {
+//            let moduleTreePK = PKCase()
+//            moduleTreePK[.primary] = pkCase[.primary]
+//            moduleTreePK[.secondary] = ModulesTree.primaryKey(for: $0)
+//            coreDataMapping?.requestSubordinate(for: ModulesTree.self, moduleTreePK, subordinateRequestType: .remote, keyPathPrefix: "modules_tree.", callback: { (managedObject) in
+//                if let module = managedObject as? ModulesTree {
+//                    self.addToNext_modules(module)
+//                    coreDataMapping?.stash(moduleTreePK)
+//                }
+//            })
+//        }
 
-        #warning("recursion")
-        /*
-         let nextTanksIdents = jSON[#keyPath(ModulesTree.next_tanks)] as? [Any]
-         coreDataMapping?.pullRemoteSubordinate(for: Vehicles.self, byIdents: nextTanksIdents, completion: { managedObject in
-             if let vehicle = managedObject as? Vehicles {
-                 self.addToNext_tanks(vehicle)
-                 coreDataMapping?.stash(pkCase)
-             }
-         })
-         */
+        let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
+        (nextTanks as? [AnyObject])?.forEach {
+            let nextTanksPK = PKCase()
+            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
+            coreDataMapping?.requestSubordinate(for: Vehicles.self, nextTanksPK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
+                if let module = managedObject as? ModulesTree {
+                    self.addToNext_modules(module)
+                    coreDataMapping?.stash(nextTanksPK)
+                }
+            })
+        }
     }
 }
 
@@ -81,7 +92,7 @@ extension ModulesTree: PrimaryKeypathProtocol {
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 }
 
@@ -98,7 +109,7 @@ extension ModulesTree {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = pkCase[.primary]
 
-            coreDataMapping?.pullLocalSubordinate(for: ModulesTree.self, submodulesCase) { newObject in
+            coreDataMapping?.requestSubordinate(for: ModulesTree.self, submodulesCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
                 coreDataMapping?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest)
                 callback(newObject)
             }
@@ -107,7 +118,7 @@ extension ModulesTree {
 
     public static func nextModules(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectSetCallback ) {
         guard let json = json as? JSON else { return }
-        coreDataMapping?.pullLocalSubordinate(for: ModulesTree.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: ModulesTree.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback([newObject])
         }

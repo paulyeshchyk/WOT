@@ -60,7 +60,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     @objc
-    private var coordinator: WOTRequestCoordinatorProtocol
+    public var coordinator: WOTRequestCoordinatorProtocol
 
     @objc
     private var hostConfig: WOTHostConfigurationProtocol
@@ -130,25 +130,8 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         grouppedRequests[groupId]?.forEach { $0.cancel() }
     }
 
-    fileprivate func request(_ parentRequest: WOTRequestProtocol, queueJsonLinks jsonLinks: ([WOTJSONLink?])?, externalCallback: NSManagedObjectCallback?) {
-        guard let jsonLinks = jsonLinks, jsonLinks.count != 0 else {
-            self.request(parentRequest, didCompleteParsing: .noData)
-            return
-        }
-
-        jsonLinks.compactMap { $0 }.forEach { jsonLink in
-            if let requestIDs = self.requestCoordinator.requestIds(forClass: jsonLink.clazz) {
-                requestIDs.forEach {
-                    self.queue(parentRequest: parentRequest, requestId: $0, jsonLink: jsonLink, externalCallback: externalCallback, listener: nil)
-                }
-            } else {
-                print("requests not parsed")
-            }
-        }
-    }
-
     @discardableResult
-    private func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink, externalCallback: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) -> Bool {
+    public func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink, externalCallback: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) -> Bool {
         guard let clazz = jsonLink.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
         guard let request = requestCoordinator.createRequest(forRequestId: requestId) else { return false }
@@ -161,7 +144,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         #warning("forKey: fields should be refactored")
         arguments.setValues(keyPaths, forKey: "fields")
         jsonLink.primaryKeys?.forEach {
-            arguments.setValues([$0.value], forKey: $0.name)
+            arguments.setValues([$0.value], forKey: $0.nameAlias)
         }
 
         request.hostConfiguration = hostConfiguration
@@ -175,13 +158,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 }
 
-extension WOTRequestManager: JSONLinksAdapterProtocol {
-    public func request(_ request: WOTRequestProtocol, adaptExternalLinks jsonLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?) {
-        let theRequest = request.parentRequest ?? request
-        self.request(theRequest, queueJsonLinks: jsonLinks, externalCallback: externalCallback)
-    }
-}
-
 extension WOTRequestManager: LogMessageSender {
     public var logSenderDescription: String {
         return String(describing: type(of: self))
@@ -189,14 +165,23 @@ extension WOTRequestManager: LogMessageSender {
 }
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
-    public var requestCoordinator: WOTRequestCoordinatorProtocol {
+    private var requestCoordinator: WOTRequestCoordinatorProtocol {
         get { return coordinator }
         set { coordinator = newValue }
+    }
+
+    @objc
+    public func setRequestCoordinator(coordinator: WOTRequestCoordinatorProtocol) {
+        requestCoordinator = coordinator
     }
 
     public var hostConfiguration: WOTHostConfigurationProtocol {
         get { return hostConfig }
         set { hostConfig = newValue }
+    }
+
+    public func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol? {
+        requestCoordinator.createRequest(forRequestId: requestId)
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
@@ -206,7 +191,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         let externalCallback = self.externalCallbacks[request.uuid.uuidString]
-        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: self, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: { [weak self] error in
+        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: appManager?.jsonLinksAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: { [weak self] error in
             DispatchQueue.main.async {
                 #warning("error was not used here")
                 self?.request(request, didCompleteParsing: .finished)

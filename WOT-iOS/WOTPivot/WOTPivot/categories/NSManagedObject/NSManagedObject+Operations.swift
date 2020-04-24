@@ -54,7 +54,7 @@ extension NSManagedObject {
     }
 }
 
-public typealias NSManagedObjectCallback = (NSManagedObject?) -> Void
+public typealias NSManagedObjectCallback = (_ managedObject: NSManagedObject?) -> Void
 public typealias NSManagedObjectSetCallback = ([NSManagedObject?]?) -> Void
 
 extension NSManagedObject: JSONMapperProtocol {

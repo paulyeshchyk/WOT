@@ -41,8 +41,6 @@
     id<LogInspectorProtocol> logInspector = [[LogInspector alloc] init];
     [logInspector objcOnlyAddpriority: 0];
     [logInspector objcOnlyAddpriority: 1];
-    [logInspector objcOnlyAddpriority: 5];
-    [logInspector objcOnlyAddpriority: 8];
 
     id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];
 
@@ -53,6 +51,10 @@
     id<WOTWebSessionManagerProtocol> sessionManager = [[WOTWebSessionManager alloc] init];
     
     id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTTankCoreDataProvider alloc] init];
+    
+    id<WOTMappingCoordinatorProtocol> mappingCoordinator = [[WOTMappingCoordinator alloc] init];
+    
+    id<JSONLinksAdapterProtocol> jsonLinksAdapter = [[WOTJSONLinksAdapter alloc] init];
 
     self.appManager = [WOTPivotAppManager sharedInstance];
     self.appManager.hostConfiguration = hostConfiguration;
@@ -61,6 +63,8 @@
     self.appManager.sessionManager = sessionManager;
     self.appManager.logInspector = logInspector;
     self.appManager.coreDataProvider = coreDataProvider;
+    self.appManager.mappingCoordinator = mappingCoordinator;
+    self.appManager.jsonLinksAdapter = jsonLinksAdapter;
 
     [AppDefaults registerRequestsFor:requestCoordinator];
     [WOTApplicationDefaults registerDefaultSettings];

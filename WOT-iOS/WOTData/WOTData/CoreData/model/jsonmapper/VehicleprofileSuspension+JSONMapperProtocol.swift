@@ -61,7 +61,7 @@ extension VehicleprofileSuspension {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileSuspension.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileSuspension.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
@@ -82,6 +82,6 @@ extension VehicleprofileSuspension: PrimaryKeypathProtocol {
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 }

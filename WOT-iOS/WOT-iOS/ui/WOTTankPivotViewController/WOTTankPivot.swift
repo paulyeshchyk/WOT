@@ -113,7 +113,7 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         DispatchQueue.main.async {
             super.loadModel()
-            if completionResultType == .finished || completionResultType == .noData  {
+            if completionResultType == .finished || completionResultType == .noData {
                 requestManager.removeListener(self)
             }
         }

@@ -117,7 +117,7 @@ extension Vehicles {
 }
 
 extension Vehicles: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(Vehicles.tag)
+    private static let pkey: String = #keyPath(Vehicles.tank_id)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey
@@ -130,7 +130,7 @@ extension Vehicles: PrimaryKeypathProtocol {
 
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 
     public static func foreingKey(for ident: AnyObject?, foreignPaths: [String]) -> WOTPrimaryKey? {
@@ -140,6 +140,6 @@ extension Vehicles: PrimaryKeypathProtocol {
         fullPaths.append(self.pkey)
         let foreignPath = fullPaths.joined(separator: ".")
 
-        return WOTPrimaryKey(name: foreignPath, value: ident as AnyObject, predicateFormat: "%K == %@")
+        return WOTPrimaryKey(name: foreignPath, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 }
