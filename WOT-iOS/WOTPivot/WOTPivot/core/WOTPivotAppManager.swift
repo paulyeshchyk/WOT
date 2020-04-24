@@ -64,7 +64,11 @@ public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
     }
 
     @objc
-    public var mappingCoordinator: WOTMappingCoordinatorProtocol?
+    public var mappingCoordinator: WOTMappingCoordinatorProtocol? {
+        didSet {
+            mappingCoordinator?.appManager = self
+        }
+    }
 
     @objc
     public var requestListener: WOTRequestListenerProtocol?

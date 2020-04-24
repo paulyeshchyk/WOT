@@ -49,20 +49,18 @@ extension ModulesTree {
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
 
-        //#warning("tank_id is expected: self.defaultProfile?.vehicles?.tank_id")
-        //#warning("prefix is expected: instead of name, use modules_tree.name")
-//        let nextModules = jSON[#keyPath(ModulesTree.next_modules)]
-//        (nextModules as? [AnyObject])?.forEach {
-//            let moduleTreePK = PKCase()
-//            moduleTreePK[.primary] = pkCase[.primary]
-//            moduleTreePK[.secondary] = ModulesTree.primaryKey(for: $0)
-//            coreDataMapping?.requestSubordinate(for: ModulesTree.self, moduleTreePK, subordinateRequestType: .remote, keyPathPrefix: "modules_tree.", callback: { (managedObject) in
-//                if let module = managedObject as? ModulesTree {
-//                    self.addToNext_modules(module)
-//                    coreDataMapping?.stash(moduleTreePK)
-//                }
-//            })
-//        }
+        let nextModules = jSON[#keyPath(ModulesTree.next_modules)]
+        (nextModules as? [AnyObject])?.forEach {
+            let moduleTreePK = PKCase()
+            moduleTreePK[.primary] = pkCase[.primary]
+            moduleTreePK[.secondary] = ModulesTree.primaryKey(for: $0)
+            coreDataMapping?.requestSubordinate(for: ModulesTree.self, moduleTreePK, subordinateRequestType: .remote, keyPathPrefix: "modules_tree.", callback: { (managedObject) in
+                if let module = managedObject as? ModulesTree {
+                    self.addToNext_modules(module)
+                    coreDataMapping?.stash(moduleTreePK)
+                }
+            })
+        }
 
         let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
         (nextTanks as? [AnyObject])?.forEach {
