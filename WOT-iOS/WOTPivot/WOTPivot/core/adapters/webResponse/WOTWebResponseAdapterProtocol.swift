@@ -8,15 +8,6 @@
 
 import Foundation
 
-extension AnyHashable {}
-
-public typealias JSON = [AnyHashable: Any]
-
-@objc
-public protocol CoreDataStoreProtocol: class {
-    func perform()
-}
-
 #warning("transform an conforming class to Future/Promise")
 
 @objc
@@ -24,14 +15,14 @@ public protocol WOTWebResponseAdapterProtocol: NSObjectProtocol {
     @objc
     var appManager: WOTAppManagerProtocol? { get set }
 
-    func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol
 }
 
 @objc
 open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
     public var appManager: WOTAppManagerProtocol?
 
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void )) -> CoreDataStoreProtocol {
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void )) -> CoreDataStoreProtocol {
         fatalError("should be overriden")
     }
 
@@ -42,5 +33,7 @@ open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
 
 @objc
 public protocol JSONLinksAdapterProtocol {
-    func request(_ request: WOTRequestProtocol, adaptExternalLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?)
+    var appManager: WOTAppManagerProtocol? { get set }
+
+    func request(_ request: WOTRequestProtocol, adaptExternalLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, adaptCallback: @escaping (WOTRequestManagerCompletionResultType) -> Void)
 }

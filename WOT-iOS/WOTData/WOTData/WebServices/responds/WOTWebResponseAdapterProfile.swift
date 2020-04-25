@@ -12,8 +12,8 @@ import Foundation
 public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
     public let Clazz: PrimaryKeypathProtocol.Type = Vehicleprofile.self
 
-    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
-        let store = CoreDataStore(Clazz: Clazz, request: request, binary: binary, linkAdapter: jsonLinkAdapter, appManager: appManager, extenalLinks: subordinateLinks)
+    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
+        let store = CoreDataStore(Clazz: Clazz, request: request, linkAdapter: jsonLinkAdapter, appManager: appManager, extenalLinks: subordinateLinks)
         store.onGetIdent = onGetIdent(_:_:_:)
         store.onFinishJSONParse = onFinish
         store.onCreateNSManagedObject = externalCallback
@@ -22,7 +22,9 @@ public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
 
     private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
         let ident: Any
-        if let primaryKeyPath = Clazz.primaryKeyPath() {
+        let primaryKeyPath = Clazz.primaryKeyPath()
+        #warning("check the case")
+        if  primaryKeyPath.count > 0 {
             ident = (json[primaryKeyPath] as? JSON)?.asURLQueryString().hashValue ?? key
         } else {
             ident = key

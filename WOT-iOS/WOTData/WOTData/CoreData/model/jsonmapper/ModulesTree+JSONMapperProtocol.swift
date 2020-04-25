@@ -6,82 +6,45 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc extension ModulesTree: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(ModulesTree.name),
-                #keyPath(ModulesTree.module_id),
-                #keyPath(ModulesTree.price_credit),
-                #keyPath(ModulesTree.next_tanks),
-                #keyPath(ModulesTree.next_modules)
-        ]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return ModulesTree.keypaths()
-    }
-}
+import WOTPivot
 
 extension ModulesTree {
-    public enum FieldKeys: String, CodingKey {
-        case module_id
-        case name
-        case price_credit
-        case price_xp
-        case is_default
-        case type
-        case next_modules
-        case next_tanks
-    }
-
-    public typealias Fields = FieldKeys
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.name = jSON[#keyPath(ModulesTree.name)] as? String
-        self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
-        self.is_default = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.is_default)] as? Bool ?? false)
-        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_credit)] as? Int ?? 0)
-        self.price_xp = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.price_xp)] as? Int ?? 0)
-        self.type = jSON[#keyPath(ModulesTree.type)] as? String
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
 
-        let nextModulesIdents = jSON[#keyPath(ModulesTree.next_modules)] as? [Any]
-        coreDataMapping?.pullRemoteSubordinate(for: Module.self, byIdents: nextModulesIdents, completion: { managedObject in
-            if let module = managedObject as? Module {
-                self.addToNext_modules(module)
-                coreDataMapping?.stash(pkCase)
-            }
-        })
+        var parents = pkCase.plainParents
+        parents.append(self)
 
-        #warning("recursion")
-        /*
-         let nextTanksIdents = jSON[#keyPath(ModulesTree.next_tanks)] as? [Any]
-         coreDataMapping?.pullRemoteSubordinate(for: Vehicles.self, byIdents: nextTanksIdents, completion: { managedObject in
-             if let vehicle = managedObject as? Vehicles {
-                 self.addToNext_tanks(vehicle)
-                 coreDataMapping?.stash(pkCase)
-             }
-         })
-         */
-    }
-}
+        let nextModules = jSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
+        nextModules?.forEach {
+            let modulePK = PKCase(parentObjects: parents)
+            modulePK[.primary] = pkCase[.primary]
+            modulePK[.secondary] = Module.primaryIdKey(for: $0)
+            coreDataMapping?.requestSubordinate(for: Module.self, modulePK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
+                if let module = managedObject as? Module {
+                    self.addToNext_modules(module)
+                    coreDataMapping?.stash(hint: modulePK)
+                }
+            })
+        }
 
-extension ModulesTree: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(ModulesTree.module_id)
-
-    public static func primaryKeyPath() -> String? {
-        return self.pkey
-    }
-
-    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
-        guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", self.pkey, ident)
-    }
-
-    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+        let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
+        (nextTanks as? [AnyObject])?.forEach {
+            //parents was not used for next portion of tanks
+            let nextTanksPK = PKCase(parentObjects: nil)
+            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
+            coreDataMapping?.requestSubordinate(for: Vehicles.self, nextTanksPK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
+                if let tank = managedObject as? Vehicles {
+                    self.addToNext_tanks(tank)
+                    coreDataMapping?.stash(hint: nextTanksPK)
+                }
+            })
+        }
     }
 }
 
@@ -94,22 +57,14 @@ extension ModulesTree {
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber  else { return }
             guard let modulePK = ModulesTree.primaryKey(for: module_id) else { return }
 
-            let submodulesCase = PKCase()
+            let submodulesCase = PKCase(parentObjects: pkCase.plainParents)
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = pkCase[.primary]
 
-            coreDataMapping?.pullLocalSubordinate(for: ModulesTree.self, submodulesCase) { newObject in
+            coreDataMapping?.requestSubordinate(for: ModulesTree.self, submodulesCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
                 coreDataMapping?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest)
                 callback(newObject)
             }
-        }
-    }
-
-    public static func nextModules(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectSetCallback ) {
-        guard let json = json as? JSON else { return }
-        coreDataMapping?.pullLocalSubordinate(for: ModulesTree.self, pkCase) { newObject in
-            coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
-            callback([newObject])
         }
     }
 }

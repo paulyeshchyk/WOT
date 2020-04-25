@@ -54,28 +54,5 @@ extension NSManagedObject {
     }
 }
 
-public typealias NSManagedObjectCallback = (NSManagedObject?) -> Void
+public typealias NSManagedObjectCallback = (_ managedObject: NSManagedObject?) -> Void
 public typealias NSManagedObjectSetCallback = ([NSManagedObject?]?) -> Void
-
-extension NSManagedObject: JSONMapperProtocol {
-    public enum FieldKeys: String, CodingKey {
-        case hasChanges
-    }
-
-    public typealias Fields = FieldKeys
-
-    @objc
-    open func mapping(fromArray array: [Any]) {
-        fatalError("not implemented")
-    }
-
-    @objc
-    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        fatalError("not implemented")
-    }
-
-    @objc
-    open func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        fatalError("not implemented")
-    }
-}

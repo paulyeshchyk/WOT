@@ -36,7 +36,6 @@ open class WOTPivotViewController: UIViewController {
         return WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
     }()
 
-    #warning("crash is possible here!!!")
     open func pivotModel() -> WOTPivotDataModelProtocol {
         return WOTPivotDataModel(enumerator: WOTNodeEnumerator.sharedInstance)
     }

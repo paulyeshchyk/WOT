@@ -6,34 +6,16 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc extension VehicleprofileArmor: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileArmor.front),
-                #keyPath(VehicleprofileArmor.sides),
-                #keyPath(VehicleprofileArmor.rear)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileArmor.keypaths()
-    }
-}
+import WOTPivot
 
 extension VehicleprofileArmor {
-    public enum FieldKeys: String, CodingKey {
-        case front
-        case sides
-        case rear
-    }
-
-    public typealias Fields = FieldKeys
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.front = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileArmor.front)] as? Int ?? 0)
-        self.sides = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileArmor.sides)] as? Int ?? 0)
-        self.rear = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileArmor.rear)] as? Int ?? 0)
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
     }
 }
 
@@ -44,7 +26,7 @@ extension VehicleprofileArmor {
             return
         }
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileArmor.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileArmor.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
@@ -56,7 +38,7 @@ extension VehicleprofileArmor {
             return
         }
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileArmor.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileArmor.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

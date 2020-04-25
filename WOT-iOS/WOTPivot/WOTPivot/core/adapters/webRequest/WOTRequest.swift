@@ -9,54 +9,6 @@
 import Foundation
 
 @objc
-public protocol WOTStartableProtocol {
-    @objc
-    func cancel()
-
-    @objc
-    @discardableResult
-    func start(_ args: WOTRequestArgumentsProtocol) -> Bool
-}
-
-//public enum WOTRequestAction {
-//    case new
-//    case start
-//    case finish
-//    case cancel
-//    case errorText(String)
-//    case error(Error)
-//    public var description: String {
-//        switch self {
-//        case .cancel: return "[CANCEL]:"
-//        case .start: return "[RUN]:"
-//        case .finish: return "[END]:"
-//        case .new: return "[NEW]:"
-//        case .errorText( _): return "[ERR]:"
-//        case .error( _): return "[ERR]:"
-//        }
-//    }
-//
-//    public var details: String {
-//        switch self {
-//        case .errorText(let error): return error
-//        case .error(let error):
-//            if let error = error as? WOTWEBRequestError {
-//                return error.description
-//            } else {
-//                return error.localizedDescription
-//            }
-//        default: return ""
-//        }
-//    }
-//}
-
-@objc
-public protocol WOTDescribable {
-    @objc
-    var description: String { get }
-}
-
-@objc
 public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
@@ -82,6 +34,10 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
     var uuid: UUID { get }
 
     var parentRequest: WOTRequestProtocol? { get set }
+
+    @available(*, deprecated, message: "use JSONLink instead" )
+    @objc
+    var pkCase: PKCase? { get set }
 }
 
 @objc
@@ -109,6 +65,9 @@ public protocol WOTRequestManagerProtocol {
     func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, externalCallback: NSManagedObjectCallback?) -> Bool
 
     @objc
+    func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol?
+
+    @objc
     func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
 
     @objc
@@ -118,14 +77,20 @@ public protocol WOTRequestManagerProtocol {
     func cancelRequests(groupId: String)
 
     @objc
-    var requestCoordinator: WOTRequestCoordinatorProtocol { get set }
-
-    @objc
     var hostConfiguration: WOTHostConfigurationProtocol { get set }
 
     @objc
     var appManager: WOTAppManagerProtocol? { get set }
+
+    @objc
+    var coordinator: WOTRequestCoordinatorProtocol { get }
+
+    @objc
+    @discardableResult
+    func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink, externalCallback: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) -> Bool
 }
+
+public extension WOTRequestManagerProtocol {}
 
 @objc
 public protocol WOTRequestListenerProtocol {
@@ -146,6 +111,16 @@ public protocol WOTRequestListenerProtocol {
 }
 
 @objc
+public protocol WOTStartableProtocol {
+    @objc
+    func cancel()
+
+    @objc
+    @discardableResult
+    func start(_ args: WOTRequestArgumentsProtocol) -> Bool
+}
+
+@objc
 open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     public let uuid: UUID = UUID()
 
@@ -157,6 +132,9 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
 
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
+
+    @objc
+    public var pkCase: PKCase?
 
     private var groups = [String]()
 

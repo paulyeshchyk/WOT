@@ -6,15 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import WOTPivot
 
 extension VehicleprofileArmorList {
-    public enum FieldKeys: String, CodingKey {
-        case type
-    }
-
-    public typealias Fields = FieldKeys
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         let hullCase = PKCase()
@@ -22,14 +16,14 @@ extension VehicleprofileArmorList {
 
         VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.hull = newObject as? VehicleprofileArmor
-            coreDataMapping?.stash(hullCase)
+            coreDataMapping?.stash(hint: hullCase)
         }
 
         let turretCase = PKCase()
         turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
         VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.turret = newObject as? VehicleprofileArmor
-            coreDataMapping?.stash(hullCase)
+            coreDataMapping?.stash(hint: hullCase)
         }
     }
 }
@@ -38,7 +32,7 @@ extension VehicleprofileArmorList {
     public static func list(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
-        coreDataMapping?.pullLocalSubordinate(for: VehicleprofileArmorList.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: VehicleprofileArmorList.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

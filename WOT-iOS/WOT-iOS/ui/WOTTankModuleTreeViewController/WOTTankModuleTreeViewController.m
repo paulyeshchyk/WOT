@@ -22,6 +22,10 @@
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)
+@dynamic collapseToGroups;
+@dynamic hostConfiguration;
+@dynamic requestManager;
+@dynamic useEmptyNode;
 
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
     if ([fetchedObject isKindOfClass: [Vehicles class]]) {
@@ -37,6 +41,24 @@
 - (id<WOTNodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
    return [[WOTNode alloc] initWithName: name];
 }
+
+- (id<WOTNodeProtocol> _Nonnull)createEmptyNode {
+    NSAssert(NO, @"not overriden yet");
+    return [[WOTNode alloc] initWithName: @""];
+}
+
+
+- (id<WOTNodeProtocol> _Nonnull)createNodeGroupWithName:(NSString * _Nonnull)name fetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
+    NSAssert(NO, @"not overriden yet");
+    return [[WOTNode alloc] initWithName: @""];
+}
+
+
+- (NSArray<id<WOTNodeProtocol>> * _Nonnull)createNodesWithFetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
+    NSAssert(NO, @"not overriden yet");
+    return @[[[WOTNode alloc] initWithName: @""]];
+}
+
 
 @end
 
@@ -266,12 +288,22 @@
     
 }
 
+- (void)removeRequest:(id<WOTRequestProtocol> _Nonnull)request {
+    
+}
+
+
+- (void)requestHasStarted:(id<WOTRequestProtocol> _Nonnull)request {
+    
+}
+
+
 - (NSInteger)uuidHash {
     return [@"WOTTankModuleTreeViewController" hash];
 }
 
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
-
+    
     if (completionResultType == WOTRequestManagerCompletionResultTypeFinished && didParseDataForRequest.parentRequest == nil && didParseDataForRequest != didParseDataForRequest.parentRequest) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self reloadModel];
@@ -286,13 +318,13 @@
 - (void)modelDidLoad {
     [self.collectionView reloadData];
     dispatch_async(dispatch_get_main_queue(), ^{
-
+        
         [self addConnectorsLayer];
     });
 }
 
 - (void) modelDidFailLoadWithError:(NSError *)error {
-
+    
 }
 
 - (NSArray *)metadataItems {

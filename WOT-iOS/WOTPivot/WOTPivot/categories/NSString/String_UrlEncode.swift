@@ -24,11 +24,10 @@ extension NSNumber: URLEncodedProtocol {
     }
 }
 
-@objc
 extension NSString: URLEncodedProtocol {
     @objc
     public func urlEncoded() -> String? {
-        return (self as? String)?.urlEncoded()
+        return (self as String).urlEncoded()
     }
 }
 

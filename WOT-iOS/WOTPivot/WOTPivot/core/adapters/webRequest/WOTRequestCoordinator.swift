@@ -15,16 +15,9 @@ public typealias  WOTRequestCallback = (Data?, Error?) -> Void
 
 @objc
 public protocol WOTRequestDataBindingProtocol {
-    @objc
-    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
-
-    @objc
     static func unregisterDataAdapter(for requestId: WOTRequestIdType)
-
-    @objc
     static func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass?
-
-    @objc
+    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
     func request(for requestId: WOTRequestIdType) -> AnyClass?
 }
 
@@ -49,7 +42,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void))
+    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void))
 }
 
 @objc
@@ -151,20 +144,21 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void) ) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void) ) {
         guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else {
             appManager?.logInspector?.log(ErrorLog("model class not found for request\(request.description)"), sender: self)
             onFinish(nil)
             return
         }
 
-        var coreDataStoreStack: [CoreDataStoreProtocol] = .init()
+        var coreDataStoreStack: [CoreDataStorePair] = .init()
         let requestIdTypes = self.requestIds(forClass: modelClass)
         requestIdTypes?.forEach({ requestIdType in
 
             if let adapter = adapterInstance(for: requestIdType) {
                 let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: onFinish)
-                coreDataStoreStack.append(store)
+                let pair = CoreDataStorePair(coreDataStore: store, data: binary)
+                coreDataStoreStack.append(pair)
             } else {
                 appManager?.logInspector?.log(ErrorLog("Adapter not found for \(requestIdType)"), sender: self)
             }
@@ -174,10 +168,15 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
             onFinish(nil)
         }
 
-        coreDataStoreStack.forEach { (store) in
-            store.perform()
+        coreDataStoreStack.forEach { (pair) in
+            pair.coreDataStore.perform(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
         }
     }
+}
+
+struct CoreDataStorePair {
+    let coreDataStore: CoreDataStoreProtocol
+    let data: Data?
 }
 
 extension WOTRequestCoordinator: LogMessageSender {

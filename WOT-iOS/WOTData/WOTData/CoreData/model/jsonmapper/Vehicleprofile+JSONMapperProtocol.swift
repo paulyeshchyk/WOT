@@ -6,131 +6,74 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc extension Vehicleprofile: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(Vehicleprofile.max_ammo),
-                #keyPath(Vehicleprofile.weight),
-                #keyPath(Vehicleprofile.hp),
-                #keyPath(Vehicleprofile.is_default),
-                #keyPath(Vehicleprofile.modules),
-//                #keyPath(Vehicleprofile.modulesTree),
-//                #keyPath(Vehicleprofile.vehicles),
-                #keyPath(Vehicleprofile.speed_forward),
-                #keyPath(Vehicleprofile.hull_hp),
-                #keyPath(Vehicleprofile.speed_backward),
-                #keyPath(Vehicleprofile.tank_id),
-                #keyPath(Vehicleprofile.max_weight)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return Vehicleprofile.keypaths()
-    }
-}
+import WOTPivot
 
 extension Vehicleprofile {
-    public enum FieldKeys: String, CodingKey {
-        case max_ammo
-        case weight
-        case hp
-        case is_default
-        case hull_weight
-        case speed_forward
-        case hull_hp
-        case speed_backward
-        case tank_id
-        case max_weight
-    }
-
-    public typealias Fields = FieldKeys
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.tank_id = AnyConvertable(jSON[#keyPath(Vehicleprofile.tank_id)]).asNSDecimal
-        self.is_default = AnyConvertable(jSON[#keyPath(Vehicleprofile.is_default)]).asNSDecimal
-        self.max_ammo = AnyConvertable(jSON[#keyPath(Vehicleprofile.max_ammo)]).asNSDecimal
-        self.max_weight = AnyConvertable(jSON[#keyPath(Vehicleprofile.max_weight)]).asNSDecimal
-        self.weight = AnyConvertable(jSON[#keyPath(Vehicleprofile.weight)]).asNSDecimal
-        self.hp = AnyConvertable(jSON[#keyPath(Vehicleprofile.hp)]).asNSDecimal
-        self.hull_hp = AnyConvertable(jSON[#keyPath(Vehicleprofile.hull_hp)]).asNSDecimal
-        self.hull_weight = AnyConvertable(jSON[#keyPath(Vehicleprofile.hull_weight)]).asNSDecimal
-        self.speed_backward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_backward)]).asNSDecimal
-        self.speed_forward = AnyConvertable(jSON[#keyPath(Vehicleprofile.speed_forward)]).asNSDecimal
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
+        var parents = pkCase.plainParents
+        parents.append(self)
 
-        let vehicleprofileAmmoListCase = PKCase()
+        let vehicleprofileAmmoListCase = PKCase(parentObjects: parents)
         vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
         VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: vehicleprofileAmmoListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.ammo = newObject as? VehicleprofileAmmoList
-            coreDataMapping?.stash(vehicleprofileAmmoListCase)
+            coreDataMapping?.stash(hint: vehicleprofileAmmoListCase)
         }
 
-        let vehicleprofileArmorListCase = PKCase()
+        let vehicleprofileArmorListCase = PKCase(parentObjects: parents)
         vehicleprofileArmorListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
         VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: vehicleprofileArmorListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.armor = newObject as? VehicleprofileArmorList
-            coreDataMapping?.stash(vehicleprofileArmorListCase)
+            coreDataMapping?.stash(hint: vehicleprofileArmorListCase)
         }
 
-        let vehicleprofileEngineListCase = PKCase()
+        let vehicleprofileEngineListCase = PKCase(parentObjects: parents)
         vehicleprofileEngineListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileEngine.vehicleprofile))
         VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], pkCase: vehicleprofileEngineListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.engine = newObject as? VehicleprofileEngine
-            coreDataMapping?.stash(vehicleprofileEngineListCase)
+            coreDataMapping?.stash(hint: vehicleprofileEngineListCase)
         }
 
-        let vehicleprofileGunListCase = PKCase()
+        let vehicleprofileGunListCase = PKCase(parentObjects: parents)
         vehicleprofileGunListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileGun.vehicleprofile))
         VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], pkCase: vehicleprofileGunListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.gun = newObject as? VehicleprofileGun
-            coreDataMapping?.stash(vehicleprofileGunListCase)
+            coreDataMapping?.stash(hint: vehicleprofileGunListCase)
         }
 
-        let vehicleprofileRadioListCase = PKCase()
+        let vehicleprofileRadioListCase = PKCase(parentObjects: parents)
         vehicleprofileRadioListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileRadio.vehicleprofile))
         VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], pkCase: vehicleprofileRadioListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.radio = newObject as? VehicleprofileRadio
-            coreDataMapping?.stash(vehicleprofileRadioListCase)
+            coreDataMapping?.stash(hint: vehicleprofileRadioListCase)
         }
 
-        let vehicleprofileSuspensionListCase = PKCase()
+        let vehicleprofileSuspensionListCase = PKCase(parentObjects: parents)
         vehicleprofileSuspensionListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileSuspension.vehicleprofile))
         VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: vehicleprofileSuspensionListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.suspension = newObject as? VehicleprofileSuspension
-            coreDataMapping?.stash(vehicleprofileSuspensionListCase)
+            coreDataMapping?.stash(hint: vehicleprofileSuspensionListCase)
         }
 
-        let vehicleprofileTurretCase = PKCase()
+        let vehicleprofileTurretCase = PKCase(parentObjects: parents)
         vehicleprofileTurretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileTurret.vehicleprofile))
         VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: vehicleprofileTurretCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.turret = newObject as? VehicleprofileTurret
-            coreDataMapping?.stash(vehicleprofileTurretCase)
+            coreDataMapping?.stash(hint: vehicleprofileTurretCase)
         }
 
-        let vehicleprofileModuleCase = PKCase()
-        vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleProfile))
-        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], pkCase: vehicleprofileModuleCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
-            self.modules = newObject as? VehicleprofileModule
-            coreDataMapping?.stash(vehicleprofileModuleCase)
-        }
-    }
-}
-
-extension Vehicleprofile: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(Vehicleprofile.hashName)
-
-    public static func primaryKeyPath() -> String? {
-        return self.pkey
-    }
-
-    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
-        guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", self.pkey, ident)
-    }
-
-    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+//        let vehicleprofileModuleCase = PKCase(parentObjects: parents)
+//        vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
+//        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], pkCase: vehicleprofileModuleCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+//            self.modules = newObject as? VehicleprofileModule
+//            coreDataMapping?.stash(hint: vehicleprofileModuleCase)
+//        }
     }
 }
 
@@ -141,7 +84,7 @@ extension Vehicleprofile {
             return
         }
 
-        coreDataMapping?.pullLocalSubordinate(for: Vehicleprofile.self, pkCase) { newObject in
+        coreDataMapping?.requestSubordinate(for: Vehicleprofile.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

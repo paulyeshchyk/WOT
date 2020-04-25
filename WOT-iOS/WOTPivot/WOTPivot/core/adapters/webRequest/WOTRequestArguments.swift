@@ -26,6 +26,11 @@ open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
     public private(set) var dictionary = JSON()
 
     @objc
+    public override var description: String {
+        return "\(dictionary)"
+    }
+
+    @objc
     required convenience public init(_ dictionary: JSON) {
         self.init()
 

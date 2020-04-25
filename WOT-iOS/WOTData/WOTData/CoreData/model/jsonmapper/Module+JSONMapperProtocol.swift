@@ -1,114 +1,95 @@
 //
-//  Module+JSONMapperProtocol.swift
+//  VehicleprofileModule+JSONMapperProtocol.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/19/20.
+//  Created by Pavel Yeshchyk on 1/16/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
-
-@objc extension Module: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(Module.name),
-                #keyPath(Module.nation),
-                #keyPath(Module.tier),
-                #keyPath(Module.type),
-                #keyPath(Module.price_credit),
-                #keyPath(Module.weight),
-                #keyPath(Module.tanks),
-                #keyPath(Module.image),
-                #keyPath(Module.module_id)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return Module.keypaths()
-    }
-}
+import WOTPivot
+import CoreData
 
 extension Module {
-    public enum FieldKeys: String, CodingKey {
-        case name
-        case nation
-        case tier
-        case module_id
-    }
+    @objc
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
 
-    public typealias Fields = FieldKeys
-}
+        let parents = pkCase.plainParents.filter({$0 is Vehicles}).compactMap({($0 as? Vehicles)?.tank_id })
 
-extension Module {
-    override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.name = jSON[#keyPath(Module.name)] as? String
-        self.nation = jSON[#keyPath(Module.nation)] as? String
-        self.tier = NSDecimalNumber(value: jSON[#keyPath(Module.tier)] as? Int ?? 0)
-        self.type = jSON[#keyPath(Module.type)] as? String
-        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Module.price_credit)] as? Int ?? 0)
-        self.weight = NSDecimalNumber(value: jSON[#keyPath(Module.weight)] as? Int ?? 0)
-        self.module_id = AnyConvertable(jSON[#keyPath(Module.module_id)]).asNSDecimal
-        self.image = jSON[#keyPath(Module.image)] as? String
+        let tank_id = parents.first
 
-        let idents = [self.module_id?.stringValue].compactMap { $0 }
-        if type == "vehicleRadio" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileRadio.self, byIdents: idents, completion: { managedObject in
-                if let radio = managedObject as? VehicleprofileRadio {
-                    self.vehicleRadio = radio
-                    coreDataMapping?.stash(pkCase)
+        if let moduleType = self.type {
+            if let moduleType = VehicleModuleType(rawValue: moduleType) {
+                switch moduleType {
+                case .vehicleChassis:
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, coreDataMapping: coreDataMapping, keyPathPrefix: "suspension.", callback: { managedObject in
+                        if let module = managedObject as? VehicleprofileSuspension {
+                            self.suspension = module
+                            coreDataMapping?.stash(hint: pkCase)
+                        }
+                    })
+                case .vehicleGun:
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, coreDataMapping: coreDataMapping, keyPathPrefix: "gun.", callback: { managedObject in
+                        if let module = managedObject as? VehicleprofileGun {
+                            self.gun = module
+                            coreDataMapping?.stash(hint: pkCase)
+                        }
+                    })
+                case .vehicleRadio:
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, coreDataMapping: coreDataMapping, keyPathPrefix: "radio.", callback: { managedObject in
+                        if let module = managedObject as? VehicleprofileRadio {
+                            self.radio = module
+                            coreDataMapping?.stash(hint: pkCase)
+                        }
+                    })
+                case .vehicleEngine:
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, coreDataMapping: coreDataMapping, keyPathPrefix: "engine.", callback: { managedObject in
+                        if let module = managedObject as? VehicleprofileEngine {
+                            self.engine = module
+                            coreDataMapping?.stash(hint: pkCase)
+                        }
+                    })
+                case .vehicleTurret:
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, coreDataMapping: coreDataMapping, keyPathPrefix: "turret.", callback: { managedObject in
+                        if let module = managedObject as? VehicleprofileTurret {
+                            self.turret = module
+                            coreDataMapping?.stash(hint: pkCase)
+                        }
+                    })
+                case .unknown:print(moduleType.rawValue)
+                case .tank:print(moduleType.rawValue)
                 }
-            })
-        } else if type == "vehicleEngine" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileEngine.self, byIdents: idents, completion: { managedObject in
-                if let engine = managedObject as? VehicleprofileEngine {
-                    self.vehicleEngine = engine
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
-        } else if type == "vehicleGun" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileGun.self, byIdents: idents, completion: { managedObject in
-                if let gun = managedObject as? VehicleprofileGun {
-                    self.vehicleGun = gun
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
-        } else if type == "vehicleChassis" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileSuspension.self, byIdents: idents, completion: { managedObject in
-                if let suspension = managedObject as? VehicleprofileSuspension {
-                    self.vehicleChassis = suspension
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
-        } else if type == "vehicleTurret" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileTurret.self, byIdents: idents, completion: { managedObject in
-                if let turret = managedObject as? VehicleprofileTurret {
-                    self.vehicleTurret = turret
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
+            }
         }
     }
+
+    private func requestVehicleModule(by id: NSDecimalNumber?, tank_id: NSDecimalNumber?, andClass Clazz: NSManagedObject.Type, coreDataMapping: CoreDataMappingProtocol?, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
+        guard let id = id else {
+            return
+        }
+        guard let tank_id = tank_id else {
+            return
+        }
+
+        let pkCase = PKCase()
+        pkCase[.primary] = Clazz.primaryIdKey(for: id)
+        pkCase[.secondary] = Vehicles.primaryKey(for: tank_id)
+
+        coreDataMapping?.requestSubordinate(for: Clazz, pkCase, subordinateRequestType: .remote, keyPathPrefix: keyPathPrefix, callback: callback)
+    }
 }
 
-extension Module: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(Module.module_id)
+extension Module {
+    public static func module(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
+        guard let json = json as? JSON else { return }
 
-    public static func primaryKeyPath() -> String? {
-        return self.pkey
-    }
-
-    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
-        guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", self.pkey, ident)
-    }
-
-    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, predicateFormat: "%K == %@")
+        coreDataMapping?.requestSubordinate(for: Module.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+            coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
+            callback(newObject)
+        }
     }
 }

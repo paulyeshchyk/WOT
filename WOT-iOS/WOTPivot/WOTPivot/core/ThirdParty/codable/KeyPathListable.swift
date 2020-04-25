@@ -41,9 +41,7 @@ extension KeyPathListable {
 
 @objc
 public protocol KeypathProtocol: class {
-    @objc
-    static func keypaths() -> [String]
-
-    @objc
-    func instanceKeypaths() -> [String]
+    static func fieldsKeypaths() -> [String]
+    static func relationsKeypaths() -> [String]
+    static func classKeypaths() -> [String]
 }

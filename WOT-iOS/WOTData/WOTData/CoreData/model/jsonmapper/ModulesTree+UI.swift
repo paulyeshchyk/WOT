@@ -8,7 +8,6 @@
 
 import Foundation
 
-@objc
 extension ModulesTree {
     @objc
     public func localImageURL() -> URL? {
