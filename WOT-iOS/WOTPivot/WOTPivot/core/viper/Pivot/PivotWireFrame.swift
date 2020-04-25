@@ -9,6 +9,4 @@
 import Foundation
 
 @objc(PivotWireFrame)
-public class PivotWireFrame: VIPERWireFrame, PivotVIPERWireFrameProtocol {
-    
-}
+public class PivotWireFrame: VIPERWireFrame, PivotVIPERWireFrameProtocol {}

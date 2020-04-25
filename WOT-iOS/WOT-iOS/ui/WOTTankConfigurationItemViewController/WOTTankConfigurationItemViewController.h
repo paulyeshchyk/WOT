@@ -11,7 +11,7 @@
 
 @interface WOTTankConfigurationItemViewController : UIViewController
 
-@property (nonatomic, strong)ModulesTree *moduleTree;
+@property (nonatomic, strong)id<WOTTreeModulesTreeProtocol> moduleTree;
 @property (nonatomic, copy) NSURL *imageURL;
 @property (nonatomic, strong) WOTTankConfigurationModuleMapping *mapping;
 

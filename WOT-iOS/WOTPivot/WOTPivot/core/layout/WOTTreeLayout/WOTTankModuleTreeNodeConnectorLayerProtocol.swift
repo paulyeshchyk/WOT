@@ -9,9 +9,7 @@
 import Foundation
 
 @objc
-public protocol WOTTankModuleTreeNodeConnectorLayerProtocol: NSObjectProtocol {
-
-}
+public protocol WOTTankModuleTreeNodeConnectorLayerProtocol: NSObjectProtocol {}
 
 @objc
 public protocol WOTTankConfigurationFlowCellLayoutProtocol {
@@ -19,5 +17,3 @@ public protocol WOTTankConfigurationFlowCellLayoutProtocol {
     func layoutAttribute(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes?
     func layoutAttributes(in rect: CGRect) -> [UICollectionViewLayoutAttributes]?
 }
-
-

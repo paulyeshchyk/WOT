@@ -15,6 +15,7 @@ typedef void(^NodeBlock)(NSIndexPath *indexPath);
 @property (nonatomic, copy) NSIndexPath *indexPath;
 @property (nonatomic, strong) UIColor *dataViewColor;
 
+@property (nonatomic, assign) NSInteger uuid;
 @property (nonatomic, copy) NSString *symbol;
 @property (nonatomic, copy) NSString *dpm;
 @property (nonatomic, copy) NSString *visibility;

@@ -14,60 +14,35 @@
 + (WOTTankConfigurationModuleMapping *)engineMapping {
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
-    [result addFields:@[WOTApiKeys.module_id, WOTApiKeys.power, WOTApiKeys.fire_starting_chance] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-        
-        NSSet *setOfObjs = moduleTree.nextEngines;
-        return [setOfObjs anyObject];
-    }];
+    [result addFields:@[WGJsonFields.module_id, WOTApiKeys.power, WOTApiKeys.fire_starting_chance] forSection:@"Характеристика"];
     return result;
 }
 
 + (WOTTankConfigurationModuleMapping *)radiosMapping {
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
-    [result addFields:@[WOTApiKeys.module_id, WOTApiKeys.distance] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-
-        NSSet *setOfObjs = moduleTree.nextRadios;
-        return [setOfObjs anyObject];
-    }];
+    [result addFields:@[WGJsonFields.module_id, WOTApiKeys.distance] forSection:@"Характеристика"];
     return result;
 }
 
 + (WOTTankConfigurationModuleMapping *)turretMapping {
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
-    [result addFields:@[WOTApiKeys.module_id, WOTApiKeys.armor_board, WOTApiKeys.armor_forehead, WOTApiKeys.armor_fedd, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-
-        NSSet *setOfObjs = moduleTree.nextTurrets;
-        return [setOfObjs anyObject];
-    }];
+    [result addFields:@[WGJsonFields.module_id, WOTApiKeys.armor_board, WOTApiKeys.armor_forehead, WOTApiKeys.armor_fedd, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
     return result;
 }
 
 + (WOTTankConfigurationModuleMapping *)chassisMapping {
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
-    [result addFields:@[WOTApiKeys.module_id, WOTApiKeys.max_load, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-
-        NSSet *setOfObjs = moduleTree.nextChassis;
-        return [setOfObjs anyObject];
-    }];
+    [result addFields:@[WGJsonFields.module_id, WOTApiKeys.max_load, WOTApiKeys.rotation_speed] forSection:@"Характеристика"];
     return result;
 }
 
 + (WOTTankConfigurationModuleMapping *)gunMapping {
     
     WOTTankConfigurationModuleMapping *result = [[WOTTankConfigurationModuleMapping alloc] init];
-    [result addFields:@[WOTApiKeys.module_id, WOTApiKeys.rate] forSection:@"Характеристика"];
-    [result setExtractor:^(ModulesTree *moduleTree){
-        
-        NSSet *setOfObjs = moduleTree.nextGuns;
-        return [setOfObjs anyObject];
-    }];
+    [result addFields:@[WGJsonFields.module_id, WOTApiKeys.rate] forSection:@"Характеристика"];
     return result;
 }
 @end

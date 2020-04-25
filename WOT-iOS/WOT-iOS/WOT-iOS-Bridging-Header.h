@@ -4,7 +4,6 @@
 
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTApplicationDefaults.h"
-#import "WOTApplicationStartupRequests.h"
 #import "WOTTankModuleTreeViewController.h"
 #import "WOTTankPivotDataCollectionViewCell.h"
 #import "WOTTankPivotFilterCollectionViewCell.h"
@@ -16,5 +15,7 @@
 #import "WOTProfileViewController.h"
 #import "WOTMenuTableViewCell.h"
 #import "WOTNode+PivotFactory.h"
+#import "WOTSessionManager.h"
 #import <WOTPivot/WOTPivot.h>
 #import <WOTData/WOTData.h>
+#import "WOTRequestIds.h"

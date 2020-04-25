@@ -7,14 +7,11 @@
 //
 
 import XCTest
-@testable import WOTPivot
 
 class WOTNodeTest: XCTestCase {
-
     var asyncExpectation: XCTestExpectation?
 
     func testName() {
-
         let node = WOTNode(name: "test")
         XCTAssert(node.isVisible == true)
         XCTAssert(node.name.compare("test") == .orderedSame)
@@ -45,7 +42,6 @@ class WOTNodeTest: XCTestCase {
         node.addChild(child)
         XCTAssert(child.parent === node)
         XCTAssert(child.fullName.compare("parent.child") == .orderedSame)
-
     }
 
     func testAddChildArray() {
@@ -91,7 +87,6 @@ class WOTNodeTest: XCTestCase {
         parent.children.append(WOTNode(name: "child3"))
         XCTAssert(parent.children.count == 3)
         parent.removeChild(child) { (_) in
-
         }
         XCTAssert(parent.children.count == 2)
     }
@@ -102,7 +97,6 @@ class WOTNodeTest: XCTestCase {
         XCTAssert(parent.children.count == 1)
         let unlinkedChild = WOTNode(name: "unlinkedChild")
         parent.removeChild(unlinkedChild) { (_) in
-
         }
         XCTAssert(parent.children.count == 1)
     }

@@ -9,7 +9,7 @@
 #import "WOTTankGridCollectionViewCell.h"
 #import "WOTTankGridCollectionSubitemTableViewCell.h"
 #import "WOTNode+DetailGrid.h"
-#import "WOTTankEvalutionResult.h"
+#import <WOTData/WOTData.h>
 #import "NSObject+WOTTankGridValueData.h"
 
 @interface WOTTankGridCollectionViewCell () <UITableViewDataSource, UITableViewDelegate>

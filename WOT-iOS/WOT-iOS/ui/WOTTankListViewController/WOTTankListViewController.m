@@ -129,11 +129,11 @@
     
     WOTTankListCollectionViewCell *result = (WOTTankListCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewCell class]) forIndexPath:indexPath];
 
-    Tanks *tank = (Tanks *)[self.fetchedResultController objectAtIndexPath:indexPath];
-    result.image = [tank image];
-    result.tankName = tank.name_i18n;
+    Vehicles *tank = (Vehicles *)[self.fetchedResultController objectAtIndexPath:indexPath];
+//    result.image = [tank image];
+    result.tankName = tank.name;
     result.tankType = tank.type;
-    result.level = [tank.level integerValue];
+    result.level = [tank.tier integerValue];
     return result;
 }
 
@@ -171,7 +171,7 @@
     }];
     
     WOTTankDetailViewController *detail = [[WOTTankDetailViewController alloc] initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];
-    Tanks *tank = [self.fetchedResultController objectAtIndexPath:indexPath];
+    Vehicles *tank = [self.fetchedResultController objectAtIndexPath:indexPath];
     detail.tankId = tank.tank_id;
 
     [detail.navigationItem setLeftBarButtonItem:backButtonItem];
@@ -183,13 +183,12 @@
 
     self.fetchedResultController.delegate = nil;
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
     [fetchRequest setSortDescriptors:self.sortDescriptors];
     [fetchRequest setPredicate:self.filterByPredicate];
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
-    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:self.groupByField cacheName:nil];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
+    self.fetchedResultController = [dataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
     self.fetchedResultController.delegate = self;
     
     NSError *error = nil;
@@ -209,7 +208,7 @@
     
     if ([self.searchBarText length] != 0) {
 
-        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOTApiKeys.name_i18n, self.searchBarText];
+        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOTApiKeys.name, self.searchBarText];
         [predicates addObject:searchBarPredicate];
     }
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];

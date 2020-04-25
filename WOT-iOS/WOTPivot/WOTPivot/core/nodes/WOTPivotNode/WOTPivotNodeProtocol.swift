@@ -22,7 +22,7 @@ public enum WOTPivotCellType: Int {
 public protocol WOTPivotNodeProtocol: WOTNodeProtocol {
     var imageURL: NSURL? { get set }
     var dataColor: UIColor? { get set }
-    var data1: NSManagedObject? { get set }
+    var data1: AnyObject? { get set }
     var stickyType: PivotStickyType { get }
     var cellType: WOTPivotCellType { get }
     var predicate: NSPredicate? { get set }

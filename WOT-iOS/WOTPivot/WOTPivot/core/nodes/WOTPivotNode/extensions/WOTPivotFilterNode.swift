@@ -9,7 +9,6 @@
 import Foundation
 
 public class WOTPivotFilterNode: WOTPivotNode {
-
     override public var stickyType: PivotStickyType {
         let horizontal = UInt8(PivotStickyType.horizontal.rawValue)
         let vertical = UInt8(PivotStickyType.vertical.rawValue)

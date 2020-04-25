@@ -9,9 +9,7 @@
 import Foundation
 
 public class WOTPivotDataNode: WOTPivotNode {
-
     override public var cellType: WOTPivotCellType {
         return .data
     }
-
 }

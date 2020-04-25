@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 public typealias WOTNodeComparator = (_ left: WOTNodeProtocol, _ right: WOTNodeProtocol) -> Bool
 
@@ -18,20 +19,23 @@ public protocol WOTNodeCreatorProtocol {
     func createNode(name: String) -> WOTNodeProtocol
     func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol
     func createNodes(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol]
-    func createNodeGroup(fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol
+    func createNodeGroup(name: String, fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol
+}
+
+@objc
+public protocol WOTDataModelMetadatasource {
+    func metadataItems() -> [WOTNodeProtocol]
+    func filters() -> [WOTNodeProtocol]
 }
 
 @objc
 public protocol WOTDataModelListener {
     func modelDidLoad()
     func modelDidFailLoad(error: Error)
-    func metadataItems() -> [WOTNodeProtocol]
-    func modelHasNewDataItem()
 }
 
 @objc
 public protocol WOTDataModelProtocol {
-    init(enumerator: WOTNodeEnumeratorProtocol)
     var rootNodes: [WOTNodeProtocol] { get }
     var endpointsCount: Int { get }
     func add(rootNode: WOTNodeProtocol)

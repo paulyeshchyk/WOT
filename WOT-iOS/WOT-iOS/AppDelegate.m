@@ -10,49 +10,67 @@
 
 #import "WOTDrawerViewController.h"
 #import "WOTApplicationDefaults.h"
-#import "WOTApplicationStartupRequests.h"
 #import "NSTimer+BlocksKit.h"
+#import "WOTSessionManager.h"
 
-@interface WOTWEBHostConfiguration: NSObject<WEBHostConfiguration>
-@end
-
-@implementation WOTWEBHostConfiguration
-
-- (NSString *)applicationID {
-    return WOT_VALUE_APPLICATION_ID_EU;
-}
-
-- (NSString *)host {
-    return [WOTApplicationDefaults host];
-}
-
-- (NSString *)scheme {
-    return [WOTApplicationDefaults scheme];
-}
-
-@end
-
-
-@interface AppDelegate ()
+@interface AppDelegate () <WOTHostConfigurationOwner, WOTAppDelegateProtocol>
 
 @property (nonatomic, strong) WOTDrawerViewController *wotDrawerViewController;
 
 @end
 
-@implementation AppDelegate
 
+@implementation AppDelegate
+@synthesize hostConfiguration;
+@synthesize appManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-
-    [WOTApplicationDefaults registerRequests];
-    [WOTApplicationDefaults registerDefaultSettings];
+    /*
+     case error = 0
+     case lifeCycle = 1
+     case threads = 2
+     case web = 3
+     case json = 4
+     case coredata = 5
+     case info = 6
+     case performance = 7
+     case logic = 8
+     */
     
-    WOTWEBHostConfiguration *hostConfig = [[WOTWEBHostConfiguration alloc] init];
-    [[WOTRequestExecutor sharedInstance] setHostConfiguration:hostConfig];
+    id<LogInspectorProtocol> logInspector = [[LogInspector alloc] init];
+    [logInspector objcOnlyAddpriority: 0];
+    [logInspector objcOnlyAddpriority: 1];
+    [logInspector objcOnlyAddpriority: 3];
 
+    id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];
 
-    [WOTApplicationStartupRequests executeAllStartupRequests];
+    id<WOTHostConfigurationProtocol> hostConfiguration = [[WOTWebHostConfiguration alloc] init];
+
+    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration];
+    
+    id<WOTWebSessionManagerProtocol> sessionManager = [[WOTWebSessionManager alloc] init];
+    
+    id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTTankCoreDataProvider alloc] init];
+    
+    id<WOTMappingCoordinatorProtocol> mappingCoordinator = [[WOTMappingCoordinator alloc] init];
+    
+    id<JSONLinksAdapterProtocol> jsonLinksAdapter = [[WOTJSONLinksAdapter alloc] init];
+
+    self.appManager = [WOTPivotAppManager sharedInstance];
+    self.appManager.hostConfiguration = hostConfiguration;
+    self.appManager.requestCoordinator = requestCoordinator;
+    self.appManager.requestManager = requestManager;
+    self.appManager.requestListener = requestManager;
+    self.appManager.sessionManager = sessionManager;
+    self.appManager.logInspector = logInspector;
+    self.appManager.coreDataProvider = coreDataProvider;
+    self.appManager.mappingCoordinator = mappingCoordinator;
+    self.appManager.jsonLinksAdapter = jsonLinksAdapter;
+
+    [AppDefaults registerRequestsFor:requestCoordinator];
+    [WOTApplicationDefaults registerDefaultSettings];
+   
 
     [self initSessionTimer];
     
@@ -60,16 +78,15 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.wotDrawerViewController;
     [self.window makeKeyAndVisible];
-    
-    
     return YES;
 }
 
 - (void)initSessionTimer {
+
     [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
         NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
-
-            [WOTSessionManager logout];
+            
+            [WOTSessionManager logoutWithRequestManager:self->appManager.requestManager];
         } repeats:NO];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
         return timer;
