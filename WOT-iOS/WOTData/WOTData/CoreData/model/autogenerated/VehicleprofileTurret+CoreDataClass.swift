@@ -33,7 +33,8 @@ extension VehicleprofileTurret {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath() -> String? {
-        return #keyPath(VehicleprofileTurret.turret_id)
+    override public class func primaryKeyPath() -> String {
+        //tag was used when parsed response vehicleprofile-suspension
+        return #keyPath(VehicleprofileTurret.tag)
     }
 }

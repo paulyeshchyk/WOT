@@ -35,7 +35,8 @@ extension VehicleprofileGun {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath() -> String? {
-        return #keyPath(VehicleprofileGun.gun_id)
+    override public class func primaryKeyPath() -> String {
+        //tag was used when parsed response vehicleprofile-gun
+        return #keyPath(VehicleprofileGun.tag)
     }
 }

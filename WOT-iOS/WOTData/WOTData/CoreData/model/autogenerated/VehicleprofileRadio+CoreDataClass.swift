@@ -29,7 +29,8 @@ extension VehicleprofileRadio {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath() -> String? {
-        return #keyPath(VehicleprofileRadio.radio_id)
+    override public class func primaryKeyPath() -> String {
+        //tag was used when parsed response vehicleprofile-radio
+        return #keyPath(VehicleprofileRadio.tag)
     }
 }

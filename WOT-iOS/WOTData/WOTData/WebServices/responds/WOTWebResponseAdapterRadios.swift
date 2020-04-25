@@ -22,7 +22,9 @@ public class WOTWebResponseAdapterRadios: WOTWebResponseAdapter {
 
     private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
         let ident: Any
-        if let primaryKeyPath = Clazz.primaryKeyPath() {
+        let primaryKeyPath = Clazz.primaryKeyPath()
+        #warning("check the case")
+        if  primaryKeyPath.count > 0 {
             ident = json[primaryKeyPath] ?? key
         } else {
             ident = key

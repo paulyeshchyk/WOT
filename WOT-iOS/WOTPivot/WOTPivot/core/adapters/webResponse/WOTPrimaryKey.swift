@@ -97,6 +97,8 @@ public class PKCase: NSObject, WOTDescribable {
                 var updatedSet: Set<WOTPrimaryKey> = values[pkType] ?? Set<WOTPrimaryKey>()
                 updatedSet.insert(value)
                 values[pkType] = updatedSet
+            } else {
+                print("PKCase was not fully initialized")
             }
         }
     }

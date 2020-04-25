@@ -29,7 +29,7 @@ extension VehicleprofileModule {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath() -> String? {
+    override public class func primaryKeyPath() -> String {
         return #keyPath(VehicleprofileModule.module_id)
     }
 }

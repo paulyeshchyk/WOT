@@ -31,7 +31,7 @@ extension Module {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath() -> String? {
+    override public class func primaryKeyPath() -> String {
         return #keyPath(Module.name)
     }
 }

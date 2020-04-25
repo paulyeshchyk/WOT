@@ -18,8 +18,8 @@ extension ModulesTree {
         self.module_id = NSDecimalNumber(value: jSON[#keyPath(ModulesTree.module_id)] as? Int ?? 0)
         self.type = jSON[#keyPath(ModulesTree.type)] as? String
 
-        let nextModules = jSON[#keyPath(ModulesTree.next_modules)]
-        (nextModules as? [AnyObject])?.forEach {
+        let nextModules = jSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
+        nextModules?.forEach {
             let moduleTreePK = PKCase()
             moduleTreePK[.primary] = pkCase[.primary]
             moduleTreePK[.secondary] = ModulesTree.primaryKey(for: $0)

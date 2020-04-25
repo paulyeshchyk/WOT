@@ -52,18 +52,18 @@ extension Vehicles {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public static func primaryKeyPath() -> String? {
+    override public static func primaryKeyPath() -> String {
         return #keyPath(Vehicles.tank_id)
     }
 
-    public static func foreingKey(for ident: AnyObject?, foreignPaths: [String]) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-        guard let keyPath = primaryKeyPath() else { return nil }
-
-        var fullPaths = foreignPaths
-        fullPaths.append(keyPath)
-        let foreignPath = fullPaths.joined(separator: ".")
-
-        return WOTPrimaryKey(name: foreignPath, value: ident as AnyObject, nameAlias: keyPath, predicateFormat: "%K == %@")
-    }
+//    public static func foreingKey(for ident: AnyObject?, foreignPaths: [String]) -> WOTPrimaryKey? {
+//        guard let ident = ident else { return nil }
+//        guard let keyPath = primaryKeyPath() else { return nil }
+//
+//        var fullPaths = foreignPaths
+//        fullPaths.append(keyPath)
+//        let foreignPath = fullPaths.joined(separator: ".")
+//
+//        return WOTPrimaryKey(name: foreignPath, value: ident as AnyObject, nameAlias: keyPath, predicateFormat: "%K == %@")
+//    }
 }
