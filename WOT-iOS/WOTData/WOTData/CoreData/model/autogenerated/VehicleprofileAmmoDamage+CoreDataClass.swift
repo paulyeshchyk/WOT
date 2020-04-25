@@ -27,3 +27,11 @@ extension VehicleprofileAmmoDamage {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 }
+
+extension VehicleprofileAmmoDamage: JSONDecoding {
+    public func decodeWith(_ decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: Fields.self)
+        //
+//        if let array = try container.decodeArray()
+    }
+}

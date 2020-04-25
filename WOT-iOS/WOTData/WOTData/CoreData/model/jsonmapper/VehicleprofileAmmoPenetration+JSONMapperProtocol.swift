@@ -11,9 +11,6 @@ import WOTPivot
 extension VehicleprofileAmmoPenetration {
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        defer {
-            coreDataMapping?.stash(hint: pkCase)
-        }
         self.min_value = AnyConvertable(array[0]).asNSDecimal
         self.avg_value = AnyConvertable(array[1]).asNSDecimal
         self.max_value = AnyConvertable(array[2]).asNSDecimal

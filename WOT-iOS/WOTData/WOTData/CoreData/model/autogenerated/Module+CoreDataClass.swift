@@ -35,3 +35,17 @@ extension Module {
         return #keyPath(Module.name)
     }
 }
+
+extension Module: JSONDecoding {
+    public func decodeWith(_ decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Fields.self)
+        //
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
+        self.nation = try container.decodeIfPresent(String.self, forKey: .nation)
+        self.tier = try container.decodeIfPresent(Int.self, forKey: .tier)?.asDecimal
+        self.type = try container.decodeIfPresent(String.self, forKey: .type)
+        self.price_credit = try container.decodeIfPresent(Int.self, forKey: .tier)?.asDecimal
+        self.weight = try container.decodeIfPresent(Int.self, forKey: .tier)?.asDecimal
+        self.image = try container.decodeIfPresent(String.self, forKey: .image)
+    }
+}

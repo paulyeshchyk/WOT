@@ -43,5 +43,5 @@ public protocol CoreDataMappingProtocol {
 }
 
 extension CoreDataMappingProtocol {
-    public func stach() { self.stash(hint: nil) }
+    public func stash() { self.stash(hint: nil) }
 }

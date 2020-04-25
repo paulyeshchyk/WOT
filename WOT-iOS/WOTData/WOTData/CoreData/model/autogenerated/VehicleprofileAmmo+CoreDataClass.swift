@@ -31,3 +31,11 @@ extension VehicleprofileAmmo {
         return #keyPath(VehicleprofileAmmo.type)
     }
 }
+
+extension VehicleprofileAmmo: JSONDecoding {
+    public func decodeWith(_ decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Fields.self)
+        //
+        self.type = try container.decodeIfPresent(String.self, forKey: .type)
+    }
+}

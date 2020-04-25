@@ -11,17 +11,11 @@ import WOTPivot
 extension Vehicles {
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.name = jSON[#keyPath(Vehicles.name)] as? String
-        self.tier = AnyConvertable(jSON[#keyPath(Vehicles.tier)]).asNSDecimal
-        self.tag = AnyConvertable(jSON[#keyPath(Vehicles.tag)]).asString
-        self.tank_id = AnyConvertable(jSON[#keyPath(Vehicles.tank_id)]).asNSDecimal
-        self.nation = jSON[#keyPath(Vehicles.nation)] as? String
-        self.price_credit = AnyConvertable(jSON[#keyPath(Vehicles.price_credit)]).asNSDecimal
-        self.price_gold = AnyConvertable(jSON[#keyPath(Vehicles.price_gold)]).asNSDecimal
-        self.is_premium = AnyConvertable(jSON[#keyPath(Vehicles.is_premium)]).asNSDecimal
-        self.is_gift = AnyConvertable(jSON[#keyPath(Vehicles.is_gift)]).asNSDecimal
-        self.short_name = jSON[#keyPath(Vehicles.short_name)] as? String
-        self.type = jSON[#keyPath(Vehicles.type)] as? String
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
 
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))

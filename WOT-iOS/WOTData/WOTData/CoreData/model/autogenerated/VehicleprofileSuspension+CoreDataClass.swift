@@ -26,22 +26,40 @@ extension VehicleprofileSuspension {
         case tag
     }
 
-    public enum RelativeKeys: String, CodingKey, CaseIterable {
-        case suspension_id
-    }
+//    public enum RelativeKeys: String, CodingKey, CaseIterable {
+//        case suspension_id
+//    }
 
     @objc
     override public class func fieldsKeypaths() -> [String] {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    @objc
-    override public class func relationsKeypaths() -> [String] {
-        return RelativeKeys.allCases.compactMap { $0.rawValue }
-    }
+//    @objc
+//    override public class func relationsKeypaths() -> [String] {
+//        return RelativeKeys.allCases.compactMap { $0.rawValue }
+//    }
 
     override public class func primaryKeyPath() -> String {
         //tag was used when parsed response vehicleprofile-suspension
         return #keyPath(VehicleprofileSuspension.tag)
+    }
+
+    override public class func primaryIdKeyPath() -> String {
+        //id was used when quering remote module
+        return #keyPath(VehicleprofileSuspension.suspension_id)
+    }
+}
+
+extension VehicleprofileSuspension: JSONDecoding {
+    public func decodeWith(_ decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Fields.self)
+        //
+        self.name = try container.decodeAnyIfPresent(String.self, forKey: .name)
+        self.tag = try container.decodeAnyIfPresent(String.self, forKey: .tag)
+        self.tier = try container.decodeAnyIfPresent(Int.self, forKey: .tier)?.asDecimal
+        self.weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
+        self.load_limit = try container.decodeAnyIfPresent(Int.self, forKey: .load_limit)?.asDecimal
+        self.steering_lock_angle = try container.decodeAnyIfPresent(Int.self, forKey: .steering_lock_angle)?.asDecimal
     }
 }

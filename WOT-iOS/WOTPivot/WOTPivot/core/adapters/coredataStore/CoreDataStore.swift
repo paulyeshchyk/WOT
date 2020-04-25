@@ -93,6 +93,32 @@ public class CoreDataStore: NSObject, CoreDataStoreProtocol {
             }
         })
     }
+
+    public func onReceivedJSON(_ json: JSON?, _ error: Error?) {
+        guard error == nil, let json = json else {
+            appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
+            onFinishJSONParse?(error)
+            return
+        }
+
+        appManager?.logInspector?.log(JSONStartLog(""), sender: self)
+        let keys = json.keys
+        for (idx, key) in keys.enumerated() {
+            //
+            #warning("not working for case data->7473->modules_tree->... because CoreDataStore uses Wrong class. It operates with Vehicles instead of using Module_Tree")
+
+            let extraction = extractSubJSON(from: json, by: key)
+            findOrCreateObject(for: extraction) { managedObject in
+
+                self.onCreateNSManagedObject?(managedObject)
+
+                if idx == (keys.count - 1) {
+                    self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
+                    self.onFinishJSONParse?(nil)
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Hash
@@ -102,6 +128,30 @@ func == (lhs: CoreDataStore, rhs: CoreDataStore) -> Bool {
 
 // MARK: - private
 extension CoreDataStore {
+    private struct JSONExtraction {
+        let identifier: Any
+        let json: JSON
+    }
+
+    /**
+
+     */
+    private func extractSubJSON(from json: JSON, by key: AnyHashable ) -> JSONExtraction {
+        guard let jsonByKey = json[key] as? JSON else {
+            fatalError("invalid json for key")
+        }
+        let objectJson: JSON
+        if let jsonExtractor = onGetObjectJSON {
+            objectJson = jsonExtractor(jsonByKey)
+        } else {
+            objectJson = jsonByKey
+        }
+        guard let ident = onGetIdent?(Clazz, objectJson, key) else {
+            fatalError("onGetIdent not defined")
+        }
+        return JSONExtraction(identifier: ident, json: objectJson)
+    }
+
     private func findOrCreateObject(for jsonExtraction: JSONExtraction, callback: @escaping NSManagedObjectCallback) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
@@ -128,59 +178,6 @@ extension CoreDataStore {
 extension CoreDataStore: LogMessageSender {
     public var logSenderDescription: String {
         return "Storage:\(String(describing: type(of: request)))"
-    }
-}
-
-// MARK: - CoreDataStoreProtocol
-extension CoreDataStore {
-    private struct JSONExtraction {
-        let identifier: Any
-        let json: JSON
-    }
-
-    /**
-
-     */
-    private func extractSubJSON(from json: JSON, by key: AnyHashable ) -> JSONExtraction {
-        guard let jsonByKey = json[key] as? JSON else {
-            fatalError("invalid json for key")
-        }
-        let objectJson: JSON
-        if let jsonExtractor = onGetObjectJSON {
-            objectJson = jsonExtractor(jsonByKey)
-        } else {
-            objectJson = jsonByKey
-        }
-        guard let ident = onGetIdent?(Clazz, objectJson, key) else {
-            fatalError("onGetIdent not defined")
-        }
-        return JSONExtraction(identifier: ident, json: objectJson)
-    }
-
-    public func onReceivedJSON(_ json: JSON?, _ error: Error?) {
-        guard error == nil, let json = json else {
-            appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
-            onFinishJSONParse?(error)
-            return
-        }
-
-        appManager?.logInspector?.log(JSONStartLog(""), sender: self)
-        let keys = json.keys
-        for (idx, key) in keys.enumerated() {
-            //
-            #warning("not working for case data->7473->modules_tree->... because CoreDataStore uses Wrong class. It operates with Vehicles instead of using Module_Tree")
-
-            let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(for: extraction) { managedObject in
-
-                self.onCreateNSManagedObject?(managedObject)
-
-                if idx == (keys.count - 1) {
-                    self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
-                    self.onFinishJSONParse?(nil)
-                }
-            }
-        }
     }
 }
 

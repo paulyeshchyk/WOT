@@ -9,54 +9,6 @@
 import Foundation
 
 @objc
-public protocol WOTStartableProtocol {
-    @objc
-    func cancel()
-
-    @objc
-    @discardableResult
-    func start(_ args: WOTRequestArgumentsProtocol) -> Bool
-}
-
-//public enum WOTRequestAction {
-//    case new
-//    case start
-//    case finish
-//    case cancel
-//    case errorText(String)
-//    case error(Error)
-//    public var description: String {
-//        switch self {
-//        case .cancel: return "[CANCEL]:"
-//        case .start: return "[RUN]:"
-//        case .finish: return "[END]:"
-//        case .new: return "[NEW]:"
-//        case .errorText( _): return "[ERR]:"
-//        case .error( _): return "[ERR]:"
-//        }
-//    }
-//
-//    public var details: String {
-//        switch self {
-//        case .errorText(let error): return error
-//        case .error(let error):
-//            if let error = error as? WOTWEBRequestError {
-//                return error.description
-//            } else {
-//                return error.localizedDescription
-//            }
-//        default: return ""
-//        }
-//    }
-//}
-
-@objc
-public protocol WOTDescribable {
-    @objc
-    var description: String { get }
-}
-
-@objc
 public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
@@ -152,6 +104,16 @@ public protocol WOTRequestListenerProtocol {
 
     @objc
     func removeRequest(_ request: WOTRequestProtocol)
+}
+
+@objc
+public protocol WOTStartableProtocol {
+    @objc
+    func cancel()
+
+    @objc
+    @discardableResult
+    func start(_ args: WOTRequestArgumentsProtocol) -> Bool
 }
 
 @objc

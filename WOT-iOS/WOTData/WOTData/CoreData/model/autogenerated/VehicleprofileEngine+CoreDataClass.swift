@@ -34,4 +34,22 @@ extension VehicleprofileEngine {
         //tag was used when parsed response vehicleprofile-engine
         return #keyPath(VehicleprofileEngine.tag)
     }
+
+    override public class func primaryIdKeyPath() -> String {
+        //id was used when quering remote module
+        return #keyPath(VehicleprofileEngine.engine_id)
+    }
+}
+
+extension VehicleprofileEngine: JSONDecoding {
+    public func decodeWith(_ decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Fields.self)
+        //
+        self.name = try container.decodeAnyIfPresent(String.self, forKey: .name)
+        self.tier = try container.decodeAnyIfPresent(Int.self, forKey: .tier)?.asDecimal
+        self.tag = try container.decodeAnyIfPresent(String.self, forKey: .tag)
+        self.fire_chance = try container.decodeAnyIfPresent(Float.self, forKey: .fire_chance)?.asDecimal
+        self.power = try container.decodeAnyIfPresent(Int.self, forKey: .power)?.asDecimal
+        self.weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
+    }
 }

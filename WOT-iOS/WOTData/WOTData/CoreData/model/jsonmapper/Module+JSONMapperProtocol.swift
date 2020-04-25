@@ -11,14 +11,12 @@ import WOTPivot
 extension Module {
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.name = jSON[#keyPath(Module.name)] as? String
-        self.nation = jSON[#keyPath(Module.nation)] as? String
-        self.tier = NSDecimalNumber(value: jSON[#keyPath(Module.tier)] as? Int ?? 0)
-        self.type = jSON[#keyPath(Module.type)] as? String
-        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Module.price_credit)] as? Int ?? 0)
-        self.weight = NSDecimalNumber(value: jSON[#keyPath(Module.weight)] as? Int ?? 0)
-//        self.module_id = AnyConvertable(jSON[#keyPath(Module.module_id)]).asNSDecimal
-        self.image = jSON[#keyPath(Module.image)] as? String
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
+
         /*
          let nextTanksPK = PKCase()
          nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)

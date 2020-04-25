@@ -47,24 +47,14 @@ public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
     }
 }
 
-public struct RESTAPIResponseMeta {
-    var count: Int
-    var page_total: Int
-    var total: Int
-    var limit: Int
+public struct RESTAPIResponseMeta: Codable {
+    var count: Int?
+    var page_total: Int?
+    var total: Int?
+    var limit: Int?
     var page: Int?
-    init(count: Int, page_total: Int, total: Int, limit: Int, page: Int?) {
-        self.count = count
-        self.page_total = page_total
-        self.total = total
-        self.limit = limit
-        self.page = page
-    }
-}
 
-extension RESTAPIResponseMeta: Codable {}
-
-extension RESTAPIResponseMeta: JSONMapperProtocol {
+    public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {
         case count
         case page_total
@@ -73,14 +63,14 @@ extension RESTAPIResponseMeta: JSONMapperProtocol {
         case page
     }
 
-    public typealias Fields = FieldKeys
-
-    mutating public func mapping(fromJSON jSON: JSON) {
-        count = jSON["count"] as? Int ?? 0
-        page_total = jSON["page_total"] as? Int ?? 0
-        total = jSON["total"] as? Int ?? 0
-        limit = jSON["limit"] as? Int ?? 0
-        page = jSON["page"] as? Int
+    // MARK: - Decodable
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Fields.self)
+        self.count = try container.decodeIfPresent(Int.self, forKey: .count)
+        self.page_total = try container.decodeIfPresent(Int.self, forKey: .page_total)
+        self.total = try container.decodeIfPresent(Int.self, forKey: .total)
+        self.limit = try container.decodeIfPresent(Int.self, forKey: .limit)
+        self.page = try container.decodeIfPresent(Int.self, forKey: .page)
     }
 }
 

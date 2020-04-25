@@ -122,3 +122,15 @@ extension UnkeyedDecodingContainer {
         return try nestedContainer.decode(type)
     }
 }
+
+extension Int {
+    public var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+}
+
+extension Bool {
+    public var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+}
+
+extension Float {
+    public var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+}
