@@ -34,6 +34,10 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
     var uuid: UUID { get }
 
     var parentRequest: WOTRequestProtocol? { get set }
+
+    @available(*, deprecated, message: "use JSONLink instead" )
+    @objc
+    var pkCase: PKCase? { get set }
 }
 
 @objc
@@ -128,6 +132,9 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
 
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
+
+    @objc
+    public var pkCase: PKCase?
 
     private var groups = [String]()
 

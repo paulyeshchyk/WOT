@@ -14,7 +14,12 @@ public class WOTJSONLink: NSObject {
     public var clazz: AnyClass
 
     @objc
-    public var primaryKeys: [WOTPrimaryKey]?
+    public var primaryKeys: [WOTPrimaryKey] {
+        return pkCase?.allValues()?.compactMap { $0 } ?? []
+    }
+
+    @objc
+    public var pkCase: PKCase?
 
     @objc
     public var completion: ((JSON) -> Void)?
@@ -25,10 +30,8 @@ public class WOTJSONLink: NSObject {
     public override var description: String {
         get {
             var result: String = "WOTJSONLink: \(String(describing: clazz))"
-            if let clearPK = primaryKeys?.compactMap { $0 } {
-                clearPK.forEach {
-                    result += " key:\($0)"
-                }
+            primaryKeys.forEach {
+                result += " key:\($0)"
             }
             if let prefix = keypathPrefix {
                 result += " prefix:\(prefix)"
@@ -46,17 +49,9 @@ public class WOTJSONLink: NSObject {
         return String(format: "%@%@", preffix, to)
     }
 
-    public init?(clazz clazzTo: AnyClass, primaryKeys keys: [WOTPrimaryKey], keypathPrefix kp: String?, completion block: ((JSON) -> Void)?) {
+    public init?(clazz clazzTo: AnyClass, pkCase parentCase: PKCase, keypathPrefix kp: String?, completion block: ((JSON) -> Void)?) {
         clazz = clazzTo
-        primaryKeys = keys
-        completion = block
-        keypathPrefix = kp
-        super.init()
-    }
-
-    public init?(clazz clazzTo: AnyClass, pkCase: PKCase, keypathPrefix kp: String?, completion block: ((JSON) -> Void)?) {
-        clazz = clazzTo
-        primaryKeys = pkCase.allValues()?.compactMap { $0 }
+        pkCase = parentCase
         completion = block
         keypathPrefix = kp
         super.init()

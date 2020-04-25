@@ -16,21 +16,21 @@ public protocol CoreDataStoreProtocol: NSObjectProtocol {
     var onFinishJSONParse: ((Error?) -> Void)? { get set }
     var onCreateNSManagedObject: NSManagedObjectCallback? { get set }
     func perform()
-    func onReceivedJSON(_ json: JSON?, _ error: Error?)
+    func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
 }
 
 extension CoreDataStoreProtocol {
-    public func perform<T>(binary: Data?, forType type: T.Type) where T: RESTAPIResponseProtocol {
+    public func perform<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
         guard let data = binary else {
-            onReceivedJSON(nil, nil)
+            onReceivedJSON(nil, fromRequest: request, nil)
             return
         }
         let decoder = JSONDecoder()
         do {
             let result = try decoder.decode(T.self, from: data)
-            onReceivedJSON(result.data, nil)
+            onReceivedJSON(result.data, fromRequest: request, nil)
         } catch let error {
-            onReceivedJSON(nil, error)
+            onReceivedJSON(nil, fromRequest: request, error)
         }
     }
 }
@@ -94,7 +94,7 @@ public class CoreDataStore: NSObject, CoreDataStoreProtocol {
         })
     }
 
-    public func onReceivedJSON(_ json: JSON?, _ error: Error?) {
+    public func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
             onFinishJSONParse?(error)
@@ -108,7 +108,7 @@ public class CoreDataStore: NSObject, CoreDataStoreProtocol {
             #warning("not working for case data->7473->modules_tree->... because CoreDataStore uses Wrong class. It operates with Vehicles instead of using Module_Tree")
 
             let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(for: extraction) { managedObject in
+            findOrCreateObject(for: extraction, fromRequest: fromRequest) { managedObject in
 
                 self.onCreateNSManagedObject?(managedObject)
 
@@ -152,21 +152,22 @@ extension CoreDataStore {
         return JSONExtraction(identifier: ident, json: objectJson)
     }
 
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, callback: @escaping NSManagedObjectCallback) {
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping NSManagedObjectCallback) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
         //
-        let pkCase = PKCase()
-        pkCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
-        appManager?.logInspector?.log(JSONStartLog("\(pkCase)"), sender: self)
+        let parents = fromRequest.pkCase?.plainParents ?? []
+        let objCase = PKCase(parentObjects: parents)
+        objCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
+        appManager?.logInspector?.log(JSONStartLog("\(objCase)"), sender: self)
 
-        appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: pkCase[.primary]?.predicate, callback: { (managedObject) in
+        appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: objCase[.primary]?.predicate, callback: { (managedObject) in
 
-            self.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: pkCase, forRequest: self.request)
+            self.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase, forRequest: self.request)
             let status = managedObject.isInserted ? "created" : "located"
-            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(pkCase.description); status: \(status)"), sender: self)
-            self.appManager?.logInspector?.log(JSONFinishLog("\(pkCase)"), sender: self)
+            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(objCase.description); status: \(status)"), sender: self)
+            self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
 
             // managedObject should be send as a result of external links parse flow
             callback(managedObject)
@@ -226,7 +227,9 @@ extension CoreDataStore: CoreDataMappingProtocol {
         var result = [WOTJSONLink]()
         idents?.forEach {
             if let pk = Clazz.primaryKey(for: $0 as AnyObject) {
-                if let link = WOTJSONLink(clazz: Clazz, primaryKeys: [pk], keypathPrefix: nil, completion: nil) {
+                let pkCase = PKCase()
+                pkCase[.primary] = pk
+                if let link = WOTJSONLink(clazz: Clazz, pkCase: pkCase, keypathPrefix: nil, completion: nil) {
                     result.append(link)
                 }
             }

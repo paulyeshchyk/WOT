@@ -27,6 +27,15 @@ extension Module {
         case module_id
     }
 
+    public enum RelativeKeys: String, CodingKey, CaseIterable {
+        case tanks
+    }
+
+    @objc
+    override public static func relationsKeypaths() -> [String] {
+        return RelativeKeys.allCases.compactMap { $0.rawValue }
+    }
+
     @objc
     override public class func fieldsKeypaths() -> [String] {
         return FieldKeys.allCases.compactMap { $0.rawValue }

@@ -37,10 +37,13 @@ extension Vehicles {
             self.removeFromModules_tree(set)
         }
 
-        let modulesTreeCase = PKCase()
+        var parents = pkCase.plainParents
+        parents.append(self)
+        let modulesTreeCase = PKCase(parentObjects: parents)
         modulesTreeCase[.primary] = pkCase[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
+
         ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             guard let module_tree = newObject as? ModulesTree else {
                 return

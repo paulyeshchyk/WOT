@@ -133,12 +133,13 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         let arguments = WOTRequestArguments()
         #warning("forKey: fields should be refactored")
         arguments.setValues(keyPaths, forKey: "fields")
-        jsonLink.primaryKeys?.forEach {
+        jsonLink.primaryKeys.forEach {
             arguments.setValues([$0.value], forKey: $0.nameAlias)
         }
 
         request.hostConfiguration = hostConfiguration
         request.parentRequest = parentRequest
+        request.pkCase = jsonLink.pkCase
 
         self.addListener(listener, forRequest: request)
 

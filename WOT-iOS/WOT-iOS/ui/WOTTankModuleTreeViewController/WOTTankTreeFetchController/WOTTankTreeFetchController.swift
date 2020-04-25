@@ -103,16 +103,16 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func transform(module: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
-//        guard let submodules = module.next_modules as? Set<ModulesTree> else {
-//            return
-//        }
-//        submodules.forEach({ (submodule) in
-//            if let moduleId = submodule.module_id?.intValue, submodule.isCompatible(forTankId: tankId) {
-//                nodeCreation(moduleId, submodule)
-//            }
-//
-//            self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
-//        })
+        guard let submodules = module.next_modules as? Set<ModulesTree> else {
+            return
+        }
+        submodules.forEach({ (submodule) in
+            if let moduleId = submodule.module_id?.intValue, submodule.isCompatible(forTankId: tankId) {
+                nodeCreation(moduleId, submodule)
+            }
+
+            self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
+        })
     }
 }
 
@@ -143,12 +143,10 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
         return self.module_id!.intValue
     }
 
-    #warning("implement compatibility; otherwise module tree is not working")
     func isCompatible(forTankId: NSNumber) -> Bool {
-        return false
-//        guard let tanksSet = self.next_tanks as? Set<Vehicles> else { return false }
-//        let filtered = tanksSet.filter({$0.tank_id?.intValue == forTankId.intValue})
-//        return filtered.count > 0
+        guard let tanksSet = self.next_tanks as? Set<Vehicles> else { return false }
+        let filtered = tanksSet.filter({$0.tank_id?.intValue == forTankId.intValue})
+        return filtered.count > 0
     }
 
     public func nestedModules() -> [WOTTreeModulesTreeProtocol]? {

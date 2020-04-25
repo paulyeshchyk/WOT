@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
-
 @objc
 public protocol PrimaryKeypathProtocol: class {
     static func predicateFormat() -> String
@@ -87,6 +85,21 @@ public class PKCase: NSObject, WOTDescribable {
     public enum PredicateCompoundType: Int {
         case or = 0
         case and = 1
+    }
+
+    /**
+     used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
+     parents identifier has taken from a list
+     */
+    #warning("Use tree instead of plain")
+    public var plainParents: [AnyObject] = []
+
+    public convenience init(parentObjects: [AnyObject?]? ) {
+        self.init()
+
+        if let parentObjects = parentObjects?.compactMap({$0}) {
+            plainParents.append(contentsOf: parentObjects)
+        }
     }
 
     public override var debugDescription: String { return description }

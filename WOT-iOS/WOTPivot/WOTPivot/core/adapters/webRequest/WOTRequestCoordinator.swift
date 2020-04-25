@@ -169,7 +169,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         }
 
         coreDataStoreStack.forEach { (pair) in
-            pair.coreDataStore.perform(binary: pair.data, forType: RESTAPIResponse.self)
+            pair.coreDataStore.perform(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
         }
     }
 }
