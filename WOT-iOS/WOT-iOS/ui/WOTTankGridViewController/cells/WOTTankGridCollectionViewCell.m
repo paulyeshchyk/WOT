@@ -2,14 +2,14 @@
 //  WOTTankGridCollectionViewCell.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 9/14/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 9/14/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankGridCollectionViewCell.h"
 #import "WOTTankGridCollectionSubitemTableViewCell.h"
 #import "WOTNode+DetailGrid.h"
-#import "WOTTankEvalutionResult.h"
+#import <WOTData/WOTData.h>
 #import "NSObject+WOTTankGridValueData.h"
 
 @interface WOTTankGridCollectionViewCell () <UITableViewDataSource, UITableViewDelegate>

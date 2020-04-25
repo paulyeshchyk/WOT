@@ -2,62 +2,64 @@
 //  WOTTankTreeFetchController.swift
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/23/18.
-//  Copyright © 2018 Pavel Yeshchyk. All rights reserved.
+//  Created on 7/23/18.
+//  Copyright © 2018. All rights reserved.
 //
 
 import Foundation
+import WOTPivot
+import WOTData
 
 @objc
-class WOTTankTreeFetchController: WOTDataTanksFetchController {
-
-    override func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
-
+class WOTTankTreeFetchController: WOTDataFetchController {
+    override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
         var result = [WOTNodeProtocol]()
 
         let filtered = self.fetchedObjects()?.filter { predicate.evaluate(with: $0) }
 
-        filtered?.forEach { (fetchedObject) in
-            let transformed = self.transform(tank: fetchedObject)
+        filtered?.forEach { fetchedObject in
+            let transformed = self.transform(tank: fetchedObject, nodeCreator: nodeCreator)
             result.append(contentsOf: transformed)
         }
-        return result
+        filteredCompletion(predicate, result)
     }
 
-    private func tankId(_ tank: AnyObject) -> NSDecimalNumber? {
-        guard let tanks = tank as? Tanks else {
+    private func tankId(_ tank: AnyObject) -> NSNumber? {
+        guard let tanks = tank as? Vehicles else {
             return nil
         }
         return tanks.tank_id
     }
 
-    private func tankModules(_ tank: AnyObject) -> Set<ModulesTree>? {
-        guard let tanks = tank as? Tanks else {
+    private func vehicleModules(_ vehicle: AnyObject) -> Set<ModulesTree>? {
+        guard let vehicles = vehicle as? Vehicles else {
             return nil
         }
-        guard let modules = tanks.modulesTree as? Set<ModulesTree> else {
-            return nil
-        }
-        return modules
+        return vehicles.modules_tree as? Set<ModulesTree>
     }
 
-    private func transform(tank: AnyObject) -> [WOTNodeProtocol] {
+    private func transform(tank: AnyObject, nodeCreator: WOTNodeCreatorProtocol?) -> [WOTNodeProtocol] {
         guard let tankId = self.tankId(tank) else {
             return []
         }
 
-        let root = self.nodeCreator.createNode(fetchedObject: tank, byPredicate: nil)
+        guard let root = nodeCreator?.createNode(fetchedObject: tank, byPredicate: nil) else {
+            return []
+        }
 
-        guard let modules = self.tankModules(tank) else {
+        guard let modules = self.vehicleModules(tank) else {
             return [root]
         }
 
         var temporaryList = [Int: WOTNodeProtocol]()
         let nodeCreation: NodeCreateClosure = { (id: Int, module: ModulesTree) in
-            let node = self.nodeCreator.createNode(fetchedObject: module, byPredicate: nil)
-            temporaryList[id] = node
+            if let node = nodeCreator?.createNode(fetchedObject: module, byPredicate: nil) {
+                temporaryList[id] = node
+            } else {
+                print("not created")
+            }
         }
 
         self.transform(modulesSet: modules, withId: tankId, nodeCreation: nodeCreation)
@@ -76,7 +78,7 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
                 return
             }
             nestedModules.forEach({ (module) in
-                guard let prevNode = listofNodes[module.module_id.intValue] else {
+                guard let prevNode = listofNodes[module.moduleIdInt()] else {
                     root.addChild(value)
                     return
                 }
@@ -87,26 +89,24 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
 
     typealias NodeCreateClosure = (Int, ModulesTree) -> Void
 
-    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSDecimalNumber, nodeCreation: NodeCreateClosure) {
+    private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
         modulesSet.forEach { (submodule) in
             if let moduleId = submodule.module_id?.intValue {
                 if submodule.isCompatible(forTankId: tankId) {
                     nodeCreation(moduleId, submodule)
+                } else {
+                    print("not compatible")
                 }
             }
             self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
         }
     }
 
-    private func transform(module: ModulesTree, withId tankId: NSDecimalNumber, nodeCreation: NodeCreateClosure) {
-        guard let submodules = module.nextModules else {
+    private func transform(module: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
+        guard let submodules = module.next_modules as? Set<ModulesTree> else {
             return
         }
-        submodules.forEach({ (a_submodule) in
-            guard let submodule = a_submodule as? ModulesTree else {
-                return
-            }
-
+        submodules.forEach({ (submodule) in
             if let moduleId = submodule.module_id?.intValue, submodule.isCompatible(forTankId: tankId) {
                 nodeCreation(moduleId, submodule)
             }
@@ -116,42 +116,40 @@ class WOTTankTreeFetchController: WOTDataTanksFetchController {
     }
 }
 
-extension ModulesTree {
-
-    func isCompatible(forTankId: NSDecimalNumber) -> Bool {
-        let result = self.nextTanks.filter({ (next) -> Bool in
-            return (next as? Tanks)?.tank_id.intValue == forTankId.intValue
-        })
-        return (result.count != 0)
+extension ModulesTree: WOTTreeModulesTreeProtocol {
+    public func moduleType() -> String? {
+        return self.type
     }
 
-    func nestedModules () -> Set<ModulesTree>? {
-        guard let modules = self.prevModules else {
+    public func moduleLocalImageURL() -> URL? {
+        guard let imageName = self.type else {
             return nil
         }
-        return [modules]
-    }
-}
-
-/*
- https://medium.com/ios-swift-development-notes/swiftbites-8-merging-dictionaries-in-swift-894c3e235fec
- */
-extension Dictionary {
-    /// Merge and return a new dictionary
-    func merge(with: [Key: Value]) -> [Key: Value] {
-        var copy = self
-        for (k, v) in with {
-            // If a key is already present it will be overritten
-            copy[k] = v
+        guard let path =  Bundle.main.url(forResource: imageName, withExtension: "png") else {
+            return nil
         }
-        return copy
+        return path
     }
 
-    /// Merge in-place
-    mutating func append(with: [Key: Value]) {
-        for (k, v) in with {
-            // If a key is already present it will be overritten
-            self[k] = v
-        }
+    public func moduleName() -> String {
+        return self.name ?? ""
+    }
+
+    public func moduleValue(forKey: String) -> Any? {
+        return nil
+    }
+
+    public func moduleIdInt() -> Int {
+        return self.module_id!.intValue
+    }
+
+    func isCompatible(forTankId: NSNumber) -> Bool {
+        guard let tanksSet = self.next_tanks as? Set<Vehicles> else { return false }
+        let filtered = tanksSet.filter({$0.tank_id?.intValue == forTankId.intValue})
+        return filtered.count > 0
+    }
+
+    public func nestedModules() -> [WOTTreeModulesTreeProtocol]? {
+        return nil
     }
 }

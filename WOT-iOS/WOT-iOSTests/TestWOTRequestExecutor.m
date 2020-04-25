@@ -2,13 +2,13 @@
 //  TestWOTRequestExecutor.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 8/26/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 8/26/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 
 #import <XCTest/XCTest.h>
-#import "WOTRequestExecutor.h"
+#import <WOTPivot/WOTPivot.h>
 
 @interface TestWOTRequestExecutor : XCTestCase
 
@@ -29,14 +29,14 @@
 
 - (void)testSharedInstanceIsNotNull {
     
-    WOTRequestExecutor *sharedInstance = [WOTRequestExecutor sharedInstance];
-    XCTAssertNotNil(sharedInstance);
+//    WOTRequestManager *sharedInstance = [WOTRequestManager sharedInstance];
+//    XCTAssertNotNil(sharedInstance);
 }
 
 - (void)testSharedInstanceInitiallyHasNoPendingRequests {
     
-    WOTRequestExecutor *sharedInstance = [WOTRequestExecutor sharedInstance];
-    XCTAssertEqual(sharedInstance.pendingRequestsCount, 0);
+//    WOTRequestManager *sharedInstance = [WOTRequestManager sharedInstance];
+//    XCTAssertEqual(sharedInstance.pendingRequestsCount, 0);
 }
 
 

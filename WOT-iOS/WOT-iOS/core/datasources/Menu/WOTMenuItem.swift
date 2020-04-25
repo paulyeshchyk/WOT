@@ -2,8 +2,8 @@
 //  WOTMenuItem.swift
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 8/14/18.
-//  Copyright © 2018 Pavel Yeshchyk. All rights reserved.
+//  Created on 8/14/18.
+//  Copyright © 2018. All rights reserved.
 //
 
 import Foundation
@@ -19,11 +19,10 @@ protocol WOTMenuItemProtocol: NSObjectProtocol {
 
 @objc
 class WOTMenuItem: NSObject {
-
-    @objc private(set)var controllerClass: AnyClass
-    @objc private(set)var controllerTitle: String
-    @objc private(set)var icon: UIImage
-    @objc private(set)var userDependence: Bool
+    @objc private(set) var controllerClass: AnyClass
+    @objc private(set) var controllerTitle: String
+    @objc private(set) var icon: UIImage
+    @objc private(set) var userDependence: Bool
 
     init(controllerClass clazz: AnyClass, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool) {
         controllerClass = clazz
@@ -31,5 +30,4 @@ class WOTMenuItem: NSObject {
         icon = image
         userDependence = dependence
     }
-
 }

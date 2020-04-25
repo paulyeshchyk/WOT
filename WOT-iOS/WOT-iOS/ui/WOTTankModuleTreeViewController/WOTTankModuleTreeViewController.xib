@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,7 +23,7 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Mfw-dz-DVC">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="ae5-Q7-qy5" customClass="WOTTankConfigurationFlowLayout" customModule="WOT" customModuleProvider="target">
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="ae5-Q7-qy5" customClass="WOTTankConfigurationFlowLayout" customModule="WOTPivot">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="2"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -41,7 +41,7 @@
                 <constraint firstAttribute="bottom" secondItem="Mfw-dz-DVC" secondAttribute="bottom" id="OYn-Bv-EyN"/>
                 <constraint firstItem="Mfw-dz-DVC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xWS-O8-6Kz"/>
             </constraints>
-            <point key="canvasLocation" x="494" y="371"/>
+            <point key="canvasLocation" x="790.39999999999998" y="333.7331334332834"/>
         </view>
     </objects>
 </document>

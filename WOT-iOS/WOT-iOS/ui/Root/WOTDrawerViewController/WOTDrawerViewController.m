@@ -2,13 +2,14 @@
 //  WOTDrawerViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/3/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/3/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTDrawerViewController.h"
 #import "MMDrawerVisualState.h"
-
+#import "UINavigationBar+WOT.h"
+#import "UIBarButtonItem+EventBlock.h"
 #import "WOTSessionManager.h"
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
@@ -76,8 +77,16 @@
 
     [UIViewController attemptRotationToDeviceOrientation];
 
-    [[WOTSessionManager sharedInstance] invalidateTimer];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onLogout:) name:WOT_NOTIFICATION_LOGOUT object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 - (BOOL)shouldAutorotate {
@@ -121,10 +130,12 @@
 }
 
 - (void)loginPressedOnMenu:(id<WOTMenuProtocol>)menu {
- 
+
+    id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+
     [self closeDrawerAnimated:YES completion:NULL];
     
-    [WOTSessionManager switchUser];
+    [WOTSessionManager switchUserWithRequestManager:manager.requestManager];
 }
 
 #pragma mark - private

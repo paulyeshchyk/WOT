@@ -2,8 +2,8 @@
 //  WOTSplitViewController.swift
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 8/14/18.
-//  Copyright © 2018 Pavel Yeshchyk. All rights reserved.
+//  Created on 8/14/18.
+//  Copyright © 2018. All rights reserved.
 //
 
 import Foundation
@@ -14,9 +14,7 @@ struct WOTSplitBehaviour: OptionSet {
 }
 
 @objc
-protocol WOTMasterControllerProtocol: NSObjectProtocol {
-
-}
+protocol WOTMasterControllerProtocol: NSObjectProtocol {}
 
 @objc
 protocol WOTDetailControllerProtocol: NSObjectProtocol {
@@ -34,15 +32,12 @@ struct WOTMasterDetailBehaviour {
     }
 }
 
-
 extension WOTMasterDetailBehaviour {
     static let PivotModuletree = WOTMasterDetailBehaviour(master: WOTSplitViewController.self, detail: WOTTankModuleTreeViewController.self, behaviour: .moduleTree)
 }
 
-
 @objc
 class WOTSplitViewController: UISplitViewController, WOTMasterControllerProtocol {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.preferredDisplayMode = .allVisible
@@ -51,6 +46,5 @@ class WOTSplitViewController: UISplitViewController, WOTMasterControllerProtocol
         let right = WOTTankModuleTreeViewController(nibName: "WOTTankModuleTreeViewController", bundle: nil)
         let rightNC = UINavigationController(rootViewController: right)
         self.viewControllers = [leftNC, rightNC]
-
     }
 }

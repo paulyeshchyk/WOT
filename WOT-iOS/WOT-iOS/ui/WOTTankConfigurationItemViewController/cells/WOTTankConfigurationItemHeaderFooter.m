@@ -2,8 +2,8 @@
 //  WOTTankConfigurationItemHeaderFooter.m
 //  WOT-iOS
 //
-//  Created by Paul on 7/20/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 7/20/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankConfigurationItemHeaderFooter.h"
@@ -14,14 +14,6 @@
 @end
 
 @implementation WOTTankConfigurationItemHeaderFooter
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 - (void)setTitle:(NSString *)title {
     

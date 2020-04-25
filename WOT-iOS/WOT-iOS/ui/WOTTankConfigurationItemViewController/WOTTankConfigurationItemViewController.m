@@ -2,15 +2,17 @@
 //  WOTTankConfigurationItemViewController.m
 //  WOT-iOS
 //
-//  Created by Paul on 7/20/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 7/20/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankConfigurationItemViewController.h"
 
 #import "WOTTankConfigurationItemCell.h"
 #import "WOTTankConfigurationItemHeaderFooter.h"
-#import "ModulesTree+UI.h"
+#import <WOTPivot/WOTPivot.h>
+#import <WOTData/WOTData.h>
+#import "UIImageView+WebCache.h"
 
 @interface WOTTankConfigurationItemViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -32,7 +34,7 @@
     [self update];
 }
 
-- (void)setModuleTree:(ModulesTree *)moduleTree {
+- (void)setModuleTree:(id<WOTTreeModulesTreeProtocol>)moduleTree {
     
     if (_moduleTree != moduleTree) {
         
@@ -43,8 +45,8 @@
 
 - (void)update {
     
-    self.titleLabel.text = self.moduleTree.name;
-    self.imageURL = [self.moduleTree localImageURL];
+    self.titleLabel.text = self.moduleTree.moduleName;
+    self.imageURL = [self.moduleTree moduleLocalImageURL];
 }
 
 - (void)setImageURL:(NSURL *)imageURL {

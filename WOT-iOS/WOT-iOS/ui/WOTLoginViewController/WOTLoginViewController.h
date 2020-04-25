@@ -2,11 +2,16 @@
 //  WOTLoginViewController.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/1/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/1/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+
+#define WOT_KEY_STATUS @"status"
+#define WOT_KEY_ERROR @"error"
+
+
 @class WOTLogin;
 
 typedef void(^WOTLoginCallback)(WOTLogin *wotLogin);
