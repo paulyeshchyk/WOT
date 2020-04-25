@@ -2,8 +2,8 @@
 //  WOTTankListSettingsDatasource+TableView.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/12/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/12/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListSettingsDatasource+TableView.h"
@@ -44,33 +44,15 @@
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
-            [WOTTankListSettingsDatasource context:self.context createSortSettingForKey:value ascending:ascending orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
-
-                if (callback) {
-                    
-                    callback(createdObject);
-                }
-            }];
+            [WOTTankListSettingsDatasource context:self.context createSortSettingForKey:value ascending:ascending orderBy:orderBy callback:callback];
         } else if([type isEqualToString:WOT_KEY_SETTING_TYPE_GROUP]){
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
-            [WOTTankListSettingsDatasource context:self.context createGroupBySettingForKey:value ascending:ascending orderBy:orderBy callback:^(NSManagedObjectContext *context, id createdObject) {
-                
-                if (callback) {
-                    
-                    callback(createdObject);
-                }
-            }];
+            [WOTTankListSettingsDatasource context:self.context createGroupBySettingForKey:value ascending:ascending orderBy:orderBy callback:callback];
         } else if ([type isEqualToString:WOT_KEY_SETTING_TYPE_FILTER]) {
             
-            [WOTTankListSettingsDatasource context:self.context createFilterBySettingForKey:value value:filterValue callback:^(NSManagedObjectContext *context, id createdObject) {
-                
-                if (callback) {
-                    
-                    callback(createdObject);
-                }
-            }];
+            [WOTTankListSettingsDatasource context:self.context createFilterBySettingForKey:value value:filterValue callback:callback];
         } else {
             NSCAssert(NO, @"SettingType is not defined");
         }
@@ -81,7 +63,7 @@
         [[WOTTankListSettingsDatasource sharedInstance] setting:updatedSetting setAscending:ascending];
         if (callback) {
             
-            callback(updatedSetting);
+            callback(nil, updatedSetting);
         }
     }
 }

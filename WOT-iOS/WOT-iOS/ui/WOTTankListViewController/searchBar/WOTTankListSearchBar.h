@@ -2,14 +2,14 @@
 //  WOTTankListSearchBar.h
 //  WOT-iOS
 //
-//  Created by Paul on 7/27/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 7/27/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 typedef void(^SearchCommitBlock)(NSString *text);
-typedef void(^SearchCloseBlock)();
+typedef void(^SearchCloseBlock)(void);
 
 @interface WOTTankListSearchBar : UIView
 

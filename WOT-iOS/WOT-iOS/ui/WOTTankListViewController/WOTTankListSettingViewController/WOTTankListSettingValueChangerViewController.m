@@ -2,12 +2,12 @@
 //  WOTTankListSettingValueChangerViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/12/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/12/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListSettingValueChangerViewController.h"
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankListSettingField.h"
 #import "WOTTankListSettingNameTableViewCell.h"
 
@@ -91,7 +91,7 @@
     
     __weak typeof(self)weakSelf = self;
     WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
-    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text ascending:NO callback:^(id setting) {
+    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text ascending:NO callback:^(id context, id setting) {
         
         weakSelf.setting = setting;
         [weakSelf.textField setText:nil];
@@ -107,7 +107,7 @@
     
     __weak typeof(self)weakSelf = self;
     WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[[self.tableView.indexPathForSelectedRow row]];
-    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text  ascending:NO callback:^(id setting) {
+    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:self.textField.text  ascending:NO callback:^(id context, id setting) {
         
         weakSelf.setting = setting;
         weakSelf.canApply = ([[weakSelf.textField text] length] != 0);

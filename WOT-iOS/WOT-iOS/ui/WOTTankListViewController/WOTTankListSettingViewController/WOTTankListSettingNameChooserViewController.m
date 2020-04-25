@@ -2,8 +2,8 @@
 //  WOTTankListSettingNameChooserViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/8/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/8/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListSettingNameChooserViewController.h"
@@ -80,7 +80,7 @@
     [cell setSortClick:^(BOOL ascending){
         
         WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
-        [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:ascending callback:^(id setting) {
+        [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:ascending callback:^(id context, id setting) {
 
             [tableView beginUpdates];
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -112,7 +112,7 @@
  
     
     WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
-    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:field.ascending callback:^(id setting) {
+    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:field.ascending callback:^(id context, id setting) {
         
         self.setting = setting;
         [tableView reloadData];

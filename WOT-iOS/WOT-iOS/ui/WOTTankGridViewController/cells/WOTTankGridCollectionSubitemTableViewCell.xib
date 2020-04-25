@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WOTTankGridCollectionSubitemTableViewCell" rowHeight="12" id="KGk-i7-Jjw" customClass="WOTTankGridCollectionSubitemTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="12"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="42" placeholderIntrinsicHeight="21" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQ1-s6-Z4d">
+                        <rect key="frame" x="1" y="1" width="42" height="9"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i03-jS-lms">
+                        <rect key="frame" x="44" y="1" width="275" height="9"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="i03-jS-lms" secondAttribute="trailing" constant="1" id="5MD-De-ELw"/>
+                    <constraint firstItem="rQ1-s6-Z4d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="IOh-mH-Xzz"/>
+                    <constraint firstAttribute="bottom" secondItem="i03-jS-lms" secondAttribute="bottom" constant="1" id="VBt-Xh-HMQ"/>
+                    <constraint firstItem="i03-jS-lms" firstAttribute="leading" secondItem="rQ1-s6-Z4d" secondAttribute="trailing" constant="1" id="rGZ-Jg-Uuy"/>
+                    <constraint firstAttribute="bottom" secondItem="rQ1-s6-Z4d" secondAttribute="bottom" constant="1" id="uwY-zw-uaT"/>
+                    <constraint firstItem="rQ1-s6-Z4d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="ygc-Ca-Ia7"/>
+                    <constraint firstItem="i03-jS-lms" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="zZz-Vh-NX5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="captionLabel" destination="rQ1-s6-Z4d" id="5tM-uP-f7y"/>
+                <outlet property="valueLabel" destination="i03-jS-lms" id="yF0-wS-OfF"/>
+            </connections>
+            <point key="canvasLocation" x="435" y="355"/>
+        </tableViewCell>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

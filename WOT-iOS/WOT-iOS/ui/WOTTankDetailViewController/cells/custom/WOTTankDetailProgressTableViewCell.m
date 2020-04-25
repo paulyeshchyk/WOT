@@ -2,8 +2,8 @@
 //  WOTTankDetailProgressTableViewCell.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 7/10/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 7/10/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankDetailProgressTableViewCell.h"
@@ -45,9 +45,12 @@
         CGFloat max = [values[@"max"] floatValue];
         CGFloat this = [values[@"this"] floatValue];
         if (max != 0) {
+            
             progress = this/max;
         }
+        
         [self.progressView setProgress:progress animated:YES];
+        
 //        [self.progressView setAverageValue:values[@"av"]];
 //        [self.progressView setThisValue:values[@"this"]];
 //        [self.progressView setMaxValue:values[@"max"]];
