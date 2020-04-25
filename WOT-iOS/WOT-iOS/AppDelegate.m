@@ -59,6 +59,7 @@
 
     self.appManager = [WOTPivotAppManager sharedInstance];
     self.appManager.hostConfiguration = hostConfiguration;
+    self.appManager.requestCoordinator = requestCoordinator;
     self.appManager.requestManager = requestManager;
     self.appManager.requestListener = requestManager;
     self.appManager.sessionManager = sessionManager;

@@ -10,23 +10,19 @@ import Foundation
 
 @objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-    @objc
-    public var appManager: WOTAppManagerProtocol? {
-        didSet {
-            coordinator.appManager = appManager
-        }
-    }
+    @objc public var coordinator: WOTRequestCoordinatorProtocol
+    @objc public var hostConfiguration: WOTHostConfigurationProtocol
+    @objc public var appManager: WOTAppManagerProtocol?
 
     deinit {
-        appManager?.logInspector?.log(OBJFreeLog(), sender: self)
+        //
     }
 
     @objc
-    required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
+    required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
         coordinator = requestCoordinator
-        hostConfig = hostConfiguration
+        hostConfiguration = hostConfig
         super.init()
-        appManager?.logInspector?.log(OBJNewLog(), sender: self)
     }
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
@@ -58,12 +54,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             }
         }
     }
-
-    @objc
-    public var coordinator: WOTRequestCoordinatorProtocol
-
-    @objc
-    private var hostConfig: WOTHostConfigurationProtocol
 
     @objc
     private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String, jsonLink: WOTJSONLink?, externalCallback: NSManagedObjectCallback?) -> Bool {
@@ -117,7 +107,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, externalCallback: NSManagedObjectCallback?) -> Bool {
         guard addRequest(request, forGroupId: forGroupId, jsonLink: jsonLink, externalCallback: externalCallback) else { return false }
 
-        request.hostConfiguration = hostConfig
+        request.hostConfiguration = hostConfiguration
         guard request.start(arguments) == true else { return false }
         grouppedListeners[request.uuid.uuidString]?.forEach {
             $0.requestManager(self, didStartRequest: request)
@@ -134,9 +124,10 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     public func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink, externalCallback: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) -> Bool {
         guard let clazz = jsonLink.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
-        guard let request = requestCoordinator.createRequest(forRequestId: requestId) else { return false }
+//        guard let requestCoordinator = requestCoordinator else { fatalError("requestcoordinator not defined")}
+        guard let request = coordinator.createRequest(forRequestId: requestId) else { return false }
 
-        let keyPaths = obj.instanceKeypaths().compactMap {
+        let keyPaths = type(of: obj).classKeypaths().compactMap {
             jsonLink.addPreffix(to: $0)
         }
 
@@ -165,23 +156,8 @@ extension WOTRequestManager: LogMessageSender {
 }
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
-    private var requestCoordinator: WOTRequestCoordinatorProtocol {
-        get { return coordinator }
-        set { coordinator = newValue }
-    }
-
-    @objc
-    public func setRequestCoordinator(coordinator: WOTRequestCoordinatorProtocol) {
-        requestCoordinator = coordinator
-    }
-
-    public var hostConfiguration: WOTHostConfigurationProtocol {
-        get { return hostConfig }
-        set { hostConfig = newValue }
-    }
-
     public func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol? {
-        requestCoordinator.createRequest(forRequestId: requestId)
+        coordinator.createRequest(forRequestId: requestId)
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
@@ -191,7 +167,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
         let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
         let externalCallback = self.externalCallbacks[request.uuid.uuidString]
-        requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: appManager?.jsonLinksAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: { [weak self] error in
+        coordinator.request(request, processBinary: data, jsonLinkAdapter: appManager?.jsonLinksAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: { [weak self] error in
             DispatchQueue.main.async {
                 if let error = error {
                     self?.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)

@@ -11,3 +11,22 @@ import Foundation
 import CoreData
 
 public class Module: NSManagedObject {}
+
+extension Module {
+    //
+    public typealias Fields = Void
+    public enum FieldKeys: String, CodingKey, CaseIterable {
+        case name
+        case nation
+        case tier
+        case type
+        case price_credit
+        case weight
+        case image
+    }
+
+    @objc
+    override public class func fieldsKeypaths() -> [String] {
+        return FieldKeys.allCases.compactMap { $0.rawValue }
+    }
+}

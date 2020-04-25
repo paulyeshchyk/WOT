@@ -121,9 +121,6 @@ public protocol WOTRequestManagerProtocol {
     func cancelRequests(groupId: String)
 
     @objc
-    func setRequestCoordinator(coordinator: WOTRequestCoordinatorProtocol)
-
-    @objc
     var hostConfiguration: WOTHostConfigurationProtocol { get set }
 
     @objc

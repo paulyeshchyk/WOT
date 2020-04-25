@@ -8,66 +8,7 @@
 
 import WOTPivot
 
-extension Vehicles: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(Vehicles.name),
-                #keyPath(Vehicles.short_name),
-                #keyPath(Vehicles.is_premium),
-                #keyPath(Vehicles.is_gift),
-                #keyPath(Vehicles.type),
-                #keyPath(Vehicles.nation),
-                #keyPath(Vehicles.tag),
-                #keyPath(Vehicles.tier),
-                #keyPath(Vehicles.tank_id),
-                #keyPath(Vehicles.default_profile),
-                #keyPath(Vehicles.modules_tree),
-                #keyPath(Vehicles.engines),
-                #keyPath(Vehicles.suspensions),
-                #keyPath(Vehicles.radios),
-                #keyPath(Vehicles.guns),
-                #keyPath(Vehicles.turrets)]
-    }
-
-    @objc
-    public class func keypathsLight() -> [String] {
-        return [#keyPath(Vehicles.name),
-                #keyPath(Vehicles.short_name),
-                #keyPath(Vehicles.is_premium),
-                #keyPath(Vehicles.is_gift),
-                #keyPath(Vehicles.type),
-                #keyPath(Vehicles.nation),
-                #keyPath(Vehicles.tag),
-                #keyPath(Vehicles.tier),
-                #keyPath(Vehicles.tank_id)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return Vehicles.keypaths()
-    }
-}
-
 extension Vehicles {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case is_premium_igr
-        case is_wheeled
-        case name
-        case nation
-        case price_credit
-        case price_gold
-        case is_premium
-        case is_gift
-        case short_name
-        case tag
-        case tier
-        case type
-        case tank_id
-        case modules_tree
-        case default_profile
-    }
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.name = jSON[#keyPath(Vehicles.name)] as? String
@@ -92,7 +33,7 @@ extension Vehicles {
             self.default_profile = defaultProfile
             self.modules_tree?.forEach({ (element) in
                 if let modules_tree = element as? ModulesTree {
-                    modules_tree.defaultProfile = defaultProfile
+                    modules_tree.default_profile = defaultProfile
                 }
             })
             coreDataMapping?.stash(vehicleProfileCase)
@@ -105,12 +46,12 @@ extension Vehicles {
         let modulesTreeCase = PKCase()
         modulesTreeCase[.primary] = pkCase[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
-            .foreignKey(byInsertingComponent: #keyPath(ModulesTree.defaultProfile))
+            .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
         ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             guard let module_tree = newObject as? ModulesTree else {
                 return
             }
-            module_tree.defaultProfile = self.default_profile
+            module_tree.default_profile = self.default_profile
             self.addToModules_tree(module_tree)
             coreDataMapping?.stash(modulesTreeCase)
         }

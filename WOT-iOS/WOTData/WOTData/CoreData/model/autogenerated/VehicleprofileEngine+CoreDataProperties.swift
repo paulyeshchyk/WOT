@@ -22,6 +22,7 @@ extension VehicleprofileEngine {
     @NSManaged public var tag: String?
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
+    @NSManaged public var test: String?
     @NSManaged public var vehicle: NSSet?
     @NSManaged public var vehicleprofile: Vehicleprofile?
     @NSManaged public var vehicleprofileModule: Module?

@@ -8,28 +8,7 @@
 
 import WOTPivot
 
-extension VehicleprofileAmmoPenetration: KeypathProtocol {
-    @objc
-    public static func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileAmmoPenetration.avg_value),
-                #keyPath(VehicleprofileAmmoPenetration.max_value),
-                #keyPath(VehicleprofileAmmoPenetration.min_value)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileAmmoPenetration.keypaths()
-    }
-}
-
 extension VehicleprofileAmmoPenetration {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case min_value
-        case avg_value
-        case max_valie
-    }
-
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         defer {
@@ -51,5 +30,3 @@ extension VehicleprofileAmmoPenetration {
         }
     }
 }
-
-#warning("add PrimaryKeypathProtocol support")

@@ -12,3 +12,18 @@ import CoreData
 
 @objc(VehicleprofileAmmo)
 public class VehicleprofileAmmo: NSManagedObject {}
+
+extension VehicleprofileAmmo {
+    //
+    public typealias Fields = FieldKeys
+    public enum FieldKeys: String, CodingKey, CaseIterable {
+        case type
+        case stun
+        case damage
+        case penetration
+    }
+
+    override public static func fieldsKeypaths() -> [String] {
+        return FieldKeys.allCases.compactMap { $0.rawValue }
+    }
+}

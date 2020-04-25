@@ -8,18 +8,6 @@
 
 import WOTPivot
 
-extension VehicleprofileAmmoList: KeypathProtocol {
-    @objc
-    public static func keypaths() -> [String] {
-        return []
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileAmmoList.keypaths()
-    }
-}
-
 extension VehicleprofileAmmoList {
     public typealias Fields = Void
 

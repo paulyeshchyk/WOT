@@ -8,87 +8,60 @@
 
 import WOTPivot
 
-extension VehicleprofileModule: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileModule.name),
-                #keyPath(VehicleprofileModule.nation),
-                #keyPath(VehicleprofileModule.tier),
-                #keyPath(VehicleprofileModule.type),
-                #keyPath(VehicleprofileModule.price_credit),
-                #keyPath(VehicleprofileModule.weight),
-                #keyPath(VehicleprofileModule.tanks),
-                #keyPath(VehicleprofileModule.image),
-                #keyPath(VehicleprofileModule.module_id)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileModule.keypaths()
-    }
-}
-
 extension VehicleprofileModule {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case name
-        case nation
-        case tier
-        case module_id
-    }
-
     override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.name = jSON[#keyPath(VehicleprofileModule.name)] as? String
-        self.nation = jSON[#keyPath(VehicleprofileModule.nation)] as? String
-        self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.tier)] as? Int ?? 0)
-        self.type = jSON[#keyPath(VehicleprofileModule.type)] as? String
-        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.price_credit)] as? Int ?? 0)
-        self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileModule.weight)] as? Int ?? 0)
-        self.module_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.module_id)]).asNSDecimal
-        self.image = jSON[#keyPath(VehicleprofileModule.image)] as? String
+        self.radio_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.radio_id)]).asNSDecimal
+        self.suspension_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.suspension_id)]).asNSDecimal
+        self.engine_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.engine_id)]).asNSDecimal
+        self.gun_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.gun_id)]).asNSDecimal
+        self.turret_id = AnyConvertable(jSON[#keyPath(VehicleprofileModule.turret_id)]).asNSDecimal
 
-        let idents = [self.module_id?.stringValue].compactMap { $0 }
-        if type == "vehicleRadio" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileRadio.self, byIdents: idents, completion: { managedObject in
-                if let radio = managedObject as? VehicleprofileRadio {
-                    self.vehicleRadio = radio
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
-        } else if type == "vehicleEngine" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileEngine.self, byIdents: idents, completion: { managedObject in
-                if let engine = managedObject as? VehicleprofileEngine {
-                    self.vehicleEngine = engine
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
-        } else if type == "vehicleGun" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileGun.self, byIdents: idents, completion: { managedObject in
-                if let gun = managedObject as? VehicleprofileGun {
-                    self.vehicleGun = gun
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
-        } else if type == "vehicleChassis" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileSuspension.self, byIdents: idents, completion: { managedObject in
-                if let suspension = managedObject as? VehicleprofileSuspension {
-                    self.vehicleChassis = suspension
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
-        } else if type == "vehicleTurret" {
-            #warning("tank_id is expected")
-            coreDataMapping?.pullRemoteSubordinate(for: VehicleprofileTurret.self, byIdents: idents, completion: { managedObject in
-                if let turret = managedObject as? VehicleprofileTurret {
-                    self.vehicleTurret = turret
-                    coreDataMapping?.stash(pkCase)
-                }
-            })
-        }
+        let gunCase = PKCase()
+        gunCase[.primary] = VehicleprofileGun.primaryKey(for: self.gun_id)
+        gunCase[.secondary] = pkCase[.primary]
+        coreDataMapping?.requestSubordinate(for: VehicleprofileGun.self, gunCase, subordinateRequestType: .remote, keyPathPrefix: "gun.", callback: { (managedObject) in
+            if let gun = managedObject as? VehicleprofileGun {
+                self.vehicleGun = gun
+                coreDataMapping?.stash(gunCase)
+            }
+        })
+
+        let radioCase = PKCase()
+        radioCase[.primary] = VehicleprofileRadio.primaryKey(for: self.radio_id)
+        radioCase[.secondary] = pkCase[.primary]
+        coreDataMapping?.requestSubordinate(for: VehicleprofileRadio.self, radioCase, subordinateRequestType: .remote, keyPathPrefix: "radio.", callback: { (managedObject) in
+            if let radio = managedObject as? VehicleprofileRadio {
+                self.vehicleRadio = radio
+                coreDataMapping?.stash(radioCase)
+            }
+        })
+        let engineCase = PKCase()
+        engineCase[.primary] = VehicleprofileEngine.primaryKey(for: self.engine_id)
+        engineCase[.secondary] = pkCase[.primary]
+        coreDataMapping?.requestSubordinate(for: VehicleprofileEngine.self, engineCase, subordinateRequestType: .remote, keyPathPrefix: "engine.", callback: { (managedObject) in
+            if let engine = managedObject as? VehicleprofileEngine {
+                self.vehicleEngine = engine
+                coreDataMapping?.stash(engineCase)
+            }
+        })
+//        let suspensionCase = PKCase()
+//        suspensionCase[.primary] = VehicleprofileSuspension.primaryKey(for: self.suspension_id)
+//        suspensionCase[.secondary] = pkCase[.primary]
+//        coreDataMapping?.requestSubordinate(for: VehicleprofileSuspension.self, suspensionCase, subordinateRequestType: .remote, keyPathPrefix: "default_profile.", callback: { (managedObject) in
+//            if let suspension = managedObject as? VehicleprofileSuspension {
+//                self.vehicleChassis = suspension
+//                coreDataMapping?.stash(suspensionCase)
+//            }
+//        })
+//        let turretCase = PKCase()
+//        turretCase[.primary] = VehicleprofileTurret.primaryKey(for: self.turret_id)
+//        turretCase[.secondary] = pkCase[.primary]
+//        coreDataMapping?.requestSubordinate(for: VehicleprofileTurret.self, suspensionCase, subordinateRequestType: .remote, keyPathPrefix: "default_profile.", callback: { (managedObject) in
+//            if let turret = managedObject as? VehicleprofileTurret {
+//                self.vehicleTurret = turret
+//                coreDataMapping?.stash(turretCase)
+//            }
+//        })
     }
 }
 

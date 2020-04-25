@@ -8,39 +8,7 @@
 
 import WOTPivot
 
-extension ModulesTree: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(ModulesTree.name),
-                //recursion                #keyPath(ModulesTree.next_modules),
-                #keyPath(ModulesTree.next_tanks),
-                #keyPath(ModulesTree.is_default),
-                #keyPath(ModulesTree.price_xp),
-                #keyPath(ModulesTree.price_credit),
-                #keyPath(ModulesTree.module_id),
-                #keyPath(ModulesTree.type)
-        ]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return ModulesTree.keypaths()
-    }
-}
-
 extension ModulesTree {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case module_id
-        case name
-        case price_credit
-        case price_xp
-        case is_default
-        case type
-        case next_modules
-        case next_tanks
-    }
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.name = jSON[#keyPath(ModulesTree.name)] as? String

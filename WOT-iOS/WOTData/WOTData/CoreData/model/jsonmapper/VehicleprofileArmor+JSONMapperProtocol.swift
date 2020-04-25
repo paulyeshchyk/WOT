@@ -8,28 +8,7 @@
 
 import WOTPivot
 
-extension VehicleprofileArmor: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileArmor.front),
-                #keyPath(VehicleprofileArmor.sides),
-                #keyPath(VehicleprofileArmor.rear)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileArmor.keypaths()
-    }
-}
-
 extension VehicleprofileArmor {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case front
-        case sides
-        case rear
-    }
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.front = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileArmor.front)] as? Int ?? 0)

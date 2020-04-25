@@ -12,3 +12,20 @@ import CoreData
 
 @objc(VehicleprofileModule)
 public class VehicleprofileModule: NSManagedObject {}
+
+extension VehicleprofileModule {
+    //
+    public enum RelativeKeys: String, CodingKey, CaseIterable {
+        case radio_id
+        case suspension_id
+        case module_id
+        case engine_id
+        case gun_id
+        case turret_id
+    }
+
+    @objc
+    override public static func relationsKeypaths() -> [String] {
+        return RelativeKeys.allCases.compactMap { $0.rawValue }
+    }
+}

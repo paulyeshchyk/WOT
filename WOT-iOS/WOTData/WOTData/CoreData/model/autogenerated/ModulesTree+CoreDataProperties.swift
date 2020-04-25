@@ -21,7 +21,7 @@ extension ModulesTree {
     @NSManaged public var price_credit: NSDecimalNumber?
     @NSManaged public var price_xp: NSDecimalNumber?
     @NSManaged public var type: String?
-    @NSManaged public var defaultProfile: Vehicleprofile?
+    @NSManaged public var default_profile: Vehicleprofile?
     @NSManaged public var next_modules: NSSet?
     @NSManaged public var next_tanks: NSSet?
 }

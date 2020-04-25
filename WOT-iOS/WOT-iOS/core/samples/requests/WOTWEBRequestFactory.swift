@@ -13,7 +13,7 @@ public class WOTWEBRequestFactory: NSObject {
     @objc
     public static func fetchVehiclePivotData(_ requestManager: WOTRequestManagerProtocol?, listener: WOTRequestManagerListenerProtocol) {
         let arguments = WOTRequestArguments()
-        arguments.setValues(Vehicles.keypathsLight(), forKey: WGWebQueryArgs.fields)
+        arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
 
         guard let request = requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else { return }
         requestManager?.addListener(listener, forRequest: request)
@@ -31,7 +31,7 @@ public class WOTWEBRequestFactory: NSObject {
 
         let args = WOTRequestArguments()
         args.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
-        args.setValues([Vehicles.keypaths()], forKey: WGWebQueryArgs.fields)
+        args.setValues([Vehicles.classKeypaths()], forKey: WGWebQueryArgs.fields)
 
         let started = requestManager.start(request, with: args, forGroupId: groupId, jsonLink: nil, externalCallback: nil)
         requestManager.addListener(listener, forRequest: request)
@@ -49,7 +49,7 @@ public class WOTWEBRequestFactory: NSObject {
 
         let args = WOTRequestArguments()
         args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
-        args.setValues([Vehicleprofile.keypaths()], forKey: WGWebQueryArgs.fields)
+        args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
 
         let started = requestManager.start(request, with: args, forGroupId: groupId, jsonLink: nil, externalCallback: nil)
         requestManager.addListener(listener, forRequest: request)

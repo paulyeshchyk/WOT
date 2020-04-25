@@ -8,34 +8,28 @@
 
 import WOTPivot
 
-extension Module: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(Module.name),
-                #keyPath(Module.nation),
-                #keyPath(Module.tier),
-                #keyPath(Module.type),
-                #keyPath(Module.price_credit),
-                #keyPath(Module.weight),
-                #keyPath(Module.image)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return Module.keypaths()
-    }
-}
-
 extension Module {
-    public typealias Fields = Void
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.radio_id = AnyConvertable(jSON[#keyPath(Module.radio_id)]).asNSDecimal
-        self.suspension_id = AnyConvertable(jSON[#keyPath(Module.suspension_id)]).asNSDecimal
-        self.engine_id = AnyConvertable(jSON[#keyPath(Module.engine_id)]).asNSDecimal
-        self.gun_id = AnyConvertable(jSON[#keyPath(Module.gun_id)]).asNSDecimal
-        self.turret_id = AnyConvertable(jSON[#keyPath(Module.turret_id)]).asNSDecimal
+        self.name = jSON[#keyPath(Module.name)] as? String
+        self.nation = jSON[#keyPath(Module.nation)] as? String
+        self.tier = NSDecimalNumber(value: jSON[#keyPath(Module.tier)] as? Int ?? 0)
+        self.type = jSON[#keyPath(Module.type)] as? String
+        self.price_credit = NSDecimalNumber(value: jSON[#keyPath(Module.price_credit)] as? Int ?? 0)
+        self.weight = NSDecimalNumber(value: jSON[#keyPath(Module.weight)] as? Int ?? 0)
+//        self.module_id = AnyConvertable(jSON[#keyPath(Module.module_id)]).asNSDecimal
+        self.image = jSON[#keyPath(Module.image)] as? String
+        /*
+         let nextTanksPK = PKCase()
+         nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
+         coreDataMapping?.requestSubordinate(for: Vehicles.self, nextTanksPK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
+             if let module = managedObject as? ModulesTree {
+                 self.addToNext_modules(module)
+                 coreDataMapping?.stash(nextTanksPK)
+             }
+         })
+
+         */
     }
 }
 
@@ -51,8 +45,7 @@ extension Module {
 }
 
 extension Module: PrimaryKeypathProtocol {
-    #warning("fakeModule_id")
-    private static let pkey: String = #keyPath(Module.fakeModule_id)
+    private static let pkey: String = #keyPath(Module.name)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey

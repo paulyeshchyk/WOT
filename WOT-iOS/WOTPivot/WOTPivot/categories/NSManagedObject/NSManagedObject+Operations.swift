@@ -79,3 +79,22 @@ extension NSManagedObject: JSONMapperProtocol {
         fatalError("not implemented")
     }
 }
+
+extension NSManagedObject: KeypathProtocol {
+    @objc
+    open class func fieldsKeypaths() -> [String] {
+        return []
+    }
+
+    @objc
+    open class func relationsKeypaths() -> [String] {
+        return []
+    }
+
+    @objc
+    public static func classKeypaths() -> [String] {
+        let fields = fieldsKeypaths()
+        let relations = relationsKeypaths()
+        return fields + relations
+    }
+}

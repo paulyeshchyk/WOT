@@ -8,46 +8,7 @@
 
 import WOTPivot
 
-extension VehicleprofileGun: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileGun.gun_id),
-                #keyPath(VehicleprofileGun.move_down_arc),
-                #keyPath(VehicleprofileGun.caliber),
-                #keyPath(VehicleprofileGun.name),
-                #keyPath(VehicleprofileGun.weight),
-                #keyPath(VehicleprofileGun.move_up_arc),
-                #keyPath(VehicleprofileGun.fire_rate),
-                #keyPath(VehicleprofileGun.dispersion),
-                #keyPath(VehicleprofileGun.tag),
-                #keyPath(VehicleprofileGun.reload_time),
-                #keyPath(VehicleprofileGun.tier),
-                #keyPath(VehicleprofileGun.aim_time)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileGun.keypaths()
-    }
-}
-
 extension VehicleprofileGun {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case gun_id
-        case move_down_arc
-        case caliber
-        case name
-        case weight
-        case move_up_arc
-        case fire_rate
-        case dispersion
-        case tag
-        case reload_time
-        case tier
-        case aim_time
-    }
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.name = jSON[#keyPath(VehicleprofileGun.name)] as? String
@@ -64,24 +25,8 @@ extension VehicleprofileGun {
     }
 }
 
-extension VehicleprofileGun {
-    public static func gun(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
-        guard let jSON = jSON as? JSON else { return }
-
-        let tag = jSON[VehicleprofileGun.primaryKeyPath()]
-        let pk = VehicleprofileGun.primaryKey(for: tag as AnyObject?)
-        let pkCase = PKCase()
-        pkCase[.primary] = pk
-
-        coreDataMapping?.requestSubordinate(for: VehicleprofileGun.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
-            callback(newObject)
-        }
-    }
-}
-
 extension VehicleprofileGun: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileGun.gun_id)
+    private static let pkey: String = #keyPath(VehicleprofileGun.tag)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey
@@ -95,5 +40,21 @@ extension VehicleprofileGun: PrimaryKeypathProtocol {
     public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
         guard let ident = ident else { return nil }
         return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
+    }
+}
+
+extension VehicleprofileGun {
+    public static func gun(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
+        guard let jSON = jSON as? JSON else { return }
+
+        let tag = jSON[VehicleprofileGun.primaryKeyPath()]
+        let pk = VehicleprofileGun.primaryKey(for: tag as AnyObject?)
+        let pkCase = PKCase()
+        pkCase[.primary] = pk
+
+        coreDataMapping?.requestSubordinate(for: VehicleprofileGun.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+            coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
+            callback(newObject)
+        }
     }
 }

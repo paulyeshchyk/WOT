@@ -8,34 +8,7 @@
 
 import WOTPivot
 
-extension VehicleprofileRadio: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileRadio.radio_id),
-                #keyPath(VehicleprofileRadio.tier),
-                #keyPath(VehicleprofileRadio.signal_range),
-                #keyPath(VehicleprofileRadio.tag),
-                #keyPath(VehicleprofileRadio.weight),
-                #keyPath(VehicleprofileRadio.name)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileRadio.keypaths()
-    }
-}
-
 extension VehicleprofileRadio {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case radio_id
-        case tier
-        case signal_range
-        case tag
-        case weight
-        case name
-    }
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.name = jSON[#keyPath(VehicleprofileRadio.name)] as? String
@@ -64,7 +37,7 @@ extension VehicleprofileRadio {
 }
 
 extension VehicleprofileRadio: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileRadio.radio_id)
+    private static let pkey: String = #keyPath(VehicleprofileRadio.tag)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey

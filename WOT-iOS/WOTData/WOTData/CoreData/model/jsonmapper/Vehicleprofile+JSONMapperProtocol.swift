@@ -8,43 +8,7 @@
 
 import WOTPivot
 
-extension Vehicleprofile: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(Vehicleprofile.max_ammo),
-                #keyPath(Vehicleprofile.weight),
-                #keyPath(Vehicleprofile.hp),
-                #keyPath(Vehicleprofile.is_default),
-                #keyPath(Vehicleprofile.modules),
-                #keyPath(Vehicleprofile.modulesTree),
-                #keyPath(Vehicleprofile.speed_forward),
-                #keyPath(Vehicleprofile.hull_hp),
-                #keyPath(Vehicleprofile.speed_backward),
-                #keyPath(Vehicleprofile.tank_id),
-                #keyPath(Vehicleprofile.max_weight)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return Vehicleprofile.keypaths()
-    }
-}
-
 extension Vehicleprofile {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case max_ammo
-        case weight
-        case hp
-        case is_default
-        case hull_weight
-        case speed_forward
-        case hull_hp
-        case speed_backward
-        case tank_id
-        case max_weight
-    }
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.tank_id = AnyConvertable(jSON[#keyPath(Vehicleprofile.tank_id)]).asNSDecimal

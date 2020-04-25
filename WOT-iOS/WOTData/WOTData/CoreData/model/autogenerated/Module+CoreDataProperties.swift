@@ -15,12 +15,13 @@ extension Module {
         return NSFetchRequest<Module>(entityName: "Module")
     }
 
-    @NSManaged public var engine_id: NSDecimalNumber?
-    @NSManaged public var gun_id: NSDecimalNumber?
-    @NSManaged public var radio_id: NSDecimalNumber?
-    @NSManaged public var suspension_id: NSDecimalNumber?
-    @NSManaged public var turret_id: NSDecimalNumber?
-    @NSManaged public var fakeModule_id: NSDecimalNumber?
+    @NSManaged public var image: String?
+    @NSManaged public var name: String?
+    @NSManaged public var nation: String?
+    @NSManaged public var tier: NSDecimalNumber?
+    @NSManaged public var price_credit: NSDecimalNumber?
+    @NSManaged public var type: String?
+    @NSManaged public var weight: NSDecimalNumber?
     @NSManaged public var engine: VehicleprofileEngine?
     @NSManaged public var gun: VehicleprofileGun?
     @NSManaged public var radio: VehicleprofileRadio?

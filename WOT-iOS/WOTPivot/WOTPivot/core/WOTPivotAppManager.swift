@@ -11,6 +11,7 @@ import Foundation
 @objc
 public protocol WOTAppManagerProtocol {
     @objc var hostConfiguration: WOTHostConfigurationProtocol? { get set }
+    @objc var requestCoordinator: WOTRequestCoordinatorProtocol? { get set }
     @objc var requestManager: WOTRequestManagerProtocol? { get set }
     @objc var requestListener: WOTRequestListenerProtocol? { get set }
     @objc var sessionManager: WOTWebSessionManagerProtocol? { get set }
@@ -26,6 +27,12 @@ public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
     @objc public static let sharedInstance = WOTPivotAppManager()
     @objc public var shared: WOTAppManagerProtocol { return WOTPivotAppManager.sharedInstance }
     @objc public var hostConfiguration: WOTHostConfigurationProtocol?
+    @objc public var requestCoordinator: WOTRequestCoordinatorProtocol? {
+        didSet {
+            requestCoordinator?.appManager = self
+        }
+    }
+
     @objc public var requestManager: WOTRequestManagerProtocol? {
         didSet {
             requestManager?.appManager = self

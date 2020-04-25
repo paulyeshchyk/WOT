@@ -8,44 +8,38 @@
 
 import WOTPivot
 
-extension VehicleprofileEngine: KeypathProtocol {
+extension VehicleprofileEngine {
     @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileEngine.engine_id),
-                #keyPath(VehicleprofileEngine.name),
+    public override class func fieldsKeypaths() -> [String] {
+        return [#keyPath(VehicleprofileEngine.name),
                 #keyPath(VehicleprofileEngine.power),
-                #keyPath(VehicleprofileEngine.weight),
                 #keyPath(VehicleprofileEngine.tag),
-                #keyPath(VehicleprofileEngine.fire_chance),
-                #keyPath(VehicleprofileEngine.tier)]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileEngine.keypaths()
+                #keyPath(VehicleprofileEngine.tier),
+                #keyPath(VehicleprofileEngine.weight),
+                #keyPath(VehicleprofileEngine.fire_chance)
+        ]
     }
 }
 
 extension VehicleprofileEngine {
     public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case engine_id
+    public enum FieldKeys: String, CodingKey, CaseIterable {
+        case fire_chance
         case name
         case power
-        case weight
         case tag
-        case fire_chance
         case tier
+        case weight
     }
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
-        self.name = jSON[#keyPath(VehicleprofileEngine.name)] as? String
-        self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.tier)]  as? Int ?? 0)
-        self.tag = jSON[#keyPath(VehicleprofileEngine.tag)] as? String
-        self.power = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.power)] as? Int ?? 0)
-        self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.weight)]  as? Int ?? 0)
         self.fire_chance = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.fire_chance)] as? Int ?? 0)
+        self.name = jSON[#keyPath(VehicleprofileEngine.name)] as? String
+        self.power = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.power)] as? Int ?? 0)
+        self.tag = jSON[#keyPath(VehicleprofileEngine.tag)] as? String
+        self.tier = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.tier)]  as? Int ?? 0)
+        self.weight = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.weight)]  as? Int ?? 0)
     }
 }
 
@@ -65,7 +59,7 @@ extension VehicleprofileEngine {
 }
 
 extension VehicleprofileEngine: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileEngine.engine_id)
+    private static let pkey: String = #keyPath(VehicleprofileEngine.tag)
 
     public static func primaryKeyPath() -> String? {
         return self.pkey

@@ -8,43 +8,7 @@
 
 import WOTPivot
 
-extension VehicleprofileTurret: KeypathProtocol {
-    @objc
-    public class func keypaths() -> [String] {
-        return [#keyPath(VehicleprofileTurret.turret_id),
-                #keyPath(VehicleprofileTurret.traverse_left_arc),
-                #keyPath(VehicleprofileTurret.traverse_speed),
-                #keyPath(VehicleprofileTurret.weight),
-                #keyPath(VehicleprofileTurret.view_range),
-                #keyPath(VehicleprofileTurret.hp),
-                #keyPath(VehicleprofileTurret.tier),
-                #keyPath(VehicleprofileTurret.name),
-                #keyPath(VehicleprofileTurret.tag),
-                #keyPath(VehicleprofileTurret.traverse_right_arc)
-        ]
-    }
-
-    @objc
-    public func instanceKeypaths() -> [String] {
-        return VehicleprofileTurret.keypaths()
-    }
-}
-
 extension VehicleprofileTurret {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
-        case turret_id
-        case traverse_left_arc
-        case traverse_speed
-        case weight
-        case view_range
-        case hp
-        case tier
-        case name
-        case tag
-        case traverse_right_arc
-    }
-
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.name = jSON[#keyPath(VehicleprofileTurret.name)] as? String
