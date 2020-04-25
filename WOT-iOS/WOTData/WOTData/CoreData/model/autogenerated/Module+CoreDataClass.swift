@@ -10,11 +10,12 @@
 import Foundation
 import CoreData
 
+@objc(Module)
 public class Module: NSManagedObject {}
 
 extension Module {
     //
-    public typealias Fields = Void
+    public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey, CaseIterable {
         case name
         case nation
@@ -28,5 +29,9 @@ extension Module {
     @objc
     override public class func fieldsKeypaths() -> [String] {
         return FieldKeys.allCases.compactMap { $0.rawValue }
+    }
+
+    override public class func primaryKeyPath() -> String? {
+        return #keyPath(Module.name)
     }
 }

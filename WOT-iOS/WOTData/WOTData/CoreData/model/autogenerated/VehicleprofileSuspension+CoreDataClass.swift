@@ -39,4 +39,8 @@ extension VehicleprofileSuspension {
     override public class func relationsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
+
+    override public class func primaryKeyPath() -> String? {
+        return #keyPath(VehicleprofileSuspension.suspension_id)
+    }
 }

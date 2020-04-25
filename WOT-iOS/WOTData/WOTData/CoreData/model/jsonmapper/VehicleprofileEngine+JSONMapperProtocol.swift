@@ -10,29 +10,6 @@ import WOTPivot
 
 extension VehicleprofileEngine {
     @objc
-    public override class func fieldsKeypaths() -> [String] {
-        return [#keyPath(VehicleprofileEngine.name),
-                #keyPath(VehicleprofileEngine.power),
-                #keyPath(VehicleprofileEngine.tag),
-                #keyPath(VehicleprofileEngine.tier),
-                #keyPath(VehicleprofileEngine.weight),
-                #keyPath(VehicleprofileEngine.fire_chance)
-        ]
-    }
-}
-
-extension VehicleprofileEngine {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey, CaseIterable {
-        case fire_chance
-        case name
-        case power
-        case tag
-        case tier
-        case weight
-    }
-
-    @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.fire_chance = NSDecimalNumber(value: jSON[#keyPath(VehicleprofileEngine.fire_chance)] as? Int ?? 0)
         self.name = jSON[#keyPath(VehicleprofileEngine.name)] as? String
@@ -55,23 +32,5 @@ extension VehicleprofileEngine {
             coreDataMapping?.mapping(object: newObject,fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
-    }
-}
-
-extension VehicleprofileEngine: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileEngine.tag)
-
-    public static func primaryKeyPath() -> String? {
-        return self.pkey
-    }
-
-    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
-        guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", self.pkey, ident)
-    }
-
-    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
     }
 }

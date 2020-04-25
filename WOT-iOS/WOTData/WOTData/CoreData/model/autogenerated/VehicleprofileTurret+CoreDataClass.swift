@@ -32,4 +32,8 @@ extension VehicleprofileTurret {
     override public static func fieldsKeypaths() -> [String] {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
+
+    override public class func primaryKeyPath() -> String? {
+        return #keyPath(VehicleprofileTurret.turret_id)
+    }
 }

@@ -98,3 +98,27 @@ extension NSManagedObject: KeypathProtocol {
         return fields + relations
     }
 }
+
+extension NSManagedObject: PrimaryKeypathProtocol {
+    open class func primaryKeyPath() -> String? {
+        fatalError("Primary keyname is not defined")
+    }
+
+    open class func predicateFormat() -> String? {
+        return "%K == %@"
+    }
+
+    open class func predicate(for ident: AnyObject?) -> NSPredicate? {
+        guard let ident = ident as? String else { return nil }
+        guard let keyName = primaryKeyPath() else { return nil }
+        guard let predicateFormat = predicateFormat() else { return nil }
+        return NSPredicate(format: predicateFormat, keyName, ident)
+    }
+
+    open class func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
+        guard let ident = ident else { return nil }
+        guard let keyName = primaryKeyPath() else { return nil }
+        guard let predicateFormat = predicateFormat() else { return nil }
+        return WOTPrimaryKey(name: keyName, value: ident as AnyObject, nameAlias: keyName, predicateFormat: predicateFormat)
+    }
+}

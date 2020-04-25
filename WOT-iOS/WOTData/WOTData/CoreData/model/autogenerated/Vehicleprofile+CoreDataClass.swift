@@ -36,11 +36,15 @@ extension Vehicleprofile {
 
     @objc
     override public static func fieldsKeypaths() -> [String] {
-        return Vehicles.FieldKeys.allCases.compactMap { $0.rawValue }
+        return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
     @objc
     override public static func relationsKeypaths() -> [String] {
-        return Vehicles.RelativeKeys.allCases.compactMap { $0.rawValue }
+        return RelativeKeys.allCases.compactMap { $0.rawValue }
+    }
+
+    override public class func primaryKeyPath() -> String? {
+        return #keyPath(Vehicleprofile.hashName)
     }
 }

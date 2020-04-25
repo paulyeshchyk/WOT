@@ -40,21 +40,3 @@ extension VehicleprofileAmmo {
         coreDataMapping?.mapping(object: self, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
     }
 }
-
-extension VehicleprofileAmmo: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(VehicleprofileAmmo.type)
-
-    public static func primaryKeyPath() -> String? {
-        return self.pkey
-    }
-
-    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
-        guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", self.pkey, ident)
-    }
-
-    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
-    }
-}

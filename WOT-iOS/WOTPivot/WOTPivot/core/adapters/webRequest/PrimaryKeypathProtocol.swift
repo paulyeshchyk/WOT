@@ -10,6 +10,7 @@ import Foundation
 
 @objc
 public protocol PrimaryKeypathProtocol: class {
+    static func predicateFormat() -> String?
     static func primaryKeyPath() -> String?
     static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey?
     static func predicate(for ident: AnyObject?) -> NSPredicate?

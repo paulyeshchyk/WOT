@@ -57,31 +57,3 @@ extension Vehicles {
         }
     }
 }
-
-extension Vehicles: PrimaryKeypathProtocol {
-    private static let pkey: String = #keyPath(Vehicles.tank_id)
-
-    public static func primaryKeyPath() -> String? {
-        return self.pkey
-    }
-
-    public static func predicate(for ident: AnyObject?) -> NSPredicate? {
-        guard let ident = ident as? String else { return nil }
-        return NSPredicate(format: "%K == %@", self.pkey, ident)
-    }
-
-    public static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-        return WOTPrimaryKey(name: self.pkey, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
-    }
-
-    public static func foreingKey(for ident: AnyObject?, foreignPaths: [String]) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-
-        var fullPaths = foreignPaths
-        fullPaths.append(self.pkey)
-        let foreignPath = fullPaths.joined(separator: ".")
-
-        return WOTPrimaryKey(name: foreignPath, value: ident as AnyObject, nameAlias: self.pkey, predicateFormat: "%K == %@")
-    }
-}

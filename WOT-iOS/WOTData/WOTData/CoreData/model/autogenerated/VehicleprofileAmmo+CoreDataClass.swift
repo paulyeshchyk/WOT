@@ -26,4 +26,8 @@ extension VehicleprofileAmmo {
     override public static func fieldsKeypaths() -> [String] {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
+
+    override public class func primaryKeyPath() -> String? {
+        return #keyPath(VehicleprofileAmmo.type)
+    }
 }
