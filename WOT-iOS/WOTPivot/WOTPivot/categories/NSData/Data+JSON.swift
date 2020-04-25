@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTPivot
-
 public typealias JSONParseCompletion = (JSON?, Error?) -> Void
 
 extension NSData {
@@ -28,7 +26,7 @@ extension Data {
                 return
             }
 
-            let response = WOTWebResponse()
+            let response = WGResponseObject()
             response.mapping(fromJSON: json)
             switch response.status {
             case .ok: completion?(response.data, nil)

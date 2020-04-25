@@ -26,14 +26,14 @@ public enum WOTWebResponseStatus: String {
     }
 }
 
-public class WOTWebResponse: NSObject {
+public class WGResponseObject: NSObject {
     public var status: WOTWebResponseStatus = .unknown
     public var meta: WOTWebResponseMeta?
     public var data: JSON?
     public var error: JSON?
 }
 
-extension WOTWebResponse: JSONMapperProtocol {
+extension WGResponseObject: JSONMapperProtocol {
     //
     public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {
