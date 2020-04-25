@@ -2,12 +2,12 @@
 //  WOTTankListSettingsDatasource.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/9/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/9/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListSettingsDatasource.h"
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
 
 @interface WOTTankListSettingsDatasource () <NSFetchedResultsControllerDelegate>
 
@@ -38,23 +38,21 @@
     self = [super init];
     if (self){
 
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:self.context];
-        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TYPE ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
-        
-        self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:WOT_KEY_TYPE cacheName:nil];
-        self.fetchedResultController.delegate = self;
+        id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
+        [coreDataProvider perform:^(NSManagedObjectContext * _Nonnull context) {
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:context];
+            [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
+            
+            self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:WOTApiKeys.type cacheName:nil];
+            self.fetchedResultController.delegate = self;
 
-        NSError *error = nil;
-        [self.fetchedResultController performFetch:&error];
+            NSError *error = nil;
+            [self.fetchedResultController performFetch:&error];
+        }];
         
     }
     return self;
-}
-
-- (NSManagedObjectContext *)context {
-    
-    return [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
 }
 
 - (NSCompoundPredicate *)filterBy {
@@ -64,7 +62,7 @@
 
     NSMutableArray *predicates = [[NSMutableArray alloc] init];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_FILTER];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_FILTER];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
 
     for (ListSetting *setting in objects) {
@@ -78,7 +76,7 @@
         return nil;
     } else {
     
-#warning think about or / and predicates
+#warning think about "or / and" predicates
         return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
     }
 }
@@ -88,7 +86,7 @@
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_GROUP];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
     NSArray * result = [objects valueForKeyPath:@"key"];
     if ([result count] == 0) {
@@ -101,7 +99,7 @@
     
 }
 
-- (NSArray *)sortBy {
+- (NSArray<NSSortDescriptor *> *  _Nonnull)sortBy {
     
     NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
@@ -109,7 +107,7 @@
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@" %K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_SORT];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@" %K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_SORT];
     NSArray *objects = [[self.fetchedResultController fetchedObjects] filteredArrayUsingPredicate:predicate];
 
     for (ListSetting *setting in objects) {
@@ -210,10 +208,10 @@
 + (id)context:(NSManagedObjectContext *)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_SORT];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_SORT];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
-    ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate inManagedObjectContext:context];
+    ListSetting *setting = (ListSetting *)[ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
     setting.key = key;
     setting.ascending = @(ascending);
     setting.type = WOT_KEY_SETTING_TYPE_SORT;
@@ -229,10 +227,10 @@
 + (id)context:(NSManagedObjectContext *)context createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_GROUP];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_GROUP];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
-    ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate inManagedObjectContext:context];
+    ListSetting *setting = (ListSetting *)[ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
     setting.key = key;
     setting.ascending = @(ascending);
     setting.type = WOT_KEY_SETTING_TYPE_GROUP;
@@ -249,11 +247,11 @@
 + (id)context:(NSManagedObjectContext *)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
     
     NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_TYPE,WOT_KEY_SETTING_TYPE_FILTER];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiKeys.type,WOT_KEY_SETTING_TYPE_FILTER];
     NSPredicate *valuesPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_VALUES,value];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate,valuesPredicate]];
 
-    ListSetting *setting = [ListSetting findOrCreateObjectWithPredicate:compoundPredicate inManagedObjectContext:context];
+    ListSetting *setting = (ListSetting *)[ListSetting findOrCreateObjectWithPredicate:compoundPredicate context:context];
     setting.key = key;
     setting.ascending = @(NO);
     setting.type = WOT_KEY_SETTING_TYPE_FILTER;
@@ -272,10 +270,10 @@
 - (id)filteredValue:(id)value forKey:(NSString *)key {
     
     id result = nil;
-    if ([key isEqualToString:WOT_KEY_LEVEL]) {
+    if ([key isEqualToString:WOTApiKeys.tier]) {
         
         result = @([value integerValue]);
-    } else if ([key isEqualToString:WOT_KEY_IS_PREMIUM]){
+    } else if ([key isEqualToString: WOTApiKeys.is_premium]){
         
         result = @([value integerValue]);
     } else {

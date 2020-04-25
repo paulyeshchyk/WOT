@@ -2,68 +2,95 @@
 //  AppDelegate.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/1/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/1/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "AppDelegate.h"
 
 #import "WOTDrawerViewController.h"
 #import "WOTApplicationDefaults.h"
-#import "WOTApplicationStartupRequests.h"
+#import "NSTimer+BlocksKit.h"
+#import "WOTSessionManager.h"
 
-
-
-@interface AppDelegate ()
+@interface AppDelegate () <WOTHostConfigurationOwner, WOTAppDelegateProtocol>
 
 @property (nonatomic, strong) WOTDrawerViewController *wotDrawerViewController;
 
 @end
 
-@implementation AppDelegate
 
+@implementation AppDelegate
+@synthesize hostConfiguration;
+@synthesize appManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    [WOTApplicationDefaults registerRequests];
-    [WOTApplicationDefaults registerDefaultSettings];
+    /*
+     case error = 0
+     case lifeCycle = 1
+     case threads = 2
+     case web = 3
+     case json = 4
+     case coredata = 5
+     case info = 6
+     case performance = 7
+     case logic = 8
+     */
     
-    [WOTApplicationStartupRequests executeAllStartupRequests];
+    id<LogInspectorProtocol> logInspector = [[LogInspector alloc] init];
+    [logInspector objcOnlyAddpriority: 0];
+    [logInspector objcOnlyAddpriority: 1];
+    [logInspector objcOnlyAddpriority: 3];
 
+    id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];
+
+    id<WOTHostConfigurationProtocol> hostConfiguration = [[WOTWebHostConfiguration alloc] init];
+
+    id<WOTRequestManagerProtocol, WOTRequestListenerProtocol> requestManager = [[WOTRequestManager alloc] initWithRequestCoordinator:requestCoordinator hostConfiguration:hostConfiguration];
+    
+    id<WOTWebSessionManagerProtocol> sessionManager = [[WOTWebSessionManager alloc] init];
+    
+    id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTTankCoreDataProvider alloc] init];
+    
+    id<WOTMappingCoordinatorProtocol> mappingCoordinator = [[WOTMappingCoordinator alloc] init];
+    
+    id<JSONLinksAdapterProtocol> jsonLinksAdapter = [[WOTJSONLinksAdapter alloc] init];
+
+    self.appManager = [WOTPivotAppManager sharedInstance];
+    self.appManager.hostConfiguration = hostConfiguration;
+    self.appManager.requestCoordinator = requestCoordinator;
+    self.appManager.requestManager = requestManager;
+    self.appManager.requestListener = requestManager;
+    self.appManager.sessionManager = sessionManager;
+    self.appManager.logInspector = logInspector;
+    self.appManager.coreDataProvider = coreDataProvider;
+    self.appManager.mappingCoordinator = mappingCoordinator;
+    self.appManager.jsonLinksAdapter = jsonLinksAdapter;
+
+    [AppDefaults registerRequestsFor:requestCoordinator];
+    [WOTApplicationDefaults registerDefaultSettings];
+   
+
+    [self initSessionTimer];
     
     self.wotDrawerViewController = [[WOTDrawerViewController alloc] initWithMenu];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.wotDrawerViewController;
     [self.window makeKeyAndVisible];
-    
-    
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+- (void)initSessionTimer {
+
+    [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
+        NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
+            
+            [WOTSessionManager logoutWithRequestManager:self->appManager.requestManager];
+        } repeats:NO];
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+        return timer;
+    }];
 }
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    // Saves changes in the application's managed object context before the application terminates.
-//    [[WOTCoreDataProvider sharedInstance] saveContext];
-}
-
 
 @end
