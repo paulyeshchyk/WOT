@@ -27,10 +27,25 @@ extension VehicleprofileGun {
     @NSManaged public var tag: String?
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var weight: NSDecimalNumber?
+    @NSManaged public var modules: NSSet?
     @NSManaged public var vehicle: NSSet?
     @NSManaged public var vehicleprofile: NSSet?
     @NSManaged public var vehicleprofileModule: Module?
-    @NSManaged public var modules: NSSet?
+}
+
+// MARK: Generated accessors for modules
+extension VehicleprofileGun {
+    @objc(addModulesObject:)
+    @NSManaged public func addToModules(_ value: VehicleprofileModule)
+
+    @objc(removeModulesObject:)
+    @NSManaged public func removeFromModules(_ value: VehicleprofileModule)
+
+    @objc(addModules:)
+    @NSManaged public func addToModules(_ values: NSSet)
+
+    @objc(removeModules:)
+    @NSManaged public func removeFromModules(_ values: NSSet)
 }
 
 // MARK: Generated accessors for vehicle
@@ -61,19 +76,4 @@ extension VehicleprofileGun {
 
     @objc(removeVehicleprofile:)
     @NSManaged public func removeFromVehicleprofile(_ values: NSSet)
-}
-
-// MARK: Generated accessors for modules
-extension VehicleprofileGun {
-    @objc(addModulesObject:)
-    @NSManaged public func addToModules(_ value: VehicleprofileModule)
-
-    @objc(removeModulesObject:)
-    @NSManaged public func removeFromModules(_ value: VehicleprofileModule)
-
-    @objc(addModules:)
-    @NSManaged public func addToModules(_ values: NSSet)
-
-    @objc(removeModules:)
-    @NSManaged public func removeFromModules(_ values: NSSet)
 }

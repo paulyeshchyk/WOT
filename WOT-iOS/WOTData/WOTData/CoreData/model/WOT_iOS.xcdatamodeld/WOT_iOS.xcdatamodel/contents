@@ -212,7 +212,7 @@
     </entity>
     <elements>
         <element name="ListSetting" positionX="-342" positionY="-288" width="128" height="120"/>
-        <element name="VehicleprofileModule" positionX="-1494" positionY="-297" width="128" height="238"/>
+        <element name="Module" positionX="-1494" positionY="-297" width="128" height="223"/>
         <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="178"/>
         <element name="UserSession" positionX="-117" positionY="-369" width="128" height="135"/>
         <element name="Vehicleprofile" positionX="-1494" positionY="-297" width="128" height="373"/>
@@ -224,7 +224,7 @@
         <element name="VehicleprofileArmorList" positionX="-1467" positionY="-270" width="128" height="90"/>
         <element name="VehicleprofileEngine" positionX="-1485" positionY="-288" width="128" height="223"/>
         <element name="VehicleprofileGun" positionX="-1467" positionY="-270" width="128" height="283"/>
-        <element name="Module" positionX="-1494" positionY="-297" width="128" height="223"/>
+        <element name="VehicleprofileModule" positionX="-1494" positionY="-297" width="128" height="238"/>
         <element name="VehicleprofileRadio" positionX="-1476" positionY="-279" width="128" height="193"/>
         <element name="VehicleprofileSuspension" positionX="-1476" positionY="-279" width="128" height="223"/>
         <element name="VehicleprofileTurret" positionX="-1449" positionY="-252" width="128" height="253"/>

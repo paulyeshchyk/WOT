@@ -15,19 +15,19 @@ extension VehicleprofileModule {
         return NSFetchRequest<VehicleprofileModule>(entityName: "VehicleprofileModule")
     }
 
-    @NSManaged public var module_id: NSDecimalNumber?
     @NSManaged public var engine_id: NSDecimalNumber?
     @NSManaged public var gun_id: NSDecimalNumber?
+    @NSManaged public var module_id: NSDecimalNumber?
     @NSManaged public var radio_id: NSDecimalNumber?
     @NSManaged public var suspension_id: NSDecimalNumber?
     @NSManaged public var turret_id: NSDecimalNumber?
     @NSManaged public var vehicle: NSSet?
-    @NSManaged public var vehicleRadio: VehicleprofileRadio?
+    @NSManaged public var vehicleChassis: VehicleprofileSuspension?
     @NSManaged public var vehicleEngine: VehicleprofileEngine?
     @NSManaged public var vehicleGun: VehicleprofileGun?
-    @NSManaged public var vehicleChassis: VehicleprofileSuspension?
-    @NSManaged public var vehicleTurret: VehicleprofileTurret?
     @NSManaged public var vehicleprofile: Vehicleprofile?
+    @NSManaged public var vehicleRadio: VehicleprofileRadio?
+    @NSManaged public var vehicleTurret: VehicleprofileTurret?
 }
 
 // MARK: Generated accessors for vehicle
