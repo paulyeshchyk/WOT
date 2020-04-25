@@ -2,8 +2,8 @@
 //  WOTTankListSortViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/8/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/8/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListSortViewController.h"
@@ -12,9 +12,11 @@
 #import "WOTTankListSettingNameChooserViewController.h"
 #import "WOTTankListSettingValueChangerViewController.h"
 #import "WOTTankListSortHeaderView.h"
-#import "ListSetting.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankListSettingsDatasource+TableView.h"
 #import "WOTTankListSettingsDatasource+AvailableFields.h"
+#import "UINavigationBar+WOT.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListSortViewController () <UITableViewDataSource, UITableViewDelegate, WOTTankListSettingsDatasourceListener>
 

@@ -2,15 +2,15 @@
 //  WOTTankListSettingViewController.h
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/12/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/12/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTableViewDatasourceProtocol.h"
 #import "WOTTankListSettingsAvailableFieldsProtocol.h"
 
-typedef void (^WOTTankListSettingCancelBlock) ();
-typedef void (^WOTTankListSettingApplyBlock) ();
+typedef void (^WOTTankListSettingCancelBlock) (void);
+typedef void (^WOTTankListSettingApplyBlock) (void);
 
 @interface WOTTankListSettingViewController : UIViewController
 

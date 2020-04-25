@@ -2,13 +2,12 @@
 //  PivotTreeTestCase.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 8/31/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 8/31/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "WOTPivotTree.h"
 
 @interface PivotTreeTestCase : XCTestCase
 
@@ -26,12 +25,12 @@
     [super tearDown];
 }
 
-- (void)testInitialPivotContentSizeShouldBeSizeZero {
- 
-    WOTPivotTree *tree = [[WOTPivotTree alloc] init];
-    CGSize contentSize = tree.contentSize;
-    
-    XCTAssert(CGSizeEqualToSize(CGSizeZero,contentSize), @"contentSize should be equal to CGSizeZero");
-}
+//- (void)testInitialPivotContentSizeShouldBeSizeZero {
+//
+//    WOTPivotTree *tree = [[WOTPivotTree alloc] init];
+//    CGSize contentSize = tree.contentSize;
+//
+//    XCTAssert(CGSizeEqualToSize(CGSizeZero,contentSize), @"contentSize should be equal to CGSizeZero");
+//}
 
 @end

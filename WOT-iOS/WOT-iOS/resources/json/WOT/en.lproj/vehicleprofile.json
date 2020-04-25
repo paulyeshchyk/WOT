@@ -1,0 +1,133 @@
+{
+    "status": "ok",
+    "meta": {
+        "count": 1
+    },
+    "data": {
+        "5473": {
+            "engine": {
+                "name": "2x Kawasaki Type 98 V-12 (550)",
+                "power": 1100,
+                "weight": 1020,
+                "tag": "_Type98_V12_x2_1100",
+                "fire_chance": 0.2,
+                "tier": 7
+            },
+            "siege": null,
+            "max_ammo": 100,
+            "suspension": {
+                "name": "O-I",
+                "weight": 25000,
+                "load_limit": 150500,
+                "tag": "Chassis_J24_Mi_To_130_tons",
+                "traverse_speed": 16,
+                "tier": 5
+            },
+            "weight": 150360,
+            "armor": {
+                "turret": {
+                    "front": 150,
+                    "sides": 150,
+                    "rear": 105
+                },
+                "hull": {
+                    "front": 150,
+                    "sides": 70,
+                    "rear": 105
+                }
+            },
+            "hp": 950,
+            "profile_id": "615-7013-7780-9059-10850",
+            "modules": {
+                "gun_id": 7780,
+                "suspension_id": 10850,
+                "turret_id": 9059,
+                "radio_id": 615,
+                "engine_id": 7013
+            },
+            "gun": {
+                "move_down_arc": 10,
+                "caliber": 105,
+                "name": "10 cm Cannon Type 92",
+                "weight": 1792,
+                "move_up_arc": 20,
+                "fire_rate": 5,
+                "dispersion": 0.43,
+                "tag": "_105mm_Cannon_Type92",
+                "traverse_speed": 22,
+                "reload_time": 12,
+                "tier": 7,
+                "aim_time": 3.2
+            },
+            "is_default": true,
+            "turret": {
+                "name": "O-I",
+                "weight": 12000,
+                "view_range": 370,
+                "hp": 190,
+                "tag": "Turret_1_J24_Mi_To_130_tons",
+                "traverse_speed": 18,
+                "traverse_right_arc": 180,
+                "tier": 6,
+                "traverse_left_arc": 180
+            },
+            "hull_weight": 110208,
+            "radio": {
+                "tier": 2,
+                "signal_range": 300,
+                "tag": "_Type94_Otsu",
+                "name": "Type 94 Mk. 4 Otsu",
+                "weight": 40
+            },
+            "speed_forward": 29,
+            "hull_hp": 760,
+            "speed_backward": 10,
+            "tank_id": 5473,
+            "ammo": [
+                     {
+                     "penetration": [
+                                     131,
+                                     175,
+                                     219
+                                     ],
+                     "stun": null,
+                     "type": "ARMOR_PIERCING",
+                     "damage": [
+                                225,
+                                300,
+                                375
+                                ]
+                     },
+                     {
+                     "penetration": [
+                                     151,
+                                     201,
+                                     251
+                                     ],
+                     "stun": null,
+                     "type": "ARMOR_PIERCING",
+                     "damage": [
+                                225,
+                                300,
+                                375
+                                ]
+                     },
+                     {
+                     "penetration": [
+                                     40,
+                                     53,
+                                     66
+                                     ],
+                     "stun": null,
+                     "type": "HIGH_EXPLOSIVE",
+                     "damage": [
+                                270,
+                                360,
+                                450
+                                ]
+                     }
+                     ],
+            "max_weight": 150500
+        }
+    }
+}

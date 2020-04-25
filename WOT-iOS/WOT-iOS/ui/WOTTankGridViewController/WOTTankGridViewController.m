@@ -2,19 +2,18 @@
 //  WOTTankGridViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 9/14/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 9/14/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankGridViewController.h"
 #import "WOTTankGridCollectionViewCell.h"
-#import "WOTTree.h"
 
 @interface WOTTankGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak)IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, strong)WOTTree *subitemsTree;
+@property (nonatomic, strong)WOTPivotDataModel *subitemsTree;
 
 @property (nonatomic, readonly) NSInteger columnsCount;
 
@@ -68,11 +67,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    WOTNode *rootNode = [[self.subitemsTree rootNodes] allObjects][indexPath.row];
-    
+
     WOTTankGridCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class]) forIndexPath:indexPath];
-    result.metricName = rootNode.name;
-    result.subitems = rootNode.children;
+#warning("remove comment")
+//    WOTNode *rootNode = [[self.subitemsTree rootNodes] allObjects][indexPath.row];
+//    result.metricName = rootNode.name;
+//    result.subitems = rootNode.children;
     [result reloadCell];
     return result;
 }

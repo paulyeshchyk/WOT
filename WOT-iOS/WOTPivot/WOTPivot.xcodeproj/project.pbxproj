@@ -1,0 +1,1455 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0304CF21E8C19100050131 /* WOTAPI.swift */; };
+		1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5021A54E4E001AF67F /* VIPER.swift */; };
+		1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */; };
+		1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5321A54E4E001AF67F /* PivotVIPER.swift */; };
+		1D126A5921A54E4E001AF67F /* PivotWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5421A54E4E001AF67F /* PivotWireFrame.swift */; };
+		1D126A5A21A54E4E001AF67F /* VIPERView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5521A54E4E001AF67F /* VIPERView.swift */; };
+		1D16176124544DB60022E02F /* NSManagedObject+KeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176024544DB60022E02F /* NSManagedObject+KeypathProtocol.swift */; };
+		1D16176324544DD10022E02F /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176224544DD10022E02F /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
+		1D16176524544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176424544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift */; };
+		1D16176B24544F130022E02F /* WOTWEBRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176A24544F130022E02F /* WOTWEBRequestError.swift */; };
+		1D1617732454517D0022E02F /* JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1617722454517D0022E02F /* JSONMapperProtocol.swift */; };
+		1D1617762454524B0022E02F /* CoreDataMappingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1617752454524B0022E02F /* CoreDataMappingProtocol.swift */; };
+		1D161778245452660022E02F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D161777245452660022E02F /* CoreDataStore.swift */; };
+		1D161781245472110022E02F /* RESTAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D161780245472110022E02F /* RESTAPIResponse.swift */; };
+		1D16178324547BAD0022E02F /* NSManagedObject+JSONDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16178224547BAD0022E02F /* NSManagedObject+JSONDecoding.swift */; };
+		1D2612182410DEE500CFEB16 /* WOTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2612172410DEE500CFEB16 /* WOTRequest.swift */; };
+		1D294B6522116856002DA600 /* String_UrlEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D294B6422116856002DA600 /* String_UrlEncode.swift */; };
+		1D3005C4241A241C00E453B9 /* WOTPivotAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */; };
+		1D4ACF34244373C400C6CBE0 /* KeyPathListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4ACF33244373C400C6CBE0 /* KeyPathListable.swift */; };
+		1D5668F12424BD54008458AF /* WOTWebSessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5668F02424BD54008458AF /* WOTWebSessionManagerProtocol.swift */; };
+		1D5D021823C7334F004B0314 /* WOTTankPivotNodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */; };
+		1D5D022C23C8623D004B0314 /* WOTDataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D022A23C8623D004B0314 /* WOTDataFetchController.swift */; };
+		1D5D023023C86299004B0314 /* WOTCoredataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D022F23C86299004B0314 /* WOTCoredataProviderProtocol.swift */; };
+		1D5D023723C86AC5004B0314 /* WOTCoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D023623C86AC5004B0314 /* WOTCoreDataProvider.swift */; };
+		1D5D024123C87033004B0314 /* NSManagedObject+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D023E23C87033004B0314 /* NSManagedObject+Operations.swift */; };
+		1D5D024A23C87456004B0314 /* NSManagedObjectContext+AllObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D024923C87456004B0314 /* NSManagedObjectContext+AllObjects.swift */; };
+		1D5D0AFD23CCB012004B0314 /* WOTPivotMetadataPermutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AFB23CCB012004B0314 /* WOTPivotMetadataPermutator.swift */; };
+		1D5D0AFE23CCB02B004B0314 /* WOTPivotMetadataPermutatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AFA23CCB012004B0314 /* WOTPivotMetadataPermutatorTest.swift */; };
+		1D5D0B0223CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0B0023CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift */; };
+		1D5D0B0323CCB086004B0314 /* WOTNodeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0B0123CCB086004B0314 /* WOTNodeEnumerator.swift */; };
+		1D5D0B0523CCB110004B0314 /* WOTDataFetchControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0B0423CCB110004B0314 /* WOTDataFetchControllerProtocol.swift */; };
+		1D65F778221435E7006A85E4 /* NSString+UrlEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D65F776221435E7006A85E4 /* NSString+UrlEncode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D65F779221435E7006A85E4 /* NSString+UrlEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F777221435E7006A85E4 /* NSString+UrlEncode.m */; };
+		1D65F77C221551C6006A85E4 /* NSError+Pivot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F77B221551C6006A85E4 /* NSError+Pivot.swift */; };
+		1D65F7BE2215795F006A85E4 /* Dictionary_Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7BD2215795F006A85E4 /* Dictionary_Merge.swift */; };
+		1D65F7D42215AF63006A85E4 /* CGContext_NodeConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7D32215AF63006A85E4 /* CGContext_NodeConnector.swift */; };
+		1D65F7D72215B0CD006A85E4 /* CGRect_Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7D62215B0CD006A85E4 /* CGRect_Center.swift */; };
+		1D65F7F22216A60E006A85E4 /* WOTTankPivotLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EA2216A60D006A85E4 /* WOTTankPivotLayout.swift */; };
+		1D65F7F32216A60E006A85E4 /* WOTPivotLayoutCellAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EB2216A60D006A85E4 /* WOTPivotLayoutCellAttributes.swift */; };
+		1D65F7F52216A60E006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7ED2216A60D006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift */; };
+		1D65F7F62216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EF2216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift */; };
+		1D65F7F72216A60E006A85E4 /* WOTTankConfigurationFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7F02216A60D006A85E4 /* WOTTankConfigurationFlowLayout.swift */; };
+		1D65F7F82216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7F12216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift */; };
+		1D65F7F92216A63F006A85E4 /* WOTPivotLayoutCellAttributesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EC2216A60D006A85E4 /* WOTPivotLayoutCellAttributesTest.swift */; };
+		1D65F8242216A7B8006A85E4 /* WOTDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8162216A7B8006A85E4 /* WOTDimension.swift */; };
+		1D65F8252216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F81A2216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift */; };
+		1D65F8262216A7B8006A85E4 /* WOTDimensionRowCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F81B2216A7B8006A85E4 /* WOTDimensionRowCalculator.swift */; };
+		1D65F8272216A7B8006A85E4 /* WOTDimensionFilterCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F81C2216A7B8006A85E4 /* WOTDimensionFilterCalculator.swift */; };
+		1D65F8282216A7B8006A85E4 /* WOTDimensionDataCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F81D2216A7B8006A85E4 /* WOTDimensionDataCalculator.swift */; };
+		1D65F8292216A7B8006A85E4 /* WOTDimensionColumnCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F81E2216A7B8006A85E4 /* WOTDimensionColumnCalculator.swift */; };
+		1D65F82A2216A7B8006A85E4 /* WOTDimensionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F81F2216A7B8006A85E4 /* WOTDimensionCalculator.swift */; };
+		1D65F82B2216A7B8006A85E4 /* WOTPivotNodeHolderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8202216A7B8006A85E4 /* WOTPivotNodeHolderProtocol.swift */; };
+		1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8212216A7B8006A85E4 /* WOTPivotDimension.swift */; };
+		1D65F82D2216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8222216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift */; };
+		1D65F82E2216A7B8006A85E4 /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8232216A7B8006A85E4 /* WOTDimensionProtocol.swift */; };
+		1D695C79244CB01700650F95 /* AnyConvertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D695C78244CB01700650F95 /* AnyConvertable.swift */; };
+		1D70CD6F244ED46A0031CBFE /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD6E244ED46A0031CBFE /* LogInspector.swift */; };
+		1D70CD71244EDEBB0031CBFE /* ErrorLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD70244EDEBB0031CBFE /* ErrorLog.swift */; };
+		1D70CD77244EDFE30031CBFE /* OBJNewLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD76244EDFE30031CBFE /* OBJNewLog.swift */; };
+		1D70CD79244EE0050031CBFE /* OBJFreeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD78244EE0050031CBFE /* OBJFreeLog.swift */; };
+		1D70CD87244EF88F0031CBFE /* CurrentThreadLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD86244EF88F0031CBFE /* CurrentThreadLog.swift */; };
+		1D70CD89244EFC730031CBFE /* CustomThreadLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD88244EFC730031CBFE /* CustomThreadLog.swift */; };
+		1D70CD8B244F3C160031CBFE /* CDFetchLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD8A244F3C160031CBFE /* CDFetchLog.swift */; };
+		1D70CD8D244F40940031CBFE /* CDStash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD8C244F40940031CBFE /* CDStash.swift */; };
+		1D70CD8F244F44C60031CBFE /* JSONStartLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD8E244F44C60031CBFE /* JSONStartLog.swift */; };
+		1D70CD91244F44EF0031CBFE /* JSONFinishLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD90244F44EF0031CBFE /* JSONFinishLog.swift */; };
+		1D70CD93244F8B400031CBFE /* WEBStartLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD92244F8B400031CBFE /* WEBStartLog.swift */; };
+		1D70CD95244F8BBE0031CBFE /* WEBCancelLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD94244F8BBE0031CBFE /* WEBCancelLog.swift */; };
+		1D70CD99244F8C680031CBFE /* WEBFinishLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD98244F8C680031CBFE /* WEBFinishLog.swift */; };
+		1D70CD9D245029AD0031CBFE /* CDMergeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD9C245029AC0031CBFE /* CDMergeLog.swift */; };
+		1D70CD9F24508E9D0031CBFE /* TIMEMeasureLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD9E24508E9D0031CBFE /* TIMEMeasureLog.swift */; };
+		1D70CDA12450AC820031CBFE /* LogicLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CDA02450AC820031CBFE /* LogicLog.swift */; };
+		1D70CDA52450E0EE0031CBFE /* PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CDA42450E0ED0031CBFE /* PrimaryKeypathProtocol.swift */; };
+		1D70CF452452B5680031CBFE /* WOTMappingCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CF442452B5680031CBFE /* WOTMappingCoordinatorProtocol.swift */; };
+		1D73BB7924436936004B720A /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7724436936004B720A /* Coding.swift */; };
+		1D73BB7A24436936004B720A /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73BB7824436936004B720A /* AnyCodable.swift */; };
+		1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */; };
+		1D79EDAF212439C2005FBA34 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79EDA5212439C2005FBA34 /* WOTPivot.framework */; };
+		1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */; };
+		1D79EDB6212439C2005FBA34 /* WOTPivot.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D79EDA8212439C2005FBA34 /* WOTPivot.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D8C293621357B9A00759C42 /* NSNumber+CustomFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C293221357B9900759C42 /* NSNumber+CustomFormatter.m */; };
+		1D8C293721357B9A00759C42 /* NSNumber+Randomizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C293321357B9900759C42 /* NSNumber+Randomizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D8C293821357B9A00759C42 /* NSNumber+CustomFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C293421357B9900759C42 /* NSNumber+CustomFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D8C293921357B9A00759C42 /* NSNumber+Randomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C293521357B9900759C42 /* NSNumber+Randomizer.m */; };
+		1D8C297F21358A4800759C42 /* NSSet+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C297D21358A4800759C42 /* NSSet+WOT.m */; };
+		1D8C298021358A4800759C42 /* NSSet+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C297E21358A4800759C42 /* NSSet+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D8C298421358ACA00759C42 /* NSThread+ExecutionOnMain.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C298221358ACA00759C42 /* NSThread+ExecutionOnMain.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D8C298521358ACA00759C42 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C298321358ACA00759C42 /* NSThread+ExecutionOnMain.m */; };
+		1D8C298B21358B4200759C42 /* NSMutableArray+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C298721358B4200759C42 /* NSMutableArray+WOT.m */; };
+		1D8C298C21358B4200759C42 /* NSArray+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C298821358B4200759C42 /* NSArray+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D8C298D21358B4200759C42 /* NSArray+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C298921358B4200759C42 /* NSArray+WOT.m */; };
+		1D8C298E21358B4200759C42 /* NSMutableArray+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C298A21358B4200759C42 /* NSMutableArray+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D8C299221358CF700759C42 /* WOTPivotDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C299121358CF700759C42 /* WOTPivotDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D8C299421358DB600759C42 /* WOTLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C299321358DB600759C42 /* WOTLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D9340F824179BF400B18F42 /* WOTRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9340F724179BF400B18F42 /* WOTRequestManager.swift */; };
+		1DA1539E2444CDC700FB3C89 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153972444CDC700FB3C89 /* Reachability.m */; };
+		1DA1539F2444CDC700FB3C89 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA153982444CDC700FB3C89 /* Reachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA153A02444CDC700FB3C89 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1539A2444CDC700FB3C89 /* NSString+RomanUtils.m */; };
+		1DA153A12444CDC700FB3C89 /* RomanNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA1539B2444CDC700FB3C89 /* RomanNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA153A22444CDC700FB3C89 /* NSString+RomanUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA1539C2444CDC700FB3C89 /* NSString+RomanUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA153A32444CDC700FB3C89 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1539D2444CDC700FB3C89 /* RomanNumber.m */; };
+		1DA153AF244A433700FB3C89 /* WOTJSONLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153AE244A433700FB3C89 /* WOTJSONLink.swift */; };
+		1DA153B1244A438200FB3C89 /* WOTWebRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153B0244A438200FB3C89 /* WOTWebRequestBuilder.swift */; };
+		1DA153B3244A43A100FB3C89 /* WOTWebDataPumper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153B2244A43A100FB3C89 /* WOTWebDataPumper.swift */; };
+		1DA83CAC2135633F0039CB4B /* NSMutableDictionary+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CA82135633F0039CB4B /* NSMutableDictionary+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA83CAD2135633F0039CB4B /* NSDictionary+Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CA92135633F0039CB4B /* NSDictionary+Hash.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA83CAE2135633F0039CB4B /* NSMutableDictionary+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83CAA2135633F0039CB4B /* NSMutableDictionary+WOT.m */; };
+		1DA83CAF213563400039CB4B /* NSDictionary+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83CAB2135633F0039CB4B /* NSDictionary+Hash.m */; };
+		1DA83CB3213563C50039CB4B /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83CB1213563C50039CB4B /* NSBundle+LanguageBundle.m */; };
+		1DA83CB4213563C50039CB4B /* NSBundle+LanguageBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CB2213563C50039CB4B /* NSBundle+LanguageBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA83CB8213563F60039CB4B /* NSString+WOTValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA83CB6213563F60039CB4B /* NSString+WOTValue.m */; };
+		1DA83CB9213563F60039CB4B /* NSString+WOTValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DB67455221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB67454221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift */; };
+		1DBF89A4240D0F08007DF8B2 /* WOTTankMetricOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */; };
+		1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */; };
+		1DBF89A8240D1E19007DF8B2 /* WOTTankMetricList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */; };
+		1DBF89AA240D27C9007DF8B2 /* WOTTankEvalutionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A9240D27C9007DF8B2 /* WOTTankEvalutionResult.swift */; };
+		1DBF89AC240D3137007DF8B2 /* WOTTankIDList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89AB240D3137007DF8B2 /* WOTTankIDList.swift */; };
+		1DBF89B4240E3BEE007DF8B2 /* WOTWebProxyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89B3240E3BEE007DF8B2 /* WOTWebProxyRequest.swift */; };
+		1DBF89B6240E4927007DF8B2 /* WOTWebRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */; };
+		1DBF89BC240F9D06007DF8B2 /* Dictionary_URLQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89BB240F9D06007DF8B2 /* Dictionary_URLQuery.swift */; };
+		1DBF89BE240FAE8C007DF8B2 /* WOTRequestArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89BD240FAE8C007DF8B2 /* WOTRequestArguments.swift */; };
+		1DBF89C0240FC12B007DF8B2 /* WOTHostConfigurationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89BF240FC12B007DF8B2 /* WOTHostConfigurationProtocol.swift */; };
+		1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */; };
+		1DC6D4CA212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */; };
+		1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */; };
+		1DC6D4CF212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC6D4CD212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift */; };
+		1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D02124560500576D41 /* WOTPivotFilterNode.swift */; };
+		1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D12124560500576D41 /* WOTPivotRowNode.swift */; };
+		1DE558DF2124560500576D41 /* WOTPivotColNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D22124560500576D41 /* WOTPivotColNode.swift */; };
+		1DE558E02124560500576D41 /* WOTPivotDataGroupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D32124560500576D41 /* WOTPivotDataGroupNode.swift */; };
+		1DE558E12124560500576D41 /* WOTPivotDataNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D42124560500576D41 /* WOTPivotDataNode.swift */; };
+		1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D62124560500576D41 /* WOTPivotNode.swift */; };
+		1DE558E42124560500576D41 /* WOTPivotNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D72124560500576D41 /* WOTPivotNodeProtocol.swift */; };
+		1DE558E52124560500576D41 /* WOTNodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D92124560500576D41 /* WOTNodeProtocol.swift */; };
+		1DE558E72124560500576D41 /* WOTNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558DB2124560500576D41 /* WOTNode.swift */; };
+		1DE558E82124561000576D41 /* WOTPivotNodeExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558CF2124560500576D41 /* WOTPivotNodeExtensionTest.swift */; };
+		1DE558E92124561000576D41 /* WOTPivotNodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558D52124560500576D41 /* WOTPivotNodeTest.swift */; };
+		1DE558EA2124561500576D41 /* WOTNodeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558DA2124560500576D41 /* WOTNodeTest.swift */; };
+		1DE559022124571000576D41 /* WOTDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558F92124571000576D41 /* WOTDataModelProtocol.swift */; };
+		1DE559042124571000576D41 /* WOTDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558FB2124571000576D41 /* WOTDataModel.swift */; };
+		1DE559072124571000576D41 /* WOTTreeDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559002124571000576D41 /* WOTTreeDataModel.swift */; };
+		1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */; };
+		1DE5590A2124572D00576D41 /* WOTDataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558FA2124571000576D41 /* WOTDataModelTest.swift */; };
+		1DE5591D212458E100576D41 /* WOTPivotNodeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5591A212458E100576D41 /* WOTPivotNodeIndex.swift */; };
+		1DE5591E212458E100576D41 /* WOTConnectorNodeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5591C212458E100576D41 /* WOTConnectorNodeIndex.swift */; };
+		1DE559572125586200576D41 /* WOTPivotNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */; };
+		1DE5595921255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595821255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift */; };
+		1DE5595B21255AE400576D41 /* WOTNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1D79EDB0212439C2005FBA34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D79ED9C212439C2005FBA34 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D79EDA4212439C2005FBA34;
+			remoteInfo = WOTPivot;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D0304CF21E8C19100050131 /* WOTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WOTAPI.swift; path = core/WOTAPI.swift; sourceTree = "<group>"; };
+		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
+		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
+		1D126A5321A54E4E001AF67F /* PivotVIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotVIPER.swift; sourceTree = "<group>"; };
+		1D126A5421A54E4E001AF67F /* PivotWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotWireFrame.swift; sourceTree = "<group>"; };
+		1D126A5521A54E4E001AF67F /* VIPERView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERView.swift; sourceTree = "<group>"; };
+		1D16176024544DB60022E02F /* NSManagedObject+KeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+KeypathProtocol.swift"; sourceTree = "<group>"; };
+		1D16176224544DD10022E02F /* NSManagedObject+PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+PrimaryKeypathProtocol.swift"; sourceTree = "<group>"; };
+		1D16176424544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
+		1D16176A24544F130022E02F /* WOTWEBRequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestError.swift; sourceTree = "<group>"; };
+		1D1617722454517D0022E02F /* JSONMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMapperProtocol.swift; sourceTree = "<group>"; };
+		1D1617752454524B0022E02F /* CoreDataMappingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMappingProtocol.swift; sourceTree = "<group>"; };
+		1D161777245452660022E02F /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		1D161780245472110022E02F /* RESTAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTAPIResponse.swift; sourceTree = "<group>"; };
+		1D16178224547BAD0022E02F /* NSManagedObject+JSONDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONDecoding.swift"; sourceTree = "<group>"; };
+		1D2612172410DEE500CFEB16 /* WOTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequest.swift; sourceTree = "<group>"; };
+		1D294B6422116856002DA600 /* String_UrlEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_UrlEncode.swift; sourceTree = "<group>"; };
+		1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotAppManager.swift; sourceTree = "<group>"; };
+		1D4ACF33244373C400C6CBE0 /* KeyPathListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathListable.swift; sourceTree = "<group>"; };
+		1D5668F02424BD54008458AF /* WOTWebSessionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManagerProtocol.swift; sourceTree = "<group>"; };
+		1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotNodeCreator.swift; sourceTree = "<group>"; };
+		1D5D022A23C8623D004B0314 /* WOTDataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataFetchController.swift; sourceTree = "<group>"; };
+		1D5D022B23C8623D004B0314 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
+		1D5D022F23C86299004B0314 /* WOTCoredataProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoredataProviderProtocol.swift; sourceTree = "<group>"; };
+		1D5D023623C86AC5004B0314 /* WOTCoreDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoreDataProvider.swift; sourceTree = "<group>"; };
+		1D5D023E23C87033004B0314 /* NSManagedObject+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Operations.swift"; sourceTree = "<group>"; };
+		1D5D024923C87456004B0314 /* NSManagedObjectContext+AllObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+AllObjects.swift"; sourceTree = "<group>"; };
+		1D5D0AFA23CCB012004B0314 /* WOTPivotMetadataPermutatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutatorTest.swift; sourceTree = "<group>"; };
+		1D5D0AFB23CCB012004B0314 /* WOTPivotMetadataPermutator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutator.swift; sourceTree = "<group>"; };
+		1D5D0B0023CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumeratorProtocol.swift; sourceTree = "<group>"; };
+		1D5D0B0123CCB086004B0314 /* WOTNodeEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumerator.swift; sourceTree = "<group>"; };
+		1D5D0B0423CCB110004B0314 /* WOTDataFetchControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataFetchControllerProtocol.swift; sourceTree = "<group>"; };
+		1D65F776221435E7006A85E4 /* NSString+UrlEncode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlEncode.h"; sourceTree = "<group>"; };
+		1D65F777221435E7006A85E4 /* NSString+UrlEncode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncode.m"; sourceTree = "<group>"; };
+		1D65F77B221551C6006A85E4 /* NSError+Pivot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+Pivot.swift"; sourceTree = "<group>"; };
+		1D65F7BD2215795F006A85E4 /* Dictionary_Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary_Merge.swift; sourceTree = "<group>"; };
+		1D65F7D32215AF63006A85E4 /* CGContext_NodeConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGContext_NodeConnector.swift; sourceTree = "<group>"; };
+		1D65F7D62215B0CD006A85E4 /* CGRect_Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
+		1D65F7EA2216A60D006A85E4 /* WOTTankPivotLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotLayout.swift; sourceTree = "<group>"; };
+		1D65F7EB2216A60D006A85E4 /* WOTPivotLayoutCellAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotLayoutCellAttributes.swift; sourceTree = "<group>"; };
+		1D65F7EC2216A60D006A85E4 /* WOTPivotLayoutCellAttributesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotLayoutCellAttributesTest.swift; sourceTree = "<group>"; };
+		1D65F7ED2216A60D006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotSeparatorLayoutAttributes.swift; sourceTree = "<group>"; };
+		1D65F7EF2216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankModuleTreeNodeConnectorLayerProtocol.swift; sourceTree = "<group>"; };
+		1D65F7F02216A60D006A85E4 /* WOTTankConfigurationFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankConfigurationFlowLayout.swift; sourceTree = "<group>"; };
+		1D65F7F12216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankModuleTreeNodeConnectorLayer.swift; sourceTree = "<group>"; };
+		1D65F8162216A7B8006A85E4 /* WOTDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimension.swift; sourceTree = "<group>"; };
+		1D65F81A2216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionDataGroupCalculator.swift; sourceTree = "<group>"; };
+		1D65F81B2216A7B8006A85E4 /* WOTDimensionRowCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionRowCalculator.swift; sourceTree = "<group>"; };
+		1D65F81C2216A7B8006A85E4 /* WOTDimensionFilterCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionFilterCalculator.swift; sourceTree = "<group>"; };
+		1D65F81D2216A7B8006A85E4 /* WOTDimensionDataCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionDataCalculator.swift; sourceTree = "<group>"; };
+		1D65F81E2216A7B8006A85E4 /* WOTDimensionColumnCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionColumnCalculator.swift; sourceTree = "<group>"; };
+		1D65F81F2216A7B8006A85E4 /* WOTDimensionCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionCalculator.swift; sourceTree = "<group>"; };
+		1D65F8202216A7B8006A85E4 /* WOTPivotNodeHolderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeHolderProtocol.swift; sourceTree = "<group>"; };
+		1D65F8212216A7B8006A85E4 /* WOTPivotDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDimension.swift; sourceTree = "<group>"; };
+		1D65F8222216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDimensionProtocol.swift; sourceTree = "<group>"; };
+		1D65F8232216A7B8006A85E4 /* WOTDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionProtocol.swift; sourceTree = "<group>"; };
+		1D695C78244CB01700650F95 /* AnyConvertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyConvertable.swift; sourceTree = "<group>"; };
+		1D70CD6E244ED46A0031CBFE /* LogInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
+		1D70CD70244EDEBB0031CBFE /* ErrorLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLog.swift; sourceTree = "<group>"; };
+		1D70CD76244EDFE30031CBFE /* OBJNewLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBJNewLog.swift; sourceTree = "<group>"; };
+		1D70CD78244EE0050031CBFE /* OBJFreeLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBJFreeLog.swift; sourceTree = "<group>"; };
+		1D70CD86244EF88F0031CBFE /* CurrentThreadLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentThreadLog.swift; sourceTree = "<group>"; };
+		1D70CD88244EFC730031CBFE /* CustomThreadLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomThreadLog.swift; sourceTree = "<group>"; };
+		1D70CD8A244F3C160031CBFE /* CDFetchLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDFetchLog.swift; sourceTree = "<group>"; };
+		1D70CD8C244F40940031CBFE /* CDStash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDStash.swift; sourceTree = "<group>"; };
+		1D70CD8E244F44C60031CBFE /* JSONStartLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStartLog.swift; sourceTree = "<group>"; };
+		1D70CD90244F44EF0031CBFE /* JSONFinishLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFinishLog.swift; sourceTree = "<group>"; };
+		1D70CD92244F8B400031CBFE /* WEBStartLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WEBStartLog.swift; sourceTree = "<group>"; };
+		1D70CD94244F8BBE0031CBFE /* WEBCancelLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WEBCancelLog.swift; sourceTree = "<group>"; };
+		1D70CD98244F8C680031CBFE /* WEBFinishLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WEBFinishLog.swift; sourceTree = "<group>"; };
+		1D70CD9C245029AC0031CBFE /* CDMergeLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDMergeLog.swift; sourceTree = "<group>"; };
+		1D70CD9E24508E9D0031CBFE /* TIMEMeasureLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TIMEMeasureLog.swift; sourceTree = "<group>"; };
+		1D70CDA02450AC820031CBFE /* LogicLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicLog.swift; sourceTree = "<group>"; };
+		1D70CDA42450E0ED0031CBFE /* PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryKeypathProtocol.swift; sourceTree = "<group>"; };
+		1D70CF442452B5680031CBFE /* WOTMappingCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMappingCoordinatorProtocol.swift; sourceTree = "<group>"; };
+		1D73BB7724436936004B720A /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
+		1D73BB7824436936004B720A /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
+		1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestCoordinator.swift; sourceTree = "<group>"; };
+		1D79EDA5212439C2005FBA34 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D79EDA8212439C2005FBA34 /* WOTPivot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPivot.h; sourceTree = "<group>"; };
+		1D79EDA9212439C2005FBA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D79EDAE212439C2005FBA34 /* WOTPivotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTPivotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotTests.swift; sourceTree = "<group>"; };
+		1D79EDB5212439C2005FBA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D8C293221357B9900759C42 /* NSNumber+CustomFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+CustomFormatter.m"; sourceTree = "<group>"; };
+		1D8C293321357B9900759C42 /* NSNumber+Randomizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Randomizer.h"; sourceTree = "<group>"; };
+		1D8C293421357B9900759C42 /* NSNumber+CustomFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+CustomFormatter.h"; sourceTree = "<group>"; };
+		1D8C293521357B9900759C42 /* NSNumber+Randomizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Randomizer.m"; sourceTree = "<group>"; };
+		1D8C297D21358A4800759C42 /* NSSet+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+WOT.m"; sourceTree = "<group>"; };
+		1D8C297E21358A4800759C42 /* NSSet+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+WOT.h"; sourceTree = "<group>"; };
+		1D8C298221358ACA00759C42 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
+		1D8C298321358ACA00759C42 /* NSThread+ExecutionOnMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+ExecutionOnMain.m"; sourceTree = "<group>"; };
+		1D8C298721358B4200759C42 /* NSMutableArray+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WOT.m"; sourceTree = "<group>"; };
+		1D8C298821358B4200759C42 /* NSArray+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WOT.h"; sourceTree = "<group>"; };
+		1D8C298921358B4200759C42 /* NSArray+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WOT.m"; sourceTree = "<group>"; };
+		1D8C298A21358B4200759C42 /* NSMutableArray+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WOT.h"; sourceTree = "<group>"; };
+		1D8C299121358CF700759C42 /* WOTPivotDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPivotDefines.h; sourceTree = "<group>"; };
+		1D8C299321358DB600759C42 /* WOTLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTLogger.h; sourceTree = "<group>"; };
+		1D9340F724179BF400B18F42 /* WOTRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestManager.swift; sourceTree = "<group>"; };
+		1DA153972444CDC700FB3C89 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		1DA153982444CDC700FB3C89 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		1DA1539A2444CDC700FB3C89 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
+		1DA1539B2444CDC700FB3C89 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
+		1DA1539C2444CDC700FB3C89 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
+		1DA1539D2444CDC700FB3C89 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
+		1DA153AE244A433700FB3C89 /* WOTJSONLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTJSONLink.swift; sourceTree = "<group>"; };
+		1DA153B0244A438200FB3C89 /* WOTWebRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebRequestBuilder.swift; sourceTree = "<group>"; };
+		1DA153B2244A43A100FB3C89 /* WOTWebDataPumper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebDataPumper.swift; sourceTree = "<group>"; };
+		1DA83CA82135633F0039CB4B /* NSMutableDictionary+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+WOT.h"; sourceTree = "<group>"; };
+		1DA83CA92135633F0039CB4B /* NSDictionary+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Hash.h"; sourceTree = "<group>"; };
+		1DA83CAA2135633F0039CB4B /* NSMutableDictionary+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+WOT.m"; sourceTree = "<group>"; };
+		1DA83CAB2135633F0039CB4B /* NSDictionary+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Hash.m"; sourceTree = "<group>"; };
+		1DA83CB1213563C50039CB4B /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
+		1DA83CB2213563C50039CB4B /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
+		1DA83CB6213563F60039CB4B /* NSString+WOTValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WOTValue.m"; sourceTree = "<group>"; };
+		1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WOTValue.h"; sourceTree = "<group>"; };
+		1DB67454221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebResponseAdapterProtocol.swift; sourceTree = "<group>"; };
+		1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankMetricOptions.swift; sourceTree = "<group>"; };
+		1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMetric.swift; sourceTree = "<group>"; };
+		1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankMetricList.swift; sourceTree = "<group>"; };
+		1DBF89A9240D27C9007DF8B2 /* WOTTankEvalutionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankEvalutionResult.swift; sourceTree = "<group>"; };
+		1DBF89AB240D3137007DF8B2 /* WOTTankIDList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankIDList.swift; sourceTree = "<group>"; };
+		1DBF89B3240E3BEE007DF8B2 /* WOTWebProxyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebProxyRequest.swift; sourceTree = "<group>"; };
+		1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebRequest.swift; sourceTree = "<group>"; };
+		1DBF89BB240F9D06007DF8B2 /* Dictionary_URLQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary_URLQuery.swift; sourceTree = "<group>"; };
+		1DBF89BD240FAE8C007DF8B2 /* WOTRequestArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestArguments.swift; sourceTree = "<group>"; };
+		1DBF89BF240FC12B007DF8B2 /* WOTHostConfigurationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTHostConfigurationProtocol.swift; sourceTree = "<group>"; };
+		1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModel.swift; sourceTree = "<group>"; };
+		1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataModelProtocol.swift; sourceTree = "<group>"; };
+		1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeModuleNode.swift; sourceTree = "<group>"; };
+		1DC6D4CD212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeModuleNodeProtocol.swift; sourceTree = "<group>"; };
+		1DE558CF2124560500576D41 /* WOTPivotNodeExtensionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeExtensionTest.swift; sourceTree = "<group>"; };
+		1DE558D02124560500576D41 /* WOTPivotFilterNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotFilterNode.swift; sourceTree = "<group>"; };
+		1DE558D12124560500576D41 /* WOTPivotRowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotRowNode.swift; sourceTree = "<group>"; };
+		1DE558D22124560500576D41 /* WOTPivotColNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotColNode.swift; sourceTree = "<group>"; };
+		1DE558D32124560500576D41 /* WOTPivotDataGroupNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataGroupNode.swift; sourceTree = "<group>"; };
+		1DE558D42124560500576D41 /* WOTPivotDataNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDataNode.swift; sourceTree = "<group>"; };
+		1DE558D52124560500576D41 /* WOTPivotNodeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeTest.swift; sourceTree = "<group>"; };
+		1DE558D62124560500576D41 /* WOTPivotNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNode.swift; sourceTree = "<group>"; };
+		1DE558D72124560500576D41 /* WOTPivotNodeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeProtocol.swift; sourceTree = "<group>"; };
+		1DE558D92124560500576D41 /* WOTNodeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeProtocol.swift; sourceTree = "<group>"; };
+		1DE558DA2124560500576D41 /* WOTNodeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeTest.swift; sourceTree = "<group>"; };
+		1DE558DB2124560500576D41 /* WOTNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNode.swift; sourceTree = "<group>"; };
+		1DE558F92124571000576D41 /* WOTDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataModelProtocol.swift; sourceTree = "<group>"; };
+		1DE558FA2124571000576D41 /* WOTDataModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataModelTest.swift; sourceTree = "<group>"; };
+		1DE558FB2124571000576D41 /* WOTDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataModel.swift; sourceTree = "<group>"; };
+		1DE559002124571000576D41 /* WOTTreeDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModel.swift; sourceTree = "<group>"; };
+		1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModelProtocol.swift; sourceTree = "<group>"; };
+		1DE5591A212458E100576D41 /* WOTPivotNodeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeIndex.swift; sourceTree = "<group>"; };
+		1DE5591C212458E100576D41 /* WOTConnectorNodeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTConnectorNodeIndex.swift; sourceTree = "<group>"; };
+		1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeIndexProtocol.swift; sourceTree = "<group>"; };
+		1DE5595821255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTConnectorNodeIndexProtocol.swift; sourceTree = "<group>"; };
+		1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeIndexProtocol.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D79EDA1212439C2005FBA34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D79EDAB212439C2005FBA34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D79EDAF212439C2005FBA34 /* WOTPivot.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D126A5221A54E4E001AF67F /* Pivot */ = {
+			isa = PBXGroup;
+			children = (
+				1D126A5321A54E4E001AF67F /* PivotVIPER.swift */,
+				1D126A5421A54E4E001AF67F /* PivotWireFrame.swift */,
+			);
+			path = Pivot;
+			sourceTree = "<group>";
+		};
+		1D1617742454523F0022E02F /* coredataStore */ = {
+			isa = PBXGroup;
+			children = (
+				1D1617752454524B0022E02F /* CoreDataMappingProtocol.swift */,
+				1D161777245452660022E02F /* CoreDataStore.swift */,
+			);
+			path = coredataStore;
+			sourceTree = "<group>";
+		};
+		1D256CD9212D4182002FCD78 /* viper */ = {
+			isa = PBXGroup;
+			children = (
+				1D126A5221A54E4E001AF67F /* Pivot */,
+				1D126A5021A54E4E001AF67F /* VIPER.swift */,
+				1D126A5521A54E4E001AF67F /* VIPERView.swift */,
+				1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */,
+			);
+			path = viper;
+			sourceTree = "<group>";
+		};
+		1D5D021623C73330004B0314 /* WOTPivotNodeCreator */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */,
+			);
+			path = WOTPivotNodeCreator;
+			sourceTree = "<group>";
+		};
+		1D5D022923C8623D004B0314 /* fetchController */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D022F23C86299004B0314 /* WOTCoredataProviderProtocol.swift */,
+				1D5D023623C86AC5004B0314 /* WOTCoreDataProvider.swift */,
+				1D5D0B0423CCB110004B0314 /* WOTDataFetchControllerProtocol.swift */,
+				1D5D022A23C8623D004B0314 /* WOTDataFetchController.swift */,
+				1D5D022B23C8623D004B0314 /* WOTDataTanksFetchControllerTest.swift */,
+			);
+			path = fetchController;
+			sourceTree = "<group>";
+		};
+		1D5D023D23C87033004B0314 /* NSManagedObject */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D023E23C87033004B0314 /* NSManagedObject+Operations.swift */,
+				1D16176024544DB60022E02F /* NSManagedObject+KeypathProtocol.swift */,
+				1D16176224544DD10022E02F /* NSManagedObject+PrimaryKeypathProtocol.swift */,
+				1D16176424544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift */,
+				1D16178224547BAD0022E02F /* NSManagedObject+JSONDecoding.swift */,
+			);
+			path = NSManagedObject;
+			sourceTree = "<group>";
+		};
+		1D5D024823C8743F004B0314 /* NSManagedObjectContext */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D024923C87456004B0314 /* NSManagedObjectContext+AllObjects.swift */,
+			);
+			path = NSManagedObjectContext;
+			sourceTree = "<group>";
+		};
+		1D5D0AF923CCB012004B0314 /* WOTPermutator */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D0AFB23CCB012004B0314 /* WOTPivotMetadataPermutator.swift */,
+				1D5D0AFA23CCB012004B0314 /* WOTPivotMetadataPermutatorTest.swift */,
+			);
+			path = WOTPermutator;
+			sourceTree = "<group>";
+		};
+		1D5D0AFF23CCB086004B0314 /* WOTNodeEnumerator */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D0B0023CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift */,
+				1D5D0B0123CCB086004B0314 /* WOTNodeEnumerator.swift */,
+			);
+			path = WOTNodeEnumerator;
+			sourceTree = "<group>";
+		};
+		1D5D0B0623CDA129004B0314 /* metrics */ = {
+			isa = PBXGroup;
+			children = (
+				1DBF89A9240D27C9007DF8B2 /* WOTTankEvalutionResult.swift */,
+				1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */,
+				1DBF89A7240D1E19007DF8B2 /* WOTTankMetricList.swift */,
+				1DBF89AB240D3137007DF8B2 /* WOTTankIDList.swift */,
+				1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */,
+			);
+			path = metrics;
+			sourceTree = "<group>";
+		};
+		1D65F77A221551C6006A85E4 /* NSError */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F77B221551C6006A85E4 /* NSError+Pivot.swift */,
+			);
+			path = NSError;
+			sourceTree = "<group>";
+		};
+		1D65F7D22215AF4D006A85E4 /* CGContext */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F7D32215AF63006A85E4 /* CGContext_NodeConnector.swift */,
+			);
+			path = CGContext;
+			sourceTree = "<group>";
+		};
+		1D65F7D52215B0B8006A85E4 /* CGRect */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F7D62215B0CD006A85E4 /* CGRect_Center.swift */,
+			);
+			path = CGRect;
+			sourceTree = "<group>";
+		};
+		1D65F7E82216A60D006A85E4 /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F7E92216A60D006A85E4 /* WOTPivotLayout */,
+				1D65F7EE2216A60D006A85E4 /* WOTTreeLayout */,
+			);
+			path = layout;
+			sourceTree = "<group>";
+		};
+		1D65F7E92216A60D006A85E4 /* WOTPivotLayout */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F8152216A7B8006A85E4 /* WOTDimension */,
+				1D65F7EA2216A60D006A85E4 /* WOTTankPivotLayout.swift */,
+				1D65F7EB2216A60D006A85E4 /* WOTPivotLayoutCellAttributes.swift */,
+				1D65F7EC2216A60D006A85E4 /* WOTPivotLayoutCellAttributesTest.swift */,
+				1D65F7ED2216A60D006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift */,
+			);
+			path = WOTPivotLayout;
+			sourceTree = "<group>";
+		};
+		1D65F7EE2216A60D006A85E4 /* WOTTreeLayout */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F7EF2216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift */,
+				1D65F7F02216A60D006A85E4 /* WOTTankConfigurationFlowLayout.swift */,
+				1D65F7F12216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift */,
+			);
+			path = WOTTreeLayout;
+			sourceTree = "<group>";
+		};
+		1D65F8152216A7B8006A85E4 /* WOTDimension */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F8172216A7B8006A85E4 /* WOTPivotDimension */,
+				1D65F8162216A7B8006A85E4 /* WOTDimension.swift */,
+				1D65F8232216A7B8006A85E4 /* WOTDimensionProtocol.swift */,
+			);
+			path = WOTDimension;
+			sourceTree = "<group>";
+		};
+		1D65F8172216A7B8006A85E4 /* WOTPivotDimension */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F8182216A7B8006A85E4 /* WOTPivotDimensionCalculator */,
+				1D65F8202216A7B8006A85E4 /* WOTPivotNodeHolderProtocol.swift */,
+				1D65F8212216A7B8006A85E4 /* WOTPivotDimension.swift */,
+				1D65F8222216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift */,
+			);
+			path = WOTPivotDimension;
+			sourceTree = "<group>";
+		};
+		1D65F8182216A7B8006A85E4 /* WOTPivotDimensionCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F8192216A7B8006A85E4 /* extension */,
+				1D65F81F2216A7B8006A85E4 /* WOTDimensionCalculator.swift */,
+			);
+			path = WOTPivotDimensionCalculator;
+			sourceTree = "<group>";
+		};
+		1D65F8192216A7B8006A85E4 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				1D65F81A2216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift */,
+				1D65F81B2216A7B8006A85E4 /* WOTDimensionRowCalculator.swift */,
+				1D65F81C2216A7B8006A85E4 /* WOTDimensionFilterCalculator.swift */,
+				1D65F81D2216A7B8006A85E4 /* WOTDimensionDataCalculator.swift */,
+				1D65F81E2216A7B8006A85E4 /* WOTDimensionColumnCalculator.swift */,
+			);
+			path = extension;
+			sourceTree = "<group>";
+		};
+		1D695C77244CB00A00650F95 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				1D695C78244CB01700650F95 /* AnyConvertable.swift */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		1D70CD6D244ED45A0031CBFE /* LogInspector */ = {
+			isa = PBXGroup;
+			children = (
+				1D70CD6E244ED46A0031CBFE /* LogInspector.swift */,
+				1D70CD76244EDFE30031CBFE /* OBJNewLog.swift */,
+				1D70CD78244EE0050031CBFE /* OBJFreeLog.swift */,
+				1D70CD90244F44EF0031CBFE /* JSONFinishLog.swift */,
+				1D70CD8E244F44C60031CBFE /* JSONStartLog.swift */,
+				1D70CD70244EDEBB0031CBFE /* ErrorLog.swift */,
+				1D70CD86244EF88F0031CBFE /* CurrentThreadLog.swift */,
+				1D70CD88244EFC730031CBFE /* CustomThreadLog.swift */,
+				1D70CD8A244F3C160031CBFE /* CDFetchLog.swift */,
+				1D70CD9C245029AC0031CBFE /* CDMergeLog.swift */,
+				1D70CD8C244F40940031CBFE /* CDStash.swift */,
+				1D70CD92244F8B400031CBFE /* WEBStartLog.swift */,
+				1D70CD94244F8BBE0031CBFE /* WEBCancelLog.swift */,
+				1D70CD98244F8C680031CBFE /* WEBFinishLog.swift */,
+				1D70CD9E24508E9D0031CBFE /* TIMEMeasureLog.swift */,
+				1D70CDA02450AC820031CBFE /* LogicLog.swift */,
+			);
+			path = LogInspector;
+			sourceTree = "<group>";
+		};
+		1D73BB7524436936004B720A /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				1DA153962444CDC700FB3C89 /* Reachability */,
+				1DA153992444CDC700FB3C89 /* RomanNumber */,
+				1D73BB7624436936004B720A /* codable */,
+			);
+			name = ThirdParty;
+			path = core/ThirdParty;
+			sourceTree = "<group>";
+		};
+		1D73BB7624436936004B720A /* codable */ = {
+			isa = PBXGroup;
+			children = (
+				1D73BB7724436936004B720A /* Coding.swift */,
+				1D73BB7824436936004B720A /* AnyCodable.swift */,
+				1D4ACF33244373C400C6CBE0 /* KeyPathListable.swift */,
+			);
+			path = codable;
+			sourceTree = "<group>";
+		};
+		1D79ED9B212439C2005FBA34 = {
+			isa = PBXGroup;
+			children = (
+				1D79EDA7212439C2005FBA34 /* WOTPivot */,
+				1D79EDB2212439C2005FBA34 /* WOTPivotTests */,
+				1D79EDA6212439C2005FBA34 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1D79EDA6212439C2005FBA34 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D79EDA5212439C2005FBA34 /* WOTPivot.framework */,
+				1D79EDAE212439C2005FBA34 /* WOTPivotTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D79EDA7212439C2005FBA34 /* WOTPivot */ = {
+			isa = PBXGroup;
+			children = (
+				1D0304CF21E8C19100050131 /* WOTAPI.swift */,
+				1D73BB7524436936004B720A /* ThirdParty */,
+				1DA83CA62135633F0039CB4B /* categories */,
+				1DE558CB2124560500576D41 /* core */,
+				1D79EDA8212439C2005FBA34 /* WOTPivot.h */,
+				1D79EDA9212439C2005FBA34 /* Info.plist */,
+				1D8C299121358CF700759C42 /* WOTPivotDefines.h */,
+				1D8C299321358DB600759C42 /* WOTLogger.h */,
+			);
+			path = WOTPivot;
+			sourceTree = "<group>";
+		};
+		1D79EDB2212439C2005FBA34 /* WOTPivotTests */ = {
+			isa = PBXGroup;
+			children = (
+				1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */,
+				1D79EDB5212439C2005FBA34 /* Info.plist */,
+			);
+			path = WOTPivotTests;
+			sourceTree = "<group>";
+		};
+		1D8C293121357B9900759C42 /* NSNumber */ = {
+			isa = PBXGroup;
+			children = (
+				1D8C293421357B9900759C42 /* NSNumber+CustomFormatter.h */,
+				1D8C293221357B9900759C42 /* NSNumber+CustomFormatter.m */,
+				1D8C293321357B9900759C42 /* NSNumber+Randomizer.h */,
+				1D8C293521357B9900759C42 /* NSNumber+Randomizer.m */,
+			);
+			path = NSNumber;
+			sourceTree = "<group>";
+		};
+		1D8C297C21358A4800759C42 /* NSSet */ = {
+			isa = PBXGroup;
+			children = (
+				1D8C297E21358A4800759C42 /* NSSet+WOT.h */,
+				1D8C297D21358A4800759C42 /* NSSet+WOT.m */,
+			);
+			path = NSSet;
+			sourceTree = "<group>";
+		};
+		1D8C298121358ACA00759C42 /* NSThread */ = {
+			isa = PBXGroup;
+			children = (
+				1D8C298221358ACA00759C42 /* NSThread+ExecutionOnMain.h */,
+				1D8C298321358ACA00759C42 /* NSThread+ExecutionOnMain.m */,
+			);
+			path = NSThread;
+			sourceTree = "<group>";
+		};
+		1D8C298621358B4200759C42 /* NSArray */ = {
+			isa = PBXGroup;
+			children = (
+				1D8C298A21358B4200759C42 /* NSMutableArray+WOT.h */,
+				1D8C298721358B4200759C42 /* NSMutableArray+WOT.m */,
+				1D8C298821358B4200759C42 /* NSArray+WOT.h */,
+				1D8C298921358B4200759C42 /* NSArray+WOT.m */,
+			);
+			path = NSArray;
+			sourceTree = "<group>";
+		};
+		1DA153962444CDC700FB3C89 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				1DA153972444CDC700FB3C89 /* Reachability.m */,
+				1DA153982444CDC700FB3C89 /* Reachability.h */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		1DA153992444CDC700FB3C89 /* RomanNumber */ = {
+			isa = PBXGroup;
+			children = (
+				1DA1539B2444CDC700FB3C89 /* RomanNumber.h */,
+				1DA1539D2444CDC700FB3C89 /* RomanNumber.m */,
+				1DA1539C2444CDC700FB3C89 /* NSString+RomanUtils.h */,
+				1DA1539A2444CDC700FB3C89 /* NSString+RomanUtils.m */,
+			);
+			path = RomanNumber;
+			sourceTree = "<group>";
+		};
+		1DA83C89213558AB0039CB4B /* adapters */ = {
+			isa = PBXGroup;
+			children = (
+				1D1617742454523F0022E02F /* coredataStore */,
+				1DA83C9721355A6D0039CB4B /* webRequest */,
+				1DA83C9021355A340039CB4B /* webResponse */,
+			);
+			path = adapters;
+			sourceTree = "<group>";
+		};
+		1DA83C9021355A340039CB4B /* webResponse */ = {
+			isa = PBXGroup;
+			children = (
+				1D1617722454517D0022E02F /* JSONMapperProtocol.swift */,
+				1D161780245472110022E02F /* RESTAPIResponse.swift */,
+				1DB67454221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift */,
+				1DA153AE244A433700FB3C89 /* WOTJSONLink.swift */,
+			);
+			path = webResponse;
+			sourceTree = "<group>";
+		};
+		1DA83C9721355A6D0039CB4B /* webRequest */ = {
+			isa = PBXGroup;
+			children = (
+				1D70CDA42450E0ED0031CBFE /* PrimaryKeypathProtocol.swift */,
+				1DBF89BF240FC12B007DF8B2 /* WOTHostConfigurationProtocol.swift */,
+				1D5668F02424BD54008458AF /* WOTWebSessionManagerProtocol.swift */,
+				1DBF89BD240FAE8C007DF8B2 /* WOTRequestArguments.swift */,
+				1D2612172410DEE500CFEB16 /* WOTRequest.swift */,
+				1DBF89B5240E4927007DF8B2 /* WOTWebRequest.swift */,
+				1DBF89B3240E3BEE007DF8B2 /* WOTWebProxyRequest.swift */,
+				1D73E9702412400100C6DB06 /* WOTRequestCoordinator.swift */,
+				1D9340F724179BF400B18F42 /* WOTRequestManager.swift */,
+				1DA153B0244A438200FB3C89 /* WOTWebRequestBuilder.swift */,
+				1DA153B2244A43A100FB3C89 /* WOTWebDataPumper.swift */,
+				1D70CF442452B5680031CBFE /* WOTMappingCoordinatorProtocol.swift */,
+				1D16176A24544F130022E02F /* WOTWEBRequestError.swift */,
+			);
+			path = webRequest;
+			sourceTree = "<group>";
+		};
+		1DA83CA62135633F0039CB4B /* categories */ = {
+			isa = PBXGroup;
+			children = (
+				1D695C77244CB00A00650F95 /* JSON */,
+				1D65F7D22215AF4D006A85E4 /* CGContext */,
+				1D65F7D52215B0B8006A85E4 /* CGRect */,
+				1D8C298621358B4200759C42 /* NSArray */,
+				1DA83CB0213563C50039CB4B /* NSBundle */,
+				1DA83CA72135633F0039CB4B /* NSDictionary */,
+				1D65F77A221551C6006A85E4 /* NSError */,
+				1D5D023D23C87033004B0314 /* NSManagedObject */,
+				1D5D024823C8743F004B0314 /* NSManagedObjectContext */,
+				1D8C293121357B9900759C42 /* NSNumber */,
+				1D8C297C21358A4800759C42 /* NSSet */,
+				1DA83CB5213563F60039CB4B /* NSString */,
+				1D8C298121358ACA00759C42 /* NSThread */,
+			);
+			path = categories;
+			sourceTree = "<group>";
+		};
+		1DA83CA72135633F0039CB4B /* NSDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				1DA83CA82135633F0039CB4B /* NSMutableDictionary+WOT.h */,
+				1DA83CAA2135633F0039CB4B /* NSMutableDictionary+WOT.m */,
+				1DA83CA92135633F0039CB4B /* NSDictionary+Hash.h */,
+				1DA83CAB2135633F0039CB4B /* NSDictionary+Hash.m */,
+				1D65F7BD2215795F006A85E4 /* Dictionary_Merge.swift */,
+				1DBF89BB240F9D06007DF8B2 /* Dictionary_URLQuery.swift */,
+			);
+			path = NSDictionary;
+			sourceTree = "<group>";
+		};
+		1DA83CB0213563C50039CB4B /* NSBundle */ = {
+			isa = PBXGroup;
+			children = (
+				1DA83CB2213563C50039CB4B /* NSBundle+LanguageBundle.h */,
+				1DA83CB1213563C50039CB4B /* NSBundle+LanguageBundle.m */,
+			);
+			path = NSBundle;
+			sourceTree = "<group>";
+		};
+		1DA83CB5213563F60039CB4B /* NSString */ = {
+			isa = PBXGroup;
+			children = (
+				1DA83CB7213563F60039CB4B /* NSString+WOTValue.h */,
+				1DA83CB6213563F60039CB4B /* NSString+WOTValue.m */,
+				1D294B6422116856002DA600 /* String_UrlEncode.swift */,
+				1D65F776221435E7006A85E4 /* NSString+UrlEncode.h */,
+				1D65F777221435E7006A85E4 /* NSString+UrlEncode.m */,
+			);
+			path = NSString;
+			sourceTree = "<group>";
+		};
+		1DC6D4C6212576EA00A1C9C2 /* WOTPivotDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4C8212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift */,
+				1DC6D4C7212576EA00A1C9C2 /* WOTPivotDataModel.swift */,
+			);
+			path = WOTPivotDataModel;
+			sourceTree = "<group>";
+		};
+		1DC6D4CB212577D400A1C9C2 /* WOTTreeNode */ = {
+			isa = PBXGroup;
+			children = (
+				1DC6D4CD212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift */,
+				1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */,
+			);
+			path = WOTTreeNode;
+			sourceTree = "<group>";
+		};
+		1DE558CB2124560500576D41 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */,
+				1D70CD6D244ED45A0031CBFE /* LogInspector */,
+				1D5D0B0623CDA129004B0314 /* metrics */,
+				1D5D022923C8623D004B0314 /* fetchController */,
+				1D65F7E82216A60D006A85E4 /* layout */,
+				1DA83C89213558AB0039CB4B /* adapters */,
+				1D256CD9212D4182002FCD78 /* viper */,
+				1DE55918212458E100576D41 /* indexes */,
+				1DE558CC2124560500576D41 /* nodes */,
+				1DE558F72124571000576D41 /* models */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		1DE558CC2124560500576D41 /* nodes */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D0AFF23CCB086004B0314 /* WOTNodeEnumerator */,
+				1D5D021623C73330004B0314 /* WOTPivotNodeCreator */,
+				1DC6D4CB212577D400A1C9C2 /* WOTTreeNode */,
+				1DE558CD2124560500576D41 /* WOTPivotNode */,
+				1DE558D82124560500576D41 /* WOTNode */,
+			);
+			path = nodes;
+			sourceTree = "<group>";
+		};
+		1DE558CD2124560500576D41 /* WOTPivotNode */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558CE2124560500576D41 /* extensions */,
+				1DE558D52124560500576D41 /* WOTPivotNodeTest.swift */,
+				1DE558D62124560500576D41 /* WOTPivotNode.swift */,
+				1DE558D72124560500576D41 /* WOTPivotNodeProtocol.swift */,
+			);
+			path = WOTPivotNode;
+			sourceTree = "<group>";
+		};
+		1DE558CE2124560500576D41 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558CF2124560500576D41 /* WOTPivotNodeExtensionTest.swift */,
+				1DE558D02124560500576D41 /* WOTPivotFilterNode.swift */,
+				1DE558D12124560500576D41 /* WOTPivotRowNode.swift */,
+				1DE558D22124560500576D41 /* WOTPivotColNode.swift */,
+				1DE558D32124560500576D41 /* WOTPivotDataGroupNode.swift */,
+				1DE558D42124560500576D41 /* WOTPivotDataNode.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		1DE558D82124560500576D41 /* WOTNode */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558D92124560500576D41 /* WOTNodeProtocol.swift */,
+				1DE558DA2124560500576D41 /* WOTNodeTest.swift */,
+				1DE558DB2124560500576D41 /* WOTNode.swift */,
+			);
+			path = WOTNode;
+			sourceTree = "<group>";
+		};
+		1DE558F72124571000576D41 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D0AF923CCB012004B0314 /* WOTPermutator */,
+				1DC6D4C6212576EA00A1C9C2 /* WOTPivotDataModel */,
+				1DE558F82124571000576D41 /* WOTDataModel */,
+				1DE558FF2124571000576D41 /* WOTTreeDataModel */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		1DE558F82124571000576D41 /* WOTDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				1DE558F92124571000576D41 /* WOTDataModelProtocol.swift */,
+				1DE558FB2124571000576D41 /* WOTDataModel.swift */,
+				1DE558FA2124571000576D41 /* WOTDataModelTest.swift */,
+			);
+			path = WOTDataModel;
+			sourceTree = "<group>";
+		};
+		1DE558FF2124571000576D41 /* WOTTreeDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */,
+				1DE559002124571000576D41 /* WOTTreeDataModel.swift */,
+			);
+			path = WOTTreeDataModel;
+			sourceTree = "<group>";
+		};
+		1DE55918212458E100576D41 /* indexes */ = {
+			isa = PBXGroup;
+			children = (
+				1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */,
+				1DE55919212458E100576D41 /* WOTNodeIndex */,
+				1DE5591B212458E100576D41 /* WOTNodeConnectorIndex */,
+			);
+			path = indexes;
+			sourceTree = "<group>";
+		};
+		1DE55919212458E100576D41 /* WOTNodeIndex */ = {
+			isa = PBXGroup;
+			children = (
+				1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */,
+				1DE5591A212458E100576D41 /* WOTPivotNodeIndex.swift */,
+			);
+			path = WOTNodeIndex;
+			sourceTree = "<group>";
+		};
+		1DE5591B212458E100576D41 /* WOTNodeConnectorIndex */ = {
+			isa = PBXGroup;
+			children = (
+				1DE5595821255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift */,
+				1DE5591C212458E100576D41 /* WOTConnectorNodeIndex.swift */,
+			);
+			path = WOTNodeConnectorIndex;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1D79EDA2212439C2005FBA34 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DA83CAC2135633F0039CB4B /* NSMutableDictionary+WOT.h in Headers */,
+				1DA83CAD2135633F0039CB4B /* NSDictionary+Hash.h in Headers */,
+				1D8C293821357B9A00759C42 /* NSNumber+CustomFormatter.h in Headers */,
+				1D8C293721357B9A00759C42 /* NSNumber+Randomizer.h in Headers */,
+				1D8C298E21358B4200759C42 /* NSMutableArray+WOT.h in Headers */,
+				1D8C298C21358B4200759C42 /* NSArray+WOT.h in Headers */,
+				1D65F778221435E7006A85E4 /* NSString+UrlEncode.h in Headers */,
+				1D8C299421358DB600759C42 /* WOTLogger.h in Headers */,
+				1D8C298421358ACA00759C42 /* NSThread+ExecutionOnMain.h in Headers */,
+				1DA83CB4213563C50039CB4B /* NSBundle+LanguageBundle.h in Headers */,
+				1DA153A22444CDC700FB3C89 /* NSString+RomanUtils.h in Headers */,
+				1DA153A12444CDC700FB3C89 /* RomanNumber.h in Headers */,
+				1D8C298021358A4800759C42 /* NSSet+WOT.h in Headers */,
+				1D8C299221358CF700759C42 /* WOTPivotDefines.h in Headers */,
+				1DA1539F2444CDC700FB3C89 /* Reachability.h in Headers */,
+				1DA83CB9213563F60039CB4B /* NSString+WOTValue.h in Headers */,
+				1D79EDB6212439C2005FBA34 /* WOTPivot.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1D79EDA4212439C2005FBA34 /* WOTPivot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D79EDB9212439C2005FBA34 /* Build configuration list for PBXNativeTarget "WOTPivot" */;
+			buildPhases = (
+				1D79EDA0212439C2005FBA34 /* Sources */,
+				1D79EDA1212439C2005FBA34 /* Frameworks */,
+				1D79EDA2212439C2005FBA34 /* Headers */,
+				1D79EDA3212439C2005FBA34 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WOTPivot;
+			productName = WOTPivot;
+			productReference = 1D79EDA5212439C2005FBA34 /* WOTPivot.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		1D79EDAD212439C2005FBA34 /* WOTPivotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D79EDBC212439C2005FBA34 /* Build configuration list for PBXNativeTarget "WOTPivotTests" */;
+			buildPhases = (
+				1D79EDAA212439C2005FBA34 /* Sources */,
+				1D79EDAB212439C2005FBA34 /* Frameworks */,
+				1D79EDAC212439C2005FBA34 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D79EDB1212439C2005FBA34 /* PBXTargetDependency */,
+			);
+			name = WOTPivotTests;
+			productName = WOTPivotTests;
+			productReference = 1D79EDAE212439C2005FBA34 /* WOTPivotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1D79ED9C212439C2005FBA34 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Pavel Yeshchyk";
+				TargetAttributes = {
+					1D79EDA4212439C2005FBA34 = {
+						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1140;
+					};
+					1D79EDAD212439C2005FBA34 = {
+						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1010;
+					};
+				};
+			};
+			buildConfigurationList = 1D79ED9F212439C2005FBA34 /* Build configuration list for PBXProject "WOTPivot" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1D79ED9B212439C2005FBA34;
+			productRefGroup = 1D79EDA6212439C2005FBA34 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D79EDA4212439C2005FBA34 /* WOTPivot */,
+				1D79EDAD212439C2005FBA34 /* WOTPivotTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D79EDA3212439C2005FBA34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D79EDAC212439C2005FBA34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D79EDA0212439C2005FBA34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D70CD77244EDFE30031CBFE /* OBJNewLog.swift in Sources */,
+				1DA153B3244A43A100FB3C89 /* WOTWebDataPumper.swift in Sources */,
+				1D161778245452660022E02F /* CoreDataStore.swift in Sources */,
+				1D8C293921357B9A00759C42 /* NSNumber+Randomizer.m in Sources */,
+				1D5D022C23C8623D004B0314 /* WOTDataFetchController.swift in Sources */,
+				1DE559022124571000576D41 /* WOTDataModelProtocol.swift in Sources */,
+				1DA153AF244A433700FB3C89 /* WOTJSONLink.swift in Sources */,
+				1D65F82B2216A7B8006A85E4 /* WOTPivotNodeHolderProtocol.swift in Sources */,
+				1D65F8282216A7B8006A85E4 /* WOTDimensionDataCalculator.swift in Sources */,
+				1D70CD93244F8B400031CBFE /* WEBStartLog.swift in Sources */,
+				1DB67455221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift in Sources */,
+				1D70CD91244F44EF0031CBFE /* JSONFinishLog.swift in Sources */,
+				1DC6D4CA212576EA00A1C9C2 /* WOTPivotDataModelProtocol.swift in Sources */,
+				1D5D023723C86AC5004B0314 /* WOTCoreDataProvider.swift in Sources */,
+				1DE558DF2124560500576D41 /* WOTPivotColNode.swift in Sources */,
+				1D70CD9D245029AD0031CBFE /* CDMergeLog.swift in Sources */,
+				1DBF89AA240D27C9007DF8B2 /* WOTTankEvalutionResult.swift in Sources */,
+				1DE559042124571000576D41 /* WOTDataModel.swift in Sources */,
+				1DE558E42124560500576D41 /* WOTPivotNodeProtocol.swift in Sources */,
+				1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */,
+				1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */,
+				1DBF89B6240E4927007DF8B2 /* WOTWebRequest.swift in Sources */,
+				1D65F7F22216A60E006A85E4 /* WOTTankPivotLayout.swift in Sources */,
+				1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */,
+				1D161781245472110022E02F /* RESTAPIResponse.swift in Sources */,
+				1DBF89C0240FC12B007DF8B2 /* WOTHostConfigurationProtocol.swift in Sources */,
+				1DBF89B4240E3BEE007DF8B2 /* WOTWebProxyRequest.swift in Sources */,
+				1D5D0B0223CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift in Sources */,
+				1DE559072124571000576D41 /* WOTTreeDataModel.swift in Sources */,
+				1D70CD8D244F40940031CBFE /* CDStash.swift in Sources */,
+				1D5D0B0523CCB110004B0314 /* WOTDataFetchControllerProtocol.swift in Sources */,
+				1D5D021823C7334F004B0314 /* WOTTankPivotNodeCreator.swift in Sources */,
+				1D70CD99244F8C680031CBFE /* WEBFinishLog.swift in Sources */,
+				1DE5595921255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift in Sources */,
+				1D65F8252216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift in Sources */,
+				1D2612182410DEE500CFEB16 /* WOTRequest.swift in Sources */,
+				1D294B6522116856002DA600 /* String_UrlEncode.swift in Sources */,
+				1D65F8272216A7B8006A85E4 /* WOTDimensionFilterCalculator.swift in Sources */,
+				1DA1539E2444CDC700FB3C89 /* Reachability.m in Sources */,
+				1D70CD8F244F44C60031CBFE /* JSONStartLog.swift in Sources */,
+				1DA153B1244A438200FB3C89 /* WOTWebRequestBuilder.swift in Sources */,
+				1DE558E12124560500576D41 /* WOTPivotDataNode.swift in Sources */,
+				1DBF89A8240D1E19007DF8B2 /* WOTTankMetricList.swift in Sources */,
+				1D65F7D42215AF63006A85E4 /* CGContext_NodeConnector.swift in Sources */,
+				1D5D024A23C87456004B0314 /* NSManagedObjectContext+AllObjects.swift in Sources */,
+				1D8C298521358ACA00759C42 /* NSThread+ExecutionOnMain.m in Sources */,
+				1DBF89BC240F9D06007DF8B2 /* Dictionary_URLQuery.swift in Sources */,
+				1DE5591D212458E100576D41 /* WOTPivotNodeIndex.swift in Sources */,
+				1D65F8292216A7B8006A85E4 /* WOTDimensionColumnCalculator.swift in Sources */,
+				1D5D0B0323CCB086004B0314 /* WOTNodeEnumerator.swift in Sources */,
+				1D70CD95244F8BBE0031CBFE /* WEBCancelLog.swift in Sources */,
+				1D65F7F72216A60E006A85E4 /* WOTTankConfigurationFlowLayout.swift in Sources */,
+				1D65F779221435E7006A85E4 /* NSString+UrlEncode.m in Sources */,
+				1D126A5921A54E4E001AF67F /* PivotWireFrame.swift in Sources */,
+				1D126A5A21A54E4E001AF67F /* VIPERView.swift in Sources */,
+				1D70CD71244EDEBB0031CBFE /* ErrorLog.swift in Sources */,
+				1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */,
+				1D65F82A2216A7B8006A85E4 /* WOTDimensionCalculator.swift in Sources */,
+				1DA83CAE2135633F0039CB4B /* NSMutableDictionary+WOT.m in Sources */,
+				1D8C293621357B9A00759C42 /* NSNumber+CustomFormatter.m in Sources */,
+				1D5668F12424BD54008458AF /* WOTWebSessionManagerProtocol.swift in Sources */,
+				1D16176324544DD10022E02F /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */,
+				1D65F82D2216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift in Sources */,
+				1DA83CB8213563F60039CB4B /* NSString+WOTValue.m in Sources */,
+				1D65F82E2216A7B8006A85E4 /* WOTDimensionProtocol.swift in Sources */,
+				1D65F7F32216A60E006A85E4 /* WOTPivotLayoutCellAttributes.swift in Sources */,
+				1D1617762454524B0022E02F /* CoreDataMappingProtocol.swift in Sources */,
+				1D9340F824179BF400B18F42 /* WOTRequestManager.swift in Sources */,
+				1D8C298B21358B4200759C42 /* NSMutableArray+WOT.m in Sources */,
+				1D5D023023C86299004B0314 /* WOTCoredataProviderProtocol.swift in Sources */,
+				1DA83CB3213563C50039CB4B /* NSBundle+LanguageBundle.m in Sources */,
+				1D16176124544DB60022E02F /* NSManagedObject+KeypathProtocol.swift in Sources */,
+				1D1617732454517D0022E02F /* JSONMapperProtocol.swift in Sources */,
+				1D70CDA12450AC820031CBFE /* LogicLog.swift in Sources */,
+				1D70CD6F244ED46A0031CBFE /* LogInspector.swift in Sources */,
+				1D4ACF34244373C400C6CBE0 /* KeyPathListable.swift in Sources */,
+				1DE558E52124560500576D41 /* WOTNodeProtocol.swift in Sources */,
+				1D65F7F82216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift in Sources */,
+				1D3005C4241A241C00E453B9 /* WOTPivotAppManager.swift in Sources */,
+				1DE5595B21255AE400576D41 /* WOTNodeIndexProtocol.swift in Sources */,
+				1D70CD79244EE0050031CBFE /* OBJFreeLog.swift in Sources */,
+				1DE558E72124560500576D41 /* WOTNode.swift in Sources */,
+				1DC6D4CF212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift in Sources */,
+				1D65F7F62216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift in Sources */,
+				1DA153A02444CDC700FB3C89 /* NSString+RomanUtils.m in Sources */,
+				1D70CDA52450E0EE0031CBFE /* PrimaryKeypathProtocol.swift in Sources */,
+				1D8C297F21358A4800759C42 /* NSSet+WOT.m in Sources */,
+				1D65F7BE2215795F006A85E4 /* Dictionary_Merge.swift in Sources */,
+				1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */,
+				1DBF89BE240FAE8C007DF8B2 /* WOTRequestArguments.swift in Sources */,
+				1DE558E02124560500576D41 /* WOTPivotDataGroupNode.swift in Sources */,
+				1DA153A32444CDC700FB3C89 /* RomanNumber.m in Sources */,
+				1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */,
+				1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */,
+				1D695C79244CB01700650F95 /* AnyConvertable.swift in Sources */,
+				1D16176524544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift in Sources */,
+				1D16178324547BAD0022E02F /* NSManagedObject+JSONDecoding.swift in Sources */,
+				1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */,
+				1D5D024123C87033004B0314 /* NSManagedObject+Operations.swift in Sources */,
+				1D5D0AFD23CCB012004B0314 /* WOTPivotMetadataPermutator.swift in Sources */,
+				1D73BB7A24436936004B720A /* AnyCodable.swift in Sources */,
+				1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */,
+				1D65F8262216A7B8006A85E4 /* WOTDimensionRowCalculator.swift in Sources */,
+				1D70CD89244EFC730031CBFE /* CustomThreadLog.swift in Sources */,
+				1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */,
+				1D70CF452452B5680031CBFE /* WOTMappingCoordinatorProtocol.swift in Sources */,
+				1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */,
+				1D73BB7924436936004B720A /* Coding.swift in Sources */,
+				1D16176B24544F130022E02F /* WOTWEBRequestError.swift in Sources */,
+				1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */,
+				1DE5591E212458E100576D41 /* WOTConnectorNodeIndex.swift in Sources */,
+				1D8C298D21358B4200759C42 /* NSArray+WOT.m in Sources */,
+				1D65F8242216A7B8006A85E4 /* WOTDimension.swift in Sources */,
+				1DE559572125586200576D41 /* WOTPivotNodeIndexProtocol.swift in Sources */,
+				1D65F7D72215B0CD006A85E4 /* CGRect_Center.swift in Sources */,
+				1DBF89A4240D0F08007DF8B2 /* WOTTankMetricOptions.swift in Sources */,
+				1D65F7F52216A60E006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift in Sources */,
+				1DA83CAF213563400039CB4B /* NSDictionary+Hash.m in Sources */,
+				1D70CD9F24508E9D0031CBFE /* TIMEMeasureLog.swift in Sources */,
+				1D70CD87244EF88F0031CBFE /* CurrentThreadLog.swift in Sources */,
+				1DBF89AC240D3137007DF8B2 /* WOTTankIDList.swift in Sources */,
+				1D65F77C221551C6006A85E4 /* NSError+Pivot.swift in Sources */,
+				1D70CD8B244F3C160031CBFE /* CDFetchLog.swift in Sources */,
+				1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D79EDAA212439C2005FBA34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D5D0AFE23CCB02B004B0314 /* WOTPivotMetadataPermutatorTest.swift in Sources */,
+				1DE558EA2124561500576D41 /* WOTNodeTest.swift in Sources */,
+				1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */,
+				1D65F7F92216A63F006A85E4 /* WOTPivotLayoutCellAttributesTest.swift in Sources */,
+				1DE558E92124561000576D41 /* WOTPivotNodeTest.swift in Sources */,
+				1DE5590A2124572D00576D41 /* WOTDataModelTest.swift in Sources */,
+				1DE558E82124561000576D41 /* WOTPivotNodeExtensionTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1D79EDB1212439C2005FBA34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D79EDA4212439C2005FBA34 /* WOTPivot */;
+			targetProxy = 1D79EDB0212439C2005FBA34 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D79EDB7212439C2005FBA34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "WOTPivot-Swift.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1D79EDB8212439C2005FBA34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "WOTPivot-Swift.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1D79EDBA212439C2005FBA34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = WOTPivot/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTPivot;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(PRODUCT_NAME)-Swift.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D79EDBB212439C2005FBA34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = WOTPivot/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTPivot;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(PRODUCT_NAME)-Swift.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1D79EDBD212439C2005FBA34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WOTPivotTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTPivotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D79EDBE212439C2005FBA34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WOTPivotTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.WOTPivotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D79ED9F212439C2005FBA34 /* Build configuration list for PBXProject "WOTPivot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D79EDB7212439C2005FBA34 /* Debug */,
+				1D79EDB8212439C2005FBA34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D79EDB9212439C2005FBA34 /* Build configuration list for PBXNativeTarget "WOTPivot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D79EDBA212439C2005FBA34 /* Debug */,
+				1D79EDBB212439C2005FBA34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D79EDBC212439C2005FBA34 /* Build configuration list for PBXNativeTarget "WOTPivotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D79EDBD212439C2005FBA34 /* Debug */,
+				1D79EDBE212439C2005FBA34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1D79ED9C212439C2005FBA34 /* Project object */;
+}

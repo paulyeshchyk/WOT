@@ -1,0 +1,7 @@
+*.zip
+*.DS_Store
+*.xcuserstate
+*.xcbkptlist
+**/*.xcuserdatad/*
+**/xcshareddata/*
+WOT-iOS/Pods/*

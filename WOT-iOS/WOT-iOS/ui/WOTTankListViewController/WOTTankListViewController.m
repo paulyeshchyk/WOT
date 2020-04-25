@@ -2,22 +2,22 @@
 //  WOTTankListViewController.m
 //  WOT-iOS
 //
-//  Created by Pavel Yeshchyk on 6/3/15.
-//  Copyright (c) 2015 Pavel Yeshchyk. All rights reserved.
+//  Created on 6/3/15.
+//  Copyright (c) 2015. All rights reserved.
 //
 
 #import "WOTTankListViewController.h"
 
-#import "WOTRequestExecutor.h"
 #import "WOTTankListSortViewController.h"
 
-#import "Tanks.h"
-#import "Vehicles.h"
+#import <WOTData/WOTData.h>
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
 #import "WOTTankListSettingsDatasource.h"
 #import "WOTTankDetailViewController.h"
 #import "WOTTankListSearchBar.h"
+#import "UIImage+Resize.h"
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -129,11 +129,11 @@
     
     WOTTankListCollectionViewCell *result = (WOTTankListCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankListCollectionViewCell class]) forIndexPath:indexPath];
 
-    Tanks *tank = (Tanks *)[self.fetchedResultController objectAtIndexPath:indexPath];
-    result.image = [tank image];
-    result.tankName = tank.name_i18n;
+    Vehicles *tank = (Vehicles *)[self.fetchedResultController objectAtIndexPath:indexPath];
+//    result.image = [tank image];
+    result.tankName = tank.name;
     result.tankType = tank.type;
-    result.level = [tank.level integerValue];
+    result.level = [tank.tier integerValue];
     return result;
 }
 
@@ -171,7 +171,7 @@
     }];
     
     WOTTankDetailViewController *detail = [[WOTTankDetailViewController alloc] initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];
-    Tanks *tank = [self.fetchedResultController objectAtIndexPath:indexPath];
+    Vehicles *tank = [self.fetchedResultController objectAtIndexPath:indexPath];
     detail.tankId = tank.tank_id;
 
     [detail.navigationItem setLeftBarButtonItem:backButtonItem];
@@ -183,12 +183,12 @@
 
     self.fetchedResultController.delegate = nil;
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Tanks class])];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
     [fetchRequest setSortDescriptors:self.sortDescriptors];
     [fetchRequest setPredicate:self.filterByPredicate];
     
-    NSManagedObjectContext *context = [[WOTCoreDataProvider sharedInstance] mainManagedObjectContext];
-    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:self.groupByField cacheName:nil];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
+    self.fetchedResultController = [dataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
     self.fetchedResultController.delegate = self;
     
     NSError *error = nil;
@@ -208,7 +208,7 @@
     
     if ([self.searchBarText length] != 0) {
 
-        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOT_KEY_NAME_I18N, self.searchBarText];
+        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOTApiKeys.name, self.searchBarText];
         [predicates addObject:searchBarPredicate];
     }
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
@@ -217,7 +217,7 @@
 - (NSArray *)sortDescriptors {
     
     NSMutableArray *result = [[NSMutableArray alloc] initWithArray:[WOTTankListSettingsDatasource sharedInstance].sortBy];
-    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_TANK_ID ascending:YES]];
+    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
     return result;
 }
