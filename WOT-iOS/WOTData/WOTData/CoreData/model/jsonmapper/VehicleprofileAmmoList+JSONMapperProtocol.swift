@@ -24,7 +24,7 @@ extension VehicleprofileAmmoList {
                 }
                 coreDataMapping?.mapping(object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase, forRequest: forRequest)
                 self.addToVehicleprofileAmmo(ammo)
-                coreDataMapping?.stash(vehicleprofileAmmoCase)
+                coreDataMapping?.stash(hint: vehicleprofileAmmoCase)
             }
         }
     }

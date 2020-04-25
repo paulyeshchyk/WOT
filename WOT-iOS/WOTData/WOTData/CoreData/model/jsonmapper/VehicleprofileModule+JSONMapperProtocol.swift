@@ -22,7 +22,7 @@ extension VehicleprofileModule {
         coreDataMapping?.requestSubordinate(for: VehicleprofileGun.self, gunCase, subordinateRequestType: .remote, keyPathPrefix: "gun.", callback: { (managedObject) in
             if let gun = managedObject as? VehicleprofileGun {
                 self.vehicleGun = gun
-                coreDataMapping?.stash(gunCase)
+                coreDataMapping?.stash(hint: gunCase)
             }
         })
 
@@ -32,7 +32,7 @@ extension VehicleprofileModule {
         coreDataMapping?.requestSubordinate(for: VehicleprofileRadio.self, radioCase, subordinateRequestType: .remote, keyPathPrefix: "radio.", callback: { (managedObject) in
             if let radio = managedObject as? VehicleprofileRadio {
                 self.vehicleRadio = radio
-                coreDataMapping?.stash(radioCase)
+                coreDataMapping?.stash(hint: radioCase)
             }
         })
         let engineCase = PKCase()
@@ -41,7 +41,7 @@ extension VehicleprofileModule {
         coreDataMapping?.requestSubordinate(for: VehicleprofileEngine.self, engineCase, subordinateRequestType: .remote, keyPathPrefix: "engine.", callback: { (managedObject) in
             if let engine = managedObject as? VehicleprofileEngine {
                 self.vehicleEngine = engine
-                coreDataMapping?.stash(engineCase)
+                coreDataMapping?.stash(hint: engineCase)
             }
         })
 //        let suspensionCase = PKCase()

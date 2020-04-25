@@ -36,7 +36,7 @@ extension Vehicles {
                     modules_tree.default_profile = defaultProfile
                 }
             })
-            coreDataMapping?.stash(vehicleProfileCase)
+            coreDataMapping?.stash(hint: vehicleProfileCase)
         }
 
         if let set = self.modules_tree {
@@ -53,7 +53,7 @@ extension Vehicles {
             }
             module_tree.default_profile = self.default_profile
             self.addToModules_tree(module_tree)
-            coreDataMapping?.stash(modulesTreeCase)
+            coreDataMapping?.stash(hint: modulesTreeCase)
         }
     }
 }

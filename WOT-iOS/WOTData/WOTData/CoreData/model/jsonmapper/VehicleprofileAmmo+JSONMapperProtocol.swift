@@ -18,7 +18,7 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)], pkCase: vehicleprofileAmmoPenetrationCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.penetration = newObject as? VehicleprofileAmmoPenetration
-            coreDataMapping?.stash(vehicleprofileAmmoPenetrationCase)
+            coreDataMapping?.stash(hint: vehicleprofileAmmoPenetrationCase)
         }
 
         let vehicleprofileAmmoDamageCase = PKCase()
@@ -26,7 +26,7 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], pkCase: vehicleprofileAmmoDamageCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.damage = newObject as? VehicleprofileAmmoDamage
-            coreDataMapping?.stash(vehicleprofileAmmoDamageCase)
+            coreDataMapping?.stash(hint: vehicleprofileAmmoDamageCase)
         }
     }
 

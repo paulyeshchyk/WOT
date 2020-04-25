@@ -16,14 +16,14 @@ extension VehicleprofileArmorList {
 
         VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.hull = newObject as? VehicleprofileArmor
-            coreDataMapping?.stash(hullCase)
+            coreDataMapping?.stash(hint: hullCase)
         }
 
         let turretCase = PKCase()
         turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
         VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.turret = newObject as? VehicleprofileArmor
-            coreDataMapping?.stash(hullCase)
+            coreDataMapping?.stash(hint: hullCase)
         }
     }
 }

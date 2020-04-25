@@ -26,7 +26,7 @@ extension ModulesTree {
             coreDataMapping?.requestSubordinate(for: ModulesTree.self, moduleTreePK, subordinateRequestType: .remote, keyPathPrefix: "modules_tree.", callback: { (managedObject) in
                 if let module = managedObject as? ModulesTree {
                     self.addToNext_modules(module)
-                    coreDataMapping?.stash(moduleTreePK)
+                    coreDataMapping?.stash(hint: moduleTreePK)
                 }
             })
         }
@@ -38,7 +38,7 @@ extension ModulesTree {
             coreDataMapping?.requestSubordinate(for: Vehicles.self, nextTanksPK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
                 if let module = managedObject as? ModulesTree {
                     self.addToNext_modules(module)
-                    coreDataMapping?.stash(nextTanksPK)
+                    coreDataMapping?.stash(hint: nextTanksPK)
                 }
             })
         }

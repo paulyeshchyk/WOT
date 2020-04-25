@@ -26,56 +26,56 @@ extension Vehicleprofile {
         vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
         VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: vehicleprofileAmmoListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.ammo = newObject as? VehicleprofileAmmoList
-            coreDataMapping?.stash(vehicleprofileAmmoListCase)
+            coreDataMapping?.stash(hint: vehicleprofileAmmoListCase)
         }
 
         let vehicleprofileArmorListCase = PKCase()
         vehicleprofileArmorListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
         VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: vehicleprofileArmorListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.armor = newObject as? VehicleprofileArmorList
-            coreDataMapping?.stash(vehicleprofileArmorListCase)
+            coreDataMapping?.stash(hint: vehicleprofileArmorListCase)
         }
 
         let vehicleprofileEngineListCase = PKCase()
         vehicleprofileEngineListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileEngine.vehicleprofile))
         VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], pkCase: vehicleprofileEngineListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.engine = newObject as? VehicleprofileEngine
-            coreDataMapping?.stash(vehicleprofileEngineListCase)
+            coreDataMapping?.stash(hint: vehicleprofileEngineListCase)
         }
 
         let vehicleprofileGunListCase = PKCase()
         vehicleprofileGunListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileGun.vehicleprofile))
         VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], pkCase: vehicleprofileGunListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.gun = newObject as? VehicleprofileGun
-            coreDataMapping?.stash(vehicleprofileGunListCase)
+            coreDataMapping?.stash(hint: vehicleprofileGunListCase)
         }
 
         let vehicleprofileRadioListCase = PKCase()
         vehicleprofileRadioListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileRadio.vehicleprofile))
         VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], pkCase: vehicleprofileRadioListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.radio = newObject as? VehicleprofileRadio
-            coreDataMapping?.stash(vehicleprofileRadioListCase)
+            coreDataMapping?.stash(hint: vehicleprofileRadioListCase)
         }
 
         let vehicleprofileSuspensionListCase = PKCase()
         vehicleprofileSuspensionListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileSuspension.vehicleprofile))
         VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: vehicleprofileSuspensionListCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.suspension = newObject as? VehicleprofileSuspension
-            coreDataMapping?.stash(vehicleprofileSuspensionListCase)
+            coreDataMapping?.stash(hint: vehicleprofileSuspensionListCase)
         }
 
         let vehicleprofileTurretCase = PKCase()
         vehicleprofileTurretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileTurret.vehicleprofile))
         VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: vehicleprofileTurretCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.turret = newObject as? VehicleprofileTurret
-            coreDataMapping?.stash(vehicleprofileTurretCase)
+            coreDataMapping?.stash(hint: vehicleprofileTurretCase)
         }
 
         let vehicleprofileModuleCase = PKCase()
         vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
         VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], pkCase: vehicleprofileModuleCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
             self.modules = newObject as? VehicleprofileModule
-            coreDataMapping?.stash(vehicleprofileModuleCase)
+            coreDataMapping?.stash(hint: vehicleprofileModuleCase)
         }
     }
 }

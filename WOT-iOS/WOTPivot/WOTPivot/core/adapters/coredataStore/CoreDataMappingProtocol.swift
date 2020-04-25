@@ -36,8 +36,12 @@ public protocol CoreDataMappingProtocol {
         - Parameter pkCase: just informative
 
      */
-    func stash(_ pkCase: PKCase)
+    func stash(hint: WOTDescribable?)
 
     func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol)
     func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol)
+}
+
+extension CoreDataMappingProtocol {
+    public func stach() { self.stash(hint: nil) }
 }

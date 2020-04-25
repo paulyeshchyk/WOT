@@ -49,6 +49,29 @@ public class CoreDataStore: CoreDataStoreProtocol {
     public func perform() {
         binary?.parseAsJSON(onReceivedJSON(_:_:))
     }
+
+    /**
+
+     */
+    public func stash(hint: WOTDescribable?) {
+        guard let provider = appManager?.coreDataProvider else {
+            fatalError("provider was released")
+        }
+
+        provider.stash({ (error) in
+            if let error = error {
+                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
+            } else {
+                let debugInfo: String
+                if let debugDescription = hint {
+                    debugInfo = "\(String(describing: self.Clazz)) \(debugDescription.description)"
+                } else {
+                    debugInfo = "\(String(describing: self.Clazz))"
+                }
+                self.appManager?.logInspector?.log(CDStashLog(debugInfo), sender: self)
+            }
+        })
+    }
 }
 
 // MARK: - private
@@ -150,13 +173,13 @@ extension CoreDataStore: CoreDataMappingProtocol {
     public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol) {
         appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         object?.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, coreDataMapping: self)
-        stash(pkCase)
+        stash(hint: pkCase)
     }
 
     public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol) {
         appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         object?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: self)
-        stash(pkCase)
+        stash(hint: pkCase)
     }
 
     /**
@@ -186,25 +209,5 @@ extension CoreDataStore: CoreDataMappingProtocol {
             }
         }
         self.linkAdapter?.request(self.request, adaptExternalLinks: result, externalCallback: completion, adaptCallback: { _ in})
-    }
-
-    /**
-
-     */
-    public func stash(_ pkCase: PKCase) {
-//        if Thread.current.isMainThread {
-//            fatalError("should not be executed on main")
-//        }
-        guard let provider = appManager?.coreDataProvider else {
-            fatalError("provider was released")
-        }
-
-        provider.stash({ (error) in
-            if let error = error {
-                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
-            } else {
-                self.appManager?.logInspector?.log(CDStashLog("\(String(describing: self.Clazz)) \(pkCase.description)"), sender: self)
-            }
-        })
     }
 }
