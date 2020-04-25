@@ -151,13 +151,14 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
             return
         }
 
-        var coreDataStoreStack: [CoreDataStoreProtocol] = .init()
+        var coreDataStoreStack: [CoreDataStorePair] = .init()
         let requestIdTypes = self.requestIds(forClass: modelClass)
         requestIdTypes?.forEach({ requestIdType in
 
             if let adapter = adapterInstance(for: requestIdType) {
                 let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: onFinish)
-                coreDataStoreStack.append(store)
+                let pair = CoreDataStorePair(coreDataStore: store, data: binary)
+                coreDataStoreStack.append(pair)
             } else {
                 appManager?.logInspector?.log(ErrorLog("Adapter not found for \(requestIdType)"), sender: self)
             }
@@ -167,10 +168,15 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
             onFinish(nil)
         }
 
-        coreDataStoreStack.forEach { (store) in
-            store.perform()
+        coreDataStoreStack.forEach { (pair) in
+            pair.coreDataStore.perform(binary: pair.data, forType: RESTAPIResponse.self)
         }
     }
+}
+
+struct CoreDataStorePair {
+    let coreDataStore: CoreDataStoreProtocol
+    let data: Data?
 }
 
 extension WOTRequestCoordinator: LogMessageSender {

@@ -124,7 +124,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     public func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink, externalCallback: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) -> Bool {
         guard let clazz = jsonLink.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
         guard let obj = clazz.init() as? KeypathProtocol else { return false }
-//        guard let requestCoordinator = requestCoordinator else { fatalError("requestcoordinator not defined")}
         guard let request = coordinator.createRequest(forRequestId: requestId) else { return false }
 
         let keyPaths = type(of: obj).classKeypaths().compactMap {

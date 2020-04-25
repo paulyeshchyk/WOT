@@ -8,10 +8,6 @@
 
 import Foundation
 
-extension AnyHashable {}
-
-public typealias JSON = [AnyHashable: Any]
-
 #warning("transform an conforming class to Future/Promise")
 
 @objc

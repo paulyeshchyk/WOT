@@ -8,6 +8,8 @@
 
 import Foundation
 
+public typealias JSON = [AnyHashable: Any]
+
 public protocol JSONMapperProtocol {
     associatedtype Fields
 

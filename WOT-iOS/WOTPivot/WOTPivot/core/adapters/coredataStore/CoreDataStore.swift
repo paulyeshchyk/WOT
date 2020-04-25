@@ -9,30 +9,51 @@
 import CoreData
 
 @objc
-public protocol CoreDataStoreProtocol {
+public protocol CoreDataStoreProtocol: NSObjectProtocol {
+    var uuid: UUID { get }
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)? { get set }
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
     var onFinishJSONParse: ((Error?) -> Void)? { get set }
     var onCreateNSManagedObject: NSManagedObjectCallback? { get set }
     func perform()
+    func onReceivedJSON(_ json: JSON?, _ error: Error?)
 }
 
-public class CoreDataStore: CoreDataStoreProtocol {
+extension CoreDataStoreProtocol {
+    public func perform<T>(binary: Data?, forType type: T.Type) where T: RESTAPIResponseProtocol {
+        guard let data = binary else {
+            onReceivedJSON(nil, nil)
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            let result = try decoder.decode(T.self, from: data)
+            onReceivedJSON(result.data, nil)
+        } catch let error {
+            onReceivedJSON(nil, error)
+        }
+    }
+}
+
+public class CoreDataStore: NSObject, CoreDataStoreProtocol {
+    public let uuid: UUID = UUID()
     private let Clazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
-    private let binary: Data?
     private let linkAdapter: JSONLinksAdapterProtocol?
     private var extenalLinks: [WOTJSONLink]?
     private let appManager: WOTAppManagerProtocol?
+    override public var hash: Int {
+        return uuid.uuidString.hashValue
+    }
 
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol?, appManager: WOTAppManagerProtocol?, extenalLinks: [WOTJSONLink]?) {
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, linkAdapter: JSONLinksAdapterProtocol?, appManager: WOTAppManagerProtocol?, extenalLinks: [WOTJSONLink]?) {
         self.Clazz = clazz
         self.request = request
-        self.binary = binary
         self.linkAdapter = linkAdapter
         self.appManager = appManager
         self.extenalLinks = extenalLinks
 
+        super.init()
         appManager?.logInspector?.log(OBJNewLog(request.description), sender: self)
     }
 
@@ -46,9 +67,9 @@ public class CoreDataStore: CoreDataStoreProtocol {
     public var onFinishJSONParse: ((Error?) -> Void)?
     public var onCreateNSManagedObject: NSManagedObjectCallback?
 
-    public func perform() {
-        binary?.parseAsJSON(onReceivedJSON(_:_:))
-    }
+    private let METAClass: Codable.Type = RESTAPIResponse.self
+
+    public func perform() {}
 
     /**
 
@@ -72,6 +93,11 @@ public class CoreDataStore: CoreDataStoreProtocol {
             }
         })
     }
+}
+
+// MARK: - Hash
+func == (lhs: CoreDataStore, rhs: CoreDataStore) -> Bool {
+    return lhs.uuid == rhs.uuid
 }
 
 // MARK: - private
@@ -131,7 +157,7 @@ extension CoreDataStore {
         return JSONExtraction(identifier: ident, json: objectJson)
     }
 
-    private func onReceivedJSON(_ json: JSON?, _ error: Error?) {
+    public func onReceivedJSON(_ json: JSON?, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
             onFinishJSONParse?(error)
