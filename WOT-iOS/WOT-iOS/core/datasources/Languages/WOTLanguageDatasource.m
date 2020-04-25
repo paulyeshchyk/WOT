@@ -64,8 +64,8 @@
     self = [super init];
     if (self){
 
-        WOTLanguage *ruLanguage = [[WOTLanguage alloc] initWithLanguage:WOT_VALUE_LANGUAGE_RU applicationCode:WOT_VALUE_APPLICATION_ID_RU isSelected:YES];
-        WOTLanguage *euLanguage = [[WOTLanguage alloc] initWithLanguage:WOT_VALUE_LANGUAGE_EU applicationCode:WOT_VALUE_APPLICATION_ID_EU isSelected:NO];
+        WOTLanguage *ruLanguage = [[WOTLanguage alloc] initWithLanguage:WOT_VALUE_LANGUAGE_RU applicationCode:@"e3a1e0889ff9c76fa503177f351b853c" isSelected:YES];
+        WOTLanguage *euLanguage = [[WOTLanguage alloc] initWithLanguage:WOT_VALUE_LANGUAGE_EU applicationCode:@"e3a1e0889ff9c76fa503177f351b853c" isSelected:NO];
 
         self.availableLanguages = @[ruLanguage, euLanguage];
         

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol WOTPivotDataModelProtocol: NSObjectProtocol {
+public protocol WOTPivotDataModelProtocol: WOTDataModelProtocol {
     var contentSize: CGSize { get }
     var shouldDisplayEmptyColumns: Bool { get set }
     func itemRect(atIndexPath: NSIndexPath) -> CGRect
@@ -18,5 +18,5 @@ public protocol WOTPivotDataModelProtocol: NSObjectProtocol {
     func add(metadataItems: [WOTNodeProtocol])
 
     var dimension: WOTPivotDimensionProtocol { get }
-    init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, enumerator: WOTNodeEnumeratorProtocol)
+    init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource)
 }

@@ -9,21 +9,18 @@
 import Foundation
 
 enum WOTPivotSeparatorKind: String {
-
-    case top = "WOTPivotSeparatorKind.top"
-    case bottom = "WOTPivotSeparatorKind.bottom"
-    case left = "WOTPivotSeparatorKind.left"
-    case right = "WOTPivotSeparatorKind.right"
+    case top
+    case bottom
+    case left
+    case right
 }
 
 class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
-
     private var separatorWidth: CGFloat {
         return 1.0
     }
 
     private var topSeparatorFrame: CGRect {
-
         let customFrame = self.customFrame ?? CGRect.zero
         return CGRect(x: customFrame.minX,
                       y: customFrame.minY - self.separatorWidth,
@@ -32,7 +29,6 @@ class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
     }
 
     private var leftSeparatorFrame: CGRect {
-
         let customFrame = self.customFrame ?? CGRect.zero
         return CGRect(x: customFrame.minX,
                       y: customFrame.minY - self.separatorWidth,
@@ -41,25 +37,22 @@ class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
     }
 
     private var bottomSeparatorFrame: CGRect {
-
         let customFrame = self.customFrame ?? CGRect.zero
-        return CGRect(x: customFrame.minX ,
+        return CGRect(x: customFrame.minX,
                       y: customFrame.maxY - self.separatorWidth,
                       width: customFrame.width,
                       height: self.separatorWidth)
     }
 
     private var rightSeparatorFrame: CGRect {
-
         let customFrame = self.customFrame ?? CGRect.zero
         return CGRect(x: customFrame.maxX,
                       y: customFrame.minY - self.separatorWidth,
                       width: self.separatorWidth,
-                      height: customFrame.height + self.separatorWidth )
+                      height: customFrame.height + self.separatorWidth)
     }
 
     private func invalidateFrame(kind: WOTPivotSeparatorKind) {
-
         switch kind {
         case .top:
             self.frame = self.topSeparatorFrame
@@ -80,8 +73,8 @@ class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
             }
             invalidateFrame(kind: kindValue)
         }
-
     }
+
     var customFrame: CGRect? {
         didSet {
             guard let kindValue = kind else {
@@ -93,7 +86,6 @@ class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
 }
 
 class WOTPivotSeparatorView: UICollectionReusableView {
-
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
 

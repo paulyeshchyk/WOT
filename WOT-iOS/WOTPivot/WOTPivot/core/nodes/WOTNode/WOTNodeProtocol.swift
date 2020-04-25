@@ -12,7 +12,6 @@ public typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: WOT
 
 @objc
 public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
-
     init(name nameValue: String)
 
     subscript(index: Int) -> WOTNodeProtocol { get set }
@@ -46,5 +45,4 @@ public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
     func unlinkChild(_ child: WOTNodeProtocol)
 
     func value(key: AnyHashable) -> Any?
-
 }

@@ -9,12 +9,10 @@
 import Foundation
 
 public class WOTPivotDataGroupNode: WOTPivotNode {
-
     @objc
     public var fetchedObjects: [AnyObject]?
 
     override public var cellType: WOTPivotCellType {
         return .dataGroup
     }
-
 }

@@ -13,7 +13,6 @@ protocol WOTMenuDelegate: NSObjectProtocol {
     var currentUserName: String { get }
     func menu(_ menu: WOTMenuProtocol, didSelectControllerClass controllerClass: AnyClass, title: String, image: UIImage)
     func loginPressedOnMenu(_ menu: WOTMenuProtocol)
-
 }
 
 @objc
@@ -27,13 +26,13 @@ protocol WOTMenuProtocol: NSObjectProtocol {
 @objc(WOTMenuViewController)
 
 class WOTMenuViewController: UIViewController, WOTMenuProtocol {
-
     @IBOutlet var tableView: UITableView?
     var selectedIndex: NSInteger = 0 {
         didSet {
             self.delegate?.menu(self, didSelectControllerClass: self.selectedMenuItemClass, title: self.selectedMenuItemTitle, image: self.selectedMenuItemImage)
         }
     }
+
     var menuDatasource: WOTMenuDatasourceProtocol?
 
     weak var delegate: WOTMenuDelegate?
@@ -58,7 +57,6 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol {
         self.menuDatasource?.delegate = self
         self.menuDatasource?.rebuild()
         self.selectedIndex = 0
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -74,13 +72,12 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol {
         self.tableView?.register(nib, forCellReuseIdentifier: String(describing: WOTMenuTableViewCell.self))
 
         self.redrawNavigationBar()
-
     }
 
     fileprivate func redrawNavigationBar() {
-        self.navigationController?.navigationBar .setDarkStyle()
+        self.navigationController?.navigationBar.setDarkStyle()
         let image = UIImage(named: L10n.wotImageUser)
-        let backButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.done, target: self, action: #selector(WOTMenuViewController.loginPressed(_ :)))
+        let backButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.done, target: self, action: #selector(WOTMenuViewController.loginPressed(_:)))
         self.navigationItem.leftBarButtonItems = [backButton]
         self.navigationItem.title = self.delegate?.currentUserName
     }
@@ -99,7 +96,6 @@ extension WOTMenuViewController: WOTMenuDatasourceDelegate {
 }
 
 extension WOTMenuViewController: UITableViewDataSource, UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.menuDatasource?.objectsCount() ?? 0
     }
@@ -119,5 +115,4 @@ extension WOTMenuViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
         self.selectedIndex = indexPath.row
     }
-
 }

@@ -1,6 +1,10 @@
-warning_threshold: 1
+warning_threshold: 197
 
 disabled_rules:
+- redundant_objc_attribute
+- unused_setter_value
+- syntactic_sugar
+- comma
 - line_length
 - trailing_newline
 - todo
@@ -11,18 +15,23 @@ disabled_rules:
 #- weak_delegate
 
 type_body_length:
-- 250 # warning
-- 300 # error
+- 2250 # warning
+- 2300 # error
+
+function_parameter_count:
+- 12
 
 function_body_length:
-- 20 # warning
+- 60 # warning
 
 cyclomatic_complexity:
 - 5 # warning
 
 file_length:
-- 220 # warning
-- 250 # error
+- 2220 # warning
+- 2250 # error
+
+force_cast: warning
 
 excluded:
 - Pods

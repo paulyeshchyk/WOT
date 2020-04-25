@@ -34,7 +34,7 @@
     [self update];
 }
 
-- (void)setModuleTree:(ModulesTree *)moduleTree {
+- (void)setModuleTree:(id<WOTTreeModulesTreeProtocol>)moduleTree {
     
     if (_moduleTree != moduleTree) {
         
@@ -45,8 +45,8 @@
 
 - (void)update {
     
-    self.titleLabel.text = self.moduleTree.name;
-    self.imageURL = [self.moduleTree localImageURL];
+    self.titleLabel.text = self.moduleTree.moduleName;
+    self.imageURL = [self.moduleTree moduleLocalImageURL];
 }
 
 - (void)setImageURL:(NSURL *)imageURL {

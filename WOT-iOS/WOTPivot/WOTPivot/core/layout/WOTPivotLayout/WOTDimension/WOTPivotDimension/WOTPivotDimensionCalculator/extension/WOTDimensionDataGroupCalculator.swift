@@ -8,7 +8,4 @@
 
 import Foundation
 
-public class WOTDimensionDataGroupCalculator: WOTDimensionDataCalculator {
-
-}
-
+public class WOTDimensionDataGroupCalculator: WOTDimensionDataCalculator {}

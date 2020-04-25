@@ -9,5 +9,4 @@
 import Foundation
 
 @objc
-class WOTTankPivotDataGroupCollectionViewCell: UICollectionViewCell {
-}
+class WOTTankPivotDataGroupCollectionViewCell: UICollectionViewCell {}

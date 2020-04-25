@@ -38,23 +38,21 @@
     self = [super init];
     if (self){
 
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:self.context];
-        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
-        
-        self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:WOTApiKeys.type cacheName:nil];
-        self.fetchedResultController.delegate = self;
+        id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
+        [coreDataProvider perform:^(NSManagedObjectContext * _Nonnull context) {
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:context];
+            [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
+            
+            self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:WOTApiKeys.type cacheName:nil];
+            self.fetchedResultController.delegate = self;
 
-        NSError *error = nil;
-        [self.fetchedResultController performFetch:&error];
+            NSError *error = nil;
+            [self.fetchedResultController performFetch:&error];
+        }];
         
     }
     return self;
-}
-
-- (NSManagedObjectContext *)context {
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
-    return [dataProvider mainManagedObjectContext];
 }
 
 - (NSCompoundPredicate *)filterBy {
@@ -78,7 +76,7 @@
         return nil;
     } else {
     
-#warning think about or / and predicates
+#warning think about "or / and" predicates
         return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
     }
 }

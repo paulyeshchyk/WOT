@@ -12,6 +12,7 @@
 #import "UINavigationBar+WOT.h"
 #import "UIImage+Resize.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "WOTSessionManager.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 
@@ -100,9 +101,9 @@
     if (language) {
 
         [WOTApplicationDefaults setLanguage:language];
-
-        WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-        [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:nil];
+        id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+        
+        [WOTSessionManager loginWithRequestManager:manager.requestManager];
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];

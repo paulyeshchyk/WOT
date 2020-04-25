@@ -10,16 +10,11 @@ import Foundation
 import ObjectiveC
 
 open class WOTNode: NSObject, WOTNodeProtocol {
-
     @objc
     public required init(name nameValue: String) {
         super.init()
         self.name = nameValue
     }
-
-//    override open var hashValue: Int {
-//        return self.fullName.hashValue
-//    }
 
     override open var hash: Int {
         return self.fullName.hashValue
@@ -76,7 +71,7 @@ open class WOTNode: NSObject, WOTNodeProtocol {
     }
 
     open func removeChild(_ child: WOTNodeProtocol, completion: @escaping (WOTNodeProtocol) -> Void) {
-        guard let index = (self.children.index { $0 === child }) else {
+        guard let index = (self.children.firstIndex { $0 === child }) else {
             return
         }
         child.removeParent()
@@ -107,13 +102,12 @@ open class WOTNode: NSObject, WOTNodeProtocol {
             return
         }
         self.parent = nil
-        parent.removeChild(self) { (_ ) in
-
+        parent.removeChild(self) { (_) in
         }
     }
 
     open func unlinkChild(_ child: WOTNodeProtocol) {
-        guard let index = (self.children.index { $0 === child }) else {
+        guard let index = (self.children.firstIndex { $0 === child }) else {
             return
         }
         child.removeParent()

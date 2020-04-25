@@ -10,20 +10,17 @@ import Foundation
 
 @objc
 open class WOTDataModel: NSObject, WOTDataModelProtocol {
-
     lazy public var nodeIndex: WOTPivotNodeIndexProtocol = { return WOTPivotNodeIndex() }()
     lazy public var rootNodes: [WOTNodeProtocol] = { return [] }()
     private var comparator: WOTNodeComparator = { (left, right) in return true }
 
-    public var endpointsCount: Int { return self.enumerator.endpoints(array: self.rootNodes).count }
+    public var endpointsCount: Int {
+        return self.enumerator?.endpoints(array: rootNodes).count ?? 0
+    }
 
     open var nodes: [WOTNodeProtocol] { return [] }
 
-    var enumerator: WOTNodeEnumeratorProtocol
-
-    public required init(enumerator enumer: WOTNodeEnumeratorProtocol) {
-        enumerator = enumer
-    }
+    public var enumerator: WOTNodeEnumeratorProtocol?
 
     open func loadModel() {
         self.reindexNodes()
@@ -45,7 +42,7 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
     }
 
     public func remove(rootNode: WOTNodeProtocol) {
-        guard let index = (self.rootNodes.index { $0 === rootNode }) else {
+        guard let index = (self.rootNodes.firstIndex { $0 === rootNode }) else {
             return
         }
         self.rootNodes.remove(at: index)
@@ -60,19 +57,15 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
         return Array(self.rootNodes).sorted(by: comparator)
     }
 
-    //TODO: check
     public func nodesCount(section: Int) -> Int {
         return 0
     }
 
-    //TODO: check
     public func node(atIndexPath indexPath: NSIndexPath) -> WOTNodeProtocol? {
         return self.nodeIndex.item(indexPath: indexPath)
     }
 
-    //TODO: check
     public func indexPath(forNode: WOTNodeProtocol?) -> IndexPath? {
         return nil
     }
-
 }

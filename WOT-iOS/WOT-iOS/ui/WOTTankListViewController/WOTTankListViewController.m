@@ -187,9 +187,8 @@
     [fetchRequest setSortDescriptors:self.sortDescriptors];
     [fetchRequest setPredicate:self.filterByPredicate];
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
-    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:self.groupByField cacheName:nil];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
+    self.fetchedResultController = [dataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
     self.fetchedResultController.delegate = self;
     
     NSError *error = nil;

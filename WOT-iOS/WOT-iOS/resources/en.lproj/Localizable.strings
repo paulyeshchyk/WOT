@@ -93,15 +93,10 @@ WOT_KEY_HASHNAME  = "hashName";
 WOT_KEY_KEY  = "key";
 WOT_KEY_LOCATION  = "location";
 WOT_KEY_MESSAGE  = "message";
-WOT_KEY_DPM  = "dpm";
 WOT_KEY_NICKNAME  = "nickname";
 WOT_KEY_ORDERBY  = "orderBy";
-WOT_KEY_PRICES_XP  = "prices_xp";
-WOT_KEY_VEHICLES  = "vehicles";
 WOT_KEY_USER_ID  = "userId";
 WOT_KEY_VALUES  = "values";
-WOT_KEY_WEIGHT  = "weight";
-WOT_KEY_NEXT_TANKS  = "next_tanks";
 
 WOT_STRING_ARMOR  = "armor";
 WOT_STRING_OBSERVE  = "observe";

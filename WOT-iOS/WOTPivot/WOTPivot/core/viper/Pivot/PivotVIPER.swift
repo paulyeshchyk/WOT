@@ -8,21 +8,13 @@
 
 import Foundation
 
-public protocol PivotVIPERViewProtocol {
+public protocol PivotVIPERViewProtocol {}
 
-}
+public protocol PivotVIPERInteractorProtocol {}
 
-public protocol PivotVIPERInteractorProtocol {
+public protocol PivotVIPERPresenterProtocol {}
 
-}
-
-public protocol PivotVIPERPresenterProtocol {
-
-}
-
-public protocol PivotVIPERWireFrameProtocol {
-    
-}
+public protocol PivotVIPERWireFrameProtocol {}
 
 struct PivotVIPER {
     typealias View = PivotVIPERViewProtocol

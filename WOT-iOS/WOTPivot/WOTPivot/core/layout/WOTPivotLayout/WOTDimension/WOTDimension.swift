@@ -12,14 +12,8 @@ typealias TNodeSize = [String: Int]
 typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
 public class WOTDimension: NSObject, WOTDimensionProtocol {
-
-    required public init(fetchController: WOTDataFetchControllerProtocol, enumerator: WOTNodeEnumeratorProtocol) {
-        self.fetchController = fetchController
-        self.enumerator = enumerator
-    }
-
-    var fetchController: WOTDataFetchControllerProtocol
-    var enumerator: WOTNodeEnumeratorProtocol
+    public var fetchController: WOTDataFetchControllerProtocol?
+    public var enumerator: WOTNodeEnumeratorProtocol?
 
     lazy private var sizes: TNodesSizesType = {
         return TNodesSizesType()
@@ -78,15 +72,15 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
         guard let parent = node.parent else {
             return 0
         }
-        guard let indexOfNode = (parent.children.index { $0 === node }) else {
+        guard let indexOfNode = (parent.children.firstIndex { $0 === node }) else {
             return 0
         }
 
         var result: Int = 0
         for idx in 0 ..< indexOfNode {
             let child = parent.children[idx]
-            let endpoints = self.enumerator.endpoints(node: child)
-            endpoints.forEach { (endpoint) in
+            let endpoints = self.enumerator?.endpoints(node: child)
+            endpoints?.forEach { (endpoint) in
                 result += self.maxWidth(endpoint, orValue: orValue)
             }
         }
@@ -102,8 +96,7 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
         return .zero
     }
 
-    public func reload(forIndex externalIndex: Int) {
+    public func reload(forIndex externalIndex: Int, nodeCreator: WOTNodeCreatorProtocol?) {
         preconditionFailure("This method must be overridden")
     }
-
 }

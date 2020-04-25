@@ -1,5 +1,5 @@
 //
-//  WOTTankPivotLayout.swift
+//  WOTPivotLayout.swift
 //  WOT-iOS
 //
 //  Created on 7/25/18.
@@ -16,7 +16,6 @@ public protocol WOTTankPivotLayoutProtocol {
 }
 
 public class WOTColoredLayout: UICollectionViewFlowLayout {
-
     func layoutAttributesForDecorationView(ofKind elementKind: WOTPivotSeparatorKind, at indexPath: IndexPath, pivotAttributes: WOTPivotLayoutCellAttributesProtocol) -> WOTPivotSeparatorLayoutAttributes? {
         guard let layoutAttributes = self.layoutAttributesForDecorationView(ofKind: elementKind.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes else {
             return nil
@@ -28,7 +27,6 @@ public class WOTColoredLayout: UICollectionViewFlowLayout {
     }
 
     override public func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-
         let layoutAttributes = WOTPivotSeparatorLayoutAttributes(forDecorationViewOfKind: elementKind, with: indexPath)
         layoutAttributes.color = UIColor.darkGray
         layoutAttributes.zIndex = -1
@@ -36,8 +34,7 @@ public class WOTColoredLayout: UICollectionViewFlowLayout {
     }
 }
 
-
-public class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
+public class WOTPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     public var relativeContentSizeBlock: (() -> CGSize)?
     public var itemRelativeRectCallback: ((IndexPath) -> CGRect)?
     public var itemLayoutStickyType: ((IndexPath) -> PivotStickyType)?
@@ -54,9 +51,7 @@ public class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
         get {
             return Constants.itemSize
         }
-        set {
-
-        }
+        set {}
     }
 
     override open var collectionViewContentSize: CGSize {
@@ -67,8 +62,7 @@ public class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
             let height = relativeSize.height * itemSize.height
             return CGSize(width: width, height: height)
         }
-        set {
-        }
+        set {}
     }
 
     override open func initialLayoutAttributesForAppearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -84,11 +78,9 @@ public class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     }
 
     func sepatorAttributes(for collectionView: UICollectionView, at indexPath: IndexPath, in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
-
         let contentOffset = collectionView.contentOffset
         let pivotAttributes = self.pivotLayoutCellAttributes(indexPath: indexPath, contentOffset: contentOffset)
         guard let cellAttributes = pivotAttributes.collectionViewLayoutAttributes(forRect: rect) else {
-
             return []
         }
 
@@ -119,8 +111,7 @@ public class WOTTankPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     }
 }
 
-extension WOTTankPivotLayout {
-
+extension WOTPivotLayout {
     fileprivate struct Constants {
         static let ipadCellSize = CGSize(width: 88.0, height: 66.0)
         static let iphoneCellSize = CGSize(width: 66.0, height: 44.0)
@@ -173,7 +164,7 @@ extension WOTTankPivotLayout {
             cellZIndex += 2
         }
         let approxRect = CGRect(x: x, y: y, width: width, height: height)
-        let cellRect = approxRect//.integral
+        let cellRect = approxRect // .integral
         return WOTPivotLayoutCellAttributes(cellRect: cellRect, cellZIndex: cellZIndex, cellIndexPath: indexPath)
     }
 }

@@ -9,7 +9,6 @@
 import Foundation
 
 public class WOTDimensionDataCalculator: WOTDimensionCalculator {
-
     override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
         guard let node = forNode as? WOTPivotNodeProtocol else {
             return 0

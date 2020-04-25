@@ -9,7 +9,6 @@
 import Foundation
 
 public protocol WOTPivotNodeHolderProtocol: NSObjectProtocol {
-
     var rootFilterNode: WOTNodeProtocol { get }
 
     var rootColsNode: WOTNodeProtocol { get }

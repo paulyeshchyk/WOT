@@ -10,7 +10,6 @@ import XCTest
 @testable import WOTPivot
 
 class WOTPivotNodeTest: XCTestCase {
-
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -65,6 +64,5 @@ class WOTPivotNodeTest: XCTestCase {
         let nodePredicate = NSPredicate(format: "data1 == %d", 1)
         let node = WOTPivotNode(name: "node", predicate: nodePredicate)
         XCTAssert(node.predicate?.predicateFormat.compare(nodePredicate.predicateFormat) == .orderedSame)
-
     }
 }

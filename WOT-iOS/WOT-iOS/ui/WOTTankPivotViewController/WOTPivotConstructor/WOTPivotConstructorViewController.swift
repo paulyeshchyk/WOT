@@ -8,6 +8,4 @@
 
 import Foundation
 
-class WOTPivotConstructorViewController: UIViewController {
-    
-}
+class WOTPivotConstructorViewController: UIViewController {}

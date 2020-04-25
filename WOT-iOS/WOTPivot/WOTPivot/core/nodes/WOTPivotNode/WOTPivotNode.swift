@@ -11,7 +11,7 @@ import CoreData
 
 public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
     public var dataColor: UIColor?
-    public var data1: NSManagedObject?
+    public var data1: AnyObject?
     public var stickyType: PivotStickyType { return .float }
     public var cellType: WOTPivotCellType { return .data }
     public var predicate: NSPredicate?
@@ -38,7 +38,6 @@ public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
 
     @objc
     public required init(name nameValue: String) {
-
         super.init(name: nameValue)
     }
 
@@ -50,5 +49,4 @@ public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
         result.imageURL = self.imageURL?.copy(with: zone) as? NSURL
         return result
     }
-
 }

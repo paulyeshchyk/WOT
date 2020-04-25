@@ -13,7 +13,6 @@ public enum VIPERModule: String {
     case Tree
 }
 
-
 public protocol VIPERViewProtocol: class {
     var presenter: VIPERPresenterProtocol? { get set }
 }
@@ -27,7 +26,6 @@ public protocol VIPERPresenterProtocol: class {
     var interactor: VIPERInteractorProtocol { get set }
     var view: VIPERViewProtocol { get set }
 }
-
 
 func iterateEnum<T: Hashable>(_: T.Type) -> AnyIterator<T> {
     var i = 0
@@ -47,14 +45,12 @@ func iterateEnum<T: Hashable>(_: T.Type) -> AnyIterator<T> {
 public typealias InitializedModule = (view: VIPERViewProtocol, interactor: VIPERInteractorProtocol, presenter: VIPERPresenterProtocol, wireFrame: VIPERWireFrameProtocol)
 
 extension VIPERModule {
-
     func classFor(_ viperEntity: String) -> String {
         let className = self.rawValue + viperEntity
         return Bundle.classWithName(className)
     }
 
     static func module(for wireFrame: VIPERWireFrame) -> VIPERModule? {
-        
         for module in iterateEnum(self) {
             let lhs = module.classFor("WireFrame")
             let rhs = Bundle.classWithName(String(describing: type(of: wireFrame)))
@@ -71,7 +67,6 @@ extension VIPERModule {
                            interactor: VIPERInteractorProtocol,
                            presenter: VIPERPresenterProtocol,
                            wireFrame: VIPERWireFrameProtocol) -> InitializedModule {
-
         presenter.wireFrame = wireFrame
         presenter.interactor = interactor
         presenter.view = view
@@ -94,14 +89,11 @@ extension VIPERModule {
             return nil
         }
         return wireframeClass.init()
-
     }
 }
 
-
 // MARK: - Classes
 extension Bundle {
-
     fileprivate static var name: String { // For correct runtime object creation we need this id
         if let productName = main.infoDictionary?["Product module name"] as? String {
             return productName
@@ -116,4 +108,3 @@ extension Bundle {
 //            .replacingOccurrences(of: "-", with: "_")
     }
 }
-

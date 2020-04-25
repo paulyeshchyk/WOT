@@ -48,7 +48,7 @@
 }
 
 - (void)setUuid:(NSInteger)uuid {
-    self.dataLabel.text = [NSString stringWithFormat:@"%d",uuid];
+    self.dataLabel.text = [NSString stringWithFormat:@"%ld",(long)uuid];
 }
 
 - (void)setMask:(NSString *)mask {

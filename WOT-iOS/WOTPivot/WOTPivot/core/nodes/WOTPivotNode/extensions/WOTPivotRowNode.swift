@@ -9,7 +9,6 @@
 import Foundation
 
 public class WOTPivotRowNode: WOTPivotNode {
-
     override public var stickyType: PivotStickyType {
         return PivotStickyType.horizontal
     }

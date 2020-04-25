@@ -9,188 +9,47 @@
 #import "WOTApplicationDefaults.h"
 
 #import <WOTData/WOTData.h>
+#import <WOTData/WOTData-Swift.h>
 #import <WOTPivot/WOTPivot.h>
 
 #import "WOTTankListSettingsDatasource.h"
 #import "NSTimer+BlocksKit.h"
 #import "WOTLoginViewController.h"
+#import "WOTRequestIds.h"
 
 @implementation WOTApplicationDefaults
 
 + (void)registerDefaultSettings {
     
-    id<WOTCoredataProviderProtocol> dataProvider = [WOTCoreDataProvider sharedInstance];
-    NSManagedObjectContext *context = [dataProvider workManagedObjectContext];
+    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
+    [dataProvider perform:^(NSManagedObjectContext * _Nonnull context) {
 
-    NSString *entityName = NSStringFromClass([ListSetting class]);
-    NSError *error = nil;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
-    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
-    NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    [fetchedResultController performFetch:&error];
-    
-#warning will recreate objects if user has deleted everything
-    if ([[fetchedResultController fetchedObjects] count] == 0) {
+        NSString *entityName = NSStringFromClass([ListSetting class]);
+        NSError *error = nil;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
+        [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
+        NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+        [fetchedResultController performFetch:&error];
         
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.nation ascending:NO orderBy:0 callback:NULL];
-        [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.type ascending:YES orderBy:1 callback:NULL];
-        
-        
-        [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOTApiKeys.nation ascending:YES orderBy:0 callback:NULL];
-        
-        [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.tier value:@"6" callback:NULL];
-        
-        if ([context hasChanges]) {
+        #warning will recreate objects if user has deleted everything
+        if ([[fetchedResultController fetchedObjects] count] == 0) {
             
-            NSError *error = nil;
-            [context save:&error];
+            [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.nation ascending:NO orderBy:0 callback:NULL];
+            [WOTTankListSettingsDatasource context:context createSortSettingForKey:WOTApiKeys.type ascending:YES orderBy:1 callback:NULL];
+            
+            
+            [WOTTankListSettingsDatasource context:context createGroupBySettingForKey:WOTApiKeys.nation ascending:YES orderBy:0 callback:NULL];
+            
+            [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.tier value:@"6" callback:NULL];
+            
+            if ([context hasChanges]) {
+                
+                NSError *error = nil;
+                [context save:&error];
+            }
         }
-    }
-    
+    }];
 }
-
-+ (void)registerRequests {
-
-    /**
-     * Login
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestClass:[WOTWEBRequestLogin class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogin registerRequestCallback:^(id data, NSError *error, NSData *binary) {
-
-        if (error){
-
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo description] delegate:nil cancelButtonTitle:@"DISMISS" otherButtonTitles:nil] show];
-            return;
-        }
-
-        NSString *location = data[WOTApiKeys.data][WOT_KEY_LOCATION];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:location]];
-
-        UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
-        UIViewController *presentedViewController = [[rootViewController.presentedViewController childViewControllers] firstObject];
-        if ([presentedViewController isKindOfClass:[WOTLoginViewController class]]){
-
-            WOTLoginViewController *loginController = (WOTLoginViewController *)presentedViewController;
-            loginController.request = request;
-            [loginController reloadData];
-
-        } else {
-
-            WOTLoginViewController *loginController = [[WOTLoginViewController alloc] initWithNibName:NSStringFromClass([WOTLoginViewController class]) bundle:nil];
-            loginController.request = request;
-            loginController.redirectUrlPath = data[WOTApiKeys.redirectUri];
-            [loginController setCallback:loginCallback];
-
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
-
-            [rootViewController presentViewController:nav animated:YES completion:NULL];
-        }
-    }];
-
-    /**
-     * Logout
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestClass:[WOTWEBRequestLogout class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdLogout registerRequestCallback:^(id data, NSError *error, NSData *binary) {
-        
-        if (error){
-            
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:[error.userInfo description] delegate:nil cancelButtonTitle:@"DISMISS" otherButtonTitles:nil] show];
-        } else {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:WOT_NOTIFICATION_LOGOUT object:nil userInfo:nil];
-            WOTRequest *clearSessionRequest = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdClearSession];
-            [[WOTRequestExecutor sharedInstance] runRequest:clearSessionRequest withArgs:nil];
-            
-            WOTRequest *loginRequest = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdLogin];
-            [[WOTRequestExecutor sharedInstance] runRequest:loginRequest withArgs:nil];
-        }
-        
-    }];
-
-    /**
-     * Save Sassion
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestClass:[WOTSaveSessionRequest class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdSaveSession registerRequestCallback:^(id data, NSError *error, NSData *binary) {
-        
-        [[WOTSessionManager sharedInstance] invalidateTimer:^NSTimer *(NSTimeInterval interval) {
-            NSTimer *timer = [NSTimer bk_scheduledTimerWithTimeInterval:interval block:^(NSTimer *timer) {
-
-                [WOTSessionManager logout];
-            } repeats:NO];
-            [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-            return timer;
-        }];
-        
-    }];
-
-    /**
-     * Clear Sassion
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdClearSession registerRequestClass:[WOTClearSessionRequest class]];
-
-    /**
-     * Tanks.Chassis
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerRequestClass:[WOTWebRequestTankChassis class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankChassis registerDataAdapterClass:[WOTWebResponseAdapterChassis class]];
-    
-    /**
-     * Tanks.Turrets
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerRequestClass:[WOTWebRequestTankTurrets class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankTurrets registerDataAdapterClass:[WOTWebResponseAdapterTurrets class]];
-    
-    /**
-     * Tanks.Guns
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerRequestClass:[WOTWebRequestTankGuns class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankGuns registerDataAdapterClass:[WOTWebResponseAdapterGuns class]];
-    
-    /**
-     * Tanks.Radios
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerRequestClass:[WOTWebRequestTankRadios class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankRadios registerDataAdapterClass:[WOTWebResponseAdapterRadios class]];
-    
-    /**
-     * Tanks.Engines
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerRequestClass:[WOTWEBRequestTankEngines class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankEngines registerDataAdapterClass:[WOTWebResponseAdapterEngines class]];
-
-    /**
-     * Tanks.Vehicles
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerRequestClass:[WOTWEBRequestTankVehicles class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankVehicles registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
-    
-    /**
-     * Tanks.Modules
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerRequestClass:[WOTWEBRequestTankVehicles class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdModulesTree registerDataAdapterClass:[WOTWebResponseAdapterVehicles class]];
-
-    /**
-     * Tanks.Profile
-     **/
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerRequestClass:[WOTWEBRequestTankProfile class]];
-    [[WOTRequestExecutor sharedInstance] requestId:WOTRequestIdTankProfile registerDataAdapterClass:[WOTWebResponseAdapterProfile class]];
-    
-}
-
-WOTLoginCallback loginCallback = ^(WOTLogin *wotLogin){
-
-    NSDictionary *args = [wotLogin asDictionary];
-
-    WOTRequest *request = [[WOTRequestExecutor sharedInstance] createRequestForId:WOTRequestIdSaveSession];
-    [[WOTRequestExecutor sharedInstance] runRequest:request withArgs:args];
-
-    UIViewController *rootViewController = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
-    [rootViewController dismissViewControllerAnimated:YES completion:NULL];
-};
-
 
 static NSString *WOTWEBRequestDefaultLanguage;
 
@@ -222,15 +81,6 @@ static NSString *WOTWEBRequestDefaultLanguage;
         }
     }
     return WOTWEBRequestDefaultLanguage;
-}
-
-+ (NSString *)scheme {
-    return WOTApiDefaults.applicationScheme;
-}
-
-+ (NSString *)host {
-    
-    return [NSString stringWithFormat:@"%@.%@", WOTApiDefaults.applicationHost, [self language]];
 }
 
 @end

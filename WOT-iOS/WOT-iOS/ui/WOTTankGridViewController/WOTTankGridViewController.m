@@ -69,7 +69,7 @@
 
 
     WOTTankGridCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankGridCollectionViewCell class]) forIndexPath:indexPath];
-    //TODO: remove comment
+#warning("remove comment")
 //    WOTNode *rootNode = [[self.subitemsTree rootNodes] allObjects][indexPath.row];
 //    result.metricName = rootNode.name;
 //    result.subitems = rootNode.children;

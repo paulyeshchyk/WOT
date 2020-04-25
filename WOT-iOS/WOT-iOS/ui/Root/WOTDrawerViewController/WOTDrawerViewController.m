@@ -10,6 +10,7 @@
 #import "MMDrawerVisualState.h"
 #import "UINavigationBar+WOT.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "WOTSessionManager.h"
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 
@@ -129,10 +130,12 @@
 }
 
 - (void)loginPressedOnMenu:(id<WOTMenuProtocol>)menu {
- 
+
+    id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+
     [self closeDrawerAnimated:YES completion:NULL];
     
-    [WOTSessionManager switchUser];
+    [WOTSessionManager switchUserWithRequestManager:manager.requestManager];
 }
 
 #pragma mark - private
