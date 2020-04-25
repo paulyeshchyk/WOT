@@ -15,16 +15,9 @@ public typealias  WOTRequestCallback = (Data?, Error?) -> Void
 
 @objc
 public protocol WOTRequestDataBindingProtocol {
-    @objc
-    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
-
-    @objc
     static func unregisterDataAdapter(for requestId: WOTRequestIdType)
-
-    @objc
     static func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass?
-
-    @objc
+    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
     func request(for requestId: WOTRequestIdType) -> AnyClass?
 }
 

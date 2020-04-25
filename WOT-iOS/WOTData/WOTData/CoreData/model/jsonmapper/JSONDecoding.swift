@@ -6,6 +6,8 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+import CoreData
+
 class DecoderWrapper: Decodable {
     let decoder: Decoder
 

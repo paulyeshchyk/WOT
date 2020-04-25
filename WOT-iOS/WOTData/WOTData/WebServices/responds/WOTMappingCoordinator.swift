@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTPivot
+import CoreData
 
 @objc
 public class WOTMappingCoordinator: NSObject {

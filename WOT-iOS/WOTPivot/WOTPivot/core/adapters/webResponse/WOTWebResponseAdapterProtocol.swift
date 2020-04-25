@@ -12,11 +12,6 @@ extension AnyHashable {}
 
 public typealias JSON = [AnyHashable: Any]
 
-@objc
-public protocol CoreDataStoreProtocol: class {
-    func perform()
-}
-
 #warning("transform an conforming class to Future/Promise")
 
 @objc

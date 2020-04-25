@@ -1,24 +1,29 @@
 //
 //  CoreDataStore.swift
-//  WOTData
+//  WOTPivot
 //
-//  Created by Pavel Yeshchyk on 4/18/20.
+//  Created by Pavel Yeshchyk on 4/25/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
-public class CoreDataStore {
-    let Clazz: PrimaryKeypathProtocol.Type
-    let request: WOTRequestProtocol
-    let binary: Data?
-    let linkAdapter: JSONLinksAdapterProtocol?
-    var extenalLinks: [WOTJSONLink]?
-    var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
-    var onGetObjectJSON: ((JSON) -> JSON)?
-    var onFinishJSONParse: ((Error?) -> Void)?
-    var onCreateNSManagedObject: NSManagedObjectCallback?
-    let appManager: WOTAppManagerProtocol?
+@objc
+public protocol CoreDataStoreProtocol {
+    var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)? { get set }
+    var onGetObjectJSON: ((JSON) -> JSON)? { get set }
+    var onFinishJSONParse: ((Error?) -> Void)? { get set }
+    var onCreateNSManagedObject: NSManagedObjectCallback? { get set }
+    func perform()
+}
+
+public class CoreDataStore: CoreDataStoreProtocol {
+    private let Clazz: PrimaryKeypathProtocol.Type
+    private let request: WOTRequestProtocol
+    private let binary: Data?
+    private let linkAdapter: JSONLinksAdapterProtocol?
+    private var extenalLinks: [WOTJSONLink]?
+    private let appManager: WOTAppManagerProtocol?
 
     public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, binary: Data?, linkAdapter: JSONLinksAdapterProtocol?, appManager: WOTAppManagerProtocol?, extenalLinks: [WOTJSONLink]?) {
         self.Clazz = clazz
@@ -35,8 +40,19 @@ public class CoreDataStore {
         appManager?.logInspector?.log(OBJFreeLog(request.description), sender: self)
     }
 
-    // MARK: - private
+    // MARK: - CoreDataStoreProtocol
+    public var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
+    public var onGetObjectJSON: ((JSON) -> JSON)?
+    public var onFinishJSONParse: ((Error?) -> Void)?
+    public var onCreateNSManagedObject: NSManagedObjectCallback?
 
+    public func perform() {
+        binary?.parseAsJSON(onReceivedJSON(_:_:))
+    }
+}
+
+// MARK: - private
+extension CoreDataStore {
     private func findOrCreateObject(for jsonExtraction: JSONExtraction, callback: @escaping NSManagedObjectCallback) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
@@ -57,8 +73,6 @@ public class CoreDataStore {
             callback(managedObject)
         })
     }
-
-    private func perform(pkCase: PKCase, json: JSON, completion: @escaping () -> Void ) {}
 }
 
 // MARK: - LogMessageSender
@@ -69,7 +83,7 @@ extension CoreDataStore: LogMessageSender {
 }
 
 // MARK: - CoreDataStoreProtocol
-extension CoreDataStore: CoreDataStoreProtocol {
+extension CoreDataStore {
     private struct JSONExtraction {
         let identifier: Any
         let json: JSON
@@ -78,11 +92,6 @@ extension CoreDataStore: CoreDataStoreProtocol {
     /**
 
      */
-
-    public func perform() {
-        binary?.parseAsJSON(onReceivedJSON(_:_:))
-    }
-
     private func extractSubJSON(from json: JSON, by key: AnyHashable ) -> JSONExtraction {
         guard let jsonByKey = json[key] as? JSON else {
             fatalError("invalid json for key")

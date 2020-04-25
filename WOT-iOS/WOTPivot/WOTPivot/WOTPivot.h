@@ -19,8 +19,6 @@
 #import "NSMutableArray+WOT.h"
 #import "NSString+UrlEncode.h"
 
-#import "NSManagedObject+CoreDataOperations.h"
-#import "NSManagedObject+FillProperties.h"
 #import "WOTLogger.h"
 #import "NSString+RomanUtils.h"
 #import "RomanNumber.h"

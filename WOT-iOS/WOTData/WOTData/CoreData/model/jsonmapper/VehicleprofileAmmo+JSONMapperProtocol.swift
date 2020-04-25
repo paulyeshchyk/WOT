@@ -6,7 +6,7 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTPivot
+import CoreData
 
 extension VehicleprofileAmmo {
     @objc
