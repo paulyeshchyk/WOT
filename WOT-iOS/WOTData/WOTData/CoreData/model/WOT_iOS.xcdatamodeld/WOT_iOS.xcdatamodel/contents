@@ -9,6 +9,7 @@
     </entity>
     <entity name="Module" representedClassName="Module" syncable="YES">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="module_id" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price_credit" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -17,6 +18,7 @@
         <attribute name="weight" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <relationship name="engine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileEngine" inverseName="vehicleprofileModule" inverseEntity="VehicleprofileEngine" syncable="YES"/>
         <relationship name="gun" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileGun" inverseName="vehicleprofileModule" inverseEntity="VehicleprofileGun" syncable="YES"/>
+        <relationship name="modulesTree" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_modules" inverseEntity="ModulesTree" syncable="YES"/>
         <relationship name="radio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileRadio" inverseName="vehicleprofileModule" inverseEntity="VehicleprofileRadio" syncable="YES"/>
         <relationship name="suspension" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileSuspension" inverseName="vehicleProfileModule" inverseEntity="VehicleprofileSuspension" syncable="YES"/>
         <relationship name="turret" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VehicleprofileTurret" inverseName="vehicleprofileModule" inverseEntity="VehicleprofileTurret" syncable="YES"/>
@@ -29,7 +31,7 @@
         <attribute name="price_xp" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="default_profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicleprofile" inverseName="modulesTree" inverseEntity="Vehicleprofile" syncable="YES"/>
-        <relationship name="next_modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModulesTree" inverseName="next_modules" inverseEntity="ModulesTree" syncable="YES"/>
+        <relationship name="next_modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="modulesTree" inverseEntity="Module" syncable="YES"/>
         <relationship name="next_tanks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vehicles" inverseName="modules_tree" inverseEntity="Vehicles" syncable="YES"/>
     </entity>
     <entity name="UserSession" representedClassName="UserSession" syncable="YES">
@@ -212,7 +214,7 @@
     </entity>
     <elements>
         <element name="ListSetting" positionX="-342" positionY="-288" width="128" height="120"/>
-        <element name="Module" positionX="-1494" positionY="-297" width="128" height="223"/>
+        <element name="Module" positionX="-1494" positionY="-297" width="128" height="253"/>
         <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="178"/>
         <element name="UserSession" positionX="-117" positionY="-369" width="128" height="135"/>
         <element name="Vehicleprofile" positionX="-1494" positionY="-297" width="128" height="373"/>

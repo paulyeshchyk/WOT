@@ -103,7 +103,6 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func transform(module: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
-        return
 //        guard let submodules = module.next_modules as? Set<ModulesTree> else {
 //            return
 //        }

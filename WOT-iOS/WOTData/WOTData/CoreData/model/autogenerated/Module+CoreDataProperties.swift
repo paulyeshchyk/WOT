@@ -22,9 +22,26 @@ extension Module {
     @NSManaged public var tier: NSDecimalNumber?
     @NSManaged public var type: String?
     @NSManaged public var weight: NSDecimalNumber?
+    @NSManaged public var module_id: NSDecimalNumber?
     @NSManaged public var engine: VehicleprofileEngine?
     @NSManaged public var gun: VehicleprofileGun?
     @NSManaged public var radio: VehicleprofileRadio?
     @NSManaged public var suspension: VehicleprofileSuspension?
     @NSManaged public var turret: VehicleprofileTurret?
+    @NSManaged public var modulesTree: NSSet?
+}
+
+// MARK: Generated accessors for modulesTree
+extension Module {
+    @objc(addModulesTreeObject:)
+    @NSManaged public func addToModulesTree(_ value: ModulesTree)
+
+    @objc(removeModulesTreeObject:)
+    @NSManaged public func removeFromModulesTree(_ value: ModulesTree)
+
+    @objc(addModulesTree:)
+    @NSManaged public func addToModulesTree(_ values: NSSet)
+
+    @objc(removeModulesTree:)
+    @NSManaged public func removeFromModulesTree(_ values: NSSet)
 }

@@ -29,10 +29,10 @@ extension ModulesTree {
 // MARK: Generated accessors for next_modules
 extension ModulesTree {
     @objc(addNext_modulesObject:)
-    @NSManaged public func addToNext_modules(_ value: ModulesTree)
+    @NSManaged public func addToNext_modules(_ value: Module)
 
     @objc(removeNext_modulesObject:)
-    @NSManaged public func removeFromNext_modules(_ value: ModulesTree)
+    @NSManaged public func removeFromNext_modules(_ value: Module)
 
     @objc(addNext_modules:)
     @NSManaged public func addToNext_modules(_ values: NSSet)

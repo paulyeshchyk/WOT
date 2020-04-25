@@ -19,13 +19,13 @@ extension ModulesTree {
 
         let nextModules = jSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let moduleTreePK = PKCase()
-            moduleTreePK[.primary] = pkCase[.primary]
-            moduleTreePK[.secondary] = ModulesTree.primaryKey(for: $0)
-            coreDataMapping?.requestSubordinate(for: ModulesTree.self, moduleTreePK, subordinateRequestType: .remote, keyPathPrefix: "modules_tree.", callback: { (managedObject) in
-                if let module = managedObject as? ModulesTree {
+            let modulePK = PKCase()
+            modulePK[.primary] = pkCase[.primary]
+            modulePK[.secondary] = Module.primaryIdKey(for: $0)
+            coreDataMapping?.requestSubordinate(for: Module.self, modulePK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
+                if let module = managedObject as? Module {
                     self.addToNext_modules(module)
-                    coreDataMapping?.stash(hint: moduleTreePK)
+                    coreDataMapping?.stash(hint: modulePK)
                 }
             })
         }
@@ -35,8 +35,8 @@ extension ModulesTree {
             let nextTanksPK = PKCase()
             nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
             coreDataMapping?.requestSubordinate(for: Vehicles.self, nextTanksPK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
-                if let module = managedObject as? ModulesTree {
-                    self.addToNext_modules(module)
+                if let tank = managedObject as? Vehicles {
+                    self.addToNext_tanks(tank)
                     coreDataMapping?.stash(hint: nextTanksPK)
                 }
             })

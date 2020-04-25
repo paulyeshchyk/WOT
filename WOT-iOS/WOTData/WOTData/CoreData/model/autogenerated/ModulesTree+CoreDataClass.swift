@@ -47,13 +47,13 @@ extension ModulesTree {
 
 extension ModulesTree: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Fields.self)
+        let fieldsContainer = try decoder.container(keyedBy: Fields.self)
         //
-        self.name = try container.decodeIfPresent(String.self, forKey: .name)
-        self.type = try container.decodeIfPresent(String.self, forKey: .type)
-        self.module_id = try container.decodeIfPresent(Int.self, forKey: .module_id)?.asDecimal
-        self.price_credit = try container.decodeIfPresent(Int.self, forKey: .price_credit)?.asDecimal
-        self.price_xp = try container.decodeIfPresent(Int.self, forKey: .price_xp)?.asDecimal
-        self.is_default = try container.decodeIfPresent(Bool.self, forKey: .is_default)?.asDecimal
+        self.name = try fieldsContainer.decodeIfPresent(String.self, forKey: .name)
+        self.type = try fieldsContainer.decodeIfPresent(String.self, forKey: .type)
+        self.module_id = try fieldsContainer.decodeIfPresent(Int.self, forKey: .module_id)?.asDecimal
+        self.price_credit = try fieldsContainer.decodeIfPresent(Int.self, forKey: .price_credit)?.asDecimal
+        self.price_xp = try fieldsContainer.decodeIfPresent(Int.self, forKey: .price_xp)?.asDecimal
+        self.is_default = try fieldsContainer.decodeIfPresent(Bool.self, forKey: .is_default)?.asDecimal
     }
 }

@@ -142,3 +142,25 @@ public class PKCase: NSObject, WOTDescribable {
         }
     }
 }
+
+public struct IntArray: Codable {
+    enum CodingKeys: String, CodingKey {
+        case elements
+    }
+
+    public var elements: [Int]
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        elements = try container.decode([Int].self, forKey: .elements)
+    }
+
+    public subscript(index: Int) -> Int {
+        get {
+            return self.elements[index]
+        }
+        set(newValue) {
+            self.elements[index] = newValue
+        }
+    }
+}

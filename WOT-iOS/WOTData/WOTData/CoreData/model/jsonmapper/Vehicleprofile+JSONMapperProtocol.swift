@@ -58,20 +58,20 @@ extension Vehicleprofile {
 //            self.suspension = newObject as? VehicleprofileSuspension
 //            coreDataMapping?.stash(hint: vehicleprofileSuspensionListCase)
 //        }
-//
-//        let vehicleprofileTurretCase = PKCase()
-//        vehicleprofileTurretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileTurret.vehicleprofile))
-//        VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: vehicleprofileTurretCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
-//            self.turret = newObject as? VehicleprofileTurret
-//            coreDataMapping?.stash(hint: vehicleprofileTurretCase)
-//        }
 
-        let vehicleprofileModuleCase = PKCase()
-        vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
-        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], pkCase: vehicleprofileModuleCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
-            self.modules = newObject as? VehicleprofileModule
-            coreDataMapping?.stash(hint: vehicleprofileModuleCase)
+        let vehicleprofileTurretCase = PKCase()
+        vehicleprofileTurretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileTurret.vehicleprofile))
+        VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: vehicleprofileTurretCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+            self.turret = newObject as? VehicleprofileTurret
+            coreDataMapping?.stash(hint: vehicleprofileTurretCase)
         }
+
+//        let vehicleprofileModuleCase = PKCase()
+//        vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
+//        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], pkCase: vehicleprofileModuleCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+//            self.modules = newObject as? VehicleprofileModule
+//            coreDataMapping?.stash(hint: vehicleprofileModuleCase)
+//        }
     }
 }
 

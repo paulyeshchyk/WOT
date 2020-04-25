@@ -24,6 +24,7 @@ extension Module {
         case price_credit
         case weight
         case image
+        case module_id
     }
 
     @objc
@@ -34,12 +35,17 @@ extension Module {
     override public class func primaryKeyPath() -> String {
         return #keyPath(Module.name)
     }
+
+    override public class func primaryIdKeyPath() -> String {
+        return #keyPath(Module.module_id)
+    }
 }
 
 extension Module: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
         //
+        self.module_id = try container.decodeIfPresent(Int.self, forKey: .module_id)?.asDecimal
         self.name = try container.decodeIfPresent(String.self, forKey: .name)
         self.nation = try container.decodeIfPresent(String.self, forKey: .nation)
         self.tier = try container.decodeIfPresent(Int.self, forKey: .tier)?.asDecimal
