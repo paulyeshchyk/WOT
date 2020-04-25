@@ -6,7 +6,9 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc extension ModulesTree: KeypathProtocol {
+import WOTPivot
+
+extension ModulesTree: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(ModulesTree.name),
@@ -27,6 +29,7 @@
 }
 
 extension ModulesTree {
+    public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {
         case module_id
         case name
@@ -37,8 +40,6 @@ extension ModulesTree {
         case next_modules
         case next_tanks
     }
-
-    public typealias Fields = FieldKeys
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {

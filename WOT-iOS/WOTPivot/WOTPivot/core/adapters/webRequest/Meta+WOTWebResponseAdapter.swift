@@ -28,9 +28,8 @@ public protocol CoreDataMappingProtocol {
     func requestSubordinate(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback )
     /**
      Asks Remote storage to find/create object by predicate
-     - Parameter clazz: Type of requested object
-     - Parameter pkCase: Set of predicates available for this request
-     - Parameter callback: -
+     - Parameter Clazz: Type of requested object
+     - Parameter completion: -
      */
     @available(*, deprecated, message: "use requestSubordinate(_:_:.remote:)")
     func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents: [Any]?, completion: @escaping NSManagedObjectCallback)
@@ -190,7 +189,7 @@ struct WOTWEBRequestError: Error, WOTErrorProtocol {
 
 public typealias JSONParseCompletion = (JSON?, Error?) -> Void
 
-@objc extension NSData {
+extension NSData {
     @available(*, deprecated, message: "Use Data.parseAsJSON(:) instead")
     @objc
     public func parseAsJSON(_ completion: JSONParseCompletion?) {

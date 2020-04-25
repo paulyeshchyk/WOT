@@ -6,7 +6,9 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc extension VehicleprofileTurret: KeypathProtocol {
+import WOTPivot
+
+extension VehicleprofileTurret: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileTurret.turret_id),
@@ -29,6 +31,7 @@
 }
 
 extension VehicleprofileTurret {
+    public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {
         case turret_id
         case traverse_left_arc

@@ -6,7 +6,9 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc extension VehicleprofileEngine: KeypathProtocol {
+import WOTPivot
+
+extension VehicleprofileEngine: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileEngine.engine_id),
@@ -25,6 +27,7 @@
 }
 
 extension VehicleprofileEngine {
+    public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {
         case engine_id
         case name
@@ -34,8 +37,6 @@ extension VehicleprofileEngine {
         case fire_chance
         case tier
     }
-
-    public typealias Fields = FieldKeys
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {

@@ -6,8 +6,25 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
 import WOTPivot
+
+extension Module: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return [#keyPath(Module.name),
+                #keyPath(Module.nation),
+                #keyPath(Module.tier),
+                #keyPath(Module.type),
+                #keyPath(Module.price_credit),
+                #keyPath(Module.weight),
+                #keyPath(Module.image)]
+    }
+
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return Module.keypaths()
+    }
+}
 
 extension Module {
     public typealias Fields = Void

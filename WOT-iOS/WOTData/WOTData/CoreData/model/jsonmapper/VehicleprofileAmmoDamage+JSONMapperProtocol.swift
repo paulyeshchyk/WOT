@@ -6,7 +6,9 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc extension VehicleprofileAmmoDamage: KeypathProtocol {
+import WOTPivot
+
+extension VehicleprofileAmmoDamage: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileAmmoDamage.avg_value),
@@ -21,13 +23,12 @@
 }
 
 extension VehicleprofileAmmoDamage {
+    public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {
         case min_value
         case avg_value
         case max_value
     }
-
-    public typealias Fields = FieldKeys
 
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {

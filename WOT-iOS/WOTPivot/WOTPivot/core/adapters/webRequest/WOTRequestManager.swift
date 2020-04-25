@@ -193,7 +193,9 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         let externalCallback = self.externalCallbacks[request.uuid.uuidString]
         requestCoordinator.request(request, processBinary: data, jsonLinkAdapter: appManager?.jsonLinksAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: { [weak self] error in
             DispatchQueue.main.async {
-                #warning("error was not used here")
+                if let error = error {
+                    self?.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
+                }
                 self?.request(request, didCompleteParsing: .finished)
             }
         })

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import WOTPivot
 
-@objc extension VehicleprofileModule: KeypathProtocol {
+extension VehicleprofileModule: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileModule.name),
@@ -29,6 +29,7 @@ import Foundation
 }
 
 extension VehicleprofileModule {
+    public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {
         case name
         case nation
@@ -36,10 +37,6 @@ extension VehicleprofileModule {
         case module_id
     }
 
-    public typealias Fields = FieldKeys
-}
-
-extension VehicleprofileModule {
     override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
         self.name = jSON[#keyPath(VehicleprofileModule.name)] as? String
         self.nation = jSON[#keyPath(VehicleprofileModule.nation)] as? String

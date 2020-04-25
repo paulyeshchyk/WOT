@@ -6,7 +6,9 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc extension VehicleprofileRadio: KeypathProtocol {
+import WOTPivot
+
+extension VehicleprofileRadio: KeypathProtocol {
     @objc
     public class func keypaths() -> [String] {
         return [#keyPath(VehicleprofileRadio.radio_id),
@@ -24,6 +26,7 @@
 }
 
 extension VehicleprofileRadio {
+    public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {
         case radio_id
         case tier
@@ -32,8 +35,6 @@ extension VehicleprofileRadio {
         case weight
         case name
     }
-
-    public typealias Fields = FieldKeys
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {

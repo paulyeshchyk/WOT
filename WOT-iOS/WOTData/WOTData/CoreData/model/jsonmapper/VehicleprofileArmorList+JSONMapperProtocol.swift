@@ -6,14 +6,22 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import WOTPivot
 
-extension VehicleprofileArmorList {
-    public enum FieldKeys: String, CodingKey {
-        case type
+extension VehicleprofileArmorList: KeypathProtocol {
+    @objc
+    public class func keypaths() -> [String] {
+        return []
     }
 
-    public typealias Fields = FieldKeys
+    @objc
+    public func instanceKeypaths() -> [String] {
+        return VehicleprofileArmorList.keypaths()
+    }
+}
+
+extension VehicleprofileArmorList {
+    public typealias Fields = Void
 
     @objc
     public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
