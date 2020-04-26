@@ -10,7 +10,7 @@ import WOTPivot
 
 extension VehicleprofileArmor {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -20,26 +20,26 @@ extension VehicleprofileArmor {
 }
 
 extension VehicleprofileArmor {
-    public static func hull(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func hull(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else {
             callback(nil)
             return
         }
 
-        coreDataMapping?.mapper?.requestSubordinate(for: VehicleprofileArmor.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
+        persistentStore?.requestSubordinate(for: VehicleprofileArmor.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+            persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }
 
-    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else {
             callback(nil)
             return
         }
 
-        coreDataMapping?.mapper?.requestSubordinate(for: VehicleprofileArmor.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
+        persistentStore?.requestSubordinate(for: VehicleprofileArmor.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+            persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

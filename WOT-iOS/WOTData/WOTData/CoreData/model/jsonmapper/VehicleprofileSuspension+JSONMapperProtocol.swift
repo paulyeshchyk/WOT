@@ -10,7 +10,7 @@ import WOTPivot
 
 extension VehicleprofileSuspension {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -20,7 +20,7 @@ extension VehicleprofileSuspension {
 }
 
 extension VehicleprofileSuspension {
-    public static func suspension(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func suspension(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
 
         let tag = jSON[VehicleprofileSuspension.primaryKeyPath()]
@@ -29,8 +29,8 @@ extension VehicleprofileSuspension {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.mapper?.requestSubordinate(for: VehicleprofileSuspension.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
+        persistentStore?.requestSubordinate(for: VehicleprofileSuspension.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+            persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

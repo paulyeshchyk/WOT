@@ -18,7 +18,7 @@ public protocol WOTAppManagerProtocol {
     @objc var logInspector: LogInspectorProtocol? { get set }
     @objc var coreDataProvider: WOTCoredataProviderProtocol? { get set }
     @objc var shared: WOTAppManagerProtocol { get }
-    @objc var mappingCoordinator: WOTMappingCoordinatorProtocol? { get set }
+    @objc var persistentStore: WOTPersistentStoreProtocol? { get set }
     @objc var jsonLinksAdapter: JSONLinksAdapterProtocol? { get set }
 }
 
@@ -45,9 +45,9 @@ public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
         }
     }
 
-    @objc public var mappingCoordinator: WOTMappingCoordinatorProtocol? {
+    @objc public var persistentStore: WOTPersistentStoreProtocol? {
         didSet {
-            mappingCoordinator?.appManager = self
+            persistentStore?.appManager = self
         }
     }
 

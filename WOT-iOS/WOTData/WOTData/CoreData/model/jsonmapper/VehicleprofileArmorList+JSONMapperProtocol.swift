@@ -10,30 +10,30 @@ import WOTPivot
 
 extension VehicleprofileArmorList {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
         let hullCase = PKCase()
         hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
 
-        VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+        VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, persistentStore: persistentStore) { newObject in
             self.hull = newObject as? VehicleprofileArmor
-            coreDataMapping?.stash(hint: hullCase)
+            persistentStore?.stash(hint: hullCase)
         }
 
         let turretCase = PKCase()
         turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
-        VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+        VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, persistentStore: persistentStore) { newObject in
             self.turret = newObject as? VehicleprofileArmor
-            coreDataMapping?.stash(hint: hullCase)
+            persistentStore?.stash(hint: hullCase)
         }
     }
 }
 
 extension VehicleprofileArmorList {
-    public static func list(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func list(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
-        coreDataMapping?.mapper?.requestSubordinate(for: VehicleprofileArmorList.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
+        persistentStore?.requestSubordinate(for: VehicleprofileArmorList.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+            persistentStore?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

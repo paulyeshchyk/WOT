@@ -9,7 +9,11 @@
 import CoreData
 
 @objc
-public protocol JSONCoordinatorProtocol: NSObjectProtocol {
+public protocol JSONCoordinatorProtocol: CoreDataMappingProtocol {
+    @available(*, deprecated)
+    @objc
+    var appManager: WOTAppManagerProtocol? { get set }
+
     var uuid: UUID { get }
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)? { get set }
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
@@ -36,7 +40,10 @@ extension JSONCoordinatorProtocol {
     }
 }
 
+@objc
 public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
+    public var appManager: WOTAppManagerProtocol?
+
     public let uuid: UUID = UUID()
     private let Clazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
@@ -44,13 +51,9 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
         return uuid.uuidString.hashValue
     }
 
-    private let appManager: WOTAppManagerProtocol?
+    private var persistentStore: WOTPersistentStoreProtocol?
 
     private let linkAdapter: JSONLinksAdapterProtocol?
-
-    public var mapper: WOTMappingCoordinatorProtocol? {
-        return appManager?.mappingCoordinator
-    }
 
     public var coreDataProvider: WOTCoredataProviderProtocol? {
         return appManager?.coreDataProvider
@@ -61,6 +64,7 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
         self.request = request
         self.linkAdapter = linkAdapter
         self.appManager = appManager
+        self.persistentStore = appManager?.persistentStore
 
         super.init()
         appManager?.logInspector?.log(OBJNewLog(request.description), sender: self)
@@ -149,7 +153,7 @@ extension JSONCoordinator {
 
         appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: objCase[.primary]?.predicate, callback: { (managedObject) in
 
-            self.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase, forRequest: self.request)
+            self.persistentStore?.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase, forRequest: self.request)
             let status = managedObject.isInserted ? "created" : "located"
             self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(objCase.description); status: \(status)"), sender: self)
             self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
@@ -168,42 +172,4 @@ extension JSONCoordinator: LogMessageSender {
 }
 
 // MARK: - CoreDataMappingProtocol
-extension JSONCoordinator: CoreDataMappingProtocol {
-    /**
-
-     */
-    public func stash(hint: String?) {
-        guard let provider = appManager?.coreDataProvider else {
-            fatalError("provider was released")
-        }
-
-        provider.stash({ (error) in
-            if let error = error {
-                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
-            } else {
-                let debugInfo: String
-                if let debugDescription = hint {
-                    debugInfo = "\(String(describing: self.Clazz)) \(debugDescription.description)"
-                } else {
-                    debugInfo = "\(String(describing: self.Clazz))"
-                }
-                self.appManager?.logInspector?.log(CDStashLog(debugInfo), sender: self)
-            }
-        })
-    }
-
-    /**
-
-     */
-    public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol) {
-        appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
-        object?.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, coreDataMapping: self)
-        stash(hint: pkCase)
-    }
-
-    public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol) {
-        appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
-        object?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: self)
-        stash(hint: pkCase)
-    }
-}
+extension JSONCoordinator {}

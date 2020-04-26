@@ -53,7 +53,7 @@
     
     id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTTankCoreDataProvider alloc] init];
     
-    id<WOTMappingCoordinatorProtocol> mappingCoordinator = [[WOTMappingCoordinator alloc] init];
+    id<WOTPersistentStoreProtocol> persistentStore = [[WOTpersistentStore alloc] init];
     
     id<JSONLinksAdapterProtocol> jsonLinksAdapter = [[WOTJSONLinksAdapter alloc] init];
 
@@ -65,7 +65,7 @@
     self.appManager.sessionManager = sessionManager;
     self.appManager.logInspector = logInspector;
     self.appManager.coreDataProvider = coreDataProvider;
-    self.appManager.mappingCoordinator = mappingCoordinator;
+    self.appManager.persistentStore = persistentStore;
     self.appManager.jsonLinksAdapter = jsonLinksAdapter;
 
     [AppDefaults registerRequestsFor:requestCoordinator];

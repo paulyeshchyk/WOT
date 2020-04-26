@@ -11,7 +11,7 @@ import CoreData
 
 extension Module {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -26,38 +26,38 @@ extension Module {
             if let moduleType = VehicleModuleType(rawValue: moduleType) {
                 switch moduleType {
                 case .vehicleChassis:
-                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, coreDataMapping: coreDataMapping, keyPathPrefix: "suspension.", callback: { managedObject in
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, persistentStore: persistentStore, keyPathPrefix: "suspension.", callback: { managedObject in
                         if let module = managedObject as? VehicleprofileSuspension {
                             self.suspension = module
-                            coreDataMapping?.stash(hint: pkCase)
+                            persistentStore?.stash(hint: pkCase)
                         }
                     })
                 case .vehicleGun:
-                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, coreDataMapping: coreDataMapping, keyPathPrefix: "gun.", callback: { managedObject in
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, persistentStore: persistentStore, keyPathPrefix: "gun.", callback: { managedObject in
                         if let module = managedObject as? VehicleprofileGun {
                             self.gun = module
-                            coreDataMapping?.stash(hint: pkCase)
+                            persistentStore?.stash(hint: pkCase)
                         }
                     })
                 case .vehicleRadio:
-                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, coreDataMapping: coreDataMapping, keyPathPrefix: "radio.", callback: { managedObject in
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, persistentStore: persistentStore, keyPathPrefix: "radio.", callback: { managedObject in
                         if let module = managedObject as? VehicleprofileRadio {
                             self.radio = module
-                            coreDataMapping?.stash(hint: pkCase)
+                            persistentStore?.stash(hint: pkCase)
                         }
                     })
                 case .vehicleEngine:
-                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, coreDataMapping: coreDataMapping, keyPathPrefix: "engine.", callback: { managedObject in
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, persistentStore: persistentStore, keyPathPrefix: "engine.", callback: { managedObject in
                         if let module = managedObject as? VehicleprofileEngine {
                             self.engine = module
-                            coreDataMapping?.stash(hint: pkCase)
+                            persistentStore?.stash(hint: pkCase)
                         }
                     })
                 case .vehicleTurret:
-                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, coreDataMapping: coreDataMapping, keyPathPrefix: "turret.", callback: { managedObject in
+                    requestVehicleModule(by: self.module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, persistentStore: persistentStore, keyPathPrefix: "turret.", callback: { managedObject in
                         if let module = managedObject as? VehicleprofileTurret {
                             self.turret = module
-                            coreDataMapping?.stash(hint: pkCase)
+                            persistentStore?.stash(hint: pkCase)
                         }
                     })
                 case .unknown:print(moduleType.rawValue)
@@ -67,7 +67,7 @@ extension Module {
         }
     }
 
-    private func requestVehicleModule(by id: NSDecimalNumber?, tank_id: NSDecimalNumber?, andClass Clazz: NSManagedObject.Type, coreDataMapping: CoreDataMappingProtocol?, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
+    private func requestVehicleModule(by id: NSDecimalNumber?, tank_id: NSDecimalNumber?, andClass Clazz: NSManagedObject.Type, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
         guard let id = id else {
             return
         }
@@ -79,16 +79,16 @@ extension Module {
         pkCase[.primary] = Clazz.primaryIdKey(for: id)
         pkCase[.secondary] = Vehicles.primaryKey(for: tank_id)
 
-        coreDataMapping?.mapper?.requestSubordinate(for: Clazz, pkCase: pkCase, subordinateRequestType: .remote, keyPathPrefix: keyPathPrefix, onCreateNSManagedObject: callback)
+        persistentStore?.requestSubordinate(for: Clazz, pkCase: pkCase, subordinateRequestType: .remote, keyPathPrefix: keyPathPrefix, onCreateNSManagedObject: callback)
     }
 }
 
 extension Module {
-    public static func module(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func module(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
-        coreDataMapping?.mapper?.requestSubordinate(for: Module.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
+        persistentStore?.requestSubordinate(for: Module.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+            persistentStore?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
     }

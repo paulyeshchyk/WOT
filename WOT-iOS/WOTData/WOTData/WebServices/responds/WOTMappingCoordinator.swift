@@ -1,5 +1,5 @@
 //
-//  WOTMappingCoordinator.swift
+//  WOTpersistentStore.swift
 //  WOTData
 //
 //  Created by Pavel Yeshchyk on 4/24/20.
@@ -9,7 +9,7 @@
 import CoreData
 
 @objc
-public class WOTMappingCoordinator: NSObject {
+public class WOTpersistentStore: NSObject {
     private var localAppManager: WOTAppManagerProtocol?
 
     fileprivate func localSubordinate(for clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
@@ -39,14 +39,14 @@ public class WOTMappingCoordinator: NSObject {
     }
 }
 
-extension WOTMappingCoordinator: LogMessageSender {
+extension WOTpersistentStore: LogMessageSender {
     public var logSenderDescription: String {
         return String(describing: type(of: self))
     }
 }
 
-// MARK: - WOTMappingCoordinatorProtocol
-extension WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
+// MARK: - WOTpersistentStoreProtocol
+extension WOTpersistentStore: WOTPersistentStoreProtocol {
     @objc
     public var appManager: WOTAppManagerProtocol? {
         set {
@@ -63,5 +63,43 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         case .local: localSubordinate(for: clazz, pkCase, callback: onCreateNSManagedObject)
         case .remote: remoteSubordinate(for: clazz, pkCase,  keypathPrefix: keyPathPrefix, onCreateNSManagedObject: onCreateNSManagedObject)
         }
+    }
+
+    /**
+
+     */
+    @objc public func stash(hint: String?) {
+        guard let provider = appManager?.coreDataProvider else {
+            fatalError("provider was released")
+        }
+
+        provider.stash({ (error) in
+            if let error = error {
+                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
+            } else {
+                let debugInfo: String
+                if let debugDescription = hint {
+                    debugInfo = "\(String(describing: self)) \(debugDescription.description)"
+                } else {
+                    debugInfo = "\(String(describing: self))"
+                }
+                self.appManager?.logInspector?.log(CDStashLog(debugInfo), sender: self)
+            }
+        })
+    }
+
+    /**
+
+     */
+    @objc public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol) {
+        appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
+        object?.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, persistentStore: self)
+        stash(hint: pkCase)
+    }
+
+    @objc public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol) {
+        appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
+        object?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, persistentStore: self)
+        stash(hint: pkCase)
     }
 }

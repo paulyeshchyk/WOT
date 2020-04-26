@@ -10,7 +10,7 @@ import WOTPivot
 
 extension Vehicles {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -20,7 +20,7 @@ extension Vehicles {
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
 
-        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, forRequest: forRequest, persistentStore: persistentStore) { newObject in
             guard let defaultProfile = newObject as? Vehicleprofile else {
                 return
             }
@@ -30,7 +30,7 @@ extension Vehicles {
                     modules_tree.default_profile = defaultProfile
                 }
             })
-            coreDataMapping?.stash(hint: vehicleProfileCase)
+            persistentStore?.stash(hint: vehicleProfileCase)
         }
 
         if let set = self.modules_tree {
@@ -44,13 +44,13 @@ extension Vehicles {
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
 
-        ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, coreDataMapping: coreDataMapping) { newObject in
+        ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, forRequest: forRequest, persistentStore: persistentStore) { newObject in
             guard let module_tree = newObject as? ModulesTree else {
                 return
             }
             module_tree.default_profile = self.default_profile
             self.addToModules_tree(module_tree)
-            coreDataMapping?.stash(hint: modulesTreeCase)
+            persistentStore?.stash(hint: modulesTreeCase)
         }
     }
 }

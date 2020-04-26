@@ -7,35 +7,11 @@
 //
 
 import CoreData
-
-@objc
-public enum SubordinateRequestType: Int {
-    case local = 0
-    case remote = 1
-}
-
 @objc
 public protocol CoreDataMappingProtocol {
-    @available(*, deprecated)
-    var mapper: WOTMappingCoordinatorProtocol? { get }
-
     /**
      Asks Subordinator to save context before running links mapping
         - Parameter pkCase: just informative
 
      */
-    func stash(hint: String?)
-
-    func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol)
-    func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol)
-}
-
-extension CoreDataMappingProtocol {
-    public func stash(hint: Describable?) {
-        self.stash(hint: hint?.description)
-    }
-}
-
-extension CoreDataMappingProtocol {
-    public func stash() { self.stash(hint: nil) }
 }
