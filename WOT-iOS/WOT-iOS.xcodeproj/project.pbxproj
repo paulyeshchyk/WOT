@@ -2023,7 +2023,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/SwiftGen/bin/swiftgen.app/Contents/MacOS/swiftgen strings -p $PODS_ROOT/SwiftGen/templates/strings/flat-swift3.stencil --output ${SRCROOT}/WOT-iOS/resources/strings.swift ${SRCROOT}/WOT-iOS/resources/en.lproj/Localizable.strings\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${TOOLS_ROOT}/SwiftGen/bin/swiftgen.app/Contents/MacOS/swiftgen\" strings -p \"${TOOLS_ROOT}/SwiftGen/bin/templates/strings/flat-swift3.stencil\" --output \"${SRCROOT}/WOT-iOS/resources/strings.swift\" \"${SRCROOT}/WOT-iOS/resources/en.lproj/Localizable.strings\"\n";
 		};
 		1DB5FB4E2428A2B400413F41 /* Swiftformat */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2041,7 +2041,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\" \n";
+			shellScript = "\"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\" \n";
 		};
 		6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2461,6 +2461,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 5.0;
+				TOOLS_ROOT = "${SRCROOT}/Tools";
 				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Debug;
@@ -2485,6 +2486,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/WOT-iOS-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 5.0;
+				TOOLS_ROOT = "${SRCROOT}/Tools";
 				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Release;
