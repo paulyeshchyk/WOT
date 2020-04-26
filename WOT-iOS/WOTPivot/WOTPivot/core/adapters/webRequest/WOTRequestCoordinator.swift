@@ -174,7 +174,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 }
 
 struct CoreDataStorePair {
-    let coreDataStore: CoreDataStoreProtocol
+    let coreDataStore: JSONCoordinatorProtocol
     let data: Data?
 }
 

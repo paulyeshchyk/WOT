@@ -22,7 +22,7 @@
 		1D16176524544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176424544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift */; };
 		1D1617732454517D0022E02F /* JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1617722454517D0022E02F /* JSONMapperProtocol.swift */; };
 		1D1617762454524B0022E02F /* CoreDataMappingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1617752454524B0022E02F /* CoreDataMappingProtocol.swift */; };
-		1D161778245452660022E02F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D161777245452660022E02F /* CoreDataStore.swift */; };
+		1D161778245452660022E02F /* JSONCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D161777245452660022E02F /* JSONCoordinator.swift */; };
 		1D161781245472110022E02F /* RESTAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D161780245472110022E02F /* RESTAPIResponse.swift */; };
 		1D16178324547BAD0022E02F /* NSManagedObject+JSONDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16178224547BAD0022E02F /* NSManagedObject+JSONDecoding.swift */; };
 		1D2612182410DEE500CFEB16 /* WOTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2612172410DEE500CFEB16 /* WOTRequest.swift */; };
@@ -187,7 +187,7 @@
 		1D16176424544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1D1617722454517D0022E02F /* JSONMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMapperProtocol.swift; sourceTree = "<group>"; };
 		1D1617752454524B0022E02F /* CoreDataMappingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMappingProtocol.swift; sourceTree = "<group>"; };
-		1D161777245452660022E02F /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		1D161777245452660022E02F /* JSONCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoordinator.swift; sourceTree = "<group>"; };
 		1D161780245472110022E02F /* RESTAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTAPIResponse.swift; sourceTree = "<group>"; };
 		1D16178224547BAD0022E02F /* NSManagedObject+JSONDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONDecoding.swift"; sourceTree = "<group>"; };
 		1D2612172410DEE500CFEB16 /* WOTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequest.swift; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				1D1617752454524B0022E02F /* CoreDataMappingProtocol.swift */,
-				1D161777245452660022E02F /* CoreDataStore.swift */,
+				1D161777245452660022E02F /* JSONCoordinator.swift */,
 			);
 			path = coredataStore;
 			sourceTree = "<group>";
@@ -1074,7 +1074,7 @@
 				1D70CD77244EDFE30031CBFE /* OBJNewLog.swift in Sources */,
 				1DA153B3244A43A100FB3C89 /* WOTWebDataPumper.swift in Sources */,
 				1D02D22224558C4300EE8DE9 /* WEBError.swift in Sources */,
-				1D161778245452660022E02F /* CoreDataStore.swift in Sources */,
+				1D161778245452660022E02F /* JSONCoordinator.swift in Sources */,
 				1D8C293921357B9A00759C42 /* NSNumber+Randomizer.m in Sources */,
 				1D5D022C23C8623D004B0314 /* WOTDataFetchController.swift in Sources */,
 				1DE559022124571000576D41 /* WOTDataModelProtocol.swift in Sources */,

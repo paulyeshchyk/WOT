@@ -1,5 +1,5 @@
 //
-//  JSONCoordinator.swift
+//  CoreDataStore.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/25/20.
@@ -9,7 +9,7 @@
 import CoreData
 
 @objc
-public protocol JSONCoordinatorProtocol: NSObjectProtocol {
+public protocol CoreDataStoreProtocol: NSObjectProtocol {
     var uuid: UUID { get }
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)? { get set }
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
@@ -20,7 +20,7 @@ public protocol JSONCoordinatorProtocol: NSObjectProtocol {
     var coreDataProvider: WOTCoredataProviderProtocol? { get }
 }
 
-extension JSONCoordinatorProtocol {
+extension CoreDataStoreProtocol {
     public func perform<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
         guard let data = binary else {
             onReceivedJSON(nil, fromRequest: request, nil)
@@ -36,7 +36,7 @@ extension JSONCoordinatorProtocol {
     }
 }
 
-public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
+public class JSONCoordinator: NSObject, CoreDataStoreProtocol {
     public let uuid: UUID = UUID()
     private let Clazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
