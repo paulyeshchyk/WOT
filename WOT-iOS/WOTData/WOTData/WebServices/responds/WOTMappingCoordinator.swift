@@ -9,7 +9,7 @@
 import CoreData
 
 @objc
-public class WOTpersistentStore: NSObject {
+public class WOTPersistentStore: NSObject {
     private var localAppManager: WOTAppManagerProtocol?
 
     fileprivate func localSubordinate(for clazz: AnyClass, _ pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
@@ -39,14 +39,14 @@ public class WOTpersistentStore: NSObject {
     }
 }
 
-extension WOTpersistentStore: LogMessageSender {
+extension WOTPersistentStore: LogMessageSender {
     public var logSenderDescription: String {
         return String(describing: type(of: self))
     }
 }
 
 // MARK: - WOTpersistentStoreProtocol
-extension WOTpersistentStore: WOTPersistentStoreProtocol {
+extension WOTPersistentStore: WOTPersistentStoreProtocol {
     @objc
     public var appManager: WOTAppManagerProtocol? {
         set {

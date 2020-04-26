@@ -53,7 +53,7 @@
     
     id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTTankCoreDataProvider alloc] init];
     
-    id<WOTPersistentStoreProtocol> persistentStore = [[WOTpersistentStore alloc] init];
+    id<WOTPersistentStoreProtocol> persistentStore = [[WOTPersistentStore alloc] init];
     
     id<JSONLinksAdapterProtocol> jsonLinksAdapter = [[WOTJSONLinksAdapter alloc] init];
 
