@@ -9,7 +9,7 @@
 import WOTPivot
 
 extension VehicleprofileModule {
-    override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -70,11 +70,11 @@ extension VehicleprofileModule {
 }
 
 extension VehicleprofileModule {
-    public static func module(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func module(fromJSON json: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
         persistentStore?.requestSubordinate(for: VehicleprofileModule.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
+            persistentStore?.mapping(object: newObject, fromJSON: json, pkCase: pkCase)
             callback(newObject)
         }
     }

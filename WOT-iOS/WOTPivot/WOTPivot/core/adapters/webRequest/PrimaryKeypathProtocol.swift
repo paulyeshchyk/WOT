@@ -96,7 +96,7 @@ public class PKCase: NSObject {
      used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
      parents identifier has taken from a list
      */
-    #warning("Use tree instead of plain")
+    @available(*, deprecated, message:"Use tree instead of plain")
     public var plainParents: [AnyObject] = []
 
     public convenience init(parentObjects: [AnyObject?]? ) {

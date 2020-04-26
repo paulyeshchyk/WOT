@@ -10,7 +10,7 @@ import WOTPivot
 
 extension VehicleprofileRadio {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -20,7 +20,7 @@ extension VehicleprofileRadio {
 }
 
 extension VehicleprofileRadio {
-    public static func radio(fromJSON jSON: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func radio(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
 
         let tag = jSON[VehicleprofileRadio.primaryKeyPath()]
@@ -30,7 +30,7 @@ extension VehicleprofileRadio {
         pkCase[.primary] = pk
 
         persistentStore?.requestSubordinate(for: VehicleprofileRadio.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
+            persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
             callback(newObject)
         }
     }

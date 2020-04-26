@@ -12,7 +12,7 @@ extension VehicleprofileAmmoList {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
             let vehicleprofileAmmoCase = PKCase()
@@ -22,7 +22,7 @@ extension VehicleprofileAmmoList {
                 guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
                     return
                 }
-                persistentStore?.mapping(object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase, forRequest: forRequest)
+                persistentStore?.mapping(object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
                 self.addToVehicleprofileAmmo(ammo)
                 persistentStore?.stash(hint: vehicleprofileAmmoCase)
             }
@@ -31,11 +31,11 @@ extension VehicleprofileAmmoList {
 }
 
 extension VehicleprofileAmmoList {
-    public static func list(fromArray array: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback:  @escaping NSManagedObjectCallback ) {
+    public static func list(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback:  @escaping NSManagedObjectCallback ) {
         guard let array = array as? [Any] else { return }
 
         persistentStore?.requestSubordinate(for: VehicleprofileAmmoList.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase, forRequest: forRequest)
+            persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase)
             callback(newObject)
         }
     }

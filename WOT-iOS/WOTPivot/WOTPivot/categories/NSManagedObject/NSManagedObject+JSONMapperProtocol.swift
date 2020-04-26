@@ -21,12 +21,12 @@ extension NSManagedObject: JSONMapperProtocol {
     }
 
     @objc
-    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         fatalError("not implemented")
     }
 
     @objc
-    open func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    open func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         fatalError("not implemented")
     }
 }

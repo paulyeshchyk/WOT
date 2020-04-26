@@ -10,7 +10,7 @@ import WOTPivot
 
 extension ModulesTree {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -49,7 +49,7 @@ extension ModulesTree {
 }
 
 extension ModulesTree {
-    public static func modulesTree(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func modulesTree(fromJSON json: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
         json.keys.forEach { (key) in
@@ -62,7 +62,7 @@ extension ModulesTree {
             submodulesCase[.secondary] = pkCase[.primary]
 
             persistentStore?.requestSubordinate(for: ModulesTree.self, pkCase: submodulesCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-                persistentStore?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest)
+                persistentStore?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase)
                 callback(newObject)
             }
         }

@@ -91,15 +91,15 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     /**
 
      */
-    @objc public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol) {
+    @objc public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) {
         appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
-        object?.mapping(fromJSON: jSON, pkCase: pkCase, forRequest: forRequest, persistentStore: self)
+        object?.mapping(fromJSON: jSON, pkCase: pkCase, persistentStore: self)
         stash(hint: pkCase)
     }
 
-    @objc public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol) {
+    @objc public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) {
         appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
-        object?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, persistentStore: self)
+        object?.mapping(fromArray: array, pkCase: pkCase, persistentStore: self)
         stash(hint: pkCase)
     }
 }

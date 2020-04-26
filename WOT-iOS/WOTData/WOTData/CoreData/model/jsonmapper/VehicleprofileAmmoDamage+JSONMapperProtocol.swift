@@ -10,7 +10,7 @@ import WOTPivot
 
 extension VehicleprofileAmmoDamage {
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         self.min_value = AnyConvertable(array[0]).asNSDecimal
         self.avg_value = AnyConvertable(array[1]).asNSDecimal
         self.max_value = AnyConvertable(array[2]).asNSDecimal
@@ -18,11 +18,11 @@ extension VehicleprofileAmmoDamage {
 }
 
 extension VehicleprofileAmmoDamage {
-    public static func damage(fromArray array: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func damage(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let array = array as? [Any] else { return }
 
         persistentStore?.requestSubordinate(for: VehicleprofileAmmoDamage.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase, forRequest: forRequest)
+            persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase)
             callback(newObject)
         }
     }

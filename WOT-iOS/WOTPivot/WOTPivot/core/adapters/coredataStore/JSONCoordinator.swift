@@ -153,7 +153,7 @@ extension JSONCoordinator {
 
         appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: objCase[.primary]?.predicate, callback: { (managedObject) in
 
-            self.persistentStore?.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase, forRequest: self.request)
+            self.persistentStore?.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
             let status = managedObject.isInserted ? "created" : "located"
             self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(objCase.description); status: \(status)"), sender: self)
             self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
@@ -170,6 +170,3 @@ extension JSONCoordinator: LogMessageSender {
         return "Storage:\(String(describing: type(of: request)))"
     }
 }
-
-// MARK: - CoreDataMappingProtocol
-extension JSONCoordinator {}

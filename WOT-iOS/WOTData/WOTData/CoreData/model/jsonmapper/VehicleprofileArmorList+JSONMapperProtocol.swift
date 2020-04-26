@@ -10,18 +10,18 @@ import WOTPivot
 
 extension VehicleprofileArmorList {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         let hullCase = PKCase()
         hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
 
-        VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, persistentStore: persistentStore) { newObject in
+        VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { newObject in
             self.hull = newObject as? VehicleprofileArmor
             persistentStore?.stash(hint: hullCase)
         }
 
         let turretCase = PKCase()
         turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
-        VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, forRequest: forRequest, persistentStore: persistentStore) { newObject in
+        VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { newObject in
             self.turret = newObject as? VehicleprofileArmor
             persistentStore?.stash(hint: hullCase)
         }
@@ -29,11 +29,11 @@ extension VehicleprofileArmorList {
 }
 
 extension VehicleprofileArmorList {
-    public static func list(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func list(fromJSON json: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
         persistentStore?.requestSubordinate(for: VehicleprofileArmorList.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
+            persistentStore?.mapping(object: newObject, fromJSON: json, pkCase: pkCase)
             callback(newObject)
         }
     }

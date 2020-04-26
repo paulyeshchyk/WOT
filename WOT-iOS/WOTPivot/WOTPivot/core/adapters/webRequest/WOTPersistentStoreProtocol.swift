@@ -22,9 +22,9 @@ public protocol WOTPersistentStoreProtocol {
     @objc
     func requestSubordinate(for clazz: AnyClass, pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback)
 
-    func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol)
+    func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase)
 
-    func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol)
+    func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase)
 
     func stash(hint: String?)
 }

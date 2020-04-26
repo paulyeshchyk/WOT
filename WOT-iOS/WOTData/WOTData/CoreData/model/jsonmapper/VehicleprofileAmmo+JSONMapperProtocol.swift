@@ -10,7 +10,7 @@ import CoreData
 
 extension VehicleprofileAmmo {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -20,7 +20,7 @@ extension VehicleprofileAmmo {
         let vehicleprofileAmmoPenetrationCase = PKCase()
         vehicleprofileAmmoPenetrationCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-        VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)], pkCase: vehicleprofileAmmoPenetrationCase, forRequest: forRequest, persistentStore: persistentStore) { newObject in
+        VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)], pkCase: vehicleprofileAmmoPenetrationCase, persistentStore: persistentStore) { newObject in
             self.penetration = newObject as? VehicleprofileAmmoPenetration
             persistentStore?.stash(hint: vehicleprofileAmmoPenetrationCase)
         }
@@ -28,7 +28,7 @@ extension VehicleprofileAmmo {
         let vehicleprofileAmmoDamageCase = PKCase()
         vehicleprofileAmmoDamageCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
-        VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], pkCase: vehicleprofileAmmoDamageCase, forRequest: forRequest, persistentStore: persistentStore) { newObject in
+        VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], pkCase: vehicleprofileAmmoDamageCase, persistentStore: persistentStore) { newObject in
             self.damage = newObject as? VehicleprofileAmmoDamage
             persistentStore?.stash(hint: vehicleprofileAmmoDamageCase)
         }
@@ -41,6 +41,6 @@ extension VehicleprofileAmmo {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
 
-        persistentStore?.mapping(object: self, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
+        persistentStore?.mapping(object: self, fromJSON: json, pkCase: pkCase)
     }
 }
