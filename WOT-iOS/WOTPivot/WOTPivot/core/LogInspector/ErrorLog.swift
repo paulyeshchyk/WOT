@@ -23,15 +23,15 @@ public class ErrorLog: LogMessageTypeProtocol {
 
     convenience public init?(_ error: Any?, details: Any?) {
         var messages: [String] = .init()
-        if let wotError = error as? WOTErrorProtocol {
-            messages.append(wotError.wotDescription)
+        if let wotError = error as? WOTError {
+            messages.append(wotError.debugDescription)
         } else if let swiftError = error as? Error {
             messages.append(swiftError.localizedDescription)
         } else {
             messages.append("Unknown error")
         }
 
-        if let describable = details as? WOTDescribable {
+        if let describable = details as? Describable {
             if describable.description.count > 0 {
                 messages.append(describable.description)
             }

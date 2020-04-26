@@ -14,5 +14,5 @@ public protocol WOTMappingCoordinatorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
 
     @objc
-    func requestSubordinate(for clazz: AnyClass, byRequest: WOTRequestProtocol, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback)
+    func requestSubordinate(for clazz: AnyClass, pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback)
 }

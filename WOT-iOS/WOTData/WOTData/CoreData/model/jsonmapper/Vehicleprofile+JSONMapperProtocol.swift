@@ -84,7 +84,7 @@ extension Vehicleprofile {
             return
         }
 
-        coreDataMapping?.requestSubordinate(for: Vehicleprofile.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        coreDataMapping?.mapper?.requestSubordinate(for: Vehicleprofile.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

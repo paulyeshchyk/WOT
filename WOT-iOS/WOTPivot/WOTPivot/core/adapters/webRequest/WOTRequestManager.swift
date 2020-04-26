@@ -27,36 +27,14 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
-    fileprivate var subordinateLinks: [AnyHashable: [WOTJSONLink]] = [:]
     fileprivate var externalCallbacks: [AnyHashable: NSManagedObjectCallback] = [:]
 
-    private func request(_ request: WOTRequestProtocol, addExternalCallback callback: NSManagedObjectCallback?) {
-        #warning("try to use array of callbacks")
+    private func request(_ request: WOTRequestProtocol, addOnCreateNSManagedObject callback: NSManagedObjectCallback?) {
         externalCallbacks[request.uuid.uuidString] = callback
     }
 
-    private func request(_ request: WOTRequestProtocol, addSubordinateLink link: WOTJSONLink?) {
-        guard let link = link else { return }
-        if var linksForRequest = subordinateLinks[request.uuid.uuidString] {
-            if linksForRequest.firstIndex(of: link) == nil {
-                linksForRequest.append(link)
-                subordinateLinks[request.uuid.uuidString] = linksForRequest
-            }
-        } else {
-            subordinateLinks[request.uuid.uuidString] = [link]
-        }
-    }
-
-    private func request(_ request: WOTRequestProtocol, removeSubordinateLink link: WOTJSONLink) {
-        if var linksForRequest = subordinateLinks[request.uuid.uuidString] {
-            if let index = linksForRequest.firstIndex(of: link) {
-                linksForRequest.remove(at: index)
-            }
-        }
-    }
-
     @objc
-    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String, jsonLink: WOTJSONLink?, externalCallback: NSManagedObjectCallback?) -> Bool {
+    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String, jsonLink: WOTJSONLink?, onCreateNSManagedObject: NSManagedObjectCallback?) -> Bool {
         var grouppedRequests: [WOTRequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
             grouppedRequests.append(contentsOf: available)
@@ -71,8 +49,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             grouppedRequests.append(request)
         }
         self.grouppedRequests[groupId] = grouppedRequests
-        self.request(request, addSubordinateLink: jsonLink)
-        self.request(request, addExternalCallback: externalCallback)
+        self.request(request, addOnCreateNSManagedObject: onCreateNSManagedObject)
 
         return result
     }
@@ -103,16 +80,19 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     @objc
-    @discardableResult
-    public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, externalCallback: NSManagedObjectCallback?) -> Bool {
-        guard addRequest(request, forGroupId: forGroupId, jsonLink: jsonLink, externalCallback: externalCallback) else { return false }
+    public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, onCreateNSManagedObject: NSManagedObjectCallback?) {
+        guard addRequest(request, forGroupId: forGroupId, jsonLink: jsonLink, onCreateNSManagedObject: onCreateNSManagedObject) else {
+            return
+        }
 
         request.hostConfiguration = hostConfiguration
-        guard request.start(arguments) == true else { return false }
+        guard request.start(arguments) == true else {
+            return
+        }
         grouppedListeners[request.uuid.uuidString]?.forEach {
             $0.requestManager(self, didStartRequest: request)
         }
-        return true
+        return
     }
 
     @objc
@@ -120,13 +100,15 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         grouppedRequests[groupId]?.forEach { $0.cancel() }
     }
 
-    @discardableResult
-    public func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink, externalCallback: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) -> Bool {
-        guard let clazz = jsonLink.clazz as? NSObject.Type, clazz.conforms(to: KeypathProtocol.self) else { return false }
-        guard let obj = clazz.init() as? KeypathProtocol else { return false }
-        guard let request = coordinator.createRequest(forRequestId: requestId) else { return false }
+    public func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONLink, onCreateNSManagedObject: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) {
+        guard jsonLink.clazz.conforms(to: KeypathProtocol.self) else {
+            return
+        }
+        guard let request = coordinator.createRequest(forRequestId: requestId) else {
+            return
+        }
 
-        let keyPaths = type(of: obj).classKeypaths().compactMap {
+        let keyPaths = jsonLink.clazz.classKeypaths().compactMap {
             jsonLink.addPreffix(to: $0)
         }
 
@@ -138,14 +120,13 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
 
         request.hostConfiguration = hostConfiguration
-        request.parentRequest = parentRequest
-        request.pkCase = jsonLink.pkCase
+        request.jsonLink = jsonLink
 
         self.addListener(listener, forRequest: request)
 
-        let groupId = "Nested\(String(describing: clazz))-\(jsonLink)"
+        let groupId = "Nested\(String(describing: jsonLink.clazz))-\(jsonLink)"
 
-        return start(request, with: arguments, forGroupId: groupId, jsonLink: jsonLink, externalCallback: externalCallback)
+        start(request, with: arguments, forGroupId: groupId, jsonLink: jsonLink, onCreateNSManagedObject: onCreateNSManagedObject)
     }
 }
 
@@ -165,9 +146,8 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             fatalError("Current thread is not main")
         }
 
-        let subordinateLinks = self.subordinateLinks[request.uuid.uuidString]
-        let externalCallback = self.externalCallbacks[request.uuid.uuidString]
-        coordinator.request(request, processBinary: data, jsonLinkAdapter: appManager?.jsonLinksAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: { [weak self] error in
+        let onCreateNSManagedObject = self.externalCallbacks[request.uuid.uuidString]
+        coordinator.request(request, processBinary: data, jsonLinkAdapter: appManager?.jsonLinksAdapter, onCreateNSManagedObject: onCreateNSManagedObject, onFinish: { [weak self] error in
             DispatchQueue.main.async {
                 if let error = error {
                     self?.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
@@ -218,7 +198,6 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             }
         }
         externalCallbacks[request.uuid.uuidString] = nil
-        subordinateLinks[request.uuid.uuidString] = nil
         request.removeListener(self)
     }
 }

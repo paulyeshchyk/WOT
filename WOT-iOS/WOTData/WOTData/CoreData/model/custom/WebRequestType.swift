@@ -24,15 +24,14 @@ public enum WebRequestType: String {
     case moduleTree
     case tankProfile
 
-    private static var allTypes: [WebRequestType] = [.unknown, .login, .logout, .sessionSave, .sessionClear, .suspension, .turrets, .guns, .radios, .engines, .vehicles, .moduleTree, .tankProfile, .modules]
-
-    var index: Int {
-        guard let result = WebRequestType.allTypes.firstIndex(of: self) else { fatalError("WebRequestType.alltypes has no value:\(self)")}
-        return result
+    public var description: String {
+        return "\(String(describing: type(of: self))).\(String(describing: self))"
     }
 
-    static func value(for intValue: Int) -> WebRequestType {
-        return WebRequestType.allTypes[intValue]
+    private static var allTypes: [WebRequestType] = [.unknown, .login, .logout, .sessionSave, .sessionClear, .suspension, .turrets, .guns, .radios, .engines, .vehicles, .moduleTree, .tankProfile, .modules]
+
+    var index: Int? {
+        return WebRequestType.allTypes.firstIndex(of: self)
     }
 }
 
@@ -52,10 +51,6 @@ public enum ObjCWebRequestType: Int {
     case moduleTree
     case modules
     case tankProfile
-
-    var stringValue: String {
-        return WebRequestType.value(for: self.rawValue).rawValue
-    }
 
     static func fromString(stringValue: String) -> ObjCWebRequestType {
         guard let index = WebRequestType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)")}

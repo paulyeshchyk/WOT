@@ -29,13 +29,13 @@ public class WOTMappingCoordinator: NSObject {
         })
     }
 
-    fileprivate func remoteSubordinate(for clazz: AnyClass, byRequest: WOTRequestProtocol, _ pkCase: PKCase,  keypathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
+    fileprivate func remoteSubordinate(for clazz: AnyClass, _ pkCase: PKCase,  keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
         var result = [WOTJSONLink]()
         if let link = WOTJSONLink(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix, completion: nil) {
             result.append(link)
         }
-        appManager?.jsonLinksAdapter?.request(byRequest, adaptExternalLinks: result, externalCallback: callback, adaptCallback: { _ in})
+        appManager?.jsonLinksAdapter?.request(adaptExternalLinks: result, onCreateNSManagedObject: onCreateNSManagedObject, adaptCallback: { _ in})
     }
 }
 
@@ -58,10 +58,10 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
     }
 
     @objc
-    public func requestSubordinate(for clazz: AnyClass, byRequest: WOTRequestProtocol, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
+    public func requestSubordinate(for clazz: AnyClass, pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback) {
         switch subordinateRequestType {
-        case .local: localSubordinate(for: clazz, pkCase, callback: callback)
-        case .remote: remoteSubordinate(for: clazz, byRequest: byRequest, pkCase,  keypathPrefix: keyPathPrefix, callback: callback)
+        case .local: localSubordinate(for: clazz, pkCase, callback: onCreateNSManagedObject)
+        case .remote: remoteSubordinate(for: clazz, pkCase,  keypathPrefix: keyPathPrefix, onCreateNSManagedObject: onCreateNSManagedObject)
         }
     }
 }

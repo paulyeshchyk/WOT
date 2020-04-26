@@ -190,10 +190,9 @@
 
     _tank_Id = [value copy];
 
-    id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                                                   requestManager: self.requestManager
-                                                                         listener: self];
-    [request addListener:self];
+    [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
+                                             requestManager: self.requestManager
+                                                   listener: self];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -304,7 +303,7 @@
 
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
     
-    if (completionResultType == WOTRequestManagerCompletionResultTypeFinished && didParseDataForRequest.parentRequest == nil && didParseDataForRequest != didParseDataForRequest.parentRequest) {
+    if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self reloadModel];
         });

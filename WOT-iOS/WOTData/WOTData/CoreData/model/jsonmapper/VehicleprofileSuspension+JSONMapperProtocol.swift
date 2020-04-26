@@ -29,7 +29,7 @@ extension VehicleprofileSuspension {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.requestSubordinate(for: VehicleprofileSuspension.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        coreDataMapping?.mapper?.requestSubordinate(for: VehicleprofileSuspension.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

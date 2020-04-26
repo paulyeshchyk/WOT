@@ -25,7 +25,7 @@ extension ModulesTree {
             let modulePK = PKCase(parentObjects: parents)
             modulePK[.primary] = pkCase[.primary]
             modulePK[.secondary] = Module.primaryIdKey(for: $0)
-            coreDataMapping?.requestSubordinate(for: Module.self, modulePK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
+            coreDataMapping?.mapper?.requestSubordinate(for: Module.self, pkCase: modulePK, subordinateRequestType: .remote, keyPathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
                 if let module = managedObject as? Module {
                     self.addToNext_modules(module)
                     coreDataMapping?.stash(hint: modulePK)
@@ -38,7 +38,7 @@ extension ModulesTree {
             //parents was not used for next portion of tanks
             let nextTanksPK = PKCase(parentObjects: nil)
             nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
-            coreDataMapping?.requestSubordinate(for: Vehicles.self, nextTanksPK, subordinateRequestType: .remote, keyPathPrefix: nil, callback: { (managedObject) in
+            coreDataMapping?.mapper?.requestSubordinate(for: Vehicles.self, pkCase: nextTanksPK, subordinateRequestType: .remote, keyPathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
                 if let tank = managedObject as? Vehicles {
                     self.addToNext_tanks(tank)
                     coreDataMapping?.stash(hint: nextTanksPK)
@@ -61,7 +61,7 @@ extension ModulesTree {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = pkCase[.primary]
 
-            coreDataMapping?.requestSubordinate(for: ModulesTree.self, submodulesCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+            coreDataMapping?.mapper?.requestSubordinate(for: ModulesTree.self, pkCase: submodulesCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
                 coreDataMapping?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase, forRequest: forRequest)
                 callback(newObject)
             }

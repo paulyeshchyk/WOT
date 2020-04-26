@@ -32,7 +32,7 @@ extension VehicleprofileArmorList {
     public static func list(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
-        coreDataMapping?.requestSubordinate(for: VehicleprofileArmorList.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        coreDataMapping?.mapper?.requestSubordinate(for: VehicleprofileArmorList.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

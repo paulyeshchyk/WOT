@@ -42,7 +42,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void))
+    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void))
 }
 
 @objc
@@ -76,22 +76,15 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 
     @objc
     public func request(for requestId: WOTRequestIdType) -> AnyClass? {
-        let result: AnyClass? = WOTRequestCoordinator.registeredRequests[requestId]
-        if result == nil {
-            appManager?.logInspector?.log(ErrorLog("request not found:\(requestId)"), sender: self)
-        }
-        return result
+        return WOTRequestCoordinator.registeredRequests[requestId]
     }
 
     // MARK: - WOTRequestDatasourceProtocol
     @objc
     public func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol? {
-        guard let Clazz = request(for: requestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self) else {
-            appManager?.logInspector?.log(ErrorLog("request clazz not found:\(requestId)"), sender: self)
-            return nil
-        }
-        guard let result = Clazz.init() as? WOTRequestProtocol else {
-            appManager?.logInspector?.log(ErrorLog("request not created:\(String(describing: Clazz))"), sender: self)
+        guard
+            let Clazz = request(for: requestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self),
+            let result = Clazz.init() as? WOTRequestProtocol else {
             return nil
         }
         return result
@@ -129,39 +122,45 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return modelClass
     }
 
-    private func adapterInstance(for requestIdType: WOTRequestIdType) -> WOTWebResponseAdapterProtocol? {
+    private func adapterInstance(for requestIdType: WOTRequestIdType) throws -> WOTWebResponseAdapterProtocol {
         guard let AdapterType = WOTRequestCoordinator.dataAdapter(for: requestIdType) else {
-            appManager?.logInspector?.log(ErrorLog("dataadapter not found for :\(requestIdType)"))
-            return nil
+            throw DataAdapterError.adapterNotFound(requestType: requestIdType)
         }
 
         guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapterProtocol else {
-            appManager?.logInspector?.log(ErrorLog("adapter is not conforming protocol WOTWebResponseAdapter :\(requestIdType)"))
-            return nil
+            throw DataAdapterError.classIsNotDataAdapter(dataAdapter: String(describing: AdapterType))
         }
         adapter.appManager = appManager
         return adapter
     }
 
-    @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void) ) {
+    private func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]? {
         guard let modelClass = WOTRequestCoordinator.modelClass(for: request) else {
             appManager?.logInspector?.log(ErrorLog("model class not found for request\(request.description)"), sender: self)
+            return nil
+        }
+
+        return self.requestIds(forClass: modelClass)
+    }
+
+    #warning("to be refactored")
+    @objc
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void) ) {
+        guard let requestIds = requestIds(forRequest: request), requestIds.count > 0 else {
             onFinish(nil)
             return
         }
-
         var coreDataStoreStack: [CoreDataStorePair] = .init()
-        let requestIdTypes = self.requestIds(forClass: modelClass)
-        requestIdTypes?.forEach({ requestIdType in
-
-            if let adapter = adapterInstance(for: requestIdType) {
-                let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, subordinateLinks: subordinateLinks, externalCallback: externalCallback, onFinish: onFinish)
+        requestIds.forEach({ requestIdType in
+            do {
+                let adapter = try adapterInstance(for: requestIdType)
+                let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, onCreateNSManagedObject: onCreateNSManagedObject, onFinish: onFinish)
                 let pair = CoreDataStorePair(coreDataStore: store, data: binary)
                 coreDataStoreStack.append(pair)
-            } else {
-                appManager?.logInspector?.log(ErrorLog("Adapter not found for \(requestIdType)"), sender: self)
+            } catch let error {
+                appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
             }
+
         })
 
         if coreDataStoreStack.count == 0 {

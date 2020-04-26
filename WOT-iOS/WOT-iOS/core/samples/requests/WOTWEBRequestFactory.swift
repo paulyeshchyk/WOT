@@ -11,17 +11,18 @@ import Foundation
 @objc
 public class WOTWEBRequestFactory: NSObject {
     @objc
-    public static func fetchVehiclePivotData(_ requestManager: WOTRequestManagerProtocol?, listener: WOTRequestManagerListenerProtocol) {
+    public static func fetchVehiclePivotData(_ requestManager: WOTRequestManagerProtocol?, listener: WOTRequestManagerListenerProtocol)throws {
         let arguments = WOTRequestArguments()
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
 
-        guard let request = requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else { return }
+        guard let request = requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
+            throw DataAdapterError.requestNotRegistered(requestType: WebRequestType.vehicles.description)
+        }
         requestManager?.addListener(listener, forRequest: request)
-        requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonLink: nil, externalCallback: nil)
+        requestManager?.start(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonLink: nil, onCreateNSManagedObject: nil)
     }
 
     @objc
-    @discardableResult
     public static func fetchVehicleTreeData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) -> WOTRequestProtocol? {
         guard let request = requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             return nil
@@ -33,16 +34,15 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicles.classKeypaths()], forKey: WGWebQueryArgs.fields)
 
-        let started = requestManager.start(request, with: args, forGroupId: groupId, jsonLink: nil, externalCallback: nil)
+        requestManager.start(request, with: args, forGroupId: groupId, jsonLink: nil, onCreateNSManagedObject: nil)
         requestManager.addListener(listener, forRequest: request)
-        return started ? request : nil
+        return request
     }
 
     @objc
-    @discardableResult
-    public static func fetchProfileData(profileTankId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) -> Bool {
+    public static func fetchProfileData(profileTankId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) {
         guard let request = requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue) else {
-            return false
+            return
         }
 
         let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
@@ -51,8 +51,7 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
 
-        let started = requestManager.start(request, with: args, forGroupId: groupId, jsonLink: nil, externalCallback: nil)
+        requestManager.start(request, with: args, forGroupId: groupId, jsonLink: nil, onCreateNSManagedObject: nil)
         requestManager.addListener(listener, forRequest: request)
-        return started
     }
 }

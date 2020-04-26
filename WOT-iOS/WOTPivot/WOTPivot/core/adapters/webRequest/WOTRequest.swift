@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
+public protocol WOTRequestProtocol: WOTStartableProtocol, ObjCDescribable {
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
 
@@ -33,11 +33,8 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, WOTDescribable {
 
     var uuid: UUID { get }
 
-    var parentRequest: WOTRequestProtocol? { get set }
-
-    @available(*, deprecated, message: "use JSONLink instead" )
     @objc
-    var pkCase: PKCase? { get set }
+    var jsonLink: WOTJSONLink? { get set }
 }
 
 @objc
@@ -61,8 +58,7 @@ public protocol WOTRequestManagerListenerProtocol {
 @objc
 public protocol WOTRequestManagerProtocol {
     @objc
-    @discardableResult
-    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, externalCallback: NSManagedObjectCallback?) -> Bool
+    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, onCreateNSManagedObject: NSManagedObjectCallback?)
 
     @objc
     func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol?
@@ -86,11 +82,8 @@ public protocol WOTRequestManagerProtocol {
     var coordinator: WOTRequestCoordinatorProtocol { get }
 
     @objc
-    @discardableResult
-    func queue(parentRequest: WOTRequestProtocol?, requestId: WOTRequestIdType, jsonLink: WOTJSONLink, externalCallback: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?) -> Bool
+    func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONLink, onCreateNSManagedObject: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?)
 }
-
-public extension WOTRequestManagerProtocol {}
 
 @objc
 public protocol WOTRequestListenerProtocol {
@@ -121,7 +114,7 @@ public protocol WOTStartableProtocol {
 }
 
 @objc
-open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
+open class WOTRequest: NSObject, WOTRequestProtocol {
     public let uuid: UUID = UUID()
 
     @objc
@@ -134,7 +127,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     public var listeners = [WOTRequestListenerProtocol]()
 
     @objc
-    public var pkCase: PKCase?
+    public var jsonLink: WOTJSONLink?
 
     private var groups = [String]()
 
@@ -172,7 +165,4 @@ open class WOTRequest: NSObject, WOTRequestProtocol, WOTStartableProtocol {
     @objc
     @discardableResult
     open func start(_ args: WOTRequestArgumentsProtocol) -> Bool { return false }
-
-    @objc
-    public var parentRequest: WOTRequestProtocol?
 }

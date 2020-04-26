@@ -28,7 +28,7 @@ extension VehicleprofileTurret {
         let pkCase = PKCase()
         pkCase[.primary] = pk
 
-        coreDataMapping?.requestSubordinate(for: VehicleprofileTurret.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        coreDataMapping?.mapper?.requestSubordinate(for: VehicleprofileTurret.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }

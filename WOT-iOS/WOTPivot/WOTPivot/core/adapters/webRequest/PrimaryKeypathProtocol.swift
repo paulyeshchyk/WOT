@@ -16,8 +16,13 @@ public protocol PrimaryKeypathProtocol: class {
     static func primaryIdKey(for ident: AnyObject?) -> WOTPrimaryKey?
 }
 
+public protocol Describable {
+    var description: String { get }
+}
+
+@available(*, deprecated, message: "Use Describable instead")
 @objc
-public protocol WOTDescribable {
+public protocol ObjCDescribable {
     @objc
     var description: String { get }
 }
@@ -80,7 +85,7 @@ public enum PKType: Hashable {
 }
 
 @objc
-public class PKCase: NSObject, WOTDescribable {
+public class PKCase: NSObject {
     @objc
     public enum PredicateCompoundType: Int {
         case or = 0
@@ -103,17 +108,6 @@ public class PKCase: NSObject, WOTDescribable {
     }
 
     public override var debugDescription: String { return description }
-
-    public override var description: String {
-        guard let objects = allValues(), !objects.isEmpty else {
-            return "empty case"
-        }
-        var result = [String]()
-        objects.forEach {
-            result.append("key:`\($0.description)`")
-        }
-        return result.joined(separator: ";")
-    }
 
     private var values: [PKType: Set<WOTPrimaryKey>] = .init()
 
@@ -153,6 +147,19 @@ public class PKCase: NSObject, WOTDescribable {
         case .and: return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         case .or: return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         }
+    }
+}
+
+extension PKCase: Describable {
+    public override var description: String {
+        guard let objects = allValues(), !objects.isEmpty else {
+            return "empty case"
+        }
+        var result = [String]()
+        objects.forEach {
+            result.append("key:`\($0.description)`")
+        }
+        return result.joined(separator: ";")
     }
 }
 

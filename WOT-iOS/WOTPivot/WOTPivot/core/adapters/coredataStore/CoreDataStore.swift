@@ -17,6 +17,7 @@ public protocol CoreDataStoreProtocol: NSObjectProtocol {
     var onCreateNSManagedObject: NSManagedObjectCallback? { get set }
     func perform()
     func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
+    var coreDataProvider: WOTCoredataProviderProtocol? { get }
 }
 
 extension CoreDataStoreProtocol {
@@ -39,19 +40,27 @@ public class CoreDataStore: NSObject, CoreDataStoreProtocol {
     public let uuid: UUID = UUID()
     private let Clazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
-    private let linkAdapter: JSONLinksAdapterProtocol?
-    private var extenalLinks: [WOTJSONLink]?
-    private let appManager: WOTAppManagerProtocol?
     override public var hash: Int {
         return uuid.uuidString.hashValue
     }
 
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, linkAdapter: JSONLinksAdapterProtocol?, appManager: WOTAppManagerProtocol?, extenalLinks: [WOTJSONLink]?) {
+    private let appManager: WOTAppManagerProtocol?
+
+    private let linkAdapter: JSONLinksAdapterProtocol?
+
+    public var mapper: WOTMappingCoordinatorProtocol? {
+        return appManager?.mappingCoordinator
+    }
+
+    public var coreDataProvider: WOTCoredataProviderProtocol? {
+        return appManager?.coreDataProvider
+    }
+
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, linkAdapter: JSONLinksAdapterProtocol?, appManager: WOTAppManagerProtocol?) {
         self.Clazz = clazz
         self.request = request
         self.linkAdapter = linkAdapter
         self.appManager = appManager
-        self.extenalLinks = extenalLinks
 
         super.init()
         appManager?.logInspector?.log(OBJNewLog(request.description), sender: self)
@@ -71,29 +80,6 @@ public class CoreDataStore: NSObject, CoreDataStoreProtocol {
 
     public func perform() {}
 
-    /**
-
-     */
-    public func stash(hint: WOTDescribable?) {
-        guard let provider = appManager?.coreDataProvider else {
-            fatalError("provider was released")
-        }
-
-        provider.stash({ (error) in
-            if let error = error {
-                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
-            } else {
-                let debugInfo: String
-                if let debugDescription = hint {
-                    debugInfo = "\(String(describing: self.Clazz)) \(debugDescription.description)"
-                } else {
-                    debugInfo = "\(String(describing: self.Clazz))"
-                }
-                self.appManager?.logInspector?.log(CDStashLog(debugInfo), sender: self)
-            }
-        })
-    }
-
     public func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
@@ -105,8 +91,6 @@ public class CoreDataStore: NSObject, CoreDataStoreProtocol {
         let keys = json.keys
         for (idx, key) in keys.enumerated() {
             //
-            #warning("not working for case data->7473->modules_tree->... because CoreDataStore uses Wrong class. It operates with Vehicles instead of using Module_Tree")
-
             let extraction = extractSubJSON(from: json, by: key)
             findOrCreateObject(for: extraction, fromRequest: fromRequest) { managedObject in
 
@@ -152,15 +136,16 @@ extension CoreDataStore {
         return JSONExtraction(identifier: ident, json: objectJson)
     }
 
+    #warning("to be refactored")
     private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping NSManagedObjectCallback) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
         //
-        let parents = fromRequest.pkCase?.plainParents ?? []
+        let parents = fromRequest.jsonLink?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
         objCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
-        appManager?.logInspector?.log(JSONStartLog("\(objCase)"), sender: self)
+        appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 
         appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: objCase[.primary]?.predicate, callback: { (managedObject) in
 
@@ -184,10 +169,26 @@ extension CoreDataStore: LogMessageSender {
 
 // MARK: - CoreDataMappingProtocol
 extension CoreDataStore: CoreDataMappingProtocol {
-    func onSubordinate(_ clazz: AnyClass, _ pkCase: PKCase, block: @escaping (NSManagedObject?) -> Void) {
-        //
-        appManager?.coreDataProvider?.findOrCreateObject(by: clazz, andPredicate: pkCase[.primary]?.predicate, callback: { (managedObject) in
-            block(managedObject)
+    /**
+
+     */
+    public func stash(hint: String?) {
+        guard let provider = appManager?.coreDataProvider else {
+            fatalError("provider was released")
+        }
+
+        provider.stash({ (error) in
+            if let error = error {
+                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
+            } else {
+                let debugInfo: String
+                if let debugDescription = hint {
+                    debugInfo = "\(String(describing: self.Clazz)) \(debugDescription.description)"
+                } else {
+                    debugInfo = "\(String(describing: self.Clazz))"
+                }
+                self.appManager?.logInspector?.log(CDStashLog(debugInfo), sender: self)
+            }
         })
     }
 
@@ -209,31 +210,11 @@ extension CoreDataStore: CoreDataMappingProtocol {
     /**
 
      */
-    public func requestSubordinate(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
-        appManager?.mappingCoordinator?.requestSubordinate(for: clazz,
-                                                           byRequest: self.request,
-                                                           pkCase,
-                                                           subordinateRequestType: subordinateRequestType,
-                                                           keyPathPrefix: keyPathPrefix,
-                                                           callback: callback)
-    }
-
-    /**
-
-     */
-    @available(*, deprecated, message: "use requestSubordinate(_:_:.remote:)")
-    public func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents idents: [Any]?, completion: @escaping NSManagedObjectCallback) {
-        appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(Clazz)"), sender: self)
-        var result = [WOTJSONLink]()
-        idents?.forEach {
-            if let pk = Clazz.primaryKey(for: $0 as AnyObject) {
-                let pkCase = PKCase()
-                pkCase[.primary] = pk
-                if let link = WOTJSONLink(clazz: Clazz, pkCase: pkCase, keypathPrefix: nil, completion: nil) {
-                    result.append(link)
-                }
-            }
-        }
-        self.linkAdapter?.request(self.request, adaptExternalLinks: result, externalCallback: completion, adaptCallback: { _ in})
+    public func requestSubordinate1(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback) {
+        mapper?.requestSubordinate(for: clazz,
+                                   pkCase: pkCase,
+                                   subordinateRequestType: subordinateRequestType,
+                                   keyPathPrefix: keyPathPrefix,
+                                   onCreateNSManagedObject: onCreateNSManagedObject)
     }
 }

@@ -12,11 +12,11 @@ import Foundation
 public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
     public let Clazz: PrimaryKeypathProtocol.Type = VehicleprofileSuspension.self
 
-    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
-        let store = CoreDataStore(Clazz: Clazz, request: request, linkAdapter: jsonLinkAdapter, appManager: appManager, extenalLinks: subordinateLinks)
+    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
+        let store = CoreDataStore(Clazz: Clazz, request: request, linkAdapter: jsonLinkAdapter, appManager: appManager)
         store.onGetIdent = onGetIdent(_:_:_:)
         store.onFinishJSONParse = onFinish
-        store.onCreateNSManagedObject = externalCallback
+        store.onCreateNSManagedObject = onCreateNSManagedObject
         return store
     }
 

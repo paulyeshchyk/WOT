@@ -13,7 +13,7 @@ public class WOTJSONLinksAdapter: NSObject, JSONLinksAdapterProtocol {
     public var appManager: WOTAppManagerProtocol?
 
     @objc
-    public func request(_ parentRequest: WOTRequestProtocol, adaptExternalLinks jsonLinks: ([WOTJSONLink])?, externalCallback: NSManagedObjectCallback?, adaptCallback: @escaping (WOTRequestManagerCompletionResultType) -> Void) {
+    public func request(adaptExternalLinks jsonLinks: ([WOTJSONLink])?, onCreateNSManagedObject: NSManagedObjectCallback?, adaptCallback: @escaping (WOTRequestManagerCompletionResultType) -> Void) {
         guard let jsonLinks = jsonLinks, jsonLinks.count != 0 else {
             adaptCallback(.noData)
             return
@@ -22,7 +22,7 @@ public class WOTJSONLinksAdapter: NSObject, JSONLinksAdapterProtocol {
         jsonLinks.compactMap { $0 }.forEach { jsonLink in
             if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: jsonLink.clazz) {
                 requestIDs.forEach {
-                    appManager?.requestManager?.queue(parentRequest: parentRequest, requestId: $0, jsonLink: jsonLink, externalCallback: externalCallback, listener: nil)
+                    appManager?.requestManager?.queue(requestId: $0, jsonLink: jsonLink, onCreateNSManagedObject: onCreateNSManagedObject, listener: nil)
                 }
             } else {
                 print("requests not parsed")

@@ -26,7 +26,7 @@ public class CurrentThreadLog: LogMessageTypeProtocol {
         message = CurrentThreadLog.threadMessage
     }
 
-    public convenience init?(details: WOTDescribable) {
+    public convenience init?(details: Describable) {
         self.init()
         message += "; details: \(details.description)"
     }

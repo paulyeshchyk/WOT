@@ -16,30 +16,32 @@ public enum SubordinateRequestType: Int {
 
 @objc
 public protocol CoreDataMappingProtocol {
+    @available(*, deprecated)
+    var mapper: WOTMappingCoordinatorProtocol? { get }
+
     /**
      Asks NSManagedObjectContext to find/create object by predicate
      - Parameter clazz: Type of requested object
      - Parameter pkCase: Set of predicates available for this request
      - Parameter callback: -
      */
-    func requestSubordinate(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback )
-    /**
-     Asks Remote storage to find/create object by predicate
-     - Parameter Clazz: Type of requested object
-     - Parameter completion: -
-     */
-    @available(*, deprecated, message: "use requestSubordinate(_:_:.remote:)")
-    func pullRemoteSubordinate(for Clazz: PrimaryKeypathProtocol.Type, byIdents: [Any]?, completion: @escaping NSManagedObjectCallback)
+    func requestSubordinate1(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback )
 
     /**
      Asks Subordinator to save context before running links mapping
         - Parameter pkCase: just informative
 
      */
-    func stash(hint: WOTDescribable?)
+    func stash(hint: String?)
 
     func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, forRequest: WOTRequestProtocol)
     func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol)
+}
+
+extension CoreDataMappingProtocol {
+    public func stash(hint: Describable?) {
+        self.stash(hint: hint?.description)
+    }
 }
 
 extension CoreDataMappingProtocol {

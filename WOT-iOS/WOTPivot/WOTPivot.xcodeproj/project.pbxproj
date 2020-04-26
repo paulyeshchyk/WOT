@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D02D21E24558BB300EE8DE9 /* WOTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D21D24558BB300EE8DE9 /* WOTError.swift */; };
+		1D02D22024558C0E00EE8DE9 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D21F24558C0E00EE8DE9 /* JSONError.swift */; };
+		1D02D22224558C4300EE8DE9 /* WEBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D22124558C4300EE8DE9 /* WEBError.swift */; };
+		1D02D2242455C0DE00EE8DE9 /* DataAdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D2232455C0DE00EE8DE9 /* DataAdapterError.swift */; };
 		1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0304CF21E8C19100050131 /* WOTAPI.swift */; };
 		1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5021A54E4E001AF67F /* VIPER.swift */; };
 		1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */; };
@@ -16,7 +20,6 @@
 		1D16176124544DB60022E02F /* NSManagedObject+KeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176024544DB60022E02F /* NSManagedObject+KeypathProtocol.swift */; };
 		1D16176324544DD10022E02F /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176224544DD10022E02F /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
 		1D16176524544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176424544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift */; };
-		1D16176B24544F130022E02F /* WOTWEBRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D16176A24544F130022E02F /* WOTWEBRequestError.swift */; };
 		1D1617732454517D0022E02F /* JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1617722454517D0022E02F /* JSONMapperProtocol.swift */; };
 		1D1617762454524B0022E02F /* CoreDataMappingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1617752454524B0022E02F /* CoreDataMappingProtocol.swift */; };
 		1D161778245452660022E02F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D161777245452660022E02F /* CoreDataStore.swift */; };
@@ -169,6 +172,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D02D21D24558BB300EE8DE9 /* WOTError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTError.swift; sourceTree = "<group>"; };
+		1D02D21F24558C0E00EE8DE9 /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
+		1D02D22124558C4300EE8DE9 /* WEBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WEBError.swift; sourceTree = "<group>"; };
+		1D02D2232455C0DE00EE8DE9 /* DataAdapterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAdapterError.swift; sourceTree = "<group>"; };
 		1D0304CF21E8C19100050131 /* WOTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WOTAPI.swift; path = core/WOTAPI.swift; sourceTree = "<group>"; };
 		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
 		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
@@ -178,7 +185,6 @@
 		1D16176024544DB60022E02F /* NSManagedObject+KeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+KeypathProtocol.swift"; sourceTree = "<group>"; };
 		1D16176224544DD10022E02F /* NSManagedObject+PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+PrimaryKeypathProtocol.swift"; sourceTree = "<group>"; };
 		1D16176424544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
-		1D16176A24544F130022E02F /* WOTWEBRequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestError.swift; sourceTree = "<group>"; };
 		1D1617722454517D0022E02F /* JSONMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMapperProtocol.swift; sourceTree = "<group>"; };
 		1D1617752454524B0022E02F /* CoreDataMappingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMappingProtocol.swift; sourceTree = "<group>"; };
 		1D161777245452660022E02F /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
@@ -343,6 +349,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D02D21C24558BA400EE8DE9 /* errors */ = {
+			isa = PBXGroup;
+			children = (
+				1D02D21D24558BB300EE8DE9 /* WOTError.swift */,
+				1D02D21F24558C0E00EE8DE9 /* JSONError.swift */,
+				1D02D22124558C4300EE8DE9 /* WEBError.swift */,
+				1D02D2232455C0DE00EE8DE9 /* DataAdapterError.swift */,
+			);
+			path = errors;
+			sourceTree = "<group>";
+		};
 		1D126A5221A54E4E001AF67F /* Pivot */ = {
 			isa = PBXGroup;
 			children = (
@@ -729,7 +746,6 @@
 				1DA153B0244A438200FB3C89 /* WOTWebRequestBuilder.swift */,
 				1DA153B2244A43A100FB3C89 /* WOTWebDataPumper.swift */,
 				1D70CF442452B5680031CBFE /* WOTMappingCoordinatorProtocol.swift */,
-				1D16176A24544F130022E02F /* WOTWEBRequestError.swift */,
 			);
 			path = webRequest;
 			sourceTree = "<group>";
@@ -810,6 +826,7 @@
 			isa = PBXGroup;
 			children = (
 				1D3005C3241A241C00E453B9 /* WOTPivotAppManager.swift */,
+				1D02D21C24558BA400EE8DE9 /* errors */,
 				1D70CD6D244ED45A0031CBFE /* LogInspector */,
 				1D5D0B0623CDA129004B0314 /* metrics */,
 				1D5D022923C8623D004B0314 /* fetchController */,
@@ -1056,6 +1073,7 @@
 			files = (
 				1D70CD77244EDFE30031CBFE /* OBJNewLog.swift in Sources */,
 				1DA153B3244A43A100FB3C89 /* WOTWebDataPumper.swift in Sources */,
+				1D02D22224558C4300EE8DE9 /* WEBError.swift in Sources */,
 				1D161778245452660022E02F /* CoreDataStore.swift in Sources */,
 				1D8C293921357B9A00759C42 /* NSNumber+Randomizer.m in Sources */,
 				1D5D022C23C8623D004B0314 /* WOTDataFetchController.swift in Sources */,
@@ -1144,6 +1162,7 @@
 				1D65F7BE2215795F006A85E4 /* Dictionary_Merge.swift in Sources */,
 				1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */,
 				1DBF89BE240FAE8C007DF8B2 /* WOTRequestArguments.swift in Sources */,
+				1D02D2242455C0DE00EE8DE9 /* DataAdapterError.swift in Sources */,
 				1DE558E02124560500576D41 /* WOTPivotDataGroupNode.swift in Sources */,
 				1DA153A32444CDC700FB3C89 /* RomanNumber.m in Sources */,
 				1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */,
@@ -1162,7 +1181,6 @@
 				1D70CF452452B5680031CBFE /* WOTMappingCoordinatorProtocol.swift in Sources */,
 				1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */,
 				1D73BB7924436936004B720A /* Coding.swift in Sources */,
-				1D16176B24544F130022E02F /* WOTWEBRequestError.swift in Sources */,
 				1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */,
 				1DE5591E212458E100576D41 /* WOTConnectorNodeIndex.swift in Sources */,
 				1D8C298D21358B4200759C42 /* NSArray+WOT.m in Sources */,
@@ -1174,7 +1192,9 @@
 				1DA83CAF213563400039CB4B /* NSDictionary+Hash.m in Sources */,
 				1D70CD9F24508E9D0031CBFE /* TIMEMeasureLog.swift in Sources */,
 				1D70CD87244EF88F0031CBFE /* CurrentThreadLog.swift in Sources */,
+				1D02D22024558C0E00EE8DE9 /* JSONError.swift in Sources */,
 				1DBF89AC240D3137007DF8B2 /* WOTTankIDList.swift in Sources */,
+				1D02D21E24558BB300EE8DE9 /* WOTError.swift in Sources */,
 				1D65F77C221551C6006A85E4 /* NSError+Pivot.swift in Sources */,
 				1D70CD8B244F3C160031CBFE /* CDFetchLog.swift in Sources */,
 				1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */,

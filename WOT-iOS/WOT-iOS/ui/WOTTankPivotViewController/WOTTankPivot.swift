@@ -95,13 +95,18 @@ class WOTTankPivotModel: WOTPivotDataModel {
     override func loadModel() {
         super.loadModel()
 
-        performWebRequest()
+        do {
+            try performWebRequest()
+        } catch let error {
+            let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
+            appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: nil)
+        }
     }
 
-    private func performWebRequest() {
+    private func performWebRequest() throws {
         let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
         let requestManager = appManager?.requestManager
-        WOTWEBRequestFactory.fetchVehiclePivotData(requestManager, listener: self)
+        try WOTWEBRequestFactory.fetchVehiclePivotData(requestManager, listener: self)
     }
 }
 

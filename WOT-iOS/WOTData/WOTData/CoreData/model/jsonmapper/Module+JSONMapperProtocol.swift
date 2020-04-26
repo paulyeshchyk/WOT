@@ -79,7 +79,7 @@ extension Module {
         pkCase[.primary] = Clazz.primaryIdKey(for: id)
         pkCase[.secondary] = Vehicles.primaryKey(for: tank_id)
 
-        coreDataMapping?.requestSubordinate(for: Clazz, pkCase, subordinateRequestType: .remote, keyPathPrefix: keyPathPrefix, callback: callback)
+        coreDataMapping?.mapper?.requestSubordinate(for: Clazz, pkCase: pkCase, subordinateRequestType: .remote, keyPathPrefix: keyPathPrefix, onCreateNSManagedObject: callback)
     }
 }
 
@@ -87,7 +87,7 @@ extension Module {
     public static func module(fromJSON json: Any?, pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let json = json as? JSON else { return }
 
-        coreDataMapping?.requestSubordinate(for: Module.self, pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        coreDataMapping?.mapper?.requestSubordinate(for: Module.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
             coreDataMapping?.mapping(object: newObject, fromJSON: json, pkCase: pkCase, forRequest: forRequest)
             callback(newObject)
         }
