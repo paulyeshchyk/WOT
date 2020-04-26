@@ -36,7 +36,7 @@ extension CoreDataStoreProtocol {
     }
 }
 
-public class CoreDataStore: NSObject, CoreDataStoreProtocol {
+public class JSONCoordinator: NSObject, CoreDataStoreProtocol {
     public let uuid: UUID = UUID()
     private let Clazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
@@ -106,12 +106,12 @@ public class CoreDataStore: NSObject, CoreDataStoreProtocol {
 }
 
 // MARK: - Hash
-func == (lhs: CoreDataStore, rhs: CoreDataStore) -> Bool {
+func == (lhs: JSONCoordinator, rhs: JSONCoordinator) -> Bool {
     return lhs.uuid == rhs.uuid
 }
 
 // MARK: - private
-extension CoreDataStore {
+extension JSONCoordinator {
     private struct JSONExtraction {
         let identifier: Any
         let json: JSON
@@ -161,14 +161,14 @@ extension CoreDataStore {
 }
 
 // MARK: - LogMessageSender
-extension CoreDataStore: LogMessageSender {
+extension JSONCoordinator: LogMessageSender {
     public var logSenderDescription: String {
         return "Storage:\(String(describing: type(of: request)))"
     }
 }
 
 // MARK: - CoreDataMappingProtocol
-extension CoreDataStore: CoreDataMappingProtocol {
+extension JSONCoordinator: CoreDataMappingProtocol {
     /**
 
      */
@@ -205,16 +205,5 @@ extension CoreDataStore: CoreDataMappingProtocol {
         appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         object?.mapping(fromArray: array, pkCase: pkCase, forRequest: forRequest, coreDataMapping: self)
         stash(hint: pkCase)
-    }
-
-    /**
-
-     */
-    public func requestSubordinate1(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback) {
-        mapper?.requestSubordinate(for: clazz,
-                                   pkCase: pkCase,
-                                   subordinateRequestType: subordinateRequestType,
-                                   keyPathPrefix: keyPathPrefix,
-                                   onCreateNSManagedObject: onCreateNSManagedObject)
     }
 }

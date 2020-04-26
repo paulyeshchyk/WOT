@@ -20,14 +20,6 @@ public protocol CoreDataMappingProtocol {
     var mapper: WOTMappingCoordinatorProtocol? { get }
 
     /**
-     Asks NSManagedObjectContext to find/create object by predicate
-     - Parameter clazz: Type of requested object
-     - Parameter pkCase: Set of predicates available for this request
-     - Parameter callback: -
-     */
-    func requestSubordinate1(for clazz: AnyClass, _ pkCase: PKCase, subordinateRequestType: SubordinateRequestType, keyPathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback )
-
-    /**
      Asks Subordinator to save context before running links mapping
         - Parameter pkCase: just informative
 
