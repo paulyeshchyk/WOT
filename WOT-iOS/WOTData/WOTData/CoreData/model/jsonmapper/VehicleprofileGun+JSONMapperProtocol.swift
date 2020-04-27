@@ -23,8 +23,8 @@ extension VehicleprofileGun {
     public static func gun(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
 
-        let tag = jSON[VehicleprofileGun.primaryKeyPath()]
-        let pk = VehicleprofileGun.primaryKey(for: tag as AnyObject?)
+        guard let tag = jSON[VehicleprofileGun.primaryKeyPath()] else { return }
+        let pk = VehicleprofileGun.primaryKey(for: tag)
         let pkCase = PKCase()
         pkCase[.primary] = pk
 

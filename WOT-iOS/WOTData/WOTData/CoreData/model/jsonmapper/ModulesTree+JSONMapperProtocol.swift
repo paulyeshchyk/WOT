@@ -55,8 +55,8 @@ extension ModulesTree {
         json.keys.forEach { (key) in
             guard let moduleTreeJSON = json[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber  else { return }
-            guard let modulePK = ModulesTree.primaryKey(for: module_id) else { return }
 
+            let modulePK = ModulesTree.primaryKey(for: module_id)
             let submodulesCase = PKCase(parentObjects: pkCase.plainParents)
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = pkCase[.primary]

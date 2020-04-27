@@ -11,9 +11,14 @@ import WOTPivot
 extension VehicleprofileAmmoPenetration {
     @objc
     public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
-        self.min_value = AnyConvertable(array[0]).asNSDecimal
-        self.avg_value = AnyConvertable(array[1]).asNSDecimal
-        self.max_value = AnyConvertable(array[2]).asNSDecimal
+        guard array.count == 3 else {
+            print("invalid penetration from json")
+            return
+        }
+        let intArray = NSDecimalNumberArray(array: array)
+        self.min_value = intArray.elements[0]
+        self.avg_value = intArray.elements[1]
+        self.max_value = intArray.elements[2]
     }
 }
 

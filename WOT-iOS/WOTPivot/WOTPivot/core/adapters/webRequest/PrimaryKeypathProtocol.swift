@@ -11,7 +11,7 @@ public protocol PrimaryKeypathProtocol: class {
     static func predicateFormat() -> String
     static func predicate(for ident: AnyObject?) -> NSPredicate?
     static func primaryKeyPath() -> String
-    static func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey?
+    static func primaryKey(for ident: Any) -> WOTPrimaryKey
     static func primaryIdKeyPath() -> String // keypath for remote module search
     static func primaryIdKey(for ident: AnyObject?) -> WOTPrimaryKey?
 }
@@ -160,27 +160,5 @@ extension PKCase: Describable {
             result.append("key:`\($0.description)`")
         }
         return result.joined(separator: ";")
-    }
-}
-
-public struct IntArray: Codable {
-    enum CodingKeys: String, CodingKey {
-        case elements
-    }
-
-    public var elements: [Int]
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        elements = try container.decode([Int].self, forKey: .elements)
-    }
-
-    public subscript(index: Int) -> Int {
-        get {
-            return self.elements[index]
-        }
-        set(newValue) {
-            self.elements[index] = newValue
-        }
     }
 }

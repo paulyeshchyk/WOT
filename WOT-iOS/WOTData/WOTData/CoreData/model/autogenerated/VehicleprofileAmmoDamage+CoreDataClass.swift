@@ -29,10 +29,5 @@ extension VehicleprofileAmmoDamage {
 }
 
 extension VehicleprofileAmmoDamage: JSONDecoding {
-    public func decodeWith(_ decoder: Decoder) throws {
-        let intArray = try IntArray(from: decoder)
-        self.min_value = intArray.elements[0].asDecimal
-        self.avg_value = intArray.elements[1].asDecimal
-        self.max_value = intArray.elements[2].asDecimal
-    }
+    public func decodeWith(_ decoder: Decoder) throws {}
 }

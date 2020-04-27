@@ -28,8 +28,7 @@ extension NSManagedObject: PrimaryKeypathProtocol {
         return NSPredicate(format: predicateTemplate, keyName, ident)
     }
 
-    open class func primaryKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
+    open class func primaryKey(for ident: Any) -> WOTPrimaryKey {
         let predicateTemplate = predicateFormat()
         let keyName = primaryKeyPath()
         return WOTPrimaryKey(name: keyName, value: ident as AnyObject, nameAlias: keyName, predicateFormat: predicateTemplate)

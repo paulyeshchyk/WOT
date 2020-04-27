@@ -11,6 +11,8 @@
 		1D02D22024558C0E00EE8DE9 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D21F24558C0E00EE8DE9 /* JSONError.swift */; };
 		1D02D22224558C4300EE8DE9 /* WEBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D22124558C4300EE8DE9 /* WEBError.swift */; };
 		1D02D2242455C0DE00EE8DE9 /* DataAdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D2232455C0DE00EE8DE9 /* DataAdapterError.swift */; };
+		1D02D2272456BA3E00EE8DE9 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D2262456BA3E00EE8DE9 /* KeyedDecodingContainer+Decode.swift */; };
+		1D02D22A2456BAA900EE8DE9 /* NSDecimalNumber+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D2292456BAA900EE8DE9 /* NSDecimalNumber+Conversion.swift */; };
 		1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0304CF21E8C19100050131 /* WOTAPI.swift */; };
 		1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5021A54E4E001AF67F /* VIPER.swift */; };
 		1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */; };
@@ -65,7 +67,6 @@
 		1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8212216A7B8006A85E4 /* WOTPivotDimension.swift */; };
 		1D65F82D2216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8222216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift */; };
 		1D65F82E2216A7B8006A85E4 /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8232216A7B8006A85E4 /* WOTDimensionProtocol.swift */; };
-		1D695C79244CB01700650F95 /* AnyConvertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D695C78244CB01700650F95 /* AnyConvertable.swift */; };
 		1D70CD6F244ED46A0031CBFE /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD6E244ED46A0031CBFE /* LogInspector.swift */; };
 		1D70CD71244EDEBB0031CBFE /* ErrorLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD70244EDEBB0031CBFE /* ErrorLog.swift */; };
 		1D70CD77244EDFE30031CBFE /* OBJNewLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70CD76244EDFE30031CBFE /* OBJNewLog.swift */; };
@@ -176,6 +177,8 @@
 		1D02D21F24558C0E00EE8DE9 /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		1D02D22124558C4300EE8DE9 /* WEBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WEBError.swift; sourceTree = "<group>"; };
 		1D02D2232455C0DE00EE8DE9 /* DataAdapterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAdapterError.swift; sourceTree = "<group>"; };
+		1D02D2262456BA3E00EE8DE9 /* KeyedDecodingContainer+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Decode.swift"; sourceTree = "<group>"; };
+		1D02D2292456BAA900EE8DE9 /* NSDecimalNumber+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Conversion.swift"; sourceTree = "<group>"; };
 		1D0304CF21E8C19100050131 /* WOTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WOTAPI.swift; path = core/WOTAPI.swift; sourceTree = "<group>"; };
 		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
 		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
@@ -231,7 +234,6 @@
 		1D65F8212216A7B8006A85E4 /* WOTPivotDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDimension.swift; sourceTree = "<group>"; };
 		1D65F8222216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotDimensionProtocol.swift; sourceTree = "<group>"; };
 		1D65F8232216A7B8006A85E4 /* WOTDimensionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDimensionProtocol.swift; sourceTree = "<group>"; };
-		1D695C78244CB01700650F95 /* AnyConvertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyConvertable.swift; sourceTree = "<group>"; };
 		1D70CD6E244ED46A0031CBFE /* LogInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
 		1D70CD70244EDEBB0031CBFE /* ErrorLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLog.swift; sourceTree = "<group>"; };
 		1D70CD76244EDFE30031CBFE /* OBJNewLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBJNewLog.swift; sourceTree = "<group>"; };
@@ -358,6 +360,22 @@
 				1D02D2232455C0DE00EE8DE9 /* DataAdapterError.swift */,
 			);
 			path = errors;
+			sourceTree = "<group>";
+		};
+		1D02D2252456BA2900EE8DE9 /* KeyedDecodingContainer */ = {
+			isa = PBXGroup;
+			children = (
+				1D02D2262456BA3E00EE8DE9 /* KeyedDecodingContainer+Decode.swift */,
+			);
+			path = KeyedDecodingContainer;
+			sourceTree = "<group>";
+		};
+		1D02D2282456BA9C00EE8DE9 /* NSDecimalNumber */ = {
+			isa = PBXGroup;
+			children = (
+				1D02D2292456BAA900EE8DE9 /* NSDecimalNumber+Conversion.swift */,
+			);
+			path = NSDecimalNumber;
 			sourceTree = "<group>";
 		};
 		1D126A5221A54E4E001AF67F /* Pivot */ = {
@@ -556,14 +574,6 @@
 			path = extension;
 			sourceTree = "<group>";
 		};
-		1D695C77244CB00A00650F95 /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				1D695C78244CB01700650F95 /* AnyConvertable.swift */,
-			);
-			path = JSON;
-			sourceTree = "<group>";
-		};
 		1D70CD6D244ED45A0031CBFE /* LogInspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -753,7 +763,8 @@
 		1DA83CA62135633F0039CB4B /* categories */ = {
 			isa = PBXGroup;
 			children = (
-				1D695C77244CB00A00650F95 /* JSON */,
+				1D02D2282456BA9C00EE8DE9 /* NSDecimalNumber */,
+				1D02D2252456BA2900EE8DE9 /* KeyedDecodingContainer */,
 				1D65F7D22215AF4D006A85E4 /* CGContext */,
 				1D65F7D52215B0B8006A85E4 /* CGRect */,
 				1D8C298621358B4200759C42 /* NSArray */,
@@ -1094,6 +1105,7 @@
 				1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */,
 				1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */,
 				1DBF89B6240E4927007DF8B2 /* WOTWebRequest.swift in Sources */,
+				1D02D2272456BA3E00EE8DE9 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				1D65F7F22216A60E006A85E4 /* WOTTankPivotLayout.swift in Sources */,
 				1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */,
 				1D161781245472110022E02F /* RESTAPIResponse.swift in Sources */,
@@ -1153,6 +1165,7 @@
 				1D3005C4241A241C00E453B9 /* WOTPivotAppManager.swift in Sources */,
 				1DE5595B21255AE400576D41 /* WOTNodeIndexProtocol.swift in Sources */,
 				1D70CD79244EE0050031CBFE /* OBJFreeLog.swift in Sources */,
+				1D02D22A2456BAA900EE8DE9 /* NSDecimalNumber+Conversion.swift in Sources */,
 				1DE558E72124560500576D41 /* WOTNode.swift in Sources */,
 				1DC6D4CF212577D400A1C9C2 /* WOTTreeModuleNodeProtocol.swift in Sources */,
 				1D65F7F62216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift in Sources */,
@@ -1167,7 +1180,6 @@
 				1DA153A32444CDC700FB3C89 /* RomanNumber.m in Sources */,
 				1D73E9712412400100C6DB06 /* WOTRequestCoordinator.swift in Sources */,
 				1DE558DD2124560500576D41 /* WOTPivotFilterNode.swift in Sources */,
-				1D695C79244CB01700650F95 /* AnyConvertable.swift in Sources */,
 				1D16176524544DF70022E02F /* NSManagedObject+JSONMapperProtocol.swift in Sources */,
 				1D16178324547BAD0022E02F /* NSManagedObject+JSONDecoding.swift in Sources */,
 				1D65F82C2216A7B8006A85E4 /* WOTPivotDimension.swift in Sources */,
