@@ -79,35 +79,35 @@ extension Module {
         let moduleType = VehicleModuleType(rawValue: mt)
         switch moduleType {
         case .vehicleChassis:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, persistentStore: persistentStore, keyPathPrefix: "suspension.", callback: { managedObject, error in
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, persistentStore: persistentStore, keyPathPrefix: "suspension.", callback: { managedObject, _ in
                 if let module = managedObject as? VehicleprofileSuspension {
                     self.suspension = module
                     persistentStore?.stash(hint: pkCase)
                 }
                 })
         case .vehicleGun:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, persistentStore: persistentStore, keyPathPrefix: "gun.", callback: { managedObject, error in
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, persistentStore: persistentStore, keyPathPrefix: "gun.", callback: { managedObject, _ in
                 if let module = managedObject as? VehicleprofileGun {
                     self.gun = module
                     persistentStore?.stash(hint: pkCase)
                 }
                 })
         case .vehicleRadio:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, persistentStore: persistentStore, keyPathPrefix: "radio.", callback: { managedObject, error in
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, persistentStore: persistentStore, keyPathPrefix: "radio.", callback: { managedObject, _ in
                 if let module = managedObject as? VehicleprofileRadio {
                     self.radio = module
                     persistentStore?.stash(hint: pkCase)
                 }
                 })
         case .vehicleEngine:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, persistentStore: persistentStore, keyPathPrefix: "engine.", callback: { managedObject, error in
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, persistentStore: persistentStore, keyPathPrefix: "engine.", callback: { managedObject, _ in
                 if let module = managedObject as? VehicleprofileEngine {
                     self.engine = module
                     persistentStore?.stash(hint: pkCase)
                 }
                 })
         case .vehicleTurret:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, persistentStore: persistentStore, keyPathPrefix: "turret.", callback: { managedObject, error in
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, persistentStore: persistentStore, keyPathPrefix: "turret.", callback: { managedObject, _ in
                 if let module = managedObject as? VehicleprofileTurret {
                     self.turret = module
                     persistentStore?.stash(hint: pkCase)

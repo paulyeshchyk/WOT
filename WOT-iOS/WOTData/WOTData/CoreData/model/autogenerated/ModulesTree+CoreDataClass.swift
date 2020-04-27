@@ -63,7 +63,7 @@ extension ModulesTree {
             let modulePK = PKCase(parentObjects: parents)
             modulePK[.primary] = pkCase[.primary]
             modulePK[.secondary] = Module.primaryIdKey(for: $0)
-            persistentStore?.remoteSubordinate(for: Module.self, pkCase: modulePK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject, error) in
+            persistentStore?.remoteSubordinate(for: Module.self, pkCase: modulePK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject, _) in
                 if let module = managedObject as? Module {
                     self.addToNext_modules(module)
                     persistentStore?.stash(hint: modulePK)
@@ -76,7 +76,7 @@ extension ModulesTree {
             //parents was not used for next portion of tanks
             let nextTanksPK = PKCase(parentObjects: nil)
             nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
-            persistentStore?.remoteSubordinate(for: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject, error) in
+            persistentStore?.remoteSubordinate(for: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject, _) in
                 if let tank = managedObject as? Vehicles {
                     self.addToNext_tanks(tank)
                     persistentStore?.stash(hint: nextTanksPK)
