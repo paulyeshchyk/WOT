@@ -153,7 +153,7 @@ extension JSONCoordinator {
         }
         //
         let parents = fromRequest.jsonLink?.pkCase?.plainParents ?? []
-        let objCase = RemotePKCase(parentObjects: parents)
+        let objCase = PKCase(parentObjects: parents)
         objCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
         appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 

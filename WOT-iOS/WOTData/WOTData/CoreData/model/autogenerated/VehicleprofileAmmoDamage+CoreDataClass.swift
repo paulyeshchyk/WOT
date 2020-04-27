@@ -31,7 +31,7 @@ extension VehicleprofileAmmoDamage {
 
 // MARK: - Mapping
 extension VehicleprofileAmmoDamage {
-    public override func mapping(fromArray array: [Any], pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         guard array.count == 3 else {
             print("invalid damage from json")
             return
@@ -50,7 +50,7 @@ extension VehicleprofileAmmoDamage: JSONDecoding {
 
 extension VehicleprofileAmmoDamage {
     @available(*, deprecated, message: "deprecated")
-    public static func damage(fromArray array: Any?, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func damage(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let array = array as? [Any] else { return }
 
         persistentStore?.localSubordinate(for: VehicleprofileAmmoDamage.self, pkCase: pkCase) { newObject in

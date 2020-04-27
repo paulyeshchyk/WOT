@@ -45,7 +45,7 @@ extension VehicleprofileEngine {
 // MARK: - Mapping
 extension VehicleprofileEngine {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {

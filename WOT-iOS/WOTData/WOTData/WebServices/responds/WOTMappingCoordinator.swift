@@ -57,13 +57,13 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     /**
 
      */
-    @objc public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: RemotePKCase) {
+    @objc public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) {
         appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         object?.mapping(fromJSON: jSON, pkCase: pkCase, persistentStore: self)
         stash(hint: pkCase)
     }
 
-    @objc public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: RemotePKCase) {
+    @objc public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) {
         appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         object?.mapping(fromArray: array, pkCase: pkCase, persistentStore: self)
         stash(hint: pkCase)
@@ -88,13 +88,15 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     }
 
     @objc
-    public func remoteSubordinate(for clazz: AnyClass, pkCase: RemotePKCase,  keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback) {
+    public func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
         var result = [WOTJSONLink]()
         if let link = WOTJSONLink(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix, completion: nil) {
             result.append(link)
         }
-        appManager?.jsonLinksAdapter?.request(adaptExternalLinks: result, onCreateNSManagedObject: onCreateNSManagedObject, adaptCallback: { _ in})
+        appManager?.jsonLinksAdapter?.request(adaptExternalLinks: result, onCreateNSManagedObject: onCreateNSManagedObject, adaptCallback: { result in
+            print("adapt callback from remoteSubordinate")
+        })
     }
 }
 
@@ -102,7 +104,7 @@ extension WOTPersistentStoreProtocol {
     /**
 
      */
-    public func itemMapping(forClass Clazz: AnyClass, itemJSON: JSON, pkCase: RemotePKCase, callback: @escaping NSManagedObjectCallback) {
+    public func itemMapping(forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
         localSubordinate(for: Clazz, pkCase: pkCase) { newObject in
             self.mapping(object: newObject, fromJSON: itemJSON, pkCase: pkCase)
             callback(newObject)
@@ -113,7 +115,7 @@ extension WOTPersistentStoreProtocol {
     /**
 
      */
-    public func itemMapping(forClass Clazz: AnyClass, items: [Any], pkCase: RemotePKCase, callback: @escaping NSManagedObjectCallback) {
+    public func itemMapping(forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
         localSubordinate(for: Clazz, pkCase: pkCase) { newObject in
             self.mapping(object: newObject, fromArray: items, pkCase: pkCase)
             callback(newObject)

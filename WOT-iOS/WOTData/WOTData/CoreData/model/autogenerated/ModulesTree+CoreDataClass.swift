@@ -48,7 +48,7 @@ extension ModulesTree {
 
 // MARK: - Mapping
 extension ModulesTree {
-    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -60,7 +60,7 @@ extension ModulesTree {
 
         let nextModules = jSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let modulePK = RemotePKCase(parentObjects: parents)
+            let modulePK = PKCase(parentObjects: parents)
             modulePK[.primary] = pkCase[.primary]
             modulePK[.secondary] = Module.primaryIdKey(for: $0)
             persistentStore?.remoteSubordinate(for: Module.self, pkCase: modulePK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
@@ -74,7 +74,7 @@ extension ModulesTree {
         let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
         (nextTanks as? [AnyObject])?.forEach {
             //parents was not used for next portion of tanks
-            let nextTanksPK = RemotePKCase(parentObjects: nil)
+            let nextTanksPK = PKCase(parentObjects: nil)
             nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
             persistentStore?.remoteSubordinate(for: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
                 if let tank = managedObject as? Vehicles {

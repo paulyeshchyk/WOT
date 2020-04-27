@@ -31,7 +31,7 @@ extension VehicleprofileArmor {
 
 // MARK: - Mapping
 extension VehicleprofileArmor {
-    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -53,7 +53,7 @@ extension VehicleprofileArmor: JSONDecoding {
 
 extension VehicleprofileArmor {
     @available(*, deprecated, message: "deprecated")
-    public static func hull(fromJSON jSON: Any?, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func hull(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else {
             callback(nil)
             return
@@ -65,7 +65,7 @@ extension VehicleprofileArmor {
         }
     }
 
-    public static func turret(fromJSON jSON: Any?, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else {
             callback(nil)
             return

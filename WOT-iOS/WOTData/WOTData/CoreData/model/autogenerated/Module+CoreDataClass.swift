@@ -53,7 +53,7 @@ extension Module {
 
 // MARK: - Mapping
 extension Module {
-    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -118,7 +118,7 @@ extension Module {
     }
 
     private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass Clazz: NSManagedObject.Type, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
-        let pkCase = RemotePKCase()
+        let pkCase = PKCase()
         pkCase[.primary] = Clazz.primaryIdKey(for: module_id)
         pkCase[.secondary] = Vehicles.primaryKey(for: tank_id)
 

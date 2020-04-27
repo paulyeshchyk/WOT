@@ -85,12 +85,18 @@ public enum PKType: Hashable {
 }
 
 @objc
-public class RemotePKCase: PKCase {
+public class PKCase: NSObject {
+    @objc
+    public enum PredicateCompoundType: Int {
+        case or = 0
+        case and = 1
+    }
+
     /**
      used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
      parents identifier has taken from a list
      */
-//    @available(*, deprecated, message:"Use tree instead of plain")
+    //    @available(*, deprecated, message:"Use tree instead of plain")
     public var plainParents: [AnyObject] = []
 
     public convenience init(parentObjects: [AnyObject?]? ) {
@@ -99,15 +105,6 @@ public class RemotePKCase: PKCase {
         if let parentObjects = parentObjects?.compactMap({$0}) {
             plainParents.append(contentsOf: parentObjects)
         }
-    }
-}
-
-@objc
-public class PKCase: NSObject {
-    @objc
-    public enum PredicateCompoundType: Int {
-        case or = 0
-        case and = 1
     }
 
     public override var debugDescription: String { return description }

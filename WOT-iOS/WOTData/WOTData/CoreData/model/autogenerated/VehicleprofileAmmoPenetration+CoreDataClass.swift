@@ -31,7 +31,7 @@ extension VehicleprofileAmmoPenetration {
 
 // MARK: - Mapping
 extension VehicleprofileAmmoPenetration {
-    public override func mapping(fromArray array: [Any], pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         guard array.count == 3 else {
             print("invalid penetration from json")
             return
@@ -55,7 +55,7 @@ extension VehicleprofileAmmoPenetration: JSONDecoding {
 
 extension VehicleprofileAmmoPenetration {
     @available(*, deprecated, message: "deprecated")
-    public static func penetration(fromArray array: Any?, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func penetration(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let array = array as? [Any] else { return }
 
         persistentStore?.localSubordinate(for: VehicleprofileAmmoPenetration.self, pkCase: pkCase) { newObject in
