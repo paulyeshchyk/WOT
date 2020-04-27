@@ -117,7 +117,7 @@ extension Module {
         }
     }
 
-    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass Clazz: NSManagedObject.Type, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, callback: @escaping NSManagedObjectCallback) {
+    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass Clazz: NSManagedObject.Type, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, callback: @escaping NSManagedObjectOptionalCallback) {
         let pkCase = PKCase()
         pkCase[.primary] = Clazz.primaryIdKey(for: module_id)
         pkCase[.secondary] = Vehicles.primaryKey(for: tank_id)

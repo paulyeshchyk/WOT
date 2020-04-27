@@ -15,14 +15,14 @@ public protocol WOTWebResponseAdapterProtocol: NSObjectProtocol {
     @objc
     var appManager: WOTAppManagerProtocol? { get set }
 
-    func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping OnParserDidFinish ) -> JSONCoordinatorProtocol
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish ) -> JSONCoordinatorProtocol
 }
 
 @objc
 open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
     public var appManager: WOTAppManagerProtocol?
 
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
         fatalError("should be overriden")
     }
 
@@ -35,5 +35,5 @@ open class WOTWebResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
 public protocol JSONLinksAdapterProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
 
-    func request(adaptExternalLinks: [WOTJSONLink]?, onCreateNSManagedObject: NSManagedObjectCallback?, adaptCallback: @escaping (WOTRequestManagerCompletionResultType) -> Void)
+    func request(adaptExternalLinks: [WOTJSONLink]?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, adaptCallback: @escaping (WOTRequestManagerCompletionResultType) -> Void)
 }

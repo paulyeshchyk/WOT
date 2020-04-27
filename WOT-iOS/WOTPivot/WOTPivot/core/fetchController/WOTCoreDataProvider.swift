@@ -76,8 +76,7 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         }
     }
 
-    @objc
-    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping (NSManagedObject) -> Void ) {
+    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping NSManagedObjectCompletion ) {
         perform { context in
             guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) else {
                 fatalError("Managed object is not created:\(predicate?.description ?? "<Unknown predicate>")")
@@ -129,39 +128,26 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
     public func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency) {}
 
-    private func tryToSave(_ context: NSManagedObjectContext, block: @escaping (Error?) -> Void) {
-        guard context.hasChanges else {
-            block(nil)
-            return
-        }
-        do {
-            try context.save()
-            block(nil)
-        } catch let error {
-            block(error)
-        }
-    }
-
-    private func perform(inContext: NSManagedObjectContext, block: @escaping (NSManagedObjectContext) -> Void) {
+    private func perform(inContext: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion) {
         inContext.perform {
             block(inContext)
         }
     }
 
     @objc
-    public func perform(_ block: @escaping (NSManagedObjectContext) -> Void) {
+    public func perform(_ block: @escaping NSManagedObjectContextCompletion) {
         perform(inContext: workManagedObjectContext, block: block)
     }
 
     @objc
-    public func performMain(_ block: @escaping (NSManagedObjectContext) -> Void) {
+    public func performMain(_ block: @escaping NSManagedObjectContextCompletion) {
         perform(inContext: mainManagedObjectContext, block: block)
     }
 
     @objc
-    public func stash(_ block: @escaping (Error?) -> Void) {
+    public func stash(_ block: @escaping ThrowableCompletion ) {
         let uuid = UUID()
-        let customBlock: ((Error?) -> Void ) = { error in
+        let customBlock: ThrowableCompletion = { error in
             block(error)
             self.appManager?.logInspector?.log(TIMEMeasureLog("Context save end", uuid: uuid))
         }

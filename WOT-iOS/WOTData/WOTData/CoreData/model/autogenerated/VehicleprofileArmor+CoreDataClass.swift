@@ -53,7 +53,7 @@ extension VehicleprofileArmor: JSONDecoding {
 
 extension VehicleprofileArmor {
     @available(*, deprecated, message: "deprecated")
-    public static func hull(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func hull(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
         guard let jSON = jSON as? JSON else {
             callback(nil)
             return
@@ -65,7 +65,7 @@ extension VehicleprofileArmor {
         }
     }
 
-    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
         guard let jSON = jSON as? JSON else {
             callback(nil)
             return

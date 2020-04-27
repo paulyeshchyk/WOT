@@ -17,11 +17,11 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
         super.init()
     }
 
-    public func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping (WOTNodeProtocol) -> Void) {
+    public func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping WOTNodeProtocolCompletion) {
         self.enumerateAll(children: node.children, comparator: comparator, childCompletion: childCompletion)
     }
 
-    public func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping (WOTNodeProtocol) -> Void) {
+    public func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping WOTNodeProtocolCompletion) {
         let sortedItems = children.sorted { (obj1, obj2) -> Bool in
             return comparator(obj1, obj2, -1) == .orderedSame
         }

@@ -58,7 +58,7 @@ public protocol WOTRequestManagerListenerProtocol {
 @objc
 public protocol WOTRequestManagerProtocol {
     @objc
-    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, onCreateNSManagedObject: NSManagedObjectCallback?)
+    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONLink?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?)
 
     @objc
     func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol?
@@ -82,7 +82,7 @@ public protocol WOTRequestManagerProtocol {
     var coordinator: WOTRequestCoordinatorProtocol { get }
 
     @objc
-    func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONLink, onCreateNSManagedObject: NSManagedObjectCallback?, listener: WOTRequestManagerListenerProtocol?)
+    func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONLink, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, listener: WOTRequestManagerListenerProtocol?)
 }
 
 @objc

@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+public typealias FilteredObjectCompletion = (NSPredicate, [AnyObject]?) -> Void
+
 open class WOTDataFetchController: NSObject {
     typealias WOTDataFetchedResultController = NSFetchedResultsController<NSFetchRequestResult>
 
@@ -70,7 +72,7 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
         return self.fetchResultController?.fetchedObjects
     }
 
-    open func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {
+    open func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
         let filtered = (self.fetchedObjects()?.filter { predicate.evaluate(with: $0) })

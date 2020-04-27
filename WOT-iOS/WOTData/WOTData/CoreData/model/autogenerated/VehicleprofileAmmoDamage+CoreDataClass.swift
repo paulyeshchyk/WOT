@@ -50,7 +50,7 @@ extension VehicleprofileAmmoDamage: JSONDecoding {
 
 extension VehicleprofileAmmoDamage {
     @available(*, deprecated, message: "deprecated")
-    public static func damage(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func damage(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
         guard let array = array as? [Any] else { return }
 
         persistentStore?.localSubordinate(for: VehicleprofileAmmoDamage.self, pkCase: pkCase) { newObject in

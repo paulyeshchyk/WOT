@@ -8,16 +8,18 @@
 
 import Foundation
 
-public protocol WOTWebDataPumperProtocol: Describable {
-    var completion: ((Data?, Error?) -> Void) { get }
+public typealias DataReceiveCompletion = (Data?, Error?) -> Void
 
-    init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void))
+public protocol WOTWebDataPumperProtocol: Describable {
+    var completion: DataReceiveCompletion { get }
+
+    init(request: URLRequest, completion: @escaping DataReceiveCompletion)
     func start()
 }
 
 class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataDelegate {
     let request: URLRequest
-    public private(set) var completion: ((Data?, Error?) -> Void)
+    public private(set) var completion: DataReceiveCompletion
     private var data: Data?
     private var connection: NSURLConnection?
 
@@ -33,13 +35,13 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
         return request.url?.absoluteString ?? "-"
     }
 
-    convenience init(hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: (@escaping (Data?, Error?) -> Void)) {
+    convenience init(hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: @escaping DataReceiveCompletion) {
         let requestBuilder = WOTWebRequestBuilder()
         let urlRequest = requestBuilder.build(service: service, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
         self.init(request: urlRequest, completion: completion)
     }
 
-    required init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void)) {
+    required init(request: URLRequest, completion: @escaping DataReceiveCompletion) {
         self.request = request
         self.completion = completion
 

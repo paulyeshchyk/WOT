@@ -15,6 +15,12 @@ public enum WOTExecuteConcurency: Int {
     case privateQueue
 }
 
+public typealias ThrowableCompletion = (Error?) -> Void
+public typealias NSManagedObjectCompletion = (NSManagedObject) -> Void
+public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
+public typealias NSManagedObjectOptionalCallback = (_ managedObject: NSManagedObject?) -> Void
+public typealias NSManagedObjectSetOptinalCallback = ([NSManagedObject?]?) -> Void
+
 @objc
 public protocol WOTCoredataProviderProtocol: NSObjectProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
@@ -23,10 +29,10 @@ public protocol WOTCoredataProviderProtocol: NSObjectProtocol {
     @objc var applicationDocumentsDirectoryURL: URL? { get }
     @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }
 
-    @objc func perform(_ block: @escaping (NSManagedObjectContext) -> Void)
-    @objc func performMain(_ block: @escaping (NSManagedObjectContext) -> Void)
-    @objc func stash(_ block: @escaping (Error?) -> Void)
-    @objc func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping (NSManagedObject) -> Void )
+    @objc func perform(_ block: @escaping NSManagedObjectContextCompletion)
+    @objc func performMain(_ block: @escaping NSManagedObjectContextCompletion)
+    @objc func stash(_ block: @escaping ThrowableCompletion )
+    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping NSManagedObjectCompletion )
 
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>

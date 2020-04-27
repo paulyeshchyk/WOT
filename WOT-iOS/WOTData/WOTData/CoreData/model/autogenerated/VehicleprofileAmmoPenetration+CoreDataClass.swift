@@ -55,7 +55,7 @@ extension VehicleprofileAmmoPenetration: JSONDecoding {
 
 extension VehicleprofileAmmoPenetration {
     @available(*, deprecated, message: "deprecated")
-    public static func penetration(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func penetration(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
         guard let array = array as? [Any] else { return }
 
         persistentStore?.localSubordinate(for: VehicleprofileAmmoPenetration.self, pkCase: pkCase) { newObject in

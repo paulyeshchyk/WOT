@@ -53,6 +53,3 @@ extension NSManagedObject {
         return foundObject
     }
 }
-
-public typealias NSManagedObjectCallback = (_ managedObject: NSManagedObject?) -> Void
-public typealias NSManagedObjectSetCallback = ([NSManagedObject?]?) -> Void

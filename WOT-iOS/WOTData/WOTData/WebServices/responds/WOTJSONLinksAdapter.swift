@@ -13,7 +13,7 @@ public class WOTJSONLinksAdapter: NSObject, JSONLinksAdapterProtocol {
     public var appManager: WOTAppManagerProtocol?
 
     @objc
-    public func request(adaptExternalLinks jsonLinks: ([WOTJSONLink])?, onCreateNSManagedObject: NSManagedObjectCallback?, adaptCallback: @escaping (WOTRequestManagerCompletionResultType) -> Void) {
+    public func request(adaptExternalLinks jsonLinks: ([WOTJSONLink])?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, adaptCallback: @escaping (WOTRequestManagerCompletionResultType) -> Void) {
         guard let jsonLinks = jsonLinks, jsonLinks.count != 0 else {
             adaptCallback(.noData)
             return

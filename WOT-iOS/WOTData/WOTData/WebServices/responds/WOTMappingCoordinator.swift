@@ -70,7 +70,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     }
 
     @objc
-    public func localSubordinate(for clazz: AnyClass, pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+    public func localSubordinate(for clazz: AnyClass, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
         appManager?.logInspector?.log(LogicLog("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
@@ -88,7 +88,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     }
 
     @objc
-    public func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectCallback) {
+    public func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectOptionalCallback) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
         var result = [WOTJSONLink]()
         if let link = WOTJSONLink(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix, completion: nil) {
@@ -104,7 +104,7 @@ extension WOTPersistentStoreProtocol {
     /**
 
      */
-    public func itemMapping(forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+    public func itemMapping(forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
         localSubordinate(for: Clazz, pkCase: pkCase) { newObject in
             self.mapping(object: newObject, fromJSON: itemJSON, pkCase: pkCase)
             callback(newObject)
@@ -115,7 +115,7 @@ extension WOTPersistentStoreProtocol {
     /**
 
      */
-    public func itemMapping(forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectCallback) {
+    public func itemMapping(forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
         localSubordinate(for: Clazz, pkCase: pkCase) { newObject in
             self.mapping(object: newObject, fromArray: items, pkCase: pkCase)
             callback(newObject)

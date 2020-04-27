@@ -20,7 +20,7 @@ public protocol JSONCoordinatorProtocol: CoreDataMappingProtocol {
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)? { get set }
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
     var onFinishJSONParse: OnParserDidFinish? { get set }
-    var onCreateNSManagedObject: NSManagedObjectCallback? { get set }
+    var onCreateNSManagedObject: NSManagedObjectOptionalCallback? { get set }
     func perform()
     func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
     var coreDataProvider: WOTCoredataProviderProtocol? { get }
@@ -84,7 +84,7 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
     public var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     public var onGetObjectJSON: ((JSON) -> JSON)?
     public var onFinishJSONParse: OnParserDidFinish?
-    public var onCreateNSManagedObject: NSManagedObjectCallback?
+    public var onCreateNSManagedObject: NSManagedObjectOptionalCallback?
 
     private let METAClass: Codable.Type = RESTAPIResponse.self
 
@@ -147,7 +147,7 @@ extension JSONCoordinator {
     }
 
     #warning("to be refactored")
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping NSManagedObjectCallback) {
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping NSManagedObjectOptionalCallback) {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }

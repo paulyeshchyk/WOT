@@ -70,7 +70,7 @@ open class WOTNode: NSObject, WOTNodeProtocol {
         }
     }
 
-    open func removeChild(_ child: WOTNodeProtocol, completion: @escaping (WOTNodeProtocol) -> Void) {
+    open func removeChild(_ child: WOTNodeProtocol, completion: @escaping WOTNodeProtocolCompletion ) {
         guard let index = (self.children.firstIndex { $0 === child }) else {
             return
         }
@@ -82,7 +82,7 @@ open class WOTNode: NSObject, WOTNodeProtocol {
         }
     }
 
-    open func removeChildren(completion: @escaping (WOTNodeProtocol) -> Void) {
+    open func removeChildren(completion: @escaping WOTNodeProtocolCompletion) {
         self.children.forEach { (child) in
             child.removeChildren(completion: { (node) in
                 node.removeParent()

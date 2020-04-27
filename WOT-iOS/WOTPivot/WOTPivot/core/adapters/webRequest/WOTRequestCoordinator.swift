@@ -8,10 +8,7 @@
 
 import Foundation
 
-public typealias WOTRequestCompletion = () -> Void
 public typealias WOTRequestIdType = String
-
-public typealias  WOTRequestCallback = (Data?, Error?) -> Void
 
 @objc
 public protocol WOTRequestDataBindingProtocol {
@@ -42,7 +39,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping OnParserDidFinish )
+    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish )
 }
 
 @objc
@@ -151,7 +148,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 
     #warning("to be refactored")
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping OnParserDidFinish) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) {
         guard let requestIds = requestIds(forRequest: request), requestIds.count > 0 else {
             onFinish(self, nil)
             return
