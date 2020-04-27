@@ -13,6 +13,7 @@ import CoreData
 @objc(VehicleprofileTurret)
 public class VehicleprofileTurret: NSManagedObject {}
 
+// MARK: - Coding Keys
 extension VehicleprofileTurret {
     //
     public typealias Fields = FieldKeys
@@ -44,6 +45,19 @@ extension VehicleprofileTurret {
     }
 }
 
+// MARK: - Mapping
+extension VehicleprofileTurret {
+    @objc
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
+    }
+}
+
+// MARK: - JSONDecoding
 extension VehicleprofileTurret: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)

@@ -13,6 +13,7 @@ import CoreData
 @objc(ModulesTree)
 public class ModulesTree: NSManagedObject {}
 
+// MARK: - Coding Keys
 extension ModulesTree {
     //
     public typealias Fields = FieldKeys
@@ -45,6 +46,47 @@ extension ModulesTree {
     }
 }
 
+// MARK: - Mapping
+extension ModulesTree {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
+
+        var parents = pkCase.plainParents
+        parents.append(self)
+
+        let nextModules = jSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
+        nextModules?.forEach {
+            let modulePK = RemotePKCase(parentObjects: parents)
+            modulePK[.primary] = pkCase[.primary]
+            modulePK[.secondary] = Module.primaryIdKey(for: $0)
+            persistentStore?.remoteSubordinate(for: Module.self, pkCase: modulePK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
+                if let module = managedObject as? Module {
+                    self.addToNext_modules(module)
+                    persistentStore?.stash(hint: modulePK)
+                }
+            })
+        }
+
+        let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
+        (nextTanks as? [AnyObject])?.forEach {
+            //parents was not used for next portion of tanks
+            let nextTanksPK = RemotePKCase(parentObjects: nil)
+            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
+            persistentStore?.remoteSubordinate(for: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
+                if let tank = managedObject as? Vehicles {
+                    self.addToNext_tanks(tank)
+                    persistentStore?.stash(hint: nextTanksPK)
+                }
+            })
+        }
+    }
+}
+
+// MARK: - JSONDecoding
 extension ModulesTree: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
         let fieldsContainer = try decoder.container(keyedBy: Fields.self)
@@ -55,5 +97,20 @@ extension ModulesTree: JSONDecoding {
         self.price_credit = try fieldsContainer.decodeIfPresent(Int.self, forKey: .price_credit)?.asDecimal
         self.price_xp = try fieldsContainer.decodeIfPresent(Int.self, forKey: .price_xp)?.asDecimal
         self.is_default = try fieldsContainer.decodeIfPresent(Bool.self, forKey: .is_default)?.asDecimal
+    }
+}
+
+// MARK: - Customization
+extension ModulesTree {
+    @objc
+    public func localImageURL() -> URL? {
+        let type = self.moduleType()
+        let name = type.stringValue
+        return Bundle.main.url(forResource: name, withExtension: "png")
+    }
+
+    @objc
+    public func moduleType() -> ObjCVehicleModuleType {
+        return .unknown
     }
 }

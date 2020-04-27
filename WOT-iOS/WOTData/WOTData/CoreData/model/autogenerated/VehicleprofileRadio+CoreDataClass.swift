@@ -13,6 +13,7 @@ import CoreData
 @objc(VehicleprofileRadio)
 public class VehicleprofileRadio: NSManagedObject {}
 
+// MARK: - Coding Keys
 extension VehicleprofileRadio {
     //
     public typealias Fields = FieldKeys
@@ -40,6 +41,18 @@ extension VehicleprofileRadio {
     }
 }
 
+// MARK: - Mapping
+extension VehicleprofileRadio {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
+    }
+}
+
+// MARK: - JSONDecoding
 extension VehicleprofileRadio: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
@@ -49,16 +62,5 @@ extension VehicleprofileRadio: JSONDecoding {
         self.tier = try container.decodeAnyIfPresent(Int.self, forKey: .tier)?.asDecimal
         self.signal_range = try container.decodeAnyIfPresent(Int.self, forKey: .signal_range)?.asDecimal
         self.weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
-    }
-}
-
-extension VehicleprofileTurret {
-    @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
-        do {
-            try self.decode(json: jSON)
-        } catch let error {
-            print("JSON Mapping Error: \(error)")
-        }
     }
 }

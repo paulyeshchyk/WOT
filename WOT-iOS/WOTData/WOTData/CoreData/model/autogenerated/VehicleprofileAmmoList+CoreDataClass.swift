@@ -13,21 +13,25 @@ import CoreData
 @objc(VehicleprofileAmmoList)
 public class VehicleprofileAmmoList: NSManagedObject {}
 
-//extension VehicleprofileArmorList {
-//    //
-//    public typealias Fields = FieldKeys
-//    public enum FieldKeys: String, CodingKey, CaseIterable {
-//    }
-//
-//    @objc
-//    override public static func fieldsKeypaths() -> [String] {
-//        return FieldKeys.allCases.compactMap { $0.rawValue }
-//    }
-//}
-//
-//extension VehicleprofileAmmoList: JSONDecoding {
-//    public func decodeWith(_ decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: Fields.self)
-//        //
-//    }
-//}
+// MARK: - Coding Keys
+extension VehicleprofileAmmoList {
+    public typealias Fields = Void
+
+    @objc
+    public override func mapping(fromArray array: [Any], pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+        array.compactMap { $0 as? JSON }.forEach { (jSON) in
+
+            let vehicleprofileAmmoCase = RemotePKCase()
+            vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+            vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject)
+            persistentStore?.localSubordinate(for: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] newObject in
+                guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
+                    return
+                }
+                persistentStore?.mapping(object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
+                self.addToVehicleprofileAmmo(ammo)
+                persistentStore?.stash(hint: vehicleprofileAmmoCase)
+            }
+        }
+    }
+}

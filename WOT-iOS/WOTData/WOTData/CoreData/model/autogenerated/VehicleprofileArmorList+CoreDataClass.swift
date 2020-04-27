@@ -13,24 +13,23 @@ import CoreData
 @objc(VehicleprofileArmorList)
 public class VehicleprofileArmorList: NSManagedObject {}
 
-//extension VehicleprofileArmorList {
-//    //
-//    public typealias Fields = FieldKeys
-//    public enum FieldKeys: String, CodingKey, CaseIterable {
-//        case front
-//        case sides
-//        case rear
-//    }
-//
-//    @objc
-//    override public static func fieldsKeypaths() -> [String] {
-//        return FieldKeys.allCases.compactMap { $0.rawValue }
-//    }
-//}
-//
-//extension VehicleprofileArmorList: JSONDecoding {
-//    public func decodeWith(_ decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: Fields.self)
-//        //
-//    }
-//}
+// MARK: - Mapping
+extension VehicleprofileArmorList {
+    @objc
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+        let hullCase = RemotePKCase()
+        hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
+
+        VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { newObject in
+            self.hull = newObject as? VehicleprofileArmor
+            persistentStore?.stash(hint: hullCase)
+        }
+
+        let turretCase = RemotePKCase()
+        turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
+        VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { newObject in
+            self.turret = newObject as? VehicleprofileArmor
+            persistentStore?.stash(hint: hullCase)
+        }
+    }
+}

@@ -13,6 +13,7 @@ import CoreData
 @objc(VehicleprofileSuspension)
 public class VehicleprofileSuspension: NSManagedObject {}
 
+// MARK: - Coding Keys
 extension VehicleprofileSuspension {
     //
     public typealias Fields = FieldKeys
@@ -51,6 +52,18 @@ extension VehicleprofileSuspension {
     }
 }
 
+// MARK: - Mapping
+extension VehicleprofileSuspension {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
+    }
+}
+
+// MARK: - JSONDecoding
 extension VehicleprofileSuspension: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
