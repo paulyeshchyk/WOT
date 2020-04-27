@@ -11,7 +11,7 @@ import Foundation
 @objc
 public protocol WOTJSONResponseAdapterProtocol: NSObjectProtocol {
     init(appManager: WOTAppManagerProtocol?)
-    func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish ) -> JSONAdapterProtocol
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?, onFinish: @escaping OnParserDidFinish ) -> JSONAdapterProtocol
 }
 
 @objc
@@ -29,7 +29,7 @@ open class WOTJSONResponseAdapter: NSObject, WOTJSONResponseAdapterProtocol {
         fatalError("should be overriden")
     }
 
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONAdapterProtocol {
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?, onFinish: @escaping OnParserDidFinish) -> JSONAdapterProtocol {
         let store = JSONAdapter(Clazz: Clazz, request: request, appManager: appManager)
         store.onGetIdent = onGetIdent(_:_:_:)
         store.onFinishJSONParse = onFinish

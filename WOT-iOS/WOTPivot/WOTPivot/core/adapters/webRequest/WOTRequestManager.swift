@@ -27,14 +27,14 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
-    fileprivate var externalCallbacks: [AnyHashable: NSManagedObjectOptionalCallback] = [:]
+    fileprivate var externalCallbacks: [AnyHashable: NSManagedObjectErrorCompletion] = [:]
 
-    private func request(_ request: WOTRequestProtocol, addOnCreateNSManagedObject callback: NSManagedObjectOptionalCallback?) {
+    private func request(_ request: WOTRequestProtocol, addOnCreateNSManagedObject callback: NSManagedObjectErrorCompletion?) {
         externalCallbacks[request.uuid.uuidString] = callback
     }
 
     @objc
-    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String, jsonLink: WOTJSONPredicate?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?) -> Bool {
+    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String, jsonLink: WOTJSONPredicate?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?) -> Bool {
         var grouppedRequests: [WOTRequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
             grouppedRequests.append(contentsOf: available)
@@ -80,7 +80,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     @objc
-    public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONPredicate?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?) {
+    public func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONPredicate?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?) {
         guard addRequest(request, forGroupId: forGroupId, jsonLink: jsonLink, onCreateNSManagedObject: onCreateNSManagedObject) else {
             return
         }
@@ -100,7 +100,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         grouppedRequests[groupId]?.forEach { $0.cancel() }
     }
 
-    public func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONPredicate, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, listener: WOTRequestManagerListenerProtocol?) {
+    public func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONPredicate, onCreateNSManagedObject: NSManagedObjectErrorCompletion?) {
         guard jsonLink.clazz.conforms(to: KeypathProtocol.self) else {
             return
         }
@@ -122,10 +122,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         request.hostConfiguration = hostConfiguration
         request.jsonLink = jsonLink
 
-        self.addListener(listener, forRequest: request)
-
         let groupId = "Nested\(String(describing: jsonLink.clazz))-\(jsonLink)"
-
         start(request, with: arguments, forGroupId: groupId, jsonLink: jsonLink, onCreateNSManagedObject: onCreateNSManagedObject)
     }
 }

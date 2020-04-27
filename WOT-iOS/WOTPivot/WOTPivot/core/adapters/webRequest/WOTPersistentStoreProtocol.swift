@@ -26,7 +26,7 @@ public protocol WOTPersistentStoreProtocol {
     func localSubordinate(for clazz: AnyClass, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback)
 
     @objc
-    func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectOptionalCallback)
+    func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectErrorCompletion)
 
     func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase)
 
