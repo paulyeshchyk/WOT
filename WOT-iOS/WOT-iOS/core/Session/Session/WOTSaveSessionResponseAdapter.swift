@@ -13,11 +13,11 @@ public class WOTSaveSessionResponseAdapter: NSObject, WOTDataResponseAdapterProt
     @objc
     public var appManager: WOTAppManagerProtocol?
 
-    required public init(appManager app: WOTAppManagerProtocol?) {
+    required public init(appManager app: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type) {
         appManager = app
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCompleteObjectCreationL1: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("not implemented")
 //        WOTSessionManager.sharedInstance()?.invalidateTimer({ (interval) -> Timer? in
 //            if #available(iOS 10.0, *) {

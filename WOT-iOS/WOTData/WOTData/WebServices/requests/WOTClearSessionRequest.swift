@@ -9,7 +9,15 @@
 import Foundation
 
 @objc
-public class WOTClearSessionRequest: WOTWEBRequest {
+public class WOTClearSessionRequest: WOTWEBRequest, WOTModelServiceProtocol {
+    public static func modelClass() -> PrimaryKeypathProtocol.Type? {
+        return nil
+    }
+
+    public func instanceModelClass() -> AnyClass? {
+        return nil
+    }
+
     override public var method: String { return "POST" }
 
     @objc

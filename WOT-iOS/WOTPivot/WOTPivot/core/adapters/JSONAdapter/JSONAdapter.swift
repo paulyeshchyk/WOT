@@ -11,24 +11,97 @@ import CoreData
 public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
 @objc
-public protocol CoreDataMappingProtocol {}
+public protocol DataAdapterProtocol {
+    @available(*, deprecated)
+    @objc var appManager: WOTAppManagerProtocol? { get set }
+    var uuid: UUID { get }
+    var onComplete: OnRequestComplete? { get set }
+}
 
 @objc
-public protocol JSONAdapterProtocol: CoreDataMappingProtocol {
-    @available(*, deprecated)
-    @objc
-    var appManager: WOTAppManagerProtocol? { get set }
-
-    var uuid: UUID { get }
-    var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)? { get set }
+public protocol JSONAdapterProtocol: DataAdapterProtocol {
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
-    var onRequestComplete: OnRequestComplete? { get set }
-    var onCreateNSManagedObject: NSManagedObjectErrorCompletion? { get set }
+    var onCompleteObjectCreation: NSManagedObjectErrorCompletion? { get set }
     func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
     var coreDataProvider: WOTCoredataProviderProtocol? { get }
 }
 
+@objc
+public class JSONAdapter: NSObject, JSONAdapterProtocol {
+    // MARK: NSObject -
+    override public var hash: Int {
+        return uuid.uuidString.hashValue
+    }
+
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?) {
+        self.Clazz = clazz
+        self.request = request
+        self.appManager = appManager
+        self.persistentStore = appManager?.persistentStore
+
+        super.init()
+        appManager?.logInspector?.log(OBJNewLog(request.description), sender: self)
+    }
+
+    deinit {
+        appManager?.logInspector?.log(OBJFreeLog(request.description), sender: self)
+    }
+
+    // MARK: DataAdapterProtocol -
+    public var appManager: WOTAppManagerProtocol?
+    public let uuid: UUID = UUID()
+
+    // MARK: JSONAdapterProtocol -
+    public var onGetObjectJSON: ((JSON) -> JSON)?
+    public var onComplete: OnRequestComplete?
+    public var onCompleteObjectCreation: NSManagedObjectErrorCompletion?
+    public var coreDataProvider: WOTCoredataProviderProtocol? {
+        return appManager?.coreDataProvider
+    }
+
+    public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
+        guard error == nil, let json = json else {
+            appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
+            onComplete?(fromRequest, self, error)
+            return
+        }
+
+        appManager?.logInspector?.log(JSONStartLog(""), sender: self)
+        let keys = json.keys
+        for (idx, key) in keys.enumerated() {
+            //
+            let extraction = extractSubJSON(from: json, by: key)
+            findOrCreateObject(for: extraction, fromRequest: fromRequest) { managedObject, error in
+
+                self.onCompleteObjectCreation?(managedObject, error)
+
+                if idx == (keys.count - 1) {
+                    self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
+                    self.onComplete?(fromRequest, self, error)
+                }
+            }
+        }
+    }
+
+    // MARK: Private -
+    private let METAClass: Codable.Type = RESTAPIResponse.self
+    private var persistentStore: WOTPersistentStoreProtocol?
+    private let Clazz: PrimaryKeypathProtocol.Type
+    private let request: WOTRequestProtocol
+}
+
+// MARK: - Hash
+func == (lhs: JSONAdapter, rhs: JSONAdapter) -> Bool {
+    return lhs.uuid == rhs.uuid
+}
+
+// MARK: - private
+
 extension JSONAdapterProtocol {
+    /**
+     because of objC limitation, the function added as an extention to *JSONAdapterProtocol*
+     */
+
     public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
         guard let data = binary else {
             didReceiveJSON(nil, fromRequest: request, nil)
@@ -48,80 +121,22 @@ extension JSONAdapterProtocol {
     }
 }
 
-@objc
-public class JSONAdapter: NSObject, JSONAdapterProtocol {
-    public var appManager: WOTAppManagerProtocol?
-
-    public let uuid: UUID = UUID()
-    private let Clazz: PrimaryKeypathProtocol.Type
-    private let request: WOTRequestProtocol
-    override public var hash: Int {
-        return uuid.uuidString.hashValue
-    }
-
-    private var persistentStore: WOTPersistentStoreProtocol?
-
-    public var coreDataProvider: WOTCoredataProviderProtocol? {
-        return appManager?.coreDataProvider
-    }
-
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?) {
-        self.Clazz = clazz
-        self.request = request
-        self.appManager = appManager
-        self.persistentStore = appManager?.persistentStore
-
-        super.init()
-        appManager?.logInspector?.log(OBJNewLog(request.description), sender: self)
-    }
-
-    deinit {
-        appManager?.logInspector?.log(OBJFreeLog(request.description), sender: self)
-    }
-
-    // MARK: - CoreDataStoreProtocol
-    public var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
-    public var onGetObjectJSON: ((JSON) -> JSON)?
-    public var onRequestComplete: OnRequestComplete?
-    public var onCreateNSManagedObject: NSManagedObjectErrorCompletion?
-
-    private let METAClass: Codable.Type = RESTAPIResponse.self
-
-    public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
-        guard error == nil, let json = json else {
-            appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
-            onRequestComplete?(fromRequest, self, error)
-            return
-        }
-
-        appManager?.logInspector?.log(JSONStartLog(""), sender: self)
-        let keys = json.keys
-        for (idx, key) in keys.enumerated() {
-            //
-            let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(for: extraction, fromRequest: fromRequest) { managedObject, error in
-
-                self.onCreateNSManagedObject?(managedObject, error)
-
-                if idx == (keys.count - 1) {
-                    self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
-                    self.onRequestComplete?(fromRequest, self, error)
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Hash
-func == (lhs: JSONAdapter, rhs: JSONAdapter) -> Bool {
-    return lhs.uuid == rhs.uuid
-}
-
-// MARK: - private
 extension JSONAdapter {
     private struct JSONExtraction {
         let identifier: Any
         let json: JSON
+    }
+
+    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
+        let ident: Any
+        let primaryKeyPath = Clazz.primaryKeyPath()
+
+        if  primaryKeyPath.count > 0 {
+            ident = json[primaryKeyPath] ?? key
+        } else {
+            ident = key
+        }
+        return ident
     }
 
     /**
@@ -137,9 +152,7 @@ extension JSONAdapter {
         } else {
             objectJson = jsonByKey
         }
-        guard let ident = onGetIdent?(Clazz, objectJson, key) else {
-            fatalError("onGetIdent not defined")
-        }
+        let ident = onGetIdent(Clazz, objectJson, key)
         return JSONExtraction(identifier: ident, json: objectJson)
     }
 

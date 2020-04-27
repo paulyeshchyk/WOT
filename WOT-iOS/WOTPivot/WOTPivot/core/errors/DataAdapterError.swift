@@ -11,5 +11,7 @@ import Foundation
 public enum DataAdapterError: Error {
     case requestNotRegistered(requestType: String)
     case adapterNotFound(requestType: String)
+    case requestClassNotFound(requestType: String)
+    case modelClassNotFound(requestType: String)
     case classIsNotDataAdapter(dataAdapter: String)
 }

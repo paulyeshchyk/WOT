@@ -9,10 +9,22 @@
 import Foundation
 
 @objc
-public class WOTSaveSessionRequest: WOTWEBRequest {
+public class WOTSaveSessionRequest: WOTWEBRequest, WOTModelServiceProtocol {
     @objc
     public class func modelClassName() -> String {
         return ""
+    }
+
+    @objc public static func modelClass() -> PrimaryKeypathProtocol.Type? {
+        return nil
+    }
+
+    @objc public func instanceModelClass() -> AnyClass? {
+        return nil
+    }
+
+    required init(appManager app: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type) {
+//        appManager = app
     }
 
     // - (void)start:(WOTRequestArguments * _Nonnull)args{

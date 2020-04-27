@@ -48,7 +48,7 @@ extension VehicleprofileModule {
         let gunCase = PKCase()
         gunCase[.primary] = VehicleprofileGun.primaryIdKey(for: self.gun_id)
         gunCase[.secondary] = pkCase[.primary]
-        persistentStore?.remoteSubordinate(for: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", onCreateNSManagedObject: { (managedObject, _) in
+        persistentStore?.remoteSubordinate(for: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", onCompleteObjectCreationL8: { (managedObject, _) in
             if let gun = managedObject as? VehicleprofileGun {
                 self.vehicleGun = gun
                 persistentStore?.stash(hint: gunCase)
@@ -58,7 +58,7 @@ extension VehicleprofileModule {
         let radioCase = PKCase()
         radioCase[.primary] = VehicleprofileRadio.primaryIdKey(for: self.radio_id)
         radioCase[.secondary] = pkCase[.primary]
-        persistentStore?.remoteSubordinate(for: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", onCreateNSManagedObject: { (managedObject, _) in
+        persistentStore?.remoteSubordinate(for: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", onCompleteObjectCreationL8: { (managedObject, _) in
             if let radio = managedObject as? VehicleprofileRadio {
                 self.vehicleRadio = radio
                 persistentStore?.stash(hint: radioCase)
@@ -67,7 +67,7 @@ extension VehicleprofileModule {
         let engineCase = PKCase()
         engineCase[.primary] = VehicleprofileEngine.primaryIdKey(for: self.engine_id)
         engineCase[.secondary] = pkCase[.primary]
-        persistentStore?.remoteSubordinate(for: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", onCreateNSManagedObject: { (managedObject, _) in
+        persistentStore?.remoteSubordinate(for: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", onCompleteObjectCreationL8: { (managedObject, _) in
             if let engine = managedObject as? VehicleprofileEngine {
                 self.vehicleEngine = engine
                 persistentStore?.stash(hint: engineCase)
@@ -76,7 +76,7 @@ extension VehicleprofileModule {
         let suspensionCase = PKCase()
         suspensionCase[.primary] = VehicleprofileSuspension.primaryIdKey(for: self.suspension_id)
         suspensionCase[.secondary] = pkCase[.primary]
-        persistentStore?.remoteSubordinate(for: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", onCreateNSManagedObject: { (managedObject, _) in
+        persistentStore?.remoteSubordinate(for: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", onCompleteObjectCreationL8: { (managedObject, _) in
             if let suspension = managedObject as? VehicleprofileSuspension {
                 self.vehicleChassis = suspension
                 persistentStore?.stash(hint: suspensionCase)
@@ -88,7 +88,7 @@ extension VehicleprofileModule {
             let turretCase = PKCase()
             turretCase[.primary] = VehicleprofileTurret.primaryIdKey(for: turret_id)
             turretCase[.secondary] = pkCase[.primary]
-            persistentStore?.remoteSubordinate(for: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", onCreateNSManagedObject: { (managedObject, _) in
+            persistentStore?.remoteSubordinate(for: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", onCompleteObjectCreationL8: { (managedObject, _) in
                 if let turret = managedObject as? VehicleprofileTurret {
                     self.vehicleTurret = turret
                     persistentStore?.stash(hint: turretCase)

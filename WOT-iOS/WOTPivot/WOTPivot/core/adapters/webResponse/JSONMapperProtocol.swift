@@ -17,12 +17,12 @@ public protocol JSONMapperProtocol {
     func mapping(fromArray array: [Any])
 
     func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?)
-    func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?)
+    func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: DataAdapterProtocol?)
 }
 
 extension JSONMapperProtocol {
     public func mapping(fromJSON jSON: JSON) {}
     public func mapping(fromArray array: [Any]) {}
     public func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {}
-    public func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: CoreDataMappingProtocol?) {}
+    public func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: DataAdapterProtocol?) {}
 }

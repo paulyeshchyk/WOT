@@ -19,7 +19,7 @@ extension WOTPersistentStore: LogMessageSender {
     }
 }
 
-// MARK: - WOTpersistentStoreProtocol
+// MARK: - WOTPersistentStoreProtocol
 extension WOTPersistentStore: WOTPersistentStoreProtocol {
     @objc
     public var appManager: WOTAppManagerProtocol? {
@@ -88,7 +88,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     }
 
     @objc
-    public func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectErrorCompletion) {
+    public func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCompleteObjectCreationL8: @escaping NSManagedObjectErrorCompletion) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
 
         var predicates = [WOTJSONPredicate]()
@@ -97,7 +97,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
         predicates.forEach { jsonLink in
             if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: jsonLink.clazz) {
                 requestIDs.forEach {
-                    appManager?.requestManager?.queue(requestId: $0, jsonLink: jsonLink, onCreateNSManagedObject: onCreateNSManagedObject)
+                    appManager?.requestManager?.queue(requestId: $0, jsonLink: jsonLink, onCompleteObjectCreationL7: onCompleteObjectCreationL8)
                 }
             } else {
                 print("requests not parsed")
