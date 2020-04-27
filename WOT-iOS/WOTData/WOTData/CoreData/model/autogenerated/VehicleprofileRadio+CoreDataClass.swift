@@ -51,3 +51,14 @@ extension VehicleprofileRadio: JSONDecoding {
         self.weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
     }
 }
+
+extension VehicleprofileTurret {
+    @objc
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+        do {
+            try self.decode(json: jSON)
+        } catch let error {
+            print("JSON Mapping Error: \(error)")
+        }
+    }
+}

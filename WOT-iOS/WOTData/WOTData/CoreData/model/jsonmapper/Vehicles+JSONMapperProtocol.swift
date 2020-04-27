@@ -10,27 +10,25 @@ import WOTPivot
 
 extension Vehicles {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
             print("JSON Mapping Error: \(error)")
         }
 
-        let vehicleProfileCase = PKCase()
-        vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-
-        Vehicleprofile.profile(fromJSON: jSON[#keyPath(Vehicles.default_profile)], pkCase: vehicleProfileCase, persistentStore: persistentStore) { newObject in
-            guard let defaultProfile = newObject as? Vehicleprofile else {
-                return
-            }
-            self.default_profile = defaultProfile
-            self.modules_tree?.forEach({ (element) in
-                if let modules_tree = element as? ModulesTree {
-                    modules_tree.default_profile = defaultProfile
+        if let itemJSON = jSON[#keyPath(Vehicles.default_profile)] as? JSON {
+            let vehicleProfileCase = RemotePKCase()
+            vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
+            persistentStore?.itemMapping(forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, callback: { (managedObject) in
+                guard let defaultProfile = managedObject as? Vehicleprofile else {
+                    return
                 }
+                self.default_profile = defaultProfile
+                self.modules_tree?.forEach({ (element) in
+                    (element as? ModulesTree)?.default_profile = defaultProfile
+                })
             })
-            persistentStore?.stash(hint: vehicleProfileCase)
         }
 
         if let set = self.modules_tree {
@@ -39,18 +37,32 @@ extension Vehicles {
 
         var parents = pkCase.plainParents
         parents.append(self)
-        let modulesTreeCase = PKCase(parentObjects: parents)
+        let modulesTreeCase = RemotePKCase(parentObjects: parents)
         modulesTreeCase[.primary] = pkCase[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
 
-        ModulesTree.modulesTree(fromJSON: jSON[#keyPath(Vehicles.modules_tree)], pkCase: modulesTreeCase, persistentStore: persistentStore) { newObject in
-            guard let module_tree = newObject as? ModulesTree else {
-                return
+        if let moduleTreeJSON = jSON[#keyPath(Vehicles.modules_tree)] as? JSON {
+            moduleTreeJSON.keys.forEach { (key) in
+                guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
+                guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber  else { return }
+
+                let modulePK = ModulesTree.primaryKey(for: module_id)
+                let submodulesCase = RemotePKCase(parentObjects: modulesTreeCase.plainParents)
+                submodulesCase[.primary] = modulePK
+                submodulesCase[.secondary] = modulesTreeCase[.primary]
+
+                persistentStore?.localSubordinate(for: ModulesTree.self, pkCase: submodulesCase) { newObject in
+                    guard let module_tree = newObject as? ModulesTree else {
+                        return
+                    }
+                    persistentStore?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase)
+
+                    module_tree.default_profile = self.default_profile
+                    self.addToModules_tree(module_tree)
+                    persistentStore?.stash(hint: modulesTreeCase)
+                }
             }
-            module_tree.default_profile = self.default_profile
-            self.addToModules_tree(module_tree)
-            persistentStore?.stash(hint: modulesTreeCase)
         }
     }
 }

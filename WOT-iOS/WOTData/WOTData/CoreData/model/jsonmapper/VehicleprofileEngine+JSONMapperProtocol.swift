@@ -10,7 +10,7 @@ import WOTPivot
 
 extension VehicleprofileEngine {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -20,14 +20,14 @@ extension VehicleprofileEngine {
 }
 
 extension VehicleprofileEngine {
-    public static func engine(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func engine(fromJSON jSON: Any?, pkCase parent: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
-        let tag = jSON[VehicleprofileEngine.primaryKeyPath()]
-        let pk = VehicleprofileEngine.primaryKey(for: tag as AnyObject?)
-        let pkCase = PKCase()
-        pkCase[.primary] = pk
+        guard let tag = jSON[VehicleprofileEngine.primaryKeyPath()] else { return }
 
-        persistentStore?.requestSubordinate(for: VehicleprofileEngine.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        let pkCase = RemotePKCase()
+        pkCase[.primary] = VehicleprofileEngine.primaryKey(for: tag)
+
+        persistentStore?.localSubordinate(for: VehicleprofileEngine.self, pkCase: pkCase) { newObject in
             persistentStore?.mapping(object: newObject,fromJSON: jSON, pkCase: pkCase)
             callback(newObject)
         }

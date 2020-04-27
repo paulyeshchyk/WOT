@@ -8,6 +8,8 @@
 
 import CoreData
 
+public typealias OnParserDidFinish = (Any?, Error?) -> Void
+
 @objc
 public protocol JSONCoordinatorProtocol: CoreDataMappingProtocol {
     @available(*, deprecated)
@@ -17,7 +19,7 @@ public protocol JSONCoordinatorProtocol: CoreDataMappingProtocol {
     var uuid: UUID { get }
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)? { get set }
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
-    var onFinishJSONParse: ((Error?) -> Void)? { get set }
+    var onFinishJSONParse: OnParserDidFinish? { get set }
     var onCreateNSManagedObject: NSManagedObjectCallback? { get set }
     func perform()
     func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
@@ -33,7 +35,11 @@ extension JSONCoordinatorProtocol {
         let decoder = JSONDecoder()
         do {
             let result = try decoder.decode(T.self, from: data)
-            onReceivedJSON(result.data, fromRequest: request, nil)
+            if let swiftError = result.swiftError {
+                onReceivedJSON(nil, fromRequest: request, swiftError)
+            } else {
+                onReceivedJSON(result.data, fromRequest: request, nil)
+            }
         } catch let error {
             onReceivedJSON(nil, fromRequest: request, error)
         }
@@ -77,7 +83,7 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
     // MARK: - CoreDataStoreProtocol
     public var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     public var onGetObjectJSON: ((JSON) -> JSON)?
-    public var onFinishJSONParse: ((Error?) -> Void)?
+    public var onFinishJSONParse: OnParserDidFinish?
     public var onCreateNSManagedObject: NSManagedObjectCallback?
 
     private let METAClass: Codable.Type = RESTAPIResponse.self
@@ -87,7 +93,7 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
     public func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
-            onFinishJSONParse?(error)
+            onFinishJSONParse?(self, error)
             return
         }
 
@@ -102,7 +108,7 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
-                    self.onFinishJSONParse?(nil)
+                    self.onFinishJSONParse?(self, nil)
                 }
             }
         }
@@ -147,7 +153,7 @@ extension JSONCoordinator {
         }
         //
         let parents = fromRequest.jsonLink?.pkCase?.plainParents ?? []
-        let objCase = PKCase(parentObjects: parents)
+        let objCase = RemotePKCase(parentObjects: parents)
         objCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
         appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 

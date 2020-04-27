@@ -10,7 +10,7 @@ import WOTPivot
 
 extension VehicleprofileAmmoPenetration {
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         guard array.count == 3 else {
             print("invalid penetration from json")
             return
@@ -23,10 +23,10 @@ extension VehicleprofileAmmoPenetration {
 }
 
 extension VehicleprofileAmmoPenetration {
-    public static func penetration(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func penetration(fromArray array: Any?, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let array = array as? [Any] else { return }
 
-        persistentStore?.requestSubordinate(for: VehicleprofileAmmoPenetration.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        persistentStore?.localSubordinate(for: VehicleprofileAmmoPenetration.self, pkCase: pkCase) { newObject in
             persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase)
             callback(newObject)
         }

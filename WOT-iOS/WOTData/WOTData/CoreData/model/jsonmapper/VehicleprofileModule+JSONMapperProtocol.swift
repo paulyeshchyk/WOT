@@ -9,45 +9,45 @@
 import WOTPivot
 
 extension VehicleprofileModule {
-    override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    override public func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
             print("JSON Mapping Error: \(error)")
         }
 
-        let gunCase = PKCase()
+        let gunCase = RemotePKCase()
         gunCase[.primary] = VehicleprofileGun.primaryIdKey(for: self.gun_id)
         gunCase[.secondary] = pkCase[.primary]
-        persistentStore?.requestSubordinate(for: VehicleprofileGun.self, pkCase: gunCase, subordinateRequestType: .remote, keyPathPrefix: "gun.", onCreateNSManagedObject: { (managedObject) in
+        persistentStore?.remoteSubordinate(for: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", onCreateNSManagedObject: { (managedObject) in
             if let gun = managedObject as? VehicleprofileGun {
                 self.vehicleGun = gun
                 persistentStore?.stash(hint: gunCase)
             }
         })
 
-        let radioCase = PKCase()
+        let radioCase = RemotePKCase()
         radioCase[.primary] = VehicleprofileRadio.primaryIdKey(for: self.radio_id)
         radioCase[.secondary] = pkCase[.primary]
-        persistentStore?.requestSubordinate(for: VehicleprofileRadio.self, pkCase: radioCase, subordinateRequestType: .remote, keyPathPrefix: "radio.", onCreateNSManagedObject: { (managedObject) in
+        persistentStore?.remoteSubordinate(for: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", onCreateNSManagedObject: { (managedObject) in
             if let radio = managedObject as? VehicleprofileRadio {
                 self.vehicleRadio = radio
                 persistentStore?.stash(hint: radioCase)
             }
         })
-        let engineCase = PKCase()
+        let engineCase = RemotePKCase()
         engineCase[.primary] = VehicleprofileEngine.primaryIdKey(for: self.engine_id)
         engineCase[.secondary] = pkCase[.primary]
-        persistentStore?.requestSubordinate(for: VehicleprofileEngine.self, pkCase: engineCase, subordinateRequestType: .remote, keyPathPrefix: "engine.", onCreateNSManagedObject: { (managedObject) in
+        persistentStore?.remoteSubordinate(for: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", onCreateNSManagedObject: { (managedObject) in
             if let engine = managedObject as? VehicleprofileEngine {
                 self.vehicleEngine = engine
                 persistentStore?.stash(hint: engineCase)
             }
         })
-        let suspensionCase = PKCase()
+        let suspensionCase = RemotePKCase()
         suspensionCase[.primary] = VehicleprofileSuspension.primaryIdKey(for: self.suspension_id)
         suspensionCase[.secondary] = pkCase[.primary]
-        persistentStore?.requestSubordinate(for: VehicleprofileSuspension.self, pkCase: suspensionCase, subordinateRequestType: .remote, keyPathPrefix: "suspension.", onCreateNSManagedObject: { (managedObject) in
+        persistentStore?.remoteSubordinate(for: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", onCreateNSManagedObject: { (managedObject) in
             if let suspension = managedObject as? VehicleprofileSuspension {
                 self.vehicleChassis = suspension
                 persistentStore?.stash(hint: suspensionCase)
@@ -56,26 +56,15 @@ extension VehicleprofileModule {
 
         //turret is optional device, turret_id can be null
         if let turret_id = self.turret_id {
-            let turretCase = PKCase()
+            let turretCase = RemotePKCase()
             turretCase[.primary] = VehicleprofileTurret.primaryIdKey(for: turret_id)
             turretCase[.secondary] = pkCase[.primary]
-            persistentStore?.requestSubordinate(for: VehicleprofileTurret.self, pkCase: suspensionCase, subordinateRequestType: .remote, keyPathPrefix: "turret.", onCreateNSManagedObject: { (managedObject) in
+            persistentStore?.remoteSubordinate(for: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", onCreateNSManagedObject: { (managedObject) in
                 if let turret = managedObject as? VehicleprofileTurret {
                     self.vehicleTurret = turret
                     persistentStore?.stash(hint: turretCase)
                 }
             })
-        }
-    }
-}
-
-extension VehicleprofileModule {
-    public static func module(fromJSON json: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
-        guard let json = json as? JSON else { return }
-
-        persistentStore?.requestSubordinate(for: VehicleprofileModule.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromJSON: json, pkCase: pkCase)
-            callback(newObject)
         }
     }
 }

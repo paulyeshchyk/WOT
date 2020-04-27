@@ -22,6 +22,6 @@ public class CDFetchLog: LogMessageTypeProtocol {
     }
 
     public init?(error: Error) {
-        message = error.localizedDescription
+        message = error.debugDescription
     }
 }

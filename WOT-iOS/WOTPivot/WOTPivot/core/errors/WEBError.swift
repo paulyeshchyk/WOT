@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum WEBError: WOTError {
+public enum WEBError: Error {
     case dataIsNull
     case invalidStatus
 }

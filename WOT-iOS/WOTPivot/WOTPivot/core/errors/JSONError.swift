@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum JSONError: WOTError {
+public enum JSONError: Error {
     case empty(message: String = "JSON is empty")
     case parse(message: String)
 }

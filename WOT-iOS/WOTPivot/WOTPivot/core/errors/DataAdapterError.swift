@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum DataAdapterError: WOTError {
+public enum DataAdapterError: Error {
     case requestNotRegistered(requestType: String)
     case adapterNotFound(requestType: String)
     case classIsNotDataAdapter(dataAdapter: String)

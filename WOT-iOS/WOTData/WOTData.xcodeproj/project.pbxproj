@@ -85,7 +85,6 @@
 		1DAD1B3423D0581B0050B5B7 /* Module+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2123D0581B0050B5B7 /* Module+JSONMapperProtocol.swift */; };
 		1DAD1B3523D0581B0050B5B7 /* VehicleprofileAmmoDamage+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2223D0581B0050B5B7 /* VehicleprofileAmmoDamage+JSONMapperProtocol.swift */; };
 		1DAD1B3623D0581B0050B5B7 /* VehicleprofileGun+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2323D0581B0050B5B7 /* VehicleprofileGun+JSONMapperProtocol.swift */; };
-		1DAD1B3723D0581B0050B5B7 /* VehicleprofileTurret+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2423D0581B0050B5B7 /* VehicleprofileTurret+JSONMapperProtocol.swift */; };
 		1DAD1B3823D0581B0050B5B7 /* VehicleprofileSuspension+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2523D0581B0050B5B7 /* VehicleprofileSuspension+JSONMapperProtocol.swift */; };
 		1DAD1B3923D0581B0050B5B7 /* VehicleprofileAmmoPenetration+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2623D0581B0050B5B7 /* VehicleprofileAmmoPenetration+JSONMapperProtocol.swift */; };
 		1DAD1B3A23D0581B0050B5B7 /* ModulesTree+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAD1B2723D0581B0050B5B7 /* ModulesTree+JSONMapperProtocol.swift */; };
@@ -190,7 +189,6 @@
 		1DAD1B2123D0581B0050B5B7 /* Module+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B2223D0581B0050B5B7 /* VehicleprofileAmmoDamage+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B2323D0581B0050B5B7 /* VehicleprofileGun+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
-		1DAD1B2423D0581B0050B5B7 /* VehicleprofileTurret+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B2523D0581B0050B5B7 /* VehicleprofileSuspension+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B2623D0581B0050B5B7 /* VehicleprofileAmmoPenetration+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1DAD1B2723D0581B0050B5B7 /* ModulesTree+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
@@ -436,7 +434,6 @@
 				1D695C71244C416B00650F95 /* VehicleprofileModule+JSONMapperProtocol.swift */,
 				1DAD1B2D23D0581B0050B5B7 /* VehicleprofileRadio+JSONMapperProtocol.swift */,
 				1DAD1B2523D0581B0050B5B7 /* VehicleprofileSuspension+JSONMapperProtocol.swift */,
-				1DAD1B2423D0581B0050B5B7 /* VehicleprofileTurret+JSONMapperProtocol.swift */,
 			);
 			path = jsonmapper;
 			sourceTree = "<group>";
@@ -579,7 +576,6 @@
 				1D70CF1F2451EC400031CBFE /* VehicleprofileTurret+CoreDataProperties.swift in Sources */,
 				1D70CF372451EC400031CBFE /* Vehicleprofile+CoreDataClass.swift in Sources */,
 				1D695CC8244CC8A800650F95 /* WOTWEBRequestTankEngines.swift in Sources */,
-				1DAD1B3723D0581B0050B5B7 /* VehicleprofileTurret+JSONMapperProtocol.swift in Sources */,
 				1D70CF322451EC400031CBFE /* VehicleprofileModule+CoreDataProperties.swift in Sources */,
 				1DAD1B3B23D0581B0050B5B7 /* Vehicleprofile+JSONMapperProtocol.swift in Sources */,
 				1DA153CD244AE79C00FB3C89 /* WOTWebResponseAdapterGuns.swift in Sources */,

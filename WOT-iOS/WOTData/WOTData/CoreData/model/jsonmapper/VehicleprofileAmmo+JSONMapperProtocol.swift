@@ -10,14 +10,14 @@ import CoreData
 
 extension VehicleprofileAmmo {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
             print("JSON Mapping Error: \(error)")
         }
 
-        let vehicleprofileAmmoPenetrationCase = PKCase()
+        let vehicleprofileAmmoPenetrationCase = RemotePKCase()
         vehicleprofileAmmoPenetrationCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)], pkCase: vehicleprofileAmmoPenetrationCase, persistentStore: persistentStore) { newObject in
@@ -25,7 +25,7 @@ extension VehicleprofileAmmo {
             persistentStore?.stash(hint: vehicleprofileAmmoPenetrationCase)
         }
 
-        let vehicleprofileAmmoDamageCase = PKCase()
+        let vehicleprofileAmmoDamageCase = RemotePKCase()
         vehicleprofileAmmoDamageCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], pkCase: vehicleprofileAmmoDamageCase, persistentStore: persistentStore) { newObject in
@@ -38,7 +38,7 @@ extension VehicleprofileAmmo {
         guard let json = json, let entityDescription = VehicleprofileAmmo.entityDescription(context) else { return nil }
         self.init(entity: entityDescription, insertInto: context)
 
-        let pkCase = PKCase()
+        let pkCase = RemotePKCase()
         pkCase[.primary] = parentPrimaryKey
 
         persistentStore?.mapping(object: self, fromJSON: json, pkCase: pkCase)

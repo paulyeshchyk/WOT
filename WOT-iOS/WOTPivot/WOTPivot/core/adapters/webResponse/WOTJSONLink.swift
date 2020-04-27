@@ -19,7 +19,7 @@ public class WOTJSONLink: NSObject {
     }
 
     @objc
-    public var pkCase: PKCase?
+    public var pkCase: RemotePKCase?
 
     @objc
     public var completion: ((JSON) -> Void)?
@@ -49,7 +49,7 @@ public class WOTJSONLink: NSObject {
         return String(format: "%@%@", preffix, to)
     }
 
-    public init?(clazz clazzTo: AnyClass, pkCase parentCase: PKCase, keypathPrefix kp: String?, completion block: ((JSON) -> Void)?) {
+    public init?(clazz clazzTo: AnyClass, pkCase parentCase: RemotePKCase, keypathPrefix kp: String?, completion block: ((JSON) -> Void)?) {
         clazz = clazzTo
         pkCase = parentCase
         completion = block

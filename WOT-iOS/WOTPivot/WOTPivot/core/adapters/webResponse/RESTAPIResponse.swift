@@ -12,6 +12,32 @@ public protocol RESTAPIResponseProtocol: Codable {
     var status: RESTAPIResponseStatus? { get set }
     var data: JSON? { get set }
     var error: JSON? { get set }
+    var swiftError: Error? { get }
+}
+
+public struct RESTAPIError: WOTError {
+    public var code: Int?
+    public var message: String?
+    public init(code: Int?, message: String?) {
+        self.code = code
+        self.message = message
+    }
+
+    public var customDescription: String? {
+        return "RESTAPIError code:\(code ?? -1); message: \(message ?? "No message")"
+    }
+
+    public init?(json: JSON?) {
+        let code = json?["code"] as? Int
+        let message = json?["message"] as? String
+
+        let hasCode = code != nil
+        let hasMessage = message != nil
+        let hasError = hasCode || hasMessage
+        guard hasError else { return nil }
+
+        self =  RESTAPIError(code: code, message: message)
+    }
 }
 
 public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
@@ -19,6 +45,11 @@ public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
     public var meta: RESTAPIResponseMeta?
     public var data: JSON?
     public var error: JSON?
+    public var swiftError: Error? {
+        guard let json = error else { return nil }
+        return RESTAPIError(json: json)
+    }
+
     //
     public typealias Fields = FieldKeys
     public enum FieldKeys: String, CodingKey {

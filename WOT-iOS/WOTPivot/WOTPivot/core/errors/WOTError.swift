@@ -8,11 +8,15 @@
 
 import Foundation
 
-public protocol WOTError: Error {}
+public protocol WOTError: Error {
+    var code: Int? { get }
+    var message: String? { get }
+    var customDescription: String? { get }
+    init(code: Int?, message: String?)
+}
 
 extension Error {
     var debugDescription: String {
-//        return "\(String(describing: type(of: self))).\(String(describing: self)) (code \((self as NSError).code))"
         return ".\(String(describing: self)) (code \((self as NSError).code))"
     }
 }

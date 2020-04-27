@@ -10,7 +10,7 @@ import WOTPivot
 
 extension Vehicleprofile {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -19,74 +19,78 @@ extension Vehicleprofile {
         var parents = pkCase.plainParents
         parents.append(self)
 
-        let vehicleprofileAmmoListCase = PKCase(parentObjects: parents)
-        vehicleprofileAmmoListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
-        VehicleprofileAmmoList.list(fromArray: jSON[#keyPath(Vehicleprofile.ammo)], pkCase: vehicleprofileAmmoListCase, persistentStore: persistentStore) { newObject in
-            self.ammo = newObject as? VehicleprofileAmmoList
-            persistentStore?.stash(hint: vehicleprofileAmmoListCase)
+        if let itemsList = jSON[#keyPath(Vehicleprofile.ammo)] as? [Any] {
+            let itemCase = RemotePKCase(parentObjects: parents)
+            itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+            persistentStore?.itemMapping(forClass: VehicleprofileAmmoList.self, items: itemsList, pkCase: itemCase) { newObject in
+                self.ammo = newObject as? VehicleprofileAmmoList
+            }
         }
 
-        let vehicleprofileArmorListCase = PKCase(parentObjects: parents)
-        vehicleprofileArmorListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
-        VehicleprofileArmorList.list(fromJSON: jSON[#keyPath(Vehicleprofile.armor)], pkCase: vehicleprofileArmorListCase, persistentStore: persistentStore) { newObject in
-            self.armor = newObject as? VehicleprofileArmorList
-            persistentStore?.stash(hint: vehicleprofileArmorListCase)
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.armor)] as? JSON {
+            let itemCase = RemotePKCase(parentObjects: parents)
+            itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
+            persistentStore?.itemMapping(forClass: VehicleprofileArmorList.self, itemJSON: itemJSON, pkCase: itemCase) { newObject in
+                self.armor = newObject as? VehicleprofileArmorList
+            }
         }
 
-        let vehicleprofileEngineListCase = PKCase(parentObjects: parents)
-        vehicleprofileEngineListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileEngine.vehicleprofile))
-        VehicleprofileEngine.engine(fromJSON: jSON[#keyPath(Vehicleprofile.engine)], pkCase: vehicleprofileEngineListCase, persistentStore: persistentStore) { newObject in
-            self.engine = newObject as? VehicleprofileEngine
-            persistentStore?.stash(hint: vehicleprofileEngineListCase)
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.engine)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileEngine.primaryKeyPath()] {
+                let pkCase = RemotePKCase()
+                pkCase[.primary] = VehicleprofileEngine.primaryKey(for: itemID)
+                persistentStore?.itemMapping(forClass: VehicleprofileEngine.self, itemJSON: itemJSON, pkCase: pkCase) { newObject in
+                    self.engine = newObject as? VehicleprofileEngine
+                }
+            }
         }
 
-        let vehicleprofileGunListCase = PKCase(parentObjects: parents)
-        vehicleprofileGunListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileGun.vehicleprofile))
-        VehicleprofileGun.gun(fromJSON: jSON[#keyPath(Vehicleprofile.gun)], pkCase: vehicleprofileGunListCase, persistentStore: persistentStore) { newObject in
-            self.gun = newObject as? VehicleprofileGun
-            persistentStore?.stash(hint: vehicleprofileGunListCase)
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.gun)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileGun.primaryKeyPath()] {
+                let pkCase = RemotePKCase()
+                pkCase[.primary] = VehicleprofileGun.primaryKey(for: itemID)
+                persistentStore?.itemMapping(forClass: VehicleprofileGun.self, itemJSON: itemJSON, pkCase: pkCase) { newObject in
+                    self.gun = newObject as? VehicleprofileGun
+                }
+            }
         }
 
-        let vehicleprofileRadioListCase = PKCase(parentObjects: parents)
-        vehicleprofileRadioListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileRadio.vehicleprofile))
-        VehicleprofileRadio.radio(fromJSON: jSON[#keyPath(Vehicleprofile.radio)], pkCase: vehicleprofileRadioListCase, persistentStore: persistentStore) { newObject in
-            self.radio = newObject as? VehicleprofileRadio
-            persistentStore?.stash(hint: vehicleprofileRadioListCase)
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.radio)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileRadio.primaryKeyPath()] {
+                let pkCase = RemotePKCase()
+                pkCase[.primary] = VehicleprofileRadio.primaryKey(for: itemID)
+                persistentStore?.itemMapping(forClass: VehicleprofileRadio.self, itemJSON: itemJSON, pkCase: pkCase) { newObject in
+                    self.radio = newObject as? VehicleprofileRadio
+                }
+            }
         }
 
-        let vehicleprofileSuspensionListCase = PKCase(parentObjects: parents)
-        vehicleprofileSuspensionListCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileSuspension.vehicleprofile))
-        VehicleprofileSuspension.suspension(fromJSON: jSON[#keyPath(Vehicleprofile.suspension)], pkCase: vehicleprofileSuspensionListCase, persistentStore: persistentStore) { newObject in
-            self.suspension = newObject as? VehicleprofileSuspension
-            persistentStore?.stash(hint: vehicleprofileSuspensionListCase)
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.suspension)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileSuspension.primaryKeyPath()] {
+                let pkCase = RemotePKCase()
+                pkCase[.primary] = VehicleprofileSuspension.primaryKey(for: itemID)
+                persistentStore?.itemMapping(forClass: VehicleprofileSuspension.self, itemJSON: itemJSON, pkCase: pkCase) { newObject in
+                    self.suspension = newObject as? VehicleprofileSuspension
+                }
+            }
         }
 
-        let vehicleprofileTurretCase = PKCase(parentObjects: parents)
-        vehicleprofileTurretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileTurret.vehicleprofile))
-        VehicleprofileTurret.turret(fromJSON: jSON[#keyPath(Vehicleprofile.turret)], pkCase: vehicleprofileTurretCase, persistentStore: persistentStore) { newObject in
-            self.turret = newObject as? VehicleprofileTurret
-            persistentStore?.stash(hint: vehicleprofileTurretCase)
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.turret)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileTurret.primaryKeyPath()] {
+                let pkCase = RemotePKCase()
+                pkCase[.primary] = VehicleprofileTurret.primaryKey(for: itemID)
+                persistentStore?.itemMapping(forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase) { newObject in
+                    self.turret = newObject as? VehicleprofileTurret
+                }
+            }
         }
 
-        let vehicleprofileModuleCase = PKCase(parentObjects: parents)
-        vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
-        VehicleprofileModule.module(fromJSON: jSON[#keyPath(Vehicleprofile.modules)], pkCase: vehicleprofileModuleCase, persistentStore: persistentStore) { newObject in
-            self.modules = newObject as? VehicleprofileModule
-            persistentStore?.stash(hint: vehicleprofileModuleCase)
-        }
-    }
-}
-
-extension Vehicleprofile {
-    public static func profile(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
-        guard let jSON = jSON as? JSON else {
-            callback(nil)
-            return
-        }
-
-        persistentStore?.requestSubordinate(for: Vehicleprofile.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
-            callback(newObject)
+        if let moduleJSON = jSON[#keyPath(Vehicleprofile.modules)] as? JSON {
+            let vehicleprofileModuleCase = RemotePKCase(parentObjects: parents)
+            vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
+            persistentStore?.itemMapping(forClass: VehicleprofileModule.self, itemJSON: moduleJSON, pkCase: vehicleprofileModuleCase) { newObject in
+                self.modules = newObject as? VehicleprofileModule
+            }
         }
     }
 }

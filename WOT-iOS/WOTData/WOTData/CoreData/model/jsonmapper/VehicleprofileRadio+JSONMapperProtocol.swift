@@ -10,7 +10,7 @@ import WOTPivot
 
 extension VehicleprofileRadio {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -20,16 +20,16 @@ extension VehicleprofileRadio {
 }
 
 extension VehicleprofileRadio {
-    public static func radio(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func radio(fromJSON jSON: Any?, pkCase parent: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let jSON = jSON as? JSON else { return }
+        guard let tag = jSON[VehicleprofileRadio.primaryKeyPath()] else { return }
 
-        let tag = jSON[VehicleprofileRadio.primaryKeyPath()]
-        let pk = VehicleprofileRadio.primaryKey(for: tag as AnyObject?)
+        let pk = VehicleprofileRadio.primaryKey(for: tag)
 
-        let pkCase = PKCase()
+        let pkCase = RemotePKCase()
         pkCase[.primary] = pk
 
-        persistentStore?.requestSubordinate(for: VehicleprofileRadio.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        persistentStore?.localSubordinate(for: VehicleprofileRadio.self, pkCase: pkCase) { newObject in
             persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
             callback(newObject)
         }

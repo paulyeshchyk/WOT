@@ -12,7 +12,7 @@ import Foundation
 public class WOTWebResponseAdapterProfile: WOTWebResponseAdapter {
     public let Clazz: PrimaryKeypathProtocol.Type = Vehicleprofile.self
 
-    override public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> JSONCoordinatorProtocol {
+    override public func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
         let store = JSONCoordinator(Clazz: Clazz, request: request, linkAdapter: jsonLinkAdapter, appManager: appManager)
         store.onGetIdent = onGetIdent(_:_:_:)
         store.onFinishJSONParse = onFinish

@@ -10,7 +10,7 @@ import WOTPivot
 
 extension VehicleprofileAmmoDamage {
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         guard array.count == 3 else {
             print("invalid damage from json")
             return
@@ -23,10 +23,10 @@ extension VehicleprofileAmmoDamage {
 }
 
 extension VehicleprofileAmmoDamage {
-    public static func damage(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
+    public static func damage(fromArray array: Any?, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
         guard let array = array as? [Any] else { return }
 
-        persistentStore?.requestSubordinate(for: VehicleprofileAmmoDamage.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
+        persistentStore?.localSubordinate(for: VehicleprofileAmmoDamage.self, pkCase: pkCase) { newObject in
             persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase)
             callback(newObject)
         }

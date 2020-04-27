@@ -12,13 +12,13 @@ extension VehicleprofileAmmoList {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
-            let vehicleprofileAmmoCase = PKCase()
+            let vehicleprofileAmmoCase = RemotePKCase()
             vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject)
-            persistentStore?.requestSubordinate(for: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase, subordinateRequestType: .local, keyPathPrefix: nil) { [weak self] newObject in
+            persistentStore?.localSubordinate(for: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] newObject in
                 guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
                     return
                 }
@@ -26,17 +26,6 @@ extension VehicleprofileAmmoList {
                 self.addToVehicleprofileAmmo(ammo)
                 persistentStore?.stash(hint: vehicleprofileAmmoCase)
             }
-        }
-    }
-}
-
-extension VehicleprofileAmmoList {
-    public static func list(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback:  @escaping NSManagedObjectCallback ) {
-        guard let array = array as? [Any] else { return }
-
-        persistentStore?.requestSubordinate(for: VehicleprofileAmmoList.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase)
-            callback(newObject)
         }
     }
 }

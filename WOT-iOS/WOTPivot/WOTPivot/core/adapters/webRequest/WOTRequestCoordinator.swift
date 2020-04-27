@@ -42,7 +42,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void))
+    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping OnParserDidFinish )
 }
 
 @objc
@@ -106,10 +106,12 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     @objc
     public func requestIds(forClass: AnyClass) -> [WOTRequestIdType]? {
         let result =  WOTRequestCoordinator.registeredRequests.keys.filter { key in
-            guard let requestClass = WOTRequestCoordinator.registeredRequests[key], requestClass.conforms(to: WOTModelServiceProtocol.self) else { return false }
-            guard let requestModelClass = requestClass.modelClass() else { return false }
-            guard forClass == requestModelClass else { return false }
-            return true
+            if let requestClass = WOTRequestCoordinator.registeredRequests[key], requestClass.conforms(to: WOTModelServiceProtocol.self) {
+                if let requestModelClass = requestClass.modelClass() {
+                    return forClass == requestModelClass
+                }
+            }
+            return false
         }
         return result
     }
@@ -140,14 +142,18 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
             return nil
         }
 
-        return self.requestIds(forClass: modelClass)
+        guard let result = requestIds(forClass: modelClass), result.count > 0 else {
+            appManager?.logInspector?.log(ErrorLog("\(type(of: modelClass)) was not registered for request \(type(of: request))"), sender: self)
+            return nil
+        }
+        return result
     }
 
     #warning("to be refactored")
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping ((Error?) -> Void) ) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectCallback?, onFinish: @escaping OnParserDidFinish) {
         guard let requestIds = requestIds(forRequest: request), requestIds.count > 0 else {
-            onFinish(nil)
+            onFinish(self, nil)
             return
         }
         var coreDataStoreStack: [CoreDataStorePair] = .init()
@@ -164,7 +170,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         })
 
         if coreDataStoreStack.count == 0 {
-            onFinish(nil)
+            onFinish(self, nil)
         }
 
         coreDataStoreStack.forEach { (pair) in

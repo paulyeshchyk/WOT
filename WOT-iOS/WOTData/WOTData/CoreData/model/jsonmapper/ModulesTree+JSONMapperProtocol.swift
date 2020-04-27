@@ -10,7 +10,7 @@ import WOTPivot
 
 extension ModulesTree {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
         do {
             try self.decode(json: jSON)
         } catch let error {
@@ -22,10 +22,10 @@ extension ModulesTree {
 
         let nextModules = jSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let modulePK = PKCase(parentObjects: parents)
+            let modulePK = RemotePKCase(parentObjects: parents)
             modulePK[.primary] = pkCase[.primary]
             modulePK[.secondary] = Module.primaryIdKey(for: $0)
-            persistentStore?.requestSubordinate(for: Module.self, pkCase: modulePK, subordinateRequestType: .remote, keyPathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
+            persistentStore?.remoteSubordinate(for: Module.self, pkCase: modulePK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
                 if let module = managedObject as? Module {
                     self.addToNext_modules(module)
                     persistentStore?.stash(hint: modulePK)
@@ -36,35 +36,14 @@ extension ModulesTree {
         let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
         (nextTanks as? [AnyObject])?.forEach {
             //parents was not used for next portion of tanks
-            let nextTanksPK = PKCase(parentObjects: nil)
+            let nextTanksPK = RemotePKCase(parentObjects: nil)
             nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
-            persistentStore?.requestSubordinate(for: Vehicles.self, pkCase: nextTanksPK, subordinateRequestType: .remote, keyPathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
+            persistentStore?.remoteSubordinate(for: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onCreateNSManagedObject: { (managedObject) in
                 if let tank = managedObject as? Vehicles {
                     self.addToNext_tanks(tank)
                     persistentStore?.stash(hint: nextTanksPK)
                 }
             })
-        }
-    }
-}
-
-extension ModulesTree {
-    public static func modulesTree(fromJSON json: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
-        guard let json = json as? JSON else { return }
-
-        json.keys.forEach { (key) in
-            guard let moduleTreeJSON = json[key] as? JSON else { return }
-            guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber  else { return }
-
-            let modulePK = ModulesTree.primaryKey(for: module_id)
-            let submodulesCase = PKCase(parentObjects: pkCase.plainParents)
-            submodulesCase[.primary] = modulePK
-            submodulesCase[.secondary] = pkCase[.primary]
-
-            persistentStore?.requestSubordinate(for: ModulesTree.self, pkCase: submodulesCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-                persistentStore?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: pkCase)
-                callback(newObject)
-            }
         }
     }
 }

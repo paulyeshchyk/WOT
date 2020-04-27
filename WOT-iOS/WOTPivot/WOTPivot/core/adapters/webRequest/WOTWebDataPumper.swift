@@ -8,10 +8,8 @@
 
 import Foundation
 
-@objc
-public protocol WOTWebDataPumperProtocol {
+public protocol WOTWebDataPumperProtocol: Describable {
     var completion: ((Data?, Error?) -> Void) { get }
-    var description: String { get }
 
     init(request: URLRequest, completion: (@escaping (Data?, Error?) -> Void))
     func start()

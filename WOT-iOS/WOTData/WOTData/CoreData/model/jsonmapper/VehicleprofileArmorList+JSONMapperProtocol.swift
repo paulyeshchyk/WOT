@@ -10,8 +10,8 @@ import WOTPivot
 
 extension VehicleprofileArmorList {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
-        let hullCase = PKCase()
+    public override func mapping(fromJSON jSON: JSON, pkCase: RemotePKCase, persistentStore: WOTPersistentStoreProtocol?) {
+        let hullCase = RemotePKCase()
         hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
 
         VehicleprofileArmor.hull(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { newObject in
@@ -19,22 +19,11 @@ extension VehicleprofileArmorList {
             persistentStore?.stash(hint: hullCase)
         }
 
-        let turretCase = PKCase()
+        let turretCase = RemotePKCase()
         turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
         VehicleprofileArmor.turret(fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { newObject in
             self.turret = newObject as? VehicleprofileArmor
             persistentStore?.stash(hint: hullCase)
-        }
-    }
-}
-
-extension VehicleprofileArmorList {
-    public static func list(fromJSON json: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectCallback) {
-        guard let json = json as? JSON else { return }
-
-        persistentStore?.requestSubordinate(for: VehicleprofileArmorList.self, pkCase: pkCase, subordinateRequestType: .local, keyPathPrefix: nil) { newObject in
-            persistentStore?.mapping(object: newObject, fromJSON: json, pkCase: pkCase)
-            callback(newObject)
         }
     }
 }

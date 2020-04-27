@@ -20,7 +20,7 @@ public class WOTWEBRequestTankEngines: WOTWEBRequest {
 extension WOTWEBRequestTankEngines: WOTModelServiceProtocol {
     @objc
     public static func modelClass() -> AnyClass? {
-        return nil
+        return VehicleprofileEngine.self
     }
 
     @objc

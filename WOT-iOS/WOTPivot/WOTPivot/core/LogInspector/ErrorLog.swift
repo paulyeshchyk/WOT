@@ -11,7 +11,7 @@ import Foundation
 public class ErrorLog: LogMessageTypeProtocol {
     public private(set) var message: String
     public var priorityType: LogMessagePriorityType { return .error }
-    public var logeventType: String { return "-==- ERROR -==-"}
+    public var logeventType: String { return "!!ERROR!!"}
 
     public init() {
         message = ""
@@ -24,9 +24,9 @@ public class ErrorLog: LogMessageTypeProtocol {
     convenience public init?(_ error: Any?, details: Any?) {
         var messages: [String] = .init()
         if let wotError = error as? WOTError {
-            messages.append(wotError.debugDescription)
+            messages.append(wotError.customDescription ?? "unknown error")
         } else if let swiftError = error as? Error {
-            messages.append(swiftError.localizedDescription)
+            messages.append(swiftError.debugDescription)
         } else {
             messages.append("Unknown error")
         }
@@ -35,6 +35,8 @@ public class ErrorLog: LogMessageTypeProtocol {
             if describable.description.count > 0 {
                 messages.append(describable.description)
             }
+        } else {
+            print("\(type(of: details)) is not Describable")
         }
 
         self.init(messages.joined(separator: "; details: "))

@@ -145,15 +145,16 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         guard Thread.current.isMainThread else {
             fatalError("Current thread is not main")
         }
+        if let error = error {
+            appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
+        }
 
         let onCreateNSManagedObject = self.externalCallbacks[request.uuid.uuidString]
-        coordinator.request(request, processBinary: data, jsonLinkAdapter: appManager?.jsonLinksAdapter, onCreateNSManagedObject: onCreateNSManagedObject, onFinish: { [weak self] error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    self?.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
-                }
-                self?.request(request, didCompleteParsing: .finished)
+        coordinator.request(request, processBinary: data, jsonLinkAdapter: appManager?.jsonLinksAdapter, onCreateNSManagedObject: onCreateNSManagedObject, onFinish: { [weak self] sender, error in
+            if let error = error {
+                self?.appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
             }
+            self?.request(request, didCompleteParsing: .finished)
         })
 
         appManager?.logInspector?.log(WEBFinishLog(request.description), sender: self)
@@ -161,12 +162,8 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 
     private func request(_ request: WOTRequestProtocol, didCompleteParsing complete: WOTRequestManagerCompletionResultType ) {
-        guard Thread.current.isMainThread else {
-            fatalError("Current thread is not main")
-        }
-
-        grouppedListeners[request.uuid.uuidString]?.forEach {
-            $0.requestManager(self, didParseDataForRequest: request, completionResultType: complete)
+        grouppedListeners[request.uuid.uuidString]?.forEach { listener in
+            listener.requestManager(self, didParseDataForRequest: request, completionResultType: complete)
         }
     }
 
@@ -199,5 +196,11 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         }
         externalCallbacks[request.uuid.uuidString] = nil
         request.removeListener(self)
+    }
+}
+
+extension WOTRequestManager: Describable {
+    public override var description: String {
+        return "WOTRequestManager"
     }
 }
