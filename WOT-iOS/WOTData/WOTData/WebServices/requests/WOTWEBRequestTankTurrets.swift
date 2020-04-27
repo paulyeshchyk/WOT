@@ -19,7 +19,7 @@ public class WOTWEBRequestTankTurrets: WOTWEBRequest {
 
 extension WOTWEBRequestTankTurrets: WOTModelServiceProtocol {
     @objc
-    public class func modelClass() -> AnyClass? {
+    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
         return VehicleprofileTurret.self
     }
 

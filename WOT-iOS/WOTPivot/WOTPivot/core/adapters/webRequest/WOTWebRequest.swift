@@ -18,7 +18,7 @@ public protocol WOTWebServiceProtocol {
 @objc
 public protocol WOTModelServiceProtocol: class {
     @objc
-    static func modelClass() -> AnyClass?
+    static func modelClass() -> PrimaryKeypathProtocol.Type?
 
     @objc
     func instanceModelClass() -> AnyClass?

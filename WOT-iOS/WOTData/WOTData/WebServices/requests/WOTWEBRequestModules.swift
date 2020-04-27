@@ -19,7 +19,7 @@ public class WOTWEBRequestModules: WOTWEBRequest {
 
 extension WOTWEBRequestModules: WOTModelServiceProtocol {
     @objc
-    public static func modelClass() -> AnyClass? {
+    public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return Module.self
     }
 

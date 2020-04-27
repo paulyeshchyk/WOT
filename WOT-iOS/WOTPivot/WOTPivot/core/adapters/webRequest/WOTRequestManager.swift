@@ -147,20 +147,19 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         }
 
         let onCreateNSManagedObject = self.externalCallbacks[request.uuid.uuidString]
-        coordinator.request(request, processBinary: data, onCreateNSManagedObject: onCreateNSManagedObject, onFinish: { [weak self] sender, error in
-            if let error = error {
-                self?.appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
-            }
-            self?.request(request, didCompleteParsing: .finished)
-        })
+        coordinator.request(request, processBinary: data, onCreateNSManagedObject: onCreateNSManagedObject, onRequestComplete: onRequestComplete)
 
         appManager?.logInspector?.log(WEBFinishLog(request.description), sender: self)
         self.removeRequest(request)
     }
 
-    private func request(_ request: WOTRequestProtocol, didCompleteParsing complete: WOTRequestManagerCompletionResultType ) {
+    private func onRequestComplete(_ request: WOTRequestProtocol?, _ sender: Any?, error: Error?) {
+        guard let request = request else {
+            print("Unknown request finished")
+            return
+        }
         grouppedListeners[request.uuid.uuidString]?.forEach { listener in
-            listener.requestManager(self, didParseDataForRequest: request, completionResultType: complete)
+            listener.requestManager(self, didParseDataForRequest: request, completionResultType: .finished, error: error)
         }
     }
 

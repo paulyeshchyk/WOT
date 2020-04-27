@@ -19,7 +19,7 @@ public class WOTWEBRequestSuspension: WOTWEBRequest {
 
 extension WOTWEBRequestSuspension: WOTModelServiceProtocol {
     @objc
-    public static func modelClass() -> AnyClass? {
+    public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return VehicleprofileSuspension.self
     }
 

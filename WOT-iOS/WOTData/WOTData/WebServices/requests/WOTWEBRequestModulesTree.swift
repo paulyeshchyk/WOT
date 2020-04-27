@@ -21,7 +21,7 @@ public class WOTWEBRequestModulesTree: WOTWEBRequest {
 
 extension WOTWEBRequestModulesTree: WOTModelServiceProtocol {
     @objc
-    public class func modelClass() -> AnyClass? {
+    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
         return ModulesTree.self
     }
 

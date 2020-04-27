@@ -39,7 +39,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?, onFinish: @escaping OnParserDidFinish )
+    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete )
 }
 
 @objc
@@ -121,8 +121,8 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return modelClass
     }
 
-    private func adapterInstance(for requestIdType: WOTRequestIdType) throws -> WOTJSONResponseAdapterProtocol {
-        guard let JSONResponseAdapterType = WOTRequestCoordinator.dataAdapterClass(for: requestIdType) as? WOTJSONResponseAdapterProtocol.Type else {
+    private func responseAdapterInstance(for requestIdType: WOTRequestIdType) throws -> WOTDataResponseAdapterProtocol {
+        guard let JSONResponseAdapterType = WOTRequestCoordinator.dataAdapterClass(for: requestIdType) as? WOTDataResponseAdapterProtocol.Type else {
             throw DataAdapterError.adapterNotFound(requestType: requestIdType)
         }
 
@@ -143,16 +143,16 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?, onFinish: @escaping OnParserDidFinish) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, onCreateNSManagedObject: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete) {
         guard let requestIds = requestIds(forRequest: request), requestIds.count > 0 else {
-            onFinish(self, nil)
+            onRequestComplete(request, self, nil)
             return
         }
         var coreDataStoreStack: [CoreDataStorePair] = .init()
         requestIds.forEach({ requestIdType in
             do {
-                let adapter = try adapterInstance(for: requestIdType)
-                let store = adapter.request(request, parseData: binary, onCreateNSManagedObject: onCreateNSManagedObject, onFinish: onFinish)
+                let adapter = try responseAdapterInstance(for: requestIdType)
+                let store = adapter.request(request, parseData: binary, onCreateNSManagedObject: onCreateNSManagedObject, onRequestComplete: onRequestComplete)
                 let pair = CoreDataStorePair(coreDataStore: store, data: binary)
                 coreDataStoreStack.append(pair)
             } catch let error {
@@ -161,7 +161,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         })
 
         if coreDataStoreStack.count == 0 {
-            onFinish(self, nil)
+            onRequestComplete(request, self, nil)
         }
 
         coreDataStoreStack.forEach { (pair) in

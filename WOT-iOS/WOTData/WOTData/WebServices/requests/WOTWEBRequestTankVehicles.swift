@@ -19,7 +19,7 @@ public class WOTWEBRequestTankVehicles: WOTWEBRequest {
 
 extension WOTWEBRequestTankVehicles: WOTModelServiceProtocol {
     @objc
-    public class func modelClass() -> AnyClass? {
+    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
         return Vehicles.self
     }
 

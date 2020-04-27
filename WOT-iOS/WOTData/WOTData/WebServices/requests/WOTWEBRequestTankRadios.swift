@@ -19,7 +19,7 @@ public class WOTWEBRequestTankRadios: WOTWEBRequest {
 
 extension WOTWEBRequestTankRadios: WOTModelServiceProtocol {
     @objc
-    public class func modelClass() -> AnyClass? {
+    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
         return VehicleprofileRadio.self
     }
 

@@ -21,7 +21,7 @@ public class WOTWEBRequestLogout: WOTWEBRequest {
 
 extension WOTWEBRequestLogout: WOTModelServiceProtocol {
     @objc
-    public static func modelClass() -> AnyClass? {
+    public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return nil
     }
 

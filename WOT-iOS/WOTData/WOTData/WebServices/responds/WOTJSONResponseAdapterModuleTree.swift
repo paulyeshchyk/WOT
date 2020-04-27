@@ -10,17 +10,6 @@ import Foundation
 
 @objc
 public class WOTJSONResponseAdapterModuleTree: WOTJSONResponseAdapter {
+//
     override public var Clazz: PrimaryKeypathProtocol.Type { return ModulesTree.self }
-
-    override public func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
-        let ident: Any
-        let primaryKeyPath = Clazz.primaryKeyPath()
-
-        if  primaryKeyPath.count > 0 {
-            ident = json[primaryKeyPath] ?? key
-        } else {
-            ident = key
-        }
-        return ident
-    }
 }

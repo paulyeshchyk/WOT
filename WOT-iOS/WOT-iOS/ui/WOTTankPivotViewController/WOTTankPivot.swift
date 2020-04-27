@@ -74,7 +74,9 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     }
 }
 
-class WOTTankPivotModel: WOTPivotDataModel {
+class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
+    var logSenderDescription: String = "WOTTankPivotModel"
+
     convenience init(modelListener: WOTDataModelListener, dataProvider: WOTCoredataProviderProtocol?) {
         let fetchRequest = WOTTankPivotFetchRequest()
         let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: dataProvider)
@@ -115,9 +117,12 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         return "WOTTankPivotModel".hashValue
     }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType, error: Error?) {
         DispatchQueue.main.async {
             super.loadModel()
+            if let error = error {
+                requestManager.appManager?.logInspector?.log(ErrorLog(error, details: didParseDataForRequest), sender: self)
+            }
             if completionResultType == .finished || completionResultType == .noData {
                 requestManager.removeListener(self)
             }

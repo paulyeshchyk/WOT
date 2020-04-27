@@ -8,7 +8,10 @@
 
 import CoreData
 
-public typealias OnParserDidFinish = (Any?, Error?) -> Void
+public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
+
+@objc
+public protocol CoreDataMappingProtocol {}
 
 @objc
 public protocol JSONAdapterProtocol: CoreDataMappingProtocol {
@@ -19,7 +22,7 @@ public protocol JSONAdapterProtocol: CoreDataMappingProtocol {
     var uuid: UUID { get }
     var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)? { get set }
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
-    var onFinishJSONParse: OnParserDidFinish? { get set }
+    var onRequestComplete: OnRequestComplete? { get set }
     var onCreateNSManagedObject: NSManagedObjectErrorCompletion? { get set }
     func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
     var coreDataProvider: WOTCoredataProviderProtocol? { get }
@@ -79,7 +82,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: - CoreDataStoreProtocol
     public var onGetIdent: ((PrimaryKeypathProtocol.Type, JSON, AnyHashable) -> Any)?
     public var onGetObjectJSON: ((JSON) -> JSON)?
-    public var onFinishJSONParse: OnParserDidFinish?
+    public var onRequestComplete: OnRequestComplete?
     public var onCreateNSManagedObject: NSManagedObjectErrorCompletion?
 
     private let METAClass: Codable.Type = RESTAPIResponse.self
@@ -87,7 +90,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
-            onFinishJSONParse?(self, error)
+            onRequestComplete?(fromRequest, self, error)
             return
         }
 
@@ -98,15 +101,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
             let extraction = extractSubJSON(from: json, by: key)
             findOrCreateObject(for: extraction, fromRequest: fromRequest) { managedObject, error in
 
-//                if let error = error {
-//                    self.appManager?.logInspector?.log(ErrorLog(error, details: nil))
-//                }
-
                 self.onCreateNSManagedObject?(managedObject, error)
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
-                    self.onFinishJSONParse?(self, nil)
+                    self.onRequestComplete?(fromRequest, self, error)
                 }
             }
         }
@@ -179,6 +178,6 @@ extension JSONAdapter {
 // MARK: - LogMessageSender
 extension JSONAdapter: LogMessageSender {
     public var logSenderDescription: String {
-        return "Storage:\(String(describing: type(of: request)))"
+        return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 }
