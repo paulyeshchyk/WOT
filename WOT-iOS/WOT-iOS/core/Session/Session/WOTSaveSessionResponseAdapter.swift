@@ -9,11 +9,15 @@
 import Foundation
 
 @objc
-public class WOTSaveSessionResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+public class WOTSaveSessionResponseAdapter: NSObject, WOTJSONResponseAdapterProtocol {
     @objc
     public var appManager: WOTAppManagerProtocol?
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
+    required public init(appManager app: WOTAppManagerProtocol?) {
+        appManager = app
+    }
+
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONAdapterProtocol {
         fatalError("not implemented")
 //        WOTSessionManager.sharedInstance()?.invalidateTimer({ (interval) -> Timer? in
 //            if #available(iOS 10.0, *) {

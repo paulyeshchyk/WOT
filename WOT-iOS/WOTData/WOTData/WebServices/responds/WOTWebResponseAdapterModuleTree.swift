@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class WOTWebResponseAdapterModuleTree: WOTWebResponseAdapter {
+public class WOTJSONResponseAdapterModuleTree: WOTJSONResponseAdapter {
     override public var Clazz: PrimaryKeypathProtocol.Type { return ModulesTree.self }
 
     override public func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {

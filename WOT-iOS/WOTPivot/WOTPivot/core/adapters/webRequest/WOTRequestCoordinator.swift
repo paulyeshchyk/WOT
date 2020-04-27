@@ -13,7 +13,7 @@ public typealias WOTRequestIdType = String
 @objc
 public protocol WOTRequestDataBindingProtocol {
     static func unregisterDataAdapter(for requestId: WOTRequestIdType)
-    static func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass?
+    static func dataAdapterClass(for requestId: WOTRequestIdType) -> AnyClass?
     func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: AnyClass, registerDataAdapterClass dataAdapterClass: AnyClass)
     func request(for requestId: WOTRequestIdType) -> AnyClass?
 }
@@ -67,7 +67,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public static func dataAdapter(for requestId: WOTRequestIdType) -> AnyClass? {
+    public static func dataAdapterClass(for requestId: WOTRequestIdType) -> AnyClass? {
         return WOTRequestCoordinator.registeredDataAdapters[requestId]
     }
 
@@ -121,16 +121,12 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return modelClass
     }
 
-    private func adapterInstance(for requestIdType: WOTRequestIdType) throws -> WOTWebResponseAdapterProtocol {
-        guard let AdapterType = WOTRequestCoordinator.dataAdapter(for: requestIdType) else {
+    private func adapterInstance(for requestIdType: WOTRequestIdType) throws -> WOTJSONResponseAdapterProtocol {
+        guard let JSONResponseAdapterType = WOTRequestCoordinator.dataAdapterClass(for: requestIdType) as? WOTJSONResponseAdapterProtocol.Type else {
             throw DataAdapterError.adapterNotFound(requestType: requestIdType)
         }
 
-        guard let Clazz = AdapterType as? NSObject.Type, let adapter = Clazz.init() as? WOTWebResponseAdapterProtocol else {
-            throw DataAdapterError.classIsNotDataAdapter(dataAdapter: String(describing: AdapterType))
-        }
-        adapter.appManager = appManager
-        return adapter
+        return JSONResponseAdapterType.init(appManager: appManager)
     }
 
     private func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]? {
@@ -169,13 +165,13 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         }
 
         coreDataStoreStack.forEach { (pair) in
-            pair.coreDataStore.perform(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
+            pair.coreDataStore.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
         }
     }
 }
 
 struct CoreDataStorePair {
-    let coreDataStore: JSONCoordinatorProtocol
+    let coreDataStore: JSONAdapterProtocol
     let data: Data?
 }
 

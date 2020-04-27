@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class WOTWebResponseAdapterGuns: WOTWebResponseAdapter {
+public class WOTJSONResponseAdapterGuns: WOTJSONResponseAdapter {
     override public var Clazz: PrimaryKeypathProtocol.Type { return VehicleprofileGun.self }
 
     override public func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {

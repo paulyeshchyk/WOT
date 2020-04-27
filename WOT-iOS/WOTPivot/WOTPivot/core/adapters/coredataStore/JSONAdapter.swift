@@ -11,7 +11,7 @@ import CoreData
 public typealias OnParserDidFinish = (Any?, Error?) -> Void
 
 @objc
-public protocol JSONCoordinatorProtocol: CoreDataMappingProtocol {
+public protocol JSONAdapterProtocol: CoreDataMappingProtocol {
     @available(*, deprecated)
     @objc
     var appManager: WOTAppManagerProtocol? { get set }
@@ -21,33 +21,32 @@ public protocol JSONCoordinatorProtocol: CoreDataMappingProtocol {
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
     var onFinishJSONParse: OnParserDidFinish? { get set }
     var onCreateNSManagedObject: NSManagedObjectOptionalCallback? { get set }
-    func perform()
-    func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
+    func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
     var coreDataProvider: WOTCoredataProviderProtocol? { get }
 }
 
-extension JSONCoordinatorProtocol {
-    public func perform<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
+extension JSONAdapterProtocol {
+    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
         guard let data = binary else {
-            onReceivedJSON(nil, fromRequest: request, nil)
+            didReceiveJSON(nil, fromRequest: request, nil)
             return
         }
         let decoder = JSONDecoder()
         do {
             let result = try decoder.decode(T.self, from: data)
             if let swiftError = result.swiftError {
-                onReceivedJSON(nil, fromRequest: request, swiftError)
+                didReceiveJSON(nil, fromRequest: request, swiftError)
             } else {
-                onReceivedJSON(result.data, fromRequest: request, nil)
+                didReceiveJSON(result.data, fromRequest: request, nil)
             }
         } catch let error {
-            onReceivedJSON(nil, fromRequest: request, error)
+            didReceiveJSON(nil, fromRequest: request, error)
         }
     }
 }
 
 @objc
-public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
+public class JSONAdapter: NSObject, JSONAdapterProtocol {
     public var appManager: WOTAppManagerProtocol?
 
     public let uuid: UUID = UUID()
@@ -85,9 +84,7 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
 
     private let METAClass: Codable.Type = RESTAPIResponse.self
 
-    public func perform() {}
-
-    public func onReceivedJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
+    public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
             onFinishJSONParse?(self, error)
@@ -113,12 +110,12 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
 }
 
 // MARK: - Hash
-func == (lhs: JSONCoordinator, rhs: JSONCoordinator) -> Bool {
+func == (lhs: JSONAdapter, rhs: JSONAdapter) -> Bool {
     return lhs.uuid == rhs.uuid
 }
 
 // MARK: - private
-extension JSONCoordinator {
+extension JSONAdapter {
     private struct JSONExtraction {
         let identifier: Any
         let json: JSON
@@ -152,6 +149,7 @@ extension JSONCoordinator {
         let parents = fromRequest.jsonLink?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
         objCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
+        let predicate = objCase[.primary]
         appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 
         appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: objCase[.primary]?.predicate, callback: { (managedObject) in
@@ -168,7 +166,7 @@ extension JSONCoordinator {
 }
 
 // MARK: - LogMessageSender
-extension JSONCoordinator: LogMessageSender {
+extension JSONAdapter: LogMessageSender {
     public var logSenderDescription: String {
         return "Storage:\(String(describing: type(of: request)))"
     }

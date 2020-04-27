@@ -20,18 +20,26 @@ class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
     func logout() {}
 }
 
-class WOTWebSessionClearResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+class WOTWebSessionClearResponseAdapter: NSObject, WOTJSONResponseAdapterProtocol {
     var appManager: WOTAppManagerProtocol?
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
+    required init(appManager app: WOTAppManagerProtocol?) {
+        appManager = app
+    }
+
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONAdapterProtocol {
         fatalError("should be implemented")
     }
 }
 
-class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+class WOTWebSessionSaveResponseAdapter: NSObject, WOTJSONResponseAdapterProtocol {
     var appManager: WOTAppManagerProtocol?
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
+    required init(appManager app: WOTAppManagerProtocol?) {
+        appManager = app
+    }
+
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
@@ -50,10 +58,13 @@ class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol 
     }
 }
 
-class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+class WOTWebSessionLoginResponseAdapter: NSObject, WOTJSONResponseAdapterProtocol {
     var appManager: WOTAppManagerProtocol?
+    required init(appManager app: WOTAppManagerProtocol?) {
+        appManager = app
+    }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
@@ -113,10 +124,13 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol
     }
 }
 
-class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+class WOTWebSessionLogoutResponseAdapter: NSObject, WOTJSONResponseAdapterProtocol {
     var appManager: WOTAppManagerProtocol?
+    required init(appManager app: WOTAppManagerProtocol?) {
+        appManager = app
+    }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
