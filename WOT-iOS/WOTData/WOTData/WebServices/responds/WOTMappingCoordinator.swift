@@ -90,13 +90,19 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     @objc
     public func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCreateNSManagedObject: @escaping NSManagedObjectOptionalCallback) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
-        var result = [WOTJSONLink]()
-        if let link = WOTJSONLink(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix, completion: nil) {
-            result.append(link)
+
+        var predicates = [WOTJSONPredicate]()
+        predicates.append(WOTJSONPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
+
+        predicates.forEach { jsonLink in
+            if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: jsonLink.clazz) {
+                requestIDs.forEach {
+                    appManager?.requestManager?.queue(requestId: $0, jsonLink: jsonLink, onCreateNSManagedObject: onCreateNSManagedObject, listener: nil)
+                }
+            } else {
+                print("requests not parsed")
+            }
         }
-        appManager?.jsonLinksAdapter?.request(adaptExternalLinks: result, onCreateNSManagedObject: onCreateNSManagedObject, adaptCallback: { result in
-            print("adapt callback from remoteSubordinate")
-        })
     }
 }
 

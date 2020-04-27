@@ -19,7 +19,6 @@ public protocol WOTAppManagerProtocol {
     @objc var coreDataProvider: WOTCoredataProviderProtocol? { get set }
     @objc var shared: WOTAppManagerProtocol { get }
     @objc var persistentStore: WOTPersistentStoreProtocol? { get set }
-    @objc var jsonLinksAdapter: JSONLinksAdapterProtocol? { get set }
 }
 
 @objc
@@ -36,12 +35,6 @@ public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
     @objc public var requestManager: WOTRequestManagerProtocol? {
         didSet {
             requestManager?.appManager = self
-        }
-    }
-
-    @objc public var jsonLinksAdapter: JSONLinksAdapterProtocol? {
-        didSet {
-            jsonLinksAdapter?.appManager = self
         }
     }
 

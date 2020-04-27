@@ -112,7 +112,7 @@
 		1DA153A12444CDC700FB3C89 /* RomanNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA1539B2444CDC700FB3C89 /* RomanNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DA153A22444CDC700FB3C89 /* NSString+RomanUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA1539C2444CDC700FB3C89 /* NSString+RomanUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DA153A32444CDC700FB3C89 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1539D2444CDC700FB3C89 /* RomanNumber.m */; };
-		1DA153AF244A433700FB3C89 /* WOTJSONLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153AE244A433700FB3C89 /* WOTJSONLink.swift */; };
+		1DA153AF244A433700FB3C89 /* WOTJSONPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153AE244A433700FB3C89 /* WOTJSONPredicate.swift */; };
 		1DA153B1244A438200FB3C89 /* WOTWebRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153B0244A438200FB3C89 /* WOTWebRequestBuilder.swift */; };
 		1DA153B3244A43A100FB3C89 /* WOTWebDataPumper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA153B2244A43A100FB3C89 /* WOTWebDataPumper.swift */; };
 		1DA83CAC2135633F0039CB4B /* NSMutableDictionary+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA83CA82135633F0039CB4B /* NSMutableDictionary+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -282,7 +282,7 @@
 		1DA1539B2444CDC700FB3C89 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
 		1DA1539C2444CDC700FB3C89 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
 		1DA1539D2444CDC700FB3C89 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
-		1DA153AE244A433700FB3C89 /* WOTJSONLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTJSONLink.swift; sourceTree = "<group>"; };
+		1DA153AE244A433700FB3C89 /* WOTJSONPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTJSONPredicate.swift; sourceTree = "<group>"; };
 		1DA153B0244A438200FB3C89 /* WOTWebRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebRequestBuilder.swift; sourceTree = "<group>"; };
 		1DA153B2244A43A100FB3C89 /* WOTWebDataPumper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTWebDataPumper.swift; sourceTree = "<group>"; };
 		1DA83CA82135633F0039CB4B /* NSMutableDictionary+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+WOT.h"; sourceTree = "<group>"; };
@@ -736,7 +736,7 @@
 				1D1617722454517D0022E02F /* JSONMapperProtocol.swift */,
 				1D161780245472110022E02F /* RESTAPIResponse.swift */,
 				1DB67454221C01E100982EE6 /* WOTWebResponseAdapterProtocol.swift */,
-				1DA153AE244A433700FB3C89 /* WOTJSONLink.swift */,
+				1DA153AE244A433700FB3C89 /* WOTJSONPredicate.swift */,
 			);
 			path = webResponse;
 			sourceTree = "<group>";
@@ -1089,7 +1089,7 @@
 				1D8C293921357B9A00759C42 /* NSNumber+Randomizer.m in Sources */,
 				1D5D022C23C8623D004B0314 /* WOTDataFetchController.swift in Sources */,
 				1DE559022124571000576D41 /* WOTDataModelProtocol.swift in Sources */,
-				1DA153AF244A433700FB3C89 /* WOTJSONLink.swift in Sources */,
+				1DA153AF244A433700FB3C89 /* WOTJSONPredicate.swift in Sources */,
 				1D65F82B2216A7B8006A85E4 /* WOTPivotNodeHolderProtocol.swift in Sources */,
 				1D65F8282216A7B8006A85E4 /* WOTDimensionDataCalculator.swift in Sources */,
 				1D70CD93244F8B400031CBFE /* WEBStartLog.swift in Sources */,

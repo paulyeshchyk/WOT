@@ -59,16 +59,13 @@ public class JSONCoordinator: NSObject, JSONCoordinatorProtocol {
 
     private var persistentStore: WOTPersistentStoreProtocol?
 
-    private let linkAdapter: JSONLinksAdapterProtocol?
-
     public var coreDataProvider: WOTCoredataProviderProtocol? {
         return appManager?.coreDataProvider
     }
 
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, linkAdapter: JSONLinksAdapterProtocol?, appManager: WOTAppManagerProtocol?) {
+    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?) {
         self.Clazz = clazz
         self.request = request
-        self.linkAdapter = linkAdapter
         self.appManager = appManager
         self.persistentStore = appManager?.persistentStore
 

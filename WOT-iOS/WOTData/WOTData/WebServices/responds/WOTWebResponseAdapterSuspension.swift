@@ -10,17 +10,9 @@ import Foundation
 
 @objc
 public class WOTWebResponseAdapterSuspension: WOTWebResponseAdapter {
-    public let Clazz: PrimaryKeypathProtocol.Type = VehicleprofileSuspension.self
+    override public var Clazz: PrimaryKeypathProtocol.Type { return VehicleprofileSuspension.self }
 
-    override public func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) -> JSONCoordinatorProtocol {
-        let store = JSONCoordinator(Clazz: Clazz, request: request, linkAdapter: jsonLinkAdapter, appManager: appManager)
-        store.onGetIdent = onGetIdent(_:_:_:)
-        store.onFinishJSONParse = onFinish
-        store.onCreateNSManagedObject = onCreateNSManagedObject
-        return store
-    }
-
-    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
+    override public func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
         let ident: Any
         let primaryKeyPath = Clazz.primaryKeyPath()
         #warning("check the case")

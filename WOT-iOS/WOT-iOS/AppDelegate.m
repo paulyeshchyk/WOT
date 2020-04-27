@@ -55,8 +55,6 @@
     
     id<WOTPersistentStoreProtocol> persistentStore = [[WOTPersistentStore alloc] init];
     
-    id<JSONLinksAdapterProtocol> jsonLinksAdapter = [[WOTJSONLinksAdapter alloc] init];
-
     self.appManager = [WOTPivotAppManager sharedInstance];
     self.appManager.hostConfiguration = hostConfiguration;
     self.appManager.requestCoordinator = requestCoordinator;
@@ -66,7 +64,6 @@
     self.appManager.logInspector = logInspector;
     self.appManager.coreDataProvider = coreDataProvider;
     self.appManager.persistentStore = persistentStore;
-    self.appManager.jsonLinksAdapter = jsonLinksAdapter;
 
     [AppDefaults registerRequestsFor:requestCoordinator];
     [WOTApplicationDefaults registerDefaultSettings];

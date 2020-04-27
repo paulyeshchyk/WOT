@@ -1,5 +1,5 @@
 //
-//  WOTJSONLink.swift
+//  WOTJSONPredicate.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/17/20.
@@ -11,7 +11,7 @@ import Foundation
 public typealias JSONCompletion = (JSON) -> Void
 
 @objc
-public class WOTJSONLink: NSObject {
+public class WOTJSONPredicate: NSObject {
     @objc
     public var clazz: AnyClass
 
@@ -22,9 +22,6 @@ public class WOTJSONLink: NSObject {
 
     @objc
     public var pkCase: PKCase?
-
-    @objc
-    public var completion: JSONCompletion?
 
     @objc
     public var keypathPrefix: String?
@@ -51,10 +48,9 @@ public class WOTJSONLink: NSObject {
         return String(format: "%@%@", preffix, to)
     }
 
-    public init?(clazz clazzTo: AnyClass, pkCase parentCase: PKCase, keypathPrefix kp: String?, completion block: JSONCompletion?) {
+    public init(clazz clazzTo: AnyClass, pkCase parentCase: PKCase, keypathPrefix kp: String?) {
         clazz = clazzTo
         pkCase = parentCase
-        completion = block
         keypathPrefix = kp
         super.init()
     }

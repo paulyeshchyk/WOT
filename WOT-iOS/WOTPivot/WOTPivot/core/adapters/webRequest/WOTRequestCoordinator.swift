@@ -39,7 +39,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish )
+    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish )
 }
 
 @objc
@@ -146,9 +146,8 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return result
     }
 
-    #warning("to be refactored")
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, onCreateNSManagedObject: NSManagedObjectOptionalCallback?, onFinish: @escaping OnParserDidFinish) {
         guard let requestIds = requestIds(forRequest: request), requestIds.count > 0 else {
             onFinish(self, nil)
             return
@@ -157,13 +156,12 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         requestIds.forEach({ requestIdType in
             do {
                 let adapter = try adapterInstance(for: requestIdType)
-                let store = adapter.request(request, parseData: binary, jsonLinkAdapter: jsonLinkAdapter, onCreateNSManagedObject: onCreateNSManagedObject, onFinish: onFinish)
+                let store = adapter.request(request, parseData: binary, onCreateNSManagedObject: onCreateNSManagedObject, onFinish: onFinish)
                 let pair = CoreDataStorePair(coreDataStore: store, data: binary)
                 coreDataStoreStack.append(pair)
             } catch let error {
                 appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
             }
-
         })
 
         if coreDataStoreStack.count == 0 {
