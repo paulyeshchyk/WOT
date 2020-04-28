@@ -117,12 +117,12 @@ extension Module {
         }
     }
 
-    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass Clazz: NSManagedObject.Type, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, onCompleteObjectCreationL9: @escaping NSManagedObjectErrorCompletion) {
+    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass modelClazz: NSManagedObject.Type, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, onCompleteObjectCreationL9: @escaping NSManagedObjectErrorCompletion) {
         let pkCase = PKCase()
-        pkCase[.primary] = Clazz.primaryIdKey(for: module_id)
+        pkCase[.primary] = modelClazz.primaryIdKey(for: module_id)
         pkCase[.secondary] = Vehicles.primaryKey(for: tank_id)
 
-        persistentStore?.remoteSubordinate(for: Clazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, onCompleteObjectCreationL8: onCompleteObjectCreationL9)
+        persistentStore?.fetchRemote(byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, onCompleteObjectCreationL8: onCompleteObjectCreationL9)
     }
 }
 

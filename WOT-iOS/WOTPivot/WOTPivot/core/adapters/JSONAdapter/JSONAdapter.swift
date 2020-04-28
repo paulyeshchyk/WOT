@@ -34,7 +34,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     }
 
     public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?) {
-        self.Clazz = clazz
+        self.modelClazz = clazz
         self.request = request
         self.appManager = appManager
         self.persistentStore = appManager?.persistentStore
@@ -86,7 +86,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: Private -
     private let METAClass: Codable.Type = RESTAPIResponse.self
     private var persistentStore: WOTPersistentStoreProtocol?
-    private let Clazz: PrimaryKeypathProtocol.Type
+    private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
 }
 
@@ -152,7 +152,7 @@ extension JSONAdapter {
         } else {
             objectJson = jsonByKey
         }
-        let ident = onGetIdent(Clazz, objectJson, key)
+        let ident = onGetIdent(modelClazz, objectJson, key)
         return JSONExtraction(identifier: ident, json: objectJson)
     }
 
@@ -163,12 +163,13 @@ extension JSONAdapter {
         //
         let parents = fromRequest.jsonLink?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
-        objCase[.primary] = Clazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
+        #warning("not working for guns: expected gun_id - received tag")
+        objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
         appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 
-        appManager?.coreDataProvider?.findOrCreateObject(by: self.Clazz, andPredicate: objCase[.primary]?.predicate, callback: { (managedObject, error) in
+        appManager?.coreDataProvider?.findOrCreateObject(by: self.modelClazz, andPredicate: objCase[.primary]?.predicate, callback: { (managedObject, error) in
 
-            guard let managedObject = managedObject else {
+            guard let managedObject = managedObject as? NSManagedObject else {
                 callback(nil, error)
                 return
             }
@@ -179,7 +180,7 @@ extension JSONAdapter {
 
             self.persistentStore?.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
             let status = managedObject.isInserted ? "created" : "located"
-            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.Clazz)) \(objCase.description); status: \(status)"), sender: self)
+            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.modelClazz)) \(objCase.description); status: \(status)"), sender: self)
             self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
 
             // managedObject should be send as a result of external links parse flow

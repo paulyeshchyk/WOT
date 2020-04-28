@@ -76,7 +76,7 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         }
     }
 
-    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping NSManagedObjectErrorCompletion ) {
+    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping AnyObjectErrorCompletion ) {
         perform { context in
 
             let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context)

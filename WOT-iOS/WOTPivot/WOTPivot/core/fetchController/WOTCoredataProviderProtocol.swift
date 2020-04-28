@@ -17,14 +17,21 @@ public enum WOTExecuteConcurency: Int {
 
 public typealias ThrowableCompletion = (Error?) -> Void
 public typealias NSManagedObjectCompletion = (NSManagedObject) -> Void
+public typealias AnyObjectErrorCompletion = (AnyObject?, Error?) -> Void
 public typealias NSManagedObjectErrorCompletion = (NSManagedObject?, Error?) -> Void
 public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
 public typealias NSManagedObjectOptionalCallback = (_ managedObject: NSManagedObject?) -> Void
 public typealias NSManagedObjectSetOptinalCallback = ([NSManagedObject?]?) -> Void
 
 @objc
-public protocol WOTCoredataProviderProtocol: NSObjectProtocol {
+public protocol WOTDataProviderProtocol: NSObjectProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
+    @objc func stash(_ block: @escaping ThrowableCompletion )
+    @objc func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping AnyObjectErrorCompletion )
+}
+
+@objc
+public protocol WOTCoredataProviderProtocol: WOTDataProviderProtocol {
     @objc var sqliteURL: URL? { get }
     @objc var modelURL: URL? { get }
     @objc var applicationDocumentsDirectoryURL: URL? { get }
@@ -32,8 +39,6 @@ public protocol WOTCoredataProviderProtocol: NSObjectProtocol {
 
     @objc func perform(_ block: @escaping NSManagedObjectContextCompletion)
     @objc func performMain(_ block: @escaping NSManagedObjectContextCompletion)
-    @objc func stash(_ block: @escaping ThrowableCompletion )
-    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping NSManagedObjectErrorCompletion )
 
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>

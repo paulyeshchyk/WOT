@@ -100,7 +100,7 @@ extension Vehicles {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = modulesTreeCase[.primary]
 
-            persistentStore?.localSubordinate(for: ModulesTree.self, pkCase: submodulesCase) { newObject in
+            persistentStore?.fetchLocal(byModelClass: ModulesTree.self, pkCase: submodulesCase) { newObject in
                 guard let module_tree = newObject as? ModulesTree else {
                     return
                 }

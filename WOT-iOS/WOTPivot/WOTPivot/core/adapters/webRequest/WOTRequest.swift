@@ -34,7 +34,7 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, ObjCDescribable {
     var uuid: UUID { get }
 
     @objc
-    var jsonLink: WOTJSONPredicate? { get set }
+    var jsonLink: WOTPredicate? { get set }
 }
 
 @objc
@@ -58,7 +58,7 @@ public protocol WOTRequestManagerListenerProtocol {
 @objc
 public protocol WOTRequestManagerProtocol {
     @objc
-    func start(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTJSONPredicate?, onCompleteObjectCreationL6: NSManagedObjectErrorCompletion?)
+    func startRequest(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTPredicate?, onCompleteObjectCreation: NSManagedObjectErrorCompletion?)
 
     @objc
     func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol?
@@ -82,7 +82,7 @@ public protocol WOTRequestManagerProtocol {
     var coordinator: WOTRequestCoordinatorProtocol { get }
 
     @objc
-    func queue(requestId: WOTRequestIdType, jsonLink: WOTJSONPredicate, onCompleteObjectCreationL7: NSManagedObjectErrorCompletion?)
+    func startRequest(by requestId: WOTRequestIdType, jsonLink: WOTPredicate, onCompleteObjectCreation: NSManagedObjectErrorCompletion?)
 }
 
 @objc
@@ -126,8 +126,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
 
-    @objc
-    public var jsonLink: WOTJSONPredicate?
+    public var jsonLink: WOTPredicate?
 
     private var groups = [String]()
 

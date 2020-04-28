@@ -58,7 +58,7 @@ extension VehicleprofileAmmoPenetration {
     public static func penetration(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
         guard let array = array as? [Any] else { return }
 
-        persistentStore?.localSubordinate(for: VehicleprofileAmmoPenetration.self, pkCase: pkCase) { newObject in
+        persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmoPenetration.self, pkCase: pkCase) { newObject in
             persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase)
             callback(newObject)
         }

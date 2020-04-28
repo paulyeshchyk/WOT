@@ -70,7 +70,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     }
 
     @objc
-    public func localSubordinate(for clazz: AnyClass, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
+    public func fetchLocal(byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
         appManager?.logInspector?.log(LogicLog("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
@@ -88,16 +88,16 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     }
 
     @objc
-    public func remoteSubordinate(for clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCompleteObjectCreationL8: @escaping NSManagedObjectErrorCompletion) {
+    public func fetchRemote(byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCompleteObjectCreationL8: @escaping NSManagedObjectErrorCompletion) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
 
-        var predicates = [WOTJSONPredicate]()
-        predicates.append(WOTJSONPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
+        var predicates = [WOTPredicate]()
+        predicates.append(WOTPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
 
         predicates.forEach { jsonLink in
             if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: jsonLink.clazz) {
                 requestIDs.forEach {
-                    appManager?.requestManager?.queue(requestId: $0, jsonLink: jsonLink, onCompleteObjectCreationL7: onCompleteObjectCreationL8)
+                    appManager?.requestManager?.startRequest(by: $0, jsonLink: jsonLink, onCompleteObjectCreation: onCompleteObjectCreationL8)
                 }
             } else {
                 print("requests not parsed")
@@ -111,7 +111,7 @@ extension WOTPersistentStoreProtocol {
 
      */
     public func itemMapping(forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
-        localSubordinate(for: Clazz, pkCase: pkCase) { newObject in
+        fetchLocal(byModelClass: Clazz, pkCase: pkCase) { newObject in
             self.mapping(object: newObject, fromJSON: itemJSON, pkCase: pkCase)
             callback(newObject)
             self.stash(hint: pkCase)
@@ -122,7 +122,7 @@ extension WOTPersistentStoreProtocol {
 
      */
     public func itemMapping(forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
-        localSubordinate(for: Clazz, pkCase: pkCase) { newObject in
+        fetchLocal(byModelClass: Clazz, pkCase: pkCase) { newObject in
             self.mapping(object: newObject, fromArray: items, pkCase: pkCase)
             callback(newObject)
             self.stash(hint: pkCase)
