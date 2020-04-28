@@ -66,7 +66,7 @@
 
     NSError *error = nil;
     id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
+    NSManagedObjectContext *context = [dataProvider mainContext];
     NSArray *objects = [context executeFetchRequest:request error:&error];
     NSDictionary *requestValues = [objects lastObject];
 

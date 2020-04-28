@@ -22,7 +22,7 @@
 + (void)registerDefaultSettings {
     
     id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-    [dataProvider perform:^(NSManagedObjectContext * _Nonnull context) {
+    [dataProvider performMain:^(NSManagedObjectContext * _Nonnull context) {
 
         NSString *entityName = NSStringFromClass([ListSetting class]);
         NSError *error = nil;

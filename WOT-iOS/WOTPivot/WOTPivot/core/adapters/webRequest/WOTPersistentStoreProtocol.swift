@@ -13,23 +13,23 @@ public protocol WOTPersistentStoreProtocol {
     @objc
     var appManager: WOTAppManagerProtocol? { get set }
 
-    func fetchLocal(byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) throws
+    func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping ContextAnyObjectErrorCompletion) throws
 
-    func fetchRemote(byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion)
+    func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, onObjectDidFetch: @escaping ContextAnyObjectErrorCompletion)
 
-    func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) throws
+    func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) throws
 
-    func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) throws
+    func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) throws
 
-    func stash(hint: String?)
+    func stash(context: NSManagedObjectContext, hint: String?)
 }
 
 extension WOTPersistentStoreProtocol {
-    public func stash(hint: Describable?) {
-        self.stash(hint: hint?.description)
+    public func stash(context: NSManagedObjectContext, hint: Describable?) {
+        self.stash(context: context, hint: hint?.description)
     }
 }
 
 extension WOTPersistentStoreProtocol {
-    public func stash() { self.stash(hint: nil) }
+    public func stash(context: NSManagedObjectContext) { self.stash(context: context, hint: nil) }
 }

@@ -31,7 +31,7 @@ extension VehicleprofileArmor {
 
 // MARK: - Mapping
 extension VehicleprofileArmor {
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
     }
 }
@@ -49,17 +49,23 @@ extension VehicleprofileArmor: JSONDecoding {
 
 extension VehicleprofileArmor {
     @available(*, deprecated, message: "deprecated")
-    public static func hull(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
+    public static func hull(context: NSManagedObjectContext, fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping ContextAnyObjectErrorCompletion) {
         guard let jSON = jSON as? JSON else {
-            callback(nil)
+            callback(context, nil, nil)
             return
         }
 
         do {
-            try persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
+            try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) {context, managedObjectID, _ in
                 do {
-                    try persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
-                    callback(newObject)
+                    guard let managedObjectID = managedObjectID else {
+                        print("nil")
+                        return
+                    }
+                    let newObject = context.object(with: managedObjectID)
+
+                    try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase)
+                    callback(context, managedObjectID, nil)
                 } catch let error {
                     print(error)
                 }
@@ -69,17 +75,23 @@ extension VehicleprofileArmor {
         }
     }
 
-    public static func turret(fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
+    public static func turret(context: NSManagedObjectContext, fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping ContextAnyObjectErrorCompletion) {
         guard let jSON = jSON as? JSON else {
-            callback(nil)
+            callback(context, nil, nil)
             return
         }
 
         do {
-            try persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
+            try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { context, managedObjectID, _ in
                 do {
-                    try persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
-                    callback(newObject)
+                    guard let managedObjectID = managedObjectID else {
+                        print("not found")
+                        return
+                    }
+                    let newObject = context.object(with: managedObjectID)
+
+                    try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase)
+                    callback(context, managedObjectID, nil)
                 } catch let error {
                     print(error)
                 }

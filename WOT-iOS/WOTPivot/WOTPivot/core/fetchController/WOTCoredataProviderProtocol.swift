@@ -17,17 +17,18 @@ public enum WOTExecuteConcurency: Int {
 
 public typealias ThrowableCompletion = (Error?) -> Void
 public typealias NSManagedObjectCompletion = (NSManagedObject) -> Void
+public typealias ContextAnyObjectErrorCompletion = (NSManagedObjectContext, NSManagedObjectID?, Error?) -> Void
 public typealias AnyObjectErrorCompletion = (AnyObject?, Error?) -> Void
-public typealias NSManagedObjectErrorCompletion = (NSManagedObject?, Error?) -> Void
+public typealias NSManagedObjectErrorCompletion = ContextAnyObjectErrorCompletion//(NSManagedObject?, Error?) -> Void
 public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
-public typealias NSManagedObjectOptionalCallback = (_ managedObject: NSManagedObject?) -> Void
+public typealias NSManagedObjectOptionalCallback = (_ managedObject: NSManagedObjectID?) -> Void
 public typealias NSManagedObjectSetOptinalCallback = ([NSManagedObject?]?) -> Void
 
 @objc
 public protocol WOTDataProviderProtocol: NSObjectProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
-    func stash(_ block: @escaping ThrowableCompletion )
-    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping AnyObjectErrorCompletion )
+    func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion )
+    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping ContextAnyObjectErrorCompletion )
 }
 
 @objc
@@ -37,10 +38,10 @@ public protocol WOTCoredataProviderProtocol: WOTDataProviderProtocol {
     @objc var applicationDocumentsDirectoryURL: URL? { get }
     @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }
 
-    @available(*, deprecated, message:"not to be used")
-    @objc var mainManagedObjectContext: NSManagedObjectContext { get }
+    @objc var mainContext: NSManagedObjectContext { get }
+    @objc func privateContext() -> NSManagedObjectContext
 
-    @objc func perform(_ block: @escaping NSManagedObjectContextCompletion)
+    @objc func perform(context: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion)
     @objc func performMain(_ block: @escaping NSManagedObjectContextCompletion)
 
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>

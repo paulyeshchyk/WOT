@@ -35,7 +35,7 @@ extension VehicleprofileAmmo {
 
 // MARK: - Mapping
 extension VehicleprofileAmmo {
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
 
         let vehicleprofileAmmoPenetrationCase = PKCase()
@@ -43,12 +43,12 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         if let penetrationArray = jSON[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
             do {
-                try persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { newObject in
-                    if let penetrationObject = newObject as? VehicleprofileAmmoPenetration {
+                try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) {context, managedObjectID, _ in
+                    if let managedObjectID = managedObjectID, let penetrationObject = context.object(with: managedObjectID) as? VehicleprofileAmmoPenetration {
                         do {
-                            try persistentStore?.mapping(object: penetrationObject, fromArray: penetrationArray, pkCase: vehicleprofileAmmoPenetrationCase)
+                            try persistentStore?.mapping(context: context, object: penetrationObject, fromArray: penetrationArray, pkCase: vehicleprofileAmmoPenetrationCase)
                             self.penetration = penetrationObject
-                            persistentStore?.stash(hint: vehicleprofileAmmoPenetrationCase)
+                            persistentStore?.stash(context: context, hint: vehicleprofileAmmoPenetrationCase)
                         } catch let error {
                             print(error)
                         }
@@ -64,12 +64,12 @@ extension VehicleprofileAmmo {
 
         if let damageArray = jSON[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
             do {
-                try persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { newObject in
-                    if let damageObject = newObject as? VehicleprofileAmmoDamage {
+                try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { context, managedObjectID, _ in
+                    if let managedObjectID = managedObjectID, let damageObject = context.object(with: managedObjectID) as? VehicleprofileAmmoDamage {
                         do {
-                            try persistentStore?.mapping(object: damageObject, fromArray: damageArray, pkCase: vehicleprofileAmmoDamageCase)
+                            try persistentStore?.mapping(context: context, object: damageObject, fromArray: damageArray, pkCase: vehicleprofileAmmoDamageCase)
                             self.damage = damageObject
-                            persistentStore?.stash(hint: vehicleprofileAmmoPenetrationCase)
+                            persistentStore?.stash(context: context, hint: vehicleprofileAmmoPenetrationCase)
                         } catch let error {
                             print(error)
                         }
@@ -88,7 +88,7 @@ extension VehicleprofileAmmo {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
         do {
-            try persistentStore?.mapping(object: self, fromJSON: json, pkCase: pkCase)
+            try persistentStore?.mapping(context: context, object: self, fromJSON: json, pkCase: pkCase)
         } catch let error {
             print(error)
         }

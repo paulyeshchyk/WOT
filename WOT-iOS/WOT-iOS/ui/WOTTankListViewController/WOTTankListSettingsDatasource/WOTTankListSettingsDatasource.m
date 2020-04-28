@@ -39,7 +39,7 @@
     if (self){
 
         id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-        [coreDataProvider perform:^(NSManagedObjectContext * _Nonnull context) {
+        [coreDataProvider performMain:^(NSManagedObjectContext * _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:context];
             [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];

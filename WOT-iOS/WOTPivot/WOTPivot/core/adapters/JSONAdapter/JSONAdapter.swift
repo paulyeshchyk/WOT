@@ -16,7 +16,7 @@ public protocol DataAdapterProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
     var uuid: UUID { get }
     var onComplete: OnRequestComplete? { get set }
-    var onObjectDidParse: NSManagedObjectErrorCompletion? { get set }
+    var onObjectDidParse: ContextAnyObjectErrorCompletion? { get set }
     func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
     init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?)
 }
@@ -54,7 +54,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: JSONAdapterProtocol -
     public var onGetObjectJSON: ((JSON) -> JSON)?
     public var onComplete: OnRequestComplete?
-    public var onObjectDidParse: NSManagedObjectErrorCompletion?
+    public var onObjectDidParse: ContextAnyObjectErrorCompletion?
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
@@ -68,9 +68,9 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         for (idx, key) in keys.enumerated() {
             //
             let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(for: extraction, fromRequest: fromRequest) { managedObject, error in
+            findOrCreateObject(for: extraction, fromRequest: fromRequest) {context, managedObject, error in
 
-                self.onObjectDidParse?(managedObject, error)
+                self.onObjectDidParse?(context, managedObject, error)
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
@@ -153,10 +153,11 @@ extension JSONAdapter {
         return ident
     }
 
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping NSManagedObjectErrorCompletion) {
-        guard Thread.current.isMainThread else {
-            fatalError("Current thread is not main")
-        }
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping ContextAnyObjectErrorCompletion) {
+        #warning("check")
+//        guard Thread.current.isMainThread else {
+//            fatalError("Current thread is not main")
+//        }
         //
         let parents = fromRequest.jsonLink?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
@@ -164,25 +165,26 @@ extension JSONAdapter {
         objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
         appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 
-        appManager?.coreDataProvider?.findOrCreateObject(by: self.modelClazz, andPredicate: objCase[.primary]?.predicate, callback: { (managedObject, error) in
+        appManager?.coreDataProvider?.findOrCreateObject(by: self.modelClazz, andPredicate: objCase[.primary]?.predicate, callback: { (context, managedObjectID, error) in
 
-            guard let managedObject = managedObject as? NSManagedObject else {
-                callback(nil, error)
+            guard let managedObjectID = managedObjectID else {
+                callback(context, nil, error)
                 return
             }
+            let managedObject = context.object(with: managedObjectID)
             guard error == nil else {
-                callback(managedObject, error)
+                callback(context, managedObjectID, error)
                 return
             }
 
             do {
-                try self.persistentStore?.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
+                try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
                 let status = managedObject.isInserted ? "created" : "located"
                 self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.modelClazz)) \(objCase.description); status: \(status)"), sender: self)
                 self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
-
+                self.persistentStore?.stash(context: context, hint: objCase)
                 // managedObject should be send as a result of external links parse flow
-                callback(managedObject, error)
+                callback(context, managedObjectID, error)
             } catch let error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: objCase), sender: self)
             }

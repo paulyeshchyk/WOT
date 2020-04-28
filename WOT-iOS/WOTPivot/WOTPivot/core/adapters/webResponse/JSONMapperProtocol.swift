@@ -6,23 +6,23 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
 public typealias JSON = Swift.Dictionary<Swift.AnyHashable, Any>
 
 public protocol JSONMapperProtocol {
     associatedtype Fields
 
-    mutating func mapping(fromJSON jSON: JSON)
-    func mapping(fromArray array: [Any])
+    mutating func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON)
+    func mapping(context: NSManagedObjectContext, fromArray array: [Any])
 
-    func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws
-    func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: DataAdapterProtocol?) throws
+    func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws
+    func mapping(context: NSManagedObjectContext, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: DataAdapterProtocol?) throws
 }
 
 extension JSONMapperProtocol {
-    public func mapping(fromJSON jSON: JSON) {}
-    public func mapping(fromArray array: [Any]) {}
-    public func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {}
-    public func mapping(fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: DataAdapterProtocol?) throws {}
+    public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON) {}
+    public func mapping(context: NSManagedObjectContext, fromArray array: [Any]) {}
+    public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {}
+    public func mapping(context: NSManagedObjectContext, fromArray array: [Any], pkCase: PKCase, forRequest: WOTRequestProtocol, coreDataMapping: DataAdapterProtocol?) throws {}
 }

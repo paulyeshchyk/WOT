@@ -34,12 +34,12 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     /**
 
      */
-    @objc public func stash(hint: String?) {
+    @objc public func stash(context: NSManagedObjectContext, hint: String?) {
         guard let provider = appManager?.coreDataProvider else {
             fatalError("provider was released")
         }
 
-        provider.stash({ (error) in
+        provider.stash(context: context) { (error) in
             if let error = error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
             } else {
@@ -51,45 +51,50 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
                 }
                 self.appManager?.logInspector?.log(CDStashLog(debugInfo), sender: self)
             }
-        })
+        }
     }
 
     /**
 
      */
-    public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) throws {
+    public func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) throws {
         appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
-        try object?.mapping(fromJSON: jSON, pkCase: pkCase, persistentStore: self)
-        stash(hint: pkCase)
+        try object?.mapping(context: context, fromJSON: jSON, pkCase: pkCase, persistentStore: self)
+//        stash(context: context, hint: pkCase)
     }
 
-    public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) throws {
+    public func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) throws {
         appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
-        try object?.mapping(fromArray: array, pkCase: pkCase, persistentStore: self)
-        stash(hint: pkCase)
+        try object?.mapping(context: context, fromArray: array, pkCase: pkCase, persistentStore: self)
+//        stash(context: context, hint: pkCase)
     }
 
-    public func fetchLocal(byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) throws {
+    public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping ContextAnyObjectErrorCompletion) throws {
         appManager?.logInspector?.log(LogicLog("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
-            callback(nil)
+            callback(context, nil, nil)
             return
         }
-        appManager?.coreDataProvider?.perform({ context in
+
+//        guard let context = appManager?.coreDataProvider?.mainContext else {
+//            throw WOTPersistentStoreError.contextNotDefined
+//        }
+
+        appManager?.coreDataProvider?.perform(context: context) { context in
             do {
                 if let managedObject = try NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) {
                     let status = managedObject.isInserted ? "created" : "located"
                     self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
-                    callback(managedObject)
+                    callback(context, managedObject.objectID, nil)
                 }
             } catch let error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: pkCase), sender: self)
             }
-        })
+        }
     }
 
-    public func fetchRemote(byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion) {
+    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onObjectDidFetch: @escaping ContextAnyObjectErrorCompletion) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
 
         var predicates = [WOTPredicate]()
@@ -111,17 +116,24 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     }
 }
 
+public enum WOTPersistentStoreError: Error {
+    case contextNotDefined
+}
+
 extension WOTPersistentStoreProtocol {
     /**
 
      */
-    public func itemMapping(forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
+    public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
         do {
-            try fetchLocal(byModelClass: Clazz, pkCase: pkCase) { newObject in
+            try fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { context, managedObjectID, _ in
                 do {
-                    try self.mapping(object: newObject, fromJSON: itemJSON, pkCase: pkCase)
-                    callback(newObject)
-                    self.stash(hint: pkCase)
+                    if let managedObjectID = managedObjectID {
+                        let newObject = context.object(with: managedObjectID)
+                        try self.mapping(context: context,object: newObject, fromJSON: itemJSON, pkCase: pkCase)
+                        callback(managedObjectID)
+                        self.stash(context: context, hint: pkCase)
+                    }
                 } catch let error {
                     print(error)
                 }
@@ -134,13 +146,17 @@ extension WOTPersistentStoreProtocol {
     /**
 
      */
-    public func itemMapping(forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
+    public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
         do {
-            try fetchLocal(byModelClass: Clazz, pkCase: pkCase) { newObject in
+            try fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { context, managedObjectID, _ in
                 do {
-                    try self.mapping(object: newObject, fromArray: items, pkCase: pkCase)
-                    callback(newObject)
-                    self.stash(hint: pkCase)
+                    if let managedObjectID = managedObjectID {
+                        let newObject = context.object(with: managedObjectID)
+
+                        try self.mapping(context: context,object: newObject, fromArray: items, pkCase: pkCase)
+                        callback(managedObjectID)
+                        self.stash(context: context, hint: pkCase)
+                    }
                 } catch let error {
                     print(error)
                 }

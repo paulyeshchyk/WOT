@@ -53,7 +53,7 @@ extension Module {
 
 // MARK: - Mapping
 extension Module {
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
 
         let parents = pkCase.plainParents.filter({$0 is Vehicles}).compactMap({ $0.tank_id as? NSDecimalNumber })
@@ -75,50 +75,50 @@ extension Module {
         let moduleType = VehicleModuleType(rawValue: mt)
         switch moduleType {
         case .vehicleChassis:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, persistentStore: persistentStore, keyPathPrefix: "suspension.", onObjectDidFetch: { managedObject, _ in
-                if let module = managedObject as? VehicleprofileSuspension {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: persistentStore, keyPathPrefix: "suspension.", onObjectDidFetch: { context, managedObjectID, _  in
+                if let managedObjectID = managedObjectID, let module = context.object(with: managedObjectID) as? VehicleprofileSuspension {
                     self.suspension = module
-                    persistentStore?.stash(hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase)
                 }
                 })
         case .vehicleGun:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, persistentStore: persistentStore, keyPathPrefix: "gun.", onObjectDidFetch: { managedObject, _ in
-                if let module = managedObject as? VehicleprofileGun {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: persistentStore, keyPathPrefix: "gun.", onObjectDidFetch: { context, managedObjectID, _ in
+                if let managedObjectID = managedObjectID,  let module = context.object(with: managedObjectID) as? VehicleprofileGun {
                     self.gun = module
-                    persistentStore?.stash(hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase)
                 }
                 })
         case .vehicleRadio:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, persistentStore: persistentStore, keyPathPrefix: "radio.", onObjectDidFetch: { managedObject, _ in
-                if let module = managedObject as? VehicleprofileRadio {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: persistentStore, keyPathPrefix: "radio.", onObjectDidFetch: { context, managedObjectID, _ in
+                if let managedObjectID = managedObjectID,  let module = context.object(with: managedObjectID) as? VehicleprofileRadio {
                     self.radio = module
-                    persistentStore?.stash(hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase)
                 }
                 })
         case .vehicleEngine:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, persistentStore: persistentStore, keyPathPrefix: "engine.", onObjectDidFetch: { managedObject, _ in
-                if let module = managedObject as? VehicleprofileEngine {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: persistentStore, keyPathPrefix: "engine.", onObjectDidFetch: { context, managedObjectID, _ in
+                if let managedObjectID = managedObjectID,  let module = context.object(with: managedObjectID) as? VehicleprofileEngine {
                     self.engine = module
-                    persistentStore?.stash(hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase)
                 }
                 })
         case .vehicleTurret:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, persistentStore: persistentStore, keyPathPrefix: "turret.", onObjectDidFetch: { managedObject, _ in
-                if let module = managedObject as? VehicleprofileTurret {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: persistentStore, keyPathPrefix: "turret.", onObjectDidFetch: { context, managedObjectID, _ in
+                if let managedObjectID = managedObjectID,  let module = context.object(with: managedObjectID) as? VehicleprofileTurret {
                     self.turret = module
-                    persistentStore?.stash(hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase)
                 }
                 })
         default: print(mt)
         }
     }
 
-    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass modelClazz: NSManagedObject.Type, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion) {
+    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion) {
         let pkCase = PKCase()
         pkCase[.primary] = modelClazz.primaryIdKey(for: module_id)
         pkCase[.secondary] = Vehicles.primaryKey(for: tank_id)
 
-        persistentStore?.fetchRemote(byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, onObjectDidFetch: onObjectDidFetch)
+        persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, onObjectDidFetch: onObjectDidFetch)
     }
 }
 

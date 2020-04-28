@@ -47,7 +47,7 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: L10n.wotStringProfile, icon: UIImage(), userDependence: false))
 
-        WOTPivotAppManager.sharedInstance.coreDataProvider?.perform({ (context) in
+        WOTPivotAppManager.sharedInstance.coreDataProvider?.performMain({ context in
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: UserSession.self))
             request.sortDescriptors = [NSSortDescriptor(key: L10n.wotKeyExpiresAt, ascending: false)]
             let fetchedResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)

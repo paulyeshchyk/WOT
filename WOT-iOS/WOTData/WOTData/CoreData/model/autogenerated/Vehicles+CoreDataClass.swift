@@ -60,13 +60,14 @@ extension Vehicles {
 
 // MARK: - Mapping
 extension Vehicles {
-    private func defaultProfileMapping(jSON: JSON?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    private func defaultProfileMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         guard let itemJSON = jSON else { return }
 
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-        persistentStore?.itemMapping(forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, callback: { (managedObject) in
-            guard let defaultProfile = managedObject as? Vehicleprofile else {
+        persistentStore?.itemMapping(context: context, forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, callback: { (managedObjectID) in
+
+            guard let managedObjectID = managedObjectID, let defaultProfile = context.object(with: managedObjectID) as? Vehicleprofile else {
                 return
             }
             self.default_profile = defaultProfile
@@ -76,7 +77,7 @@ extension Vehicles {
         })
     }
 
-    private func modulesTreeMapping(jSON: JSON?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -101,16 +102,21 @@ extension Vehicles {
             submodulesCase[.secondary] = modulesTreeCase[.primary]
 
             do {
-                try persistentStore?.fetchLocal(byModelClass: ModulesTree.self, pkCase: submodulesCase) { newObject in
-                    guard let module_tree = newObject as? ModulesTree else {
+                try persistentStore?.fetchLocal(context: context, byModelClass: ModulesTree.self, pkCase: submodulesCase) { context, managedObjectID, _ in
+
+                    guard let managedObjectID = managedObjectID else {
+                        return
+                    }
+
+                    guard let module_tree = context.object(with: managedObjectID) as? ModulesTree else {
                         return
                     }
                     do {
-                        try persistentStore?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase)
+                        try persistentStore?.mapping(context: context, object: module_tree, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase)
 
                         module_tree.default_profile = self.default_profile
                         self.addToModules_tree(module_tree)
-                        persistentStore?.stash(hint: modulesTreeCase)
+                        persistentStore?.stash(context: context, hint: modulesTreeCase)
                     } catch let error {
                         print(error)
                     }
@@ -121,12 +127,12 @@ extension Vehicles {
         }
     }
 
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
 
-        defaultProfileMapping(jSON: jSON[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
+        defaultProfileMapping(context: context, jSON: jSON[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
 
-        modulesTreeMapping(jSON: jSON[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
+        modulesTreeMapping(context: context, jSON: jSON[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
     }
 }
 

@@ -18,21 +18,21 @@ extension VehicleprofileAmmoList {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    public override func mapping(context: NSManagedObjectContext, fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
             let vehicleprofileAmmoCase = PKCase()
             vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject)
             do {
-                try persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] newObject in
-                    guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
+                try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] context, managedObjectID, _ in
+                    guard let self = self, let managedObjectID = managedObjectID, let ammo = context.object(with: managedObjectID) as? VehicleprofileAmmo else {
                         return
                     }
                     do {
-                        try persistentStore?.mapping(object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
+                        try persistentStore?.mapping(context: context, object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
                         self.addToVehicleprofileAmmo(ammo)
-                        persistentStore?.stash(hint: vehicleprofileAmmoCase)
+                        persistentStore?.stash(context: context, hint: vehicleprofileAmmoCase)
                     } catch let error {
                         print(error)
                     }

@@ -153,24 +153,27 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     private func jsonLinksCallback(_ jsonLinks: [WOTPredicate]?) {}
 
     public func requestHasCanceled(_ request: WOTRequestProtocol) {
-        guard Thread.current.isMainThread else {
-            fatalError("Current thread is not main")
-        }
+        #warning("check")
+//        guard Thread.current.isMainThread else {
+//            fatalError("Current thread is not main")
+//        }
         appManager?.logInspector?.log(WEBCancelLog(request.description))
         removeRequest(request)
     }
 
     public func requestHasStarted(_ request: WOTRequestProtocol) {
-        guard Thread.current.isMainThread else {
-            fatalError("Current thread is not main")
-        }
+        #warning("check")
+//        guard Thread.current.isMainThread else {
+//            fatalError("Current thread is not main")
+//        }
         appManager?.logInspector?.log(WEBStartLog(request.description), sender: self)
     }
 
     public func removeRequest(_ request: WOTRequestProtocol) {
-        guard Thread.current.isMainThread else {
-            fatalError("Current thread is not main")
-        }
+        #warning("check")
+//        guard Thread.current.isMainThread else {
+//            fatalError("Current thread is not main")
+//        }
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
                 grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })

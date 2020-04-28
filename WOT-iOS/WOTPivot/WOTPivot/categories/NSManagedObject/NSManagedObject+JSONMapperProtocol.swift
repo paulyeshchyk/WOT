@@ -16,17 +16,17 @@ extension NSManagedObject: JSONMapperProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    open func mapping(fromArray array: [Any]) {
+    open func mapping(context: NSManagedObjectContext, fromArray array: [Any]) {
         fatalError("not implemented")
     }
 
     @objc
-    open func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    open func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         throw LogicError.shouldBeOverriden
     }
 
     @objc
-    open func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    open func mapping(context: NSManagedObjectContext, fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         throw LogicError.shouldBeOverriden
     }
 }

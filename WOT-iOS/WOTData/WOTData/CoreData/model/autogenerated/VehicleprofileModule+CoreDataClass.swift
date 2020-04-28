@@ -38,44 +38,44 @@ extension VehicleprofileModule {
 
 // MARK: - Mapping
 extension VehicleprofileModule {
-    override public func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    override public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
 
         let gunCase = PKCase()
         gunCase[.primary] = VehicleprofileGun.primaryIdKey(for: self.gun_id)
         gunCase[.secondary] = pkCase[.primary]
-        persistentStore?.fetchRemote(byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", onObjectDidFetch: { (managedObject, _) in
-            if let gun = managedObject as? VehicleprofileGun {
+        persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", onObjectDidFetch: { (context, managedObjectID, _) in
+            if let managedObjectID = managedObjectID, let gun = context.object(with: managedObjectID) as? VehicleprofileGun {
                 self.vehicleGun = gun
-                persistentStore?.stash(hint: gunCase)
+                persistentStore?.stash(context: context, hint: gunCase)
             }
         })
 
         let radioCase = PKCase()
         radioCase[.primary] = VehicleprofileRadio.primaryIdKey(for: self.radio_id)
         radioCase[.secondary] = pkCase[.primary]
-        persistentStore?.fetchRemote(byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", onObjectDidFetch: { (managedObject, _) in
-            if let radio = managedObject as? VehicleprofileRadio {
+        persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", onObjectDidFetch: { (context, managedObjectID, _) in
+            if let managedObjectID = managedObjectID, let radio = context.object(with: managedObjectID) as? VehicleprofileRadio {
                 self.vehicleRadio = radio
-                persistentStore?.stash(hint: radioCase)
+                persistentStore?.stash(context: context,hint: radioCase)
             }
         })
         let engineCase = PKCase()
         engineCase[.primary] = VehicleprofileEngine.primaryIdKey(for: self.engine_id)
         engineCase[.secondary] = pkCase[.primary]
-        persistentStore?.fetchRemote(byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", onObjectDidFetch: { (managedObject, _) in
-            if let engine = managedObject as? VehicleprofileEngine {
+        persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", onObjectDidFetch: { (context, managedObjectID, _) in
+            if let managedObjectID = managedObjectID, let engine = context.object(with: managedObjectID) as? VehicleprofileEngine {
                 self.vehicleEngine = engine
-                persistentStore?.stash(hint: engineCase)
+                persistentStore?.stash(context: context, hint: engineCase)
             }
         })
         let suspensionCase = PKCase()
         suspensionCase[.primary] = VehicleprofileSuspension.primaryIdKey(for: self.suspension_id)
         suspensionCase[.secondary] = pkCase[.primary]
-        persistentStore?.fetchRemote(byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", onObjectDidFetch: { (managedObject, _) in
-            if let suspension = managedObject as? VehicleprofileSuspension {
+        persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", onObjectDidFetch: { (context, managedObjectID, _) in
+            if let managedObjectID = managedObjectID, let suspension = context.object(with: managedObjectID) as? VehicleprofileSuspension {
                 self.vehicleChassis = suspension
-                persistentStore?.stash(hint: suspensionCase)
+                persistentStore?.stash(context: context, hint: suspensionCase)
             }
         })
 
@@ -84,10 +84,10 @@ extension VehicleprofileModule {
             let turretCase = PKCase()
             turretCase[.primary] = VehicleprofileTurret.primaryIdKey(for: turret_id)
             turretCase[.secondary] = pkCase[.primary]
-            persistentStore?.fetchRemote(byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", onObjectDidFetch: { (managedObject, _) in
-                if let turret = managedObject as? VehicleprofileTurret {
+            persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", onObjectDidFetch: { (context, managedObjectID, _) in
+                if let managedObjectID = managedObjectID, let turret = context.object(with: managedObjectID) as? VehicleprofileTurret {
                     self.vehicleTurret = turret
-                    persistentStore?.stash(hint: turretCase)
+                    persistentStore?.stash(context: context, hint: turretCase)
                 }
             })
         }
