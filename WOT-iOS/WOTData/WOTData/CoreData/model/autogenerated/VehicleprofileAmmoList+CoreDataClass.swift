@@ -24,7 +24,7 @@ extension VehicleprofileAmmoList {
             let vehicleprofileAmmoCase = PKCase()
             vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject)
-            persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] newObject in
+            try? persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] newObject in
                 guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
                     return
                 }

@@ -42,6 +42,7 @@
     [logInspector objcOnlyAddpriority: 0];
     [logInspector objcOnlyAddpriority: 1];
     [logInspector objcOnlyAddpriority: 3];
+    [logInspector objcOnlyAddpriority: 4];
 
     id<WOTRequestCoordinatorProtocol> requestCoordinator = [[WOTRequestCoordinator alloc] init];
 

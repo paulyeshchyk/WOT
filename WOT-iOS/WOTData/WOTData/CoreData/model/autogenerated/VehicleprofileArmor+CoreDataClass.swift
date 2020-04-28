@@ -59,7 +59,7 @@ extension VehicleprofileArmor {
             return
         }
 
-        persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
+        try? persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
             persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
             callback(newObject)
         }
@@ -71,7 +71,7 @@ extension VehicleprofileArmor {
             return
         }
 
-        persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
+        try? persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
             persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
             callback(newObject)
         }
