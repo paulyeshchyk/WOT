@@ -27,24 +27,22 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
-    fileprivate var grouppedCompleteObjectCreation: [AnyHashable: NSManagedObjectErrorCompletion] = [:]
+    fileprivate var grouppedObjectDidParse: [AnyHashable: NSManagedObjectErrorCompletion] = [:]
 
     //
     @objc
     public func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol? {
-        coordinator.createRequest(forRequestId: requestId)
+        let result = coordinator.createRequest(forRequestId: requestId)
+        result?.hostConfiguration = hostConfiguration
+        return result
     }
 
     private func createRequest(forRequestId requestId: WOTRequestIdType, jsonLink: WOTPredicate) -> WOTRequestProtocol? {
         guard jsonLink.clazz.conforms(to: KeypathProtocol.self) else {
             return nil
         }
-        guard let request = createRequest(forRequestId: requestId) else {
-            return nil
-        }
-
-        request.hostConfiguration = hostConfiguration
-        request.jsonLink = jsonLink
+        let request = createRequest(forRequestId: requestId)
+        request?.jsonLink = jsonLink
         return request
     }
 
@@ -93,31 +91,27 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    @objc
-    public func startRequest(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTPredicate?, onCompleteObjectCreation: NSManagedObjectErrorCompletion?) {
+    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: String, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
         guard addRequest(request, forGroupId: forGroupId) else {
-            return
+            throw WEBError.requestWasNotAddedToGroup
         }
 
-        self.grouppedCompleteObjectCreation[request.uuid.uuidString] = onCompleteObjectCreation
-        request.hostConfiguration = hostConfiguration
-        guard request.start(arguments) == true else {
-            return
-        }
+        self.grouppedObjectDidParse[request.uuid.uuidString] = onObjectDidFetch
+
+        try request.start(withArguments: withArguments)
         grouppedListeners[request.uuid.uuidString]?.forEach {
             $0.requestManager(self, didStartRequest: request)
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, jsonLink: WOTPredicate, onCompleteObjectCreation: NSManagedObjectErrorCompletion?) {
-        guard let request = self.createRequest(forRequestId: requestId, jsonLink: jsonLink) else {
-            print("request not created")
-            return
+    public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
+        guard let request = self.createRequest(forRequestId: requestId, jsonLink: withPredicate) else {
+            throw WEBError.requestIsNotCreated
         }
 
-        let arguments = jsonLink.buildRequestArguments()
-        let groupId = "Nested\(String(describing: jsonLink.clazz))-\(jsonLink)"
-        startRequest(request, with: arguments, forGroupId: groupId, jsonLink: jsonLink, onCompleteObjectCreation: onCompleteObjectCreation)
+        let arguments = withPredicate.buildRequestArguments()
+        let groupId = "Nested\(String(describing: withPredicate.clazz))-\(withPredicate)"
+        try startRequest(request, withArguments: arguments, forGroupId: groupId, onObjectDidFetch: onObjectDidFetch)
     }
 
     @objc
@@ -141,8 +135,8 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
         }
 
-        let onCreateNSManagedObject = self.grouppedCompleteObjectCreation[request.uuid.uuidString]
-        coordinator.request(request, processBinary: data, onCompleteObjectCreationL2: onCreateNSManagedObject, onRequestComplete: onRequestComplete)
+        let onObjectDidParse = self.grouppedObjectDidParse[request.uuid.uuidString]
+        coordinator.request(request, processBinary: data, onObjectDidParse: onObjectDidParse, onRequestComplete: self.onRequestComplete(_:_:error:))
 
         appManager?.logInspector?.log(WEBFinishLog(request.description), sender: self)
         self.removeRequest(request)
@@ -185,7 +179,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                 self.grouppedRequests[group] = grouppedRequests
             }
         }
-        self.grouppedCompleteObjectCreation[request.uuid.uuidString] = nil
+        self.grouppedObjectDidParse[request.uuid.uuidString] = nil
         request.removeListener(self)
     }
 }

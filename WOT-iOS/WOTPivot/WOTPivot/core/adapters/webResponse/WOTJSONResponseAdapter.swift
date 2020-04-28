@@ -20,22 +20,10 @@ open class WOTJSONResponseAdapter: NSObject, WOTDataResponseAdapterProtocol {
         modelClass = clazz
     }
 
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, onCompleteObjectCreationL1: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
-        let store: JSONAdapterProtocol = JSONAdapter(Clazz: modelClass, request: request, appManager: appManager)
-        store.onComplete = onRequestComplete
-        store.onCompleteObjectCreation = onCompleteObjectCreationL1
-        return store
-    }
-
-    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
-        let ident: Any
-        let primaryKeyPath = Clazz.primaryKeyPath()
-
-        if  primaryKeyPath.count > 0 {
-            ident = json[primaryKeyPath] ?? key
-        } else {
-            ident = key
-        }
-        return ident
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, onObjectDidFetch: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+        let jsonAdapter: JSONAdapterProtocol = JSONAdapter(Clazz: modelClass, request: request, appManager: appManager)
+        jsonAdapter.onComplete = onRequestComplete
+        jsonAdapter.onObjectDidParse = onObjectDidFetch
+        return jsonAdapter
     }
 }

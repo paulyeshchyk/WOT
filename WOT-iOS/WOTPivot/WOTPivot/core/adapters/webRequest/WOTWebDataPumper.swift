@@ -35,7 +35,7 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
         return request.url?.absoluteString ?? "-"
     }
 
-    convenience init(hostConfiguration: WOTHostConfigurationProtocol?, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: @escaping DataReceiveCompletion) {
+    convenience init(hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: @escaping DataReceiveCompletion) {
         let requestBuilder = WOTWebRequestBuilder()
         let urlRequest = requestBuilder.build(service: service, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
         self.init(request: urlRequest, completion: completion)

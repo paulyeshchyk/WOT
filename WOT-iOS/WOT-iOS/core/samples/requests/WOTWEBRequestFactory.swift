@@ -19,10 +19,15 @@ public class WOTWEBRequestFactory: NSObject {
             throw DataAdapterError.requestNotRegistered(requestType: WebRequestType.vehicles.description)
         }
         requestManager?.addListener(listener, forRequest: request)
-        requestManager?.startRequest(request, with: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonLink: nil, onCompleteObjectCreation: nil)
+        do {
+            try requestManager?.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, onObjectDidFetch: nil)
+        } catch let error {
+            print(error)
+        }
     }
 
     @objc
+    @discardableResult
     public static func fetchVehicleTreeData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) -> WOTRequestProtocol? {
         guard let request = requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             return nil
@@ -34,8 +39,12 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicles.classKeypaths()], forKey: WGWebQueryArgs.fields)
 
-        requestManager.startRequest(request, with: args, forGroupId: groupId, jsonLink: nil, onCompleteObjectCreation: nil)
         requestManager.addListener(listener, forRequest: request)
+        do {
+            try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, onObjectDidFetch: nil)
+        } catch let error {
+            print(error)
+        }
         return request
     }
 
@@ -51,7 +60,11 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
 
-        requestManager.startRequest(request, with: args, forGroupId: groupId, jsonLink: nil, onCompleteObjectCreation: nil)
-        requestManager.addListener(listener, forRequest: request)
+        do {
+            try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, onObjectDidFetch: nil)
+            requestManager.addListener(listener, forRequest: request)
+        } catch let error {
+            print(error)
+        }
     }
 }

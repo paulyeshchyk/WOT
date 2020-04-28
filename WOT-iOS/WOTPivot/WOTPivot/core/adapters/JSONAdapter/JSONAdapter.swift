@@ -16,14 +16,14 @@ public protocol DataAdapterProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
     var uuid: UUID { get }
     var onComplete: OnRequestComplete? { get set }
+    var onObjectDidParse: NSManagedObjectErrorCompletion? { get set }
+    func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
+    init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?)
 }
 
 @objc
 public protocol JSONAdapterProtocol: DataAdapterProtocol {
     var onGetObjectJSON: ((JSON) -> JSON)? { get set }
-    var onCompleteObjectCreation: NSManagedObjectErrorCompletion? { get set }
-    func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
-    var coreDataProvider: WOTCoredataProviderProtocol? { get }
 }
 
 @objc
@@ -33,7 +33,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         return uuid.uuidString.hashValue
     }
 
-    public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?) {
+    required public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?) {
         self.modelClazz = clazz
         self.request = request
         self.appManager = appManager
@@ -54,10 +54,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: JSONAdapterProtocol -
     public var onGetObjectJSON: ((JSON) -> JSON)?
     public var onComplete: OnRequestComplete?
-    public var onCompleteObjectCreation: NSManagedObjectErrorCompletion?
-    public var coreDataProvider: WOTCoredataProviderProtocol? {
-        return appManager?.coreDataProvider
-    }
+    public var onObjectDidParse: NSManagedObjectErrorCompletion?
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
@@ -73,7 +70,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
             let extraction = extractSubJSON(from: json, by: key)
             findOrCreateObject(for: extraction, fromRequest: fromRequest) { managedObject, error in
 
-                self.onCompleteObjectCreation?(managedObject, error)
+                self.onObjectDidParse?(managedObject, error)
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
@@ -97,7 +94,7 @@ func == (lhs: JSONAdapter, rhs: JSONAdapter) -> Bool {
 
 // MARK: - private
 
-extension JSONAdapterProtocol {
+extension DataAdapterProtocol {
     /**
      because of objC limitation, the function added as an extention to *JSONAdapterProtocol*
      */
@@ -127,18 +124,6 @@ extension JSONAdapter {
         let json: JSON
     }
 
-    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
-        let ident: Any
-        let primaryKeyPath = Clazz.primaryKeyPath()
-
-        if  primaryKeyPath.count > 0 {
-            ident = json[primaryKeyPath] ?? key
-        } else {
-            ident = key
-        }
-        return ident
-    }
-
     /**
 
      */
@@ -154,6 +139,18 @@ extension JSONAdapter {
         }
         let ident = onGetIdent(modelClazz, objectJson, key)
         return JSONExtraction(identifier: ident, json: objectJson)
+    }
+
+    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
+        let ident: Any
+        let primaryKeyPath = Clazz.primaryKeyPath()
+
+        if  primaryKeyPath.count > 0 {
+            ident = json[primaryKeyPath] ?? key
+        } else {
+            ident = key
+        }
+        return ident
     }
 
     private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping NSManagedObjectErrorCompletion) {

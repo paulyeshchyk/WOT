@@ -58,9 +58,6 @@ public protocol WOTRequestManagerListenerProtocol {
 @objc
 public protocol WOTRequestManagerProtocol {
     @objc
-    func startRequest(_ request: WOTRequestProtocol, with arguments: WOTRequestArgumentsProtocol, forGroupId: String, jsonLink: WOTPredicate?, onCompleteObjectCreation: NSManagedObjectErrorCompletion?)
-
-    @objc
     func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol?
 
     @objc
@@ -81,8 +78,9 @@ public protocol WOTRequestManagerProtocol {
     @objc
     var coordinator: WOTRequestCoordinatorProtocol { get }
 
-    @objc
-    func startRequest(by requestId: WOTRequestIdType, jsonLink: WOTPredicate, onCompleteObjectCreation: NSManagedObjectErrorCompletion?)
+    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: String, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
+
+    func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
 }
 
 @objc
@@ -105,12 +103,8 @@ public protocol WOTRequestListenerProtocol {
 
 @objc
 public protocol WOTStartableProtocol {
-    @objc
     func cancel()
-
-    @objc
-    @discardableResult
-    func start(_ args: WOTRequestArgumentsProtocol) -> Bool
+    func start(withArguments: WOTRequestArgumentsProtocol) throws
 }
 
 @objc
@@ -158,10 +152,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
         return NSStringFromClass(type(of: self)).hash
     }
 
-    @objc
     open func cancel() {}
 
-    @objc
-    @discardableResult
-    open func start(_ args: WOTRequestArgumentsProtocol) -> Bool { return false }
+    open func start(withArguments: WOTRequestArgumentsProtocol) throws { throw LogicError.shouldBeOverriden}
 }

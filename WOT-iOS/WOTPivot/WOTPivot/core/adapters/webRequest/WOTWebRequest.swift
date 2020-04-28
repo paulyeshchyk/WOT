@@ -55,14 +55,15 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, Describable, NSURLC
 
     var pumper: WOTWebDataPumperProtocol?
 
-    @discardableResult
-    open override func start(_ args: WOTRequestArgumentsProtocol) -> Bool {
-        self.pumper = WOTWebDataPumper(hostConfiguration: hostConfiguration, args: args, httpBodyData: httpBodyData, service: self, completion: requestHasFinishedLoad(data:error:))
+    open override func start(withArguments: WOTRequestArgumentsProtocol) throws {
+        guard let hostConfig = hostConfiguration else {
+            throw WEBError.hostConfigurationIsNotDefined
+        }
+        self.pumper = WOTWebDataPumper(hostConfiguration: hostConfig, args: withArguments, httpBodyData: httpBodyData, service: self, completion: requestHasFinishedLoad(data:error:))
         self.pumper?.start()
 
         self.listeners.compactMap { $0 }.forEach {
             $0.requestHasStarted(self)
         }
-        return true
     }
 }

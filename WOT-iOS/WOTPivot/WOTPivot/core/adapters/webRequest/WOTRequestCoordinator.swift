@@ -14,14 +14,14 @@ public typealias WOTRequestIdType = String
 public protocol WOTRequestDataBindingProtocol {
     static func unregisterDataAdapter(for requestId: WOTRequestIdType)
     static func dataAdapterClass(for requestId: WOTRequestIdType) -> AnyClass?
-    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: AnyClass)
+    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: DataAdapterProtocol.Type)
     func request(for requestId: WOTRequestIdType) -> AnyClass?
 }
 
 @objc
 public protocol WOTDataResponseAdapterProtocol: NSObjectProtocol {
     init(appManager: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type)
-    func request(_ request: WOTRequestProtocol, parseData binary: Data?, onCompleteObjectCreationL1: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete ) -> JSONAdapterProtocol
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, onObjectDidFetch: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete ) -> JSONAdapterProtocol
 }
 
 @objc
@@ -45,7 +45,7 @@ public protocol WOTRequestDatasourceProtocol {
 @objc
 public protocol WOTRequestDataParserProtocol {
     @objc
-    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, onCompleteObjectCreationL2: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete )
+    func request(_ request: WOTRequestProtocol, processBinary binary: Data?, onObjectDidParse: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete )
 }
 
 @objc
@@ -57,12 +57,12 @@ public protocol WOTRequestCoordinatorProtocol: WOTRequestDataBindingProtocol, WO
 @objc
 public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     private static var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
-    private static var registeredDataAdapters: [WOTRequestIdType: AnyClass] = .init()
+    private static var registeredDataAdapters: [WOTRequestIdType: DataAdapterProtocol.Type] = .init()
     public var appManager: WOTAppManagerProtocol?
 
     // MARK: - WOTRequestDataBindingProtocol
     @objc
-    public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: AnyClass) {
+    public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: DataAdapterProtocol.Type) {
         WOTRequestCoordinator.registeredRequests[requiestId] = requestClass
         WOTRequestCoordinator.registeredDataAdapters[requiestId] = dataAdapterClass
     }
@@ -133,15 +133,15 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return requestClass.modelClass()
     }
 
-    private func responseAdapterInstance(for requestIdType: WOTRequestIdType) throws -> WOTDataResponseAdapterProtocol {
+    private func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol) throws -> DataAdapterProtocol {
         guard let modelClass = try WOTRequestCoordinator.modelClass(for: requestIdType) else {
             throw DataAdapterError.modelClassNotFound(requestType: requestIdType)
         }
-        guard let dataResponseAdapterType = WOTRequestCoordinator.dataAdapterClass(for: requestIdType) as? WOTDataResponseAdapterProtocol.Type else {
+        guard let dataResponseAdapterType = WOTRequestCoordinator.dataAdapterClass(for: requestIdType) as? DataAdapterProtocol.Type else {
             throw DataAdapterError.adapterNotFound(requestType: requestIdType)
         }
 
-        return dataResponseAdapterType.init(appManager: appManager, clazz: modelClass)
+        return dataResponseAdapterType.init(Clazz: modelClass, request: request, appManager: appManager)
     }
 
     private func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]? {
@@ -158,35 +158,36 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     @objc
-    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, onCompleteObjectCreationL2: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete) {
+    public func request( _ request: WOTRequestProtocol, processBinary binary: Data?, onObjectDidParse: NSManagedObjectErrorCompletion?, onRequestComplete: @escaping OnRequestComplete) {
         guard let requestIds = requestIds(forRequest: request), requestIds.count > 0 else {
             onRequestComplete(request, self, nil)
             return
         }
-        var coreDataStoreStack: [CoreDataStorePair] = .init()
+        var dataAdaptationPair: [DataAdaptationPair] = .init()
         requestIds.forEach({ requestIdType in
             do {
-                let adapter = try responseAdapterInstance(for: requestIdType)
-                let store = adapter.request(request, parseData: binary, onCompleteObjectCreationL1: onCompleteObjectCreationL2, onRequestComplete: onRequestComplete)
-                let pair = CoreDataStorePair(coreDataStore: store, data: binary)
-                coreDataStoreStack.append(pair)
+                let adapter = try responseAdapterInstance(for: requestIdType, request: request)
+                adapter.onComplete = onRequestComplete
+                adapter.onObjectDidParse = onObjectDidParse
+                let pair = DataAdaptationPair(dataAdapter: adapter, data: binary)
+                dataAdaptationPair.append(pair)
             } catch let error {
                 appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
             }
         })
 
-        if coreDataStoreStack.count == 0 {
+        if dataAdaptationPair.count == 0 {
             onRequestComplete(request, self, nil)
         }
 
-        coreDataStoreStack.forEach { (pair) in
-            pair.coreDataStore.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
+        dataAdaptationPair.forEach { (pair) in
+            pair.dataAdapter.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
         }
     }
 }
 
-struct CoreDataStorePair {
-    let coreDataStore: JSONAdapterProtocol
+struct DataAdaptationPair {
+    let dataAdapter: DataAdapterProtocol
     let data: Data?
 }
 

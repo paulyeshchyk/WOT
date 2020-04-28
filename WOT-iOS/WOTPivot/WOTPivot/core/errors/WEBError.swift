@@ -11,4 +11,7 @@ import Foundation
 public enum WEBError: Error {
     case dataIsNull
     case invalidStatus
+    case requestIsNotCreated
+    case requestWasNotAddedToGroup
+    case hostConfigurationIsNotDefined
 }

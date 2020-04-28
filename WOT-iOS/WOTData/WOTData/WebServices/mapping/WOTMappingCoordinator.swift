@@ -88,7 +88,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     }
 
     @objc
-    public func fetchRemote(byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onCompleteObjectCreationL8: @escaping NSManagedObjectErrorCompletion) {
+    public func fetchRemote(byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
 
         var predicates = [WOTPredicate]()
@@ -97,7 +97,11 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
         predicates.forEach { jsonLink in
             if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: jsonLink.clazz) {
                 requestIDs.forEach {
-                    appManager?.requestManager?.startRequest(by: $0, jsonLink: jsonLink, onCompleteObjectCreation: onCompleteObjectCreationL8)
+                    do {
+                        try appManager?.requestManager?.startRequest(by: $0, withPredicate: jsonLink, onObjectDidFetch: onObjectDidFetch)
+                    } catch let error {
+                        appManager?.logInspector?.log(ErrorLog(error, details: $0), sender: self)
+                    }
                 }
             } else {
                 print("requests not parsed")

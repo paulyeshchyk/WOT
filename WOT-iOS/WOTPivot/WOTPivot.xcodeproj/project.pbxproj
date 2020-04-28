@@ -18,6 +18,7 @@
 		1D02D23E245800B300EE8DE9 /* PKCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D23D245800B300EE8DE9 /* PKCase.swift */; };
 		1D02D240245800EA00EE8DE9 /* WOTPrimaryKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D23F245800E900EE8DE9 /* WOTPrimaryKey.swift */; };
 		1D02D2422458014A00EE8DE9 /* DescribableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D2412458014A00EE8DE9 /* DescribableProtocol.swift */; };
+		1D02D244245817EF00EE8DE9 /* LogicError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D243245817EF00EE8DE9 /* LogicError.swift */; };
 		1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0304CF21E8C19100050131 /* WOTAPI.swift */; };
 		1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5021A54E4E001AF67F /* VIPER.swift */; };
 		1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */; };
@@ -185,6 +186,7 @@
 		1D02D23D245800B300EE8DE9 /* PKCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCase.swift; sourceTree = "<group>"; };
 		1D02D23F245800E900EE8DE9 /* WOTPrimaryKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPrimaryKey.swift; sourceTree = "<group>"; };
 		1D02D2412458014A00EE8DE9 /* DescribableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescribableProtocol.swift; sourceTree = "<group>"; };
+		1D02D243245817EF00EE8DE9 /* LogicError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicError.swift; sourceTree = "<group>"; };
 		1D0304CF21E8C19100050131 /* WOTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WOTAPI.swift; path = core/WOTAPI.swift; sourceTree = "<group>"; };
 		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
 		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				1D02D21F24558C0E00EE8DE9 /* JSONError.swift */,
 				1D02D22124558C4300EE8DE9 /* WEBError.swift */,
 				1D02D2232455C0DE00EE8DE9 /* DataAdapterError.swift */,
+				1D02D243245817EF00EE8DE9 /* LogicError.swift */,
 			);
 			path = errors;
 			sourceTree = "<group>";
@@ -1200,6 +1203,7 @@
 				1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */,
 				1D65F8262216A7B8006A85E4 /* WOTDimensionRowCalculator.swift in Sources */,
 				1D70CD89244EFC730031CBFE /* CustomThreadLog.swift in Sources */,
+				1D02D244245817EF00EE8DE9 /* LogicError.swift in Sources */,
 				1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */,
 				1D70CF452452B5680031CBFE /* WOTPersistentStoreProtocol.swift in Sources */,
 				1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */,
