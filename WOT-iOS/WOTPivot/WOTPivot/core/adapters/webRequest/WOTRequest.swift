@@ -45,37 +45,27 @@ public enum WOTRequestManagerCompletionResultType: Int {
 
 @objc
 public protocol WOTRequestManagerListenerProtocol {
-    @objc
     var uuidHash: Int { get }
 
-    @objc
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType, error: Error?)
 
-    @objc
     func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol)
 }
 
 @objc
 public protocol WOTRequestManagerProtocol {
-    @objc
-    func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol?
+    func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol
 
-    @objc
     func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
 
-    @objc
     func removeListener(_ listener: WOTRequestManagerListenerProtocol)
 
-    @objc
     func cancelRequests(groupId: String)
 
-    @objc
     var hostConfiguration: WOTHostConfigurationProtocol { get set }
 
-    @objc
     var appManager: WOTAppManagerProtocol? { get set }
 
-    @objc
     var coordinator: WOTRequestCoordinatorProtocol { get }
 
     func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: String, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws

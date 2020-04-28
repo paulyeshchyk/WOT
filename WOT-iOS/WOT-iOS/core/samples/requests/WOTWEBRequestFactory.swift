@@ -10,29 +10,25 @@ import Foundation
 
 @objc
 public class WOTWEBRequestFactory: NSObject {
-    @objc
-    public static func fetchVehiclePivotData(_ requestManager: WOTRequestManagerProtocol?, listener: WOTRequestManagerListenerProtocol)throws {
+    public static func fetchVehiclePivotData(_ requestManager: WOTRequestManagerProtocol?, listener: WOTRequestManagerListenerProtocol) throws {
+        guard let requestManager = requestManager else {
+            throw LogicError.objectNotDefined
+        }
         let arguments = WOTRequestArguments()
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
 
-        guard let request = requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
-            throw DataAdapterError.requestNotRegistered(requestType: WebRequestType.vehicles.description)
-        }
-        requestManager?.addListener(listener, forRequest: request)
+        let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
+        requestManager.addListener(listener, forRequest: request)
         do {
-            try requestManager?.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, onObjectDidFetch: nil)
+            try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, onObjectDidFetch: nil)
         } catch let error {
             print(error)
         }
     }
 
     @objc
-    @discardableResult
-    public static func fetchVehicleTreeData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) -> WOTRequestProtocol? {
-        guard let request = requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
-            return nil
-        }
-
+    public static func fetchVehicleTreeData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) throws {
+        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
         let groupId = "WOT_REQUEST_ID_VEHICLE_BY_TIER:\(vehicleId)"
 
         let args = WOTRequestArguments()
@@ -40,31 +36,19 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([Vehicles.classKeypaths()], forKey: WGWebQueryArgs.fields)
 
         requestManager.addListener(listener, forRequest: request)
-        do {
-            try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, onObjectDidFetch: nil)
-        } catch let error {
-            print(error)
-        }
-        return request
+        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, onObjectDidFetch: nil)
     }
 
     @objc
-    public static func fetchProfileData(profileTankId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) {
-        guard let request = requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue) else {
-            return
-        }
-
+    public static func fetchProfileData(profileTankId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) throws {
+        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue)
         let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
 
         let args = WOTRequestArguments()
         args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
 
-        do {
-            try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, onObjectDidFetch: nil)
-            requestManager.addListener(listener, forRequest: request)
-        } catch let error {
-            print(error)
-        }
+        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, onObjectDidFetch: nil)
+        requestManager.addListener(listener, forRequest: request)
     }
 }

@@ -42,14 +42,17 @@ extension NSManagedObject {
         return foundObject
     }
 
-    @objc
-    public static func findOrCreateObject(forClass: AnyClass, predicate: NSPredicate?, context: NSManagedObjectContext?) -> NSManagedObject? {
+    public static func findOrCreateObject(forClass: AnyClass, predicate: NSPredicate?, context: NSManagedObjectContext?) throws -> NSManagedObject? {
         guard let context = context else {
-            fatalError("context not defined")
+            throw NSManagedObjectError.contextNotDefined
         }
         guard let foundObject = forClass.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
             return forClass.insertNewObject(context)
         }
         return foundObject
     }
+}
+
+public enum NSManagedObjectError: Error {
+    case contextNotDefined
 }

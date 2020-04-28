@@ -79,9 +79,13 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping AnyObjectErrorCompletion ) {
         perform { context in
 
-            let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context)
-            let error = (managedObject == nil) ? JSONError.parse(message: "\(String(describing: clazz)) not found by predicate:\(predicate?.predicateFormat ?? "<Unknown predicate>")") : nil
-            callback(managedObject, error)
+            do {
+                let managedObject = try NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context)
+                let error = (managedObject == nil) ? JSONError.parse(message: "\(String(describing: clazz)) not found by predicate:\(predicate?.predicateFormat ?? "<Unknown predicate>")") : nil
+                callback(managedObject, error)
+            } catch let error {
+                self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: nil)
+            }
         }
     }
 

@@ -10,4 +10,5 @@ import Foundation
 
 public enum LogicError: Error {
     case shouldBeOverriden
+    case objectNotDefined
 }

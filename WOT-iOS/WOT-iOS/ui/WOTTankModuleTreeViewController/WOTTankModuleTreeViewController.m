@@ -190,9 +190,11 @@
 
     _tank_Id = [value copy];
 
+    NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
                                              requestManager: self.requestManager
-                                                   listener: self];
+                                                   listener: self
+                                                      error: &error];
 }
 
 #pragma mark - UICollectionViewDataSource

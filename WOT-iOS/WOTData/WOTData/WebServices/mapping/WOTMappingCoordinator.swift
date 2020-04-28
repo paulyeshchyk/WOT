@@ -78,27 +78,29 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
             return
         }
         appManager?.coreDataProvider?.perform({ context in
-            guard let managedObject = NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) else {
-                fatalError("Managed object is not created:\(pkCase.description)")
+            do {
+                if let managedObject = try NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) {
+                    let status = managedObject.isInserted ? "created" : "located"
+                    self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
+                    callback(managedObject)
+                }
+            } catch let error {
+                self.appManager?.logInspector?.log(ErrorLog(error, details: pkCase), sender: self)
             }
-            let status = managedObject.isInserted ? "created" : "located"
-            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
-            callback(managedObject)
         })
     }
 
-    @objc
     public func fetchRemote(byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
 
         var predicates = [WOTPredicate]()
         predicates.append(WOTPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
 
-        predicates.forEach { jsonLink in
-            if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: jsonLink.clazz) {
+        predicates.forEach { predicate in
+            if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) {
                 requestIDs.forEach {
                     do {
-                        try appManager?.requestManager?.startRequest(by: $0, withPredicate: jsonLink, onObjectDidFetch: onObjectDidFetch)
+                        try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, onObjectDidFetch: onObjectDidFetch)
                     } catch let error {
                         appManager?.logInspector?.log(ErrorLog(error, details: $0), sender: self)
                     }

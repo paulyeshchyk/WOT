@@ -268,8 +268,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
          * Default Profile
          */
         [WOTWEBRequestFactory fetchProfileDataWithProfileTankId: [tankId integerValue]
-                                          requestManager: self.requestManager
-                                                listener: self];
+                                                 requestManager: self.requestManager
+                                                       listener: self
+                                                          error: &error];
     }
 }
 
@@ -316,9 +317,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
+    NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                  requestManager: self.requestManager
-                                        listener: self];
+                                             requestManager: self.requestManager
+                                                   listener: self
+                                                      error: &error];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

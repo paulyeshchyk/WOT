@@ -30,19 +30,15 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     fileprivate var grouppedObjectDidParse: [AnyHashable: NSManagedObjectErrorCompletion] = [:]
 
     //
-    @objc
-    public func createRequest(forRequestId requestId: WOTRequestIdType) -> WOTRequestProtocol? {
-        let result = coordinator.createRequest(forRequestId: requestId)
-        result?.hostConfiguration = hostConfiguration
+    public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
+        let result = try coordinator.createRequest(forRequestId: requestId)
+        result.hostConfiguration = hostConfiguration
         return result
     }
 
-    private func createRequest(forRequestId requestId: WOTRequestIdType, jsonLink: WOTPredicate) -> WOTRequestProtocol? {
-        guard jsonLink.clazz.conforms(to: KeypathProtocol.self) else {
-            return nil
-        }
-        let request = createRequest(forRequestId: requestId)
-        request?.jsonLink = jsonLink
+    private func createRequest(forRequestId requestId: WOTRequestIdType, jsonLink: WOTPredicate) throws -> WOTRequestProtocol {
+        let request = try createRequest(forRequestId: requestId)
+        request.jsonLink = jsonLink
         return request
     }
 
@@ -105,9 +101,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
-        guard let request = self.createRequest(forRequestId: requestId, jsonLink: withPredicate) else {
-            throw WEBError.requestIsNotCreated
-        }
+        let request = try self.createRequest(forRequestId: requestId, jsonLink: withPredicate)
 
         let arguments = withPredicate.buildRequestArguments()
         let groupId = "Nested\(String(describing: withPredicate.clazz))-\(withPredicate)"
@@ -136,9 +130,13 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         }
 
         let onObjectDidParse = self.grouppedObjectDidParse[request.uuid.uuidString]
-        coordinator.request(request, processBinary: data, onObjectDidParse: onObjectDidParse, onRequestComplete: self.onRequestComplete(_:_:error:))
-
+        do {
+            try coordinator.request(request, parseData: data, onObjectDidParse: onObjectDidParse, onRequestComplete: self.onRequestComplete(_:_:error:))
+        } catch let error {
+            appManager?.logInspector?.log( ErrorLog(error, details: request), sender: self)
+        }
         appManager?.logInspector?.log(WEBFinishLog(request.description), sender: self)
+
         self.removeRequest(request)
     }
 
