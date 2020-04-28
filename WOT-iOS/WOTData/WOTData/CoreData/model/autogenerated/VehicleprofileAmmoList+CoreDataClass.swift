@@ -18,19 +18,27 @@ extension VehicleprofileAmmoList {
     public typealias Fields = Void
 
     @objc
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
             let vehicleprofileAmmoCase = PKCase()
             vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject)
-            try? persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] newObject in
-                guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
-                    return
+            do {
+                try persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] newObject in
+                    guard let self = self, let ammo = newObject as? VehicleprofileAmmo else {
+                        return
+                    }
+                    do {
+                        try persistentStore?.mapping(object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
+                        self.addToVehicleprofileAmmo(ammo)
+                        persistentStore?.stash(hint: vehicleprofileAmmoCase)
+                    } catch let error {
+                        print(error)
+                    }
                 }
-                persistentStore?.mapping(object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
-                self.addToVehicleprofileAmmo(ammo)
-                persistentStore?.stash(hint: vehicleprofileAmmoCase)
+            } catch let error {
+                print(error)
             }
         }
     }

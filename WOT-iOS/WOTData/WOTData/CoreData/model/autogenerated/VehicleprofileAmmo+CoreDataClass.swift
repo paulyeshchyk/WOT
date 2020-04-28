@@ -35,27 +35,49 @@ extension VehicleprofileAmmo {
 
 // MARK: - Mapping
 extension VehicleprofileAmmo {
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
-        do {
-            try self.decode(json: jSON)
-        } catch let error {
-            print("JSON Mapping Error: \(error)")
-        }
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+        try self.decode(json: jSON)
 
         let vehicleprofileAmmoPenetrationCase = PKCase()
         vehicleprofileAmmoPenetrationCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-        VehicleprofileAmmoPenetration.penetration(fromArray: jSON[#keyPath(VehicleprofileAmmo.penetration)], pkCase: vehicleprofileAmmoPenetrationCase, persistentStore: persistentStore) { newObject in
-            self.penetration = newObject as? VehicleprofileAmmoPenetration
-            persistentStore?.stash(hint: vehicleprofileAmmoPenetrationCase)
+        if let penetrationArray = jSON[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
+            do {
+                try persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { newObject in
+                    if let penetrationObject = newObject as? VehicleprofileAmmoPenetration {
+                        do {
+                            try persistentStore?.mapping(object: penetrationObject, fromArray: penetrationArray, pkCase: vehicleprofileAmmoPenetrationCase)
+                            self.penetration = penetrationObject
+                            persistentStore?.stash(hint: vehicleprofileAmmoPenetrationCase)
+                        } catch let error {
+                            print(error)
+                        }
+                    }
+                }
+            } catch let error {
+                print(error)
+            }
         }
-
         let vehicleprofileAmmoDamageCase = PKCase()
         vehicleprofileAmmoDamageCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
-        VehicleprofileAmmoDamage.damage(fromArray: jSON[#keyPath(VehicleprofileAmmo.damage)], pkCase: vehicleprofileAmmoDamageCase, persistentStore: persistentStore) { newObject in
-            self.damage = newObject as? VehicleprofileAmmoDamage
-            persistentStore?.stash(hint: vehicleprofileAmmoDamageCase)
+
+        if let damageArray = jSON[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
+            do {
+                try persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { newObject in
+                    if let damageObject = newObject as? VehicleprofileAmmoDamage {
+                        do {
+                            try persistentStore?.mapping(object: damageObject, fromArray: damageArray, pkCase: vehicleprofileAmmoDamageCase)
+                            self.damage = damageObject
+                            persistentStore?.stash(hint: vehicleprofileAmmoPenetrationCase)
+                        } catch let error {
+                            print(error)
+                        }
+                    }
+                }
+            } catch let error {
+                print(error)
+            }
         }
     }
 
@@ -65,8 +87,11 @@ extension VehicleprofileAmmo {
 
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
-
-        persistentStore?.mapping(object: self, fromJSON: json, pkCase: pkCase)
+        do {
+            try persistentStore?.mapping(object: self, fromJSON: json, pkCase: pkCase)
+        } catch let error {
+            print(error)
+        }
     }
 }
 

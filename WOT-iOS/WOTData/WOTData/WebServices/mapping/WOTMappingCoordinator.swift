@@ -57,15 +57,15 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     /**
 
      */
-    public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) {
+    public func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) throws {
         appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
-        object?.mapping(fromJSON: jSON, pkCase: pkCase, persistentStore: self)
+        try object?.mapping(fromJSON: jSON, pkCase: pkCase, persistentStore: self)
         stash(hint: pkCase)
     }
 
-    public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) {
+    public func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) throws {
         appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
-        object?.mapping(fromArray: array, pkCase: pkCase, persistentStore: self)
+        try object?.mapping(fromArray: array, pkCase: pkCase, persistentStore: self)
         stash(hint: pkCase)
     }
 
@@ -116,10 +116,18 @@ extension WOTPersistentStoreProtocol {
 
      */
     public func itemMapping(forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
-        try? fetchLocal(byModelClass: Clazz, pkCase: pkCase) { newObject in
-            self.mapping(object: newObject, fromJSON: itemJSON, pkCase: pkCase)
-            callback(newObject)
-            self.stash(hint: pkCase)
+        do {
+            try fetchLocal(byModelClass: Clazz, pkCase: pkCase) { newObject in
+                do {
+                    try self.mapping(object: newObject, fromJSON: itemJSON, pkCase: pkCase)
+                    callback(newObject)
+                    self.stash(hint: pkCase)
+                } catch let error {
+                    print(error)
+                }
+            }
+        } catch let error {
+            print(error)
         }
     }
 
@@ -127,10 +135,18 @@ extension WOTPersistentStoreProtocol {
 
      */
     public func itemMapping(forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
-        try? fetchLocal(byModelClass: Clazz, pkCase: pkCase) { newObject in
-            self.mapping(object: newObject, fromArray: items, pkCase: pkCase)
-            callback(newObject)
-            self.stash(hint: pkCase)
+        do {
+            try fetchLocal(byModelClass: Clazz, pkCase: pkCase) { newObject in
+                do {
+                    try self.mapping(object: newObject, fromArray: items, pkCase: pkCase)
+                    callback(newObject)
+                    self.stash(hint: pkCase)
+                } catch let error {
+                    print(error)
+                }
+            }
+        } catch let error {
+            print(error)
         }
     }
 }

@@ -29,12 +29,15 @@ extension VehicleprofileAmmoDamage {
     }
 }
 
+public enum ErrorVehicleprofileAmmoDamage: Error {
+    case arrayIsNotContainingThreeElements
+}
+
 // MARK: - Mapping
 extension VehicleprofileAmmoDamage {
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         guard array.count == 3 else {
-            print("invalid damage from json")
-            return
+            throw ErrorVehicleprofileAmmoDamage.arrayIsNotContainingThreeElements
         }
         let intArray = NSDecimalNumberArray(array: array)
         self.min_value = intArray.elements[0]
@@ -46,16 +49,4 @@ extension VehicleprofileAmmoDamage {
 // MARK: - JSONDecoding
 extension VehicleprofileAmmoDamage: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {}
-}
-
-extension VehicleprofileAmmoDamage {
-    @available(*, deprecated, message: "deprecated")
-    public static func damage(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
-        guard let array = array as? [Any] else { return }
-
-        try? persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmoDamage.self, pkCase: pkCase) { newObject in
-            persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase)
-            callback(newObject)
-        }
-    }
 }

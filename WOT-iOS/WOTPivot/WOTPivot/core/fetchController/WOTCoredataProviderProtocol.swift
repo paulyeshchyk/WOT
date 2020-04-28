@@ -26,8 +26,8 @@ public typealias NSManagedObjectSetOptinalCallback = ([NSManagedObject?]?) -> Vo
 @objc
 public protocol WOTDataProviderProtocol: NSObjectProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
-    @objc func stash(_ block: @escaping ThrowableCompletion )
-    @objc func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping AnyObjectErrorCompletion )
+    func stash(_ block: @escaping ThrowableCompletion )
+    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping AnyObjectErrorCompletion )
 }
 
 @objc
@@ -37,15 +37,15 @@ public protocol WOTCoredataProviderProtocol: WOTDataProviderProtocol {
     @objc var applicationDocumentsDirectoryURL: URL? { get }
     @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }
 
+    @available(*, deprecated, message:"not to be used")
+    @objc var mainManagedObjectContext: NSManagedObjectContext { get }
+
     @objc func perform(_ block: @escaping NSManagedObjectContextCompletion)
     @objc func performMain(_ block: @escaping NSManagedObjectContextCompletion)
 
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency)
-
-    @available(*, deprecated, message:"not to be used")
-    @objc var mainManagedObjectContext: NSManagedObjectContext { get }
 }
 
 extension WOTCoredataProviderProtocol {

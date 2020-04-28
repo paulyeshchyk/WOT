@@ -9,12 +9,6 @@
 import CoreData
 
 @objc
-public enum SubordinateRequestType: Int {
-    case local = 0
-    case remote = 1
-}
-
-@objc
 public protocol WOTPersistentStoreProtocol {
     @objc
     var appManager: WOTAppManagerProtocol? { get set }
@@ -23,9 +17,9 @@ public protocol WOTPersistentStoreProtocol {
 
     func fetchRemote(byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion)
 
-    func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase)
+    func mapping(object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) throws
 
-    func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase)
+    func mapping(object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) throws
 
     func stash(hint: String?)
 }

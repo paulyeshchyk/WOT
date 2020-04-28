@@ -53,12 +53,8 @@ extension Module {
 
 // MARK: - Mapping
 extension Module {
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
-        do {
-            try self.decode(json: jSON)
-        } catch let error {
-            print("JSON Mapping Error: \(error)")
-        }
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+        try self.decode(json: jSON)
 
         let parents = pkCase.plainParents.filter({$0 is Vehicles}).compactMap({ $0.tank_id as? NSDecimalNumber })
 

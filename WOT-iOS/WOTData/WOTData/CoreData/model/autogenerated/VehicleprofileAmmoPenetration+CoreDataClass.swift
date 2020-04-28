@@ -29,12 +29,15 @@ extension VehicleprofileAmmoPenetration {
     }
 }
 
+public enum ErrorVehicleprofileAmmoPenetration: Error {
+    case arrayIsNotContainingThreeElements
+}
+
 // MARK: - Mapping
 extension VehicleprofileAmmoPenetration {
-    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromArray array: [Any], pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         guard array.count == 3 else {
-            print("invalid penetration from json")
-            return
+            throw ErrorVehicleprofileAmmoPenetration.arrayIsNotContainingThreeElements
         }
         let intArray = NSDecimalNumberArray(array: array)
         self.min_value = intArray.elements[0]
@@ -50,17 +53,5 @@ extension VehicleprofileAmmoPenetration: JSONDecoding {
 //        self.min_value = intArray.elements[0].asDecimal
 //        self.avg_value = intArray.elements[1].asDecimal
 //        self.max_value = intArray.elements[2].asDecimal
-    }
-}
-
-extension VehicleprofileAmmoPenetration {
-    @available(*, deprecated, message: "deprecated")
-    public static func penetration(fromArray array: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping NSManagedObjectOptionalCallback) {
-        guard let array = array as? [Any] else { return }
-
-        try? persistentStore?.fetchLocal(byModelClass: VehicleprofileAmmoPenetration.self, pkCase: pkCase) { newObject in
-            persistentStore?.mapping(object: newObject, fromArray: array, pkCase: pkCase)
-            callback(newObject)
-        }
     }
 }

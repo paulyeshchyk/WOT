@@ -175,13 +175,17 @@ extension JSONAdapter {
                 return
             }
 
-            self.persistentStore?.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
-            let status = managedObject.isInserted ? "created" : "located"
-            self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.modelClazz)) \(objCase.description); status: \(status)"), sender: self)
-            self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
+            do {
+                try self.persistentStore?.mapping(object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
+                let status = managedObject.isInserted ? "created" : "located"
+                self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.modelClazz)) \(objCase.description); status: \(status)"), sender: self)
+                self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
 
-            // managedObject should be send as a result of external links parse flow
-            callback(managedObject, error)
+                // managedObject should be send as a result of external links parse flow
+                callback(managedObject, error)
+            } catch let error {
+                self.appManager?.logInspector?.log(ErrorLog(error, details: objCase), sender: self)
+            }
         })
     }
 }

@@ -16,7 +16,7 @@ public class VehicleprofileArmorList: NSManagedObject {}
 // MARK: - Mapping
 extension VehicleprofileArmorList {
     @objc
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         let hullCase = PKCase()
         hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
 

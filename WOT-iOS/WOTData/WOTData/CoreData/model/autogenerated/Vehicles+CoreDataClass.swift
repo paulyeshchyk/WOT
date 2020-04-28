@@ -100,25 +100,29 @@ extension Vehicles {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = modulesTreeCase[.primary]
 
-            try? persistentStore?.fetchLocal(byModelClass: ModulesTree.self, pkCase: submodulesCase) { newObject in
-                guard let module_tree = newObject as? ModulesTree else {
-                    return
-                }
-                persistentStore?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase)
+            do {
+                try persistentStore?.fetchLocal(byModelClass: ModulesTree.self, pkCase: submodulesCase) { newObject in
+                    guard let module_tree = newObject as? ModulesTree else {
+                        return
+                    }
+                    do {
+                        try persistentStore?.mapping(object: newObject, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase)
 
-                module_tree.default_profile = self.default_profile
-                self.addToModules_tree(module_tree)
-                persistentStore?.stash(hint: modulesTreeCase)
+                        module_tree.default_profile = self.default_profile
+                        self.addToModules_tree(module_tree)
+                        persistentStore?.stash(hint: modulesTreeCase)
+                    } catch let error {
+                        print(error)
+                    }
+                }
+            } catch let error {
+                print(error)
             }
         }
     }
 
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
-        do {
-            try self.decode(json: jSON)
-        } catch let error {
-            print("JSON Mapping Error: \(error)")
-        }
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+        try self.decode(json: jSON)
 
         defaultProfileMapping(jSON: jSON[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
 

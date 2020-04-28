@@ -52,12 +52,9 @@ extension Vehicleprofile {
 
 // MARK: - Mapping
 extension Vehicleprofile {
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
-        do {
-            try self.decode(json: jSON)
-        } catch let error {
-            print("JSON Mapping Error: \(error)")
-        }
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+        try self.decode(json: jSON)
+
         var parents = pkCase.plainParents
         parents.append(self)
 

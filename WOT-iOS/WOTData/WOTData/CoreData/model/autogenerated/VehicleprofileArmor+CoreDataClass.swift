@@ -31,12 +31,8 @@ extension VehicleprofileArmor {
 
 // MARK: - Mapping
 extension VehicleprofileArmor {
-    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
-        do {
-            try self.decode(json: jSON)
-        } catch let error {
-            print("JSON Mapping Error: \(error)")
-        }
+    public override func mapping(fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+        try self.decode(json: jSON)
     }
 }
 
@@ -59,9 +55,17 @@ extension VehicleprofileArmor {
             return
         }
 
-        try? persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
-            persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
-            callback(newObject)
+        do {
+            try persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
+                do {
+                    try persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
+                    callback(newObject)
+                } catch let error {
+                    print(error)
+                }
+            }
+        } catch let error {
+            print(error)
         }
     }
 
@@ -71,9 +75,17 @@ extension VehicleprofileArmor {
             return
         }
 
-        try? persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
-            persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
-            callback(newObject)
+        do {
+            try persistentStore?.fetchLocal(byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { newObject in
+                do {
+                    try persistentStore?.mapping(object: newObject, fromJSON: jSON, pkCase: pkCase)
+                    callback(newObject)
+                } catch let error {
+                    print(error)
+                }
+            }
+        } catch let error {
+            print(error)
         }
     }
 }
