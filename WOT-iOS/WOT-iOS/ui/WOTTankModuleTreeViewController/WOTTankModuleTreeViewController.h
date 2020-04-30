@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <WOT-Swift.h>
-#import "WOTTankListSettingsDatasource.h"
 
+#import "WOTTankListSettingsDatasource.h"
+@protocol WOTViewControllerProtocol;
 typedef void(^WOTConfigurationCompletionCancelBlock) (void);
 typedef void(^WOTConfigurationCompletionDoneBlock) (id configuration);
 

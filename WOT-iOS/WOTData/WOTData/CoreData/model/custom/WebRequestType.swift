@@ -34,36 +34,3 @@ public enum WebRequestType: String {
         return WebRequestType.allTypes.firstIndex(of: self)
     }
 }
-
-@objc
-public enum ObjCWebRequestType: Int {
-    case unknown
-    case login
-    case logout
-    case saveSession
-    case clearSession
-    case chassis
-    case turrets
-    case guns
-    case radios
-    case engines
-    case vehicles
-    case moduleTree
-    case modules
-    case tankProfile
-
-    static func fromString(stringValue: String) -> ObjCWebRequestType {
-        guard let index = WebRequestType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)")}
-        guard let result = ObjCWebRequestType(rawValue: index) else { fatalError("unknown WebRequestType")}
-        return result
-    }
-}
-
-@objc
-public class ObjCWebRequestTypeConverter: NSObject {
-    @objc
-    @available(*, deprecated, message: "Use swift ModuleType")
-    public static func fromString(_ string: String) -> ObjCWebRequestType {
-        return ObjCWebRequestType.fromString(stringValue: string)
-    }
-}

@@ -7,6 +7,7 @@
 //
 
 #import "WOTPlayersListViewController.h"
+#import <WOT-Swift.h>
 
 @interface WOTPlayersListViewController ()
 

@@ -6,8 +6,9 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import <WOT-Swift.h>
 #import <MMDrawerController/MMDrawerController.h>
+
+@protocol WOTViewControllerProtocol;
 
 @interface WOTDrawerViewController : MMDrawerController<WOTViewControllerProtocol>
 

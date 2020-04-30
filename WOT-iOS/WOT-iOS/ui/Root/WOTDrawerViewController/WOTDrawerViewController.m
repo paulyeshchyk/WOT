@@ -11,6 +11,7 @@
 #import "UINavigationBar+WOT.h"
 #import "UIBarButtonItem+EventBlock.h"
 #import "WOTSessionManager.h"
+#import <WOT-Swift.h>
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 

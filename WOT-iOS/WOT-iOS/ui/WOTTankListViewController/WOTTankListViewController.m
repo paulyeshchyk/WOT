@@ -9,6 +9,7 @@
 #import "WOTTankListViewController.h"
 
 #import "WOTTankListSortViewController.h"
+#import <WOT-Swift.h>
 
 #import <WOTData/WOTData.h>
 #import "WOTTankListCollectionViewCell.h"

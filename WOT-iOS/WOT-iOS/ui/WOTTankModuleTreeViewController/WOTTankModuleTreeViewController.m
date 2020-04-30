@@ -11,6 +11,7 @@
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTTankListSettingsDatasource.h"
+#import <WOT-Swift.h>
 #import <WOTPivot/WOTPivot.h>
 #import "UINavigationBar+WOT.h"
 #import "UIImageView+WebCache.h"

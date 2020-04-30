@@ -7,6 +7,7 @@
 //
 
 #import "WOTProfileViewController.h"
+#import <WOT-Swift.h>
 
 @implementation WOTProfileViewController
 
