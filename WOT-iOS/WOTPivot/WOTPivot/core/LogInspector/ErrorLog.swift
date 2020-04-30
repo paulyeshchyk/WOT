@@ -21,22 +21,18 @@ public class ErrorLog: LogMessageTypeProtocol {
         message = text
     }
 
-    convenience public init?(_ error: Any?, details: Any?) {
+    convenience public init?(_ error: Error?, details: Describable?) {
         var messages: [String] = .init()
-        if let wotError = error as? WOTError {
-            messages.append(wotError.customDescription ?? "unknown error")
-        } else if let swiftError = error as? Error {
-            messages.append(swiftError.debugDescription)
+        if let error = error {
+            messages.append(error.debugDescription)
         } else {
             messages.append("Unknown error")
         }
 
-        if let describable = details as? Describable {
-            if describable.description.count > 0 {
-                messages.append(describable.description)
+        if let details = details {
+            if details.description.count > 0 {
+                messages.append(details.description)
             }
-        } else {
-            print("\(type(of: details)) is not Describable")
         }
 
         self.init(message: messages.joined(separator: "; details: "))

@@ -68,9 +68,9 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         for (idx, key) in keys.enumerated() {
             //
             let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(for: extraction, fromRequest: fromRequest) {context, managedObject, error in
+            findOrCreateObject(for: extraction, fromRequest: fromRequest) {context, managedObjectID, error in
 
-                self.onObjectDidParse?(context, managedObject, error)
+                self.onObjectDidParse?(context, managedObjectID, error)
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
@@ -154,11 +154,7 @@ extension JSONAdapter {
     }
 
     private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping ContextAnyObjectErrorCompletion) {
-        #warning("check")
-//        guard Thread.current.isMainThread else {
-//            fatalError("Current thread is not main")
-//        }
-        //
+
         let parents = fromRequest.jsonLink?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
         #warning("not working for guns: expected gun_id - received tag")
@@ -179,11 +175,9 @@ extension JSONAdapter {
 
             do {
                 try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
-                let status = managedObject.isInserted ? "created" : "located"
-//                self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.modelClazz)) \(objCase.description); status: \(status)"), sender: self)
                 self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
                 self.persistentStore?.stash(context: context, hint: objCase)
-                // managedObject should be send as a result of external links parse flow
+                //
                 callback(context, managedObjectID, error)
             } catch let error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: objCase), sender: self)

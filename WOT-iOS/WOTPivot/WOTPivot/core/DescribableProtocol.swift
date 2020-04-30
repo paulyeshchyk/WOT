@@ -8,13 +8,12 @@
 
 import Foundation
 
-public protocol Describable {
+@objc public protocol Describable {
     var description: String { get }
 }
 
 @available(*, deprecated, message: "Use Describable instead")
-@objc
-public protocol ObjCDescribable {
+@objc public protocol ObjCDescribable {
     @objc
     var description: String { get }
 }

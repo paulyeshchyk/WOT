@@ -39,7 +39,7 @@ public protocol WOTCoredataProviderProtocol: WOTDataProviderProtocol {
     @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }
 
     @objc var mainContext: NSManagedObjectContext { get }
-    @objc func privateContext() -> NSManagedObjectContext
+    @objc func newPrivateContext() -> NSManagedObjectContext
 
     @objc func perform(context: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion)
     @objc func performMain(_ block: @escaping NSManagedObjectContextCompletion)

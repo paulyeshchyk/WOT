@@ -32,7 +32,6 @@ public protocol WOTRequestBindingProtocol {
     func request(for requestId: WOTRequestIdType) -> WOTModelServiceProtocol.Type?
 }
 
-
 public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: DataAdapterProtocol.Type] = .init()

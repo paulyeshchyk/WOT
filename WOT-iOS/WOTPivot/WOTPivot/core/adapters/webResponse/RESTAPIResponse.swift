@@ -23,7 +23,7 @@ public struct RESTAPIError: WOTError {
         self.message = message
     }
 
-    public var customDescription: String? {
+    public var debubDescription: String? {
         return "RESTAPIError code:\(code ?? -1); message: \(message ?? "No message")"
     }
 

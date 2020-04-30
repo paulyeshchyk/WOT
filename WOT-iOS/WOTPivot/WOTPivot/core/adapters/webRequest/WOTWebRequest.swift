@@ -25,7 +25,7 @@ public protocol WOTModelServiceProtocol: class {
 }
 
 @objc
-open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, Describable, NSURLConnectionDataDelegate {
+open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
     override open var description: String {
         let pumperDescription = pumper?.description ?? ""
         return "\(String(describing: type(of: self))) \(pumperDescription)"

@@ -106,7 +106,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
                     do {
                         try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, onObjectDidFetch: onObjectDidFetch)
                     } catch let error {
-                        appManager?.logInspector?.log(ErrorLog(error, details: $0), sender: self)
+                        appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
                     }
                 }
             } else {

@@ -38,7 +38,7 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
             }
         }
 
-        let context = privateContext()
+        let context = newPrivateContext()
         let debugInfo: String = "Context: \"\(context.name ?? "<Unknown>")\" \(String(describing: clazz)) \(predicate?.description ?? "<Unknown predicate>")"
         self.appManager?.logInspector?.log(CDFetchStartLog("\(debugInfo)"), sender: self)
 
@@ -80,7 +80,7 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         return coordinator
     }()
 
-    @objc public func privateContext() -> NSManagedObjectContext {
+    @objc public func newPrivateContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.name = "Private"
         context.parent = self.mainContext
