@@ -52,7 +52,7 @@
 //    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout jsonLink: NULL];
 }
 
-+ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
+//+ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
 
 //    id<WOTRequestProtocol> request =  [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
 //
@@ -64,17 +64,17 @@
 //    [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
 //
 //    [requestManager start:request with:args forGroupId:WGWebRequestGroups.login jsonLink: NULL];
-}
+//}
 
-+ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager {
-    
-    id access_token = [self currentAccessToken];
-    if (access_token){
-        [self logoutWithRequestManager:requestManager];
-    } else {
-        [self loginWithRequestManager:requestManager];
-    }
-}
+//+ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager {
+//    
+//    id access_token = [self currentAccessToken];
+//    if (access_token){
+//        [self logoutWithRequestManager:requestManager];
+//    } else {
+//        [self loginWithRequestManager:requestManager];
+//    }
+//}
 
 + (BOOL)sessionHasBeenExpired {
     
