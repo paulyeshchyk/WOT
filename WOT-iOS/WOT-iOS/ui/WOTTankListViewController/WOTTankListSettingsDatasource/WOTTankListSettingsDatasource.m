@@ -14,32 +14,20 @@
 @property (nonatomic, strong, readwrite) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, strong) NSPointerArray *listeners;
 
+@property (nonatomic, assign) id<WOTCoredataProviderProtocol> coreDataProvider;
+
 @end
 
 @implementation WOTTankListSettingsDatasource
-
-+ (WOTTankListSettingsDatasource *)sharedInstance {
-    
-    static dispatch_once_t once;
-    static id instance;
-    dispatch_once(&once, ^{
-        
-        [NSThread executeOnMainThread:^{
-            
-            instance = [[self alloc] init];
-        }];
-        
-    });
-    return instance;
-}
 
 - (id)init {
     
     self = [super init];
     if (self){
 
-        id<WOTCoredataProviderProtocol> coreDataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-        [coreDataProvider performMain:^(NSManagedObjectContext * _Nonnull context) {
+        id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+        self.coreDataProvider = appDelegate.appManager.coreDataProvider;
+        [self.coreDataProvider performWithContext:self.context block:^(NSManagedObjectContext * _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:context];
             [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
@@ -53,6 +41,10 @@
         
     }
     return self;
+}
+
+- (void)stash:(void (^ _Nonnull)(NSError * _Nullable))block{
+    [self.coreDataProvider stashWithContext:self.context block: block];
 }
 
 - (NSCompoundPredicate *)filterBy {
@@ -97,6 +89,12 @@
         return [result componentsJoinedByString:@","];
     }
     
+}
+
+- (NSManagedObjectContext *)context {
+    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+    id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
+    return coreDataProvider.mainContext;
 }
 
 - (NSArray<NSSortDescriptor *> *  _Nonnull)sortBy {

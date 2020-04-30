@@ -31,8 +31,6 @@ typedef void(^WOTTankListSettingsDatasourceCallback)(void);
 @property (nonatomic, readonly) NSManagedObjectContext * _Nullable context;
 @property (nonatomic, readonly) NSFetchedResultsController * _Nullable fetchedResultController;
 
-+ (WOTTankListSettingsDatasource * _Nonnull)sharedInstance;
-
 + (id _Nonnull )context:(NSManagedObjectContext *_Nonnull)context createSortSettingForKey:(NSString *_Nonnull)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
 + (id _Nonnull )context:(NSManagedObjectContext *_Nonnull)context createGroupBySettingForKey:(NSString *_Nullable)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
 + (id _Nonnull )context:(NSManagedObjectContext *_Nonnull)context createFilterBySettingForKey:(NSString *_Nullable)key value:(NSString *_Nullable)value callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
@@ -45,6 +43,5 @@ typedef void(^WOTTankListSettingsDatasourceCallback)(void);
 - (void)setting:(id _Nonnull )setting setKey:(NSString *_Nullable)key;
 - (void)setting:(id _Nullable )setting setValues:(NSString *_Nonnull)values;
 - (id _Nullable )keyForSetting:(id _Nullable )setting;
-
 
 @end

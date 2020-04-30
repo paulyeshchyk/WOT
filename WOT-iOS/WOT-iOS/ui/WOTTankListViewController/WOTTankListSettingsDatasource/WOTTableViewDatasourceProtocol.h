@@ -35,7 +35,7 @@ typedef void(^WOTTankListSettingMoveCompletionCallback)(void);
 - (void)updateSetting:(id)setting byType:(id)type byValue:(id)value filterValue:(id)filterValue ascending:(BOOL)ascending callback:(WOTTankListSettingUpateCallback)callback;
 - (id)keyForSetting:(id)setting;
 
-- (void)save;
+- (void)stash:(void (^ _Nonnull)(NSError * _Nullable))block;
 - (void)rollback;
 
 @end

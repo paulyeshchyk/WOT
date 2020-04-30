@@ -1,17 +1,17 @@
 //
-//  CDFetchLog.swift
+//  CDMapping.swift
 //  WOTPivot
 //
-//  Created by Pavel Yeshchyk on 4/21/20.
+//  Created by Pavel Yeshchyk on 4/29/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
 import Foundation
 
-public class CDFetchStartLog: LogMessageTypeProtocol {
+public class CDMappingStartLog: LogMessageTypeProtocol {
     public private(set) var message: String
     public var priorityType: LogMessagePriorityType { return .coredata }
-    public var logeventType: String { return "CDFetchStart"}
+    public var logeventType: String { return "CDMappingStart"}
 
     public init() {
         message = ""
@@ -26,10 +26,10 @@ public class CDFetchStartLog: LogMessageTypeProtocol {
     }
 }
 
-public class CDFetchEndedLog: LogMessageTypeProtocol {
+public class CDMappingEndLog: LogMessageTypeProtocol {
     public private(set) var message: String
     public var priorityType: LogMessagePriorityType { return .coredata }
-    public var logeventType: String { return "CDFetchEnded"}
+    public var logeventType: String { return "CDMappingEnded"}
 
     public init() {
         message = ""

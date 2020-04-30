@@ -16,10 +16,13 @@
 
 @property (nonatomic, strong) UIViewController<WOTMenuProtocol>* menu;
 @property (nonatomic, copy)Class visibleViewControllerClass;
+@property (nonatomic, assign)id<WOTCoredataProviderProtocol> _Nullable dataProvider;
 
 @end
 
 @implementation WOTDrawerViewController
+
+@synthesize appManager;
 
 + (UIViewController *)centerViewControllerForClassName:(Class )class title:(NSString *)title image:(UIImage *)image{
 
@@ -46,9 +49,15 @@
     self.menu.delegate = nil;
 }
 
-- (id)initWithMenu {
++ (WOTDrawerViewController * _Nonnull)newDrawer{
+    return [[WOTDrawerViewController alloc] initWithMenu];
+}
+
+- (id _Nonnull)initWithMenu {
+
+    WOTMenuDatasource *menuDatasource = [[WOTMenuDatasource alloc] init];
+    WOTMenuViewController *menuViewController = [[WOTMenuViewController alloc] initWithMenuDatasource: menuDatasource nibName:@"WOTMenuViewController" bundle: nil];
     
-    WOTMenuViewController *menuViewController = [[WOTMenuViewController alloc] initWithNibName:NSStringFromClass([WOTMenuViewController class]) bundle:nil];
     UINavigationController *leftNavigationController = [[UINavigationController alloc] initWithRootViewController:menuViewController];
     
     UIViewController *centerViewController = [WOTDrawerViewController centerViewControllerForClassName:menuViewController.selectedMenuItemClass title:menuViewController.selectedMenuItemTitle image:menuViewController.selectedMenuItemImage];
@@ -59,10 +68,13 @@
     
     self = [super initWithCenterViewController:centerNavigationController leftDrawerViewController:leftNavigationController];
     if (self){
-
+        
+        menuViewController.delegate = self;
         self.menu = menuViewController;
-        self.menu.delegate = self;
+
         self.visibleViewControllerClass = self.menu.selectedMenuItemClass;
+        
+        [self.menu rebuildMenu];
         [self setDrawerVisualStateBlock:[MMDrawerVisualState parallaxVisualStateBlockWithParallaxFactor:CGFLOAT_MAX]];
 
         self.openDrawerGestureModeMask = MMCloseDrawerGestureModePanningNavigationBar;

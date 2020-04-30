@@ -49,7 +49,7 @@ public protocol LogMessageSender {
 public class LogInspector: NSObject, LogInspectorProtocol {
     private var prioritiesToLog: [LogMessagePriorityType] = []
 
-    convenience init(priorities: [LogMessagePriorityType]) {
+    public convenience init(priorities: [LogMessagePriorityType]) {
         self.init()
         self.prioritiesToLog = priorities
     }

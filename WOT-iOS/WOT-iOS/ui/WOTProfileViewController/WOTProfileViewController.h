@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WOT-Swift.h>
 
-@interface WOTProfileViewController : UIViewController
+@interface WOTProfileViewController : UIViewController<WOTViewControllerProtocol>
 
 @end

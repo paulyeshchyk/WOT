@@ -26,6 +26,11 @@ class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
 }
 
 class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
+    var settingsDatasource: WOTTankListSettingsDatasource
+    init(datasource: WOTTankListSettingsDatasource) {
+        settingsDatasource = datasource
+    }
+
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
         let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicles")
         result.sortDescriptors = sortDescriptors()
@@ -35,7 +40,7 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
 
     private func sortDescriptors() -> [NSSortDescriptor] {
         let tankIdDescriptor = NSSortDescriptor(key: "tank_id", ascending: true)
-        var result = WOTTankListSettingsDatasource.sharedInstance().sortBy
+        var result = settingsDatasource.sortBy
         result.append(tankIdDescriptor)
         return result
     }
@@ -76,13 +81,14 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 
 class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
     var logSenderDescription: String = "WOTTankPivotModel"
+    var appManager: WOTAppManagerProtocol?
 
-    convenience init(modelListener: WOTDataModelListener, dataProvider: WOTCoredataProviderProtocol?) {
-        let fetchRequest = WOTTankPivotFetchRequest()
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: dataProvider)
+    convenience init(modelListener: WOTDataModelListener, appManager: WOTAppManagerProtocol?, settingsDatasource: WOTTankListSettingsDatasource) {
+        let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: appManager?.coreDataProvider)
 
         let metadatasource = WOTTankPivotMetadatasource()
-        let nodeCreator = WOTTankPivotNodeCreator()
+        let nodeCreator = WOTTankPivotNodeCreator(appManager: appManager)
 
         self.init(fetchController: fetchController,
                   modelListener: modelListener,
@@ -90,6 +96,7 @@ class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
                   metadatasource: metadatasource)
 
         self.enumerator = WOTNodeEnumerator.sharedInstance
+        self.appManager = appManager
     }
 
     deinit {}
@@ -100,13 +107,11 @@ class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
         do {
             try performWebRequest()
         } catch let error {
-            let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
             appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: nil)
         }
     }
 
     private func performWebRequest() throws {
-        let appManager = (UIApplication.shared.delegate as? WOTAppDelegateProtocol)?.appManager
         let requestManager = appManager?.requestManager
         try WOTWEBRequestFactory.fetchVehiclePivotData(requestManager, listener: self)
     }

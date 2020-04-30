@@ -21,6 +21,8 @@
 
 @implementation WOTTankGridViewController
 
+@synthesize appManager;
+
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];

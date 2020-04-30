@@ -10,6 +10,8 @@
 
 @implementation WOTProfileViewController
 
+@synthesize appManager;
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }

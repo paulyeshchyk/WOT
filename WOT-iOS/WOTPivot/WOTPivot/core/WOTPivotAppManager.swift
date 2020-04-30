@@ -17,14 +17,11 @@ public protocol WOTAppManagerProtocol {
     @objc var sessionManager: WOTWebSessionManagerProtocol? { get set }
     @objc var logInspector: LogInspectorProtocol? { get set }
     @objc var coreDataProvider: WOTCoredataProviderProtocol? { get set }
-    @objc var shared: WOTAppManagerProtocol { get }
     @objc var persistentStore: WOTPersistentStoreProtocol? { get set }
 }
 
 @objc
 public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
-    @objc public static let sharedInstance = WOTPivotAppManager()
-    @objc public var shared: WOTAppManagerProtocol { return WOTPivotAppManager.sharedInstance }
     @objc public var hostConfiguration: WOTHostConfigurationProtocol?
     @objc public var requestCoordinator: WOTRequestCoordinatorProtocol? {
         didSet {

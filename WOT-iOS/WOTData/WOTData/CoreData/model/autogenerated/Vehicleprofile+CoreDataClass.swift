@@ -61,7 +61,7 @@ extension Vehicleprofile {
         if let itemsList = jSON[#keyPath(Vehicleprofile.ammo)] as? [Any] {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
-            persistentStore?.itemMapping(context: context, forClass: VehicleprofileAmmoList.self, items: itemsList, pkCase: itemCase) { managedObjectID in
+            try? persistentStore?.itemMapping(context: context, forClass: VehicleprofileAmmoList.self, items: itemsList, pkCase: itemCase) { managedObjectID in
                 guard let managedObjectID = managedObjectID, let ammo = context.object(with: managedObjectID) as? VehicleprofileAmmoList else {
                     return
                 }
@@ -72,7 +72,7 @@ extension Vehicleprofile {
         if let itemJSON = jSON[#keyPath(Vehicleprofile.armor)] as? JSON {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
-            persistentStore?.itemMapping(context: context, forClass: VehicleprofileArmorList.self, itemJSON: itemJSON, pkCase: itemCase) { managedObjectID in
+            try? persistentStore?.itemMapping(context: context, forClass: VehicleprofileArmorList.self, itemJSON: itemJSON, pkCase: itemCase) { managedObjectID in
                 guard let managedObjectID = managedObjectID, let armor = context.object(with: managedObjectID) as? VehicleprofileArmorList else {
                     return
                 }
@@ -84,7 +84,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileEngine.primaryKeyPath()] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileEngine.primaryKey(for: itemID)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileEngine.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
+                try? persistentStore?.itemMapping(context: context, forClass: VehicleprofileEngine.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
                     guard let managedObjectID = managedObjectID, let engine = context.object(with: managedObjectID) as? VehicleprofileEngine else {
                         return
                     }
@@ -97,7 +97,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileGun.primaryKeyPath()] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileGun.primaryKey(for: itemID)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileGun.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
+                try? persistentStore?.itemMapping(context: context, forClass: VehicleprofileGun.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
                     guard let managedObjectID = managedObjectID, let gun = context.object(with: managedObjectID) as? VehicleprofileGun else {
                         return
                     }
@@ -110,7 +110,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileRadio.primaryKeyPath()] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileRadio.primaryKey(for: itemID)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileRadio.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
+                try? persistentStore?.itemMapping(context: context, forClass: VehicleprofileRadio.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
                     guard let managedObjectID = managedObjectID, let radio = context.object(with: managedObjectID) as? VehicleprofileRadio else {
                         return
                     }
@@ -123,7 +123,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileSuspension.primaryKeyPath()] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileSuspension.primaryKey(for: itemID)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileSuspension.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
+                try? persistentStore?.itemMapping(context: context, forClass: VehicleprofileSuspension.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
                     guard let managedObjectID = managedObjectID, let suspension = context.object(with: managedObjectID) as? VehicleprofileSuspension else {
                         return
                     }
@@ -136,7 +136,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileTurret.primaryKeyPath()] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileTurret.primaryKey(for: itemID)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
+                try? persistentStore?.itemMapping(context: context, forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
                     guard let managedObjectID = managedObjectID, let turret = context.object(with: managedObjectID) as? VehicleprofileTurret else {
                         return
                     }
@@ -148,7 +148,7 @@ extension Vehicleprofile {
         if let moduleJSON = jSON[#keyPath(Vehicleprofile.modules)] as? JSON {
             let vehicleprofileModuleCase = PKCase(parentObjects: parents)
             vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
-            persistentStore?.itemMapping(context: context, forClass: VehicleprofileModule.self, itemJSON: moduleJSON, pkCase: vehicleprofileModuleCase) { managedObjectID in
+            try? persistentStore?.itemMapping(context: context, forClass: VehicleprofileModule.self, itemJSON: moduleJSON, pkCase: vehicleprofileModuleCase) { managedObjectID in
                 guard let managedObjectID = managedObjectID, let module = context.object(with: managedObjectID) as? VehicleprofileModule else {
                     return
                 }

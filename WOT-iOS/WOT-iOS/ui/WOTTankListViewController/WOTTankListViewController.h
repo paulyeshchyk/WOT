@@ -6,8 +6,9 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
+#import <WOT-Swift.h>
 #import <UIKit/UIKit.h>
 
-@interface WOTTankListViewController : UIViewController
+@interface WOTTankListViewController : UIViewController<WOTViewControllerProtocol>
 
 @end

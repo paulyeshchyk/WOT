@@ -32,10 +32,13 @@
 @property (nonatomic, weak) WOTTankListSearchBar *searchBar;
 @property (nonatomic, copy) NSArray *leftBarButtonItems;
 @property (nonatomic, copy) NSString *searchBarText;
+@property (nonatomic, strong) WOTTankListSettingsDatasource *settingsDatasource;
 
 @end
 
 @implementation WOTTankListViewController
+
+@synthesize appManager;
 
 - (void)dealloc {
 
@@ -44,6 +47,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    _settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
     
     __weak typeof(self)weakSelf = self;
     self.settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
@@ -187,8 +192,9 @@
     [fetchRequest setSortDescriptors:self.sortDescriptors];
     [fetchRequest setPredicate:self.filterByPredicate];
     
-    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-    self.fetchedResultController = [dataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
+    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+    id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
+    self.fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
     self.fetchedResultController.delegate = self;
     
     NSError *error = nil;
@@ -199,7 +205,7 @@
 
 - (NSPredicate *)filterByPredicate {
     
-    NSPredicate *filterByPredicate = [WOTTankListSettingsDatasource sharedInstance].filterBy;
+    NSPredicate *filterByPredicate = _settingsDatasource.filterBy;
     NSMutableArray *predicates = [[NSMutableArray alloc] init];
     if (filterByPredicate){
         
@@ -216,7 +222,7 @@
 
 - (NSArray *)sortDescriptors {
     
-    NSMutableArray *result = [[NSMutableArray alloc] initWithArray:[WOTTankListSettingsDatasource sharedInstance].sortBy];
+    NSMutableArray *result = [[NSMutableArray alloc] initWithArray:_settingsDatasource.sortBy];
     [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
     return result;
@@ -224,7 +230,7 @@
 
 - (NSString *)groupByField {
     
-    return [WOTTankListSettingsDatasource sharedInstance].groupBy;
+    return _settingsDatasource.groupBy;
 }
 
 #pragma mark - private

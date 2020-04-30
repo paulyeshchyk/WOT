@@ -17,10 +17,13 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
     public var appManager: WOTAppManagerProtocol?
 
     public func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion ) {
+        let debugInfo: String = "Context: \"\(context.name ?? "<Unknown>")\" \(debugDescription.description)"
+        self.appManager?.logInspector?.log(CDStashStartLog(debugInfo), sender: self)
         let uuid = UUID()
         let customBlock: ThrowableCompletion = { error in
             block(error)
             self.appManager?.logInspector?.log(TIMEMeasureLog("Context save end", uuid: uuid))
+            self.appManager?.logInspector?.log(CDStashEndLog(debugInfo), sender: self)
         }
 
         context.saveRecursively(customBlock)
@@ -36,6 +39,9 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         }
 
         let context = privateContext()
+        let debugInfo: String = "Context: \"\(context.name ?? "<Unknown>")\" \(String(describing: clazz)) \(predicate?.description ?? "<Unknown predicate>")"
+        self.appManager?.logInspector?.log(CDFetchStartLog("\(debugInfo)"), sender: self)
+
         perform(context: context) { context in
             do {
                 let managedObject = try NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context)
@@ -79,6 +85,7 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         context.name = "Private"
         context.parent = self.mainContext
         context.undoManager = nil
+
         #warning("check notifications")
         NotificationCenter.default.addObserver(self, selector: #selector(WOTCoreDataProvider.mainContextDidSave(notification:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
         return context
@@ -88,22 +95,16 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.name = "Main"
         context.parent = self.masterContext
-//        context.mergePolicy = self.masterContext.mergePolicy
         return context
     }()
 
     @objc private lazy var masterContext: NSManagedObjectContext  = {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-//        if #available(iOS 10.0, *) {
-//            context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-//        } else {
-//            print("not iOS 10.0")
-//        }
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
         context.name = "Master"
         context.undoManager = nil
-        #warning("check notifications")
 
+        #warning("check notifications")
         NotificationCenter.default.addObserver(self, selector: #selector(WOTCoreDataProvider.mainContextDidSave(notification:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
         return context
     }()
@@ -125,7 +126,7 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 
     @objc
     public func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult> {
-        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: masterContext, sectionNameKeyPath: nil, cacheName: nil)
+        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
     }
 
     public func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency) {}
@@ -197,5 +198,11 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
 //        self.mainContext.perform {
 //            self.mergeChanges(notification: notification, toContext: self.masterContext)
 //        }
+    }
+}
+
+extension WOTCoreDataProvider: LogMessageSender {
+    public var logSenderDescription: String {
+        return String(describing: type(of: self))
     }
 }

@@ -14,4 +14,6 @@
 
 @implementation WOTPlayersListViewController
 
+@synthesize appManager;
+
 @end

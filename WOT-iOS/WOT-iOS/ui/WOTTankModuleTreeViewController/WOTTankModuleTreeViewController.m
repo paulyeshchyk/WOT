@@ -77,7 +77,7 @@
 }
 
 - (NSArray *) sortDescriptors {
-    NSMutableArray *result = [[[WOTTankListSettingsDatasource sharedInstance] sortBy] mutableCopy];
+    NSMutableArray *result = [[self.settingsDatasource sortBy] mutableCopy];
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:WOTApiKeys.tank_id ascending:YES];
     [result addObject:descriptor];
     return result;
@@ -102,6 +102,7 @@
 
 @implementation WOTTankModuleTreeViewController
 @synthesize uuidHash;
+@synthesize appManager;
 
 - (void)dealloc {
     
@@ -122,9 +123,13 @@
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
+        id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+        id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
 
+        self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
+        
         self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
-                                                                                      dataprovider:[[WOTPivotAppManager sharedInstance] coreDataProvider]];
+                                                                                      dataprovider:coreDataProvider];
         self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController
                                                               listener: self
                                                             enumerator: [WOTNodeEnumerator sharedInstance]

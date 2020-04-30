@@ -58,9 +58,10 @@
         }
     } else {
         
-        [[WOTTankListSettingsDatasource sharedInstance] setting:updatedSetting setKey:value];
-        [[WOTTankListSettingsDatasource sharedInstance] setting:updatedSetting setValues:filterValue];
-        [[WOTTankListSettingsDatasource sharedInstance] setting:updatedSetting setAscending:ascending];
+        [self setting:updatedSetting setKey:value];
+        [self setting:updatedSetting setValues:filterValue];
+        [self setting:updatedSetting setAscending:ascending];
+        
         if (callback) {
             
             callback(nil, updatedSetting);
@@ -121,7 +122,8 @@
             [self setting:setting setOrderIndex:idx];
         }];
 
-        [self save];
+        [self stash:^(NSError * _Nullable error) {
+            
         
         [NSThread executeOnMainThread:^{
             
@@ -130,7 +132,8 @@
                 completionBlock();
             }
         }];
-        
+        }];
+
     }];
 }
 
@@ -141,19 +144,12 @@
         NSManagedObject *obj = [self objectAtIndexPath:indexPath];
         
         [self.context deleteObject:obj];
-        [self save];
+        [self stash:^(NSError * _Nullable error) {
+            
+        }];
     }];
 }
 
-
-- (void)save {
-    
-    if ([self.context hasChanges]) {
-        
-        NSError *error = nil;
-        [self.context save:&error];
-    }
-}
 
 - (void)rollback {
     

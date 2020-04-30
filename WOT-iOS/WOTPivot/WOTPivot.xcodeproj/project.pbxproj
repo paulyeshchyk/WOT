@@ -21,6 +21,7 @@
 		1D02D244245817EF00EE8DE9 /* LogicError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D02D243245817EF00EE8DE9 /* LogicError.swift */; };
 		1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0304CF21E8C19100050131 /* WOTAPI.swift */; };
 		1D038A5A2458A18E0015101F /* NSManagedObjectContext+Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D038A592458A18E0015101F /* NSManagedObjectContext+Save.swift */; };
+		1D038A5C245942D00015101F /* CDMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D038A5B245942D00015101F /* CDMapping.swift */; };
 		1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5021A54E4E001AF67F /* VIPER.swift */; };
 		1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */; };
 		1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5321A54E4E001AF67F /* PivotVIPER.swift */; };
@@ -190,6 +191,7 @@
 		1D02D243245817EF00EE8DE9 /* LogicError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicError.swift; sourceTree = "<group>"; };
 		1D0304CF21E8C19100050131 /* WOTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WOTAPI.swift; path = core/WOTAPI.swift; sourceTree = "<group>"; };
 		1D038A592458A18E0015101F /* NSManagedObjectContext+Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Save.swift"; sourceTree = "<group>"; };
+		1D038A5B245942D00015101F /* CDMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDMapping.swift; sourceTree = "<group>"; };
 		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
 		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
 		1D126A5321A54E4E001AF67F /* PivotVIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotVIPER.swift; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 				1D70CD88244EFC730031CBFE /* CustomThreadLog.swift */,
 				1D70CD8A244F3C160031CBFE /* CDFetchLog.swift */,
 				1D70CD9C245029AC0031CBFE /* CDMergeLog.swift */,
+				1D038A5B245942D00015101F /* CDMapping.swift */,
 				1D70CD8C244F40940031CBFE /* CDStash.swift */,
 				1D70CD92244F8B400031CBFE /* WEBStartLog.swift */,
 				1D70CD94244F8BBE0031CBFE /* WEBCancelLog.swift */,
@@ -1156,6 +1159,7 @@
 				1D02D23A2457FF1900EE8DE9 /* WOTPredicate.swift in Sources */,
 				1D70CD95244F8BBE0031CBFE /* WEBCancelLog.swift in Sources */,
 				1D65F7F72216A60E006A85E4 /* WOTTankConfigurationFlowLayout.swift in Sources */,
+				1D038A5C245942D00015101F /* CDMapping.swift in Sources */,
 				1D65F779221435E7006A85E4 /* NSString+UrlEncode.m in Sources */,
 				1D126A5921A54E4E001AF67F /* PivotWireFrame.swift in Sources */,
 				1D126A5A21A54E4E001AF67F /* VIPERView.swift in Sources */,

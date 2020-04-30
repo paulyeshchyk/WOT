@@ -180,7 +180,7 @@ extension JSONAdapter {
             do {
                 try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
                 let status = managedObject.isInserted ? "created" : "located"
-                self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.modelClazz)) \(objCase.description); status: \(status)"), sender: self)
+//                self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: self.modelClazz)) \(objCase.description); status: \(status)"), sender: self)
                 self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
                 self.persistentStore?.stash(context: context, hint: objCase)
                 // managedObject should be send as a result of external links parse flow

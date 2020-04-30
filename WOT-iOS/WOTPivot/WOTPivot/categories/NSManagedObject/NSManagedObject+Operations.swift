@@ -11,7 +11,12 @@ import CoreData
 
 extension NSManagedObject {
     @objc
-    public static func singleObject(predicate: NSPredicate?, inManagedObjectContext context: NSManagedObjectContext, includeSubentities: Bool) -> NSManagedObject? {
+    public static func singleObject(predicate: NSPredicate?, inManagedObjectContext context: NSManagedObjectContext?, includeSubentities: Bool) -> NSManagedObject? {
+        //
+        guard let context = context else {
+            fatalError("context not defined")
+        }
+
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: self))
         request.fetchLimit = 1
         request.predicate = predicate
@@ -25,17 +30,29 @@ extension NSManagedObject {
     }
 
     @objc
-    public static func insertNewObject(_ context: NSManagedObjectContext) -> NSManagedObject {
+    public static func insertNewObject(_ context: NSManagedObjectContext?) -> NSManagedObject {
+        //
+        guard let context = context else {
+            fatalError("context not defined")
+        }
         return NSEntityDescription.insertNewObject(forEntityName: String(describing: self), into: context)
     }
 
     @objc
-    public static func entityDescription(_ context: NSManagedObjectContext) -> NSEntityDescription? {
+    public static func entityDescription(_ context: NSManagedObjectContext?) -> NSEntityDescription? {
+        //
+        guard let context = context else {
+            fatalError("context not defined")
+        }
         return NSEntityDescription.entity(forEntityName: String(describing: self), in: context)
     }
 
     @objc
-    public static func findOrCreateObject(predicate: NSPredicate?, context: NSManagedObjectContext) -> NSManagedObject? {
+    public static func findOrCreateObject(predicate: NSPredicate?, context: NSManagedObjectContext?) -> NSManagedObject? {
+        //
+        guard let context = context else {
+            fatalError("context not defined")
+        }
         guard let foundObject = self.singleObject(predicate: predicate, inManagedObjectContext: context, includeSubentities: false) else {
             return self.insertNewObject(context)
         }

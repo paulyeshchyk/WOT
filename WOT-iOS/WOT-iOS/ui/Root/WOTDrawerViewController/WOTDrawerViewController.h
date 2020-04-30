@@ -6,10 +6,12 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "MMDrawerController.h"
+#import <WOT-Swift.h>
+#import <MMDrawerController/MMDrawerController.h>
 
-@interface WOTDrawerViewController : MMDrawerController
+@interface WOTDrawerViewController : MMDrawerController<WOTViewControllerProtocol>
 
-- (id)initWithMenu;
+- (id _Nonnull)initWithMenu;
++ (WOTDrawerViewController * _Nonnull)newDrawer;
 
 @end

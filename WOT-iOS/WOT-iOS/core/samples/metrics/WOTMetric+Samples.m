@@ -28,8 +28,10 @@
     request.predicate = predicate;
     request.propertiesToFetch = [self.expression expressionDescriptions];
     request.resultType = NSDictionaryResultType;
-    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-    NSManagedObjectContext *context = [dataProvider mainContext];
+
+    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+    id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
+    NSManagedObjectContext *context = [coreDataProvider mainContext];
     id result = [context executeFetchRequest:request error:&error];
     
     if ([result count] == 0) {

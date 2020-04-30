@@ -8,10 +8,28 @@
 
 import Foundation
 
-public class CDStashLog: LogMessageTypeProtocol {
+public class CDStashStartLog: LogMessageTypeProtocol {
     public private(set) var message: String
     public var priorityType: LogMessagePriorityType { return .coredata }
-    public var logeventType: String { return "CDStash"}
+    public var logeventType: String { return "CDStashStart"}
+
+    public init() {
+        message = ""
+    }
+
+    required public init?(_ text: String) {
+        message = text
+    }
+
+    public init?(error: Error) {
+        message = error.debugDescription
+    }
+}
+
+public class CDStashEndLog: LogMessageTypeProtocol {
+    public private(set) var message: String
+    public var priorityType: LogMessagePriorityType { return .coredata }
+    public var logeventType: String { return "CDStashEnded"}
 
     public init() {
         message = ""
