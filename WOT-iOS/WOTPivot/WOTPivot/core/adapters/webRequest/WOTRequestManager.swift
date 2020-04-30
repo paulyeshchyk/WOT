@@ -9,11 +9,33 @@
 import Foundation
 
 @objc
-public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-    @objc public var coordinator: WOTRequestCoordinatorProtocol
-    @objc public var hostConfiguration: WOTHostConfigurationProtocol
-    @objc public var appManager: WOTAppManagerProtocol?
+public protocol WOTRequestCoordinatorBridgeProtocol {
+    func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol
+}
 
+@objc
+public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
+
+    var appManager: WOTAppManagerProtocol? { get set }
+
+    var coordinator: WOTRequestCoordinatorProtocol { get }
+
+    var hostConfiguration: WOTHostConfigurationProtocol { get set }
+
+    func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
+
+    func removeListener(_ listener: WOTRequestManagerListenerProtocol)
+
+    func cancelRequests(groupId: String, with error: Error?)
+
+    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: String, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
+
+    func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
+}
+
+@objc
+public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
+    
     deinit {
         //
     }
@@ -25,42 +47,14 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         super.init()
     }
 
+    // MARK: WOTRequestManagerProtocol-
+    @objc public var appManager: WOTAppManagerProtocol?
+    @objc public var coordinator: WOTRequestCoordinatorProtocol
+    @objc public var hostConfiguration: WOTHostConfigurationProtocol
+
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
     fileprivate var grouppedObjectDidParse: [AnyHashable: NSManagedObjectErrorCompletion] = [:]
-
-    //
-    public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
-        let result = try coordinator.createRequest(forRequestId: requestId)
-        result.hostConfiguration = hostConfiguration
-        return result
-    }
-
-    private func createRequest(forRequestId requestId: WOTRequestIdType, jsonLink: WOTPredicate) throws -> WOTRequestProtocol {
-        let request = try createRequest(forRequestId: requestId)
-        request.jsonLink = jsonLink
-        return request
-    }
-
-    @objc
-    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool {
-        var grouppedRequests: [WOTRequestProtocol] = []
-        if let available = self.grouppedRequests[groupId] {
-            grouppedRequests.append(contentsOf: available)
-        }
-        let filtered = grouppedRequests.filter { (availableRequest) -> Bool in
-            availableRequest.uuid.uuidString == request.uuid.uuidString
-        }
-        let result: Bool = (filtered.count == 0)
-        if result {
-            request.addListener(self)
-            request.addGroup(groupId)
-            grouppedRequests.append(request)
-        }
-        self.grouppedRequests[groupId] = grouppedRequests
-
-        return result
-    }
 
     @objc
     public func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol) {
@@ -87,6 +81,26 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
+    @objc
+    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool {
+        var grouppedRequests: [WOTRequestProtocol] = []
+        if let available = self.grouppedRequests[groupId] {
+            grouppedRequests.append(contentsOf: available)
+        }
+        let filtered = grouppedRequests.filter { (availableRequest) -> Bool in
+            availableRequest.uuid.uuidString == request.uuid.uuidString
+        }
+        let result: Bool = (filtered.count == 0)
+        if result {
+            request.addListener(self)
+            request.addGroup(groupId)
+            grouppedRequests.append(request)
+        }
+        self.grouppedRequests[groupId] = grouppedRequests
+
+        return result
+    }
+
     public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: String, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
         guard addRequest(request, forGroupId: forGroupId) else {
             throw WEBError.requestWasNotAddedToGroup
@@ -109,8 +123,22 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     @objc
-    public func cancelRequests(groupId: String) {
-        grouppedRequests[groupId]?.forEach { $0.cancel() }
+    public func cancelRequests(groupId: String, with error: Error?) {
+        grouppedRequests[groupId]?.forEach { $0.cancel(with: error) }
+    }
+
+    // MARK: WOTRequestCoordinatorBridgeProtocol-
+
+    public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
+        let result = try coordinator.createRequest(forRequestId: requestId)
+        result.hostConfiguration = hostConfiguration
+        return result
+    }
+
+    func createRequest(forRequestId requestId: WOTRequestIdType, jsonLink: WOTPredicate) throws -> WOTRequestProtocol {
+        let request = try createRequest(forRequestId: requestId)
+        request.jsonLink = jsonLink
+        return request
     }
 }
 
@@ -121,23 +149,47 @@ extension WOTRequestManager: LogMessageSender {
 }
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
+
+    public func request(_ request: WOTRequestProtocol, startedWith: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol) {
+        appManager?.logInspector?.log(WEBStartLog(request.description), sender: self)
+    }
+
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
-        guard Thread.current.isMainThread else {
-            fatalError("Current thread is not main")
+        defer {
+            appManager?.logInspector?.log(WEBFinishLog(request.description), sender: self)
+            removeRequest(request)
         }
+
         if let error = error {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
+            return
         }
 
         let onObjectDidParse = self.grouppedObjectDidParse[request.uuid.uuidString]
+//        guard  else {
+//            appManager?.logInspector?.log( ErrorLog("onObjectDidParse not registered for \(type(of: request))"), sender: self)
+//            return
+//        }
+
+        guard let dataparser = appManager?.responseCoordinator else {
+            appManager?.logInspector?.log( ErrorLog(message: "dataparser not found"), sender: self)
+            return
+        }
+
         do {
-            try coordinator.request(request, parseData: data, onObjectDidParse: onObjectDidParse, onRequestComplete: self.onRequestComplete(_:_:error:))
+            try dataparser.parseResponseData(data,
+                                             forRequest: request,
+                                             onObjectDidParse: onObjectDidParse,
+                                             onRequestComplete: self.onRequestComplete(_:_:error:)
+            )
         } catch let error {
             appManager?.logInspector?.log( ErrorLog(error, details: request), sender: self)
         }
-        appManager?.logInspector?.log(WEBFinishLog(request.description), sender: self)
+    }
 
-        self.removeRequest(request)
+    public func request(_ request: WOTRequestProtocol, canceledWith error: Error?) {
+        appManager?.logInspector?.log(WEBCancelLog(request.description))
+        removeRequest(request)
     }
 
     private func onRequestComplete(_ request: WOTRequestProtocol?, _ sender: Any?, error: Error?) {
@@ -150,30 +202,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         }
     }
 
-    private func jsonLinksCallback(_ jsonLinks: [WOTPredicate]?) {}
-
-    public func requestHasCanceled(_ request: WOTRequestProtocol) {
-        #warning("check")
-//        guard Thread.current.isMainThread else {
-//            fatalError("Current thread is not main")
-//        }
-        appManager?.logInspector?.log(WEBCancelLog(request.description))
-        removeRequest(request)
-    }
-
-    public func requestHasStarted(_ request: WOTRequestProtocol) {
-        #warning("check")
-//        guard Thread.current.isMainThread else {
-//            fatalError("Current thread is not main")
-//        }
-        appManager?.logInspector?.log(WEBStartLog(request.description), sender: self)
-    }
-
-    public func removeRequest(_ request: WOTRequestProtocol) {
-        #warning("check")
-//        guard Thread.current.isMainThread else {
-//            fatalError("Current thread is not main")
-//        }
+    private func removeRequest(_ request: WOTRequestProtocol) {
         request.availableInGroups.forEach { group in
             if var grouppedRequests = self.grouppedRequests[group] {
                 grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })

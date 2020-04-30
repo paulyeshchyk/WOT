@@ -22,6 +22,7 @@
 		1D0304D021E8C19100050131 /* WOTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0304CF21E8C19100050131 /* WOTAPI.swift */; };
 		1D038A5A2458A18E0015101F /* NSManagedObjectContext+Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D038A592458A18E0015101F /* NSManagedObjectContext+Save.swift */; };
 		1D038A5C245942D00015101F /* CDMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D038A5B245942D00015101F /* CDMapping.swift */; };
+		1D038A66245B29B40015101F /* RESTResponseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D038A65245B29B40015101F /* RESTResponseCoordinator.swift */; };
 		1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5021A54E4E001AF67F /* VIPER.swift */; };
 		1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */; };
 		1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5321A54E4E001AF67F /* PivotVIPER.swift */; };
@@ -192,6 +193,7 @@
 		1D0304CF21E8C19100050131 /* WOTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WOTAPI.swift; path = core/WOTAPI.swift; sourceTree = "<group>"; };
 		1D038A592458A18E0015101F /* NSManagedObjectContext+Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Save.swift"; sourceTree = "<group>"; };
 		1D038A5B245942D00015101F /* CDMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDMapping.swift; sourceTree = "<group>"; };
+		1D038A65245B29B40015101F /* RESTResponseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTResponseCoordinator.swift; sourceTree = "<group>"; };
 		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
 		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
 		1D126A5321A54E4E001AF67F /* PivotVIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotVIPER.swift; sourceTree = "<group>"; };
@@ -775,6 +777,7 @@
 				1DA153B0244A438200FB3C89 /* WOTWebRequestBuilder.swift */,
 				1DA153B2244A43A100FB3C89 /* WOTWebDataPumper.swift */,
 				1D70CF442452B5680031CBFE /* WOTPersistentStoreProtocol.swift */,
+				1D038A65245B29B40015101F /* RESTResponseCoordinator.swift */,
 			);
 			path = webRequest;
 			sourceTree = "<group>";
@@ -1124,6 +1127,7 @@
 				1D038A5A2458A18E0015101F /* NSManagedObjectContext+Save.swift in Sources */,
 				1DE558E42124560500576D41 /* WOTPivotNodeProtocol.swift in Sources */,
 				1DE558DE2124560500576D41 /* WOTPivotRowNode.swift in Sources */,
+				1D038A66245B29B40015101F /* RESTResponseCoordinator.swift in Sources */,
 				1DC6D4CE212577D400A1C9C2 /* WOTTreeModuleNode.swift in Sources */,
 				1DBF89B6240E4927007DF8B2 /* WOTWebRequest.swift in Sources */,
 				1D02D2272456BA3E00EE8DE9 /* KeyedDecodingContainer+Decode.swift in Sources */,

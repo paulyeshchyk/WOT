@@ -18,11 +18,29 @@ public protocol WOTAppManagerProtocol {
     @objc var logInspector: LogInspectorProtocol? { get set }
     @objc var coreDataProvider: WOTCoredataProviderProtocol? { get set }
     @objc var persistentStore: WOTPersistentStoreProtocol? { get set }
+    @objc var responseCoordinator: WOTResponseCoordinatorProtocol? { get set }
 }
 
 @objc
 public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
+    //
+
+    deinit {
+        responseCoordinator?.appManager = nil
+        requestCoordinator?.appManager = nil
+        requestManager?.appManager = nil
+        persistentStore?.appManager = nil
+        sessionManager?.appManager = nil
+    }
+    
     @objc public var hostConfiguration: WOTHostConfigurationProtocol?
+
+    @objc public var responseCoordinator: WOTResponseCoordinatorProtocol? {
+        didSet {
+            responseCoordinator?.appManager = self
+        }
+    }
+
     @objc public var requestCoordinator: WOTRequestCoordinatorProtocol? {
         didSet {
             requestCoordinator?.appManager = self

@@ -53,47 +53,18 @@ public protocol WOTRequestManagerListenerProtocol {
 }
 
 @objc
-public protocol WOTRequestManagerProtocol {
-    func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol
-
-    func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
-
-    func removeListener(_ listener: WOTRequestManagerListenerProtocol)
-
-    func cancelRequests(groupId: String)
-
-    var hostConfiguration: WOTHostConfigurationProtocol { get set }
-
-    var appManager: WOTAppManagerProtocol? { get set }
-
-    var coordinator: WOTRequestCoordinatorProtocol { get }
-
-    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: String, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
-
-    func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
-}
-
-@objc
 public protocol WOTRequestListenerProtocol {
     @objc
     var hash: Int { get }
 
-    @objc
-    func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?)
-
-    @objc
-    func requestHasCanceled(_ request: WOTRequestProtocol)
-
-    @objc
-    func requestHasStarted(_ request: WOTRequestProtocol)
-
-    @objc
-    func removeRequest(_ request: WOTRequestProtocol)
+    @objc func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?)
+    @objc func request(_ request: WOTRequestProtocol, canceledWith error: Error?)
+    @objc func request(_ request: WOTRequestProtocol, startedWith hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol)
 }
 
 @objc
 public protocol WOTStartableProtocol {
-    func cancel()
+    func cancel(with error: Error?)
     func start(withArguments: WOTRequestArgumentsProtocol) throws
 }
 
@@ -142,7 +113,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
         return NSStringFromClass(type(of: self)).hash
     }
 
-    open func cancel() {}
+    open func cancel(with error: Error?) {}
 
     open func start(withArguments: WOTRequestArgumentsProtocol) throws { throw LogicError.shouldBeOverriden}
 }

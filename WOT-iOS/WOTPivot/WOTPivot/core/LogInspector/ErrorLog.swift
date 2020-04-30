@@ -17,7 +17,7 @@ public class ErrorLog: LogMessageTypeProtocol {
         message = ""
     }
 
-    required public init?(_ text: String) {
+    required public init?(message text: String) {
         message = text
     }
 
@@ -39,6 +39,6 @@ public class ErrorLog: LogMessageTypeProtocol {
             print("\(type(of: details)) is not Describable")
         }
 
-        self.init(messages.joined(separator: "; details: "))
+        self.init(message: messages.joined(separator: "; details: "))
     }
 }

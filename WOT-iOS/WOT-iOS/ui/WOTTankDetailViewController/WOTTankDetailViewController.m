@@ -78,11 +78,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
-    [self.requestManager cancelRequestsWithGroupId:requestId];
+    [self.requestManager cancelRequestsWithGroupId:requestId with:NULL];
     
     [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
         
-        [self.requestManager cancelRequestsWithGroupId:requestID];
+        [self.requestManager cancelRequestsWithGroupId:requestID with:NULL];
     }];
     
     [self.runningRequestIDs removeAllObjects];

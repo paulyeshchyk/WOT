@@ -47,9 +47,9 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, Describable, NSURLC
         }
     }
 
-    open override func cancel() {
+    open override func cancel(with error: Error?) {
         self.listeners.compactMap { $0 }.forEach {
-            $0.requestHasCanceled(self)
+            $0.request(self, canceledWith: error)
         }
     }
 
@@ -63,7 +63,7 @@ open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, Describable, NSURLC
         self.pumper?.start()
 
         self.listeners.compactMap { $0 }.forEach {
-            $0.requestHasStarted(self)
+            $0.request(self, startedWith: hostConfig, args: withArguments)
         }
     }
 }

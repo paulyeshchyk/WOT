@@ -70,7 +70,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping ContextAnyObjectErrorCompletion) {
         appManager?.logInspector?.log(LogicLog("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
-            appManager?.logInspector?.log(ErrorLog("no key defined for class: \(String(describing: clazz))"), sender: self)
+            appManager?.logInspector?.log(ErrorLog(message: "no key defined for class: \(String(describing: clazz))"), sender: self)
             callback(context, nil, nil)
             return
         }

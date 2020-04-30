@@ -14,25 +14,28 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
     public let appManager: WOTAppManagerProtocol = WOTPivotAppManager()
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+
         //
-        let hostConfiguration = WOTWebHostConfiguration()
         let requestCoordinator = WOTRequestCoordinator()
+        let hostConfiguration = WOTWebHostConfiguration()
         let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, hostConfiguration: hostConfiguration)
         let sessionManager = WOTWebSessionManager()
         let logInspector = LogInspector(priorities: [.error, .lifeCycle, .json, .coredata])
-        let coreDataProvider = WOTTankCoreDataProvider()
+        let coreDataProvider = WOTCustomCoreDataProvider()
         let persistentStore = WOTPersistentStore()
+        let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator)
 
         appManager.hostConfiguration = hostConfiguration
         appManager.requestCoordinator = requestCoordinator
         appManager.requestManager = requestManager
         appManager.requestListener = requestManager
+        appManager.responseCoordinator = responseCoordinator
         appManager.sessionManager = sessionManager
         appManager.logInspector = logInspector
         appManager.coreDataProvider = coreDataProvider
         appManager.persistentStore = persistentStore
 
-        AppDefaults.registerRequests(for: requestCoordinator)
+        requestCoordinator.registerDefaultRequests()
 
         let drawerViewController: WOTDrawerViewController = WOTDrawerViewController.newDrawer()
 
