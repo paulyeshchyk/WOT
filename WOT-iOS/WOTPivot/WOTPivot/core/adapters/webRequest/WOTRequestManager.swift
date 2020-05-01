@@ -25,9 +25,9 @@ public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
 
     func removeListener(_ listener: WOTRequestManagerListenerProtocol)
 
-    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
+    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, onObjectDidFetch: FetchResultCompletion?) throws
 
-    func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
+    func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: FetchResultCompletion?) throws
 
     func cancelRequests(groupId: WOTRequestIdType, with error: Error?)
 }
@@ -53,7 +53,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     fileprivate var grouppedRequests: [WOTRequestIdType: [WOTRequestProtocol]] = [:]
-    fileprivate var grouppedObjectDidParse: [AnyHashable: NSManagedObjectErrorCompletion] = [:]
+    fileprivate var grouppedObjectDidFetch: [AnyHashable: FetchResultCompletion] = [:]
 
     public func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol) {
         guard let listener = listener else { return }
@@ -97,12 +97,12 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
+    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, onObjectDidFetch: FetchResultCompletion?) throws {
         guard addRequest(request, forGroupId: forGroupId) else {
             throw WEBError.requestWasNotAddedToGroup
         }
 
-        grouppedObjectDidParse[request.uuid.uuidString] = onObjectDidFetch
+        grouppedObjectDidFetch[request.uuid.uuidString] = onObjectDidFetch
 
         try request.start(withArguments: withArguments)
         grouppedListeners[request.uuid.uuidString]?.forEach {
@@ -110,7 +110,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
+    public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: FetchResultCompletion?) throws {
         let request = try createRequest(forRequestId: requestId, withPredicate: withPredicate)
 
         let arguments = withPredicate.buildRequestArguments()
@@ -159,7 +159,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        let onObjectDidParse = grouppedObjectDidParse[request.uuid.uuidString]
+        let onObjectDidFetch = grouppedObjectDidFetch[request.uuid.uuidString]
 //        guard  else {
 //            appManager?.logInspector?.log( ErrorLog("onObjectDidParse not registered for \(type(of: request))"), sender: self)
 //            return
@@ -173,7 +173,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         do {
             try dataparser.parseResponseData(data,
                                              forRequest: request,
-                                             onObjectDidParse: onObjectDidParse,
+                                             onObjectDidFetch: onObjectDidFetch,
                                              onRequestComplete: onRequestComplete(_:_:error:))
         } catch {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
@@ -202,7 +202,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                 self.grouppedRequests[group] = grouppedRequests
             }
         }
-        grouppedObjectDidParse[request.uuid.uuidString] = nil
+        grouppedObjectDidFetch[request.uuid.uuidString] = nil
         request.removeListener(self)
     }
 }

@@ -51,7 +51,9 @@ public class WOTPrimaryKey: NSObject {
 
     @objc
     public var predicate: NSPredicate {
+        // swiftlint:disable force_cast
         return NSPredicate(format: predicateFormat, name, value as! CVarArg)
+        // swiftlint:enable force_cast
     }
 
     @objc

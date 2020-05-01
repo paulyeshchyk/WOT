@@ -16,7 +16,7 @@ public protocol DataAdapterProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
     var uuid: UUID { get }
     var onComplete: OnRequestComplete? { get set }
-    var onObjectDidParse: ContextObjectidErrorCompletion? { get set }
+    var onObjectDidParse: FetchResultCompletion? { get set }
     func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
     init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?)
 }
@@ -54,7 +54,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: JSONAdapterProtocol -
     public var onGetObjectJSON: ((JSON) -> JSON)?
     public var onComplete: OnRequestComplete?
-    public var onObjectDidParse: ContextObjectidErrorCompletion?
+    public var onObjectDidParse: FetchResultCompletion?
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
@@ -68,9 +68,9 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         for (idx, key) in keys.enumerated() {
             //
             let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(for: extraction, fromRequest: fromRequest) {context, managedObjectID, error in
+            findOrCreateObject(for: extraction, fromRequest: fromRequest) { fetchResult in
 
-                self.onObjectDidParse?(context, managedObjectID, error)
+                self.onObjectDidParse?(fetchResult)
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
@@ -153,31 +153,35 @@ extension JSONAdapter {
         return ident
     }
 
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping ContextObjectidErrorCompletion) {
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping FetchResultCompletion) {
+        guard Thread.current.isMainThread else {
+            fatalError("thread is not main")
+        }
+
+        guard let MAINCONTEXT = appManager?.coreDataProvider?.mainContext else {
+            fatalError("main is not accessible")
+        }
+
         let parents = fromRequest.predicate?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
-        #warning("not working for guns: expected gun_id - received tag")
         objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject, andType: .external)
         appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 
-        appManager?.coreDataProvider?.findOrCreateObject(by: self.modelClazz, andPredicate: objCase[.primary]?.predicate, callback: { (context, managedObjectID, error) in
+        appManager?.coreDataProvider?.findOrCreateObject(by: self.modelClazz, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult in
 
-            guard let managedObjectID = managedObjectID else {
-                callback(context, nil, error)
+            guard fetchResult.error == nil else {
+                callback(fetchResult)
                 return
             }
-            let managedObject = context.object(with: managedObjectID)
-            guard error == nil else {
-                callback(context, managedObjectID, error)
-                return
-            }
+
+            let context = fetchResult.context
+            let managedObject = fetchResult.managedObject()
 
             do {
-                try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase)
-                self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
-                self.persistentStore?.stash(context: context, hint: objCase)
-                //
-                callback(context, managedObjectID, error)
+                try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase) { error in
+                    self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
+                    callback(fetchResult)
+                }
             } catch let error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: objCase), sender: self)
             }

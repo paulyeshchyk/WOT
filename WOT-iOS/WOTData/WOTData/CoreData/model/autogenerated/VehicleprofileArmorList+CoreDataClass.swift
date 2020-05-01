@@ -7,36 +7,44 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(VehicleprofileArmorList)
 public class VehicleprofileArmorList: NSManagedObject {}
 
 // MARK: - Mapping
+
 extension VehicleprofileArmorList {
     @objc
-    public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    override public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         let hullCase = PKCase()
         hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
 
-        VehicleprofileArmor.hull(context: context, fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { context, managedObjectID, _ in
-            guard let managedObjectID = managedObjectID, let hull = context.object(with: managedObjectID) as? VehicleprofileArmor else {
-                return
+        VehicleprofileArmor.hull(context: context, fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { fetchResult in
+            let context = fetchResult.context
+            if let hull = fetchResult.managedObject() as? VehicleprofileArmor {
+                self.hull = hull
+                persistentStore?.stash(context: context, hint: hullCase) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                }
             }
-
-            self.hull = hull
-            persistentStore?.stash(context: context, hint: hullCase)
         }
 
         let turretCase = PKCase()
         turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
-        VehicleprofileArmor.turret(context: context, fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { context, managedObjectID, _ in
-            guard let managedObjectID = managedObjectID, let turret = context.object(with: managedObjectID) as? VehicleprofileArmor else {
-                return
+        VehicleprofileArmor.turret(context: context, fromJSON: jSON[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, persistentStore: persistentStore) { fetchResult in
+            let context = fetchResult.context
+            if let turret = fetchResult.managedObject() as? VehicleprofileArmor {
+                self.turret = turret
+                persistentStore?.stash(context: context, hint: hullCase) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                }
             }
-            self.turret = turret
-            persistentStore?.stash(context: context, hint: hullCase)
         }
     }
 }

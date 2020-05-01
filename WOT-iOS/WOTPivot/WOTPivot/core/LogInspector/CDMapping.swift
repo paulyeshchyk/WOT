@@ -10,7 +10,7 @@ import Foundation
 
 public class CDMappingStartLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .coredata }
+    public var priorityType: LogMessagePriorityType { return .mapping }
     public var logeventType: String { return "CDMappingStart"}
 
     public init() {
@@ -28,7 +28,7 @@ public class CDMappingStartLog: LogMessageTypeProtocol {
 
 public class CDMappingEndLog: LogMessageTypeProtocol {
     public private(set) var message: String
-    public var priorityType: LogMessagePriorityType { return .coredata }
+    public var priorityType: LogMessagePriorityType { return .mapping }
     public var logeventType: String { return "CDMappingEnded"}
 
     public init() {

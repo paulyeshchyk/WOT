@@ -30,10 +30,12 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         appManager?.logInspector?.log(TIMEMeasureLog("Context save start", uuid: uuid))
     }
 
-    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping ContextObjectidErrorCompletion ) {
-        let privateCompletion: ContextObjectidErrorCompletion = { context, managedObjectID, error in
-            self.performMain { (context) in
-                callback(context, managedObjectID, error)
+    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultCompletion ) {
+        let privateCallback: FetchResultCompletion = { fetchResult in
+            visibleInContext.perform {
+                let fetchResultForContext = fetchResult.dublicate()
+                fetchResultForContext.context = visibleInContext
+                callback(fetchResultForContext)
             }
         }
 
@@ -46,7 +48,8 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
                 let managedObject = try NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context)
                 let managedObjectID = managedObject?.objectID
                 self.stash(context: context) { (error) in
-                    privateCompletion(context, managedObjectID, error)
+                    let fetchResult = FetchResult(context: context, objectID: managedObjectID, predicate: predicate, fetchStatus: .none, error: error)
+                    privateCallback(fetchResult)
                 }
             } catch let error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: nil)

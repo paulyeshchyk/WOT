@@ -20,6 +20,14 @@
 
 @implementation WOTSessionManager
 
++ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
+    
+}
+
++ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
+    
+}
+
 + (id)currentAccessToken {
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
     id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;

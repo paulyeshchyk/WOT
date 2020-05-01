@@ -27,13 +27,19 @@ extension VehicleprofileAmmoList {
 
             persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] fetchResult in
                 let context = fetchResult.context
-                guard let self = self, let managedObjectID = fetchResult.objectID, let ammo = context.object(with: managedObjectID) as? VehicleprofileAmmo else {
+                guard let self = self, let ammo = fetchResult.managedObject() as? VehicleprofileAmmo else {
                     return
                 }
                 do {
-                    try persistentStore?.mapping(context: context, object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
-                    self.addToVehicleprofileAmmo(ammo)
-                    persistentStore?.stash(context: context, hint: vehicleprofileAmmoCase)
+                    try persistentStore?.mapping(context: context, object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase) { error in
+
+                        self.addToVehicleprofileAmmo(ammo)
+                        persistentStore?.stash(context: context, hint: vehicleprofileAmmoCase) { error in
+                            if let error = error {
+                                print(error.debugDescription)
+                            }
+                        }
+                    }
                 } catch let error {
                     print(error)
                 }

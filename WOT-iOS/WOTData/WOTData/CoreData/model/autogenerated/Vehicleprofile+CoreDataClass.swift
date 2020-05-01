@@ -64,22 +64,34 @@ extension Vehicleprofile {
         if let itemsList = jSON[#keyPath(Vehicleprofile.ammo)] as? [Any] {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
-            persistentStore?.itemMapping(context: context, forClass: VehicleprofileAmmoList.self, items: itemsList, pkCase: itemCase) { managedObjectID in
-                guard let managedObjectID = managedObjectID, let ammo = context.object(with: managedObjectID) as? VehicleprofileAmmoList else {
+            persistentStore?.itemMapping(context: context, forClass: VehicleprofileAmmoList.self, items: itemsList, pkCase: itemCase) { fetchResult in
+                guard let ammo = fetchResult.managedObject() as? VehicleprofileAmmoList else {
                     return
                 }
                 self.ammo = ammo
+                let context = fetchResult.context
+                persistentStore?.stash(context: context, hint: pkCase) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                }
             }
         }
 
         if let itemJSON = jSON[#keyPath(Vehicleprofile.armor)] as? JSON {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
-            persistentStore?.itemMapping(context: context, forClass: VehicleprofileArmorList.self, itemJSON: itemJSON, pkCase: itemCase) { managedObjectID in
-                guard let managedObjectID = managedObjectID, let armor = context.object(with: managedObjectID) as? VehicleprofileArmorList else {
+            persistentStore?.itemMapping(context: context, forClass: VehicleprofileArmorList.self, itemJSON: itemJSON, pkCase: itemCase) { fetchResult in
+                guard let armor = fetchResult.managedObject() as? VehicleprofileArmorList else {
                     return
                 }
                 self.armor = armor
+                let context = fetchResult.context
+                persistentStore?.stash(context: context, hint: pkCase) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                }
             }
         }
 
@@ -87,11 +99,17 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileEngine.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileEngine.primaryKey(for: itemID, andType: .internal)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileEngine.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
-                    guard let managedObjectID = managedObjectID, let engine = context.object(with: managedObjectID) as? VehicleprofileEngine else {
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileEngine.self, itemJSON: itemJSON, pkCase: pkCase) { fetchResult in
+                    guard let engine = fetchResult.managedObject() as? VehicleprofileEngine else {
                         return
                     }
                     self.engine = engine
+                    let context = fetchResult.context
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
             }
         }
@@ -100,11 +118,19 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileGun.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileGun.primaryKey(for: itemID, andType: .internal)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileGun.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
-                    guard let managedObjectID = managedObjectID, let gun = context.object(with: managedObjectID) as? VehicleprofileGun else {
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileGun.self, itemJSON: itemJSON, pkCase: pkCase) { fetchResult in
+
+                    guard let gun = fetchResult.managedObject() as? VehicleprofileGun else {
                         return
                     }
                     self.gun = gun
+
+                    let context = fetchResult.context
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
             }
         }
@@ -113,11 +139,19 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileRadio.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileRadio.primaryKey(for: itemID, andType: .internal)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileRadio.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
-                    guard let managedObjectID = managedObjectID, let radio = context.object(with: managedObjectID) as? VehicleprofileRadio else {
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileRadio.self, itemJSON: itemJSON, pkCase: pkCase) { fetchResult in
+                    guard let radio = fetchResult.managedObject() as? VehicleprofileRadio else {
                         return
                     }
+
                     self.radio = radio
+
+                    let context = fetchResult.context
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
             }
         }
@@ -126,11 +160,17 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileSuspension.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileSuspension.primaryKey(for: itemID, andType: .internal)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileSuspension.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
-                    guard let managedObjectID = managedObjectID, let suspension = context.object(with: managedObjectID) as? VehicleprofileSuspension else {
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileSuspension.self, itemJSON: itemJSON, pkCase: pkCase) { fetchResult in
+                    guard let suspension = fetchResult.managedObject() as? VehicleprofileSuspension else {
                         return
                     }
                     self.suspension = suspension
+                    let context = fetchResult.context
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
             }
         }
@@ -139,11 +179,17 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileTurret.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileTurret.primaryKey(for: itemID, andType: .internal)
-                persistentStore?.itemMapping(context: context, forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase) { managedObjectID in
-                    guard let managedObjectID = managedObjectID, let turret = context.object(with: managedObjectID) as? VehicleprofileTurret else {
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase) { fetchResult in
+                    guard let turret = fetchResult.managedObject() as? VehicleprofileTurret else {
                         return
                     }
                     self.turret = turret
+                    let context = fetchResult.context
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
             }
         }
@@ -151,11 +197,17 @@ extension Vehicleprofile {
         if let moduleJSON = jSON[#keyPath(Vehicleprofile.modules)] as? JSON {
             let vehicleprofileModuleCase = PKCase(parentObjects: parents)
             vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
-            persistentStore?.itemMapping(context: context, forClass: VehicleprofileModule.self, itemJSON: moduleJSON, pkCase: vehicleprofileModuleCase) { managedObjectID in
-                guard let managedObjectID = managedObjectID, let module = context.object(with: managedObjectID) as? VehicleprofileModule else {
+            persistentStore?.itemMapping(context: context, forClass: VehicleprofileModule.self, itemJSON: moduleJSON, pkCase: vehicleprofileModuleCase) { fetchResult in
+                guard let module = fetchResult.managedObject() as? VehicleprofileModule else {
                     return
                 }
                 self.modules = module
+                let context = fetchResult.context
+                persistentStore?.stash(context: context, hint: pkCase) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                }
             }
         }
     }

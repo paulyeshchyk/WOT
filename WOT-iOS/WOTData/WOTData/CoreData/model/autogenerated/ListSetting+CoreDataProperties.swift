@@ -2,13 +2,13 @@
 //  ListSetting+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/25/20.
+//  Created by Pavel Yeshchyk on 5/1/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 extension ListSetting {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ListSetting> {

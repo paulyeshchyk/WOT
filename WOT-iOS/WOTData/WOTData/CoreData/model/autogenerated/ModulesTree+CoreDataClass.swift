@@ -30,6 +30,7 @@ extension ModulesTree {
     public enum RelativeKeys: String, CodingKey, CaseIterable {
         case next_modules
         case next_tanks
+        case currentModule
     }
 
     @objc
@@ -59,31 +60,47 @@ extension ModulesTree {
         var parents = pkCase.plainParents
         parents.append(self)
 
-        let nextModules = jSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
-        nextModules?.forEach {
-            let modulePK = PKCase(parentObjects: parents)
-            modulePK[.primary] = pkCase[.primary]
-            modulePK[.secondary] = Module.primaryKey(for: $0, andType: .external)
-            persistentStore?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, onObjectDidFetch: { context, managedObjectID, _ in
-                if let managedObjectID = managedObjectID, let module = context.object(with: managedObjectID) as? Module {
-                    self.addToNext_modules(module)
-                    persistentStore?.stash(context: context, hint: modulePK)
+        let currentModulePK = PKCase(parentObjects: parents)
+        currentModulePK[.primary] = Module.primaryKey(for: self.module_id as AnyObject, andType: .external)
+        persistentStore?.fetchRemote(context: context, byModelClass: Module.self, pkCase: currentModulePK, keypathPrefix: nil, onObjectDidFetch: { fetchResult in
+            let context = fetchResult.context
+            if let module = fetchResult.managedObject() as? Module {
+                self.currentModule = module
+                persistentStore?.stash(context: context, hint: currentModulePK) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
                 }
-            })
-        }
+            }
+        })
 
-        let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
-        (nextTanks as? [AnyObject])?.forEach {
-            // parents was not used for next portion of tanks
-            let nextTanksPK = PKCase(parentObjects: nil)
-            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0, andType: .internal)
-            persistentStore?.fetchRemote(context: context, byModelClass: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onObjectDidFetch: { context, managedObjectID, _ in
-                if let managedObjectID = managedObjectID, let tank = context.object(with: managedObjectID) as? Vehicles {
-                    self.addToNext_tanks(tank)
-                    persistentStore?.stash(context: context, hint: nextTanksPK)
-                }
-            })
-        }
+//        let nextModules = jSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
+//        nextModules?.forEach {
+//            let modulePK = PKCase(parentObjects: parents)
+//            modulePK[.primary] = pkCase[.primary]
+//            modulePK[.secondary] = Module.primaryKey(for: $0, andType: .external)
+//            persistentStore?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, onObjectDidFetch: { fetchResult in
+//                let context = fetchResult.context
+//                if let module = fetchResult.managedObject() as? Module {
+//                    self.addToNext_modules(module)
+//                    persistentStore?.stash(context: context, hint: modulePK)
+//                }
+//            })
+//        }
+//
+//        let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
+//        (nextTanks as? [AnyObject])?.forEach {
+//            // parents was not used for next portion of tanks
+//            let nextTanksPK = PKCase(parentObjects: nil)
+//            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0, andType: .internal)
+//            persistentStore?.fetchRemote(context: context, byModelClass: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onObjectDidFetch: { fetchResult in
+//                let context = fetchResult.context
+//                if let tank = fetchResult.managedObject() as? Vehicles {
+//                    self.addToNext_tanks(tank)
+//                    persistentStore?.stash(context: context, hint: nextTanksPK)
+//                }
+//            })
+//        }
     }
 }
 

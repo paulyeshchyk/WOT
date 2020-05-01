@@ -57,65 +57,91 @@ extension Module {
 
         let parents = pkCase.plainParents.filter({$0 is Vehicles}).compactMap({ $0.tank_id as? NSDecimalNumber })
 
-        guard let tank_id = parents.first else {
-            print("tankID not found")
-            return
-        }
-
         guard let module_id = self.module_id else {
             print("module_id not found")
             return
         }
 
-        guard let mt = self.type else {
+        guard let moduleTypeString = self.type else {
             print("unknown module type")
             return
         }
-        let moduleType = VehicleModuleType(rawValue: mt)
+        let moduleType = VehicleModuleType(rawValue: moduleTypeString)
+
+        let tank_id = parents.first
+
         switch moduleType {
         case .vehicleChassis:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: persistentStore, keyPathPrefix: "suspension.", onObjectDidFetch: { context, managedObjectID, _  in
-                if let managedObjectID = managedObjectID, let module = context.object(with: managedObjectID) as? VehicleprofileSuspension {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: persistentStore, keyPathPrefix: "suspension.", onObjectDidFetch: { fetchResult  in
+                let context = fetchResult.context
+                if let module = fetchResult.managedObject() as? VehicleprofileSuspension {
                     self.suspension = module
-                    persistentStore?.stash(context: context, hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
                 })
         case .vehicleGun:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: persistentStore, keyPathPrefix: "gun.", onObjectDidFetch: { context, managedObjectID, _ in
-                if let managedObjectID = managedObjectID,  let module = context.object(with: managedObjectID) as? VehicleprofileGun {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: persistentStore, keyPathPrefix: "gun.", onObjectDidFetch: { fetchResult in
+                let context = fetchResult.context
+                if let module = fetchResult.managedObject() as? VehicleprofileGun {
                     self.gun = module
-                    persistentStore?.stash(context: context, hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
                 })
         case .vehicleRadio:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: persistentStore, keyPathPrefix: "radio.", onObjectDidFetch: { context, managedObjectID, _ in
-                if let managedObjectID = managedObjectID,  let module = context.object(with: managedObjectID) as? VehicleprofileRadio {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: persistentStore, keyPathPrefix: "radio.", onObjectDidFetch: { fetchResult in
+                let context = fetchResult.context
+                if let module = fetchResult.managedObject() as? VehicleprofileRadio {
                     self.radio = module
-                    persistentStore?.stash(context: context, hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
                 })
         case .vehicleEngine:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: persistentStore, keyPathPrefix: "engine.", onObjectDidFetch: { context, managedObjectID, _ in
-                if let managedObjectID = managedObjectID,  let module = context.object(with: managedObjectID) as? VehicleprofileEngine {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: persistentStore, keyPathPrefix: "engine.", onObjectDidFetch: { fetchResult in
+                let context = fetchResult.context
+                if let module = fetchResult.managedObject() as? VehicleprofileEngine {
                     self.engine = module
-                    persistentStore?.stash(context: context, hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
                 })
         case .vehicleTurret:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: persistentStore, keyPathPrefix: "turret.", onObjectDidFetch: { context, managedObjectID, _ in
-                if let managedObjectID = managedObjectID,  let module = context.object(with: managedObjectID) as? VehicleprofileTurret {
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: persistentStore, keyPathPrefix: "turret.", onObjectDidFetch: { fetchResult in
+                let context = fetchResult.context
+                if let module = fetchResult.managedObject() as? VehicleprofileTurret {
                     self.turret = module
-                    persistentStore?.stash(context: context, hint: pkCase)
+                    persistentStore?.stash(context: context, hint: pkCase) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
                 })
-        default: print(mt)
+        default: print(moduleTypeString)
         }
     }
 
-    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion) {
+    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, onObjectDidFetch: @escaping FetchResultCompletion) {
         let pkCase = PKCase()
         pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .external)
-        pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .internal)
+        if let tank_id = tank_id {
+            //module as currentModule for module_tree
+            pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .internal)
+        }
 
         persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, onObjectDidFetch: onObjectDidFetch)
     }

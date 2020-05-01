@@ -116,7 +116,7 @@
     return [result copy];
 }
 
-- (id)keyForSetting:(id)setting {
+- (id _Nullable)keyForSetting:(id _Nullable)setting {
 
     if (![setting isKindOfClass:[ListSetting class]]) {
 

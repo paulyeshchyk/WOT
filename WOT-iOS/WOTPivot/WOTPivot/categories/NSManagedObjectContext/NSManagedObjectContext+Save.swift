@@ -10,26 +10,26 @@ import CoreData
 
 extension NSManagedObjectContext {
     public func saveRecursively(_ block: @escaping ThrowableCompletion) {
-//        let parentBlock: ThrowableCompletion = { error in
-//            if self.parent == nil {
-//                block(error)
-//            }
-//        }
+        let privateCompletion: ThrowableCompletion = { error in
+            self.perform {
+                block(error)
+            }
+        }
+        guard hasChanges else {
+            privateCompletion(nil)
+            return
+        }
 
         performAndWait {
-            if hasChanges {
-                do {
-                    try self.save()
-                    if let parent = self.parent {
-                        parent.saveRecursively(block)
-                    } else {
-                        block(nil)
-                    }
-                } catch let error {
-                    block(error)
+            do {
+                try self.save()
+                if let parent = self.parent {
+                    parent.saveRecursively(privateCompletion)
+                } else {
+                    privateCompletion(nil)
                 }
-            } else {
-                block(nil)
+            } catch let error {
+                privateCompletion(error)
             }
         }
     }

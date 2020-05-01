@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, WOTTankListSettingType) {
     WOTTankListSettingTypeValueChanger
 };
 
-typedef void(^WOTTankListSettingUpateCallback)(id context, id setting);
+typedef void(^WOTTankListSettingUpateCallback)(id _Nullable context, id _Nonnull setting);
 typedef void(^WOTTankListSettingMoveCompletionCallback)(void);
 
 
@@ -23,17 +23,17 @@ typedef void(^WOTTankListSettingMoveCompletionCallback)(void);
 
 @required
 
-@property (nonatomic, readonly) NSArray *availableSections;
+@property (nonatomic, readonly) NSArray * _Nonnull availableSections;
 
-- (NSString *)sectionNameAtIndex:(NSInteger)index;
+- (NSString * _Nonnull)sectionNameAtIndex:(NSInteger)index;
 - (NSInteger)objectsCountForSection:(NSInteger)section;
-- (id)objectAtIndexPath:(NSIndexPath *)indexPath;
-- (void)moveRowAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath completionBlock:(WOTTankListSettingMoveCompletionCallback)completionBlock;
-- (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath;
+- (id _Nonnull)objectAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (void)moveRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath toIndexPath:(NSIndexPath * _Nonnull)newIndexPath completionBlock:(WOTTankListSettingMoveCompletionCallback _Nonnull)completionBlock;
+- (void)removeObjectAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
 
 - (WOTTankListSettingType)settingTypeForSectionAtIndex:(NSInteger)section;
-- (void)updateSetting:(id)setting byType:(id)type byValue:(id)value filterValue:(id)filterValue ascending:(BOOL)ascending callback:(WOTTankListSettingUpateCallback)callback;
-- (id)keyForSetting:(id)setting;
+- (void)updateSetting:(id _Nonnull)setting byType:(id _Nonnull)type byValue:(id _Nonnull)value filterValue:(id _Nullable)filterValue ascending:(BOOL)ascending callback:(WOTTankListSettingUpateCallback _Nonnull)callback;
+- (id _Nonnull)keyForSetting:(id _Nonnull)setting;
 
 - (void)stash:(void (^ _Nonnull)(NSError * _Nullable))block;
 - (void)rollback;

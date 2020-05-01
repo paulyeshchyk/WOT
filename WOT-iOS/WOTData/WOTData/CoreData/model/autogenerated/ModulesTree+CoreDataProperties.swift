@@ -2,7 +2,7 @@
 //  ModulesTree+CoreDataProperties.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 4/25/20.
+//  Created by Pavel Yeshchyk on 5/1/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 //
@@ -24,6 +24,7 @@ extension ModulesTree {
     @NSManaged public var default_profile: Vehicleprofile?
     @NSManaged public var next_modules: NSSet?
     @NSManaged public var next_tanks: NSSet?
+    @NSManaged public var currentModule: Module?
 }
 
 // MARK: Generated accessors for next_modules
