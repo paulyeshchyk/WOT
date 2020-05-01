@@ -6,8 +6,8 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc
 public enum WOTExecuteConcurency: Int {
@@ -30,10 +30,10 @@ public class FetchResult: NSObject {
     public var predicate: NSPredicate?
     public var error: Error?
 
-    override required public init() {
+    override public required init() {
         fatalError("")
     }
-    
+
     public required init(context cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus, error err: Error?) {
         context = cntx
         objectID = objID
@@ -49,7 +49,7 @@ public typealias NSManagedObjectCompletion = (NSManagedObject) -> Void
 public typealias FetchResultCompletion = (FetchResult) -> Void
 public typealias ContextObjectidErrorCompletion = (NSManagedObjectContext, NSManagedObjectID?, Error?) -> Void
 public typealias AnyObjectErrorCompletion = (AnyObject?, Error?) -> Void
-public typealias NSManagedObjectErrorCompletion = ContextObjectidErrorCompletion//(NSManagedObject?, Error?) -> Void
+public typealias NSManagedObjectErrorCompletion = ContextObjectidErrorCompletion // (NSManagedObject?, Error?) -> Void
 public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
 public typealias NSManagedObjectOptionalCallback = (_ managedObject: NSManagedObjectID?) -> Void
 public typealias NSManagedObjectSetOptinalCallback = ([NSManagedObject?]?) -> Void
@@ -57,8 +57,8 @@ public typealias NSManagedObjectSetOptinalCallback = ([NSManagedObject?]?) -> Vo
 @objc
 public protocol WOTDataProviderProtocol: NSObjectProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
-    func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion )
-    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping ContextObjectidErrorCompletion )
+    func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion)
+    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping ContextObjectidErrorCompletion)
 }
 
 @objc

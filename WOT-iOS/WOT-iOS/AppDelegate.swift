@@ -14,7 +14,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
     public let appManager: WOTAppManagerProtocol = WOTPivotAppManager()
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-
         //
         let requestCoordinator = WOTRequestCoordinator()
         let hostConfiguration = WOTWebHostConfiguration()
@@ -39,9 +38,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
 
         let drawerViewController: WOTDrawerViewController = WOTDrawerViewController.newDrawer()
 
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = drawerViewController
-        self.window?.makeKeyAndVisible()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = drawerViewController
+        window?.makeKeyAndVisible()
 
         return true
     }

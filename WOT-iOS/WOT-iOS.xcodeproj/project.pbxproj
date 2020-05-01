@@ -2025,7 +2025,7 @@
 		};
 		1DB5FB4E2428A2B400413F41 /* Swiftformat */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -2039,7 +2039,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# \"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\" \n";
+			shellScript = " \"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\"\n";
 		};
 		6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -7,13 +7,14 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(VehicleprofileEngine)
 public class VehicleprofileEngine: NSManagedObject {}
 
 // MARK: - Coding Keys
+
 extension VehicleprofileEngine {
     //
     public typealias Fields = FieldKeys
@@ -31,27 +32,27 @@ extension VehicleprofileEngine {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
-        //id was used when quering remote module
-        //tag was used when parsed response vehicleprofile-engine
+        // id was used when quering remote module
+        // tag was used when parsed response vehicleprofile-engine
         switch forType {
         case .external: return #keyPath(VehicleprofileEngine.engine_id)
-        case .internal:return #keyPath(VehicleprofileEngine.tag)
+        case .internal: return #keyPath(VehicleprofileEngine.tag)
         }
-        
     }
 }
 
 // MARK: - Mapping
+
 extension VehicleprofileEngine {
     @objc
-    public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    override public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
     }
 }
 
 // MARK: - JSONDecoding
+
 extension VehicleprofileEngine: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)

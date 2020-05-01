@@ -20,6 +20,7 @@ extension WOTPersistentStore: LogMessageSender {
 }
 
 // MARK: - WOTPersistentStoreProtocol
+
 extension WOTPersistentStore: WOTPersistentStoreProtocol {
     @objc
     public var appManager: WOTAppManagerProtocol? {
@@ -39,7 +40,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
             fatalError("provider was released")
         }
 
-        provider.stash(context: context) { (error) in
+        provider.stash(context: context) { error in
             if let error = error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
             }
@@ -51,19 +52,19 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
      */
     public func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) throws {
         let debugContextName = "Context: \"\(context.name ?? "<Unknown>")\""
-        self.appManager?.logInspector?.log(CDMappingStartLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
+        appManager?.logInspector?.log(CDMappingStartLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
         appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         try object?.mapping(context: context, fromJSON: jSON, pkCase: pkCase, persistentStore: self)
-        self.appManager?.logInspector?.log(CDMappingEndLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
+        appManager?.logInspector?.log(CDMappingEndLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
 //        stash(context: context, hint: pkCase)
     }
 
     public func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase) throws {
         let debugContextName = "Context: \"\(context.name ?? "<Unknown>")\""
-        self.appManager?.logInspector?.log(CDMappingStartLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
+        appManager?.logInspector?.log(CDMappingStartLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
         appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         try object?.mapping(context: context, fromArray: array, pkCase: pkCase, persistentStore: self)
-        self.appManager?.logInspector?.log(CDMappingEndLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
+        appManager?.logInspector?.log(CDMappingEndLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
 //        stash(context: context, hint: pkCase)
     }
 
@@ -85,13 +86,13 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
                     let fetchResult = FetchResult(context: context, objectID: managedObject.objectID, predicate: predicate, fetchStatus: fetchStatus, error: nil)
                     callback(fetchResult)
                 }
-            } catch let error {
+            } catch {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: pkCase), sender: self)
             }
         }
     }
 
-    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onObjectDidFetch: @escaping ContextObjectidErrorCompletion) {
+    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, onObjectDidFetch: @escaping ContextObjectidErrorCompletion) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
 
         var predicates = [WOTPredicate]()
@@ -102,7 +103,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
                 requestIDs.forEach {
                     do {
                         try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, onObjectDidFetch: onObjectDidFetch)
-                    } catch let error {
+                    } catch {
                         appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
                     }
                 }
@@ -124,14 +125,14 @@ extension WOTPersistentStoreProtocol {
      */
     public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
-            
+
             let context = fetchResult.context
             guard let managedObjectID = fetchResult.objectID else {
 //                throw WOTPersistentStoreError.objectIDNotDefined
                 return
             }
             let newObject = context.object(with: managedObjectID)
-            try? self.mapping(context: context,object: newObject, fromJSON: itemJSON, pkCase: pkCase)
+            try? self.mapping(context: context, object: newObject, fromJSON: itemJSON, pkCase: pkCase)
             callback(managedObjectID)
             self.stash(context: context, hint: pkCase)
         }
@@ -142,7 +143,7 @@ extension WOTPersistentStoreProtocol {
      */
     public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
-            
+
             let context = fetchResult.context
             guard let managedObjectID = fetchResult.objectID else {
 //                throw WOTPersistentStoreError.objectIDNotDefined
@@ -150,11 +151,11 @@ extension WOTPersistentStoreProtocol {
             }
 
             let newObject = context.object(with: managedObjectID)
-            try? self.mapping(context: context,object: newObject, fromArray: items, pkCase: pkCase)
+            try? self.mapping(context: context, object: newObject, fromArray: items, pkCase: pkCase)
             callback(managedObjectID)
             self.stash(context: context, hint: pkCase)
         }
     }
 
-    private func itemMappingCallback(_ context: NSManagedObjectContext, _ managedObjectID: NSManagedObjectID, _ error:Error? ) {}
+    private func itemMappingCallback(_ context: NSManagedObjectContext, _ managedObjectID: NSManagedObjectID, _ error: Error?) {}
 }

@@ -15,7 +15,6 @@ public protocol WOTRequestCoordinatorBridgeProtocol {
 
 @objc
 public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
-
     var appManager: WOTAppManagerProtocol? { get set }
 
     var coordinator: WOTRequestCoordinatorProtocol { get }
@@ -29,25 +28,25 @@ public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
     func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
 
     func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
-    
+
     func cancelRequests(groupId: WOTRequestIdType, with error: Error?)
 }
 
 @objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-
     deinit {
         //
     }
 
     @objc
-    required public init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
+    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
         coordinator = requestCoordinator
         hostConfiguration = hostConfig
         super.init()
     }
 
     // MARK: WOTRequestManagerProtocol-
+
     @objc public var appManager: WOTAppManagerProtocol?
     @objc public var coordinator: WOTRequestCoordinatorProtocol
     @objc public var hostConfiguration: WOTHostConfigurationProtocol
@@ -103,7 +102,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
             throw WEBError.requestWasNotAddedToGroup
         }
 
-        self.grouppedObjectDidParse[request.uuid.uuidString] = onObjectDidFetch
+        grouppedObjectDidParse[request.uuid.uuidString] = onObjectDidFetch
 
         try request.start(withArguments: withArguments)
         grouppedListeners[request.uuid.uuidString]?.forEach {
@@ -112,7 +111,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
-        let request = try self.createRequest(forRequestId: requestId, withPredicate: withPredicate)
+        let request = try createRequest(forRequestId: requestId, withPredicate: withPredicate)
 
         let arguments = withPredicate.buildRequestArguments()
         let groupId = "Nested\(String(describing: withPredicate.clazz))-\(withPredicate)"
@@ -145,7 +144,6 @@ extension WOTRequestManager: LogMessageSender {
 }
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
-
     public func request(_ request: WOTRequestProtocol, startedWith: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol) {
         appManager?.logInspector?.log(WEBStartLog(request.description), sender: self)
     }
@@ -161,14 +159,14 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        let onObjectDidParse = self.grouppedObjectDidParse[request.uuid.uuidString]
+        let onObjectDidParse = grouppedObjectDidParse[request.uuid.uuidString]
 //        guard  else {
 //            appManager?.logInspector?.log( ErrorLog("onObjectDidParse not registered for \(type(of: request))"), sender: self)
 //            return
 //        }
 
         guard let dataparser = appManager?.responseCoordinator else {
-            appManager?.logInspector?.log( ErrorLog(message: "dataparser not found"), sender: self)
+            appManager?.logInspector?.log(ErrorLog(message: "dataparser not found"), sender: self)
             return
         }
 
@@ -176,10 +174,9 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             try dataparser.parseResponseData(data,
                                              forRequest: request,
                                              onObjectDidParse: onObjectDidParse,
-                                             onRequestComplete: self.onRequestComplete(_:_:error:)
-            )
-        } catch let error {
-            appManager?.logInspector?.log( ErrorLog(error, details: request), sender: self)
+                                             onRequestComplete: onRequestComplete(_:_:error:))
+        } catch {
+            appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
         }
     }
 
@@ -205,13 +202,13 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                 self.grouppedRequests[group] = grouppedRequests
             }
         }
-        self.grouppedObjectDidParse[request.uuid.uuidString] = nil
+        grouppedObjectDidParse[request.uuid.uuidString] = nil
         request.removeListener(self)
     }
 }
 
 extension WOTRequestManager: Describable {
-    public override var description: String {
+    override public var description: String {
         return "WOTRequestManager"
     }
 }

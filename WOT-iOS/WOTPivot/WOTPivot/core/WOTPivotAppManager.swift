@@ -32,7 +32,7 @@ public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
         persistentStore?.appManager = nil
         sessionManager?.appManager = nil
     }
-    
+
     @objc public var hostConfiguration: WOTHostConfigurationProtocol?
 
     @objc public var responseCoordinator: WOTResponseCoordinatorProtocol? {

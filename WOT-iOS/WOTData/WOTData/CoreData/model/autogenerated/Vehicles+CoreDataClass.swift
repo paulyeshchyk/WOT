@@ -7,13 +7,14 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Vehicles)
 public class Vehicles: NSManagedObject {}
 
 // MARK: - Coding Keys
+
 extension Vehicles {
     //
     public typealias Fields = FieldKeys
@@ -58,26 +59,26 @@ extension Vehicles {
         case .external: return #keyPath(Vehicles.tank_id)
         case .internal: return #keyPath(Vehicles.tank_id)
         }
-        
     }
 }
 
 // MARK: - Mapping
+
 extension Vehicles {
     private func defaultProfileMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
         guard let itemJSON = jSON else { return }
 
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-        persistentStore?.itemMapping(context: context, forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, callback: { (managedObjectID) in
+        persistentStore?.itemMapping(context: context, forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, callback: { managedObjectID in
 
             guard let managedObjectID = managedObjectID, let defaultProfile = context.object(with: managedObjectID) as? Vehicleprofile else {
                 return
             }
             self.default_profile = defaultProfile
-            self.modules_tree?.forEach({ (element) in
+            self.modules_tree?.forEach { element in
                 (element as? ModulesTree)?.default_profile = defaultProfile
-            })
+            }
             persistentStore?.stash(context: context, hint: vehicleProfileCase)
         })
     }
@@ -97,9 +98,9 @@ extension Vehicles {
         modulesTreeCase[.primary] = pkCase[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
-        moduleTreeJSON.keys.forEach { (key) in
+        moduleTreeJSON.keys.forEach { key in
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
-            guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber  else { return }
+            guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
             let modulePK = ModulesTree.primaryKey(for: module_id, andType: .internal)
             let submodulesCase = PKCase(parentObjects: modulesTreeCase.plainParents)
@@ -122,23 +123,24 @@ extension Vehicles {
                     module_tree.default_profile = self.default_profile
                     self.addToModules_tree(module_tree)
                     persistentStore?.stash(context: context, hint: modulesTreeCase)
-                } catch let error {
+                } catch {
                     print(error)
                 }
             }
         }
     }
 
-    public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    override public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
 
-        defaultProfileMapping(context: context, jSON: jSON[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
+        self.defaultProfileMapping(context: context, jSON: jSON[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
 
-        modulesTreeMapping(context: context, jSON: jSON[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
+        self.modulesTreeMapping(context: context, jSON: jSON[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
     }
 }
 
 // MARK: - JSONDecoding
+
 extension Vehicles: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)

@@ -154,7 +154,6 @@ extension JSONAdapter {
     }
 
     private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping ContextObjectidErrorCompletion) {
-
         let parents = fromRequest.predicate?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
         #warning("not working for guns: expected gun_id - received tag")

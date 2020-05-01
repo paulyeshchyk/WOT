@@ -116,7 +116,6 @@ public protocol WOTRequestModelBindingProtocol {
 }
 
 extension WOTRequestCoordinator: WOTRequestModelBindingProtocol {
-
     public func modelClass(for request: WOTRequestProtocol) -> PrimaryKeypathProtocol.Type? {
         guard let clazz = type(of: request) as? WOTModelServiceProtocol.Type else { return nil }
         return clazz.modelClass()
@@ -129,7 +128,6 @@ extension WOTRequestCoordinator: WOTRequestModelBindingProtocol {
 
         return requestClass.modelClass()
     }
-
 }
 
 extension WOTRequestCoordinator: LogMessageSender {

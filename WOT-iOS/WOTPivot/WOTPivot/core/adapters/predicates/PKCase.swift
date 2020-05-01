@@ -40,15 +40,15 @@ public class PKCase: NSObject {
     //    @available(*, deprecated, message:"Use tree instead of plain")
     public var plainParents: [AnyObject] = []
 
-    public convenience init(parentObjects: [AnyObject?]? ) {
+    public convenience init(parentObjects: [AnyObject?]?) {
         self.init()
 
-        if let parentObjects = parentObjects?.compactMap({$0}) {
+        if let parentObjects = parentObjects?.compactMap({ $0 }) {
             plainParents.append(contentsOf: parentObjects)
         }
     }
 
-    public override var debugDescription: String { return description }
+    override public var debugDescription: String { return description }
 
     private var values: [PKType: Set<WOTPrimaryKey>] = .init()
 
@@ -73,9 +73,9 @@ public class PKCase: NSObject {
         } else {
             var updatedSet = Set<WOTPrimaryKey>()
             values.keys.forEach {
-                values[$0]?.forEach({ key in
+                values[$0]?.forEach { key in
                     updatedSet.insert(key)
-                })
+                }
             }
             return updatedSet
         }
@@ -92,7 +92,7 @@ public class PKCase: NSObject {
 }
 
 extension PKCase: Describable {
-    public override var description: String {
+    override public var description: String {
         guard let objects = allValues(), !objects.isEmpty else {
             return "empty case"
         }

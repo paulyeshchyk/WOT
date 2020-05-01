@@ -7,13 +7,14 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(ModulesTree)
 public class ModulesTree: NSManagedObject {}
 
 // MARK: - Coding Keys
+
 extension ModulesTree {
     //
     public typealias Fields = FieldKeys
@@ -50,8 +51,9 @@ extension ModulesTree {
 }
 
 // MARK: - Mapping
+
 extension ModulesTree {
-    public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+    override public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
 
         var parents = pkCase.plainParents
@@ -72,7 +74,7 @@ extension ModulesTree {
 
         let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
         (nextTanks as? [AnyObject])?.forEach {
-            //parents was not used for next portion of tanks
+            // parents was not used for next portion of tanks
             let nextTanksPK = PKCase(parentObjects: nil)
             nextTanksPK[.primary] = Vehicles.primaryKey(for: $0, andType: .internal)
             persistentStore?.fetchRemote(context: context, byModelClass: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onObjectDidFetch: { context, managedObjectID, _ in
@@ -86,6 +88,7 @@ extension ModulesTree {
 }
 
 // MARK: - JSONDecoding
+
 extension ModulesTree: JSONDecoding {
     public func decodeWith(_ decoder: Decoder) throws {
         let fieldsContainer = try decoder.container(keyedBy: Fields.self)
@@ -100,6 +103,7 @@ extension ModulesTree: JSONDecoding {
 }
 
 // MARK: - Customization
+
 extension ModulesTree {
     @objc
     public func localImageURL() -> URL? {

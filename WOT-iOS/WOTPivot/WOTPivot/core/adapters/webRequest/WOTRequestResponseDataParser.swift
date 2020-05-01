@@ -17,7 +17,6 @@ public protocol WOTRequestResponseDataParserProtocol {
 }
 
 public class WOTRESTResponseDataParser: WOTRequestResponseDataParserProtocol, LogMessageSender {
-
     private struct DataAdaptationPair {
         let dataAdapter: DataAdapterProtocol
         let data: Data?
@@ -63,5 +62,4 @@ public class WOTRESTResponseDataParser: WOTRequestResponseDataParserProtocol, Lo
 
     // MARK: LogMessageSender-
     public var logSenderDescription: String = "WOTRequestDataParser"
-
 }
