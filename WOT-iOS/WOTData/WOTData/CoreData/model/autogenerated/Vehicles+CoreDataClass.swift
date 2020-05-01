@@ -69,7 +69,7 @@ extension Vehicles {
 
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-        try? persistentStore?.itemMapping(context: context, forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, callback: { (managedObjectID) in
+        persistentStore?.itemMapping(context: context, forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, callback: { (managedObjectID) in
 
             guard let managedObjectID = managedObjectID, let defaultProfile = context.object(with: managedObjectID) as? Vehicleprofile else {
                 return
@@ -78,6 +78,7 @@ extension Vehicles {
             self.modules_tree?.forEach({ (element) in
                 (element as? ModulesTree)?.default_profile = defaultProfile
             })
+            persistentStore?.stash(context: context, hint: vehicleProfileCase)
         })
     }
 
@@ -105,28 +106,25 @@ extension Vehicles {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = modulesTreeCase[.primary]
 
-            do {
-                try persistentStore?.fetchLocal(context: context, byModelClass: ModulesTree.self, pkCase: submodulesCase) { context, managedObjectID, _ in
+            persistentStore?.fetchLocal(context: context, byModelClass: ModulesTree.self, pkCase: submodulesCase) { fetchResult in
 
-                    guard let managedObjectID = managedObjectID else {
-                        return
-                    }
-
-                    guard let module_tree = context.object(with: managedObjectID) as? ModulesTree else {
-                        return
-                    }
-                    do {
-                        try persistentStore?.mapping(context: context, object: module_tree, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase)
-
-                        module_tree.default_profile = self.default_profile
-                        self.addToModules_tree(module_tree)
-                        persistentStore?.stash(context: context, hint: modulesTreeCase)
-                    } catch let error {
-                        print(error)
-                    }
+                let context = fetchResult.context
+                guard let managedObjectID = fetchResult.objectID else {
+                    return
                 }
-            } catch let error {
-                print(error)
+
+                guard let module_tree = context.object(with: managedObjectID) as? ModulesTree else {
+                    return
+                }
+                do {
+                    try persistentStore?.mapping(context: context, object: module_tree, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase)
+
+                    module_tree.default_profile = self.default_profile
+                    self.addToModules_tree(module_tree)
+                    persistentStore?.stash(context: context, hint: modulesTreeCase)
+                } catch let error {
+                    print(error)
+                }
             }
         }
     }

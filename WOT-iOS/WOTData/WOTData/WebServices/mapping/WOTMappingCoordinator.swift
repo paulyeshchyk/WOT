@@ -67,26 +67,23 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
 //        stash(context: context, hint: pkCase)
     }
 
-    public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping ContextAnyObjectErrorCompletion) {
+    public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping FetchResultCompletion) {
         appManager?.logInspector?.log(LogicLog("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             appManager?.logInspector?.log(ErrorLog(message: "no key defined for class: \(String(describing: clazz))"), sender: self)
-            callback(context, nil, nil)
+            let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none, error: nil)
+            callback(fetchResult)
             return
         }
-
-//        guard let context = appManager?.coreDataProvider?.mainContext else {
-//            throw WOTPersistentStoreError.contextNotDefined
-//        }
 
         appManager?.coreDataProvider?.perform(context: context) { context in
             do {
                 let debugInfo: String = "Context: \"\(context.name ?? "<Unknown>")\" \(String(describing: clazz)) \(pkCase.description)"
                 self.appManager?.logInspector?.log(CDFetchStartLog(debugInfo), sender: self)
                 if let managedObject = try NSManagedObject.findOrCreateObject(forClass: clazz, predicate: predicate, context: context) {
-//                    let status = managedObject.isInserted ? "created" : "located"
-//                    self.appManager?.logInspector?.log(CDFetchLog("\(String(describing: clazz)) \(pkCase.description); status: \(status)"), sender: self)
-                    callback(context, managedObject.objectID, nil)
+                    let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .none
+                    let fetchResult = FetchResult(context: context, objectID: managedObject.objectID, predicate: predicate, fetchStatus: fetchStatus, error: nil)
+                    callback(fetchResult)
                 }
             } catch let error {
                 self.appManager?.logInspector?.log(ErrorLog(error, details: pkCase), sender: self)
@@ -94,7 +91,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
         }
     }
 
-    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onObjectDidFetch: @escaping ContextAnyObjectErrorCompletion) {
+    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase,  keypathPrefix: String?, onObjectDidFetch: @escaping ContextObjectidErrorCompletion) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
 
         var predicates = [WOTPredicate]()
@@ -126,8 +123,10 @@ extension WOTPersistentStoreProtocol {
 
      */
     public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
-        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { context, managedObjectID, _ in
-            guard let managedObjectID = managedObjectID else {
+        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
+            
+            let context = fetchResult.context
+            guard let managedObjectID = fetchResult.objectID else {
 //                throw WOTPersistentStoreError.objectIDNotDefined
                 return
             }
@@ -142,8 +141,10 @@ extension WOTPersistentStoreProtocol {
 
      */
     public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
-        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { context, managedObjectID, _ in
-            guard let managedObjectID = managedObjectID else {
+        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
+            
+            let context = fetchResult.context
+            guard let managedObjectID = fetchResult.objectID else {
 //                throw WOTPersistentStoreError.objectIDNotDefined
                 return
             }

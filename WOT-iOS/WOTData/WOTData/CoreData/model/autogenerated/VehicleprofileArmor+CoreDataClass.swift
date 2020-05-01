@@ -49,55 +49,49 @@ extension VehicleprofileArmor: JSONDecoding {
 
 extension VehicleprofileArmor {
     @available(*, deprecated, message: "deprecated")
-    public static func hull(context: NSManagedObjectContext, fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping ContextAnyObjectErrorCompletion) {
+    public static func hull(context: NSManagedObjectContext, fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping ContextObjectidErrorCompletion) {
         guard let jSON = jSON as? JSON else {
             callback(context, nil, nil)
             return
         }
 
-        do {
-            try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) {context, managedObjectID, _ in
-                do {
-                    guard let managedObjectID = managedObjectID else {
-                        print("nil")
-                        return
-                    }
-                    let newObject = context.object(with: managedObjectID)
-
-                    try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase)
-                    callback(context, managedObjectID, nil)
-                } catch let error {
-                    print(error)
+        persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
+            do {
+                let context = fetchResult.context
+                guard let managedObjectID = fetchResult.objectID else {
+                    print("nil")
+                    return
                 }
+                let newObject = context.object(with: managedObjectID)
+
+                try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase)
+                callback(context, managedObjectID, nil)
+            } catch let error {
+                print(error)
             }
-        } catch let error {
-            print(error)
         }
     }
 
-    public static func turret(context: NSManagedObjectContext, fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping ContextAnyObjectErrorCompletion) {
+    public static func turret(context: NSManagedObjectContext, fromJSON jSON: Any?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?, callback: @escaping ContextObjectidErrorCompletion) {
         guard let jSON = jSON as? JSON else {
             callback(context, nil, nil)
             return
         }
 
-        do {
-            try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { context, managedObjectID, _ in
-                do {
-                    guard let managedObjectID = managedObjectID else {
-                        print("not found")
-                        return
-                    }
-                    let newObject = context.object(with: managedObjectID)
-
-                    try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase)
-                    callback(context, managedObjectID, nil)
-                } catch let error {
-                    print(error)
+        persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
+            do {
+                let context = fetchResult.context
+                guard let managedObjectID = fetchResult.objectID else {
+                    print("not found")
+                    return
                 }
+                let newObject = context.object(with: managedObjectID)
+
+                try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase)
+                callback(context, managedObjectID, nil)
+            } catch let error {
+                print(error)
             }
-        } catch let error {
-            print(error)
         }
     }
 }

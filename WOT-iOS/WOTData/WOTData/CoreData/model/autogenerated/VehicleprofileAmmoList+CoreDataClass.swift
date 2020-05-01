@@ -24,21 +24,19 @@ extension VehicleprofileAmmoList {
             let vehicleprofileAmmoCase = PKCase()
             vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject, andType: .internal)
-            do {
-                try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] context, managedObjectID, _ in
-                    guard let self = self, let managedObjectID = managedObjectID, let ammo = context.object(with: managedObjectID) as? VehicleprofileAmmo else {
-                        return
-                    }
-                    do {
-                        try persistentStore?.mapping(context: context, object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
-                        self.addToVehicleprofileAmmo(ammo)
-                        persistentStore?.stash(context: context, hint: vehicleprofileAmmoCase)
-                    } catch let error {
-                        print(error)
-                    }
+
+            persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] fetchResult in
+                let context = fetchResult.context
+                guard let self = self, let managedObjectID = fetchResult.objectID, let ammo = context.object(with: managedObjectID) as? VehicleprofileAmmo else {
+                    return
                 }
-            } catch let error {
-                print(error)
+                do {
+                    try persistentStore?.mapping(context: context, object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase)
+                    self.addToVehicleprofileAmmo(ammo)
+                    persistentStore?.stash(context: context, hint: vehicleprofileAmmoCase)
+                } catch let error {
+                    print(error)
+                }
             }
         }
     }

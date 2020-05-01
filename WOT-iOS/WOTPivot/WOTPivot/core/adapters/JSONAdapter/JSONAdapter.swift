@@ -16,7 +16,7 @@ public protocol DataAdapterProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
     var uuid: UUID { get }
     var onComplete: OnRequestComplete? { get set }
-    var onObjectDidParse: ContextAnyObjectErrorCompletion? { get set }
+    var onObjectDidParse: ContextObjectidErrorCompletion? { get set }
     func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
     init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?)
 }
@@ -54,7 +54,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: JSONAdapterProtocol -
     public var onGetObjectJSON: ((JSON) -> JSON)?
     public var onComplete: OnRequestComplete?
-    public var onObjectDidParse: ContextAnyObjectErrorCompletion?
+    public var onObjectDidParse: ContextObjectidErrorCompletion?
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
@@ -153,7 +153,7 @@ extension JSONAdapter {
         return ident
     }
 
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping ContextAnyObjectErrorCompletion) {
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping ContextObjectidErrorCompletion) {
 
         let parents = fromRequest.predicate?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)

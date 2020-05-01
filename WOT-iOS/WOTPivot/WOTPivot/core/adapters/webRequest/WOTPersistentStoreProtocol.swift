@@ -13,9 +13,9 @@ public protocol WOTPersistentStoreProtocol {
     @objc
     var appManager: WOTAppManagerProtocol? { get set }
 
-    func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping ContextAnyObjectErrorCompletion)
+    func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping FetchResultCompletion)
 
-    func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, onObjectDidFetch: @escaping ContextAnyObjectErrorCompletion)
+    func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, onObjectDidFetch: @escaping ContextObjectidErrorCompletion)
 
     func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase) throws
 

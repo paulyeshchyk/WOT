@@ -30,11 +30,10 @@ open class WOTCoreDataProvider: NSObject, WOTCoredataProviderProtocol {
         appManager?.logInspector?.log(TIMEMeasureLog("Context save start", uuid: uuid))
     }
 
-    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping ContextAnyObjectErrorCompletion ) {
-        let privateCompletion: ContextAnyObjectErrorCompletion = { context, managedObjectID, error in
-
-            self.performMain { (mainContext) in
-                callback(mainContext, managedObjectID, error)
+    public func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping ContextObjectidErrorCompletion ) {
+        let privateCompletion: ContextObjectidErrorCompletion = { context, managedObjectID, error in
+            self.performMain { (context) in
+                callback(context, managedObjectID, error)
             }
         }
 

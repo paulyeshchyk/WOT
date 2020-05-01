@@ -15,11 +15,41 @@ public enum WOTExecuteConcurency: Int {
     case privateQueue
 }
 
+@objc
+public enum FetchStatus: Int {
+    case none
+    case inserted
+    case updated
+}
+
+@objc
+public class FetchResult: NSObject {
+    public var context: NSManagedObjectContext
+    public var objectID: NSManagedObjectID?
+    public var fetchStatus: FetchStatus = .none
+    public var predicate: NSPredicate?
+    public var error: Error?
+
+    override required public init() {
+        fatalError("")
+    }
+    
+    public required init(context cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus, error err: Error?) {
+        context = cntx
+        objectID = objID
+        predicate = predicat
+        fetchStatus = status
+        error = err
+        super.init()
+    }
+}
+
 public typealias ThrowableCompletion = (Error?) -> Void
 public typealias NSManagedObjectCompletion = (NSManagedObject) -> Void
-public typealias ContextAnyObjectErrorCompletion = (NSManagedObjectContext, NSManagedObjectID?, Error?) -> Void
+public typealias FetchResultCompletion = (FetchResult) -> Void
+public typealias ContextObjectidErrorCompletion = (NSManagedObjectContext, NSManagedObjectID?, Error?) -> Void
 public typealias AnyObjectErrorCompletion = (AnyObject?, Error?) -> Void
-public typealias NSManagedObjectErrorCompletion = ContextAnyObjectErrorCompletion//(NSManagedObject?, Error?) -> Void
+public typealias NSManagedObjectErrorCompletion = ContextObjectidErrorCompletion//(NSManagedObject?, Error?) -> Void
 public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
 public typealias NSManagedObjectOptionalCallback = (_ managedObject: NSManagedObjectID?) -> Void
 public typealias NSManagedObjectSetOptinalCallback = ([NSManagedObject?]?) -> Void
@@ -28,7 +58,7 @@ public typealias NSManagedObjectSetOptinalCallback = ([NSManagedObject?]?) -> Vo
 public protocol WOTDataProviderProtocol: NSObjectProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
     func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion )
-    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping ContextAnyObjectErrorCompletion )
+    func findOrCreateObject(by clazz: AnyClass, andPredicate predicate: NSPredicate?, callback: @escaping ContextObjectidErrorCompletion )
 }
 
 @objc

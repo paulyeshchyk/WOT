@@ -45,20 +45,17 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoPenetrationCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         if let penetrationArray = jSON[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
-            do {
-                try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) {context, managedObjectID, _ in
-                    if let managedObjectID = managedObjectID, let penetrationObject = context.object(with: managedObjectID) as? VehicleprofileAmmoPenetration {
-                        do {
-                            try persistentStore?.mapping(context: context, object: penetrationObject, fromArray: penetrationArray, pkCase: vehicleprofileAmmoPenetrationCase)
-                            self.penetration = penetrationObject
-                            persistentStore?.stash(context: context, hint: vehicleprofileAmmoPenetrationCase)
-                        } catch let error {
-                            print(error)
-                        }
+            persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult in
+                let context = fetchResult.context
+                if let managedObjectID = fetchResult.objectID, let penetrationObject = context.object(with: managedObjectID) as? VehicleprofileAmmoPenetration {
+                    do {
+                        try persistentStore?.mapping(context: context, object: penetrationObject, fromArray: penetrationArray, pkCase: vehicleprofileAmmoPenetrationCase)
+                        self.penetration = penetrationObject
+                        persistentStore?.stash(context: context, hint: vehicleprofileAmmoPenetrationCase)
+                    } catch let error {
+                        print(error)
                     }
                 }
-            } catch let error {
-                print(error)
             }
         }
         let vehicleprofileAmmoDamageCase = PKCase()
@@ -66,20 +63,18 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
 
         if let damageArray = jSON[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
-            do {
-                try persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { context, managedObjectID, _ in
-                    if let managedObjectID = managedObjectID, let damageObject = context.object(with: managedObjectID) as? VehicleprofileAmmoDamage {
-                        do {
-                            try persistentStore?.mapping(context: context, object: damageObject, fromArray: damageArray, pkCase: vehicleprofileAmmoDamageCase)
-                            self.damage = damageObject
-                            persistentStore?.stash(context: context, hint: vehicleprofileAmmoPenetrationCase)
-                        } catch let error {
-                            print(error)
-                        }
+            persistentStore?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { fetchResult in
+
+                let context = fetchResult.context
+                if let managedObjectID = fetchResult.objectID, let damageObject = context.object(with: managedObjectID) as? VehicleprofileAmmoDamage {
+                    do {
+                        try persistentStore?.mapping(context: context, object: damageObject, fromArray: damageArray, pkCase: vehicleprofileAmmoDamageCase)
+                        self.damage = damageObject
+                        persistentStore?.stash(context: context, hint: vehicleprofileAmmoPenetrationCase)
+                    } catch let error {
+                        print(error)
                     }
                 }
-            } catch let error {
-                print(error)
             }
         }
     }
