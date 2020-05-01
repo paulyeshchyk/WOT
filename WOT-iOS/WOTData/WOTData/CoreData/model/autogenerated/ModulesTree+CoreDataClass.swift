@@ -41,8 +41,11 @@ extension ModulesTree {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath() -> String {
-        return #keyPath(ModulesTree.module_id)
+    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
+        switch forType {
+        case .external: return #keyPath(ModulesTree.module_id)
+        case .internal: return #keyPath(ModulesTree.module_id)
+        }
     }
 }
 
@@ -58,7 +61,7 @@ extension ModulesTree {
         nextModules?.forEach {
             let modulePK = PKCase(parentObjects: parents)
             modulePK[.primary] = pkCase[.primary]
-            modulePK[.secondary] = Module.primaryIdKey(for: $0)
+            modulePK[.secondary] = Module.primaryKey(for: $0, andType: .external)
             persistentStore?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, onObjectDidFetch: { context, managedObjectID, _ in
                 if let managedObjectID = managedObjectID, let module = context.object(with: managedObjectID) as? Module {
                     self.addToNext_modules(module)
@@ -71,7 +74,7 @@ extension ModulesTree {
         (nextTanks as? [AnyObject])?.forEach {
             //parents was not used for next portion of tanks
             let nextTanksPK = PKCase(parentObjects: nil)
-            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0)
+            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0, andType: .internal)
             persistentStore?.fetchRemote(context: context, byModelClass: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, onObjectDidFetch: { context, managedObjectID, _ in
                 if let managedObjectID = managedObjectID, let tank = context.object(with: managedObjectID) as? Vehicles {
                     self.addToNext_tanks(tank)

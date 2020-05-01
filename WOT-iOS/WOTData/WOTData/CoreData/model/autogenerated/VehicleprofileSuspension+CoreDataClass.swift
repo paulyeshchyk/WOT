@@ -41,14 +41,14 @@ extension VehicleprofileSuspension {
 //        return RelativeKeys.allCases.compactMap { $0.rawValue }
 //    }
 
-    override public class func primaryKeyPath() -> String {
-        //tag was used when parsed response vehicleprofile-suspension
-        return #keyPath(VehicleprofileSuspension.tag)
-    }
-
-    override public class func primaryIdKeyPath() -> String {
+    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         //id was used when quering remote module
-        return #keyPath(VehicleprofileSuspension.suspension_id)
+        //tag was used when parsed response vehicleprofile-suspension
+
+        switch forType {
+        case .external: return #keyPath(VehicleprofileSuspension.suspension_id)
+        case .internal: return #keyPath(VehicleprofileSuspension.tag)
+        }
     }
 }
 

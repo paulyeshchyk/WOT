@@ -9,11 +9,7 @@
 import CoreData
 
 extension NSManagedObject: PrimaryKeypathProtocol {
-    open class func primaryKeyPath() -> String {
-        fatalError("Primary keypath is not defined")
-    }
-
-    open class func primaryIdKeyPath() -> String {
+    open class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         fatalError("Primary ID keypath is not defined")
     }
 
@@ -24,20 +20,13 @@ extension NSManagedObject: PrimaryKeypathProtocol {
     open class func predicate(for ident: AnyObject?) -> NSPredicate? {
         guard let ident = ident as? String else { return nil }
         let predicateTemplate = predicateFormat()
-        let keyName = primaryKeyPath()
+        let keyName = primaryKeyPath(forType: .internal)
         return NSPredicate(format: predicateTemplate, keyName, ident)
     }
 
-    open class func primaryKey(for ident: Any) -> WOTPrimaryKey {
+    open class func primaryKey(for ident: Any, andType: PrimaryKeyType) -> WOTPrimaryKey? {
         let predicateTemplate = predicateFormat()
-        let keyName = primaryKeyPath()
-        return WOTPrimaryKey(name: keyName, value: ident as AnyObject, nameAlias: keyName, predicateFormat: predicateTemplate)
-    }
-
-    open class func primaryIdKey(for ident: AnyObject?) -> WOTPrimaryKey? {
-        guard let ident = ident else { return nil }
-        let predicateTemplate = predicateFormat()
-        let keyName = primaryIdKeyPath()
+        let keyName = primaryKeyPath(forType: andType)
         return WOTPrimaryKey(name: keyName, value: ident as AnyObject, nameAlias: keyName, predicateFormat: predicateTemplate)
     }
 }

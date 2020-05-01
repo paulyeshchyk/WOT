@@ -26,7 +26,7 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, Describable {
     var availableInGroups: [String] { get }
 
     @objc
-    func addGroup(_ group: String)
+    func addGroup(_ group: WOTRequestIdType)
 
     @objc
     func removeGroup(_ group: String)
@@ -34,7 +34,7 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, Describable {
     var uuid: UUID { get }
 
     @objc
-    var jsonLink: WOTPredicate? { get set }
+    var predicate: WOTPredicate? { get set }
 }
 
 @objc
@@ -76,22 +76,22 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
     public var hostConfiguration: WOTHostConfigurationProtocol?
 
     @objc
-    public var availableInGroups = [String]()
+    public var availableInGroups = [WOTRequestIdType]()
 
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
 
-    public var jsonLink: WOTPredicate?
+    public var predicate: WOTPredicate?
 
-    private var groups = [String]()
+    private var groups = [WOTRequestIdType]()
 
     @objc
-    open func addGroup(_ group: String) {
+    open func addGroup(_ group: WOTRequestIdType) {
         groups.append(group)
     }
 
     @objc
-    open func removeGroup(_ group: String) {
+    open func removeGroup(_ group: WOTRequestIdType) {
         groups.removeAll(where: { group.compare($0) == .orderedSame })
     }
 

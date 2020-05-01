@@ -53,8 +53,12 @@ extension Vehicles {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public static func primaryKeyPath() -> String {
-        return #keyPath(Vehicles.tank_id)
+    override public static func primaryKeyPath(forType: PrimaryKeyType) -> String {
+        switch forType {
+        case .external: return #keyPath(Vehicles.tank_id)
+        case .internal: return #keyPath(Vehicles.tank_id)
+        }
+        
     }
 }
 
@@ -96,7 +100,7 @@ extension Vehicles {
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber  else { return }
 
-            let modulePK = ModulesTree.primaryKey(for: module_id)
+            let modulePK = ModulesTree.primaryKey(for: module_id, andType: .internal)
             let submodulesCase = PKCase(parentObjects: modulesTreeCase.plainParents)
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = modulesTreeCase[.primary]

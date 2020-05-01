@@ -143,7 +143,7 @@ extension JSONAdapter {
 
     private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
         let ident: Any
-        let primaryKeyPath = Clazz.primaryKeyPath()
+        let primaryKeyPath = Clazz.primaryKeyPath(forType: .internal)
 
         if  primaryKeyPath.count > 0 {
             ident = json[primaryKeyPath] ?? key
@@ -155,10 +155,10 @@ extension JSONAdapter {
 
     private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping ContextAnyObjectErrorCompletion) {
 
-        let parents = fromRequest.jsonLink?.pkCase?.plainParents ?? []
+        let parents = fromRequest.predicate?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
         #warning("not working for guns: expected gun_id - received tag")
-        objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject)
+        objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject, andType: .external)
         appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 
         appManager?.coreDataProvider?.findOrCreateObject(by: self.modelClazz, andPredicate: objCase[.primary]?.predicate, callback: { (context, managedObjectID, error) in

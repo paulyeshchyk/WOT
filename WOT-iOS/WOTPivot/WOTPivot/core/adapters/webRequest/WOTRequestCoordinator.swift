@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias WOTRequestIdType = AnyHashable
+public typealias WOTRequestIdType = String
 
 @objc
 public protocol WOTDataResponseAdapterProtocol: NSObjectProtocol {
@@ -63,7 +63,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         }
         return result
     }
-    
+
     public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]? {
         guard let modelClass = modelClass(for: request) else {
             appManager?.logInspector?.log(ErrorLog(message: "model class not found for request\(request.description)"), sender: self)

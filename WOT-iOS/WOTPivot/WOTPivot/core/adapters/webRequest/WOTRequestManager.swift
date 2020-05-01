@@ -26,16 +26,16 @@ public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
 
     func removeListener(_ listener: WOTRequestManagerListenerProtocol)
 
-    func cancelRequests(groupId: String, with error: Error?)
-
-    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: String, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
+    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
 
     func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws
+    
+    func cancelRequests(groupId: WOTRequestIdType, with error: Error?)
 }
 
 @objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-    
+
     deinit {
         //
     }
@@ -53,10 +53,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     @objc public var hostConfiguration: WOTHostConfigurationProtocol
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
-    fileprivate var grouppedRequests: [String: [WOTRequestProtocol]] = [:]
+    fileprivate var grouppedRequests: [WOTRequestIdType: [WOTRequestProtocol]] = [:]
     fileprivate var grouppedObjectDidParse: [AnyHashable: NSManagedObjectErrorCompletion] = [:]
 
-    @objc
     public func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol) {
         guard let listener = listener else { return }
         let uuid = forRequest.uuid.uuidString
@@ -71,7 +70,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    @objc
     public func removeListener(_ listener: WOTRequestManagerListenerProtocol) {
         grouppedListeners.keys.forEach {
             if var listeners = grouppedListeners[$0] {
@@ -81,8 +79,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    @objc
-    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: String) -> Bool {
+    private func addRequest(_ request: WOTRequestProtocol, forGroupId groupId: WOTRequestIdType) -> Bool {
         var grouppedRequests: [WOTRequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
             grouppedRequests.append(contentsOf: available)
@@ -101,7 +98,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: String, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
+    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
         guard addRequest(request, forGroupId: forGroupId) else {
             throw WEBError.requestWasNotAddedToGroup
         }
@@ -115,15 +112,14 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, onObjectDidFetch: NSManagedObjectErrorCompletion?) throws {
-        let request = try self.createRequest(forRequestId: requestId, jsonLink: withPredicate)
+        let request = try self.createRequest(forRequestId: requestId, withPredicate: withPredicate)
 
         let arguments = withPredicate.buildRequestArguments()
         let groupId = "Nested\(String(describing: withPredicate.clazz))-\(withPredicate)"
         try startRequest(request, withArguments: arguments, forGroupId: groupId, onObjectDidFetch: onObjectDidFetch)
     }
 
-    @objc
-    public func cancelRequests(groupId: String, with error: Error?) {
+    public func cancelRequests(groupId: WOTRequestIdType, with error: Error?) {
         grouppedRequests[groupId]?.forEach { $0.cancel(with: error) }
     }
 
@@ -135,9 +131,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    func createRequest(forRequestId requestId: WOTRequestIdType, jsonLink: WOTPredicate) throws -> WOTRequestProtocol {
+    private func createRequest(forRequestId requestId: WOTRequestIdType, withPredicate: WOTPredicate) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
-        request.jsonLink = jsonLink
+        request.predicate = withPredicate
         return request
     }
 }

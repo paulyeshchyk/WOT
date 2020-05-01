@@ -31,14 +31,15 @@ extension VehicleprofileEngine {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath() -> String {
-        //tag was used when parsed response vehicleprofile-engine
-        return #keyPath(VehicleprofileEngine.tag)
-    }
 
-    override public class func primaryIdKeyPath() -> String {
+    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         //id was used when quering remote module
-        return #keyPath(VehicleprofileEngine.engine_id)
+        //tag was used when parsed response vehicleprofile-engine
+        switch forType {
+        case .external: return #keyPath(VehicleprofileEngine.engine_id)
+        case .internal:return #keyPath(VehicleprofileEngine.tag)
+        }
+        
     }
 }
 

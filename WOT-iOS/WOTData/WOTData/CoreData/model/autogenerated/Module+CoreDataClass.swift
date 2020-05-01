@@ -42,12 +42,11 @@ extension Module {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath() -> String {
-        return #keyPath(Module.name)
-    }
-
-    override public class func primaryIdKeyPath() -> String {
-        return #keyPath(Module.module_id)
+    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
+        switch forType {
+        case .external: return #keyPath(Module.module_id)
+        case .internal: return #keyPath(Module.module_id)// was name
+        }
     }
 }
 
@@ -115,8 +114,8 @@ extension Module {
 
     private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, onObjectDidFetch: @escaping NSManagedObjectErrorCompletion) {
         let pkCase = PKCase()
-        pkCase[.primary] = modelClazz.primaryIdKey(for: module_id)
-        pkCase[.secondary] = Vehicles.primaryKey(for: tank_id)
+        pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .external)
+        pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .internal)
 
         persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, onObjectDidFetch: onObjectDidFetch)
     }

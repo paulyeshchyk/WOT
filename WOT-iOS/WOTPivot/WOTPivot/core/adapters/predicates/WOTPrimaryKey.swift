@@ -9,13 +9,17 @@
 import Foundation
 
 @objc
+public enum PrimaryKeyType: Int {
+    case `internal`
+    case external
+}
+
+@objc
 public protocol PrimaryKeypathProtocol: class {
     static func predicateFormat() -> String
     static func predicate(for ident: AnyObject?) -> NSPredicate?
-    static func primaryKeyPath() -> String
-    static func primaryKey(for ident: Any) -> WOTPrimaryKey
-    static func primaryIdKeyPath() -> String // keypath for remote module search
-    static func primaryIdKey(for ident: AnyObject?) -> WOTPrimaryKey?
+    static func primaryKeyPath(forType: PrimaryKeyType) -> String
+    static func primaryKey(for ident: Any, andType: PrimaryKeyType) -> WOTPrimaryKey?
 }
 
 @objc
