@@ -26,7 +26,8 @@ public protocol JSONAdapterProtocol: DataAdapterProtocol {
 }
 
 @objc
-public protocol JSONAdapterInstanceHelper: class {
+public protocol JSONAdapterInstanceHelper {
+    init(objectID: NSManagedObjectID, identifier: Any?)
     func onInstanceDidParse(fetchResult: FetchResult)
     func onJSONExtraction(json: JSON) -> JSON?
 }

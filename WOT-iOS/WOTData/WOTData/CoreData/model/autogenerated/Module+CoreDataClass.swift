@@ -72,23 +72,23 @@ extension Module {
 
         switch moduleType {
         case .vehicleChassis:
-            let vehicleSuspensionInstanceHelper = ModuleSuspensionJSONAdapterHelper(module: self, suspension_id: module_id)
+            let vehicleSuspensionInstanceHelper = ModuleSuspensionJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
             vehicleSuspensionInstanceHelper.persistentStore = persistentStore
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: persistentStore, keyPathPrefix: "suspension.", instanceHelper: vehicleSuspensionInstanceHelper)
         case .vehicleGun:
-            let vehicleGunInstanceHelper = ModuleGunJSONAdapterHelper(module: self, gun_id: module_id)
+            let vehicleGunInstanceHelper = ModuleGunJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
             vehicleGunInstanceHelper.persistentStore = persistentStore
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: persistentStore, keyPathPrefix: "gun.", instanceHelper: vehicleGunInstanceHelper)
         case .vehicleRadio:
-            let vehicleRadoiInstanceHelper = ModuleRadioJSONAdapterHelper(module: self, radio_id: module_id)
+            let vehicleRadoiInstanceHelper = ModuleRadioJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
             vehicleRadoiInstanceHelper.persistentStore = persistentStore
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: persistentStore, keyPathPrefix: "radio.", instanceHelper: vehicleRadoiInstanceHelper)
         case .vehicleEngine:
-            let vehicleEngineInstanceHelper = ModuleEngineJSONAdapterHelper(module: self, engine_id: module_id)
+            let vehicleEngineInstanceHelper = ModuleEngineJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
             vehicleEngineInstanceHelper.persistentStore = persistentStore
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: persistentStore, keyPathPrefix: "engine.", instanceHelper: vehicleEngineInstanceHelper)
         case .vehicleTurret:
-            let vehicleTurretInstanceHelper = ModuleTurretJSONAdapterHelper(module: self, turret_id: module_id)
+            let vehicleTurretInstanceHelper = ModuleTurretJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
             vehicleTurretInstanceHelper.persistentStore = persistentStore
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: persistentStore, keyPathPrefix: "turret.", instanceHelper: vehicleTurretInstanceHelper)
         case .none, .tank, .unknown:

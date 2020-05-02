@@ -8,30 +8,30 @@
 
 import CoreData
 
-@objc
-public class VehicleProfileModuleGunLocalJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper {
+public class VehicleProfileModuleGunLocalJSONAdapterHelper: JSONAdapterInstanceHelper {
     var persistentStore: WOTPersistentStoreProtocol?
-    private var vehicleProfile: Vehicleprofile
-    private var tag: Any
+    private var objectID: NSManagedObjectID
+    private var identifier: Any?
+
+    public required init(objectID: NSManagedObjectID, identifier: Any?) {
+        self.objectID = objectID
+        self.identifier = identifier
+    }
 
     public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
     public func onInstanceDidParse(fetchResult: FetchResult) {
-        guard let gun = fetchResult.managedObject() as? VehicleprofileGun else {
-            return
-        }
-        self.vehicleProfile.gun = gun
-
         let context = fetchResult.context
-        persistentStore?.stash(context: context, hint: nil) { error in
-            if let error = error {
-                print(error.debugDescription)
+        if let gun = fetchResult.managedObject() as? VehicleprofileGun {
+            if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
+                vehicleProfile.gun = gun
+
+                persistentStore?.stash(context: context, hint: nil) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                }
             }
         }
-    }
-
-    init(vehicleProfile: Vehicleprofile, tag: Any) {
-        self.vehicleProfile = vehicleProfile
-        self.tag = tag
     }
 }

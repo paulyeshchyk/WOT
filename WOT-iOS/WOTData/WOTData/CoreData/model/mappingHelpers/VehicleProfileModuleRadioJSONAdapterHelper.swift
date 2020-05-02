@@ -8,11 +8,15 @@
 
 import CoreData
 
-@objc
-public class VehicleProfileModuleRadioJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper {
+public class VehicleProfileModuleRadioJSONAdapterHelper: JSONAdapterInstanceHelper {
     var persistentStore: WOTPersistentStoreProtocol?
-    private var module: VehicleprofileModule
-    private var radio_id: NSDecimalNumber
+    private var objectID: NSManagedObjectID
+    private var identifier: Any?
+
+    public required init(objectID: NSManagedObjectID, identifier: Any?) {
+        self.objectID = objectID
+        self.identifier = identifier
+    }
 
     public func onJSONExtraction(json: JSON) -> JSON? {
         return json["radio"] as? JSON
@@ -21,18 +25,15 @@ public class VehicleProfileModuleRadioJSONAdapterHelper: NSObject, JSONAdapterIn
     public func onInstanceDidParse(fetchResult: FetchResult) {
         let context = fetchResult.context
         if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
-            vehicleProfileRadio.radio_id = self.radio_id
-            self.module.vehicleRadio = vehicleProfileRadio
-            persistentStore?.stash(context: context, hint: nil) { error in
-                if let error = error {
-                    print(error.debugDescription)
+            if let module = context.object(with: objectID) as? VehicleprofileModule {
+                vehicleProfileRadio.radio_id = identifier as? NSDecimalNumber
+                module.vehicleRadio = vehicleProfileRadio
+                persistentStore?.stash(context: context, hint: nil) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
                 }
             }
         }
-    }
-
-    init(module: VehicleprofileModule, radio_id: NSDecimalNumber) {
-        self.module = module
-        self.radio_id = radio_id
     }
 }

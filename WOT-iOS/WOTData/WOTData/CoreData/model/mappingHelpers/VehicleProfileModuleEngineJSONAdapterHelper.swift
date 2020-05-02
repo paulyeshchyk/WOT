@@ -8,11 +8,15 @@
 
 import CoreData
 
-@objc
-public class VehicleProfileModuleEngineJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper {
+public class VehicleProfileModuleEngineJSONAdapterHelper: JSONAdapterInstanceHelper {
     var persistentStore: WOTPersistentStoreProtocol?
-    private var module: VehicleprofileModule
-    private var engine_id: NSDecimalNumber
+    private var objectID: NSManagedObjectID
+    private var identifier: Any?
+
+    public required init(objectID: NSManagedObjectID, identifier: Any?) {
+        self.objectID = objectID
+        self.identifier = identifier
+    }
 
     public func onJSONExtraction(json: JSON) -> JSON? {
         return json["engine"] as? JSON
@@ -21,18 +25,15 @@ public class VehicleProfileModuleEngineJSONAdapterHelper: NSObject, JSONAdapterI
     public func onInstanceDidParse(fetchResult: FetchResult) {
         let context = fetchResult.context
         if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
-            vehicleProfileEngine.engine_id = self.engine_id
-            self.module.vehicleEngine = vehicleProfileEngine
-            persistentStore?.stash(context: context, hint: nil) { error in
-                if let error = error {
-                    print(error.debugDescription)
+            if let module = context.object(with: objectID) as? VehicleprofileModule {
+                vehicleProfileEngine.engine_id = identifier as? NSDecimalNumber
+                module.vehicleEngine = vehicleProfileEngine
+                persistentStore?.stash(context: context, hint: nil) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
                 }
             }
         }
-    }
-
-    init(module: VehicleprofileModule, engine_id: NSDecimalNumber) {
-        self.module = module
-        self.engine_id = engine_id
     }
 }

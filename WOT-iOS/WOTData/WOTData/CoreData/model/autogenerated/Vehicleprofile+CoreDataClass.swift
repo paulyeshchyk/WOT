@@ -64,14 +64,14 @@ extension Vehicleprofile {
         if let itemsList = jSON[#keyPath(Vehicleprofile.ammo)] as? [Any] {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
-            let instanceHelper = VehicleProfileAmmoListLocalJSONAdapterHelper(vehicleProfile: self)
+            let instanceHelper = VehicleProfileAmmoListLocalJSONAdapterHelper(objectID: self.objectID, identifier: nil)
             persistentStore?.itemMapping(context: context, forClass: VehicleprofileAmmoList.self, items: itemsList, pkCase: itemCase, instanceHelper: instanceHelper, callback: { _ in })
         }
 
         if let itemJSON = jSON[#keyPath(Vehicleprofile.armor)] as? JSON {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
-            let instanceHelper = VehicleProfileArmorListLocalJSONAdapterHelper(vehicleProfile: self)
+            let instanceHelper = VehicleProfileArmorListLocalJSONAdapterHelper(objectID: self.objectID, identifier: nil)
             persistentStore?.itemMapping(context: context, forClass: VehicleprofileArmorList.self, itemJSON: itemJSON, pkCase: itemCase, instanceHelper: instanceHelper, callback: { _ in })
         }
 
@@ -79,7 +79,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileSuspension.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileSuspension.primaryKey(for: itemID, andType: .internal)
-                let instanceHelper = VehicleProfileSuspensionLocalJSONAdapterHelper(vehicleProfile: self, tag: itemID)
+                let instanceHelper = VehicleProfileSuspensionLocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID)
                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileSuspension.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in })
             }
         }
@@ -88,7 +88,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileGun.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileGun.primaryKey(for: itemID, andType: .internal)
-                let instanceHelper = VehicleProfileModuleGunLocalJSONAdapterHelper(vehicleProfile: self, tag: itemID)
+                let instanceHelper = VehicleProfileModuleGunLocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID)
                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileGun.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in })
             }
         }
@@ -97,7 +97,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileRadio.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileRadio.primaryKey(for: itemID, andType: .internal)
-                let instanceHelper = VehicleProfileRadioLocalJSONAdapterHelper(vehicleProfile: self, tag: itemID)
+                let instanceHelper = VehicleProfileRadioLocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID)
                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileRadio.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
             }
         }
@@ -106,7 +106,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileEngine.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileEngine.primaryKey(for: itemID, andType: .internal)
-                let instanceHelper = VehicleProfileEngineLocalJSONAdapterHelper(vehicleProfile: self, tag: itemID)
+                let instanceHelper = VehicleProfileEngineLocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID)
                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileEngine.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
             }
         }
@@ -115,7 +115,7 @@ extension Vehicleprofile {
             if let itemID = itemJSON[VehicleprofileTurret.primaryKeyPath(forType: .internal)] {
                 let pkCase = PKCase()
                 pkCase[.primary] = VehicleprofileTurret.primaryKey(for: itemID, andType: .internal)
-                let instanceHelper = VehicleProfileTurretLocalJSONAdapterHelper(vehicleProfile: self, tag: itemID)
+                let instanceHelper = VehicleProfileTurretLocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID)
                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
             }
         }
@@ -123,7 +123,7 @@ extension Vehicleprofile {
         if let moduleJSON = jSON[#keyPath(Vehicleprofile.modules)] as? JSON {
             let vehicleprofileModuleCase = PKCase(parentObjects: parents)
             vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
-            let instanceHelper = VehicleProfileModuleJSONAdapterHelper(vehicleProfile: self)
+            let instanceHelper = VehicleProfileModuleJSONAdapterHelper(objectID: self.objectID, identifier: nil)
             persistentStore?.itemMapping(context: context, forClass: VehicleprofileModule.self, itemJSON: moduleJSON, pkCase: vehicleprofileModuleCase, instanceHelper: instanceHelper, callback: { _ in })
         }
     }

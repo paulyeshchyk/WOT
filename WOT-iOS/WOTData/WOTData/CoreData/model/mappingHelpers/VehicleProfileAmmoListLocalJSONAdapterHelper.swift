@@ -8,28 +8,30 @@
 
 import CoreData
 
-@objc
-public class VehicleProfileAmmoListLocalJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper {
+public class VehicleProfileAmmoListLocalJSONAdapterHelper: JSONAdapterInstanceHelper {
     var persistentStore: WOTPersistentStoreProtocol?
-    private var vehicleProfile: Vehicleprofile
+    private var objectID: NSManagedObjectID
+    private var identifier: Any?
+
+    public required init(objectID: NSManagedObjectID, identifier: Any?) {
+        self.objectID = objectID
+        self.identifier = identifier
+    }
 
     public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
     public func onInstanceDidParse(fetchResult: FetchResult) {
-        guard let ammoList = fetchResult.managedObject() as? VehicleprofileAmmoList else {
-            return
-        }
-        self.vehicleProfile.ammo = ammoList
-
         let context = fetchResult.context
-        persistentStore?.stash(context: context, hint: nil) { error in
-            if let error = error {
-                print(error.debugDescription)
+        if let ammoList = fetchResult.managedObject() as? VehicleprofileAmmoList {
+            if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
+                vehicleProfile.ammo = ammoList
+
+                persistentStore?.stash(context: context, hint: nil) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                }
             }
         }
-    }
-
-    init(vehicleProfile: Vehicleprofile) {
-        self.vehicleProfile = vehicleProfile
     }
 }

@@ -8,11 +8,15 @@
 
 import CoreData
 
-@objc
-public class VehicleProfileModuleGunJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper {
+public class VehicleProfileModuleGunJSONAdapterHelper: JSONAdapterInstanceHelper {
     var persistentStore: WOTPersistentStoreProtocol?
-    private var module: VehicleprofileModule
-    private var gun_id: NSDecimalNumber
+    private var objectID: NSManagedObjectID
+    private var identifier: Any?
+
+    public required init(objectID: NSManagedObjectID, identifier: Any?) {
+        self.objectID = objectID
+        self.identifier = identifier
+    }
 
     public func onJSONExtraction(json: JSON) -> JSON? {
         return json["gun"] as? JSON
@@ -21,18 +25,15 @@ public class VehicleProfileModuleGunJSONAdapterHelper: NSObject, JSONAdapterInst
     public func onInstanceDidParse(fetchResult: FetchResult) {
         let context = fetchResult.context
         if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
-            vehicleProfileGun.gun_id = self.gun_id
-            self.module.vehicleGun = vehicleProfileGun
-            persistentStore?.stash(context: context, hint: nil) { error in
-                if let error = error {
-                    print(error.debugDescription)
+            if let module = context.object(with: objectID) as? VehicleprofileModule {
+                vehicleProfileGun.gun_id = identifier as? NSDecimalNumber
+                module.vehicleGun = vehicleProfileGun
+                persistentStore?.stash(context: context, hint: nil) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
                 }
             }
         }
-    }
-
-    init(module: VehicleprofileModule, gun_id: NSDecimalNumber) {
-        self.module = module
-        self.gun_id = gun_id
     }
 }

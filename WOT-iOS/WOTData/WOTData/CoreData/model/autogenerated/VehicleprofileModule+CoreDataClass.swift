@@ -51,7 +51,7 @@ extension VehicleprofileModule {
             let gunCase = PKCase()
             gunCase[.primary] = VehicleprofileGun.primaryKey(for: gun_id, andType: .external)
             gunCase[.secondary] = pkCase[.primary]
-            let gunHelper = VehicleProfileModuleGunJSONAdapterHelper(module: self, gun_id: gun_id)
+            let gunHelper = VehicleProfileModuleGunJSONAdapterHelper(objectID: self.objectID, identifier: gun_id)
             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", instanceHelper: gunHelper)
         }
 
@@ -59,7 +59,7 @@ extension VehicleprofileModule {
             let radioCase = PKCase()
             radioCase[.primary] = VehicleprofileRadio.primaryKey(for: radio_id, andType: .external)
             radioCase[.secondary] = pkCase[.primary]
-            let radioHelper = VehicleProfileModuleRadioJSONAdapterHelper(module: self, radio_id: radio_id)
+            let radioHelper = VehicleProfileModuleRadioJSONAdapterHelper(objectID: self.objectID, identifier: radio_id)
             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", instanceHelper: radioHelper)
         }
 
@@ -67,7 +67,7 @@ extension VehicleprofileModule {
             let engineCase = PKCase()
             engineCase[.primary] = VehicleprofileEngine.primaryKey(for: engine_id, andType: .external)
             engineCase[.secondary] = pkCase[.primary]
-            let engineHelper = VehicleProfileModuleEngineJSONAdapterHelper(module: self, engine_id: engine_id)
+            let engineHelper = VehicleProfileModuleEngineJSONAdapterHelper(objectID: self.objectID, identifier: engine_id)
             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", instanceHelper: engineHelper)
         }
 
@@ -75,7 +75,7 @@ extension VehicleprofileModule {
             let suspensionCase = PKCase()
             suspensionCase[.primary] = VehicleprofileSuspension.primaryKey(for: suspension_id, andType: .external)
             suspensionCase[.secondary] = pkCase[.primary]
-            let suspensionHelper = VehicleProfileModuleSuspensionJSONAdapterHelper(module: self, suspension_id: suspension_id)
+            let suspensionHelper = VehicleProfileModuleSuspensionJSONAdapterHelper(objectID: self.objectID, identifier: suspension_id)
             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", instanceHelper: suspensionHelper)
         }
 
@@ -83,7 +83,7 @@ extension VehicleprofileModule {
             let turretCase = PKCase()
             turretCase[.primary] = VehicleprofileTurret.primaryKey(for: turret_id, andType: .external)
             turretCase[.secondary] = pkCase[.primary]
-            let turretHelper = VehicleProfileModuleTurretJSONAdapterHelper(module: self, turret_id: turret_id)
+            let turretHelper = VehicleProfileModuleTurretJSONAdapterHelper(objectID: self.objectID, identifier: turret_id)
             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", instanceHelper: turretHelper)
         }
     }

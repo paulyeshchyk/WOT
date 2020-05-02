@@ -6,29 +6,31 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
-// MARK: - Mapping
-@objc
-public class ModulesTreeCurrentModuleJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper {
+public class ModulesTreeCurrentModuleJSONAdapterHelper: JSONAdapterInstanceHelper {
     var persistentStore: WOTPersistentStoreProtocol?
+    private var objectID: NSManagedObjectID
+    private var identifier: Any?
 
-    private var moduleTree: ModulesTree
-    init(moduleTree: ModulesTree) {
-        self.moduleTree = moduleTree
+    public required init(objectID: NSManagedObjectID, identifier: Any?) {
+        self.objectID = objectID
+        self.identifier = identifier
     }
+
+    public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
     public func onInstanceDidParse(fetchResult: FetchResult) {
         let context = fetchResult.context
         if let module = fetchResult.managedObject() as? Module {
-            moduleTree.currentModule = module
-            persistentStore?.stash(context: context, hint: nil) { error in
-                if let error = error {
-                    print(error.debugDescription)
+            if let modulesTree = context.object(with: objectID) as? ModulesTree {
+                modulesTree.currentModule = module
+                persistentStore?.stash(context: context, hint: nil) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
                 }
             }
         }
     }
-
-    public func onJSONExtraction(json: JSON) -> JSON? { return nil }
 }

@@ -8,11 +8,15 @@
 
 import CoreData
 
-@objc
-public class ModuleTurretJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper {
+public class ModuleTurretJSONAdapterHelper: JSONAdapterInstanceHelper {
     var persistentStore: WOTPersistentStoreProtocol?
-    private var module: Module
-    private var turret_id: NSDecimalNumber
+    private var objectID: NSManagedObjectID
+    private var identifier: Any?
+
+    public required init(objectID: NSManagedObjectID, identifier: Any?) {
+        self.objectID = objectID
+        self.identifier = identifier
+    }
 
     public func onJSONExtraction(json: JSON) -> JSON? {
         return json["turret"] as? JSON
@@ -21,18 +25,15 @@ public class ModuleTurretJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper 
     public func onInstanceDidParse(fetchResult: FetchResult) {
         let context = fetchResult.context
         if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
-            vehicleProfileTurret.turret_id = self.turret_id
-            self.module.turret = vehicleProfileTurret
-            persistentStore?.stash(context: context, hint: nil) { error in
-                if let error = error {
-                    print(error.debugDescription)
+            if let module = context.object(with: objectID) as? Module {
+                vehicleProfileTurret.turret_id = identifier as? NSDecimalNumber
+                module.turret = vehicleProfileTurret
+                persistentStore?.stash(context: context, hint: nil) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
                 }
             }
         }
-    }
-
-    init(module: Module, turret_id: NSDecimalNumber) {
-        self.module = module
-        self.turret_id = turret_id
     }
 }

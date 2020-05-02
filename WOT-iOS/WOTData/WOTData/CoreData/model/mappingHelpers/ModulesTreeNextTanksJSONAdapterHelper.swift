@@ -8,26 +8,29 @@
 
 import CoreData
 
-@objc
-public class ModulesTreeNextTanksJSONAdapterHelper: NSObject, JSONAdapterInstanceHelper {
+public class ModulesTreeNextTanksJSONAdapterHelper: JSONAdapterInstanceHelper {
     var persistentStore: WOTPersistentStoreProtocol?
+    private var objectID: NSManagedObjectID
+    private var identifier: Any?
 
-    private var modulesTree: ModulesTree
-    init(modulesTree: ModulesTree) {
-        self.modulesTree = modulesTree
+    public required init(objectID: NSManagedObjectID, identifier: Any?) {
+        self.objectID = objectID
+        self.identifier = identifier
     }
+
+    public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
     public func onInstanceDidParse(fetchResult: FetchResult) {
         let context = fetchResult.context
         if let tank = fetchResult.managedObject() as? Vehicles {
-            modulesTree.addToNext_tanks(tank)
-            persistentStore?.stash(context: context, hint: nil) { error in
-                if let error = error {
-                    print(error.debugDescription)
+            if let modulesTree = context.object(with: objectID) as? ModulesTree {
+                modulesTree.addToNext_tanks(tank)
+                persistentStore?.stash(context: context, hint: nil) { error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
                 }
             }
         }
     }
-
-    public func onJSONExtraction(json: JSON) -> JSON? { return nil }
 }
