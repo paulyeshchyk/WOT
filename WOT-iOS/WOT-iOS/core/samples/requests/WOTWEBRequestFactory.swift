@@ -20,7 +20,7 @@ public class WOTWEBRequestFactory: NSObject {
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
         requestManager.addListener(listener, forRequest: request)
         do {
-            try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, onObjectDidFetch: nil)
+            try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, instanceHelper: nil)
         } catch let error {
             print(error)
         }
@@ -36,7 +36,7 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([Vehicles.classKeypaths()], forKey: WGWebQueryArgs.fields)
 
         requestManager.addListener(listener, forRequest: request)
-        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, onObjectDidFetch: nil)
+        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, instanceHelper: nil)
     }
 
     @objc
@@ -48,7 +48,7 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
 
-        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, onObjectDidFetch: nil)
+        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, instanceHelper: nil)
         requestManager.addListener(listener, forRequest: request)
     }
 }

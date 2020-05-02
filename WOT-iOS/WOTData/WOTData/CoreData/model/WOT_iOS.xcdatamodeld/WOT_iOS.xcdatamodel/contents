@@ -215,7 +215,7 @@
         <relationship name="turrets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VehicleprofileTurret" inverseName="vehicle" inverseEntity="VehicleprofileTurret" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ListSetting" positionX="-342" positionY="-288" width="128" height="120"/>
+        <element name="ListSetting" positionX="-342" positionY="-288" width="128" height="118"/>
         <element name="Module" positionX="-1494" positionY="-297" width="128" height="268"/>
         <element name="ModulesTree" positionX="-1692" positionY="41" width="128" height="193"/>
         <element name="UserSession" positionX="-117" positionY="-369" width="128" height="135"/>

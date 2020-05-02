@@ -93,7 +93,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
         }
     }
 
-    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, onObjectDidFetch: @escaping FetchResultCompletion) {
+    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, instanceHelper: JSONAdapterInstanceHelper?) {
         appManager?.logInspector?.log(LogicLog("pullRemoteSubordinate:\(clazz)"), sender: self)
 
         var predicates = [WOTPredicate]()
@@ -103,7 +103,7 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
             if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) {
                 requestIDs.forEach {
                     do {
-                        try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, onObjectDidFetch: onObjectDidFetch)
+                        try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, instanceHelper: instanceHelper)
                     } catch {
                         appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: self)
                     }
@@ -124,14 +124,19 @@ extension WOTPersistentStoreProtocol {
     /**
 
      */
-    public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
+    public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, callback: @escaping NSManagedObjectOptionalCallback) {
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
             let context = fetchResult.context
             let newObject = fetchResult.managedObject()
             try? self.mapping(context: context, object: newObject, fromJSON: itemJSON, pkCase: pkCase) { error in
                 let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: FetchStatus.none, error: nil)
-                callback(fetchResult)
+                #warning("remove if")
+                if let instanceHelper = instanceHelper {
+                    instanceHelper.onInstanceDidParse(fetchResult: fetchResult)
+                } else {
+                    callback(fetchResult)
+                }
             }
         }
     }
@@ -139,14 +144,19 @@ extension WOTPersistentStoreProtocol {
     /**
 
      */
-    public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, callback: @escaping NSManagedObjectOptionalCallback) {
+    public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, callback: @escaping NSManagedObjectOptionalCallback) {
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
             let context = fetchResult.context
             let newObject = fetchResult.managedObject()
             try? self.mapping(context: context, object: newObject, fromArray: items, pkCase: pkCase) { error in
                 let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: FetchStatus.none, error: nil)
-                callback(fetchResult)
+                #warning("remove if")
+                if let instanceHelper = instanceHelper {
+                    instanceHelper.onInstanceDidParse(fetchResult: fetchResult)
+                } else {
+                    callback(fetchResult)
+                }
             }
         }
     }

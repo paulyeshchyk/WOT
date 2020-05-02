@@ -15,15 +15,20 @@ public protocol DataAdapterProtocol {
     @available(*, deprecated)
     @objc var appManager: WOTAppManagerProtocol? { get set }
     var uuid: UUID { get }
-    var onComplete: OnRequestComplete? { get set }
-    var onObjectDidParse: FetchResultCompletion? { get set }
+    var onJSONDidParse: OnRequestComplete? { get set }
     func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
     init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?)
 }
 
 @objc
 public protocol JSONAdapterProtocol: DataAdapterProtocol {
-    var onGetObjectJSON: ((JSON) -> JSON)? { get set }
+    var instanceHelper: JSONAdapterInstanceHelper? { get set }
+}
+
+@objc
+public protocol JSONAdapterInstanceHelper: class {
+    func onInstanceDidParse(fetchResult: FetchResult)
+    func onJSONExtraction(json: JSON) -> JSON?
 }
 
 @objc
@@ -52,14 +57,13 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     public let uuid: UUID = UUID()
 
     // MARK: JSONAdapterProtocol -
-    public var onGetObjectJSON: ((JSON) -> JSON)?
-    public var onComplete: OnRequestComplete?
-    public var onObjectDidParse: FetchResultCompletion?
+    public var onJSONDidParse: OnRequestComplete?
+    public var instanceHelper: JSONAdapterInstanceHelper?
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             appManager?.logInspector?.log(ErrorLog(error, details: request), sender: self)
-            onComplete?(fromRequest, self, error)
+            onJSONDidParse?(fromRequest, self, error)
             return
         }
 
@@ -70,11 +74,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
             let extraction = extractSubJSON(from: json, by: key)
             findOrCreateObject(for: extraction, fromRequest: fromRequest) { fetchResult in
 
-                self.onObjectDidParse?(fetchResult)
+                self.instanceHelper?.onInstanceDidParse(fetchResult: fetchResult)
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.log(JSONFinishLog(""), sender: self)
-                    self.onComplete?(fromRequest, self, error)
+                    self.onJSONDidParse?(fromRequest, self, error)
                 }
             }
         }
@@ -132,8 +136,8 @@ extension JSONAdapter {
             fatalError("invalid json for key")
         }
         let objectJson: JSON
-        if let jsonExtractor = onGetObjectJSON {
-            objectJson = jsonExtractor(jsonByKey)
+        if let extracted = instanceHelper?.onJSONExtraction(json: jsonByKey) {
+            objectJson = extracted
         } else {
             objectJson = jsonByKey
         }
@@ -143,6 +147,7 @@ extension JSONAdapter {
 
     private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
         let ident: Any
+        #warning(".external should be used in case ModureTree-Module-VehicleProfileGun")
         let primaryKeyPath = Clazz.primaryKeyPath(forType: .internal)
 
         if  primaryKeyPath.count > 0 {
@@ -178,7 +183,7 @@ extension JSONAdapter {
             let managedObject = fetchResult.managedObject()
 
             do {
-                try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase) { error in
+                try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase) { _ in
                     self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
                     callback(fetchResult)
                 }

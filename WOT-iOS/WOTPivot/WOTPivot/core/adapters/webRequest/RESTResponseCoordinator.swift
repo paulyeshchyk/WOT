@@ -13,7 +13,7 @@ public protocol WOTResponseCoordinatorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
 
     init(requestCoordinator: WOTRequestCoordinatorProtocol)
-    func parseResponseData(_ parseData: Data?, forRequest request: WOTRequestProtocol, onObjectDidFetch: FetchResultCompletion?, onRequestComplete: @escaping OnRequestComplete) throws
+    func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, instanceHelper: JSONAdapterInstanceHelper?, onComplete: @escaping OnRequestComplete) throws
 }
 
 public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessageSender {
@@ -29,21 +29,21 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
         requestCoordinator = rc
     }
 
-    public func parseResponseData(_ parseData: Data?, forRequest request: WOTRequestProtocol, onObjectDidFetch: FetchResultCompletion?, onRequestComplete: @escaping OnRequestComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, instanceHelper: JSONAdapterInstanceHelper?, onComplete: @escaping OnRequestComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
         }
 
         guard let requestIds = requestCoordinator.requestIds(forRequest: request), requestIds.count > 0 else {
-            onRequestComplete(request, self, nil)
+            onComplete(request, self, nil)
             return
         }
         var dataAdaptationPair: [DataAdaptationPair] = .init()
         requestIds.forEach({ requestIdType in
             do {
                 let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request)
-                adapter.onComplete = onRequestComplete
-                adapter.onObjectDidParse = onObjectDidFetch
+                adapter.onJSONDidParse = onComplete
+                adapter.instanceHelper = instanceHelper
                 let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
                 dataAdaptationPair.append(pair)
             } catch let error {
@@ -52,7 +52,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
         })
 
         if dataAdaptationPair.count == 0 {
-            onRequestComplete(request, self, nil)
+            onComplete(request, self, nil)
         }
 
         dataAdaptationPair.forEach { (pair) in

@@ -77,6 +77,7 @@ extension KeyedDecodingContainer {
 }
 
 extension UnkeyedDecodingContainer {
+    // swiftlint:disable cyclomatic_complexity
     mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
         var array: [Any] = []
         while isAtEnd == false {
@@ -97,6 +98,8 @@ extension UnkeyedDecodingContainer {
         }
         return array
     }
+
+    // swiftlint:enable cyclomatic_complexity
 
     mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         let nestedContainer = try self.nestedContainer(keyedBy: JSONCodingKeys.self)

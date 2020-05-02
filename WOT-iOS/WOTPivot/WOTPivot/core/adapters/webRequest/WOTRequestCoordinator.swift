@@ -13,7 +13,7 @@ public typealias WOTRequestIdType = String
 @objc
 public protocol WOTDataResponseAdapterProtocol: NSObjectProtocol {
     init(appManager: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type)
-    func request(_ request: WOTRequestProtocol, parseData binary: Data?, onObjectDidFetch: FetchResultCompletion?, onRequestComplete: @escaping OnRequestComplete ) -> JSONAdapterProtocol
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete ) -> JSONAdapterProtocol
 }
 
 @objc
@@ -22,19 +22,19 @@ public protocol WOTRequestCoordinatorProtocol {
     func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]?
     func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]?
-    func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol) throws -> DataAdapterProtocol
+    func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol) throws -> JSONAdapterProtocol
 }
 
 public protocol WOTRequestBindingProtocol {
     func unregisterDataAdapter(for requestId: WOTRequestIdType)
-    func dataAdapterClass(for requestId: WOTRequestIdType) -> DataAdapterProtocol.Type?
-    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: DataAdapterProtocol.Type)
+    func dataAdapterClass(for requestId: WOTRequestIdType) -> JSONAdapterProtocol.Type?
+    func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type)
     func request(for requestId: WOTRequestIdType) -> WOTModelServiceProtocol.Type?
 }
 
 public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
-    private var registeredDataAdapters: [WOTRequestIdType: DataAdapterProtocol.Type] = .init()
+    private var registeredDataAdapters: [WOTRequestIdType: JSONAdapterProtocol.Type] = .init()
     public var appManager: WOTAppManagerProtocol?
 
     override public init() {
@@ -77,7 +77,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return result
     }
 
-    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol) throws -> DataAdapterProtocol {
+    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol) throws -> JSONAdapterProtocol {
         guard let modelClass = try modelClass(for: requestIdType) else {
             throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
         }
@@ -92,7 +92,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 extension WOTRequestCoordinator: WOTRequestBindingProtocol {
     // MARK: - WOTRequestBindingProtocol
 
-    public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: DataAdapterProtocol.Type) {
+    public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type) {
         registeredRequests[requiestId] = requestClass
         registeredDataAdapters[requiestId] = dataAdapterClass
     }
@@ -101,7 +101,7 @@ extension WOTRequestCoordinator: WOTRequestBindingProtocol {
         registeredDataAdapters.removeValue(forKey: requestId)
     }
 
-    public func dataAdapterClass(for requestId: WOTRequestIdType) -> DataAdapterProtocol.Type? {
+    public func dataAdapterClass(for requestId: WOTRequestIdType) -> JSONAdapterProtocol.Type? {
         return registeredDataAdapters[requestId]
     }
 

@@ -72,70 +72,31 @@ extension Module {
 
         switch moduleType {
         case .vehicleChassis:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: persistentStore, keyPathPrefix: "suspension.", onObjectDidFetch: { fetchResult  in
-                let context = fetchResult.context
-                if let module = fetchResult.managedObject() as? VehicleprofileSuspension {
-                    self.suspension = module
-                    persistentStore?.stash(context: context, hint: pkCase) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
-                })
+            let vehicleSuspensionInstanceHelper = ModuleSuspensionJSONAdapterHelper(module: self, suspension_id: module_id)
+            vehicleSuspensionInstanceHelper.persistentStore = persistentStore
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: persistentStore, keyPathPrefix: "suspension.", instanceHelper: vehicleSuspensionInstanceHelper)
         case .vehicleGun:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: persistentStore, keyPathPrefix: "gun.", onObjectDidFetch: { fetchResult in
-                let context = fetchResult.context
-                if let module = fetchResult.managedObject() as? VehicleprofileGun {
-                    self.gun = module
-                    persistentStore?.stash(context: context, hint: pkCase) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
-                })
+            let vehicleGunInstanceHelper = ModuleGunJSONAdapterHelper(module: self, gun_id: module_id)
+            vehicleGunInstanceHelper.persistentStore = persistentStore
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: persistentStore, keyPathPrefix: "gun.", instanceHelper: vehicleGunInstanceHelper)
         case .vehicleRadio:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: persistentStore, keyPathPrefix: "radio.", onObjectDidFetch: { fetchResult in
-                let context = fetchResult.context
-                if let module = fetchResult.managedObject() as? VehicleprofileRadio {
-                    self.radio = module
-                    persistentStore?.stash(context: context, hint: pkCase) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
-                })
+            let vehicleRadoiInstanceHelper = ModuleRadioJSONAdapterHelper(module: self, radio_id: module_id)
+            vehicleRadoiInstanceHelper.persistentStore = persistentStore
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: persistentStore, keyPathPrefix: "radio.", instanceHelper: vehicleRadoiInstanceHelper)
         case .vehicleEngine:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: persistentStore, keyPathPrefix: "engine.", onObjectDidFetch: { fetchResult in
-                let context = fetchResult.context
-                if let module = fetchResult.managedObject() as? VehicleprofileEngine {
-                    self.engine = module
-                    persistentStore?.stash(context: context, hint: pkCase) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
-                })
+            let vehicleEngineInstanceHelper = ModuleEngineJSONAdapterHelper(module: self, engine_id: module_id)
+            vehicleEngineInstanceHelper.persistentStore = persistentStore
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: persistentStore, keyPathPrefix: "engine.", instanceHelper: vehicleEngineInstanceHelper)
         case .vehicleTurret:
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: persistentStore, keyPathPrefix: "turret.", onObjectDidFetch: { fetchResult in
-                let context = fetchResult.context
-                if let module = fetchResult.managedObject() as? VehicleprofileTurret {
-                    self.turret = module
-                    persistentStore?.stash(context: context, hint: pkCase) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
-                })
-        default: print(moduleTypeString)
+            let vehicleTurretInstanceHelper = ModuleTurretJSONAdapterHelper(module: self, turret_id: module_id)
+            vehicleTurretInstanceHelper.persistentStore = persistentStore
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: persistentStore, keyPathPrefix: "turret.", instanceHelper: vehicleTurretInstanceHelper)
+        case .none, .tank, .unknown:
+            fatalError("unknown module type")
         }
     }
 
-    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, onObjectDidFetch: @escaping FetchResultCompletion) {
+    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTPersistentStoreProtocol?, keyPathPrefix: String?, instanceHelper: JSONAdapterInstanceHelper?) {
         let pkCase = PKCase()
         pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .external)
         if let tank_id = tank_id {
@@ -143,7 +104,7 @@ extension Module {
             pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .internal)
         }
 
-        persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, onObjectDidFetch: onObjectDidFetch)
+        persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, instanceHelper: instanceHelper)
     }
 }
 

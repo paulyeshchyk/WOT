@@ -65,15 +65,16 @@ extension Vehicles {
 // MARK: - Mapping
 
 extension Vehicles {
-    private func defaultProfileMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    private func defaultProfileMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, persistentStore: WOTPersistentStoreProtocol?) {
         guard let itemJSON = jSON else { return }
 
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-        persistentStore?.itemMapping(context: context, forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, callback: { fetchResult in
+        persistentStore?.itemMapping(context: context, forClass: Vehicleprofile.self, itemJSON: itemJSON, pkCase: vehicleProfileCase, instanceHelper: instanceHelper, callback: { fetchResult in
 
             let context = fetchResult.context
             if let defaultProfile = fetchResult.managedObject() as? Vehicleprofile {
+                #warning("not used instanceHelper")
                 self.default_profile = defaultProfile
                 self.modules_tree?.forEach { element in
                     (element as? ModulesTree)?.default_profile = defaultProfile
@@ -87,7 +88,7 @@ extension Vehicles {
         })
     }
 
-    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) {
+    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, persistentStore: WOTPersistentStoreProtocol?) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -120,6 +121,7 @@ extension Vehicles {
                 }
                 do {
                     try persistentStore?.mapping(context: context, object: module_tree, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase) { error in
+                        #warning("not used instanceHelper")
                         module_tree.default_profile = self.default_profile
                         self.addToModules_tree(module_tree)
                         persistentStore?.stash(context: context, hint: modulesTreeCase) { error in
@@ -139,9 +141,11 @@ extension Vehicles {
     override public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
 
-        self.defaultProfileMapping(context: context, jSON: jSON[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
+        let defaultProfileHelper: JSONAdapterInstanceHelper? = nil
+        self.defaultProfileMapping(context: context, jSON: jSON[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, instanceHelper: defaultProfileHelper, persistentStore: persistentStore)
 
-        self.modulesTreeMapping(context: context, jSON: jSON[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, persistentStore: persistentStore)
+        let modulesTreeHelper: JSONAdapterInstanceHelper? = nil
+        self.modulesTreeMapping(context: context, jSON: jSON[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, instanceHelper: modulesTreeHelper, persistentStore: persistentStore)
     }
 }
 
