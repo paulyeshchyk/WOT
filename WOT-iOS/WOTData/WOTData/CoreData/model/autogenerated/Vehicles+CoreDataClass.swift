@@ -120,16 +120,8 @@ extension Vehicles {
                     return
                 }
                 do {
-                    try persistentStore?.mapping(context: context, object: module_tree, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase) { error in
-                        #warning("not used instanceHelper")
-                        module_tree.default_profile = self.default_profile
-                        self.addToModules_tree(module_tree)
-                        persistentStore?.stash(context: context, hint: modulesTreeCase) { error in
-                            if let error = error {
-                                print(error.debugDescription)
-                            }
-                        }
-                    }
+                    let moduleTreeHelper: JSONAdapterInstanceHelper? = ModulesTree.DefaultProfileJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
+                    try persistentStore?.mapping(context: context, object: module_tree, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase, instanceHelper: moduleTreeHelper, completion: { _ in })
 
                 } catch let error {
                     print(error)
@@ -167,5 +159,35 @@ extension Vehicles: JSONDecoding {
         self.is_premium = try container.decodeIfPresent(Bool.self, forKey: .is_premium)?.asDecimal
         self.is_premium_igr = try container.decodeIfPresent(Bool.self, forKey: .is_premium_igr)?.asDecimal
         self.is_gift = try container.decodeIfPresent(Bool.self, forKey: .is_gift)?.asDecimal
+    }
+}
+
+extension Vehicles {
+    public class TreeJSONAdapterHelper: JSONAdapterInstanceHelper {
+        private var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let tank = fetchResult.managedObject() as? Vehicles {
+                if let modulesTree = context.object(with: objectID) as? ModulesTree {
+                    modulesTree.addToNext_tanks(tank)
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

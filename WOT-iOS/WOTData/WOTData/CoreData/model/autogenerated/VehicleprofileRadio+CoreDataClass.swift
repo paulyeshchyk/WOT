@@ -59,3 +59,34 @@ extension VehicleprofileRadio: JSONDecoding {
         self.weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
     }
 }
+
+extension VehicleprofileRadio {
+    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
+        var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let radio = fetchResult.managedObject() as? VehicleprofileRadio {
+                if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
+                    vehicleProfile.radio = radio
+
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

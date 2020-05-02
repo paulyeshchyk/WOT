@@ -51,22 +51,40 @@ extension WOTPersistentStore: WOTPersistentStoreProtocol {
     /**
 
      */
-    public func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, completion: @escaping ThrowableCompletion) throws {
+    public func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromJSON jSON: JSON, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
+        #warning("helper.onInstanceDidParse should have callback")
+        let localCompletion: ThrowableCompletion = { error in
+            if let helper = instanceHelper {
+                let fetchResult = FetchResult(context: context, objectID: object?.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: error)
+                helper.onInstanceDidParse(fetchResult: fetchResult)
+            } else {
+                completion(error)
+            }
+        }
         let debugContextName = "Context: \"\(context.name ?? "<Unknown>")\""
         appManager?.logInspector?.log(CDMappingStartLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
         appManager?.logInspector?.log(LogicLog("JSONMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         try object?.mapping(context: context, fromJSON: jSON, pkCase: pkCase, persistentStore: self)
         appManager?.logInspector?.log(CDMappingEndLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
-        stash(context: context, hint: pkCase, completion: completion)
+        stash(context: context, hint: pkCase, completion: localCompletion)
     }
 
-    public func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, completion: @escaping ThrowableCompletion) throws {
+    public func mapping(context: NSManagedObjectContext, object: NSManagedObject?, fromArray array: [Any], pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
+        #warning("helper.onInstanceDidParse should have callback")
+        let localCompletion: ThrowableCompletion = { error in
+            if let helper = instanceHelper {
+                let fetchResult = FetchResult(context: context, objectID: object?.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: error)
+                helper.onInstanceDidParse(fetchResult: fetchResult)
+            } else {
+                completion(error)
+            }
+        }
         let debugContextName = "Context: \"\(context.name ?? "<Unknown>")\""
         appManager?.logInspector?.log(CDMappingStartLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
         appManager?.logInspector?.log(LogicLog("ArrayMapping: \(object?.entity.name ?? "<unknown>") - \(pkCase.debugDescription)"), sender: self)
         try object?.mapping(context: context, fromArray: array, pkCase: pkCase, persistentStore: self)
         appManager?.logInspector?.log(CDMappingEndLog("\(debugContextName); \(object?.entity.name ?? "<unknown>") \(pkCase.description)"), sender: self)
-        stash(context: context, hint: pkCase, completion: completion)
+        stash(context: context, hint: pkCase, completion: localCompletion)
     }
 
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, callback: @escaping FetchResultCompletion) {
@@ -125,11 +143,12 @@ extension WOTPersistentStoreProtocol {
 
      */
     public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, itemJSON: JSON, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, callback: @escaping NSManagedObjectOptionalCallback) {
+        //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
             let context = fetchResult.context
             let newObject = fetchResult.managedObject()
-            try? self.mapping(context: context, object: newObject, fromJSON: itemJSON, pkCase: pkCase) { error in
+            try? self.mapping(context: context, object: newObject, fromJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper) { error in
                 let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: FetchStatus.none, error: nil)
                 #warning("remove if")
                 if let instanceHelper = instanceHelper {
@@ -145,11 +164,12 @@ extension WOTPersistentStoreProtocol {
 
      */
     public func itemMapping(context: NSManagedObjectContext, forClass Clazz: AnyClass, items: [Any], pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, callback: @escaping NSManagedObjectOptionalCallback) {
+        //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
             let context = fetchResult.context
             let newObject = fetchResult.managedObject()
-            try? self.mapping(context: context, object: newObject, fromArray: items, pkCase: pkCase) { error in
+            try? self.mapping(context: context, object: newObject, fromArray: items, pkCase: pkCase, instanceHelper: instanceHelper) { error in
                 let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: FetchStatus.none, error: nil)
                 #warning("remove if")
                 if let instanceHelper = instanceHelper {

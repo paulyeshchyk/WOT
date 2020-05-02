@@ -31,7 +31,8 @@ extension VehicleprofileAmmoList {
                     return
                 }
                 do {
-                    try persistentStore?.mapping(context: context, object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase) { error in
+                    let ammoInstanceHelper: JSONAdapterInstanceHelper? = VehicleprofileAmmo.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
+                    try persistentStore?.mapping(context: context, object: ammo, fromJSON: jSON, pkCase: vehicleprofileAmmoCase, instanceHelper: ammoInstanceHelper) { error in
 
                         self.addToVehicleprofileAmmo(ammo)
                         persistentStore?.stash(context: context, hint: vehicleprofileAmmoCase) { error in
@@ -42,6 +43,37 @@ extension VehicleprofileAmmoList {
                     }
                 } catch let error {
                     print(error)
+                }
+            }
+        }
+    }
+}
+
+extension VehicleprofileAmmoList {
+    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
+        private var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let ammoList = fetchResult.managedObject() as? VehicleprofileAmmoList {
+                if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
+                    vehicleProfile.ammo = ammoList
+
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
                 }
             }
         }

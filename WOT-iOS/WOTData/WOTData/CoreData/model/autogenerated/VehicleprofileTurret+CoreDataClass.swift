@@ -68,3 +68,34 @@ extension VehicleprofileTurret: JSONDecoding {
         self.hp = try container.decodeAnyIfPresent(Int.self, forKey: .hp)?.asDecimal
     }
 }
+
+extension VehicleprofileTurret {
+    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
+        private var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let turret = fetchResult.managedObject() as? VehicleprofileTurret {
+                if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
+                    vehicleProfile.turret = turret
+
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

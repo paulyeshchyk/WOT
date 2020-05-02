@@ -72,24 +72,19 @@ extension Module {
 
         switch moduleType {
         case .vehicleChassis:
-            let vehicleSuspensionInstanceHelper = ModuleSuspensionJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
-            vehicleSuspensionInstanceHelper.persistentStore = persistentStore
+            let vehicleSuspensionInstanceHelper = Module.SuspensionJSONAdapterHelper(objectID: self.objectID, identifier: module_id, persistentStore: persistentStore)
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: persistentStore, keyPathPrefix: "suspension.", instanceHelper: vehicleSuspensionInstanceHelper)
         case .vehicleGun:
-            let vehicleGunInstanceHelper = ModuleGunJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
-            vehicleGunInstanceHelper.persistentStore = persistentStore
+            let vehicleGunInstanceHelper = Module.GunJSONAdapterHelper(objectID: self.objectID, identifier: module_id, persistentStore: persistentStore)
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: persistentStore, keyPathPrefix: "gun.", instanceHelper: vehicleGunInstanceHelper)
         case .vehicleRadio:
-            let vehicleRadoiInstanceHelper = ModuleRadioJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
-            vehicleRadoiInstanceHelper.persistentStore = persistentStore
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: persistentStore, keyPathPrefix: "radio.", instanceHelper: vehicleRadoiInstanceHelper)
+            let vehicleRadioInstanceHelper = Module.RadioJSONAdapterHelper(objectID: self.objectID, identifier: module_id, persistentStore: persistentStore)
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: persistentStore, keyPathPrefix: "radio.", instanceHelper: vehicleRadioInstanceHelper)
         case .vehicleEngine:
-            let vehicleEngineInstanceHelper = ModuleEngineJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
-            vehicleEngineInstanceHelper.persistentStore = persistentStore
+            let vehicleEngineInstanceHelper = Module.EngineJSONAdapterHelper(objectID: self.objectID, identifier: module_id, persistentStore: persistentStore)
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: persistentStore, keyPathPrefix: "engine.", instanceHelper: vehicleEngineInstanceHelper)
         case .vehicleTurret:
-            let vehicleTurretInstanceHelper = ModuleTurretJSONAdapterHelper(objectID: self.objectID, identifier: module_id)
-            vehicleTurretInstanceHelper.persistentStore = persistentStore
+            let vehicleTurretInstanceHelper = Module.TurretJSONAdapterHelper(objectID: self.objectID, identifier: module_id, persistentStore: persistentStore)
             requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: persistentStore, keyPathPrefix: "turret.", instanceHelper: vehicleTurretInstanceHelper)
         case .none, .tank, .unknown:
             fatalError("unknown module type")
@@ -121,5 +116,162 @@ extension Module: JSONDecoding {
         self.price_credit = try container.decodeIfPresent(Int.self, forKey: .tier)?.asDecimal
         self.weight = try container.decodeIfPresent(Int.self, forKey: .tier)?.asDecimal
         self.image = try container.decodeIfPresent(String.self, forKey: .image)
+    }
+}
+
+extension Module {
+    public class EngineJSONAdapterHelper: JSONAdapterInstanceHelper {
+        private var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? {
+            return json["engine"] as? JSON
+        }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
+                if let module = fetchResult.context.object(with: objectID) as? Module {
+                    vehicleProfileEngine.engine_id = identifier as? NSDecimalNumber
+                    module.engine = vehicleProfileEngine
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public class TurretJSONAdapterHelper: JSONAdapterInstanceHelper {
+        var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? {
+            return json["turret"] as? JSON
+        }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
+                if let module = context.object(with: objectID) as? Module {
+                    vehicleProfileTurret.turret_id = identifier as? NSDecimalNumber
+                    module.turret = vehicleProfileTurret
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public class SuspensionJSONAdapterHelper: JSONAdapterInstanceHelper {
+        var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? {
+            return json["suspension"] as? JSON
+        }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
+                if let module = context.object(with: objectID) as? Module {
+                    vehicleProfileSuspension.suspension_id = identifier as? NSDecimalNumber
+                    module.suspension = vehicleProfileSuspension
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public class RadioJSONAdapterHelper: JSONAdapterInstanceHelper {
+        var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? {
+            return json["radio"] as? JSON
+        }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
+                if let module = context.object(with: objectID) as? Module {
+                    vehicleProfileRadio.radio_id = identifier as? NSDecimalNumber
+                    module.radio = vehicleProfileRadio
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public class GunJSONAdapterHelper: JSONAdapterInstanceHelper {
+        var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? {
+            return json["gun"] as? JSON
+        }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
+                if let module = context.object(with: objectID) as? Module {
+                    vehicleProfileGun.gun_id = identifier as? NSDecimalNumber
+                    module.gun = vehicleProfileGun
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

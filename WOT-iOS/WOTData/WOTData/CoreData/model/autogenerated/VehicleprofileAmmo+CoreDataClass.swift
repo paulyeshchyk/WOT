@@ -49,7 +49,8 @@ extension VehicleprofileAmmo {
                 let context = fetchResult.context
                 if let penetrationObject = fetchResult.managedObject() as? VehicleprofileAmmoPenetration {
                     do {
-                        try persistentStore?.mapping(context: context, object: penetrationObject, fromArray: penetrationArray, pkCase: vehicleprofileAmmoPenetrationCase) { error in
+                        let penetrationHelper: JSONAdapterInstanceHelper? = nil
+                        try persistentStore?.mapping(context: context, object: penetrationObject, fromArray: penetrationArray, pkCase: vehicleprofileAmmoPenetrationCase, instanceHelper: penetrationHelper) { error in
                             self.penetration = penetrationObject
                             persistentStore?.stash(context: context, hint: vehicleprofileAmmoPenetrationCase) { error in
                                 if let error = error {
@@ -73,7 +74,8 @@ extension VehicleprofileAmmo {
                 let context = fetchResult.context
                 if let damageObject = fetchResult.managedObject() as? VehicleprofileAmmoDamage {
                     do {
-                        try persistentStore?.mapping(context: context, object: damageObject, fromArray: damageArray, pkCase: vehicleprofileAmmoDamageCase) { error in
+                        let damageHelper: JSONAdapterInstanceHelper? = nil
+                        try persistentStore?.mapping(context: context, object: damageObject, fromArray: damageArray, pkCase: vehicleprofileAmmoDamageCase, instanceHelper: damageHelper) { error in
                             self.damage = damageObject
                             persistentStore?.stash(context: context, hint: vehicleprofileAmmoPenetrationCase) { error in
                                 if let error = error {
@@ -96,7 +98,7 @@ extension VehicleprofileAmmo {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
         do {
-            try persistentStore?.mapping(context: context, object: self, fromJSON: json, pkCase: pkCase) { _ in
+            try persistentStore?.mapping(context: context, object: self, fromJSON: json, pkCase: pkCase, instanceHelper: nil) { _ in
             }
         } catch let error {
             print(error)
@@ -110,5 +112,36 @@ extension VehicleprofileAmmo: JSONDecoding {
         let container = try decoder.container(keyedBy: Fields.self)
         //
         self.type = try container.decodeIfPresent(String.self, forKey: .type)
+    }
+}
+
+extension VehicleprofileAmmo {
+    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
+        private var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
+                if let ammoList = context.object(with: objectID) as? VehicleprofileAmmoList {
+                    ammoList.addToVehicleprofileAmmo(ammo)
+
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

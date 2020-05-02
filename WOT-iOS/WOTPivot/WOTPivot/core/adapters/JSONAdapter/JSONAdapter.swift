@@ -27,7 +27,7 @@ public protocol JSONAdapterProtocol: DataAdapterProtocol {
 
 @objc
 public protocol JSONAdapterInstanceHelper {
-    init(objectID: NSManagedObjectID, identifier: Any?)
+    init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?)
     func onInstanceDidParse(fetchResult: FetchResult)
     func onJSONExtraction(json: JSON) -> JSON?
 }
@@ -184,7 +184,7 @@ extension JSONAdapter {
             let managedObject = fetchResult.managedObject()
 
             do {
-                try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase) { _ in
+                try self.persistentStore?.mapping(context: context, object: managedObject, fromJSON: jsonExtraction.json, pkCase: objCase, instanceHelper: nil) { _ in
                     self.appManager?.logInspector?.log(JSONFinishLog("\(objCase)"), sender: self)
                     callback(fetchResult)
                 }

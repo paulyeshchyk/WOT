@@ -70,3 +70,34 @@ extension VehicleprofileGun: JSONDecoding {
         self.aim_time = try container.decodeAnyIfPresent(Int.self, forKey: .aim_time)?.asDecimal
     }
 }
+
+extension VehicleprofileGun {
+    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
+        private var persistentStore: WOTPersistentStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.persistentStore = persistentStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+
+        public func onInstanceDidParse(fetchResult: FetchResult) {
+            let context = fetchResult.context
+            if let gun = fetchResult.managedObject() as? VehicleprofileGun {
+                if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
+                    vehicleProfile.gun = gun
+
+                    persistentStore?.stash(context: context, hint: nil) { error in
+                        if let error = error {
+                            print(error.debugDescription)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -61,7 +61,8 @@ extension VehicleprofileArmor {
                 let context = fetchResult.context
                 let newObject = fetchResult.managedObject()
 
-                try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase) { error in
+                let armorInstanceHelper: JSONAdapterInstanceHelper? = nil
+                try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase, instanceHelper: armorInstanceHelper) { error in
                     let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: nil, fetchStatus: .none, error: nil)
                     callback(fetchResult)
                 }
@@ -83,7 +84,8 @@ extension VehicleprofileArmor {
                 let context = fetchResult.context
                 let newObject = fetchResult.managedObject()
 
-                try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase) { error in
+                let turretInstanceHelper: JSONAdapterInstanceHelper? = nil
+                try persistentStore?.mapping(context: context, object: newObject, fromJSON: jSON, pkCase: pkCase, instanceHelper: turretInstanceHelper) { error in
                     let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: nil, fetchStatus: .none, error: nil)
                     callback(fetchResult)
                 }
