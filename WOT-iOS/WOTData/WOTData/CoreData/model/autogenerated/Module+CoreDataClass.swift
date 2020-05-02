@@ -121,6 +121,10 @@ extension Module: JSONDecoding {
 
 extension Module {
     public class EngineJSONAdapterHelper: JSONAdapterInstanceHelper {
+        public var primaryKeyType: PrimaryKeyType {
+            return .internal
+        }
+
         private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
@@ -152,7 +156,11 @@ extension Module {
     }
 
     public class TurretJSONAdapterHelper: JSONAdapterInstanceHelper {
-        var persistentStore: WOTPersistentStoreProtocol?
+        public var primaryKeyType: PrimaryKeyType {
+            return .internal
+        }
+
+        private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
 
@@ -183,7 +191,11 @@ extension Module {
     }
 
     public class SuspensionJSONAdapterHelper: JSONAdapterInstanceHelper {
-        var persistentStore: WOTPersistentStoreProtocol?
+        public var primaryKeyType: PrimaryKeyType {
+            return .internal
+        }
+
+        private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
 
@@ -214,7 +226,11 @@ extension Module {
     }
 
     public class RadioJSONAdapterHelper: JSONAdapterInstanceHelper {
-        var persistentStore: WOTPersistentStoreProtocol?
+        public var primaryKeyType: PrimaryKeyType {
+            return .internal
+        }
+
+        private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
 
@@ -245,7 +261,11 @@ extension Module {
     }
 
     public class GunJSONAdapterHelper: JSONAdapterInstanceHelper {
-        var persistentStore: WOTPersistentStoreProtocol?
+        public var primaryKeyType: PrimaryKeyType {
+            return .internal
+        }
+
+        private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
 

@@ -118,6 +118,10 @@ extension ModulesTree {
 
 extension ModulesTree {
     public class DefaultProfileJSONAdapterHelper: JSONAdapterInstanceHelper {
+        public var primaryKeyType: PrimaryKeyType {
+            return .external
+        }
+
         private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
@@ -146,6 +150,10 @@ extension ModulesTree {
     }
 
     public class CurrentModuleJSONAdapterHelper: JSONAdapterInstanceHelper {
+        public var primaryKeyType: PrimaryKeyType {
+            return .external
+        }
+
         private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
@@ -174,6 +182,10 @@ extension ModulesTree {
     }
 
     public class NextModulesJSONAdapterHelper: JSONAdapterInstanceHelper {
+        public var primaryKeyType: PrimaryKeyType {
+            return .external
+        }
+
         private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
@@ -202,6 +214,10 @@ extension ModulesTree {
     }
 
     public class NextTanksJSONAdapterHelper: JSONAdapterInstanceHelper {
+        public var primaryKeyType: PrimaryKeyType {
+            return .external
+        }
+
         private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?

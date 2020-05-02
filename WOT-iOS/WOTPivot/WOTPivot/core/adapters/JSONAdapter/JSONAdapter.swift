@@ -28,6 +28,7 @@ public protocol JSONAdapterProtocol: DataAdapterProtocol {
 @objc
 public protocol JSONAdapterInstanceHelper {
     init(objectID: NSManagedObjectID, identifier: Any?, persistentStore: WOTPersistentStoreProtocol?)
+    var primaryKeyType: PrimaryKeyType { get }
     func onInstanceDidParse(fetchResult: FetchResult)
     func onJSONExtraction(json: JSON) -> JSON?
 }
@@ -73,7 +74,8 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         for (idx, key) in keys.enumerated() {
             //
             let extraction = extractSubJSON(from: json, by: key)
-            findOrCreateObject(for: extraction, fromRequest: fromRequest) { fetchResult in
+            let primaryKeyType = self.instanceHelper?.primaryKeyType ?? .external
+            findOrCreateObject(for: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult in
 
                 self.instanceHelper?.onInstanceDidParse(fetchResult: fetchResult)
 
@@ -159,7 +161,7 @@ extension JSONAdapter {
         return ident
     }
 
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, callback: @escaping FetchResultCompletion) {
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, primaryKeyType: PrimaryKeyType,  callback: @escaping FetchResultCompletion) {
         guard Thread.current.isMainThread else {
             fatalError("thread is not main")
         }
@@ -170,7 +172,7 @@ extension JSONAdapter {
 
         let parents = fromRequest.predicate?.pkCase?.plainParents ?? []
         let objCase = PKCase(parentObjects: parents)
-        objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject, andType: .external)
+        objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject, andType: primaryKeyType)
         appManager?.logInspector?.log(JSONStartLog(objCase.description), sender: self)
 
         appManager?.coreDataProvider?.findOrCreateObject(by: self.modelClazz, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult in

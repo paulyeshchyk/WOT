@@ -75,7 +75,11 @@ extension VehicleprofileSuspension: JSONDecoding {
 
 extension VehicleprofileSuspension {
     public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
-        var persistentStore: WOTPersistentStoreProtocol?
+        public var primaryKeyType: PrimaryKeyType {
+            return .external
+        }
+
+        private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?
 

@@ -57,69 +57,68 @@ extension Vehicleprofile {
 extension Vehicleprofile {
     public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         try self.decode(json: jSON)
+        var parents = pkCase.plainParents
+        parents.append(self)
+
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.gun)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileGun.primaryKeyPath(forType: .internal)] {
+                let pkCase = PKCase()
+                pkCase[.primary] = VehicleprofileGun.primaryKey(for: itemID, andType: .internal)
+                let instanceHelper = VehicleprofileGun.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileGun.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in })
+            }
+        }
+
+        if let itemsList = jSON[#keyPath(Vehicleprofile.ammo)] as? [Any] {
+            let itemCase = PKCase(parentObjects: parents)
+            itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+            let instanceHelper = VehicleprofileAmmoList.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
+            persistentStore?.itemMapping(context: context, forClass: VehicleprofileAmmoList.self, items: itemsList, pkCase: itemCase, instanceHelper: instanceHelper, callback: { _ in })
+        }
+
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.armor)] as? JSON {
+            let itemCase = PKCase(parentObjects: parents)
+            itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
+            let instanceHelper = VehicleprofileArmorList.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
+            persistentStore?.itemMapping(context: context, forClass: VehicleprofileArmorList.self, itemJSON: itemJSON, pkCase: itemCase, instanceHelper: instanceHelper, callback: { _ in })
+        }
+
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.suspension)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileSuspension.primaryKeyPath(forType: .internal)] {
+                let pkCase = PKCase()
+                pkCase[.primary] = VehicleprofileSuspension.primaryKey(for: itemID, andType: .internal)
+                let instanceHelper = VehicleprofileSuspension.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileSuspension.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in })
+            }
+        }
+
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.radio)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileRadio.primaryKeyPath(forType: .internal)] {
+                let pkCase = PKCase()
+                pkCase[.primary] = VehicleprofileRadio.primaryKey(for: itemID, andType: .internal)
+                let instanceHelper = VehicleprofileRadio.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileRadio.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
+            }
+        }
+
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.engine)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileEngine.primaryKeyPath(forType: .internal)] {
+                let pkCase = PKCase()
+                pkCase[.primary] = VehicleprofileEngine.primaryKey(for: itemID, andType: .internal)
+                let instanceHelper = VehicleprofileEngine.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileEngine.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
+            }
+        }
+
+        if let itemJSON = jSON[#keyPath(Vehicleprofile.turret)] as? JSON {
+            if let itemID = itemJSON[VehicleprofileTurret.primaryKeyPath(forType: .internal)] {
+                let pkCase = PKCase()
+                pkCase[.primary] = VehicleprofileTurret.primaryKey(for: itemID, andType: .internal)
+                let instanceHelper = VehicleprofileTurret.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
+                persistentStore?.itemMapping(context: context, forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
+            }
+        }
         /*
-         var parents = pkCase.plainParents
-         parents.append(self)
-
-         if let itemsList = jSON[#keyPath(Vehicleprofile.ammo)] as? [Any] {
-             let itemCase = PKCase(parentObjects: parents)
-             itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
-             let instanceHelper = VehicleprofileAmmoList.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
-             persistentStore?.itemMapping(context: context, forClass: VehicleprofileAmmoList.self, items: itemsList, pkCase: itemCase, instanceHelper: instanceHelper, callback: { _ in })
-         }
-
-         if let itemJSON = jSON[#keyPath(Vehicleprofile.armor)] as? JSON {
-             let itemCase = PKCase(parentObjects: parents)
-             itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
-             let instanceHelper = VehicleprofileArmorList.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
-             persistentStore?.itemMapping(context: context, forClass: VehicleprofileArmorList.self, itemJSON: itemJSON, pkCase: itemCase, instanceHelper: instanceHelper, callback: { _ in })
-         }
-
-         if let itemJSON = jSON[#keyPath(Vehicleprofile.suspension)] as? JSON {
-             if let itemID = itemJSON[VehicleprofileSuspension.primaryKeyPath(forType: .internal)] {
-                 let pkCase = PKCase()
-                 pkCase[.primary] = VehicleprofileSuspension.primaryKey(for: itemID, andType: .internal)
-                 let instanceHelper = VehicleprofileSuspension.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
-                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileSuspension.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in })
-             }
-         }
-
-         if let itemJSON = jSON[#keyPath(Vehicleprofile.gun)] as? JSON {
-             if let itemID = itemJSON[VehicleprofileGun.primaryKeyPath(forType: .internal)] {
-                 let pkCase = PKCase()
-                 pkCase[.primary] = VehicleprofileGun.primaryKey(for: itemID, andType: .internal)
-                 let instanceHelper = VehicleprofileGun.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
-                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileGun.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in })
-             }
-         }
-
-         if let itemJSON = jSON[#keyPath(Vehicleprofile.radio)] as? JSON {
-             if let itemID = itemJSON[VehicleprofileRadio.primaryKeyPath(forType: .internal)] {
-                 let pkCase = PKCase()
-                 pkCase[.primary] = VehicleprofileRadio.primaryKey(for: itemID, andType: .internal)
-                 let instanceHelper = VehicleprofileRadio.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
-                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileRadio.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
-             }
-         }
-
-         if let itemJSON = jSON[#keyPath(Vehicleprofile.engine)] as? JSON {
-             if let itemID = itemJSON[VehicleprofileEngine.primaryKeyPath(forType: .internal)] {
-                 let pkCase = PKCase()
-                 pkCase[.primary] = VehicleprofileEngine.primaryKey(for: itemID, andType: .internal)
-                 let instanceHelper = VehicleprofileEngine.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
-                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileEngine.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
-             }
-         }
-
-         if let itemJSON = jSON[#keyPath(Vehicleprofile.turret)] as? JSON {
-             if let itemID = itemJSON[VehicleprofileTurret.primaryKeyPath(forType: .internal)] {
-                 let pkCase = PKCase()
-                 pkCase[.primary] = VehicleprofileTurret.primaryKey(for: itemID, andType: .internal)
-                 let instanceHelper = VehicleprofileTurret.LocalJSONAdapterHelper(objectID: self.objectID, identifier: itemID, persistentStore: persistentStore)
-                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
-             }
-         }
-
          if let moduleJSON = jSON[#keyPath(Vehicleprofile.modules)] as? JSON {
              let vehicleprofileModuleCase = PKCase(parentObjects: parents)
              vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))

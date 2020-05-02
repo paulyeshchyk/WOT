@@ -13,6 +13,18 @@ import CoreData
 @objc(VehicleprofileGun)
 public class VehicleprofileGun: NSManagedObject {}
 
+// MARK: - PrimaryKeypathProtocol
+extension VehicleprofileGun {
+    override open class func predicateFormat(forType: PrimaryKeyType) -> String {
+        switch forType {
+        case .external:
+            return "%K == %@"
+        default:
+            return "%K = %@"
+        }
+    }
+}
+
 // MARK: - Coding Keys
 extension VehicleprofileGun {
     //
@@ -73,6 +85,10 @@ extension VehicleprofileGun: JSONDecoding {
 
 extension VehicleprofileGun {
     public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
+        public var primaryKeyType: PrimaryKeyType {
+            return .external
+        }
+
         private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?

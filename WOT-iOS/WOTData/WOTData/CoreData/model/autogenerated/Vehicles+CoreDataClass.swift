@@ -164,6 +164,10 @@ extension Vehicles: JSONDecoding {
 
 extension Vehicles {
     public class TreeJSONAdapterHelper: JSONAdapterInstanceHelper {
+        public var primaryKeyType: PrimaryKeyType {
+            return .external
+        }
+
         private var persistentStore: WOTPersistentStoreProtocol?
         private var objectID: NSManagedObjectID
         private var identifier: Any?

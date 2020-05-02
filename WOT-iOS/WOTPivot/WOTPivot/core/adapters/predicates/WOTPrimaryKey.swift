@@ -16,8 +16,8 @@ public enum PrimaryKeyType: Int {
 
 @objc
 public protocol PrimaryKeypathProtocol: class {
-    static func predicateFormat() -> String
-    static func predicate(for ident: AnyObject?) -> NSPredicate?
+    static func predicateFormat(forType: PrimaryKeyType) -> String
+    static func predicate(for ident: AnyObject?, andType: PrimaryKeyType) -> NSPredicate?
     static func primaryKeyPath(forType: PrimaryKeyType) -> String
     static func primaryKey(for ident: Any, andType: PrimaryKeyType) -> WOTPrimaryKey?
 }
