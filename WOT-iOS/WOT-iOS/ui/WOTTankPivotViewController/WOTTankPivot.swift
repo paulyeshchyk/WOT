@@ -85,7 +85,7 @@ class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
 
     convenience init(modelListener: WOTDataModelListener, appManager: WOTAppManagerProtocol?, settingsDatasource: WOTTankListSettingsDatasource) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: appManager?.coreDataProvider)
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: appManager?.coreDataStore)
 
         let metadatasource = WOTTankPivotMetadatasource()
         let nodeCreator = WOTTankPivotNodeCreator(appManager: appManager)
@@ -107,7 +107,7 @@ class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
         do {
             try performWebRequest()
         } catch let error {
-            appManager?.logInspector?.log(ErrorLog(error, details: nil), sender: nil)
+            appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
         }
     }
 
@@ -126,7 +126,7 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         DispatchQueue.main.async {
             super.loadModel()
             if let error = error {
-                requestManager.appManager?.logInspector?.log(ErrorLog(error, details: didParseDataForRequest), sender: self)
+                requestManager.appManager?.logInspector?.logEvent(EventError(error, details: didParseDataForRequest), sender: self)
             }
             if completionResultType == .finished || completionResultType == .noData {
                 requestManager.removeListener(self)

@@ -15,13 +15,16 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         //
+
+        let logPriorities = Set(LogEventType.allValues).subtracting([LogEventType.performance]).compactMap {$0}
+
         let requestCoordinator = WOTRequestCoordinator()
         let hostConfiguration = WOTWebHostConfiguration()
         let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, hostConfiguration: hostConfiguration)
         let sessionManager = WOTWebSessionManager()
-        let logInspector = LogInspector(priorities: LogMessagePriorityType.allValues)
+        let logInspector = LogInspector(priorities: logPriorities)
         let coreDataProvider = WOTCustomCoreDataProvider()
-        let persistentStore = WOTPersistentStore()
+        let mappingCoordinator = WOTMappingCoordinator()
         let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator)
 
         appManager.hostConfiguration = hostConfiguration
@@ -31,8 +34,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         appManager.responseCoordinator = responseCoordinator
         appManager.sessionManager = sessionManager
         appManager.logInspector = logInspector
-        appManager.coreDataProvider = coreDataProvider
-        appManager.persistentStore = persistentStore
+        appManager.coreDataStore = coreDataProvider
+        appManager.mappingCoordinator = mappingCoordinator
 
         requestCoordinator.registerDefaultRequests()
 

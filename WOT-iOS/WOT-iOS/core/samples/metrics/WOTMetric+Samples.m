@@ -30,7 +30,7 @@
     request.resultType = NSDictionaryResultType;
 
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
+    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
     NSManagedObjectContext *context = [coreDataProvider mainContext];
     id result = [context executeFetchRequest:request error:&error];
     

@@ -6,7 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol {
     lazy public var dimension: WOTPivotDimensionProtocol = {

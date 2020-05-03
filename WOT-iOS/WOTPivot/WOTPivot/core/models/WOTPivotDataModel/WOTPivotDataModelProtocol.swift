@@ -6,7 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public protocol WOTPivotDataModelProtocol: WOTDataModelProtocol {
     var contentSize: CGSize { get }

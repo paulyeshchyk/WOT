@@ -37,8 +37,8 @@ public class WOTWEBRequestFactory: NSObject {
 
         requestManager.addListener(listener, forRequest: request)
 
-        let provider = requestManager.appManager?.coreDataProvider
-        let persistentStore = requestManager.appManager?.persistentStore
+        let provider = requestManager.appManager?.coreDataStore
+        let persistentStore = requestManager.appManager?.mappingCoordinator
         let predicate = NSPredicate(format: "%K == %d", "tank_id", vehicleId)
         if let context = provider?.mainContext {
             provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context, callback: { fetchResult in

@@ -80,7 +80,7 @@ static const NSInteger RowHeight = 44.0f;
 
 - (void)invalidate {
     
-    self.bottomSeparatorView.backgroundColor = self.isLastInSection?[UIColor clearColor]:WOT_COLOR_BOTTOM_CELL_SEPARATOR;
+    self.bottomSeparatorView.backgroundColor = self.isLastInSection ? [UIColor clearColor] : WOT_COLOR_BOTTOM_CELL_SEPARATOR;
     
     [self.tableView reloadData];
 }

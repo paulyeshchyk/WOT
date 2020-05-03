@@ -269,6 +269,10 @@
 		1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE3861B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m */; };
 		1DDEE3981B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEE3871B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib */; };
 		1DDEE39C1B8F353200C90D4B /* WOTTankPivotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEE38F1B8F353200C90D4B /* WOTTankPivotViewController.xib */; };
+		1DE1FA15245EE4F7002866A3 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA14245EE4F7002866A3 /* NSThread+ExecutionOnMain.m */; };
+		1DE1FA1F245EE7C8002866A3 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA18245EE7C7002866A3 /* NSString+RomanUtils.m */; };
+		1DE1FA20245EE7C8002866A3 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA1B245EE7C7002866A3 /* RomanNumber.m */; };
+		1DE1FA21245EE7C8002866A3 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA1D245EE7C7002866A3 /* Reachability.m */; };
 		1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */; };
 		1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */; };
 		1DE319AE1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */; };
@@ -501,7 +505,6 @@
 		1D79EDD621243A97005FBA34 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D86DD012122DB4C00678E71 /* WOTMenuDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMenuDatasource.swift; sourceTree = "<group>"; };
 		1D86DD032122F89A00678E71 /* WOTMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMenuItem.swift; sourceTree = "<group>"; };
-		1D90695A1B412D6B00237852 /* WOTColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTColors.h; sourceTree = "<group>"; };
 		1D90695E1B4161F300237852 /* UIToolbar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+WOT.h"; sourceTree = "<group>"; };
 		1D90695F1B4161F300237852 /* UIToolbar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+WOT.m"; sourceTree = "<group>"; };
 		1D9CAA1E210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankTreeNodeCollectionViewCell.m; sourceTree = "<group>"; };
@@ -652,6 +655,15 @@
 		1DDEE3861B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotFixedCollectionViewCell.m; sourceTree = "<group>"; };
 		1DDEE3871B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotFixedCollectionViewCell.xib; sourceTree = "<group>"; };
 		1DDEE38F1B8F353200C90D4B /* WOTTankPivotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotViewController.xib; sourceTree = "<group>"; };
+		1DE1FA13245EE4F7002866A3 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
+		1DE1FA14245EE4F7002866A3 /* NSThread+ExecutionOnMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+ExecutionOnMain.m"; sourceTree = "<group>"; };
+		1DE1FA18245EE7C7002866A3 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
+		1DE1FA19245EE7C7002866A3 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
+		1DE1FA1A245EE7C7002866A3 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
+		1DE1FA1B245EE7C7002866A3 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
+		1DE1FA1D245EE7C7002866A3 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		1DE1FA1E245EE7C7002866A3 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		1DE1FA23245EE936002866A3 /* WOTLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTLogger.h; sourceTree = "<group>"; };
 		1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark.png"; sourceTree = "<group>"; };
 		1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark@2x.png"; sourceTree = "<group>"; };
 		1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray.png"; sourceTree = "<group>"; };
@@ -1484,13 +1496,14 @@
 		1DD6468C1B1D9A7000B0EC76 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1DE1FA16245EE7A6002866A3 /* ThirdParty */,
 				1DD6469C1B1DC42100B0EC76 /* Categories */,
 				1D5669242424D121008458AF /* Session */,
 				1D56697C2424DEF5008458AF /* samples */,
 				1D047B581B331D8900B5B696 /* datasources */,
 				1D047B671B331DF000B5B696 /* WOTApplicationDefaults.h */,
 				1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */,
-				1D90695A1B412D6B00237852 /* WOTColors.h */,
+				1DE1FA23245EE936002866A3 /* WOTLogger.h */,
 				1D5669382424D9CC008458AF /* WOTRequestIds.h */,
 			);
 			path = core;
@@ -1499,6 +1512,7 @@
 		1DD6469C1B1DC42100B0EC76 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				1DE1FA12245EE4F7002866A3 /* NSThread */,
 				1D010D771B8AF5F400FA6A75 /* UIColor */,
 				1D519D371B4FD40600D3A286 /* UIProgressView */,
 				1D519D1B1B4E9FCF00D3A286 /* NSExpressionDescription */,
@@ -1685,6 +1699,44 @@
 				1D1795FA2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib */,
 			);
 			path = cells;
+			sourceTree = "<group>";
+		};
+		1DE1FA12245EE4F7002866A3 /* NSThread */ = {
+			isa = PBXGroup;
+			children = (
+				1DE1FA13245EE4F7002866A3 /* NSThread+ExecutionOnMain.h */,
+				1DE1FA14245EE4F7002866A3 /* NSThread+ExecutionOnMain.m */,
+			);
+			path = NSThread;
+			sourceTree = "<group>";
+		};
+		1DE1FA16245EE7A6002866A3 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				1DE1FA1C245EE7C7002866A3 /* Reachability */,
+				1DE1FA17245EE7C7002866A3 /* RomanNumber */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		1DE1FA17245EE7C7002866A3 /* RomanNumber */ = {
+			isa = PBXGroup;
+			children = (
+				1DE1FA1A245EE7C7002866A3 /* NSString+RomanUtils.h */,
+				1DE1FA18245EE7C7002866A3 /* NSString+RomanUtils.m */,
+				1DE1FA19245EE7C7002866A3 /* RomanNumber.h */,
+				1DE1FA1B245EE7C7002866A3 /* RomanNumber.m */,
+			);
+			path = RomanNumber;
+			sourceTree = "<group>";
+		};
+		1DE1FA1C245EE7C7002866A3 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				1DE1FA1D245EE7C7002866A3 /* Reachability.m */,
+				1DE1FA1E245EE7C7002866A3 /* Reachability.h */,
+			);
+			path = Reachability;
 			sourceTree = "<group>";
 		};
 		1DEEAC5F20FF1ABE0072E099 /* WOTTree+GridData */ = {
@@ -2111,6 +2163,7 @@
 				1D5669B42424DEF5008458AF /* WOTCoreDataPredicates.m in Sources */,
 				1D4C92641B27085600E320B5 /* WOTTankListSortViewController.m in Sources */,
 				1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */,
+				1DE1FA21245EE7C8002866A3 /* Reachability.m in Sources */,
 				1D6FF5112106FF85006C1328 /* WOTTankConfigurationItemCell.m in Sources */,
 				1D5D021A23C73376004B0314 /* WOTTankPivot.swift in Sources */,
 				1D9CAA362111A09700B6CA5A /* strings.swift in Sources */,
@@ -2136,6 +2189,7 @@
 				1D56692E2424D121008458AF /* WOTSessionManager.m in Sources */,
 				1D5669B72424DEF5008458AF /* WOTNode+PivotFactory.m in Sources */,
 				1D9CAA20210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m in Sources */,
+				1DE1FA20245EE7C8002866A3 /* RomanNumber.m in Sources */,
 				1D5669BA2424DEF5008458AF /* WOTTankDetailFieldExpression.m in Sources */,
 				1D4C92561B25F27200E320B5 /* WOTLanguageTableViewCell.m in Sources */,
 				1DD46B921BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewCell.m in Sources */,
@@ -2167,6 +2221,7 @@
 				1DA1D73D1B2AF48B00C5C2FB /* WOTTankListSettingViewController.m in Sources */,
 				1D5669C52424DEF5008458AF /* WOTTurretsArmorBoardCompareFieldExpression.m in Sources */,
 				1D6FF4F62106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m in Sources */,
+				1DE1FA15245EE4F7002866A3 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
 				1D56692D2424D121008458AF /* WOTWebHostConfiguration.swift in Sources */,
 				1D1795ED211D9ACA00A0E42E /* WOTTankPivotViewController.swift in Sources */,
@@ -2190,6 +2245,7 @@
 				1D010D7A1B8AF60300FA6A75 /* UIColor+HSB.m in Sources */,
 				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
 				1DDEE3931B8F353200C90D4B /* WOTTankPivotEmptyCollectionViewCell.m in Sources */,
+				1DE1FA1F245EE7C8002866A3 /* NSString+RomanUtils.m in Sources */,
 				1D4C92581B25F27200E320B5 /* WOTLanguageSelectorViewController.m in Sources */,
 				1D519D1E1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m in Sources */,
 				1D5669302424D121008458AF /* WOTSaveSessionResponseAdapter.swift in Sources */,

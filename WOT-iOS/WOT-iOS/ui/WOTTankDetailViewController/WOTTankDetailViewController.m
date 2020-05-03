@@ -20,6 +20,7 @@
 #import "NSObject+WOTTankGridValueData.h"
 #import "UIView+StretchingConstraints.h"
 #import "UIToolbar+WOT.h"
+#import "NSThread+ExecutionOnMain.h"
 
 typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTTankDetailViewModeUnknown = 0,
@@ -244,7 +245,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
+        id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
         _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
     }

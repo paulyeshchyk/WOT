@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) UIViewController<WOTMenuProtocol>* menu;
 @property (nonatomic, copy)Class visibleViewControllerClass;
-@property (nonatomic, assign)id<WOTCoredataProviderProtocol> _Nullable dataProvider;
+@property (nonatomic, assign)id<WOTCoredataStoreProtocol> _Nullable dataProvider;
 
 @end
 

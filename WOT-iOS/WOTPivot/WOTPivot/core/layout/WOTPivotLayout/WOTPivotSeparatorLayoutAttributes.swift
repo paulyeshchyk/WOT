@@ -6,7 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum WOTPivotSeparatorKind: String {
     case top

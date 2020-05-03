@@ -7,6 +7,7 @@
 //
 
 #import "WOTTankListSettingsDatasource+TableView.h"
+#import "NSThread+ExecutionOnMain.h"
 
 @implementation WOTTankListSettingsDatasource (TableView)
 

@@ -6,7 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public protocol WOTDimensionCalculatorProtocol {
     static func rectangle(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> CGRect

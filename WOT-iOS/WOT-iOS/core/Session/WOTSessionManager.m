@@ -11,6 +11,7 @@
 #import <WOTData/WOTData-Swift.h>
 
 #import "WOTRequestIds.h"
+#import "NSThread+ExecutionOnMain.h"
 
 @interface WOTSessionManager ()
 
@@ -29,29 +30,30 @@
 }
 
 + (id)currentAccessToken {
-    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
-    NSManagedObjectContext *context = [coreDataProvider mainContext];
-    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
-    return session.access_token;
+    return nil;
+//    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+//    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+//    NSManagedObjectContext *context = [coreDataProvider mainContext];
+//    UserSession *session = (UserSession *)[context singleObjectForType:UserSession.class predicate:nil includeSubentities:NO];
+//    return session.access_token;
 }
 
 + (NSString *)currentUserName {
-    
-    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
-    NSManagedObjectContext *context = [coreDataProvider mainContext];
-    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
-    return session.nickname;
+    return nil;
+//    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+//    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+//    NSManagedObjectContext *context = [coreDataProvider mainContext];
+//    UserSession *session = (UserSession *)[context singleObjectForType:UserSession.class predicate:nil includeSubentities:NO];
+//    return session.nickname;
 }
 
 + (NSTimeInterval)expirationTime {
-    
-    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<WOTCoredataProviderProtocol> coreDataProvider = appDelegate.appManager.coreDataProvider;
-    NSManagedObjectContext *context = [coreDataProvider mainContext];
-    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
-    return [session.expires_at integerValue];
+    return [NSDate timeIntervalSinceReferenceDate];
+//    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+//    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+//    NSManagedObjectContext *context = [coreDataProvider mainContext];
+//    UserSession *session = (UserSession *)[context singleObjectForType:UserSession.class predicate:nil includeSubentities:NO];
+//    return [session.expires_at integerValue];
 }
 
 
