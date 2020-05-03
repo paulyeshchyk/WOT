@@ -17,15 +17,30 @@ protocol WOTMenuDelegate: NSObjectProtocol {
 
 @objc
 protocol WOTMenuProtocol: NSObjectProtocol {
+    init(menuDatasource datasource: WOTMenuDatasource, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
     var delegate: WOTMenuDelegate? { get set }
     var selectedMenuItemClass: AnyClass { get }
     var selectedMenuItemTitle: String { get }
     var selectedMenuItemImage: UIImage { get }
+    func rebuildMenu()
 }
 
-@objc(WOTMenuViewController)
+class DefaultMenuViewController: WOTViewController {}
 
-class WOTMenuViewController: UIViewController, WOTMenuProtocol {
+@objc(WOTMenuViewController)
+class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourceDelegate {
+    var menuDatasource: WOTMenuDatasourceProtocol?
+
+    required convenience init(menuDatasource datasource: WOTMenuDatasource, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.menuDatasource = datasource
+        self.menuDatasource?.delegate = self
+    }
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
     @IBOutlet var tableView: UITableView?
     var selectedIndex: NSInteger = 0 {
         didSet {
@@ -33,12 +48,15 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol {
         }
     }
 
-    var menuDatasource: WOTMenuDatasourceProtocol?
+    func rebuildMenu() {
+        menuDatasource?.rebuild()
+    }
 
     weak var delegate: WOTMenuDelegate?
+
     var selectedMenuItemClass: AnyClass {
         let item = self.menuDatasource?.object(at: self.selectedIndex)
-        return item?.controllerClass ?? WOTMenuViewController.self
+        return item?.controllerClass ?? DefaultMenuViewController.self
     }
 
     var selectedMenuItemTitle: String {
@@ -49,14 +67,6 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol {
     var selectedMenuItemImage: UIImage {
         let item = self.menuDatasource?.object(at: self.selectedIndex)
         return item?.icon ?? UIImage()
-    }
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.menuDatasource = WOTMenuDatasource()
-        self.menuDatasource?.delegate = self
-        self.menuDatasource?.rebuild()
-        self.selectedIndex = 0
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -85,9 +95,8 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol {
     @objc func loginPressed(_ obj: AnyObject?) {
         self.delegate?.loginPressedOnMenu(self)
     }
-}
 
-extension WOTMenuViewController: WOTMenuDatasourceDelegate {
+    // MARK: - WOTMenuDatasourceDelegate
     func hasUpdatedData(_ datasource: WOTMenuDatasourceProtocol) {
         self.redrawNavigationBar()
         self.selectedIndex = 0
@@ -97,14 +106,14 @@ extension WOTMenuViewController: WOTMenuDatasourceDelegate {
 
 extension WOTMenuViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.menuDatasource?.objectsCount() ?? 0
+        return menuDatasource?.objectsCount() ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard  let result = tableView.dequeueReusableCell(withIdentifier: String(describing: WOTMenuTableViewCell.self), for: indexPath) as? WOTMenuTableViewCell else {
             return UITableViewCell()
         }
-        if let menuItem = self.menuDatasource?.object(at: indexPath.row) {
+        if let menuItem = menuDatasource?.object(at: indexPath.row) {
             result.cellTitle = menuItem.controllerTitle
             result.cellImage = menuItem.icon
         }

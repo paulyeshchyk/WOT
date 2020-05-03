@@ -6,7 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {

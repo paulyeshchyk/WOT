@@ -11,6 +11,7 @@
 #import <WOTData/WOTData-Swift.h>
 
 #import "WOTRequestIds.h"
+#import "NSThread+ExecutionOnMain.h"
 
 @interface WOTSessionManager ()
 
@@ -20,28 +21,39 @@
 
 @implementation WOTSessionManager
 
-+ (id)currentAccessToken {
++ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
+    
+}
 
-    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
-    return session.access_token;
++ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
+    
+}
+
++ (id)currentAccessToken {
+    return nil;
+//    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+//    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+//    NSManagedObjectContext *context = [coreDataProvider mainContext];
+//    UserSession *session = (UserSession *)[context singleObjectForType:UserSession.class predicate:nil includeSubentities:NO];
+//    return session.access_token;
 }
 
 + (NSString *)currentUserName {
-    
-    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
-    return session.nickname;
+    return nil;
+//    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+//    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+//    NSManagedObjectContext *context = [coreDataProvider mainContext];
+//    UserSession *session = (UserSession *)[context singleObjectForType:UserSession.class predicate:nil includeSubentities:NO];
+//    return session.nickname;
 }
 
 + (NSTimeInterval)expirationTime {
-    
-    id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-    NSManagedObjectContext *context = [dataProvider mainManagedObjectContext];
-    UserSession *session = (UserSession *)[UserSession singleObjectWithPredicate:nil inManagedObjectContext:context includeSubentities:NO];
-    return [session.expires_at integerValue];
+    return [NSDate timeIntervalSinceReferenceDate];
+//    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+//    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+//    NSManagedObjectContext *context = [coreDataProvider mainContext];
+//    UserSession *session = (UserSession *)[context singleObjectForType:UserSession.class predicate:nil includeSubentities:NO];
+//    return [session.expires_at integerValue];
 }
 
 
@@ -50,7 +62,7 @@
 //    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout jsonLink: NULL];
 }
 
-+ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
+//+ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
 
 //    id<WOTRequestProtocol> request =  [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
 //
@@ -62,17 +74,17 @@
 //    [args setValues:@[redirectUri] forKey: WOTApiKeys.redirectUri];
 //
 //    [requestManager start:request with:args forGroupId:WGWebRequestGroups.login jsonLink: NULL];
-}
+//}
 
-+ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager {
-    
-    id access_token = [self currentAccessToken];
-    if (access_token){
-        [self logoutWithRequestManager:requestManager];
-    } else {
-        [self loginWithRequestManager:requestManager];
-    }
-}
+//+ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager {
+//    
+//    id access_token = [self currentAccessToken];
+//    if (access_token){
+//        [self logoutWithRequestManager:requestManager];
+//    } else {
+//        [self loginWithRequestManager:requestManager];
+//    }
+//}
 
 + (BOOL)sessionHasBeenExpired {
     

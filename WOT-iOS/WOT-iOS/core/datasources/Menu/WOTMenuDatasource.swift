@@ -26,6 +26,10 @@ protocol WOTMenuDatasourceProtocol: NSObjectProtocol {
 
 @objc
 class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
+    // MARK: - Properties
+
+    weak var delegate: WOTMenuDatasourceDelegate?
+
     var availableViewControllers: [WOTMenuItem] = []
     var visibleViewControllers: [WOTMenuItem]? = nil {
         didSet {
@@ -46,20 +50,8 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankListViewController.self, controllerTitle: L10n.wotStringTankopedia, icon: UIImage(), userDependence: false))
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: L10n.wotStringProfile, icon: UIImage(), userDependence: false))
-
-        WOTPivotAppManager.sharedInstance.coreDataProvider?.perform({ (context) in
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: UserSession.self))
-            request.sortDescriptors = [NSSortDescriptor(key: L10n.wotKeyExpiresAt, ascending: false)]
-            let fetchedResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-            fetchedResultController.delegate = self
-            self.fetchedResultController = fetchedResultController
-            do {
-                try fetchedResultController.performFetch()
-            } catch {}
-        })
     }
 
-    weak var delegate: WOTMenuDatasourceDelegate?
     func object(at index: Int) -> WOTMenuItem? {
         return self.visibleViewControllers?[index]
     }

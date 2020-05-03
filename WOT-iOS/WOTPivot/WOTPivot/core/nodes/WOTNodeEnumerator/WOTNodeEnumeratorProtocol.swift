@@ -19,6 +19,6 @@ public protocol WOTNodeEnumeratorProtocol: NSObjectProtocol {
     func allItems(fromArray: [WOTNodeProtocol]) -> [WOTNodeProtocol]
     func parentsCount(node: WOTNodeProtocol) -> Int
     func visibleParentsCount(node: WOTNodeProtocol) -> Int
-    func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping (WOTNodeProtocol) -> Void)
-    func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping (WOTNodeProtocol) -> Void)
+    func enumerateAll(children: [WOTNodeProtocol], comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping WOTNodeProtocolCompletion)
+    func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping WOTNodeProtocolCompletion)
 }

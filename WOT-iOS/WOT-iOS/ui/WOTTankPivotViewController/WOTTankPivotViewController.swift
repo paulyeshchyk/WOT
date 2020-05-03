@@ -12,7 +12,7 @@ import WOTPivot
 typealias WOTTankPivotCompletionCancelBlock = () -> Void
 typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 
-open class WOTPivotViewController: UIViewController {
+open class WOTPivotViewController: WOTViewController {
     @IBOutlet open var collectionView: UICollectionView?
 
     @IBOutlet open var flowLayout: WOTPivotLayout? {
@@ -165,9 +165,12 @@ class WOTTankPivotViewController: WOTPivotViewController {
     var cancelBlock: WOTTankPivotCompletionCancelBlock?
     var doneBlock: WOTTankPivotCompletionDoneBlock?
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
+    var settingsDatasource = WOTTankListSettingsDatasource()
 
     override func pivotModel() -> WOTPivotDataModelProtocol {
-        return WOTTankPivotModel(modelListener: self, dataProvider: WOTPivotAppManager.sharedInstance.coreDataProvider)
+        let appDelegate = UIApplication.shared.delegate as? WOTAppDelegateProtocol
+        let appManager = appDelegate?.appManager
+        return WOTTankPivotModel(modelListener: self, appManager: appManager, settingsDatasource: settingsDatasource)
     }
 
     override func viewDidLoad() {

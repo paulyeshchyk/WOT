@@ -11,6 +11,7 @@
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"
 #import "WOTTankListSettingsDatasource.h"
+#import <WOT-Swift.h>
 #import <WOTPivot/WOTPivot.h>
 #import "UINavigationBar+WOT.h"
 #import "UIImageView+WebCache.h"
@@ -77,7 +78,7 @@
 }
 
 - (NSArray *) sortDescriptors {
-    NSMutableArray *result = [[[WOTTankListSettingsDatasource sharedInstance] sortBy] mutableCopy];
+    NSMutableArray *result = [[self.settingsDatasource sortBy] mutableCopy];
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:WOTApiKeys.tank_id ascending:YES];
     [result addObject:descriptor];
     return result;
@@ -102,6 +103,7 @@
 
 @implementation WOTTankModuleTreeViewController
 @synthesize uuidHash;
+@synthesize appManager;
 
 - (void)dealloc {
     
@@ -122,9 +124,13 @@
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
+        id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+        id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
 
+        self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
+        
         self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
-                                                                                      dataprovider:[[WOTPivotAppManager sharedInstance] coreDataProvider]];
+                                                                                      dataprovider:coreDataProvider];
         self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController
                                                               listener: self
                                                             enumerator: [WOTNodeEnumerator sharedInstance]
@@ -190,10 +196,11 @@
 
     _tank_Id = [value copy];
 
-    id<WOTRequestProtocol> request = [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                                                   requestManager: self.requestManager
-                                                                         listener: self];
-    [request addListener:self];
+    NSError *error = nil;
+    [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
+                                             requestManager: self.requestManager
+                                                   listener: self
+                                                      error: &error];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -284,6 +291,16 @@
     [self reloadModel];
 }
 
+- (void)request:(id<WOTRequestProtocol> _Nonnull)request canceledWith:(NSError * _Nullable)error {
+    
+}
+
+
+- (void)request:(id<WOTRequestProtocol> _Nonnull)request startedWith:(id<WOTHostConfigurationProtocol> _Nonnull)hostConfiguration args:(id<WOTRequestArgumentsProtocol> _Nonnull)args {
+    
+}
+
+
 - (void)requestHasCanceled:(id<WOTRequestProtocol>)request {
     
 }
@@ -302,10 +319,10 @@
     return [@"WOTTankModuleTreeViewController" hash];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
     
-    if (completionResultType == WOTRequestManagerCompletionResultTypeFinished && didParseDataForRequest.parentRequest == nil && didParseDataForRequest != didParseDataForRequest.parentRequest) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+    if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self reloadModel];
         });
     }

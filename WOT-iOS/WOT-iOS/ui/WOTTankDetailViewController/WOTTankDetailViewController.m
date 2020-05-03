@@ -20,6 +20,7 @@
 #import "NSObject+WOTTankGridValueData.h"
 #import "UIView+StretchingConstraints.h"
 #import "UIToolbar+WOT.h"
+#import "NSThread+ExecutionOnMain.h"
 
 typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTTankDetailViewModeUnknown = 0,
@@ -64,6 +65,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 @implementation WOTTankDetailViewController
 
+@synthesize appManager;
+
 - (id<WOTRequestManagerProtocol>) requestManager {
     id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
     return ((id<WOTAppDelegateProtocol>) delegate).appManager.requestManager;
@@ -76,11 +79,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
-    [self.requestManager cancelRequestsWithGroupId:requestId];
+    [self.requestManager cancelRequestsWithGroupId:requestId with:NULL];
     
     [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
         
-        [self.requestManager cancelRequestsWithGroupId:requestID];
+        [self.requestManager cancelRequestsWithGroupId:requestID with:NULL];
     }];
     
     [self.runningRequestIDs removeAllObjects];
@@ -241,8 +244,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         fetchRequest.predicate = predicate;
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
-        id<WOTCoredataProviderProtocol> dataProvider = [[WOTPivotAppManager sharedInstance] coreDataProvider];
-        _fetchedResultController = [dataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
+        id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+        id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+        _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
     }
     return _fetchedResultController;
@@ -268,8 +272,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
          * Default Profile
          */
         [WOTWEBRequestFactory fetchProfileDataWithProfileTankId: [tankId integerValue]
-                                          requestManager: self.requestManager
-                                                listener: self];
+                                                 requestManager: self.requestManager
+                                                       listener: self
+                                                          error: &error];
     }
 }
 
@@ -316,9 +321,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
+    NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                  requestManager: self.requestManager
-                                        listener: self];
+                                             requestManager: self.requestManager
+                                                   listener: self
+                                                      error: &error];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -463,5 +470,10 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<WOTRequestProtocol> _Nonnull)didStartRequest {
     //
 }
+
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
+    //
+}
+
 
 @end

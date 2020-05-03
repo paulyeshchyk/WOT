@@ -7,6 +7,7 @@
 //
 
 #import "WOTTankDetailCollectionReusableView.h"
+#import <WOTPivot/WOTPivot.h>
 
 @interface WOTTankDetailCollectionReusableView ()
 

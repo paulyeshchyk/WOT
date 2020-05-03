@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WOTTankListViewController : UIViewController
+@protocol WOTViewControllerProtocol;
+
+@interface WOTTankListViewController : UIViewController<WOTViewControllerProtocol>
 
 @end

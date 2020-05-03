@@ -20,18 +20,34 @@ class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
     func logout() {}
 }
 
-class WOTWebSessionClearResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+class WOTWebSessionClearResponseAdapter: NSObject, WOTDataResponseAdapterProtocol, WOTModelServiceProtocol {
     var appManager: WOTAppManagerProtocol?
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
+    @objc static func modelClass() -> PrimaryKeypathProtocol.Type? {
+        return nil
+    }
+
+    @objc func instanceModelClass() -> AnyClass? {
+        return nil
+    }
+
+    required init(appManager app: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type) {
+        appManager = app
+    }
+
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("should be implemented")
     }
 }
 
-class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+class WOTWebSessionSaveResponseAdapter: NSObject, WOTDataResponseAdapterProtocol {
     var appManager: WOTAppManagerProtocol?
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
+    required init(appManager app: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type) {
+        appManager = app
+    }
+
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
@@ -50,10 +66,13 @@ class WOTWebSessionSaveResponseAdapter: NSObject, WOTWebResponseAdapterProtocol 
     }
 }
 
-class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+class WOTWebSessionLoginResponseAdapter: NSObject, WOTDataResponseAdapterProtocol {
     var appManager: WOTAppManagerProtocol?
+    required init(appManager app: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type) {
+        appManager = app
+    }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
@@ -113,10 +132,13 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTWebResponseAdapterProtocol
     }
 }
 
-class WOTWebSessionLogoutResponseAdapter: NSObject, WOTWebResponseAdapterProtocol {
+class WOTWebSessionLogoutResponseAdapter: NSObject, WOTDataResponseAdapterProtocol {
     var appManager: WOTAppManagerProtocol?
+    required init(appManager app: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type) {
+        appManager = app
+    }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonLinkAdapter: JSONLinksAdapterProtocol?, subordinateLinks: [WOTJSONLink]?, externalCallback: NSManagedObjectCallback?, onFinish: @escaping ( (Error?) -> Void ) ) -> CoreDataStoreProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {

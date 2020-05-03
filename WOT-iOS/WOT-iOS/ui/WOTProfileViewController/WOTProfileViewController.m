@@ -7,8 +7,11 @@
 //
 
 #import "WOTProfileViewController.h"
+#import <WOT-Swift.h>
 
 @implementation WOTProfileViewController
+
+@synthesize appManager;
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

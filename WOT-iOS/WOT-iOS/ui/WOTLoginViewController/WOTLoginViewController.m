@@ -101,9 +101,9 @@
     if (language) {
 
         [WOTApplicationDefaults setLanguage:language];
-        id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
+//        id<WOTAppManagerProtocol> manager = ((id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate]).appManager;
         
-        [WOTSessionManager loginWithRequestManager:manager.requestManager];
+//        [WOTSessionManager loginWithRequestManager:manager.requestManager];
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];

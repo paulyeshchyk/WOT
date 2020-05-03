@@ -6,7 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 @objc
 public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnectorLayerProtocol {
@@ -32,5 +32,21 @@ public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNod
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return result
+    }
+}
+
+extension CGContext {
+    public func drawNodeConnector(frame: CGRect, node: WOTNodeProtocol, model: WOTDataModelProtocol, layout: WOTTankConfigurationFlowCellLayoutProtocol) {
+        let parentCenter = frame.center()
+        node.children.forEach { (child) in
+            if let childIndexPath = model.indexPath(forNode: child) {
+                let childFrame = layout.cellFrame(indexPath: childIndexPath)
+                let childCenter = childFrame.center()
+
+                self.move(to: childCenter)
+                self.addLine(to: parentCenter)
+                self.strokePath()
+            }
+        }
     }
 }

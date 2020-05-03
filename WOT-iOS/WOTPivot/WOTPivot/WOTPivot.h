@@ -6,25 +6,10 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #import "WOTPivotDefines.h"
-#import "NSMutableDictionary+WOT.h"
-#import "NSDictionary+Hash.h"
-#import "NSBundle+LanguageBundle.h"
-#import "NSString+WOTValue.h"
-#import "NSNumber+Randomizer.h"
-#import "NSNumber+CustomFormatter.h"
-#import "NSSet+WOT.h"
-#import "NSThread+ExecutionOnMain.h"
-#import "NSArray+WOT.h"
-#import "NSMutableArray+WOT.h"
-#import "NSString+UrlEncode.h"
-
-#import "WOTLogger.h"
-#import "NSString+RomanUtils.h"
-#import "RomanNumber.h"
-#import "Reachability.h"
-
-
+#import "WOTColors.h"
 
 //! Project version number for WOTPivot.
 FOUNDATION_EXPORT double WOTPivotVersionNumber;

@@ -11,7 +11,6 @@
 #import "WOT-Swift.h"
 #import "Strings.h"
 #import "WOTMacro.h"
-#import "WOTColors.h"
 
 #import <Availability.h>
 

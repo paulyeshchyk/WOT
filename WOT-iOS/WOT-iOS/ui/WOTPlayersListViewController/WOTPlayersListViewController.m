@@ -7,11 +7,14 @@
 //
 
 #import "WOTPlayersListViewController.h"
+#import <WOT-Swift.h>
 
 @interface WOTPlayersListViewController ()
 
 @end
 
 @implementation WOTPlayersListViewController
+
+@synthesize appManager;
 
 @end

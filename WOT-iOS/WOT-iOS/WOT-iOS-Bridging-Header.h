@@ -19,3 +19,4 @@
 #import <WOTPivot/WOTPivot.h>
 #import <WOTData/WOTData.h>
 #import "WOTRequestIds.h"
+#import "WOTDrawerViewController.h"

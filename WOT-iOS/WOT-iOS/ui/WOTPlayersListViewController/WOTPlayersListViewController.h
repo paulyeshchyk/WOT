@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WOTPlayersListViewController : UIViewController
+@protocol WOTViewControllerProtocol;
+
+@interface WOTPlayersListViewController : UIViewController<WOTViewControllerProtocol>
 
 @end

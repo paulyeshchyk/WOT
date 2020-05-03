@@ -11,18 +11,22 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, PivotMetadataType) {
-    PivotMetadataTypeFilter = 0,
-    PivotMetadataTypeColumn,
-    PivotMetadataTypeRow,
-    PivotMetadataTypeData
-};
+#define IS_IPAD   (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+
 
 typedef NS_ENUM(NSInteger, PivotStickyType) {
 
     PivotStickyTypeFloat = 0,
     PivotStickyTypeHorizontal = 1 << 1,
     PivotStickyTypeVertical = 1 << 2
+};
+
+typedef NS_ENUM(NSInteger, PivotMetadataType) {
+    PivotMetadataTypeFilter = 0,
+    PivotMetadataTypeColumn,
+    PivotMetadataTypeRow,
+    PivotMetadataTypeData
 };
 
 

@@ -7,7 +7,8 @@
 //
 
 import Foundation
-public typealias WOTNodeProtocolRemoveCompletion = (WOTNodeProtocol) -> Void
+
+public typealias WOTNodeProtocolCompletion = (WOTNodeProtocol) -> Void
 public typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult
 
 @objc
@@ -32,9 +33,9 @@ public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
 
     func addChildArray(_ childArray: [WOTNodeProtocol])
 
-    func removeChild(_ child: WOTNodeProtocol, completion: @escaping (WOTNodeProtocol) -> Void)
+    func removeChild(_ child: WOTNodeProtocol, completion: @escaping WOTNodeProtocolCompletion)
 
-    func removeChildren(completion: @escaping (WOTNodeProtocol) -> Void)
+    func removeChildren(completion: @escaping WOTNodeProtocolCompletion)
 
     func addToParent(_ newParent: WOTNodeProtocol)
 

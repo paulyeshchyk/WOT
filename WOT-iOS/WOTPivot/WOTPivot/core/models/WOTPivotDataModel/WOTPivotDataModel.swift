@@ -6,7 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol {
     lazy public var dimension: WOTPivotDimensionProtocol = {
@@ -115,7 +115,9 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
 
         do {
             try fetchController?.performFetch(nodeCreator: nodeCreator)
-        } catch {}
+        } catch let error {
+            print(error)
+        }
     }
 
     public func item(atIndexPath: NSIndexPath) -> WOTPivotNodeProtocol? {

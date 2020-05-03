@@ -12,7 +12,7 @@ import WOTData
 
 @objc
 class WOTTankTreeFetchController: WOTDataFetchController {
-    override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {
+    override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
         var result = [WOTNodeProtocol]()
