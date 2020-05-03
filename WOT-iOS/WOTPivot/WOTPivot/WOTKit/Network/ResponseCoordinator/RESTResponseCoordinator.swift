@@ -16,6 +16,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
 
     public var appManager: WOTAppManagerProtocol?
     public var requestCoordinator: WOTRequestCoordinatorProtocol
+
     // MARK: - WOTResponseCoordinatorProtocol
     public required init(requestCoordinator rc: WOTRequestCoordinatorProtocol) {
         requestCoordinator = rc

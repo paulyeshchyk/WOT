@@ -43,7 +43,9 @@ extension VehicleprofileRadio {
 // MARK: - Mapping
 extension VehicleprofileRadio {
     public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         try self.decode(json: json)
+        //
     }
 }
 

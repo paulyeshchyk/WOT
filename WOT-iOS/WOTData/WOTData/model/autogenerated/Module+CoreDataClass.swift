@@ -53,6 +53,7 @@ extension Module {
 // MARK: - Mapping
 extension Module {
     public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         try self.decode(json: json)
 
         let parents = pkCase.plainParents.filter({$0 is Vehicles}).compactMap({ $0.tank_id as? NSDecimalNumber })

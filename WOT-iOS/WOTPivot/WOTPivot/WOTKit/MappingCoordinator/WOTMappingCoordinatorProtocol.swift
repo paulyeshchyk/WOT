@@ -24,9 +24,9 @@ public protocol WOTMappingCoordinatorProtocol {
 
     func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, instanceHelper: JSONAdapterInstanceHelper?)
 
-    func mapping(json jSON: JSON, context: NSManagedObjectContext, object: NSManagedObject?, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
+    func mapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
 
-    func mapping(array: [Any], context: NSManagedObjectContext, object: NSManagedObject?, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
+    func mapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
 }
 
 extension WOTMappingCoordinatorProtocol {
@@ -35,12 +35,12 @@ extension WOTMappingCoordinatorProtocol {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
-            let context = fetchResult.context
-            let newObject = fetchResult.managedObject()
-            try? self.mapping(json: json, context: context, object: newObject, pkCase: pkCase, instanceHelper: instanceHelper) { error in
-                let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: FetchStatus.none, error: nil)
+            try? self.mapping(json: json, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: instanceHelper) { error in
+                let finalFetchResult: FetchResult = fetchResult.dublicate()
+                finalFetchResult.predicate = pkCase.compoundPredicate()
+                finalFetchResult.error = error
                 if let instanceHelper = instanceHelper {
-                    instanceHelper.onInstanceDidParse(fetchResult: fetchResult)
+                    instanceHelper.onInstanceDidParse(fetchResult: finalFetchResult)
                 } else {
                     callback(fetchResult)
                 }
@@ -52,12 +52,12 @@ extension WOTMappingCoordinatorProtocol {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
-            let context = fetchResult.context
-            let newObject = fetchResult.managedObject()
-            try? self.mapping(array: array, context: context, object: newObject, pkCase: pkCase, instanceHelper: instanceHelper) { error in
-                let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: FetchStatus.none, error: nil)
+            try? self.mapping(array: array, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: instanceHelper) { error in
+                let finalFetchResult = fetchResult.dublicate()
+                finalFetchResult.predicate = pkCase.compoundPredicate()
+                finalFetchResult.error = error
                 if let instanceHelper = instanceHelper {
-                    instanceHelper.onInstanceDidParse(fetchResult: fetchResult)
+                    instanceHelper.onInstanceDidParse(fetchResult: finalFetchResult)
                 } else {
                     callback(fetchResult)
                 }

@@ -53,7 +53,9 @@ extension ModulesTree {
 
 extension ModulesTree {
     override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         try self.decode(json: json)
+        //
         var parents = pkCase.plainParents
         parents.append(self)
 

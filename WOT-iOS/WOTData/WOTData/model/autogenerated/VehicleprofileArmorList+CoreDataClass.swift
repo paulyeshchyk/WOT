@@ -18,6 +18,7 @@ public class VehicleprofileArmorList: NSManagedObject {}
 extension VehicleprofileArmorList {
     @objc
     override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         let hullCase = PKCase()
         hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
 

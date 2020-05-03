@@ -36,6 +36,7 @@ public enum ErrorVehicleprofileAmmoDamage: Error {
 // MARK: - Mapping
 extension VehicleprofileAmmoDamage {
     public override func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         guard array.count == 3 else {
             throw ErrorVehicleprofileAmmoDamage.arrayIsNotContainingThreeElements
         }

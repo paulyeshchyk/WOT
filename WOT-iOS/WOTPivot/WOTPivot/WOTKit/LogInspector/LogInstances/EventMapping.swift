@@ -18,8 +18,10 @@ public class EventMappingStart: LogEventProtocol {
     public var type: LogEventType { return .mapping }
     public var name: String { return "MappingStart"}
 
-    public init(context: NSManagedObjectContext, managedObject: NSManagedObject?, pkCase: PKCase, mappingType: EventMappingType) {
-        message = "`\(mappingType)` Mapping Context: \(context.name ?? ""); \(managedObject?.entity.name ?? "<unknown>") \(pkCase.description)"
+    public init(fetchResult: FetchResult, pkCase: PKCase, mappingType: EventMappingType) {
+        let context = fetchResult.context
+        let managedObject = fetchResult.managedObject()
+        message = "`\(mappingType)` Mapping Context: \(context.name ?? ""); \(managedObject.entity.name ?? "<unknown>") \(pkCase.description)"
     }
 
     required public init?(_ text: String) {
@@ -36,8 +38,10 @@ public class EventMappingEnded: LogEventProtocol {
     public var type: LogEventType { return .mapping }
     public var name: String { return "MappingEnded"}
 
-    public init(context: NSManagedObjectContext, managedObject: NSManagedObject?, pkCase: PKCase, mappingType: EventMappingType) {
-        message = "`\(mappingType)` Mapping Context: \(context.name ?? ""); \(managedObject?.entity.name ?? "<unknown>") \(pkCase.description)"
+    public init(fetchResult: FetchResult, pkCase: PKCase, mappingType: EventMappingType) {
+        let context = fetchResult.context
+        let managedObject = fetchResult.managedObject()
+        message = "`\(mappingType)` Mapping Context: \(context.name ?? ""); \(managedObject.entity.name ?? "<unknown>") \(pkCase.description)"
     }
 
     required public init?(_ text: String) {

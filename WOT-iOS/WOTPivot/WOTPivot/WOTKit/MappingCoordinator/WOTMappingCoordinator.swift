@@ -24,36 +24,50 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     // MARK: - WOTMapperProtocol
-    public func mapping(json: JSON, context: NSManagedObjectContext, object: NSManagedObject?, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
+    public func mapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
         #warning("helper.onInstanceDidParse should have callback")
         let localCompletion: ThrowableCompletion = { error in
             if let helper = instanceHelper {
-                let fetchResult = FetchResult(context: context, objectID: object?.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: error)
-                helper.onInstanceDidParse(fetchResult: fetchResult)
+                let finalFetchResult = fetchResult.dublicate()
+                finalFetchResult.predicate = pkCase.compoundPredicate()
+                finalFetchResult.error = error
+                helper.onInstanceDidParse(fetchResult: finalFetchResult)
             } else {
                 completion(error)
             }
         }
-        appManager?.logInspector?.logEvent(EventMappingStart(context: context, managedObject: object, pkCase: pkCase, mappingType: .JSON), sender: self)
-        try object?.mapping(json: json, context: context, pkCase: pkCase, mappingCoordinator: self)
-        appManager?.logInspector?.logEvent(EventMappingEnded(context: context, managedObject: object, pkCase: pkCase, mappingType: .JSON), sender: self)
+
+        appManager?.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
+        //
+        let context = fetchResult.context
+        let object = fetchResult.managedObject()
+        try object.mapping(json: json, context: context, pkCase: pkCase, mappingCoordinator: self)
         coreDataStore?.stash(context: context, block: localCompletion)
+        //
+        appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
     }
 
-    public func mapping(array: [Any], context: NSManagedObjectContext, object: NSManagedObject?, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
+    public func mapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
         #warning("helper.onInstanceDidParse should have callback")
         let localCompletion: ThrowableCompletion = { error in
             if let helper = instanceHelper {
-                let fetchResult = FetchResult(context: context, objectID: object?.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: error)
-                helper.onInstanceDidParse(fetchResult: fetchResult)
+                let finalFetchResult = fetchResult.dublicate()
+                finalFetchResult.predicate = pkCase.compoundPredicate()
+                finalFetchResult.error = error
+                helper.onInstanceDidParse(fetchResult: finalFetchResult)
             } else {
                 completion(error)
             }
         }
-        appManager?.logInspector?.logEvent(EventMappingStart(context: context, managedObject: object, pkCase: pkCase, mappingType: .Array), sender: self)
-        try object?.mapping(array: array, context: context, pkCase: pkCase, mappingCoordinator: self)
-        appManager?.logInspector?.logEvent(EventMappingEnded(context: context, managedObject: object, pkCase: pkCase, mappingType: .Array), sender: self)
-        coreDataStore?.stash(context: context, block: localCompletion)
+
+        appManager?.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
+        //
+        let context = fetchResult.context
+        let object = fetchResult.managedObject()
+        try object.mapping(array: array, context: context, pkCase: pkCase, mappingCoordinator: self)
+        coreDataStore?.stash(context: fetchResult.context, block: localCompletion)
+        //
+        appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
     }
 
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultCompletion) {

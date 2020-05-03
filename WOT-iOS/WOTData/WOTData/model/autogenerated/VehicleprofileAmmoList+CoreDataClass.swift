@@ -19,6 +19,7 @@ extension VehicleprofileAmmoList {
 
     @objc
     public override func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
             let vehicleprofileAmmoCase = PKCase()
@@ -27,15 +28,16 @@ extension VehicleprofileAmmoList {
 
             #warning("refactoring")
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] fetchResult in
-                let context = fetchResult.context
-                guard let self = self, let ammo = fetchResult.managedObject() as? VehicleprofileAmmo else {
+                guard let self = self else {
                     return
                 }
                 do {
                     let ammoInstanceHelper: JSONAdapterInstanceHelper? = VehicleprofileAmmo.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-                    try mappingCoordinator?.mapping(json: jSON, context: context, object: ammo, pkCase: vehicleprofileAmmoCase, instanceHelper: ammoInstanceHelper) { error in
+                    try mappingCoordinator?.mapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, instanceHelper: ammoInstanceHelper) { error in
 
-                        self.addToVehicleprofileAmmo(ammo)
+                        if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
+                            self.addToVehicleprofileAmmo(ammo)
+                        }
                         mappingCoordinator?.coreDataStore?.stash(context: context) { error in
                             if let error = error {
                                 print(error.debugDescription)

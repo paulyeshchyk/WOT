@@ -19,22 +19,17 @@ public struct RESTAPIError: WOTError {
     public var code: Int?
     public var message: String?
     public init(code: Int?, message: String?) {
-        self.code = code
+        self.code = code ?? -1
         self.message = message
     }
 
-    public var debubDescription: String? {
-        return "RESTAPIError code:\(code ?? -1); message: \(message ?? "No message")"
+    public var debugDescription: String {
+        return "RESTAPIError code: \(code ?? -1); message: \(message ?? "No message")"
     }
 
     public init?(json: JSON?) {
-        let code = json?["code"] as? Int
-        let message = json?["message"] as? String
-
-        let hasCode = code != nil
-        let hasMessage = message != nil
-        let hasError = hasCode || hasMessage
-        guard hasError else { return nil }
+        let code: Int = json?["code"] as? Int ?? -1
+        let message = json?["message"] as? String ?? "<unknown>"
 
         self =  RESTAPIError(code: code, message: message)
     }

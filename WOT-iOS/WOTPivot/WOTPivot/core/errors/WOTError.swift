@@ -20,6 +20,10 @@ public protocol WOTError: Error, DebugDescriptable {
 
 extension Error {
     public var debugDescription: String {
-        return ".\(String(describing: self)) (code \((self as NSError).code))"
+        if let wotError = self as? WOTError {
+            return wotError.debugDescription
+        } else {
+            return ".\(String(describing: self)) (code \((self as NSError).code))"
+        }
     }
 }

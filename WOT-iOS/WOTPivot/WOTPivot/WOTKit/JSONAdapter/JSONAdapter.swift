@@ -163,13 +163,10 @@ extension JSONAdapter {
                 return
             }
 
-            let context = fetchResult.context
-            let managedObject = fetchResult.managedObject()
-
             do {
                 let jsonStartParsingDate = Date()
                 self.appManager?.logInspector?.logEvent(EventJSONStart(objCase.description), sender: self)
-                try self.mappingCoordinator?.mapping(json: jsonExtraction.json, context: context, object: managedObject, pkCase: objCase, instanceHelper: nil) { _ in
+                try self.mappingCoordinator?.mapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, instanceHelper: nil) { _ in
                     self.appManager?.logInspector?.logEvent(EventJSONEnded("\(objCase)", initiatedIn: jsonStartParsingDate), sender: self)
                     callback(fetchResult)
                 }

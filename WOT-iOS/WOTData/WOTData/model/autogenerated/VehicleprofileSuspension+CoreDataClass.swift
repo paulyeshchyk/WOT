@@ -46,7 +46,9 @@ extension VehicleprofileSuspension {
 // MARK: - Mapping
 extension VehicleprofileSuspension {
     public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         try self.decode(json: json)
+        //
     }
 }
 

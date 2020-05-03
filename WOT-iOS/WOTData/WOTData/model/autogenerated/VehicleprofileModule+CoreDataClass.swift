@@ -46,7 +46,7 @@ extension VehicleprofileModule {
     override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
-
+        //
         if let gun_id = self.gun_id {
             let gunCase = PKCase()
             gunCase[.primary] = VehicleprofileGun.primaryKey(for: gun_id, andType: .external)

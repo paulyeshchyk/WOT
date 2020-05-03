@@ -116,8 +116,6 @@ extension Vehicles {
             #warning("refactoring")
             persistentStore?.fetchLocal(context: context, byModelClass: ModulesTree.self, pkCase: submodulesCase) { fetchResult in
 
-                let context = fetchResult.context
-
                 guard let module_tree = fetchResult.managedObject() as? ModulesTree else {
                     return
                 }
@@ -126,7 +124,7 @@ extension Vehicles {
 
                 do {
                     let moduleTreeHelper: JSONAdapterInstanceHelper? = ModulesTree.DefaultProfileJSONAdapterHelper(objectID: self.objectID, identifier: nil, coreDataStore: persistentStore?.coreDataStore)
-                    try persistentStore?.mapping(json: moduleTreeJSON, context: context, object: module_tree, pkCase: modulesTreeCase, instanceHelper: moduleTreeHelper, completion: { _ in })
+                    try persistentStore?.mapping(json: moduleTreeJSON, fetchResult: fetchResult, pkCase: modulesTreeCase, instanceHelper: moduleTreeHelper, completion: { _ in })
 
                 } catch let error {
                     print(error)
@@ -136,8 +134,9 @@ extension Vehicles {
     }
 
     override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         try self.decode(json: json)
-
+        //
         let defaultProfileHelper: JSONAdapterInstanceHelper? = nil
         self.defaultProfileMapping(context: context, jSON: json[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, instanceHelper: defaultProfileHelper, persistentStore: mappingCoordinator)
 

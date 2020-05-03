@@ -32,7 +32,9 @@ extension VehicleprofileArmor {
 // MARK: - Mapping
 extension VehicleprofileArmor {
     public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         try self.decode(json: json)
+        //
     }
 }
 
@@ -59,13 +61,13 @@ extension VehicleprofileArmor {
         #warning("refactoring")
         mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
             do {
-                let context = fetchResult.context
-                let newObject = fetchResult.managedObject()
-
                 let armorInstanceHelper: JSONAdapterInstanceHelper? = nil
-                try mappingCoordinator?.mapping(json: jSON, context: context, object: newObject, pkCase: pkCase, instanceHelper: armorInstanceHelper) { error in
-                    let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: nil, fetchStatus: .none, error: nil)
-                    callback(fetchResult)
+                try mappingCoordinator?.mapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: armorInstanceHelper) { error in
+
+                    let finalFetchResult = fetchResult.dublicate()
+                    finalFetchResult.error = error
+
+                    callback(finalFetchResult)
                 }
             } catch let error {
                 print(error)
@@ -73,6 +75,7 @@ extension VehicleprofileArmor {
         }
     }
 
+    @available(*, deprecated, message: "deprecated")
     public static func turret(context: NSManagedObjectContext, fromJSON jSON: Any?, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?, callback: @escaping FetchResultCompletion) {
         guard let jSON = jSON as? JSON else {
             let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none, error: nil)
@@ -83,13 +86,12 @@ extension VehicleprofileArmor {
         #warning("refactoring")
         mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
             do {
-                let context = fetchResult.context
-                let newObject = fetchResult.managedObject()
-
                 let turretInstanceHelper: JSONAdapterInstanceHelper? = nil
-                try mappingCoordinator?.mapping(json: jSON, context: context, object: newObject, pkCase: pkCase, instanceHelper: turretInstanceHelper) { error in
-                    let fetchResult = FetchResult(context: context, objectID: newObject.objectID, predicate: nil, fetchStatus: .none, error: nil)
-                    callback(fetchResult)
+                try mappingCoordinator?.mapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: turretInstanceHelper) { error in
+
+                    let finalFetchResult = fetchResult.dublicate()
+                    finalFetchResult.error = error
+                    callback(finalFetchResult)
                 }
             } catch let error {
                 print(error)

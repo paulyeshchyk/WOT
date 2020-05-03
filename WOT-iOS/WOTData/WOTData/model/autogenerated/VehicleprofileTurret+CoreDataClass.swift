@@ -48,7 +48,9 @@ extension VehicleprofileTurret {
 extension VehicleprofileTurret {
     @objc
     public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        //
         try self.decode(json: json)
+        //
     }
 }
 
