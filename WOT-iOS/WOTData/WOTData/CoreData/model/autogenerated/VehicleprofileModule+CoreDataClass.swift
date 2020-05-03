@@ -46,47 +46,46 @@ extension VehicleprofileModule {
     override public func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
         //
         try self.decode(json: jSON)
-        /*
-         if let gun_id = self.gun_id {
-             let gunCase = PKCase()
-             gunCase[.primary] = VehicleprofileGun.primaryKey(for: gun_id, andType: .external)
-             gunCase[.secondary] = pkCase[.primary]
-             let moduleGunHelper = VehicleprofileModule.GunJSONAdapterHelper(objectID: self.objectID, identifier: gun_id, persistentStore: persistentStore)
-             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", instanceHelper: moduleGunHelper)
-         }
 
-         if let radio_id = self.radio_id {
-             let radioCase = PKCase()
-             radioCase[.primary] = VehicleprofileRadio.primaryKey(for: radio_id, andType: .external)
-             radioCase[.secondary] = pkCase[.primary]
-             let moduleRadioHelper = VehicleprofileModule.RadioJSONAdapterHelper(objectID: self.objectID, identifier: radio_id, persistentStore: persistentStore)
-             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", instanceHelper: moduleRadioHelper)
-         }
+        if let gun_id = self.gun_id {
+            let gunCase = PKCase()
+            gunCase[.primary] = VehicleprofileGun.primaryKey(for: gun_id, andType: .external)
+            gunCase[.secondary] = pkCase[.primary]
+            let moduleGunHelper = VehicleprofileModule.GunJSONAdapterHelper(objectID: self.objectID, identifier: gun_id, persistentStore: persistentStore)
+            persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", instanceHelper: moduleGunHelper)
+        }
 
-         if let engine_id = self.engine_id {
-             let engineCase = PKCase()
-             engineCase[.primary] = VehicleprofileEngine.primaryKey(for: engine_id, andType: .external)
-             engineCase[.secondary] = pkCase[.primary]
-             let moduleEngineHelper = VehicleprofileModule.EngineJSONAdapterHelper(objectID: self.objectID, identifier: engine_id, persistentStore: persistentStore)
-             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", instanceHelper: moduleEngineHelper)
-         }
+        if let radio_id = self.radio_id {
+            let radioCase = PKCase()
+            radioCase[.primary] = VehicleprofileRadio.primaryKey(for: radio_id, andType: .external)
+            radioCase[.secondary] = pkCase[.primary]
+            let moduleRadioHelper = VehicleprofileModule.RadioJSONAdapterHelper(objectID: self.objectID, identifier: radio_id, persistentStore: persistentStore)
+            persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", instanceHelper: moduleRadioHelper)
+        }
 
-         if let suspension_id = self.suspension_id {
-             let suspensionCase = PKCase()
-             suspensionCase[.primary] = VehicleprofileSuspension.primaryKey(for: suspension_id, andType: .external)
-             suspensionCase[.secondary] = pkCase[.primary]
-             let moduleSuspensionHelper = VehicleprofileModule.SuspensionJSONAdapterHelper(objectID: self.objectID, identifier: suspension_id, persistentStore: persistentStore)
-             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", instanceHelper: moduleSuspensionHelper)
-         }
+        if let engine_id = self.engine_id {
+            let engineCase = PKCase()
+            engineCase[.primary] = VehicleprofileEngine.primaryKey(for: engine_id, andType: .external)
+            engineCase[.secondary] = pkCase[.primary]
+            let moduleEngineHelper = VehicleprofileModule.EngineJSONAdapterHelper(objectID: self.objectID, identifier: engine_id, persistentStore: persistentStore)
+            persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", instanceHelper: moduleEngineHelper)
+        }
 
-         if let turret_id = self.turret_id {
-             let turretCase = PKCase()
-             turretCase[.primary] = VehicleprofileTurret.primaryKey(for: turret_id, andType: .external)
-             turretCase[.secondary] = pkCase[.primary]
-             let moduleTurretHelper = VehicleprofileModule.TurretJSONAdapterHelper(objectID: self.objectID, identifier: turret_id, persistentStore: persistentStore)
-             persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", instanceHelper: moduleTurretHelper)
-         }
-         */
+        if let suspension_id = self.suspension_id {
+            let suspensionCase = PKCase()
+            suspensionCase[.primary] = VehicleprofileSuspension.primaryKey(for: suspension_id, andType: .external)
+            suspensionCase[.secondary] = pkCase[.primary]
+            let moduleSuspensionHelper = VehicleprofileModule.SuspensionJSONAdapterHelper(objectID: self.objectID, identifier: suspension_id, persistentStore: persistentStore)
+            persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", instanceHelper: moduleSuspensionHelper)
+        }
+
+        if let turret_id = self.turret_id {
+            let turretCase = PKCase()
+            turretCase[.primary] = VehicleprofileTurret.primaryKey(for: turret_id, andType: .external)
+            turretCase[.secondary] = pkCase[.primary]
+            let moduleTurretHelper = VehicleprofileModule.TurretJSONAdapterHelper(objectID: self.objectID, identifier: turret_id, persistentStore: persistentStore)
+            persistentStore?.fetchRemote(context: context, byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", instanceHelper: moduleTurretHelper)
+        }
     }
 }
 

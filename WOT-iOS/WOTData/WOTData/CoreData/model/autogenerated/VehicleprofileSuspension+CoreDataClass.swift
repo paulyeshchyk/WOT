@@ -27,19 +27,10 @@ extension VehicleprofileSuspension {
         case tag
     }
 
-//    public enum RelativeKeys: String, CodingKey, CaseIterable {
-//        case suspension_id
-//    }
-
     @objc
     override public class func fieldsKeypaths() -> [String] {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
-
-//    @objc
-//    override public class func relationsKeypaths() -> [String] {
-//        return RelativeKeys.allCases.compactMap { $0.rawValue }
-//    }
 
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         //id was used when quering remote module

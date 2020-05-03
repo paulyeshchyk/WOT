@@ -46,17 +46,16 @@ extension Vehicleprofile {
     }
 
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
-        switch forType {
-        case .external: return #keyPath(Vehicleprofile.hashName)
-        case .internal: return #keyPath(Vehicleprofile.hashName)
-        }
+        return #keyPath(Vehicleprofile.hashName)
     }
 }
 
 // MARK: - Mapping
 extension Vehicleprofile {
     public override func mapping(context: NSManagedObjectContext, fromJSON jSON: JSON, pkCase: PKCase, persistentStore: WOTPersistentStoreProtocol?) throws {
+        //
         try self.decode(json: jSON)
+
         var parents = pkCase.plainParents
         parents.append(self)
 
@@ -118,14 +117,13 @@ extension Vehicleprofile {
                 persistentStore?.itemMapping(context: context, forClass: VehicleprofileTurret.self, itemJSON: itemJSON, pkCase: pkCase, instanceHelper: instanceHelper, callback: { _ in})
             }
         }
-        /*
-         if let moduleJSON = jSON[#keyPath(Vehicleprofile.modules)] as? JSON {
-             let vehicleprofileModuleCase = PKCase(parentObjects: parents)
-             vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
-             let instanceHelper = VehicleprofileModule.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
-             persistentStore?.itemMapping(context: context, forClass: VehicleprofileModule.self, itemJSON: moduleJSON, pkCase: vehicleprofileModuleCase, instanceHelper: instanceHelper, callback: { _ in })
-         }
-         */
+
+        if let moduleJSON = jSON[#keyPath(Vehicleprofile.modules)] as? JSON {
+            let vehicleprofileModuleCase = PKCase(parentObjects: parents)
+            vehicleprofileModuleCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
+            let instanceHelper = VehicleprofileModule.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
+            persistentStore?.itemMapping(context: context, forClass: VehicleprofileModule.self, itemJSON: moduleJSON, pkCase: vehicleprofileModuleCase, instanceHelper: instanceHelper, callback: { _ in })
+        }
     }
 }
 

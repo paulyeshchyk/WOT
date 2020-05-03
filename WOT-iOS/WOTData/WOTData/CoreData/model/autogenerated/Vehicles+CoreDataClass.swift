@@ -119,6 +119,9 @@ extension Vehicles {
                 guard let module_tree = fetchResult.managedObject() as? ModulesTree else {
                     return
                 }
+
+                self.addToModules_tree(module_tree)
+
                 do {
                     let moduleTreeHelper: JSONAdapterInstanceHelper? = ModulesTree.DefaultProfileJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
                     try persistentStore?.mapping(context: context, object: module_tree, fromJSON: moduleTreeJSON, pkCase: modulesTreeCase, instanceHelper: moduleTreeHelper, completion: { _ in })
@@ -136,7 +139,7 @@ extension Vehicles {
         let defaultProfileHelper: JSONAdapterInstanceHelper? = nil
         self.defaultProfileMapping(context: context, jSON: jSON[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, instanceHelper: defaultProfileHelper, persistentStore: persistentStore)
 
-        let modulesTreeHelper: JSONAdapterInstanceHelper? = nil
+        let modulesTreeHelper: JSONAdapterInstanceHelper? = Vehicles.TreeJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
         self.modulesTreeMapping(context: context, jSON: jSON[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, instanceHelper: modulesTreeHelper, persistentStore: persistentStore)
     }
 }

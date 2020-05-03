@@ -20,6 +20,7 @@ public enum LogMessagePriorityType: Int {
     case performance = 7
     case logic = 8
     case mapping = 9
+    public static var allValues: [LogMessagePriorityType] { [.error, .lifeCycle, .threads,.web, .json, .coredata, .info, .performance, .logic, .mapping] }
 }
 
 @objc

@@ -291,6 +291,16 @@
     [self reloadModel];
 }
 
+- (void)request:(id<WOTRequestProtocol> _Nonnull)request canceledWith:(NSError * _Nullable)error {
+    
+}
+
+
+- (void)request:(id<WOTRequestProtocol> _Nonnull)request startedWith:(id<WOTHostConfigurationProtocol> _Nonnull)hostConfiguration args:(id<WOTRequestArgumentsProtocol> _Nonnull)args {
+    
+}
+
+
 - (void)requestHasCanceled:(id<WOTRequestProtocol>)request {
     
 }
@@ -312,7 +322,7 @@
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
     
     if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self reloadModel];
         });
     }

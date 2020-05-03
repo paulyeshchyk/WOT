@@ -36,7 +36,18 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([Vehicles.classKeypaths()], forKey: WGWebQueryArgs.fields)
 
         requestManager.addListener(listener, forRequest: request)
-        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, instanceHelper: nil)
+
+        let provider = requestManager.appManager?.coreDataProvider
+        let persistentStore = requestManager.appManager?.persistentStore
+        let predicate = NSPredicate(format: "%K == %d", "tank_id", vehicleId)
+        if let context = provider?.mainContext {
+            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context, callback: { fetchResult in
+                let modulesTreeHelper: JSONAdapterInstanceHelper? = nil //Vehicles.TreeJSONAdapterHelper(objectID: fetchResult.managedObject().objectID, identifier: nil, persistentStore: persistentStore)
+                try? requestManager.startRequest(request, withArguments: args, forGroupId: groupId, instanceHelper: modulesTreeHelper)
+            })
+//            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context) { (fetchResult) in
+//            }
+        }
     }
 
     @objc

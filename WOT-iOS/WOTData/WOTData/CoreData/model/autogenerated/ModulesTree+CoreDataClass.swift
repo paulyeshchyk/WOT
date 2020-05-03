@@ -73,15 +73,15 @@ extension ModulesTree {
             persistentStore?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, instanceHelper: nextModulesHelper)
         }
 
-//        // MARK: - NextTanks
-//        let nextTanksHelper = ModulesTree.NextTanksJSONAdapterHelper(objectID: self.objectID, identifier: nil)
-//        let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
-//        (nextTanks as? [AnyObject])?.forEach {
-//            // parents was not used for next portion of tanks
-//            let nextTanksPK = PKCase(parentObjects: nil)
-//            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0, andType: .internal)
-//            persistentStore?.fetchRemote(context: context, byModelClass: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, instanceHelper: nextTanksHelper)
-//        }
+        // MARK: - NextTanks
+        let nextTanksHelper = ModulesTree.NextTanksJSONAdapterHelper(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
+        let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
+        (nextTanks as? [AnyObject])?.forEach {
+            // parents was not used for next portion of tanks
+            let nextTanksPK = PKCase(parentObjects: nil)
+            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0, andType: .internal)
+            persistentStore?.fetchRemote(context: context, byModelClass: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, instanceHelper: nextTanksHelper)
+        }
     }
 }
 
