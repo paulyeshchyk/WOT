@@ -76,7 +76,7 @@ extension VehicleprofileGun: JSONDecoding {
         self.weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
         self.move_down_arc = try container.decodeAnyIfPresent(Int.self, forKey: .move_down_arc)?.asDecimal
         self.move_up_arc = try container.decodeAnyIfPresent(Int.self, forKey: .move_up_arc)?.asDecimal
-        self.fire_rate = try container.decodeAnyIfPresent(Int.self, forKey: .fire_rate)?.asDecimal
+        self.fire_rate = try container.decodeAnyIfPresent(Double.self, forKey: .fire_rate)?.asDecimal
         self.dispersion = try container.decodeAnyIfPresent(Double.self, forKey: .dispersion)?.asDecimal
         self.reload_time = try container.decodeAnyIfPresent(Double.self, forKey: .reload_time)?.asDecimal
         self.aim_time = try container.decodeAnyIfPresent(Double.self, forKey: .aim_time)?.asDecimal
