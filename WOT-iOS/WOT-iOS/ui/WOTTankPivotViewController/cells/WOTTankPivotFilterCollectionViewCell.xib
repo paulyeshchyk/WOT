@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14270.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WOTTankPivotFilterCollectionViewCell" id="gTV-IL-0wX" customClass="WOTTankPivotFilterCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3M-HI-3Dh">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JgM-kH-t8S">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.23923206329345703" green="0.23922491073608398" blue="0.23922893404960632" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JgM-kH-t8S" firstAttribute="width" secondItem="M3M-HI-3Dh" secondAttribute="width" id="3oT-0U-Zhx"/>
+                            <constraint firstItem="JgM-kH-t8S" firstAttribute="height" secondItem="M3M-HI-3Dh" secondAttribute="height" id="I9M-xp-4Rj"/>
+                            <constraint firstItem="JgM-kH-t8S" firstAttribute="centerY" secondItem="M3M-HI-3Dh" secondAttribute="centerY" id="qNJ-L7-wUf"/>
+                            <constraint firstItem="JgM-kH-t8S" firstAttribute="centerX" secondItem="M3M-HI-3Dh" secondAttribute="centerX" id="rjl-lW-SbB"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="M3M-HI-3Dh" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" id="b0Q-An-dIz"/>
+                <constraint firstItem="M3M-HI-3Dh" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="eUq-SM-Il7"/>
+                <constraint firstItem="M3M-HI-3Dh" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="r95-9I-gcZ"/>
+                <constraint firstItem="M3M-HI-3Dh" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="zPI-4p-RFb"/>
+            </constraints>
+            <point key="canvasLocation" x="494" y="371"/>
+        </collectionViewCell>
+    </objects>
+</document>

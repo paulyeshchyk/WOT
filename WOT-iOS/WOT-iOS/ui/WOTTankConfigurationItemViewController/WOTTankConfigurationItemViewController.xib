@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WOTTankConfigurationItemViewController">
+            <connections>
+                <outlet property="imageView" destination="ugk-RS-Ooc" id="SxR-Vj-hmS"/>
+                <outlet property="tableView" destination="Xb0-fK-xqh" id="RLC-cI-jwi"/>
+                <outlet property="titleLabel" destination="lQg-Mr-PcP" id="yM0-7x-1tl"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="-1" y="0.0" width="310" height="376"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Rp-nY-Nc4">
+                    <rect key="frame" x="8" y="8" width="294" height="64"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ugk-RS-Ooc">
+                            <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ugk-RS-Ooc" secondAttribute="height" multiplier="1:1" id="PVZ-DQ-6d6"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="222" placeholderIntrinsicHeight="29" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQg-Mr-PcP">
+                            <rect key="frame" x="72" y="4" width="214" height="29"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="ugk-RS-Ooc" firstAttribute="top" secondItem="6Rp-nY-Nc4" secondAttribute="top" id="1pw-L6-WRs"/>
+                        <constraint firstItem="lQg-Mr-PcP" firstAttribute="leading" secondItem="ugk-RS-Ooc" secondAttribute="trailing" constant="8" id="5ZX-5O-8qz"/>
+                        <constraint firstItem="lQg-Mr-PcP" firstAttribute="top" secondItem="6Rp-nY-Nc4" secondAttribute="top" constant="4" id="Acb-W7-feQ"/>
+                        <constraint firstAttribute="height" constant="64" id="E2I-AS-Yvz"/>
+                        <constraint firstAttribute="bottom" secondItem="ugk-RS-Ooc" secondAttribute="bottom" id="Jjx-Td-dX2"/>
+                        <constraint firstItem="ugk-RS-Ooc" firstAttribute="leading" secondItem="6Rp-nY-Nc4" secondAttribute="leading" id="edD-3O-bGb"/>
+                        <constraint firstAttribute="trailing" secondItem="lQg-Mr-PcP" secondAttribute="trailing" constant="8" id="gA3-K0-bs2"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="12" sectionHeaderHeight="16" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Xb0-fK-xqh">
+                    <rect key="frame" x="8" y="80" width="294" height="288"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="cvN-yU-q7l"/>
+                        <outlet property="delegate" destination="-1" id="dEo-ag-Kmo"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="0.050980392156862744" green="0.050980392156862744" blue="0.050980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="6Rp-nY-Nc4" secondAttribute="trailing" constant="8" id="8pr-Y4-AiB"/>
+                <constraint firstAttribute="bottom" secondItem="Xb0-fK-xqh" secondAttribute="bottom" constant="8" id="NIl-dE-0il"/>
+                <constraint firstItem="6Rp-nY-Nc4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="RSz-cs-Qdu"/>
+                <constraint firstItem="6Rp-nY-Nc4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="XuD-aj-fwo"/>
+                <constraint firstItem="Xb0-fK-xqh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="aeB-hg-KSM"/>
+                <constraint firstAttribute="trailing" secondItem="Xb0-fK-xqh" secondAttribute="trailing" constant="8" id="gBa-gp-gAf"/>
+                <constraint firstItem="Xb0-fK-xqh" firstAttribute="top" secondItem="6Rp-nY-Nc4" secondAttribute="bottom" constant="8" id="lyw-YF-fNO"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="295" y="144"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

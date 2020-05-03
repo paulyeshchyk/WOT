@@ -1,0 +1,111 @@
+/* 
+  Localizable.strings
+  WOT-iOS
+
+  Created on 6/4/15.
+  Copyright (c) 2015. All rights reserved.
+*/
+
+
+WOT_IMAGE_MENU_ICON         = "wotShowMenuButtoniPhone";
+
+WOT_KEY_SETTING_TYPE_FILTER = "Filter";
+WOT_KEY_SETTING_TYPE_GROUP  = "Groupping";
+WOT_KEY_SETTING_TYPE_SORT   = "Sorting";
+
+WOT_STRING_ANONYMOUS_USER   = "Anonymous user";
+WOT_STRING_APPLY            = "Apply";
+WOT_STRING_BACK             = "Back";
+WOT_STRING_CANCEL           = "Cancel";
+WOT_STRING_COMPOUND         = "Compound";
+WOT_STRING_EDIT             = "Edit";
+WOT_STRING_GROUP_AND_SORT   = "Group and sort";
+WOT_STRING_LOGIN            = "Login";
+WOT_STRING_PLAYERS          = "Players";
+WOT_STRING_TANKDELEYEV      = "Tankdeleyev";
+WOT_STRING_PROFILE          = "Profile";
+WOT_STRING_REORDER          = "Reorder";
+WOT_STRING_SELECT_LANGUAGE  = "SELECT lang";
+WOT_STRING_TANKOPEDIA       = "Tankopedia";
+
+WOT_STRING_PREVIEW          = "Preview";
+WOT_STRING_CHANGE_SORTING   = "Change sorting";
+WOT_STRING_CHANGE_GROUP     = "Change groupping";
+WOT_STRING_CHANGE_FILTER    = "Change filter";
+
+WOT_STRING_IS_NOT_GIFT      = "Is not gift";
+WOT_STRING_IS_GIFT          = "Is gift";
+
+ARMOR_BOARD                 = "Armor Board";
+ARMOR_FEDD                  = "Armor Fedd";
+ARMOR_FOREHEAD              = "Armor Forehead";
+CIRCULAR_VISION_RADIUS      = "Circular vision radius";
+CONTOUR_IMAGE               = "Contour image";
+DISTANCE                    = "Distance";
+FIRE_STARTING_CHANCE        = "Fire Starting Chance";
+IMAGE                       = "Image";
+IMAGE_SMALL                 = "Small image";
+IS_GIFT                     = "Is Gift";
+IS_PREMIUM                  = "Is Premium";
+KEY                         = "Key";
+LEVEL                       = "Level";
+MAX_LOAD                    = "Max Load";
+MODULE_ID                   = "Module Id";
+NAME                        = "name";
+NAME_I18N                   = "Name (national)";
+NATION                      = "Nation";
+NATION_I18N                 = "Nation(national)";
+POWER                       = "Power";
+PRICE_CREDIT                = "Price Credit";
+PRICE_GOLD                  = "Price Gold";
+PRICES_XP                   = "Prices XP";
+RATE                        = "Rate";
+ROTATION_SPEED              = "Rotation Speed";
+SHORT_NAME                  = "Short Name";
+SHORT_NAME_I18N             = "Short name(national)";
+TAG                         = "Tag";
+TANK_ID                     = "id";
+TIER                        = "Tier";
+TYPE                        = "Type";
+TYPE_I18N                   = "Type (national)";
+VALUES                      = "Values";
+WEIGHT                      = "Weight";
+
+WOT_IMAGE_BACK  = "WOTBackIconGray.png";
+WOT_IMAGE_CHECKMARK_DARK  = "WOTSelector-checkmark-dark.png";
+WOT_IMAGE_CHECKMARK_GRAY  = "WOTSelector-checkmark-gray.png";
+WOT_IMAGE_DATA_FLOW_CHART  = "Data-Flow-Chart-icon.png";
+WOT_IMAGE_DATA_LIST  = "Data-List-icon.png";
+WOT_IMAGE_DOWN  = "WOTArrowDown.png";
+WOT_IMAGE_GEAR  = "WOTiPadMenuGear.png";
+WOT_IMAGE_SEARCH  = "Search Gray.png";
+WOT_IMAGE_CANCEL  = "Cancel Gray.png";
+WOT_IMAGE_GLOBE  = "WOTGlobe.png";
+WOT_IMAGE_MESSAGING_CATEGORIZE  = "Messaging-Categorize-icon.png";
+WOT_IMAGE_UP  = "WOTArrowUp.png";
+WOT_IMAGE_USER  = "WOTLoggedInUser.png";
+
+WOT_KEY_ACCOUNT_ID  = "account_id";
+WOT_KEY_CODE  = "code";
+WOT_KEY_CONTOUR_IMAGE  = "contour_image";
+WOT_KEY_EXPIRES_AT  = "expires_at";
+WOT_KEY_HASHNAME  = "hashName";
+WOT_KEY_KEY  = "key";
+WOT_KEY_LOCATION  = "location";
+WOT_KEY_MESSAGE  = "message";
+WOT_KEY_NICKNAME  = "nickname";
+WOT_KEY_ORDERBY  = "orderBy";
+WOT_KEY_USER_ID  = "userId";
+WOT_KEY_VALUES  = "values";
+
+WOT_STRING_ARMOR  = "armor";
+WOT_STRING_OBSERVE  = "observe";
+WOT_STRING_FIRE  = "fire";
+WOT_STRING_MOBI  = "mobi";
+
+WOT_USERDEFAULTS_LOGIN_LANGUAGE  = "LoginLanguage";
+WOT_USERDEFAULTS_LOGIN_LANGUAGEVALUE_EU  = "eu";
+
+
+WOT_VALUE_LANGUAGE_EU  = "eu";
+WOT_VALUE_LANGUAGE_RU  = "ru";

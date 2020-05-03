@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14270.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WOTTankPivotFixedCollectionViewCell" id="gTV-IL-0wX" customClass="WOTTankPivotFixedCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e9U-rl-HyI">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ShT-MC-e1M">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fixed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BzF-Bs-Uec">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.23923206329345703" green="0.23922491073608398" blue="0.23922893404960632" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="BzF-Bs-Uec" firstAttribute="width" secondItem="ShT-MC-e1M" secondAttribute="width" id="1TZ-ah-vkv"/>
+                                    <constraint firstItem="BzF-Bs-Uec" firstAttribute="centerY" secondItem="ShT-MC-e1M" secondAttribute="centerY" id="BRf-Od-pel"/>
+                                    <constraint firstItem="BzF-Bs-Uec" firstAttribute="centerX" secondItem="ShT-MC-e1M" secondAttribute="centerX" id="TUK-80-5Gy"/>
+                                    <constraint firstItem="BzF-Bs-Uec" firstAttribute="height" secondItem="ShT-MC-e1M" secondAttribute="height" id="eUr-T5-1lQ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ShT-MC-e1M" firstAttribute="width" secondItem="e9U-rl-HyI" secondAttribute="width" id="EkL-Ht-ACe"/>
+                            <constraint firstItem="ShT-MC-e1M" firstAttribute="height" secondItem="e9U-rl-HyI" secondAttribute="height" id="Hai-k8-WVQ"/>
+                            <constraint firstItem="ShT-MC-e1M" firstAttribute="centerX" secondItem="e9U-rl-HyI" secondAttribute="centerX" id="f3R-xt-STp"/>
+                            <constraint firstItem="ShT-MC-e1M" firstAttribute="centerY" secondItem="e9U-rl-HyI" secondAttribute="centerY" id="qvg-PA-l8u"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="e9U-rl-HyI" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Dj3-KV-KHx"/>
+                <constraint firstItem="e9U-rl-HyI" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" id="Iq6-Yf-tRs"/>
+                <constraint firstItem="e9U-rl-HyI" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="foZ-4t-LCa"/>
+                <constraint firstItem="e9U-rl-HyI" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="jID-Kl-n4h"/>
+            </constraints>
+            <connections>
+                <outlet property="backView" destination="ShT-MC-e1M" id="a4D-V2-YbI"/>
+                <outlet property="label" destination="BzF-Bs-Uec" id="6L2-29-xj0"/>
+            </connections>
+            <point key="canvasLocation" x="494" y="371"/>
+        </collectionViewCell>
+    </objects>
+</document>
