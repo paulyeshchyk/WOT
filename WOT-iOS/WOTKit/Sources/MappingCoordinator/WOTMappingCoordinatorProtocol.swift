@@ -17,6 +17,7 @@ public typealias ThrowableCompletion = (Error?) -> Void
 
 public enum WOTMappingCoordinatorError: Error {
     case linkerNotStarted
+    case noKeysDefinedForClass(String)
 }
 
 @objc
@@ -25,7 +26,7 @@ public protocol WOTMappingCoordinatorProtocol {
     var coreDataStore: WOTCoredataStoreProtocol? { get }
 
     #warning("change callback")
-    func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultCompletion)
+    func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultErrorCompletion)
 
     func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?)
 
@@ -38,7 +39,12 @@ extension WOTMappingCoordinatorProtocol {
     //
     public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
         //
-        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
+        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult, error in
+
+            if let error = error {
+                callback(fetchResult, error)
+                return
+            }
 
             try? self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
                 if let error = error {
@@ -56,7 +62,12 @@ extension WOTMappingCoordinatorProtocol {
 
     public func fetchLocal(array: [Any], context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
         //
-        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
+        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult, error in
+
+            if let error = error {
+                callback(fetchResult, error)
+                return
+            }
 
             try? self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
                 if let error = error {

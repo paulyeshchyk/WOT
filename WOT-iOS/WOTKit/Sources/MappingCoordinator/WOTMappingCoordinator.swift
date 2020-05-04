@@ -77,12 +77,12 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
     }
 
-    public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultCompletion) {
+    public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultErrorCompletion) {
         appManager?.logInspector?.logEvent(EventCustomLogic("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
-            appManager?.logInspector?.logEvent(EventError(message: "no key defined for class: \(String(describing: clazz))"), sender: self)
-            let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none, error: nil)
-            callback(fetchResult)
+            let error = WOTMappingCoordinatorError.noKeysDefinedForClass(String(describing: clazz))
+            let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none, error: error)
+            callback(fetchResult, error)
             return
         }
 
@@ -91,7 +91,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
                 if let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) {
                     let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .none
                     let fetchResult = FetchResult(context: context, objectID: managedObject.objectID, predicate: predicate, fetchStatus: fetchStatus, error: nil)
-                    callback(fetchResult)
+                    callback(fetchResult, nil)
                 }
             } catch let error {
                 self.appManager?.logInspector?.logEvent(EventError(error, details: nil))

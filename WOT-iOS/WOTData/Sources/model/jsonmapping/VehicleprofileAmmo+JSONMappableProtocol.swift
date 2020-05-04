@@ -22,7 +22,11 @@ extension VehicleprofileAmmo {
         if let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
             //
             #warning("refactoring")
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult in
+            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult, error in
+                if let error = error {
+                    print(error.debugDescription)
+                    return
+                }
                 do {
                     let penetrationHelper: JSONAdapterLinkerProtocol? = nil
                     try mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, linker: penetrationHelper) { newFetchResult, error in
@@ -46,7 +50,11 @@ extension VehicleprofileAmmo {
         if let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
             //
             #warning("refactoring")
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { fetchResult in
+            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { fetchResult, error in
+                if let error = error {
+                    print(error.debugDescription)
+                    return
+                }
 
                 let damageHelper: JSONAdapterLinkerProtocol? = nil
                 do {

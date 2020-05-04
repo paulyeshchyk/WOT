@@ -21,7 +21,13 @@ extension VehicleprofileAmmoList {
             vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject, andType: .internal)
 
             #warning("refactoring")
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] fetchResult in
+            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] fetchResult, error in
+
+                if let error = error {
+                    print(error.debugDescription)
+                    return
+                }
+
                 guard let self = self else {
                     return
                 }

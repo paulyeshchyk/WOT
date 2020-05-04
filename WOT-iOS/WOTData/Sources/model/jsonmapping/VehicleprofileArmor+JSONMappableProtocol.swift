@@ -29,7 +29,11 @@ extension VehicleprofileArmor {
         }
 
         #warning("refactoring")
-        mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
+        mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult, error in
+            if let error = error {
+                print(error)
+                return
+            }
             do {
                 let armorLinker: JSONAdapterLinkerProtocol? = nil
                 try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, linker: armorLinker) { newfetchResult, error in
@@ -55,7 +59,11 @@ extension VehicleprofileArmor {
         }
 
         #warning("refactoring")
-        mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
+        mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult, error in
+            if let error = error {
+                print(error.debugDescription)
+                return
+            }
             do {
                 let turretLinker: JSONAdapterLinkerProtocol? = nil
                 try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, linker: turretLinker) { fetchResult, error in

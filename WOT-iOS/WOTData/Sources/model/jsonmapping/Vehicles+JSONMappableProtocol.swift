@@ -79,7 +79,12 @@ extension Vehicles {
             submodulesCase[.secondary] = modulesTreeCase[.primary]
 
             #warning("refactoring")
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: ModulesTree.self, pkCase: submodulesCase) { fetchResult in
+            mappingCoordinator?.fetchLocal(context: context, byModelClass: ModulesTree.self, pkCase: submodulesCase) { fetchResult, error in
+
+                if let error = error {
+                    print(error.debugDescription)
+                    return
+                }
 
                 guard let module_tree = fetchResult.managedObject() as? ModulesTree else {
                     return
