@@ -7,7 +7,10 @@
 //
 
 import CoreData
+import WOTKit
 
 // MARK: - JSONDecodingProtocol
 
-extension VehicleprofileAmmoList {}
+extension VehicleprofileAmmoList: JSONDecodingProtocol {
+    public func decodeWith(_ decoder: Decoder) throws {}
+}

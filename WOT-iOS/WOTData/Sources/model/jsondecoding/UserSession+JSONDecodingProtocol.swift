@@ -12,8 +12,5 @@ import WOTKit
 // MARK: - JSONDecodingProtocol
 
 extension UserSession: JSONDecodingProtocol {
-    public func decodeWith(_ decoder: Decoder) throws {
-        //let container = try decoder.container(keyedBy: Fields.self)
-        //
-    }
+    public func decodeWith(_ decoder: Decoder) throws {}
 }

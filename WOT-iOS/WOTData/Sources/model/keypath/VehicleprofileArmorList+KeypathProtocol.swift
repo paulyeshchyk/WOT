@@ -7,7 +7,12 @@
 //
 
 import CoreData
+import WOTKit
 
 // MARK: - KeypathProtocol
 
-extension VehicleprofileArmorList {}
+extension VehicleprofileArmorList {
+    //
+    public typealias Fields = FieldKeys
+//    public enum FieldKeys: String, CodingKey, CaseIterable { }
+}

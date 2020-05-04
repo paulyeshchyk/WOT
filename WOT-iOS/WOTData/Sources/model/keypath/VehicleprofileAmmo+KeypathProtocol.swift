@@ -6,8 +6,8 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import CoreData
+import WOTKit
 
 // MARK: - KeypathProtocol
 

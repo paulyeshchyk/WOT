@@ -6,11 +6,13 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import CoreData
+import WOTKit
 
 // MARK: - KeypathProtocol
 
 extension VehicleprofileAmmoList {
-    public typealias Fields = Void
+    //
+    public typealias Fields = FieldKeys
+//    public enum FieldKeys: String, CodingKey, CaseIterable { }
 }

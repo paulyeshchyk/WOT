@@ -25,13 +25,13 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
 
     // MARK: - WOTMappingCoordinatorProtocol
     public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws {
-        #warning("helper.onInstanceDidParse should have callback")
+        #warning("linker.process should have callback")
         let localCompletion: ThrowableCompletion = { error in
-            if let helper = linker {
+            if let linker = linker {
                 let finalFetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
-                helper.process(fetchResult: finalFetchResult)
+                linker.process(fetchResult: finalFetchResult)
             } else {
                 completion(error)
             }
