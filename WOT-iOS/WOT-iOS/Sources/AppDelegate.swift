@@ -22,7 +22,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let hostConfiguration = WOTWebHostConfiguration()
         let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, hostConfiguration: hostConfiguration)
         let sessionManager = WOTWebSessionManager()
-        let logInspector = LogInspector(priorities: [.lifeCycle,.error])
+        let logInspector = LogInspector(priorities: [.lifeCycle,.error, .json])
         let coreDataProvider = WOTCustomCoreDataProvider()
         let mappingCoordinator = WOTMappingCoordinator()
         let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator)

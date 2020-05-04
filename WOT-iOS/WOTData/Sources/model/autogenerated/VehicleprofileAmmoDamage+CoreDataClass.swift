@@ -48,6 +48,6 @@ extension VehicleprofileAmmoDamage {
 }
 
 // MARK: - JSONDecoding
-extension VehicleprofileAmmoDamage: JSONDecoding {
+extension VehicleprofileAmmoDamage: JSONDecodingProtocol {
     public func decodeWith(_ decoder: Decoder) throws {}
 }

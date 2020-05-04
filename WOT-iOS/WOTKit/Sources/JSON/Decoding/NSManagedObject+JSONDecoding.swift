@@ -8,19 +8,7 @@
 
 import CoreData
 
-class DecoderWrapper: Decodable {
-    let decoder: Decoder
-
-    required init(from decoder: Decoder) throws {
-        self.decoder = decoder
-    }
-}
-
-public protocol JSONDecoding {
-    func decodeWith(_ decoder: Decoder) throws
-}
-
-extension JSONDecoding where Self: NSManagedObject {
+extension JSONDecodingProtocol where Self: NSManagedObject {
     public func decode(json: JSON) throws {
         let data = try JSONSerialization.data(withJSONObject: json, options: [])
         let wrapper = try JSONDecoder().decode(DecoderWrapper.self, from: data)
@@ -31,5 +19,13 @@ extension JSONDecoding where Self: NSManagedObject {
         let data = try JSONSerialization.data(withJSONObject: array, options: [])
         let wrapper = try JSONDecoder().decode(DecoderWrapper.self, from: data)
         try decodeWith(wrapper.decoder)
+    }
+}
+
+class DecoderWrapper: Decodable {
+    let decoder: Decoder
+
+    required init(from decoder: Decoder) throws {
+        self.decoder = decoder
     }
 }

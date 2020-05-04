@@ -47,7 +47,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         }
 
         let jsonStartParsingDate = Date()
-        appManager?.logInspector?.logEvent(EventJSONStart(""), sender: self)
+        appManager?.logInspector?.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
         let keys = json.keys
         for (idx, key) in keys.enumerated() {
             //
@@ -58,7 +58,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
                 self.instanceHelper?.onInstanceDidParse(fetchResult: fetchResult)
 
                 if idx == (keys.count - 1) {
-                    self.appManager?.logInspector?.logEvent(EventJSONEnded("", initiatedIn: jsonStartParsingDate), sender: self)
+                    self.appManager?.logInspector?.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
                     self.onJSONDidParse?(fromRequest, self, error)
                 }
             }

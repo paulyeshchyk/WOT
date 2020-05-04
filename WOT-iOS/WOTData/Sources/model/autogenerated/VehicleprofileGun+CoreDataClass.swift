@@ -67,7 +67,7 @@ extension VehicleprofileGun {
 }
 
 // MARK: - JSONDecoding
-extension VehicleprofileGun: JSONDecoding {
+extension VehicleprofileGun: JSONDecodingProtocol {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
         //

@@ -90,7 +90,7 @@ extension ModulesTree {
 
 // MARK: - JSONDecoding
 
-extension ModulesTree: JSONDecoding {
+extension ModulesTree: JSONDecodingProtocol {
     public func decodeWith(_ decoder: Decoder) throws {
         let fieldsContainer = try decoder.container(keyedBy: Fields.self)
         //

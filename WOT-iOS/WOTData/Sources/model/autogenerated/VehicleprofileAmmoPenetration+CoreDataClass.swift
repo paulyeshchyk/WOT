@@ -48,7 +48,7 @@ extension VehicleprofileAmmoPenetration {
 }
 
 // MARK: - JSONDecoding
-extension VehicleprofileAmmoPenetration: JSONDecoding {
+extension VehicleprofileAmmoPenetration: JSONDecodingProtocol {
     public func decodeWith(_ decoder: Decoder) throws {
 //        let intArray = try DecimalArray(from: decoder)
 //        self.min_value = intArray.elements[0].asDecimal
