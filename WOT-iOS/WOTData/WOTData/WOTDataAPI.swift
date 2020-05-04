@@ -6,7 +6,6 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
 import WOTPivot
 
 @objc

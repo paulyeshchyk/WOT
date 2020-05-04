@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <WOTPivot/WOTPivot-Swift.h>
+#import <WOTKit/WOTKit-Swift.h>
 
 typedef NSTimer*(^WOTSessionManagerInvalidateTimeCompletion)(NSTimeInterval interval);
 

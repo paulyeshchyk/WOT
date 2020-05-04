@@ -10,7 +10,6 @@ import Foundation
 
 public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
     //
-
     deinit {
         responseCoordinator?.appManager = nil
         requestCoordinator?.appManager = nil

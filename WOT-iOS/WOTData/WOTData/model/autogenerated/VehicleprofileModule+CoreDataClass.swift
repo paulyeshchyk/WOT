@@ -8,7 +8,7 @@
 //
 
 import CoreData
-import Foundation
+import WOTKit
 
 @objc(VehicleprofileModule)
 public class VehicleprofileModule: NSManagedObject {}

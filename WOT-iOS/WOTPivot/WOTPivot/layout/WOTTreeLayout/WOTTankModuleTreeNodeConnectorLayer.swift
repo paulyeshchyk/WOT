@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOTKit
 
 @objc
 public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnectorLayerProtocol {
