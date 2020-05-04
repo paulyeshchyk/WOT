@@ -32,11 +32,12 @@ extension VehicleprofileArmor {
         mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
             do {
                 let armorLinker: JSONAdapterLinkerProtocol? = nil
-                try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, linker: armorLinker) { error in
+                try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, linker: armorLinker) { newfetchResult, error in
 
-                    let finalFetchResult = fetchResult.dublicate()
+                    let finalFetchResult = newfetchResult.dublicate()
                     finalFetchResult.error = error
 
+                    #warning("!!! change callback")
                     callback(finalFetchResult)
                 }
             } catch let error {
@@ -57,10 +58,11 @@ extension VehicleprofileArmor {
         mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
             do {
                 let turretLinker: JSONAdapterLinkerProtocol? = nil
-                try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, linker: turretLinker) { error in
+                try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, linker: turretLinker) { fetchResult, error in
 
                     let finalFetchResult = fetchResult.dublicate()
                     finalFetchResult.error = error
+                    #warning("!!! change callback")
                     callback(finalFetchResult)
                 }
             } catch let error {

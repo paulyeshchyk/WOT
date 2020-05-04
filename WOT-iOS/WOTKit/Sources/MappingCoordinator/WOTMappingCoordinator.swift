@@ -24,18 +24,19 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     // MARK: - WOTMappingCoordinatorProtocol
-    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws {
-        #warning("linker.process should have callback")
+    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) throws {
         let localCompletion: ThrowableCompletion = { error in
-            if let linker = linker {
-                let finalFetchResult = fetchResult.dublicate()
-                finalFetchResult.predicate = pkCase.compoundPredicate()
-                finalFetchResult.error = error
-                linker.process(fetchResult: finalFetchResult) { _ , error in
-                    completion(error)
-                }
+            if let error = error {
+                completion(fetchResult, error)
             } else {
-                completion(error)
+                if let linker = linker {
+                    let finalFetchResult = fetchResult.dublicate()
+                    finalFetchResult.predicate = pkCase.compoundPredicate()
+                    finalFetchResult.error = error
+                    linker.process(fetchResult: finalFetchResult, completion: completion)
+                } else {
+                    completion(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
+                }
             }
         }
 
@@ -51,18 +52,16 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
     }
 
-    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws {
-        #warning("helper.onInstanceDidParse should have callback")
+    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) throws {
         let localCompletion: ThrowableCompletion = { error in
-            if let helper = linker {
-                let finalFetchResult = fetchResult.dublicate()
-                finalFetchResult.predicate = pkCase.compoundPredicate()
-                finalFetchResult.error = error
-                helper.process(fetchResult: finalFetchResult) {_, error in
-                    completion(error)
-                }
+            if let error = error {
+                completion(fetchResult, error)
             } else {
-                completion(error)
+                if let linker = linker {
+                    linker.process(fetchResult: fetchResult, completion: completion)
+                } else {
+                    completion(fetchResult, nil)//WOTMappingCoordinatorError.linkerNotStarted
+                }
             }
         }
 

@@ -25,7 +25,8 @@ extension VehicleprofileAmmo {
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult in
                 do {
                     let penetrationHelper: JSONAdapterLinkerProtocol? = nil
-                    try mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, linker: penetrationHelper) { error in
+                    try mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, linker: penetrationHelper) { newFetchResult, error in
+
                         self.penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration
                         mappingCoordinator?.coreDataStore?.stash(context: context) { error in
                             if let error = error {
@@ -49,7 +50,8 @@ extension VehicleprofileAmmo {
 
                 let damageHelper: JSONAdapterLinkerProtocol? = nil
                 do {
-                    try mappingCoordinator?.decodingAndMapping(array: damageArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoDamageCase, linker: damageHelper) { error in
+                    try mappingCoordinator?.decodingAndMapping(array: damageArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoDamageCase, linker: damageHelper) { newfetchResult, error in
+
                         self.damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage
                         mappingCoordinator?.coreDataStore?.stash(context: context) { error in
                             if let error = error {
@@ -75,8 +77,10 @@ extension VehicleprofileAmmo {
         pkCase[.primary] = parentPrimaryKey
         do {
             let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: nil)
-            try persistentStore?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { error in
-                print(error?.debugDescription ?? "")
+            try persistentStore?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { _, error in
+                if let error = error {
+                    print(error.debugDescription)
+                }
             }
         } catch let error {
             print(error)

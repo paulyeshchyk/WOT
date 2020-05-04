@@ -27,7 +27,7 @@ extension VehicleprofileAmmoList {
                 }
                 do {
                     let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-                    try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, linker: ammoLinker) { error in
+                    try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, linker: ammoLinker) { newFetchResult, error in
 
                         if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
                             self.addToVehicleprofileAmmo(ammo)

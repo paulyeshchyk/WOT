@@ -15,22 +15,23 @@ public enum WOTMapperError: Error {
 
 public typealias ThrowableCompletion = (Error?) -> Void
 
+public enum WOTMappingCoordinatorError: Error {
+    case linkerNotStarted
+}
+
 @objc
 public protocol WOTMappingCoordinatorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
     var coreDataStore: WOTCoredataStoreProtocol? { get }
 
+    #warning("change callback")
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultCompletion)
 
     func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?)
 
-    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws
+    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) throws
 
-    func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws
-}
-
-public enum WOTMappingCoordinatorError: Error {
-    case linkerNotStarted
+    func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) throws
 }
 
 extension WOTMappingCoordinatorProtocol {
@@ -39,14 +40,15 @@ extension WOTMappingCoordinatorProtocol {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
-            try? self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { error in
-                let finalFetchResult: FetchResult = fetchResult.dublicate()
-                finalFetchResult.predicate = pkCase.compoundPredicate()
-                finalFetchResult.error = error
-                if let linker = linker {
-                    linker.process(fetchResult: finalFetchResult, completion: callback)
+            try? self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
+                if let error = error {
+                    callback(fetchResult, error)
                 } else {
-                    callback(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
+                    if let linker = linker {
+                        linker.process(fetchResult: fetchResult, completion: callback)
+                    } else {
+                        callback(fetchResult, nil)//WOTMappingCoordinatorError.linkerNotStarted
+                    }
                 }
             }
         }
@@ -56,14 +58,15 @@ extension WOTMappingCoordinatorProtocol {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
-            try? self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { error in
-                let finalFetchResult = fetchResult.dublicate()
-                finalFetchResult.predicate = pkCase.compoundPredicate()
-                finalFetchResult.error = error
-                if let linker = linker {
-                    linker.process(fetchResult: finalFetchResult, completion: callback)
+            try? self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
+                if let error = error {
+                    callback(fetchResult, error)
                 } else {
-                    callback(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
+                    if let linker = linker {
+                        linker.process(fetchResult: fetchResult, completion: callback)
+                    } else {
+                        callback(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
+                    }
                 }
             }
         }

@@ -30,6 +30,7 @@ public class FetchResult: NSObject, NSCopying {
     private var objectID: NSManagedObjectID?
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
+    @available(*, deprecated, message: "deprecated")
     public var error: Error?
 
     override public required init() {

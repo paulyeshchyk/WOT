@@ -55,8 +55,10 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
             let primaryKeyType = self.linker?.primaryKeyType ?? .external
             findOrCreateObject(for: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult in
 
-                self.linker?.process(fetchResult: fetchResult) { _, _ in
-                    print("Test completion")
+                self.linker?.process(fetchResult: fetchResult) { _, error in
+                    if let error = error {
+                        self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    }
                 }
 
                 if idx == (keys.count - 1) {
@@ -168,7 +170,10 @@ extension JSONAdapter {
             do {
                 let jsonStartParsingDate = Date()
                 self.appManager?.logInspector?.logEvent(EventJSONStart(objCase.description), sender: self)
-                try self.mappingCoordinator?.decodingAndMapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, linker: nil) { _ in
+                try self.mappingCoordinator?.decodingAndMapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, linker: nil) { fetchResult, error in
+                    if let error = error {
+                        self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    }
                     self.appManager?.logInspector?.logEvent(EventJSONEnded("\(objCase)", initiatedIn: jsonStartParsingDate), sender: self)
                     callback(fetchResult)
                 }
