@@ -23,21 +23,33 @@ extension Vehicleprofile {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = parentCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
             let linker = Vehicleprofile.VehicleprofileAmmoListLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchLocal(array: itemsList, context: context, forClass: VehicleprofileAmmoList.self, pkCase: itemCase, linker: linker, callback: { _ in })
+            mappingCoordinator?.fetchLocal(array: itemsList, context: context, forClass: VehicleprofileAmmoList.self, pkCase: itemCase, linker: linker, callback: { _, error in
+                if let error = error {
+                    print(error.debugDescription)
+                }
+            })
         }
 
         if let itemJSON = json[#keyPath(Vehicleprofile.armor)] as? JSON {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = parentCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
             let linker = Vehicleprofile.VehicleprofileArmorListLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileArmorList.self, pkCase: itemCase, linker: linker, callback: { _ in })
+            mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileArmorList.self, pkCase: itemCase, linker: linker, callback: { _, error in
+                if let error = error {
+                    print(error.debugDescription)
+                }
+            })
         }
 
         if let moduleJSON = json[#keyPath(Vehicleprofile.modules)] as? JSON {
             let itemCase = PKCase(parentObjects: parents)
             itemCase[.primary] = parentCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
             let linker = Vehicleprofile.VehicleprofileModuleLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchLocal(json: moduleJSON, context: context, forClass: VehicleprofileModule.self, pkCase: itemCase, linker: linker, callback: { _ in })
+            mappingCoordinator?.fetchLocal(json: moduleJSON, context: context, forClass: VehicleprofileModule.self, pkCase: itemCase, linker: linker, callback: { _, error in
+                if let error = error {
+                    print(error.debugDescription)
+                }
+            })
         }
 
         if let itemJSON = json[#keyPath(Vehicleprofile.gun)] as? JSON {
@@ -45,7 +57,11 @@ extension Vehicleprofile {
                 let itemCase = PKCase()
                 itemCase[.primary] = VehicleprofileGun.primaryKey(for: itemID, andType: .internal)
                 let linker = Vehicleprofile.VehicleprofileGunLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
-                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileGun.self, pkCase: itemCase, linker: linker, callback: { _ in })
+                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileGun.self, pkCase: itemCase, linker: linker, callback: { _, error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                })
             }
         }
 
@@ -54,7 +70,11 @@ extension Vehicleprofile {
                 let itemCase = PKCase()
                 itemCase[.primary] = VehicleprofileSuspension.primaryKey(for: itemID, andType: .internal)
                 let linker = Vehicleprofile.VehicleprofileSuspensionLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
-                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileSuspension.self, pkCase: itemCase, linker: linker, callback: { _ in })
+                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileSuspension.self, pkCase: itemCase, linker: linker, callback: { _, error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                })
             }
         }
 
@@ -63,7 +83,11 @@ extension Vehicleprofile {
                 let itemCase = PKCase()
                 itemCase[.primary] = VehicleprofileRadio.primaryKey(for: itemID, andType: .internal)
                 let linker = Vehicleprofile.VehicleprofileRadioLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
-                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileRadio.self, pkCase: itemCase, linker: linker, callback: { _ in})
+                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileRadio.self, pkCase: itemCase, linker: linker, callback: { _, error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                })
             }
         }
 
@@ -72,7 +96,11 @@ extension Vehicleprofile {
                 let itemCase = PKCase()
                 itemCase[.primary] = VehicleprofileEngine.primaryKey(for: itemID, andType: .internal)
                 let linker = Vehicleprofile.VehicleprofileEngineLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
-                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileEngine.self, pkCase: itemCase, linker: linker, callback: { _ in})
+                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileEngine.self, pkCase: itemCase, linker: linker, callback: { _, error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                })
             }
         }
 
@@ -81,7 +109,11 @@ extension Vehicleprofile {
                 let itemCase = PKCase()
                 itemCase[.primary] = VehicleprofileTurret.primaryKey(for: itemID, andType: .internal)
                 let linker = Vehicleprofile.VehicleprofileTurretLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
-                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileTurret.self, pkCase: itemCase, linker: linker, callback: { _ in})
+                mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileTurret.self, pkCase: itemCase, linker: linker, callback: { _, error in
+                    if let error = error {
+                        print(error.debugDescription)
+                    }
+                })
             }
         }
     }
@@ -105,16 +137,14 @@ extension Vehicleprofile {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let radio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
                     vehicleProfile.radio = radio
 
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -138,16 +168,14 @@ extension Vehicleprofile {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let turret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
                     vehicleProfile.turret = turret
 
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -171,16 +199,14 @@ extension Vehicleprofile {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let suspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
                     vehicleProfile.suspension = suspension
 
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -204,16 +230,14 @@ extension Vehicleprofile {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let gun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
                     vehicleProfile.gun = gun
 
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -237,15 +261,13 @@ extension Vehicleprofile {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let modules = fetchResult.managedObject() as? VehicleprofileModule {
                 if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
                     vehicleProfile.modules = modules
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -269,16 +291,14 @@ extension Vehicleprofile {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let engine = fetchResult.managedObject() as? VehicleprofileEngine {
                 if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
                     vehicleProfile.engine = engine
 
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -302,16 +322,14 @@ extension Vehicleprofile {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let armorList = fetchResult.managedObject() as? VehicleprofileArmorList {
                 if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
                     vehicleProfile.armor = armorList
 
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -335,16 +353,14 @@ extension Vehicleprofile {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let ammoList = fetchResult.managedObject() as? VehicleprofileAmmoList {
                 if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
                     vehicleProfile.ammo = ammoList
 
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }

@@ -31,7 +31,9 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
                 let finalFetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
-                linker.process(fetchResult: finalFetchResult)
+                linker.process(fetchResult: finalFetchResult) { _ , error in
+                    completion(error)
+                }
             } else {
                 completion(error)
             }
@@ -56,7 +58,9 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
                 let finalFetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
-                helper.process(fetchResult: finalFetchResult)
+                helper.process(fetchResult: finalFetchResult) {_, error in
+                    completion(error)
+                }
             } else {
                 completion(error)
             }

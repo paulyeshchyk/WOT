@@ -75,7 +75,9 @@ extension VehicleprofileAmmo {
         pkCase[.primary] = parentPrimaryKey
         do {
             let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: nil)
-            try persistentStore?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { _ in }
+            try persistentStore?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { error in
+                print(error?.debugDescription ?? "")
+            }
         } catch let error {
             print(error)
         }

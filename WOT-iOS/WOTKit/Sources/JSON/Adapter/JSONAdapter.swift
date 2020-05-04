@@ -55,7 +55,9 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
             let primaryKeyType = self.linker?.primaryKeyType ?? .external
             findOrCreateObject(for: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult in
 
-                self.linker?.process(fetchResult: fetchResult)
+                self.linker?.process(fetchResult: fetchResult) { _, _ in
+                    print("Test completion")
+                }
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)

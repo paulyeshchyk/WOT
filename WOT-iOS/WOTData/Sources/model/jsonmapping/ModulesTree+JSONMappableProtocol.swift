@@ -66,15 +66,13 @@ extension ModulesTree {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let module = fetchResult.managedObject() as? Module {
                 if let modulesTree = context.object(with: objectID) as? ModulesTree {
                     modulesTree.currentModule = module
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -98,15 +96,13 @@ extension ModulesTree {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let nextModule = fetchResult.managedObject() as? Module {
                 if let modulesTree = context.object(with: objectID) as? ModulesTree {
                     modulesTree.addToNext_modules(nextModule)
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -130,15 +126,13 @@ extension ModulesTree {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let tank = fetchResult.managedObject() as? Vehicles {
                 if let modulesTree = context.object(with: objectID) as? ModulesTree {
                     modulesTree.addToNext_tanks(tank)
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }

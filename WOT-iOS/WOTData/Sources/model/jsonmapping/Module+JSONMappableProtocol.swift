@@ -83,16 +83,14 @@ extension Module {
             return json["engine"] as? JSON
         }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
                 if let module = fetchResult.context.object(with: objectID) as? Module {
                     vehicleProfileEngine.engine_id = identifier as? NSDecimalNumber
                     module.engine = vehicleProfileEngine
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -118,16 +116,14 @@ extension Module {
             return json["turret"] as? JSON
         }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = context.object(with: objectID) as? Module {
                     vehicleProfileTurret.turret_id = identifier as? NSDecimalNumber
                     module.turret = vehicleProfileTurret
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -153,16 +149,14 @@ extension Module {
             return json["suspension"] as? JSON
         }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = context.object(with: objectID) as? Module {
                     vehicleProfileSuspension.suspension_id = identifier as? NSDecimalNumber
                     module.suspension = vehicleProfileSuspension
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -188,16 +182,14 @@ extension Module {
             return json["radio"] as? JSON
         }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = context.object(with: objectID) as? Module {
                     vehicleProfileRadio.radio_id = identifier as? NSDecimalNumber
                     module.radio = vehicleProfileRadio
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
@@ -223,16 +215,14 @@ extension Module {
             return json["gun"] as? JSON
         }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = context.object(with: objectID) as? Module {
                     vehicleProfileGun.gun_id = identifier as? NSDecimalNumber
                     module.gun = vehicleProfileGun
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }

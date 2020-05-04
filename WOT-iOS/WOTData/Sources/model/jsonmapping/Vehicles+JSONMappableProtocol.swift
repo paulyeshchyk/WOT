@@ -30,7 +30,12 @@ extension Vehicles {
 
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-        persistentStore?.fetchLocal(json: itemJSON, context: context, forClass: Vehicleprofile.self, pkCase: vehicleProfileCase, linker: linker, callback: { fetchResult in
+        persistentStore?.fetchLocal(json: itemJSON, context: context, forClass: Vehicleprofile.self, pkCase: vehicleProfileCase, linker: linker, callback: { fetchResult, error in
+
+            if let error = error {
+                print(error.debugDescription)
+                return
+            }
 
             let context = fetchResult.context
             if let defaultProfile = fetchResult.managedObject() as? Vehicleprofile {
@@ -112,15 +117,13 @@ extension Vehicles {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let modulesTree = fetchResult.managedObject() as? ModulesTree {
                 if let vehicles = context.object(with: objectID) as? Vehicles {
                     modulesTree.default_profile = vehicles.default_profile
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }

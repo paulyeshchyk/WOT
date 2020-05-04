@@ -17,6 +17,6 @@ public protocol JSONAdapterProtocol: DataAdapterProtocol {
 public protocol JSONAdapterLinkerProtocol {
     init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?)
     var primaryKeyType: PrimaryKeyType { get }
-    func process(fetchResult: FetchResult)
+    func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion)
     func onJSONExtraction(json: JSON) -> JSON?
 }

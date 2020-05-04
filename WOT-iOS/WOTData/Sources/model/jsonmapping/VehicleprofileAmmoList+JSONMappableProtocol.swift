@@ -64,16 +64,14 @@ extension VehicleprofileAmmoList {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func process(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
                 if let ammoList = context.object(with: objectID) as? VehicleprofileAmmoList {
                     ammoList.addToVehicleprofileAmmo(ammo)
 
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }

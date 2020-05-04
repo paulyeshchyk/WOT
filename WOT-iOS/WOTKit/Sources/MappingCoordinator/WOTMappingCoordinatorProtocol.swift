@@ -29,9 +29,13 @@ public protocol WOTMappingCoordinatorProtocol {
     func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws
 }
 
+public enum WOTMappingCoordinatorError: Error {
+    case linkerNotStarted
+}
+
 extension WOTMappingCoordinatorProtocol {
     //
-    public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultCompletion) {
+    public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
@@ -40,15 +44,15 @@ extension WOTMappingCoordinatorProtocol {
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
                 if let linker = linker {
-                    linker.process(fetchResult: finalFetchResult)
+                    linker.process(fetchResult: finalFetchResult, completion: callback)
                 } else {
-                    callback(fetchResult)
+                    callback(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                 }
             }
         }
     }
 
-    public func fetchLocal(array: [Any], context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultCompletion) {
+    public func fetchLocal(array: [Any], context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
@@ -57,9 +61,9 @@ extension WOTMappingCoordinatorProtocol {
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
                 if let linker = linker {
-                    linker.process(fetchResult: finalFetchResult)
+                    linker.process(fetchResult: finalFetchResult, completion: callback)
                 } else {
-                    callback(fetchResult)
+                    callback(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                 }
             }
         }

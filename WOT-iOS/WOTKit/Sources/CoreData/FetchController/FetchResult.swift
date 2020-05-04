@@ -9,6 +9,7 @@
 import CoreData
 
 public typealias FetchResultCompletion = (FetchResult) -> Void
+public typealias FetchResultErrorCompletion = (FetchResult, Error?) -> Void
 
 @objc
 public enum WOTExecuteConcurency: Int {
