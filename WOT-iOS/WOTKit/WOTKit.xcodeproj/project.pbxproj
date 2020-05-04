@@ -81,7 +81,6 @@
 		1D60E5D2245FE93E007E5CA8 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5CD245FE93E007E5CA8 /* JSONError.swift */; };
 		1D60E5D3245FE93E007E5CA8 /* DataAdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5CE245FE93E007E5CA8 /* DataAdapterError.swift */; };
 		1D60E5DA245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */; };
-		1D60E5E924601193007E5CA8 /* WOTKit.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D60E5E824601193007E5CA8 /* WOTKit.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,7 +161,6 @@
 		1D60E5CD245FE93E007E5CA8 /* JSONError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		1D60E5CE245FE93E007E5CA8 /* DataAdapterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAdapterError.swift; sourceTree = "<group>"; };
 		1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManagerProtocol.swift; sourceTree = "<group>"; };
-		1D60E5E824601193007E5CA8 /* WOTKit.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = WOTKit.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +177,6 @@
 		1D60E4FC245FE541007E5CA8 = {
 			isa = PBXGroup;
 			children = (
-				1D60E5E824601193007E5CA8 /* WOTKit.json */,
 				1D60E508245FE541007E5CA8 /* source */,
 				1D60E507245FE541007E5CA8 /* Products */,
 			);
@@ -530,6 +527,7 @@
 				1D60E502245FE541007E5CA8 /* Sources */,
 				1D60E503245FE541007E5CA8 /* Frameworks */,
 				1D60E504245FE541007E5CA8 /* Resources */,
+				1D60E5EA246013C0007E5CA8 /* sourcekitten */,
 			);
 			buildRules = (
 			);
@@ -578,11 +576,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60E5E924601193007E5CA8 /* WOTKit.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1D60E5EA246013C0007E5CA8 /* sourcekitten */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = sourcekitten;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# sourcekitten doc --module-name WOTKit -- -project WOTKit.xcodeproj >> WOTKit-sourcekitten.json\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60E502245FE541007E5CA8 /* Sources */ = {
