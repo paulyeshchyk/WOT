@@ -41,7 +41,9 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         //
         let context = fetchResult.context
         let object = fetchResult.managedObject()
+        //
         try object.mapping(json: json, context: context, pkCase: pkCase, mappingCoordinator: self)
+        //
         coreDataStore?.stash(context: context, block: localCompletion)
         //
         appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
@@ -64,7 +66,9 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         //
         let context = fetchResult.context
         let object = fetchResult.managedObject()
+        //
         try object.mapping(array: array, context: context, pkCase: pkCase, mappingCoordinator: self)
+        //
         coreDataStore?.stash(context: fetchResult.context, block: localCompletion)
         //
         appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)

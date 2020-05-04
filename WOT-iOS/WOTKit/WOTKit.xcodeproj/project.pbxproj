@@ -82,6 +82,7 @@
 		1D60E5D3245FE93E007E5CA8 /* DataAdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5CE245FE93E007E5CA8 /* DataAdapterError.swift */; };
 		1D60E5DA245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */; };
 		1D60E60C24602A8F007E5CA8 /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E60B24602A8F007E5CA8 /* JSONDecodingProtocol.swift */; };
+		1D60E74D246052F4007E5CA8 /* json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E74C246052F4007E5CA8 /* json.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -163,6 +164,7 @@
 		1D60E5CE245FE93E007E5CA8 /* DataAdapterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAdapterError.swift; sourceTree = "<group>"; };
 		1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManagerProtocol.swift; sourceTree = "<group>"; };
 		1D60E60B24602A8F007E5CA8 /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
+		1D60E74C246052F4007E5CA8 /* json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = json.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,6 +347,7 @@
 		1D60E54C245FE7E4007E5CA8 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
+				1D60E74C246052F4007E5CA8 /* json.swift */,
 				1D60E60F24602BF8007E5CA8 /* Decoding */,
 				1D60E60D24602AFE007E5CA8 /* Adapter */,
 				1D60E60E24602B17007E5CA8 /* Mapping */,
@@ -660,6 +663,7 @@
 			files = (
 				1D60E599245FE7E5007E5CA8 /* NSManagedObject+JSONDecoding.swift in Sources */,
 				1D60E592245FE7E5007E5CA8 /* WOTDataStoreProtocol.swift in Sources */,
+				1D60E74D246052F4007E5CA8 /* json.swift in Sources */,
 				1D60E5B2245FE7E5007E5CA8 /* WOTWebRequest.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* WOTWebDataPumper.swift in Sources */,
 				1D60E530245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift in Sources */,
