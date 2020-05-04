@@ -98,13 +98,17 @@ extension ModulesTree {
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let nextModule = fetchResult.managedObject() as? Module {
-                if let modulesTree = context.object(with: objectID) as? ModulesTree {
-                    modulesTree.addToNext_modules(nextModule)
-                    coreDataStore?.stash(context: context) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            guard let modulesTree = context.object(with: objectID) as? ModulesTree else {
+                completion(fetchResult, JSONAdapterLinkerError.wrongParentClass)
+                return
+            }
+            guard let nextModule = fetchResult.managedObject() as? Module else {
+                completion(fetchResult, JSONAdapterLinkerError.wrongChildClass)
+                return
+            }
+            modulesTree.addToNext_modules(nextModule)
+            coreDataStore?.stash(context: context) { error in
+                completion(fetchResult, error)
             }
         }
     }

@@ -11,6 +11,14 @@ import CoreData
 
 @objc
 open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
+    }
+
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
+    }
+
     // MARK: - WOTProviderProtocol -
 
     @objc
@@ -18,15 +26,16 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
 
     public func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion ) {
         let initialDate = Date()
-        self.appManager?.logInspector?.logEvent(EventCDStashStart(context: context), sender: self)
+
+        self.logEvent(EventCDStashStart(context: context), sender: self)
         let uuid = UUID()
         let customBlock: ThrowableCompletion = { error in
             block(error)
-            self.appManager?.logInspector?.logEvent(EventCDStashEnded(context: context, initiatedIn: initialDate), sender: self)
+            self.logEvent(EventCDStashEnded(context: context, initiatedIn: initialDate), sender: self)
         }
 
         context.saveRecursively(customBlock)
-        appManager?.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
+        self.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
     }
 
     public func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultErrorCompletion ) {
@@ -42,16 +51,16 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
         perform(context: context) { context in
             do {
                 guard let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) else {
-                    self.appManager?.logInspector?.logEvent(EventError(message: "Object not created:[\(String(describing: clazz))]"), sender: nil)
+                    self.logEvent(EventError(message: "Object not created:[\(String(describing: clazz))]"), sender: nil)
                     return
                 }
                 let managedObjectID = managedObject.objectID
                 self.stash(context: context) { (error) in
-                    let fetchResult = FetchResult(context: context, objectID: managedObjectID, predicate: predicate, fetchStatus: .none, error: error)
+                    let fetchResult = FetchResult(context: context, objectID: managedObjectID, predicate: predicate, fetchStatus: .none)
                     privateCallback(fetchResult, error)
                 }
             } catch let error {
-                self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
+                self.logEvent(EventError(error, details: nil), sender: nil)
             }
         }
     }
@@ -158,7 +167,7 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
     }
 
     private func mergeObjects(_ objects: [NSManagedObject], toContext: NSManagedObjectContext, fromNotification: Notification) {
-        appManager?.logInspector?.logEvent(EventCDMerge())
+        self.logEvent(EventCDMerge())
         var updatedObjectsInCurrentContext = Set<NSManagedObject>()
 
         objects.forEach { (updatedObject) in

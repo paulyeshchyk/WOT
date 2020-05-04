@@ -98,12 +98,12 @@ class WOTTankTreeFetchController: WOTDataFetchController {
                     print("not compatible")
                 }
             }
-            self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
+            self.transform(modulesTree: submodule, withId: tankId, nodeCreation: nodeCreation)
         }
     }
 
-    private func transform(module: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
-        guard let submodules = module.next_modules as? Set<ModulesTree> else {
+    private func transform(modulesTree: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
+        guard let submodules = modulesTree.next_modules as? Set<ModulesTree> else {
             return
         }
         submodules.forEach({ (submodule) in
@@ -111,7 +111,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
                 nodeCreation(moduleId, submodule)
             }
 
-            self.transform(module: submodule, withId: tankId, nodeCreation: nodeCreation)
+            self.transform(modulesTree: submodule, withId: tankId, nodeCreation: nodeCreation)
         })
     }
 }

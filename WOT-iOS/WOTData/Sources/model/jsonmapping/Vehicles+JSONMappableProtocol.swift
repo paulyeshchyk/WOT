@@ -17,7 +17,7 @@ extension Vehicles {
         try self.decode(json: json)
         //
         let defaultProfileHelper: JSONAdapterLinkerProtocol? = nil
-        self.defaultProfileMapping(context: context, jSON: json[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, linker: defaultProfileHelper, persistentStore: mappingCoordinator)
+        self.defaultProfileMapping(context: context, jSON: json[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, linker: defaultProfileHelper, mappingCoordinator: mappingCoordinator)
 
         let modulesTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         self.modulesTreeMapping(context: context, jSON: json[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, linker: modulesTreeHelper, mappingCoordinator: mappingCoordinator)
@@ -25,15 +25,15 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    private func defaultProfileMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, persistentStore: WOTMappingCoordinatorProtocol?) {
+    private func defaultProfileMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         guard let itemJSON = jSON else { return }
 
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-        persistentStore?.fetchLocal(json: itemJSON, context: context, forClass: Vehicleprofile.self, pkCase: vehicleProfileCase, linker: linker, callback: { fetchResult, error in
+        mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: Vehicleprofile.self, pkCase: vehicleProfileCase, linker: linker, callback: { fetchResult, error in
 
             if let error = error {
-                print(error.debugDescription)
+                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                 return
             }
 
@@ -45,9 +45,9 @@ extension Vehicles {
                 self.modules_tree?.forEach { element in
                     (element as? ModulesTree)?.default_profile = defaultProfile
                 }
-                persistentStore?.coreDataStore?.stash(context: context) { error in
+                mappingCoordinator?.coreDataStore?.stash(context: context) { error in
                     if let error = error {
-                        print(error.debugDescription)
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     }
                 }
             }
@@ -82,7 +82,7 @@ extension Vehicles {
             mappingCoordinator?.fetchLocal(context: context, byModelClass: ModulesTree.self, pkCase: submodulesCase) { fetchResult, error in
 
                 if let error = error {
-                    print(error.debugDescription)
+                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     return
                 }
 
@@ -92,17 +92,12 @@ extension Vehicles {
 
                 self.addToModules_tree(module_tree)
 
-                do {
-                    let moduleTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-                    try mappingCoordinator?.decodingAndMapping(json: moduleTreeJSON, fetchResult: fetchResult, pkCase: modulesTreeCase, linker: moduleTreeHelper, completion: { _, error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    })
-
-                } catch let error {
-                    print(error)
-                }
+                let moduleTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                mappingCoordinator?.decodingAndMapping(json: moduleTreeJSON, fetchResult: fetchResult, pkCase: modulesTreeCase, linker: moduleTreeHelper, completion: { _, error in
+                    if let error = error {
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+                    }
+                })
             }
         }
     }

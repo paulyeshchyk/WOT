@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol WOTResponseCoordinatorProtocol {
+public protocol WOTResponseCoordinatorProtocol: LogInspectorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
 
     init(requestCoordinator: WOTRequestCoordinatorProtocol)

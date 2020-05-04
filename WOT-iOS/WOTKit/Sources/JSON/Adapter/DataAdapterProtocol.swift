@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol DataAdapterProtocol {
+public protocol DataAdapterProtocol: LogInspectorProtocol {
     @available(*, deprecated)
     @objc var appManager: WOTAppManagerProtocol? { get set }
     var uuid: UUID { get }

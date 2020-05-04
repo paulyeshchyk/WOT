@@ -21,7 +21,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
 
-    public var predicate: WOTPredicate?
+    public var predicate: RequestPredicate?
 
     private var groups = [WOTRequestIdType]()
 

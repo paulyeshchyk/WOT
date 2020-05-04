@@ -18,13 +18,17 @@ extension VehicleprofileArmorList {
         let hullCase = PKCase()
         hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
 
-        VehicleprofileArmor.hull(context: context, fromJSON: json[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, mappingCoordinator: mappingCoordinator) { fetchResult in
+        VehicleprofileArmor.hull(context: context, fromJSON: json[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, mappingCoordinator: mappingCoordinator) { fetchResult, error in
+            if let error = error {
+                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+                return
+            }
             let context = fetchResult.context
             if let hull = fetchResult.managedObject() as? VehicleprofileArmor {
                 self.hull = hull
                 mappingCoordinator?.coreDataStore?.stash(context: context) { error in
                     if let error = error {
-                        print(error.debugDescription)
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     }
                 }
             }
@@ -32,13 +36,18 @@ extension VehicleprofileArmorList {
 
         let turretCase = PKCase()
         turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
-        VehicleprofileArmor.turret(context: context, fromJSON: json[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, mappingCoordinator: mappingCoordinator) { fetchResult in
+        VehicleprofileArmor.turret(context: context, fromJSON: json[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, mappingCoordinator: mappingCoordinator) { fetchResult, error in
+            if let error = error {
+                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+                return
+            }
+
             let context = fetchResult.context
             if let turret = fetchResult.managedObject() as? VehicleprofileArmor {
                 self.turret = turret
                 mappingCoordinator?.coreDataStore?.stash(context: context) { error in
                     if let error = error {
-                        print(error.debugDescription)
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     }
                 }
             }

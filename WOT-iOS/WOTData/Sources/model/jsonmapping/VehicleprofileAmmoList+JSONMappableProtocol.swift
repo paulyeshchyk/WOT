@@ -21,31 +21,28 @@ extension VehicleprofileAmmoList {
             vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject, andType: .internal)
 
             #warning("refactoring")
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { [weak self] fetchResult, error in
+            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { fetchResult, error in
 
                 if let error = error {
-                    print(error.debugDescription)
+                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     return
                 }
 
-                guard let self = self else {
-                    return
-                }
-                do {
-                    let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-                    try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, linker: ammoLinker) { newFetchResult, error in
+                let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, linker: ammoLinker) { _, error in
+                    if let error = error {
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+                        return
+                    }
 
-                        if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
-                            self.addToVehicleprofileAmmo(ammo)
-                        }
-                        mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                            if let error = error {
-                                print(error.debugDescription)
-                            }
+                    if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
+                        self.addToVehicleprofileAmmo(ammo)
+                    }
+                    mappingCoordinator?.coreDataStore?.stash(context: context) { error in
+                        if let error = error {
+                            mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                         }
                     }
-                } catch let error {
-                    print(error)
                 }
             }
         }

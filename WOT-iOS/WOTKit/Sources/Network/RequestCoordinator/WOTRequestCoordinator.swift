@@ -18,6 +18,14 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         //
     }
 
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
+    }
+
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
+    }
+
     // MARK: - WOTRequestCoordinatorProtocol
     public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
         guard
@@ -42,12 +50,12 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 
     public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]? {
         guard let modelClass = modelClass(for: request) else {
-            appManager?.logInspector?.logEvent(EventError(message: "model class not found for request\(request.description)"), sender: self)
+            self.logEvent(EventError(message: "model class not found for request\(request.description)"), sender: self)
             return nil
         }
 
         guard let result = requestIds(forClass: modelClass), result.count > 0 else {
-            appManager?.logInspector?.logEvent(EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))"), sender: self)
+            self.logEvent(EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))"), sender: self)
             return nil
         }
         return result

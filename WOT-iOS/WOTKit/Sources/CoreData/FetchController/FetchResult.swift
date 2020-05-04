@@ -30,24 +30,21 @@ public class FetchResult: NSObject, NSCopying {
     private var objectID: NSManagedObjectID?
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
-    @available(*, deprecated, message: "deprecated")
-    public var error: Error?
 
     override public required init() {
         fatalError("")
     }
 
-    public required init(context cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus, error err: Error?) {
+    public required init(context cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
         context = cntx
         objectID = objID
         predicate = predicat
         fetchStatus = status
-        error = err
         super.init()
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = FetchResult(context: context, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus, error: error)
+        let copy = FetchResult(context: context, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }
 

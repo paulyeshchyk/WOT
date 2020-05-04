@@ -12,6 +12,14 @@ public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
+    }
+
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
+    }
+
     // MARK: NSObject -
     override public var hash: Int {
         return uuid.uuidString.hashValue
@@ -24,11 +32,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         self.mappingCoordinator = appManager?.mappingCoordinator
 
         super.init()
-        appManager?.logInspector?.logEvent(EventObjectNew(request.description), sender: self)
+        self.logEvent(EventObjectNew(request.description), sender: self)
     }
 
     deinit {
-        appManager?.logInspector?.logEvent(EventObjectFree(request.description), sender: self)
+        self.logEvent(EventObjectFree(request.description), sender: self)
     }
 
     // MARK: DataAdapterProtocol -
@@ -41,28 +49,33 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
-            appManager?.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            self.logEvent(EventError(error, details: request), sender: self)
             onJSONDidParse?(fromRequest, self, error)
             return
         }
 
         let jsonStartParsingDate = Date()
-        appManager?.logInspector?.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
+        self.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
         let keys = json.keys
         for (idx, key) in keys.enumerated() {
             //
             let extraction = extractSubJSON(from: json, by: key)
             let primaryKeyType = self.linker?.primaryKeyType ?? .external
-            findOrCreateObject(for: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult in
+            findOrCreateObject(for: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult, error in
+
+                if let error = error {
+                    self.logEvent(EventError(error, details: nil), sender: self)
+                    return
+                }
 
                 self.linker?.process(fetchResult: fetchResult) { _, error in
                     if let error = error {
-                        self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        self.logEvent(EventError(error, details: nil), sender: self)
                     }
                 }
 
                 if idx == (keys.count - 1) {
-                    self.appManager?.logInspector?.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
+                    self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
                     self.onJSONDidParse?(fromRequest, self, error)
                 }
             }
@@ -143,7 +156,7 @@ extension JSONAdapter {
         return ident
     }
 
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, primaryKeyType: PrimaryKeyType,  callback: @escaping FetchResultCompletion) {
+    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, primaryKeyType: PrimaryKeyType,  callback: @escaping FetchResultErrorCompletion) {
         guard Thread.current.isMainThread else {
             fatalError("thread is not main")
         }
@@ -162,23 +175,19 @@ extension JSONAdapter {
 
         appManager?.coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
 
-            guard fetchResult.error == nil else {
-                callback(fetchResult)
+            if let error = error {
+                callback(fetchResult, error)
                 return
             }
 
-            do {
-                let jsonStartParsingDate = Date()
-                self.appManager?.logInspector?.logEvent(EventJSONStart(objCase.description), sender: self)
-                try self.mappingCoordinator?.decodingAndMapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, linker: nil) { fetchResult, error in
-                    if let error = error {
-                        self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
-                    }
-                    self.appManager?.logInspector?.logEvent(EventJSONEnded("\(objCase)", initiatedIn: jsonStartParsingDate), sender: self)
-                    callback(fetchResult)
+            let jsonStartParsingDate = Date()
+            self.logEvent(EventJSONStart(objCase.description), sender: self)
+            self.mappingCoordinator?.decodingAndMapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, linker: nil) { fetchResult, error in
+                if let error = error {
+                    self.logEvent(EventError(error, details: nil), sender: self)
                 }
-            } catch let error {
-                self.appManager?.logInspector?.logEvent(EventError(error, details: objCase), sender: self)
+                self.logEvent(EventJSONEnded("\(objCase)", initiatedIn: jsonStartParsingDate), sender: self)
+                callback(fetchResult, nil)
             }
         })
     }

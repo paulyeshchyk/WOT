@@ -16,12 +16,13 @@ public enum WOTMapperError: Error {
 public typealias ThrowableCompletion = (Error?) -> Void
 
 public enum WOTMappingCoordinatorError: Error {
+    case requestsNotParsed
     case linkerNotStarted
     case noKeysDefinedForClass(String)
 }
 
 @objc
-public protocol WOTMappingCoordinatorProtocol {
+public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
     var coreDataStore: WOTCoredataStoreProtocol? { get }
 
@@ -29,9 +30,9 @@ public protocol WOTMappingCoordinatorProtocol {
 
     func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?)
 
-    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) throws
+    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
 
-    func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) throws
+    func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
 }
 
 extension WOTMappingCoordinatorProtocol {
@@ -68,7 +69,7 @@ extension WOTMappingCoordinatorProtocol {
                 return
             }
 
-            try? self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
+            self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
                 if let error = error {
                     callback(fetchResult, error)
                 } else {

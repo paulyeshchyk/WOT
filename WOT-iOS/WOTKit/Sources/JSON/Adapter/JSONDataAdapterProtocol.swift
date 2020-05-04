@@ -13,6 +13,11 @@ public protocol JSONAdapterProtocol: DataAdapterProtocol {
     var linker: JSONAdapterLinkerProtocol? { get set }
 }
 
+public enum JSONAdapterLinkerError: Error {
+    case wrongParentClass
+    case wrongChildClass
+}
+
 @objc
 public protocol JSONAdapterLinkerProtocol {
     init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?)

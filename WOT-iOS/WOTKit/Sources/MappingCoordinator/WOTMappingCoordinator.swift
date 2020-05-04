@@ -23,8 +23,16 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         //
     }
 
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
+    }
+
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
+    }
+
     // MARK: - WOTMappingCoordinatorProtocol
-    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) throws {
+    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)
@@ -32,7 +40,6 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
                 if let linker = linker {
                     let finalFetchResult = fetchResult.dublicate()
                     finalFetchResult.predicate = pkCase.compoundPredicate()
-                    finalFetchResult.error = error
                     linker.process(fetchResult: finalFetchResult, completion: completion)
                 } else {
                     completion(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
@@ -40,19 +47,21 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
             }
         }
 
-        appManager?.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
+        self.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
         //
         let context = fetchResult.context
         let object = fetchResult.managedObject()
         //
-        try object.mapping(json: json, context: context, pkCase: pkCase, mappingCoordinator: self)
-        //
-        coreDataStore?.stash(context: context, block: localCompletion)
-        //
-        appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
+        do {
+            try object.mapping(json: json, context: context, pkCase: pkCase, mappingCoordinator: self)
+            coreDataStore?.stash(context: context, block: localCompletion)
+            self.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
+        } catch let error {
+            localCompletion(error)
+        }
     }
 
-    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) throws {
+    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)
@@ -65,62 +74,66 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
             }
         }
 
-        appManager?.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
+        self.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
         //
         let context = fetchResult.context
         let object = fetchResult.managedObject()
         //
-        try object.mapping(array: array, context: context, pkCase: pkCase, mappingCoordinator: self)
-        //
-        coreDataStore?.stash(context: fetchResult.context, block: localCompletion)
-        //
-        appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
+        do {
+            try object.mapping(array: array, context: context, pkCase: pkCase, mappingCoordinator: self)
+            //
+            coreDataStore?.stash(context: fetchResult.context, block: localCompletion)
+            //
+            self.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
+        } catch let error {
+            localCompletion(error)
+        }
     }
 
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultErrorCompletion) {
-        appManager?.logInspector?.logEvent(EventCustomLogic("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
+        self.logEvent(EventCustomLogic("fetchLocal: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
         guard let predicate = pkCase.compoundPredicate(.and) else {
             let error = WOTMappingCoordinatorError.noKeysDefinedForClass(String(describing: clazz))
-            let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none, error: error)
+            let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none)
             callback(fetchResult, error)
             return
         }
 
-        appManager?.coreDataStore?.perform(context: context) { context in
+        coreDataStore?.perform(context: context) { context in
             do {
                 if let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) {
                     let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .none
-                    let fetchResult = FetchResult(context: context, objectID: managedObject.objectID, predicate: predicate, fetchStatus: fetchStatus, error: nil)
+                    let fetchResult = FetchResult(context: context, objectID: managedObject.objectID, predicate: predicate, fetchStatus: fetchStatus)
                     callback(fetchResult, nil)
                 }
             } catch let error {
-                self.appManager?.logInspector?.logEvent(EventError(error, details: nil))
+                self.logEvent(EventError(error, details: nil))
             }
         }
     }
 
     public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
-        appManager?.logInspector?.logEvent(EventCustomLogic("pullRemoteSubordinate:\(clazz)"), sender: self)
+        self.logEvent(EventCustomLogic("fetchRemote:\(clazz)"), sender: self)
 
-        var predicates = [WOTPredicate]()
-        predicates.append(WOTPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
+        var predicates = [RequestPredicate]()
+        predicates.append(RequestPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
 
         predicates.forEach { predicate in
-            fetchRemote(byPredicate: predicate, linker: linker)
+            fetchRemote(predicate: predicate, linker: linker)
         }
     }
 
     // MARK: private -
-    private func fetchRemote(byPredicate predicate: WOTPredicate, linker: JSONAdapterLinkerProtocol?) {
+    private func fetchRemote(predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?) {
         guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {
-            print("requests not parsed")
+            self.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
             return
         }
         requestIDs.forEach {
             do {
-                try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, linker: linker)
+                try appManager?.requestManager?.startRequest(by: $0, requestPredicate: predicate, linker: linker)
             } catch {
-                appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                self.logEvent(EventError(error, details: nil), sender: self)
             }
         }
     }

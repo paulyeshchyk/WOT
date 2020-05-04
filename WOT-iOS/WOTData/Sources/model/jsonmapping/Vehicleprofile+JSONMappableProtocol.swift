@@ -25,7 +25,7 @@ extension Vehicleprofile {
             let linker = Vehicleprofile.VehicleprofileAmmoListLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchLocal(array: itemsList, context: context, forClass: VehicleprofileAmmoList.self, pkCase: itemCase, linker: linker, callback: { _, error in
                 if let error = error {
-                    print(error.debugDescription)
+                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                 }
             })
         }
@@ -36,7 +36,7 @@ extension Vehicleprofile {
             let linker = Vehicleprofile.VehicleprofileArmorListLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileArmorList.self, pkCase: itemCase, linker: linker, callback: { _, error in
                 if let error = error {
-                    print(error.debugDescription)
+                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                 }
             })
         }
@@ -47,7 +47,7 @@ extension Vehicleprofile {
             let linker = Vehicleprofile.VehicleprofileModuleLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchLocal(json: moduleJSON, context: context, forClass: VehicleprofileModule.self, pkCase: itemCase, linker: linker, callback: { _, error in
                 if let error = error {
-                    print(error.debugDescription)
+                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                 }
             })
         }
@@ -59,7 +59,7 @@ extension Vehicleprofile {
                 let linker = Vehicleprofile.VehicleprofileGunLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileGun.self, pkCase: itemCase, linker: linker, callback: { _, error in
                     if let error = error {
-                        print(error.debugDescription)
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     }
                 })
             }
@@ -72,7 +72,7 @@ extension Vehicleprofile {
                 let linker = Vehicleprofile.VehicleprofileSuspensionLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileSuspension.self, pkCase: itemCase, linker: linker, callback: { _, error in
                     if let error = error {
-                        print(error.debugDescription)
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     }
                 })
             }
@@ -85,7 +85,7 @@ extension Vehicleprofile {
                 let linker = Vehicleprofile.VehicleprofileRadioLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileRadio.self, pkCase: itemCase, linker: linker, callback: { _, error in
                     if let error = error {
-                        print(error.debugDescription)
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     }
                 })
             }
@@ -98,7 +98,7 @@ extension Vehicleprofile {
                 let linker = Vehicleprofile.VehicleprofileEngineLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileEngine.self, pkCase: itemCase, linker: linker, callback: { _, error in
                     if let error = error {
-                        print(error.debugDescription)
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     }
                 })
             }
@@ -111,7 +111,7 @@ extension Vehicleprofile {
                 let linker = Vehicleprofile.VehicleprofileTurretLinker(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileTurret.self, pkCase: itemCase, linker: linker, callback: { _, error in
                     if let error = error {
-                        print(error.debugDescription)
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     }
                 })
             }

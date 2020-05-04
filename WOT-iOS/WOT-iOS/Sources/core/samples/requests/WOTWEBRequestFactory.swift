@@ -22,7 +22,7 @@ public class WOTWEBRequestFactory: NSObject {
         do {
             try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, linker: nil)
         } catch let error {
-            print(error)
+            requestManager.logEvent(EventError(error, details: nil), sender: nil)
         }
     }
 
@@ -37,12 +37,12 @@ public class WOTWEBRequestFactory: NSObject {
 
         requestManager.addListener(listener, forRequest: request)
 
-        let provider = requestManager.appManager?.coreDataStore
+        let coreDataStore = requestManager.appManager?.coreDataStore
         let predicate = NSPredicate(format: "%K == %d", "tank_id", vehicleId)
-        if let context = provider?.mainContext {
-            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context, callback: { _, error in
+        if let context = coreDataStore?.mainContext {
+            coreDataStore?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context, callback: { _, error in
                 if let error = error {
-                    print(error.debugDescription)
+                    coreDataStore?.logEvent(EventError(error, details: nil), sender: nil)
                     return
                 }
                 #warning("use TreeJSONAdapterHelper")

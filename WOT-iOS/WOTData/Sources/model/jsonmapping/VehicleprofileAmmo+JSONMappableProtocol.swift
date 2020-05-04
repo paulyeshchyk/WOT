@@ -24,22 +24,22 @@ extension VehicleprofileAmmo {
             #warning("refactoring")
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult, error in
                 if let error = error {
-                    print(error.debugDescription)
+                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     return
                 }
-                do {
-                    let penetrationHelper: JSONAdapterLinkerProtocol? = nil
-                    try mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, linker: penetrationHelper) { newFetchResult, error in
+                let penetrationHelper: JSONAdapterLinkerProtocol? = nil
+                mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, linker: penetrationHelper) { fetchResult, error in
+                    if let error = error {
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+                        return
+                    }
 
-                        self.penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration
-                        mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                            if let error = error {
-                                print(error.debugDescription)
-                            }
+                    self.penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration
+                    mappingCoordinator?.coreDataStore?.stash(context: context) { error in
+                        if let error = error {
+                            mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                         }
                     }
-                } catch let error {
-                    print(error)
                 }
             }
         }
@@ -52,29 +52,29 @@ extension VehicleprofileAmmo {
             #warning("refactoring")
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { fetchResult, error in
                 if let error = error {
-                    print(error.debugDescription)
+                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     return
                 }
 
                 let damageHelper: JSONAdapterLinkerProtocol? = nil
-                do {
-                    try mappingCoordinator?.decodingAndMapping(array: damageArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoDamageCase, linker: damageHelper) { newfetchResult, error in
+                mappingCoordinator?.decodingAndMapping(array: damageArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoDamageCase, linker: damageHelper) { fetchResult, error in
+                    if let error = error {
+                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+                        return
+                    }
 
-                        self.damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage
-                        mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                            if let error = error {
-                                print(error.debugDescription)
-                            }
+                    self.damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage
+                    mappingCoordinator?.coreDataStore?.stash(context: context) { error in
+                        if let error = error {
+                            mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                         }
                     }
-                } catch let error {
-                    print(error)
                 }
             }
         }
     }
 
-    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, persistentStore: WOTMappingCoordinatorProtocol?) {
+    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         guard let json = json, let entityDescription = context.entityDescription(forType: VehicleprofileAmmo.self) else {
             fatalError("Entity description not found [\(String(describing: VehicleprofileAmmo.self))]")
             return nil
@@ -83,15 +83,11 @@ extension VehicleprofileAmmo {
 
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
-        do {
-            let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: nil)
-            try persistentStore?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { _, error in
-                if let error = error {
-                    print(error.debugDescription)
-                }
+        let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none)
+        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { _, error in
+            if let error = error {
+                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
             }
-        } catch let error {
-            print(error)
         }
     }
 }

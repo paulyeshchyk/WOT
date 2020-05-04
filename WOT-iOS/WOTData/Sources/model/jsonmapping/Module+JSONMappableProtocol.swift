@@ -34,32 +34,32 @@ extension Module {
         switch moduleType {
         case .vehicleChassis:
             let vehicleSuspensionLinker = Module.ModuleSuspensionLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "suspension.", linker: vehicleSuspensionLinker)
+            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "suspension.", linker: vehicleSuspensionLinker)
         case .vehicleGun:
             let vehicleGunLinker = Module.ModuleGunLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "gun.", linker: vehicleGunLinker)
+            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "gun.", linker: vehicleGunLinker)
         case .vehicleRadio:
             let vehicleRadioLinker = Module.ModuleRadioLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "radio.", linker: vehicleRadioLinker)
+            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "radio.", linker: vehicleRadioLinker)
         case .vehicleEngine:
             let vehicleEngineLinker = Module.ModuleEngineLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "engine.", linker: vehicleEngineLinker)
+            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "engine.", linker: vehicleEngineLinker)
         case .vehicleTurret:
             let vehicleTurretLinker = Module.ModuleTurretLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "turret.", linker: vehicleTurretLinker)
+            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "turret.", linker: vehicleTurretLinker)
         case .none, .tank, .unknown:
             fatalError("unknown module type")
         }
     }
 
-    private func fetchRemoteModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
+    private func fetchRemoteModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
         let pkCase = PKCase()
         pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .external)
         if let tank_id = tank_id {
             pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .internal)
         }
 
-        persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, linker: linker)
+        mappingCoordinator?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, linker: linker)
     }
 }
 

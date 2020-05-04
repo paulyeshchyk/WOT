@@ -34,5 +34,5 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, Describable {
     var uuid: UUID { get }
 
     @objc
-    var predicate: WOTPredicate? { get set }
+    var predicate: RequestPredicate? { get set }
 }
