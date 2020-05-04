@@ -177,7 +177,7 @@
 		1D60E4FC245FE541007E5CA8 = {
 			isa = PBXGroup;
 			children = (
-				1D60E508245FE541007E5CA8 /* WOTKit */,
+				1D60E508245FE541007E5CA8 /* source */,
 				1D60E507245FE541007E5CA8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -190,7 +190,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1D60E508245FE541007E5CA8 /* WOTKit */ = {
+		1D60E508245FE541007E5CA8 /* source */ = {
 			isa = PBXGroup;
 			children = (
 				1D60E585245FE7E5007E5CA8 /* AppManager */,
@@ -203,7 +203,7 @@
 				1D60E509245FE541007E5CA8 /* WOTKit.h */,
 				1D60E50A245FE541007E5CA8 /* Info.plist */,
 			);
-			path = WOTKit;
+			path = source;
 			sourceTree = "<group>";
 		};
 		1D60E51C245FE7A7007E5CA8 /* basics */ = {
@@ -793,7 +793,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = WOTKit/Info.plist;
+				INFOPLIST_FILE = source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -819,7 +819,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = WOTKit/Info.plist;
+				INFOPLIST_FILE = source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = (

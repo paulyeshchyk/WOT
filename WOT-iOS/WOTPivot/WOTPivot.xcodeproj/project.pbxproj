@@ -251,19 +251,11 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1D60E5D4245FE962007E5CA8 /* categories */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E5D5245FE96E007E5CA8 /* WOTDataFetchController */,
-			);
-			path = categories;
-			sourceTree = "<group>";
-		};
 		1D60E5D5245FE96E007E5CA8 /* WOTDataFetchController */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E5DD245FEA6F007E5CA8 /* WOTDataFetchController.swift */,
 				1D60E5DB245FEA41007E5CA8 /* WOTDataFetchControllerProtocol.swift */,
+				1D60E5DD245FEA6F007E5CA8 /* WOTDataFetchController.swift */,
 				1D60E5D6245FE97C007E5CA8 /* WOTDataFetchController+NodeCreator.swift */,
 			);
 			path = WOTDataFetchController;
@@ -364,8 +356,13 @@
 		1D79EDA7212439C2005FBA34 /* WOTPivot */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E5D4245FE962007E5CA8 /* categories */,
-				1DE558CB2124560500576D41 /* core */,
+				1DE558F72124571000576D41 /* models */,
+				1DE558CC2124560500576D41 /* nodes */,
+				1DE55918212458E100576D41 /* indexes */,
+				1D256CD9212D4182002FCD78 /* viper */,
+				1DA83C89213558AB0039CB4B /* adapters */,
+				1D65F7E82216A60D006A85E4 /* layout */,
+				1D5D0B0623CDA129004B0314 /* metrics */,
 				1D79EDA8212439C2005FBA34 /* WOTPivot.h */,
 				1DE1FA26245EEA62002866A3 /* WOTColors.h */,
 				1DE1FA24245EE9E4002866A3 /* WOTPivotDefines.h */,
@@ -417,20 +414,6 @@
 			path = WOTTreeNode;
 			sourceTree = "<group>";
 		};
-		1DE558CB2124560500576D41 /* core */ = {
-			isa = PBXGroup;
-			children = (
-				1D5D0B0623CDA129004B0314 /* metrics */,
-				1D65F7E82216A60D006A85E4 /* layout */,
-				1DA83C89213558AB0039CB4B /* adapters */,
-				1D256CD9212D4182002FCD78 /* viper */,
-				1DE55918212458E100576D41 /* indexes */,
-				1DE558CC2124560500576D41 /* nodes */,
-				1DE558F72124571000576D41 /* models */,
-			);
-			path = core;
-			sourceTree = "<group>";
-		};
 		1DE558CC2124560500576D41 /* nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,6 +463,7 @@
 		1DE558F72124571000576D41 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				1D60E5D5245FE96E007E5CA8 /* WOTDataFetchController */,
 				1D5D0AF923CCB012004B0314 /* WOTPermutator */,
 				1DC6D4C6212576EA00A1C9C2 /* WOTPivotDataModel */,
 				1DE558F82124571000576D41 /* WOTDataModel */,
