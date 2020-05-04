@@ -7,6 +7,7 @@
 //
 
 import WOTPivot
+import WOTKit
 
 @objc
 public class WOTCustomCoreDataProvider: WOTCoreDataStore {

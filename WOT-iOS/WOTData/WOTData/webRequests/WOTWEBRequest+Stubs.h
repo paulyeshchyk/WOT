@@ -10,12 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WOTWEBRequest (Stubs)
-
-@property (nonatomic, readonly) NSString *stubJSON;
-- (NSData *)stubs;
-
-@end
+//@interface WOTWEBRequest (Stubs)
+//
+//@property (nonatomic, readonly) NSString *stubJSON;
+//- (NSData *)stubs;
+//
+//@end
 
 
 //@interface WOTWEBRequestTanks (Fake)

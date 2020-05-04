@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import WOTKit
 
 open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
     open var collapseToGroups: Bool { return false }

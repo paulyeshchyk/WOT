@@ -8,7 +8,7 @@
 //
 
 import CoreData
-import Foundation
+import WOTKit
 
 @objc(ModulesTree)
 public class ModulesTree: NSManagedObject {}
