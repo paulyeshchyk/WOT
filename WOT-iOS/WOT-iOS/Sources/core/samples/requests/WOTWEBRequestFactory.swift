@@ -20,7 +20,7 @@ public class WOTWEBRequestFactory: NSObject {
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
         requestManager.addListener(listener, forRequest: request)
         do {
-            try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, instanceHelper: nil)
+            try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, linker: nil)
         } catch let error {
             print(error)
         }
@@ -41,8 +41,8 @@ public class WOTWEBRequestFactory: NSObject {
         let predicate = NSPredicate(format: "%K == %d", "tank_id", vehicleId)
         if let context = provider?.mainContext {
             provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context, callback: { fetchResult in
-                let modulesTreeHelper: JSONAdapterInstanceHelper? = nil //Vehicles.TreeJSONAdapterHelper(objectID: fetchResult.managedObject().objectID, identifier: nil, persistentStore: persistentStore)
-                try? requestManager.startRequest(request, withArguments: args, forGroupId: groupId, instanceHelper: modulesTreeHelper)
+                let modulesTreeHelper: JSONAdapterLinkerProtocol? = nil //Vehicles.TreeJSONAdapterHelper(objectID: fetchResult.managedObject().objectID, identifier: nil, persistentStore: persistentStore)
+                try? requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: modulesTreeHelper)
             })
 //            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context) { (fetchResult) in
 //            }
@@ -58,7 +58,7 @@ public class WOTWEBRequestFactory: NSObject {
         args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
         args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
 
-        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, instanceHelper: nil)
+        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
         requestManager.addListener(listener, forRequest: request)
     }
 }

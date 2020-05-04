@@ -16,26 +16,26 @@ extension Vehicles {
         //
         try self.decode(json: json)
         //
-        let defaultProfileHelper: JSONAdapterInstanceHelper? = nil
-        self.defaultProfileMapping(context: context, jSON: json[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, instanceHelper: defaultProfileHelper, persistentStore: mappingCoordinator)
+        let defaultProfileHelper: JSONAdapterLinkerProtocol? = nil
+        self.defaultProfileMapping(context: context, jSON: json[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, linker: defaultProfileHelper, persistentStore: mappingCoordinator)
 
-        let modulesTreeHelper: JSONAdapterInstanceHelper? = Vehicles.TreeJSONAdapterHelper(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-        self.modulesTreeMapping(context: context, jSON: json[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, instanceHelper: modulesTreeHelper, mappingCoordinator: mappingCoordinator)
+        let modulesTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        self.modulesTreeMapping(context: context, jSON: json[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, linker: modulesTreeHelper, mappingCoordinator: mappingCoordinator)
     }
 }
 
 extension Vehicles {
-    private func defaultProfileMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, persistentStore: WOTMappingCoordinatorProtocol?) {
+    private func defaultProfileMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, persistentStore: WOTMappingCoordinatorProtocol?) {
         guard let itemJSON = jSON else { return }
 
         let vehicleProfileCase = PKCase()
         vehicleProfileCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))
-        persistentStore?.fetchLocal(json: itemJSON, context: context, forClass: Vehicleprofile.self, pkCase: vehicleProfileCase, instanceHelper: instanceHelper, callback: { fetchResult in
+        persistentStore?.fetchLocal(json: itemJSON, context: context, forClass: Vehicleprofile.self, pkCase: vehicleProfileCase, linker: linker, callback: { fetchResult in
 
             let context = fetchResult.context
             if let defaultProfile = fetchResult.managedObject() as? Vehicleprofile {
                 //
-                #warning("not used instanceHelper")
+                #warning("not used linker")
                 self.default_profile = defaultProfile
                 self.modules_tree?.forEach { element in
                     (element as? ModulesTree)?.default_profile = defaultProfile
@@ -49,7 +49,7 @@ extension Vehicles {
         })
     }
 
-    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -83,8 +83,8 @@ extension Vehicles {
                 self.addToModules_tree(module_tree)
 
                 do {
-                    let moduleTreeHelper: JSONAdapterInstanceHelper? = ModulesTree.DefaultProfileJSONAdapterHelper(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-                    try mappingCoordinator?.decodingAndMapping(json: moduleTreeJSON, fetchResult: fetchResult, pkCase: modulesTreeCase, instanceHelper: moduleTreeHelper, completion: { _ in })
+                    let moduleTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                    try mappingCoordinator?.decodingAndMapping(json: moduleTreeJSON, fetchResult: fetchResult, pkCase: modulesTreeCase, linker: moduleTreeHelper, completion: { _ in })
 
                 } catch let error {
                     print(error)
@@ -95,7 +95,7 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    public class TreeJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class VehiclesModulesTreeLinker: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .external
         }
@@ -112,11 +112,11 @@ extension Vehicles {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
-            if let tank = fetchResult.managedObject() as? Vehicles {
-                if let modulesTree = context.object(with: objectID) as? ModulesTree {
-                    modulesTree.addToNext_tanks(tank)
+            if let modulesTree = fetchResult.managedObject() as? ModulesTree {
+                if let vehicles = context.object(with: objectID) as? Vehicles {
+                    modulesTree.default_profile = vehicles.default_profile
                     coreDataStore?.stash(context: context) { error in
                         if let error = error {
                             print(error.debugDescription)

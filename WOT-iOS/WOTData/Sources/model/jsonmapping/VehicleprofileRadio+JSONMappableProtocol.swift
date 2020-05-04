@@ -18,38 +18,3 @@ extension VehicleprofileRadio {
         //
     }
 }
-
-extension VehicleprofileRadio {
-    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
-
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
-
-        public func onInstanceDidParse(fetchResult: FetchResult) {
-            let context = fetchResult.context
-            if let radio = fetchResult.managedObject() as? VehicleprofileRadio {
-                if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
-                    vehicleProfile.radio = radio
-
-                    coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
-            }
-        }
-    }
-}

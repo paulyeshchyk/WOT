@@ -31,8 +31,8 @@ extension VehicleprofileArmor {
         #warning("refactoring")
         mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
             do {
-                let armorInstanceHelper: JSONAdapterInstanceHelper? = nil
-                try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: armorInstanceHelper) { error in
+                let armorLinker: JSONAdapterLinkerProtocol? = nil
+                try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, linker: armorLinker) { error in
 
                     let finalFetchResult = fetchResult.dublicate()
                     finalFetchResult.error = error
@@ -56,8 +56,8 @@ extension VehicleprofileArmor {
         #warning("refactoring")
         mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: pkCase) { fetchResult in
             do {
-                let turretInstanceHelper: JSONAdapterInstanceHelper? = nil
-                try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: turretInstanceHelper) { error in
+                let turretLinker: JSONAdapterLinkerProtocol? = nil
+                try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: pkCase, linker: turretLinker) { error in
 
                     let finalFetchResult = fetchResult.dublicate()
                     finalFetchResult.error = error

@@ -33,26 +33,26 @@ extension Module {
 
         switch moduleType {
         case .vehicleChassis:
-            let vehicleSuspensionInstanceHelper = Module.SuspensionJSONAdapterHelper(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "suspension.", instanceHelper: vehicleSuspensionInstanceHelper)
+            let vehicleSuspensionLinker = Module.ModuleSuspensionLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "suspension.", linker: vehicleSuspensionLinker)
         case .vehicleGun:
-            let vehicleGunInstanceHelper = Module.GunJSONAdapterHelper(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "gun.", instanceHelper: vehicleGunInstanceHelper)
+            let vehicleGunLinker = Module.ModuleGunLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "gun.", linker: vehicleGunLinker)
         case .vehicleRadio:
-            let vehicleRadioInstanceHelper = Module.RadioJSONAdapterHelper(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "radio.", instanceHelper: vehicleRadioInstanceHelper)
+            let vehicleRadioLinker = Module.ModuleRadioLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "radio.", linker: vehicleRadioLinker)
         case .vehicleEngine:
-            let vehicleEngineInstanceHelper = Module.EngineJSONAdapterHelper(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "engine.", instanceHelper: vehicleEngineInstanceHelper)
+            let vehicleEngineLinker = Module.ModuleEngineLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "engine.", linker: vehicleEngineLinker)
         case .vehicleTurret:
-            let vehicleTurretInstanceHelper = Module.TurretJSONAdapterHelper(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "turret.", instanceHelper: vehicleTurretInstanceHelper)
+            let vehicleTurretLinker = Module.ModuleTurretLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            requestVehicleModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "turret.", linker: vehicleTurretLinker)
         case .none, .tank, .unknown:
             fatalError("unknown module type")
         }
     }
 
-    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, instanceHelper: JSONAdapterInstanceHelper?) {
+    private func requestVehicleModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
         let pkCase = PKCase()
         pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .external)
         if let tank_id = tank_id {
@@ -60,12 +60,12 @@ extension Module {
             pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .internal)
         }
 
-        persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, instanceHelper: instanceHelper)
+        persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, linker: linker)
     }
 }
 
 extension Module {
-    public class EngineJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class ModuleEngineLinker: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .internal
         }
@@ -84,7 +84,7 @@ extension Module {
             return json["engine"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
                 if let module = fetchResult.context.object(with: objectID) as? Module {
@@ -100,7 +100,7 @@ extension Module {
         }
     }
 
-    public class TurretJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class ModuleTurretLinker: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .internal
         }
@@ -119,7 +119,7 @@ extension Module {
             return json["turret"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = context.object(with: objectID) as? Module {
@@ -135,7 +135,7 @@ extension Module {
         }
     }
 
-    public class SuspensionJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class ModuleSuspensionLinker: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .internal
         }
@@ -154,7 +154,7 @@ extension Module {
             return json["suspension"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = context.object(with: objectID) as? Module {
@@ -170,7 +170,7 @@ extension Module {
         }
     }
 
-    public class RadioJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class ModuleRadioLinker: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .internal
         }
@@ -189,7 +189,7 @@ extension Module {
             return json["radio"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = context.object(with: objectID) as? Module {
@@ -205,7 +205,7 @@ extension Module {
         }
     }
 
-    public class GunJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class ModuleGunLinker: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .internal
         }
@@ -224,7 +224,7 @@ extension Module {
             return json["gun"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = context.object(with: objectID) as? Module {

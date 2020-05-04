@@ -24,8 +24,8 @@ extension VehicleprofileAmmo {
             #warning("refactoring")
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult in
                 do {
-                    let penetrationHelper: JSONAdapterInstanceHelper? = nil
-                    try mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, instanceHelper: penetrationHelper) { error in
+                    let penetrationHelper: JSONAdapterLinkerProtocol? = nil
+                    try mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, linker: penetrationHelper) { error in
                         self.penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration
                         mappingCoordinator?.coreDataStore?.stash(context: context) { error in
                             if let error = error {
@@ -47,9 +47,9 @@ extension VehicleprofileAmmo {
             #warning("refactoring")
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { fetchResult in
 
-                let damageHelper: JSONAdapterInstanceHelper? = nil
+                let damageHelper: JSONAdapterLinkerProtocol? = nil
                 do {
-                    try mappingCoordinator?.decodingAndMapping(array: damageArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoDamageCase, instanceHelper: damageHelper) { error in
+                    try mappingCoordinator?.decodingAndMapping(array: damageArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoDamageCase, linker: damageHelper) { error in
                         self.damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage
                         mappingCoordinator?.coreDataStore?.stash(context: context) { error in
                             if let error = error {
@@ -75,44 +75,9 @@ extension VehicleprofileAmmo {
         pkCase[.primary] = parentPrimaryKey
         do {
             let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: nil)
-            try persistentStore?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: nil) { _ in }
+            try persistentStore?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { _ in }
         } catch let error {
             print(error)
-        }
-    }
-}
-
-extension VehicleprofileAmmo {
-    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
-
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
-
-        public func onInstanceDidParse(fetchResult: FetchResult) {
-            let context = fetchResult.context
-            if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
-                if let ammoList = context.object(with: objectID) as? VehicleprofileAmmoList {
-                    ammoList.addToVehicleprofileAmmo(ammo)
-
-                    coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
-            }
         }
     }
 }

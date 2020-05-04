@@ -37,7 +37,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
     // MARK: JSONAdapterProtocol -
     public var onJSONDidParse: OnRequestComplete?
-    public var instanceHelper: JSONAdapterInstanceHelper?
+    public var linker: JSONAdapterLinkerProtocol?
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
@@ -52,10 +52,10 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         for (idx, key) in keys.enumerated() {
             //
             let extraction = extractSubJSON(from: json, by: key)
-            let primaryKeyType = self.instanceHelper?.primaryKeyType ?? .external
+            let primaryKeyType = self.linker?.primaryKeyType ?? .external
             findOrCreateObject(for: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult in
 
-                self.instanceHelper?.onInstanceDidParse(fetchResult: fetchResult)
+                self.linker?.process(fetchResult: fetchResult)
 
                 if idx == (keys.count - 1) {
                     self.appManager?.logInspector?.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
@@ -117,7 +117,7 @@ extension JSONAdapter {
             fatalError("invalid json for key")
         }
         let objectJson: JSON
-        if let extracted = instanceHelper?.onJSONExtraction(json: jsonByKey) {
+        if let extracted = linker?.onJSONExtraction(json: jsonByKey) {
             objectJson = extracted
         } else {
             objectJson = jsonByKey
@@ -166,7 +166,7 @@ extension JSONAdapter {
             do {
                 let jsonStartParsingDate = Date()
                 self.appManager?.logInspector?.logEvent(EventJSONStart(objCase.description), sender: self)
-                try self.mappingCoordinator?.decodingAndMapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, instanceHelper: nil) { _ in
+                try self.mappingCoordinator?.decodingAndMapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, linker: nil) { _ in
                     self.appManager?.logInspector?.logEvent(EventJSONEnded("\(objCase)", initiatedIn: jsonStartParsingDate), sender: self)
                     callback(fetchResult)
                 }

@@ -35,7 +35,7 @@ class WOTWebSessionClearResponseAdapter: NSObject, WOTDataResponseAdapterProtoco
         appManager = app
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("should be implemented")
     }
 }
@@ -47,7 +47,7 @@ class WOTWebSessionSaveResponseAdapter: NSObject, WOTDataResponseAdapterProtocol
         appManager = app
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
@@ -72,7 +72,7 @@ class WOTWebSessionLoginResponseAdapter: NSObject, WOTDataResponseAdapterProtoco
         appManager = app
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {
@@ -138,7 +138,7 @@ class WOTWebSessionLogoutResponseAdapter: NSObject, WOTDataResponseAdapterProtoc
         appManager = app
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, instanceHelper: JSONAdapterInstanceHelper?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol?, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("should be implemented")
         /*
          ^(NSData *binary, NSError *error) {

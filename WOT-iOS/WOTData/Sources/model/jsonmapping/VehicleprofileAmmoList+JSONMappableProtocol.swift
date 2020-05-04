@@ -26,8 +26,8 @@ extension VehicleprofileAmmoList {
                     return
                 }
                 do {
-                    let ammoInstanceHelper: JSONAdapterInstanceHelper? = VehicleprofileAmmo.LocalJSONAdapterHelper(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-                    try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, instanceHelper: ammoInstanceHelper) { error in
+                    let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                    try mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, linker: ammoLinker) { error in
 
                         if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
                             self.addToVehicleprofileAmmo(ammo)
@@ -47,7 +47,7 @@ extension VehicleprofileAmmoList {
 }
 
 extension VehicleprofileAmmoList {
-    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class VehicleprofileAmmoListAmmoLinker: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .external
         }
@@ -64,11 +64,11 @@ extension VehicleprofileAmmoList {
 
         public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
-            if let ammoList = fetchResult.managedObject() as? VehicleprofileAmmoList {
-                if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
-                    vehicleProfile.ammo = ammoList
+            if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
+                if let ammoList = context.object(with: objectID) as? VehicleprofileAmmoList {
+                    ammoList.addToVehicleprofileAmmo(ammo)
 
                     coreDataStore?.stash(context: context) { error in
                         if let error = error {

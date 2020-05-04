@@ -24,14 +24,14 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     // MARK: - WOTMappingCoordinatorProtocol
-    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
+    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws {
         #warning("helper.onInstanceDidParse should have callback")
         let localCompletion: ThrowableCompletion = { error in
-            if let helper = instanceHelper {
+            if let helper = linker {
                 let finalFetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
-                helper.onInstanceDidParse(fetchResult: finalFetchResult)
+                helper.process(fetchResult: finalFetchResult)
             } else {
                 completion(error)
             }
@@ -49,14 +49,14 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
     }
 
-    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
+    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws {
         #warning("helper.onInstanceDidParse should have callback")
         let localCompletion: ThrowableCompletion = { error in
-            if let helper = instanceHelper {
+            if let helper = linker {
                 let finalFetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
-                helper.onInstanceDidParse(fetchResult: finalFetchResult)
+                helper.process(fetchResult: finalFetchResult)
             } else {
                 completion(error)
             }
@@ -96,26 +96,26 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         }
     }
 
-    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, instanceHelper: JSONAdapterInstanceHelper?) {
+    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
         appManager?.logInspector?.logEvent(EventCustomLogic("pullRemoteSubordinate:\(clazz)"), sender: self)
 
         var predicates = [WOTPredicate]()
         predicates.append(WOTPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
 
         predicates.forEach { predicate in
-            fetchRemote(byPredicate: predicate, instanceHelper: instanceHelper)
+            fetchRemote(byPredicate: predicate, linker: linker)
         }
     }
 
     // MARK: private -
-    private func fetchRemote(byPredicate predicate: WOTPredicate, instanceHelper: JSONAdapterInstanceHelper?) {
+    private func fetchRemote(byPredicate predicate: WOTPredicate, linker: JSONAdapterLinkerProtocol?) {
         guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {
             print("requests not parsed")
             return
         }
         requestIDs.forEach {
             do {
-                try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, instanceHelper: instanceHelper)
+                try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, linker: linker)
             } catch {
                 appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }

@@ -29,7 +29,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     fileprivate var grouppedRequests: [WOTRequestIdType: [WOTRequestProtocol]] = [:]
-    fileprivate var grouppedAdapterInstanceHelpers: [AnyHashable: JSONAdapterInstanceHelper] = [:]
+    fileprivate var grouppedLinkers: [AnyHashable: JSONAdapterLinkerProtocol] = [:]
 
     public func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol) {
         guard let listener = listener else { return }
@@ -73,12 +73,12 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, instanceHelper: JSONAdapterInstanceHelper?) throws {
+    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol?) throws {
         guard addRequest(request, forGroupId: forGroupId) else {
             throw WEBError.requestWasNotAddedToGroup
         }
 
-        grouppedAdapterInstanceHelpers[request.uuid.uuidString] = instanceHelper
+        grouppedLinkers[request.uuid.uuidString] = linker
 
         try request.start(withArguments: withArguments)
         grouppedListeners[request.uuid.uuidString]?.forEach {
@@ -86,12 +86,12 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, instanceHelper: JSONAdapterInstanceHelper?) throws {
+    public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, linker: JSONAdapterLinkerProtocol?) throws {
         let request = try createRequest(forRequestId: requestId, withPredicate: withPredicate)
 
         let arguments = withPredicate.buildRequestArguments()
         let groupId = "Nested\(String(describing: withPredicate.clazz))-\(withPredicate)"
-        try startRequest(request, withArguments: arguments, forGroupId: groupId, instanceHelper: instanceHelper)
+        try startRequest(request, withArguments: arguments, forGroupId: groupId, linker: linker)
     }
 
     public func cancelRequests(groupId: WOTRequestIdType, with error: Error?) {
@@ -140,11 +140,11 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        let adapterInstanceHelper = grouppedAdapterInstanceHelpers[request.uuid.uuidString]
+        let adapterLinker = grouppedLinkers[request.uuid.uuidString]
         do {
             try dataparser.parseResponse(data: data,
                                          forRequest: request,
-                                         instanceHelper: adapterInstanceHelper,
+                                         linker: adapterLinker,
                                          onComplete: onRequestComplete(_:_:error:))
         } catch {
             appManager?.logInspector?.logEvent(EventError(error, details: request), sender: self)

@@ -22,25 +22,25 @@ public protocol WOTMappingCoordinatorProtocol {
 
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultCompletion)
 
-    func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, instanceHelper: JSONAdapterInstanceHelper?)
+    func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?)
 
-    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
+    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws
 
-    func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
+    func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws
 }
 
 extension WOTMappingCoordinatorProtocol {
     //
-    public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, callback: @escaping FetchResultCompletion) {
+    public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultCompletion) {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
-            try? self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: instanceHelper) { error in
+            try? self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { error in
                 let finalFetchResult: FetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
-                if let instanceHelper = instanceHelper {
-                    instanceHelper.onInstanceDidParse(fetchResult: finalFetchResult)
+                if let linker = linker {
+                    linker.process(fetchResult: finalFetchResult)
                 } else {
                     callback(fetchResult)
                 }
@@ -48,16 +48,16 @@ extension WOTMappingCoordinatorProtocol {
         }
     }
 
-    public func fetchLocal(array: [Any], context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, callback: @escaping FetchResultCompletion) {
+    public func fetchLocal(array: [Any], context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultCompletion) {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
-            try? self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: instanceHelper) { error in
+            try? self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { error in
                 let finalFetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
-                if let instanceHelper = instanceHelper {
-                    instanceHelper.onInstanceDidParse(fetchResult: finalFetchResult)
+                if let linker = linker {
+                    linker.process(fetchResult: finalFetchResult)
                 } else {
                     callback(fetchResult)
                 }

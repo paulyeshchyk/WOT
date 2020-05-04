@@ -22,7 +22,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
         requestCoordinator = rc
     }
 
-    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, instanceHelper: JSONAdapterInstanceHelper?, onComplete: @escaping OnRequestComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol?, onComplete: @escaping OnRequestComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
         }
@@ -36,7 +36,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
             do {
                 let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request)
                 adapter.onJSONDidParse = onComplete
-                adapter.instanceHelper = instanceHelper
+                adapter.linker = linker
                 let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
                 dataAdaptationPair.append(pair)
             } catch let error {

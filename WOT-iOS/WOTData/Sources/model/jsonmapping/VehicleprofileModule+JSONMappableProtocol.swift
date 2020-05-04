@@ -21,7 +21,7 @@ extension VehicleprofileModule {
             gunCase[.primary] = VehicleprofileGun.primaryKey(for: gun_id, andType: .external)
             gunCase[.secondary] = pkCase[.primary]
             let moduleGunHelper = VehicleprofileModule.GunJSONAdapterHelper(objectID: self.objectID, identifier: gun_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", instanceHelper: moduleGunHelper)
+            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", linker: moduleGunHelper)
         }
 
         if let radio_id = self.radio_id {
@@ -29,7 +29,7 @@ extension VehicleprofileModule {
             radioCase[.primary] = VehicleprofileRadio.primaryKey(for: radio_id, andType: .external)
             radioCase[.secondary] = pkCase[.primary]
             let moduleRadioHelper = VehicleprofileModule.RadioJSONAdapterHelper(objectID: self.objectID, identifier: radio_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", instanceHelper: moduleRadioHelper)
+            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", linker: moduleRadioHelper)
         }
 
         if let engine_id = self.engine_id {
@@ -37,7 +37,7 @@ extension VehicleprofileModule {
             engineCase[.primary] = VehicleprofileEngine.primaryKey(for: engine_id, andType: .external)
             engineCase[.secondary] = pkCase[.primary]
             let moduleEngineHelper = VehicleprofileModule.EngineJSONAdapterHelper(objectID: self.objectID, identifier: engine_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", instanceHelper: moduleEngineHelper)
+            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", linker: moduleEngineHelper)
         }
 
         if let suspension_id = self.suspension_id {
@@ -45,7 +45,7 @@ extension VehicleprofileModule {
             suspensionCase[.primary] = VehicleprofileSuspension.primaryKey(for: suspension_id, andType: .external)
             suspensionCase[.secondary] = pkCase[.primary]
             let moduleSuspensionHelper = VehicleprofileModule.SuspensionJSONAdapterHelper(objectID: self.objectID, identifier: suspension_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", instanceHelper: moduleSuspensionHelper)
+            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", linker: moduleSuspensionHelper)
         }
 
         if let turret_id = self.turret_id {
@@ -53,46 +53,13 @@ extension VehicleprofileModule {
             turretCase[.primary] = VehicleprofileTurret.primaryKey(for: turret_id, andType: .external)
             turretCase[.secondary] = pkCase[.primary]
             let moduleTurretHelper = VehicleprofileModule.TurretJSONAdapterHelper(objectID: self.objectID, identifier: turret_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", instanceHelper: moduleTurretHelper)
+            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", linker: moduleTurretHelper)
         }
     }
 }
 
 extension VehicleprofileModule {
-    //
-    public class LocalJSONAdapterHelper: JSONAdapterInstanceHelper {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
-
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
-
-        public func onInstanceDidParse(fetchResult: FetchResult) {
-            let context = fetchResult.context
-            if let modules = fetchResult.managedObject() as? VehicleprofileModule {
-                if let vehicleProfile = context.object(with: objectID) as? Vehicleprofile {
-                    vehicleProfile.modules = modules
-                    coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public class SuspensionJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class SuspensionJSONAdapterHelper: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .external
         }
@@ -111,7 +78,7 @@ extension VehicleprofileModule {
             return json["suspension"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = context.object(with: objectID) as? VehicleprofileModule {
@@ -127,7 +94,7 @@ extension VehicleprofileModule {
         }
     }
 
-    public class EngineJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class EngineJSONAdapterHelper: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .external
         }
@@ -146,7 +113,7 @@ extension VehicleprofileModule {
             return json["engine"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
                 if let module = context.object(with: objectID) as? VehicleprofileModule {
@@ -162,7 +129,7 @@ extension VehicleprofileModule {
         }
     }
 
-    public class TurretJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class TurretJSONAdapterHelper: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .external
         }
@@ -181,7 +148,7 @@ extension VehicleprofileModule {
             return json["turret"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = context.object(with: objectID) as? VehicleprofileModule {
@@ -197,7 +164,7 @@ extension VehicleprofileModule {
         }
     }
 
-    public class RadioJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class RadioJSONAdapterHelper: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .external
         }
@@ -216,7 +183,7 @@ extension VehicleprofileModule {
             return json["radio"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = context.object(with: objectID) as? VehicleprofileModule {
@@ -232,7 +199,7 @@ extension VehicleprofileModule {
         }
     }
 
-    public class GunJSONAdapterHelper: JSONAdapterInstanceHelper {
+    public class GunJSONAdapterHelper: JSONAdapterLinkerProtocol {
         public var primaryKeyType: PrimaryKeyType {
             return .internal
         }
@@ -251,7 +218,7 @@ extension VehicleprofileModule {
             return json["gun"] as? JSON
         }
 
-        public func onInstanceDidParse(fetchResult: FetchResult) {
+        public func process(fetchResult: FetchResult) {
             let context = fetchResult.context
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = context.object(with: objectID) as? VehicleprofileModule {
