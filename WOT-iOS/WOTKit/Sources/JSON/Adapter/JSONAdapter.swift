@@ -160,7 +160,7 @@ extension JSONAdapter {
             fatalError("modelClazz: \(self.modelClazz) is not NSManagedObject.Type")
         }
 
-        appManager?.coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult in
+        appManager?.coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
 
             guard fetchResult.error == nil else {
                 callback(fetchResult)

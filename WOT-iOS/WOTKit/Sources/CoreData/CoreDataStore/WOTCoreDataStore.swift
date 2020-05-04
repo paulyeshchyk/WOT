@@ -29,12 +29,12 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
         appManager?.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
     }
 
-    public func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultCompletion ) {
-        let privateCallback: FetchResultCompletion = { fetchResult in
+    public func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultErrorCompletion ) {
+        let privateCallback: FetchResultErrorCompletion = { fetchResult, error in
             visibleInContext.perform {
                 let fetchResultForContext = fetchResult.dublicate()
                 fetchResultForContext.context = visibleInContext
-                callback(fetchResultForContext)
+                callback(fetchResultForContext, error)
             }
         }
 
@@ -48,7 +48,7 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
                 let managedObjectID = managedObject.objectID
                 self.stash(context: context) { (error) in
                     let fetchResult = FetchResult(context: context, objectID: managedObjectID, predicate: predicate, fetchStatus: .none, error: error)
-                    privateCallback(fetchResult)
+                    privateCallback(fetchResult, error)
                 }
             } catch let error {
                 self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: nil)

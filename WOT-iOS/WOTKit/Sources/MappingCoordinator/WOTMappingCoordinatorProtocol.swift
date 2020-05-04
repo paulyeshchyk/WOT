@@ -25,7 +25,6 @@ public protocol WOTMappingCoordinatorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
     var coreDataStore: WOTCoredataStoreProtocol? { get }
 
-    #warning("change callback")
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultErrorCompletion)
 
     func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?)

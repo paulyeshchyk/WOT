@@ -40,12 +40,15 @@ public class WOTWEBRequestFactory: NSObject {
         let provider = requestManager.appManager?.coreDataStore
         let predicate = NSPredicate(format: "%K == %d", "tank_id", vehicleId)
         if let context = provider?.mainContext {
-            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context, callback: { fetchResult in
+            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context, callback: { _, error in
+                if let error = error {
+                    print(error.debugDescription)
+                    return
+                }
+                #warning("use TreeJSONAdapterHelper")
                 let modulesTreeHelper: JSONAdapterLinkerProtocol? = nil //Vehicles.TreeJSONAdapterHelper(objectID: fetchResult.managedObject().objectID, identifier: nil, persistentStore: persistentStore)
                 try? requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: modulesTreeHelper)
             })
-//            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context) { (fetchResult) in
-//            }
         }
     }
 
