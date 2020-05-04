@@ -99,16 +99,21 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         predicates.append(WOTPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
 
         predicates.forEach { predicate in
-            if let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) {
-                requestIDs.forEach {
-                    do {
-                        try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, instanceHelper: instanceHelper)
-                    } catch {
-                        appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
-                    }
-                }
-            } else {
-                print("requests not parsed")
+            fetchRemote(byPredicate: predicate, instanceHelper: instanceHelper)
+        }
+    }
+
+    // MARK: private -
+    private func fetchRemote(byPredicate predicate: WOTPredicate, instanceHelper: JSONAdapterInstanceHelper?) {
+        guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {
+            print("requests not parsed")
+            return
+        }
+        requestIDs.forEach {
+            do {
+                try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, instanceHelper: instanceHelper)
+            } catch {
+                appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
         }
     }

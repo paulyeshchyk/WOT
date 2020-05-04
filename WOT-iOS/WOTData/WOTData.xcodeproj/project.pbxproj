@@ -180,10 +180,11 @@
 		1D3DAEC02133FD5300368AFA = {
 			isa = PBXGroup;
 			children = (
-				1D3DAECC2133FD5300368AFA /* WOTData */,
-				1D3DAED72133FD5300368AFA /* WOTDataTests */,
+				1D3DAECC2133FD5300368AFA /* Sources */,
+				1D3DAED72133FD5300368AFA /* Tests */,
 				1D3DAECB2133FD5300368AFA /* Products */,
 				1D3DAEE72133FDDE00368AFA /* Frameworks */,
+				1D3DAECE2133FD5300368AFA /* Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -196,7 +197,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1D3DAECC2133FD5300368AFA /* WOTData */ = {
+		1D3DAECC2133FD5300368AFA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				1DE1FA00245EE2C5002866A3 /* categories */,
@@ -207,18 +208,17 @@
 				1D3DAECD2133FD5300368AFA /* WOTData.h */,
 				1D8C298F21358C6000759C42 /* WOTDataDefines.h */,
 				1D5D0AF223CCAC05004B0314 /* WOTDataAPI.swift */,
-				1D3DAECE2133FD5300368AFA /* Info.plist */,
 			);
-			path = WOTData;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		1D3DAED72133FD5300368AFA /* WOTDataTests */ = {
+		1D3DAED72133FD5300368AFA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				1D3DAED82133FD5300368AFA /* WOTDataTests.swift */,
 				1D3DAEDA2133FD5300368AFA /* Info.plist */,
 			);
-			path = WOTDataTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		1D3DAEE72133FDDE00368AFA /* Frameworks */ = {
@@ -685,7 +685,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = WOTData/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -713,7 +713,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = WOTData/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = (
