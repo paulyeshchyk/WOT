@@ -10,7 +10,7 @@ import CoreData
 
 public typealias JSON = Swift.Dictionary<Swift.AnyHashable, Any>
 
-public protocol JSONMapperProtocol {
+public protocol JSONMappableProtocol {
     func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws
     func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws
 }

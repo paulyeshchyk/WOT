@@ -1,8 +1,8 @@
 //
-//  WOTModuleType.swift
+//  Module+Customization.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/15/20.
+//  Created by Pavel Yeshchyk on 5/4/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 

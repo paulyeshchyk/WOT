@@ -23,8 +23,8 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         //
     }
 
-    // MARK: - WOTMapperProtocol
-    public func mapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
+    // MARK: - WOTMappingCoordinatorProtocol
+    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
         #warning("helper.onInstanceDidParse should have callback")
         let localCompletion: ThrowableCompletion = { error in
             if let helper = instanceHelper {
@@ -47,7 +47,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
     }
 
-    public func mapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
+    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws {
         #warning("helper.onInstanceDidParse should have callback")
         let localCompletion: ThrowableCompletion = { error in
             if let helper = instanceHelper {

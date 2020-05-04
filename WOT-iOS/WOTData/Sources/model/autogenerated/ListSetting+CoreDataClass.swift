@@ -7,15 +7,7 @@
 //
 //
 
-import WOTKit
 import CoreData
 
 @objc(ListSetting)
 public class ListSetting: NSManagedObject {}
-
-extension ListSetting: JSONDecodingProtocol {
-    public func decodeWith(_ decoder: Decoder) throws {
-        //let container = try decoder.container(keyedBy: Fields.self)
-        //
-    }
-}

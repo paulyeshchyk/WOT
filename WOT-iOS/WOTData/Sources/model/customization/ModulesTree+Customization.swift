@@ -1,12 +1,28 @@
 //
-//  WOTVehicleModuleType.swift
+//  ModulesTree+Customization.swift
 //  WOTData
 //
-//  Created by Pavel Yeshchyk on 1/15/20.
+//  Created by Pavel Yeshchyk on 5/4/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import CoreData
+
+// MARK: - Customization
+
+extension ModulesTree {
+    @objc
+    public func moduleType() -> ObjCVehicleModuleType {
+        return .unknown
+    }
+
+    @objc
+    public func localImageURL() -> URL? {
+        let type = self.moduleType()
+        let name = type.stringValue
+        return Bundle.main.url(forResource: name, withExtension: "png")
+    }
+}
 
 public enum VehicleModuleType: String {
     case unknown
@@ -20,8 +36,10 @@ public enum VehicleModuleType: String {
     private static var allTypes: [VehicleModuleType] = [.unknown, .vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun, .tank]
 
     var index: Int {
-        guard let result = VehicleModuleType.allTypes.firstIndex(of: self) else { fatalError("VehicleModuleType.alltypes has no value:\(self)")}
-        return result
+        if let result = VehicleModuleType.allTypes.firstIndex(of: self) {
+            return result
+        }
+        fatalError("VehicleModuleType.alltypes has no value:\(self)")
     }
 
     static func value(for intValue: Int) -> VehicleModuleType {

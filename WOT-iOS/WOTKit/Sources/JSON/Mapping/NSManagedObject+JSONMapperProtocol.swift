@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension NSManagedObject: JSONMapperProtocol {
+extension NSManagedObject: JSONMappableProtocol {
     public enum FieldKeys: String, CodingKey {
         case hasChanges
     }

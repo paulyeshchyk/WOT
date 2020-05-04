@@ -33,7 +33,7 @@
 		1D60E598245FE7E5007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E54D245FE7E4007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift */; };
 		1D60E599245FE7E5007E5CA8 /* NSManagedObject+JSONDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E54E245FE7E4007E5CA8 /* NSManagedObject+JSONDecoding.swift */; };
 		1D60E59A245FE7E5007E5CA8 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E54F245FE7E4007E5CA8 /* JSONAdapter.swift */; };
-		1D60E59B245FE7E5007E5CA8 /* JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E550245FE7E4007E5CA8 /* JSONMapperProtocol.swift */; };
+		1D60E59B245FE7E5007E5CA8 /* JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E550245FE7E4007E5CA8 /* JSONMappableProtocol.swift */; };
 		1D60E59C245FE7E5007E5CA8 /* DataAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E551245FE7E4007E5CA8 /* DataAdapterProtocol.swift */; };
 		1D60E59D245FE7E5007E5CA8 /* JSONDataAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E552245FE7E4007E5CA8 /* JSONDataAdapterProtocol.swift */; };
 		1D60E59F245FE7E5007E5CA8 /* WOTMappingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E555245FE7E4007E5CA8 /* WOTMappingCoordinator.swift */; };
@@ -114,7 +114,7 @@
 		1D60E54D245FE7E4007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1D60E54E245FE7E4007E5CA8 /* NSManagedObject+JSONDecoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONDecoding.swift"; sourceTree = "<group>"; };
 		1D60E54F245FE7E4007E5CA8 /* JSONAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; };
-		1D60E550245FE7E4007E5CA8 /* JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONMapperProtocol.swift; sourceTree = "<group>"; };
+		1D60E550245FE7E4007E5CA8 /* JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONMappableProtocol.swift; sourceTree = "<group>"; };
 		1D60E551245FE7E4007E5CA8 /* DataAdapterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAdapterProtocol.swift; sourceTree = "<group>"; };
 		1D60E552245FE7E4007E5CA8 /* JSONDataAdapterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDataAdapterProtocol.swift; sourceTree = "<group>"; };
 		1D60E555245FE7E4007E5CA8 /* WOTMappingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTMappingCoordinator.swift; sourceTree = "<group>"; };
@@ -541,7 +541,7 @@
 		1D60E60E24602B17007E5CA8 /* Mapping */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E550245FE7E4007E5CA8 /* JSONMapperProtocol.swift */,
+				1D60E550245FE7E4007E5CA8 /* JSONMappableProtocol.swift */,
 				1D60E54D245FE7E4007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift */,
 			);
 			path = Mapping;
@@ -725,7 +725,7 @@
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
 				1D60E58C245FE7E5007E5CA8 /* WOTPrimaryKey.swift in Sources */,
 				1D60E59C245FE7E5007E5CA8 /* DataAdapterProtocol.swift in Sources */,
-				1D60E59B245FE7E5007E5CA8 /* JSONMapperProtocol.swift in Sources */,
+				1D60E59B245FE7E5007E5CA8 /* JSONMappableProtocol.swift in Sources */,
 				1D60E52E245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				1D60E5D3245FE93E007E5CA8 /* DataAdapterError.swift in Sources */,
 				1D60E5AF245FE7E5007E5CA8 /* WOTRequest.swift in Sources */,

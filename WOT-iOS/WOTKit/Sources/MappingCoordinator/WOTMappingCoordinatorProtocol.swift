@@ -1,5 +1,5 @@
 //
-//  WOTMapperProtocol.swift
+//  WOTMappingCoordinatorProtocol.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/24/20.
@@ -24,9 +24,9 @@ public protocol WOTMappingCoordinatorProtocol {
 
     func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, instanceHelper: JSONAdapterInstanceHelper?)
 
-    func mapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
+    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
 
-    func mapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
+    func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, instanceHelper: JSONAdapterInstanceHelper?, completion: @escaping ThrowableCompletion) throws
 }
 
 extension WOTMappingCoordinatorProtocol {
@@ -35,7 +35,7 @@ extension WOTMappingCoordinatorProtocol {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
-            try? self.mapping(json: json, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: instanceHelper) { error in
+            try? self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: instanceHelper) { error in
                 let finalFetchResult: FetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
@@ -52,7 +52,7 @@ extension WOTMappingCoordinatorProtocol {
         //
         fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult in
 
-            try? self.mapping(array: array, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: instanceHelper) { error in
+            try? self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, instanceHelper: instanceHelper) { error in
                 let finalFetchResult = fetchResult.dublicate()
                 finalFetchResult.predicate = pkCase.compoundPredicate()
                 finalFetchResult.error = error
