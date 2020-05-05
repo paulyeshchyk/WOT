@@ -9,8 +9,8 @@
 import Foundation
 
 public class EventCustomLogic: LogEventProtocol {
+    public static var type: LogEventType { return .logic }
     public private(set) var message: String
-    public var type: LogEventType { return .logic }
     public var name: String { return "Logic"}
 
     public init() {

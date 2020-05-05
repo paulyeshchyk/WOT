@@ -9,8 +9,8 @@
 import Foundation
 
 public class EventWEBStart: LogEventProtocol {
+    public static var type: LogEventType { return .web }
     public private(set) var message: String
-    public var type: LogEventType { return .web }
     public var name: String { return "WEBStart"}
 
     public init() {
@@ -23,8 +23,8 @@ public class EventWEBStart: LogEventProtocol {
 }
 
 public class EventWEBCancel: LogEventProtocol {
+    public static var type: LogEventType { return .web }
     public private(set) var message: String
-    public var type: LogEventType { return .web }
     public var name: String { return "WEBCancel"}
 
     public init() {
@@ -37,8 +37,8 @@ public class EventWEBCancel: LogEventProtocol {
 }
 
 public class EventWEBEnd: LogEventProtocol {
+    public static var type: LogEventType { return .web }
     public private(set) var message: String
-    public var type: LogEventType { return .web }
     public var name: String { return "WEBEnded"}
 
     public init() {

@@ -9,8 +9,8 @@
 import Foundation
 
 public class EventCDMerge: LogEventProtocol {
+    public static var type: LogEventType { return .coredata }
     public private(set) var message: String
-    public var type: LogEventType { return .coredata }
     public var name: String { return "CDMerge"}
 
     public init() {

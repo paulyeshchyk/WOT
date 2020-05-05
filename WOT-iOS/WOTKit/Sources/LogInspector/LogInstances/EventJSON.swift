@@ -9,8 +9,8 @@
 import Foundation
 
 public class EventJSONStart: LogEventProtocol {
+    public static var type: LogEventType { return .json }
     public private(set) var message: String
-    public var type: LogEventType { return .json }
     public var name: String { return "JSONStart"}
 
     public init() {
@@ -23,8 +23,8 @@ public class EventJSONStart: LogEventProtocol {
 }
 
 public class EventJSONEnded: LogEventProtocol {
+    public static var type: LogEventType { return .json }
     public private(set) var message: String
-    public var type: LogEventType { return .json }
     public var name: String { return "JSONEnded"}
 
     public init() {

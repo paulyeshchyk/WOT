@@ -9,8 +9,8 @@
 import Foundation
 
 public class EventError: LogEventProtocol {
+    public static var type: LogEventType { return .error }
     public private(set) var message: String
-    public var type: LogEventType { return .error }
     public var name: String { return "!!ERROR!!"}
 
     public init() {

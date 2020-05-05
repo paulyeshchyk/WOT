@@ -18,13 +18,8 @@ public class LogInspector: NSObject, LogInspectorProtocol {
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
-        if
-            let eventPriority = event?.type,
-            prioritiesToLog.count > 0,
-            !prioritiesToLog.contains(eventPriority) {
-            return
-        }
-
+        guard  let event = event else { return }
+        guard isLoggable(eventClass: type(of: event)) else { return }
         let senderMessage: String
         if let logSenderDescription = sender?.logSenderDescription {
             senderMessage = "::\(logSenderDescription)"
@@ -32,9 +27,13 @@ public class LogInspector: NSObject, LogInspectorProtocol {
             senderMessage = ""
         }
 
-        let eventType = event?.name ?? "UNKNOWN logeventType"
-        let eventMessage = event?.message ?? ""
+        let eventType = event.name// ?? "UNKNOWN logeventType"
+        let eventMessage = event.message// ?? ""
 
         print("[\(eventType)\(senderMessage)]{\(eventMessage)}")
+    }
+
+    private func isLoggable(eventClass: LogEventProtocol.Type) -> Bool {
+        return prioritiesToLog.contains(eventClass.type)
     }
 }
