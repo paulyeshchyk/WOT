@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import Combine
 
 public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
@@ -29,13 +30,13 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         self.modelClazz = clazz
         self.request = request
         self.appManager = appManager
-        self.mappingCoordinator = appManager?.mappingCoordinator
 
         super.init()
         self.logEvent(EventObjectNew(request.description), sender: self)
     }
 
     deinit {
+        jsonIterator?.cancel()
         self.logEvent(EventObjectFree(request.description), sender: self)
     }
 
@@ -46,6 +47,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: JSONAdapterProtocol -
     public var onJSONDidParse: OnRequestComplete?
     public var linker: JSONAdapterLinkerProtocol?
+    private var jsonIterator: AnyCancellable?
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
@@ -57,34 +59,22 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         let jsonStartParsingDate = Date()
         self.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
         let keys = json.keys
-        for (idx, key) in keys.enumerated() {
-            //
-            let extraction = extractSubJSON(from: json, by: key)
-            let primaryKeyType = self.linker?.primaryKeyType ?? .external
-            findOrCreateObject(for: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult, error in
+        let publisher = Publishers.Sequence<Dictionary<AnyHashable, Any>.Keys, Error>(sequence: keys)
+        jsonIterator = publisher.sink(receiveCompletion: { _ in
+            self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
+            self.onJSONDidParse?(fromRequest, self, error)
 
-                if let error = error {
-                    self.logEvent(EventError(error, details: nil), sender: self)
-                    return
-                }
-
-                self.linker?.process(fetchResult: fetchResult) { _, error in
-                    if let error = error {
-                        self.logEvent(EventError(error, details: nil), sender: self)
-                    }
-                }
-
-                if idx == (keys.count - 1) {
-                    self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
-                    self.onJSONDidParse?(fromRequest, self, error)
-                }
-            }
+        }) { key in
+            self.findOrCreate(json: json, key: key, fromRequest: fromRequest)
         }
     }
 
+    private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
+
     // MARK: Private -
     private let METAClass: Codable.Type = RESTAPIResponse.self
-    private var mappingCoordinator: WOTMappingCoordinatorProtocol?
+    private var mappingCoordinator: WOTMappingCoordinatorProtocol? { return appManager?.mappingCoordinator }
+    private var coreDataStore: WOTCoredataStoreProtocol? { return appManager?.coreDataStore }
     private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
 }
@@ -156,12 +146,30 @@ extension JSONAdapter {
         return ident
     }
 
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, primaryKeyType: PrimaryKeyType,  callback: @escaping FetchResultErrorCompletion) {
+    private func findOrCreate(json: JSON, key: AnyHashable, fromRequest: WOTRequestProtocol) {
+        let extraction = self.extractSubJSON(from: json, by: key)
+        let primaryKeyType = self.linker?.primaryKeyType ?? .external
+        self.findOrCreateObject(jsonExtraction: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult, error in
+
+            if let error = error {
+                self.logEvent(EventError(error, details: nil), sender: self)
+                return
+            }
+
+            self.linker?.process(fetchResult: fetchResult) { _, error in
+                if let error = error {
+                    self.logEvent(EventError(error, details: nil), sender: self)
+                }
+            }
+        }
+    }
+
+    private func findOrCreateObject(jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, primaryKeyType: PrimaryKeyType,  callback: @escaping FetchResultErrorCompletion) {
         guard Thread.current.isMainThread else {
             fatalError("thread is not main")
         }
 
-        guard let MAINCONTEXT = appManager?.coreDataStore?.mainContext else {
+        guard let MAINCONTEXT = coreDataStore?.mainContext else {
             fatalError("main is not accessible")
         }
 
@@ -173,7 +181,7 @@ extension JSONAdapter {
             fatalError("modelClazz: \(self.modelClazz) is not NSManagedObject.Type")
         }
 
-        appManager?.coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
+        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
 
             if let error = error {
                 callback(fetchResult, error)
