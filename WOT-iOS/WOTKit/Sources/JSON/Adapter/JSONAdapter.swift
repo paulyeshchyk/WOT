@@ -60,13 +60,13 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         self.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
         let keys = json.keys
         let publisher = Publishers.Sequence<Dictionary<AnyHashable, Any>.Keys, Error>(sequence: keys)
-        jsonIterator = publisher.sink(receiveCompletion: { _ in
-            self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
-            self.onJSONDidParse?(fromRequest, self, error)
-
-        }) { key in
-            self.findOrCreate(json: json, key: key, fromRequest: fromRequest)
-        }
+        jsonIterator = publisher
+            .sink(receiveCompletion: { _ in
+                self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
+                self.onJSONDidParse?(fromRequest, self, error)
+            }, receiveValue: { key in
+                self.findOrCreate(json: json, key: key, fromRequest: fromRequest)
+            })
     }
 
     private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
@@ -119,7 +119,7 @@ extension JSONAdapter {
     /**
 
      */
-    private func extractSubJSON(from json: JSON, by key: AnyHashable ) -> JSONExtraction {
+    private func extractSubJSON(from json: JSON, by key: AnyHashable, keyType: PrimaryKeyType) -> JSONExtraction {
         guard let jsonByKey = json[key] as? JSON else {
             fatalError("invalid json for key")
         }
@@ -129,27 +129,26 @@ extension JSONAdapter {
         } else {
             objectJson = jsonByKey
         }
-        let ident = onGetIdent(modelClazz, objectJson, key)
-        return JSONExtraction(identifier: ident, json: objectJson)
-    }
+        let primaryKeyPath = modelClazz.primaryKeyPath(forType: keyType)
 
-    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
         let ident: Any
-        #warning(".external should be used in case ModureTree-Module-VehicleProfileGun")
-        let primaryKeyPath = Clazz.primaryKeyPath(forType: .internal)
-
         if  primaryKeyPath.count > 0 {
-            ident = json[primaryKeyPath] ?? key
+            ident = objectJson[primaryKeyPath] ?? key
         } else {
             ident = key
         }
-        return ident
+        return JSONExtraction(identifier: ident, json: objectJson)
     }
 
     private func findOrCreate(json: JSON, key: AnyHashable, fromRequest: WOTRequestProtocol) {
-        let extraction = self.extractSubJSON(from: json, by: key)
-        let primaryKeyType = self.linker?.primaryKeyType ?? .external
-        self.findOrCreateObject(jsonExtraction: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult, error in
+        let primaryKeyType = self.linker?.primaryKeyType ?? .internal
+        let extraction = self.extractSubJSON(from: json, by: key, keyType: primaryKeyType)
+
+        let parents = fromRequest.predicate?.pkCase?.plainParents
+        let objCase = PKCase(parentObjects: parents)
+        objCase[.primary] = modelClazz.primaryKey(for: extraction.identifier as AnyObject, andType: primaryKeyType)
+
+        self.findOrCreateObject(jsonExtraction: extraction, fromRequest: fromRequest, pkCase: objCase) { fetchResult, error in
 
             if let error = error {
                 self.logEvent(EventError(error, details: nil), sender: self)
@@ -164,7 +163,7 @@ extension JSONAdapter {
         }
     }
 
-    private func findOrCreateObject(jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, primaryKeyType: PrimaryKeyType,  callback: @escaping FetchResultErrorCompletion) {
+    private func findOrCreateObject(jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, pkCase objCase: PKCase,  callback: @escaping FetchResultErrorCompletion) {
         guard Thread.current.isMainThread else {
             fatalError("thread is not main")
         }
@@ -172,10 +171,6 @@ extension JSONAdapter {
         guard let MAINCONTEXT = coreDataStore?.mainContext else {
             fatalError("main is not accessible")
         }
-
-        let parents = fromRequest.predicate?.pkCase?.plainParents ?? []
-        let objCase = PKCase(parentObjects: parents)
-        objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject, andType: primaryKeyType)
 
         guard let managedObjectClass = self.modelClazz as? NSManagedObject.Type else {
             fatalError("modelClazz: \(self.modelClazz) is not NSManagedObject.Type")
