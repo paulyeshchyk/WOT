@@ -135,7 +135,7 @@ extension Vehicleprofile {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
@@ -166,7 +166,7 @@ extension Vehicleprofile {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
@@ -197,7 +197,7 @@ extension Vehicleprofile {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
@@ -228,7 +228,7 @@ extension Vehicleprofile {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
@@ -259,7 +259,7 @@ extension Vehicleprofile {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
@@ -289,7 +289,7 @@ extension Vehicleprofile {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
@@ -320,7 +320,7 @@ extension Vehicleprofile {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
@@ -351,7 +351,7 @@ extension Vehicleprofile {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context

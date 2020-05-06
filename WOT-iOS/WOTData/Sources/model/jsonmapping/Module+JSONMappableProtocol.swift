@@ -52,7 +52,7 @@ extension Module {
         }
     }
 
-    private func fetchRemoteModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
+    private func fetchRemoteModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, linker: JSONAdapterLinkerProtocol) {
         let pkCase = PKCase()
         pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .external)
         if let tank_id = tank_id {
@@ -79,8 +79,11 @@ extension Module {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["engine"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["engine"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -112,8 +115,11 @@ extension Module {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["turret"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["turret"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -145,8 +151,11 @@ extension Module {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["suspension"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["suspension"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -178,8 +187,11 @@ extension Module {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["radio"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["radio"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -211,8 +223,11 @@ extension Module {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["gun"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["gun"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {

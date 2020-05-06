@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import Combine
 
 public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
@@ -21,34 +20,35 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         appManager?.logInspector?.logEvent(event)
     }
 
-    // MARK: NSObject -
-    override public var hash: Int {
-        return uuid.uuidString.hashValue
-    }
-
-    required public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?) {
-        self.modelClazz = clazz
-        self.request = request
-        self.appManager = appManager
-
-        super.init()
-        self.logEvent(EventObjectNew(request.description), sender: self)
-    }
-
-    deinit {
-        jsonIterator?.cancel()
-        self.logEvent(EventObjectFree(request.description), sender: self)
-    }
-
     // MARK: DataAdapterProtocol -
     public var appManager: WOTAppManagerProtocol?
     public let uuid: UUID = UUID()
 
     // MARK: JSONAdapterProtocol -
     public var onJSONDidParse: OnRequestComplete?
-    public var linker: JSONAdapterLinkerProtocol?
-    private var jsonIterator: AnyCancellable?
+    public var linker: JSONAdapterLinkerProtocol
 
+    // MARK: NSObject -
+    override public var hash: Int {
+        return uuid.uuidString.hashValue
+    }
+
+    required public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol) {
+        self.modelClazz = clazz
+        self.request = request
+        self.appManager = appManager
+        self.linker = linker
+
+        super.init()
+        self.logEvent(EventObjectNew(request.description), sender: self)
+    }
+
+    deinit {
+
+        self.logEvent(EventObjectFree(request.description), sender: self)
+    }
+
+    // MARK: JSONAdapterProtocol -
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             self.logEvent(EventError(error, details: request), sender: self)
@@ -58,15 +58,31 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
         let jsonStartParsingDate = Date()
         self.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
-        let keys = json.keys
-        let publisher = Publishers.Sequence<Dictionary<AnyHashable, Any>.Keys, Error>(sequence: keys)
-        jsonIterator = publisher
-            .sink(receiveCompletion: { _ in
-                self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
-                self.onJSONDidParse?(fromRequest, self, error)
-            }, receiveValue: { key in
-                self.findOrCreate(json: json, key: key, fromRequest: fromRequest)
-            })
+
+        var fakeIncrement: Int = json.keys.count
+        json.keys.forEach { key in
+            //
+            let extraction = self.linker.performJSONExtraction(from: json, byKey: key, forClazz: self.modelClazz, request: fromRequest)
+
+            self.findOrCreateObject(json: extraction.json, pkCase: extraction.pkCase) { fetchResult, error in
+
+                if let error = error {
+                    self.logEvent(EventError(error, details: nil), sender: self)
+                    return
+                }
+
+                self.linker.process(fetchResult: fetchResult) { _, error in
+                    if let error = error {
+                        self.logEvent(EventError(error, details: nil), sender: self)
+                    }
+                    fakeIncrement -= 1
+                    if fakeIncrement == 0 {
+                        self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
+                        self.onJSONDidParse?(fromRequest, self, error)
+                    }
+                }
+            }
+        }
     }
 
     private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
@@ -111,59 +127,7 @@ extension DataAdapterProtocol {
 }
 
 extension JSONAdapter {
-    private struct JSONExtraction {
-        let identifier: Any
-        let json: JSON
-    }
-
-    /**
-
-     */
-    private func extractSubJSON(from json: JSON, by key: AnyHashable, keyType: PrimaryKeyType) -> JSONExtraction {
-        guard let jsonByKey = json[key] as? JSON else {
-            fatalError("invalid json for key")
-        }
-        let objectJson: JSON
-        if let extracted = linker?.onJSONExtraction(json: jsonByKey) {
-            objectJson = extracted
-        } else {
-            objectJson = jsonByKey
-        }
-        let primaryKeyPath = modelClazz.primaryKeyPath(forType: keyType)
-
-        let ident: Any
-        if  primaryKeyPath.count > 0 {
-            ident = objectJson[primaryKeyPath] ?? key
-        } else {
-            ident = key
-        }
-        return JSONExtraction(identifier: ident, json: objectJson)
-    }
-
-    private func findOrCreate(json: JSON, key: AnyHashable, fromRequest: WOTRequestProtocol) {
-        let primaryKeyType = self.linker?.primaryKeyType ?? .internal
-        let extraction = self.extractSubJSON(from: json, by: key, keyType: primaryKeyType)
-
-        let parents = fromRequest.predicate?.pkCase?.plainParents
-        let objCase = PKCase(parentObjects: parents)
-        objCase[.primary] = modelClazz.primaryKey(for: extraction.identifier as AnyObject, andType: primaryKeyType)
-
-        self.findOrCreateObject(jsonExtraction: extraction, fromRequest: fromRequest, pkCase: objCase) { fetchResult, error in
-
-            if let error = error {
-                self.logEvent(EventError(error, details: nil), sender: self)
-                return
-            }
-
-            self.linker?.process(fetchResult: fetchResult) { _, error in
-                if let error = error {
-                    self.logEvent(EventError(error, details: nil), sender: self)
-                }
-            }
-        }
-    }
-
-    private func findOrCreateObject(jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, pkCase objCase: PKCase,  callback: @escaping FetchResultErrorCompletion) {
+    private func findOrCreateObject(json: JSON, pkCase: PKCase,  callback: @escaping FetchResultErrorCompletion) {
         guard Thread.current.isMainThread else {
             fatalError("thread is not main")
         }
@@ -176,7 +140,7 @@ extension JSONAdapter {
             fatalError("modelClazz: \(self.modelClazz) is not NSManagedObject.Type")
         }
 
-        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
+        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: pkCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
 
             if let error = error {
                 callback(fetchResult, error)
@@ -184,15 +148,44 @@ extension JSONAdapter {
             }
 
             let jsonStartParsingDate = Date()
-            self.logEvent(EventJSONStart(objCase.description), sender: self)
-            self.mappingCoordinator?.decodingAndMapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, linker: nil) { fetchResult, error in
+            self.logEvent(EventJSONStart(pkCase.description), sender: self)
+            self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { fetchResult, error in
                 if let error = error {
                     self.logEvent(EventError(error, details: nil), sender: self)
                 }
-                self.logEvent(EventJSONEnded("\(objCase)", initiatedIn: jsonStartParsingDate), sender: self)
+                self.logEvent(EventJSONEnded("\(pkCase)", initiatedIn: jsonStartParsingDate), sender: self)
                 callback(fetchResult, nil)
             }
         })
+    }
+}
+
+public struct JSONExtraction {
+    public let pkCase: PKCase
+    public let json: JSON
+}
+
+extension JSONAdapterLinkerProtocol {
+    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: WOTRequestProtocol) -> JSONExtraction {
+        guard let json = from[key] as? JSON else {
+            fatalError("invalid json for key")
+        }
+
+        let extractedJSON = onJSONExtraction(json: json)
+        let primaryKeyPath = modelClazz.primaryKeyPath(forType: self.primaryKeyType)
+
+        let ident: Any
+        if  primaryKeyPath.count > 0 {
+            ident = extractedJSON[primaryKeyPath] ?? key
+        } else {
+            ident = key
+        }
+
+        let parents = fromRequest.predicate?.pkCase?.plainParents
+        let objCase = PKCase(parentObjects: parents)
+        objCase[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: primaryKeyType)
+
+        return JSONExtraction(pkCase: objCase, json: extractedJSON)
     }
 }
 

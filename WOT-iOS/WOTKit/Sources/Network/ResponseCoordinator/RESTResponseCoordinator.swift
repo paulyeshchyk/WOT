@@ -30,21 +30,20 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
         appManager?.logInspector?.logEvent(event)
     }
 
-    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol?, onComplete: @escaping OnRequestComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
         }
 
         guard let requestIds = requestCoordinator.requestIds(forRequest: request), requestIds.count > 0 else {
-            onComplete(request, self, nil)
+            onRequestComplete(request, self, nil)
             return
         }
         var dataAdaptationPair: [DataAdaptationPair] = .init()
         requestIds.forEach({ requestIdType in
             do {
-                let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request)
-                adapter.onJSONDidParse = onComplete
-                adapter.linker = linker
+                let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request, linker: linker)
+                adapter.onJSONDidParse = onRequestComplete
                 let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
                 dataAdaptationPair.append(pair)
             } catch let error {
@@ -53,7 +52,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
         })
 
         if dataAdaptationPair.count == 0 {
-            onComplete(request, self, nil)
+            onRequestComplete(request, self, nil)
         }
 
         dataAdaptationPair.forEach { (pair) in

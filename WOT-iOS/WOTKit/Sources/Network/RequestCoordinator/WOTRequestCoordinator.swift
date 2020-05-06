@@ -61,7 +61,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return result
     }
 
-    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol) throws -> JSONAdapterProtocol {
+    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) throws -> JSONAdapterProtocol {
         guard let modelClass = try modelClass(for: requestIdType) else {
             throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
         }
@@ -69,7 +69,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
             throw RequestCoordinatorError.adapterNotFound(requestType: requestIdType.debugDescription)
         }
 
-        return dataAdapterClass.init(Clazz: modelClass, request: request, appManager: appManager)
+        return dataAdapterClass.init(Clazz: modelClass, request: request, appManager: appManager, linker: linker)
     }
 }
 

@@ -74,8 +74,11 @@ extension VehicleprofileModule {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["suspension"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["suspension"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -107,8 +110,11 @@ extension VehicleprofileModule {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["engine"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["engine"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -140,8 +146,11 @@ extension VehicleprofileModule {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["turret"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["turret"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -173,8 +182,11 @@ extension VehicleprofileModule {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["radio"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["radio"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -206,8 +218,11 @@ extension VehicleprofileModule {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["gun"] as? JSON
+        public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["gun"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {

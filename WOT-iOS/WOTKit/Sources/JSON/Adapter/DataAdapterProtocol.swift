@@ -15,5 +15,4 @@ public protocol DataAdapterProtocol: LogInspectorProtocol {
     var uuid: UUID { get }
     var onJSONDidParse: OnRequestComplete? { get set }
     func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
-    init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?)
 }

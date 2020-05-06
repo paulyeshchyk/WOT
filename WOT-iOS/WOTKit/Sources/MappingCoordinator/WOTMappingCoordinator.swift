@@ -112,7 +112,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         }
     }
 
-    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
+    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol) {
         self.logEvent(EventCustomLogic("fetchRemote:\(clazz)"), sender: self)
 
         var predicates = [RequestPredicate]()
@@ -124,7 +124,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     // MARK: private -
-    private func fetchRemote(predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?) {
+    private func fetchRemote(predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) {
         guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {
             self.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
             return

@@ -119,7 +119,7 @@ extension Vehicles {
             self.coreDataStore = coreDataStore
         }
 
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
@@ -131,6 +131,31 @@ extension Vehicles {
                     }
                 }
             }
+        }
+    }
+
+    public class VehiclesPivotDataLinker: JSONAdapterLinkerProtocol {
+        public var primaryKeyType: PrimaryKeyType {
+            return .internal
+        }
+
+        private var coreDataStore: WOTCoredataStoreProtocol?
+        private var objectID: NSManagedObjectID
+        private var identifier: Any?
+
+        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
+            self.objectID = objectID
+            self.identifier = identifier
+            self.coreDataStore = coreDataStore
+        }
+
+        public func onJSONExtraction(json: JSON) -> JSON { return json }
+
+        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+            let context = fetchResult.context
+            coreDataStore?.stash(context: context, block: { error in
+                completion(fetchResult, error)
+            })
         }
     }
 }

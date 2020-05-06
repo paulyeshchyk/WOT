@@ -10,7 +10,8 @@ import CoreData
 
 @objc
 public protocol JSONAdapterProtocol: DataAdapterProtocol {
-    var linker: JSONAdapterLinkerProtocol? { get set }
+    var linker: JSONAdapterLinkerProtocol { get set }
+    init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol)
 }
 
 public enum JSONAdapterLinkerError: Error {
@@ -23,5 +24,5 @@ public protocol JSONAdapterLinkerProtocol {
     init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?)
     var primaryKeyType: PrimaryKeyType { get }
     func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion)
-    func onJSONExtraction(json: JSON) -> JSON?
+    func onJSONExtraction(json: JSON) -> JSON
 }

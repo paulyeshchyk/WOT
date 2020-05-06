@@ -14,5 +14,5 @@ public protocol WOTRequestCoordinatorProtocol: LogInspectorProtocol {
     func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]?
     func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]?
-    func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol) throws -> JSONAdapterProtocol
+    func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) throws -> JSONAdapterProtocol
 }

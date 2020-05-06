@@ -13,5 +13,5 @@ public protocol WOTResponseCoordinatorProtocol: LogInspectorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
 
     init(requestCoordinator: WOTRequestCoordinatorProtocol)
-    func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol?, onComplete: @escaping OnRequestComplete) throws
+    func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws
 }

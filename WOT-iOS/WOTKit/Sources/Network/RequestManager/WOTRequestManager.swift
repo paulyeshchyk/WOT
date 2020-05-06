@@ -81,7 +81,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol?) throws {
+    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol) throws {
         guard addRequest(request, forGroupId: forGroupId) else {
             throw WEBError.requestWasNotAddedToGroup
         }
@@ -94,7 +94,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?) throws {
+    public func startRequest(by requestId: WOTRequestIdType, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) throws {
         let request = try createRequest(forRequestId: requestId, withPredicate: requestPredicate)
 
         let arguments = requestPredicate.buildRequestArguments()
@@ -148,12 +148,15 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        let adapterLinker = grouppedLinkers[request.uuid.uuidString]
+        guard let adapterLinker = grouppedLinkers[request.uuid.uuidString] else {
+            self.logEvent(EventError(message: "linker not found"), sender: self)
+            return
+        }
         do {
             try dataparser.parseResponse(data: data,
                                          forRequest: request,
                                          linker: adapterLinker,
-                                         onComplete: onRequestComplete(_:_:error:))
+                                         onRequestComplete: onRequestComplete(_:_:error:))
         } catch {
             self.logEvent(EventError(error, details: request), sender: self)
         }
