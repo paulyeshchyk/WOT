@@ -23,7 +23,7 @@ extension VehicleprofileModule {
             let gunCase = PKCase()
             gunCase[.primary] = VehicleprofileGun.primaryKey(for: gun_id, andType: .external)
             gunCase[.secondary] = pkCase[.primary]
-            let moduleGunHelper = VehicleprofileModule.GunJSONAdapterHelper(masterFetchResult: masterFetchResult, identifier: gun_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let moduleGunHelper = VehicleprofileModule.GunJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: gun_id, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", linker: moduleGunHelper)
         }
 
@@ -31,7 +31,7 @@ extension VehicleprofileModule {
             let radioCase = PKCase()
             radioCase[.primary] = VehicleprofileRadio.primaryKey(for: radio_id, andType: .external)
             radioCase[.secondary] = pkCase[.primary]
-            let moduleRadioHelper = VehicleprofileModule.RadioJSONAdapterHelper(masterFetchResult: masterFetchResult, identifier: radio_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let moduleRadioHelper = VehicleprofileModule.RadioJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: radio_id, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", linker: moduleRadioHelper)
         }
 
@@ -39,7 +39,7 @@ extension VehicleprofileModule {
             let engineCase = PKCase()
             engineCase[.primary] = VehicleprofileEngine.primaryKey(for: engine_id, andType: .external)
             engineCase[.secondary] = pkCase[.primary]
-            let moduleEngineHelper = VehicleprofileModule.EngineJSONAdapterHelper(masterFetchResult: masterFetchResult, identifier: engine_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let moduleEngineHelper = VehicleprofileModule.EngineJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: engine_id, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", linker: moduleEngineHelper)
         }
 
@@ -47,7 +47,7 @@ extension VehicleprofileModule {
             let suspensionCase = PKCase()
             suspensionCase[.primary] = VehicleprofileSuspension.primaryKey(for: suspension_id, andType: .external)
             suspensionCase[.secondary] = pkCase[.primary]
-            let moduleSuspensionHelper = VehicleprofileModule.SuspensionJSONAdapterHelper(masterFetchResult: masterFetchResult, identifier: suspension_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let moduleSuspensionHelper = VehicleprofileModule.SuspensionJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: suspension_id, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", linker: moduleSuspensionHelper)
         }
 
@@ -55,7 +55,7 @@ extension VehicleprofileModule {
             let turretCase = PKCase()
             turretCase[.primary] = VehicleprofileTurret.primaryKey(for: turret_id, andType: .external)
             turretCase[.secondary] = pkCase[.primary]
-            let moduleTurretHelper = VehicleprofileModule.TurretJSONAdapterHelper(masterFetchResult: masterFetchResult, identifier: turret_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let moduleTurretHelper = VehicleprofileModule.TurretJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: turret_id, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", linker: moduleTurretHelper)
         }
     }
@@ -76,7 +76,7 @@ extension VehicleprofileModule {
             let context = fetchResult.context
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileModule {
-                    vehicleProfileSuspension.suspension_id = identifier as? NSDecimalNumber
+                    vehicleProfileSuspension.suspension_id = mappedObjectIdentifier as? NSDecimalNumber
                     module.vehicleChassis = vehicleProfileSuspension
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -100,7 +100,7 @@ extension VehicleprofileModule {
             let context = fetchResult.context
             if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileModule {
-                    vehicleProfileEngine.engine_id = identifier as? NSDecimalNumber
+                    vehicleProfileEngine.engine_id = mappedObjectIdentifier as? NSDecimalNumber
                     module.vehicleEngine = vehicleProfileEngine
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -124,7 +124,7 @@ extension VehicleprofileModule {
             let context = fetchResult.context
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileModule {
-                    vehicleProfileTurret.turret_id = identifier as? NSDecimalNumber
+                    vehicleProfileTurret.turret_id = mappedObjectIdentifier as? NSDecimalNumber
                     module.vehicleTurret = vehicleProfileTurret
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -148,7 +148,7 @@ extension VehicleprofileModule {
             let context = fetchResult.context
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileModule {
-                    vehicleProfileRadio.radio_id = identifier as? NSDecimalNumber
+                    vehicleProfileRadio.radio_id = mappedObjectIdentifier as? NSDecimalNumber
                     module.vehicleRadio = vehicleProfileRadio
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -172,7 +172,7 @@ extension VehicleprofileModule {
             let context = fetchResult.context
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileModule {
-                    vehicleProfileGun.gun_id = identifier as? NSDecimalNumber
+                    vehicleProfileGun.gun_id = mappedObjectIdentifier as? NSDecimalNumber
                     module.vehicleGun = vehicleProfileGun
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)

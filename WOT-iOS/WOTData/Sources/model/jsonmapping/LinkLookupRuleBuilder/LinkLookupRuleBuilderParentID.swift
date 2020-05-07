@@ -26,6 +26,6 @@ public class LinkLookupRuleBuilderParentID: LinkLookupRuleBuilderProtocol {
         if let foreignKey = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey) {
             itemCase[.primary] = foreignKey
         }
-        return LinkLookupRule(ident: nil, pkCase: itemCase)
+        return LinkLookupRule(objectIdentifier: nil, pkCase: itemCase)
     }
 }

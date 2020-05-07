@@ -20,7 +20,7 @@ public class WOTWEBRequestFactory: NSObject {
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
         requestManager.addListener(listener, forRequest: request)
         let coreDataStore = requestManager.appManager?.coreDataStore
-        let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), identifier: nil, coreDataStore: coreDataStore)
+        let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil, coreDataStore: coreDataStore)
         try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, linker: pivotLinker)
     }
 
@@ -44,7 +44,7 @@ public class WOTWEBRequestFactory: NSObject {
                 }
 
                 let groupId = "WOT_REQUEST_ID_VEHICLE_BY_TIER:\(vehicleId)"
-                let modulesTreeHelper: JSONAdapterLinkerProtocol = Vehicles.VehiclesModulesTreeLinker(masterFetchResult: fetchResult, identifier: nil, coreDataStore: coreDataStore)
+                let modulesTreeHelper: JSONAdapterLinkerProtocol = Vehicles.VehiclesModulesTreeLinker(masterFetchResult: fetchResult, mappedObjectIdentifier: nil, coreDataStore: coreDataStore)
                 try? requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: modulesTreeHelper)
             })
         }

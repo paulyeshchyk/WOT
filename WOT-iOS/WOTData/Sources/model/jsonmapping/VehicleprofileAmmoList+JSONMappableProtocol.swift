@@ -29,7 +29,7 @@ extension VehicleprofileAmmoList {
                     return
                 }
 
-                let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(masterFetchResult: vehicleProfileAmmoListFetchResult, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(masterFetchResult: vehicleProfileAmmoListFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, linker: ammoLinker) { _, error in
                     if let error = error {
                         mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)

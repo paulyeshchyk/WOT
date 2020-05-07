@@ -22,7 +22,7 @@ extension Vehicles {
         let defaultProfileHelper: JSONAdapterLinkerProtocol? = nil
         self.defaultProfileMapping(context: context, jSON: json[#keyPath(Vehicles.default_profile)] as? JSON, pkCase: pkCase, linker: defaultProfileHelper, mappingCoordinator: mappingCoordinator)
 
-        let modulesTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(masterFetchResult: vehiclesFetchResult, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        let modulesTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(masterFetchResult: vehiclesFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         self.modulesTreeMapping(context: context, jSON: json[#keyPath(Vehicles.modules_tree)] as? JSON, pkCase: pkCase, linker: modulesTreeHelper, mappingCoordinator: mappingCoordinator)
     }
 }
@@ -97,7 +97,7 @@ extension Vehicles {
                 #warning("not used linker")
                 self.addToModules_tree(module_tree)
 
-                let moduleTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(masterFetchResult: vehiclesFetchResult, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                let moduleTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(masterFetchResult: vehiclesFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.decodingAndMapping(json: moduleTreeJSON, fetchResult: fetchResult, pkCase: modulesTreeCase, linker: moduleTreeHelper, completion: { _, error in
                     if let error = error {
                         mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)

@@ -27,7 +27,7 @@ extension VehicleprofileArmorList {
                     mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     return
                 }
-                let armorHullLinker: JSONAdapterLinkerProtocol? = VehicleprofileArmorList.HullLinker(masterFetchResult: masterFetchResult, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                let armorHullLinker: JSONAdapterLinkerProtocol? = VehicleprofileArmorList.HullLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.decodingAndMapping(json: fromJSON, fetchResult: fetchResult, pkCase: hullCase, linker: armorHullLinker) { _, error in
                     if let error = error {
                         mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
@@ -47,7 +47,7 @@ extension VehicleprofileArmorList {
                     mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     return
                 }
-                let armorHullLinker: JSONAdapterLinkerProtocol? = VehicleprofileArmorList.TurretLinker(masterFetchResult: masterFetchResult, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                let armorHullLinker: JSONAdapterLinkerProtocol? = VehicleprofileArmorList.TurretLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.decodingAndMapping(json: fromJSON, fetchResult: fetchResult, pkCase: hullCase, linker: armorHullLinker) { _, error in
                     if let error = error {
                         mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)

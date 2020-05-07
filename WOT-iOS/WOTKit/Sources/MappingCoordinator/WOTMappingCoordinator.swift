@@ -124,34 +124,34 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     //
-    public func linkItems(from array: [Any]?, clazz: PrimaryKeypathProtocol.Type, linkerType: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, fetchResult: FetchResult) {
+    public func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
         guard let itemsList = array else { return }
 
         guard let linkLookupRule = linkLookupRuleBuilder.build() else {
             return
         }
 
-        let context = fetchResult.context
+        let context = masterFetchResult.context
 
-        let linker = linkerType.init(masterFetchResult: fetchResult, identifier: nil, coreDataStore: self.coreDataStore)
-        self.fetchLocal(array: itemsList, context: context, forClass: clazz, pkCase: linkLookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
+        let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: self.coreDataStore)
+        self.fetchLocal(array: itemsList, context: context, forClass: linkedClazz, pkCase: linkLookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
             if let error = error {
                 self?.logEvent(EventError(error, details: nil), sender: nil)
             }
         })
     }
 
-    public func linkItem(from json: JSON?, clazz: PrimaryKeypathProtocol.Type, linkerType: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, fetchResult: FetchResult) {
+    public func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
         guard let itemJSON = json else { return }
 
         guard let linkLookupRule = linkLookupRuleBuilder.build() else {
             return
         }
 
-        let context = fetchResult.context
+        let context = masterFetchResult.context
 
-        let linker = linkerType.init(masterFetchResult: fetchResult, identifier: linkLookupRule.ident, coreDataStore: self.coreDataStore)
-        self.fetchLocal(json: itemJSON, context: context, forClass: clazz, pkCase: linkLookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
+        let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: linkLookupRule.objectIdentifier, coreDataStore: self.coreDataStore)
+        self.fetchLocal(json: itemJSON, context: context, forClass: linkedClazz, pkCase: linkLookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
             if let error = error {
                 self?.logEvent(EventError(error, details: nil), sender: nil)
             }

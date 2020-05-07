@@ -14,16 +14,14 @@ public class LinkLookupRuleBuilderParentIDAndObjectID: LinkLookupRuleBuilderProt
     private var pkCase: PKCase
     private var foreignSelectKey: String
     private var parentObjectIDList: [NSManagedObjectID]?
-    private var primaryKeyType: PrimaryKeyType
-    private var clazz: PrimaryKeypathProtocol.Type
+    private var masterClazz: PrimaryKeypathProtocol.Type
 
-    public init(json: JSON?, pkCase: PKCase, foreignSelectKey: String, parentObjectIDList: [NSManagedObjectID]?, primaryKeyType: PrimaryKeyType, clazz: PrimaryKeypathProtocol.Type) {
+    public init(json: JSON?, masterClazz: PrimaryKeypathProtocol.Type, pkCase: PKCase, foreignSelectKey: String, parentObjectIDList: [NSManagedObjectID]?) {
         self.json = json
         self.pkCase = pkCase
         self.foreignSelectKey = foreignSelectKey
         self.parentObjectIDList = parentObjectIDList
-        self.primaryKeyType = primaryKeyType
-        self.clazz = clazz
+        self.masterClazz = masterClazz
     }
 
     public func build() -> LinkLookupRule? {
@@ -31,7 +29,7 @@ public class LinkLookupRuleBuilderParentIDAndObjectID: LinkLookupRuleBuilderProt
 
         let itemCase = PKCase(parentObjectIDList: parentObjectIDList)
         let objectID: Any?
-        if let idKeyPath = clazz.primaryKeyPath(forType: primaryKeyType) {
+        if let idKeyPath = masterClazz.primaryKeyPath(forType: .none) {
             objectID = json[idKeyPath]
         } else {
             objectID = nil
@@ -39,6 +37,6 @@ public class LinkLookupRuleBuilderParentIDAndObjectID: LinkLookupRuleBuilderProt
         if let foreignKey = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey) {
             itemCase[.primary] = foreignKey
         }
-        return LinkLookupRule(ident: objectID, pkCase: itemCase)
+        return LinkLookupRule(objectIdentifier: objectID, pkCase: itemCase)
     }
 }

@@ -24,61 +24,61 @@ extension Vehicleprofile {
 
         let vehicleProfileFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
-        // MARK: - Ammo
+        // MARK: - AmmoList
 
         let ammoListArray = json[#keyPath(Vehicleprofile.ammo)] as? [Any]
-        let ammoListLinkerType = Vehicleprofile.VehicleprofileAmmoListLinker.self
+        let ammoListMapperClazz = Vehicleprofile.VehicleprofileAmmoListLinker.self
         let ammoLookupBuilder = LinkLookupRuleBuilderParentID(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parents: parentObjectIDList)
-        mappingCoordinator?.linkItems(from: ammoListArray, clazz: VehicleprofileAmmoList.self, linkerType: ammoListLinkerType, linkLookupRuleBuilder: ammoLookupBuilder, fetchResult: vehicleProfileFetchResult)
+        mappingCoordinator?.linkItems(from: ammoListArray, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileAmmoList.self, mapperClazz: ammoListMapperClazz, linkLookupRuleBuilder: ammoLookupBuilder)
 
         // MARK: - Armor
 
         let armorJSON = json[#keyPath(Vehicleprofile.armor)] as? JSON
-        let armorListLinkerType = Vehicleprofile.VehicleprofileArmorListLinker.self
-        let armorLookupBuilder = LinkLookupRuleBuilderParentIDAndObjectID(json: armorJSON, pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList, primaryKeyType: .none, clazz: VehicleprofileModule.self)
-        mappingCoordinator?.linkItem(from: armorJSON, clazz: VehicleprofileArmorList.self, linkerType: armorListLinkerType, linkLookupRuleBuilder: armorLookupBuilder, fetchResult: vehicleProfileFetchResult)
+        let armorListMapperClazz = Vehicleprofile.VehicleprofileArmorListLinker.self
+        let armorLookupBuilder = LinkLookupRuleBuilderParentIDAndObjectID(json: armorJSON, masterClazz: VehicleprofileModule.self, pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        mappingCoordinator?.linkItem(from: armorJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileArmorList.self, mapperClazz: armorListMapperClazz, linkLookupRuleBuilder: armorLookupBuilder)
 
-        // MARK: - Modules
+        // MARK: - Module
 
         let moduleJSON = json[#keyPath(Vehicleprofile.modules)] as? JSON
-        let moduleLinkerType = Vehicleprofile.VehicleprofileModuleLinker.self
-        let modulesLookupBuilder = LinkLookupRuleBuilderParentIDAndObjectID(json: moduleJSON, pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList, primaryKeyType: .none, clazz: VehicleprofileModule.self)
-        mappingCoordinator?.linkItem(from: moduleJSON, clazz: VehicleprofileModule.self, linkerType: moduleLinkerType, linkLookupRuleBuilder: modulesLookupBuilder, fetchResult: vehicleProfileFetchResult)
+        let moduleMapperClazz = Vehicleprofile.VehicleprofileModuleLinker.self
+        let modulesLookupBuilder = LinkLookupRuleBuilderParentIDAndObjectID(json: moduleJSON, masterClazz: VehicleprofileModule.self, pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        mappingCoordinator?.linkItem(from: moduleJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileModule.self, mapperClazz: moduleMapperClazz, linkLookupRuleBuilder: modulesLookupBuilder)
 
         // MARK: - Engine
 
         let engineJSON = json[#keyPath(Vehicleprofile.engine)] as? JSON
-        let engineLinkerType = Vehicleprofile.VehicleprofileEngineLinker.self
-        let engineLookupBuilder = LinkLookupRuleBuilderObjectID(json: engineJSON, primaryKeyType: .internal, clazz: VehicleprofileEngine.self)
-        mappingCoordinator?.linkItem(from: engineJSON, clazz: VehicleprofileEngine.self, linkerType: engineLinkerType, linkLookupRuleBuilder: engineLookupBuilder, fetchResult: vehicleProfileFetchResult)
+        let engineMapperClazz = Vehicleprofile.VehicleprofileEngineLinker.self
+        let engineLookupBuilder = LinkLookupRuleBuilderObjectID(json: engineJSON, linkedClazz: VehicleprofileEngine.self)
+        mappingCoordinator?.linkItem(from: engineJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileEngine.self, mapperClazz: engineMapperClazz, linkLookupRuleBuilder: engineLookupBuilder)
 
         // MARK: - Gun
 
         let gunJSON = json[#keyPath(Vehicleprofile.gun)] as? JSON
-        let gunLinkerType = Vehicleprofile.VehicleprofileGunLinker.self
-        let gunLookupBuilder = LinkLookupRuleBuilderObjectID(json: gunJSON, primaryKeyType: .internal, clazz: VehicleprofileGun.self)
-        mappingCoordinator?.linkItem(from: gunJSON, clazz: VehicleprofileGun.self, linkerType: gunLinkerType, linkLookupRuleBuilder: gunLookupBuilder, fetchResult: vehicleProfileFetchResult)
+        let gunMapperClazz = Vehicleprofile.VehicleprofileGunLinker.self
+        let gunLookupBuilder = LinkLookupRuleBuilderObjectID(json: gunJSON, linkedClazz: VehicleprofileGun.self)
+        mappingCoordinator?.linkItem(from: gunJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileGun.self, mapperClazz: gunMapperClazz, linkLookupRuleBuilder: gunLookupBuilder)
 
         // MARK: - Suspension
 
         let suspensionJSON = json[#keyPath(Vehicleprofile.suspension)] as? JSON
-        let suspensionLinkerType = Vehicleprofile.VehicleprofileSuspensionLinker.self
-        let suspensionLookupBuilder = LinkLookupRuleBuilderObjectID(json: suspensionJSON, primaryKeyType: .internal, clazz: VehicleprofileSuspension.self)
-        mappingCoordinator?.linkItem(from: suspensionJSON, clazz: VehicleprofileSuspension.self, linkerType: suspensionLinkerType, linkLookupRuleBuilder: suspensionLookupBuilder, fetchResult: vehicleProfileFetchResult)
+        let suspensionMapperClazz = Vehicleprofile.VehicleprofileSuspensionLinker.self
+        let suspensionLookupBuilder = LinkLookupRuleBuilderObjectID(json: suspensionJSON, linkedClazz: VehicleprofileSuspension.self)
+        mappingCoordinator?.linkItem(from: suspensionJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileSuspension.self, mapperClazz: suspensionMapperClazz, linkLookupRuleBuilder: suspensionLookupBuilder)
 
         // MARK: - Turret
 
         let turretJSON = json[#keyPath(Vehicleprofile.turret)] as? JSON
-        let turretLinkerType = Vehicleprofile.VehicleprofileTurretLinker.self
-        let turretLookupBuilder = LinkLookupRuleBuilderObjectID(json: turretJSON, primaryKeyType: .internal, clazz: VehicleprofileTurret.self)
-        mappingCoordinator?.linkItem(from: turretJSON, clazz: VehicleprofileTurret.self, linkerType: turretLinkerType, linkLookupRuleBuilder: turretLookupBuilder, fetchResult: vehicleProfileFetchResult)
+        let turretMapperClazz = Vehicleprofile.VehicleprofileTurretLinker.self
+        let turretLookupBuilder = LinkLookupRuleBuilderObjectID(json: turretJSON, linkedClazz: VehicleprofileTurret.self)
+        mappingCoordinator?.linkItem(from: turretJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileTurret.self, mapperClazz: turretMapperClazz, linkLookupRuleBuilder: turretLookupBuilder)
 
         // MARK: - Radio
 
         let radioJSON = json[#keyPath(Vehicleprofile.radio)] as? JSON
-        let radioLinkerType = Vehicleprofile.VehicleprofileRadioLinker.self
-        let radioLookupBuilder = LinkLookupRuleBuilderObjectID(json: radioJSON, primaryKeyType: .internal, clazz: VehicleprofileRadio.self)
-        mappingCoordinator?.linkItem(from: radioJSON, clazz: VehicleprofileRadio.self, linkerType: radioLinkerType, linkLookupRuleBuilder: radioLookupBuilder, fetchResult: vehicleProfileFetchResult)
+        let radioMapperClazz = Vehicleprofile.VehicleprofileRadioLinker.self
+        let radioLookupBuilder = LinkLookupRuleBuilderObjectID(json: radioJSON, linkedClazz: VehicleprofileRadio.self)
+        mappingCoordinator?.linkItem(from: radioJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileRadio.self, mapperClazz: radioMapperClazz, linkLookupRuleBuilder: radioLookupBuilder)
     }
 }
 

@@ -41,19 +41,19 @@ extension Module {
         let moduleType = VehicleModuleType(rawValue: moduleTypeString)
         switch moduleType {
         case .vehicleChassis:
-            let vehicleSuspensionLinker = Module.SuspensionLinker(masterFetchResult: masterFetchResult, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let vehicleSuspensionLinker = Module.SuspensionLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "suspension.", linker: vehicleSuspensionLinker)
         case .vehicleGun:
-            let vehicleGunLinker = Module.ModuleGunLinker(masterFetchResult: masterFetchResult, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let vehicleGunLinker = Module.ModuleGunLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "gun.", linker: vehicleGunLinker)
         case .vehicleRadio:
-            let vehicleRadioLinker = Module.RadioLinker(masterFetchResult: masterFetchResult, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let vehicleRadioLinker = Module.RadioLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "radio.", linker: vehicleRadioLinker)
         case .vehicleEngine:
-            let vehicleEngineLinker = Module.EngineLinker(masterFetchResult: masterFetchResult, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let vehicleEngineLinker = Module.EngineLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "engine.", linker: vehicleEngineLinker)
         case .vehicleTurret:
-            let vehicleTurretLinker = Module.TurretLinker(masterFetchResult: masterFetchResult, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let vehicleTurretLinker = Module.TurretLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "turret.", linker: vehicleTurretLinker)
         case .none, .tank, .unknown:
             fatalError("unknown module type")
@@ -86,7 +86,7 @@ extension Module {
             let context = fetchResult.context
             if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
-                    vehicleProfileEngine.engine_id = self.identifier as? NSDecimalNumber
+                    vehicleProfileEngine.engine_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.engine = vehicleProfileEngine
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -110,7 +110,7 @@ extension Module {
             let context = fetchResult.context
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
-                    vehicleProfileTurret.turret_id = self.identifier as? NSDecimalNumber
+                    vehicleProfileTurret.turret_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.turret = vehicleProfileTurret
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -134,7 +134,7 @@ extension Module {
             let context = fetchResult.context
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
-                    vehicleProfileSuspension.suspension_id = self.identifier as? NSDecimalNumber
+                    vehicleProfileSuspension.suspension_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.suspension = vehicleProfileSuspension
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -158,7 +158,7 @@ extension Module {
             let context = fetchResult.context
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
-                    vehicleProfileRadio.radio_id = self.identifier as? NSDecimalNumber
+                    vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.radio = vehicleProfileRadio
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -182,7 +182,7 @@ extension Module {
             let context = fetchResult.context
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
-                    vehicleProfileGun.gun_id = self.identifier as? NSDecimalNumber
+                    vehicleProfileGun.gun_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.gun = vehicleProfileGun
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
