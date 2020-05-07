@@ -78,7 +78,6 @@ extension Vehicles {
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = modulesTreeCase[.primary]
 
-            #warning("refactoring")
             mappingCoordinator?.fetchLocal(context: context, byModelClass: ModulesTree.self, pkCase: submodulesCase) { fetchResult, error in
 
                 if let error = error {
@@ -90,6 +89,7 @@ extension Vehicles {
                     return
                 }
 
+                #warning("not used linker")
                 self.addToModules_tree(module_tree)
 
                 let moduleTreeHelper: JSONAdapterLinkerProtocol? = Vehicles.VehiclesModulesTreeLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)

@@ -12,16 +12,16 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Vehicleprofile {
-    public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase parentCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
         //
-        var parents = parentCase.plainParents
+        var parents = pkCase.plainParents
         parents.append(self)
 
         if let itemsList = json[#keyPath(Vehicleprofile.ammo)] as? [Any] {
             let itemCase = PKCase(parentObjects: parents)
-            itemCase[.primary] = parentCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
+            itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoList.vehicleprofile))
             let linker = Vehicleprofile.VehicleprofileAmmoListLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchLocal(array: itemsList, context: context, forClass: VehicleprofileAmmoList.self, pkCase: itemCase, linker: linker, callback: { _, error in
                 if let error = error {
@@ -32,7 +32,7 @@ extension Vehicleprofile {
 
         if let itemJSON = json[#keyPath(Vehicleprofile.armor)] as? JSON {
             let itemCase = PKCase(parentObjects: parents)
-            itemCase[.primary] = parentCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
+            itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmorList.vehicleprofile))
             let linker = Vehicleprofile.VehicleprofileArmorListLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: VehicleprofileArmorList.self, pkCase: itemCase, linker: linker, callback: { _, error in
                 if let error = error {
@@ -43,7 +43,7 @@ extension Vehicleprofile {
 
         if let moduleJSON = json[#keyPath(Vehicleprofile.modules)] as? JSON {
             let itemCase = PKCase(parentObjects: parents)
-            itemCase[.primary] = parentCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
+            itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileModule.vehicleprofile))
             let linker = Vehicleprofile.VehicleprofileModuleLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
             mappingCoordinator?.fetchLocal(json: moduleJSON, context: context, forClass: VehicleprofileModule.self, pkCase: itemCase, linker: linker, callback: { _, error in
                 if let error = error {

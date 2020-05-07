@@ -44,7 +44,6 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     }
 
     deinit {
-
         self.logEvent(EventObjectFree(request.description), sender: self)
     }
 

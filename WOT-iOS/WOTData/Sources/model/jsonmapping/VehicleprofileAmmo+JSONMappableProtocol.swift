@@ -20,8 +20,6 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoPenetrationCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         if let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
-            //
-            #warning("refactoring")
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult, error in
                 if let error = error {
                     mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
@@ -48,8 +46,6 @@ extension VehicleprofileAmmo {
         vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
 
         if let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
-            //
-            #warning("refactoring")
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { fetchResult, error in
                 if let error = error {
                     mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
