@@ -34,6 +34,10 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
     func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
 
     func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
+
+    func linkItems(from array: [Any]?, clazz: PrimaryKeypathProtocol.Type, linkerType: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, fetchResult: FetchResult)
+
+    func linkItem(from json: JSON?, clazz: PrimaryKeypathProtocol.Type, linkerType: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, fetchResult: FetchResult)
 }
 
 extension WOTMappingCoordinatorProtocol {

@@ -27,12 +27,18 @@ public enum FetchStatus: Int {
 @objc
 public class FetchResult: NSObject, NSCopying {
     public var context: NSManagedObjectContext
-    private var objectID: NSManagedObjectID?
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
 
+    #warning("make private")
+    public var objectID: NSManagedObjectID?
+
     override public required init() {
         fatalError("")
+    }
+
+    override public var debugDescription: String {
+        return "Context: \(context.name ?? ""); \(managedObject().entity.name ?? "<unknown>")"
     }
 
     public required init(context cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
@@ -55,9 +61,30 @@ public class FetchResult: NSObject, NSCopying {
     }
 
     public func managedObject() -> NSManagedObject {
+        return managedObject(inContext: self.context)
+    }
+
+    public func managedObject(inContext: NSManagedObjectContext) -> NSManagedObject {
         guard let objectID = objectID else {
             fatalError("objectID is not defined")
         }
-        return context.object(with: objectID)
+        return inContext.object(with: objectID)
+    }
+}
+
+public class EmptyFetchResult: FetchResult {
+    public convenience required init() {
+        let cntx = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        let objectID = NSManagedObjectID()
+        self.init(context: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)
+    }
+
+    override public var objectID: NSManagedObjectID? {
+        get {
+            fatalError("should get here")
+        }
+        set {
+            fatalError("should not get here")
+        }
     }
 }

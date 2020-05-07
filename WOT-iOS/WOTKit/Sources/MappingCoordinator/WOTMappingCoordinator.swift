@@ -123,6 +123,41 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         }
     }
 
+    //
+    public func linkItems(from array: [Any]?, clazz: PrimaryKeypathProtocol.Type, linkerType: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, fetchResult: FetchResult) {
+        guard let itemsList = array else { return }
+
+        guard let linkLookupRule = linkLookupRuleBuilder.build() else {
+            return
+        }
+
+        let context = fetchResult.context
+
+        let linker = linkerType.init(masterFetchResult: fetchResult, identifier: nil, coreDataStore: self.coreDataStore)
+        self.fetchLocal(array: itemsList, context: context, forClass: clazz, pkCase: linkLookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
+            if let error = error {
+                self?.logEvent(EventError(error, details: nil), sender: nil)
+            }
+        })
+    }
+
+    public func linkItem(from json: JSON?, clazz: PrimaryKeypathProtocol.Type, linkerType: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, fetchResult: FetchResult) {
+        guard let itemJSON = json else { return }
+
+        guard let linkLookupRule = linkLookupRuleBuilder.build() else {
+            return
+        }
+
+        let context = fetchResult.context
+
+        let linker = linkerType.init(masterFetchResult: fetchResult, identifier: linkLookupRule.ident, coreDataStore: self.coreDataStore)
+        self.fetchLocal(json: itemJSON, context: context, forClass: clazz, pkCase: linkLookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
+            if let error = error {
+                self?.logEvent(EventError(error, details: nil), sender: nil)
+            }
+        })
+    }
+
     // MARK: private -
     private func fetchRemote(predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) {
         guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {

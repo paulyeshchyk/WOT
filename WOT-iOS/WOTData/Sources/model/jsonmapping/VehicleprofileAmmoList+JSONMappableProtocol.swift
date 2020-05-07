@@ -14,6 +14,8 @@ import CoreData
 extension VehicleprofileAmmoList {
     public override func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
+
+        let vehicleProfileAmmoListFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
         array.compactMap { $0 as? JSON }.forEach { (jSON) in
 
             let vehicleprofileAmmoCase = PKCase()
@@ -27,7 +29,7 @@ extension VehicleprofileAmmoList {
                     return
                 }
 
-                let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+                let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(masterFetchResult: vehicleProfileAmmoListFetchResult, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
                 mappingCoordinator?.decodingAndMapping(json: jSON, fetchResult: fetchResult, pkCase: vehicleprofileAmmoCase, linker: ammoLinker) { _, error in
                     if let error = error {
                         mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
@@ -57,7 +59,7 @@ extension VehicleprofileAmmoList {
         override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
-                if let ammoList = context.object(with: self.objectID) as? VehicleprofileAmmoList {
+                if let ammoList = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmoList {
                     ammoList.addToVehicleprofileAmmo(ammo)
 
                     coreDataStore?.stash(context: context) { error in

@@ -10,8 +10,9 @@ import CoreData
 
 @objc
 public protocol JSONAdapterLinkerProtocol {
-    init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?)
     var primaryKeyType: PrimaryKeyType { get }
+
+    init(masterFetchResult: FetchResult?, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?)
     func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion)
     func onJSONExtraction(json: JSON) -> JSON
 }
@@ -26,12 +27,12 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
     open var primaryKeyType: PrimaryKeyType { return .none }
 
     // MARK: - Public
-    public var objectID: NSManagedObjectID
+    public var masterFetchResult: FetchResult?
     public var identifier: Any?
     public var coreDataStore: WOTCoredataStoreProtocol?
 
-    public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-        self.objectID = objectID
+    public required init(masterFetchResult: FetchResult?, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
+        self.masterFetchResult = masterFetchResult
         self.identifier = identifier
         self.coreDataStore = coreDataStore
     }

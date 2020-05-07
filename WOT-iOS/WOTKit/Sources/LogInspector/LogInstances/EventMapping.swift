@@ -19,9 +19,7 @@ public class EventMappingStart: LogEventProtocol {
     public var name: String { return "MappingStart"}
 
     public init(fetchResult: FetchResult, pkCase: PKCase, mappingType: EventMappingType) {
-        let context = fetchResult.context
-        let managedObject = fetchResult.managedObject()
-        message = "`\(mappingType)` Mapping Context: \(context.name ?? ""); \(managedObject.entity.name ?? "<unknown>") \(pkCase.description)"
+        message = "`\(mappingType)` Mapping \(fetchResult.debugDescription) \(pkCase.description)"
     }
 
     required public init?(_ text: String) {
@@ -39,9 +37,7 @@ public class EventMappingEnded: LogEventProtocol {
     public var name: String { return "MappingEnded"}
 
     public init(fetchResult: FetchResult, pkCase: PKCase, mappingType: EventMappingType) {
-        let context = fetchResult.context
-        let managedObject = fetchResult.managedObject()
-        message = "`\(mappingType)` Mapping Context: \(context.name ?? ""); \(managedObject.entity.name ?? "<unknown>") \(pkCase.description)"
+        message = "`\(mappingType)` Mapping \(fetchResult.debugDescription) \(pkCase.description)"
     }
 
     required public init?(_ text: String) {
