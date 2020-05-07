@@ -179,8 +179,8 @@ extension JSONAdapterLinkerProtocol {
             ident = key
         }
 
-        let parents = fromRequest.predicate?.pkCase?.plainParents
-        let objCase = PKCase(parentObjects: parents)
+        let parents = fromRequest.predicate?.pkCase?.parentObjectIDList
+        let objCase = PKCase(parentObjectIDList: parents)
         objCase[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: primaryKeyType)
 
         return JSONExtraction(pkCase: objCase, json: extractedJSON)

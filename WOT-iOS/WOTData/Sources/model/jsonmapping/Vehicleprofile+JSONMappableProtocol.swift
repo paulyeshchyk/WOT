@@ -10,18 +10,99 @@ import CoreData
 import WOTKit
 
 // MARK: - CaseBuilder
-public protocol CaseBuilderProtocol {
-    func build(json: JSON, pkCase: PKCase, foreignSelectKey: String, parents: [AnyObject]?) -> PKCase?
+
+public struct CaseIdenPair {
+    let ident: Any?
+    let pkCase: PKCase
 }
 
-public class CaseBuilder1: CaseBuilderProtocol {
-    public func build(json: JSON, pkCase: PKCase, foreignSelectKey: String, parents: [AnyObject]?) -> PKCase? {
-        let itemCase = PKCase(parentObjects: parents)
+public protocol CaseBuilderProtocol {
+    func build() -> CaseIdenPair?
+}
+
+public class CaseBuilderParentList: CaseBuilderProtocol {
+    private var pkCase: PKCase
+    private var foreignSelectKey: String
+    private var parentObjectIDList: [NSManagedObjectID]?
+
+    public init(pkCase: PKCase, foreignSelectKey: String, parents: [NSManagedObjectID]?) {
+        self.pkCase = pkCase
+        self.foreignSelectKey = foreignSelectKey
+        self.parentObjectIDList = parents
+    }
+
+    public func build() -> CaseIdenPair? {
+        let itemCase = PKCase(parentObjectIDList: parentObjectIDList)
 
         if let foreignKey = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey) {
             itemCase[.primary] = foreignKey
         }
-        return itemCase
+        return CaseIdenPair(ident: nil, pkCase: itemCase)
+    }
+}
+
+public class CaseBuilderParentListAndObjectIdent: CaseBuilderProtocol {
+    private var json: JSON?
+    private var pkCase: PKCase
+    private var foreignSelectKey: String
+    private var parentObjectIDList: [NSManagedObjectID]?
+    private var primaryKeyType: PrimaryKeyType
+    private var clazz: PrimaryKeypathProtocol.Type
+
+    public init(json: JSON?, pkCase: PKCase, foreignSelectKey: String, parentObjectIDList: [NSManagedObjectID]?, primaryKeyType: PrimaryKeyType, clazz: PrimaryKeypathProtocol.Type) {
+        self.json = json
+        self.pkCase = pkCase
+        self.foreignSelectKey = foreignSelectKey
+        self.parentObjectIDList = parentObjectIDList
+        self.primaryKeyType = primaryKeyType
+        self.clazz = clazz
+    }
+
+    public func build() -> CaseIdenPair? {
+        guard let json = self.json else { return nil }
+
+        let itemCase = PKCase(parentObjectIDList: parentObjectIDList)
+        let itemID: Any?
+        if let idKeyPath = clazz.primaryKeyPath(forType: primaryKeyType) {
+            itemID = json[idKeyPath]
+        } else {
+            itemID = nil
+        }
+        if let foreignKey = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey) {
+            itemCase[.primary] = foreignKey
+        }
+        return CaseIdenPair(ident: itemID, pkCase: itemCase)
+    }
+}
+
+public class CaseBuilderObjectIdent: CaseBuilderProtocol {
+    private var json: JSON?
+    private var primaryKeyType: PrimaryKeyType
+    private var clazz: PrimaryKeypathProtocol.Type
+
+    public init(json: JSON?, primaryKeyType: PrimaryKeyType, clazz: PrimaryKeypathProtocol.Type) {
+        self.json = json
+        self.primaryKeyType = primaryKeyType
+        self.clazz = clazz
+    }
+
+    public func build() -> CaseIdenPair? {
+        guard let json = self.json else { return nil }
+
+        let itemCase = PKCase()
+        let itemID: Any?
+        if let idKeyPath = clazz.primaryKeyPath(forType: primaryKeyType) {
+            itemID = json[idKeyPath]
+        } else {
+            itemID = nil
+        }
+        guard let itemID1 = itemID else { return nil }
+
+        if let primaryID = clazz.primaryKey(for: itemID1, andType: primaryKeyType) {
+            itemCase[.primary] = primaryID
+        }
+
+        return CaseIdenPair(ident: itemID, pkCase: itemCase)
     }
 }
 
@@ -29,118 +110,101 @@ public class CaseBuilder1: CaseBuilderProtocol {
 
 extension Vehicleprofile {
     //
-    private func linkItems(from array: [Any]?, clazz: NSManagedObject.Type, primaryKeyType: PrimaryKeyType, linkerType: JSONAdapterLinkerProtocol.Type, foreignSelectKey: String, pkCase: PKCase, parents: [AnyObject]?, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+    private func linkItems(from array: [Any]?, clazz: PrimaryKeypathProtocol.Type, linkerType: JSONAdapterLinkerProtocol.Type, caseBuilder: CaseBuilderProtocol, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         guard let itemsList = array else { return }
 
-        let itemCase = PKCase(parentObjects: parents)
-
-        if let foreignKey = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey) {
-            itemCase[.primary] = foreignKey
+        guard let casePair = caseBuilder.build() else {
+            return
         }
 
-        let linker = linkerType.init(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-        mappingCoordinator?.fetchLocal(array: itemsList, context: context, forClass: clazz, pkCase: itemCase, linker: linker, callback: { _, error in
+        let linker = linkerType.init(objectID: objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        mappingCoordinator?.fetchLocal(array: itemsList, context: context, forClass: clazz, pkCase: casePair.pkCase, linker: linker, callback: { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
             }
         })
     }
 
-    private func linkItem(from json: JSON?, clazz: PrimaryKeypathProtocol.Type, primaryKeyType: PrimaryKeyType, linkerType: JSONAdapterLinkerProtocol.Type, foreignSelectKey: String, pkCase: PKCase, parents: [AnyObject]?, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
-        guard let itemsJSON = json else { return }
-
-        let itemCase = PKCase(parentObjects: parents)
-        let itemID: Any?
-        if let idKeyPath = clazz.primaryKeyPath(forType: primaryKeyType) {
-            itemID = itemsJSON[idKeyPath]
-        } else {
-            itemID = nil
-        }
-        if let foreignKey = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey) {
-            itemCase[.primary] = foreignKey
-        }
-        let linker = linkerType.init(objectID: self.objectID, identifier: itemID, coreDataStore: mappingCoordinator?.coreDataStore)
-        mappingCoordinator?.fetchLocal(json: itemsJSON, context: context, forClass: clazz, pkCase: itemCase, linker: linker, callback: { _, error in
-            if let error = error {
-                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-            }
-        })
-    }
-
-    private func linkItem2(from json: JSON?, clazz: PrimaryKeypathProtocol.Type, primaryKeyType: PrimaryKeyType, linkerType: JSONAdapterLinkerProtocol.Type, pkCase: PKCase, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+    private func linkItem(from json: JSON?, clazz: PrimaryKeypathProtocol.Type, linkerType: JSONAdapterLinkerProtocol.Type, caseBuilder: CaseBuilderProtocol, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         guard let itemJSON = json else { return }
 
-        let itemCase = PKCase()
-        let itemID: Any?
-        if let idKeyPath = clazz.primaryKeyPath(forType: primaryKeyType) {
-            itemID = itemJSON[idKeyPath]
-        } else {
-            itemID = nil
-        }
-        guard let itemID1 = itemID else { return }
-
-        if let primaryID = clazz.primaryKey(for: itemID1, andType: primaryKeyType) {
-            itemCase[.primary] = primaryID
+        guard let caseIdentPair = caseBuilder.build() else {
+            return
         }
 
-        let linker = linkerType.init(objectID: self.objectID, identifier: itemID1, coreDataStore: mappingCoordinator?.coreDataStore)
-        mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: clazz, pkCase: itemCase, linker: linker, callback: { _, error in
+        let linker = linkerType.init(objectID: objectID, identifier: caseIdentPair.ident, coreDataStore: mappingCoordinator?.coreDataStore)
+        mappingCoordinator?.fetchLocal(json: itemJSON, context: context, forClass: clazz, pkCase: caseIdentPair.pkCase, linker: linker, callback: { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
             }
         })
     }
 
-    public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         // MARK: - Decode properties
 
-        try self.decode(json: json)
+        try decode(json: json)
 
         // MARK: - Link items
 
-        var parents = pkCase.plainParents
-        parents.append(self)
-
-        // MARK: - Armor
-        let armorJSON = json[#keyPath(Vehicleprofile.armor)] as? JSON
-        let armorListLinkerType = Vehicleprofile.VehicleprofileArmorListLinker.self
-        linkItem(from: armorJSON, clazz: VehicleprofileArmorList.self, primaryKeyType: .none, linkerType: armorListLinkerType, foreignSelectKey: #keyPath(VehicleprofileArmorList.vehicleprofile), pkCase: pkCase, parents: parents, context: context, mappingCoordinator: mappingCoordinator)
+        var parentObjectIDList = pkCase.parentObjectIDList
+        parentObjectIDList.append(self.objectID)
 
         // MARK: - Ammo
+
         let ammoListArray = json[#keyPath(Vehicleprofile.ammo)] as? [Any]
         let ammoListLinkerType = Vehicleprofile.VehicleprofileAmmoListLinker.self
-        let caseBuilder = CaseBuilder1()
-        linkItems(from: ammoListArray, clazz: VehicleprofileAmmoList.self, primaryKeyType: .none, linkerType: ammoListLinkerType, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), pkCase: pkCase, parents: parents, context: context, mappingCoordinator: mappingCoordinator)
+        let ammoCaseBuilder = CaseBuilderParentList(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parents: parentObjectIDList)
+        linkItems(from: ammoListArray, clazz: VehicleprofileAmmoList.self, linkerType: ammoListLinkerType, caseBuilder: ammoCaseBuilder, context: context, mappingCoordinator: mappingCoordinator)
+
+        // MARK: - Armor
+
+        let armorJSON = json[#keyPath(Vehicleprofile.armor)] as? JSON
+        let armorListLinkerType = Vehicleprofile.VehicleprofileArmorListLinker.self
+        let armorCaseBuilder = CaseBuilderParentListAndObjectIdent(json: armorJSON, pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList, primaryKeyType: .none, clazz: VehicleprofileModule.self)
+        linkItem(from: armorJSON, clazz: VehicleprofileArmorList.self, linkerType: armorListLinkerType, caseBuilder: armorCaseBuilder, context: context, mappingCoordinator: mappingCoordinator)
 
         // MARK: - Modules
+
         let moduleJSON = json[#keyPath(Vehicleprofile.modules)] as? JSON
         let moduleLinkerType = Vehicleprofile.VehicleprofileModuleLinker.self
-        linkItem(from: moduleJSON, clazz: VehicleprofileModule.self, primaryKeyType: .none, linkerType: moduleLinkerType, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), pkCase: pkCase, parents: parents, context: context, mappingCoordinator: mappingCoordinator)
+        let modulesCaseBuilder = CaseBuilderParentListAndObjectIdent(json: moduleJSON, pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList, primaryKeyType: .none, clazz: VehicleprofileModule.self)
+        linkItem(from: moduleJSON, clazz: VehicleprofileModule.self, linkerType: moduleLinkerType, caseBuilder: modulesCaseBuilder, context: context, mappingCoordinator: mappingCoordinator)
 
         // MARK: - Engine
+
         let engineJSON = json[#keyPath(Vehicleprofile.engine)] as? JSON
         let engineLinkerType = Vehicleprofile.VehicleprofileEngineLinker.self
-        linkItem2(from: engineJSON, clazz: VehicleprofileEngine.self, primaryKeyType: .internal, linkerType: engineLinkerType, pkCase: pkCase, context: context, mappingCoordinator: mappingCoordinator)
+        let engineCaseBuilder = CaseBuilderObjectIdent(json: engineJSON, primaryKeyType: .internal, clazz: VehicleprofileEngine.self)
+        linkItem(from: engineJSON, clazz: VehicleprofileEngine.self, linkerType: engineLinkerType, caseBuilder: engineCaseBuilder, context: context, mappingCoordinator: mappingCoordinator)
 
         // MARK: - Gun
+
         let gunJSON = json[#keyPath(Vehicleprofile.gun)] as? JSON
         let gunLinkerType = Vehicleprofile.VehicleprofileGunLinker.self
-        linkItem2(from: gunJSON, clazz: VehicleprofileGun.self, primaryKeyType: .internal, linkerType: gunLinkerType, pkCase: pkCase, context: context, mappingCoordinator: mappingCoordinator)
+        let gunCaseBuilder = CaseBuilderObjectIdent(json: gunJSON, primaryKeyType: .internal, clazz: VehicleprofileGun.self)
+        linkItem(from: gunJSON, clazz: VehicleprofileGun.self, linkerType: gunLinkerType, caseBuilder: gunCaseBuilder, context: context, mappingCoordinator: mappingCoordinator)
 
         // MARK: - Suspension
+
         let suspensionJSON = json[#keyPath(Vehicleprofile.suspension)] as? JSON
         let suspensionLinkerType = Vehicleprofile.VehicleprofileSuspensionLinker.self
-        linkItem2(from: suspensionJSON, clazz: VehicleprofileSuspension.self, primaryKeyType: .internal, linkerType: suspensionLinkerType, pkCase: pkCase, context: context, mappingCoordinator: mappingCoordinator)
+        let suspensionCaseBuilder = CaseBuilderObjectIdent(json: suspensionJSON, primaryKeyType: .internal, clazz: VehicleprofileSuspension.self)
+        linkItem(from: suspensionJSON, clazz: VehicleprofileSuspension.self, linkerType: suspensionLinkerType, caseBuilder: suspensionCaseBuilder, context: context, mappingCoordinator: mappingCoordinator)
 
         // MARK: - Turret
+
         let turretJSON = json[#keyPath(Vehicleprofile.turret)] as? JSON
         let turretLinkerType = Vehicleprofile.VehicleprofileTurretLinker.self
-        linkItem2(from: turretJSON, clazz: VehicleprofileTurret.self, primaryKeyType: .internal, linkerType: turretLinkerType, pkCase: pkCase, context: context, mappingCoordinator: mappingCoordinator)
+        let turretCaseBuilder = CaseBuilderObjectIdent(json: turretJSON, primaryKeyType: .internal, clazz: VehicleprofileTurret.self)
+        linkItem(from: turretJSON, clazz: VehicleprofileTurret.self, linkerType: turretLinkerType, caseBuilder: turretCaseBuilder, context: context, mappingCoordinator: mappingCoordinator)
 
         // MARK: - Radio
+
         let radioJSON = json[#keyPath(Vehicleprofile.radio)] as? JSON
         let radioLinkerType = Vehicleprofile.VehicleprofileRadioLinker.self
-        linkItem2(from: radioJSON, clazz: VehicleprofileRadio.self, primaryKeyType: .internal, linkerType: radioLinkerType, pkCase: pkCase, context: context, mappingCoordinator: mappingCoordinator)
+        let radioCaseBuilder = CaseBuilderObjectIdent(json: radioJSON, primaryKeyType: .internal, clazz: VehicleprofileRadio.self)
+        linkItem(from: radioJSON, clazz: VehicleprofileRadio.self, linkerType: radioLinkerType, caseBuilder: radioCaseBuilder, context: context, mappingCoordinator: mappingCoordinator)
     }
 }
 

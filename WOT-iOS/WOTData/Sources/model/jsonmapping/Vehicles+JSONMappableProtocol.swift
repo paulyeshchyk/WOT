@@ -63,9 +63,9 @@ extension Vehicles {
             return
         }
 
-        var parents = pkCase.plainParents
-        parents.append(self)
-        let modulesTreeCase = PKCase(parentObjects: parents)
+        var parentObjectIDList = pkCase.parentObjectIDList
+        parentObjectIDList.append(self.objectID)
+        let modulesTreeCase = PKCase(parentObjectIDList: parentObjectIDList)
         modulesTreeCase[.primary] = pkCase[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
@@ -74,7 +74,7 @@ extension Vehicles {
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
             let modulePK = ModulesTree.primaryKey(for: module_id, andType: .internal)
-            let submodulesCase = PKCase(parentObjects: modulesTreeCase.plainParents)
+            let submodulesCase = PKCase(parentObjectIDList: modulesTreeCase.parentObjectIDList)
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = modulesTreeCase[.primary]
 

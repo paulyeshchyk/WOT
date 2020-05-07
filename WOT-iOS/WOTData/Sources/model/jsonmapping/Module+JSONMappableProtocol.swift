@@ -12,11 +12,19 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Module {
-    public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
 
-        let parents = pkCase.plainParents.filter({$0 is Vehicles}).compactMap({ $0.tank_id as? NSDecimalNumber })
+        let parentsAsManagedObject = pkCase.parentObjectIDList.compactMap { context.object(with: $0) }
+        let parentsAsVehicles = parentsAsManagedObject.compactMap { $0 as? Vehicles }
+        let parents = parentsAsVehicles.compactMap { $0.tank_id }
+
+        guard parents.count > 1 else {
+            print("parents count should be less or equal 1")
+            return
+        }
+        let tank_id = parents.first
 
         guard let module_id = self.module_id else {
             print("module_id not found")
@@ -27,26 +35,24 @@ extension Module {
             print("unknown module type")
             return
         }
+
         let moduleType = VehicleModuleType(rawValue: moduleTypeString)
-
-        let tank_id = parents.first
-
         switch moduleType {
         case .vehicleChassis:
             let vehicleSuspensionLinker = Module.ModuleSuspensionLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "suspension.", linker: vehicleSuspensionLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "suspension.", linker: vehicleSuspensionLinker)
         case .vehicleGun:
             let vehicleGunLinker = Module.ModuleGunLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "gun.", linker: vehicleGunLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "gun.", linker: vehicleGunLinker)
         case .vehicleRadio:
             let vehicleRadioLinker = Module.ModuleRadioLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "radio.", linker: vehicleRadioLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "radio.", linker: vehicleRadioLinker)
         case .vehicleEngine:
             let vehicleEngineLinker = Module.ModuleEngineLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "engine.", linker: vehicleEngineLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "engine.", linker: vehicleEngineLinker)
         case .vehicleTurret:
             let vehicleTurretLinker = Module.ModuleTurretLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "turret.", linker: vehicleTurretLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "turret.", linker: vehicleTurretLinker)
         case .none, .tank, .unknown:
             fatalError("unknown module type")
         }

@@ -16,13 +16,13 @@ extension ModulesTree {
         //
         try self.decode(json: json)
         //
-        var parents = pkCase.plainParents
-        parents.append(self)
+        var parentObjectIDList = pkCase.parentObjectIDList
+        parentObjectIDList.append(self.objectID)
 
         // MARK: - CurrentModule
 
         let currentModuleHelper = ModulesTree.ModulesTreeCurrentModuleLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-        let currentModulePK = PKCase(parentObjects: parents)
+        let currentModulePK = PKCase(parentObjectIDList: parentObjectIDList)
         currentModulePK[.primary] = Module.primaryKey(for: self.module_id as AnyObject, andType: .external)
         mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: currentModulePK, keypathPrefix: nil, linker: currentModuleHelper)
 
@@ -31,7 +31,7 @@ extension ModulesTree {
         let nextModulesHelper = ModulesTree.ModulesTreeNextModulesLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let modulePK = PKCase(parentObjects: parents)
+            let modulePK = PKCase(parentObjectIDList: parentObjectIDList)
             modulePK[.primary] = pkCase[.primary]
             modulePK[.secondary] = Module.primaryKey(for: $0, andType: .external)
             mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, linker: nextModulesHelper)

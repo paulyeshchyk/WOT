@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
 public enum PKType: Hashable {
     case primary
@@ -38,13 +38,13 @@ public class PKCase: NSObject {
      parents identifier has taken from a list
      */
     //    @available(*, deprecated, message:"Use tree instead of plain")
-    public var plainParents: [AnyObject] = []
+    public var parentObjectIDList: [NSManagedObjectID] = []
 
-    public convenience init(parentObjects: [AnyObject?]?) {
+    public convenience init(parentObjectIDList idList: [NSManagedObjectID?]?) {
         self.init()
 
-        if let parentObjects = parentObjects?.compactMap({ $0 }) {
-            plainParents.append(contentsOf: parentObjects)
+        if let idListCompacted = idList?.compactMap({ $0 }) {
+            self.parentObjectIDList.append(contentsOf: idListCompacted)
         }
     }
 
