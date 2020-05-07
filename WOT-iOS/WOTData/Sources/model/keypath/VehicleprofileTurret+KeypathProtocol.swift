@@ -31,12 +31,13 @@ extension VehicleprofileTurret {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
+    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
         //id was used when quering remote module
         //tag was used when parsed response vehicleprofile-suspension
         switch forType {
         case .external: return #keyPath(VehicleprofileTurret.turret_id)
         case .internal: return #keyPath(VehicleprofileTurret.tag)
+        case .none: return nil
         }
     }
 }

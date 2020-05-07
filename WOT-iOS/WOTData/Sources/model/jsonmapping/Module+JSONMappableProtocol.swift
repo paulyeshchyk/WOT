@@ -64,33 +64,21 @@ extension Module {
 }
 
 extension Module {
-    public class ModuleEngineLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
-        }
+    public class ModuleEngineLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .internal }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON {
+        override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["engine"] as? JSON else {
                 fatalError("invalid json")
             }
             return result
         }
 
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
-                if let module = fetchResult.context.object(with: objectID) as? Module {
-                    vehicleProfileEngine.engine_id = identifier as? NSDecimalNumber
+                if let module = fetchResult.context.object(with: self.objectID) as? Module {
+                    vehicleProfileEngine.engine_id = self.identifier as? NSDecimalNumber
                     module.engine = vehicleProfileEngine
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -100,33 +88,21 @@ extension Module {
         }
     }
 
-    public class ModuleTurretLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
-        }
+    public class ModuleTurretLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .internal }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON {
+        override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["turret"] as? JSON else {
                 fatalError("invalid json")
             }
             return result
         }
 
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
-                if let module = context.object(with: objectID) as? Module {
-                    vehicleProfileTurret.turret_id = identifier as? NSDecimalNumber
+                if let module = context.object(with: self.objectID) as? Module {
+                    vehicleProfileTurret.turret_id = self.identifier as? NSDecimalNumber
                     module.turret = vehicleProfileTurret
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -136,33 +112,21 @@ extension Module {
         }
     }
 
-    public class ModuleSuspensionLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
-        }
+    public class ModuleSuspensionLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .internal }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON {
+        override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["suspension"] as? JSON else {
                 fatalError("invalid json")
             }
             return result
         }
 
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
-                if let module = context.object(with: objectID) as? Module {
-                    vehicleProfileSuspension.suspension_id = identifier as? NSDecimalNumber
+                if let module = context.object(with: self.objectID) as? Module {
+                    vehicleProfileSuspension.suspension_id = self.identifier as? NSDecimalNumber
                     module.suspension = vehicleProfileSuspension
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -172,33 +136,21 @@ extension Module {
         }
     }
 
-    public class ModuleRadioLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
-        }
+    public class ModuleRadioLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .internal }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON {
+        override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["radio"] as? JSON else {
                 fatalError("invalid json")
             }
             return result
         }
 
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
-                if let module = context.object(with: objectID) as? Module {
-                    vehicleProfileRadio.radio_id = identifier as? NSDecimalNumber
+                if let module = context.object(with: self.objectID) as? Module {
+                    vehicleProfileRadio.radio_id = self.identifier as? NSDecimalNumber
                     module.radio = vehicleProfileRadio
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -208,33 +160,21 @@ extension Module {
         }
     }
 
-    public class ModuleGunLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
-        }
+    public class ModuleGunLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .internal }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON {
+        override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["gun"] as? JSON else {
                 fatalError("invalid json")
             }
             return result
         }
 
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
-                if let module = context.object(with: objectID) as? Module {
-                    vehicleProfileGun.gun_id = identifier as? NSDecimalNumber
+                if let module = context.object(with: self.objectID) as? Module {
+                    vehicleProfileGun.gun_id = self.identifier as? NSDecimalNumber
                     module.gun = vehicleProfileGun
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)

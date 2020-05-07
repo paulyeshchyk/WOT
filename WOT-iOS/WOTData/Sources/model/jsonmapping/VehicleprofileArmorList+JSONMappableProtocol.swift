@@ -54,24 +54,12 @@ extension VehicleprofileArmorList {
 }
 
 extension VehicleprofileArmorList {
-    public class VehicleprofileArmorListTurretLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class VehicleprofileArmorListTurretLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .external }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON { return json }
-
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let armor = fetchResult.managedObject() as? VehicleprofileArmor {
                 if let armorList = context.object(with: objectID) as? VehicleprofileArmorList {
@@ -85,24 +73,12 @@ extension VehicleprofileArmorList {
         }
     }
 
-    public class VehicleprofileArmorListHullLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class VehicleprofileArmorListHullLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .external }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON { return json }
-
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let armor = fetchResult.managedObject() as? VehicleprofileArmor {
                 if let armorList = context.object(with: objectID) as? VehicleprofileArmorList {

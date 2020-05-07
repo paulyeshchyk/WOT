@@ -49,27 +49,15 @@ extension VehicleprofileAmmoList {
 }
 
 extension VehicleprofileAmmoList {
-    public class VehicleprofileAmmoListAmmoLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class VehicleprofileAmmoListAmmoLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType {            return .external        }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON { return json }
-
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
-                if let ammoList = context.object(with: objectID) as? VehicleprofileAmmoList {
+                if let ammoList = context.object(with: self.objectID) as? VehicleprofileAmmoList {
                     ammoList.addToVehicleprofileAmmo(ammo)
 
                     coreDataStore?.stash(context: context) { error in

@@ -11,6 +11,7 @@ import CoreData
 public enum WOTMapperError: Error {
     case contextNotDefined
     case objectIDNotDefined
+    case clazzIsNotSupportable(String)
 }
 
 public typealias ThrowableCompletion = (Error?) -> Void
@@ -37,9 +38,15 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
 
 extension WOTMappingCoordinatorProtocol {
     //
-    public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: NSManagedObject.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
+    public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
+        guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
+            let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
+            callback(FetchResult(), error)
+            return
+        }
+
         //
-        fetchLocal(context: context, byModelClass: Clazz, pkCase: pkCase) { fetchResult, error in
+        fetchLocal(context: context, byModelClass: ManagedObjectClass, pkCase: pkCase) { fetchResult, error in
 
             if let error = error {
                 callback(fetchResult, error)

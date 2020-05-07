@@ -13,16 +13,3 @@ public protocol JSONAdapterProtocol: DataAdapterProtocol {
     var linker: JSONAdapterLinkerProtocol { get set }
     init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol)
 }
-
-public enum JSONAdapterLinkerError: Error {
-    case wrongParentClass
-    case wrongChildClass
-}
-
-@objc
-public protocol JSONAdapterLinkerProtocol {
-    init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?)
-    var primaryKeyType: PrimaryKeyType { get }
-    func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion)
-    func onJSONExtraction(json: JSON) -> JSON
-}

@@ -20,12 +20,14 @@ extension ModulesTree {
         parents.append(self)
 
         // MARK: - CurrentModule
+
         let currentModuleHelper = ModulesTree.ModulesTreeCurrentModuleLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         let currentModulePK = PKCase(parentObjects: parents)
         currentModulePK[.primary] = Module.primaryKey(for: self.module_id as AnyObject, andType: .external)
         mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: currentModulePK, keypathPrefix: nil, linker: currentModuleHelper)
 
         // MARK: - NextModules
+
         let nextModulesHelper = ModulesTree.ModulesTreeNextModulesLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
@@ -49,27 +51,15 @@ extension ModulesTree {
 }
 
 extension ModulesTree {
-    public class ModulesTreeCurrentModuleLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class ModulesTreeCurrentModuleLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .external }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON { return json }
-
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let module = fetchResult.managedObject() as? Module {
-                if let modulesTree = context.object(with: objectID) as? ModulesTree {
+                if let modulesTree = context.object(with: self.objectID) as? ModulesTree {
                     modulesTree.currentModule = module
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
@@ -79,26 +69,14 @@ extension ModulesTree {
         }
     }
 
-    public class ModulesTreeNextModulesLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class ModulesTreeNextModulesLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .external }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON { return json }
-
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            guard let modulesTree = context.object(with: objectID) as? ModulesTree else {
+            guard let modulesTree = context.object(with: self.objectID) as? ModulesTree else {
                 completion(fetchResult, JSONAdapterLinkerError.wrongParentClass)
                 return
             }
@@ -113,29 +91,17 @@ extension ModulesTree {
         }
     }
 
-    public class ModulesTreeNextVehicleLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class ModulesTreeNextVehicleLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .external }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON { return json }
-
-        public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let tank = fetchResult.managedObject() as? Vehicles {
-                if let modulesTree = context.object(with: objectID) as? ModulesTree {
+                if let modulesTree = context.object(with: self.objectID) as? ModulesTree {
                     modulesTree.addToNext_tanks(tank)
-                    coreDataStore?.stash(context: context) { error in
+                    self.coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
                     }
                 }

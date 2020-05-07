@@ -171,10 +171,9 @@ extension JSONAdapterLinkerProtocol {
         }
 
         let extractedJSON = onJSONExtraction(json: json)
-        let primaryKeyPath = modelClazz.primaryKeyPath(forType: self.primaryKeyType)
 
         let ident: Any
-        if  primaryKeyPath.count > 0 {
+        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: self.primaryKeyType) {
             ident = extractedJSON[primaryKeyPath] ?? key
         } else {
             ident = key

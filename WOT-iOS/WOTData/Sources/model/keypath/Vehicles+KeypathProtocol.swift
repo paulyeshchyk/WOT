@@ -54,6 +54,7 @@ extension Vehicles {
         switch forType {
         case .external: return #keyPath(Vehicles.tank_id)
         case .internal: return #keyPath(Vehicles.tank_id)
+        case .none: return ""
         }
     }
 }
