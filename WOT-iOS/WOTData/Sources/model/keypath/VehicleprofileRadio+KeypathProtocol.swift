@@ -31,8 +31,8 @@ extension VehicleprofileRadio {
         //id was used when quering remote module
         //tag was used when parsed response vehicleprofile-radio
         switch forType {
-        case .external: return #keyPath(VehicleprofileRadio.radio_id)
-        case .internal: return #keyPath(VehicleprofileRadio.tag)
+        case .remote: return #keyPath(VehicleprofileRadio.radio_id)
+        case .local: return #keyPath(VehicleprofileRadio.tag)
         case .none: return nil
         }
     }

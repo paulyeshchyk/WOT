@@ -78,7 +78,7 @@ extension Vehicles {
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
-            let modulePK = ModulesTree.primaryKey(for: module_id, andType: .internal)
+            let modulePK = ModulesTree.primaryKey(for: module_id, andType: .local)
             let submodulesCase = PKCase(parentObjectIDList: modulesTreeCase.parentObjectIDList)
             submodulesCase[.primary] = modulePK
             submodulesCase[.secondary] = modulesTreeCase[.primary]
@@ -111,7 +111,7 @@ extension Vehicles {
 extension Vehicles {
     public class VehiclesModulesTreeLinker: BaseJSONAdapterLinker {
         // MARK: -
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
@@ -129,7 +129,7 @@ extension Vehicles {
 
     public class VehiclesPivotDataLinker: BaseJSONAdapterLinker {
         // MARK: -
-        override public var primaryKeyType: PrimaryKeyType { return .internal }
+        override public var primaryKeyType: PrimaryKeyType { return .local }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {

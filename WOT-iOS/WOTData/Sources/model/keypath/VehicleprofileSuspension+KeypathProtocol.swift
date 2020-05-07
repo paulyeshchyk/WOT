@@ -34,8 +34,8 @@ extension VehicleprofileSuspension {
         //tag was used when parsed response vehicleprofile-suspension
 
         switch forType {
-        case .external: return #keyPath(VehicleprofileSuspension.suspension_id)
-        case .internal: return #keyPath(VehicleprofileSuspension.tag)
+        case .remote: return #keyPath(VehicleprofileSuspension.suspension_id)
+        case .local: return #keyPath(VehicleprofileSuspension.tag)
         case .none: return nil
         }
     }

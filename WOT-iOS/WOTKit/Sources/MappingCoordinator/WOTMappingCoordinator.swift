@@ -112,14 +112,14 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         }
     }
 
-    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol) {
+    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
         self.logEvent(EventCustomLogic("fetchRemote:\(clazz)"), sender: self)
 
         var predicates = [RequestPredicate]()
         predicates.append(RequestPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
 
         predicates.forEach { predicate in
-            fetchRemote(predicate: predicate, linker: linker)
+            fetchRemote(predicate: predicate, linker: mapper)
         }
     }
 

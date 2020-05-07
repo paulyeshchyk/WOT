@@ -41,8 +41,8 @@ extension ModulesTree {
 
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
         switch forType {
-        case .external: return #keyPath(ModulesTree.module_id)
-        case .internal: return #keyPath(ModulesTree.module_id)
+        case .remote: return #keyPath(ModulesTree.module_id)
+        case .local: return #keyPath(ModulesTree.module_id)
         case .none: return nil
         }
     }

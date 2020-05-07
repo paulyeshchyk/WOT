@@ -35,8 +35,8 @@ extension VehicleprofileTurret {
         //id was used when quering remote module
         //tag was used when parsed response vehicleprofile-suspension
         switch forType {
-        case .external: return #keyPath(VehicleprofileTurret.turret_id)
-        case .internal: return #keyPath(VehicleprofileTurret.tag)
+        case .remote: return #keyPath(VehicleprofileTurret.turret_id)
+        case .local: return #keyPath(VehicleprofileTurret.tag)
         case .none: return nil
         }
     }

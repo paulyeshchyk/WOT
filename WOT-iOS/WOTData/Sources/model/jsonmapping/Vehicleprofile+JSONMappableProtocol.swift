@@ -49,42 +49,42 @@ extension Vehicleprofile {
 
         let engineJSON = json[#keyPath(Vehicleprofile.engine)] as? JSON
         let engineMapperClazz = Vehicleprofile.VehicleprofileEngineLinker.self
-        let engineLookupBuilder = LinkLookupRuleBuilderObjectID(json: engineJSON, linkedClazz: VehicleprofileEngine.self)
+        let engineLookupBuilder = LinkLookupRuleBuilderLocalObjectID(json: engineJSON, linkedClazz: VehicleprofileEngine.self)
         mappingCoordinator?.linkItem(from: engineJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileEngine.self, mapperClazz: engineMapperClazz, linkLookupRuleBuilder: engineLookupBuilder)
 
         // MARK: - Gun
 
         let gunJSON = json[#keyPath(Vehicleprofile.gun)] as? JSON
         let gunMapperClazz = Vehicleprofile.VehicleprofileGunLinker.self
-        let gunLookupBuilder = LinkLookupRuleBuilderObjectID(json: gunJSON, linkedClazz: VehicleprofileGun.self)
+        let gunLookupBuilder = LinkLookupRuleBuilderLocalObjectID(json: gunJSON, linkedClazz: VehicleprofileGun.self)
         mappingCoordinator?.linkItem(from: gunJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileGun.self, mapperClazz: gunMapperClazz, linkLookupRuleBuilder: gunLookupBuilder)
 
         // MARK: - Suspension
 
         let suspensionJSON = json[#keyPath(Vehicleprofile.suspension)] as? JSON
         let suspensionMapperClazz = Vehicleprofile.VehicleprofileSuspensionLinker.self
-        let suspensionLookupBuilder = LinkLookupRuleBuilderObjectID(json: suspensionJSON, linkedClazz: VehicleprofileSuspension.self)
+        let suspensionLookupBuilder = LinkLookupRuleBuilderLocalObjectID(json: suspensionJSON, linkedClazz: VehicleprofileSuspension.self)
         mappingCoordinator?.linkItem(from: suspensionJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileSuspension.self, mapperClazz: suspensionMapperClazz, linkLookupRuleBuilder: suspensionLookupBuilder)
 
         // MARK: - Turret
 
         let turretJSON = json[#keyPath(Vehicleprofile.turret)] as? JSON
         let turretMapperClazz = Vehicleprofile.VehicleprofileTurretLinker.self
-        let turretLookupBuilder = LinkLookupRuleBuilderObjectID(json: turretJSON, linkedClazz: VehicleprofileTurret.self)
+        let turretLookupBuilder = LinkLookupRuleBuilderLocalObjectID(json: turretJSON, linkedClazz: VehicleprofileTurret.self)
         mappingCoordinator?.linkItem(from: turretJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileTurret.self, mapperClazz: turretMapperClazz, linkLookupRuleBuilder: turretLookupBuilder)
 
         // MARK: - Radio
 
         let radioJSON = json[#keyPath(Vehicleprofile.radio)] as? JSON
         let radioMapperClazz = Vehicleprofile.VehicleprofileRadioLinker.self
-        let radioLookupBuilder = LinkLookupRuleBuilderObjectID(json: radioJSON, linkedClazz: VehicleprofileRadio.self)
+        let radioLookupBuilder = LinkLookupRuleBuilderLocalObjectID(json: radioJSON, linkedClazz: VehicleprofileRadio.self)
         mappingCoordinator?.linkItem(from: radioJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileRadio.self, mapperClazz: radioMapperClazz, linkLookupRuleBuilder: radioLookupBuilder)
     }
 }
 
 extension Vehicleprofile {
     public class VehicleprofileRadioLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -103,7 +103,7 @@ extension Vehicleprofile {
     }
 
     public class VehicleprofileTurretLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -122,7 +122,7 @@ extension Vehicleprofile {
     }
 
     public class VehicleprofileSuspensionLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -142,7 +142,7 @@ extension Vehicleprofile {
 
     public class VehicleprofileGunLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType {
-            return .external
+            return .remote
         }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -162,7 +162,7 @@ extension Vehicleprofile {
     }
 
     public class VehicleprofileModuleLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -180,7 +180,7 @@ extension Vehicleprofile {
     }
 
     public class VehicleprofileEngineLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -199,7 +199,7 @@ extension Vehicleprofile {
     }
 
     public class VehicleprofileArmorListLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -218,7 +218,7 @@ extension Vehicleprofile {
     }
 
     public class VehicleprofileAmmoListLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 

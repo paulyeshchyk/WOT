@@ -24,9 +24,9 @@ extension ModulesTree {
         // MARK: - CurrentModule
 
         let currentModulePK = PKCase(parentObjectIDList: parentObjectIDList)
-        currentModulePK[.primary] = Module.primaryKey(for: self.module_id as AnyObject, andType: .external)
+        currentModulePK[.primary] = Module.primaryKey(for: self.module_id as AnyObject, andType: .remote)
         let currentModuleHelper = ModulesTree.ModulesTreeCurrentModuleLinker(masterFetchResult: modulesTreeFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-        mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: currentModulePK, keypathPrefix: nil, linker: currentModuleHelper)
+        mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: currentModulePK, keypathPrefix: nil, mapper: currentModuleHelper)
 
         // MARK: - NextModules
 
@@ -35,8 +35,8 @@ extension ModulesTree {
         nextModules?.forEach {
             let modulePK = PKCase(parentObjectIDList: parentObjectIDList)
             modulePK[.primary] = pkCase[.primary]
-            modulePK[.secondary] = Module.primaryKey(for: $0, andType: .external)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, linker: nextModulesHelper)
+            modulePK[.secondary] = Module.primaryKey(for: $0, andType: .remote)
+            mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, mapper: nextModulesHelper)
         }
 
         #warning("Next Tanks")
@@ -54,7 +54,7 @@ extension ModulesTree {
 
 extension ModulesTree {
     public class ModulesTreeCurrentModuleLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -72,7 +72,7 @@ extension ModulesTree {
     }
 
     public class ModulesTreeNextModulesLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -94,7 +94,7 @@ extension ModulesTree {
     }
 
     public class ModulesTreeNextVehicleLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .external }
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 

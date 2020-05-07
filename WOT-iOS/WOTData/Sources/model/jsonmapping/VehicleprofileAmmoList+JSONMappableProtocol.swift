@@ -20,7 +20,7 @@ extension VehicleprofileAmmoList {
 
             let vehicleprofileAmmoCase = PKCase()
             vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
-            vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject, andType: .internal)
+            vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject, andType: .local)
 
             mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase) { fetchResult, error in
 
@@ -52,7 +52,7 @@ extension VehicleprofileAmmoList {
 
 extension VehicleprofileAmmoList {
     public class VehicleprofileAmmoListAmmoLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType {            return .external        }
+        override public var primaryKeyType: PrimaryKeyType {            return .remote        }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 

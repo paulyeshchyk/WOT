@@ -42,38 +42,38 @@ extension Module {
         switch moduleType {
         case .vehicleChassis:
             let vehicleSuspensionLinker = Module.SuspensionLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "suspension.", linker: vehicleSuspensionLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "suspension.", mapper: vehicleSuspensionLinker)
         case .vehicleGun:
             let vehicleGunLinker = Module.ModuleGunLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "gun.", linker: vehicleGunLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "gun.", mapper: vehicleGunLinker)
         case .vehicleRadio:
             let vehicleRadioLinker = Module.RadioLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "radio.", linker: vehicleRadioLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "radio.", mapper: vehicleRadioLinker)
         case .vehicleEngine:
             let vehicleEngineLinker = Module.EngineLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "engine.", linker: vehicleEngineLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "engine.", mapper: vehicleEngineLinker)
         case .vehicleTurret:
             let vehicleTurretLinker = Module.TurretLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "turret.", linker: vehicleTurretLinker)
+            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "turret.", mapper: vehicleTurretLinker)
         case .none, .tank, .unknown:
             fatalError("unknown module type")
         }
     }
 
-    private func fetchRemoteModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, linker: JSONAdapterLinkerProtocol) {
+    private func fetchRemoteModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
         let pkCase = PKCase()
-        pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .external)
+        pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .remote)
         if let tank_id = tank_id {
-            pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .internal)
+            pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .local)
         }
 
-        mappingCoordinator?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, linker: linker)
+        mappingCoordinator?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, mapper: mapper)
     }
 }
 
 extension Module {
     public class EngineLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .internal }
+        override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["engine"] as? JSON else {
@@ -97,7 +97,7 @@ extension Module {
     }
 
     public class TurretLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .internal }
+        override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["turret"] as? JSON else {
@@ -121,7 +121,7 @@ extension Module {
     }
 
     public class SuspensionLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .internal }
+        override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["suspension"] as? JSON else {
@@ -145,7 +145,7 @@ extension Module {
     }
 
     public class RadioLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .internal }
+        override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["radio"] as? JSON else {
@@ -169,7 +169,7 @@ extension Module {
     }
 
     public class ModuleGunLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .internal }
+        override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["gun"] as? JSON else {

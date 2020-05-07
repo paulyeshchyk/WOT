@@ -1,5 +1,5 @@
 //
-//  LinkLookupRuleBuilderObjectID.swift
+//  LinkLookupRuleBuilderLocalObjectID.swift
 //  WOTData
 //
 //  Created by Pavel Yeshchyk on 5/7/20.
@@ -9,7 +9,7 @@
 import CoreData
 import WOTKit
 
-public class LinkLookupRuleBuilderObjectID: LinkLookupRuleBuilderProtocol {
+public class LinkLookupRuleBuilderLocalObjectID: LinkLookupRuleBuilderProtocol {
     private var json: JSON?
     private var clazz: PrimaryKeypathProtocol.Type
 
@@ -23,14 +23,14 @@ public class LinkLookupRuleBuilderObjectID: LinkLookupRuleBuilderProtocol {
 
         let itemCase = PKCase()
         let itemID: Any?
-        if let idKeyPath = clazz.primaryKeyPath(forType: .internal) {
+        if let idKeyPath = clazz.primaryKeyPath(forType: .local) {
             itemID = json[idKeyPath]
         } else {
             itemID = nil
         }
         guard let itemID1 = itemID else { return nil }
 
-        if let primaryID = clazz.primaryKey(for: itemID1, andType: .internal) {
+        if let primaryID = clazz.primaryKey(for: itemID1, andType: .local) {
             itemCase[.primary] = primaryID
         }
 
