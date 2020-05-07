@@ -17,11 +17,11 @@ extension NSManagedObject: JSONMappableProtocol {
 
     @objc
     open func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
-        throw LogicError.shouldBeOverriden
+        throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
     @objc
     open func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
-        throw LogicError.shouldBeOverriden
+        throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

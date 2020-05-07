@@ -46,7 +46,7 @@ extension WOTMappingCoordinatorProtocol {
                 return
             }
 
-            try? self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
+            self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
                 if let error = error {
                     callback(fetchResult, error)
                 } else {

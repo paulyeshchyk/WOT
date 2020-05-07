@@ -55,5 +55,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
 
     open func cancel(with error: Error?) {}
 
-    open func start(withArguments: WOTRequestArgumentsProtocol) throws { throw LogicError.shouldBeOverriden}
+    open func start(withArguments: WOTRequestArgumentsProtocol) throws {
+        throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
+    }
 }
