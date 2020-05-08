@@ -16,7 +16,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         //
 
-        let logPriorities = Set(LogEventType.allValues).subtracting([LogEventType.performance]).compactMap {$0}
+//        let logPriorities = Set(LogEventType.allValues).subtracting([LogEventType.performance]).compactMap {$0}
+        let logPriorities = [LogEventType.localFetch, LogEventType.remoteFetch, LogEventType.error, LogEventType.lifeCycle]
 
         let requestCoordinator = WOTRequestCoordinator()
         let hostConfiguration = WOTWebHostConfiguration()

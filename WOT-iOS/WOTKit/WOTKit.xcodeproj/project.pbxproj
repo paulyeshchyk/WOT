@@ -10,6 +10,8 @@
 		1D20FDE9246402F9009CFA22 /* EventWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FDE8246402F9009CFA22 /* EventWarning.swift */; };
 		1D20FDEB24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FDEA24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift */; };
 		1D41161E24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41161D24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift */; };
+		1D41163124653F95009070AD /* EventLocalFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163024653F95009070AD /* EventLocalFetch.swift */; };
+		1D41163324653FD4009070AD /* EventRemoteFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163224653FD4009070AD /* EventRemoteFetch.swift */; };
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D60E52D245FE7A7007E5CA8 /* Dictionary_Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E51F245FE7A7007E5CA8 /* Dictionary_Merge.swift */; };
 		1D60E52E245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E521245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift */; };
@@ -92,6 +94,8 @@
 		1D20FDE8246402F9009CFA22 /* EventWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventWarning.swift; sourceTree = "<group>"; };
 		1D20FDEA24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterLinkerProtocol.swift; sourceTree = "<group>"; };
 		1D41161D24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkLookupRuleBuilderProtocol.swift; sourceTree = "<group>"; };
+		1D41163024653F95009070AD /* EventLocalFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLocalFetch.swift; sourceTree = "<group>"; };
+		1D41163224653FD4009070AD /* EventRemoteFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRemoteFetch.swift; sourceTree = "<group>"; };
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -480,6 +484,8 @@
 				1D60E582245FE7E5007E5CA8 /* EventCDStash.swift */,
 				1D60E583245FE7E5007E5CA8 /* EventTimeMeasure.swift */,
 				1D20FDE8246402F9009CFA22 /* EventWarning.swift */,
+				1D41163024653F95009070AD /* EventLocalFetch.swift */,
+				1D41163224653FD4009070AD /* EventRemoteFetch.swift */,
 			);
 			path = LogInstances;
 			sourceTree = "<group>";
@@ -719,6 +725,7 @@
 				1D60E5A7245FE7E5007E5CA8 /* WOTRequestManagerProtocol.swift in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* WOTRequestManager.swift in Sources */,
 				1D60E58A245FE7E5007E5CA8 /* KeyPathListable.swift in Sources */,
+				1D41163324653FD4009070AD /* EventRemoteFetch.swift in Sources */,
 				1D60E5BC245FE7E5007E5CA8 /* EventCDFetch.swift in Sources */,
 				1D60E589245FE7E5007E5CA8 /* Coding.swift in Sources */,
 				1D60E5B3245FE7E5007E5CA8 /* WOTRequestArguments.swift in Sources */,
@@ -748,6 +755,7 @@
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
 				1D60E58C245FE7E5007E5CA8 /* WOTPrimaryKey.swift in Sources */,
 				1D60E59C245FE7E5007E5CA8 /* DataAdapterProtocol.swift in Sources */,
+				1D41163124653F95009070AD /* EventLocalFetch.swift in Sources */,
 				1D60E59B245FE7E5007E5CA8 /* JSONMappableProtocol.swift in Sources */,
 				1D60E52E245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				1D60E5D3245FE93E007E5CA8 /* DataAdapterError.swift in Sources */,

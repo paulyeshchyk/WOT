@@ -91,7 +91,8 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultErrorCompletion) {
-        self.logEvent(EventCustomLogic("fetchLocal: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
+        self.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(pkCase.debugDescription)"), sender: self)
+
         guard let predicate = pkCase.compoundPredicate(.and) else {
             let error = WOTMappingCoordinatorError.noKeysDefinedForClass(String(describing: clazz))
             let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none)
@@ -113,7 +114,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     public func fetchRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
-        self.logEvent(EventCustomLogic("fetchRemote:\(modelClazz)"), sender: self)
+        self.logEvent(EventRemoteFetch("\(String(describing: modelClazz)) - \(pkCase.debugDescription)"), sender: self)
 
         var predicates = [RequestPredicate]()
         predicates.append(RequestPredicate(clazz: modelClazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
@@ -138,44 +139,44 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     //
-    public func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
+    public func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
         guard let itemsList = array else { return }
 
-        guard let linkLookupRule = linkLookupRuleBuilder.build() else {
+        guard let lookupRule = lookupRuleBuilder.build() else {
             return
         }
 
         let context = masterFetchResult.context
 
         let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: self.coreDataStore)
-        self.fetchLocal(array: itemsList, context: context, forClass: linkedClazz, pkCase: linkLookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
+        self.fetchLocal(array: itemsList, context: context, forClass: linkedClazz, pkCase: lookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
             if let error = error {
                 self?.logEvent(EventError(error, details: nil), sender: nil)
             }
         })
     }
 
-    public func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
+    public func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
         guard let itemJSON = json else { return }
 
-        guard let linkLookupRule = linkLookupRuleBuilder.build() else {
+        guard let lookupRule = lookupRuleBuilder.build() else {
             return
         }
 
         let context = masterFetchResult.context
 
-        let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: linkLookupRule.objectIdentifier, coreDataStore: self.coreDataStore)
-        self.fetchLocal(json: itemJSON, context: context, forClass: linkedClazz, pkCase: linkLookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
+        let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier, coreDataStore: self.coreDataStore)
+        self.fetchLocal(json: itemJSON, context: context, forClass: linkedClazz, pkCase: lookupRule.pkCase, linker: linker, callback: { [weak self] _, error in
             if let error = error {
                 self?.logEvent(EventError(error, details: nil), sender: nil)
             }
         })
     }
 
-    public func linkRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
-        guard let rule =  linkLookupRuleBuilder.build() else {
+    public func linkRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, lookupRuleBuilder: LinkLookupRuleBuilderProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
+        guard let lookupRule =  lookupRuleBuilder.build() else {
             return
         }
-        fetchRemote(modelClazz: modelClazz, masterFetchResult: masterFetchResult, pkCase: rule.pkCase, keypathPrefix: keypathPrefix, mapper: mapper)
+        fetchRemote(modelClazz: modelClazz, masterFetchResult: masterFetchResult, pkCase: lookupRule.pkCase, keypathPrefix: keypathPrefix, mapper: mapper)
     }
 }

@@ -30,3 +30,14 @@ extension Dictionary {
         }
     }
 }
+
+extension Dictionary {
+    public func debugOutput(options: JSONSerialization.WritingOptions = [.withoutEscapingSlashes, .prettyPrinted]) -> String {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: self, options: options)
+            return String(data: jsonData, encoding: .utf8) ?? ""
+        } catch {
+            return "\(error.localizedDescription)"
+        }
+    }
+}

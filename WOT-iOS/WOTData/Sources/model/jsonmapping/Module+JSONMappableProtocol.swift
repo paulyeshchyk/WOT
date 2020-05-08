@@ -43,23 +43,23 @@ extension Module {
         case .vehicleChassis:
             let suspensionMapper = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: module_id)
-            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileSuspension.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "suspension.", mapper: suspensionMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileSuspension.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "suspension.", mapper: suspensionMapper)
         case .vehicleGun:
             let gunMapper = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileGun.self, linkedObjectID: module_id)
-            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileGun.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "gun.", mapper: gunMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileGun.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "gun.", mapper: gunMapper)
         case .vehicleRadio:
             let radioMapper = Module.RadioMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileRadio.self, linkedObjectID: module_id)
-            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileRadio.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "radio.", mapper: radioMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileRadio.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "radio.", mapper: radioMapper)
         case .vehicleEngine:
             let engineMapper = Module.EngineMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileEngine.self, linkedObjectID: module_id)
-            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileEngine.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "engine.", mapper: engineMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileEngine.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "engine.", mapper: engineMapper)
         case .vehicleTurret:
             let turretMapper = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
-            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileTurret.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "turret.", mapper: turretMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileTurret.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "turret.", mapper: turretMapper)
         case .none, .tank, .unknown:
             fatalError("unknown module type")
 //        default: break

@@ -25,7 +25,7 @@ extension ModulesTree {
 
         let ruleBuilder = LinkedRemoteAsPrimaryRuleBuilder(parentObjectIDList: parentObjectIDList, linkedClazz: Module.self, linkedObjectID: module_id)
         let currentModuleHelper = ModulesTree.ModulesTreeCurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-        mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: currentModuleHelper)
+        mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: currentModuleHelper)
 
         // MARK: - NextModules
 
@@ -33,7 +33,7 @@ extension ModulesTree {
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
             let ruleBuilder = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pkCase: pkCase, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
-            mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextModulesHelper)
+            mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextModulesHelper)
         }
 
         #warning("Next Tanks")
@@ -43,7 +43,7 @@ extension ModulesTree {
         (nextTanks as? [AnyObject])?.forEach {
             // parents was not used for next portion of tanks
             let ruleBuilder = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
-            mappingCoordinator?.linkRemote(modelClazz: Vehicles.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextTanksHelper)
+            mappingCoordinator?.linkRemote(modelClazz: Vehicles.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextTanksHelper)
         }
     }
 }

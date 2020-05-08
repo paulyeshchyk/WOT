@@ -21,7 +21,9 @@ public enum LogEventType: Int {
     case performance
     case logic
     case mapping
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.web, .json, .coredata, .info, .performance, .logic, .mapping] }
+    case localFetch
+    case remoteFetch
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.web, .json, .coredata, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch] }
 }
 
 @objc
