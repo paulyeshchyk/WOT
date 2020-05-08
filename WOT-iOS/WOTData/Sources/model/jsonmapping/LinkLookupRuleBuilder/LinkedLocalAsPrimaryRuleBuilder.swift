@@ -11,9 +11,9 @@ import WOTKit
 
 public class LinkedLocalAsPrimaryRuleBuilder: LinkLookupRuleBuilderProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
-    private var linkedObjectID: Any
+    private var linkedObjectID: AnyObject
 
-    public init(linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: Any) {
+    public init(linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
     }

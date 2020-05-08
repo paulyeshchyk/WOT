@@ -18,16 +18,10 @@ extension VehicleprofileAmmoList {
         let vehicleProfileAmmoListFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
         array.compactMap { $0 as? JSON }.forEach { jSON in
 
-            let vehicleprofileAmmoCase = PKCase()
-            vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
-            vehicleprofileAmmoCase[.secondary] = VehicleprofileAmmo.primaryKey(for: jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject, andType: .local)
-
-            let ammoLinker: JSONAdapterLinkerProtocol? = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker(masterFetchResult: vehicleProfileAmmoListFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchLocal(json: jSON, context: context, forClass: VehicleprofileAmmo.self, pkCase: vehicleprofileAmmoCase, mapper: ammoLinker) { _, error in
-                if let error = error {
-                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                }
-            }
+            let ammoType = jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject
+            let ruleBuilder = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder(pkCase: pkCase, ammoType: ammoType, linkedClazz: VehicleprofileAmmo.self, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+            let ammoLinkerClass = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker.self
+            mappingCoordinator?.linkItem(from: jSON, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, mapperClazz: ammoLinkerClass, lookupRuleBuilder: ruleBuilder)
         }
     }
 }

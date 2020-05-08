@@ -21,9 +21,9 @@ public class RootTagRuleBuilder: LinkLookupRuleBuilderProtocol {
     public func build() -> LinkLookupRule? {
         guard let json = self.json else { return nil }
 
-        let itemID: Any?
+        let itemID: AnyObject?
         if let idKeyPath = linkedClazz.primaryKeyPath(forType: .local) {
-            itemID = json[idKeyPath]
+            itemID = json[idKeyPath] as AnyObject
         } else {
             itemID = nil
             fatalError("need to debug")

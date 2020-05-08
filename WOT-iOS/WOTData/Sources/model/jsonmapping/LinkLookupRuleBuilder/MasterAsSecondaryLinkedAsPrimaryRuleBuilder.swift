@@ -11,10 +11,10 @@ import WOTKit
 
 public class MasterAsSecondaryLinkedAsPrimaryRuleBuilder: LinkLookupRuleBuilderProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
-    private var linkedObjectID: Any
+    private var linkedObjectID: AnyObject
     private var pkCase: PKCase
 
-    public init(pkCase: PKCase, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: Any) {
+    public init(pkCase: PKCase, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
         self.pkCase = pkCase

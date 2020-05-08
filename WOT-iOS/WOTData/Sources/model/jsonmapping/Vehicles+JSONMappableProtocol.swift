@@ -48,13 +48,13 @@ extension Vehicles {
         modulesTreeCase[.primary] = pkCase[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
+        
         moduleTreeJSON.keys.forEach { key in
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
-            let modulePK = ModulesTree.primaryKey(for: module_id, andType: .local)
             let submodulesCase = PKCase(parentObjectIDList: modulesTreeCase.parentObjectIDList)
-            submodulesCase[.primary] = modulePK
+            submodulesCase[.primary] = ModulesTree.primaryKey(for: module_id, andType: .local)
             submodulesCase[.secondary] = modulesTreeCase[.primary]
 
             let mapper = Vehicles.VehiclesModules2TreeLinker(masterFetchResult: vehiclesFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)

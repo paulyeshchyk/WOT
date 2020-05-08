@@ -11,11 +11,11 @@ import WOTKit
 
 public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: LinkLookupRuleBuilderProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
-    private var linkedObjectID: Any
+    private var linkedObjectID: AnyObject
     private var pkCase: PKCase
     private var parentObjectIDList: [NSManagedObjectID]?
 
-    public init(pkCase: PKCase, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: Any, parentObjectIDList: [NSManagedObjectID]?) {
+    public init(pkCase: PKCase, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, parentObjectIDList: [NSManagedObjectID]?) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
         self.pkCase = pkCase

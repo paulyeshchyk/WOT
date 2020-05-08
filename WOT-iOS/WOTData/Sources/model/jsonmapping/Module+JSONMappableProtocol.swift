@@ -33,12 +33,7 @@ extension Module {
             return
         }
 
-        guard let moduleTypeString = self.type else {
-            print("unknown module type")
-            return
-        }
-
-        let moduleType = VehicleModuleType(rawValue: moduleTypeString)
+        let moduleType = VehicleModuleType.fromString(self.type)
         switch moduleType {
         case .vehicleChassis:
             let suspensionMapper = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
@@ -60,9 +55,7 @@ extension Module {
             let turretMapper = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
             mappingCoordinator?.linkRemote(modelClazz: VehicleprofileTurret.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "turret.", mapper: turretMapper)
-        case .none, .tank, .unknown:
-            fatalError("unknown module type")
-//        default: break
+        default: fatalError("unknown module type")
         }
     }
 }

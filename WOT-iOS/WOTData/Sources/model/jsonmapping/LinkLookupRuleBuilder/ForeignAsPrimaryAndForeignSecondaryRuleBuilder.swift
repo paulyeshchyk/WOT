@@ -1,5 +1,5 @@
 //
-//  ForeignAsPrimaryAndSecondary.swift
+//  ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift
 //  WOTData
 //
 //  Created by Pavel Yeshchyk on 5/8/20.
@@ -9,7 +9,7 @@
 import CoreData
 import WOTKit
 
-public class ForeignAsPrimaryAndSecondary: LinkLookupRuleBuilderProtocol {
+public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: LinkLookupRuleBuilderProtocol {
     private var pkCase: PKCase
     private var foreignPrimarySelectKey: String
     private var foreignSecondarySelectKey: String
@@ -22,8 +22,8 @@ public class ForeignAsPrimaryAndSecondary: LinkLookupRuleBuilderProtocol {
 
     public func build() -> LinkLookupRule? {
         let resultCase = PKCase()
-        resultCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)//#keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
-        resultCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)//#keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo)
+        resultCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
+        resultCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
 
         return LinkLookupRule(objectIdentifier: nil, pkCase: resultCase)
     }
