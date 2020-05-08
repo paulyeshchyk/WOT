@@ -22,17 +22,11 @@ extension VehicleprofileArmorList {
         let hullCase = PKCase()
         hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
         if let fromJSON = json[#keyPath(VehicleprofileArmorList.hull)] as? JSON {
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: hullCase) { fetchResult, error in
+            let armorHullMapper: JSONAdapterLinkerProtocol? = VehicleprofileArmorList.HullLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+            mappingCoordinator?.fetchLocal(json: fromJSON, context: context, forClass: VehicleprofileArmor.self, pkCase: hullCase, mapper: armorHullMapper) { _, error in
                 if let error = error {
                     mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     return
-                }
-                let armorHullLinker: JSONAdapterLinkerProtocol? = VehicleprofileArmorList.HullLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-                mappingCoordinator?.decodingAndMapping(json: fromJSON, fetchResult: fetchResult, pkCase: hullCase, linker: armorHullLinker) { _, error in
-                    if let error = error {
-                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                        return
-                    }
                 }
             }
         }
@@ -42,17 +36,11 @@ extension VehicleprofileArmorList {
         let turretCase = PKCase()
         turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
         if let fromJSON = json[#keyPath(VehicleprofileArmorList.turret)] as? JSON {
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileArmor.self, pkCase: hullCase) { fetchResult, error in
+            let armorTurretMapper: JSONAdapterLinkerProtocol? = VehicleprofileArmorList.TurretLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+            mappingCoordinator?.fetchLocal(json: fromJSON, context: context, forClass: VehicleprofileArmor.self, pkCase: hullCase, mapper: armorTurretMapper) { _, error in
                 if let error = error {
                     mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
                     return
-                }
-                let armorHullLinker: JSONAdapterLinkerProtocol? = VehicleprofileArmorList.TurretLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-                mappingCoordinator?.decodingAndMapping(json: fromJSON, fetchResult: fetchResult, pkCase: hullCase, linker: armorHullLinker) { _, error in
-                    if let error = error {
-                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                        return
-                    }
                 }
             }
         }

@@ -31,7 +31,7 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
 
     func fetchRemote(modelClazz modelClass: AnyClass, masterFetchResult: FetchResult, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol)
 
-    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
+    func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, mapper: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
 
     func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
 
@@ -44,7 +44,7 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
 
 extension WOTMappingCoordinatorProtocol {
     //
-    public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
+    public func fetchLocal(json: JSON, context: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, pkCase: PKCase, mapper: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
             callback(FetchResult(), error)
@@ -59,12 +59,12 @@ extension WOTMappingCoordinatorProtocol {
                 return
             }
 
-            self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
+            self.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, mapper: mapper) { fetchResult, error in
                 if let error = error {
                     callback(fetchResult, error)
                 } else {
-                    if let linker = linker {
-                        linker.process(fetchResult: fetchResult, completion: callback)
+                    if let mapper = mapper {
+                        mapper.process(fetchResult: fetchResult, completion: callback)
                     } else {
                         callback(fetchResult, nil)//WOTMappingCoordinatorError.linkerNotStarted
                     }
@@ -73,7 +73,7 @@ extension WOTMappingCoordinatorProtocol {
         }
     }
 
-    public func fetchLocal(array: [Any], context: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
+    public func fetchLocal(array: [Any], context: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, pkCase: PKCase, mapper: JSONAdapterLinkerProtocol?, callback: @escaping FetchResultErrorCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
             callback(FetchResult(), error)
@@ -87,12 +87,12 @@ extension WOTMappingCoordinatorProtocol {
                 return
             }
 
-            self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, linker: linker) { fetchResult, error in
+            self.decodingAndMapping(array: array, fetchResult: fetchResult, pkCase: pkCase, linker: mapper) { fetchResult, error in
                 if let error = error {
                     callback(fetchResult, error)
                 } else {
-                    if let linker = linker {
-                        linker.process(fetchResult: fetchResult, completion: callback)
+                    if let mapper = mapper {
+                        mapper.process(fetchResult: fetchResult, completion: callback)
                     } else {
                         callback(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
                     }

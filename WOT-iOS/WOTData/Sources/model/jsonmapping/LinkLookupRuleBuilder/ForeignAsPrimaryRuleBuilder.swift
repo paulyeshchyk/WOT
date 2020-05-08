@@ -22,10 +22,8 @@ public class ForeignAsPrimaryRuleBuilder: LinkLookupRuleBuilderProtocol {
 
     public func build() -> LinkLookupRule? {
         let itemCase = PKCase(parentObjectIDList: parentObjectIDList)
+        itemCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
 
-        if let foreignKey = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey) {
-            itemCase[.primary] = foreignKey
-        }
         return LinkLookupRule(objectIdentifier: nil, pkCase: itemCase)
     }
 }

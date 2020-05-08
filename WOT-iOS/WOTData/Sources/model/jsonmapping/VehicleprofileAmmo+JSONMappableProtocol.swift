@@ -16,58 +16,20 @@ extension VehicleprofileAmmo {
         //
         try self.decode(json: json)
         //
-        let vehicleprofileAmmoPenetrationCase = PKCase()
-        vehicleprofileAmmoPenetrationCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-        vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-        if let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult, error in
-                if let error = error {
-                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                    return
-                }
-                let penetrationHelper: JSONAdapterLinkerProtocol? = nil
-                mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, linker: penetrationHelper) { fetchResult, error in
-                    if let error = error {
-                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                        return
-                    }
 
-                    self.penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration
-                    mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                        }
-                    }
-                }
-            }
-        }
-        let vehicleprofileAmmoDamageCase = PKCase()
-        vehicleprofileAmmoDamageCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
-        vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
+        let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
-        if let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { fetchResult, error in
-                if let error = error {
-                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                    return
-                }
+        // MARK: - Penetration
+        let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any]
+        let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
+        let penetrationRuleBuilder = ForeignAsPrimaryAndSecondary(pkCase: pkCase, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
+        mappingCoordinator?.linkItems(from: penetrationArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, mapperClazz: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder)
 
-                let damageHelper: JSONAdapterLinkerProtocol? = nil
-                mappingCoordinator?.decodingAndMapping(array: damageArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoDamageCase, linker: damageHelper) { fetchResult, error in
-                    if let error = error {
-                        mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                        return
-                    }
-
-                    self.damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage
-                    mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                        }
-                    }
-                }
-            }
-        }
+        // MARK: - Damage
+        let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any]
+        let damageMapper = VehicleprofileAmmo.DamageLinker.self
+        let damageRuleBuilder = ForeignAsPrimaryAndSecondary(pkCase: pkCase, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
+        mappingCoordinator?.linkItems(from: damageArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, mapperClazz: damageMapper, lookupRuleBuilder: damageRuleBuilder)
     }
 
     convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
@@ -80,9 +42,49 @@ extension VehicleprofileAmmo {
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
         let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none)
-        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { _, error in
+        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, mapper: nil) { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+            }
+        }
+    }
+}
+
+extension VehicleprofileAmmo {
+    public class PenetrationLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
+
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+            let context = fetchResult.context
+            if let penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration {
+                if let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo {
+                    ammo.penetration = penetration
+
+                    coreDataStore?.stash(context: context) { error in
+                        completion(fetchResult, error)
+                    }
+                }
+            }
+        }
+    }
+
+    public class DamageLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
+
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+            let context = fetchResult.context
+            if let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage {
+                if let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo {
+                    ammo.damage = damage
+
+                    coreDataStore?.stash(context: context) { error in
+                        completion(fetchResult, error)
+                    }
+                }
             }
         }
     }

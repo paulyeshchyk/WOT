@@ -148,7 +148,7 @@ extension JSONAdapter {
 
             let jsonStartParsingDate = Date()
             self.logEvent(EventJSONStart(pkCase.description), sender: self)
-            self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { fetchResult, error in
+            self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, mapper: nil) { fetchResult, error in
                 if let error = error {
                     self.logEvent(EventError(error, details: nil), sender: self)
                 }
