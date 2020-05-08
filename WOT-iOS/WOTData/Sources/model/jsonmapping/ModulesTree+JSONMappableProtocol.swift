@@ -19,36 +19,32 @@ extension ModulesTree {
         var parentObjectIDList = pkCase.parentObjectIDList
         parentObjectIDList.append(self.objectID)
 
-        let modulesTreeFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
+        let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
         // MARK: - CurrentModule
 
-        let currentModulePK = PKCase(parentObjectIDList: parentObjectIDList)
-        currentModulePK[.primary] = Module.primaryKey(for: self.module_id as AnyObject, andType: .remote)
-        let currentModuleHelper = ModulesTree.ModulesTreeCurrentModuleLinker(masterFetchResult: modulesTreeFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-        mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: currentModulePK, keypathPrefix: nil, mapper: currentModuleHelper)
+        let ruleBuilder = LinkedRemoteAsPrimaryRuleBuilder(parentObjectIDList: parentObjectIDList, linkedClazz: Module.self, linkedObjectID: module_id)
+        let currentModuleHelper = ModulesTree.ModulesTreeCurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: currentModuleHelper)
 
         // MARK: - NextModules
 
-        let nextModulesHelper = ModulesTree.ModulesTreeNextModulesLinker(masterFetchResult: modulesTreeFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        let nextModulesHelper = ModulesTree.ModulesTreeNextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let modulePK = PKCase(parentObjectIDList: parentObjectIDList)
-            modulePK[.primary] = pkCase[.primary]
-            modulePK[.secondary] = Module.primaryKey(for: $0, andType: .remote)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, mapper: nextModulesHelper)
+            let ruleBuilder = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pkCase: pkCase, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
+            mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextModulesHelper)
         }
 
         #warning("Next Tanks")
-//        // MARK: - NextTanks
-//        let nextTanksHelper = ModulesTree.ModulesTreeNextVehicleLinker(masterFetchResult: modulesTreeFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-//        let nextTanks = json[#keyPath(ModulesTree.next_tanks)]
-//        (nextTanks as? [AnyObject])?.forEach {
-//            // parents was not used for next portion of tanks
-//            let nextTanksPK = PKCase(parentObjectIDList: nil)
-//            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0, andType: .internal)
-//            mappingCoordinator?.fetchRemote(context: context, byModelClass: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, linker: nextTanksHelper)
-//        }
+        // MARK: - NextTanks
+        let nextTanksHelper = ModulesTree.ModulesTreeNextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        let nextTanks = json[#keyPath(ModulesTree.next_tanks)]
+        (nextTanks as? [AnyObject])?.forEach {
+            // parents was not used for next portion of tanks
+            let ruleBuilder = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
+            mappingCoordinator?.linkRemote(modelClazz: Vehicles.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextTanksHelper)
+        }
     }
 }
 

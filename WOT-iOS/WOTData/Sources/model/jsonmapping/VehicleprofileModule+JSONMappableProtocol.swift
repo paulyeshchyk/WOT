@@ -20,43 +20,33 @@ extension VehicleprofileModule {
         let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
         if let gun_id = self.gun_id {
-            let gunCase = PKCase()
-            gunCase[.primary] = VehicleprofileGun.primaryKey(for: gun_id, andType: .remote)
-            gunCase[.secondary] = pkCase[.primary]
             let gunMapper = VehicleprofileModule.GunJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: gun_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileGun.self, pkCase: gunCase, keypathPrefix: "gun.", mapper: gunMapper)
+            let linkLookupRuleBuilder = MasterAsSecondaryLinkedAsPrimaryRuleBuilder(pkCase: pkCase, linkedClazz: VehicleprofileGun.self, linkedObjectID: gun_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileGun.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: linkLookupRuleBuilder, keypathPrefix: "gun.", mapper: gunMapper)
         }
 
         if let radio_id = self.radio_id {
-            let radioCase = PKCase()
-            radioCase[.primary] = VehicleprofileRadio.primaryKey(for: radio_id, andType: .remote)
-            radioCase[.secondary] = pkCase[.primary]
+            let linkLookupRuleBuilder = MasterAsSecondaryLinkedAsPrimaryRuleBuilder(pkCase: pkCase, linkedClazz: VehicleprofileRadio.self, linkedObjectID: radio_id)
             let radioMapper = VehicleprofileModule.RadioJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: radio_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileRadio.self, pkCase: radioCase, keypathPrefix: "radio.", mapper: radioMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileRadio.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: linkLookupRuleBuilder, keypathPrefix: "radio.", mapper: radioMapper)
         }
 
         if let engine_id = self.engine_id {
-            let engineCase = PKCase()
-            engineCase[.primary] = VehicleprofileEngine.primaryKey(for: engine_id, andType: .remote)
-            engineCase[.secondary] = pkCase[.primary]
+            let linkLookupRuleBuilder = MasterAsSecondaryLinkedAsPrimaryRuleBuilder(pkCase: pkCase, linkedClazz: VehicleprofileEngine.self, linkedObjectID: engine_id)
             let engineMapper = VehicleprofileModule.EngineJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: engine_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileEngine.self, pkCase: engineCase, keypathPrefix: "engine.", mapper: engineMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileEngine.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: linkLookupRuleBuilder, keypathPrefix: "engine.", mapper: engineMapper)
         }
 
         if let suspension_id = self.suspension_id {
-            let suspensionCase = PKCase()
-            suspensionCase[.primary] = VehicleprofileSuspension.primaryKey(for: suspension_id, andType: .remote)
-            suspensionCase[.secondary] = pkCase[.primary]
+            let linkLookupRuleBuilder = MasterAsSecondaryLinkedAsPrimaryRuleBuilder(pkCase: pkCase, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: suspension_id)
             let suspensionMapper = VehicleprofileModule.SuspensionJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: suspension_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileSuspension.self, pkCase: suspensionCase, keypathPrefix: "suspension.", mapper: suspensionMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileSuspension.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: linkLookupRuleBuilder, keypathPrefix: "suspension.", mapper: suspensionMapper)
         }
 
         if let turret_id = self.turret_id {
-            let turretCase = PKCase()
-            turretCase[.primary] = VehicleprofileTurret.primaryKey(for: turret_id, andType: .remote)
-            turretCase[.secondary] = pkCase[.primary]
+            let linkLookupRuleBuilder = MasterAsSecondaryLinkedAsPrimaryRuleBuilder(pkCase: pkCase, linkedClazz: VehicleprofileTurret.self, linkedObjectID: turret_id)
             let turretMapper = VehicleprofileModule.TurretJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: turret_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: VehicleprofileTurret.self, pkCase: turretCase, keypathPrefix: "turret.", mapper: turretMapper)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileTurret.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: linkLookupRuleBuilder, keypathPrefix: "turret.", mapper: turretMapper)
         }
     }
 }

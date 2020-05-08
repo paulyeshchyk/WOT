@@ -1,5 +1,5 @@
 //
-//  LinkLookupRuleBuilderParentID.swift
+//  ForeignKeyRuleBuilder.swift
 //  WOTData
 //
 //  Created by Pavel Yeshchyk on 5/7/20.
@@ -9,15 +9,15 @@
 import CoreData
 import WOTKit
 
-public class LinkLookupRuleBuilderParentID: LinkLookupRuleBuilderProtocol {
+public class ForeignAsPrimaryRuleBuilder: LinkLookupRuleBuilderProtocol {
     private var pkCase: PKCase
     private var foreignSelectKey: String
     private var parentObjectIDList: [NSManagedObjectID]?
 
-    public init(pkCase: PKCase, foreignSelectKey: String, parents: [NSManagedObjectID]?) {
+    public init(pkCase: PKCase, foreignSelectKey: String, parentObjectIDList: [NSManagedObjectID]?) {
         self.pkCase = pkCase
         self.foreignSelectKey = foreignSelectKey
-        self.parentObjectIDList = parents
+        self.parentObjectIDList = parentObjectIDList
     }
 
     public func build() -> LinkLookupRule? {

@@ -41,38 +41,34 @@ extension Module {
         let moduleType = VehicleModuleType(rawValue: moduleTypeString)
         switch moduleType {
         case .vehicleChassis:
-            let vehicleSuspensionLinker = Module.SuspensionLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "suspension.", mapper: vehicleSuspensionLinker)
+            let suspensionMapper = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileSuspension.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "suspension.", mapper: suspensionMapper)
         case .vehicleGun:
-            let vehicleGunLinker = Module.ModuleGunLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "gun.", mapper: vehicleGunLinker)
+            let gunMapper = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileGun.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileGun.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "gun.", mapper: gunMapper)
         case .vehicleRadio:
-            let vehicleRadioLinker = Module.RadioLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "radio.", mapper: vehicleRadioLinker)
+            let radioMapper = Module.RadioMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileRadio.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileRadio.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "radio.", mapper: radioMapper)
         case .vehicleEngine:
-            let vehicleEngineLinker = Module.EngineLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "engine.", mapper: vehicleEngineLinker)
+            let engineMapper = Module.EngineMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileEngine.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileEngine.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "engine.", mapper: engineMapper)
         case .vehicleTurret:
-            let vehicleTurretLinker = Module.TurretLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            self.fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, mappingCoordinator: mappingCoordinator, keyPathPrefix: "turret.", mapper: vehicleTurretLinker)
+            let turretMapper = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileTurret.self, masterFetchResult: masterFetchResult, linkLookupRuleBuilder: ruleBuilder, keypathPrefix: "turret.", mapper: turretMapper)
         case .none, .tank, .unknown:
             fatalError("unknown module type")
+//        default: break
         }
-    }
-
-    private func fetchRemoteModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, mappingCoordinator: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
-        let pkCase = PKCase()
-        pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .remote)
-        if let tank_id = tank_id {
-            pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .local)
-        }
-
-        mappingCoordinator?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, mapper: mapper)
     }
 }
 
 extension Module {
-    public class EngineLinker: BaseJSONAdapterLinker {
+    public class EngineMapper: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
@@ -96,7 +92,7 @@ extension Module {
         }
     }
 
-    public class TurretLinker: BaseJSONAdapterLinker {
+    public class TurretMapper: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
@@ -120,7 +116,7 @@ extension Module {
         }
     }
 
-    public class SuspensionLinker: BaseJSONAdapterLinker {
+    public class SuspensionMapper: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
@@ -144,7 +140,7 @@ extension Module {
         }
     }
 
-    public class RadioLinker: BaseJSONAdapterLinker {
+    public class RadioMapper: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
@@ -168,7 +164,7 @@ extension Module {
         }
     }
 
-    public class ModuleGunLinker: BaseJSONAdapterLinker {
+    public class GunMapper: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .local }
 
         override public func onJSONExtraction(json: JSON) -> JSON {

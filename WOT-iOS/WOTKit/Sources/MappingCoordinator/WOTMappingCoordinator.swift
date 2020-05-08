@@ -112,14 +112,28 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         }
     }
 
-    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
-        self.logEvent(EventCustomLogic("fetchRemote:\(clazz)"), sender: self)
+    public func fetchRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
+        self.logEvent(EventCustomLogic("fetchRemote:\(modelClazz)"), sender: self)
 
         var predicates = [RequestPredicate]()
-        predicates.append(RequestPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
+        predicates.append(RequestPredicate(clazz: modelClazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
 
         predicates.forEach { predicate in
             fetchRemote(predicate: predicate, linker: mapper)
+        }
+    }
+
+    private func fetchRemote(predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) {
+        guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {
+            self.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
+            return
+        }
+        requestIDs.forEach {
+            do {
+                try appManager?.requestManager?.startRequest(by: $0, requestPredicate: predicate, linker: linker)
+            } catch {
+                self.logEvent(EventError(error, details: nil), sender: self)
+            }
         }
     }
 
@@ -158,18 +172,10 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         })
     }
 
-    // MARK: private -
-    private func fetchRemote(predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) {
-        guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {
-            self.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
+    public func linkRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
+        guard let rule =  linkLookupRuleBuilder.build() else {
             return
         }
-        requestIDs.forEach {
-            do {
-                try appManager?.requestManager?.startRequest(by: $0, requestPredicate: predicate, linker: linker)
-            } catch {
-                self.logEvent(EventError(error, details: nil), sender: self)
-            }
-        }
+        fetchRemote(modelClazz: modelClazz, masterFetchResult: masterFetchResult, pkCase: rule.pkCase, keypathPrefix: keypathPrefix, mapper: mapper)
     }
 }

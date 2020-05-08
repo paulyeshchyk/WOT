@@ -29,7 +29,7 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
 
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultErrorCompletion)
 
-    func fetchRemote(context: NSManagedObjectContext, byModelClass modelClass: AnyClass, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol)
+    func fetchRemote(modelClazz modelClass: AnyClass, masterFetchResult: FetchResult, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol)
 
     func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
 
@@ -38,6 +38,8 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
     func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol)
 
     func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol)
+
+    func linkRemote(modelClazz modelClass: AnyClass, masterFetchResult: FetchResult, linkLookupRuleBuilder: LinkLookupRuleBuilderProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol)
 }
 
 extension WOTMappingCoordinatorProtocol {
