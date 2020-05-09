@@ -52,11 +52,11 @@ extension VehicleprofileAmmo {
 
 extension VehicleprofileAmmo {
     public class PenetrationLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .remote }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration {
                 if let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo {
@@ -71,11 +71,11 @@ extension VehicleprofileAmmo {
     }
 
     public class DamageLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .remote }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage {
                 if let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo {

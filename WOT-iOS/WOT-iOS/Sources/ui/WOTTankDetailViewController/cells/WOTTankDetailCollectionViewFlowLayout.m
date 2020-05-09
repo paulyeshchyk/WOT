@@ -23,9 +23,9 @@
     
     self = [super initWithCoder:aDecoder];
     if (self){
-        
-        self.itemSize = IS_IPAD?CGSizeMake(768,44):CGSizeMake(320,44);
-        self.headerReferenceSize =IS_IPAD?CGSizeMake(768,44):CGSizeMake(320,44);
+        BOOL isIPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+        self.itemSize = isIPad ? CGSizeMake(768,44) : CGSizeMake(320,44);
+        self.headerReferenceSize =isIPad ? CGSizeMake(768,44) : CGSizeMake(320,44);
         
     }
     return self;

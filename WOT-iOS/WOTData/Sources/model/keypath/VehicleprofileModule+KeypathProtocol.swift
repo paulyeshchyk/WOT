@@ -30,9 +30,8 @@ extension VehicleprofileModule {
 
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
         switch forType {
-        case .remote: return #keyPath(VehicleprofileModule.module_id)
-        case .local: return #keyPath(VehicleprofileModule.module_id)
-        case .none: return nil
+        case .external: return #keyPath(VehicleprofileModule.module_id)
+        case .internal: return #keyPath(VehicleprofileModule.module_id)
         }
     }
 }

@@ -65,7 +65,7 @@ extension WOTMappingCoordinatorProtocol {
                     callback(fetchResult, error)
                 } else {
                     if let mapper = mapper {
-                        mapper.process(fetchResult: fetchResult, completion: callback)
+                        mapper.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: callback)
                     } else {
                         callback(fetchResult, nil)//WOTMappingCoordinatorError.linkerNotStarted
                     }
@@ -93,7 +93,7 @@ extension WOTMappingCoordinatorProtocol {
                     callback(fetchResult, error)
                 } else {
                     if let mapper = mapper {
-                        mapper.process(fetchResult: fetchResult, completion: callback)
+                        mapper.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: callback)
                     } else {
                         callback(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
                     }

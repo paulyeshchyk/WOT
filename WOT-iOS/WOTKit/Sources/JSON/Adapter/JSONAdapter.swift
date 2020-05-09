@@ -70,7 +70,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
                     return
                 }
 
-                self.linker.process(fetchResult: fetchResult) { _, error in
+                self.linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore) { _, error in
                     if let error = error {
                         self.logEvent(EventError(error, details: nil), sender: self)
                     }
@@ -173,7 +173,7 @@ extension JSONAdapterLinkerProtocol {
         let extractedJSON = onJSONExtraction(json: json)
 
         let ident: Any
-        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: self.primaryKeyType) {
+        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: self.linkerPrimaryKeyType) {
             ident = extractedJSON[primaryKeyPath] ?? key
         } else {
             ident = key
@@ -181,7 +181,7 @@ extension JSONAdapterLinkerProtocol {
 
         let parents = fromRequest.predicate?.pkCase?.parentObjectIDList
         let objCase = PKCase(parentObjectIDList: parents)
-        objCase[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: primaryKeyType)
+        objCase[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: self.linkerPrimaryKeyType)
 
         return JSONExtraction(pkCase: objCase, json: extractedJSON)
     }

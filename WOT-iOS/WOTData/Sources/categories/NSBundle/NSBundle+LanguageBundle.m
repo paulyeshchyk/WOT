@@ -7,7 +7,6 @@
 //
 
 #import "NSBundle+LanguageBundle.h"
-#import "NSString+WOTValue.h"
 
 NSString *const kLanguageDidChangeNotification = @"kLanguageDidChangeNotification";
 NSString *const kLocalizationEnglishDefaultPath = @"en";
@@ -82,15 +81,3 @@ NSString *WOTResourcePath(NSString *key) {
 
 }
 
-UIImage *WOTImage(NSString *key) {
-    
-    NSString *path = key;
-
-    NSString *pathComponent = [[[NSBundle languageBundle] resourcePath] lastPathComponent];
-    if (![NSString isEmptyAfterTrimmingWhitespaceAndNewlineCharacterSet:pathComponent]) {
-        
-        path = [NSString stringWithFormat:@"%@/%@",pathComponent,key];
-    }
-    
-    return [UIImage imageNamed:path];
-}

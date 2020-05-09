@@ -52,14 +52,6 @@ NSString *WOTString(NSString *key);
 NSData *WOTResource(NSString *key);
 
 
-
-/**
- * Function for image localization
- * @param key as key
- * @return As localized image. If not available, returns the English Translation.
- */
-UIImage *WOTImage(NSString *key);
-
 /**
  * Function for image path localization
  * @param path as key

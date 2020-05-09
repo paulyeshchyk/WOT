@@ -17,7 +17,7 @@
     [self setTranslucent:NO];
     [self setTintColor:[UIColor lightGrayColor]];
     [self setOpaque:YES];
-    [self setBarStyle:UIBarStyleBlackTranslucent];
+    [self setBarStyle: UIBarStyleBlack];
 }
 
 @end

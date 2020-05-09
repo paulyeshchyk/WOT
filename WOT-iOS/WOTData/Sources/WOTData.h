@@ -21,8 +21,6 @@ FOUNDATION_EXPORT const unsigned char WOTDataVersionString[];
 
 #import "WOTWEBRequest+Stubs.h"
 #import "WOTWEBRequest+Stubs.h"
-#import "NSString+WOTValue.h"
-#import "NSString+UrlEncode.h"
 
 
 #import "NSBundle+LanguageBundle.h"

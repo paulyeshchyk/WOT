@@ -66,10 +66,10 @@ extension Vehicles {
 //        mappingCoordinator?.linkItem(from: json, masterFetchResult: masterFetchResult, linkedClazz: ModulesTree.self, mapperClazz: mapperClazz, lookupRuleBuilder: ruleBuilder)
 
         let submodulesCase = PKCase(parentObjectIDList: pkCase.parentObjectIDList)
-        submodulesCase[.primary] = ModulesTree.primaryKey(for: module_id, andType: .local)
+        submodulesCase[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesCase[.secondary] = pkCase[.primary]
 
-        let mapper = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+        let mapper = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
         mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, pkCase: submodulesCase, mapper: mapper) { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
@@ -82,10 +82,10 @@ extension Vehicles {
     public class ModulesTreeLinker: BaseJSONAdapterLinker {
         // MARK: -
 
-        override public var primaryKeyType: PrimaryKeyType { return .remote }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             let childObject = fetchResult.managedObject()
 
@@ -111,10 +111,10 @@ extension Vehicles {
     public class DefaultProfileLinker: BaseJSONAdapterLinker {
         // MARK: -
 
-        override public var primaryKeyType: PrimaryKeyType { return .remote }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let defaultProfile = fetchResult.managedObject() as? Vehicleprofile {
                 if let vehicles = masterFetchResult?.managedObject(inContext: context) as? Vehicles {
@@ -133,10 +133,10 @@ extension Vehicles {
     public class VehiclesPivotDataLinker: BaseJSONAdapterLinker {
         // MARK: -
 
-        override public var primaryKeyType: PrimaryKeyType { return .local }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             coreDataStore?.stash(context: context, block: { error in
                 completion(fetchResult, error)
@@ -147,10 +147,10 @@ extension Vehicles {
     public class VehiclesTreeViewLinker: BaseJSONAdapterLinker {
         // MARK: -
 
-        override public var primaryKeyType: PrimaryKeyType { return .local }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             coreDataStore?.stash(context: context, block: { error in
                 completion(fetchResult, error)

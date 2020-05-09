@@ -20,7 +20,7 @@ public class LinkedLocalAsPrimaryRuleBuilder: LinkLookupRuleBuilderProtocol {
 
     public func build() -> LinkLookupRule? {
         let nextTanksPK = PKCase(parentObjectIDList: nil)
-        nextTanksPK[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .local)
+        nextTanksPK[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .internal)
 
         return LinkLookupRule(objectIdentifier: nil, pkCase: nextTanksPK)
     }

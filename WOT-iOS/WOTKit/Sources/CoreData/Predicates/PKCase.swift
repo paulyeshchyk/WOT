@@ -8,20 +8,12 @@
 
 import CoreData
 
-public enum PKType: Hashable {
+public enum PKType: String {
     case primary
     case secondary
-    case custom(String)
-    public var identifier: String {
-        switch self {
-        case .primary: return "primary"
-        case .secondary: return "secondary"
-        case .custom(let customType): return customType
-        }
-    }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.identifier)
+        hasher.combine(self.rawValue)
     }
 }
 
@@ -33,18 +25,15 @@ public class PKCase: NSObject {
         case and = 1
     }
 
-    /**
-     used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
-     parents identifier has taken from a list
-     */
-    //    @available(*, deprecated, message:"Use tree instead of plain")
+    /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
+    /// parents identifier has been taken from a list
     public var parentObjectIDList: [NSManagedObjectID] = []
 
     public convenience init(parentObjectIDList idList: [NSManagedObjectID?]?) {
         self.init()
 
-        if let idListCompacted = idList?.compactMap({ $0 }) {
-            self.parentObjectIDList.append(contentsOf: idListCompacted)
+        if let compacted = idList?.compactMap({ $0 }) {
+            self.parentObjectIDList.append(contentsOf: compacted)
         }
     }
 

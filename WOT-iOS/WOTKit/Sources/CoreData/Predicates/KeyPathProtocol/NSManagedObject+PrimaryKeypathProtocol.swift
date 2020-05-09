@@ -19,7 +19,7 @@ extension NSManagedObject: PrimaryKeypathProtocol {
 
     open class func predicate(for ident: AnyObject?, andType: PrimaryKeyType) -> NSPredicate? {
         guard let ident = ident as? String else { return nil }
-        guard let keyName = primaryKeyPath(forType: .local) else { return nil }
+        guard let keyName = primaryKeyPath(forType: .internal) else { return nil }
         let predicateTemplate = predicateFormat(forType: andType)
         return NSPredicate(format: predicateTemplate, keyName, ident)
     }

@@ -25,7 +25,7 @@ public class ForeignAsPrimaryLinkedAsSecondaryRuleBuilder: LinkLookupRuleBuilder
     public func build() -> LinkLookupRule? {
         let vehicleprofileAmmoCase = PKCase()
         vehicleprofileAmmoCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
-        vehicleprofileAmmoCase[.secondary] = linkedClazz.primaryKey(for: ammoType, andType: .local)
+        vehicleprofileAmmoCase[.secondary] = linkedClazz.primaryKey(for: ammoType, andType: .internal)
 
         return LinkLookupRule(objectIdentifier: nil, pkCase: vehicleprofileAmmoCase)
     }

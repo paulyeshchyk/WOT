@@ -32,9 +32,8 @@ extension VehicleprofileEngine {
         // id was used when quering remote module
         // tag was used when parsed response vehicleprofile-engine
         switch forType {
-        case .remote: return #keyPath(VehicleprofileEngine.engine_id)
-        case .local: return #keyPath(VehicleprofileEngine.tag)
-        case .none: return nil
+        case .external: return #keyPath(VehicleprofileEngine.engine_id)
+        case .internal: return #keyPath(VehicleprofileEngine.tag)
         }
     }
 }

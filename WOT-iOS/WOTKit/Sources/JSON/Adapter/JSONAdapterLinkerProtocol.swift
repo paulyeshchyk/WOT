@@ -10,10 +10,10 @@ import CoreData
 
 @objc
 public protocol JSONAdapterLinkerProtocol {
-    var primaryKeyType: PrimaryKeyType { get }
+    var linkerPrimaryKeyType: PrimaryKeyType { get }
 
-    init(masterFetchResult: FetchResult?, mappedObjectIdentifier: Any?, coreDataStore: WOTCoredataStoreProtocol?)
-    func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion)
+    init(masterFetchResult: FetchResult?, mappedObjectIdentifier: Any?)
+    func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion)
     func onJSONExtraction(json: JSON) -> JSON
 }
 
@@ -33,17 +33,17 @@ public struct UnexpectedClassError: Error {
 
 open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
     // MARK: - Open
-    open var primaryKeyType: PrimaryKeyType { return .none }
+    open var linkerPrimaryKeyType: PrimaryKeyType {
+        fatalError("should be overriden")
+    }
 
     // MARK: - Public
     public var masterFetchResult: FetchResult?
     public var mappedObjectIdentifier: Any?
-    public var coreDataStore: WOTCoredataStoreProtocol?
 
-    public required init(masterFetchResult: FetchResult?, mappedObjectIdentifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
+    public required init(masterFetchResult: FetchResult?, mappedObjectIdentifier: Any?) {
         self.masterFetchResult = masterFetchResult
         self.mappedObjectIdentifier = mappedObjectIdentifier
-        self.coreDataStore = coreDataStore
     }
 
     open func onJSONExtraction(json: JSON) -> JSON {
@@ -51,7 +51,7 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
         //throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+    open func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
         fatalError("\(type(of: self))::\(#function)")
         //throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }

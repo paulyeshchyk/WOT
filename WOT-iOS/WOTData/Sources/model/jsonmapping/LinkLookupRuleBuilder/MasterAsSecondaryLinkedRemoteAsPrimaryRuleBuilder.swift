@@ -22,7 +22,7 @@ public class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: LinkLookupRuleBu
 
     public func build() -> LinkLookupRule? {
         let resultCase = PKCase()
-        resultCase[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .remote)
+        resultCase[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
         resultCase[.secondary] = pkCase[.primary]
 
         return LinkLookupRule(objectIdentifier: nil, pkCase: resultCase)

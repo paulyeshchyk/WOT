@@ -11,10 +11,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define IS_IPAD   (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-
-
-
 typedef NS_ENUM(NSInteger, PivotStickyType) {
 
     PivotStickyTypeFloat = 0,
