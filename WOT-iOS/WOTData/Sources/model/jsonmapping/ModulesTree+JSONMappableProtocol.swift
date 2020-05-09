@@ -28,12 +28,12 @@ extension ModulesTree {
         // MARK: - CurrentModule
 
         let ruleBuilder = LinkedRemoteAsPrimaryRuleBuilder(parentObjectIDList: parentObjectIDList, linkedClazz: Module.self, linkedObjectID: module_id)
-        let currentModuleHelper = ModulesTree.ModulesTreeCurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        let currentModuleHelper = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: currentModuleHelper)
 
         // MARK: - NextModules
 
-        let nextModulesHelper = ModulesTree.ModulesTreeNextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        let nextModulesHelper = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
             let ruleBuilder = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pkCase: pkCase, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
@@ -42,7 +42,7 @@ extension ModulesTree {
 
         #warning("Next Tanks")
         // MARK: - NextTanks
-        let nextTanksHelper = ModulesTree.ModulesTreeNextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        let nextTanksHelper = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         let nextTanks = json[#keyPath(ModulesTree.next_tanks)]
         (nextTanks as? [AnyObject])?.forEach {
             // parents was not used for next portion of tanks
@@ -53,7 +53,7 @@ extension ModulesTree {
 }
 
 extension ModulesTree {
-    public class ModulesTreeCurrentModuleLinker: BaseJSONAdapterLinker {
+    public class CurrentModuleLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -71,7 +71,7 @@ extension ModulesTree {
         }
     }
 
-    public class ModulesTreeNextModulesLinker: BaseJSONAdapterLinker {
+    public class NextModulesLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -93,7 +93,7 @@ extension ModulesTree {
         }
     }
 
-    public class ModulesTreeNextVehicleLinker: BaseJSONAdapterLinker {
+    public class NextVehicleLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }

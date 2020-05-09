@@ -27,63 +27,63 @@ extension Vehicleprofile {
         // MARK: - AmmoList
 
         let ammoListArray = json[#keyPath(Vehicleprofile.ammo)] as? [Any]
-        let ammoListMapperClazz = Vehicleprofile.VehicleprofileAmmoListLinker.self
+        let ammoListMapperClazz = Vehicleprofile.AmmoListLinker.self
         let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
         mappingCoordinator?.linkItems(from: ammoListArray, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileAmmoList.self, mapperClazz: ammoListMapperClazz, lookupRuleBuilder: ammoLookupBuilder)
 
         // MARK: - Armor
 
         let armorJSON = json[#keyPath(Vehicleprofile.armor)] as? JSON
-        let armorListMapperClazz = Vehicleprofile.VehicleprofileArmorListLinker.self
+        let armorListMapperClazz = Vehicleprofile.ArmorListLinker.self
         let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
         mappingCoordinator?.linkItem(from: armorJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileArmorList.self, mapperClazz: armorListMapperClazz, lookupRuleBuilder: armorLookupBuilder)
 
         // MARK: - Module
 
         let moduleJSON = json[#keyPath(Vehicleprofile.modules)] as? JSON
-        let moduleMapperClazz = Vehicleprofile.VehicleprofileModuleLinker.self
+        let moduleMapperClazz = Vehicleprofile.ModuleLinker.self
         let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
         mappingCoordinator?.linkItem(from: moduleJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileModule.self, mapperClazz: moduleMapperClazz, lookupRuleBuilder: modulesLookupBuilder)
 
         // MARK: - Engine
 
         let engineJSON = json[#keyPath(Vehicleprofile.engine)] as? JSON
-        let engineMapperClazz = Vehicleprofile.VehicleprofileEngineLinker.self
+        let engineMapperClazz = Vehicleprofile.EngineLinker.self
         let engineLookupBuilder = RootTagRuleBuilder(json: engineJSON, linkedClazz: VehicleprofileEngine.self)
         mappingCoordinator?.linkItem(from: engineJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileEngine.self, mapperClazz: engineMapperClazz, lookupRuleBuilder: engineLookupBuilder)
 
         // MARK: - Gun
 
         let gunJSON = json[#keyPath(Vehicleprofile.gun)] as? JSON
-        let gunMapperClazz = Vehicleprofile.VehicleprofileGunLinker.self
+        let gunMapperClazz = Vehicleprofile.GunLinker.self
         let gunLookupBuilder = RootTagRuleBuilder(json: gunJSON, linkedClazz: VehicleprofileGun.self)
         mappingCoordinator?.linkItem(from: gunJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileGun.self, mapperClazz: gunMapperClazz, lookupRuleBuilder: gunLookupBuilder)
 
         // MARK: - Suspension
 
         let suspensionJSON = json[#keyPath(Vehicleprofile.suspension)] as? JSON
-        let suspensionMapperClazz = Vehicleprofile.VehicleprofileSuspensionLinker.self
+        let suspensionMapperClazz = Vehicleprofile.SuspensionLinker.self
         let suspensionLookupBuilder = RootTagRuleBuilder(json: suspensionJSON, linkedClazz: VehicleprofileSuspension.self)
         mappingCoordinator?.linkItem(from: suspensionJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileSuspension.self, mapperClazz: suspensionMapperClazz, lookupRuleBuilder: suspensionLookupBuilder)
 
         // MARK: - Turret
 
         let turretJSON = json[#keyPath(Vehicleprofile.turret)] as? JSON
-        let turretMapperClazz = Vehicleprofile.VehicleprofileTurretLinker.self
+        let turretMapperClazz = Vehicleprofile.TurretLinker.self
         let turretLookupBuilder = RootTagRuleBuilder(json: turretJSON, linkedClazz: VehicleprofileTurret.self)
         mappingCoordinator?.linkItem(from: turretJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileTurret.self, mapperClazz: turretMapperClazz, lookupRuleBuilder: turretLookupBuilder)
 
         // MARK: - Radio
 
         let radioJSON = json[#keyPath(Vehicleprofile.radio)] as? JSON
-        let radioMapperClazz = Vehicleprofile.VehicleprofileRadioLinker.self
+        let radioMapperClazz = Vehicleprofile.RadioLinker.self
         let radioLookupBuilder = RootTagRuleBuilder(json: radioJSON, linkedClazz: VehicleprofileRadio.self)
         mappingCoordinator?.linkItem(from: radioJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileRadio.self, mapperClazz: radioMapperClazz, lookupRuleBuilder: radioLookupBuilder)
     }
 }
 
 extension Vehicleprofile {
-    public class VehicleprofileRadioLinker: BaseJSONAdapterLinker {
+    public class RadioLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -102,7 +102,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class VehicleprofileTurretLinker: BaseJSONAdapterLinker {
+    public class TurretLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -121,7 +121,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class VehicleprofileSuspensionLinker: BaseJSONAdapterLinker {
+    public class SuspensionLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -140,7 +140,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class VehicleprofileGunLinker: BaseJSONAdapterLinker {
+    public class GunLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType {
             return .remote
         }
@@ -161,7 +161,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class VehicleprofileModuleLinker: BaseJSONAdapterLinker {
+    public class ModuleLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -179,7 +179,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class VehicleprofileEngineLinker: BaseJSONAdapterLinker {
+    public class EngineLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -198,7 +198,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class VehicleprofileArmorListLinker: BaseJSONAdapterLinker {
+    public class ArmorListLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -217,7 +217,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class VehicleprofileAmmoListLinker: BaseJSONAdapterLinker {
+    public class AmmoListLinker: BaseJSONAdapterLinker {
         override public var primaryKeyType: PrimaryKeyType { return .remote }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }

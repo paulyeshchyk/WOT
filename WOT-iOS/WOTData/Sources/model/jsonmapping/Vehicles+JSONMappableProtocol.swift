@@ -61,11 +61,15 @@ extension Vehicles {
     }
 
     private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, pkCase: PKCase, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+//        let ruleBuilder = MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder(pkCase: pkCase, linkedClazz: ModulesTree.self, linkedObjectID: module_id)
+//        let mapperClazz = Vehicles.ModulesTreeLinker.self
+//        mappingCoordinator?.linkItem(from: json, masterFetchResult: masterFetchResult, linkedClazz: ModulesTree.self, mapperClazz: mapperClazz, lookupRuleBuilder: ruleBuilder)
+
         let submodulesCase = PKCase(parentObjectIDList: pkCase.parentObjectIDList)
         submodulesCase[.primary] = ModulesTree.primaryKey(for: module_id, andType: .local)
         submodulesCase[.secondary] = pkCase[.primary]
 
-        let mapper = Vehicles.TreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+        let mapper = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
         mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, pkCase: submodulesCase, mapper: mapper) { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
@@ -95,7 +99,7 @@ extension Vehicles {
         }
     }
 
-    public class TreeLinker: BaseJSONAdapterLinker {
+    public class ModulesTreeLinker: BaseJSONAdapterLinker {
         // MARK: -
 
         override public var primaryKeyType: PrimaryKeyType { return .remote }
