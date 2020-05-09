@@ -56,16 +56,16 @@ extension Vehicles {
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
-            submoduleMapping(context: context, json: moduleTreeJSON, module_id: module_id, pkCase: modulesTreeCase, vehiclesFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator)
+            submoduleMapping(context: context, json: moduleTreeJSON, module_id: module_id, pkCase: modulesTreeCase, masterFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator)
         }
     }
 
-    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, pkCase: PKCase, vehiclesFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, pkCase: PKCase, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         let submodulesCase = PKCase(parentObjectIDList: pkCase.parentObjectIDList)
         submodulesCase[.primary] = ModulesTree.primaryKey(for: module_id, andType: .local)
         submodulesCase[.secondary] = pkCase[.primary]
 
-        let mapper = Vehicles.TreeLinker(masterFetchResult: vehiclesFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+        let mapper = Vehicles.TreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
         mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, pkCase: submodulesCase, mapper: mapper) { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)

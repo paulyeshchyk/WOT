@@ -1,5 +1,5 @@
 //
-//  MasterAsSecondaryLinkedAsPrimaryRuleBuilder.swift
+//  MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift
 //  WOTData
 //
 //  Created by Pavel Yeshchyk on 5/8/20.
@@ -9,7 +9,7 @@
 import CoreData
 import WOTKit
 
-public class MasterAsSecondaryLinkedAsPrimaryRuleBuilder: LinkLookupRuleBuilderProtocol {
+public class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: LinkLookupRuleBuilderProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
     private var pkCase: PKCase

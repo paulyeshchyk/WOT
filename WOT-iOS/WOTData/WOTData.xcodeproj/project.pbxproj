@@ -14,7 +14,7 @@
 		1D41162124646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162024646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift */; };
 		1D41162524646E3B009070AD /* RootTagRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162424646E3B009070AD /* RootTagRuleBuilder.swift */; };
 		1D4116272464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4116262464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */; };
-		1D41162924652FFF009070AD /* MasterAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162824652FFF009070AD /* MasterAsSecondaryLinkedAsPrimaryRuleBuilder.swift */; };
+		1D41162924652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162824652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */; };
 		1D41162B2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162A2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift */; };
 		1D41162D2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162C2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift */; };
 		1D41162F24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162E24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift */; };
@@ -155,7 +155,7 @@
 		1D41162024646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		1D41162424646E3B009070AD /* RootTagRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTagRuleBuilder.swift; sourceTree = "<group>"; };
 		1D4116262464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41162824652FFF009070AD /* MasterAsSecondaryLinkedAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterAsSecondaryLinkedAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
+		1D41162824652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		1D41162A2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift; sourceTree = "<group>"; };
 		1D41162C2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		1D41162E24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedLocalAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 				1D41163624658693009070AD /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */,
 				1D41162424646E3B009070AD /* RootTagRuleBuilder.swift */,
 				1D4116262464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */,
-				1D41162824652FFF009070AD /* MasterAsSecondaryLinkedAsPrimaryRuleBuilder.swift */,
+				1D41162824652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */,
 				1D41162A2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift */,
 				1D41162C2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift */,
 				1D41162E24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift */,
@@ -702,7 +702,7 @@
 				1D60E471245F59FB007E5CA8 /* VehicleprofileAmmo+CoreDataClass.swift in Sources */,
 				1D60E72A2460509A007E5CA8 /* VehicleprofileEngine+JSONMappableProtocol.swift in Sources */,
 				1D60E744246050AF007E5CA8 /* VehicleprofileModule+KeypathProtocol.swift in Sources */,
-				1D41162924652FFF009070AD /* MasterAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */,
+				1D41162924652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				1D60E466245F59FB007E5CA8 /* VehicleprofileAmmoList+CoreDataClass.swift in Sources */,
 				1D60E6FD24605084007E5CA8 /* VehicleprofileSuspension+JSONDecodingProtocol.swift in Sources */,
 				1D60E743246050AF007E5CA8 /* VehicleprofileAmmoPenetration+KeypathProtocol.swift in Sources */,
