@@ -9,5 +9,5 @@
 import Foundation
 
 @objc public protocol Describable {
-    var description: String { get }
+    var wotDescription: String { get }
 }

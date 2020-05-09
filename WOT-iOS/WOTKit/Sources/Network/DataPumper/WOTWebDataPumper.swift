@@ -8,21 +8,21 @@
 
 import Foundation
 
-class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataDelegate {
+class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol {
     let request: URLRequest
     public private(set) var completion: DataReceiveCompletion
     private var data: Data?
     private var connection: NSURLConnection?
 
     deinit {
-        print("deinit WOTWebDataPumper")
+//        print("deinit WOTWebDataPumper")
     }
 
     override var hash: Int {
         return request.url?.absoluteString.hashValue ?? 0
     }
 
-    override var description: String {
+    var wotDescription: String {
         return request.url?.absoluteString ?? "-"
     }
 
@@ -46,7 +46,10 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol, NSURLConnectionDataD
             self?.connection?.start()
         }
     }
+}
 
+// MARK: - NSURLConnectionDataDelegate
+extension WOTWebDataPumper: NSURLConnectionDataDelegate {
     func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
         self.data = Data()
     }

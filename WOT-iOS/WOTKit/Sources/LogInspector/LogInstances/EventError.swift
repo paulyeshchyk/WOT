@@ -30,8 +30,8 @@ public class EventError: LogEventProtocol {
         }
 
         if let details = details {
-            if details.description.count > 0 {
-                messages.append(details.description)
+            if details.wotDescription.count > 0 {
+                messages.append(details.wotDescription)
             }
         }
 

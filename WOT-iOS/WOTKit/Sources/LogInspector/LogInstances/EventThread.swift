@@ -48,6 +48,6 @@ public class EventThreadMainRun: LogEventProtocol {
 
     public convenience init?(details: Describable) {
         self.init()
-        message += "; details: \(details.description)"
+        message += "; details: \(details.wotDescription)"
     }
 }

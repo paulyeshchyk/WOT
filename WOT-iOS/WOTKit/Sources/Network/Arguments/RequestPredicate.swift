@@ -35,7 +35,7 @@ public class RequestPredicate: NSObject {
 }
 
 extension RequestPredicate: Describable {
-    public override var description: String {
+    public var wotDescription: String {
         var result: String = "RequestArguments: \(String(describing: clazz))"
         primaryKeys.forEach {
             result += " key:\($0)"

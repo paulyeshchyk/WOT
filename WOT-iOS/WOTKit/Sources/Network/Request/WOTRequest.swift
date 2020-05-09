@@ -10,6 +10,9 @@ import Foundation
 
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol {
+
+    public var wotDescription: String { return description }
+
     public let uuid: UUID = UUID()
 
     @objc

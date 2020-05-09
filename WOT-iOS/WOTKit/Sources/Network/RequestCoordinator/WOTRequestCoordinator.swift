@@ -50,7 +50,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 
     public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]? {
         guard let modelClass = modelClass(for: request) else {
-            self.logEvent(EventError(message: "model class not found for request\(request.description)"), sender: self)
+            self.logEvent(EventError(message: "model class not found for request\(request.wotDescription)"), sender: self)
             return nil
         }
 

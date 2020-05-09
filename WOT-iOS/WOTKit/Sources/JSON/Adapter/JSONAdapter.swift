@@ -40,11 +40,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         self.linker = linker
 
         super.init()
-        self.logEvent(EventObjectNew(request.description), sender: self)
+        self.logEvent(EventObjectNew(request.wotDescription), sender: self)
     }
 
     deinit {
-        self.logEvent(EventObjectFree(request.description), sender: self)
+        self.logEvent(EventObjectFree(request.wotDescription), sender: self)
     }
 
     // MARK: JSONAdapterProtocol -
@@ -56,7 +56,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         }
 
         let jsonStartParsingDate = Date()
-        self.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
+        self.logEvent(EventJSONStart(fromRequest.predicate?.wotDescription ?? "``"), sender: self)
 
         var fakeIncrement: Int = json.keys.count
         json.keys.forEach { key in
@@ -76,7 +76,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
                     }
                     fakeIncrement -= 1
                     if fakeIncrement == 0 {
-                        self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
+                        self.logEvent(EventJSONEnded(fromRequest.predicate?.wotDescription ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
                         self.onJSONDidParse?(fromRequest, self, error)
                     }
                 }
@@ -147,7 +147,7 @@ extension JSONAdapter {
             }
 
             let jsonStartParsingDate = Date()
-            self.logEvent(EventJSONStart(pkCase.description), sender: self)
+            self.logEvent(EventJSONStart(pkCase.wotDescription), sender: self)
             self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, mapper: nil) { fetchResult, error in
                 if let error = error {
                     self.logEvent(EventError(error, details: nil), sender: self)

@@ -129,12 +129,12 @@ extension WOTRequestManager: LogMessageSender {
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
     public func request(_ request: WOTRequestProtocol, startedWith: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol) {
-        self.logEvent(EventWEBStart(request.description), sender: self)
+        self.logEvent(EventWEBStart(request.wotDescription), sender: self)
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            self.logEvent(EventWEBEnd(request.description), sender: self)
+            self.logEvent(EventWEBEnd(request.wotDescription), sender: self)
             removeRequest(request)
         }
 
@@ -163,7 +163,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 
     public func request(_ request: WOTRequestProtocol, canceledWith error: Error?) {
-        self.logEvent(EventWEBCancel(request.description))
+        self.logEvent(EventWEBCancel(request.wotDescription))
         removeRequest(request)
     }
 
@@ -189,7 +189,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 }
 
 extension WOTRequestManager: Describable {
-    override public var description: String {
+    public var wotDescription: String {
         return "WOTRequestManager"
     }
 }

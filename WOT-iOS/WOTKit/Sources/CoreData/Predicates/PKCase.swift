@@ -37,7 +37,7 @@ public class PKCase: NSObject {
         }
     }
 
-    override public var debugDescription: String { return description }
+    override public var debugDescription: String { return wotDescription }
 
     private var values: [PKType: Set<WOTPrimaryKey>] = .init()
 
@@ -81,7 +81,7 @@ public class PKCase: NSObject {
 }
 
 extension PKCase: Describable {
-    override public var description: String {
+    public var wotDescription: String {
         guard let objects = allValues(), !objects.isEmpty else {
             return "empty case"
         }
