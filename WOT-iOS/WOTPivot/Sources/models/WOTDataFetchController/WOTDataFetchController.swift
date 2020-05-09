@@ -16,8 +16,12 @@ public typealias WOTDataFetchedResultController = NSFetchedResultsController<NSF
 open class WOTDataFetchController: NSObject {
     public var fetchResultController: WOTDataFetchedResultController?
 
-    public func initFetchController( block: @escaping (WOTDataFetchedResultController) -> Void ) throws {
-        self.dataProvider?.performMain({ context in
+    public func initFetchController(block: @escaping (WOTDataFetchedResultController) -> Void) throws {
+        guard let context = self.dataProvider?.workingContext() else {
+            throw WOTCoredataStoreError.contextIsNotDefined
+        }
+
+        self.dataProvider?.perform(context: context) { context in
 
             let request = self.nodeFetchRequestCreator.fetchRequest
             guard let result = self.dataProvider?.fetchResultController(for: request, andContext: context) else {
@@ -25,7 +29,7 @@ open class WOTDataFetchController: NSObject {
             }
             result.delegate = self
             block(result)
-        })
+        }
     }
 
     public var listener: WOTDataFetchControllerListenerProtocol?
@@ -33,9 +37,9 @@ open class WOTDataFetchController: NSObject {
     public var dataProvider: WOTCoredataStoreProtocol?
 
     @objc
-    required public init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTCoredataStoreProtocol?) {
-        nodeFetchRequestCreator = nfrc
-        dataProvider = dataprovider
+    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTCoredataStoreProtocol?) {
+        self.nodeFetchRequestCreator = nfrc
+        self.dataProvider = dataprovider
     }
 
     deinit {
@@ -52,7 +56,5 @@ extension WOTDataFetchController: NSFetchedResultsControllerDelegate {
 
     public func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {}
 
-    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
-        return nil
-    }
+    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? { return nil }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
-    lazy var nodeConnectorIndex: WOTConnectorNodeIndex = { return WOTConnectorNodeIndex() }()
+    lazy var nodeConnectorIndex: WOTTreeConnectorNodeIndexProtocol = { return WOTTreeConnectorNodeIndex() }()
     public var levels: Int {
         return self.nodeConnectorIndex.levels
     }

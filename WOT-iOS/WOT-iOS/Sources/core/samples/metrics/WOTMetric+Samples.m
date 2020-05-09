@@ -31,7 +31,7 @@
 
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
     id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
-    NSManagedObjectContext *context = [coreDataProvider mainContext];
+    NSManagedObjectContext *context = [coreDataProvider workingContext];
     id result = [context executeFetchRequest:request error:&error];
     
     if ([result count] == 0) {

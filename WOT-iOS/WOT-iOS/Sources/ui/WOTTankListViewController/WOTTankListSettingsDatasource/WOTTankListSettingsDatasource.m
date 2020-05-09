@@ -94,7 +94,7 @@
 - (NSManagedObjectContext *)context {
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
     id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
-    return coreDataProvider.mainContext;
+    return [coreDataProvider workingContext];
 }
 
 - (NSArray<NSSortDescriptor *> *  _Nonnull)sortBy {

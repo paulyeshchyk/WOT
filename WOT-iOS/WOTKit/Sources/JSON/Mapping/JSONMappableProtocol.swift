@@ -9,9 +9,6 @@
 import CoreData
 
 public protocol JSONMappableProtocol {
-    #warning("add completion?")
     func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws
-
-    #warning("add completion?")
     func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws
 }

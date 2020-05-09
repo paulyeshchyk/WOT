@@ -131,12 +131,12 @@ extension JSONAdapter {
             fatalError("thread is not main")
         }
 
-        guard let MAINCONTEXT = coreDataStore?.mainContext else {
-            fatalError("main is not accessible")
-        }
-
         guard let managedObjectClass = self.modelClazz as? NSManagedObject.Type else {
             fatalError("modelClazz: \(self.modelClazz) is not NSManagedObject.Type")
+        }
+
+        guard let MAINCONTEXT = coreDataStore?.workingContext() else {
+            fatalError("working context is not defined")
         }
 
         coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: pkCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in

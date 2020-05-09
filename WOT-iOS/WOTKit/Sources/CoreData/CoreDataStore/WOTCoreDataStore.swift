@@ -6,73 +6,22 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc
-open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
-    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
-    }
-
-    public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
-    }
-
-    // MARK: - WOTProviderProtocol -
-
-    @objc
-    public var appManager: WOTAppManagerProtocol?
-
-    public func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion ) {
-        let initialDate = Date()
-
-        self.logEvent(EventCDStashStart(context: context), sender: self)
-        let uuid = UUID()
-        let customBlock: ThrowableCompletion = { error in
-            block(error)
-            self.logEvent(EventCDStashEnded(context: context, initiatedIn: initialDate), sender: self)
-        }
-
-        context.saveRecursively(customBlock)
-        self.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
-    }
-
-    public func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultErrorCompletion ) {
-        let privateCallback: FetchResultErrorCompletion = { fetchResult, error in
-            visibleInContext.perform {
-                let fetchResultForContext = fetchResult.dublicate()
-                fetchResultForContext.context = visibleInContext
-                callback(fetchResultForContext, error)
-            }
-        }
-
-        let context = newPrivateContext()
-        perform(context: context) { context in
-            do {
-                guard let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) else {
-                    self.logEvent(EventError(message: "Object not created:[\(String(describing: clazz))]"), sender: nil)
-                    return
-                }
-                let managedObjectID = managedObject.objectID
-                self.stash(context: context) { (error) in
-                    let fetchResult = FetchResult(context: context, objectID: managedObjectID, predicate: predicate, fetchStatus: .none)
-                    privateCallback(fetchResult, error)
-                }
-            } catch let error {
-                self.logEvent(EventError(error, details: nil), sender: nil)
-            }
-        }
-    }
-
-    // MARK: - WOTCoredataProviderProtocol -
-
-    open var modelURL: URL? { return nil }
-    open var sqliteURL: URL? { return nil }
+open class WOTCoreDataStore: NSObject {
+    // MARK: - Open
+    open var sqliteURL: URL? { fatalError("should be overriden") }
+    open var modelURL: URL? { fatalError("should be overriden") }
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
-    open var applicationDocumentsDirectoryURL: URL? { return nil }
+    open var applicationDocumentsDirectoryURL: URL? { fatalError("should be overriden") }
 
-    @objc lazy public var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
+    // MARK: - Private
+
+    @objc public var appManager: WOTAppManagerProtocol?
+
+    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         guard let sqliteURL = self.sqliteURL else {
             abort()
         }
@@ -84,28 +33,20 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: sqliteURL, options: nil)
-        } catch let error {
+        } catch {
             abort()
         }
         return coordinator
     }()
 
-    @objc public func newPrivateContext() -> NSManagedObjectContext {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.name = "Private"
-        context.parent = self.mainContext
-        context.undoManager = nil
-        return context
-    }
-
-    @objc public lazy var mainContext: NSManagedObjectContext  = {
+    private lazy var mainContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.name = "Main"
         context.parent = self.masterContext
         return context
     }()
 
-    @objc private lazy var masterContext: NSManagedObjectContext  = {
+    private lazy var masterContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
         context.name = "Master"
@@ -113,35 +54,23 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
         return context
     }()
 
-    @objc
-    public func perform(context: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion) {
-        perform(inContext: context, block: block)
-    }
-
-    @objc
-    public func performMain(_ block: @escaping NSManagedObjectContextCompletion) {
-        perform(inContext: mainContext, block: block)
-    }
-
-    @objc
-    public func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult> {
-        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: andContext, sectionNameKeyPath: nil, cacheName: nil)
-    }
-
-    @objc
-    public func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult> {
-        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
-    }
-
-    public func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency) {}
-
-    // MARK: - Private -
-    @objc lazy private var managedObjectModel: NSManagedObjectModel? = {
+    @objc private lazy var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
             return nil
         }
         return NSManagedObjectModel(contentsOf: modelURL)
     }()
+
+    private func perform(inContext: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion) {
+        let privateBlock: NSManagedObjectContextCompletion = { context in
+            block(context)
+        }
+        inContext.perform { privateBlock(inContext) }
+    }
+}
+
+extension WOTCoreDataStore {
+    // MARK: - Merge Contexts
 
     private func mergeChanges(notification: Notification, toContext: NSManagedObjectContext) {
         if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? [NSManagedObject] {
@@ -161,10 +90,10 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
     }
 
     private func mergeObjects(_ objects: [NSManagedObject], toContext: NSManagedObjectContext, fromNotification: Notification) {
-        self.logEvent(EventCDMerge())
+        logEvent(EventCDMerge())
         var updatedObjectsInCurrentContext = Set<NSManagedObject>()
 
-        objects.forEach { (updatedObject) in
+        objects.forEach { updatedObject in
             let objectFromContext = toContext.object(with: updatedObject.objectID)
             objectFromContext.willAccessValue(forKey: nil)
             updatedObjectsInCurrentContext.insert(objectFromContext)
@@ -172,7 +101,7 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
 
         toContext.mergeChanges(fromContextDidSave: fromNotification)
         let setOfUpdatedObjects = updatedObjectsInCurrentContext.intersection(toContext.updatedObjects)
-        setOfUpdatedObjects.forEach { (obj) in
+        setOfUpdatedObjects.forEach { obj in
             toContext.refresh(obj, mergeChanges: true)
         }
 
@@ -183,31 +112,100 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
         }
         toContext.processPendingChanges()
     }
+}
 
-    private func perform(inContext: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion) {
-        let privateBlock: NSManagedObjectContextCompletion = { context in
-            block(context)
+// MARK: - WOTCoredataStoreProtocol
+
+extension WOTCoreDataStore: WOTCoredataStoreProtocol {
+    // MARK: - WOTDataStoreProtocol
+
+    public func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion) {
+        let initialDate = Date()
+
+        logEvent(EventCDStashStart(context: context), sender: self)
+        let uuid = UUID()
+        let customBlock: ThrowableCompletion = { error in
+            block(error)
+            self.logEvent(EventCDStashEnded(context: context, initiatedIn: initialDate), sender: self)
         }
-        inContext.perform { privateBlock(inContext) }
+
+        context.saveRecursively(customBlock)
+        logEvent(EventTimeMeasure("Context save start", uuid: uuid))
     }
 
-    private func workContextDidSave(notification: Notification) {
-        self.masterContext.performAndWait {
-            self.mergeChanges(notification: notification, toContext: self.masterContext)
+    public func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultErrorCompletion) {
+        let privateCallback: FetchResultErrorCompletion = { fetchResult, error in
+            visibleInContext.perform {
+                let fetchResultForContext = fetchResult.dublicate()
+                fetchResultForContext.context = visibleInContext
+                callback(fetchResultForContext, error)
+            }
+        }
+
+        let context = newPrivateContext()
+        perform(context: context) { context in
+            do {
+                guard let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) else {
+                    self.logEvent(EventError(message: "Object not created:[\(String(describing: clazz))]"), sender: nil)
+                    return
+                }
+                let managedObjectID = managedObject.objectID
+                self.stash(context: context) { error in
+                    let fetchResult = FetchResult(context: context, objectID: managedObjectID, predicate: predicate, fetchStatus: .none)
+                    privateCallback(fetchResult, error)
+                }
+            } catch {
+                self.logEvent(EventError(error, details: nil), sender: nil)
+            }
         }
     }
 
-    #warning("check notifications")
+    // MARK: - WOTCoredataStoreProtocol
+
+    @objc public func newPrivateContext() -> NSManagedObjectContext {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.name = "Private"
+        context.parent = mainContext
+        context.undoManager = nil
+        return context
+    }
+
+    @objc public func workingContext() -> NSManagedObjectContext {
+        return mainContext
+    }
+
     @objc
-    private func mainContextDidSave(notification: Notification) {
-//        self.mainContext.perform {
-//            self.mergeChanges(notification: notification, toContext: self.masterContext)
-//        }
+    public func perform(context: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion) {
+        perform(inContext: context, block: block)
+    }
+
+    @objc
+    public func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult> {
+        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: andContext, sectionNameKeyPath: nil, cacheName: nil)
+    }
+
+    @objc
+    public func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult> {
+        return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
     }
 }
+
+// MARK: - LogMessageSender -
 
 extension WOTCoreDataStore: LogMessageSender {
     public var logSenderDescription: String {
         return String(describing: type(of: self))
+    }
+}
+
+// MARK: - LogInspectorProtocol -
+
+extension WOTCoreDataStore {
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
+    }
+
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
     }
 }

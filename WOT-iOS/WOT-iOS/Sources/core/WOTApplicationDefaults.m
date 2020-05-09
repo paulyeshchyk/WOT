@@ -23,7 +23,8 @@
     
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
     id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
-    [coreDataProvider performMain:^(NSManagedObjectContext * _Nonnull context) {
+    NSManagedObjectContext *workingContext = [coreDataProvider workingContext];
+    [coreDataProvider performWithContext:workingContext block:^(NSManagedObjectContext * _Nonnull context) {
 
         NSString *entityName = NSStringFromClass([ListSetting class]);
         NSError *error = nil;

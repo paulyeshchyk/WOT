@@ -1,5 +1,5 @@
 //
-//  WOTNodeConnectorIndexProtocol.swift
+//  WOTTreeConnectorNodeIndexProtocol.swift
 //  WOTPivot
 //
 //  Created on 8/16/18.
@@ -8,9 +8,10 @@
 
 import Foundation
 
-public protocol WOTConnectorNodeIndexProtocol: WOTNodeIndexProtocol {
+public protocol WOTTreeConnectorNodeIndexProtocol: WOTNodeIndexProtocol {
     var width: Int { get }
     var levels: Int { get }
     func itemsCount(atLevel: Int) -> Int
     func set(itemsCount: Int, atLevel: Int)
+    func indexPath(forNode: WOTNodeProtocol) -> IndexPath?
 }

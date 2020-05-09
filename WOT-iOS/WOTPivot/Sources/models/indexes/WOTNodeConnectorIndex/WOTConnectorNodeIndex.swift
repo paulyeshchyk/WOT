@@ -9,9 +9,9 @@ import Foundation
 
 typealias WOTIndexTypeAlias = [Int: [WOTNodeProtocol]]
 
-class WOTConnectorNodeIndex: NSObject, WOTConnectorNodeIndexProtocol {
+class WOTTreeConnectorNodeIndex: NSObject, WOTConnectorNodeIndexProtocol {
     func add(nodes: [WOTNodeProtocol], level: Any?) {
-        nodes.forEach { (node) in
+        nodes.forEach { node in
             self.add(node: node, level: level)
         }
     }
@@ -31,12 +31,12 @@ class WOTConnectorNodeIndex: NSObject, WOTConnectorNodeIndexProtocol {
     }
 
     private lazy var levelIndex: WOTIndexTypeAlias = {
-        return WOTIndexTypeAlias()
+        WOTIndexTypeAlias()
     }()
 
     var width: Int {
         var result: Int = 0
-        self.levelIndex.keys.forEach { (key) in
+        self.levelIndex.keys.forEach { key in
             let arraycount = self.levelIndex[key]?.count ?? 0
             result = max(result, arraycount)
         }
@@ -62,20 +62,18 @@ class WOTConnectorNodeIndex: NSObject, WOTConnectorNodeIndexProtocol {
         return itemsAtSection?[indexPath.row]
     }
 
-    #warning("simplify it")
     func indexPath(forNode: WOTNodeProtocol) -> IndexPath? {
-        var indexPath: IndexPath?
-        self.levelIndex.keys.forEach { (key) in
-            if let section = self.levelIndex[key] {
-                section.forEach({ (node) in
-                    if node === forNode {
-                        if let row = section.firstIndex(where: { $0 === forNode }) {
-                            indexPath = IndexPath(row: row, section: key)
-                        }
-                    }
-                })
+        var indexPath: [IndexPath] = []
+        self.levelIndex.keys.forEach { key in
+            guard let section = self.levelIndex[key] else { return }
+
+            section.forEach { node in
+                guard  node === forNode else { return }
+                guard let row = section.firstIndex(where: { $0 === forNode }) else { return }
+
+                indexPath.append(IndexPath(row: row, section: key))
             }
         }
-        return indexPath
+        return indexPath.first
     }
 }

@@ -8,22 +8,20 @@
 
 import CoreData
 
+public enum WOTCoredataStoreError: Error {
+    case contextIsNotDefined
+}
+
 @objc
 public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol, LogInspectorProtocol {
-    @objc var sqliteURL: URL? { get }
-    @objc var modelURL: URL? { get }
-    @objc var applicationDocumentsDirectoryURL: URL? { get }
-    @objc var persistentStoreCoordinator: NSPersistentStoreCoordinator? { get }
 
-    @objc var mainContext: NSManagedObjectContext { get }
+    @objc func workingContext() -> NSManagedObjectContext
     @objc func newPrivateContext() -> NSManagedObjectContext
 
     @objc func perform(context: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion)
-    @objc func performMain(_ block: @escaping NSManagedObjectContextCompletion)
 
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>
-    @objc func executeRequest(by predicate: NSPredicate, concurency: WOTExecuteConcurency)
 }
 
 extension WOTCoredataStoreProtocol {
