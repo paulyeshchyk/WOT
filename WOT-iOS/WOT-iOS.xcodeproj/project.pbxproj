@@ -2106,7 +2106,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " \"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\"\n";
+			shellScript = "#\"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\"\n";
 		};
 		6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

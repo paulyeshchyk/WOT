@@ -31,7 +31,7 @@ public struct RESTAPIError: WOTError {
         let code: Int = json?["code"] as? Int ?? -1
         let message = json?["message"] as? String ?? "<unknown>"
 
-        self =  RESTAPIError(code: code, message: message)
+        self = RESTAPIError(code: code, message: message)
     }
 }
 
@@ -55,7 +55,8 @@ public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
     }
 
     // MARK: - Decodable
-    required convenience public init(from decoder: Decoder) throws {
+
+    public required convenience init(from decoder: Decoder) throws {
         self.init()
 
         let container = try decoder.container(keyedBy: Fields.self)
@@ -66,6 +67,7 @@ public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
     }
 
     // MARK: - Encodable
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Fields.self)
         try container.encode(status, forKey: .status)
@@ -90,6 +92,7 @@ public struct RESTAPIResponseMeta: Codable {
     }
 
     // MARK: - Decodable
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
         self.count = try container.decodeIfPresent(Int.self, forKey: .count)

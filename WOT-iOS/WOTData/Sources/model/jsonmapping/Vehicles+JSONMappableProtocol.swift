@@ -79,26 +79,6 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    @available(*, deprecated, message: "change realization")
-    public class VehiclesModulesTreeLinker: BaseJSONAdapterLinker {
-        // MARK: -
-
-        override public var primaryKeyType: PrimaryKeyType { return .remote }
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
-
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
-            let context = fetchResult.context
-            if let modulesTree = fetchResult.managedObject() as? ModulesTree {
-                if let vehicles = masterFetchResult?.managedObject(inContext: context) as? Vehicles {
-                    modulesTree.default_profile = vehicles.default_profile
-                    coreDataStore?.stash(context: context) { error in
-                        completion(fetchResult, error)
-                    }
-                }
-            }
-        }
-    }
-
     public class ModulesTreeLinker: BaseJSONAdapterLinker {
         // MARK: -
 
@@ -107,14 +87,23 @@ extension Vehicles {
 
         override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let modulesTree = fetchResult.managedObject() as? ModulesTree {
-                if let vehicles = masterFetchResult?.managedObject(inContext: context) as? Vehicles {
-                    modulesTree.default_profile = vehicles.default_profile
-                    vehicles.addToModules_tree(modulesTree)
-                    coreDataStore?.stash(context: context) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            let childObject = fetchResult.managedObject()
+
+            guard let modulesTree = childObject as? ModulesTree else {
+                let error = UnexpectedClassError(extected: ModulesTree.self, received: Swift.type(of: childObject))
+                coreDataStore?.logEvent(EventError(error, details: nil), sender: self)
+                return
+            }
+            guard let vehicles = masterFetchResult?.managedObject(inContext: context) as? Vehicles else {
+                let received = masterFetchResult != nil ? Swift.type(of: masterFetchResult!) : nil
+                let error = UnexpectedClassError(extected: Vehicles.self, received: received)
+                coreDataStore?.logEvent(EventError(error, details: nil), sender: self)
+                return
+            }
+            modulesTree.default_profile = vehicles.default_profile
+            vehicles.addToModules_tree(modulesTree)
+            coreDataStore?.stash(context: context) { error in
+                completion(fetchResult, error)
             }
         }
     }
@@ -142,6 +131,20 @@ extension Vehicles {
     }
 
     public class VehiclesPivotDataLinker: BaseJSONAdapterLinker {
+        // MARK: -
+
+        override public var primaryKeyType: PrimaryKeyType { return .local }
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+            let context = fetchResult.context
+            coreDataStore?.stash(context: context, block: { error in
+                completion(fetchResult, error)
+            })
+        }
+    }
+
+    public class VehiclesTreeViewLinker: BaseJSONAdapterLinker {
         // MARK: -
 
         override public var primaryKeyType: PrimaryKeyType { return .local }

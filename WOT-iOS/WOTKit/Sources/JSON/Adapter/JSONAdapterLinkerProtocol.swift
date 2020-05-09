@@ -22,6 +22,15 @@ public enum JSONAdapterLinkerError: Error {
     case wrongChildClass
 }
 
+public struct UnexpectedClassError: Error {
+    var expected: AnyClass
+    var received: AnyObject?
+    public init(extected exp: AnyClass, received rec: AnyObject?) {
+        self.expected = exp
+        self.received = rec
+    }
+}
+
 open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
     // MARK: - Open
     open var primaryKeyType: PrimaryKeyType { return .none }
@@ -45,5 +54,11 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
     open func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
         fatalError("\(type(of: self))::\(#function)")
         //throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
+    }
+}
+
+extension BaseJSONAdapterLinker: LogMessageSender {
+    public var logSenderDescription: String {
+        return String(describing: self)
     }
 }
