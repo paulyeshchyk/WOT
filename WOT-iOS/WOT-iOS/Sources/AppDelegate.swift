@@ -17,7 +17,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         //
 
 //        let logPriorities = Set(LogEventType.allValues).subtracting([LogEventType.performance]).compactMap {$0}
-        let logPriorities = [LogEventType.localFetch, LogEventType.remoteFetch, LogEventType.error, LogEventType.lifeCycle]
+        let logPriorities: [LogEventType] = [.localFetch, .remoteFetch, .error, .lifeCycle, .web]
 
         let requestCoordinator = WOTRequestCoordinator()
         let hostConfiguration = WOTWebHostConfiguration()
