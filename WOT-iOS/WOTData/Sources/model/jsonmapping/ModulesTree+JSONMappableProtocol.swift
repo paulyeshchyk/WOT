@@ -12,6 +12,10 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension ModulesTree {
+    override public func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        print(array)
+    }
+
     override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)

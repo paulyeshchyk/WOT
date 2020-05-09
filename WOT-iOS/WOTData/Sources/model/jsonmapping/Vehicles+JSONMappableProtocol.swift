@@ -19,12 +19,14 @@ extension Vehicles {
         let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
         // MARK: - DefaultProfile
+
         let defaultProfileJSON = json[#keyPath(Vehicles.default_profile)] as? JSON
         let builder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
         let mapper = Vehicles.DefaultProfileLinker.self
         mappingCoordinator?.linkItem(from: defaultProfileJSON, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: mapper, lookupRuleBuilder: builder)
 
         // MARK: - ModulesTree
+
         let modulesTreeJSON = json[#keyPath(Vehicles.modules_tree)] as? JSON
         self.modulesTreeMapping(context: context, jSON: modulesTreeJSON, pkCase: pkCase, mappingCoordinator: mappingCoordinator)
     }
@@ -40,28 +42,33 @@ extension Vehicles {
             return
         }
 
-        let vehiclesFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
-
         var parentObjectIDList = pkCase.parentObjectIDList
         parentObjectIDList.append(self.objectID)
+
+        let vehiclesFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
+
         let modulesTreeCase = PKCase(parentObjectIDList: parentObjectIDList)
         modulesTreeCase[.primary] = pkCase[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
-        
+
         moduleTreeJSON.keys.forEach { key in
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
-            let submodulesCase = PKCase(parentObjectIDList: modulesTreeCase.parentObjectIDList)
-            submodulesCase[.primary] = ModulesTree.primaryKey(for: module_id, andType: .local)
-            submodulesCase[.secondary] = modulesTreeCase[.primary]
+            submoduleMapping(context: context, json: moduleTreeJSON, module_id: module_id, pkCase: modulesTreeCase, vehiclesFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator)
+        }
+    }
 
-            let mapper = Vehicles.VehiclesModules2TreeLinker(masterFetchResult: vehiclesFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            mappingCoordinator?.fetchLocal(json: moduleTreeJSON, context: context, forClass: ModulesTree.self, pkCase: submodulesCase, mapper: mapper) { _, error in
-                if let error = error {
-                    mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-                }
+    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, pkCase: PKCase, vehiclesFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+        let submodulesCase = PKCase(parentObjectIDList: pkCase.parentObjectIDList)
+        submodulesCase[.primary] = ModulesTree.primaryKey(for: module_id, andType: .local)
+        submodulesCase[.secondary] = pkCase[.primary]
+
+        let mapper = Vehicles.TreeLinker(masterFetchResult: vehiclesFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+        mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, pkCase: submodulesCase, mapper: mapper) { _, error in
+            if let error = error {
+                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
             }
         }
     }
@@ -71,6 +78,7 @@ extension Vehicles {
     @available(*, deprecated, message: "change realization")
     public class VehiclesModulesTreeLinker: BaseJSONAdapterLinker {
         // MARK: -
+
         override public var primaryKeyType: PrimaryKeyType { return .remote }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -87,8 +95,9 @@ extension Vehicles {
         }
     }
 
-    public class VehiclesModules2TreeLinker: BaseJSONAdapterLinker {
+    public class TreeLinker: BaseJSONAdapterLinker {
         // MARK: -
+
         override public var primaryKeyType: PrimaryKeyType { return .remote }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -108,6 +117,7 @@ extension Vehicles {
 
     public class DefaultProfileLinker: BaseJSONAdapterLinker {
         // MARK: -
+
         override public var primaryKeyType: PrimaryKeyType { return .remote }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
@@ -116,9 +126,9 @@ extension Vehicles {
             if let defaultProfile = fetchResult.managedObject() as? Vehicleprofile {
                 if let vehicles = masterFetchResult?.managedObject(inContext: context) as? Vehicles {
                     vehicles.default_profile = defaultProfile
-                    vehicles.modules_tree?.forEach({
+                    vehicles.modules_tree?.forEach {
                         ($0 as? ModulesTree)?.default_profile = defaultProfile
-                    })
+                    }
                     coreDataStore?.stash(context: context) { error in
                         completion(fetchResult, error)
                     }
@@ -129,6 +139,7 @@ extension Vehicles {
 
     public class VehiclesPivotDataLinker: BaseJSONAdapterLinker {
         // MARK: -
+
         override public var primaryKeyType: PrimaryKeyType { return .local }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
