@@ -143,6 +143,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         guard let itemsList = array else { return }
 
         guard let lookupRule = lookupRuleBuilder.build() else {
+            logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
 
@@ -160,6 +161,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         guard let itemJSON = json else { return }
 
         guard let lookupRule = lookupRuleBuilder.build() else {
+            logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
 
@@ -175,6 +177,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
 
     public func linkRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, lookupRuleBuilder: LinkLookupRuleBuilderProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
         guard let lookupRule =  lookupRuleBuilder.build() else {
+            logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
         fetchRemote(modelClazz: modelClazz, masterFetchResult: masterFetchResult, pkCase: lookupRule.pkCase, keypathPrefix: keypathPrefix, mapper: mapper)

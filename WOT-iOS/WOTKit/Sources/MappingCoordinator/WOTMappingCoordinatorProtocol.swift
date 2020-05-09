@@ -20,6 +20,7 @@ public enum WOTMappingCoordinatorError: Error {
     case requestsNotParsed
     case linkerNotStarted
     case noKeysDefinedForClass(String)
+    case lookupRuleNotDefined
 }
 
 @objc

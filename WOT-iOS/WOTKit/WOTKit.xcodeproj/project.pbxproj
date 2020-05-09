@@ -368,8 +368,8 @@
 		1D60E553245FE7E4007E5CA8 /* MappingCoordinator */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E555245FE7E4007E5CA8 /* WOTMappingCoordinator.swift */,
 				1D60E556245FE7E4007E5CA8 /* WOTMappingCoordinatorProtocol.swift */,
+				1D60E555245FE7E4007E5CA8 /* WOTMappingCoordinator.swift */,
 			);
 			path = MappingCoordinator;
 			sourceTree = "<group>";
