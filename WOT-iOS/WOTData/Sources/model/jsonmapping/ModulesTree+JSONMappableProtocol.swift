@@ -12,133 +12,99 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension ModulesTree {
+    override public func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+        print(array)
+    }
+
     override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
         //
-        var parents = pkCase.plainParents
-        parents.append(self)
+        var parentObjectIDList = pkCase.parentObjectIDList
+        parentObjectIDList.append(self.objectID)
+
+        let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
         // MARK: - CurrentModule
-        let currentModuleHelper = ModulesTree.ModulesTreeCurrentModuleLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
-        let currentModulePK = PKCase(parentObjects: parents)
-        currentModulePK[.primary] = Module.primaryKey(for: self.module_id as AnyObject, andType: .external)
-        mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: currentModulePK, keypathPrefix: nil, linker: currentModuleHelper)
+
+        let ruleBuilder = LinkedRemoteAsPrimaryRuleBuilder(parentObjectIDList: parentObjectIDList, linkedClazz: Module.self, linkedObjectID: module_id)
+        let currentModuleHelper = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: currentModuleHelper)
 
         // MARK: - NextModules
-        let nextModulesHelper = ModulesTree.ModulesTreeNextModulesLinker(objectID: self.objectID, identifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+
+        let nextModulesHelper = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let modulePK = PKCase(parentObjects: parents)
-            modulePK[.primary] = pkCase[.primary]
-            modulePK[.secondary] = Module.primaryKey(for: $0, andType: .external)
-            mappingCoordinator?.fetchRemote(context: context, byModelClass: Module.self, pkCase: modulePK, keypathPrefix: nil, linker: nextModulesHelper)
+            let ruleBuilder = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pkCase: pkCase, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
+            mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextModulesHelper)
         }
 
         #warning("Next Tanks")
-//        // MARK: - NextTanks
-//        let nextTanksHelper = ModulesTree.ModulesTreeNextVehicleLinker(objectID: self.objectID, identifier: nil, persistentStore: persistentStore)
-//        let nextTanks = jSON[#keyPath(ModulesTree.next_tanks)]
-//        (nextTanks as? [AnyObject])?.forEach {
-//            // parents was not used for next portion of tanks
-//            let nextTanksPK = PKCase(parentObjects: nil)
-//            nextTanksPK[.primary] = Vehicles.primaryKey(for: $0, andType: .internal)
-//            persistentStore?.fetchRemote(context: context, byModelClass: Vehicles.self, pkCase: nextTanksPK, keypathPrefix: nil, linker: nextTanksHelper)
-//        }
+        // MARK: - NextTanks
+        let nextTanksHelper = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: mappingCoordinator?.coreDataStore)
+        let nextTanks = json[#keyPath(ModulesTree.next_tanks)]
+        (nextTanks as? [AnyObject])?.forEach {
+            // parents was not used for next portion of tanks
+            let ruleBuilder = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
+            mappingCoordinator?.linkRemote(modelClazz: Vehicles.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextTanksHelper)
+        }
     }
 }
 
 extension ModulesTree {
-    public class ModulesTreeCurrentModuleLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class CurrentModuleLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
-
-        public func process(fetchResult: FetchResult) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let module = fetchResult.managedObject() as? Module {
-                if let modulesTree = context.object(with: objectID) as? ModulesTree {
+                if let modulesTree = masterFetchResult?.managedObject(inContext: context) as? ModulesTree {
                     modulesTree.currentModule = module
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
         }
     }
 
-    public class ModulesTreeNextModulesLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class NextModulesLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
-
-        public func process(fetchResult: FetchResult) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let nextModule = fetchResult.managedObject() as? Module {
-                if let modulesTree = context.object(with: objectID) as? ModulesTree {
-                    modulesTree.addToNext_modules(nextModule)
-                    coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
-                    }
-                }
+            guard let modulesTree = masterFetchResult?.managedObject(inContext: context) as? ModulesTree else {
+                completion(fetchResult, JSONAdapterLinkerError.wrongParentClass)
+                return
+            }
+            guard let nextModule = fetchResult.managedObject() as? Module else {
+                completion(fetchResult, JSONAdapterLinkerError.wrongChildClass)
+                return
+            }
+            modulesTree.addToNext_modules(nextModule)
+            coreDataStore?.stash(context: context) { error in
+                completion(fetchResult, error)
             }
         }
     }
 
-    public class ModulesTreeNextVehicleLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .external
-        }
+    public class NextVehicleLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? { return json }
-
-        public func process(fetchResult: FetchResult) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let tank = fetchResult.managedObject() as? Vehicles {
-                if let modulesTree = context.object(with: objectID) as? ModulesTree {
+                if let modulesTree = masterFetchResult?.managedObject(inContext: context) as? ModulesTree {
                     modulesTree.addToNext_tanks(tank)
-                    coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                    self.coreDataStore?.stash(context: context) { error in
+                        completion(fetchResult, error)
                     }
                 }
             }

@@ -9,7 +9,7 @@
 import Foundation
 
 public enum LogicError: Error {
-    case shouldBeOverriden
+    case shouldBeOverriden(String)
     case objectNotDefined
     case wrongUnwrapping
 }

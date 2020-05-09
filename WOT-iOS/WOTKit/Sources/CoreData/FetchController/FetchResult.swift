@@ -9,6 +9,7 @@
 import CoreData
 
 public typealias FetchResultCompletion = (FetchResult) -> Void
+public typealias FetchResultErrorCompletion = (FetchResult, Error?) -> Void
 
 @objc
 public enum WOTExecuteConcurency: Int {
@@ -26,26 +27,30 @@ public enum FetchStatus: Int {
 @objc
 public class FetchResult: NSObject, NSCopying {
     public var context: NSManagedObjectContext
-    private var objectID: NSManagedObjectID?
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
-    public var error: Error?
+
+    #warning("make private")
+    public var objectID: NSManagedObjectID?
 
     override public required init() {
         fatalError("")
     }
 
-    public required init(context cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus, error err: Error?) {
+    override public var debugDescription: String {
+        return "Context: \(context.name ?? ""); \(managedObject().entity.name ?? "<unknown>")"
+    }
+
+    public required init(context cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
         context = cntx
         objectID = objID
         predicate = predicat
         fetchStatus = status
-        error = err
         super.init()
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = FetchResult(context: context, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus, error: error)
+        let copy = FetchResult(context: context, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }
 
@@ -56,9 +61,30 @@ public class FetchResult: NSObject, NSCopying {
     }
 
     public func managedObject() -> NSManagedObject {
+        return managedObject(inContext: self.context)
+    }
+
+    public func managedObject(inContext: NSManagedObjectContext) -> NSManagedObject {
         guard let objectID = objectID else {
             fatalError("objectID is not defined")
         }
-        return context.object(with: objectID)
+        return inContext.object(with: objectID)
+    }
+}
+
+public class EmptyFetchResult: FetchResult {
+    public convenience required init() {
+        let cntx = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        let objectID = NSManagedObjectID()
+        self.init(context: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)
+    }
+
+    override public var objectID: NSManagedObjectID? {
+        get {
+            fatalError("should get here")
+        }
+        set {
+            fatalError("should not get here")
+        }
     }
 }

@@ -16,55 +16,23 @@ extension VehicleprofileAmmo {
         //
         try self.decode(json: json)
         //
-        let vehicleprofileAmmoPenetrationCase = PKCase()
-        vehicleprofileAmmoPenetrationCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-        vehicleprofileAmmoPenetrationCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-        if let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any] {
-            //
-            #warning("refactoring")
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoPenetration.self, pkCase: vehicleprofileAmmoPenetrationCase) { fetchResult in
-                do {
-                    let penetrationHelper: JSONAdapterLinkerProtocol? = nil
-                    try mappingCoordinator?.decodingAndMapping(array: penetrationArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoPenetrationCase, linker: penetrationHelper) { error in
-                        self.penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration
-                        mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                            if let error = error {
-                                print(error.debugDescription)
-                            }
-                        }
-                    }
-                } catch let error {
-                    print(error)
-                }
-            }
-        }
-        let vehicleprofileAmmoDamageCase = PKCase()
-        vehicleprofileAmmoDamageCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
-        vehicleprofileAmmoDamageCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
 
-        if let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any] {
-            //
-            #warning("refactoring")
-            mappingCoordinator?.fetchLocal(context: context, byModelClass: VehicleprofileAmmoDamage.self, pkCase: vehicleprofileAmmoDamageCase) { fetchResult in
+        let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
-                let damageHelper: JSONAdapterLinkerProtocol? = nil
-                do {
-                    try mappingCoordinator?.decodingAndMapping(array: damageArray, fetchResult: fetchResult, pkCase: vehicleprofileAmmoDamageCase, linker: damageHelper) { error in
-                        self.damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage
-                        mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                            if let error = error {
-                                print(error.debugDescription)
-                            }
-                        }
-                    }
-                } catch let error {
-                    print(error)
-                }
-            }
-        }
+        // MARK: - Penetration
+        let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any]
+        let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
+        let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(pkCase: pkCase, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
+        mappingCoordinator?.linkItems(from: penetrationArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, mapperClazz: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder)
+
+        // MARK: - Damage
+        let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any]
+        let damageMapper = VehicleprofileAmmo.DamageLinker.self
+        let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(pkCase: pkCase, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
+        mappingCoordinator?.linkItems(from: damageArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, mapperClazz: damageMapper, lookupRuleBuilder: damageRuleBuilder)
     }
 
-    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, persistentStore: WOTMappingCoordinatorProtocol?) {
+    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         guard let json = json, let entityDescription = context.entityDescription(forType: VehicleprofileAmmo.self) else {
             fatalError("Entity description not found [\(String(describing: VehicleprofileAmmo.self))]")
             return nil
@@ -73,11 +41,51 @@ extension VehicleprofileAmmo {
 
         let pkCase = PKCase()
         pkCase[.primary] = parentPrimaryKey
-        do {
-            let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none, error: nil)
-            try persistentStore?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, linker: nil) { _ in }
-        } catch let error {
-            print(error)
+        let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none)
+        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, mapper: nil) { _, error in
+            if let error = error {
+                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+            }
+        }
+    }
+}
+
+extension VehicleprofileAmmo {
+    public class PenetrationLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
+
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+            let context = fetchResult.context
+            if let penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration {
+                if let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo {
+                    ammo.penetration = penetration
+
+                    coreDataStore?.stash(context: context) { error in
+                        completion(fetchResult, error)
+                    }
+                }
+            }
+        }
+    }
+
+    public class DamageLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
+
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+            let context = fetchResult.context
+            if let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage {
+                if let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo {
+                    ammo.damage = damage
+
+                    coreDataStore?.stash(context: context) { error in
+                        completion(fetchResult, error)
+                    }
+                }
+            }
         }
     }
 }

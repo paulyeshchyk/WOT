@@ -9,7 +9,7 @@
 import CoreData
 
 @objc
-public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol {
+public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol, LogInspectorProtocol {
     @objc var sqliteURL: URL? { get }
     @objc var modelURL: URL? { get }
     @objc var applicationDocumentsDirectoryURL: URL? { get }

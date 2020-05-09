@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class WOTPredicate: NSObject {
+public class RequestPredicate: NSObject {
     //
     public var clazz: AnyClass
 
@@ -34,9 +34,9 @@ public class WOTPredicate: NSObject {
     }
 }
 
-extension WOTPredicate: Describable {
+extension RequestPredicate: Describable {
     public override var description: String {
-        var result: String = "WOTPredicate: \(String(describing: clazz))"
+        var result: String = "RequestArguments: \(String(describing: clazz))"
         primaryKeys.forEach {
             result += " key:\($0)"
         }
@@ -47,7 +47,7 @@ extension WOTPredicate: Describable {
     }
 }
 
-extension WOTPredicate {
+extension RequestPredicate {
     public func buildRequestArguments() -> WOTRequestArguments {
         let keyPaths = self.clazz.classKeypaths().compactMap {
             self.addPreffix(to: $0)

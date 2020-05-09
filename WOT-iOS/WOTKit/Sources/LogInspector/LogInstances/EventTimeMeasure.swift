@@ -9,8 +9,8 @@
 import Foundation
 
 public class EventTimeMeasure: LogEventProtocol {
+    public static var type: LogEventType { return .performance }
     public private(set) var message: String
-    public var type: LogEventType { return .performance }
     public var name: String { return "TIMEMeasure"}
 
     public init() {

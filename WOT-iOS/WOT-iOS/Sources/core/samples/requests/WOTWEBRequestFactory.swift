@@ -19,46 +19,36 @@ public class WOTWEBRequestFactory: NSObject {
 
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
         requestManager.addListener(listener, forRequest: request)
-        do {
-            try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, linker: nil)
-        } catch let error {
-            print(error)
-        }
+        let coreDataStore = requestManager.appManager?.coreDataStore
+        let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil, coreDataStore: coreDataStore)
+        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, linker: pivotLinker)
     }
 
     @objc
     public static func fetchVehicleTreeData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) throws {
-        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
-        let groupId = "WOT_REQUEST_ID_VEHICLE_BY_TIER:\(vehicleId)"
 
-        let args = WOTRequestArguments()
-        args.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
-        args.setValues([Vehicles.classKeypaths()], forKey: WGWebQueryArgs.fields)
+        let arguments = WOTRequestArguments()
+        arguments.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
+        arguments.setValues(Vehicles.classKeypaths(), forKey: WGWebQueryArgs.fields)
 
+        let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
         requestManager.addListener(listener, forRequest: request)
-
-        let provider = requestManager.appManager?.coreDataStore
-        let predicate = NSPredicate(format: "%K == %d", "tank_id", vehicleId)
-        if let context = provider?.mainContext {
-            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context, callback: { fetchResult in
-                let modulesTreeHelper: JSONAdapterLinkerProtocol? = nil //Vehicles.TreeJSONAdapterHelper(objectID: fetchResult.managedObject().objectID, identifier: nil, persistentStore: persistentStore)
-                try? requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: modulesTreeHelper)
-            })
-//            provider?.findOrCreateObject(by: Vehicles.self, andPredicate: predicate, visibleInContext: context) { (fetchResult) in
-//            }
-        }
+        let coreDataStore = requestManager.appManager?.coreDataStore
+        let treeViewLinker = Vehicles.VehiclesTreeViewLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil, coreDataStore: coreDataStore)
+        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, linker: treeViewLinker)
     }
 
     @objc
     public static func fetchProfileData(profileTankId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) throws {
-        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue)
-        let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
+//        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue)
+//        let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
+//
+//        let args = WOTRequestArguments()
+//        args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
+//        args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
 
-        let args = WOTRequestArguments()
-        args.setValues([profileTankId], forKey: WOTApiKeys.tank_id)
-        args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
-
-        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
-        requestManager.addListener(listener, forRequest: request)
+//        fatalError("not implemented")
+//        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
+//        requestManager.addListener(listener, forRequest: request)
     }
 }

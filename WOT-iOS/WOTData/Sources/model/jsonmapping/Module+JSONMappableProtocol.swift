@@ -12,227 +12,169 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Module {
-    public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
 
-        let parents = pkCase.plainParents.filter({$0 is Vehicles}).compactMap({ $0.tank_id as? NSDecimalNumber })
+        let parentsAsManagedObject = pkCase.parentObjectIDList.compactMap { context.object(with: $0) }
+        let parentsAsVehicles = parentsAsManagedObject.compactMap { $0 as? Vehicles }
+        let parents = parentsAsVehicles.compactMap { $0.tank_id }
+
+        let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
+
+        guard parents.count <= 1 else {
+            print("parents count should be less or equal 1")
+            return
+        }
+        let tank_id = parents.first
 
         guard let module_id = self.module_id else {
             print("module_id not found")
             return
         }
 
-        guard let moduleTypeString = self.type else {
-            print("unknown module type")
-            return
-        }
-        let moduleType = VehicleModuleType(rawValue: moduleTypeString)
-
-        let tank_id = parents.first
-
+        let moduleType = VehicleModuleType.fromString(self.type)
         switch moduleType {
         case .vehicleChassis:
-            let vehicleSuspensionLinker = Module.ModuleSuspensionLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileSuspension.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "suspension.", linker: vehicleSuspensionLinker)
+            let suspensionMapper = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileSuspension.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "suspension.", mapper: suspensionMapper)
         case .vehicleGun:
-            let vehicleGunLinker = Module.ModuleGunLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileGun.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "gun.", linker: vehicleGunLinker)
+            let gunMapper = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileGun.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileGun.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "gun.", mapper: gunMapper)
         case .vehicleRadio:
-            let vehicleRadioLinker = Module.ModuleRadioLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileRadio.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "radio.", linker: vehicleRadioLinker)
+            let radioMapper = Module.RadioMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileRadio.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileRadio.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "radio.", mapper: radioMapper)
         case .vehicleEngine:
-            let vehicleEngineLinker = Module.ModuleEngineLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileEngine.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "engine.", linker: vehicleEngineLinker)
+            let engineMapper = Module.EngineMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileEngine.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileEngine.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "engine.", mapper: engineMapper)
         case .vehicleTurret:
-            let vehicleTurretLinker = Module.ModuleTurretLinker(objectID: self.objectID, identifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
-            fetchRemoteModule(by: module_id, tank_id: tank_id, andClass: VehicleprofileTurret.self, context: context, persistentStore: mappingCoordinator, keyPathPrefix: "turret.", linker: vehicleTurretLinker)
-        case .none, .tank, .unknown:
-            fatalError("unknown module type")
+            let turretMapper = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
+            mappingCoordinator?.linkRemote(modelClazz: VehicleprofileTurret.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "turret.", mapper: turretMapper)
+        default: fatalError("unknown module type")
         }
-    }
-
-    private func fetchRemoteModule(by module_id: NSDecimalNumber, tank_id: NSDecimalNumber?, andClass modelClazz: NSManagedObject.Type, context: NSManagedObjectContext, persistentStore: WOTMappingCoordinatorProtocol?, keyPathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
-        let pkCase = PKCase()
-        pkCase[.primary] = modelClazz.primaryKey(for: module_id, andType: .external)
-        if let tank_id = tank_id {
-            pkCase[.secondary] = Vehicles.primaryKey(for: tank_id, andType: .internal)
-        }
-
-        persistentStore?.fetchRemote(context: context, byModelClass: modelClazz, pkCase: pkCase, keypathPrefix: keyPathPrefix, linker: linker)
     }
 }
 
 extension Module {
-    public class ModuleEngineLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
+    public class EngineMapper: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .local }
+
+        override public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["engine"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["engine"] as? JSON
-        }
-
-        public func process(fetchResult: FetchResult) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
-                if let module = fetchResult.context.object(with: objectID) as? Module {
-                    vehicleProfileEngine.engine_id = identifier as? NSDecimalNumber
+                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                    vehicleProfileEngine.engine_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.engine = vehicleProfileEngine
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
         }
     }
 
-    public class ModuleTurretLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
+    public class TurretMapper: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .local }
+
+        override public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["turret"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["turret"] as? JSON
-        }
-
-        public func process(fetchResult: FetchResult) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
-                if let module = context.object(with: objectID) as? Module {
-                    vehicleProfileTurret.turret_id = identifier as? NSDecimalNumber
+                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                    vehicleProfileTurret.turret_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.turret = vehicleProfileTurret
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
         }
     }
 
-    public class ModuleSuspensionLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
+    public class SuspensionMapper: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .local }
+
+        override public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["suspension"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["suspension"] as? JSON
-        }
-
-        public func process(fetchResult: FetchResult) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
-                if let module = context.object(with: objectID) as? Module {
-                    vehicleProfileSuspension.suspension_id = identifier as? NSDecimalNumber
+                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                    vehicleProfileSuspension.suspension_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.suspension = vehicleProfileSuspension
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
         }
     }
 
-    public class ModuleRadioLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
+    public class RadioMapper: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .local }
+
+        override public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["radio"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["radio"] as? JSON
-        }
-
-        public func process(fetchResult: FetchResult) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
-                if let module = context.object(with: objectID) as? Module {
-                    vehicleProfileRadio.radio_id = identifier as? NSDecimalNumber
+                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                    vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.radio = vehicleProfileRadio
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }
         }
     }
 
-    public class ModuleGunLinker: JSONAdapterLinkerProtocol {
-        public var primaryKeyType: PrimaryKeyType {
-            return .internal
+    public class GunMapper: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .local }
+
+        override public func onJSONExtraction(json: JSON) -> JSON {
+            guard let result = json["gun"] as? JSON else {
+                fatalError("invalid json")
+            }
+            return result
         }
 
-        private var coreDataStore: WOTCoredataStoreProtocol?
-        private var objectID: NSManagedObjectID
-        private var identifier: Any?
-
-        public required init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?) {
-            self.objectID = objectID
-            self.identifier = identifier
-            self.coreDataStore = coreDataStore
-        }
-
-        public func onJSONExtraction(json: JSON) -> JSON? {
-            return json["gun"] as? JSON
-        }
-
-        public func process(fetchResult: FetchResult) {
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
-                if let module = context.object(with: objectID) as? Module {
-                    vehicleProfileGun.gun_id = identifier as? NSDecimalNumber
+                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                    vehicleProfileGun.gun_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.gun = vehicleProfileGun
                     coreDataStore?.stash(context: context) { error in
-                        if let error = error {
-                            print(error.debugDescription)
-                        }
+                        completion(fetchResult, error)
                     }
                 }
             }

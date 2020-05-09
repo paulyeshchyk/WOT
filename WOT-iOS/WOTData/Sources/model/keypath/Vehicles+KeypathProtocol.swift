@@ -52,8 +52,9 @@ extension Vehicles {
 
     override public static func primaryKeyPath(forType: PrimaryKeyType) -> String {
         switch forType {
-        case .external: return #keyPath(Vehicles.tank_id)
-        case .internal: return #keyPath(Vehicles.tank_id)
+        case .remote: return #keyPath(Vehicles.tank_id)
+        case .local: return #keyPath(Vehicles.tank_id)
+        case .none: return ""
         }
     }
 }

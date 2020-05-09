@@ -9,8 +9,8 @@
 import Foundation
 
 public class EventObjectNew: LogEventProtocol {
+    public static var type: LogEventType { return .lifeCycle }
     public private(set) var message: String
-    public var type: LogEventType { return .lifeCycle }
     public var name: String { return "OBJNew"}
 
     public init() {
@@ -27,8 +27,8 @@ public class EventObjectNew: LogEventProtocol {
 }
 
 public class EventObjectFree: LogEventProtocol {
+    public static var type: LogEventType { return .lifeCycle }
     public private(set) var message: String
-    public var type: LogEventType { return .lifeCycle }
     public var name: String { return "OBJFree"}
 
     public init() {

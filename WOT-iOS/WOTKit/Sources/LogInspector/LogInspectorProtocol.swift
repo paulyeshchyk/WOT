@@ -10,24 +10,27 @@ import Foundation
 
 @objc
 public enum LogEventType: Int {
-    case error = 0
-    case lifeCycle = 1
-    case threads = 2
-    case web = 3
-    case json = 4
-    case coredata = 5
-    case info = 6
-    case performance = 7
-    case logic = 8
-    case mapping = 9
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.web, .json, .coredata, .info, .performance, .logic, .mapping] }
+    case error
+    case warning
+    case lifeCycle
+    case threads
+    case web
+    case json
+    case coredata
+    case info
+    case performance
+    case logic
+    case mapping
+    case localFetch
+    case remoteFetch
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.web, .json, .coredata, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch] }
 }
 
 @objc
 public protocol LogEventProtocol {
+    static var type: LogEventType { get }
     var message: String { get }
     var name: String { get }
-    var type: LogEventType { get }
 }
 
 @objc

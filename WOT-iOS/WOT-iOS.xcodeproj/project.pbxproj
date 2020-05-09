@@ -2106,7 +2106,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " \"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\"\n";
+			shellScript = "#\"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\"\n";
 		};
 		6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2573,6 +2573,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOT-iOS/Sources/WOTPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "WOT-iOS/Sources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
@@ -2599,6 +2600,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOT-iOS/Sources/WOTPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "WOT-iOS/Sources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";

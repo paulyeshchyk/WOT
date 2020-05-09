@@ -17,12 +17,13 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         //
 
 //        let logPriorities = Set(LogEventType.allValues).subtracting([LogEventType.performance]).compactMap {$0}
+        let logPriorities: [LogEventType] = [.localFetch, .remoteFetch, .error, .lifeCycle, .web]
 
         let requestCoordinator = WOTRequestCoordinator()
         let hostConfiguration = WOTWebHostConfiguration()
         let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, hostConfiguration: hostConfiguration)
         let sessionManager = WOTWebSessionManager()
-        let logInspector = LogInspector(priorities: [.lifeCycle,.error, .json])
+        let logInspector = LogInspector(priorities: logPriorities)
         let coreDataProvider = WOTCustomCoreDataProvider()
         let mappingCoordinator = WOTMappingCoordinator()
         let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator)

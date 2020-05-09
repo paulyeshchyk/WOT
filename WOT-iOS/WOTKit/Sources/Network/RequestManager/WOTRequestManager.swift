@@ -21,6 +21,14 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         super.init()
     }
 
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
+    }
+
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
+    }
+
     // MARK: WOTRequestManagerProtocol-
 
     @objc public var appManager: WOTAppManagerProtocol?
@@ -73,7 +81,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol?) throws {
+    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol) throws {
         guard addRequest(request, forGroupId: forGroupId) else {
             throw WEBError.requestWasNotAddedToGroup
         }
@@ -86,11 +94,11 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, withPredicate: WOTPredicate, linker: JSONAdapterLinkerProtocol?) throws {
-        let request = try createRequest(forRequestId: requestId, withPredicate: withPredicate)
+    public func startRequest(by requestId: WOTRequestIdType, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) throws {
+        let request = try createRequest(forRequestId: requestId, withPredicate: requestPredicate)
 
-        let arguments = withPredicate.buildRequestArguments()
-        let groupId = "Nested\(String(describing: withPredicate.clazz))-\(withPredicate)"
+        let arguments = requestPredicate.buildRequestArguments()
+        let groupId = "Nested\(String(describing: requestPredicate.clazz))-\(arguments)"
         try startRequest(request, withArguments: arguments, forGroupId: groupId, linker: linker)
     }
 
@@ -106,7 +114,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    private func createRequest(forRequestId requestId: WOTRequestIdType, withPredicate: WOTPredicate) throws -> WOTRequestProtocol {
+    private func createRequest(forRequestId requestId: WOTRequestIdType, withPredicate: RequestPredicate) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
         request.predicate = withPredicate
         return request
@@ -121,38 +129,41 @@ extension WOTRequestManager: LogMessageSender {
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
     public func request(_ request: WOTRequestProtocol, startedWith: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol) {
-        appManager?.logInspector?.logEvent(EventWEBStart(request.description), sender: self)
+        self.logEvent(EventWEBStart(request.description), sender: self)
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            appManager?.logInspector?.logEvent(EventWEBEnd(request.description), sender: self)
+            self.logEvent(EventWEBEnd(request.description), sender: self)
             removeRequest(request)
         }
 
         if let error = error {
-            appManager?.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            self.logEvent(EventError(error, details: request), sender: self)
             return
         }
 
         guard let dataparser = appManager?.responseCoordinator else {
-            appManager?.logInspector?.logEvent(EventError(message: "dataparser not found"), sender: self)
+            self.logEvent(EventError(message: "dataparser not found"), sender: self)
             return
         }
 
-        let adapterLinker = grouppedLinkers[request.uuid.uuidString]
+        guard let adapterLinker = grouppedLinkers[request.uuid.uuidString] else {
+            self.logEvent(EventError(message: "linker not found"), sender: self)
+            return
+        }
         do {
             try dataparser.parseResponse(data: data,
                                          forRequest: request,
                                          linker: adapterLinker,
-                                         onComplete: onRequestComplete(_:_:error:))
+                                         onRequestComplete: onRequestComplete(_:_:error:))
         } catch {
-            appManager?.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            self.logEvent(EventError(error, details: request), sender: self)
         }
     }
 
     public func request(_ request: WOTRequestProtocol, canceledWith error: Error?) {
-        appManager?.logInspector?.logEvent(EventWEBCancel(request.description))
+        self.logEvent(EventWEBCancel(request.description))
         removeRequest(request)
     }
 

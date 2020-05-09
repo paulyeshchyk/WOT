@@ -14,5 +14,6 @@ public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> 
 public protocol WOTDataStoreProtocol: NSObjectProtocol {
     @objc var appManager: WOTAppManagerProtocol? { get set }
     func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion)
-    func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultCompletion)
+
+    func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultErrorCompletion)
 }

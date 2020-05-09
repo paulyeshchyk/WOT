@@ -22,30 +22,37 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
         requestCoordinator = rc
     }
 
-    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol?, onComplete: @escaping OnRequestComplete) throws {
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
+    }
+
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
+    }
+
+    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
         }
 
         guard let requestIds = requestCoordinator.requestIds(forRequest: request), requestIds.count > 0 else {
-            onComplete(request, self, nil)
+            onRequestComplete(request, self, nil)
             return
         }
         var dataAdaptationPair: [DataAdaptationPair] = .init()
         requestIds.forEach({ requestIdType in
             do {
-                let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request)
-                adapter.onJSONDidParse = onComplete
-                adapter.linker = linker
+                let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request, linker: linker)
+                adapter.onJSONDidParse = onRequestComplete
                 let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
                 dataAdaptationPair.append(pair)
             } catch let error {
-                appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                self.logEvent(EventError(error, details: nil), sender: self)
             }
         })
 
         if dataAdaptationPair.count == 0 {
-            onComplete(request, self, nil)
+            onRequestComplete(request, self, nil)
         }
 
         dataAdaptationPair.forEach { (pair) in

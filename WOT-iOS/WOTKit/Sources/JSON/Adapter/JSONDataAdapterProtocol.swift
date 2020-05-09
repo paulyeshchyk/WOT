@@ -10,13 +10,6 @@ import CoreData
 
 @objc
 public protocol JSONAdapterProtocol: DataAdapterProtocol {
-    var linker: JSONAdapterLinkerProtocol? { get set }
-}
-
-@objc
-public protocol JSONAdapterLinkerProtocol {
-    init(objectID: NSManagedObjectID, identifier: Any?, coreDataStore: WOTCoredataStoreProtocol?)
-    var primaryKeyType: PrimaryKeyType { get }
-    func process(fetchResult: FetchResult)
-    func onJSONExtraction(json: JSON) -> JSON?
+    var linker: JSONAdapterLinkerProtocol { get set }
+    init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol)
 }

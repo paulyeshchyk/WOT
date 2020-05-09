@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D20FDE9246402F9009CFA22 /* EventWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FDE8246402F9009CFA22 /* EventWarning.swift */; };
+		1D20FDEB24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FDEA24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift */; };
+		1D41161E24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41161D24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift */; };
+		1D41163124653F95009070AD /* EventLocalFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163024653F95009070AD /* EventLocalFetch.swift */; };
+		1D41163324653FD4009070AD /* EventRemoteFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163224653FD4009070AD /* EventRemoteFetch.swift */; };
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D60E52D245FE7A7007E5CA8 /* Dictionary_Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E51F245FE7A7007E5CA8 /* Dictionary_Merge.swift */; };
 		1D60E52E245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E521245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift */; };
@@ -25,7 +30,7 @@
 		1D60E58D245FE7E5007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
 		1D60E58E245FE7E5007E5CA8 /* PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E540245FE7E4007E5CA8 /* PrimaryKeypathProtocol.swift */; };
 		1D60E58F245FE7E5007E5CA8 /* NSManagedObject+KeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E541245FE7E4007E5CA8 /* NSManagedObject+KeypathProtocol.swift */; };
-		1D60E590245FE7E5007E5CA8 /* WOTPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E542245FE7E4007E5CA8 /* WOTPredicate.swift */; };
+		1D60E590245FE7E5007E5CA8 /* RequestPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E542245FE7E4007E5CA8 /* RequestPredicate.swift */; };
 		1D60E591245FE7E5007E5CA8 /* WOTCoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E544245FE7E4007E5CA8 /* WOTCoreDataStore.swift */; };
 		1D60E592245FE7E5007E5CA8 /* WOTDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E545245FE7E4007E5CA8 /* WOTDataStoreProtocol.swift */; };
 		1D60E593245FE7E5007E5CA8 /* WOTCoredataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E546245FE7E4007E5CA8 /* WOTCoredataStoreProtocol.swift */; };
@@ -86,6 +91,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D20FDE8246402F9009CFA22 /* EventWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventWarning.swift; sourceTree = "<group>"; };
+		1D20FDEA24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterLinkerProtocol.swift; sourceTree = "<group>"; };
+		1D41161D24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkLookupRuleBuilderProtocol.swift; sourceTree = "<group>"; };
+		1D41163024653F95009070AD /* EventLocalFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLocalFetch.swift; sourceTree = "<group>"; };
+		1D41163224653FD4009070AD /* EventRemoteFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRemoteFetch.swift; sourceTree = "<group>"; };
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,7 +116,7 @@
 		1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+PrimaryKeypathProtocol.swift"; sourceTree = "<group>"; };
 		1D60E540245FE7E4007E5CA8 /* PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryKeypathProtocol.swift; sourceTree = "<group>"; };
 		1D60E541245FE7E4007E5CA8 /* NSManagedObject+KeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+KeypathProtocol.swift"; sourceTree = "<group>"; };
-		1D60E542245FE7E4007E5CA8 /* WOTPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPredicate.swift; sourceTree = "<group>"; };
+		1D60E542245FE7E4007E5CA8 /* RequestPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPredicate.swift; sourceTree = "<group>"; };
 		1D60E544245FE7E4007E5CA8 /* WOTCoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoreDataStore.swift; sourceTree = "<group>"; };
 		1D60E545245FE7E4007E5CA8 /* WOTDataStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataStoreProtocol.swift; sourceTree = "<group>"; };
 		1D60E546245FE7E4007E5CA8 /* WOTCoredataStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoredataStoreProtocol.swift; sourceTree = "<group>"; };
@@ -300,8 +310,8 @@
 				1D60E539245FE7E4007E5CA8 /* codable */,
 				1D60E53E245FE7E4007E5CA8 /* KeyPathProtocol */,
 				1D60E538245FE7E4007E5CA8 /* PKCase.swift */,
+				1D41161D24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift */,
 				1D60E53D245FE7E4007E5CA8 /* WOTPrimaryKey.swift */,
-				1D60E542245FE7E4007E5CA8 /* WOTPredicate.swift */,
 			);
 			path = Predicates;
 			sourceTree = "<group>";
@@ -358,8 +368,8 @@
 		1D60E553245FE7E4007E5CA8 /* MappingCoordinator */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E555245FE7E4007E5CA8 /* WOTMappingCoordinator.swift */,
 				1D60E556245FE7E4007E5CA8 /* WOTMappingCoordinatorProtocol.swift */,
+				1D60E555245FE7E4007E5CA8 /* WOTMappingCoordinator.swift */,
 			);
 			path = MappingCoordinator;
 			sourceTree = "<group>";
@@ -367,6 +377,7 @@
 		1D60E557245FE7E4007E5CA8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				1D60E74E2460B026007E5CA8 /* Arguments */,
 				1D60E5D8245FE9BE007E5CA8 /* SessionManager */,
 				1D60E558245FE7E4007E5CA8 /* ResponseCoordinator */,
 				1D60E55C245FE7E4007E5CA8 /* DataPumper */,
@@ -426,9 +437,7 @@
 				1D60E56A245FE7E5007E5CA8 /* WOTStartableProtocol.swift */,
 				1D60E56B245FE7E5007E5CA8 /* WOTRequest.swift */,
 				1D60E56C245FE7E5007E5CA8 /* WOTRequestListenerProtocol.swift */,
-				1D60E56D245FE7E5007E5CA8 /* WOTRequestArgumentsProtocol.swift */,
 				1D60E56E245FE7E5007E5CA8 /* WOTWebRequest.swift */,
-				1D60E56F245FE7E5007E5CA8 /* WOTRequestArguments.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -474,6 +483,9 @@
 				1D60E581245FE7E5007E5CA8 /* EventObject.swift */,
 				1D60E582245FE7E5007E5CA8 /* EventCDStash.swift */,
 				1D60E583245FE7E5007E5CA8 /* EventTimeMeasure.swift */,
+				1D20FDE8246402F9009CFA22 /* EventWarning.swift */,
+				1D41163024653F95009070AD /* EventLocalFetch.swift */,
+				1D41163224653FD4009070AD /* EventRemoteFetch.swift */,
 			);
 			path = LogInstances;
 			sourceTree = "<group>";
@@ -537,6 +549,7 @@
 				1D60E551245FE7E4007E5CA8 /* DataAdapterProtocol.swift */,
 				1D60E552245FE7E4007E5CA8 /* JSONDataAdapterProtocol.swift */,
 				1D60E54F245FE7E4007E5CA8 /* JSONAdapter.swift */,
+				1D20FDEA24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift */,
 			);
 			path = Adapter;
 			sourceTree = "<group>";
@@ -557,6 +570,16 @@
 				1D60E54E245FE7E4007E5CA8 /* NSManagedObject+JSONDecoding.swift */,
 			);
 			path = Decoding;
+			sourceTree = "<group>";
+		};
+		1D60E74E2460B026007E5CA8 /* Arguments */ = {
+			isa = PBXGroup;
+			children = (
+				1D60E56D245FE7E5007E5CA8 /* WOTRequestArgumentsProtocol.swift */,
+				1D60E56F245FE7E5007E5CA8 /* WOTRequestArguments.swift */,
+				1D60E542245FE7E4007E5CA8 /* RequestPredicate.swift */,
+			);
+			path = Arguments;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -694,7 +717,7 @@
 				1D60E5B0245FE7E5007E5CA8 /* WOTRequestListenerProtocol.swift in Sources */,
 				1D60E5CF245FE93E007E5CA8 /* WEBError.swift in Sources */,
 				1D60E5B5245FE7E5007E5CA8 /* WOTRequestCoordinator.swift in Sources */,
-				1D60E590245FE7E5007E5CA8 /* WOTPredicate.swift in Sources */,
+				1D60E590245FE7E5007E5CA8 /* RequestPredicate.swift in Sources */,
 				1D60E5C3245FE7E5007E5CA8 /* EventTimeMeasure.swift in Sources */,
 				1D60E5AB245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift in Sources */,
 				1D60E591245FE7E5007E5CA8 /* WOTCoreDataStore.swift in Sources */,
@@ -702,6 +725,7 @@
 				1D60E5A7245FE7E5007E5CA8 /* WOTRequestManagerProtocol.swift in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* WOTRequestManager.swift in Sources */,
 				1D60E58A245FE7E5007E5CA8 /* KeyPathListable.swift in Sources */,
+				1D41163324653FD4009070AD /* EventRemoteFetch.swift in Sources */,
 				1D60E5BC245FE7E5007E5CA8 /* EventCDFetch.swift in Sources */,
 				1D60E589245FE7E5007E5CA8 /* Coding.swift in Sources */,
 				1D60E5B3245FE7E5007E5CA8 /* WOTRequestArguments.swift in Sources */,
@@ -710,6 +734,7 @@
 				1D60E5AA245FE7E5007E5CA8 /* WOTJSONResponseAdapter.swift in Sources */,
 				1D60E5D1245FE93E007E5CA8 /* WOTError.swift in Sources */,
 				1D60E5D2245FE93E007E5CA8 /* JSONError.swift in Sources */,
+				1D41161E24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift in Sources */,
 				1D60E5A3245FE7E5007E5CA8 /* RESTResponseCoordinator.swift in Sources */,
 				1D60E5AC245FE7E5007E5CA8 /* URLEncodedProtocol.swift in Sources */,
 				1D60E5A0245FE7E5007E5CA8 /* WOTMappingCoordinatorProtocol.swift in Sources */,
@@ -726,14 +751,17 @@
 				1D60E52F245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift in Sources */,
 				1D60E5BE245FE7E5007E5CA8 /* EventJSON.swift in Sources */,
 				1D60E5BF245FE7E5007E5CA8 /* EventMapping.swift in Sources */,
+				1D20FDE9246402F9009CFA22 /* EventWarning.swift in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
 				1D60E58C245FE7E5007E5CA8 /* WOTPrimaryKey.swift in Sources */,
 				1D60E59C245FE7E5007E5CA8 /* DataAdapterProtocol.swift in Sources */,
+				1D41163124653F95009070AD /* EventLocalFetch.swift in Sources */,
 				1D60E59B245FE7E5007E5CA8 /* JSONMappableProtocol.swift in Sources */,
 				1D60E52E245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				1D60E5D3245FE93E007E5CA8 /* DataAdapterError.swift in Sources */,
 				1D60E5AF245FE7E5007E5CA8 /* WOTRequest.swift in Sources */,
 				1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */,
+				1D20FDEB24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift in Sources */,
 				1D60E59D245FE7E5007E5CA8 /* JSONDataAdapterProtocol.swift in Sources */,
 				1D60E5B8245FE7E5007E5CA8 /* EventCDMerge.swift in Sources */,
 			);
@@ -873,7 +901,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -899,7 +927,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

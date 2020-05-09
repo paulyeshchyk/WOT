@@ -126,7 +126,7 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         DispatchQueue.main.async {
             super.loadModel()
             if let error = error {
-                requestManager.appManager?.logInspector?.logEvent(EventError(error, details: didParseDataForRequest), sender: self)
+                requestManager.logEvent(EventError(error, details: didParseDataForRequest), sender: self)
             }
             if completionResultType == .finished || completionResultType == .noData {
                 requestManager.removeListener(self)

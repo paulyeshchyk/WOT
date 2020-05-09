@@ -12,23 +12,12 @@ public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
-    // MARK: NSObject -
-    override public var hash: Int {
-        return uuid.uuidString.hashValue
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
-    required public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?) {
-        self.modelClazz = clazz
-        self.request = request
-        self.appManager = appManager
-        self.mappingCoordinator = appManager?.mappingCoordinator
-
-        super.init()
-        appManager?.logInspector?.logEvent(EventObjectNew(request.description), sender: self)
-    }
-
-    deinit {
-        appManager?.logInspector?.logEvent(EventObjectFree(request.description), sender: self)
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
     }
 
     // MARK: DataAdapterProtocol -
@@ -37,37 +26,70 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
     // MARK: JSONAdapterProtocol -
     public var onJSONDidParse: OnRequestComplete?
-    public var linker: JSONAdapterLinkerProtocol?
+    public var linker: JSONAdapterLinkerProtocol
 
+    // MARK: NSObject -
+    override public var hash: Int {
+        return uuid.uuidString.hashValue
+    }
+
+    required public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol) {
+        self.modelClazz = clazz
+        self.request = request
+        self.appManager = appManager
+        self.linker = linker
+
+        super.init()
+        self.logEvent(EventObjectNew(request.description), sender: self)
+    }
+
+    deinit {
+        self.logEvent(EventObjectFree(request.description), sender: self)
+    }
+
+    // MARK: JSONAdapterProtocol -
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
-            appManager?.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            self.logEvent(EventError(error, details: request), sender: self)
             onJSONDidParse?(fromRequest, self, error)
             return
         }
 
         let jsonStartParsingDate = Date()
-        appManager?.logInspector?.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
-        let keys = json.keys
-        for (idx, key) in keys.enumerated() {
+        self.logEvent(EventJSONStart(fromRequest.predicate?.description ?? "``"), sender: self)
+
+        var fakeIncrement: Int = json.keys.count
+        json.keys.forEach { key in
             //
-            let extraction = extractSubJSON(from: json, by: key)
-            let primaryKeyType = self.linker?.primaryKeyType ?? .external
-            findOrCreateObject(for: extraction, fromRequest: fromRequest, primaryKeyType: primaryKeyType) { fetchResult in
+            let extraction = self.linker.performJSONExtraction(from: json, byKey: key, forClazz: self.modelClazz, request: fromRequest)
 
-                self.linker?.process(fetchResult: fetchResult)
+            self.findOrCreateObject(json: extraction.json, pkCase: extraction.pkCase) { fetchResult, error in
 
-                if idx == (keys.count - 1) {
-                    self.appManager?.logInspector?.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
-                    self.onJSONDidParse?(fromRequest, self, error)
+                if let error = error {
+                    self.logEvent(EventError(error, details: nil), sender: self)
+                    return
+                }
+
+                self.linker.process(fetchResult: fetchResult) { _, error in
+                    if let error = error {
+                        self.logEvent(EventError(error, details: nil), sender: self)
+                    }
+                    fakeIncrement -= 1
+                    if fakeIncrement == 0 {
+                        self.logEvent(EventJSONEnded(fromRequest.predicate?.description ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
+                        self.onJSONDidParse?(fromRequest, self, error)
+                    }
                 }
             }
         }
     }
 
+    private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
+
     // MARK: Private -
     private let METAClass: Codable.Type = RESTAPIResponse.self
-    private var mappingCoordinator: WOTMappingCoordinatorProtocol?
+    private var mappingCoordinator: WOTMappingCoordinatorProtocol? { return appManager?.mappingCoordinator }
+    private var coreDataStore: WOTCoredataStoreProtocol? { return appManager?.coreDataStore }
     private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
 }
@@ -104,76 +126,64 @@ extension DataAdapterProtocol {
 }
 
 extension JSONAdapter {
-    private struct JSONExtraction {
-        let identifier: Any
-        let json: JSON
-    }
-
-    /**
-
-     */
-    private func extractSubJSON(from json: JSON, by key: AnyHashable ) -> JSONExtraction {
-        guard let jsonByKey = json[key] as? JSON else {
-            fatalError("invalid json for key")
-        }
-        let objectJson: JSON
-        if let extracted = linker?.onJSONExtraction(json: jsonByKey) {
-            objectJson = extracted
-        } else {
-            objectJson = jsonByKey
-        }
-        let ident = onGetIdent(modelClazz, objectJson, key)
-        return JSONExtraction(identifier: ident, json: objectJson)
-    }
-
-    private func onGetIdent(_ Clazz: PrimaryKeypathProtocol.Type, _ json: JSON, _ key: AnyHashable) -> Any {
-        let ident: Any
-        #warning(".external should be used in case ModureTree-Module-VehicleProfileGun")
-        let primaryKeyPath = Clazz.primaryKeyPath(forType: .internal)
-
-        if  primaryKeyPath.count > 0 {
-            ident = json[primaryKeyPath] ?? key
-        } else {
-            ident = key
-        }
-        return ident
-    }
-
-    private func findOrCreateObject(for jsonExtraction: JSONExtraction, fromRequest: WOTRequestProtocol, primaryKeyType: PrimaryKeyType,  callback: @escaping FetchResultCompletion) {
+    private func findOrCreateObject(json: JSON, pkCase: PKCase,  callback: @escaping FetchResultErrorCompletion) {
         guard Thread.current.isMainThread else {
             fatalError("thread is not main")
         }
 
-        guard let MAINCONTEXT = appManager?.coreDataStore?.mainContext else {
+        guard let MAINCONTEXT = coreDataStore?.mainContext else {
             fatalError("main is not accessible")
         }
-
-        let parents = fromRequest.predicate?.pkCase?.plainParents ?? []
-        let objCase = PKCase(parentObjects: parents)
-        objCase[.primary] = modelClazz.primaryKey(for: jsonExtraction.identifier as AnyObject, andType: primaryKeyType)
 
         guard let managedObjectClass = self.modelClazz as? NSManagedObject.Type else {
             fatalError("modelClazz: \(self.modelClazz) is not NSManagedObject.Type")
         }
 
-        appManager?.coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: objCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult in
+        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: pkCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
 
-            guard fetchResult.error == nil else {
-                callback(fetchResult)
+            if let error = error {
+                callback(fetchResult, error)
                 return
             }
 
-            do {
-                let jsonStartParsingDate = Date()
-                self.appManager?.logInspector?.logEvent(EventJSONStart(objCase.description), sender: self)
-                try self.mappingCoordinator?.decodingAndMapping(json: jsonExtraction.json, fetchResult: fetchResult, pkCase: objCase, linker: nil) { _ in
-                    self.appManager?.logInspector?.logEvent(EventJSONEnded("\(objCase)", initiatedIn: jsonStartParsingDate), sender: self)
-                    callback(fetchResult)
+            let jsonStartParsingDate = Date()
+            self.logEvent(EventJSONStart(pkCase.description), sender: self)
+            self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, mapper: nil) { fetchResult, error in
+                if let error = error {
+                    self.logEvent(EventError(error, details: nil), sender: self)
                 }
-            } catch let error {
-                self.appManager?.logInspector?.logEvent(EventError(error, details: objCase), sender: self)
+                self.logEvent(EventJSONEnded("\(pkCase)", initiatedIn: jsonStartParsingDate), sender: self)
+                callback(fetchResult, nil)
             }
         })
+    }
+}
+
+public struct JSONExtraction {
+    public let pkCase: PKCase
+    public let json: JSON
+}
+
+extension JSONAdapterLinkerProtocol {
+    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: WOTRequestProtocol) -> JSONExtraction {
+        guard let json = from[key] as? JSON else {
+            fatalError("invalid json for key")
+        }
+
+        let extractedJSON = onJSONExtraction(json: json)
+
+        let ident: Any
+        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: self.primaryKeyType) {
+            ident = extractedJSON[primaryKeyPath] ?? key
+        } else {
+            ident = key
+        }
+
+        let parents = fromRequest.predicate?.pkCase?.parentObjectIDList
+        let objCase = PKCase(parentObjectIDList: parents)
+        objCase[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: primaryKeyType)
+
+        return JSONExtraction(pkCase: objCase, json: extractedJSON)
     }
 }
 

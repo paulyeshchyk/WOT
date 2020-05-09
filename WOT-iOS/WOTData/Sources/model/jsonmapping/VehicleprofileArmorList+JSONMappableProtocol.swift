@@ -15,30 +15,57 @@ extension VehicleprofileArmorList {
     @objc
     override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
-        let hullCase = PKCase()
-        hullCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull))
+        let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
-        VehicleprofileArmor.hull(context: context, fromJSON: json[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, mappingCoordinator: mappingCoordinator) { fetchResult in
+        // MARK: - turret
+
+        let turretJSON = json[#keyPath(VehicleprofileArmorList.turret)] as? JSON
+        let turretBuilder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
+        let turretMapperClazz = VehicleprofileArmorList.TurretLinker.self
+        mappingCoordinator?.linkItem(from: turretJSON, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, mapperClazz: turretMapperClazz, lookupRuleBuilder: turretBuilder)
+
+        // MARK: - hull
+
+        let hullJSON = json[#keyPath(VehicleprofileArmorList.hull)] as? JSON
+        let hullBuilder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
+        let hullMapperClazz = VehicleprofileArmorList.HullLinker.self
+        mappingCoordinator?.linkItem(from: hullJSON, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, mapperClazz: hullMapperClazz, lookupRuleBuilder: hullBuilder)
+    }
+}
+
+extension VehicleprofileArmorList {
+    public class TurretLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
+
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let hull = fetchResult.managedObject() as? VehicleprofileArmor {
-                self.hull = hull
-                mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                    if let error = error {
-                        print(error.debugDescription)
+            if let armor = fetchResult.managedObject() as? VehicleprofileArmor {
+                if let armorList = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileArmorList {
+                    armorList.turret = armor
+
+                    coreDataStore?.stash(context: context) { error in
+                        completion(fetchResult, error)
                     }
                 }
             }
         }
+    }
 
-        let turretCase = PKCase()
-        turretCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret))
-        VehicleprofileArmor.turret(context: context, fromJSON: json[#keyPath(VehicleprofileArmorList.hull)], pkCase: hullCase, mappingCoordinator: mappingCoordinator) { fetchResult in
+    public class HullLinker: BaseJSONAdapterLinker {
+        override public var primaryKeyType: PrimaryKeyType { return .remote }
+
+        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+
+        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let turret = fetchResult.managedObject() as? VehicleprofileArmor {
-                self.turret = turret
-                mappingCoordinator?.coreDataStore?.stash(context: context) { error in
-                    if let error = error {
-                        print(error.debugDescription)
+            if let armor = fetchResult.managedObject() as? VehicleprofileArmor {
+                if let armorList = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileArmorList {
+                    armorList.hull = armor
+
+                    coreDataStore?.stash(context: context) { error in
+                        completion(fetchResult, error)
                     }
                 }
             }

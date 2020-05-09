@@ -39,10 +39,11 @@ extension Module {
         return FieldKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String {
+    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
         switch forType {
-        case .external: return #keyPath(Module.module_id)
-        case .internal: return #keyPath(Module.module_id)// was name
+        case .remote: return #keyPath(Module.module_id)
+        case .local: return #keyPath(Module.module_id)// was name
+        case .none: return nil
         }
     }
 }

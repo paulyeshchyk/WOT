@@ -33,6 +33,16 @@ public enum VehicleModuleType: String {
     case vehicleGun
     case tank
 
+    public static func fromString(_ string: String?) -> VehicleModuleType {
+        guard let string = string else {
+            fatalError("incompatible module type: nil")
+        }
+        guard let result = VehicleModuleType(rawValue: string) else {
+            fatalError("incompatible module type: \(string)")
+        }
+        return result
+    }
+
     private static var allTypes: [VehicleModuleType] = [.unknown, .vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun, .tank]
 
     var index: Int {

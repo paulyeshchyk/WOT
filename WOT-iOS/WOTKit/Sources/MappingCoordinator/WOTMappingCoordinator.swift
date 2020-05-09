@@ -23,102 +23,163 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
         //
     }
 
+    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+        appManager?.logInspector?.logEvent(event, sender: sender)
+    }
+
+    public func logEvent(_ event: LogEventProtocol?) {
+        appManager?.logInspector?.logEvent(event)
+    }
+
     // MARK: - WOTMappingCoordinatorProtocol
-    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws {
-        #warning("linker.process should have callback")
+    public func decodingAndMapping(json: JSON, fetchResult: FetchResult, pkCase: PKCase, mapper: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) {
         let localCompletion: ThrowableCompletion = { error in
-            if let linker = linker {
-                let finalFetchResult = fetchResult.dublicate()
-                finalFetchResult.predicate = pkCase.compoundPredicate()
-                finalFetchResult.error = error
-                linker.process(fetchResult: finalFetchResult)
+            if let error = error {
+                completion(fetchResult, error)
             } else {
-                completion(error)
+                if let linker = mapper {
+                    let finalFetchResult = fetchResult.dublicate()
+                    finalFetchResult.predicate = pkCase.compoundPredicate()
+                    linker.process(fetchResult: finalFetchResult, completion: completion)
+                } else {
+                    completion(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
+                }
             }
         }
 
-        appManager?.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
+        self.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
         //
         let context = fetchResult.context
         let object = fetchResult.managedObject()
         //
-        try object.mapping(json: json, context: context, pkCase: pkCase, mappingCoordinator: self)
-        //
-        coreDataStore?.stash(context: context, block: localCompletion)
-        //
-        appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
+        do {
+            try object.mapping(json: json, context: context, pkCase: pkCase, mappingCoordinator: self)
+            coreDataStore?.stash(context: context, block: localCompletion)
+            self.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .JSON), sender: self)
+        } catch let error {
+            localCompletion(error)
+        }
     }
 
-    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping ThrowableCompletion) throws {
-        #warning("helper.onInstanceDidParse should have callback")
+    public func decodingAndMapping(array: [Any], fetchResult: FetchResult, pkCase: PKCase, linker: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) {
         let localCompletion: ThrowableCompletion = { error in
-            if let helper = linker {
-                let finalFetchResult = fetchResult.dublicate()
-                finalFetchResult.predicate = pkCase.compoundPredicate()
-                finalFetchResult.error = error
-                helper.process(fetchResult: finalFetchResult)
+            if let error = error {
+                completion(fetchResult, error)
             } else {
-                completion(error)
+                if let linker = linker {
+                    linker.process(fetchResult: fetchResult, completion: completion)
+                } else {
+                    completion(fetchResult, nil)//WOTMappingCoordinatorError.linkerNotStarted
+                }
             }
         }
 
-        appManager?.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
+        self.logEvent(EventMappingStart(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
         //
         let context = fetchResult.context
         let object = fetchResult.managedObject()
         //
-        try object.mapping(array: array, context: context, pkCase: pkCase, mappingCoordinator: self)
-        //
-        coreDataStore?.stash(context: fetchResult.context, block: localCompletion)
-        //
-        appManager?.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
+        do {
+            try object.mapping(array: array, context: context, pkCase: pkCase, mappingCoordinator: self)
+            //
+            coreDataStore?.stash(context: fetchResult.context, block: localCompletion)
+            //
+            self.logEvent(EventMappingEnded(fetchResult: fetchResult, pkCase: pkCase, mappingType: .Array), sender: self)
+        } catch let error {
+            localCompletion(error)
+        }
     }
 
-    public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultCompletion) {
-        appManager?.logInspector?.logEvent(EventCustomLogic("localSubordinate: \(type(of: clazz)) - \(pkCase.debugDescription)"), sender: self)
+    public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultErrorCompletion) {
+        self.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(pkCase.debugDescription)"), sender: self)
+
         guard let predicate = pkCase.compoundPredicate(.and) else {
-            appManager?.logInspector?.logEvent(EventError(message: "no key defined for class: \(String(describing: clazz))"), sender: self)
-            let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none, error: nil)
-            callback(fetchResult)
+            let error = WOTMappingCoordinatorError.noKeysDefinedForClass(String(describing: clazz))
+            let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none)
+            callback(fetchResult, error)
             return
         }
 
-        appManager?.coreDataStore?.perform(context: context) { context in
+        coreDataStore?.perform(context: context) { context in
             do {
                 if let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) {
                     let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .none
-                    let fetchResult = FetchResult(context: context, objectID: managedObject.objectID, predicate: predicate, fetchStatus: fetchStatus, error: nil)
-                    callback(fetchResult)
+                    let fetchResult = FetchResult(context: context, objectID: managedObject.objectID, predicate: predicate, fetchStatus: fetchStatus)
+                    callback(fetchResult, nil)
                 }
             } catch let error {
-                self.appManager?.logInspector?.logEvent(EventError(error, details: nil))
+                self.logEvent(EventError(error, details: nil))
             }
         }
     }
 
-    public func fetchRemote(context: NSManagedObjectContext, byModelClass clazz: AnyClass, pkCase: PKCase, keypathPrefix: String?, linker: JSONAdapterLinkerProtocol?) {
-        appManager?.logInspector?.logEvent(EventCustomLogic("pullRemoteSubordinate:\(clazz)"), sender: self)
+    public func fetchRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
+        self.logEvent(EventRemoteFetch("\(String(describing: modelClazz)) - \(pkCase.debugDescription)"), sender: self)
 
-        var predicates = [WOTPredicate]()
-        predicates.append(WOTPredicate(clazz: clazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
+        var predicates = [RequestPredicate]()
+        predicates.append(RequestPredicate(clazz: modelClazz, pkCase: pkCase, keypathPrefix: keypathPrefix))
 
         predicates.forEach { predicate in
-            fetchRemote(byPredicate: predicate, linker: linker)
+            fetchRemote(predicate: predicate, linker: mapper)
         }
     }
 
-    // MARK: private -
-    private func fetchRemote(byPredicate predicate: WOTPredicate, linker: JSONAdapterLinkerProtocol?) {
+    private func fetchRemote(predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) {
         guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {
-            print("requests not parsed")
+            self.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
             return
         }
         requestIDs.forEach {
             do {
-                try appManager?.requestManager?.startRequest(by: $0, withPredicate: predicate, linker: linker)
+                try appManager?.requestManager?.startRequest(by: $0, requestPredicate: predicate, linker: linker)
             } catch {
-                appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                self.logEvent(EventError(error, details: nil), sender: self)
             }
         }
+    }
+
+    //
+    public func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
+        guard let itemsList = array else { return }
+
+        guard let lookupRule = lookupRuleBuilder.build() else {
+            logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
+            return
+        }
+
+        let context = masterFetchResult.context
+
+        let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: self.coreDataStore)
+        self.fetchLocal(array: itemsList, context: context, forClass: linkedClazz, pkCase: lookupRule.pkCase, mapper: mapper, callback: { [weak self] _, error in
+            if let error = error {
+                self?.logEvent(EventError(error, details: nil), sender: nil)
+            }
+        })
+    }
+
+    public func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
+        guard let itemJSON = json else { return }
+
+        guard let lookupRule = lookupRuleBuilder.build() else {
+            logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
+            return
+        }
+
+        let context = masterFetchResult.context
+
+        let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier, coreDataStore: self.coreDataStore)
+        self.fetchLocal(json: itemJSON, context: context, forClass: linkedClazz, pkCase: lookupRule.pkCase, mapper: mapper, callback: { [weak self] _, error in
+            if let error = error {
+                self?.logEvent(EventError(error, details: nil), sender: nil)
+            }
+        })
+    }
+
+    public func linkRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, lookupRuleBuilder: LinkLookupRuleBuilderProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
+        guard let lookupRule =  lookupRuleBuilder.build() else {
+            logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
+            return
+        }
+        fetchRemote(modelClazz: modelClazz, masterFetchResult: masterFetchResult, pkCase: lookupRule.pkCase, keypathPrefix: keypathPrefix, mapper: mapper)
     }
 }
