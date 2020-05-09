@@ -54,6 +54,7 @@ extension KeyedDecodingContainer {
         return try decode(type, forKey: key)
     }
 
+    // swiftlint:disable cyclomatic_complexity
     func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         var dictionary = Dictionary<String, Any>()
 
@@ -74,6 +75,7 @@ extension KeyedDecodingContainer {
         }
         return dictionary
     }
+    // swiftlint:enable cyclomatic_complexity
 }
 
 extension UnkeyedDecodingContainer {

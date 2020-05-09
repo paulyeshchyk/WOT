@@ -40,7 +40,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
                 if let linker = mapper {
                     let finalFetchResult = fetchResult.dublicate()
                     finalFetchResult.predicate = pkCase.compoundPredicate()
-                    linker.process(fetchResult: finalFetchResult, completion: completion)
+                    linker.process(fetchResult: finalFetchResult, coreDataStore: self.coreDataStore, completion: completion)
                 } else {
                     completion(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
                 }
@@ -67,7 +67,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
                 completion(fetchResult, error)
             } else {
                 if let linker = linker {
-                    linker.process(fetchResult: fetchResult, completion: completion)
+                    linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: completion)
                 } else {
                     completion(fetchResult, nil)//WOTMappingCoordinatorError.linkerNotStarted
                 }
@@ -149,7 +149,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
 
         let context = masterFetchResult.context
 
-        let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil, coreDataStore: self.coreDataStore)
+        let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         self.fetchLocal(array: itemsList, context: context, forClass: linkedClazz, pkCase: lookupRule.pkCase, mapper: mapper, callback: { [weak self] _, error in
             if let error = error {
                 self?.logEvent(EventError(error, details: nil), sender: nil)
@@ -167,7 +167,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
 
         let context = masterFetchResult.context
 
-        let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier, coreDataStore: self.coreDataStore)
+        let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
         self.fetchLocal(json: itemJSON, context: context, forClass: linkedClazz, pkCase: lookupRule.pkCase, mapper: mapper, callback: { [weak self] _, error in
             if let error = error {
                 self?.logEvent(EventError(error, details: nil), sender: nil)

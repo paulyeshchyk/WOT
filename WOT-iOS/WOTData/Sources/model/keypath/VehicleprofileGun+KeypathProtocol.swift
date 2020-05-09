@@ -36,15 +36,14 @@ extension VehicleprofileGun {
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
         //id was used when quering remote module
         switch forType {
-        case .remote: return #keyPath(VehicleprofileGun.gun_id)
-        case .local: return #keyPath(VehicleprofileGun.tag)
-        case .none: return nil
+        case .external: return #keyPath(VehicleprofileGun.gun_id)
+        case .internal: return #keyPath(VehicleprofileGun.tag)
         }
     }
 
     override open class func predicateFormat(forType: PrimaryKeyType) -> String {
         switch forType {
-        case .remote:
+        case .external:
             return "%K == %@"
         default:
             return "%K = %@"

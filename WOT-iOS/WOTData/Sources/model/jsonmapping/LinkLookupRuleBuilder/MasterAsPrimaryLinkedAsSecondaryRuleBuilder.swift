@@ -25,7 +25,7 @@ public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: LinkLookupRuleBuilderP
     public func build() -> LinkLookupRule? {
         let modulePK = PKCase(parentObjectIDList: parentObjectIDList)
         modulePK[.primary] = pkCase[.primary]
-        modulePK[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .remote)
+        modulePK[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
 
         return LinkLookupRule(objectIdentifier: nil, pkCase: modulePK)
     }

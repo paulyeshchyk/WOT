@@ -35,11 +35,11 @@ extension VehicleprofileArmorList {
 
 extension VehicleprofileArmorList {
     public class TurretLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .remote }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let armor = fetchResult.managedObject() as? VehicleprofileArmor {
                 if let armorList = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileArmorList {
@@ -54,11 +54,11 @@ extension VehicleprofileArmorList {
     }
 
     public class HullLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .remote }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let armor = fetchResult.managedObject() as? VehicleprofileArmor {
                 if let armorList = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileArmorList {

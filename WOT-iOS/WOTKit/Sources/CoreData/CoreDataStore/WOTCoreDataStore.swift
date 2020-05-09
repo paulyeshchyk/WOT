@@ -95,9 +95,6 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
         context.name = "Private"
         context.parent = self.mainContext
         context.undoManager = nil
-
-        #warning("check notifications")
-        NotificationCenter.default.addObserver(self, selector: #selector(WOTCoreDataStore.mainContextDidSave(notification:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
         return context
     }
 
@@ -113,9 +110,6 @@ open class WOTCoreDataStore: NSObject, WOTCoredataStoreProtocol {
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
         context.name = "Master"
         context.undoManager = nil
-
-        #warning("check notifications")
-        NotificationCenter.default.addObserver(self, selector: #selector(WOTCoreDataStore.mainContextDidSave(notification:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
         return context
     }()
 

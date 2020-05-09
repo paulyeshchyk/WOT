@@ -36,23 +36,23 @@ extension Module {
         let moduleType = VehicleModuleType.fromString(self.type)
         switch moduleType {
         case .vehicleChassis:
-            let suspensionMapper = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let suspensionMapper = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: module_id)
             mappingCoordinator?.linkRemote(modelClazz: VehicleprofileSuspension.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "suspension.", mapper: suspensionMapper)
         case .vehicleGun:
-            let gunMapper = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let gunMapper = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileGun.self, linkedObjectID: module_id)
             mappingCoordinator?.linkRemote(modelClazz: VehicleprofileGun.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "gun.", mapper: gunMapper)
         case .vehicleRadio:
-            let radioMapper = Module.RadioMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let radioMapper = Module.RadioMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileRadio.self, linkedObjectID: module_id)
             mappingCoordinator?.linkRemote(modelClazz: VehicleprofileRadio.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "radio.", mapper: radioMapper)
         case .vehicleEngine:
-            let engineMapper = Module.EngineMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let engineMapper = Module.EngineMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileEngine.self, linkedObjectID: module_id)
             mappingCoordinator?.linkRemote(modelClazz: VehicleprofileEngine.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "engine.", mapper: engineMapper)
         case .vehicleTurret:
-            let turretMapper = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id, coreDataStore: mappingCoordinator?.coreDataStore)
+            let turretMapper = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let ruleBuilder = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
             mappingCoordinator?.linkRemote(modelClazz: VehicleprofileTurret.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: "turret.", mapper: turretMapper)
         default: fatalError("unknown module type")
@@ -62,7 +62,7 @@ extension Module {
 
 extension Module {
     public class EngineMapper: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .local }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["engine"] as? JSON else {
@@ -71,7 +71,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
@@ -86,7 +86,7 @@ extension Module {
     }
 
     public class TurretMapper: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .local }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["turret"] as? JSON else {
@@ -95,7 +95,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
@@ -110,7 +110,7 @@ extension Module {
     }
 
     public class SuspensionMapper: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .local }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["suspension"] as? JSON else {
@@ -119,7 +119,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
@@ -134,7 +134,7 @@ extension Module {
     }
 
     public class RadioMapper: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .local }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["radio"] as? JSON else {
@@ -143,7 +143,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
@@ -158,7 +158,7 @@ extension Module {
     }
 
     public class GunMapper: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .local }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
             guard let result = json["gun"] as? JSON else {
@@ -167,7 +167,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = masterFetchResult?.managedObject(inContext: context) as? Module {

@@ -10,9 +10,8 @@ import Foundation
 
 @objc
 public enum PrimaryKeyType: Int {
-    case local
-    case remote
-    case none
+    case `internal`
+    case `external`
 }
 
 @objc

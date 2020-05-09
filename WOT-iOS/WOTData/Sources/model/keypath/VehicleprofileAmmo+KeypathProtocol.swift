@@ -27,9 +27,8 @@ extension VehicleprofileAmmo {
 
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
         switch forType {
-        case .remote: return #keyPath(VehicleprofileAmmo.type)
-        case .local: return #keyPath(VehicleprofileAmmo.type)
-        case .none: return nil
+        case .external: return #keyPath(VehicleprofileAmmo.type)
+        case .internal: return #keyPath(VehicleprofileAmmo.type)
         }
     }
 }

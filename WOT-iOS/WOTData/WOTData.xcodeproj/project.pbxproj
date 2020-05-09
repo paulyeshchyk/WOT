@@ -129,10 +129,6 @@
 		1DE1F94B245EC75A002866A3 /* WOTWEBRequestTankGuns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F914245EC75A002866A3 /* WOTWEBRequestTankGuns.swift */; };
 		1DE1FA04245EE2EF002866A3 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA02245EE2EF002866A3 /* NSBundle+LanguageBundle.m */; };
 		1DE1FA05245EE2EF002866A3 /* NSBundle+LanguageBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DE1FA03245EE2EF002866A3 /* NSBundle+LanguageBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1DE1FA0A245EE3A5002866A3 /* NSString+WOTValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA08245EE3A5002866A3 /* NSString+WOTValue.m */; };
-		1DE1FA0B245EE3A5002866A3 /* NSString+WOTValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DE1FA09245EE3A5002866A3 /* NSString+WOTValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1DE1FA0E245EE474002866A3 /* NSString+UrlEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA0C245EE474002866A3 /* NSString+UrlEncode.m */; };
-		1DE1FA0F245EE474002866A3 /* NSString+UrlEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DE1FA0D245EE474002866A3 /* NSString+UrlEncode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -271,10 +267,6 @@
 		1DE1F914245EC75A002866A3 /* WOTWEBRequestTankGuns.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestTankGuns.swift; sourceTree = "<group>"; };
 		1DE1FA02245EE2EF002866A3 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
 		1DE1FA03245EE2EF002866A3 /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
-		1DE1FA08245EE3A5002866A3 /* NSString+WOTValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WOTValue.m"; sourceTree = "<group>"; };
-		1DE1FA09245EE3A5002866A3 /* NSString+WOTValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WOTValue.h"; sourceTree = "<group>"; };
-		1DE1FA0C245EE474002866A3 /* NSString+UrlEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncode.m"; sourceTree = "<group>"; };
-		1DE1FA0D245EE474002866A3 /* NSString+UrlEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlEncode.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -542,7 +534,6 @@
 		1DE1FA00245EE2C5002866A3 /* categories */ = {
 			isa = PBXGroup;
 			children = (
-				1DE1FA07245EE3A5002866A3 /* NSString */,
 				1DE1FA01245EE2EF002866A3 /* NSBundle */,
 			);
 			path = categories;
@@ -557,17 +548,6 @@
 			path = NSBundle;
 			sourceTree = "<group>";
 		};
-		1DE1FA07245EE3A5002866A3 /* NSString */ = {
-			isa = PBXGroup;
-			children = (
-				1DE1FA0D245EE474002866A3 /* NSString+UrlEncode.h */,
-				1DE1FA0C245EE474002866A3 /* NSString+UrlEncode.m */,
-				1DE1FA08245EE3A5002866A3 /* NSString+WOTValue.m */,
-				1DE1FA09245EE3A5002866A3 /* NSString+WOTValue.h */,
-			);
-			path = NSString;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -576,9 +556,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D8C299021358CA600759C42 /* WOTDataDefines.h in Headers */,
-				1DE1FA0B245EE3A5002866A3 /* NSString+WOTValue.h in Headers */,
 				1DE1FA05245EE2EF002866A3 /* NSBundle+LanguageBundle.h in Headers */,
-				1DE1FA0F245EE474002866A3 /* NSString+UrlEncode.h in Headers */,
 				1D3DAEDB2133FD5300368AFA /* WOTData.h in Headers */,
 				1DE1F948245EC75A002866A3 /* WOTWEBRequest+Stubs.h in Headers */,
 			);
@@ -737,7 +715,6 @@
 				1D60E7282460509A007E5CA8 /* VehicleprofileAmmo+JSONMappableProtocol.swift in Sources */,
 				1D5D0AF323CCAC05004B0314 /* WOTDataAPI.swift in Sources */,
 				1D60E6FF24605084007E5CA8 /* VehicleprofileRadio+JSONDecodingProtocol.swift in Sources */,
-				1DE1FA0E245EE474002866A3 /* NSString+UrlEncode.m in Sources */,
 				1DE1F94A245EC75A002866A3 /* WOTWEBRequestTankTurrets.swift in Sources */,
 				1D60E479245F59FB007E5CA8 /* Vehicles+CoreDataProperties.swift in Sources */,
 				1D60E7272460509A007E5CA8 /* Vehicleprofile+JSONMappableProtocol.swift in Sources */,
@@ -752,7 +729,6 @@
 				1D41162D2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				1D60E464245F59FB007E5CA8 /* VehicleprofileTurret+CoreDataClass.swift in Sources */,
 				1D60E73D246050AF007E5CA8 /* VehicleprofileArmor+KeyPathProtocol.swift in Sources */,
-				1DE1FA0A245EE3A5002866A3 /* NSString+WOTValue.m in Sources */,
 				1DE1FA04245EE2EF002866A3 /* NSBundle+LanguageBundle.m in Sources */,
 				1D60E70224605084007E5CA8 /* Vehicles+JSONDecodingProtocol.swift in Sources */,
 				1D41162F24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */,

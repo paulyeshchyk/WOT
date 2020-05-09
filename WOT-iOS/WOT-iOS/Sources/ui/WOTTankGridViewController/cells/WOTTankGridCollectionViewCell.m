@@ -24,11 +24,11 @@
 
 + (CGSize)sizeForSubitemsCount:(NSInteger)subitemsCount columnsCount:(NSInteger)columnsCount{
     
-    UIInterfaceOrientation statusBarOrientation = [UIApplication sharedApplication].statusBarOrientation;
+    UIInterfaceOrientation statusBarOrientation = [UIApplication sharedApplication].delegate.window.windowScene.interfaceOrientation;
     BOOL isPortrait = UIInterfaceOrientationIsPortrait(statusBarOrientation);
     
     CGFloat separatorWidth = 1.0f;
-    CGFloat screenWidth = IS_IPAD?(isPortrait?768.0f:1024.0f):(isPortrait?320.0f:480.0f);
+    CGFloat screenWidth = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ? (isPortrait?768.0f:1024.0f):(isPortrait?320.0f:480.0f);
     
     CGFloat itemWidth = screenWidth/columnsCount-separatorWidth;
     

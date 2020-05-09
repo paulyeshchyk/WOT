@@ -22,7 +22,7 @@
     [self setTitleTextAttributes:navbarTitleTextAttributes];
     [self setTintColor:textColor];
     [self setOpaque:YES];
-    [self setBarStyle:UIBarStyleBlackTranslucent];
+    [self setBarStyle: UIBarStyleBlack];
 }
 
 

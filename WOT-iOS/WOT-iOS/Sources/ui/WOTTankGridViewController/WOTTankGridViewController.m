@@ -50,8 +50,9 @@
 }
 
 - (NSInteger)columnsCount {
-    
-    return IS_IPAD?4.0f:2.0f;
+
+    BOOL isIPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+    return isIPad ? 4.0f : 2.0f;
 }
 
 #pragma mark - Notifications

@@ -28,11 +28,11 @@ extension VehicleprofileAmmoList {
 
 extension VehicleprofileAmmoList {
     public class VehicleprofileAmmoListAmmoLinker: BaseJSONAdapterLinker {
-        override public var primaryKeyType: PrimaryKeyType { return .remote }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
             if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
                 if let ammoList = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmoList {

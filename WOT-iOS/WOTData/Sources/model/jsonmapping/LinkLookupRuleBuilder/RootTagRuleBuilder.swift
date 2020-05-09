@@ -22,7 +22,7 @@ public class RootTagRuleBuilder: LinkLookupRuleBuilderProtocol {
         guard let json = self.json else { return nil }
 
         let itemID: AnyObject?
-        if let idKeyPath = linkedClazz.primaryKeyPath(forType: .local) {
+        if let idKeyPath = linkedClazz.primaryKeyPath(forType: .internal) {
             itemID = json[idKeyPath] as AnyObject
         } else {
             itemID = nil
@@ -31,7 +31,7 @@ public class RootTagRuleBuilder: LinkLookupRuleBuilderProtocol {
         guard let itemID1 = itemID else { return nil }
 
         let resultCase = PKCase()
-        if let primaryID = linkedClazz.primaryKey(for: itemID1, andType: .local) {
+        if let primaryID = linkedClazz.primaryKey(for: itemID1, andType: .internal) {
             resultCase[.primary] = primaryID
         }
 
