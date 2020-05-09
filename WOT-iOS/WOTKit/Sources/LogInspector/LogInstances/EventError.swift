@@ -24,7 +24,7 @@ public class EventError: LogEventProtocol {
     convenience public init?(_ error: Error?, details: Describable?) {
         var messages: [String] = .init()
         if let error = error {
-            messages.append(error.debugDescription)
+            messages.append(error.wotDescription)
         } else {
             messages.append("Unknown error")
         }

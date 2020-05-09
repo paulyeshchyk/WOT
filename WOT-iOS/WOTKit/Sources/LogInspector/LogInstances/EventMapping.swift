@@ -19,7 +19,7 @@ public class EventMappingStart: LogEventProtocol {
     public var name: String { return "MappingStart"}
 
     public init(fetchResult: FetchResult, pkCase: PKCase, mappingType: EventMappingType) {
-        message = "`\(mappingType)` Mapping \(fetchResult.debugDescription) \(pkCase.wotDescription)"
+        message = "`\(mappingType)` Mapping \(fetchResult.wotDescription) \(pkCase.wotDescription)"
     }
 
     required public init?(_ text: String) {
@@ -27,7 +27,7 @@ public class EventMappingStart: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.debugDescription
+        message = error.wotDescription
     }
 }
 
@@ -37,7 +37,7 @@ public class EventMappingEnded: LogEventProtocol {
     public var name: String { return "MappingEnded"}
 
     public init(fetchResult: FetchResult, pkCase: PKCase, mappingType: EventMappingType) {
-        message = "`\(mappingType)` Mapping \(fetchResult.debugDescription) \(pkCase.wotDescription)"
+        message = "`\(mappingType)` Mapping \(fetchResult.wotDescription) \(pkCase.wotDescription)"
     }
 
     required public init?(_ text: String) {
@@ -45,6 +45,6 @@ public class EventMappingEnded: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.debugDescription
+        message = error.wotDescription
     }
 }

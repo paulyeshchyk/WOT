@@ -23,7 +23,7 @@ public struct RESTAPIError: WOTError {
         self.message = message
     }
 
-    public var debugDescription: String {
+    public var wotDescription: String {
         return "RESTAPIError code: \(code ?? -1); message: \(message ?? "No message")"
     }
 

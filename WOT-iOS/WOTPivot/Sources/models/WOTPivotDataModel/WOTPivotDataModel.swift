@@ -116,7 +116,7 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
         do {
             try fetchController?.performFetch(nodeCreator: nodeCreator)
         } catch let error {
-            print(error.debugDescription)
+            print(error.wotDescription)
         }
     }
 

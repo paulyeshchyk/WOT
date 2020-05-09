@@ -22,6 +22,6 @@ public class EventRemoteFetch: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.debugDescription
+        message = error.wotDescription
     }
 }

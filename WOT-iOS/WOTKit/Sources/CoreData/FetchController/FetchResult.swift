@@ -25,7 +25,7 @@ public enum FetchStatus: Int {
 }
 
 @objc
-public class FetchResult: NSObject, NSCopying {
+public class FetchResult: NSObject, NSCopying, Describable {
     public var context: NSManagedObjectContext
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
@@ -37,7 +37,7 @@ public class FetchResult: NSObject, NSCopying {
         fatalError("")
     }
 
-    override public var debugDescription: String {
+    public var wotDescription: String {
         return "Context: \(context.name ?? ""); \(managedObject().entity.name ?? "<unknown>")"
     }
 

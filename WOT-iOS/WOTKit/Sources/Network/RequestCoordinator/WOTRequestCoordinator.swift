@@ -66,7 +66,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
             throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
         }
         guard let dataAdapterClass = dataAdapterClass(for: requestIdType) else {
-            throw RequestCoordinatorError.adapterNotFound(requestType: requestIdType.debugDescription)
+            throw RequestCoordinatorError.adapterNotFound(requestType: requestIdType.description)
         }
 
         return dataAdapterClass.init(Clazz: modelClass, request: request, appManager: appManager, linker: linker)

@@ -91,7 +91,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, pkCase: PKCase, callback: @escaping FetchResultErrorCompletion) {
-        self.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(pkCase.debugDescription)"), sender: self)
+        self.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(pkCase.wotDescription)"), sender: self)
 
         guard let predicate = pkCase.compoundPredicate(.and) else {
             let error = WOTMappingCoordinatorError.noKeysDefinedForClass(String(describing: clazz))
@@ -114,7 +114,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, LogMessageSen
     }
 
     public func fetchRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, pkCase: PKCase, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
-        self.logEvent(EventRemoteFetch("\(String(describing: modelClazz)) - \(pkCase.debugDescription)"), sender: self)
+        self.logEvent(EventRemoteFetch("\(String(describing: modelClazz)) - \(pkCase.wotDescription)"), sender: self)
 
         var predicates = [RequestPredicate]()
         predicates.append(RequestPredicate(clazz: modelClazz, pkCase: pkCase, keypathPrefix: keypathPrefix))

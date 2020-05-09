@@ -37,7 +37,9 @@ public class PKCase: NSObject {
         }
     }
 
-    override public var debugDescription: String { return wotDescription }
+    override public var debugDescription: String {
+        return wotDescription
+    }
 
     private var values: [PKType: Set<WOTPrimaryKey>] = .init()
 

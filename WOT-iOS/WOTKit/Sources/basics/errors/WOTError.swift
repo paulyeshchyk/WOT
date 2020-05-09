@@ -8,22 +8,22 @@
 
 import Foundation
 
-public protocol DebugDescriptable {
-    var debugDescription: String { get }
-}
-
-public protocol WOTError: Error, DebugDescriptable {
+public protocol WOTError: Error {
     var code: Int? { get }
     var message: String? { get }
     init(code: Int?, message: String?)
 }
 
 extension Error {
-    public var debugDescription: String {
+    public var wotDescription: String {
         if let wotError = self as? WOTError {
-            return wotError.debugDescription
+            let message: String = wotError.message ?? "-"
+            let code: Int = wotError.code ?? -1
+            return ".\(type(of: self))(code: \(code); message: \(message)"
+        } else if let nserror = self as? NSError {
+            return ".\(String(describing: self))(code: \(nserror.code); message: \(nserror.debugDescription)"
         } else {
-            return ".\(String(describing: self)) (code \((self as NSError).code))"
+            return ".\(String(describing: self))"
         }
     }
 }
