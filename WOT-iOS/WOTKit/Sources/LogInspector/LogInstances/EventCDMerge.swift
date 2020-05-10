@@ -22,6 +22,6 @@ public class EventCDMerge: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }

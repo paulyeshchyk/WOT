@@ -38,10 +38,3 @@ extension KeyPathListable {
         return membersTokeyPaths
     }
 }
-
-@objc
-public protocol KeypathProtocol: class {
-    static func fieldsKeypaths() -> [String]
-    static func relationsKeypaths() -> [String]
-    static func classKeypaths() -> [String]
-}

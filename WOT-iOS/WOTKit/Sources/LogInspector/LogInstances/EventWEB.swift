@@ -11,41 +11,41 @@ import Foundation
 public class EventWEBStart: LogEventProtocol {
     public static var type: LogEventType { return .web }
     public private(set) var message: String
-    public var name: String { return "WEBStart"}
+    public var name: String { return "WEBStart" }
 
     public init() {
         message = ""
     }
 
-    required public init?(_ text: String) {
-        message = text
+    public required init?(_ request: WOTRequestProtocol) {
+        message = "\(String(describing: request))"
     }
 }
 
 public class EventWEBCancel: LogEventProtocol {
     public static var type: LogEventType { return .web }
     public private(set) var message: String
-    public var name: String { return "WEBCancel"}
+    public var name: String { return "WEBCancel" }
 
     public init() {
         message = ""
     }
 
-    required public init?(_ text: String) {
-        message = text
+    public required init?(_ request: WOTRequestProtocol) {
+        message = "\(String(describing: request))"
     }
 }
 
 public class EventWEBEnd: LogEventProtocol {
     public static var type: LogEventType { return .web }
     public private(set) var message: String
-    public var name: String { return "WEBEnded"}
+    public var name: String { return "WEBEnded" }
 
     public init() {
         message = ""
     }
 
-    required public init?(_ text: String) {
-        message = text
+    public required init?(_ request: WOTRequestProtocol) {
+        message = "\(String(describing: request))"
     }
 }

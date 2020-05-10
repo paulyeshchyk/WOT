@@ -10,16 +10,23 @@ import Foundation
 
 @objc
 open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
-    override open var description: String {
-        let pumperDescription = pumper?.wotDescription ?? ""
-        return "\(String(describing: type(of: self))) \(pumperDescription)"
-    }
 
     public var userInfo: JSON?
     public var httpBodyData: Data?
 
     open var method: String { return "POST" }
     open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
+
+    override open var description: String {
+        let pumperDescription: String
+        if let pumper = pumper {
+            pumperDescription = String(describing: pumper)
+        } else {
+            pumperDescription = ""
+        }
+
+        return "\(String(describing: type(of: self))) \(pumperDescription)"
+    }
 
     override open var hash: Int {
         return (pumper as? NSObject)?.hash ?? path.hashValue

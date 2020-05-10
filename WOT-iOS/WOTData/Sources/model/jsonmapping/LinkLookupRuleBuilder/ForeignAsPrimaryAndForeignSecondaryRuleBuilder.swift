@@ -9,22 +9,22 @@
 import CoreData
 import WOTKit
 
-public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: LinkLookupRuleBuilderProtocol {
-    private var pkCase: PKCase
+public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: RequestPredicateComposerProtocol {
+    private var requestPredicate: RequestPredicate
     private var foreignPrimarySelectKey: String
     private var foreignSecondarySelectKey: String
 
-    public init(pkCase: PKCase, foreignPrimarySelectKey: String, foreignSecondarySelectKey: String) {
-        self.pkCase = pkCase
+    public init(requestPredicate: RequestPredicate, foreignPrimarySelectKey: String, foreignSecondarySelectKey: String) {
+        self.requestPredicate = requestPredicate
         self.foreignPrimarySelectKey = foreignPrimarySelectKey
         self.foreignSecondarySelectKey = foreignSecondarySelectKey
     }
 
-    public func build() -> LinkLookupRule? {
-        let resultCase = PKCase()
-        resultCase[.primary] = pkCase[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
-        resultCase[.secondary] = pkCase[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
+    public func build() -> RequestPredicateComposition? {
+        let lookupPredicate = RequestPredicate()
+        lookupPredicate[.primary] = requestPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
+        lookupPredicate[.secondary] = requestPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
 
-        return LinkLookupRule(objectIdentifier: nil, pkCase: resultCase)
+        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

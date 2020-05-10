@@ -10,5 +10,5 @@ import Foundation
 
 @objc
 public protocol RequestPredicateComposerProtocol: class {
-    func build() -> PredicateComposition?
+    func build() -> RequestPredicateComposition?
 }

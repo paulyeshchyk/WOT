@@ -79,8 +79,7 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     }
 }
 
-class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
-    var logSenderDescription: String = "WOTTankPivotModel"
+class WOTTankPivotModel: WOTPivotDataModel {
     var appManager: WOTAppManagerProtocol?
 
     convenience init(modelListener: WOTDataModelListener, appManager: WOTAppManagerProtocol?, settingsDatasource: WOTTankListSettingsDatasource) {
@@ -100,6 +99,10 @@ class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
     }
 
     deinit {}
+
+    override var description: String {
+        return String(describing: type(of: self))
+    }
 
     override func loadModel() {
         super.loadModel()

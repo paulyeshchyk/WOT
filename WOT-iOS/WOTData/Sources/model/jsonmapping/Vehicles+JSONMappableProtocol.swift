@@ -12,7 +12,7 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Vehicles {
-    override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
         //
@@ -21,19 +21,19 @@ extension Vehicles {
         // MARK: - DefaultProfile
 
         let defaultProfileJSON = json[#keyPath(Vehicles.default_profile)] as? JSON
-        let builder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
+        let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
         let mapper = Vehicles.DefaultProfileLinker.self
         mappingCoordinator?.linkItem(from: defaultProfileJSON, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: mapper, lookupRuleBuilder: builder)
 
         // MARK: - ModulesTree
 
         let modulesTreeJSON = json[#keyPath(Vehicles.modules_tree)] as? JSON
-        self.modulesTreeMapping(context: context, jSON: modulesTreeJSON, pkCase: pkCase, mappingCoordinator: mappingCoordinator)
+        self.modulesTreeMapping(context: context, jSON: modulesTreeJSON, requestPredicate: requestPredicate, mappingCoordinator: mappingCoordinator)
     }
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -42,13 +42,13 @@ extension Vehicles {
             return
         }
 
-        var parentObjectIDList = pkCase.parentObjectIDList
+        var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(self.objectID)
 
         let vehiclesFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
-        let modulesTreeCase = PKCase(parentObjectIDList: parentObjectIDList)
-        modulesTreeCase[.primary] = pkCase[.primary]?
+        let modulesTreePredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
+        modulesTreePredicate[.primary] = requestPredicate[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
 
@@ -56,21 +56,21 @@ extension Vehicles {
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
-            submoduleMapping(context: context, json: moduleTreeJSON, module_id: module_id, pkCase: modulesTreeCase, masterFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator)
+            submoduleMapping(context: context, json: moduleTreeJSON, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator)
         }
     }
 
-    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, pkCase: PKCase, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
-//        let ruleBuilder = MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder(pkCase: pkCase, linkedClazz: ModulesTree.self, linkedObjectID: module_id)
+    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+//        let ruleBuilder = MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: ModulesTree.self, linkedObjectID: module_id)
 //        let mapperClazz = Vehicles.ModulesTreeLinker.self
 //        mappingCoordinator?.linkItem(from: json, masterFetchResult: masterFetchResult, linkedClazz: ModulesTree.self, mapperClazz: mapperClazz, lookupRuleBuilder: ruleBuilder)
 
-        let submodulesCase = PKCase(parentObjectIDList: pkCase.parentObjectIDList)
-        submodulesCase[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
-        submodulesCase[.secondary] = pkCase[.primary]
+        let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
+        submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
+        submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let mapper = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, pkCase: submodulesCase, mapper: mapper) { _, error in
+        mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, mapper: mapper) { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
             }

@@ -16,35 +16,35 @@ public enum EventMappingType: String {
 public class EventMappingStart: LogEventProtocol {
     public static var type: LogEventType { return .mapping }
     public private(set) var message: String
-    public var name: String { return "MappingStart"}
+    public var name: String { return "MappingStart" }
 
-    public init(fetchResult: FetchResult, pkCase: PKCase, mappingType: EventMappingType) {
-        message = "`\(mappingType)` Mapping \(fetchResult.wotDescription) \(pkCase.wotDescription)"
+    public init(fetchResult: FetchResult, requestPredicate: RequestPredicate, mappingType: EventMappingType) {
+        message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: requestPredicate))"
     }
 
-    required public init?(_ text: String) {
+    public required init?(_ text: String) {
         message = text
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }
 
 public class EventMappingEnded: LogEventProtocol {
     public static var type: LogEventType { return .mapping }
     public private(set) var message: String
-    public var name: String { return "MappingEnded"}
+    public var name: String { return "MappingEnded" }
 
-    public init(fetchResult: FetchResult, pkCase: PKCase, mappingType: EventMappingType) {
-        message = "`\(mappingType)` Mapping \(fetchResult.wotDescription) \(pkCase.wotDescription)"
+    public init(fetchResult: FetchResult, requestPredicate: RequestPredicate, mappingType: EventMappingType) {
+        message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: requestPredicate))"
     }
 
-    required public init?(_ text: String) {
+    public required init?(_ text: String) {
         message = text
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }

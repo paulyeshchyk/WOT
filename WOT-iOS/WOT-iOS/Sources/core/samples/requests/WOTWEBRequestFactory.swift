@@ -25,7 +25,6 @@ public class WOTWEBRequestFactory: NSObject {
 
     @objc
     public static func fetchVehicleTreeData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) throws {
-
         let arguments = WOTRequestArguments()
         arguments.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
         arguments.setValues(Vehicles.classKeypaths(), forKey: WGWebQueryArgs.fields)

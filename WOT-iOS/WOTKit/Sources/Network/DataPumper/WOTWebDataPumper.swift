@@ -22,7 +22,7 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol {
         return request.url?.absoluteString.hashValue ?? 0
     }
 
-    var wotDescription: String {
+    override var description: String {
         return request.url?.absoluteString ?? "-"
     }
 
@@ -49,9 +49,10 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol {
 }
 
 // MARK: - NSURLConnectionDataDelegate
+
 extension WOTWebDataPumper: NSURLConnectionDataDelegate {
     func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
-        self.data = Data()
+        data = Data()
     }
 
     func connection(_ connection: NSURLConnection, didReceive data: Data) {

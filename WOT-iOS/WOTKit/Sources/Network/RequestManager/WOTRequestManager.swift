@@ -21,7 +21,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         super.init()
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -94,11 +94,12 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) throws {
-        let request = try createRequest(forRequestId: requestId, withPredicate: requestPredicate)
+    public func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws {
+        let request = try createRequest(forRequestId: requestId, paradigm: paradigm)
 
-        let arguments = requestPredicate.buildRequestArguments()
-        let groupId = "Nested\(String(describing: requestPredicate.clazz))-\(arguments)"
+        let arguments = paradigm.buildRequestArguments()
+        let linker = paradigm.jsonAdapterLinker
+        let groupId = "Nested\(String(describing: paradigm.clazz))-\(arguments)"
         try startRequest(request, withArguments: arguments, forGroupId: groupId, linker: linker)
     }
 
@@ -106,7 +107,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         grouppedRequests[groupId]?.forEach { $0.cancel(with: error) }
     }
 
-    // MARK: WOTRequestCoordinatorBridgeProtocol-
+    // MARK: WOTRequestCoordinatorBridgeProtocol -
 
     public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
         let result = try coordinator.createRequest(forRequestId: requestId)
@@ -114,42 +115,36 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    private func createRequest(forRequestId requestId: WOTRequestIdType, withPredicate: RequestPredicate) throws -> WOTRequestProtocol {
+    private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
-        request.predicate = withPredicate
+        request.paradigm = paradigm
         return request
-    }
-}
-
-extension WOTRequestManager: LogMessageSender {
-    public var logSenderDescription: String {
-        return String(describing: type(of: self))
     }
 }
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
     public func request(_ request: WOTRequestProtocol, startedWith: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol) {
-        self.logEvent(EventWEBStart(request.wotDescription), sender: self)
+        logEvent(EventWEBStart(request), sender: self)
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            self.logEvent(EventWEBEnd(request.wotDescription), sender: self)
+            self.logEvent(EventWEBEnd(request), sender: self)
             removeRequest(request)
         }
 
         if let error = error {
-            self.logEvent(EventError(error, details: request), sender: self)
+            logEvent(EventError(error, details: String(describing: request)), sender: self)
             return
         }
 
         guard let dataparser = appManager?.responseCoordinator else {
-            self.logEvent(EventError(message: "dataparser not found"), sender: self)
+            logEvent(EventError(message: "dataparser not found"), sender: self)
             return
         }
 
         guard let adapterLinker = grouppedLinkers[request.uuid.uuidString] else {
-            self.logEvent(EventError(message: "linker not found"), sender: self)
+            logEvent(EventError(message: "linker not found"), sender: self)
             return
         }
         do {
@@ -158,12 +153,12 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                                          linker: adapterLinker,
                                          onRequestComplete: onRequestComplete(_:_:error:))
         } catch {
-            self.logEvent(EventError(error, details: request), sender: self)
+            logEvent(EventError(error, details: String(describing: request)), sender: self)
         }
     }
 
     public func request(_ request: WOTRequestProtocol, canceledWith error: Error?) {
-        self.logEvent(EventWEBCancel(request.wotDescription))
+        logEvent(EventWEBCancel(request))
         removeRequest(request)
     }
 
@@ -188,8 +183,18 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 }
 
-extension WOTRequestManager: Describable {
-    public var wotDescription: String {
-        return "WOTRequestManager"
+extension RequestParadigmProtocol {
+    public func buildRequestArguments() -> WOTRequestArguments {
+        let keyPaths = clazz.classKeypaths().compactMap {
+            self.addPreffix(to: $0)
+        }
+
+        let arguments = WOTRequestArguments()
+        #warning("forKey: fields should be refactored")
+        arguments.setValues(keyPaths, forKey: "fields")
+        primaryKeys.forEach {
+            arguments.setValues([$0.value], forKey: $0.nameAlias)
+        }
+        return arguments
     }
 }

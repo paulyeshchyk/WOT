@@ -11,17 +11,17 @@ import Foundation
 public class EventRemoteFetch: LogEventProtocol {
     public static var type: LogEventType { return .remoteFetch }
     public private(set) var message: String
-    public var name: String { return "RemoteFetch"}
+    public var name: String { return "RemoteFetch" }
 
     public init() {
         message = ""
     }
 
-    required public init?(_ text: String) {
+    public required init?(_ text: String) {
         message = text
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }

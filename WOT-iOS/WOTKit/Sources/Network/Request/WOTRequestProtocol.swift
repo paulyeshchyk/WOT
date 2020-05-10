@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol WOTRequestProtocol: WOTStartableProtocol, Describable {
+public protocol WOTRequestProtocol: WOTStartableProtocol {
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
 
@@ -34,5 +34,5 @@ public protocol WOTRequestProtocol: WOTStartableProtocol, Describable {
     var uuid: UUID { get }
 
     @objc
-    var predicate: RequestPredicate? { get set }
+    var paradigm: RequestParadigmProtocol? { get set }
 }

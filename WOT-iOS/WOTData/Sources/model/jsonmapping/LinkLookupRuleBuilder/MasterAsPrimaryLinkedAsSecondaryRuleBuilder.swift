@@ -9,24 +9,27 @@
 import CoreData
 import WOTKit
 
-public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: LinkLookupRuleBuilderProtocol {
+public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
-    private var pkCase: PKCase
-    private var parentObjectIDList: [NSManagedObjectID]?
+    private var requestPredicate: RequestPredicate
+    private var currentObjectID: NSManagedObjectID
 
-    public init(pkCase: PKCase, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, parentObjectIDList: [NSManagedObjectID]?) {
+    public init(requestPredicate: RequestPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, currentObjectID: NSManagedObjectID) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
-        self.pkCase = pkCase
-        self.parentObjectIDList = parentObjectIDList
+        self.requestPredicate = requestPredicate
+        self.currentObjectID = currentObjectID
     }
 
-    public func build() -> LinkLookupRule? {
-        let modulePK = PKCase(parentObjectIDList: parentObjectIDList)
-        modulePK[.primary] = pkCase[.primary]
-        modulePK[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
+    public func build() -> RequestPredicateComposition? {
+        var parentObjectIDList = requestPredicate.parentObjectIDList
+        parentObjectIDList.append(currentObjectID)
 
-        return LinkLookupRule(objectIdentifier: nil, pkCase: modulePK)
+        let lookupPredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
+        lookupPredicate[.primary] = requestPredicate[.primary]
+        lookupPredicate[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
+
+        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

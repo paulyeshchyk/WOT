@@ -15,16 +15,16 @@ public protocol RESTAPIResponseProtocol: Codable {
     var swiftError: Error? { get }
 }
 
-public struct RESTAPIError: WOTError {
-    public var code: Int?
-    public var message: String?
+public struct RESTAPIError: DebuggableError {
+    public var code: Int
+    public var message: String
     public init(code: Int?, message: String?) {
         self.code = code ?? -1
-        self.message = message
+        self.message = message ?? "No message"
     }
 
-    public var wotDescription: String {
-        return "RESTAPIError code: \(code ?? -1); message: \(message ?? "No message")"
+    public var debugDescription: String {
+        return "RESTAPIError code: \(code); message: \(message)"
     }
 
     public init?(json: JSON?) {

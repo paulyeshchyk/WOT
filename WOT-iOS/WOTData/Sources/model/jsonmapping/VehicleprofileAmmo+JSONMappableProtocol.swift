@@ -12,7 +12,7 @@ import CoreData
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmo {
-    public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    public override func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
         //
@@ -22,27 +22,27 @@ extension VehicleprofileAmmo {
         // MARK: - Penetration
         let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any]
         let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
-        let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(pkCase: pkCase, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
+        let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: requestPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         mappingCoordinator?.linkItems(from: penetrationArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, mapperClazz: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder)
 
         // MARK: - Damage
         let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any]
         let damageMapper = VehicleprofileAmmo.DamageLinker.self
-        let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(pkCase: pkCase, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
+        let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: requestPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         mappingCoordinator?.linkItems(from: damageArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, mapperClazz: damageMapper, lookupRuleBuilder: damageRuleBuilder)
     }
 
-    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: WOTPrimaryKey?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: RequestExpression?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
         guard let json = json, let entityDescription = context.entityDescription(forType: VehicleprofileAmmo.self) else {
             fatalError("Entity description not found [\(String(describing: VehicleprofileAmmo.self))]")
             return nil
         }
         self.init(entity: entityDescription, insertInto: context)
 
-        let pkCase = PKCase()
-        pkCase[.primary] = parentPrimaryKey
-        let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: pkCase.compoundPredicate(), fetchStatus: .none)
-        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, mapper: nil) { _, error in
+        let ammoPredicate = RequestPredicate()
+        ammoPredicate[.primary] = parentPrimaryKey
+        let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(.and), fetchStatus: .none)
+        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, mapper: nil) { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
             }

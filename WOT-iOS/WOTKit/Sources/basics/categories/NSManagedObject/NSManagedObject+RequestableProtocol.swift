@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension NSManagedObject: KeypathProtocol {
+extension NSManagedObject: RequestableProtocol {
     @objc
     open class func fieldsKeypaths() -> [String] {
         return []
