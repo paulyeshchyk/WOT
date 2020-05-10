@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol WOTRequestProtocol: WOTStartableProtocol, Describable {
+public protocol WOTRequestProtocol: WOTStartableProtocol {
     @objc
     var hostConfiguration: WOTHostConfigurationProtocol? { get set }
 

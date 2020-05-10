@@ -35,7 +35,7 @@ public protocol LogEventProtocol {
 
 @objc
 public protocol LogInspectorProtocol: class {
-    func logEvent(_ event: LogEventProtocol?, sender: Describable?)
+    func logEvent(_ event: LogEventProtocol?, sender: Any?)
 }
 
 extension LogInspectorProtocol {

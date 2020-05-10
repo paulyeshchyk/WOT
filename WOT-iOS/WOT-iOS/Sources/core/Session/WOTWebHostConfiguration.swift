@@ -31,7 +31,7 @@ public class WOTWebHostConfiguration: NSObject, WOTHostConfigurationProtocol {
         return currentArguments
     }
 
-    public override var debugDescription: String {
+    public override var description: String {
         return "\(host):\(currentArguments)"
     }
 }

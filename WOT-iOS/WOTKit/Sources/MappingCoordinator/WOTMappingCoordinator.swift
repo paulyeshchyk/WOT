@@ -8,14 +8,14 @@
 
 import CoreData
 
-public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
+public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
     public var appManager: WOTAppManagerProtocol?
 
     public var coreDataStore: WOTCoredataStoreProtocol? {
         return appManager?.coreDataStore
     }
 
-    public var wotDescription: String {
+    public var description: String {
         return String(describing: type(of: self))
     }
 
@@ -23,7 +23,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
         //
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -92,7 +92,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
     }
 
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion) {
-        logEvent(EventLocalFetch("\(String(describing: clazz)) - \(requestPredicate.wotDescription)"), sender: self)
+        logEvent(EventLocalFetch("\(String(describing: clazz)) - \(String(describing: requestPredicate))"), sender: self)
 
         guard let predicate = requestPredicate.compoundPredicate(.and) else {
             let error = WOTMappingCoordinatorError.noKeysDefinedForClass(String(describing: clazz))

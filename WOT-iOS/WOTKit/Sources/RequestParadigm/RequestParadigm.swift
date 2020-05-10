@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol RequestParadigmProtocol: Describable {
+public protocol RequestParadigmProtocol {
     var clazz: AnyClass { get set }
     var jsonAdapterLinker: JSONAdapterLinkerProtocol { get }
     var keypathPrefix: String? { get }
@@ -33,8 +33,6 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         return requestPredicate()?.expressions()?.compactMap { $0 } ?? []
     }
 
-    public var wotDescription: String { return debugDescription }
-
     public func addPreffix(to: String) -> String {
         guard let preffix = keypathPrefix else {
             return to
@@ -53,7 +51,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         return requestPredicateComposer?.build()?.requestPredicate
     }
 
-    override public var debugDescription: String {
+    override public var description: String {
         var result: String = "RequestArguments: \(String(describing: clazz))"
         primaryKeys.forEach {
             result += " key:\($0)"

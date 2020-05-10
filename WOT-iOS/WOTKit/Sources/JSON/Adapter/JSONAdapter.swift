@@ -12,7 +12,7 @@ public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
-    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -21,42 +21,50 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     }
 
     // MARK: DataAdapterProtocol -
+
     public var appManager: WOTAppManagerProtocol?
     public let uuid: UUID = UUID()
 
     // MARK: JSONAdapterProtocol -
+
     public var onJSONDidParse: OnRequestComplete?
     public var linker: JSONAdapterLinkerProtocol
 
     // MARK: NSObject -
+
     override public var hash: Int {
         return uuid.uuidString.hashValue
     }
 
-    required public init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol) {
+    override public var description: String {
+        return "JSONAdapter:\(String(describing: type(of: request)))"
+    }
+
+    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol) {
         self.modelClazz = clazz
         self.request = request
         self.appManager = appManager
         self.linker = linker
 
         super.init()
-        self.logEvent(EventObjectNew(request.wotDescription), sender: self)
+        logEvent(EventObjectNew(request), sender: self)
     }
 
     deinit {
-        self.logEvent(EventObjectFree(request.wotDescription), sender: self)
+        self.logEvent(EventObjectFree(request), sender: self)
     }
 
     // MARK: JSONAdapterProtocol -
+
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
-            self.logEvent(EventError(error, details: request), sender: self)
+            logEvent(EventError(error, details: request), sender: self)
             onJSONDidParse?(fromRequest, self, error)
             return
         }
 
         let jsonStartParsingDate = Date()
-        self.logEvent(EventJSONStart(fromRequest.paradigm?.wotDescription ?? "``"), sender: self)
+        logEvent(EventJSONStart(fromRequest), sender: self)
 
         var fakeIncrement: Int = json.keys.count
         json.keys.forEach { key in
@@ -76,7 +84,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
                     }
                     fakeIncrement -= 1
                     if fakeIncrement == 0 {
-                        self.logEvent(EventJSONEnded(fromRequest.paradigm?.wotDescription ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
+                        self.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
                         self.onJSONDidParse?(fromRequest, self, error)
                     }
                 }
@@ -87,6 +95,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
 
     // MARK: Private -
+
     private let METAClass: Codable.Type = RESTAPIResponse.self
     private var mappingCoordinator: WOTMappingCoordinatorProtocol? { return appManager?.mappingCoordinator }
     private var coreDataStore: WOTCoredataStoreProtocol? { return appManager?.coreDataStore }
@@ -95,6 +104,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 }
 
 // MARK: - Hash
+
 func == (lhs: JSONAdapter, rhs: JSONAdapter) -> Bool {
     return lhs.uuid == rhs.uuid
 }
@@ -119,20 +129,20 @@ extension DataAdapterProtocol {
             } else {
                 didReceiveJSON(result.data, fromRequest: request, nil)
             }
-        } catch let error {
+        } catch {
             didReceiveJSON(nil, fromRequest: request, error)
         }
     }
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate,  callback: @escaping FetchResultErrorCompletion) {
+    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion) {
         guard Thread.current.isMainThread else {
             fatalError("thread is not main")
         }
 
-        guard let managedObjectClass = self.modelClazz as? NSManagedObject.Type else {
-            fatalError("modelClazz: \(self.modelClazz) is not NSManagedObject.Type")
+        guard let managedObjectClass = modelClazz as? NSManagedObject.Type else {
+            fatalError("modelClazz: \(modelClazz) is not NSManagedObject.Type")
         }
 
         guard let MAINCONTEXT = coreDataStore?.workingContext() else {
@@ -147,12 +157,12 @@ extension JSONAdapter {
             }
 
             let jsonStartParsingDate = Date()
-            self.logEvent(EventJSONStart(requestPredicate.wotDescription), sender: self)
+            self.logEvent(EventJSONStart(requestPredicate), sender: self)
             self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
                 if let error = error {
                     self.logEvent(EventError(error, details: nil), sender: self)
                 }
-                self.logEvent(EventJSONEnded("\(requestPredicate)", initiatedIn: jsonStartParsingDate), sender: self)
+                self.logEvent(EventJSONEnded("\(String(describing: requestPredicate))", initiatedIn: jsonStartParsingDate), sender: self)
                 callback(fetchResult, nil)
             }
         })
@@ -173,7 +183,7 @@ extension JSONAdapterLinkerProtocol {
         let extractedJSON = onJSONExtraction(json: json)
 
         let ident: Any
-        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: self.linkerPrimaryKeyType) {
+        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType) {
             ident = extractedJSON[primaryKeyPath] ?? key
         } else {
             ident = key
@@ -181,15 +191,8 @@ extension JSONAdapterLinkerProtocol {
 
         let parents = fromRequest.paradigm?.requestPredicate()?.parentObjectIDList
         let requestPredicate = RequestPredicate(parentObjectIDList: parents)
-        requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: self.linkerPrimaryKeyType)
+        requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
 
         return JSONExtraction(requestPredicate: requestPredicate, json: extractedJSON)
-    }
-}
-
-// MARK: - LogMessageSender
-extension JSONAdapter: Describable {
-    public var wotDescription: String {
-        return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 }

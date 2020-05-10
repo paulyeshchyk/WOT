@@ -33,8 +33,15 @@ public class RequestPredicate: NSObject {
         }
     }
 
-    override public var debugDescription: String {
-        return wotDescription
+    override public var description: String {
+        guard let objects = expressions(), !objects.isEmpty else {
+            return "empty case"
+        }
+        var result = [String]()
+        objects.forEach {
+            result.append("key:`\($0.description)`")
+        }
+        return result.joined(separator: ";")
     }
 
     private var _expressions: [RequestExpressionType: Set<RequestExpression>] = .init()
@@ -75,18 +82,5 @@ public class RequestPredicate: NSObject {
         case .and: return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         case .or: return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         }
-    }
-}
-
-extension RequestPredicate: Describable {
-    public var wotDescription: String {
-        guard let objects = expressions(), !objects.isEmpty else {
-            return "empty case"
-        }
-        var result = [String]()
-        objects.forEach {
-            result.append("key:`\($0.description)`")
-        }
-        return result.joined(separator: ";")
     }
 }

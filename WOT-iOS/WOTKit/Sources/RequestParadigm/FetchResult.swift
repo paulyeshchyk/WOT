@@ -25,7 +25,7 @@ public enum FetchStatus: Int {
 }
 
 @objc
-public class FetchResult: NSObject, NSCopying, Describable {
+public class FetchResult: NSObject, NSCopying {
     public var context: NSManagedObjectContext
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
@@ -36,7 +36,7 @@ public class FetchResult: NSObject, NSCopying, Describable {
         fatalError("")
     }
 
-    public var wotDescription: String {
+    override public var description: String {
         return "Context: \(context.name ?? ""); \(managedObject().entity.name ?? "<unknown>")"
     }
 
@@ -55,12 +55,12 @@ public class FetchResult: NSObject, NSCopying, Describable {
 
     public func dublicate() -> FetchResult {
         // swiftlint:disable force_cast
-        return self.copy() as! FetchResult
+        return copy() as! FetchResult
         // swiftlint:enable force_cast
     }
 
     public func managedObject() -> NSManagedObject {
-        return managedObject(inContext: self.context)
+        return managedObject(inContext: context)
     }
 
     public func managedObject(inContext: NSManagedObjectContext) -> NSManagedObject {
@@ -72,7 +72,7 @@ public class FetchResult: NSObject, NSCopying, Describable {
 }
 
 public class EmptyFetchResult: FetchResult {
-    public convenience required init() {
+    public required convenience init() {
         let cntx = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         let objectID = NSManagedObjectID()
         self.init(context: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)

@@ -21,7 +21,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         super.init()
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -122,35 +122,29 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 }
 
-extension WOTRequestManager: Describable {
-    public var wotDescription: String {
-        return String(describing: type(of: self))
-    }
-}
-
 extension WOTRequestManager: WOTRequestListenerProtocol {
     public func request(_ request: WOTRequestProtocol, startedWith: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol) {
-        self.logEvent(EventWEBStart(request.wotDescription), sender: self)
+        logEvent(EventWEBStart(request), sender: self)
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            self.logEvent(EventWEBEnd(request.wotDescription), sender: self)
+            self.logEvent(EventWEBEnd(request), sender: self)
             removeRequest(request)
         }
 
         if let error = error {
-            self.logEvent(EventError(error, details: request), sender: self)
+            logEvent(EventError(error, details: String(describing: request)), sender: self)
             return
         }
 
         guard let dataparser = appManager?.responseCoordinator else {
-            self.logEvent(EventError(message: "dataparser not found"), sender: self)
+            logEvent(EventError(message: "dataparser not found"), sender: self)
             return
         }
 
         guard let adapterLinker = grouppedLinkers[request.uuid.uuidString] else {
-            self.logEvent(EventError(message: "linker not found"), sender: self)
+            logEvent(EventError(message: "linker not found"), sender: self)
             return
         }
         do {
@@ -159,12 +153,12 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                                          linker: adapterLinker,
                                          onRequestComplete: onRequestComplete(_:_:error:))
         } catch {
-            self.logEvent(EventError(error, details: request), sender: self)
+            logEvent(EventError(error, details: String(describing: request)), sender: self)
         }
     }
 
     public func request(_ request: WOTRequestProtocol, canceledWith error: Error?) {
-        self.logEvent(EventWEBCancel(request.wotDescription))
+        logEvent(EventWEBCancel(request))
         removeRequest(request)
     }
 
@@ -191,14 +185,14 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
 extension RequestParadigmProtocol {
     public func buildRequestArguments() -> WOTRequestArguments {
-        let keyPaths = self.clazz.classKeypaths().compactMap {
+        let keyPaths = clazz.classKeypaths().compactMap {
             self.addPreffix(to: $0)
         }
 
         let arguments = WOTRequestArguments()
         #warning("forKey: fields should be refactored")
         arguments.setValues(keyPaths, forKey: "fields")
-        self.primaryKeys.forEach {
+        primaryKeys.forEach {
             arguments.setValues([$0.value], forKey: $0.nameAlias)
         }
         return arguments

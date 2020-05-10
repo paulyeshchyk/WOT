@@ -22,12 +22,8 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol {
         return request.url?.absoluteString.hashValue ?? 0
     }
 
-    override var debugDescription: String {
+    override var description: String {
         return request.url?.absoluteString ?? "-"
-    }
-
-    var wotDescription: String {
-        return debugDescription
     }
 
     convenience init(hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: @escaping DataReceiveCompletion) {

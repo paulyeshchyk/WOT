@@ -21,7 +21,7 @@ public class EventError: LogEventProtocol {
         message = text
     }
 
-    convenience public init?(_ error: Error?, details: Describable?) {
+    convenience public init?(_ error: Error?, details: Any?) {
         var messages: [String] = .init()
         if let error = error {
             messages.append(String(describing: error))
@@ -30,9 +30,8 @@ public class EventError: LogEventProtocol {
         }
 
         if let details = details {
-            if details.wotDescription.count > 0 {
-                messages.append(details.wotDescription)
-            }
+            let txt = String(describing: details)
+            messages.append(txt)
         }
 
         self.init(message: messages.joined(separator: "; details: "))

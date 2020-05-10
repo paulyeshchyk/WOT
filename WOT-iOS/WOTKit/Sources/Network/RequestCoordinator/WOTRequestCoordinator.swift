@@ -18,7 +18,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         //
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -27,6 +27,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     // MARK: - WOTRequestCoordinatorProtocol
+
     public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
         guard
             let Clazz = request(for: requestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self),
@@ -36,27 +37,25 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return result
     }
 
-    public func requestIds(forClass: AnyClass) -> [WOTRequestIdType]? {
-        let result =  registeredRequests.keys.filter { key in
-            if let requestClass = registeredRequests[key] {
-                if let requestModelClass = requestClass.modelClass() {
-                    return forClass == requestModelClass
-                }
-            }
-            return false
+    public func requestIds(forClass: AnyClass) -> [WOTRequestIdType] {
+        let result = registeredRequests.keys.filter {
+            forClass == registeredRequests[$0]?.modelClass()
         }
         return result
     }
 
-    public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]? {
+    public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType] {
         guard let modelClass = modelClass(for: request) else {
-            self.logEvent(EventError(message: "model class not found for request\(request.wotDescription)"), sender: self)
-            return nil
+            let eventError = EventError(message: "model class not found for request\(type(of: request))")
+            logEvent(eventError, sender: self)
+            return []
         }
 
-        guard let result = requestIds(forClass: modelClass), result.count > 0 else {
-            self.logEvent(EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))"), sender: self)
-            return nil
+        let result = requestIds(forClass: modelClass)
+        guard result.count > 0 else {
+            let eventError = EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))")
+            logEvent(eventError, sender: self)
+            return []
         }
         return result
     }
@@ -111,12 +110,6 @@ extension WOTRequestCoordinator: WOTRequestModelBindingProtocol {
         }
 
         return requestClass.modelClass()
-    }
-}
-
-extension WOTRequestCoordinator: Describable {
-    public var wotDescription: String {
-        return String(describing: type(of: self))
     }
 }
 

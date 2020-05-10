@@ -17,8 +17,8 @@ public class EventObjectNew: LogEventProtocol {
         message = ""
     }
 
-    required public init?(_ text: String) {
-        message = text
+    required public init?(_ debugDescriptable: Any) {
+        message = String(describing: debugDescriptable)
     }
 
     public init?(error: Error) {
@@ -35,7 +35,7 @@ public class EventObjectFree: LogEventProtocol {
         message = ""
     }
 
-    required public init?(_ text: String) {
-        message = text
+    required public init?(_ debugDescriptable: Any) {
+        message = String(describing: debugDescriptable)
     }
 }

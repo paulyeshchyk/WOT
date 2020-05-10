@@ -25,7 +25,7 @@ public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateCompos
     public func build() -> RequestPredicateComposition? {
         var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(currentObjectID)
-        
+
         let lookupPredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
         lookupPredicate[.primary] = requestPredicate[.primary]
         lookupPredicate[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)

@@ -11,7 +11,7 @@ import Foundation
 public class EventThreadCustomRun: LogEventProtocol {
     public static var type: LogEventType { return .threads }
     public private(set) var message: String
-    public var name: String { return "THREADCustom"}
+    public var name: String { return "THREADCustom" }
 
     public init() {
         message = ""
@@ -31,7 +31,7 @@ public class EventThreadCustomRun: LogEventProtocol {
 public class EventThreadMainRun: LogEventProtocol {
     public static var type: LogEventType { return .threads }
     public private(set) var message: String
-    public var name: String { return "THREAD"}
+    public var name: String { return "THREAD" }
 
     private static var threadMessage: String {
         let thread = Thread.current
@@ -46,8 +46,8 @@ public class EventThreadMainRun: LogEventProtocol {
         message = EventThreadMainRun.threadMessage
     }
 
-    public convenience init?(details: Describable) {
+    public convenience init?(details: Any) {
         self.init()
-        message += "; details: \(details.wotDescription)"
+        message += "; details: \(String(describing: details))"
     }
 }

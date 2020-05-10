@@ -10,7 +10,7 @@ import Foundation
 
 public typealias DataReceiveCompletion = (Data?, Error?) -> Void
 
-public protocol WOTWebDataPumperProtocol: Describable {
+public protocol WOTWebDataPumperProtocol {
     var completion: DataReceiveCompletion { get }
 
     init(request: URLRequest, completion: @escaping DataReceiveCompletion)

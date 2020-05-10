@@ -56,9 +56,3 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
         //throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }
-
-extension BaseJSONAdapterLinker: Describable {
-    public var wotDescription: String {
-        return String(describing: self)
-    }
-}

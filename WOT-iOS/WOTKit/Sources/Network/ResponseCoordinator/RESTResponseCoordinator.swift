@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, Describable {
+public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
     private struct DataAdaptationPair {
         let dataAdapter: DataAdapterProtocol
         let data: Data?
@@ -22,7 +22,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, Describabl
         requestCoordinator = rc
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -35,7 +35,8 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, Describabl
             throw RequestCoordinatorError.dataIsEmpty
         }
 
-        guard let requestIds = requestCoordinator.requestIds(forRequest: request), requestIds.count > 0 else {
+        let requestIds = requestCoordinator.requestIds(forRequest: request)
+        guard requestIds.count > 0 else {
             onRequestComplete(request, self, nil)
             return
         }
@@ -59,7 +60,4 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, Describabl
             pair.dataAdapter.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
         }
     }
-
-    // MARK: LogMessageSender-
-    public var wotDescription: String = "WOTRequestDataParser"
 }

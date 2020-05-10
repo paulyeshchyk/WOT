@@ -10,7 +10,9 @@ import Foundation
 
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol {
-    public var wotDescription: String { return description }
+    override public var description: String {
+        return String(describing: type(of: self))
+    }
 
     public let uuid: UUID = UUID()
 
@@ -45,7 +47,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
     @objc
     open func removeListener(_ listener: WOTRequestListenerProtocol) {
         if let index = listeners.firstIndex(where: { (obj) -> Bool in
-            return (obj.hash == listener.hash)
+            obj.hash == listener.hash
         }) {
             listeners.remove(at: index)
         }

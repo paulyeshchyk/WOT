@@ -21,14 +21,14 @@ public class EventWarning: LogEventProtocol {
         message = text
     }
 
-    convenience public init?(message: String, details: Describable?) {
+    convenience public init?(message: String, details: CustomDebugStringConvertible?) {
         var messages: [String] = .init()
 
         messages.append(message)
 
         if let details = details {
-            if details.wotDescription.count > 0 {
-                messages.append(details.wotDescription)
+            if details.debugDescription.count > 0 {
+                messages.append(details.debugDescription)
             }
         }
 
