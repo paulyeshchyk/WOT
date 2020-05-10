@@ -41,7 +41,6 @@ extension Module {
             let chassisRequestParadigm = RequestParadigm(clazz: VehicleprofileSuspension.self, adapter: chassisJSONAdapter, requestPredicateComposer: chassisRequestComposer, keypathPrefix: "suspension.")
             mappingCoordinator?.fetchRemote(paradigm: chassisRequestParadigm)
         case .vehicleGun:
-            #warning("has errors")
             let gunJSONAdapter = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let gunRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileGun.self, linkedObjectID: module_id)
             let gunRequestParadigm = RequestParadigm(clazz: VehicleprofileGun.self, adapter: gunJSONAdapter, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.")
