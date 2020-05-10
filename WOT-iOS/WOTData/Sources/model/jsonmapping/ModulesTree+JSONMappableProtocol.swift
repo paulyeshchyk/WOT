@@ -25,29 +25,36 @@ extension ModulesTree {
 
         let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
-        // MARK: - CurrentModule
-
-        let ruleBuilder = LinkedRemoteAsPrimaryRuleBuilder(parentObjectIDList: parentObjectIDList, linkedClazz: Module.self, linkedObjectID: module_id)
-        let currentModuleHelper = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: currentModuleHelper)
-
-        // MARK: - NextModules
-
-        let nextModulesHelper = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
-        nextModules?.forEach {
-            let ruleBuilder = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
-            mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextModulesHelper)
-        }
-
         // MARK: - NextTanks
-        let nextTanksHelper = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
+
+        let nextTanksJSONAdapter = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let nextTanks = json[#keyPath(ModulesTree.next_tanks)]
         (nextTanks as? [AnyObject])?.forEach {
             // parents was not used for next portion of tanks
-            let ruleBuilder = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
-            mappingCoordinator?.linkRemote(modelClazz: Vehicles.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextTanksHelper)
+            let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
+            let nextTanksRequestPredicate = nextTanksRequestPredicateComposer.build()?.requestPredicate
+            let nextTanksRequestParadigm = RequestParadigm(clazz: Vehicles.self, requestPredicate: nextTanksRequestPredicate, keypathPrefix: nil)
+            mappingCoordinator?.fetchRemote(paradigm: nextTanksRequestParadigm, linker: nextTanksJSONAdapter)
         }
+
+        // MARK: - NextModules
+
+        let nextModuleJSONAdapter = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
+        let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
+        nextModules?.forEach {
+            let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
+            let nextModuleRequestPredicate = nextModuleRequestPredicateComposer.build()?.requestPredicate
+            let nextModuleRequestParadigm = RequestParadigm(clazz: Module.self, requestPredicate: nextModuleRequestPredicate, keypathPrefix: nil)
+            mappingCoordinator?.fetchRemote(paradigm: nextModuleRequestParadigm, linker: nextModuleJSONAdapter)
+        }
+
+        // MARK: - CurrentModule
+
+        let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(parentObjectIDList: parentObjectIDList, linkedClazz: Module.self, linkedObjectID: module_id)
+        let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
+        let moduleRequestPredicate = moduleRequestPredicateComposer.build()?.requestPredicate
+        let moduleRequestParadigm = RequestParadigm(clazz: Module.self, requestPredicate: moduleRequestPredicate, keypathPrefix: nil)
+        mappingCoordinator?.fetchRemote(paradigm: moduleRequestParadigm, linker: moduleJSONAdapter)
     }
 }
 

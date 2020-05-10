@@ -30,7 +30,7 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
 
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion)
 
-    func fetchRemote(modelClazz modelClass: AnyClass, masterFetchResult: FetchResult, requestPredicate: RequestPredicate, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol)
+    func fetchRemote(paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol)
 
     func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, requestPredicate: RequestPredicate, mapper: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
 
@@ -40,7 +40,7 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
 
     func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol)
 
-    func linkRemote(modelClazz modelClass: AnyClass, masterFetchResult: FetchResult, lookupRuleBuilder: RequestPredicateComposerProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol)
+    func l1nkRemote(modelClazz modelClass: AnyClass, lookupRuleBuilder: RequestPredicateComposerProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol)
 }
 
 extension WOTMappingCoordinatorProtocol {

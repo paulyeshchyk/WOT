@@ -56,7 +56,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         }
 
         let jsonStartParsingDate = Date()
-        self.logEvent(EventJSONStart(fromRequest.predicate?.wotDescription ?? "``"), sender: self)
+        self.logEvent(EventJSONStart(fromRequest.paradigm?.wotDescription ?? "``"), sender: self)
 
         var fakeIncrement: Int = json.keys.count
         json.keys.forEach { key in
@@ -76,7 +76,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
                     }
                     fakeIncrement -= 1
                     if fakeIncrement == 0 {
-                        self.logEvent(EventJSONEnded(fromRequest.predicate?.wotDescription ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
+                        self.logEvent(EventJSONEnded(fromRequest.paradigm?.wotDescription ?? "``", initiatedIn: jsonStartParsingDate), sender: self)
                         self.onJSONDidParse?(fromRequest, self, error)
                     }
                 }
@@ -179,7 +179,7 @@ extension JSONAdapterLinkerProtocol {
             ident = key
         }
 
-        let parents = fromRequest.predicate?.requestPredicate?.parentObjectIDList
+        let parents = fromRequest.paradigm?.requestPredicate?.parentObjectIDList
         let requestPredicate = RequestPredicate(parentObjectIDList: parents)
         requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: self.linkerPrimaryKeyType)
 

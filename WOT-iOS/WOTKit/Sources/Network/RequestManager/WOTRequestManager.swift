@@ -95,7 +95,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     public func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol) throws {
-        let request = try createRequest(forRequestId: requestId, withPredicate: paradigm)
+        let request = try createRequest(forRequestId: requestId, paradigm: paradigm)
 
         let arguments = paradigm.buildRequestArguments()
         let groupId = "Nested\(String(describing: paradigm.clazz))-\(arguments)"
@@ -114,9 +114,9 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    private func createRequest(forRequestId requestId: WOTRequestIdType, withPredicate: RequestParadigm) throws -> WOTRequestProtocol {
+    private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: RequestParadigm) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
-        request.predicate = withPredicate
+        request.paradigm = paradigm
         return request
     }
 }

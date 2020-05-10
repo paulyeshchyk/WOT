@@ -113,25 +113,15 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
         }
     }
 
-    public func fetchRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, requestPredicate: RequestPredicate, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
-        self.logEvent(EventRemoteFetch("\(String(describing: modelClazz)) - \(requestPredicate.wotDescription)"), sender: self)
-
-        var predicates = [RequestParadigm]()
-        predicates.append(RequestParadigm(clazz: modelClazz, requestPredicate: requestPredicate, keypathPrefix: keypathPrefix))
-
-        predicates.forEach { predicate in
-            fetchRemote(paradigm: predicate, linker: mapper)
-        }
-    }
-
-    private func fetchRemote(paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol) {
-        guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: paradigm.clazz) else {
+    public func fetchRemote(paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol) {
+        let requestManager = appManager?.requestManager
+        guard let requestIDs = requestManager?.coordinator.requestIds(forClass: paradigm.clazz) else {
             self.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
             return
         }
         requestIDs.forEach {
             do {
-                try appManager?.requestManager?.startRequest(by: $0, paradigm: paradigm, linker: linker)
+                try requestManager?.startRequest(by: $0, paradigm: paradigm, linker: linker)
             } catch {
                 self.logEvent(EventError(error, details: nil), sender: self)
             }
@@ -175,11 +165,13 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
         })
     }
 
-    public func linkRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, lookupRuleBuilder: RequestPredicateComposerProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
+    public func l1nkRemote(modelClazz: AnyClass, lookupRuleBuilder: RequestPredicateComposerProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
         guard let lookupRule =  lookupRuleBuilder.build() else {
             logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
-        fetchRemote(modelClazz: modelClazz, masterFetchResult: masterFetchResult, requestPredicate: lookupRule.requestPredicate, keypathPrefix: keypathPrefix, mapper: mapper)
+
+        let requestParadigm = RequestParadigm(clazz: modelClazz, requestPredicate: lookupRule.requestPredicate, keypathPrefix: keypathPrefix)
+        fetchRemote(paradigm: requestParadigm, linker: mapper)
     }
 }
