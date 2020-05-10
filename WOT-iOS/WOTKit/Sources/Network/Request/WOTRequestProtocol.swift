@@ -10,29 +10,21 @@ import Foundation
 
 @objc
 public protocol WOTRequestProtocol: WOTStartableProtocol {
-    @objc
-    var hostConfiguration: WOTHostConfigurationProtocol? { get set }
-
-    @objc
-    var listeners: [WOTRequestListenerProtocol] { get }
-
-    @objc
-    func addListener(_ listener: WOTRequestListenerProtocol)
-
-    @objc
-    func removeListener(_ listener: WOTRequestListenerProtocol)
-
-    @objc
-    var availableInGroups: [String] { get }
-
-    @objc
-    func addGroup(_ group: WOTRequestIdType)
-
-    @objc
-    func removeGroup(_ group: String)
-
     var uuid: UUID { get }
 
-    @objc
+    var availableInGroups: [String] { get }
+
+    var hostConfiguration: WOTHostConfigurationProtocol? { get set }
+
+    var listeners: [WOTRequestListenerProtocol] { get }
+
     var paradigm: RequestParadigmProtocol? { get set }
+
+    func addGroup(_ group: WOTRequestIdType)
+
+    func addListener(_ listener: WOTRequestListenerProtocol)
+
+    func removeGroup(_ group: String)
+
+    func removeListener(_ listener: WOTRequestListenerProtocol)
 }

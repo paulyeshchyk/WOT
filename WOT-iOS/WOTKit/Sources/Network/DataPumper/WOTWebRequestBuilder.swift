@@ -31,7 +31,7 @@ class WOTWebRequestBuilder {
         var result = URLRequest(url: url)
         result.httpBody = bodyData
         result.timeoutInterval = 0
-        result.httpMethod = service.method
+        result.httpMethod = service.method.stringRepresentation
         return result
     }
 }

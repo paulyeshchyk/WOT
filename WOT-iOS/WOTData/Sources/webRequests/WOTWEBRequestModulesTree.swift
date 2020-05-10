@@ -10,13 +10,12 @@ import WOTKit
 
 @objc
 public class WOTWEBRequestModulesTree: WOTWEBRequest {
+    override public var method: HTTPMethods { return .POST }
+
     override public var path: String {
         return "/wot/encyclopedia/vehicles/"
     }
 
-    override public var method: String {
-        return "POST"
-    }
 }
 
 extension WOTWEBRequestModulesTree: WOTModelServiceProtocol {

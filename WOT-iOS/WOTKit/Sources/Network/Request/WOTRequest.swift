@@ -14,52 +14,45 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
         return String(describing: type(of: self))
     }
 
-    public let uuid: UUID = UUID()
-
-    @objc
-    public var hostConfiguration: WOTHostConfigurationProtocol?
-
-    @objc
-    public var availableInGroups = [WOTRequestIdType]()
-
-    @objc
-    public var listeners = [WOTRequestListenerProtocol]()
-
-    public var paradigm: RequestParadigmProtocol?
+    override open var hash: Int {
+        return uuid.hashValue
+    }
 
     private var groups = [WOTRequestIdType]()
-
-    @objc
-    open func addGroup(_ group: WOTRequestIdType) {
-        groups.append(group)
-    }
-
-    @objc
-    open func removeGroup(_ group: WOTRequestIdType) {
-        groups.removeAll(where: { group.compare($0) == .orderedSame })
-    }
-
-    @objc
-    open func addListener(_ listener: WOTRequestListenerProtocol) {
-        listeners.append(listener)
-    }
-
-    @objc
-    open func removeListener(_ listener: WOTRequestListenerProtocol) {
-        if let index = listeners.firstIndex(where: { (obj) -> Bool in
-            obj.hash == listener.hash
-        }) {
-            listeners.remove(at: index)
-        }
-    }
-
-    override open var hash: Int {
-        return NSStringFromClass(type(of: self)).hash
-    }
 
     open func cancel(with error: Error?) {}
 
     open func start(withArguments: WOTRequestArgumentsProtocol) throws {
         throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
+    }
+
+    // MARK: - WOTRequestProtocol
+
+    public let uuid: UUID = UUID()
+
+    public var availableInGroups = [WOTRequestIdType]()
+
+    public var hostConfiguration: WOTHostConfigurationProtocol?
+
+    public var listeners = [WOTRequestListenerProtocol]()
+
+    public var paradigm: RequestParadigmProtocol?
+
+    open func addGroup(_ group: WOTRequestIdType) {
+        groups.append(group)
+    }
+
+    open func addListener(_ listener: WOTRequestListenerProtocol) {
+        listeners.append(listener)
+    }
+
+    open func removeGroup(_ group: WOTRequestIdType) {
+        groups.removeAll(where: { group.compare($0) == .orderedSame })
+    }
+
+    open func removeListener(_ listener: WOTRequestListenerProtocol) {
+        if let index = listeners.firstIndex(where: { $0.hash == listener.hash }) {
+            listeners.remove(at: index)
+        }
     }
 }

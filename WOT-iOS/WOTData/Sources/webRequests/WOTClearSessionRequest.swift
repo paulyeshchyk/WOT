@@ -10,6 +10,8 @@ import WOTKit
 
 @objc
 public class WOTClearSessionRequest: WOTWEBRequest, WOTModelServiceProtocol {
+    override public var method: HTTPMethods { return .POST }
+
     public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return nil
     }
@@ -17,8 +19,6 @@ public class WOTClearSessionRequest: WOTWEBRequest, WOTModelServiceProtocol {
     public func instanceModelClass() -> AnyClass? {
         return nil
     }
-
-    override public var method: String { return "POST" }
 
     @objc
     public class func modelClassName() -> String {

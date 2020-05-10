@@ -10,7 +10,7 @@ import WOTKit
 
 @objc
 public class WOTWEBRequestTankVehicles: WOTWEBRequest {
-    override public var method: String { return "POST" }
+    override public var method: HTTPMethods { return .POST }
 
     override public var path: String {
         return "/wot/encyclopedia/vehicles/"
