@@ -22,41 +22,36 @@ extension VehicleprofileModule {
         if let gun_id = self.gun_id {
             let gunJSONAdapter = VehicleprofileModule.GunJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: gun_id)
             let gunRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: VehicleprofileGun.self, linkedObjectID: gun_id)
-            let gunRequestPredicate = gunRequestComposer.build()?.requestPredicate
-            let gunRequestParadigm = RequestParadigm(clazz: VehicleprofileGun.self, requestPredicate: gunRequestPredicate, keypathPrefix: "gun.")
-            mappingCoordinator?.fetchRemote(paradigm: gunRequestParadigm, linker: gunJSONAdapter)
+            let gunRequestParadigm = RequestParadigm(clazz: VehicleprofileGun.self, adapter: gunJSONAdapter, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.")
+            mappingCoordinator?.fetchRemote(paradigm: gunRequestParadigm)
         }
 
         if let radio_id = self.radio_id {
             let radioJSONAdapter = VehicleprofileModule.RadioJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: radio_id)
             let radioRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: VehicleprofileRadio.self, linkedObjectID: radio_id)
-            let radioRequestPredicate = radioRequestComposer.build()?.requestPredicate
-            let radioRequestParadigm = RequestParadigm(clazz: VehicleprofileRadio.self, requestPredicate: radioRequestPredicate, keypathPrefix: "radio.")
-            mappingCoordinator?.fetchRemote(paradigm: radioRequestParadigm, linker: radioJSONAdapter)
+            let radioRequestParadigm = RequestParadigm(clazz: VehicleprofileRadio.self, adapter: radioJSONAdapter, requestPredicateComposer: radioRequestComposer, keypathPrefix: "radio.")
+            mappingCoordinator?.fetchRemote(paradigm: radioRequestParadigm)
         }
 
         if let engine_id = self.engine_id {
             let engineJSONAdapter = VehicleprofileModule.EngineJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: engine_id)
             let engineRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: VehicleprofileEngine.self, linkedObjectID: engine_id)
-            let engineRequestPredicate = engineRequestComposer.build()?.requestPredicate
-            let engineReqestParadigm = RequestParadigm(clazz: VehicleprofileEngine.self, requestPredicate: engineRequestPredicate, keypathPrefix: "engine.")
-            mappingCoordinator?.fetchRemote(paradigm: engineReqestParadigm, linker: engineJSONAdapter)
+            let engineRequstParadigm = RequestParadigm(clazz: VehicleprofileEngine.self, adapter: engineJSONAdapter, requestPredicateComposer: engineRequestComposer, keypathPrefix: "engine.")
+            mappingCoordinator?.fetchRemote(paradigm: engineRequstParadigm)
         }
 
         if let suspension_id = self.suspension_id {
             let suspensionJSONAdapter = VehicleprofileModule.SuspensionJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: suspension_id)
             let suspensionRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: suspension_id)
-            let suspensionRequestPredicate = suspensionRequestComposer.build()?.requestPredicate
-            let suspensionRequestParadigm = RequestParadigm(clazz: VehicleprofileSuspension.self, requestPredicate: suspensionRequestPredicate, keypathPrefix: "suspension.")
-            mappingCoordinator?.fetchRemote(paradigm: suspensionRequestParadigm, linker: suspensionJSONAdapter)
+            let suspensionRequestParadigm = RequestParadigm(clazz: VehicleprofileSuspension.self, adapter: suspensionJSONAdapter, requestPredicateComposer: suspensionRequestComposer, keypathPrefix: "suspension.")
+            mappingCoordinator?.fetchRemote(paradigm: suspensionRequestParadigm)
         }
 
         if let turret_id = self.turret_id {
             let turretJSONAdapter = VehicleprofileModule.TurretJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: turret_id)
             let turretRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: VehicleprofileTurret.self, linkedObjectID: turret_id)
-            let turretRequestPredicate = turretRequestComposer.build()?.requestPredicate
-            let turretRequestParadigm = RequestParadigm(clazz: VehicleprofileTurret.self, requestPredicate: turretRequestPredicate, keypathPrefix: "turret.")
-            mappingCoordinator?.fetchRemote(paradigm: turretRequestParadigm, linker: turretJSONAdapter)
+            let turretRequestParadigm = RequestParadigm(clazz: VehicleprofileTurret.self, adapter: turretJSONAdapter, requestPredicateComposer: turretRequestComposer, keypathPrefix: "turret.")
+            mappingCoordinator?.fetchRemote(paradigm: turretRequestParadigm)
         }
     }
 }

@@ -27,7 +27,7 @@ public class EventMappingStart: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }
 
@@ -45,6 +45,6 @@ public class EventMappingEnded: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }

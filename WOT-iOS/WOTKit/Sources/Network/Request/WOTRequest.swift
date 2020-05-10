@@ -23,7 +23,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
 
-    public var paradigm: RequestParadigm?
+    public var paradigm: RequestParadigmProtocol?
 
     private var groups = [WOTRequestIdType]()
 

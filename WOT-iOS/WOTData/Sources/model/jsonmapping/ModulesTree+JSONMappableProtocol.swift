@@ -20,8 +20,6 @@ extension ModulesTree {
         //
         try self.decode(json: json)
         //
-        var parentObjectIDList = requestPredicate.parentObjectIDList
-        parentObjectIDList.append(self.objectID)
 
         let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
@@ -32,9 +30,8 @@ extension ModulesTree {
         (nextTanks as? [AnyObject])?.forEach {
             // parents was not used for next portion of tanks
             let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
-            let nextTanksRequestPredicate = nextTanksRequestPredicateComposer.build()?.requestPredicate
-            let nextTanksRequestParadigm = RequestParadigm(clazz: Vehicles.self, requestPredicate: nextTanksRequestPredicate, keypathPrefix: nil)
-            mappingCoordinator?.fetchRemote(paradigm: nextTanksRequestParadigm, linker: nextTanksJSONAdapter)
+            let nextTanksRequestParadigm = RequestParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
+            mappingCoordinator?.fetchRemote(paradigm: nextTanksRequestParadigm)
         }
 
         // MARK: - NextModules
@@ -42,19 +39,17 @@ extension ModulesTree {
         let nextModuleJSONAdapter = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
-            let nextModuleRequestPredicate = nextModuleRequestPredicateComposer.build()?.requestPredicate
-            let nextModuleRequestParadigm = RequestParadigm(clazz: Module.self, requestPredicate: nextModuleRequestPredicate, keypathPrefix: nil)
-            mappingCoordinator?.fetchRemote(paradigm: nextModuleRequestParadigm, linker: nextModuleJSONAdapter)
+            let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: $0, currentObjectID: self.objectID)
+            let nextModuleRequestParadigm = RequestParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
+            mappingCoordinator?.fetchRemote(paradigm: nextModuleRequestParadigm)
         }
 
         // MARK: - CurrentModule
 
-        let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(parentObjectIDList: parentObjectIDList, linkedClazz: Module.self, linkedObjectID: module_id)
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let moduleRequestPredicate = moduleRequestPredicateComposer.build()?.requestPredicate
-        let moduleRequestParadigm = RequestParadigm(clazz: Module.self, requestPredicate: moduleRequestPredicate, keypathPrefix: nil)
-        mappingCoordinator?.fetchRemote(paradigm: moduleRequestParadigm, linker: moduleJSONAdapter)
+        let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
+        let moduleRequestParadigm = RequestParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
+        mappingCoordinator?.fetchRemote(paradigm: moduleRequestParadigm)
     }
 }
 

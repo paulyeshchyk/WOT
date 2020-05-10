@@ -94,10 +94,11 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol) throws {
+    public func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws {
         let request = try createRequest(forRequestId: requestId, paradigm: paradigm)
 
         let arguments = paradigm.buildRequestArguments()
+        let linker = paradigm.jsonAdapterLinker
         let groupId = "Nested\(String(describing: paradigm.clazz))-\(arguments)"
         try startRequest(request, withArguments: arguments, forGroupId: groupId, linker: linker)
     }
@@ -106,7 +107,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         grouppedRequests[groupId]?.forEach { $0.cancel(with: error) }
     }
 
-    // MARK: WOTRequestCoordinatorBridgeProtocol-
+    // MARK: WOTRequestCoordinatorBridgeProtocol -
 
     public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
         let result = try coordinator.createRequest(forRequestId: requestId)
@@ -114,7 +115,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: RequestParadigm) throws -> WOTRequestProtocol {
+    private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
         request.paradigm = paradigm
         return request

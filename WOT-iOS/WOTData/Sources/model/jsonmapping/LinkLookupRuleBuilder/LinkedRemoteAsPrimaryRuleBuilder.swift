@@ -12,15 +12,19 @@ import WOTKit
 public class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject?
-    private var parentObjectIDList: [NSManagedObjectID]?
+    private var requestPredicate: RequestPredicate
+    private var currentObjectID: NSManagedObjectID
 
-    public init(parentObjectIDList: [NSManagedObjectID]?, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject?) {
+    public init(requestPredicate: RequestPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject?, currentObjectID: NSManagedObjectID) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
-        self.parentObjectIDList = parentObjectIDList
+        self.requestPredicate = requestPredicate
+        self.currentObjectID = currentObjectID
     }
 
     public func build() -> RequestPredicateComposition? {
+        var parentObjectIDList = requestPredicate.parentObjectIDList
+        parentObjectIDList.append(currentObjectID)
         let lookupPredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
         lookupPredicate[.primary] = linkedClazz.primaryKey(for: linkedObjectID as AnyObject, andType: .external)
 

@@ -22,7 +22,7 @@ public class EventCDFetchStart: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }
 
@@ -40,6 +40,6 @@ public class EventCDFetchEnded: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }

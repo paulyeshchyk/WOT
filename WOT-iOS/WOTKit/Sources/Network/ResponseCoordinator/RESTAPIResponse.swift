@@ -15,7 +15,7 @@ public protocol RESTAPIResponseProtocol: Codable {
     var swiftError: Error? { get }
 }
 
-public struct RESTAPIError: WOTError {
+public struct RESTAPIError: DebuggableError {
     public var code: Int?
     public var message: String?
     public init(code: Int?, message: String?) {
@@ -23,7 +23,7 @@ public struct RESTAPIError: WOTError {
         self.message = message
     }
 
-    public var wotDescription: String {
+    public var debugDescription: String {
         return "RESTAPIError code: \(code ?? -1); message: \(message ?? "No message")"
     }
 

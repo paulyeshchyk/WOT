@@ -22,7 +22,7 @@ public class EventCDStashStart: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }
 
@@ -40,6 +40,6 @@ public class EventCDStashEnded: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }

@@ -13,16 +13,19 @@ public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateCompos
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
     private var requestPredicate: RequestPredicate
-    private var parentObjectIDList: [NSManagedObjectID]?
+    private var currentObjectID: NSManagedObjectID
 
-    public init(requestPredicate: RequestPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, parentObjectIDList: [NSManagedObjectID]?) {
+    public init(requestPredicate: RequestPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, currentObjectID: NSManagedObjectID) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
         self.requestPredicate = requestPredicate
-        self.parentObjectIDList = parentObjectIDList
+        self.currentObjectID = currentObjectID
     }
 
     public func build() -> RequestPredicateComposition? {
+        var parentObjectIDList = requestPredicate.parentObjectIDList
+        parentObjectIDList.append(currentObjectID)
+        
         let lookupPredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
         lookupPredicate[.primary] = requestPredicate[.primary]
         lookupPredicate[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)

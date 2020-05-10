@@ -38,34 +38,29 @@ extension Module {
         case .vehicleChassis:
             let chassisJSONAdapter = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let chassisRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: module_id)
-            let chassisRequestPredicate = chassisRequestComposer.build()?.requestPredicate
-            let chassisRequestParadigm = RequestParadigm(clazz: VehicleprofileSuspension.self, requestPredicate: chassisRequestPredicate, keypathPrefix: "suspension.")
-            mappingCoordinator?.fetchRemote(paradigm: chassisRequestParadigm, linker: chassisJSONAdapter)
+            let chassisRequestParadigm = RequestParadigm(clazz: VehicleprofileSuspension.self, adapter: chassisJSONAdapter, requestPredicateComposer: chassisRequestComposer, keypathPrefix: "suspension.")
+            mappingCoordinator?.fetchRemote(paradigm: chassisRequestParadigm)
         case .vehicleGun:
             #warning("has errors")
             let gunJSONAdapter = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let gunRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileGun.self, linkedObjectID: module_id)
-            let gunRequestPredicate = gunRequestComposer.build()?.requestPredicate
-            let gunRequestParadigm = RequestParadigm(clazz: VehicleprofileGun.self, requestPredicate: gunRequestPredicate, keypathPrefix: "gun.")
-            mappingCoordinator?.fetchRemote(paradigm: gunRequestParadigm, linker: gunJSONAdapter)
+            let gunRequestParadigm = RequestParadigm(clazz: VehicleprofileGun.self, adapter: gunJSONAdapter, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.")
+            mappingCoordinator?.fetchRemote(paradigm: gunRequestParadigm)
         case .vehicleRadio:
             let radioJSONAdapter = Module.RadioMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let radioRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileRadio.self, linkedObjectID: module_id)
-            let radioRequestPredicate = radioRequestComposer.build()?.requestPredicate
-            let radioRequestParadigm = RequestParadigm(clazz: VehicleprofileRadio.self, requestPredicate: radioRequestPredicate, keypathPrefix: "radio.")
-            mappingCoordinator?.fetchRemote(paradigm: radioRequestParadigm, linker: radioJSONAdapter)
+            let radioRequestParadigm = RequestParadigm(clazz: VehicleprofileRadio.self, adapter: radioJSONAdapter, requestPredicateComposer: radioRequestComposer, keypathPrefix: "radio.")
+            mappingCoordinator?.fetchRemote(paradigm: radioRequestParadigm)
         case .vehicleEngine:
             let engineJSONAdapter = Module.EngineMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let engineRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileEngine.self, linkedObjectID: module_id)
-            let engineRequestPredicate = engineRequestComposer.build()?.requestPredicate
-            let engineRequestParadigm = RequestParadigm(clazz: VehicleprofileEngine.self, requestPredicate: engineRequestPredicate, keypathPrefix: "engine.")
-            mappingCoordinator?.fetchRemote(paradigm: engineRequestParadigm, linker: engineJSONAdapter)
+            let engineRequestParadigm = RequestParadigm(clazz: VehicleprofileEngine.self, adapter: engineJSONAdapter, requestPredicateComposer: engineRequestComposer, keypathPrefix: "engine.")
+            mappingCoordinator?.fetchRemote(paradigm: engineRequestParadigm)
         case .vehicleTurret:
             let turretJSONAdapter = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let turretRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
-            let turretRequestPredicate = turretRequestComposer.build()?.requestPredicate
-            let turretRequestParadigm = RequestParadigm(clazz: VehicleprofileTurret.self, requestPredicate: turretRequestPredicate, keypathPrefix: "turret.")
-            mappingCoordinator?.fetchRemote(paradigm: turretRequestParadigm, linker: turretJSONAdapter)
+            let turretRequestParadigm = RequestParadigm(clazz: VehicleprofileTurret.self, adapter: turretJSONAdapter, requestPredicateComposer: turretRequestComposer, keypathPrefix: "turret.")
+            mappingCoordinator?.fetchRemote(paradigm: turretRequestParadigm)
         default: fatalError("unknown module type")
         }
     }

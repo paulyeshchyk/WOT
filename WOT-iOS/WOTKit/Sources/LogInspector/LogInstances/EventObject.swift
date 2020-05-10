@@ -22,7 +22,7 @@ public class EventObjectNew: LogEventProtocol {
     }
 
     public init?(error: Error) {
-        message = error.wotDescription
+        message = String(describing: error)
     }
 }
 

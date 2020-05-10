@@ -30,7 +30,7 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
 
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion)
 
-    func fetchRemote(paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol)
+    func fetchRemote(paradigm: RequestParadigmProtocol)
 
     func decodingAndMapping(json jSON: JSON, fetchResult: FetchResult, requestPredicate: RequestPredicate, mapper: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion)
 
@@ -39,8 +39,6 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
     func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol)
 
     func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol)
-
-    func l1nkRemote(modelClazz modelClass: AnyClass, lookupRuleBuilder: RequestPredicateComposerProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol)
 }
 
 extension WOTMappingCoordinatorProtocol {
@@ -67,7 +65,7 @@ extension WOTMappingCoordinatorProtocol {
                     if let mapper = mapper {
                         mapper.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: callback)
                     } else {
-                        callback(fetchResult, nil)//WOTMappingCoordinatorError.linkerNotStarted
+                        callback(fetchResult, nil) // WOTMappingCoordinatorError.linkerNotStarted
                     }
                 }
             }
@@ -95,7 +93,7 @@ extension WOTMappingCoordinatorProtocol {
                     if let mapper = mapper {
                         mapper.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: callback)
                     } else {
-                        callback(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
+                        callback(fetchResult, nil) // WOTMappingCoordinatorError.linkerNotStarted
                     }
                 }
             }
