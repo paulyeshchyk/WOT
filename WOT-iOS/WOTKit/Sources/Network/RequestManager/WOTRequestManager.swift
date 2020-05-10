@@ -134,17 +134,17 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         }
 
         if let error = error {
-            logEvent(EventError(error, details: String(describing: request)), sender: self)
+            logEvent(EventError(error, details: request), sender: self)
             return
         }
 
         guard let dataparser = appManager?.responseCoordinator else {
-            logEvent(EventError(message: "dataparser not found"), sender: self)
+            logEvent(EventError(WOTRequestManagerError.dataparserNotFound(request), details: self), sender: self)
             return
         }
 
         guard let adapterLinker = grouppedLinkers[request.uuid.uuidString] else {
-            logEvent(EventError(message: "linker not found"), sender: self)
+            logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
             return
         }
         do {
@@ -164,7 +164,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
     private func onRequestComplete(_ request: WOTRequestProtocol?, _ sender: Any?, error: Error?) {
         guard let request = request else {
-            print("Unknown request finished")
+            logEvent(EventError(WOTRequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
             return
         }
         grouppedListeners[request.uuid.uuidString]?.forEach { listener in

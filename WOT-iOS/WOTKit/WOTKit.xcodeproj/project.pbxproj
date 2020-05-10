@@ -12,6 +12,8 @@
 		1D41161E24646D64009070AD /* RequestPredicateComposerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41161D24646D64009070AD /* RequestPredicateComposerProtocol.swift */; };
 		1D41163124653F95009070AD /* EventLocalFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163024653F95009070AD /* EventLocalFetch.swift */; };
 		1D41163324653FD4009070AD /* EventRemoteFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163224653FD4009070AD /* EventRemoteFetch.swift */; };
+		1D53D33124680DB800D7B2B2 /* ErrorMixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D53D33024680DB800D7B2B2 /* ErrorMixture.swift */; };
+		1D53D333246813A900D7B2B2 /* RESTAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D53D332246813A900D7B2B2 /* RESTAPIError.swift */; };
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D60E52D245FE7A7007E5CA8 /* Dictionary_Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E51F245FE7A7007E5CA8 /* Dictionary_Merge.swift */; };
 		1D60E52E245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E521245FE7A7007E5CA8 /* KeyedDecodingContainer+Decode.swift */; };
@@ -81,7 +83,6 @@
 		1D60E5C6245FE7E5007E5CA8 /* WOTAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E587245FE7E5007E5CA8 /* WOTAppManager.swift */; };
 		1D60E5CF245FE93E007E5CA8 /* WEBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5CA245FE93E007E5CA8 /* WEBError.swift */; };
 		1D60E5D0245FE93E007E5CA8 /* LogicError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5CB245FE93E007E5CA8 /* LogicError.swift */; };
-		1D60E5D1245FE93E007E5CA8 /* WOTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5CC245FE93E007E5CA8 /* WOTError.swift */; };
 		1D60E5D2245FE93E007E5CA8 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5CD245FE93E007E5CA8 /* JSONError.swift */; };
 		1D60E5D3245FE93E007E5CA8 /* DataAdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5CE245FE93E007E5CA8 /* DataAdapterError.swift */; };
 		1D60E5DA245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */; };
@@ -97,6 +98,8 @@
 		1D41161D24646D64009070AD /* RequestPredicateComposerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposerProtocol.swift; sourceTree = "<group>"; };
 		1D41163024653F95009070AD /* EventLocalFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLocalFetch.swift; sourceTree = "<group>"; };
 		1D41163224653FD4009070AD /* EventRemoteFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRemoteFetch.swift; sourceTree = "<group>"; };
+		1D53D33024680DB800D7B2B2 /* ErrorMixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMixture.swift; sourceTree = "<group>"; };
+		1D53D332246813A900D7B2B2 /* RESTAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTAPIError.swift; sourceTree = "<group>"; };
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -169,7 +172,6 @@
 		1D60E587245FE7E5007E5CA8 /* WOTAppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTAppManager.swift; sourceTree = "<group>"; };
 		1D60E5CA245FE93E007E5CA8 /* WEBError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEBError.swift; sourceTree = "<group>"; };
 		1D60E5CB245FE93E007E5CA8 /* LogicError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicError.swift; sourceTree = "<group>"; };
-		1D60E5CC245FE93E007E5CA8 /* WOTError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTError.swift; sourceTree = "<group>"; };
 		1D60E5CD245FE93E007E5CA8 /* JSONError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		1D60E5CE245FE93E007E5CA8 /* DataAdapterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAdapterError.swift; sourceTree = "<group>"; };
 		1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManagerProtocol.swift; sourceTree = "<group>"; };
@@ -467,9 +469,10 @@
 			children = (
 				1D60E5CA245FE93E007E5CA8 /* WEBError.swift */,
 				1D60E5CB245FE93E007E5CA8 /* LogicError.swift */,
-				1D60E5CC245FE93E007E5CA8 /* WOTError.swift */,
 				1D60E5CD245FE93E007E5CA8 /* JSONError.swift */,
 				1D60E5CE245FE93E007E5CA8 /* DataAdapterError.swift */,
+				1D53D33024680DB800D7B2B2 /* ErrorMixture.swift */,
+				1D53D332246813A900D7B2B2 /* RESTAPIError.swift */,
 			);
 			path = errors;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				1D60E5C4245FE7E5007E5CA8 /* LogInspectorProtocol.swift in Sources */,
 				1D60E5BD245FE7E5007E5CA8 /* EventWEB.swift in Sources */,
 				1D60E5A5245FE7E5007E5CA8 /* WOTWebDataPumperProtocol.swift in Sources */,
+				1D53D333246813A900D7B2B2 /* RESTAPIError.swift in Sources */,
 				1D60E5AD245FE7E5007E5CA8 /* WOTRequestProtocol.swift in Sources */,
 				1D60E5A2245FE7E5007E5CA8 /* RESTAPIResponse.swift in Sources */,
 				1D60E5C1245FE7E5007E5CA8 /* EventObject.swift in Sources */,
@@ -718,7 +722,6 @@
 				1D60E5BA245FE7E5007E5CA8 /* EventError.swift in Sources */,
 				1D60E5B4245FE7E5007E5CA8 /* WOTHostConfigurationProtocol.swift in Sources */,
 				1D60E5AA245FE7E5007E5CA8 /* WOTJSONResponseAdapter.swift in Sources */,
-				1D60E5D1245FE93E007E5CA8 /* WOTError.swift in Sources */,
 				1D60E5D2245FE93E007E5CA8 /* JSONError.swift in Sources */,
 				1D41161E24646D64009070AD /* RequestPredicateComposerProtocol.swift in Sources */,
 				1D60E5A3245FE7E5007E5CA8 /* RESTResponseCoordinator.swift in Sources */,
@@ -750,6 +753,7 @@
 				1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */,
 				1DD9D52A2467B16B0064D88C /* RequestableProtocol.swift in Sources */,
 				1D20FDEB24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift in Sources */,
+				1D53D33124680DB800D7B2B2 /* ErrorMixture.swift in Sources */,
 				1D60E59D245FE7E5007E5CA8 /* JSONDataAdapterProtocol.swift in Sources */,
 				1D60E5B8245FE7E5007E5CA8 /* EventCDMerge.swift in Sources */,
 			);

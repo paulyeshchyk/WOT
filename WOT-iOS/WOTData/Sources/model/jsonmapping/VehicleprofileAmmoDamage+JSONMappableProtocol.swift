@@ -23,7 +23,3 @@ extension VehicleprofileAmmoDamage {
         self.max_value = intArray.elements[2]
     }
 }
-
-public enum ErrorVehicleprofileAmmoDamage: Error {
-    case arrayIsNotContainingThreeElements
-}

@@ -147,7 +147,7 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
         perform(context: context) { context in
             do {
                 guard let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) else {
-                    self.logEvent(EventError(message: "Object not created:[\(String(describing: clazz))]"), sender: nil)
+                    self.logEvent(EventError(WOTCoreDataStoreError.objectNotCreated(clazz), details: self), sender: nil)
                     return
                 }
                 let managedObjectID = managedObject.objectID

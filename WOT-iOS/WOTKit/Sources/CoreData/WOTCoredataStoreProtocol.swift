@@ -8,10 +8,6 @@
 
 import CoreData
 
-public enum WOTCoredataStoreError: Error {
-    case contextIsNotDefined
-}
-
 @objc
 public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol, LogInspectorProtocol {
     @objc func workingContext() -> NSManagedObjectContext

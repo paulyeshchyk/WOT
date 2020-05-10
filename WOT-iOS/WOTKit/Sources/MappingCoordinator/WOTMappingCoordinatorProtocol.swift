@@ -8,20 +8,7 @@
 
 import CoreData
 
-public enum WOTMapperError: Error {
-    case contextNotDefined
-    case objectIDNotDefined
-    case clazzIsNotSupportable(String)
-}
-
 public typealias ThrowableCompletion = (Error?) -> Void
-
-public enum WOTMappingCoordinatorError: Error {
-    case requestsNotParsed
-    case linkerNotStarted
-    case noKeysDefinedForClass(String)
-    case lookupRuleNotDefined
-}
 
 @objc
 public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {

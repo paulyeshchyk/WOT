@@ -17,20 +17,6 @@ public protocol JSONAdapterLinkerProtocol {
     func onJSONExtraction(json: JSON) -> JSON
 }
 
-public enum JSONAdapterLinkerError: Error {
-    case wrongParentClass
-    case wrongChildClass
-}
-
-public struct UnexpectedClassError: Error {
-    var expected: AnyClass
-    var received: AnyObject?
-    public init(extected exp: AnyClass, received rec: AnyObject?) {
-        self.expected = exp
-        self.received = rec
-    }
-}
-
 open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
     // MARK: - Open
     open var linkerPrimaryKeyType: PrimaryKeyType {

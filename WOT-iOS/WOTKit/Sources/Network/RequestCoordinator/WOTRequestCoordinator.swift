@@ -112,11 +112,3 @@ extension WOTRequestCoordinator: WOTRequestModelBindingProtocol {
         return requestClass.modelClass()
     }
 }
-
-public enum RequestCoordinatorError: Error {
-    case dataIsEmpty
-    case requestNotFound
-    case adapterNotFound(requestType: String)
-    case modelClassNotFound(requestType: String)
-    case requestClassNotFound(requestType: String)
-}

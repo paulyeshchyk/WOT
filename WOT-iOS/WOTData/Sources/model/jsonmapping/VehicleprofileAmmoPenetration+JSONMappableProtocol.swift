@@ -23,7 +23,3 @@ extension VehicleprofileAmmoPenetration {
         self.max_value = intArray.elements[2]
     }
 }
-
-public enum ErrorVehicleprofileAmmoPenetration: Error {
-    case arrayIsNotContainingThreeElements
-}

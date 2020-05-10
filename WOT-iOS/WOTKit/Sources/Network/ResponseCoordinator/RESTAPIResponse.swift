@@ -15,26 +15,6 @@ public protocol RESTAPIResponseProtocol: Codable {
     var swiftError: Error? { get }
 }
 
-public struct RESTAPIError: DebuggableError {
-    public var code: Int
-    public var message: String
-    public init(code: Int?, message: String?) {
-        self.code = code ?? -1
-        self.message = message ?? "No message"
-    }
-
-    public var debugDescription: String {
-        return "RESTAPIError code: \(code); message: \(message)"
-    }
-
-    public init?(json: JSON?) {
-        let code: Int = json?["code"] as? Int ?? -1
-        let message = json?["message"] as? String ?? "<unknown>"
-
-        self = RESTAPIError(code: code, message: message)
-    }
-}
-
 public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
     public var status: RESTAPIResponseStatus? = .unknown
     public var meta: RESTAPIResponseMeta?
