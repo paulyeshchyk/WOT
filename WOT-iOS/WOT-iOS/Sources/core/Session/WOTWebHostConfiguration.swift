@@ -22,9 +22,16 @@ public class WOTWebHostConfiguration: NSObject, WOTHostConfigurationProtocol {
         return WOTApiDefaults.applicationScheme
     }
 
+    private var currentArguments: String = ""
+
     @objc
     public func urlQuery(with: WOTRequestArgumentsProtocol) -> String {
         let custom = ["application_id": applicationID]
-        return with.buildQuery(custom)
+        currentArguments = with.buildQuery(custom)
+        return currentArguments
+    }
+
+    public override var debugDescription: String {
+        return "\(host):\(currentArguments)"
     }
 }

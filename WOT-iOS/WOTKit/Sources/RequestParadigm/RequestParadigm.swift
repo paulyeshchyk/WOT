@@ -33,16 +33,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         return requestPredicate()?.expressions()?.compactMap { $0 } ?? []
     }
 
-    public var wotDescription: String {
-        var result: String = "RequestArguments: \(String(describing: clazz))"
-        primaryKeys.forEach {
-            result += " key:\($0)"
-        }
-        if let prefix = keypathPrefix {
-            result += " prefix:\(prefix)"
-        }
-        return result
-    }
+    public var wotDescription: String { return debugDescription }
 
     public func addPreffix(to: String) -> String {
         guard let preffix = keypathPrefix else {
@@ -60,5 +51,16 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
 
     public func requestPredicate() -> RequestPredicate? {
         return requestPredicateComposer?.build()?.requestPredicate
+    }
+
+    override public var debugDescription: String {
+        var result: String = "RequestArguments: \(String(describing: clazz))"
+        primaryKeys.forEach {
+            result += " key:\($0)"
+        }
+        if let prefix = keypathPrefix {
+            result += " prefix:\(prefix)"
+        }
+        return result
     }
 }

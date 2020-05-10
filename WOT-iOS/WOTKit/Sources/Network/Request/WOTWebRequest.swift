@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 open class WOTWEBRequest: WOTRequest, WOTWebServiceProtocol, NSURLConnectionDataDelegate {
-    override open var description: String {
+    override open var debugDescription: String {
         let pumperDescription = pumper?.wotDescription ?? ""
         return "\(String(describing: type(of: self))) \(pumperDescription)"
     }

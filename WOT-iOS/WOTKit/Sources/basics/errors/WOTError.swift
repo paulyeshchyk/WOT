@@ -10,8 +10,8 @@ import Foundation
 
 
 public protocol DebuggableError: Swift.Error, CustomDebugStringConvertible {
-    var message: String? { get }
-    var code: Int? { get }
+    var message: String { get }
+    var code: Int { get }
 }
 
 
