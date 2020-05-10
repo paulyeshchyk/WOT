@@ -12,11 +12,11 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Module {
-    override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
 
-        let parentsAsManagedObject = pkCase.parentObjectIDList.compactMap { context.object(with: $0) }
+        let parentsAsManagedObject = requestPredicate.parentObjectIDList.compactMap { context.object(with: $0) }
         let parentsAsVehicles = parentsAsManagedObject.compactMap { $0 as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 

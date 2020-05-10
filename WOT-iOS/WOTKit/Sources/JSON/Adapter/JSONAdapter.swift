@@ -12,7 +12,7 @@ public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
-    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -63,7 +63,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
             //
             let extraction = self.linker.performJSONExtraction(from: json, byKey: key, forClazz: self.modelClazz, request: fromRequest)
 
-            self.findOrCreateObject(json: extraction.json, pkCase: extraction.pkCase) { fetchResult, error in
+            self.findOrCreateObject(json: extraction.json, requestPredicate: extraction.requestPredicate) { fetchResult, error in
 
                 if let error = error {
                     self.logEvent(EventError(error, details: nil), sender: self)
@@ -126,7 +126,7 @@ extension DataAdapterProtocol {
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, pkCase: PKCase,  callback: @escaping FetchResultErrorCompletion) {
+    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate,  callback: @escaping FetchResultErrorCompletion) {
         guard Thread.current.isMainThread else {
             fatalError("thread is not main")
         }
@@ -139,7 +139,7 @@ extension JSONAdapter {
             fatalError("working context is not defined")
         }
 
-        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: pkCase[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
+        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: requestPredicate[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
 
             if let error = error {
                 callback(fetchResult, error)
@@ -147,12 +147,12 @@ extension JSONAdapter {
             }
 
             let jsonStartParsingDate = Date()
-            self.logEvent(EventJSONStart(pkCase.wotDescription), sender: self)
-            self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, pkCase: pkCase, mapper: nil) { fetchResult, error in
+            self.logEvent(EventJSONStart(requestPredicate.wotDescription), sender: self)
+            self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
                 if let error = error {
                     self.logEvent(EventError(error, details: nil), sender: self)
                 }
-                self.logEvent(EventJSONEnded("\(pkCase)", initiatedIn: jsonStartParsingDate), sender: self)
+                self.logEvent(EventJSONEnded("\(requestPredicate)", initiatedIn: jsonStartParsingDate), sender: self)
                 callback(fetchResult, nil)
             }
         })
@@ -160,7 +160,7 @@ extension JSONAdapter {
 }
 
 public struct JSONExtraction {
-    public let pkCase: PKCase
+    public let requestPredicate: RequestPredicate
     public let json: JSON
 }
 
@@ -179,17 +179,17 @@ extension JSONAdapterLinkerProtocol {
             ident = key
         }
 
-        let parents = fromRequest.predicate?.pkCase?.parentObjectIDList
-        let objCase = PKCase(parentObjectIDList: parents)
-        objCase[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: self.linkerPrimaryKeyType)
+        let parents = fromRequest.predicate?.requestPredicate?.parentObjectIDList
+        let requestPredicate = RequestPredicate(parentObjectIDList: parents)
+        requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: self.linkerPrimaryKeyType)
 
-        return JSONExtraction(pkCase: objCase, json: extractedJSON)
+        return JSONExtraction(requestPredicate: requestPredicate, json: extractedJSON)
     }
 }
 
 // MARK: - LogMessageSender
-extension JSONAdapter: LogMessageSender {
-    public var logSenderDescription: String {
+extension JSONAdapter: Describable {
+    public var wotDescription: String {
         return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 }

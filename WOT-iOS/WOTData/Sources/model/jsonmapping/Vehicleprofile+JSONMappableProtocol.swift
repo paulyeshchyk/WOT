@@ -12,14 +12,14 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Vehicleprofile {
-    override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         // MARK: - Decode properties
 
         try decode(json: json)
 
         // MARK: - Link items
 
-        var parentObjectIDList = pkCase.parentObjectIDList
+        var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(self.objectID)
 
         let vehicleProfileFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
@@ -28,21 +28,21 @@ extension Vehicleprofile {
 
         let ammoListArray = json[#keyPath(Vehicleprofile.ammo)] as? [Any]
         let ammoListMapperClazz = Vehicleprofile.AmmoListLinker.self
-        let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
         mappingCoordinator?.linkItems(from: ammoListArray, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileAmmoList.self, mapperClazz: ammoListMapperClazz, lookupRuleBuilder: ammoLookupBuilder)
 
         // MARK: - Armor
 
         let armorJSON = json[#keyPath(Vehicleprofile.armor)] as? JSON
         let armorListMapperClazz = Vehicleprofile.ArmorListLinker.self
-        let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
         mappingCoordinator?.linkItem(from: armorJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileArmorList.self, mapperClazz: armorListMapperClazz, lookupRuleBuilder: armorLookupBuilder)
 
         // MARK: - Module
 
         let moduleJSON = json[#keyPath(Vehicleprofile.modules)] as? JSON
         let moduleMapperClazz = Vehicleprofile.ModuleLinker.self
-        let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(pkCase: pkCase, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
         mappingCoordinator?.linkItem(from: moduleJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileModule.self, mapperClazz: moduleMapperClazz, lookupRuleBuilder: modulesLookupBuilder)
 
         // MARK: - Engine

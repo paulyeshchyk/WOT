@@ -1,5 +1,5 @@
 //
-//  PKCase.swift
+//  RequestPredicate.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 4/28/20.
@@ -18,7 +18,7 @@ public enum PKType: String {
 }
 
 @objc
-public class PKCase: NSObject {
+public class RequestPredicate: NSObject {
     @objc
     public enum PredicateCompoundType: Int {
         case or = 0
@@ -41,15 +41,15 @@ public class PKCase: NSObject {
         return wotDescription
     }
 
-    private var values: [PKType: Set<WOTPrimaryKey>] = .init()
+    private var values: [PKType: Set<RequestExpression>] = .init()
 
-    public subscript(pkType: PKType) -> WOTPrimaryKey? {
+    public subscript(pkType: PKType) -> RequestExpression? {
         get {
             return values[pkType]?.first
         }
         set {
             if let value = newValue {
-                var updatedSet: Set<WOTPrimaryKey> = values[pkType] ?? Set<WOTPrimaryKey>()
+                var updatedSet: Set<RequestExpression> = values[pkType] ?? Set<RequestExpression>()
                 updatedSet.insert(value)
                 values[pkType] = updatedSet
             } else {
@@ -58,11 +58,11 @@ public class PKCase: NSObject {
         }
     }
 
-    public func allValues(_ pkType: PKType? = nil) -> Set<WOTPrimaryKey>? {
+    public func allValues(_ pkType: PKType? = nil) -> Set<RequestExpression>? {
         if let pkType = pkType {
             return values[pkType]
         } else {
-            var updatedSet = Set<WOTPrimaryKey>()
+            var updatedSet = Set<RequestExpression>()
             values.keys.forEach {
                 values[$0]?.forEach { key in
                     updatedSet.insert(key)
@@ -82,7 +82,7 @@ public class PKCase: NSObject {
     }
 }
 
-extension PKCase: Describable {
+extension RequestPredicate: Describable {
     public var wotDescription: String {
         guard let objects = allValues(), !objects.isEmpty else {
             return "empty case"

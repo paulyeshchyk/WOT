@@ -22,15 +22,15 @@
 		1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */; };
 		1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */; };
 		1D60E535245FE7A7007E5CA8 /* DescribableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E52C245FE7A7007E5CA8 /* DescribableProtocol.swift */; };
-		1D60E588245FE7E5007E5CA8 /* PKCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E538245FE7E4007E5CA8 /* PKCase.swift */; };
+		1D60E588245FE7E5007E5CA8 /* RequestPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E538245FE7E4007E5CA8 /* RequestPredicate.swift */; };
 		1D60E589245FE7E5007E5CA8 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53A245FE7E4007E5CA8 /* Coding.swift */; };
 		1D60E58A245FE7E5007E5CA8 /* KeyPathListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53B245FE7E4007E5CA8 /* KeyPathListable.swift */; };
 		1D60E58B245FE7E5007E5CA8 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53C245FE7E4007E5CA8 /* AnyCodable.swift */; };
-		1D60E58C245FE7E5007E5CA8 /* WOTPrimaryKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53D245FE7E4007E5CA8 /* WOTPrimaryKey.swift */; };
+		1D60E58C245FE7E5007E5CA8 /* RequestExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53D245FE7E4007E5CA8 /* RequestExpression.swift */; };
 		1D60E58D245FE7E5007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
 		1D60E58E245FE7E5007E5CA8 /* PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E540245FE7E4007E5CA8 /* PrimaryKeypathProtocol.swift */; };
-		1D60E58F245FE7E5007E5CA8 /* NSManagedObject+KeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E541245FE7E4007E5CA8 /* NSManagedObject+KeypathProtocol.swift */; };
-		1D60E590245FE7E5007E5CA8 /* RequestPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E542245FE7E4007E5CA8 /* RequestPredicate.swift */; };
+		1D60E58F245FE7E5007E5CA8 /* NSManagedObject+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E541245FE7E4007E5CA8 /* NSManagedObject+RequestableProtocol.swift */; };
+		1D60E590245FE7E5007E5CA8 /* RequestParadigm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E542245FE7E4007E5CA8 /* RequestParadigm.swift */; };
 		1D60E591245FE7E5007E5CA8 /* WOTCoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E544245FE7E4007E5CA8 /* WOTCoreDataStore.swift */; };
 		1D60E592245FE7E5007E5CA8 /* WOTDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E545245FE7E4007E5CA8 /* WOTDataStoreProtocol.swift */; };
 		1D60E593245FE7E5007E5CA8 /* WOTCoredataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E546245FE7E4007E5CA8 /* WOTCoredataStoreProtocol.swift */; };
@@ -88,6 +88,7 @@
 		1D60E5DA245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */; };
 		1D60E60C24602A8F007E5CA8 /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E60B24602A8F007E5CA8 /* JSONDecodingProtocol.swift */; };
 		1D60E74D246052F4007E5CA8 /* json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E74C246052F4007E5CA8 /* json.swift */; };
+		1DD9D52A2467B16B0064D88C /* RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD9D5292467B16B0064D88C /* RequestableProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,15 +109,15 @@
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
 		1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Conversion.swift"; sourceTree = "<group>"; };
 		1D60E52C245FE7A7007E5CA8 /* DescribableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescribableProtocol.swift; sourceTree = "<group>"; };
-		1D60E538245FE7E4007E5CA8 /* PKCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKCase.swift; sourceTree = "<group>"; };
+		1D60E538245FE7E4007E5CA8 /* RequestPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPredicate.swift; sourceTree = "<group>"; };
 		1D60E53A245FE7E4007E5CA8 /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		1D60E53B245FE7E4007E5CA8 /* KeyPathListable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPathListable.swift; sourceTree = "<group>"; };
 		1D60E53C245FE7E4007E5CA8 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
-		1D60E53D245FE7E4007E5CA8 /* WOTPrimaryKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPrimaryKey.swift; sourceTree = "<group>"; };
+		1D60E53D245FE7E4007E5CA8 /* RequestExpression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestExpression.swift; sourceTree = "<group>"; };
 		1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+PrimaryKeypathProtocol.swift"; sourceTree = "<group>"; };
 		1D60E540245FE7E4007E5CA8 /* PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryKeypathProtocol.swift; sourceTree = "<group>"; };
-		1D60E541245FE7E4007E5CA8 /* NSManagedObject+KeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+KeypathProtocol.swift"; sourceTree = "<group>"; };
-		1D60E542245FE7E4007E5CA8 /* RequestPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPredicate.swift; sourceTree = "<group>"; };
+		1D60E541245FE7E4007E5CA8 /* NSManagedObject+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		1D60E542245FE7E4007E5CA8 /* RequestParadigm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestParadigm.swift; sourceTree = "<group>"; };
 		1D60E544245FE7E4007E5CA8 /* WOTCoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoreDataStore.swift; sourceTree = "<group>"; };
 		1D60E545245FE7E4007E5CA8 /* WOTDataStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataStoreProtocol.swift; sourceTree = "<group>"; };
 		1D60E546245FE7E4007E5CA8 /* WOTCoredataStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoredataStoreProtocol.swift; sourceTree = "<group>"; };
@@ -175,6 +176,7 @@
 		1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManagerProtocol.swift; sourceTree = "<group>"; };
 		1D60E60B24602A8F007E5CA8 /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
 		1D60E74C246052F4007E5CA8 /* json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = json.swift; sourceTree = "<group>"; };
+		1DD9D5292467B16B0064D88C /* RequestableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestableProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 		1D60E508245FE541007E5CA8 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1DD9D5272467B0AE0064D88C /* RequestParadigm */,
 				1D60E585245FE7E5007E5CA8 /* AppManager */,
 				1D60E536245FE7E4007E5CA8 /* CoreData */,
 				1D60E54C245FE7E4007E5CA8 /* JSON */,
@@ -234,6 +237,7 @@
 		1D60E51D245FE7A7007E5CA8 /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				1DD9D5282467B0F20064D88C /* NSManagedObject */,
 				1D60E51E245FE7A7007E5CA8 /* NSDictionary */,
 				1D60E520245FE7A7007E5CA8 /* KeyedDecodingContainer */,
 				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
@@ -299,7 +303,6 @@
 			children = (
 				1D60E537245FE7E4007E5CA8 /* Predicates */,
 				1D60E543245FE7E4007E5CA8 /* CoreDataStore */,
-				1D60E547245FE7E4007E5CA8 /* FetchController */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -308,10 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				1D60E539245FE7E4007E5CA8 /* codable */,
-				1D60E53E245FE7E4007E5CA8 /* KeyPathProtocol */,
-				1D60E538245FE7E4007E5CA8 /* PKCase.swift */,
 				1D41161D24646D64009070AD /* LinkLookupRuleBuilderProtocol.swift */,
-				1D60E53D245FE7E4007E5CA8 /* WOTPrimaryKey.swift */,
 			);
 			path = Predicates;
 			sourceTree = "<group>";
@@ -320,20 +320,9 @@
 			isa = PBXGroup;
 			children = (
 				1D60E53A245FE7E4007E5CA8 /* Coding.swift */,
-				1D60E53B245FE7E4007E5CA8 /* KeyPathListable.swift */,
 				1D60E53C245FE7E4007E5CA8 /* AnyCodable.swift */,
 			);
 			path = codable;
-			sourceTree = "<group>";
-		};
-		1D60E53E245FE7E4007E5CA8 /* KeyPathProtocol */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */,
-				1D60E540245FE7E4007E5CA8 /* PrimaryKeypathProtocol.swift */,
-				1D60E541245FE7E4007E5CA8 /* NSManagedObject+KeypathProtocol.swift */,
-			);
-			path = KeyPathProtocol;
 			sourceTree = "<group>";
 		};
 		1D60E543245FE7E4007E5CA8 /* CoreDataStore */ = {
@@ -344,14 +333,6 @@
 				1D60E544245FE7E4007E5CA8 /* WOTCoreDataStore.swift */,
 			);
 			path = CoreDataStore;
-			sourceTree = "<group>";
-		};
-		1D60E547245FE7E4007E5CA8 /* FetchController */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E549245FE7E4007E5CA8 /* FetchResult.swift */,
-			);
-			path = FetchController;
 			sourceTree = "<group>";
 		};
 		1D60E54C245FE7E4007E5CA8 /* JSON */ = {
@@ -577,9 +558,31 @@
 			children = (
 				1D60E56D245FE7E5007E5CA8 /* WOTRequestArgumentsProtocol.swift */,
 				1D60E56F245FE7E5007E5CA8 /* WOTRequestArguments.swift */,
-				1D60E542245FE7E4007E5CA8 /* RequestPredicate.swift */,
 			);
 			path = Arguments;
+			sourceTree = "<group>";
+		};
+		1DD9D5272467B0AE0064D88C /* RequestParadigm */ = {
+			isa = PBXGroup;
+			children = (
+				1D60E549245FE7E4007E5CA8 /* FetchResult.swift */,
+				1D60E53B245FE7E4007E5CA8 /* KeyPathListable.swift */,
+				1D60E540245FE7E4007E5CA8 /* PrimaryKeypathProtocol.swift */,
+				1D60E542245FE7E4007E5CA8 /* RequestParadigm.swift */,
+				1D60E538245FE7E4007E5CA8 /* RequestPredicate.swift */,
+				1D60E53D245FE7E4007E5CA8 /* RequestExpression.swift */,
+				1DD9D5292467B16B0064D88C /* RequestableProtocol.swift */,
+			);
+			path = RequestParadigm;
+			sourceTree = "<group>";
+		};
+		1DD9D5282467B0F20064D88C /* NSManagedObject */ = {
+			isa = PBXGroup;
+			children = (
+				1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */,
+				1D60E541245FE7E4007E5CA8 /* NSManagedObject+RequestableProtocol.swift */,
+			);
+			path = NSManagedObject;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -717,7 +720,7 @@
 				1D60E5B0245FE7E5007E5CA8 /* WOTRequestListenerProtocol.swift in Sources */,
 				1D60E5CF245FE93E007E5CA8 /* WEBError.swift in Sources */,
 				1D60E5B5245FE7E5007E5CA8 /* WOTRequestCoordinator.swift in Sources */,
-				1D60E590245FE7E5007E5CA8 /* RequestPredicate.swift in Sources */,
+				1D60E590245FE7E5007E5CA8 /* RequestParadigm.swift in Sources */,
 				1D60E5C3245FE7E5007E5CA8 /* EventTimeMeasure.swift in Sources */,
 				1D60E5AB245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift in Sources */,
 				1D60E591245FE7E5007E5CA8 /* WOTCoreDataStore.swift in Sources */,
@@ -742,18 +745,18 @@
 				1D60E598245FE7E5007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift in Sources */,
 				1D60E5B6245FE7E5007E5CA8 /* WOTRequestCoordinatorProtocol.swift in Sources */,
 				1D60E5C2245FE7E5007E5CA8 /* EventCDStash.swift in Sources */,
-				1D60E588245FE7E5007E5CA8 /* PKCase.swift in Sources */,
+				1D60E588245FE7E5007E5CA8 /* RequestPredicate.swift in Sources */,
 				1D60E5A9245FE7E5007E5CA8 /* WOTDataResponseAdapterProtocol.swift in Sources */,
 				1D60E52D245FE7A7007E5CA8 /* Dictionary_Merge.swift in Sources */,
 				1D60E531245FE7A7007E5CA8 /* NSManagedObjectContext+FindOrCreate.swift in Sources */,
-				1D60E58F245FE7E5007E5CA8 /* NSManagedObject+KeypathProtocol.swift in Sources */,
+				1D60E58F245FE7E5007E5CA8 /* NSManagedObject+RequestableProtocol.swift in Sources */,
 				1D60E5B1245FE7E5007E5CA8 /* WOTRequestArgumentsProtocol.swift in Sources */,
 				1D60E52F245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift in Sources */,
 				1D60E5BE245FE7E5007E5CA8 /* EventJSON.swift in Sources */,
 				1D60E5BF245FE7E5007E5CA8 /* EventMapping.swift in Sources */,
 				1D20FDE9246402F9009CFA22 /* EventWarning.swift in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
-				1D60E58C245FE7E5007E5CA8 /* WOTPrimaryKey.swift in Sources */,
+				1D60E58C245FE7E5007E5CA8 /* RequestExpression.swift in Sources */,
 				1D60E59C245FE7E5007E5CA8 /* DataAdapterProtocol.swift in Sources */,
 				1D41163124653F95009070AD /* EventLocalFetch.swift in Sources */,
 				1D60E59B245FE7E5007E5CA8 /* JSONMappableProtocol.swift in Sources */,
@@ -761,6 +764,7 @@
 				1D60E5D3245FE93E007E5CA8 /* DataAdapterError.swift in Sources */,
 				1D60E5AF245FE7E5007E5CA8 /* WOTRequest.swift in Sources */,
 				1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */,
+				1DD9D52A2467B16B0064D88C /* RequestableProtocol.swift in Sources */,
 				1D20FDEB24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift in Sources */,
 				1D60E59D245FE7E5007E5CA8 /* JSONDataAdapterProtocol.swift in Sources */,
 				1D60E5B8245FE7E5007E5CA8 /* EventCDMerge.swift in Sources */,

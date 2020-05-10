@@ -192,8 +192,8 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
 
 // MARK: - LogMessageSender -
 
-extension WOTCoreDataStore: LogMessageSender {
-    public var logSenderDescription: String {
+extension WOTCoreDataStore: Describable {
+    public var wotDescription: String {
         return String(describing: type(of: self))
     }
 }
@@ -201,7 +201,7 @@ extension WOTCoreDataStore: LogMessageSender {
 // MARK: - LogInspectorProtocol -
 
 extension WOTCoreDataStore {
-    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 

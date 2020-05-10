@@ -17,12 +17,12 @@ public class LogInspector: NSObject, LogInspectorProtocol {
         self.prioritiesToLog = priorities
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
         guard  let event = event else { return }
         guard isLoggable(eventClass: type(of: event)) else { return }
         let senderMessage: String
-        if let logSenderDescription = sender?.logSenderDescription {
-            senderMessage = "::\(logSenderDescription)"
+        if let wotDescription = sender?.wotDescription {
+            senderMessage = "::\(wotDescription)"
         } else {
             senderMessage = ""
         }

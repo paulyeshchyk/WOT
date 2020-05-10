@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol {
-
     public var wotDescription: String { return description }
 
     public let uuid: UUID = UUID()
@@ -24,7 +23,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
     @objc
     public var listeners = [WOTRequestListenerProtocol]()
 
-    public var predicate: RequestPredicate?
+    public var predicate: RequestParadigm?
 
     private var groups = [WOTRequestIdType]()
 

@@ -21,9 +21,9 @@ public class LinkedRemoteAsPrimaryRuleBuilder: LinkLookupRuleBuilderProtocol {
     }
 
     public func build() -> LinkLookupRule? {
-        let currentModulePK = PKCase(parentObjectIDList: parentObjectIDList)
-        currentModulePK[.primary] = linkedClazz.primaryKey(for: linkedObjectID as AnyObject, andType: .external)
+        let lookupPredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
+        lookupPredicate[.primary] = linkedClazz.primaryKey(for: linkedObjectID as AnyObject, andType: .external)
 
-        return LinkLookupRule(objectIdentifier: nil, pkCase: currentModulePK)
+        return LinkLookupRule(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

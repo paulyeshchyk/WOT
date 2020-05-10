@@ -14,7 +14,6 @@ public enum WOTCoredataStoreError: Error {
 
 @objc
 public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol, LogInspectorProtocol {
-
     @objc func workingContext() -> NSManagedObjectContext
     @objc func newPrivateContext() -> NSManagedObjectContext
 

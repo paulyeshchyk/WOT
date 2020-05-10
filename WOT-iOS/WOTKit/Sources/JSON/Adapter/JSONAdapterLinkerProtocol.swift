@@ -57,8 +57,8 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
     }
 }
 
-extension BaseJSONAdapterLinker: LogMessageSender {
-    public var logSenderDescription: String {
+extension BaseJSONAdapterLinker: Describable {
+    public var wotDescription: String {
         return String(describing: self)
     }
 }

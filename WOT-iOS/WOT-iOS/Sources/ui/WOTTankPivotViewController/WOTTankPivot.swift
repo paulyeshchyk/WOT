@@ -79,8 +79,8 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     }
 }
 
-class WOTTankPivotModel: WOTPivotDataModel, LogMessageSender {
-    var logSenderDescription: String = "WOTTankPivotModel"
+class WOTTankPivotModel: WOTPivotDataModel, Describable {
+    var wotDescription: String = "WOTTankPivotModel"
     var appManager: WOTAppManagerProtocol?
 
     convenience init(modelListener: WOTDataModelListener, appManager: WOTAppManagerProtocol?, settingsDatasource: WOTTankListSettingsDatasource) {

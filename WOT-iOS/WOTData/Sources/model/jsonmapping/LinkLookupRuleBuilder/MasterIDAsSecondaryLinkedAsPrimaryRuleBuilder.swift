@@ -23,9 +23,9 @@ public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: LinkLookupRuleBuilde
     }
 
     public func build() -> LinkLookupRule? {
-        let resultCase = PKCase()
-        resultCase[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
-        resultCase[.secondary] = masterClazz.primaryKey(for: masterObjectID, andType: .internal)
-        return LinkLookupRule(objectIdentifier: nil, pkCase: resultCase)
+        let lookupPredicate = RequestPredicate()
+        lookupPredicate[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
+        lookupPredicate[.secondary] = masterClazz.primaryKey(for: masterObjectID, andType: .internal)
+        return LinkLookupRule(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

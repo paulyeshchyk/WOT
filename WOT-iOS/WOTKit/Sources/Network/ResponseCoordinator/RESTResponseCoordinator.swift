@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessageSender {
+public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, Describable {
     private struct DataAdaptationPair {
         let dataAdapter: DataAdapterProtocol
         let data: Data?
@@ -22,7 +22,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
         requestCoordinator = rc
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -61,5 +61,5 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol, LogMessage
     }
 
     // MARK: LogMessageSender-
-    public var logSenderDescription: String = "WOTRequestDataParser"
+    public var wotDescription: String = "WOTRequestDataParser"
 }

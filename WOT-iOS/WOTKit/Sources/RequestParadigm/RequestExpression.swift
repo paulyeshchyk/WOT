@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class WOTPrimaryKey: NSObject {
+public class RequestExpression: NSObject {
     public var components: [String]
     public var value: AnyObject
     public var name: String { return components.joined(separator: ".")}
@@ -43,9 +43,9 @@ public class WOTPrimaryKey: NSObject {
     }
 
     @objc
-    public func foreignKey(byInsertingComponent: String) -> WOTPrimaryKey? {
+    public func foreignKey(byInsertingComponent: String) -> RequestExpression? {
         var newComponents = [byInsertingComponent]
         newComponents.append(contentsOf: self.components)
-        return WOTPrimaryKey(components: newComponents, value: self.value, nameAlias: self.nameAlias, predicateFormat: predicateFormat)
+        return RequestExpression(components: newComponents, value: self.value, nameAlias: self.nameAlias, predicateFormat: predicateFormat)
     }
 }

@@ -30,11 +30,11 @@ public class RootTagRuleBuilder: LinkLookupRuleBuilderProtocol {
         }
         guard let itemID1 = itemID else { return nil }
 
-        let resultCase = PKCase()
+        let lookupPredicate = RequestPredicate()
         if let primaryID = linkedClazz.primaryKey(for: itemID1, andType: .internal) {
-            resultCase[.primary] = primaryID
+            lookupPredicate[.primary] = primaryID
         }
 
-        return LinkLookupRule(objectIdentifier: itemID, pkCase: resultCase)
+        return LinkLookupRule(objectIdentifier: itemID, requestPredicate: lookupPredicate)
     }
 }

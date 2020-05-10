@@ -12,7 +12,7 @@ import CoreData
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileGun {
-    public override func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    public override func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
         //

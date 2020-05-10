@@ -21,7 +21,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         super.init()
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -94,7 +94,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol) throws {
+    public func startRequest(by requestId: WOTRequestIdType, requestPredicate: RequestParadigm, linker: JSONAdapterLinkerProtocol) throws {
         let request = try createRequest(forRequestId: requestId, withPredicate: requestPredicate)
 
         let arguments = requestPredicate.buildRequestArguments()
@@ -114,15 +114,15 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         return result
     }
 
-    private func createRequest(forRequestId requestId: WOTRequestIdType, withPredicate: RequestPredicate) throws -> WOTRequestProtocol {
+    private func createRequest(forRequestId requestId: WOTRequestIdType, withPredicate: RequestParadigm) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
         request.predicate = withPredicate
         return request
     }
 }
 
-extension WOTRequestManager: LogMessageSender {
-    public var logSenderDescription: String {
+extension WOTRequestManager: Describable {
+    public var wotDescription: String {
         return String(describing: type(of: self))
     }
 }
@@ -188,8 +188,18 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 }
 
-extension WOTRequestManager: Describable {
-    public var wotDescription: String {
-        return "WOTRequestManager"
+extension RequestParadigm {
+    public func buildRequestArguments() -> WOTRequestArguments {
+        let keyPaths = self.clazz.classKeypaths().compactMap {
+            self.addPreffix(to: $0)
+        }
+
+        let arguments = WOTRequestArguments()
+        #warning("forKey: fields should be refactored")
+        arguments.setValues(keyPaths, forKey: "fields")
+        self.primaryKeys.forEach {
+            arguments.setValues([$0.value], forKey: $0.nameAlias)
+        }
+        return arguments
     }
 }

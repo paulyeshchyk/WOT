@@ -12,15 +12,15 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension ModulesTree {
-    override public func mapping(array: [Any], context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(array: [Any], context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         print(array)
     }
 
-    override public func mapping(json: JSON, context: NSManagedObjectContext, pkCase: PKCase, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
         //
-        var parentObjectIDList = pkCase.parentObjectIDList
+        var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(self.objectID)
 
         let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
@@ -36,7 +36,7 @@ extension ModulesTree {
         let nextModulesHelper = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let ruleBuilder = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(pkCase: pkCase, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
+            let ruleBuilder = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: $0, parentObjectIDList: parentObjectIDList)
             mappingCoordinator?.linkRemote(modelClazz: Module.self, masterFetchResult: masterFetchResult, lookupRuleBuilder: ruleBuilder, keypathPrefix: nil, mapper: nextModulesHelper)
         }
 

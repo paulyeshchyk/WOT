@@ -11,11 +11,11 @@ import Foundation
 @objc
 public class LinkLookupRule: NSObject {
     public let objectIdentifier: Any?
-    public let pkCase: PKCase
+    public let requestPredicate: RequestPredicate
 
-    required public init(objectIdentifier: Any?, pkCase: PKCase) {
+    required public init(objectIdentifier: Any?, requestPredicate: RequestPredicate) {
         self.objectIdentifier = objectIdentifier
-        self.pkCase = pkCase
+        self.requestPredicate = requestPredicate
         super.init()
     }
 }

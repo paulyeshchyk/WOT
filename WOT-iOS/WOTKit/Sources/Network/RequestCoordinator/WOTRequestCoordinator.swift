@@ -18,7 +18,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         //
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: LogMessageSender?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Describable?) {
         appManager?.logInspector?.logEvent(event, sender: sender)
     }
 
@@ -114,8 +114,8 @@ extension WOTRequestCoordinator: WOTRequestModelBindingProtocol {
     }
 }
 
-extension WOTRequestCoordinator: LogMessageSender {
-    public var logSenderDescription: String {
+extension WOTRequestCoordinator: Describable {
+    public var wotDescription: String {
         return String(describing: type(of: self))
     }
 }

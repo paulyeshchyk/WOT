@@ -12,21 +12,21 @@ import WOTKit
 public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: LinkLookupRuleBuilderProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
-    private var pkCase: PKCase
+    private var requestPredicate: RequestPredicate
     private var parentObjectIDList: [NSManagedObjectID]?
 
-    public init(pkCase: PKCase, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, parentObjectIDList: [NSManagedObjectID]?) {
+    public init(requestPredicate: RequestPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, parentObjectIDList: [NSManagedObjectID]?) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
-        self.pkCase = pkCase
+        self.requestPredicate = requestPredicate
         self.parentObjectIDList = parentObjectIDList
     }
 
     public func build() -> LinkLookupRule? {
-        let modulePK = PKCase(parentObjectIDList: parentObjectIDList)
-        modulePK[.primary] = pkCase[.primary]
-        modulePK[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
+        let lookupPredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
+        lookupPredicate[.primary] = requestPredicate[.primary]
+        lookupPredicate[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
 
-        return LinkLookupRule(objectIdentifier: nil, pkCase: modulePK)
+        return LinkLookupRule(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

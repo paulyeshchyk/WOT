@@ -75,6 +75,7 @@ extension KeyedDecodingContainer {
         }
         return dictionary
     }
+
     // swiftlint:enable cyclomatic_complexity
 }
 
