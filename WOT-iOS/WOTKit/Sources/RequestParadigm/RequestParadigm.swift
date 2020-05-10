@@ -8,17 +8,25 @@
 
 import Foundation
 
-public class RequestParadigm: NSObject {
-    //
-    public var clazz: AnyClass
+public protocol RequestParadigmProtocol {
+    var clazz: AnyClass { get set }
+    var primaryKeys: [RequestExpression] { get }
+    func addPreffix(to: String) -> String
+}
 
-    public var primaryKeys: [RequestExpression] {
-        return requestPredicate?.allValues()?.compactMap { $0 } ?? []
-    }
+public class RequestParadigm: NSObject, RequestParadigmProtocol {
+
+    // MARK: - Public
 
     public var requestPredicate: RequestPredicate?
-
     public var keypathPrefix: String?
+    public var clazz: AnyClass
+
+    // MARK: - RequestParadigmProtocol
+
+    public var primaryKeys: [RequestExpression] {
+        return requestPredicate?.expressions()?.compactMap { $0 } ?? []
+    }
 
     public func addPreffix(to: String) -> String {
         guard let preffix = keypathPrefix else {
@@ -27,7 +35,7 @@ public class RequestParadigm: NSObject {
         return String(format: "%@%@", preffix, to)
     }
 
-    public init(clazz clazzTo: AnyClass, requestPredicate rp: RequestPredicate, keypathPrefix kp: String?) {
+    public init(clazz clazzTo: AnyClass, requestPredicate rp: RequestPredicate?, keypathPrefix kp: String?) {
         clazz = clazzTo
         requestPredicate = rp
         keypathPrefix = kp

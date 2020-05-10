@@ -8,22 +8,18 @@
 
 import CoreData
 
-public enum PKType: String {
+public enum RequestExpressionType: String {
     case primary
     case secondary
+}
 
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.rawValue)
-    }
+public enum PredicateCompoundType: Int {
+    case or
+    case and
 }
 
 @objc
 public class RequestPredicate: NSObject {
-    @objc
-    public enum PredicateCompoundType: Int {
-        case or = 0
-        case and = 1
-    }
 
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
@@ -41,30 +37,30 @@ public class RequestPredicate: NSObject {
         return wotDescription
     }
 
-    private var values: [PKType: Set<RequestExpression>] = .init()
+    private var _expressions: [RequestExpressionType: Set<RequestExpression>] = .init()
 
-    public subscript(pkType: PKType) -> RequestExpression? {
+    public subscript(pkType: RequestExpressionType) -> RequestExpression? {
         get {
-            return values[pkType]?.first
+            return _expressions[pkType]?.first
         }
         set {
             if let value = newValue {
-                var updatedSet: Set<RequestExpression> = values[pkType] ?? Set<RequestExpression>()
+                var updatedSet: Set<RequestExpression> = _expressions[pkType] ?? Set<RequestExpression>()
                 updatedSet.insert(value)
-                values[pkType] = updatedSet
+                _expressions[pkType] = updatedSet
             } else {
                 print("PKCase was not fully initialized")
             }
         }
     }
 
-    public func allValues(_ pkType: PKType? = nil) -> Set<RequestExpression>? {
+    public func expressions(_ pkType: RequestExpressionType? = nil) -> Set<RequestExpression>? {
         if let pkType = pkType {
-            return values[pkType]
+            return _expressions[pkType]
         } else {
             var updatedSet = Set<RequestExpression>()
-            values.keys.forEach {
-                values[$0]?.forEach { key in
+            _expressions.keys.forEach {
+                _expressions[$0]?.forEach { key in
                     updatedSet.insert(key)
                 }
             }
@@ -72,8 +68,8 @@ public class RequestPredicate: NSObject {
         }
     }
 
-    public func compoundPredicate(_ byType: PredicateCompoundType = .and) -> NSPredicate? {
-        let allPredicates = self.allValues()?.compactMap { $0.predicate }
+    public func compoundPredicate(_ byType: PredicateCompoundType) -> NSPredicate? {
+        let allPredicates = expressions()?.compactMap { $0.predicate }
         guard let predicates = allPredicates else { return nil }
         switch byType {
         case .and: return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
@@ -84,7 +80,7 @@ public class RequestPredicate: NSObject {
 
 extension RequestPredicate: Describable {
     public var wotDescription: String {
-        guard let objects = allValues(), !objects.isEmpty else {
+        guard let objects = expressions(), !objects.isEmpty else {
             return "empty case"
         }
         var result = [String]()

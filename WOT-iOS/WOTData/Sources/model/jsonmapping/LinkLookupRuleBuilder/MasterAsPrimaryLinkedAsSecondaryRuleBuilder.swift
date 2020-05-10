@@ -9,7 +9,7 @@
 import CoreData
 import WOTKit
 
-public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: LinkLookupRuleBuilderProtocol {
+public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
     private var requestPredicate: RequestPredicate
@@ -22,11 +22,11 @@ public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: LinkLookupRuleBuilderP
         self.parentObjectIDList = parentObjectIDList
     }
 
-    public func build() -> LinkLookupRule? {
+    public func build() -> RequestPredicateComposition? {
         let lookupPredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
         lookupPredicate[.primary] = requestPredicate[.primary]
         lookupPredicate[.secondary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
 
-        return LinkLookupRule(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

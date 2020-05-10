@@ -94,11 +94,11 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, requestPredicate: RequestParadigm, linker: JSONAdapterLinkerProtocol) throws {
-        let request = try createRequest(forRequestId: requestId, withPredicate: requestPredicate)
+    public func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol) throws {
+        let request = try createRequest(forRequestId: requestId, withPredicate: paradigm)
 
-        let arguments = requestPredicate.buildRequestArguments()
-        let groupId = "Nested\(String(describing: requestPredicate.clazz))-\(arguments)"
+        let arguments = paradigm.buildRequestArguments()
+        let groupId = "Nested\(String(describing: paradigm.clazz))-\(arguments)"
         try startRequest(request, withArguments: arguments, forGroupId: groupId, linker: linker)
     }
 
@@ -188,7 +188,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 }
 
-extension RequestParadigm {
+extension RequestParadigmProtocol {
     public func buildRequestArguments() -> WOTRequestArguments {
         let keyPaths = self.clazz.classKeypaths().compactMap {
             self.addPreffix(to: $0)

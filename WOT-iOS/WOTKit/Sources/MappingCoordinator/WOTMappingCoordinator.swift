@@ -39,7 +39,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
             } else {
                 if let linker = mapper {
                     let finalFetchResult = fetchResult.dublicate()
-                    finalFetchResult.predicate = requestPredicate.compoundPredicate()
+                    finalFetchResult.predicate = requestPredicate.compoundPredicate(.and)
                     linker.process(fetchResult: finalFetchResult, coreDataStore: self.coreDataStore, completion: completion)
                 } else {
                     completion(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
@@ -120,18 +120,18 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
         predicates.append(RequestParadigm(clazz: modelClazz, requestPredicate: requestPredicate, keypathPrefix: keypathPrefix))
 
         predicates.forEach { predicate in
-            fetchRemote(predicate: predicate, linker: mapper)
+            fetchRemote(paradigm: predicate, linker: mapper)
         }
     }
 
-    private func fetchRemote(predicate: RequestParadigm, linker: JSONAdapterLinkerProtocol) {
-        guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: predicate.clazz) else {
+    private func fetchRemote(paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol) {
+        guard let requestIDs = appManager?.requestManager?.coordinator.requestIds(forClass: paradigm.clazz) else {
             self.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
             return
         }
         requestIDs.forEach {
             do {
-                try appManager?.requestManager?.startRequest(by: $0, requestPredicate: predicate, linker: linker)
+                try appManager?.requestManager?.startRequest(by: $0, paradigm: paradigm, linker: linker)
             } catch {
                 self.logEvent(EventError(error, details: nil), sender: self)
             }
@@ -139,7 +139,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
     }
 
     //
-    public func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
+    public func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol) {
         guard let itemsList = array else { return }
 
         guard let lookupRule = lookupRuleBuilder.build() else {
@@ -157,7 +157,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
         })
     }
 
-    public func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: LinkLookupRuleBuilderProtocol) {
+    public func linkItem(from json: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol) {
         guard let itemJSON = json else { return }
 
         guard let lookupRule = lookupRuleBuilder.build() else {
@@ -175,7 +175,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol, Describable {
         })
     }
 
-    public func linkRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, lookupRuleBuilder: LinkLookupRuleBuilderProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
+    public func linkRemote(modelClazz: AnyClass, masterFetchResult: FetchResult, lookupRuleBuilder: RequestPredicateComposerProtocol, keypathPrefix: String?, mapper: JSONAdapterLinkerProtocol) {
         guard let lookupRule =  lookupRuleBuilder.build() else {
             logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return

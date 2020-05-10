@@ -9,7 +9,7 @@
 import CoreData
 import WOTKit
 
-public class RootTagRuleBuilder: LinkLookupRuleBuilderProtocol {
+public class RootTagRuleBuilder: RequestPredicateComposerProtocol {
     private var json: JSON?
     private var linkedClazz: PrimaryKeypathProtocol.Type
 
@@ -18,7 +18,7 @@ public class RootTagRuleBuilder: LinkLookupRuleBuilderProtocol {
         self.linkedClazz = linkedClazz
     }
 
-    public func build() -> LinkLookupRule? {
+    public func build() -> RequestPredicateComposition? {
         guard let json = self.json else { return nil }
 
         let itemID: AnyObject?
@@ -35,6 +35,6 @@ public class RootTagRuleBuilder: LinkLookupRuleBuilderProtocol {
             lookupPredicate[.primary] = primaryID
         }
 
-        return LinkLookupRule(objectIdentifier: itemID, requestPredicate: lookupPredicate)
+        return RequestPredicateComposition(objectIdentifier: itemID, requestPredicate: lookupPredicate)
     }
 }

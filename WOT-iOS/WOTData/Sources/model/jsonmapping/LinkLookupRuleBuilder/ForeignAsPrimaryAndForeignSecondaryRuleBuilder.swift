@@ -9,7 +9,7 @@
 import CoreData
 import WOTKit
 
-public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: LinkLookupRuleBuilderProtocol {
+public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: RequestPredicateComposerProtocol {
     private var requestPredicate: RequestPredicate
     private var foreignPrimarySelectKey: String
     private var foreignSecondarySelectKey: String
@@ -20,11 +20,11 @@ public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: LinkLookupRuleBuild
         self.foreignSecondarySelectKey = foreignSecondarySelectKey
     }
 
-    public func build() -> LinkLookupRule? {
+    public func build() -> RequestPredicateComposition? {
         let lookupPredicate = RequestPredicate()
         lookupPredicate[.primary] = requestPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
         lookupPredicate[.secondary] = requestPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
 
-        return LinkLookupRule(objectIdentifier: nil, requestPredicate: lookupPredicate)
+        return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

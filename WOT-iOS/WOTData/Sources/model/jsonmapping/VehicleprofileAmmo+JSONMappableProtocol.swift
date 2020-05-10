@@ -41,7 +41,7 @@ extension VehicleprofileAmmo {
 
         let ammoPredicate = RequestPredicate()
         ammoPredicate[.primary] = parentPrimaryKey
-        let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(), fetchStatus: .none)
+        let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(.and), fetchStatus: .none)
         mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, mapper: nil) { _, error in
             if let error = error {
                 mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)

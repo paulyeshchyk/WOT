@@ -30,8 +30,7 @@ public class FetchResult: NSObject, NSCopying, Describable {
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
 
-    #warning("make private")
-    public var objectID: NSManagedObjectID?
+    private var objectID: NSManagedObjectID?
 
     override public required init() {
         fatalError("")
@@ -77,14 +76,5 @@ public class EmptyFetchResult: FetchResult {
         let cntx = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         let objectID = NSManagedObjectID()
         self.init(context: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)
-    }
-
-    override public var objectID: NSManagedObjectID? {
-        get {
-            fatalError("should get here")
-        }
-        set {
-            fatalError("should not get here")
-        }
     }
 }

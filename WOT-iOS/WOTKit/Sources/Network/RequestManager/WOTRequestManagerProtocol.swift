@@ -27,7 +27,7 @@ public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol, 
 
     func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol) throws
 
-    func startRequest(by requestId: WOTRequestIdType, requestPredicate: RequestParadigm, linker: JSONAdapterLinkerProtocol) throws
+    func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigm, linker: JSONAdapterLinkerProtocol) throws
 
     func cancelRequests(groupId: WOTRequestIdType, with error: Error?)
 }
