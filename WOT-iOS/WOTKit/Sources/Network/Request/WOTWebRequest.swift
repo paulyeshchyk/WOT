@@ -12,6 +12,10 @@ open class WOTWEBRequest: WOTRequest {
     public var userInfo: JSON?
     public var httpBodyData: Data?
 
+    deinit {
+        //
+    }
+
     override open var description: String {
         let pumperDescription: String
         if let pumper = pumper {

@@ -10,6 +10,15 @@ import Foundation
 
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol {
+
+    override public init() {
+        super.init()
+    }
+
+    deinit {
+        //
+    }
+
     override public var description: String {
         return String(describing: type(of: self))
     }

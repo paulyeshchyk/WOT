@@ -9,7 +9,18 @@
 import Foundation
 
 class WOTWebRequestBuilder {
-    private func buildURL(path: String, hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URL {
+
+    public func build(service: WOTWebServiceProtocol, hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URLRequest {
+        let url = buildURL(hostConfiguration: hostConfiguration, path: service.path, args: args, bodyData: bodyData)
+
+        var result = URLRequest(url: url)
+        result.httpBody = bodyData
+        result.timeoutInterval = 0
+        result.httpMethod = service.method.stringRepresentation
+        return result
+    }
+
+    private func buildURL(hostConfiguration: WOTHostConfigurationProtocol, path: String, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URL {
         let urlQuery: String? = hostConfiguration.urlQuery(with: args)
 
         var components = URLComponents()
@@ -22,16 +33,6 @@ class WOTWebRequestBuilder {
         guard let result = components.url else {
             fatalError("url not created")
         }
-        return result
-    }
-
-    public func build(service: WOTWebServiceProtocol, hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URLRequest {
-        let url = buildURL(path: service.path, hostConfiguration: hostConfiguration, args: args, bodyData: bodyData)
-
-        var result = URLRequest(url: url)
-        result.httpBody = bodyData
-        result.timeoutInterval = 0
-        result.httpMethod = service.method.stringRepresentation
         return result
     }
 }
