@@ -73,9 +73,8 @@ class WOTTankTreeFetchController: WOTDataFetchController {
 
             let parents = findTheParent(childId: ident, listOfNodes: listofNodes)
             if  parents.count > 0 {
-                parents.forEach({$0.addChild(value);print("ident\(ident);parent:\($0.name)")})
+                parents.forEach({$0.addChild(value)})
             } else {
-                print("ident:\(ident);parent:nil")
                 root.addChild(value)
             }
         }

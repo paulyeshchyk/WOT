@@ -157,7 +157,7 @@ extension JSONAdapter {
             }
         }
 
-        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: requestPredicate[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
+        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: requestPredicate[.primary]?.predicate, visibleInContext: MAINCONTEXT, completion: { fetchResult, error in
 
             if let error = error {
                 localCallback(fetchResult, error)

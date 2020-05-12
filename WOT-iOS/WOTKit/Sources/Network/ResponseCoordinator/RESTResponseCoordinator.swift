@@ -40,11 +40,16 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
             onRequestComplete(request, self, nil)
             return
         }
+
+        let localCallback: OnRequestComplete = {request,data,error in
+            onRequestComplete(request, data, error)
+        }
+
         var dataAdaptationPair: [DataAdaptationPair] = .init()
         requestIds.forEach({ requestIdType in
             do {
                 let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request, linker: linker)
-                adapter.onJSONDidParse = onRequestComplete
+                adapter.onJSONDidParse = localCallback
                 let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
                 dataAdaptationPair.append(pair)
             } catch let error {

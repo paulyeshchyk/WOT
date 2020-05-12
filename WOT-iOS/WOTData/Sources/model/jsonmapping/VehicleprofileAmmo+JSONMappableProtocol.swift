@@ -58,14 +58,18 @@ extension VehicleprofileAmmo {
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration {
-                if let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo {
-                    ammo.penetration = penetration
+            guard let penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmoPenetration.self))
+                return
+            }
+            guard let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))
+                return
+            }
 
-                    coreDataStore?.stash(context: context) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            ammo.penetration = penetration
+            coreDataStore?.stash(context: context) { error in
+                completion(fetchResult, error)
             }
         }
     }

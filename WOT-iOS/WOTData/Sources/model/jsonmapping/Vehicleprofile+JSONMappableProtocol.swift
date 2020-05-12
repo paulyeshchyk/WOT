@@ -90,14 +90,18 @@ extension Vehicleprofile {
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let radio = fetchResult.managedObject() as? VehicleprofileRadio {
-                if let vehicleProfile = masterFetchResult?.managedObject(inContext: context) as? Vehicleprofile {
-                    vehicleProfile.radio = radio
+            guard let radio = fetchResult.managedObject() as? VehicleprofileRadio else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileRadio.self))
+                return
+            }
+            guard let vehicleProfile = masterFetchResult?.managedObject(inContext: context) as? Vehicleprofile else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
+                return
+            }
+            vehicleProfile.radio = radio
 
-                    coreDataStore?.stash(context: context) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            coreDataStore?.stash(context: context) { error in
+                completion(fetchResult, error)
             }
         }
     }

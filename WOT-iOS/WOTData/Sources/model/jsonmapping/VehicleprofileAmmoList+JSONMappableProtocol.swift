@@ -34,14 +34,17 @@ extension VehicleprofileAmmoList {
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let ammo = fetchResult.managedObject() as? VehicleprofileAmmo {
-                if let ammoList = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmoList {
-                    ammoList.addToVehicleprofileAmmo(ammo)
-
-                    coreDataStore?.stash(context: context) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            guard let ammo = fetchResult.managedObject() as? VehicleprofileAmmo else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))
+                return
+            }
+            guard let ammoList = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmoList else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmoList.self))
+                return
+            }
+            ammoList.addToVehicleprofileAmmo(ammo)
+            coreDataStore?.stash(context: context) { error in
+                completion(fetchResult, error)
             }
         }
     }
