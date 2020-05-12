@@ -78,14 +78,18 @@ extension Module {
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine {
-                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
-                    vehicleProfileEngine.engine_id = self.mappedObjectIdentifier as? NSDecimalNumber
-                    module.engine = vehicleProfileEngine
-                    coreDataStore?.stash(context: context) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            guard let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileEngine.self))
+                return
+            }
+            guard let module = masterFetchResult?.managedObject(inContext: context) as? Module else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
+                return
+            }
+            vehicleProfileEngine.engine_id = self.mappedObjectIdentifier as? NSDecimalNumber
+            module.engine = vehicleProfileEngine
+            coreDataStore?.stash(context: context) { error in
+                completion(fetchResult, error)
             }
         }
     }

@@ -61,10 +61,6 @@ extension Vehicles {
     }
 
     private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
-//        let ruleBuilder = MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: ModulesTree.self, linkedObjectID: module_id)
-//        let mapperClazz = Vehicles.ModulesTreeLinker.self
-//        mappingCoordinator?.linkItem(from: json, masterFetchResult: masterFetchResult, linkedClazz: ModulesTree.self, mapperClazz: mapperClazz, lookupRuleBuilder: ruleBuilder)
-
         let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
@@ -116,16 +112,20 @@ extension Vehicles {
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let context = fetchResult.context
-            if let defaultProfile = fetchResult.managedObject() as? Vehicleprofile {
-                if let vehicles = masterFetchResult?.managedObject(inContext: context) as? Vehicles {
-                    vehicles.default_profile = defaultProfile
-                    vehicles.modules_tree?.forEach {
-                        ($0 as? ModulesTree)?.default_profile = defaultProfile
-                    }
-                    coreDataStore?.stash(context: context) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            guard let defaultProfile = fetchResult.managedObject() as? Vehicleprofile else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
+                return
+            }
+            guard let vehicles = masterFetchResult?.managedObject(inContext: context) as? Vehicles else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
+                return
+            }
+            vehicles.default_profile = defaultProfile
+            vehicles.modules_tree?.forEach {
+                ($0 as? ModulesTree)?.default_profile = defaultProfile
+            }
+            coreDataStore?.stash(context: context) { error in
+                completion(fetchResult, error)
             }
         }
     }

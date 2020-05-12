@@ -134,12 +134,12 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
         logEvent(EventTimeMeasure("Context save start", uuid: uuid))
     }
 
-    public func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, callback: @escaping FetchResultErrorCompletion) {
-        let privateCallback: FetchResultErrorCompletion = { fetchResult, error in
+    public func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, completion: @escaping FetchResultErrorCompletion) {
+        let localCallback: FetchResultErrorCompletion = { fetchResult, error in
             visibleInContext.perform {
                 let fetchResultForContext = fetchResult.dublicate()
                 fetchResultForContext.context = visibleInContext
-                callback(fetchResultForContext, error)
+                completion(fetchResultForContext, error)
             }
         }
 
@@ -153,7 +153,7 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
                 let managedObjectID = managedObject.objectID
                 self.stash(context: context) { error in
                     let fetchResult = FetchResult(context: context, objectID: managedObjectID, predicate: predicate, fetchStatus: .none)
-                    privateCallback(fetchResult, error)
+                    localCallback(fetchResult, error)
                 }
             } catch {
                 self.logEvent(EventError(error, details: nil), sender: nil)
