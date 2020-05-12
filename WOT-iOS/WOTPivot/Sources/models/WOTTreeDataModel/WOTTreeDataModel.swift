@@ -99,7 +99,7 @@ extension WOTTreeDataModel {
         self.nodeConnectorIndex.reset()
 
         let nodes = self.rootNodes(sortComparator: nil)
-        self.nodeConnectorIndex.add(nodes: nodes, level: nil)
+        self.nodeConnectorIndex.add(nodes: nodes, level: NodeLevelTypeZero)
     }
 }
 

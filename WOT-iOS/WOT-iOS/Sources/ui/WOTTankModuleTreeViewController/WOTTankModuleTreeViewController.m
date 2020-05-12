@@ -209,7 +209,8 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.model nodesCountWithSection:section];
+    NSInteger result = [self.model nodesCountWithSection:section];
+    return result;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -322,9 +323,7 @@
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
     
     if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self reloadModel];
-        });
+        [self reloadModel];
     }
 }
 

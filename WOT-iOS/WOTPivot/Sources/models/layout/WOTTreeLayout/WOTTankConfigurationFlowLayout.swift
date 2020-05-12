@@ -75,12 +75,11 @@ extension WOTTankConfigurationFlowLayout {
 
     public func layoutAttribute(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes? {
         let cellFrame = self.cellFrame(indexPath: indexPath)
-        if cellFrame.intersects(rect) {
-            let attrs = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-            attrs.frame = cellFrame
-            return attrs
-        }
-        return nil
+        #warning("check condition")
+//        guard cellFrame.intersects(rect) else { return nil }
+        let attrs = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+        attrs.frame = cellFrame
+        return attrs
     }
 
     public func cellFrame(indexPath: IndexPath) -> CGRect {

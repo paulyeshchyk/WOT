@@ -10,20 +10,19 @@ import Foundation
 typealias WOTIndexTypeAlias = [Int: [WOTNodeProtocol]]
 
 class WOTTreeConnectorNodeIndex: NSObject, WOTTreeConnectorNodeIndexProtocol {
-    func add(nodes: [WOTNodeProtocol], level: Any?) {
+
+    func add(nodes: [WOTNodeProtocol], level: NodeLevelType) {
         nodes.forEach { node in
             self.add(node: node, level: level)
         }
     }
 
-    func add(node: WOTNodeProtocol, level: Any?) {
-        let atLevel = (level as? Int) ?? 0
-
-        var itemsAtLevel = self.levelIndex[atLevel] ?? [WOTNodeProtocol]()
+    func add(node: WOTNodeProtocol, level: NodeLevelType) {
+        var itemsAtLevel = self.levelIndex[level] ?? [WOTNodeProtocol]()
         itemsAtLevel.append(node)
-        self.levelIndex[atLevel] = itemsAtLevel
+        self.levelIndex[level] = itemsAtLevel
 
-        self.add(nodes: node.children, level: atLevel + 1)
+        self.add(nodes: node.children, level: level + 1)
     }
 
     func addNodeToIndex(_ node: WOTNodeProtocol) {
@@ -55,7 +54,7 @@ class WOTTreeConnectorNodeIndex: NSObject, WOTTreeConnectorNodeIndexProtocol {
         return self.levelIndex[atLevel]?.count ?? 0
     }
 
-    func set(itemsCount: Int, atLevel: Int) {}
+    func set(itemsCount: Int, atLevel: NodeLevelType) {}
 
     func item(indexPath: NSIndexPath) -> WOTNodeProtocol? {
         let itemsAtSection = self.levelIndex[indexPath.section]

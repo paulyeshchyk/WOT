@@ -15,7 +15,7 @@ public protocol WOTTreeModulesTreeProtocol: NSObjectProtocol {
     func moduleType() -> String?
     func moduleLocalImageURL() -> URL?
     func moduleValue(forKey: String) -> Any?
-    func nestedModules() -> [WOTTreeModulesTreeProtocol]?
+    func next_nodesId() -> [Int]?
 }
 
 @objc

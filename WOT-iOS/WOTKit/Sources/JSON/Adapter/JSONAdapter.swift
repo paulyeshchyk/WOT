@@ -136,8 +136,10 @@ extension DataAdapterProtocol {
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion) {
-        guard Thread.current.isMainThread else {
+    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultErrorCompletion) {
+
+        let currentThread = Thread.current
+        guard currentThread.isMainThread else {
             fatalError("thread is not main")
         }
 
@@ -149,10 +151,16 @@ extension JSONAdapter {
             fatalError("working context is not defined")
         }
 
+        let localCallback: FetchResultErrorCompletion = { fetchResult, error in
+            DispatchQueue.main.async {
+                externalCallback(fetchResult, error)
+            }
+        }
+
         coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: requestPredicate[.primary]?.predicate, visibleInContext: MAINCONTEXT, callback: { fetchResult, error in
 
             if let error = error {
-                callback(fetchResult, error)
+                localCallback(fetchResult, error)
                 return
             }
 
@@ -163,7 +171,7 @@ extension JSONAdapter {
                     self.logEvent(EventError(error, details: nil), sender: self)
                 }
                 self.logEvent(EventJSONEnded("\(String(describing: requestPredicate))", initiatedIn: jsonStartParsingDate), sender: self)
-                callback(fetchResult, nil)
+                localCallback(fetchResult, nil)
             }
         })
     }

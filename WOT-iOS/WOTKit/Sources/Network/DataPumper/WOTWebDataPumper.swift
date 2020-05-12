@@ -9,10 +9,12 @@
 import Foundation
 
 class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol {
+    enum WOTWebDataPumperError: Error {
+        case urlNotDefined
+    }
+
     let request: URLRequest
     public private(set) var completion: DataReceiveCompletion
-    private var data: Data?
-    private var connection: NSURLConnection?
 
     deinit {
 //        print("deinit WOTWebDataPumper")
@@ -37,37 +39,18 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol {
         self.completion = completion
 
         super.init()
-
-        connection = NSURLConnection(request: request, delegate: self, startImmediately: false)
     }
 
     public func start() {
-        DispatchQueue.main.async { [weak self] in
-            self?.connection?.start()
+        guard let url = request.url else {
+            completion(nil, WOTWebDataPumperError.urlNotDefined)
+            return
         }
-    }
-}
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            DispatchQueue.main.async { [weak self] in
+                self?.completion(data, error)
+            }
 
-// MARK: - NSURLConnectionDataDelegate
-
-extension WOTWebDataPumper: NSURLConnectionDataDelegate {
-    func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
-        data = Data()
-    }
-
-    func connection(_ connection: NSURLConnection, didReceive data: Data) {
-        self.data?.append(data)
-    }
-
-    func connectionDidFinishLoading(_ connection: NSURLConnection) {
-        DispatchQueue.main.async { [weak self] in
-            self?.completion(self?.data, nil)
-        }
-    }
-
-    func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
-        DispatchQueue.main.async { [weak self] in
-            self?.completion(nil, error)
-        }
+        }.resume()
     }
 }

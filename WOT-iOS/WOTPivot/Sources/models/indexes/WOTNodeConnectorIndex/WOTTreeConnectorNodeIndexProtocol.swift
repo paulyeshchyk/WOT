@@ -11,7 +11,7 @@ import Foundation
 public protocol WOTTreeConnectorNodeIndexProtocol: WOTNodeIndexProtocol {
     var width: Int { get }
     var levels: Int { get }
-    func itemsCount(atLevel: Int) -> Int
-    func set(itemsCount: Int, atLevel: Int)
+    func itemsCount(atLevel: NodeLevelType) -> Int
+    func set(itemsCount: Int, atLevel: NodeLevelType)
     func indexPath(forNode: WOTNodeProtocol) -> IndexPath?
 }

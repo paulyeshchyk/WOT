@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import WOTPivot
 import WOTData
+import WOTPivot
 
 @objc
 class WOTTankTreeFetchController: WOTDataFetchController {
@@ -69,28 +69,36 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func append(listofNodes: [Int: WOTNodeProtocol], into root: WOTNodeProtocol) {
-        listofNodes.forEach { (_, value) in
-            guard let modulesTree = (value as? WOTTreeModuleNodeProtocol)?.modulesTree else {
-                return
-            }
-            guard let nestedModules = modulesTree.nestedModules() else {
+        listofNodes.forEach { ident, value in
+
+            let parents = findTheParent(childId: ident, listOfNodes: listofNodes)
+            if  parents.count > 0 {
+                parents.forEach({$0.addChild(value);print("ident\(ident);parent:\($0.name)")})
+            } else {
+                print("ident:\(ident);parent:nil")
                 root.addChild(value)
-                return
             }
-            nestedModules.forEach({ (module) in
-                guard let prevNode = listofNodes[module.moduleIdInt()] else {
-                    root.addChild(value)
-                    return
-                }
-                prevNode.addChild(value)
-            })
         }
+    }
+
+    private func findTheParent(childId: Int, listOfNodes: [Int: WOTNodeProtocol]) -> [WOTNodeProtocol] {
+        var foundParents: [WOTNodeProtocol] = []
+
+        listOfNodes.forEach { (element) in
+            if let next_nodesId = (element.value as? WOTTreeModuleNodeProtocol)?.modulesTree.next_nodesId() {
+                if next_nodesId.contains(childId) {
+                    foundParents.append(element.value)
+                }
+            }
+        }
+
+        return foundParents
     }
 
     typealias NodeCreateClosure = (Int, ModulesTree) -> Void
 
     private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
-        modulesSet.forEach { (submodule) in
+        modulesSet.forEach { submodule in
             if let moduleId = submodule.module_id?.intValue {
                 if submodule.isCompatible(forTankId: tankId) {
                     nodeCreation(moduleId, submodule)
@@ -103,16 +111,16 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func transform(modulesTree: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
-        guard let submodules = modulesTree.next_modules as? Set<ModulesTree> else {
+        guard let submodules = modulesTree.next_modules as? Set<ModulesTree>, submodules.count > 0 else {
             return
         }
-        submodules.forEach({ (submodule) in
+        submodules.forEach { submodule in
             if let moduleId = submodule.module_id?.intValue, submodule.isCompatible(forTankId: tankId) {
                 nodeCreation(moduleId, submodule)
             }
 
             self.transform(modulesTree: submodule, withId: tankId, nodeCreation: nodeCreation)
-        })
+        }
     }
 }
 
@@ -125,7 +133,7 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
         guard let imageName = self.type else {
             return nil
         }
-        guard let path =  Bundle.main.url(forResource: imageName, withExtension: "png") else {
+        guard let path = Bundle.main.url(forResource: imageName, withExtension: "png") else {
             return nil
         }
         return path
@@ -145,11 +153,13 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
 
     func isCompatible(forTankId: NSNumber) -> Bool {
         guard let tanksSet = self.next_tanks as? Set<Vehicles> else { return false }
-        let filtered = tanksSet.filter({$0.tank_id?.intValue == forTankId.intValue})
+        let filtered = tanksSet.filter { $0.tank_id?.intValue == forTankId.intValue }
         return filtered.count > 0
     }
 
-    public func nestedModules() -> [WOTTreeModulesTreeProtocol]? {
-        return nil
+    public func next_nodesId() -> [Int]? {
+        return self.next_modules?.compactMap {
+            ($0 as? Module)?.module_id?.intValue
+        }
     }
 }

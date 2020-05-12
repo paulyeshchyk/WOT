@@ -19,13 +19,13 @@ class WOTPivotNodeIndex: WOTPivotNodeIndexProtocol {
         index.removeAll()
     }
 
-    func add(nodes: [WOTNodeProtocol], level: Any?) {
+    func add(nodes: [WOTNodeProtocol], level: NodeLevelType) {
         nodes.forEach { (node) in
             self.add(node: node, level: level)
         }
     }
 
-    func add(node: WOTNodeProtocol, level: Any?) {
+    func add(node: WOTNodeProtocol, level: NodeLevelType) {
         let allItems = WOTNodeEnumerator.sharedInstance.allItems(fromNode: node)
         allItems.forEach { (node) in
             index[node.index] = node
