@@ -33,6 +33,10 @@ public protocol LogEventProtocol {
     var name: String { get }
 }
 
+public protocol LogInspectorHolderProtocol {
+    var logInspector: LogInspectorProtocol { get }
+}
+
 @objc
 public protocol LogInspectorProtocol: class {
     func logEvent(_ event: LogEventProtocol?, sender: Any?)

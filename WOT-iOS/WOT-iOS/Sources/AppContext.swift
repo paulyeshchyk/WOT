@@ -1,0 +1,57 @@
+//
+//  AppContext.swift
+//  WOT-iOS
+//
+//  Created by Pavel Yeshchyk on 5/15/20.
+//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
+//
+
+import Foundation
+
+typealias AppContextHolderProtocol = WOTHostConfigurationHolderProtocol
+    & WOTRequestManagerHolderProtocol
+    & WOTWebSessionManagerHolderProtocol
+    & LogInspectorHolderProtocol
+    & WOTCoreDataStoreHolderProtocol
+    & WOTMappingCoordinatorHolderProtocol
+    & WOTResponseCoordinatorHolderProtocol
+
+public class AppContext: NSObject, AppContextHolderProtocol {
+    public let responseCoordinator: WOTResponseCoordinatorProtocol
+    public let mappingCoordinator: WOTMappingCoordinatorProtocol
+    public let coreDataStore: WOTCoreDataStore
+    public let logInspector: LogInspectorProtocol
+    public let webSessionManager: WOTWebSessionManagerProtocol
+    public let requestManager: WOTRequestManagerProtocol
+    public let hostConfiguration: WOTHostConfigurationProtocol
+
+    init(responseCoordinator: WOTResponseCoordinatorProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, coreDataStore: WOTCoreDataStore, logInspector: LogInspectorProtocol, webSessionManager: WOTWebSessionManagerProtocol, requestManager: WOTRequestManagerProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
+        self.responseCoordinator = responseCoordinator
+        self.mappingCoordinator = mappingCoordinator
+        self.coreDataStore = coreDataStore
+        self.logInspector = logInspector
+        self.webSessionManager = webSessionManager
+        self.requestManager = requestManager
+        self.hostConfiguration = hostConfiguration
+    }
+
+    static func makeContext() -> AppContext {
+        let logPriorities: [LogEventType] = [.localFetch, .remoteFetch, .error, .lifeCycle, .web, .json]
+        let requestCoordinator = WOTRequestCoordinator()
+        let hostConfiguration = WOTWebHostConfiguration()
+        let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, hostConfiguration: hostConfiguration)
+        let sessionManager = WOTWebSessionManager()
+        let logInspector = LogInspector(priorities: logPriorities)
+        let coreDataProvider = WOTCustomCoreDataProvider()
+        let mappingCoordinator = WOTMappingCoordinator()
+        let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator)
+
+        return AppContext(responseCoordinator: responseCoordinator,
+                          mappingCoordinator: mappingCoordinator,
+                          coreDataStore: coreDataProvider,
+                          logInspector: logInspector,
+                          webSessionManager: sessionManager,
+                          requestManager: requestManager,
+                          hostConfiguration: hostConfiguration)
+    }
+}

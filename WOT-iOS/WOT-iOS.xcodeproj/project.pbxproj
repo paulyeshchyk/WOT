@@ -194,6 +194,7 @@
 		1DC07BA91B3B003D002FAA72 /* Messaging-Categorize-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07BA01B3B003D002FAA72 /* Messaging-Categorize-icon.png */; };
 		1DC07BAA1B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07BA11B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png */; };
 		1DC07BAB1B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07BA21B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png */; };
+		1DCA79E3246E7A6D002B08CB /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA79E2246E7A6D002B08CB /* AppContext.swift */; };
 		1DCC7F1D1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC7F1B1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.m */; };
 		1DCC7F1E1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F1C1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.xib */; };
 		1DCC7F251B2ED07F005FF193 /* WOTArrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F1F1B2ED07F005FF193 /* WOTArrowDown.png */; };
@@ -549,6 +550,7 @@
 		1DC07BA01B3B003D002FAA72 /* Messaging-Categorize-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon.png"; sourceTree = "<group>"; };
 		1DC07BA11B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon@2x.png"; sourceTree = "<group>"; };
 		1DC07BA21B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon@3x.png"; sourceTree = "<group>"; };
+		1DCA79E2246E7A6D002B08CB /* AppContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		1DCC7F1A1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingSortTableViewCell.h; sourceTree = "<group>"; };
 		1DCC7F1B1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingSortTableViewCell.m; sourceTree = "<group>"; };
 		1DCC7F1C1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingSortTableViewCell.xib; sourceTree = "<group>"; };
@@ -1452,6 +1454,7 @@
 				1DD646361B1C616A00B0EC76 /* Supporting Files */,
 				1D3005C5241A285400E453B9 /* WOTAppDelegateProtocol.swift */,
 				1D038A5F245ACE110015101F /* AppDelegate.swift */,
+				1DCA79E2246E7A6D002B08CB /* AppContext.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -2268,6 +2271,7 @@
 				1D010D7A1B8AF60300FA6A75 /* UIColor+HSB.m in Sources */,
 				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
 				1DDEE3931B8F353200C90D4B /* WOTTankPivotEmptyCollectionViewCell.m in Sources */,
+				1DCA79E3246E7A6D002B08CB /* AppContext.swift in Sources */,
 				1DE1FA1F245EE7C8002866A3 /* NSString+RomanUtils.m in Sources */,
 				1D4C92581B25F27200E320B5 /* WOTLanguageSelectorViewController.m in Sources */,
 				1D519D1E1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m in Sources */,

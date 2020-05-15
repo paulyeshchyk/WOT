@@ -8,6 +8,10 @@
 
 import Foundation
 
+public protocol WOTResponseCoordinatorHolderProtocol {
+    var responseCoordinator: WOTResponseCoordinatorProtocol { get }
+}
+
 @objc
 public protocol WOTResponseCoordinatorProtocol: LogInspectorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }

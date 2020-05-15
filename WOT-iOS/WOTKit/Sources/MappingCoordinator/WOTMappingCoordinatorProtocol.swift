@@ -10,6 +10,10 @@ import CoreData
 
 public typealias ThrowableCompletion = (Error?) -> Void
 
+public protocol WOTMappingCoordinatorHolderProtocol {
+    var mappingCoordinator: WOTMappingCoordinatorProtocol { get }
+}
+
 @objc
 public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }

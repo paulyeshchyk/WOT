@@ -9,6 +9,10 @@
 import CoreData
 import Foundation
 
+public protocol WOTCoreDataStoreHolderProtocol {
+    var coreDataStore: WOTCoreDataStore { get }
+}
+
 @objc
 open class WOTCoreDataStore: NSObject {
     // MARK: - Open
