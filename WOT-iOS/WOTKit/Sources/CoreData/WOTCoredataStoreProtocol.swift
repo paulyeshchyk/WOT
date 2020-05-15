@@ -8,6 +8,11 @@
 
 import CoreData
 
+
+public protocol WOTCoreDataStoreHolderProtocol {
+    var coreDataStore: WOTCoredataStoreProtocol { get }
+}
+
 @objc
 public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol, LogInspectorProtocol {
     @objc func workingContext() -> NSManagedObjectContext

@@ -9,10 +9,6 @@
 import CoreData
 import Foundation
 
-public protocol WOTCoreDataStoreHolderProtocol {
-    var coreDataStore: WOTCoredataStoreProtocol { get }
-}
-
 @objc
 open class WOTCoreDataStore: NSObject {
     // MARK: - Open
@@ -21,6 +17,11 @@ open class WOTCoreDataStore: NSObject {
     open var modelURL: URL? { fatalError("should be overriden") }
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { fatalError("should be overriden") }
+
+    private let logInspector: LogInspectorProtocol
+    public init(logInspector li: LogInspectorProtocol) {
+        logInspector = li
+    }
 
     // MARK: - Private
 
@@ -199,10 +200,10 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
 
 extension WOTCoreDataStore {
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
+        logInspector.logEvent(event, sender: sender)
     }
 
     public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
+        logInspector.logEvent(event)
     }
 }

@@ -19,15 +19,16 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
 
 //        let logPriorities = Set(LogEventType.allValues).subtracting([LogEventType.performance]).compactMap {$0}
         let logPriorities: [LogEventType] = [.localFetch, .remoteFetch, .error, .lifeCycle, .web, .json]
-
-        let requestCoordinator = WOTRequestCoordinator()
-        let hostConfiguration = WOTWebHostConfiguration()
-        let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, hostConfiguration: hostConfiguration)
-        let sessionManager = WOTWebSessionManager()
         let logInspector = LogInspector(priorities: logPriorities)
-        let coreDataProvider = WOTCustomCoreDataProvider()
-        let mappingCoordinator = WOTMappingCoordinator()
-        let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator)
+
+        let requestCoordinator = WOTRequestCoordinator(logInspector: logInspector)
+        let hostConfiguration = WOTWebHostConfiguration()
+        let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator, logInspector: logInspector)
+
+        let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, hostConfiguration: hostConfiguration, logInspector: logInspector, responseCoordinator: responseCoordinator)
+        let sessionManager = WOTWebSessionManager()
+        let coreDataProvider = WOTCustomCoreDataProvider(logInspector: logInspector)
+        let mappingCoordinator = WOTMappingCoordinator(logInspector: logInspector, coreDataStore: coreDataProvider, requestManager: requestManager, requestCoordinator: requestCoordinator)
 
         appManager.hostConfiguration = hostConfiguration
         appManager.requestCoordinator = requestCoordinator

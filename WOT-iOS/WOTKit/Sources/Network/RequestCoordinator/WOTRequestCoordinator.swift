@@ -12,10 +12,12 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: JSONAdapterProtocol.Type] = .init()
     public var appManager: WOTAppManagerProtocol?
+    private var logInspector: LogInspectorProtocol
 
-    override public init() {
+    public init(logInspector li: LogInspectorProtocol) {
+        logInspector = li
+
         super.init()
-        //
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {

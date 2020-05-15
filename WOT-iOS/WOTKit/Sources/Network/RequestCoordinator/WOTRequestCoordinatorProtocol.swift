@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public protocol WOTRequestCoordinatorProtocol: LogInspectorProtocol {
-    var appManager: WOTAppManagerProtocol? { get set }
     func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]
     func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]

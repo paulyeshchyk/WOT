@@ -16,18 +16,20 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
 
     public var appManager: WOTAppManagerProtocol?
     public var requestCoordinator: WOTRequestCoordinatorProtocol
+    public var logInspector: LogInspectorProtocol
 
     // MARK: - WOTResponseCoordinatorProtocol
-    public required init(requestCoordinator rc: WOTRequestCoordinatorProtocol) {
+    public required init(requestCoordinator rc: WOTRequestCoordinatorProtocol, logInspector li: LogInspectorProtocol) {
         requestCoordinator = rc
+        logInspector = li
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
+        logInspector.logEvent(event, sender: sender)
     }
 
     public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
+        logInspector.logEvent(event)
     }
 
     public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws {

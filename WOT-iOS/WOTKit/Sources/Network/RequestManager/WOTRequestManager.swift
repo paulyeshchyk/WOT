@@ -15,25 +15,28 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     @objc
-    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
+    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol, logInspector li: LogInspectorProtocol, responseCoordinator responseC: WOTResponseCoordinatorProtocol) {
         coordinator = requestCoordinator
         hostConfiguration = hostConfig
+        logInspector = li
+        responseCoordinator = responseC
         super.init()
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
+        logInspector.logEvent(event, sender: sender)
     }
 
     public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
+        logInspector.logEvent(event)
     }
 
     // MARK: WOTRequestManagerProtocol-
 
-    @objc public var appManager: WOTAppManagerProtocol?
     @objc public var coordinator: WOTRequestCoordinatorProtocol
     @objc public var hostConfiguration: WOTHostConfigurationProtocol
+    @objc public var logInspector: LogInspectorProtocol
+    @objc public var responseCoordinator: WOTResponseCoordinatorProtocol
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     fileprivate var grouppedRequests: [WOTRequestIdType: [WOTRequestProtocol]] = [:]
@@ -138,20 +141,15 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        guard let dataparser = appManager?.responseCoordinator else {
-            logEvent(EventError(WOTRequestManagerError.dataparserNotFound(request), details: self), sender: self)
-            return
-        }
-
         guard let adapterLinker = grouppedLinkers[request.uuid.uuidString] else {
             logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
             return
         }
         do {
-            try dataparser.parseResponse(data: data,
-                                         forRequest: request,
-                                         linker: adapterLinker,
-                                         onRequestComplete: onRequestComplete(_:_:error:))
+            try responseCoordinator.parseResponse(data: data,
+                                                  forRequest: request,
+                                                  linker: adapterLinker,
+                                                  onRequestComplete: onRequestComplete(_:_:error:))
         } catch {
             logEvent(EventError(error, details: String(describing: request)), sender: self)
         }
