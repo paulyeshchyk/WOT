@@ -10,6 +10,9 @@ import CoreData
 
 @objc
 public protocol JSONAdapterProtocol: DataAdapterProtocol {
+    @available(*, deprecated)
+    @objc var appManager: WOTAppManagerProtocol? { get set }
+
     var linker: JSONAdapterLinkerProtocol { get set }
     init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol)
 }

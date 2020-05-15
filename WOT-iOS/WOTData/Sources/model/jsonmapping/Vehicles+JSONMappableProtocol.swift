@@ -68,7 +68,8 @@ extension Vehicles {
         let mapper = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
         mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, mapper: mapper) { _, error in
             if let error = error {
-                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+                #warning("use logInspector")
+                //mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
             }
         }
     }
@@ -87,13 +88,15 @@ extension Vehicles {
 
             guard let modulesTree = childObject as? ModulesTree else {
                 let error = UnexpectedClassError(extected: ModulesTree.self, received: Swift.type(of: childObject))
-                coreDataStore?.logEvent(EventError(error, details: nil), sender: self)
+                #warning("use logInspector")
+                //coreDataStore?.logEvent(EventError(error, details: nil), sender: self)
                 return
             }
             guard let vehicles = masterFetchResult?.managedObject(inContext: context) as? Vehicles else {
                 let received = masterFetchResult != nil ? Swift.type(of: masterFetchResult!) : nil
                 let error = UnexpectedClassError(extected: Vehicles.self, received: received)
-                coreDataStore?.logEvent(EventError(error, details: nil), sender: self)
+                #warning("use logInspector")
+                //coreDataStore?.logEvent(EventError(error, details: nil), sender: self)
                 return
             }
             modulesTree.default_profile = vehicles.default_profile

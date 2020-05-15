@@ -13,7 +13,7 @@ public protocol WOTResponseCoordinatorHolderProtocol {
 }
 
 @objc
-public protocol WOTResponseCoordinatorProtocol: LogInspectorProtocol {
+public protocol WOTResponseCoordinatorProtocol {
     var appManager: WOTAppManagerProtocol? { get set }
 
     init(requestCoordinator: WOTRequestCoordinatorProtocol, logInspector: LogInspectorProtocol)

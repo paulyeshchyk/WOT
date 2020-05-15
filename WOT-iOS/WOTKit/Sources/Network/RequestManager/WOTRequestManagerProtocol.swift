@@ -18,11 +18,7 @@ public protocol WOTRequestManagerHolderProtocol {
 }
 
 @objc
-public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol, LogInspectorProtocol {
-
-    var coordinator: WOTRequestCoordinatorProtocol { get }
-
-    var hostConfiguration: WOTHostConfigurationProtocol { get set }
+public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
 
     func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
 

@@ -12,17 +12,11 @@ public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
-    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
-    }
-
-    public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
-    }
 
     // MARK: DataAdapterProtocol -
 
     public var appManager: WOTAppManagerProtocol?
+
     public let uuid: UUID = UUID()
 
     // MARK: JSONAdapterProtocol -
@@ -47,24 +41,24 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         self.linker = linker
 
         super.init()
-        logEvent(EventObjectNew(request), sender: self)
+        appManager?.logInspector?.logEvent(EventObjectNew(request), sender: self)
     }
 
     deinit {
-        self.logEvent(EventObjectFree(request), sender: self)
+        self.appManager?.logInspector?.logEvent(EventObjectFree(request), sender: self)
     }
 
     // MARK: JSONAdapterProtocol -
 
     public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
-            logEvent(EventError(error, details: request), sender: self)
+            appManager?.logInspector?.logEvent(EventError(error, details: request), sender: self)
             onJSONDidParse?(fromRequest, self, error)
             return
         }
 
         let jsonStartParsingDate = Date()
-        logEvent(EventJSONStart(fromRequest), sender: self)
+        appManager?.logInspector?.logEvent(EventJSONStart(fromRequest), sender: self)
 
         var fakeIncrement: Int = json.keys.count
         json.keys.forEach { key in
@@ -74,17 +68,17 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
             self.findOrCreateObject(json: extraction.json, requestPredicate: extraction.requestPredicate) { fetchResult, error in
 
                 if let error = error {
-                    self.logEvent(EventError(error, details: nil), sender: self)
+                    self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                     return
                 }
 
-                self.linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore) { _, error in
+                self.linker.process(fetchResult: fetchResult, coreDataStore: self.appManager?.coreDataStore) { _, error in
                     if let error = error {
-                        self.logEvent(EventError(error, details: nil), sender: self)
+                        self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                     }
                     fakeIncrement -= 1
                     if fakeIncrement == 0 {
-                        self.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
+                        self.appManager?.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
                         self.onJSONDidParse?(fromRequest, self, error)
                     }
                 }
@@ -97,8 +91,6 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: Private -
 
     private let METAClass: Codable.Type = RESTAPIResponse.self
-    private var mappingCoordinator: WOTMappingCoordinatorProtocol? { return appManager?.mappingCoordinator }
-    private var coreDataStore: WOTCoredataStoreProtocol? { return appManager?.coreDataStore }
     private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
 }
@@ -147,7 +139,7 @@ extension JSONAdapter {
             fatalError("modelClazz: \(modelClazz) is not NSManagedObject.Type")
         }
 
-        guard let MAINCONTEXT = coreDataStore?.workingContext() else {
+        guard let MAINCONTEXT = appManager?.coreDataStore?.workingContext() else {
             fatalError("working context is not defined")
         }
 
@@ -157,7 +149,7 @@ extension JSONAdapter {
             }
         }
 
-        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: requestPredicate[.primary]?.predicate, visibleInContext: MAINCONTEXT, completion: { fetchResult, error in
+        appManager?.coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: requestPredicate[.primary]?.predicate, visibleInContext: MAINCONTEXT, completion: { fetchResult, error in
 
             if let error = error {
                 localCallback(fetchResult, error)
@@ -165,12 +157,12 @@ extension JSONAdapter {
             }
 
             let jsonStartParsingDate = Date()
-            self.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
+            self.appManager?.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
+            self.appManager?.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
                 if let error = error {
-                    self.logEvent(EventError(error, details: nil), sender: self)
+                    self.appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
-                self.logEvent(EventJSONEnded("\(String(describing: requestPredicate))", initiatedIn: jsonStartParsingDate), sender: self)
+                self.appManager?.logInspector?.logEvent(EventJSONEnded("\(String(describing: requestPredicate))", initiatedIn: jsonStartParsingDate), sender: self)
                 localCallback(fetchResult, nil)
             }
         })

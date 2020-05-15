@@ -96,7 +96,7 @@ extension WOTCoreDataStore {
     }
 
     private func mergeObjects(_ objects: [NSManagedObject], toContext: NSManagedObjectContext, fromNotification: Notification) {
-        logEvent(EventCDMerge())
+        logInspector.logEvent(EventCDMerge())
         var updatedObjectsInCurrentContext = Set<NSManagedObject>()
 
         objects.forEach { updatedObject in
@@ -128,15 +128,15 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
     public func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion) {
         let initialDate = Date()
 
-        logEvent(EventCDStashStart(context: context), sender: self)
+        logInspector.logEvent(EventCDStashStart(context: context), sender: self)
         let uuid = UUID()
         let customBlock: ThrowableCompletion = { error in
             block(error)
-            self.logEvent(EventCDStashEnded(context: context, initiatedIn: initialDate), sender: self)
+            self.logInspector.logEvent(EventCDStashEnded(context: context, initiatedIn: initialDate), sender: self)
         }
 
         context.saveRecursively(customBlock)
-        logEvent(EventTimeMeasure("Context save start", uuid: uuid))
+        logInspector.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
     }
 
     public func findOrCreateObject(by clazz: NSManagedObject.Type, andPredicate predicate: NSPredicate?, visibleInContext: NSManagedObjectContext, completion: @escaping FetchResultErrorCompletion) {
@@ -152,7 +152,7 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
         perform(context: context) { context in
             do {
                 guard let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) else {
-                    self.logEvent(EventError(WOTCoreDataStoreError.objectNotCreated(clazz), details: self), sender: nil)
+                    self.logInspector.logEvent(EventError(WOTCoreDataStoreError.objectNotCreated(clazz), details: self), sender: nil)
                     return
                 }
                 let managedObjectID = managedObject.objectID
@@ -161,7 +161,7 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
                     localCallback(fetchResult, error)
                 }
             } catch {
-                self.logEvent(EventError(error, details: nil), sender: nil)
+                self.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
         }
     }
@@ -193,17 +193,5 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
     @objc
     public func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult> {
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
-    }
-}
-
-// MARK: - LogInspectorProtocol -
-
-extension WOTCoreDataStore {
-    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        logInspector.logEvent(event, sender: sender)
-    }
-
-    public func logEvent(_ event: LogEventProtocol?) {
-        logInspector.logEvent(event)
     }
 }

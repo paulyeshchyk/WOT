@@ -23,14 +23,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         super.init()
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        logInspector.logEvent(event, sender: sender)
-    }
-
-    public func logEvent(_ event: LogEventProtocol?) {
-        logInspector.logEvent(event)
-    }
-
     // MARK: WOTRequestManagerProtocol-
 
     @objc public var coordinator: WOTRequestCoordinatorProtocol
@@ -127,22 +119,22 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
     public func request(_ request: WOTRequestProtocol, startedWith: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol) {
-        logEvent(EventWEBStart(request), sender: self)
+        logInspector.logEvent(EventWEBStart(request), sender: self)
     }
 
     public func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            self.logEvent(EventWEBEnd(request), sender: self)
+            self.logInspector.logEvent(EventWEBEnd(request), sender: self)
             removeRequest(request)
         }
 
         if let error = error {
-            logEvent(EventError(error, details: request), sender: self)
+            logInspector.logEvent(EventError(error, details: request), sender: self)
             return
         }
 
         guard let adapterLinker = grouppedLinkers[request.uuid.uuidString] else {
-            logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
+            logInspector.logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
             return
         }
         do {
@@ -151,18 +143,18 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
                                                   linker: adapterLinker,
                                                   onRequestComplete: onRequestComplete(_:_:error:))
         } catch {
-            logEvent(EventError(error, details: String(describing: request)), sender: self)
+            logInspector.logEvent(EventError(error, details: String(describing: request)), sender: self)
         }
     }
 
     public func request(_ request: WOTRequestProtocol, canceledWith error: Error?) {
-        logEvent(EventWEBCancel(request))
+        logInspector.logEvent(EventWEBCancel(request))
         removeRequest(request)
     }
 
     private func onRequestComplete(_ request: WOTRequestProtocol?, _ sender: Any?, error: Error?) {
         guard let request = request else {
-            logEvent(EventError(WOTRequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
+            logInspector.logEvent(EventError(WOTRequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
             return
         }
         grouppedListeners[request.uuid.uuidString]?.forEach { listener in

@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol WOTRequestCoordinatorProtocol: LogInspectorProtocol {
+public protocol WOTRequestCoordinatorProtocol {
     func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]
     func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]
