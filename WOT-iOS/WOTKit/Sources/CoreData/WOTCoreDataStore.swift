@@ -10,7 +10,7 @@ import CoreData
 import Foundation
 
 public protocol WOTCoreDataStoreHolderProtocol {
-    var coreDataStore: WOTCoreDataStore { get }
+    var coreDataStore: WOTCoredataStoreProtocol { get }
 }
 
 @objc

@@ -169,8 +169,8 @@ class WOTTankPivotViewController: WOTPivotViewController {
 
     override func pivotModel() -> WOTPivotDataModelProtocol {
         let appDelegate = UIApplication.shared.delegate as? WOTAppDelegateProtocol
-        let appManager = appDelegate?.appManager
-        return WOTTankPivotModel(modelListener: self, appManager: appManager, settingsDatasource: settingsDatasource)
+        let context = appDelegate?.context
+        return WOTTankPivotModel(context: context!, modelListener: self, settingsDatasource: settingsDatasource)
     }
 
     override func viewDidLoad() {

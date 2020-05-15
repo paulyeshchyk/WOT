@@ -10,14 +10,17 @@ import CoreData
 import WOTKit
 
 open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
+
+    public typealias Context = WOTCoreDataStoreHolderProtocol
+
     open var collapseToGroups: Bool { return false }
 
     open var useEmptyNode: Bool { return false }
 
-    open var appManager: WOTAppManagerProtocol?
+    private var context: Context
 
-    public init(appManager manager: WOTAppManagerProtocol?) {
-        self.appManager = manager
+    public init(context: Context) {
+        self.context = context
     }
 
     open func createEmptyNode() -> WOTNodeProtocol {

@@ -80,14 +80,16 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class WOTTankPivotModel: WOTPivotDataModel {
+    typealias Context = WOTCoreDataStoreHolderProtocol
+
     var appManager: WOTAppManagerProtocol?
 
-    convenience init(modelListener: WOTDataModelListener, appManager: WOTAppManagerProtocol?, settingsDatasource: WOTTankListSettingsDatasource) {
+    convenience init(context: Context, modelListener: WOTDataModelListener, settingsDatasource: WOTTankListSettingsDatasource) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: appManager?.coreDataStore)
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: context.coreDataStore)
 
         let metadatasource = WOTTankPivotMetadatasource()
-        let nodeCreator = WOTTankPivotNodeCreator(appManager: appManager)
+        let nodeCreator = WOTTankPivotNodeCreator(context: context)
 
         self.init(fetchController: fetchController,
                   modelListener: modelListener,
@@ -109,7 +111,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
 
         do {
             try performWebRequest()
-        } catch let error {
+        } catch {
             appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
         }
     }

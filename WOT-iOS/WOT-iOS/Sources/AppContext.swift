@@ -19,13 +19,13 @@ typealias AppContextHolderProtocol = WOTHostConfigurationHolderProtocol
 public class AppContext: NSObject, AppContextHolderProtocol {
     public let responseCoordinator: WOTResponseCoordinatorProtocol
     public let mappingCoordinator: WOTMappingCoordinatorProtocol
-    public let coreDataStore: WOTCoreDataStore
+    public let coreDataStore: WOTCoredataStoreProtocol
     public let logInspector: LogInspectorProtocol
     public let webSessionManager: WOTWebSessionManagerProtocol
     public let requestManager: WOTRequestManagerProtocol
     public let hostConfiguration: WOTHostConfigurationProtocol
 
-    init(responseCoordinator: WOTResponseCoordinatorProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, coreDataStore: WOTCoreDataStore, logInspector: LogInspectorProtocol, webSessionManager: WOTWebSessionManagerProtocol, requestManager: WOTRequestManagerProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
+    init(responseCoordinator: WOTResponseCoordinatorProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, coreDataStore: WOTCoredataStoreProtocol, logInspector: LogInspectorProtocol, webSessionManager: WOTWebSessionManagerProtocol, requestManager: WOTRequestManagerProtocol, hostConfiguration: WOTHostConfigurationProtocol) {
         self.responseCoordinator = responseCoordinator
         self.mappingCoordinator = mappingCoordinator
         self.coreDataStore = coreDataStore
