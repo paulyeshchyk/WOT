@@ -33,6 +33,7 @@ public protocol LogEventProtocol {
     var name: String { get }
 }
 
+@objc
 public protocol LogInspectorHolderProtocol {
     var logInspector: LogInspectorProtocol { get }
 }

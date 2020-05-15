@@ -14,7 +14,6 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
         let data: Data?
     }
 
-    public var appManager: WOTAppManagerProtocol?
     public var requestCoordinator: WOTRequestCoordinatorProtocol
     public var logInspector: LogInspectorProtocol
 

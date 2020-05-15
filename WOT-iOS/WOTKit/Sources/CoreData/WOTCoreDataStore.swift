@@ -25,8 +25,6 @@ open class WOTCoreDataStore: NSObject {
 
     // MARK: - Private
 
-    @objc public var appManager: WOTAppManagerProtocol?
-
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         guard let sqliteURL = self.sqliteURL else {
             abort()

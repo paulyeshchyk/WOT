@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objc
 public protocol WOTWebSessionManagerHolderProtocol {
     var webSessionManager: WOTWebSessionManagerProtocol { get }
 }

@@ -9,6 +9,7 @@
 import Foundation
 
 public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
+    // MARK: - Private
     private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: JSONAdapterProtocol.Type] = .init()
     public var appManager: WOTAppManagerProtocol?

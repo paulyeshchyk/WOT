@@ -9,7 +9,7 @@
 import CoreData
 
 public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
-    public var appManager: WOTAppManagerProtocol?
+    // MARK: - Public
 
     public let coreDataStore: WOTCoredataStoreProtocol
     private let logInspector: LogInspectorProtocol

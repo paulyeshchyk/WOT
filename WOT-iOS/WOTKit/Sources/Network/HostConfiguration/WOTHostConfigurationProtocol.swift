@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objc
 public protocol WOTHostConfigurationHolderProtocol {
     var hostConfiguration: WOTHostConfigurationProtocol { get }
 }

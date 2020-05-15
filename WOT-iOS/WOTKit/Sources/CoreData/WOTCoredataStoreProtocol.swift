@@ -8,7 +8,7 @@
 
 import CoreData
 
-
+@objc
 public protocol WOTCoreDataStoreHolderProtocol {
     var coreDataStore: WOTCoredataStoreProtocol { get }
 }

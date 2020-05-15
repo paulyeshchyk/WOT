@@ -13,6 +13,7 @@ public protocol WOTRequestCoordinatorBridgeProtocol {
     func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol
 }
 
+@objc
 public protocol WOTRequestManagerHolderProtocol {
     var requestManager: WOTRequestManagerProtocol { get }
 }
