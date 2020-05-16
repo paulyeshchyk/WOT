@@ -11,16 +11,12 @@ import WOTKit
 
 open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
 
-    public typealias Context = WOTCoreDataStoreHolderProtocol
-
     open var collapseToGroups: Bool { return false }
 
     open var useEmptyNode: Bool { return false }
 
-    private var context: Context
-
-    public init(context: Context) {
-        self.context = context
+    public init() {
+        //
     }
 
     open func createEmptyNode() -> WOTNodeProtocol {

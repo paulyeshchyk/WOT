@@ -10,8 +10,5 @@ import Foundation
 
 @objc
 public protocol WOTAppDelegateProtocol {
-    @objc
     var appManager: WOTAppManagerProtocol { get }
-
-    var context: AppContext { get }
 }

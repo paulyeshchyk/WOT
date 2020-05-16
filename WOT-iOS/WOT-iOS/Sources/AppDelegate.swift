@@ -10,9 +10,10 @@ import Foundation
 
 @objc
 public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProtocol {
+    // MARK: - Public
+
     public var window: UIWindow?
     public let appManager: WOTAppManagerProtocol = WOTPivotAppManager()
-    public let context: AppContext = AppContext.makeContext()
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         //

@@ -84,12 +84,12 @@ class WOTTankPivotModel: WOTPivotDataModel {
 
     var appManager: WOTAppManagerProtocol?
 
-    convenience init(context: Context, modelListener: WOTDataModelListener, settingsDatasource: WOTTankListSettingsDatasource) {
+    convenience init(modelListener: WOTDataModelListener, settingsDatasource: WOTTankListSettingsDatasource, coreDataStore: WOTCoredataStoreProtocol?) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: context.coreDataStore)
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: coreDataStore)
 
         let metadatasource = WOTTankPivotMetadatasource()
-        let nodeCreator = WOTTankPivotNodeCreator(context: context)
+        let nodeCreator = WOTTankPivotNodeCreator()
 
         self.init(fetchController: fetchController,
                   modelListener: modelListener,
