@@ -14,6 +14,7 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     public var appManager: WOTAppManagerProtocol?
 
     override public init() {
+//        self.appManager = appManager
         super.init()
         //
     }
@@ -61,10 +62,10 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
     }
 
     public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) throws -> JSONAdapterProtocol {
-        guard let modelClass = try modelClass(for: requestIdType) else {
+        guard let modelClass = try self.modelClass(for: requestIdType) else {
             throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
         }
-        guard let dataAdapterClass = dataAdapterClass(for: requestIdType) else {
+        guard let dataAdapterClass = self.dataAdapterClass(for: requestIdType) else {
             throw RequestCoordinatorError.adapterNotFound(requestType: requestIdType.description)
         }
 

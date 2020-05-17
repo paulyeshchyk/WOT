@@ -14,20 +14,22 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
         let data: Data?
     }
 
-    public var appManager: WOTAppManagerProtocol?
     public var requestCoordinator: WOTRequestCoordinatorProtocol
+    public var logInspector: LogInspectorProtocol
 
     // MARK: - WOTResponseCoordinatorProtocol
-    public required init(requestCoordinator rc: WOTRequestCoordinatorProtocol) {
-        requestCoordinator = rc
+
+    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, logInspector: LogInspectorProtocol) {
+        self.requestCoordinator = requestCoordinator
+        self.logInspector = logInspector
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
+        logInspector.logEvent(event, sender: sender)
     }
 
     public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
+        logInspector.logEvent(event)
     }
 
     public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws {
@@ -41,27 +43,27 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
             return
         }
 
-        let localCallback: OnRequestComplete = {request,data,error in
+        let localCallback: OnRequestComplete = { request, data, error in
             onRequestComplete(request, data, error)
         }
 
         var dataAdaptationPair: [DataAdaptationPair] = .init()
-        requestIds.forEach({ requestIdType in
+        requestIds.forEach { requestIdType in
             do {
                 let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request, linker: linker)
                 adapter.onJSONDidParse = localCallback
                 let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
                 dataAdaptationPair.append(pair)
-            } catch let error {
+            } catch {
                 self.logEvent(EventError(error, details: nil), sender: self)
             }
-        })
+        }
 
         if dataAdaptationPair.count == 0 {
             onRequestComplete(request, self, nil)
         }
 
-        dataAdaptationPair.forEach { (pair) in
+        dataAdaptationPair.forEach { pair in
             pair.dataAdapter.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
         }
     }

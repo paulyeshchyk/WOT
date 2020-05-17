@@ -15,24 +15,27 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     @objc
-    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
-        coordinator = requestCoordinator
-        hostConfiguration = hostConfig
+    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, responseCoordinator: WOTResponseCoordinatorProtocol, logInspector: LogInspectorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
+        self.coordinator = requestCoordinator
+        self.hostConfiguration = hostConfig
+        self.responseCoordinator = responseCoordinator
+        self.logInspector = logInspector
         super.init()
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
+        logInspector.logEvent(event, sender: sender)
     }
 
     public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
+        logInspector.logEvent(event)
     }
 
     // MARK: WOTRequestManagerProtocol-
 
-    @objc public var appManager: WOTAppManagerProtocol?
     @objc public var coordinator: WOTRequestCoordinatorProtocol
+    @objc public var responseCoordinator: WOTResponseCoordinatorProtocol
+    @objc public var logInspector: LogInspectorProtocol
     @objc public var hostConfiguration: WOTHostConfigurationProtocol
 
     fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
@@ -138,10 +141,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        guard let dataparser = appManager?.responseCoordinator else {
-            logEvent(EventError(WOTRequestManagerError.dataparserNotFound(request), details: self), sender: self)
-            return
-        }
+        let dataparser = responseCoordinator
 
         guard let adapterLinker = grouppedLinkers[request.uuid.uuidString] else {
             logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)

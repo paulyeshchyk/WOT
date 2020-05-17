@@ -9,26 +9,27 @@
 import CoreData
 
 public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
-    public var appManager: WOTAppManagerProtocol?
 
-    public var coreDataStore: WOTCoredataStoreProtocol? {
-        return appManager?.coreDataStore
-    }
+    public var coreDataStore: WOTCoredataStoreProtocol
+    public var requestManager: WOTRequestManagerProtocol
+    public var logInspector: LogInspectorProtocol
 
     public var description: String {
         return String(describing: type(of: self))
     }
 
-    public init() {
-        //
+    public required init(coreDataStore: WOTCoredataStoreProtocol, requestManager: WOTRequestManagerProtocol, logInspector: LogInspectorProtocol) {
+        self.coreDataStore = coreDataStore
+        self.logInspector = logInspector
+        self.requestManager = requestManager
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
+        logInspector.logEvent(event, sender: sender)
     }
 
     public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
+        logInspector.logEvent(event)
     }
 
     // MARK: - WOTMappingCoordinatorProtocol
@@ -55,7 +56,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         //
         do {
             try object.mapping(json: json, context: context, requestPredicate: requestPredicate, mappingCoordinator: self)
-            coreDataStore?.stash(context: context, block: localCompletion)
+            coreDataStore.stash(context: context, block: localCompletion)
             logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         } catch {
             localCompletion(error)
@@ -83,7 +84,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         do {
             try object.mapping(array: array, context: context, requestPredicate: requestPredicate, mappingCoordinator: self)
             //
-            coreDataStore?.stash(context: fetchResult.context, block: localCompletion)
+            coreDataStore.stash(context: fetchResult.context, block: localCompletion)
             //
             logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
         } catch {
@@ -101,7 +102,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
             return
         }
 
-        coreDataStore?.perform(context: context) { context in
+        coreDataStore.perform(context: context) { context in
             do {
                 if let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) {
                     let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .none
@@ -115,14 +116,14 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
     }
 
     public func fetchRemote(paradigm: RequestParadigmProtocol) {
-        let requestManager = appManager?.requestManager
-        guard let requestIDs = requestManager?.coordinator.requestIds(forClass: paradigm.clazz) else {
+        let requestIDs = requestManager.coordinator.requestIds(forClass: paradigm.clazz)
+        guard requestIDs.count > 0 else {
             logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
             return
         }
         requestIDs.forEach {
             do {
-                try requestManager?.startRequest(by: $0, paradigm: paradigm)
+                try self.requestManager.startRequest(by: $0, paradigm: paradigm)
             } catch {
                 self.logEvent(EventError(error, details: nil), sender: self)
             }

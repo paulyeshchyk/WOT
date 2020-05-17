@@ -12,8 +12,9 @@ public typealias ThrowableCompletion = (Error?) -> Void
 
 @objc
 public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
-    var appManager: WOTAppManagerProtocol? { get set }
-    var coreDataStore: WOTCoredataStoreProtocol? { get }
+    var coreDataStore: WOTCoredataStoreProtocol { get }
+    var requestManager: WOTRequestManagerProtocol { get }
+    var logInspector: LogInspectorProtocol { get }
 
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion)
 

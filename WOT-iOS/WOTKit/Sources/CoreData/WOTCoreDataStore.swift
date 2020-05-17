@@ -18,9 +18,15 @@ open class WOTCoreDataStore: NSObject {
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { fatalError("should be overriden") }
 
+    public var logInspector: LogInspectorProtocol
+
+    required public init(logInspector: LogInspectorProtocol) {
+        self.logInspector = logInspector
+        super.init()
+    }
+
     // MARK: - Private
 
-    @objc public var appManager: WOTAppManagerProtocol?
 
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         guard let sqliteURL = self.sqliteURL else {
@@ -195,10 +201,10 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
 
 extension WOTCoreDataStore {
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
+        logInspector.logEvent(event, sender: sender)
     }
 
     public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
+        logInspector.logEvent(event)
     }
 }

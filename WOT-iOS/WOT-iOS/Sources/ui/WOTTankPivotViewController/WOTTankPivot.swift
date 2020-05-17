@@ -66,7 +66,7 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 
         let cols = permutator.permutate(templates: [levelType, levelNati], as: .column)
         let rows = permutator.permutate(templates: [levelTier], as: .row)
-        let filt = self.filters()
+        let filt = filters()
 
         result.append(contentsOf: cols)
         result.append(contentsOf: rows)
@@ -80,22 +80,34 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class WOTTankPivotModel: WOTPivotDataModel {
-    var appManager: WOTAppManagerProtocol?
+    var logInspector: LogInspectorProtocol
+    var coreDataStore: WOTCoredataStoreProtocol
+    var requestManager: WOTRequestManagerProtocol
 
-    convenience init(modelListener: WOTDataModelListener, appManager: WOTAppManagerProtocol?, settingsDatasource: WOTTankListSettingsDatasource) {
+    required init(modelListener: WOTDataModelListener, coreDataStore: WOTCoredataStoreProtocol, requestManager: WOTRequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: appManager?.coreDataStore)
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: coreDataStore)
+        self.coreDataStore = coreDataStore
+        self.requestManager = requestManager
+        self.logInspector = logInspector
 
         let metadatasource = WOTTankPivotMetadatasource()
-        let nodeCreator = WOTTankPivotNodeCreator(appManager: appManager)
+        let nodeCreator = WOTTankPivotNodeCreator()
 
-        self.init(fetchController: fetchController,
+        super.init(fetchController: fetchController,
                   modelListener: modelListener,
                   nodeCreator: nodeCreator,
                   metadatasource: metadatasource)
 
-        self.enumerator = WOTNodeEnumerator.sharedInstance
-        self.appManager = appManager
+        enumerator = WOTNodeEnumerator.sharedInstance
+    }
+
+    required init(enumerator enumer: WOTNodeEnumeratorProtocol) {
+        fatalError("init(enumerator:) has not been implemented")
+    }
+
+    required init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol, metadatasource mds: WOTDataModelMetadatasource) {
+        fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:) has not been implemented")
     }
 
     deinit {}
@@ -109,13 +121,12 @@ class WOTTankPivotModel: WOTPivotDataModel {
 
         do {
             try performWebRequest()
-        } catch let error {
-            appManager?.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
+        } catch {
+            logInspector.logEvent(EventError(error, details: nil), sender: nil)
         }
     }
 
     private func performWebRequest() throws {
-        let requestManager = appManager?.requestManager
         try WOTWEBRequestFactory.fetchVehiclePivotData(requestManager, listener: self)
     }
 }
