@@ -44,7 +44,7 @@ extension VehicleprofileAmmo {
         let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(.and), fetchStatus: .none)
         mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, mapper: nil) { _, error in
             if let error = error {
-                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
+                mappingCoordinator?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
         }
     }

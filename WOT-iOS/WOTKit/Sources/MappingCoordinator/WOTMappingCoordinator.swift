@@ -9,7 +9,6 @@
 import CoreData
 
 public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
-
     public var coreDataStore: WOTCoredataStoreProtocol
     public var requestManager: WOTRequestManagerProtocol
     public var logInspector: LogInspectorProtocol
@@ -24,14 +23,6 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         self.logInspector = logInspector
         self.requestManager = requestManager
         self.requestRegistrator = requestRegistrator
-    }
-
-    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        logInspector.logEvent(event, sender: sender)
-    }
-
-    public func logEvent(_ event: LogEventProtocol?) {
-        logInspector.logEvent(event)
     }
 
     // MARK: - WOTMappingCoordinatorProtocol
@@ -51,7 +42,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
             }
         }
 
-        logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
+        logInspector.logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         //
         let context = fetchResult.context
         let object = fetchResult.managedObject()
@@ -59,7 +50,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         do {
             try object.mapping(json: json, context: context, requestPredicate: requestPredicate, mappingCoordinator: self)
             coreDataStore.stash(context: context, block: localCompletion)
-            logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
+            logInspector.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         } catch {
             localCompletion(error)
         }
@@ -78,7 +69,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
             }
         }
 
-        logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
+        logInspector.logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
         //
         let context = fetchResult.context
         let object = fetchResult.managedObject()
@@ -88,14 +79,14 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
             //
             coreDataStore.stash(context: fetchResult.context, block: localCompletion)
             //
-            logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
+            logInspector.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
         } catch {
             localCompletion(error)
         }
     }
 
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion) {
-        logEvent(EventLocalFetch("\(String(describing: clazz)) - \(String(describing: requestPredicate))"), sender: self)
+        logInspector.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(String(describing: requestPredicate))"), sender: self)
 
         guard let predicate = requestPredicate.compoundPredicate(.and) else {
             let error = WOTMappingCoordinatorError.noKeysDefinedForClass(String(describing: clazz))
@@ -112,7 +103,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
                     callback(fetchResult, nil)
                 }
             } catch {
-                self.logEvent(EventError(error, details: nil))
+                self.logInspector.logEvent(EventError(error, details: nil))
             }
         }
     }
@@ -120,14 +111,14 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
     public func fetchRemote(paradigm: RequestParadigmProtocol) {
         let requestIDs = requestRegistrator.requestIds(forClass: paradigm.clazz)
         guard requestIDs.count > 0 else {
-            logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
+            logInspector.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
             return
         }
         requestIDs.forEach {
             do {
                 try self.requestManager.startRequest(by: $0, paradigm: paradigm)
             } catch {
-                self.logEvent(EventError(error, details: nil), sender: self)
+                self.logInspector.logEvent(EventError(error, details: nil), sender: self)
             }
         }
     }
@@ -137,7 +128,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         guard let itemsList = array else { return }
 
         guard let lookupRule = lookupRuleBuilder.build() else {
-            logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
+            logInspector.logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
 
@@ -146,7 +137,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         fetchLocal(array: itemsList, context: context, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, mapper: mapper, callback: { [weak self] _, error in
             if let error = error {
-                self?.logEvent(EventError(error, details: nil), sender: nil)
+                self?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
         })
     }
@@ -155,7 +146,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         guard let itemJSON = json else { return }
 
         guard let lookupRule = lookupRuleBuilder.build() else {
-            logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
+            logInspector.logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
 
@@ -164,7 +155,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
         fetchLocal(json: itemJSON, context: context, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, mapper: mapper, callback: { [weak self] _, error in
             if let error = error {
-                self?.logEvent(EventError(error, details: nil), sender: nil)
+                self?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
         })
     }
