@@ -12,11 +12,11 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension ModulesTree {
-    override public func mapping(array: [Any], context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
+    override public func mapping(array: [Any], context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, mappingCoordinator: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
         print(array)
     }
 
-    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, mappingCoordinator: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
         //
         try self.decode(json: json)
         //
@@ -31,7 +31,7 @@ extension ModulesTree {
             // parents was not used for next portion of tanks
             let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
             let nextTanksRequestParadigm = RequestParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
-            fetcherAndDecoder?.fetchRemote(paradigm: nextTanksRequestParadigm)
+            mappingCoordinator?.fetchRemote(paradigm: nextTanksRequestParadigm)
         }
 
         // MARK: - NextModules
@@ -41,7 +41,7 @@ extension ModulesTree {
         nextModules?.forEach {
             let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: $0, currentObjectID: self.objectID)
             let nextModuleRequestParadigm = RequestParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
-            fetcherAndDecoder?.fetchRemote(paradigm: nextModuleRequestParadigm)
+            mappingCoordinator?.fetchRemote(paradigm: nextModuleRequestParadigm)
         }
 
         // MARK: - CurrentModule
@@ -49,7 +49,7 @@ extension ModulesTree {
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
         let moduleRequestParadigm = RequestParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
-        fetcherAndDecoder?.fetchRemote(paradigm: moduleRequestParadigm)
+        mappingCoordinator?.fetchRemote(paradigm: moduleRequestParadigm)
     }
 }
 

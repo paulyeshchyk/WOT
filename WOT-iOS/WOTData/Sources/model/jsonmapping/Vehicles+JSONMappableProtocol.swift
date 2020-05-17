@@ -12,7 +12,7 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Vehicles {
-    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, mappingCoordinator: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
         //
         try self.decode(json: json)
         //
@@ -28,12 +28,12 @@ extension Vehicles {
         // MARK: - ModulesTree
 
         let modulesTreeJSON = json[#keyPath(Vehicles.modules_tree)] as? JSON
-        self.modulesTreeMapping(context: context, jSON: modulesTreeJSON, requestPredicate: requestPredicate, fetcherAndDecoder: fetcherAndDecoder, decoderAndMapper: decoderAndMapper)
+        self.modulesTreeMapping(context: context, jSON: modulesTreeJSON, requestPredicate: requestPredicate, mappingCoordinator: mappingCoordinator, decoderAndMapper: decoderAndMapper)
     }
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, requestPredicate: RequestPredicate, fetcherAndDecoder: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) {
+    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -56,17 +56,17 @@ extension Vehicles {
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
-            submoduleMapping(context: context, json: moduleTreeJSON, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, fetcherAndDecoder: fetcherAndDecoder, decoderAndMapper: decoderAndMapper)
+            submoduleMapping(context: context, json: moduleTreeJSON, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator, decoderAndMapper: decoderAndMapper)
         }
     }
 
-    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, fetcherAndDecoder: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) {
+    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) {
         let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let mapper = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        fetcherAndDecoder?.fetchLocalAndDecode(json: json, context: context, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, mapper: mapper, callback: { _, _ in })
+        mappingCoordinator?.fetchLocalAndDecode(json: json, context: context, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, mapper: mapper, callback: { _, _ in })
     }
 }
 

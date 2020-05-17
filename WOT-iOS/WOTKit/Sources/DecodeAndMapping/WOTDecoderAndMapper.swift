@@ -46,7 +46,7 @@ extension WOTDecoderAndMapper: WOTDecodeAndMappingProtocol {
         let object = fetchResult.managedObject()
         //
         do {
-            try object.mapping(json: json, context: context, requestPredicate: requestPredicate, linker: superlinker, fetcherAndDecoder: mappingCoordinator, decoderAndMapper: self)
+            try object.mapping(json: json, context: context, requestPredicate: requestPredicate, linker: superlinker, mappingCoordinator: mappingCoordinator, decoderAndMapper: self)
             coreDataStore.stash(context: context, block: localCompletion)
             logInspector.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         } catch {
@@ -73,7 +73,7 @@ extension WOTDecoderAndMapper: WOTDecodeAndMappingProtocol {
         let object = fetchResult.managedObject()
         //
         do {
-            try object.mapping(array: array, context: context, requestPredicate: requestPredicate, linker: superlinker, fetcherAndDecoder: mappingCoordinator, decoderAndMapper: self)
+            try object.mapping(array: array, context: context, requestPredicate: requestPredicate, linker: superlinker, mappingCoordinator: mappingCoordinator, decoderAndMapper: self)
             //
             coreDataStore.stash(context: fetchResult.context, block: localCompletion)
             //

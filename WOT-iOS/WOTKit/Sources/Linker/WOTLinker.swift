@@ -10,11 +10,11 @@ import Foundation
 
 public class WOTLinker {
     private var logInspector: LogInspectorProtocol
-    private var fetcherAndDecoder: WOTMappingCoordinatorProtocol
+    private var mappingCoordinator: WOTMappingCoordinatorProtocol
 
-    public init(logInspector: LogInspectorProtocol, fetcherAndDecoder: WOTMappingCoordinatorProtocol) {
+    public init(logInspector: LogInspectorProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol) {
         self.logInspector = logInspector
-        self.fetcherAndDecoder = fetcherAndDecoder
+        self.mappingCoordinator = mappingCoordinator
     }
 }
 
@@ -44,7 +44,7 @@ extension WOTLinker: WOTLinkerProtocol {
         let context = masterFetchResult.context
 
         let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        fetcherAndDecoder.fetchLocalAndDecode(array: itemsList, context: context, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, mapper: mapper, callback: { [weak self] _, error in
+        mappingCoordinator.fetchLocalAndDecode(array: itemsList, context: context, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, mapper: mapper, callback: { [weak self] _, error in
             if let error = error {
                 self?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
@@ -62,7 +62,7 @@ extension WOTLinker: WOTLinkerProtocol {
         let context = masterFetchResult.context
 
         let mapper = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
-        fetcherAndDecoder.fetchLocalAndDecode(json: itemJSON, context: context, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, mapper: mapper, callback: { [weak self] _, error in
+        mappingCoordinator.fetchLocalAndDecode(json: itemJSON, context: context, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, mapper: mapper, callback: { [weak self] _, error in
             if let error = error {
                 self?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
