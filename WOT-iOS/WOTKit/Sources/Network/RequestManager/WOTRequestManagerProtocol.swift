@@ -23,5 +23,3 @@ public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
     func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
     func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]
 }
-
-

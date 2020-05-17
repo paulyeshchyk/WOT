@@ -10,9 +10,9 @@ import Foundation
 
 public class WOTLinker {
     private var logInspector: LogInspectorProtocol
-    private var fetcherAndDecoder: WOTFetcherAndDecoder
+    private var fetcherAndDecoder: WOTMappingCoordinatorProtocol
 
-    public init(logInspector: LogInspectorProtocol, fetcherAndDecoder: WOTFetcherAndDecoder) {
+    public init(logInspector: LogInspectorProtocol, fetcherAndDecoder: WOTMappingCoordinatorProtocol) {
         self.logInspector = logInspector
         self.fetcherAndDecoder = fetcherAndDecoder
     }

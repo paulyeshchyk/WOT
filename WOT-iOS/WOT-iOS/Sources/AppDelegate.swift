@@ -25,19 +25,19 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let coreDataStore = WOTCustomCoreDataStore(logInspector: logInspector)
         let requestRegistrator = WOTRequestRegistrator(logInspector: logInspector, coreDataStore: coreDataStore)
 
-        let fetcherAndDecoder = WOTFetcherAndDecoder()
+        let mappingCoordinator = WOTMappingCoordinator()
 
         let responseParser = RESTResponseParser()
-        let linker = WOTLinker(logInspector: logInspector, fetcherAndDecoder: fetcherAndDecoder)
-        let decoderAndMapper = WOTDecoderAndMapper(logInspector: logInspector, coreDataStore: coreDataStore, linker: linker, fetcherAndDecoder: fetcherAndDecoder)
+        let linker = WOTLinker(logInspector: logInspector, fetcherAndDecoder: mappingCoordinator)
+        let decoderAndMapper = WOTDecoderAndMapper(logInspector: logInspector, coreDataStore: coreDataStore, linker: linker, mappingCoordinator: mappingCoordinator)
         let responseAdapterCreator = WOTResponseAdapterCreator(logInspector: logInspector, coreDataStore: coreDataStore, decoderAndMapper: decoderAndMapper, requestRegistrator: requestRegistrator)
         let requestManager = WOTRequestManager(logInspector: logInspector, hostConfiguration: hostConfiguration, requestRegistrator: requestRegistrator, responseParser: responseParser, responseAdapterCreator: responseAdapterCreator)
 
-        fetcherAndDecoder.requestRegistrator = requestRegistrator
-        fetcherAndDecoder.requestManager = requestManager
-        fetcherAndDecoder.coreDataStore = coreDataStore
-        fetcherAndDecoder.decoderAndMapper = decoderAndMapper
-        fetcherAndDecoder.logInspector = logInspector
+        mappingCoordinator.requestRegistrator = requestRegistrator
+        mappingCoordinator.requestManager = requestManager
+        mappingCoordinator.coreDataStore = coreDataStore
+        mappingCoordinator.decoderAndMapper = decoderAndMapper
+        mappingCoordinator.logInspector = logInspector
 
         appManager.hostConfiguration = hostConfiguration
         appManager.responseParser = responseParser

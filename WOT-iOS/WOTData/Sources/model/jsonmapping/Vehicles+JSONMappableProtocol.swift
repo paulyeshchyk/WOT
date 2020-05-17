@@ -12,7 +12,7 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Vehicles {
-    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
         //
         try self.decode(json: json)
         //
@@ -33,7 +33,7 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, requestPredicate: RequestPredicate, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) {
+    private func modulesTreeMapping(context: NSManagedObjectContext, jSON: JSON?, requestPredicate: RequestPredicate, fetcherAndDecoder: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -60,7 +60,7 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) {
+    private func submoduleMapping(context: NSManagedObjectContext, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, fetcherAndDecoder: WOTMappingCoordinatorProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) {
         let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]

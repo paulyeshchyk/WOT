@@ -1,5 +1,5 @@
 //
-//  WOTFetchAndDecodeProtocol.swift
+//  WOTMappingCoordinatorProtocol.swift
 //  WOTKit
 //
 //  Created by Pavel Yeshchyk on 5/17/20.
@@ -8,7 +8,7 @@
 
 import CoreData
 
-@objc public protocol WOTFetchAndDecodeProtocol {
+@objc public protocol WOTMappingCoordinatorProtocol {
     var logInspector: LogInspectorProtocol? { get set }
     var coreDataStore: WOTCoredataStoreProtocol? { get set }
     var decoderAndMapper: WOTDecodeAndMappingProtocol? { get set }

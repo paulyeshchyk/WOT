@@ -1,5 +1,5 @@
 //
-//  WOTFetcherAndDecoder.swift
+//  WOTMappingCoordinator.swift
 //  WOTKit
 //
 //  Created by Pavel Yeshchyk on 5/17/20.
@@ -9,14 +9,14 @@
 import CoreData
 
 @objc
-public class WOTFetcherAndDecoder: NSObject, WOTFetchAndDecodeProtocol {
+public class WOTMappingCoordinator: NSObject, WOTMappingCoordinatorProtocol {
     public var logInspector: LogInspectorProtocol?
     public var coreDataStore: WOTCoredataStoreProtocol?
     public var decoderAndMapper: WOTDecodeAndMappingProtocol?
     public var requestRegistrator: WOTRequestRegistratorProtocol?
     public var requestManager: WOTRequestManagerProtocol?
 
-    override public required init() {
+    override public init() {
         super.init()
     }
 
