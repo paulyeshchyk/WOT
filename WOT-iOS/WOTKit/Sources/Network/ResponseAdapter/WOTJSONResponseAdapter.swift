@@ -11,17 +11,17 @@ import Foundation
 @objc
 open class WOTJSONResponseAdapter: NSObject, WOTDataResponseAdapterProtocol {
     //
-    public var appManager: WOTAppManagerProtocol?
+    public var logInspector: LogInspectorProtocol?
+    public var coreDataStore: WOTCoredataStoreProtocol?
 
     open var modelClass: PrimaryKeypathProtocol.Type
 
-    required public init(appManager app: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type) {
-        appManager = app
+    required public init(clazz: PrimaryKeypathProtocol.Type) {
         modelClass = clazz
     }
 
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
-        let jsonAdapter: JSONAdapterProtocol = JSONAdapter(Clazz: modelClass, request: request, appManager: appManager, linker: linker)
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+        let jsonAdapter: JSONAdapterProtocol = JSONAdapter(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, jsonAdapterLinker: jsonAdapterLinker, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
         jsonAdapter.onJSONDidParse = onRequestComplete
         return jsonAdapter
     }

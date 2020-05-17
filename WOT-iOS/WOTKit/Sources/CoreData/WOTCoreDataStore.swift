@@ -18,7 +18,7 @@ open class WOTCoreDataStore: NSObject {
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { fatalError("should be overriden") }
 
-    public var logInspector: LogInspectorProtocol
+    private let logInspector: LogInspectorProtocol
 
     required public init(logInspector: LogInspectorProtocol) {
         self.logInspector = logInspector
@@ -26,7 +26,6 @@ open class WOTCoreDataStore: NSObject {
     }
 
     // MARK: - Private
-
 
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         guard let sqliteURL = self.sqliteURL else {
@@ -121,10 +120,21 @@ extension WOTCoreDataStore {
     }
 }
 
+public enum WOTFetcherError: Error, CustomDebugStringConvertible {
+    case requestsNotParsed
+    case noKeysDefinedForClass(String)
+
+    public var debugDescription: String {
+        switch self {
+        case .noKeysDefinedForClass(let clazz): return "No keys defined for:[\(String(describing: clazz))]"
+        case .requestsNotParsed: return "request is not parsed"
+        }
+    }
+}
+
 // MARK: - WOTCoredataStoreProtocol
 
 extension WOTCoreDataStore: WOTCoredataStoreProtocol {
-    // MARK: - WOTDataStoreProtocol
 
     public func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion) {
         let initialDate = Date()
@@ -167,6 +177,28 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
         }
     }
 
+    public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion) {
+        logInspector.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(String(describing: requestPredicate))"), sender: self)
+
+        guard let predicate = requestPredicate.compoundPredicate(.and) else {
+            let error = WOTFetcherError.noKeysDefinedForClass(String(describing: clazz))
+            let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none)
+            callback(fetchResult, error)
+            return
+        }
+
+        self.perform(context: context) { context in
+            do {
+                if let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) {
+                    let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .none
+                    let fetchResult = FetchResult(context: context, objectID: managedObject.objectID, predicate: predicate, fetchStatus: fetchStatus)
+                    callback(fetchResult, nil)
+                }
+            } catch {
+                self.logInspector.logEvent(EventError(error, details: nil))
+            }
+        }
+    }
     // MARK: - WOTCoredataStoreProtocol
 
     @objc public func newPrivateContext() -> NSManagedObjectContext {

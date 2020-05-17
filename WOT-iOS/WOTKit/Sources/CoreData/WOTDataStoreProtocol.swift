@@ -9,6 +9,7 @@
 import CoreData
 
 public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
+public typealias ThrowableCompletion = (Error?) -> Void
 
 @objc
 public protocol WOTDataStoreProtocol: NSObjectProtocol {

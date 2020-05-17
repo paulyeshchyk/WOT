@@ -20,26 +20,24 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let logPriorities: [LogEventType] = [.localFetch, .remoteFetch, .error, .lifeCycle, .web, .json]
         let logInspector = LogInspector(priorities: logPriorities)
 
-        let requestRegistrator = WOTRequestRegistrator()
-        let requestCoordinator = WOTRequestCoordinator(requestRegistrator: requestRegistrator, logInspector: logInspector)
         let hostConfiguration = WOTWebHostConfiguration()
         let sessionManager = WOTWebSessionManager()
-
         let coreDataStore = WOTCustomCoreDataStore(logInspector: logInspector)
-        let responseParser = RESTResponseParser()
+        let requestRegistrator = WOTRequestRegistrator(logInspector: logInspector)
+        let mappingCoordinator = WOTMappingCoordinator(logInspector: logInspector, coreDataStore: coreDataStore)
 
-        let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, requestRegistrator: requestRegistrator, responseParser: responseParser, logInspector: logInspector, hostConfiguration: hostConfiguration)
-        let mappingCoordinator = WOTMappingCoordinator(coreDataStore: coreDataStore, requestManager: requestManager, logInspector: logInspector, requestRegistrator: requestRegistrator)
+        let responseAdapterCreator = WOTResponseAdapterCreator(logInspector: logInspector, coreDataStore: coreDataStore, mappingCoordinator: mappingCoordinator, requestRegistrator: requestRegistrator)
+
+        let responseParser = RESTResponseParser()
+        let requestManager = WOTRequestManager(logInspector: logInspector, hostConfiguration: hostConfiguration, requestRegistrator: requestRegistrator, responseParser: responseParser, responseAdapterCreator: responseAdapterCreator)
 
         appManager.hostConfiguration = hostConfiguration
-        appManager.requestCoordinator = requestCoordinator
         appManager.responseParser = responseParser
         appManager.requestManager = requestManager
         appManager.requestListener = requestManager
         appManager.sessionManager = sessionManager
         appManager.logInspector = logInspector
         appManager.coreDataStore = coreDataStore
-        appManager.mappingCoordinator = mappingCoordinator
         appManager.requestRegistrator = requestRegistrator
 
         requestRegistrator.registerDefaultRequests()
