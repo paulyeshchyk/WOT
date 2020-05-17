@@ -23,17 +23,16 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let hostConfiguration = WOTWebHostConfiguration()
         let sessionManager = WOTWebSessionManager()
         let coreDataStore = WOTCustomCoreDataStore(logInspector: logInspector)
+        let requestRegistrator = WOTRequestRegistrator(logInspector: logInspector, coreDataStore: coreDataStore)
 
+        let fetcher = WOTFetcher()
         let fetcherAndDecoder = WOTFetcherAndDecoder()
 
-        let requestRegistrator = WOTRequestRegistrator()
-
         let responseParser = RESTResponseParser()
-        let requestManager = WOTRequestManager(requestRegistrator: requestRegistrator, responseParser: responseParser, logInspector: logInspector, hostConfiguration: hostConfiguration)
-        let fetcher = WOTFetcher()
-
         let linker = WOTLinker(logInspector: logInspector, fetcherAndDecoder: fetcherAndDecoder)
         let decoderAndMapper = WOTDecoderAndMapper(logInspector: logInspector, coreDataStore: coreDataStore, fetcher: fetcher, linker: linker, fetcherAndDecoder: fetcherAndDecoder)
+        let responseAdapterCreator = WOTResponseAdapterCreator(logInspector: logInspector, coreDataStore: coreDataStore, decoderAndMapper: decoderAndMapper, requestRegistrator: requestRegistrator)
+        let requestManager = WOTRequestManager(logInspector: logInspector, hostConfiguration: hostConfiguration, requestRegistrator: requestRegistrator, responseParser: responseParser, responseAdapterCreator: responseAdapterCreator)
 
         fetcher.coreDataStore = coreDataStore
         fetcher.logInspector = logInspector
@@ -44,10 +43,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         fetcherAndDecoder.decoderAndMapper = decoderAndMapper
         fetcherAndDecoder.fetcher = fetcher
         fetcherAndDecoder.logInspector = logInspector
-
-        requestRegistrator.decoderAndMapper = decoderAndMapper
-        requestRegistrator.logInspector = logInspector
-        requestRegistrator.coreDataStore = coreDataStore
 
         appManager.hostConfiguration = hostConfiguration
         appManager.responseParser = responseParser

@@ -97,6 +97,7 @@
 		1DFCC924247137DE005F580E /* WOTDecodeAndMappingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC923247137DE005F580E /* WOTDecodeAndMappingProtocol.swift */; };
 		1DFCC92624713805005F580E /* WOTDecoderAndMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92524713805005F580E /* WOTDecoderAndMapper.swift */; };
 		1DFCC92E24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92D24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift */; };
+		1DFCC93024714B45005F580E /* WOTResponseAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* WOTResponseAdapterCreator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +194,7 @@
 		1DFCC923247137DE005F580E /* WOTDecodeAndMappingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDecodeAndMappingProtocol.swift; sourceTree = "<group>"; };
 		1DFCC92524713805005F580E /* WOTDecoderAndMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDecoderAndMapper.swift; sourceTree = "<group>"; };
 		1DFCC92D24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTResponseAdapterCreatorProtocol.swift; sourceTree = "<group>"; };
+		1DFCC92F24714B45005F580E /* WOTResponseAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTResponseAdapterCreator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -621,6 +623,7 @@
 			isa = PBXGroup;
 			children = (
 				1DFCC92D24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift */,
+				1DFCC92F24714B45005F580E /* WOTResponseAdapterCreator.swift */,
 			);
 			path = ResponseAdapterCreator;
 			sourceTree = "<group>";
@@ -737,6 +740,7 @@
 				1D60E5A4245FE7E5007E5CA8 /* WOTWebRequestBuilder.swift in Sources */,
 				1DFCC92624713805005F580E /* WOTDecoderAndMapper.swift in Sources */,
 				1DFCC924247137DE005F580E /* WOTDecodeAndMappingProtocol.swift in Sources */,
+				1DFCC93024714B45005F580E /* WOTResponseAdapterCreator.swift in Sources */,
 				1D60E5B9245FE7E5007E5CA8 /* EventThread.swift in Sources */,
 				1D60E59A245FE7E5007E5CA8 /* JSONAdapter.swift in Sources */,
 				1D60E58B245FE7E5007E5CA8 /* AnyCodable.swift in Sources */,

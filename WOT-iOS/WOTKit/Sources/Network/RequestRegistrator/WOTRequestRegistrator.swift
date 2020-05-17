@@ -14,11 +14,12 @@ public class WOTRequestRegistrator: WOTRequestRegistratorProtocol {
     public var coreDataStore: WOTCoredataStoreProtocol?
     private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: JSONAdapterProtocol.Type] = .init()
-    public var decoderAndMapper: WOTDecodeAndMappingProtocol?
 
-    public init() {
-//        self.decoderAndMapper = decoderAndMapper
+    required public init(logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?) {
+        self.logInspector = logInspector
+        self.coreDataStore = coreDataStore
     }
+
 }
 
 // MARK: - WOTRequestBindingProtocol
@@ -29,17 +30,6 @@ extension WOTRequestRegistrator {
             forClass == registeredRequests[$0]?.modelClass()
         }
         return result
-    }
-
-    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) throws -> JSONAdapterProtocol {
-        guard let modelClass = self.modelClass(forRequestIdType: requestIdType) else {
-            throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
-        }
-        guard let dataAdapterClass = self.dataAdapterClass(for: requestIdType) else {
-            throw RequestCoordinatorError.adapterNotFound(requestType: requestIdType.description)
-        }
-
-        return dataAdapterClass.init(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, linker: linker, decoderAndMapper: decoderAndMapper)
     }
 
     public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type) {

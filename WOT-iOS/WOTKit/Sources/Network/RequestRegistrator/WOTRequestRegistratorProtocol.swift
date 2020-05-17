@@ -9,9 +9,8 @@
 import Foundation
 
 @objc
-public protocol WOTRequestRegistratorProtocol: WOTResponseAdapterCreatorProtocol {
+public protocol WOTRequestRegistratorProtocol {
 
-    var decoderAndMapper: WOTDecodeAndMappingProtocol? { get set }
     var logInspector: LogInspectorProtocol? { get set }
     var coreDataStore: WOTCoredataStoreProtocol? { get set }
 

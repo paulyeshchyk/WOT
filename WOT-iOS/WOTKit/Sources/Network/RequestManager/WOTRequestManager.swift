@@ -14,6 +14,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     private var logInspector: LogInspectorProtocol
     private var hostConfiguration: WOTHostConfigurationProtocol
     private var requestRegistrator: WOTRequestRegistratorProtocol
+    private var responseAdapterCreator: WOTResponseAdapterCreator
 
     private var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     private var grouppedRequests: [WOTRequestIdType: [WOTRequestProtocol]] = [:]
@@ -23,11 +24,12 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         //
     }
 
-    public required init(requestRegistrator: WOTRequestRegistratorProtocol, responseParser: WOTResponseParserProtocol, logInspector: LogInspectorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
+    public required init(logInspector: LogInspectorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol, requestRegistrator: WOTRequestRegistratorProtocol, responseParser: WOTResponseParserProtocol, responseAdapterCreator: WOTResponseAdapterCreator) {
         self.hostConfiguration = hostConfig
         self.responseParser = responseParser
         self.logInspector = logInspector
         self.requestRegistrator = requestRegistrator
+        self.responseAdapterCreator = responseAdapterCreator
         super.init()
     }
 }
@@ -112,13 +114,11 @@ extension WOTRequestManager {
         result.hostConfiguration = hostConfiguration
         return result
     }
-
 }
 
 // MARK: - WOTRequestCoordinatorBridgeProtocol
 
 extension WOTRequestManager {
-
     private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
         request.paradigm = paradigm
@@ -151,18 +151,10 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
 
         let requestIds = self.requestIds(forRequest: request)
 
-        var adapters: [DataAdapterProtocol] = .init()
-        requestIds.forEach { requestIdType in
-            do {
-                let adapter = try requestRegistrator.responseAdapterInstance(for: requestIdType, request: request, linker: adapterLinker)
-                adapters.append(adapter)
-            } catch {
-                logInspector.logEvent(EventError(error, details: nil), sender: self)
-            }
-        }
+        let adapters = responseAdapterCreator.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, linker: adapterLinker)
 
         if adapters.count == 0 {
-            onRequestComplete(request, self, error: nil)//no adapters found
+            onRequestComplete(request, self, error: nil) // no adapters found
             return
         }
 
@@ -206,9 +198,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 }
 
-
 extension WOTRequestManager: WOTRequestCoordinatorProtocol {
-
     public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType] {
         guard let modelClass = requestRegistrator.modelClass(forRequest: request) else {
             let eventError = EventError(message: "model class not found for request\(type(of: request))")
@@ -225,7 +215,6 @@ extension WOTRequestManager: WOTRequestCoordinatorProtocol {
         return result
     }
 }
-
 
 // MARK: - Extension RequestParadigmProtocol
 

@@ -11,4 +11,5 @@ import Foundation
 @objc
 public protocol WOTResponseAdapterCreatorProtocol {
     func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) throws -> JSONAdapterProtocol
+    func responseAdapterInstances(byRequestIdTypes: [WOTRequestIdType], request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) -> [DataAdapterProtocol] 
 }
