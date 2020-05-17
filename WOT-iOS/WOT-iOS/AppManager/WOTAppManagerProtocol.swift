@@ -11,12 +11,11 @@ import Foundation
 @objc
 public protocol WOTAppManagerProtocol {
     @objc var hostConfiguration: WOTHostConfigurationProtocol? { get set }
-    @objc var requestCoordinator: WOTRequestCoordinatorProtocol? { get set }
+    @objc var responseParser: WOTResponseParserProtocol? { get set }
     @objc var requestManager: WOTRequestManagerProtocol? { get set }
     @objc var requestListener: WOTRequestListenerProtocol? { get set }
     @objc var sessionManager: WOTWebSessionManagerProtocol? { get set }
     @objc var logInspector: LogInspectorProtocol? { get set }
     @objc var coreDataStore: WOTCoredataStoreProtocol? { get set }
-    @objc var mappingCoordinator: WOTMappingCoordinatorProtocol? { get set }
-    @objc var responseCoordinator: WOTResponseCoordinatorProtocol? { get set }
+    @objc var requestRegistrator: WOTRequestRegistratorProtocol? { get set }
 }

@@ -168,9 +168,14 @@ class WOTTankPivotViewController: WOTPivotViewController {
     var settingsDatasource = WOTTankListSettingsDatasource()
 
     override func pivotModel() -> WOTPivotDataModelProtocol {
-        let appDelegate = UIApplication.shared.delegate as? WOTAppDelegateProtocol
-        let appManager = appDelegate?.appManager
-        return WOTTankPivotModel(modelListener: self, appManager: appManager, settingsDatasource: settingsDatasource)
+        guard let appDelegate = UIApplication.shared.delegate as? WOTAppDelegateProtocol else {
+            fatalError("appDelegate is not WOTAppDelegateProtocol")
+        }
+        let appManager = appDelegate.appManager
+        guard let coreDataStore = appManager.coreDataStore else {fatalError("CoreDataStore not defined")}
+        guard let requestManager = appManager.requestManager else {fatalError("RequestManager not defined")}
+        guard let logInspector = appManager.logInspector else {fatalError("LogInspector not defined")}
+        return WOTTankPivotModel(modelListener: self, coreDataStore: coreDataStore, requestManager: requestManager, logInspector: logInspector, settingsDatasource: settingsDatasource)
     }
 
     override func viewDidLoad() {

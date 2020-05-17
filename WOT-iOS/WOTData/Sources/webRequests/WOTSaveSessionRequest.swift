@@ -23,8 +23,7 @@ public class WOTSaveSessionRequest: WOTWEBRequest, WOTModelServiceProtocol {
         return nil
     }
 
-    required init(appManager app: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type) {
-//        appManager = app
+    required init(clazz: PrimaryKeypathProtocol.Type) {
     }
 
     // - (void)start:(WOTRequestArguments * _Nonnull)args{

@@ -1,5 +1,5 @@
 //
-//  WOTCustomCoreDataProvider.swift
+//  WOTCustomCoreDataStore.swift
 //  WOT-iOS
 //
 //  Created by Pavel Yeshchyk on 1/10/20.
@@ -10,7 +10,7 @@ import WOTPivot
 import WOTKit
 
 @objc
-public class WOTCustomCoreDataProvider: WOTCoreDataStore {
+public class WOTCustomCoreDataStore: WOTCoreDataStore {
     override public var applicationDocumentsDirectoryURL: URL? {
         return FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).last
     }

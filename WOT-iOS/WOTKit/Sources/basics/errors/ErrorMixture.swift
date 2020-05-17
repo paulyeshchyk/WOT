@@ -69,22 +69,6 @@ public enum WOTMapperError: Error, CustomDebugStringConvertible {
     }
 }
 
-public enum WOTMappingCoordinatorError: Error, CustomDebugStringConvertible {
-    case requestsNotParsed
-    case linkerNotStarted
-    case noKeysDefinedForClass(String)
-    case lookupRuleNotDefined
-
-    public var debugDescription: String {
-        switch self {
-        case .noKeysDefinedForClass(let clazz): return "No keys defined for:[\(String(describing: clazz))]"
-        case .requestsNotParsed: return "request is not parsed"
-        case .linkerNotStarted: return "linker is not started"
-        case .lookupRuleNotDefined: return "rule is not defined"
-        }
-    }
-}
-
 public enum WOTRequestManagerError: Error, CustomDebugStringConvertible {
     case dataparserNotFound(WOTRequestProtocol)
     case linkerNotFound(WOTRequestProtocol)

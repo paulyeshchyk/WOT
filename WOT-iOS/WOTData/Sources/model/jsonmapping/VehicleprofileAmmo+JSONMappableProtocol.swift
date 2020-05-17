@@ -6,13 +6,13 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import CoreData
+import WOTKit
 
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmo {
-    public override func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol?) throws {
         //
         try self.decode(json: json)
         //
@@ -20,19 +20,21 @@ extension VehicleprofileAmmo {
         let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
         // MARK: - Penetration
+
         let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any]
         let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
         let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: requestPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-        mappingCoordinator?.linkItems(from: penetrationArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, mapperClazz: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder)
+        mappingCoordinator?.linkItems(from: penetrationArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, mapperClazz: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder, requestManager: requestManager!)
 
         // MARK: - Damage
+
         let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any]
         let damageMapper = VehicleprofileAmmo.DamageLinker.self
         let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: requestPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
-        mappingCoordinator?.linkItems(from: damageArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, mapperClazz: damageMapper, lookupRuleBuilder: damageRuleBuilder)
+        mappingCoordinator?.linkItems(from: damageArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, mapperClazz: damageMapper, lookupRuleBuilder: damageRuleBuilder, requestManager: requestManager!)
     }
 
-    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: RequestExpression?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol?) {
+    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: RequestExpression?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
         guard let json = json, let entityDescription = context.entityDescription(forType: VehicleprofileAmmo.self) else {
             fatalError("Entity description not found [\(String(describing: VehicleprofileAmmo.self))]")
             return nil
@@ -42,11 +44,7 @@ extension VehicleprofileAmmo {
         let ammoPredicate = RequestPredicate()
         ammoPredicate[.primary] = parentPrimaryKey
         let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(.and), fetchStatus: .none)
-        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, mapper: nil) { _, error in
-            if let error = error {
-                mappingCoordinator?.logEvent(EventError(error, details: nil), sender: nil)
-            }
-        }
+        mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, mapper: nil, requestManager: requestManager, completion: { _, _ in })
     }
 }
 

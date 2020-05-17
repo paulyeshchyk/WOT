@@ -14,10 +14,8 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
 
     open var useEmptyNode: Bool { return false }
 
-    open var appManager: WOTAppManagerProtocol?
-
-    public init(appManager manager: WOTAppManagerProtocol?) {
-        self.appManager = manager
+    public init() {
+        //
     }
 
     open func createEmptyNode() -> WOTNodeProtocol {

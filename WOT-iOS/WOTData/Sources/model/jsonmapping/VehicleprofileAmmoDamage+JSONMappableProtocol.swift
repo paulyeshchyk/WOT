@@ -12,7 +12,7 @@ import CoreData
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmoDamage {
-    public override func mapping(array: [Any], context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+     override public func mapping(array: [Any], context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol?) throws {
         //
         guard array.count == 3 else {
             throw ErrorVehicleprofileAmmoDamage.arrayIsNotContainingThreeElements

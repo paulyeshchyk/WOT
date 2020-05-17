@@ -18,5 +18,5 @@ public protocol WOTPivotDataModelProtocol: WOTDataModelProtocol {
     func add(metadataItems: [WOTNodeProtocol])
 
     var dimension: WOTPivotDimensionProtocol { get }
-    init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource)
+//    init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource)
 }

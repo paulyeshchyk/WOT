@@ -14,20 +14,13 @@ public protocol WOTRequestCoordinatorBridgeProtocol {
 }
 
 @objc
-public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol, LogInspectorProtocol {
-    var appManager: WOTAppManagerProtocol? { get set }
-
-    var coordinator: WOTRequestCoordinatorProtocol { get }
-
-    var hostConfiguration: WOTHostConfigurationProtocol { get set }
-
+public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
     func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
-
     func removeListener(_ listener: WOTRequestManagerListenerProtocol)
-
     func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol) throws
-
     func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws
-
     func cancelRequests(groupId: WOTRequestIdType, with error: Error?)
+    func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
+    func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]
+    func fetchRemote(paradigm: RequestParadigmProtocol)
 }

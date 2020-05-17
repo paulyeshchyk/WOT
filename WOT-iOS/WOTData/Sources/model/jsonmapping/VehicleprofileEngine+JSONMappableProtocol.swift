@@ -12,8 +12,7 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileEngine {
-    @objc
-    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol?) throws {
         //
         try self.decode(json: json)
         //

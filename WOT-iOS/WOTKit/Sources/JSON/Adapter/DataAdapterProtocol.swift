@@ -9,9 +9,8 @@
 import Foundation
 
 @objc
-public protocol DataAdapterProtocol: LogInspectorProtocol {
-    @available(*, deprecated)
-    @objc var appManager: WOTAppManagerProtocol? { get set }
+public protocol DataAdapterProtocol {
+
     var uuid: UUID { get }
     var onJSONDidParse: OnRequestComplete? { get set }
     func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
