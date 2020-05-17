@@ -18,5 +18,5 @@ public protocol WOTDataResponseAdapterProtocol: NSObjectProtocol {
 
     init(clazz: PrimaryKeypathProtocol.Type)
 
-    func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, onRequestComplete: @escaping OnRequestComplete ) -> JSONAdapterProtocol
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol, onRequestComplete: @escaping OnRequestComplete ) -> JSONAdapterProtocol
 }

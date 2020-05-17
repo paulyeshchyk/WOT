@@ -22,4 +22,5 @@ public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
     func cancelRequests(groupId: WOTRequestIdType, with error: Error?)
     func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
     func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]
+    func fetchRemote(paradigm: RequestParadigmProtocol)
 }

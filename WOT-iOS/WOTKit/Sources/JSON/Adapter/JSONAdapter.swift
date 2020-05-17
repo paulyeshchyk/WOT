@@ -29,6 +29,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     private var logInspector: LogInspectorProtocol?
     private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
+    private let requestManager: WOTRequestManagerProtocol
     private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
 
     // MARK: NSObject -
@@ -41,13 +42,14 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 
-    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, linker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol) {
+    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
         self.modelClazz = clazz
         self.request = request
-        self.linker = linker
+        self.linker = jsonAdapterLinker
         self.mappingCoordinator = mappingCoordinator
         self.logInspector = logInspector
         self.coreDataStore = coreDataStore
+        self.requestManager = requestManager
 
         super.init()
         logInspector?.logEvent(EventObjectNew(request), sender: self)
@@ -158,7 +160,7 @@ extension JSONAdapter {
 
             let jsonStartParsingDate = Date()
             self.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
+            self.mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil, requestManager: self.requestManager) { fetchResult, error in
                 if let error = error {
                     self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }

@@ -11,9 +11,6 @@ import Foundation
 @objc
 public protocol WOTRequestRegistratorProtocol {
 
-    var logInspector: LogInspectorProtocol? { get set }
-    var coreDataStore: WOTCoredataStoreProtocol? { get set }
-
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]
     func unregisterDataAdapter(for requestId: WOTRequestIdType)
     func dataAdapterClass(for requestId: WOTRequestIdType) -> JSONAdapterProtocol.Type?

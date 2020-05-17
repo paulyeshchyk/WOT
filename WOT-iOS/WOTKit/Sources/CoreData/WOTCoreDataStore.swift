@@ -18,7 +18,7 @@ open class WOTCoreDataStore: NSObject {
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { fatalError("should be overriden") }
 
-    public var logInspector: LogInspectorProtocol
+    private let logInspector: LogInspectorProtocol
 
     required public init(logInspector: LogInspectorProtocol) {
         self.logInspector = logInspector

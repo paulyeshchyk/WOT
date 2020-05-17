@@ -9,10 +9,10 @@
 import Foundation
 
 public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
-    public var logInspector: LogInspectorProtocol
-    public var coreDataStore: WOTCoredataStoreProtocol
-    public var mappingCoordinator: WOTMappingCoordinatorProtocol
-    public var requestRegistrator: WOTRequestRegistratorProtocol
+    private let logInspector: LogInspectorProtocol
+    private let coreDataStore: WOTCoredataStoreProtocol
+    private let mappingCoordinator: WOTMappingCoordinatorProtocol
+    private let requestRegistrator: WOTRequestRegistratorProtocol
 
     public init(logInspector: LogInspectorProtocol, coreDataStore: WOTCoredataStoreProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
         self.logInspector = logInspector
@@ -21,7 +21,7 @@ public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
         self.requestRegistrator = requestRegistrator
     }
 
-    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) throws -> JSONAdapterProtocol {
+    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: WOTRequestManagerProtocol) throws -> JSONAdapterProtocol {
         guard let modelClass = requestRegistrator.modelClass(forRequestIdType: requestIdType) else {
             throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
         }
@@ -29,14 +29,14 @@ public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
             throw RequestCoordinatorError.adapterNotFound(requestType: requestIdType.description)
         }
 
-        return dataAdapterClass.init(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, linker: linker, mappingCoordinator: mappingCoordinator)
+        return dataAdapterClass.init(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, jsonAdapterLinker: jsonAdapterLinker, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
     }
 
-    public func responseAdapterInstances(byRequestIdTypes: [WOTRequestIdType], request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) -> [DataAdapterProtocol] {
+    public func responseAdapterInstances(byRequestIdTypes: [WOTRequestIdType], request: WOTRequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: WOTRequestManagerProtocol) -> [DataAdapterProtocol] {
         var adapters: [DataAdapterProtocol] = .init()
         byRequestIdTypes.forEach { requestIdType in
             do {
-                let adapter = try self.responseAdapterInstance(for: requestIdType, request: request, linker: linker)
+                let adapter = try self.responseAdapterInstance(for: requestIdType, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: requestManager)
                 adapters.append(adapter)
             } catch {
                 logInspector.logEvent(EventError(error, details: nil), sender: self)

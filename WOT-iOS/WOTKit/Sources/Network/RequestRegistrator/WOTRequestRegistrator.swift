@@ -10,14 +10,12 @@ import Foundation
 
 public class WOTRequestRegistrator: WOTRequestRegistratorProtocol {
 
-    public var logInspector: LogInspectorProtocol?
-    public var coreDataStore: WOTCoredataStoreProtocol?
+    private let logInspector: LogInspectorProtocol
     private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: JSONAdapterProtocol.Type] = .init()
 
-    required public init(logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?) {
+    required public init(logInspector: LogInspectorProtocol) {
         self.logInspector = logInspector
-        self.coreDataStore = coreDataStore
     }
 
 }

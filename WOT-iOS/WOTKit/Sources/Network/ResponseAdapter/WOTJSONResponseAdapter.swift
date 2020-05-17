@@ -20,8 +20,8 @@ open class WOTJSONResponseAdapter: NSObject, WOTDataResponseAdapterProtocol {
         modelClass = clazz
     }
 
-    open func request(_ request: WOTRequestProtocol, parseData data: Data?, linker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
-        let jsonAdapter: JSONAdapterProtocol = JSONAdapter(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, linker: linker, mappingCoordinator: mappingCoordinator)
+    open func request(_ request: WOTRequestProtocol, parseData data: Data?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+        let jsonAdapter: JSONAdapterProtocol = JSONAdapter(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, jsonAdapterLinker: jsonAdapterLinker, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
         jsonAdapter.onJSONDidParse = onRequestComplete
         return jsonAdapter
     }
