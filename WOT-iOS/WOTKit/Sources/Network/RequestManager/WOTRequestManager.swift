@@ -116,8 +116,6 @@ extension WOTRequestManager {
     }
 }
 
-// MARK: - WOTRequestCoordinatorBridgeProtocol
-
 extension WOTRequestManager {
     private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
@@ -126,7 +124,24 @@ extension WOTRequestManager {
     }
 }
 
-// MARK: - WOTRequestManagerProtocol
+extension WOTRequestManager {
+
+    private func responseAdapters(for request: WOTRequestProtocol) -> [DataAdapterProtocol] {
+        guard let jsonAdapterLinker = grouppedLinkers[request.uuid.uuidString] else {
+            logInspector.logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
+            return []
+        }
+
+        let requestIds = self.requestIds(forRequest: request)
+
+        #warning("2b refactored")
+        let adapters = responseAdapterCreator.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: self)
+        return adapters
+
+    }
+}
+
+// MARK: - WOTRequestListenerProtocol
 
 extension WOTRequestManager: WOTRequestListenerProtocol {
     public func request(_ request: WOTRequestProtocol, startedWith: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol) {
@@ -144,14 +159,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        guard let jsonAdapterLinker = grouppedLinkers[request.uuid.uuidString] else {
-            logInspector.logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
-            return
-        }
-
-        let requestIds = self.requestIds(forRequest: request)
-
-        let adapters = responseAdapterCreator.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: self)
+        let adapters = self.responseAdapters(for: request)
 
         if adapters.count == 0 {
             onRequestComplete(request, self, error: nil) // no adapters found
@@ -162,7 +170,6 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             try responseParser.parseResponse(data: data,
                                              forRequest: request,
                                              adapters: adapters,
-                                             jsonAdapterLinker: jsonAdapterLinker,
                                              onRequestComplete: onRequestComplete(_:_:error:))
         } catch {
             logInspector.logEvent(EventError(error, details: String(describing: request)), sender: self)

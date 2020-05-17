@@ -22,7 +22,7 @@ public class RESTResponseParser: WOTResponseParserProtocol {
 // MARK: - WOTResponseParserProtocol
 
 extension RESTResponseParser {
-    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], jsonAdapterLinker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], onRequestComplete: @escaping OnRequestComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
         }
