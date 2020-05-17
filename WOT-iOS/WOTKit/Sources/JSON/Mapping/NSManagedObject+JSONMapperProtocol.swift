@@ -16,12 +16,12 @@ extension NSManagedObject: JSONMappableProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    open func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, fetcher: WOTFetcherProtocol?, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
+    open func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
         throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
     @objc
-    open func mapping(array: [Any], context: NSManagedObjectContext, requestPredicate: RequestPredicate, fetcher: WOTFetcherProtocol?, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
+    open func mapping(array: [Any], context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
         throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

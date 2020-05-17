@@ -13,7 +13,7 @@ import WOTKit
 
 extension VehicleprofileArmorList {
     @objc
-    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, fetcher: WOTFetcherProtocol?, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, linker: WOTLinkerProtocol?, fetcherAndDecoder: WOTFetchAndDecodeProtocol?, decoderAndMapper: WOTDecodeAndMappingProtocol) throws {
         //
         let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 

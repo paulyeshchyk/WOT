@@ -12,8 +12,9 @@ import CoreData
 public class WOTFetcherAndDecoder: NSObject, WOTFetchAndDecodeProtocol {
     public var logInspector: LogInspectorProtocol?
     public var coreDataStore: WOTCoredataStoreProtocol?
-    public var fetcher: WOTFetcherProtocol?
     public var decoderAndMapper: WOTDecodeAndMappingProtocol?
+    public var requestRegistrator: WOTRequestRegistratorProtocol?
+    public var requestManager: WOTRequestManagerProtocol?
 
     override public required init() {
         super.init()
@@ -29,7 +30,7 @@ public class WOTFetcherAndDecoder: NSObject, WOTFetchAndDecodeProtocol {
         }
 
         //
-        fetcher?.fetchLocal(context: context, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
+        coreDataStore?.fetchLocal(context: context, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
 
             if let error = error {
                 callback(fetchResult, error)
@@ -57,7 +58,7 @@ public class WOTFetcherAndDecoder: NSObject, WOTFetchAndDecodeProtocol {
             return
         }
         //
-        fetcher?.fetchLocal(context: context, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
+        coreDataStore?.fetchLocal(context: context, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
 
             if let error = error {
                 callback(fetchResult, error)
@@ -74,6 +75,20 @@ public class WOTFetcherAndDecoder: NSObject, WOTFetchAndDecodeProtocol {
                         callback(fetchResult, nil) // WOTFetcherAndDecoderError.linkerNotStarted
                     }
                 }
+            }
+        }
+    }
+
+    public func fetchRemote(paradigm: RequestParadigmProtocol) {
+        guard let requestIDs = requestRegistrator?.requestIds(forClass: paradigm.clazz), requestIDs.count > 0 else {
+            logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
+            return
+        }
+        requestIDs.forEach {
+            do {
+                try self.requestManager?.startRequest(by: $0, paradigm: paradigm)
+            } catch {
+                self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
         }
     }

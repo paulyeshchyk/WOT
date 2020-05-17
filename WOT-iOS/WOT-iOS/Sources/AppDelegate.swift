@@ -25,23 +25,18 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let coreDataStore = WOTCustomCoreDataStore(logInspector: logInspector)
         let requestRegistrator = WOTRequestRegistrator(logInspector: logInspector, coreDataStore: coreDataStore)
 
-        let fetcher = WOTFetcher()
         let fetcherAndDecoder = WOTFetcherAndDecoder()
 
         let responseParser = RESTResponseParser()
         let linker = WOTLinker(logInspector: logInspector, fetcherAndDecoder: fetcherAndDecoder)
-        let decoderAndMapper = WOTDecoderAndMapper(logInspector: logInspector, coreDataStore: coreDataStore, fetcher: fetcher, linker: linker, fetcherAndDecoder: fetcherAndDecoder)
+        let decoderAndMapper = WOTDecoderAndMapper(logInspector: logInspector, coreDataStore: coreDataStore, linker: linker, fetcherAndDecoder: fetcherAndDecoder)
         let responseAdapterCreator = WOTResponseAdapterCreator(logInspector: logInspector, coreDataStore: coreDataStore, decoderAndMapper: decoderAndMapper, requestRegistrator: requestRegistrator)
         let requestManager = WOTRequestManager(logInspector: logInspector, hostConfiguration: hostConfiguration, requestRegistrator: requestRegistrator, responseParser: responseParser, responseAdapterCreator: responseAdapterCreator)
 
-        fetcher.coreDataStore = coreDataStore
-        fetcher.logInspector = logInspector
-        fetcher.requestManager = requestManager
-        fetcher.requestRegistrator = requestRegistrator
-
+        fetcherAndDecoder.requestRegistrator = requestRegistrator
+        fetcherAndDecoder.requestManager = requestManager
         fetcherAndDecoder.coreDataStore = coreDataStore
         fetcherAndDecoder.decoderAndMapper = decoderAndMapper
-        fetcherAndDecoder.fetcher = fetcher
         fetcherAndDecoder.logInspector = logInspector
 
         appManager.hostConfiguration = hostConfiguration

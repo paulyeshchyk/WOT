@@ -62,8 +62,6 @@
 		1D60E5B2245FE7E5007E5CA8 /* WOTWebRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56E245FE7E5007E5CA8 /* WOTWebRequest.swift */; };
 		1D60E5B3245FE7E5007E5CA8 /* WOTRequestArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56F245FE7E5007E5CA8 /* WOTRequestArguments.swift */; };
 		1D60E5B4245FE7E5007E5CA8 /* WOTHostConfigurationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E571245FE7E5007E5CA8 /* WOTHostConfigurationProtocol.swift */; };
-		1D60E5B5245FE7E5007E5CA8 /* WOTRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E573245FE7E5007E5CA8 /* WOTRequestCoordinator.swift */; };
-		1D60E5B6245FE7E5007E5CA8 /* WOTRequestCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E574245FE7E5007E5CA8 /* WOTRequestCoordinatorProtocol.swift */; };
 		1D60E5B7245FE7E5007E5CA8 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E576245FE7E5007E5CA8 /* LogInspector.swift */; };
 		1D60E5B8245FE7E5007E5CA8 /* EventCDMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E578245FE7E5007E5CA8 /* EventCDMerge.swift */; };
 		1D60E5B9245FE7E5007E5CA8 /* EventThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E579245FE7E5007E5CA8 /* EventThread.swift */; };
@@ -88,8 +86,6 @@
 		1DD9D52C2467BA660064D88C /* RequestPredicateComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD9D52B2467BA660064D88C /* RequestPredicateComposition.swift */; };
 		1DFCC9102471153D005F580E /* WOTRequestRegistratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC90F2471153D005F580E /* WOTRequestRegistratorProtocol.swift */; };
 		1DFCC91224711574005F580E /* WOTRequestRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC91124711574005F580E /* WOTRequestRegistrator.swift */; };
-		1DFCC91524712A72005F580E /* WOTFetcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC91424712A72005F580E /* WOTFetcherProtocol.swift */; };
-		1DFCC91724712AC6005F580E /* WOTFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC91624712AC6005F580E /* WOTFetcher.swift */; };
 		1DFCC91A24712F5F005F580E /* WOTLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC91924712F5F005F580E /* WOTLinkerProtocol.swift */; };
 		1DFCC91C24712F8B005F580E /* WOTLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC91B24712F8B005F580E /* WOTLinker.swift */; };
 		1DFCC91F24713389005F580E /* WOTFetchAndDecodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC91E24713389005F580E /* WOTFetchAndDecodeProtocol.swift */; };
@@ -159,8 +155,6 @@
 		1D60E56E245FE7E5007E5CA8 /* WOTWebRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebRequest.swift; sourceTree = "<group>"; };
 		1D60E56F245FE7E5007E5CA8 /* WOTRequestArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestArguments.swift; sourceTree = "<group>"; };
 		1D60E571245FE7E5007E5CA8 /* WOTHostConfigurationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTHostConfigurationProtocol.swift; sourceTree = "<group>"; };
-		1D60E573245FE7E5007E5CA8 /* WOTRequestCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestCoordinator.swift; sourceTree = "<group>"; };
-		1D60E574245FE7E5007E5CA8 /* WOTRequestCoordinatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		1D60E576245FE7E5007E5CA8 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
 		1D60E578245FE7E5007E5CA8 /* EventCDMerge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCDMerge.swift; sourceTree = "<group>"; };
 		1D60E579245FE7E5007E5CA8 /* EventThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventThread.swift; sourceTree = "<group>"; };
@@ -185,8 +179,6 @@
 		1DD9D52B2467BA660064D88C /* RequestPredicateComposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposition.swift; sourceTree = "<group>"; };
 		1DFCC90F2471153D005F580E /* WOTRequestRegistratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestRegistratorProtocol.swift; sourceTree = "<group>"; };
 		1DFCC91124711574005F580E /* WOTRequestRegistrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestRegistrator.swift; sourceTree = "<group>"; };
-		1DFCC91424712A72005F580E /* WOTFetcherProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTFetcherProtocol.swift; sourceTree = "<group>"; };
-		1DFCC91624712AC6005F580E /* WOTFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTFetcher.swift; sourceTree = "<group>"; };
 		1DFCC91924712F5F005F580E /* WOTLinkerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTLinkerProtocol.swift; sourceTree = "<group>"; };
 		1DFCC91B24712F8B005F580E /* WOTLinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTLinker.swift; sourceTree = "<group>"; };
 		1DFCC91E24713389005F580E /* WOTFetchAndDecodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTFetchAndDecodeProtocol.swift; sourceTree = "<group>"; };
@@ -236,7 +228,6 @@
 				1DFCC922247137C2005F580E /* DecodeAndMapping */,
 				1DFCC91D24713364005F580E /* FetchAndDecode */,
 				1DFCC91824712F44005F580E /* Linker */,
-				1DFCC91324712A5B005F580E /* Fetcher */,
 				1D60E557245FE7E4007E5CA8 /* Network */,
 				1D60E51C245FE7A7007E5CA8 /* basics */,
 				1D60E509245FE541007E5CA8 /* WOTKit.h */,
@@ -361,7 +352,6 @@
 				1D60E563245FE7E5007E5CA8 /* ResponseAdapter */,
 				1D60E566245FE7E5007E5CA8 /* Request */,
 				1D60E570245FE7E5007E5CA8 /* HostConfiguration */,
-				1D60E572245FE7E5007E5CA8 /* RequestCoordinator */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -424,15 +414,6 @@
 				1D60E571245FE7E5007E5CA8 /* WOTHostConfigurationProtocol.swift */,
 			);
 			path = HostConfiguration;
-			sourceTree = "<group>";
-		};
-		1D60E572245FE7E5007E5CA8 /* RequestCoordinator */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E573245FE7E5007E5CA8 /* WOTRequestCoordinator.swift */,
-				1D60E574245FE7E5007E5CA8 /* WOTRequestCoordinatorProtocol.swift */,
-			);
-			path = RequestCoordinator;
 			sourceTree = "<group>";
 		};
 		1D60E575245FE7E5007E5CA8 /* LogInspector */ = {
@@ -581,15 +562,6 @@
 				1DFCC91124711574005F580E /* WOTRequestRegistrator.swift */,
 			);
 			path = RequestRegistrator;
-			sourceTree = "<group>";
-		};
-		1DFCC91324712A5B005F580E /* Fetcher */ = {
-			isa = PBXGroup;
-			children = (
-				1DFCC91424712A72005F580E /* WOTFetcherProtocol.swift */,
-				1DFCC91624712AC6005F580E /* WOTFetcher.swift */,
-			);
-			path = Fetcher;
 			sourceTree = "<group>";
 		};
 		1DFCC91824712F44005F580E /* Linker */ = {
@@ -754,7 +726,6 @@
 				1D60E5A2245FE7E5007E5CA8 /* RESTAPIResponse.swift in Sources */,
 				1D60E5C1245FE7E5007E5CA8 /* EventObject.swift in Sources */,
 				1D60E5DA245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift in Sources */,
-				1DFCC91524712A72005F580E /* WOTFetcherProtocol.swift in Sources */,
 				1D60E593245FE7E5007E5CA8 /* WOTCoredataStoreProtocol.swift in Sources */,
 				1D60E5AE245FE7E5007E5CA8 /* WOTStartableProtocol.swift in Sources */,
 				1DFCC91A24712F5F005F580E /* WOTLinkerProtocol.swift in Sources */,
@@ -766,7 +737,6 @@
 				1D60E58E245FE7E5007E5CA8 /* PrimaryKeypathProtocol.swift in Sources */,
 				1D60E5B0245FE7E5007E5CA8 /* WOTRequestListenerProtocol.swift in Sources */,
 				1D60E5CF245FE93E007E5CA8 /* WEBError.swift in Sources */,
-				1D60E5B5245FE7E5007E5CA8 /* WOTRequestCoordinator.swift in Sources */,
 				1D60E590245FE7E5007E5CA8 /* RequestParadigm.swift in Sources */,
 				1D60E5C3245FE7E5007E5CA8 /* EventTimeMeasure.swift in Sources */,
 				1D60E5AB245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift in Sources */,
@@ -778,7 +748,6 @@
 				1D41163324653FD4009070AD /* EventRemoteFetch.swift in Sources */,
 				1D60E5BC245FE7E5007E5CA8 /* EventCDFetch.swift in Sources */,
 				1D60E589245FE7E5007E5CA8 /* Coding.swift in Sources */,
-				1DFCC91724712AC6005F580E /* WOTFetcher.swift in Sources */,
 				1DFCC92E24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift in Sources */,
 				1D60E5B3245FE7E5007E5CA8 /* WOTRequestArguments.swift in Sources */,
 				1D60E5BA245FE7E5007E5CA8 /* EventError.swift in Sources */,
@@ -790,7 +759,6 @@
 				1D60E5AC245FE7E5007E5CA8 /* URLEncodedProtocol.swift in Sources */,
 				1D60E5C0245FE7E5007E5CA8 /* EventCustomLogic.swift in Sources */,
 				1D60E598245FE7E5007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift in Sources */,
-				1D60E5B6245FE7E5007E5CA8 /* WOTRequestCoordinatorProtocol.swift in Sources */,
 				1D60E5C2245FE7E5007E5CA8 /* EventCDStash.swift in Sources */,
 				1D60E588245FE7E5007E5CA8 /* RequestPredicate.swift in Sources */,
 				1D60E5A9245FE7E5007E5CA8 /* WOTDataResponseAdapterProtocol.swift in Sources */,

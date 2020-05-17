@@ -15,7 +15,6 @@ public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
 
     public var hostConfiguration: WOTHostConfigurationProtocol?
     public var responseParser: WOTResponseParserProtocol?
-    public var requestCoordinator: WOTRequestCoordinatorProtocol?
     public var requestManager: WOTRequestManagerProtocol?
     public var requestListener: WOTRequestListenerProtocol?
     public var sessionManager: WOTWebSessionManagerProtocol?

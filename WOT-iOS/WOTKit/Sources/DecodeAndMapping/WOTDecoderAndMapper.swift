@@ -11,14 +11,12 @@ import Foundation
 public class WOTDecoderAndMapper {
     private var logInspector: LogInspectorProtocol
     private var coreDataStore: WOTCoredataStoreProtocol
-    private var fetcher: WOTFetcherProtocol
     private var superlinker: WOTLinkerProtocol
     private var fetcherAndDecoder: WOTFetchAndDecodeProtocol
 
-    public init(logInspector: LogInspectorProtocol, coreDataStore: WOTCoredataStoreProtocol, fetcher: WOTFetcherProtocol, linker: WOTLinkerProtocol, fetcherAndDecoder: WOTFetchAndDecodeProtocol) {
+    public init(logInspector: LogInspectorProtocol, coreDataStore: WOTCoredataStoreProtocol, linker: WOTLinkerProtocol, fetcherAndDecoder: WOTFetchAndDecodeProtocol) {
         self.logInspector = logInspector
         self.coreDataStore = coreDataStore
-        self.fetcher = fetcher
         self.superlinker = linker
         self.fetcherAndDecoder = fetcherAndDecoder
     }
@@ -48,7 +46,7 @@ extension WOTDecoderAndMapper: WOTDecodeAndMappingProtocol {
         let object = fetchResult.managedObject()
         //
         do {
-            try object.mapping(json: json, context: context, requestPredicate: requestPredicate, fetcher: fetcher, linker: superlinker, fetcherAndDecoder: fetcherAndDecoder, decoderAndMapper: self)
+            try object.mapping(json: json, context: context, requestPredicate: requestPredicate, linker: superlinker, fetcherAndDecoder: fetcherAndDecoder, decoderAndMapper: self)
             coreDataStore.stash(context: context, block: localCompletion)
             logInspector.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         } catch {
@@ -75,7 +73,7 @@ extension WOTDecoderAndMapper: WOTDecodeAndMappingProtocol {
         let object = fetchResult.managedObject()
         //
         do {
-            try object.mapping(array: array, context: context, requestPredicate: requestPredicate, fetcher: fetcher, linker: superlinker, fetcherAndDecoder: fetcherAndDecoder, decoderAndMapper: self)
+            try object.mapping(array: array, context: context, requestPredicate: requestPredicate, linker: superlinker, fetcherAndDecoder: fetcherAndDecoder, decoderAndMapper: self)
             //
             coreDataStore.stash(context: fetchResult.context, block: localCompletion)
             //

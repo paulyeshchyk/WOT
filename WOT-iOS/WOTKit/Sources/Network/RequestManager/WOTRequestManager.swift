@@ -198,7 +198,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
     }
 }
 
-extension WOTRequestManager: WOTRequestCoordinatorProtocol {
+extension WOTRequestManager {
     public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType] {
         guard let modelClass = requestRegistrator.modelClass(forRequest: request) else {
             let eventError = EventError(message: "model class not found for request\(type(of: request))")
