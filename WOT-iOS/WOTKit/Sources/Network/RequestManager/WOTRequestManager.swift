@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-    private var requestCoordinator: WOTRequestCoordinatorProtocol
     private var responseParser: WOTResponseParserProtocol
     private var logInspector: LogInspectorProtocol
     private var hostConfiguration: WOTHostConfigurationProtocol
@@ -25,8 +24,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
     }
 
     @objc
-    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, requestRegistrator: WOTRequestRegistratorProtocol, responseParser: WOTResponseParserProtocol, logInspector: LogInspectorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
-        self.requestCoordinator = requestCoordinator
+    public required init(requestRegistrator: WOTRequestRegistratorProtocol, responseParser: WOTResponseParserProtocol, logInspector: LogInspectorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
         self.hostConfiguration = hostConfig
         self.responseParser = responseParser
         self.logInspector = logInspector
@@ -105,16 +103,22 @@ extension WOTRequestManager {
     public func cancelRequests(groupId: WOTRequestIdType, with error: Error?) {
         grouppedRequests[groupId]?.forEach { $0.cancel(with: error) }
     }
+
+    public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
+        guard
+            let Clazz = requestRegistrator.requestClass(for: requestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self),
+            let result = Clazz.init() as? WOTRequestProtocol else {
+            throw RequestCoordinatorError.requestNotFound
+        }
+        result.hostConfiguration = hostConfiguration
+        return result
+    }
+
 }
 
 // MARK: - WOTRequestCoordinatorBridgeProtocol
 
 extension WOTRequestManager {
-    public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
-        let result = try requestCoordinator.createRequest(forRequestId: requestId)
-        result.hostConfiguration = hostConfiguration
-        return result
-    }
 
     private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws -> WOTRequestProtocol {
         let request = try createRequest(forRequestId: requestId)
@@ -146,7 +150,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        let requestIds = requestCoordinator.requestIds(forRequest: request)
+        let requestIds = self.requestIds(forRequest: request)
 
         var adapters: [DataAdapterProtocol] = .init()
         requestIds.forEach { requestIdType in
@@ -202,6 +206,27 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
         request.removeListener(self)
     }
 }
+
+
+extension WOTRequestManager: WOTRequestCoordinatorProtocol {
+
+    public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType] {
+        guard let modelClass = requestRegistrator.modelClass(forRequest: request) else {
+            let eventError = EventError(message: "model class not found for request\(type(of: request))")
+            logInspector.logEvent(eventError, sender: self)
+            return []
+        }
+
+        let result = requestRegistrator.requestIds(forClass: modelClass)
+        guard result.count > 0 else {
+            let eventError = EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))")
+            logInspector.logEvent(eventError, sender: self)
+            return []
+        }
+        return result
+    }
+}
+
 
 // MARK: - Extension RequestParadigmProtocol
 

@@ -12,7 +12,7 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Vehicles {
-    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, fetcher: WOTFetcherProtocol?) throws {
         //
         try self.decode(json: json)
         //
@@ -66,7 +66,7 @@ extension Vehicles {
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let mapper = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, mapper: mapper, callback: { _, _ in })
+        mappingCoordinator?.fetchLocalAndDecode(json: json, context: context, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, mapper: mapper, callback: { _, _ in })
     }
 }
 

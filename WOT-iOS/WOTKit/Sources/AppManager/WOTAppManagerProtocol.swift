@@ -11,7 +11,6 @@ import Foundation
 @objc
 public protocol WOTAppManagerProtocol {
     @objc var hostConfiguration: WOTHostConfigurationProtocol? { get set }
-    @objc var requestCoordinator: WOTRequestCoordinatorProtocol? { get set }
     @objc var responseParser: WOTResponseParserProtocol? { get set }
     @objc var requestManager: WOTRequestManagerProtocol? { get set }
     @objc var requestListener: WOTRequestListenerProtocol? { get set }
