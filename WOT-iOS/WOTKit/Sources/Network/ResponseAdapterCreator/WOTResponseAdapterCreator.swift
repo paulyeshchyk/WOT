@@ -11,13 +11,13 @@ import Foundation
 public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
     public var logInspector: LogInspectorProtocol
     public var coreDataStore: WOTCoredataStoreProtocol
-    public var decoderAndMapper: WOTDecodeAndMappingProtocol
+    public var mappingCoordinator: WOTMappingCoordinatorProtocol
     public var requestRegistrator: WOTRequestRegistratorProtocol
 
-    public init(logInspector: LogInspectorProtocol, coreDataStore: WOTCoredataStoreProtocol, decoderAndMapper: WOTDecodeAndMappingProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
+    public init(logInspector: LogInspectorProtocol, coreDataStore: WOTCoredataStoreProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
         self.logInspector = logInspector
         self.coreDataStore = coreDataStore
-        self.decoderAndMapper = decoderAndMapper
+        self.mappingCoordinator = mappingCoordinator
         self.requestRegistrator = requestRegistrator
     }
 
@@ -29,7 +29,7 @@ public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
             throw RequestCoordinatorError.adapterNotFound(requestType: requestIdType.description)
         }
 
-        return dataAdapterClass.init(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, linker: linker, decoderAndMapper: decoderAndMapper)
+        return dataAdapterClass.init(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, linker: linker, mappingCoordinator: mappingCoordinator)
     }
 
     public func responseAdapterInstances(byRequestIdTypes: [WOTRequestIdType], request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) -> [DataAdapterProtocol] {

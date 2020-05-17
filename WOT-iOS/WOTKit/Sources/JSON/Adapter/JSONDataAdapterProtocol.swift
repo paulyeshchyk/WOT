@@ -11,5 +11,5 @@ import CoreData
 @objc
 public protocol JSONAdapterProtocol: DataAdapterProtocol {
     var linker: JSONAdapterLinkerProtocol { get set }
-    init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, linker: JSONAdapterLinkerProtocol, decoderAndMapper: WOTDecodeAndMappingProtocol?)
+    init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, linker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol)
 }

@@ -24,7 +24,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: Private -
 
     private let METAClass: Codable.Type = RESTAPIResponse.self
-    private var decoderAndMapper: WOTDecodeAndMappingProtocol?
+    private var mappingCoordinator: WOTMappingCoordinatorProtocol
     private var coreDataStore: WOTCoredataStoreProtocol?
     private var logInspector: LogInspectorProtocol?
     private let modelClazz: PrimaryKeypathProtocol.Type
@@ -41,11 +41,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 
-    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, linker: JSONAdapterLinkerProtocol, decoderAndMapper: WOTDecodeAndMappingProtocol?) {
+    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, linker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol) {
         self.modelClazz = clazz
         self.request = request
         self.linker = linker
-        self.decoderAndMapper = decoderAndMapper
+        self.mappingCoordinator = mappingCoordinator
         self.logInspector = logInspector
         self.coreDataStore = coreDataStore
 
@@ -158,7 +158,7 @@ extension JSONAdapter {
 
             let jsonStartParsingDate = Date()
             self.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.decoderAndMapper?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
+            self.mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
                 if let error = error {
                     self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }

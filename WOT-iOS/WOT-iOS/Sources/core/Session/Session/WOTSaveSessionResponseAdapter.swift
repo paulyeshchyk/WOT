@@ -17,7 +17,7 @@ public class WOTSaveSessionResponseAdapter: NSObject, WOTDataResponseAdapterProt
     required public init(clazz: PrimaryKeypathProtocol.Type) {
     }
 
-    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol, decoderAndMapper: WOTDecodeAndMappingProtocol, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
+    public func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, onRequestComplete: @escaping OnRequestComplete) -> JSONAdapterProtocol {
         fatalError("not implemented")
 //        WOTSessionManager.sharedInstance()?.invalidateTimer({ (interval) -> Timer? in
 //            if #available(iOS 10.0, *) {
