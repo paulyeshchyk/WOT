@@ -14,7 +14,7 @@ public protocol WOTRequestCoordinatorBridgeProtocol {
 }
 
 @objc
-public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol, LogInspectorProtocol {
+public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
     var coordinator: WOTRequestCoordinatorProtocol { get }
 
     var hostConfiguration: WOTHostConfigurationProtocol { get set }

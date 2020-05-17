@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol WOTResponseCoordinatorProtocol {
-    init(requestCoordinator: WOTRequestCoordinatorProtocol, logInspector: LogInspectorProtocol, requestRegistrator: WOTRequestRegistratorProtocol)
-    func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws
+public protocol WOTResponseParserProtocol {
+    init(logInspector: LogInspectorProtocol, requestRegistrator: WOTRequestRegistratorProtocol)
+    func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws
 }

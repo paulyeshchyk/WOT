@@ -136,12 +136,9 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         return "WOTTankPivotModel".hashValue
     }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType, error: Error?) {
+    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         DispatchQueue.main.async {
             super.loadModel()
-            if let error = error {
-                requestManager.logEvent(EventError(error, details: didParseDataForRequest), sender: self)
-            }
             if completionResultType == .finished || completionResultType == .noData {
                 requestManager.removeListener(self)
             }

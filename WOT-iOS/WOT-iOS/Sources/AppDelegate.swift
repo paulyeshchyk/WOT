@@ -26,14 +26,14 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let sessionManager = WOTWebSessionManager()
 
         let coreDataStore = WOTCustomCoreDataStore(logInspector: logInspector)
-        let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator, logInspector: logInspector, requestRegistrator: requestRegistrator)
+        let responseParser = RESTResponseCoordinator(logInspector: logInspector, requestRegistrator: requestRegistrator)
 
-        let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, responseCoordinator: responseCoordinator, logInspector: logInspector, hostConfiguration: hostConfiguration)
+        let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, requestRegistrator: requestRegistrator, responseParser: responseParser, logInspector: logInspector, hostConfiguration: hostConfiguration)
         let mappingCoordinator = WOTMappingCoordinator(coreDataStore: coreDataStore, requestManager: requestManager, logInspector: logInspector, requestRegistrator: requestRegistrator)
 
         appManager.hostConfiguration = hostConfiguration
         appManager.requestCoordinator = requestCoordinator
-        appManager.responseCoordinator = responseCoordinator
+        appManager.responseParser = responseParser
         appManager.requestManager = requestManager
         appManager.requestListener = requestManager
         appManager.sessionManager = sessionManager
