@@ -13,15 +13,17 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
     public var coreDataStore: WOTCoredataStoreProtocol
     public var requestManager: WOTRequestManagerProtocol
     public var logInspector: LogInspectorProtocol
+    public var requestRegistrator: WOTRequestRegistratorProtocol
 
     public var description: String {
         return String(describing: type(of: self))
     }
 
-    public required init(coreDataStore: WOTCoredataStoreProtocol, requestManager: WOTRequestManagerProtocol, logInspector: LogInspectorProtocol) {
+    public required init(coreDataStore: WOTCoredataStoreProtocol, requestManager: WOTRequestManagerProtocol, logInspector: LogInspectorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
         self.coreDataStore = coreDataStore
         self.logInspector = logInspector
         self.requestManager = requestManager
+        self.requestRegistrator = requestRegistrator
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
@@ -116,7 +118,7 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
     }
 
     public func fetchRemote(paradigm: RequestParadigmProtocol) {
-        let requestIDs = requestManager.coordinator.requestIds(forClass: paradigm.clazz)
+        let requestIDs = requestRegistrator.requestIds(forClass: paradigm.clazz)
         guard requestIDs.count > 0 else {
             logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
             return

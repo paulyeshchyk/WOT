@@ -16,12 +16,14 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
 
     public var requestCoordinator: WOTRequestCoordinatorProtocol
     public var logInspector: LogInspectorProtocol
+    public var requestRegistrator: WOTRequestRegistratorProtocol
 
     // MARK: - WOTResponseCoordinatorProtocol
 
-    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, logInspector: LogInspectorProtocol) {
+    public required init(requestCoordinator: WOTRequestCoordinatorProtocol, logInspector: LogInspectorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
         self.requestCoordinator = requestCoordinator
         self.logInspector = logInspector
+        self.requestRegistrator = requestRegistrator
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
@@ -50,7 +52,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
         var dataAdaptationPair: [DataAdaptationPair] = .init()
         requestIds.forEach { requestIdType in
             do {
-                let adapter = try requestCoordinator.responseAdapterInstance(for: requestIdType, request: request, linker: linker)
+                let adapter = try requestRegistrator.responseAdapterInstance(for: requestIdType, request: request, linker: linker)
                 adapter.onJSONDidParse = localCallback
                 let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
                 dataAdaptationPair.append(pair)

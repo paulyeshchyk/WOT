@@ -27,4 +27,9 @@ public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
     public var sessionManager: WOTWebSessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
     public var coreDataStore: WOTCoredataStoreProtocol?
+    public var requestRegistrator: WOTRequestRegistratorProtocol? {
+        didSet {
+            requestRegistrator?.appManager = self
+        }
+    }
 }

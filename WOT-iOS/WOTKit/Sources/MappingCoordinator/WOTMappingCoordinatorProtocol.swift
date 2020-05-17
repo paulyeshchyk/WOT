@@ -15,6 +15,7 @@ public protocol WOTMappingCoordinatorProtocol: LogInspectorProtocol {
     var coreDataStore: WOTCoredataStoreProtocol { get }
     var requestManager: WOTRequestManagerProtocol { get }
     var logInspector: LogInspectorProtocol { get }
+    var requestRegistrator: WOTRequestRegistratorProtocol { get }
 
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion)
 

@@ -20,25 +20,28 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let logPriorities: [LogEventType] = [.localFetch, .remoteFetch, .error, .lifeCycle, .web, .json]
         let logInspector = LogInspector(priorities: logPriorities)
 
-        let requestCoordinator = WOTRequestCoordinator()
+        let requestRegistrator = WOTRequestRegistrator()
+        let requestCoordinator = WOTRequestCoordinator(requestRegistrator: requestRegistrator)
         let hostConfiguration = WOTWebHostConfiguration()
         let sessionManager = WOTWebSessionManager()
+
         let coreDataStore = WOTCustomCoreDataStore(logInspector: logInspector)
-        let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator, logInspector: logInspector)
+        let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator, logInspector: logInspector, requestRegistrator: requestRegistrator)
         let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, responseCoordinator: responseCoordinator, logInspector: logInspector, hostConfiguration: hostConfiguration)
-        let mappingCoordinator = WOTMappingCoordinator(coreDataStore: coreDataStore, requestManager: requestManager, logInspector: logInspector)
+        let mappingCoordinator = WOTMappingCoordinator(coreDataStore: coreDataStore, requestManager: requestManager, logInspector: logInspector, requestRegistrator: requestRegistrator)
 
         appManager.hostConfiguration = hostConfiguration
         appManager.requestCoordinator = requestCoordinator
+        appManager.responseCoordinator = responseCoordinator
         appManager.requestManager = requestManager
         appManager.requestListener = requestManager
-        appManager.responseCoordinator = responseCoordinator
         appManager.sessionManager = sessionManager
         appManager.logInspector = logInspector
         appManager.coreDataStore = coreDataStore
         appManager.mappingCoordinator = mappingCoordinator
+        appManager.requestRegistrator = requestRegistrator
 
-        requestCoordinator.registerDefaultRequests()
+        requestRegistrator.registerDefaultRequests()
 
         let drawerViewController: WOTDrawerViewController = WOTDrawerViewController.newDrawer()
 
@@ -50,7 +53,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
     }
 }
 
-extension WOTRequestCoordinator {
+extension WOTRequestRegistrator {
     public func registerDefaultRequests() {
         requestId(WebRequestType.guns.rawValue, registerRequestClass: WOTWEBRequestTankGuns.self, registerDataAdapterClass: JSONAdapter.self)
         requestId(WebRequestType.login.rawValue, registerRequestClass: WOTWEBRequestLogin.self, registerDataAdapterClass: JSONAdapter.self)

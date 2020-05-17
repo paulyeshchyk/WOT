@@ -9,35 +9,57 @@
 import Foundation
 
 public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
-    private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
-    private var registeredDataAdapters: [WOTRequestIdType: JSONAdapterProtocol.Type] = .init()
     public var appManager: WOTAppManagerProtocol?
+    private var requestRegistrator: WOTRequestRegistratorProtocol
 
-    override public init() {
-//        self.appManager = appManager
+    private var logInspector: LogInspectorProtocol? {
+        return appManager?.logInspector
+    }
+
+    required public init(requestRegistrator: WOTRequestRegistratorProtocol) {
+        self.requestRegistrator = requestRegistrator
         super.init()
-        //
-    }
-
-    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        appManager?.logInspector?.logEvent(event, sender: sender)
-    }
-
-    public func logEvent(_ event: LogEventProtocol?) {
-        appManager?.logInspector?.logEvent(event)
     }
 
     // MARK: - WOTRequestCoordinatorProtocol
 
     public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
         guard
-            let Clazz = request(for: requestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self),
+            let Clazz = requestRegistrator.requestClass(for: requestId) as? NSObject.Type, Clazz.conforms(to: WOTRequestProtocol.self),
             let result = Clazz.init() as? WOTRequestProtocol else {
             throw RequestCoordinatorError.requestNotFound
         }
         return result
     }
 
+    public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType] {
+        guard let modelClass = requestRegistrator.modelClass(forRequest: request) else {
+            let eventError = EventError(message: "model class not found for request\(type(of: request))")
+            logInspector?.logEvent(eventError, sender: self)
+            return []
+        }
+
+        let result = requestRegistrator.requestIds(forClass: modelClass)
+        guard result.count > 0 else {
+            let eventError = EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))")
+            logInspector?.logEvent(eventError, sender: self)
+            return []
+        }
+        return result
+    }
+}
+
+public class WOTRequestRegistrator: WOTRequestRegistratorProtocol {
+    public var appManager: WOTAppManagerProtocol?
+
+    private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
+    private var registeredDataAdapters: [WOTRequestIdType: JSONAdapterProtocol.Type] = .init()
+
+    public init() {
+        //
+    }
+    // MARK: - WOTRequestBindingProtocol
+    
     public func requestIds(forClass: AnyClass) -> [WOTRequestIdType] {
         let result = registeredRequests.keys.filter {
             forClass == registeredRequests[$0]?.modelClass()
@@ -45,24 +67,9 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
         return result
     }
 
-    public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType] {
-        guard let modelClass = modelClass(for: request) else {
-            let eventError = EventError(message: "model class not found for request\(type(of: request))")
-            logEvent(eventError, sender: self)
-            return []
-        }
-
-        let result = requestIds(forClass: modelClass)
-        guard result.count > 0 else {
-            let eventError = EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))")
-            logEvent(eventError, sender: self)
-            return []
-        }
-        return result
-    }
 
     public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) throws -> JSONAdapterProtocol {
-        guard let modelClass = try self.modelClass(for: requestIdType) else {
+        guard let modelClass = self.modelClass(forRequestIdType: requestIdType) else {
             throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
         }
         guard let dataAdapterClass = self.dataAdapterClass(for: requestIdType) else {
@@ -71,10 +78,6 @@ public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
 
         return dataAdapterClass.init(Clazz: modelClass, request: request, appManager: appManager, linker: linker)
     }
-}
-
-extension WOTRequestCoordinator: WOTRequestBindingProtocol {
-    // MARK: - WOTRequestBindingProtocol
 
     public func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type) {
         registeredRequests[requiestId] = requestClass
@@ -89,25 +92,19 @@ extension WOTRequestCoordinator: WOTRequestBindingProtocol {
         return registeredDataAdapters[requestId]
     }
 
-    public func request(for requestId: WOTRequestIdType) -> WOTModelServiceProtocol.Type? {
+    public func requestClass(for requestId: WOTRequestIdType) -> WOTModelServiceProtocol.Type? {
         return registeredRequests[requestId]
     }
-}
 
-public protocol WOTRequestModelBindingProtocol {
-    func modelClass(for request: WOTRequestProtocol) -> PrimaryKeypathProtocol.Type?
-    func modelClass(for requestIdType: WOTRequestIdType) throws -> PrimaryKeypathProtocol.Type?
-}
-
-extension WOTRequestCoordinator: WOTRequestModelBindingProtocol {
-    public func modelClass(for request: WOTRequestProtocol) -> PrimaryKeypathProtocol.Type? {
+    public func modelClass(forRequest request: WOTRequestProtocol) -> PrimaryKeypathProtocol.Type? {
         guard let clazz = type(of: request) as? WOTModelServiceProtocol.Type else { return nil }
         return clazz.modelClass()
     }
 
-    public func modelClass(for requestIdType: WOTRequestIdType) throws -> PrimaryKeypathProtocol.Type? {
+    public func modelClass(forRequestIdType requestIdType: WOTRequestIdType) -> PrimaryKeypathProtocol.Type? {
         guard let requestClass = registeredRequests[requestIdType] else {
-            throw RequestCoordinatorError.requestClassNotFound(requestType: requestIdType.description)
+            return nil
+//            throw RequestCoordinatorError.requestClassNotFound(requestType: requestIdType.description)
         }
 
         return requestClass.modelClass()
