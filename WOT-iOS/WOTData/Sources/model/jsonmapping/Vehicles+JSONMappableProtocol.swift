@@ -66,11 +66,7 @@ extension Vehicles {
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let mapper = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, mapper: mapper) { _, error in
-            if let error = error {
-                mappingCoordinator?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
-            }
-        }
+        mappingCoordinator?.fetchLocal(json: json, context: context, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, mapper: mapper, callback: { _, _ in })
     }
 }
 

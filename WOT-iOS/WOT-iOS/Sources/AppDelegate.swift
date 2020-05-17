@@ -27,6 +27,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
 
         let coreDataStore = WOTCustomCoreDataStore(logInspector: logInspector)
         let responseCoordinator = RESTResponseCoordinator(requestCoordinator: requestCoordinator, logInspector: logInspector, requestRegistrator: requestRegistrator)
+
         let requestManager = WOTRequestManager(requestCoordinator: requestCoordinator, responseCoordinator: responseCoordinator, logInspector: logInspector, hostConfiguration: hostConfiguration)
         let mappingCoordinator = WOTMappingCoordinator(coreDataStore: coreDataStore, requestManager: requestManager, logInspector: logInspector, requestRegistrator: requestRegistrator)
 

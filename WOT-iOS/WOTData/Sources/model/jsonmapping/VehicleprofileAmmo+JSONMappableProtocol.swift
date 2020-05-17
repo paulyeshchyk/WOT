@@ -6,13 +6,13 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import CoreData
+import WOTKit
 
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmo {
-    public override func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
+    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?) throws {
         //
         try self.decode(json: json)
         //
@@ -20,12 +20,14 @@ extension VehicleprofileAmmo {
         let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .none)
 
         // MARK: - Penetration
+
         let penetrationArray = json[#keyPath(VehicleprofileAmmo.penetration)] as? [Any]
         let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
         let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: requestPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         mappingCoordinator?.linkItems(from: penetrationArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, mapperClazz: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder)
 
         // MARK: - Damage
+
         let damageArray = json[#keyPath(VehicleprofileAmmo.damage)] as? [Any]
         let damageMapper = VehicleprofileAmmo.DamageLinker.self
         let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: requestPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
@@ -42,11 +44,7 @@ extension VehicleprofileAmmo {
         let ammoPredicate = RequestPredicate()
         ammoPredicate[.primary] = parentPrimaryKey
         let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(.and), fetchStatus: .none)
-        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, mapper: nil) { _, error in
-            if let error = error {
-                mappingCoordinator?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
-            }
-        }
+        mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, mapper: nil, completion: { _, _ in })
     }
 }
 

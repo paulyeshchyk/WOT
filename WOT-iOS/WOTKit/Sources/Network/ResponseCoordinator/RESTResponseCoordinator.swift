@@ -18,22 +18,16 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
     public var logInspector: LogInspectorProtocol
     public var requestRegistrator: WOTRequestRegistratorProtocol
 
-    // MARK: - WOTResponseCoordinatorProtocol
-
     public required init(requestCoordinator: WOTRequestCoordinatorProtocol, logInspector: LogInspectorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
         self.requestCoordinator = requestCoordinator
         self.logInspector = logInspector
         self.requestRegistrator = requestRegistrator
     }
+}
 
-    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        logInspector.logEvent(event, sender: sender)
-    }
+// MARK: - WOTResponseCoordinatorProtocol
 
-    public func logEvent(_ event: LogEventProtocol?) {
-        logInspector.logEvent(event)
-    }
-
+extension RESTResponseCoordinator {
     public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
@@ -57,7 +51,7 @@ public class RESTResponseCoordinator: WOTResponseCoordinatorProtocol {
                 let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
                 dataAdaptationPair.append(pair)
             } catch {
-                self.logEvent(EventError(error, details: nil), sender: self)
+                self.logInspector.logEvent(EventError(error, details: nil), sender: self)
             }
         }
 

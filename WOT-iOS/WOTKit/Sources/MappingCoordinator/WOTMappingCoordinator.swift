@@ -24,12 +24,15 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
         self.requestManager = requestManager
         self.requestRegistrator = requestRegistrator
     }
+}
 
-    // MARK: - WOTMappingCoordinatorProtocol
+// MARK: - WOTDecoderProtocol
 
+extension WOTMappingCoordinator {
     public func decodingAndMapping(json: JSON, fetchResult: FetchResult, requestPredicate: RequestPredicate, mapper: JSONAdapterLinkerProtocol?, completion: @escaping FetchResultErrorCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
+                self.logInspector.logEvent(EventError(error, details: nil), sender: nil)
                 completion(fetchResult, error)
             } else {
                 if let linker = mapper {
@@ -37,7 +40,8 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
                     finalFetchResult.predicate = requestPredicate.compoundPredicate(.and)
                     linker.process(fetchResult: finalFetchResult, coreDataStore: self.coreDataStore, completion: completion)
                 } else {
-                    completion(fetchResult, nil) // WOTMappingCoordinatorError.linkerNotStarted
+                    // self.logInspector.logEvent(EventError(error, details: nil), sender: nil)// WOTMappingCoordinatorError.linkerNotStarted
+                    completion(fetchResult, nil)
                 }
             }
         }
@@ -84,7 +88,11 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
             localCompletion(error)
         }
     }
+}
 
+// MARK: - WOTFetcherProtocol
+
+extension WOTMappingCoordinator {
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion) {
         logInspector.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(String(describing: requestPredicate))"), sender: self)
 
@@ -122,8 +130,11 @@ public class WOTMappingCoordinator: WOTMappingCoordinatorProtocol {
             }
         }
     }
+}
 
-    //
+// MARK: - WOTLinkerProtocol
+
+extension WOTMappingCoordinator {
     public func linkItems(from array: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol) {
         guard let itemsList = array else { return }
 
