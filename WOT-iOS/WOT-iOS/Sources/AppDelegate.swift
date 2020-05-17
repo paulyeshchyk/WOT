@@ -20,21 +20,34 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let logPriorities: [LogEventType] = [.localFetch, .remoteFetch, .error, .lifeCycle, .web, .json]
         let logInspector = LogInspector(priorities: logPriorities)
 
-        let requestRegistrator = WOTRequestRegistrator()
         let hostConfiguration = WOTWebHostConfiguration()
         let sessionManager = WOTWebSessionManager()
-
         let coreDataStore = WOTCustomCoreDataStore(logInspector: logInspector)
+
+        let fetcherAndDecoder = WOTFetcherAndDecoder()
+
+        let requestRegistrator = WOTRequestRegistrator()
+
         let responseParser = RESTResponseParser()
-
         let requestManager = WOTRequestManager(requestRegistrator: requestRegistrator, responseParser: responseParser, logInspector: logInspector, hostConfiguration: hostConfiguration)
+        let fetcher = WOTFetcher()
 
-        let fetcher = WOTFetcher(coreDataStore: coreDataStore, logInspector: logInspector, requestRegistrator: requestRegistrator, requestManager: requestManager)
+        let linker = WOTLinker(logInspector: logInspector, fetcherAndDecoder: fetcherAndDecoder)
+        let decoderAndMapper = WOTDecoderAndMapper(logInspector: logInspector, coreDataStore: coreDataStore, fetcher: fetcher, linker: linker, fetcherAndDecoder: fetcherAndDecoder)
 
-        let mappingCoordinator = WOTMappingCoordinator(coreDataStore: coreDataStore,
-                                                       requestManager: requestManager,
-                                                       logInspector: logInspector,
-                                                       fetcher: fetcher)
+        fetcher.coreDataStore = coreDataStore
+        fetcher.logInspector = logInspector
+        fetcher.requestManager = requestManager
+        fetcher.requestRegistrator = requestRegistrator
+
+        fetcherAndDecoder.coreDataStore = coreDataStore
+        fetcherAndDecoder.decoderAndMapper = decoderAndMapper
+        fetcherAndDecoder.fetcher = fetcher
+        fetcherAndDecoder.logInspector = logInspector
+
+        requestRegistrator.decoderAndMapper = decoderAndMapper
+        requestRegistrator.logInspector = logInspector
+        requestRegistrator.coreDataStore = coreDataStore
 
         appManager.hostConfiguration = hostConfiguration
         appManager.responseParser = responseParser
@@ -43,7 +56,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         appManager.sessionManager = sessionManager
         appManager.logInspector = logInspector
         appManager.coreDataStore = coreDataStore
-        appManager.mappingCoordinator = mappingCoordinator
         appManager.requestRegistrator = requestRegistrator
 
         requestRegistrator.registerDefaultRequests()

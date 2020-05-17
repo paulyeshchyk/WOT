@@ -275,6 +275,8 @@
 		1DEB8C512122FB130093B564 /* WOTMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB8C502122FB130093B564 /* WOTMenuViewController.swift */; };
 		1DEEAC6420FF1ABF0072E099 /* WOTNode+DetailGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEEAC6020FF1ABE0072E099 /* WOTNode+DetailGrid.m */; };
 		1DEEAC6B20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEEAC6A20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m */; };
+		1DFCC92A2471470D005F580E /* WOTAppManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC9282471470D005F580E /* WOTAppManagerProtocol.swift */; };
+		1DFCC92B2471470D005F580E /* WOTAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC9292471470D005F580E /* WOTAppManager.swift */; };
 		4908876698A87AF77D91EAD5 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */; };
 		DA522D281B6637630087D684 /* Search Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D221B6637630087D684 /* Search Gray.png */; };
 		DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D231B6637630087D684 /* Search Gray@2x.png */; };
@@ -670,6 +672,8 @@
 		1DEEAC6220FF1ABE0072E099 /* WOTNode+DetailGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+DetailGrid.h"; sourceTree = "<group>"; };
 		1DEEAC6920FF1E1F0072E099 /* NSObject+WOTTankGridValueData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+WOTTankGridValueData.h"; sourceTree = "<group>"; };
 		1DEEAC6A20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WOTTankGridValueData.m"; sourceTree = "<group>"; };
+		1DFCC9282471470D005F580E /* WOTAppManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTAppManagerProtocol.swift; sourceTree = "<group>"; };
+		1DFCC9292471470D005F580E /* WOTAppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTAppManager.swift; sourceTree = "<group>"; };
 		2A176CC6D9BAC80B33FBEA3A /* Pods-WOT-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		DA522D221B6637630087D684 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
 		DA522D231B6637630087D684 /* Search Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@2x.png"; sourceTree = "<group>"; };
@@ -1447,6 +1451,7 @@
 		1DD646351B1C616A00B0EC76 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1DFCC9272471470D005F580E /* AppManager */,
 				1DD6468C1B1D9A7000B0EC76 /* core */,
 				1DD6465F1B1C619500B0EC76 /* ui */,
 				1DD646361B1C616A00B0EC76 /* Supporting Files */,
@@ -1762,6 +1767,16 @@
 			);
 			path = "WOTTree+GridData";
 			sourceTree = "<group>";
+		};
+		1DFCC9272471470D005F580E /* AppManager */ = {
+			isa = PBXGroup;
+			children = (
+				1DFCC9282471470D005F580E /* WOTAppManagerProtocol.swift */,
+				1DFCC9292471470D005F580E /* WOTAppManager.swift */,
+			);
+			name = AppManager;
+			path = "WOT-iOS/AppManager";
+			sourceTree = SOURCE_ROOT;
 		};
 		3557967E5FF81E19F0783759 /* Pods */ = {
 			isa = PBXGroup;
@@ -2213,8 +2228,10 @@
 				1D5669B72424DEF5008458AF /* WOTNode+PivotFactory.m in Sources */,
 				1D9CAA20210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m in Sources */,
 				1DE1FA20245EE7C8002866A3 /* RomanNumber.m in Sources */,
+				1DFCC92A2471470D005F580E /* WOTAppManagerProtocol.swift in Sources */,
 				1D5669BA2424DEF5008458AF /* WOTTankDetailFieldExpression.m in Sources */,
 				1D4C92561B25F27200E320B5 /* WOTLanguageTableViewCell.m in Sources */,
+				1DFCC92B2471470D005F580E /* WOTAppManager.swift in Sources */,
 				1DD46B921BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewCell.m in Sources */,
 				1D4C926E1B270BF400E320B5 /* WOTTankListSettingsDatasource.m in Sources */,
 				1DA1D7401B2AF7C800C5C2FB /* WOTTankListSettingValueChangerViewController.m in Sources */,

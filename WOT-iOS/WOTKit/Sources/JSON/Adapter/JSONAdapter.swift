@@ -14,7 +14,6 @@ public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: DataAdapterProtocol -
 
-    public var appManager: WOTAppManagerProtocol?
     public let uuid: UUID = UUID()
 
     // MARK: JSONAdapterProtocol -
@@ -25,9 +24,9 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: Private -
 
     private let METAClass: Codable.Type = RESTAPIResponse.self
-    private var mappingCoordinator: WOTMappingCoordinatorProtocol? { return appManager?.mappingCoordinator }
-    private var coreDataStore: WOTCoredataStoreProtocol? { return appManager?.coreDataStore }
-    private var logInspector: LogInspectorProtocol? { return appManager?.logInspector }
+    private var decoderAndMapper: WOTDecodeAndMappingProtocol?
+    private var coreDataStore: WOTCoredataStoreProtocol?
+    private var logInspector: LogInspectorProtocol?
     private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
     private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
@@ -42,11 +41,13 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 
-    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, appManager: WOTAppManagerProtocol?, linker: JSONAdapterLinkerProtocol) {
+    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, linker: JSONAdapterLinkerProtocol, decoderAndMapper: WOTDecodeAndMappingProtocol?) {
         self.modelClazz = clazz
         self.request = request
-        self.appManager = appManager
         self.linker = linker
+        self.decoderAndMapper = decoderAndMapper
+        self.logInspector = logInspector
+        self.coreDataStore = coreDataStore
 
         super.init()
         logInspector?.logEvent(EventObjectNew(request), sender: self)
@@ -157,7 +158,7 @@ extension JSONAdapter {
 
             let jsonStartParsingDate = Date()
             self.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.mappingCoordinator?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
+            self.decoderAndMapper?.decodingAndMapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil) { fetchResult, error in
                 if let error = error {
                     self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }

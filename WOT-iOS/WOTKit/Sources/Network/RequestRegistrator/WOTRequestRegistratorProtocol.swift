@@ -9,11 +9,14 @@
 import Foundation
 
 @objc
-public protocol WOTRequestRegistratorProtocol {
-    var appManager: WOTAppManagerProtocol? { get set }
+public protocol WOTRequestRegistratorProtocol: WOTResponseAdapterCreatorProtocol {
+
+    var decoderAndMapper: WOTDecodeAndMappingProtocol? { get set }
+    var logInspector: LogInspectorProtocol? { get set }
+    var coreDataStore: WOTCoredataStoreProtocol? { get set }
+
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]
     func unregisterDataAdapter(for requestId: WOTRequestIdType)
-    func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, linker: JSONAdapterLinkerProtocol) throws -> JSONAdapterProtocol
     func dataAdapterClass(for requestId: WOTRequestIdType) -> JSONAdapterProtocol.Type?
     func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type)
     func requestClass(for requestId: WOTRequestIdType) -> WOTModelServiceProtocol.Type?

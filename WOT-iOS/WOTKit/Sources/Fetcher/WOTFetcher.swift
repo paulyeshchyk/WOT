@@ -8,34 +8,39 @@
 
 import CoreData
 
-public class WOTFetcher {
-    private var coreDataStore: WOTCoredataStoreProtocol
-    private var logInspector: LogInspectorProtocol
-    private var requestRegistrator: WOTRequestRegistratorProtocol
-    private var requestManager: WOTRequestManagerProtocol
+public enum WOTFetcherError: Error, CustomDebugStringConvertible {
+    case requestsNotParsed
+    case noKeysDefinedForClass(String)
 
-    public init(coreDataStore: WOTCoredataStoreProtocol, logInspector: LogInspectorProtocol, requestRegistrator: WOTRequestRegistratorProtocol, requestManager: WOTRequestManagerProtocol) {
-        self.coreDataStore = coreDataStore
-        self.logInspector = logInspector
-        self.requestRegistrator = requestRegistrator
-        self.requestManager = requestManager
+    public var debugDescription: String {
+        switch self {
+        case .noKeysDefinedForClass(let clazz): return "No keys defined for:[\(String(describing: clazz))]"
+        case .requestsNotParsed: return "request is not parsed"
+        }
     }
 }
 
-// MARK: - WOTFetcherProtocol
+public class WOTFetcher: WOTFetcherProtocol {
+    public var coreDataStore: WOTCoredataStoreProtocol?
+    public var logInspector: LogInspectorProtocol?
+    public var requestRegistrator: WOTRequestRegistratorProtocol?
+    public var requestManager: WOTRequestManagerProtocol?
 
-extension WOTFetcher: WOTFetcherProtocol {
+    public init() {
+        //
+    }
+
     public func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion) {
-        logInspector.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(String(describing: requestPredicate))"), sender: self)
+        logInspector?.logEvent(EventLocalFetch("\(String(describing: clazz)) - \(String(describing: requestPredicate))"), sender: self)
 
         guard let predicate = requestPredicate.compoundPredicate(.and) else {
-            let error = WOTMappingCoordinatorError.noKeysDefinedForClass(String(describing: clazz))
+            let error = WOTFetcherError.noKeysDefinedForClass(String(describing: clazz))
             let fetchResult = FetchResult(context: context, objectID: nil, predicate: nil, fetchStatus: .none)
             callback(fetchResult, error)
             return
         }
 
-        coreDataStore.perform(context: context) { context in
+        coreDataStore?.perform(context: context) { context in
             do {
                 if let managedObject = try context.findOrCreateObject(forType: clazz, predicate: predicate) {
                     let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .none
@@ -43,22 +48,21 @@ extension WOTFetcher: WOTFetcherProtocol {
                     callback(fetchResult, nil)
                 }
             } catch {
-                self.logInspector.logEvent(EventError(error, details: nil))
+                self.logInspector?.logEvent(EventError(error, details: nil))
             }
         }
     }
 
     public func fetchRemote(paradigm: RequestParadigmProtocol) {
-        let requestIDs = requestRegistrator.requestIds(forClass: paradigm.clazz)
-        guard requestIDs.count > 0 else {
-            logInspector.logEvent(EventError(WOTMappingCoordinatorError.requestsNotParsed, details: nil), sender: self)
+        guard let requestIDs = requestRegistrator?.requestIds(forClass: paradigm.clazz), requestIDs.count > 0 else {
+            logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
             return
         }
         requestIDs.forEach {
             do {
-                try self.requestManager.startRequest(by: $0, paradigm: paradigm)
+                try self.requestManager?.startRequest(by: $0, paradigm: paradigm)
             } catch {
-                self.logInspector.logEvent(EventError(error, details: nil), sender: self)
+                self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
         }
     }

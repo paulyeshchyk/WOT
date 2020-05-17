@@ -12,6 +12,11 @@ public typealias WOTRequestIdType = String
 
 @objc
 public protocol WOTDataResponseAdapterProtocol: NSObjectProtocol {
-    init(appManager: WOTAppManagerProtocol?, clazz: PrimaryKeypathProtocol.Type)
-    func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete ) -> JSONAdapterProtocol
+
+    var logInspector: LogInspectorProtocol? { get set }
+    var coreDataStore: WOTCoredataStoreProtocol? { get set }
+
+    init(clazz: PrimaryKeypathProtocol.Type)
+
+    func request(_ request: WOTRequestProtocol, parseData binary: Data?, linker: JSONAdapterLinkerProtocol, decoderAndMapper: WOTDecodeAndMappingProtocol, onRequestComplete: @escaping OnRequestComplete ) -> JSONAdapterProtocol
 }

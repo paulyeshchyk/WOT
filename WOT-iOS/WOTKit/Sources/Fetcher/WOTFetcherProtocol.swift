@@ -9,6 +9,14 @@
 import CoreData
 
 @objc public protocol WOTFetcherProtocol {
+
+    var logInspector: LogInspectorProtocol? { get set }
+    var coreDataStore: WOTCoredataStoreProtocol? { get set }
+
+    var requestRegistrator: WOTRequestRegistratorProtocol? { get set }
+    var requestManager: WOTRequestManagerProtocol? { get set }
+
+
     func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion)
     func fetchRemote(paradigm: RequestParadigmProtocol)
 }

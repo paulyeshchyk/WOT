@@ -23,7 +23,6 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         //
     }
 
-    @objc
     public required init(requestRegistrator: WOTRequestRegistratorProtocol, responseParser: WOTResponseParserProtocol, logInspector: LogInspectorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
         self.hostConfiguration = hostConfig
         self.responseParser = responseParser
