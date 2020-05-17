@@ -46,7 +46,7 @@
 		1D60E5A0245FE7E5007E5CA8 /* WOTMappingCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E556245FE7E4007E5CA8 /* WOTMappingCoordinatorProtocol.swift */; };
 		1D60E5A1245FE7E5007E5CA8 /* WOTResponseCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E559245FE7E4007E5CA8 /* WOTResponseCoordinatorProtocol.swift */; };
 		1D60E5A2245FE7E5007E5CA8 /* RESTAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55A245FE7E4007E5CA8 /* RESTAPIResponse.swift */; };
-		1D60E5A3245FE7E5007E5CA8 /* RESTResponseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseCoordinator.swift */; };
+		1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */; };
 		1D60E5A4245FE7E5007E5CA8 /* WOTWebRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* WOTWebRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* WOTWebDataPumperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* WOTWebDataPumperProtocol.swift */; };
 		1D60E5A6245FE7E5007E5CA8 /* WOTWebDataPumper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* WOTWebDataPumper.swift */; };
@@ -137,7 +137,7 @@
 		1D60E556245FE7E4007E5CA8 /* WOTMappingCoordinatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTMappingCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		1D60E559245FE7E4007E5CA8 /* WOTResponseCoordinatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTResponseCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		1D60E55A245FE7E4007E5CA8 /* RESTAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTAPIResponse.swift; sourceTree = "<group>"; };
-		1D60E55B245FE7E4007E5CA8 /* RESTResponseCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseCoordinator.swift; sourceTree = "<group>"; };
+		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* WOTWebRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* WOTWebDataPumperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebDataPumperProtocol.swift; sourceTree = "<group>"; };
 		1D60E55F245FE7E4007E5CA8 /* WOTWebDataPumper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebDataPumper.swift; sourceTree = "<group>"; };
@@ -365,7 +365,7 @@
 			children = (
 				1D60E559245FE7E4007E5CA8 /* WOTResponseCoordinatorProtocol.swift */,
 				1D60E55A245FE7E4007E5CA8 /* RESTAPIResponse.swift */,
-				1D60E55B245FE7E4007E5CA8 /* RESTResponseCoordinator.swift */,
+				1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */,
 			);
 			path = ResponseCoordinator;
 			sourceTree = "<group>";
@@ -739,7 +739,7 @@
 				1D60E5AA245FE7E5007E5CA8 /* WOTJSONResponseAdapter.swift in Sources */,
 				1D60E5D2245FE93E007E5CA8 /* JSONError.swift in Sources */,
 				1D41161E24646D64009070AD /* RequestPredicateComposerProtocol.swift in Sources */,
-				1D60E5A3245FE7E5007E5CA8 /* RESTResponseCoordinator.swift in Sources */,
+				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
 				1D60E5AC245FE7E5007E5CA8 /* URLEncodedProtocol.swift in Sources */,
 				1D60E5A0245FE7E5007E5CA8 /* WOTMappingCoordinatorProtocol.swift in Sources */,
 				1D60E5C0245FE7E5007E5CA8 /* EventCustomLogic.swift in Sources */,

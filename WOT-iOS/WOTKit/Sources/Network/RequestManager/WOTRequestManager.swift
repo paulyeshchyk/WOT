@@ -10,15 +10,15 @@ import Foundation
 
 @objc
 public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-    @objc public var coordinator: WOTRequestCoordinatorProtocol
-    @objc public var responseParser: WOTResponseParserProtocol
-    @objc public var logInspector: LogInspectorProtocol
-    @objc public var hostConfiguration: WOTHostConfigurationProtocol
+    private var requestCoordinator: WOTRequestCoordinatorProtocol
+    private var responseParser: WOTResponseParserProtocol
+    private var logInspector: LogInspectorProtocol
+    private var hostConfiguration: WOTHostConfigurationProtocol
     private var requestRegistrator: WOTRequestRegistratorProtocol
 
-    fileprivate var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
-    fileprivate var grouppedRequests: [WOTRequestIdType: [WOTRequestProtocol]] = [:]
-    fileprivate var grouppedLinkers: [AnyHashable: JSONAdapterLinkerProtocol] = [:]
+    private var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
+    private var grouppedRequests: [WOTRequestIdType: [WOTRequestProtocol]] = [:]
+    private var grouppedLinkers: [AnyHashable: JSONAdapterLinkerProtocol] = [:]
 
     deinit {
         //
@@ -26,7 +26,7 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
 
     @objc
     public required init(requestCoordinator: WOTRequestCoordinatorProtocol, requestRegistrator: WOTRequestRegistratorProtocol, responseParser: WOTResponseParserProtocol, logInspector: LogInspectorProtocol, hostConfiguration hostConfig: WOTHostConfigurationProtocol) {
-        self.coordinator = requestCoordinator
+        self.requestCoordinator = requestCoordinator
         self.hostConfiguration = hostConfig
         self.responseParser = responseParser
         self.logInspector = logInspector
@@ -111,7 +111,7 @@ extension WOTRequestManager {
 
 extension WOTRequestManager {
     public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol {
-        let result = try coordinator.createRequest(forRequestId: requestId)
+        let result = try requestCoordinator.createRequest(forRequestId: requestId)
         result.hostConfiguration = hostConfiguration
         return result
     }
@@ -146,7 +146,7 @@ extension WOTRequestManager: WOTRequestListenerProtocol {
             return
         }
 
-        let requestIds = coordinator.requestIds(forRequest: request)
+        let requestIds = requestCoordinator.requestIds(forRequest: request)
 
         var adapters: [DataAdapterProtocol] = .init()
         requestIds.forEach { requestIdType in

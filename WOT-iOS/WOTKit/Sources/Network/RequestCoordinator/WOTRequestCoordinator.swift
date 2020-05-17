@@ -9,15 +9,14 @@
 import Foundation
 
 public class WOTRequestCoordinator: NSObject, WOTRequestCoordinatorProtocol {
-    public var appManager: WOTAppManagerProtocol?
+
     private var requestRegistrator: WOTRequestRegistratorProtocol
 
-    private var logInspector: LogInspectorProtocol? {
-        return appManager?.logInspector
-    }
+    private var logInspector: LogInspectorProtocol
 
-    public required init(requestRegistrator: WOTRequestRegistratorProtocol) {
+    public required init(requestRegistrator: WOTRequestRegistratorProtocol, logInspector: LogInspectorProtocol) {
         self.requestRegistrator = requestRegistrator
+        self.logInspector = logInspector
         super.init()
     }
 }
@@ -37,14 +36,14 @@ extension WOTRequestCoordinator {
     public func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType] {
         guard let modelClass = requestRegistrator.modelClass(forRequest: request) else {
             let eventError = EventError(message: "model class not found for request\(type(of: request))")
-            logInspector?.logEvent(eventError, sender: self)
+            logInspector.logEvent(eventError, sender: self)
             return []
         }
 
         let result = requestRegistrator.requestIds(forClass: modelClass)
         guard result.count > 0 else {
             let eventError = EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))")
-            logInspector?.logEvent(eventError, sender: self)
+            logInspector.logEvent(eventError, sender: self)
             return []
         }
         return result

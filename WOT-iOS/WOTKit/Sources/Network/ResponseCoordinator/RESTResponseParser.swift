@@ -8,24 +8,20 @@
 
 import Foundation
 
-public class RESTResponseCoordinator: WOTResponseParserProtocol {
+public class RESTResponseParser: WOTResponseParserProtocol {
     private struct DataAdaptationPair {
         let dataAdapter: DataAdapterProtocol
         let data: Data?
     }
 
-    public var logInspector: LogInspectorProtocol
-    public var requestRegistrator: WOTRequestRegistratorProtocol
-
-    public required init(logInspector: LogInspectorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
-        self.logInspector = logInspector
-        self.requestRegistrator = requestRegistrator
+    public required init() {
+        //
     }
 }
 
 // MARK: - WOTResponseParserProtocol
 
-extension RESTResponseCoordinator {
+extension RESTResponseParser {
     public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], linker: JSONAdapterLinkerProtocol, onRequestComplete: @escaping OnRequestComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty

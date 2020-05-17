@@ -11,16 +11,11 @@ import Foundation
 public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
     //
     deinit {
-        requestCoordinator?.appManager = nil
     }
 
     public var hostConfiguration: WOTHostConfigurationProtocol?
     public var responseParser: WOTResponseParserProtocol?
-    public var requestCoordinator: WOTRequestCoordinatorProtocol? {
-        didSet {
-            requestCoordinator?.appManager = self
-        }
-    }
+    public var requestCoordinator: WOTRequestCoordinatorProtocol?
     public var requestManager: WOTRequestManagerProtocol?
     public var mappingCoordinator: WOTMappingCoordinatorProtocol?
     public var requestListener: WOTRequestListenerProtocol?
