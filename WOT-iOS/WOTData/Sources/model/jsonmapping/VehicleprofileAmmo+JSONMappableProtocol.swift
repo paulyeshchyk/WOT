@@ -50,6 +50,7 @@ extension VehicleprofileAmmo {
 
 extension VehicleprofileAmmo {
     public class PenetrationLinker: BaseJSONAdapterLinker {
+        //
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -73,6 +74,7 @@ extension VehicleprofileAmmo {
     }
 
     public class DamageLinker: BaseJSONAdapterLinker {
+        //
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }

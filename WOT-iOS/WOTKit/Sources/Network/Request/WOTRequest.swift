@@ -8,9 +8,10 @@
 
 import Foundation
 
+public typealias WOTRequestIdType = String
+
 @objc
 open class WOTRequest: NSObject, WOTRequestProtocol {
-
     override public init() {
         super.init()
     }

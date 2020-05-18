@@ -10,5 +10,5 @@ import Foundation
 
 @objc
 public protocol WOTResponseParserProtocol {
-    func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], onRequestComplete: @escaping OnRequestComplete) throws
+    func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws
 }

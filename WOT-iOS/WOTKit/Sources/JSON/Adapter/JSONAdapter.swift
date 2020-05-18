@@ -8,7 +8,7 @@
 
 import CoreData
 
-public typealias OnRequestComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
+public typealias OnParseComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
@@ -18,12 +18,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
     // MARK: JSONAdapterProtocol -
 
-    public var onJSONDidParse: OnRequestComplete?
+    public var onJSONDidParse: OnParseComplete?
     public var linker: JSONAdapterLinkerProtocol
 
     // MARK: Private -
 
-    private let METAClass: Codable.Type = RESTAPIResponse.self
     private var mappingCoordinator: WOTMappingCoordinatorProtocol
     private var coreDataStore: WOTCoredataStoreProtocol?
     private var logInspector: LogInspectorProtocol?
@@ -61,7 +60,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
     // MARK: JSONAdapterProtocol -
 
-    public func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
+    public func didFinishJSONDecoding(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             logInspector?.logEvent(EventError(error, details: request), sender: self)
             onJSONDidParse?(fromRequest, self, error)
@@ -178,19 +177,19 @@ extension DataAdapterProtocol {
 
     public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
         guard let data = binary else {
-            didReceiveJSON(nil, fromRequest: request, nil)
+            didFinishJSONDecoding(nil, fromRequest: request, nil)
             return
         }
         let decoder = JSONDecoder()
         do {
             let result = try decoder.decode(T.self, from: data)
             if let swiftError = result.swiftError {
-                didReceiveJSON(nil, fromRequest: request, swiftError)
+                didFinishJSONDecoding(nil, fromRequest: request, swiftError)
             } else {
-                didReceiveJSON(result.data, fromRequest: request, nil)
+                didFinishJSONDecoding(result.data, fromRequest: request, nil)
             }
         } catch {
-            didReceiveJSON(nil, fromRequest: request, error)
+            didFinishJSONDecoding(nil, fromRequest: request, error)
         }
     }
 }

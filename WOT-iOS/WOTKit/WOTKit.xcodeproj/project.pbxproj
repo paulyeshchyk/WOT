@@ -50,8 +50,6 @@
 		1D60E5A6245FE7E5007E5CA8 /* WOTWebDataPumper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* WOTWebDataPumper.swift */; };
 		1D60E5A7245FE7E5007E5CA8 /* WOTRequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E561245FE7E4007E5CA8 /* WOTRequestManagerProtocol.swift */; };
 		1D60E5A8245FE7E5007E5CA8 /* WOTRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E562245FE7E4007E5CA8 /* WOTRequestManager.swift */; };
-		1D60E5A9245FE7E5007E5CA8 /* WOTDataResponseAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E564245FE7E5007E5CA8 /* WOTDataResponseAdapterProtocol.swift */; };
-		1D60E5AA245FE7E5007E5CA8 /* WOTJSONResponseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E565245FE7E5007E5CA8 /* WOTJSONResponseAdapter.swift */; };
 		1D60E5AB245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E567245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift */; };
 		1D60E5AC245FE7E5007E5CA8 /* URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E568245FE7E5007E5CA8 /* URLEncodedProtocol.swift */; };
 		1D60E5AD245FE7E5007E5CA8 /* WOTRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E569245FE7E5007E5CA8 /* WOTRequestProtocol.swift */; };
@@ -139,8 +137,6 @@
 		1D60E55F245FE7E4007E5CA8 /* WOTWebDataPumper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebDataPumper.swift; sourceTree = "<group>"; };
 		1D60E561245FE7E4007E5CA8 /* WOTRequestManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestManagerProtocol.swift; sourceTree = "<group>"; };
 		1D60E562245FE7E4007E5CA8 /* WOTRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestManager.swift; sourceTree = "<group>"; };
-		1D60E564245FE7E5007E5CA8 /* WOTDataResponseAdapterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataResponseAdapterProtocol.swift; sourceTree = "<group>"; };
-		1D60E565245FE7E5007E5CA8 /* WOTJSONResponseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTJSONResponseAdapter.swift; sourceTree = "<group>"; };
 		1D60E567245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebServiceProtocol.swift; sourceTree = "<group>"; };
 		1D60E568245FE7E5007E5CA8 /* URLEncodedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLEncodedProtocol.swift; sourceTree = "<group>"; };
 		1D60E569245FE7E5007E5CA8 /* WOTRequestProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestProtocol.swift; sourceTree = "<group>"; };
@@ -339,7 +335,6 @@
 				1D60E558245FE7E4007E5CA8 /* ResponseCoordinator */,
 				1D60E55C245FE7E4007E5CA8 /* DataPumper */,
 				1D60E560245FE7E4007E5CA8 /* RequestManager */,
-				1D60E563245FE7E5007E5CA8 /* ResponseAdapter */,
 				1D60E566245FE7E5007E5CA8 /* Request */,
 				1D60E570245FE7E5007E5CA8 /* HostConfiguration */,
 			);
@@ -373,15 +368,6 @@
 				1D60E562245FE7E4007E5CA8 /* WOTRequestManager.swift */,
 			);
 			path = RequestManager;
-			sourceTree = "<group>";
-		};
-		1D60E563245FE7E5007E5CA8 /* ResponseAdapter */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E564245FE7E5007E5CA8 /* WOTDataResponseAdapterProtocol.swift */,
-				1D60E565245FE7E5007E5CA8 /* WOTJSONResponseAdapter.swift */,
-			);
-			path = ResponseAdapter;
 			sourceTree = "<group>";
 		};
 		1D60E566245FE7E5007E5CA8 /* Request */ = {
@@ -721,7 +707,6 @@
 				1D60E5B3245FE7E5007E5CA8 /* WOTRequestArguments.swift in Sources */,
 				1D60E5BA245FE7E5007E5CA8 /* EventError.swift in Sources */,
 				1D60E5B4245FE7E5007E5CA8 /* WOTHostConfigurationProtocol.swift in Sources */,
-				1D60E5AA245FE7E5007E5CA8 /* WOTJSONResponseAdapter.swift in Sources */,
 				1D60E5D2245FE93E007E5CA8 /* JSONError.swift in Sources */,
 				1D41161E24646D64009070AD /* RequestPredicateComposerProtocol.swift in Sources */,
 				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
@@ -730,7 +715,6 @@
 				1D60E598245FE7E5007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift in Sources */,
 				1D60E5C2245FE7E5007E5CA8 /* EventCDStash.swift in Sources */,
 				1D60E588245FE7E5007E5CA8 /* RequestPredicate.swift in Sources */,
-				1D60E5A9245FE7E5007E5CA8 /* WOTDataResponseAdapterProtocol.swift in Sources */,
 				1DFCC9102471153D005F580E /* WOTRequestRegistratorProtocol.swift in Sources */,
 				1D60E52D245FE7A7007E5CA8 /* Dictionary_Merge.swift in Sources */,
 				1D60E531245FE7A7007E5CA8 /* NSManagedObjectContext+FindOrCreate.swift in Sources */,

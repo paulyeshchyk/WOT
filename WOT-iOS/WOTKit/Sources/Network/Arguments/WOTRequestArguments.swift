@@ -8,18 +8,17 @@
 
 import Foundation
 
-@objc
-open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
-    @objc
-    public private(set) var dictionary = JSON()
+public typealias ArgumentsType = Swift.Dictionary<Swift.AnyHashable, Any>
 
-    @objc
+open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
+
+    private var dictionary = ArgumentsType()
+
     public override var description: String {
         return "\(dictionary)"
     }
 
-    @objc
-    required convenience public init(_ dictionary: JSON) {
+    required convenience public init(_ dictionary: ArgumentsType) {
         self.init()
 
         dictionary.keys.forEach {
@@ -30,19 +29,16 @@ open class WOTRequestArguments: NSObject, WOTRequestArgumentsProtocol {
         }
     }
 
-    @objc
     public func setValues(_ values: Any, forKey: AnyHashable) {
         dictionary[forKey] = values
     }
 
-    @objc
-    public func buildQuery(_ custom: JSON = [:]) -> String {
+    public func buildQuery(_ custom: ArgumentsType = [:]) -> String {
         var mixture = custom
         mixture.append(with: dictionary)
         return mixture.asURLQueryString()
     }
 
-    @objc
     open override var hash: Int {
         do {
             let data = try JSONSerialization.data(withJSONObject: dictionary, options: JSONSerialization.WritingOptions.prettyPrinted)

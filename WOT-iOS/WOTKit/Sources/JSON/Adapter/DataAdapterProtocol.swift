@@ -12,6 +12,6 @@ import Foundation
 public protocol DataAdapterProtocol {
 
     var uuid: UUID { get }
-    var onJSONDidParse: OnRequestComplete? { get set }
-    func didReceiveJSON(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
+    var onJSONDidParse: OnParseComplete? { get set }
+    func didFinishJSONDecoding(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
 }

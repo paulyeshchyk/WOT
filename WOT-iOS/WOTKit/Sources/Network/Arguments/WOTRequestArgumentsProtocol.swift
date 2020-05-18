@@ -8,14 +8,8 @@
 
 import Foundation
 
-@objc
-public protocol WOTRequestArgumentsProtocol {
-    @objc
+@objc public protocol WOTRequestArgumentsProtocol {
     init(_ dictionary: JSON)
-
-    @objc
     func setValues(_ values: Any, forKey: AnyHashable)
-
-    @objc
     func buildQuery(_ custom: JSON) -> String
 }

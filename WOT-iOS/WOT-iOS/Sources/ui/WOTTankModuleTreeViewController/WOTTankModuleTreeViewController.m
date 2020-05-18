@@ -323,6 +323,7 @@
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
     if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
         [self reloadModel];
+//        [requestManager removeListener: self];
     }
 }
 

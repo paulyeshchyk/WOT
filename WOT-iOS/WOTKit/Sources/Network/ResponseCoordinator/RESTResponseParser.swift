@@ -22,13 +22,13 @@ public class RESTResponseParser: WOTResponseParserProtocol {
 // MARK: - WOTResponseParserProtocol
 
 extension RESTResponseParser {
-    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], onRequestComplete: @escaping OnRequestComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
         }
 
-        let localCallback: OnRequestComplete = { request, data, error in
-            onRequestComplete(request, data, error)
+        let localCallback: OnParseComplete = { request, data, error in
+            onParseComplete(request, data, error)
         }
 
         var dataAdaptationPair: [DataAdaptationPair] = .init()
@@ -39,7 +39,7 @@ extension RESTResponseParser {
         }
 
         if dataAdaptationPair.count == 0 {
-            onRequestComplete(request, self, nil)
+            onParseComplete(request, self, nil)
         }
 
         dataAdaptationPair.forEach { pair in
