@@ -71,8 +71,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         let jsonStartParsingDate = Date()
         logInspector?.logEvent(EventJSONStart(fromRequest), sender: self)
 
-        var fakeIncrement: Int = json.keys.count
+        let dispatchGroup = DispatchGroup()
+
         json.keys.forEach { key in
+
+            dispatchGroup.enter()
             //
             let extraction = self.linker.performJSONExtraction(from: json, byKey: key, forClazz: self.modelClazz, request: fromRequest)
 
@@ -87,13 +90,14 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
                     if let error = error {
                         self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                     }
-                    fakeIncrement -= 1
-                    if fakeIncrement == 0 {
-                        self.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
-                        self.onJSONDidParse?(fromRequest, self, error)
-                    }
+                    dispatchGroup.leave()
                 }
             }
+        }
+
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            self.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
+            self.onJSONDidParse?(fromRequest, self, error)
         }
     }
 }
