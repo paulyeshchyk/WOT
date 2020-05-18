@@ -13,12 +13,12 @@ public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol, LogInspectorProt
     @objc func workingContext() -> NSManagedObjectContext
     @objc func newPrivateContext() -> NSManagedObjectContext
 
-    @objc func perform(context: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion)
+    @objc func perform(managedObjectContext: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion)
 
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>
-    func fetchLocal(context: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, callback: @escaping FetchResultErrorCompletion)
-    func stash(context: NSManagedObjectContext, block: @escaping ThrowableCompletion)
+    func fetchLocal(managedObjectContext: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, completion: @escaping FetchResultErrorCompletion)
+    func stash(managedObjectContext: NSManagedObjectContext, block: @escaping ThrowableCompletion)
 }
 
 extension WOTCoredataStoreProtocol {

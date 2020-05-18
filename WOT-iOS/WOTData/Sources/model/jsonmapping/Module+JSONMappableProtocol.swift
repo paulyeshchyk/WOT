@@ -12,15 +12,15 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension Module {
-    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    override public func mapping(json: JSON, managedObjectContext: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         //
         try self.decode(json: json)
 
-        let parentsAsManagedObject = requestPredicate.parentObjectIDList.compactMap { context.object(with: $0) }
+        let parentsAsManagedObject = requestPredicate.parentObjectIDList.compactMap { managedObjectContext.object(with: $0) }
         let parentsAsVehicles = parentsAsManagedObject.compactMap { $0 as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
-        let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(managedObjectContext: managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         guard parents.count <= 1 else {
             print("parents count should be less or equal 1")
@@ -77,18 +77,18 @@ extension Module {
         }
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let context = fetchResult.context
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileEngine.self))
                 return
             }
-            guard let module = masterFetchResult?.managedObject(inContext: context) as? Module else {
+            guard let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
                 return
             }
             vehicleProfileEngine.engine_id = self.mappedObjectIdentifier as? NSDecimalNumber
             module.engine = vehicleProfileEngine
-            coreDataStore?.stash(context: context) { error in
+            coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -105,12 +105,12 @@ extension Module {
         }
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let context = fetchResult.context
+            let managedObjectContext = fetchResult.managedObjectContext
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
-                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileTurret.turret_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.turret = vehicleProfileTurret
-                    coreDataStore?.stash(context: context) { error in
+                    coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -129,12 +129,12 @@ extension Module {
         }
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let context = fetchResult.context
+            let managedObjectContext = fetchResult.managedObjectContext
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
-                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileSuspension.suspension_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.suspension = vehicleProfileSuspension
-                    coreDataStore?.stash(context: context) { error in
+                    coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -153,12 +153,12 @@ extension Module {
         }
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let context = fetchResult.context
+            let managedObjectContext = fetchResult.managedObjectContext
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
-                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.radio = vehicleProfileRadio
-                    coreDataStore?.stash(context: context) { error in
+                    coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -177,12 +177,12 @@ extension Module {
         }
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let context = fetchResult.context
+            let managedObjectContext = fetchResult.managedObjectContext
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
-                if let module = masterFetchResult?.managedObject(inContext: context) as? Module {
+                if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileGun.gun_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.gun = vehicleProfileGun
-                    coreDataStore?.stash(context: context) { error in
+                    coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
