@@ -98,51 +98,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     }
 }
 
-// MARK: - Hash
-
-func == (lhs: JSONAdapter, rhs: JSONAdapter) -> Bool {
-    return lhs.uuid == rhs.uuid
-}
-
-// MARK: - private
-
-extension DataAdapterProtocol {
-    /**
-     because of objC limitation, the function added as an extention to *JSONAdapterProtocol*
-     */
-
-    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
-        guard let data = binary else {
-            didReceiveJSON(nil, fromRequest: request, nil)
-            return
-        }
-        let decoder = JSONDecoder()
-        do {
-            let result = try decoder.decode(T.self, from: data)
-            if let swiftError = result.swiftError {
-                didReceiveJSON(nil, fromRequest: request, swiftError)
-            } else {
-                didReceiveJSON(result.data, fromRequest: request, nil)
-            }
-        } catch {
-            didReceiveJSON(nil, fromRequest: request, error)
-        }
-    }
-}
-
 extension JSONAdapter {
     private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultErrorCompletion) {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             fatalError("thread is not main")
-        }
-
-        guard let managedObjectClass = modelClazz as? NSManagedObject.Type else {
-            fatalError("modelClazz: \(modelClazz) is not NSManagedObject.Type")
-        }
-
-        guard let MAINCONTEXT = coreDataStore?.workingContext() else {
-            fatalError("working context is not defined")
         }
 
         let localCallback: FetchResultErrorCompletion = { fetchResult, error in
@@ -151,7 +111,7 @@ extension JSONAdapter {
             }
         }
 
-        coreDataStore?.findOrCreateObject(by: managedObjectClass, andPredicate: requestPredicate[.primary]?.predicate, visibleInContext: MAINCONTEXT, completion: { fetchResult, error in
+        coreDataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: requestPredicate[.primary]?.predicate, completion: { fetchResult, error in
 
             if let error = error {
                 localCallback(fetchResult, error)
@@ -160,7 +120,7 @@ extension JSONAdapter {
 
             let jsonStartParsingDate = Date()
             self.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, mapper: nil, requestManager: self.requestManager) { fetchResult, error in
+            self.mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: nil, requestManager: self.requestManager) { fetchResult, error in
                 if let error = error {
                     self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -196,5 +156,37 @@ extension JSONAdapterLinkerProtocol {
         requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
 
         return JSONExtraction(requestPredicate: requestPredicate, json: extractedJSON)
+    }
+}
+
+// MARK: - Hash
+
+func == (lhs: JSONAdapter, rhs: JSONAdapter) -> Bool {
+    return lhs.uuid == rhs.uuid
+}
+
+// MARK: - private
+
+extension DataAdapterProtocol {
+    /**
+     because of objC limitation, the function added as an extention to *JSONAdapterProtocol*
+     */
+
+    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
+        guard let data = binary else {
+            didReceiveJSON(nil, fromRequest: request, nil)
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            let result = try decoder.decode(T.self, from: data)
+            if let swiftError = result.swiftError {
+                didReceiveJSON(nil, fromRequest: request, swiftError)
+            } else {
+                didReceiveJSON(result.data, fromRequest: request, nil)
+            }
+        } catch {
+            didReceiveJSON(nil, fromRequest: request, error)
+        }
     }
 }

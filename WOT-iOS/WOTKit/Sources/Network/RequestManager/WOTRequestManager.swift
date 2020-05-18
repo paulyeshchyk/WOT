@@ -79,12 +79,12 @@ extension WOTRequestManager {
         return result
     }
 
-    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol) throws {
+    public func startRequest(_ request: WOTRequestProtocol, withArguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws {
         guard addRequest(request, forGroupId: forGroupId) else {
             throw WEBError.requestWasNotAddedToGroup
         }
 
-        grouppedLinkers[request.uuid.uuidString] = linker
+        grouppedLinkers[request.uuid.uuidString] = jsonAdapterLinker
 
         try request.start(withArguments: withArguments)
         grouppedListeners[request.uuid.uuidString]?.forEach {
@@ -96,9 +96,9 @@ extension WOTRequestManager {
         let request = try createRequest(forRequestId: requestId, paradigm: paradigm)
 
         let arguments = paradigm.buildRequestArguments()
-        let linker = paradigm.jsonAdapterLinker
+        let jsonAdapterLinker = paradigm.jsonAdapterLinker
         let groupId = "Nested\(String(describing: paradigm.clazz))-\(arguments)"
-        try startRequest(request, withArguments: arguments, forGroupId: groupId, linker: linker)
+        try startRequest(request, withArguments: arguments, forGroupId: groupId, jsonAdapterLinker: jsonAdapterLinker)
     }
 
     public func cancelRequests(groupId: WOTRequestIdType, with error: Error?) {

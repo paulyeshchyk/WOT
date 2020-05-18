@@ -45,9 +45,9 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
         return result
     }
 
-    #warning("TO BE REFACTORED")
+    #warning("2b refactored")
     private func fetchCustomPredicate() -> NSPredicate {
-        let fakePredicate = NSPredicate(format: "NOT(tank_id  = nil)")
+        let fakePredicate = NSPredicate(format: "NOT(tank_id = nil)")
         return NSCompoundPredicate(orPredicateWithSubpredicates: [fakePredicate])
     }
 }

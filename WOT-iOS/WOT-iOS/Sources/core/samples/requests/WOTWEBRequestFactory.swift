@@ -20,7 +20,7 @@ public class WOTWEBRequestFactory: NSObject {
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
         requestManager.addListener(listener, forRequest: request)
         let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
-        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, linker: pivotLinker)
+        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonAdapterLinker: pivotLinker)
     }
 
     @objc
@@ -32,7 +32,7 @@ public class WOTWEBRequestFactory: NSObject {
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
         requestManager.addListener(listener, forRequest: request)
         let treeViewLinker = Vehicles.VehiclesTreeViewLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
-        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, linker: treeViewLinker)
+        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonAdapterLinker: treeViewLinker)
     }
 
     @objc

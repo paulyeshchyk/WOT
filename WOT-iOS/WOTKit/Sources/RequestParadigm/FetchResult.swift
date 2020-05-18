@@ -20,8 +20,10 @@ public enum WOTExecuteConcurency: Int {
 @objc
 public enum FetchStatus: Int {
     case none
+    case fetched
     case inserted
     case updated
+    case recovered
 }
 
 @objc

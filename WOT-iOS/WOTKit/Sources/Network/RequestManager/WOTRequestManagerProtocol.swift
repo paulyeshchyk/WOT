@@ -17,7 +17,7 @@ public protocol WOTRequestCoordinatorBridgeProtocol {
 public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
     func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
     func removeListener(_ listener: WOTRequestManagerListenerProtocol)
-    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, linker: JSONAdapterLinkerProtocol) throws
+    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws
     func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws
     func cancelRequests(groupId: WOTRequestIdType, with error: Error?)
     func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
