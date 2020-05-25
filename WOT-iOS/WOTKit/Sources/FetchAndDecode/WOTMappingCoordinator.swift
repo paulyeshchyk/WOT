@@ -30,7 +30,6 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
             return
         }
 
-        //
         coreDataStore.fetchLocal(managedObjectContext: managedObjectContext, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
 
             if let error = error {
@@ -45,7 +44,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
                     if let linker = linker {
                         linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: completion)
                     } else {
-                        completion(fetchResult, nil) // WOTFetcherAndDecoderError.linkerNotStarted
+                        completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                     }
                 }
             }
@@ -73,7 +72,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
                     if let linker = linker {
                         linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: completion)
                     } else {
-                        completion(fetchResult, nil) // WOTFetcherAndDecoderError.linkerNotStarted
+                        completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                     }
                 }
             }
@@ -133,7 +132,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorMappingProtocol {
                     finalFetchResult.predicate = requestPredicate.compoundPredicate(.and)
                     linker.process(fetchResult: finalFetchResult, coreDataStore: self.coreDataStore, completion: completion)
                 } else {
-                    completion(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
+                    completion(fetchResult, nil)
                 }
             }
         }

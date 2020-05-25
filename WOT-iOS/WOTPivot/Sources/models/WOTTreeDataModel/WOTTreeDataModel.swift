@@ -82,14 +82,14 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
     }
 
     fileprivate func failPivot(_ error: Error) {
-        listener.modelDidFailLoad(error: error)
+        listener.didFinishLoadModel(error: error)
     }
 
     fileprivate func makeTree(_ fetchController: WOTDataFetchControllerProtocol, nodeCreator: WOTNodeCreatorProtocol?) {
         fetchController.fetchedNodes(byPredicates: [], nodeCreator: nodeCreator, filteredCompletion: { _, fetchedNodes in
             let data = fetchedNodes?.compactMap { $0 as? WOTNode } ?? []
             self.add(nodes: data)
-            self.listener.modelDidLoad()
+            self.listener.didFinishLoadModel(error: nil)
         })
     }
 }

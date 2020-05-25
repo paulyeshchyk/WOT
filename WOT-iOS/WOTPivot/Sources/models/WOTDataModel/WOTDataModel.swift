@@ -8,7 +8,6 @@
 
 import WOTKit
 
-@objc
 open class WOTDataModel: NSObject, WOTDataModelProtocol {
     lazy public var nodeIndex: WOTPivotNodeIndexProtocol = { return WOTPivotNodeIndex() }()
     lazy public var rootNodes: [WOTNodeProtocol] = { return [] }()

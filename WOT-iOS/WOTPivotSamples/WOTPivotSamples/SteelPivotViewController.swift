@@ -50,11 +50,7 @@ class SteelPivotFetchController: WOTDataFetchControllerProtocol {
 }
 
 extension SteelPivotViewController: WOTDataModelListener {
-    func modelDidLoad() {
-        self.collectionView?.reloadData()
-    }
-
-    func modelDidFailLoad(error: Error) {
+    func didFinishLoadModel(error: Error?) {
         self.collectionView?.reloadData()
     }
 

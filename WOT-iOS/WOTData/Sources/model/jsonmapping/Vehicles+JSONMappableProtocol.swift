@@ -83,13 +83,13 @@ extension Vehicles {
 
             guard let modulesTree = childObject as? ModulesTree else {
                 let error = UnexpectedClassError(extected: ModulesTree.self, received: Swift.type(of: childObject))
-                coreDataStore?.logEvent(EventError(error, details: nil), sender: self)
+                completion(fetchResult, error)
                 return
             }
             guard let vehicles = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicles else {
                 let received = masterFetchResult != nil ? Swift.type(of: masterFetchResult!) : nil
                 let error = UnexpectedClassError(extected: Vehicles.self, received: received)
-                coreDataStore?.logEvent(EventError(error, details: nil), sender: self)
+                completion(fetchResult, error)
                 return
             }
             modulesTree.default_profile = vehicles.default_profile

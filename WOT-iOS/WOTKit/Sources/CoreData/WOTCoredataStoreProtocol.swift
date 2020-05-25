@@ -9,7 +9,7 @@
 import CoreData
 
 @objc
-public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol, LogInspectorProtocol {
+public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol {
     @objc func workingContext() -> NSManagedObjectContext
     @objc func newPrivateContext() -> NSManagedObjectContext
 

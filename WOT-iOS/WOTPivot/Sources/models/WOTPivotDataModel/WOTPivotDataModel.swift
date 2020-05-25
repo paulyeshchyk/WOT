@@ -174,14 +174,14 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
     }
 
     fileprivate func failPivot(_ error: Error) {
-        listener?.modelDidFailLoad(error: error)
+        listener?.didFinishLoadModel(error: error)
     }
 }
 
 extension WOTPivotDataModel: WOTPivotDimensionListenerProtocol {
     public func didLoad(dimension: WOTDimensionProtocol) {
         self.reindexNodes()
-        self.listener?.modelDidLoad()
+        self.listener?.didFinishLoadModel(error: nil)
     }
 }
 

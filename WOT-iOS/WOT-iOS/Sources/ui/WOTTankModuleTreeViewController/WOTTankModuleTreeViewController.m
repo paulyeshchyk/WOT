@@ -332,16 +332,12 @@
     //
 }
 
-- (void)modelDidLoad {
+- (void) didFinishLoadModelWithError:(NSError *)error {
     [self.collectionView reloadData];
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+
         [self addConnectorsLayer];
     });
-}
-
-- (void) modelDidFailLoadWithError:(NSError *)error {
-    
 }
 
 - (NSArray *)metadataItems {
