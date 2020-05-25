@@ -257,12 +257,8 @@ extension WOTTankPivotViewController {
 }
 
 extension WOTTankPivotViewController: WOTDataModelListener {
-    func modelDidLoad() {
+    func didFinishLoadModel(error: Error?) {
         self.collectionView?.reloadData()
-        self.refreshControl.endRefreshing()
-    }
-
-    func modelDidFailLoad(error: Error) {
         self.refreshControl.endRefreshing()
     }
 }

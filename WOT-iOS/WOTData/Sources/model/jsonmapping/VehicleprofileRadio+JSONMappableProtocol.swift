@@ -12,7 +12,7 @@ import CoreData
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileRadio {
-    public override func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    public override func mapping(json: JSON, managedObjectContext: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         //
         try self.decode(json: json)
         //

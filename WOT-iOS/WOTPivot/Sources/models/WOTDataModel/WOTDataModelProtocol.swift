@@ -30,8 +30,7 @@ public protocol WOTDataModelMetadatasource {
 
 @objc
 public protocol WOTDataModelListener {
-    func modelDidLoad()
-    func modelDidFailLoad(error: Error)
+    func didFinishLoadModel(error: Error?)
 }
 
 @objc

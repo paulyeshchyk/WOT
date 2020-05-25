@@ -28,7 +28,7 @@ public enum FetchStatus: Int {
 
 @objc
 public class FetchResult: NSObject, NSCopying {
-    public var context: NSManagedObjectContext
+    public var managedObjectContext: NSManagedObjectContext
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
 
@@ -39,11 +39,11 @@ public class FetchResult: NSObject, NSCopying {
     }
 
     override public var description: String {
-        return "Context: \(context.name ?? ""); \(managedObject().entity.name ?? "<unknown>")"
+        return "Context: \(managedObjectContext.name ?? ""); \(managedObject().entity.name ?? "<unknown>")"
     }
 
-    public required init(context cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
-        context = cntx
+    public required init(managedObjectContext cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
+        managedObjectContext = cntx
         objectID = objID
         predicate = predicat
         fetchStatus = status
@@ -51,7 +51,7 @@ public class FetchResult: NSObject, NSCopying {
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = FetchResult(context: context, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
+        let copy = FetchResult(managedObjectContext: managedObjectContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }
 
@@ -62,14 +62,14 @@ public class FetchResult: NSObject, NSCopying {
     }
 
     public func managedObject() -> NSManagedObject {
-        return managedObject(inContext: context)
+        return managedObject(inManagedObjectContext: managedObjectContext)
     }
 
-    public func managedObject(inContext: NSManagedObjectContext) -> NSManagedObject {
+    public func managedObject(inManagedObjectContext: NSManagedObjectContext) -> NSManagedObject {
         guard let objectID = objectID else {
             fatalError("objectID is not defined")
         }
-        return inContext.object(with: objectID)
+        return inManagedObjectContext.object(with: objectID)
     }
 }
 
@@ -77,6 +77,6 @@ public class EmptyFetchResult: FetchResult {
     public required convenience init() {
         let cntx = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         let objectID = NSManagedObjectID()
-        self.init(context: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)
+        self.init(managedObjectContext: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)
     }
 }

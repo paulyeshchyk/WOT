@@ -10,6 +10,7 @@ import CoreData
 
 @objc
 public class WOTMappingCoordinator: NSObject, WOTMappingCoordinatorProtocol {
+
     private let logInspector: LogInspectorProtocol
     private let coreDataStore: WOTCoredataStoreProtocol
 
@@ -19,60 +20,59 @@ public class WOTMappingCoordinator: NSObject, WOTMappingCoordinatorProtocol {
     }
 }
 
-extension WOTMappingCoordinator {
+extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
     //
-    public func fetchLocalAndDecode(json: JSON, context: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, callback: @escaping FetchResultErrorCompletion) {
+    public func fetchLocalAndDecode(json: JSON, managedObjectContext: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
             logInspector.logEvent(EventError(error, details: nil), sender: self)
-            callback(EmptyFetchResult(), error)
+            completion(EmptyFetchResult(), error)
             return
         }
 
-        //
-        coreDataStore.fetchLocal(context: context, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
+        coreDataStore.fetchLocal(managedObjectContext: managedObjectContext, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
 
             if let error = error {
-                callback(fetchResult, error)
+                completion(fetchResult, error)
                 return
             }
 
             self.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: linker, requestManager: requestManager) { fetchResult, error in
                 if let error = error {
-                    callback(fetchResult, error)
+                    completion(fetchResult, error)
                 } else {
                     if let linker = linker {
-                        linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: callback)
+                        linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: completion)
                     } else {
-                        callback(fetchResult, nil) // WOTFetcherAndDecoderError.linkerNotStarted
+                        completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                     }
                 }
             }
         }
     }
 
-    public func fetchLocalAndDecode(array: [Any], context: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, callback: @escaping FetchResultErrorCompletion) {
+    public func fetchLocalAndDecode(array: [Any], managedObjectContext: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
-            callback(EmptyFetchResult(), error)
+            completion(EmptyFetchResult(), error)
             return
         }
         //
-        coreDataStore.fetchLocal(context: context, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
+        coreDataStore.fetchLocal(managedObjectContext: managedObjectContext, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
 
             if let error = error {
-                callback(fetchResult, error)
+                completion(fetchResult, error)
                 return
             }
 
             self.mapping(array: array, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: linker, requestManager: requestManager) { fetchResult, error in
                 if let error = error {
-                    callback(fetchResult, error)
+                    completion(fetchResult, error)
                 } else {
                     if let linker = linker {
-                        linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: callback)
+                        linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: completion)
                     } else {
-                        callback(fetchResult, nil) // WOTFetcherAndDecoderError.linkerNotStarted
+                        completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                     }
                 }
             }
@@ -80,7 +80,7 @@ extension WOTMappingCoordinator {
     }
 }
 
-extension WOTMappingCoordinator {
+extension WOTMappingCoordinator: WOTMappingCoordinatorLinkingProtocol {
     public func linkItems(from itemsList: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
 
         guard let itemsList = itemsList else { return }
@@ -90,10 +90,10 @@ extension WOTMappingCoordinator {
             return
         }
 
-        let context = masterFetchResult.context
+        let managedObjectContext = masterFetchResult.managedObjectContext
 
         let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        self.fetchLocalAndDecode(array: itemsList, context: context, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, callback: { [weak self] _, error in
+        self.fetchLocalAndDecode(array: itemsList, managedObjectContext: managedObjectContext, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
             if let error = error {
                 self?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
@@ -109,10 +109,10 @@ extension WOTMappingCoordinator {
             return
         }
 
-        let context = masterFetchResult.context
+        let managedObjectContext = masterFetchResult.managedObjectContext
 
         let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
-        self.fetchLocalAndDecode(json: itemJSON, context: context, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, callback: { [weak self] _, error in
+        self.fetchLocalAndDecode(json: itemJSON, managedObjectContext: managedObjectContext, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
             if let error = error {
                 self?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
@@ -120,7 +120,7 @@ extension WOTMappingCoordinator {
     }
 }
 
-extension WOTMappingCoordinator {
+extension WOTMappingCoordinator: WOTMappingCoordinatorMappingProtocol {
     public func mapping(json: JSON, fetchResult: FetchResult, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
@@ -132,19 +132,19 @@ extension WOTMappingCoordinator {
                     finalFetchResult.predicate = requestPredicate.compoundPredicate(.and)
                     linker.process(fetchResult: finalFetchResult, coreDataStore: self.coreDataStore, completion: completion)
                 } else {
-                    completion(fetchResult, nil) //WOTMappingCoordinatorError.linkerNotStarted
+                    completion(fetchResult, nil)
                 }
             }
         }
 
         logInspector.logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         //
-        let context = fetchResult.context
+        let managedObjectContext = fetchResult.managedObjectContext
         let object = fetchResult.managedObject()
         //
         do {
-            try object.mapping(json: json, context: context, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
-            coreDataStore.stash(context: context, block: localCompletion)
+            try object.mapping(json: json, managedObjectContext: managedObjectContext, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
+            coreDataStore.stash(managedObjectContext: managedObjectContext, block: localCompletion)
             logInspector.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         } catch {
             localCompletion(error)
@@ -166,13 +166,13 @@ extension WOTMappingCoordinator {
 
         logInspector.logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
         //
-        let context = fetchResult.context
+        let managedObjectContext = fetchResult.managedObjectContext
         let object = fetchResult.managedObject()
         //
         do {
-            try object.mapping(array: array, context: context, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
+            try object.mapping(array: array, managedObjectContext: managedObjectContext, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
             //
-            coreDataStore.stash(context: fetchResult.context, block: localCompletion)
+            coreDataStore.stash(managedObjectContext: managedObjectContext, block: localCompletion)
             //
             logInspector.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
         } catch {

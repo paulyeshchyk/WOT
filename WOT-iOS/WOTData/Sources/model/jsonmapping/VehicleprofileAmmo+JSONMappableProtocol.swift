@@ -12,12 +12,12 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmo {
-    override public func mapping(json: JSON, context: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    override public func mapping(json: JSON, managedObjectContext: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         //
         try self.decode(json: json)
         //
 
-        let masterFetchResult = FetchResult(context: context, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(managedObjectContext: managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - Penetration
 
@@ -34,16 +34,16 @@ extension VehicleprofileAmmo {
         mappingCoordinator.linkItems(from: damageArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, mapperClazz: damageMapper, lookupRuleBuilder: damageRuleBuilder, requestManager: requestManager)
     }
 
-    convenience init?(json: JSON?, into context: NSManagedObjectContext, parentPrimaryKey: RequestExpression?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
-        guard let json = json, let entityDescription = context.entityDescription(forType: VehicleprofileAmmo.self) else {
+    convenience init?(json: JSON?, into managedObjectContext: NSManagedObjectContext, parentPrimaryKey: RequestExpression?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
+        guard let json = json, let entityDescription = managedObjectContext.entityDescription(forType: VehicleprofileAmmo.self) else {
             fatalError("Entity description not found [\(String(describing: VehicleprofileAmmo.self))]")
             return nil
         }
-        self.init(entity: entityDescription, insertInto: context)
+        self.init(entity: entityDescription, insertInto: managedObjectContext)
 
         let ammoPredicate = RequestPredicate()
         ammoPredicate[.primary] = parentPrimaryKey
-        let fetchResult = FetchResult(context: context, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(.and), fetchStatus: .recovered)
+        let fetchResult = FetchResult(managedObjectContext: managedObjectContext, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(.and), fetchStatus: .recovered)
         mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, linker: nil, requestManager: requestManager, completion: { _, _ in })
     }
 }
@@ -56,18 +56,18 @@ extension VehicleprofileAmmo {
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let context = fetchResult.context
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmoPenetration.self))
                 return
             }
-            guard let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo else {
+            guard let ammo = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? VehicleprofileAmmo else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))
                 return
             }
 
             ammo.penetration = penetration
-            coreDataStore?.stash(context: context) { error in
+            coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -80,12 +80,12 @@ extension VehicleprofileAmmo {
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
         override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let context = fetchResult.context
+            let managedObjectContext = fetchResult.managedObjectContext
             if let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage {
-                if let ammo = masterFetchResult?.managedObject(inContext: context) as? VehicleprofileAmmo {
+                if let ammo = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? VehicleprofileAmmo {
                     ammo.damage = damage
 
-                    coreDataStore?.stash(context: context) { error in
+                    coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }

@@ -17,11 +17,11 @@ open class WOTDataFetchController: NSObject {
     public var fetchResultController: WOTDataFetchedResultController?
 
     public func initFetchController(block: @escaping (WOTDataFetchedResultController) -> Void) throws {
-        guard let context = self.dataProvider?.workingContext() else {
+        guard let managedObjectContext = self.dataProvider?.workingContext() else {
             throw WOTCoredataStoreError.contextIsNotDefined
         }
 
-        self.dataProvider?.perform(context: context) { context in
+        self.dataProvider?.perform(managedObjectContext: managedObjectContext) { context in
 
             let request = self.nodeFetchRequestCreator.fetchRequest
             guard let result = self.dataProvider?.fetchResultController(for: request, andContext: context) else {
