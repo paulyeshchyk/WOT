@@ -80,6 +80,8 @@
 		1D60E5DA245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */; };
 		1D60E60C24602A8F007E5CA8 /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E60B24602A8F007E5CA8 /* JSONDecodingProtocol.swift */; };
 		1D60E74D246052F4007E5CA8 /* json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E74C246052F4007E5CA8 /* json.swift */; };
+		1D7E0695247D0460008CB848 /* WOTKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E0694247D045F008CB848 /* WOTKitTests.swift */; };
+		1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E506245FE541007E5CA8 /* WOTKit.framework */; };
 		1DD9D52A2467B16B0064D88C /* RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD9D5292467B16B0064D88C /* RequestableProtocol.swift */; };
 		1DD9D52C2467BA660064D88C /* RequestPredicateComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD9D52B2467BA660064D88C /* RequestPredicateComposition.swift */; };
 		1DFCC9102471153D005F580E /* WOTRequestRegistratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC90F2471153D005F580E /* WOTRequestRegistratorProtocol.swift */; };
@@ -89,6 +91,16 @@
 		1DFCC92E24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92D24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift */; };
 		1DFCC93024714B45005F580E /* WOTResponseAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* WOTResponseAdapterCreator.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1D7E0698247D0460008CB848 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D60E4FD245FE541007E5CA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D60E505245FE541007E5CA8;
+			remoteInfo = WOTKit;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1D20FDE8246402F9009CFA22 /* EventWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventWarning.swift; sourceTree = "<group>"; };
@@ -167,6 +179,9 @@
 		1D60E5D9245FE9D5007E5CA8 /* WOTWebSessionManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManagerProtocol.swift; sourceTree = "<group>"; };
 		1D60E60B24602A8F007E5CA8 /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
 		1D60E74C246052F4007E5CA8 /* json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = json.swift; sourceTree = "<group>"; };
+		1D7E0692247D045F008CB848 /* WOTKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D7E0694247D045F008CB848 /* WOTKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTKitTests.swift; sourceTree = "<group>"; };
+		1D7E0696247D0460008CB848 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DD9D5292467B16B0064D88C /* RequestableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestableProtocol.swift; sourceTree = "<group>"; };
 		1DD9D52B2467BA660064D88C /* RequestPredicateComposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposition.swift; sourceTree = "<group>"; };
 		1DFCC90F2471153D005F580E /* WOTRequestRegistratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestRegistratorProtocol.swift; sourceTree = "<group>"; };
@@ -185,6 +200,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1D7E068F247D045F008CB848 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -193,6 +216,7 @@
 			children = (
 				1D60E508245FE541007E5CA8 /* Sources */,
 				1D60E5F324601DAB007E5CA8 /* Tests */,
+				1D7E0693247D045F008CB848 /* WOTKitTests */,
 				1D60E507245FE541007E5CA8 /* Products */,
 				1D60E50A245FE541007E5CA8 /* Info.plist */,
 			);
@@ -202,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				1D60E506245FE541007E5CA8 /* WOTKit.framework */,
+				1D7E0692247D045F008CB848 /* WOTKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -506,6 +531,15 @@
 			path = Arguments;
 			sourceTree = "<group>";
 		};
+		1D7E0693247D045F008CB848 /* WOTKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				1D7E0694247D045F008CB848 /* WOTKitTests.swift */,
+				1D7E0696247D0460008CB848 /* Info.plist */,
+			);
+			path = WOTKitTests;
+			sourceTree = "<group>";
+		};
 		1DD9D5272467B0AE0064D88C /* RequestParadigm */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,18 +625,40 @@
 			productReference = 1D60E506245FE541007E5CA8 /* WOTKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		1D7E0691247D045F008CB848 /* WOTKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D7E069C247D0460008CB848 /* Build configuration list for PBXNativeTarget "WOTKitTests" */;
+			buildPhases = (
+				1D7E068E247D045F008CB848 /* Sources */,
+				1D7E068F247D045F008CB848 /* Frameworks */,
+				1D7E0690247D045F008CB848 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D7E0699247D0460008CB848 /* PBXTargetDependency */,
+			);
+			name = WOTKitTests;
+			productName = WOTKitTests;
+			productReference = 1D7E0692247D045F008CB848 /* WOTKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		1D60E4FD245FE541007E5CA8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Pavel Yeshchyk";
 				TargetAttributes = {
 					1D60E505245FE541007E5CA8 = {
 						CreatedOnToolsVersion = 11.4.1;
 						LastSwiftMigration = 1140;
+					};
+					1D7E0691247D045F008CB848 = {
+						CreatedOnToolsVersion = 11.4.1;
 					};
 				};
 			};
@@ -620,12 +676,20 @@
 			projectRoot = "";
 			targets = (
 				1D60E505245FE541007E5CA8 /* WOTKit */,
+				1D7E0691247D045F008CB848 /* WOTKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1D60E504245FE541007E5CA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D7E0690247D045F008CB848 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -743,7 +807,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1D7E068E247D045F008CB848 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D7E0695247D0460008CB848 /* WOTKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1D7E0699247D0460008CB848 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D60E505245FE541007E5CA8 /* WOTKit */;
+			targetProxy = 1D7E0698247D0460008CB848 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D60E50C245FE541007E5CA8 /* Debug */ = {
@@ -917,6 +997,40 @@
 			};
 			name = Release;
 		};
+		1D7E069A247D0460008CB848 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WOTKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D7E069B247D0460008CB848 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WOTKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -934,6 +1048,15 @@
 			buildConfigurations = (
 				1D60E50F245FE541007E5CA8 /* Debug */,
 				1D60E510245FE541007E5CA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D7E069C247D0460008CB848 /* Build configuration list for PBXNativeTarget "WOTKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D7E069A247D0460008CB848 /* Debug */,
+				1D7E069B247D0460008CB848 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

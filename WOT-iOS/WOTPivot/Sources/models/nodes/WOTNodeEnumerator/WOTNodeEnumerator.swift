@@ -13,10 +13,6 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
     @objc
     public static let sharedInstance = WOTNodeEnumerator()
 
-    override init() {
-        super.init()
-    }
-
     public func enumerateAll(node: WOTNodeProtocol, comparator: (_ node1: WOTNodeProtocol, _ node2: WOTNodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping WOTNodeProtocolCompletion) {
         self.enumerateAll(children: node.children, comparator: comparator, childCompletion: childCompletion)
     }

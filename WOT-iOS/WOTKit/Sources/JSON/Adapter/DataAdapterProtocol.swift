@@ -10,7 +10,6 @@ import Foundation
 
 @objc
 public protocol DataAdapterProtocol {
-
     var uuid: UUID { get }
     var onJSONDidParse: OnParseComplete? { get set }
     func didFinishJSONDecoding(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)

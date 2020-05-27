@@ -9,10 +9,6 @@
 import Foundation
 
 public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
-    //
-    deinit {
-    }
-
     public var hostConfiguration: WOTHostConfigurationProtocol?
     public var responseParser: WOTResponseParserProtocol?
     public var requestManager: WOTRequestManagerProtocol?

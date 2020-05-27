@@ -64,9 +64,3 @@ extension WOTWEBRequest: WOTWebServiceProtocol {
         }
     }
 }
-
-// MARK: - NSURLConnectionDataDelegate
-
-extension WOTWEBRequest: NSURLConnectionDataDelegate {
-//
-}

@@ -110,6 +110,7 @@
 		1D60E749246050AF007E5CA8 /* VehicleprofileRadio+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E739246050AE007E5CA8 /* VehicleprofileRadio+RequestableProtocol.swift */; };
 		1D60E74A246050AF007E5CA8 /* Vehicles+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E73A246050AE007E5CA8 /* Vehicles+RequestableProtocol.swift */; };
 		1D60E74B246050AF007E5CA8 /* Module+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E73B246050AE007E5CA8 /* Module+RequestableProtocol.swift */; };
+		1D7E0682247BAAE3008CB848 /* WOTTankTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E0681247BAAE3008CB848 /* WOTTankTemplates.swift */; };
 		1D8C299021358CA600759C42 /* WOTDataDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C298F21358C6000759C42 /* WOTDataDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DE1F916245EC75A002866A3 /* WOTCoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F8DA245EC75A002866A3 /* WOTCoreDataStore.swift */; };
 		1DE1F917245EC75A002866A3 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F8DC245EC75A002866A3 /* WOT_iOS.xcdatamodeld */; };
@@ -248,6 +249,7 @@
 		1D60E739246050AE007E5CA8 /* VehicleprofileRadio+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+RequestableProtocol.swift"; sourceTree = "<group>"; };
 		1D60E73A246050AE007E5CA8 /* Vehicles+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+RequestableProtocol.swift"; sourceTree = "<group>"; };
 		1D60E73B246050AE007E5CA8 /* Module+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		1D7E0681247BAAE3008CB848 /* WOTTankTemplates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankTemplates.swift; sourceTree = "<group>"; };
 		1D8C298F21358C6000759C42 /* WOTDataDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTDataDefines.h; sourceTree = "<group>"; };
 		1DE1F8DA245EC75A002866A3 /* WOTCoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoreDataStore.swift; sourceTree = "<group>"; };
 		1DE1F8DD245EC75A002866A3 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 		1D3DAECC2133FD5300368AFA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1D7E0680247BAABC008CB848 /* Templates */,
 				1DE1FA00245EE2C5002866A3 /* categories */,
 				1DE1F8D9245EC75A002866A3 /* dataprovider */,
 				1DE1F8DB245EC75A002866A3 /* model */,
@@ -437,6 +440,14 @@
 				1D60E6F024605083007E5CA8 /* Vehicles+JSONDecodingProtocol.swift */,
 			);
 			path = jsondecoding;
+			sourceTree = "<group>";
+		};
+		1D7E0680247BAABC008CB848 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				1D7E0681247BAAE3008CB848 /* WOTTankTemplates.swift */,
+			);
+			path = Templates;
 			sourceTree = "<group>";
 		};
 		1DE1F8D7245EC75A002866A3 /* persistentStore */ = {
@@ -742,6 +753,7 @@
 				1D60E71D2460509A007E5CA8 /* VehicleprofileArmorList+JSONMappableProtocol.swift in Sources */,
 				1DE1F940245EC75A002866A3 /* WOTWEBRequestModulesTree.swift in Sources */,
 				1D41162124646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift in Sources */,
+				1D7E0682247BAAE3008CB848 /* WOTTankTemplates.swift in Sources */,
 				1D41163724658693009070AD /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				1D60E46D245F59FB007E5CA8 /* Module+CoreDataClass.swift in Sources */,
 				1D60E475245F59FB007E5CA8 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift in Sources */,
