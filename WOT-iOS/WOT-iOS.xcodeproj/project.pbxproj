@@ -915,25 +915,9 @@
 				1D5669282424D121008458AF /* WOTSessionManager.m */,
 				1D56692A2424D121008458AF /* WOTWebSessionManager.swift */,
 				1D5669262424D121008458AF /* WOTWebHostConfiguration.swift */,
-				1D5669272424D121008458AF /* Logout */,
-				1D5669292424D121008458AF /* Login */,
 				1D56692B2424D121008458AF /* Session */,
 			);
 			path = Session;
-			sourceTree = "<group>";
-		};
-		1D5669272424D121008458AF /* Logout */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Logout;
-			sourceTree = "<group>";
-		};
-		1D5669292424D121008458AF /* Login */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Login;
 			sourceTree = "<group>";
 		};
 		1D56692B2424D121008458AF /* Session */ = {

@@ -187,8 +187,9 @@
 
 - (void)reloadModel {
     if ( [self isViewLoaded] ){
-
-        [self.model loadModel];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.model loadModel];
+        });
     }
 }
 
@@ -322,9 +323,7 @@
 - (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
     
     if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self reloadModel];
-        });
+        [self reloadModel];
     }
 }
 
