@@ -6,14 +6,14 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'WOT-iOS' do
-    pod 'AFNetworking', :git => 'https://github.com/AFNetworking/AFNetworking'
-    pod 'BlocksKit', :git =>  'https://github.com/BlocksKit/BlocksKit'
-    pod 'MMDrawerController', :git => 'https://github.com/mutualmobile/MMDrawerController'
-    pod 'SDWebImage', :git => 'https://github.com/SDWebImage/SDWebImage'
+    pod 'AFNetworking', '4.0.0'
+    pod 'BlocksKit'
+    pod 'MMDrawerController', '0.6.0'
+    pod 'SDWebImage', '5.7.2'
     #pod 'Charts', :git => 
-    pod 'ASProgressPopUpView', :git => 'https://github.com/alskipp/ASProgressPopUpView'
-    pod 'WYPopoverController', :git => 'https://github.com/nicolaschengdev/WYPopoverController'
-    pod 'SwiftGen', :git => 'https://github.com/SwiftGen/SwiftGen'
-    pod 'SwiftLint', :git => 'https://github.com/realm/SwiftLint'
-    pod 'SwiftFormat', :git => 'https://github.com/nicklockwood/SwiftFormat'
+    pod 'ASProgressPopUpView', '0.9'
+    pod 'WYPopoverController', '0.1.8'
+    pod 'SwiftGen', '6.1.0'
+    pod 'SwiftLint', '0.39.2'
+    pod 'SwiftFormat', '0.44.7'
 end

@@ -15,23 +15,19 @@ PODS:
   - AFNetworking/UIKit (4.0.0):
     - AFNetworking/NSURLSession
   - ASProgressPopUpView (0.9)
-  - BlocksKit (2.2.6):
-    - BlocksKit/All (= 2.2.6)
-  - BlocksKit/All (2.2.6):
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
     - BlocksKit/MessageUI
-    - BlocksKit/QuickLook
     - BlocksKit/UIKit
-  - BlocksKit/Core (2.2.6)
-  - BlocksKit/DynamicDelegate (2.2.6)
-  - BlocksKit/MessageUI (2.2.6):
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - BlocksKit/QuickLook (2.2.6):
-    - BlocksKit/Core
-    - BlocksKit/DynamicDelegate
-  - BlocksKit/UIKit (2.2.6):
+  - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
   - MMDrawerController (0.6.0):
@@ -57,76 +53,39 @@ PODS:
   - WYPopoverController (0.1.8)
 
 DEPENDENCIES:
-  - AFNetworking (from `https://github.com/AFNetworking/AFNetworking`)
-  - ASProgressPopUpView (from `https://github.com/alskipp/ASProgressPopUpView`)
-  - BlocksKit (from `https://github.com/BlocksKit/BlocksKit`)
-  - MMDrawerController (from `https://github.com/mutualmobile/MMDrawerController`)
-  - SDWebImage (from `https://github.com/SDWebImage/SDWebImage`)
-  - SwiftFormat (from `https://github.com/nicklockwood/SwiftFormat`)
-  - SwiftGen (from `https://github.com/SwiftGen/SwiftGen`)
-  - SwiftLint (from `https://github.com/realm/SwiftLint`)
-  - WYPopoverController (from `https://github.com/nicolaschengdev/WYPopoverController`)
+  - AFNetworking (= 4.0.0)
+  - ASProgressPopUpView (= 0.9)
+  - BlocksKit
+  - MMDrawerController (= 0.6.0)
+  - SDWebImage (= 5.7.2)
+  - SwiftFormat (= 0.44.7)
+  - SwiftGen (= 6.1.0)
+  - SwiftLint (= 0.39.2)
+  - WYPopoverController (= 0.1.8)
 
-EXTERNAL SOURCES:
-  AFNetworking:
-    :git: https://github.com/AFNetworking/AFNetworking
-  ASProgressPopUpView:
-    :git: https://github.com/alskipp/ASProgressPopUpView
-  BlocksKit:
-    :git: https://github.com/BlocksKit/BlocksKit
-  MMDrawerController:
-    :git: https://github.com/mutualmobile/MMDrawerController
-  SDWebImage:
-    :git: https://github.com/SDWebImage/SDWebImage
-  SwiftFormat:
-    :git: https://github.com/nicklockwood/SwiftFormat
-  SwiftGen:
-    :git: https://github.com/SwiftGen/SwiftGen
-  SwiftLint:
-    :git: https://github.com/realm/SwiftLint
-  WYPopoverController:
-    :git: https://github.com/nicolaschengdev/WYPopoverController
-
-CHECKOUT OPTIONS:
-  AFNetworking:
-    :commit: eabbf6c51187895b5c17dcfd9fde367c041ab7bd
-    :git: https://github.com/AFNetworking/AFNetworking
-  ASProgressPopUpView:
-    :commit: e6be084585a715c6531cf706f9288dd80cb45b41
-    :git: https://github.com/alskipp/ASProgressPopUpView
-  BlocksKit:
-    :commit: 52671356f157fd76012bfe734bd99b5da1e8db07
-    :git: https://github.com/BlocksKit/BlocksKit
-  MMDrawerController:
-    :commit: 08b153860e26ddbe6b8906909fb30e32c670a9f4
-    :git: https://github.com/mutualmobile/MMDrawerController
-  SDWebImage:
-    :commit: b06d60cf3d998efb6958d97915ac1e9164d96dd8
-    :git: https://github.com/SDWebImage/SDWebImage
-  SwiftFormat:
-    :commit: 03989b9a28f98ea5cad5ca2b22024a8b67aca31c
-    :git: https://github.com/nicklockwood/SwiftFormat
-  SwiftGen:
-    :commit: c6477a6950d313c94c964c6c8ec960e3aeccb8f6
-    :git: https://github.com/SwiftGen/SwiftGen
-  SwiftLint:
-    :commit: 1e1807b88b18699a8ae7db69bc6e4fed6af0f3f8
-    :git: https://github.com/realm/SwiftLint
-  WYPopoverController:
-    :commit: a5fc1276f3e7ae9bfbf97f5e7b504f18005f5e92
-    :git: https://github.com/nicolaschengdev/WYPopoverController
+SPEC REPOS:
+  trunk:
+    - AFNetworking
+    - ASProgressPopUpView
+    - BlocksKit
+    - MMDrawerController
+    - SDWebImage
+    - SwiftFormat
+    - SwiftGen
+    - SwiftLint
+    - WYPopoverController
 
 SPEC CHECKSUMS:
-  AFNetworking: 600f97dccd86e7f6af64cf1c86d1a2c1bc8d6e77
+  AFNetworking: d9fdf484a3c723ec3c558a41cc5754c7e845ee77
   ASProgressPopUpView: dfe44c9a0313ac93a8092bd361b59f52c83a7560
-  BlocksKit: 5fae06c13638d9fdb0bbddca3dabfe8f5aa735c5
+  BlocksKit: 8639b2848dd51c35c957af4d9fbdc7a769a1fc12
   MMDrawerController: e3a54a5570388463ad3b36975251575b50c4e1a0
   SDWebImage: d9ea4959d99c52276dfada481987018fcaea3d58
   SwiftFormat: fd97e27b8de5a46c9d1988bf1db1dc92e79f86a3
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
-  WYPopoverController: a7f420833d355d868e5836415ba07ce0dbec1a27
+  WYPopoverController: e09cd3a2163e14e712f330ebf799b61ba6b2c361
 
-PODFILE CHECKSUM: 0b4f8a17f8b2826f13e54c92573c1b1113ce3735
+PODFILE CHECKSUM: 0e963dbb5d5561270042225c2653d15b4dcebb9f
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.11.3
