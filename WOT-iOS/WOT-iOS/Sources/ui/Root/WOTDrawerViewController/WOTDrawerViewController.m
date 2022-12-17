@@ -78,7 +78,7 @@
         [self.menu rebuildMenu];
         [self setDrawerVisualStateBlock:[MMDrawerVisualState parallaxVisualStateBlockWithParallaxFactor:CGFLOAT_MAX]];
 
-        self.openDrawerGestureModeMask = MMCloseDrawerGestureModePanningNavigationBar;
+        self.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningNavigationBar;
         self.closeDrawerGestureModeMask = MMCloseDrawerGestureModeAll;
     }
     return self;

@@ -52,6 +52,8 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
     }
 }
 
+#warning("Pivot Configuration")
+
 class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     private let permutator = WOTPivotMetadataPermutator()
 
