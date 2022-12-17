@@ -7,7 +7,7 @@
 //
 //
 
-import Foundation
+import WOTKit
 import CoreData
 
 @objc(VehicleprofileArmor)

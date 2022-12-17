@@ -6,17 +6,17 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import WOTKit
 
 public typealias FilteredObjectCompletion = (NSPredicate, [AnyObject]?) -> Void
 
+public typealias WOTDataFetchedResultController = NSFetchedResultsController<NSFetchRequestResult>
+
 open class WOTDataFetchController: NSObject {
-    typealias WOTDataFetchedResultController = NSFetchedResultsController<NSFetchRequestResult>
+    public var fetchResultController: WOTDataFetchedResultController?
 
-    private var fetchResultController: WOTDataFetchedResultController?
-
-    private func initFetchController( block: @escaping (WOTDataFetchedResultController) -> Void ) throws {
+    public func initFetchController( block: @escaping (WOTDataFetchedResultController) -> Void ) throws {
         self.dataProvider?.performMain({ context in
 
             let request = self.nodeFetchRequestCreator.fetchRequest
@@ -40,43 +40,6 @@ open class WOTDataFetchController: NSObject {
 
     deinit {
         self.fetchResultController?.delegate = nil
-    }
-}
-
-extension WOTDataFetchController: WOTDataFetchControllerProtocol {
-    public func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
-        if let fetch = self.fetchResultController {
-            try performFetch(with: fetch, nodeCreator: nodeCreator)
-        } else {
-            try initFetchController { fetch in
-                self.fetchResultController = fetch
-                try? self.performFetch(with: fetch, nodeCreator: nodeCreator)
-            }
-        }
-    }
-
-    private func performFetch(with fetchResultController: WOTDataFetchedResultController, nodeCreator: WOTNodeCreatorProtocol? ) throws {
-        do {
-            try fetchResultController.performFetch()
-            self.listener?.fetchPerformed(by: self)
-        } catch let error {
-            self.listener?.fetchFailed(by: self, withError: error)
-        }
-    }
-
-    public func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?) {
-        self.listener = listener
-    }
-
-    public func fetchedObjects() -> [AnyObject]? {
-        return self.fetchResultController?.fetchedObjects
-    }
-
-    open func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
-        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
-
-        let filtered = (self.fetchedObjects()?.filter { predicate.evaluate(with: $0) })
-        filteredCompletion(predicate, filtered)
     }
 }
 

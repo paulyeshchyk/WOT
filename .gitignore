@@ -5,3 +5,6 @@
 **/*.xcuserdatad/*
 **/xcshareddata/*
 WOT-iOS/Pods/*
+**/.build/*
+**/build/*
+**/contents.xcworkspacedata
