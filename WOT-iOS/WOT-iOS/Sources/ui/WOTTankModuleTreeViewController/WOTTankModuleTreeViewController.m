@@ -187,8 +187,9 @@
 
 - (void)reloadModel {
     if ( [self isViewLoaded] ){
-
-        [self.model loadModel];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.model loadModel];
+        });
     }
 }
 
