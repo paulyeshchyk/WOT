@@ -6,6 +6,8 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'WOT-iOS' do
+    project 'WOT-iOS'
+
     pod 'AFNetworking', '4.0.0'
     pod 'BlocksKit'
     pod 'MMDrawerController', '0.6.0'
