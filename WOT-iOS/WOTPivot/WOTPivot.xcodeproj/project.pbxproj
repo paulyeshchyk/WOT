@@ -17,10 +17,11 @@
 		1D5D0AFE23CCB02B004B0314 /* WOTPivotMetadataPermutatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AFA23CCB012004B0314 /* WOTPivotMetadataPermutatorTest.swift */; };
 		1D5D0B0223CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0B0023CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift */; };
 		1D5D0B0323CCB086004B0314 /* WOTNodeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0B0123CCB086004B0314 /* WOTNodeEnumerator.swift */; };
-		1D60E51A245FE67E007E5CA8 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E518245FE667007E5CA8 /* WOTKit.framework */; };
 		1D60E5D7245FE97C007E5CA8 /* WOTDataFetchController+NodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5D6245FE97C007E5CA8 /* WOTDataFetchController+NodeCreator.swift */; };
 		1D60E5DC245FEA41007E5CA8 /* WOTDataFetchControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5DB245FEA41007E5CA8 /* WOTDataFetchControllerProtocol.swift */; };
 		1D60E5DE245FEA6F007E5CA8 /* WOTDataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5DD245FEA6F007E5CA8 /* WOTDataFetchController.swift */; };
+		1D60E5F024601BAE007E5CA8 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */; };
+		1D60E5F124601BAE007E5CA8 /* WOTKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D65F7F22216A60E006A85E4 /* WOTTankPivotLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EA2216A60D006A85E4 /* WOTTankPivotLayout.swift */; };
 		1D65F7F32216A60E006A85E4 /* WOTPivotLayoutCellAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EB2216A60D006A85E4 /* WOTPivotLayoutCellAttributes.swift */; };
 		1D65F7F52216A60E006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7ED2216A60D006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift */; };
@@ -72,9 +73,9 @@
 		1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */; };
 		1DE5590A2124572D00576D41 /* WOTDataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE558FA2124571000576D41 /* WOTDataModelTest.swift */; };
 		1DE5591D212458E100576D41 /* WOTPivotNodeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5591A212458E100576D41 /* WOTPivotNodeIndex.swift */; };
-		1DE5591E212458E100576D41 /* WOTConnectorNodeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5591C212458E100576D41 /* WOTConnectorNodeIndex.swift */; };
+		1DE5591E212458E100576D41 /* WOTTreeConnectorNodeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5591C212458E100576D41 /* WOTTreeConnectorNodeIndex.swift */; };
 		1DE559572125586200576D41 /* WOTPivotNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */; };
-		1DE5595921255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595821255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift */; };
+		1DE5595921255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595821255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift */; };
 		1DE5595B21255AE400576D41 /* WOTNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1D60E5F224601BAE007E5CA8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1D60E5F124601BAE007E5CA8 /* WOTKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
 		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
@@ -99,11 +114,10 @@
 		1D5D0AFB23CCB012004B0314 /* WOTPivotMetadataPermutator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutator.swift; sourceTree = "<group>"; };
 		1D5D0B0023CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumeratorProtocol.swift; sourceTree = "<group>"; };
 		1D5D0B0123CCB086004B0314 /* WOTNodeEnumerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodeEnumerator.swift; sourceTree = "<group>"; };
-		1D60E512245FE563007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D60E518245FE667007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E5D6245FE97C007E5CA8 /* WOTDataFetchController+NodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WOTDataFetchController+NodeCreator.swift"; sourceTree = "<group>"; };
 		1D60E5DB245FEA41007E5CA8 /* WOTDataFetchControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataFetchControllerProtocol.swift; sourceTree = "<group>"; };
 		1D60E5DD245FEA6F007E5CA8 /* WOTDataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataFetchController.swift; sourceTree = "<group>"; };
+		1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D65F7EA2216A60D006A85E4 /* WOTTankPivotLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotLayout.swift; sourceTree = "<group>"; };
 		1D65F7EB2216A60D006A85E4 /* WOTPivotLayoutCellAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotLayoutCellAttributes.swift; sourceTree = "<group>"; };
 		1D65F7EC2216A60D006A85E4 /* WOTPivotLayoutCellAttributesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotLayoutCellAttributesTest.swift; sourceTree = "<group>"; };
@@ -158,9 +172,9 @@
 		1DE559002124571000576D41 /* WOTTreeDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModel.swift; sourceTree = "<group>"; };
 		1DE559012124571000576D41 /* WOTTreeDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeDataModelProtocol.swift; sourceTree = "<group>"; };
 		1DE5591A212458E100576D41 /* WOTPivotNodeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeIndex.swift; sourceTree = "<group>"; };
-		1DE5591C212458E100576D41 /* WOTConnectorNodeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTConnectorNodeIndex.swift; sourceTree = "<group>"; };
+		1DE5591C212458E100576D41 /* WOTTreeConnectorNodeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeConnectorNodeIndex.swift; sourceTree = "<group>"; };
 		1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeIndexProtocol.swift; sourceTree = "<group>"; };
-		1DE5595821255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTConnectorNodeIndexProtocol.swift; sourceTree = "<group>"; };
+		1DE5595821255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeConnectorNodeIndexProtocol.swift; sourceTree = "<group>"; };
 		1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeIndexProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,7 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60E51A245FE67E007E5CA8 /* WOTKit.framework in Frameworks */,
+				1D60E5F024601BAE007E5CA8 /* WOTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,8 +259,7 @@
 		1D60E511245FE563007E5CA8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E518245FE667007E5CA8 /* WOTKit.framework */,
-				1D60E512245FE563007E5CA8 /* WOTKit.framework */,
+				1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -337,10 +350,11 @@
 		1D79ED9B212439C2005FBA34 = {
 			isa = PBXGroup;
 			children = (
-				1D79EDA7212439C2005FBA34 /* WOTPivot */,
-				1D79EDB2212439C2005FBA34 /* WOTPivotTests */,
-				1D79EDA6212439C2005FBA34 /* Products */,
+				1D79EDA7212439C2005FBA34 /* Sources */,
+				1D79EDB2212439C2005FBA34 /* Tests */,
 				1D60E511245FE563007E5CA8 /* Frameworks */,
+				1D79EDA6212439C2005FBA34 /* Products */,
+				1D79EDA9212439C2005FBA34 /* Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -353,31 +367,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1D79EDA7212439C2005FBA34 /* WOTPivot */ = {
+		1D79EDA7212439C2005FBA34 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				1DE558F72124571000576D41 /* models */,
-				1DE558CC2124560500576D41 /* nodes */,
-				1DE55918212458E100576D41 /* indexes */,
 				1D256CD9212D4182002FCD78 /* viper */,
 				1DA83C89213558AB0039CB4B /* adapters */,
-				1D65F7E82216A60D006A85E4 /* layout */,
 				1D5D0B0623CDA129004B0314 /* metrics */,
 				1D79EDA8212439C2005FBA34 /* WOTPivot.h */,
 				1DE1FA26245EEA62002866A3 /* WOTColors.h */,
 				1DE1FA24245EE9E4002866A3 /* WOTPivotDefines.h */,
-				1D79EDA9212439C2005FBA34 /* Info.plist */,
 			);
-			path = WOTPivot;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		1D79EDB2212439C2005FBA34 /* WOTPivotTests */ = {
+		1D79EDB2212439C2005FBA34 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */,
 				1D79EDB5212439C2005FBA34 /* Info.plist */,
 			);
-			path = WOTPivotTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		1DA83C89213558AB0039CB4B /* adapters */ = {
@@ -412,6 +422,16 @@
 				1DC6D4CC212577D400A1C9C2 /* WOTTreeModuleNode.swift */,
 			);
 			path = WOTTreeNode;
+			sourceTree = "<group>";
+		};
+		1DD9D5232466F6890064D88C /* indexes */ = {
+			isa = PBXGroup;
+			children = (
+				1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */,
+				1DE5591B212458E100576D41 /* WOTNodeConnectorIndex */,
+				1DE55919212458E100576D41 /* WOTPivotNodeIndex */,
+			);
+			path = indexes;
 			sourceTree = "<group>";
 		};
 		1DE558CC2124560500576D41 /* nodes */ = {
@@ -463,6 +483,9 @@
 		1DE558F72124571000576D41 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				1D65F7E82216A60D006A85E4 /* layout */,
+				1DE558CC2124560500576D41 /* nodes */,
+				1DD9D5232466F6890064D88C /* indexes */,
 				1D60E5D5245FE96E007E5CA8 /* WOTDataFetchController */,
 				1D5D0AF923CCB012004B0314 /* WOTPermutator */,
 				1DC6D4C6212576EA00A1C9C2 /* WOTPivotDataModel */,
@@ -491,30 +514,20 @@
 			path = WOTTreeDataModel;
 			sourceTree = "<group>";
 		};
-		1DE55918212458E100576D41 /* indexes */ = {
-			isa = PBXGroup;
-			children = (
-				1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */,
-				1DE55919212458E100576D41 /* WOTNodeIndex */,
-				1DE5591B212458E100576D41 /* WOTNodeConnectorIndex */,
-			);
-			path = indexes;
-			sourceTree = "<group>";
-		};
-		1DE55919212458E100576D41 /* WOTNodeIndex */ = {
+		1DE55919212458E100576D41 /* WOTPivotNodeIndex */ = {
 			isa = PBXGroup;
 			children = (
 				1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */,
 				1DE5591A212458E100576D41 /* WOTPivotNodeIndex.swift */,
 			);
-			path = WOTNodeIndex;
+			path = WOTPivotNodeIndex;
 			sourceTree = "<group>";
 		};
 		1DE5591B212458E100576D41 /* WOTNodeConnectorIndex */ = {
 			isa = PBXGroup;
 			children = (
-				1DE5595821255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift */,
-				1DE5591C212458E100576D41 /* WOTConnectorNodeIndex.swift */,
+				1DE5595821255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift */,
+				1DE5591C212458E100576D41 /* WOTTreeConnectorNodeIndex.swift */,
 			);
 			path = WOTNodeConnectorIndex;
 			sourceTree = "<group>";
@@ -543,6 +556,7 @@
 				1D79EDA1212439C2005FBA34 /* Frameworks */,
 				1D79EDA2212439C2005FBA34 /* Headers */,
 				1D79EDA3212439C2005FBA34 /* Resources */,
+				1D60E5F224601BAE007E5CA8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -648,7 +662,7 @@
 				1D5D0B0223CCB086004B0314 /* WOTNodeEnumeratorProtocol.swift in Sources */,
 				1DE559072124571000576D41 /* WOTTreeDataModel.swift in Sources */,
 				1D5D021823C7334F004B0314 /* WOTTankPivotNodeCreator.swift in Sources */,
-				1DE5595921255AA100576D41 /* WOTConnectorNodeIndexProtocol.swift in Sources */,
+				1DE5595921255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift in Sources */,
 				1D65F8252216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift in Sources */,
 				1D65F8272216A7B8006A85E4 /* WOTDimensionFilterCalculator.swift in Sources */,
 				1DE558E12124560500576D41 /* WOTPivotDataNode.swift in Sources */,
@@ -682,7 +696,7 @@
 				1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */,
 				1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */,
 				1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */,
-				1DE5591E212458E100576D41 /* WOTConnectorNodeIndex.swift in Sources */,
+				1DE5591E212458E100576D41 /* WOTTreeConnectorNodeIndex.swift in Sources */,
 				1D65F8242216A7B8006A85E4 /* WOTDimension.swift in Sources */,
 				1DE559572125586200576D41 /* WOTPivotNodeIndexProtocol.swift in Sources */,
 				1DBF89A4240D0F08007DF8B2 /* WOTTankMetricOptions.swift in Sources */,
@@ -849,9 +863,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = WOTPivot/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -877,9 +891,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = WOTPivot/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

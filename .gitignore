@@ -8,3 +8,5 @@ WOT-iOS/Pods/*
 **/.build/*
 **/build/*
 **/contents.xcworkspacedata
+WOT-iOS.xcworkspace/*
+WOT-iOS.xcworkspace/*	
