@@ -8,12 +8,13 @@
 
 import UIKit
 import WOTPivot
+import WOTData
 import CoreData
 
 class SteelPivotViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView?
     lazy var model: WOTPivotDataModel = {
-        return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, enumerator: WOTNodeEnumerator.sharedInstance)
+        return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, metadatasource: self.metadatasource)
     }()
 
     lazy var fetchController: WOTDataFetchControllerProtocol = {
@@ -21,6 +22,7 @@ class SteelPivotViewController: UIViewController {
         return SteelPivotFetchController()
     }()
 
+    let metadatasource = WOTTankPivotMetadatasource()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,7 +30,38 @@ class SteelPivotViewController: UIViewController {
     }
 }
 
+class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
+    private let permutator = WOTPivotMetadataPermutator()
+
+    func metadataItems() -> [WOTNodeProtocol] {
+        var result = [WOTNodeProtocol]()
+
+        var templates = WOTPivotTemplates()
+//        let levelPrem = templates.vehiclePremium
+        let levelNati = templates.vehicleNation
+        let levelType = templates.vehicleType
+        let levelTier = templates.vehicleTier
+
+        let cols = permutator.permutate(templates: [levelType, levelNati], as: .column)
+        let rows = permutator.permutate(templates: [levelTier], as: .row)
+        let filt = filters()
+
+        result.append(contentsOf: cols)
+        result.append(contentsOf: rows)
+        result.append(contentsOf: filt)
+        return result
+    }
+
+    func filters() -> [WOTNodeProtocol] {
+        return [WOTPivotFilterNode(name: "Filter")]
+    }
+}
+
 class SteelPivotFetchController: WOTDataFetchControllerProtocol {
+    func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: (NSPredicate, [AnyObject]?) -> Void) {
+
+    }
+
     var listener: WOTDataFetchControllerListenerProtocol?
 
     func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
@@ -50,11 +83,7 @@ class SteelPivotFetchController: WOTDataFetchControllerProtocol {
 }
 
 extension SteelPivotViewController: WOTDataModelListener {
-    func modelDidLoad() {
-        self.collectionView?.reloadData()
-    }
-
-    func modelDidFailLoad(error: Error) {
+    func didFinishLoadModel(error: Error?) {
         self.collectionView?.reloadData()
     }
 
@@ -70,6 +99,16 @@ extension SteelPivotViewController: WOTDataFetchControllerDelegateProtocol {
 }
 
 extension SteelPivotViewController: WOTNodeCreatorProtocol {
+    func createNodeGroup(name: String, fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> WOTNodeProtocol {
+        let result = WOTPivotDataGroupNode(name: name)
+        result.fetchedObjects = fetchedObjects
+        return result
+    }
+
+    func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> WOTNodeProtocol {
+        return WOTPivotDataNode(name: "noname")
+    }
+
     var collapseToGroups: Bool {
         return false
     }
