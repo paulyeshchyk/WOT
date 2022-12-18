@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import WOTData
 import WOTPivot
 
 class WOTPivotTemplateVehicleTankID: WOTPivotTemplateProtocol {

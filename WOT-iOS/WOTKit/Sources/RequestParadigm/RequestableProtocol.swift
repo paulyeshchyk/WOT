@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol RequestableProtocol: class {
+public protocol RequestableProtocol: AnyObject {
     static func fieldsKeypaths() -> [String]
     static func relationsKeypaths() -> [String]
     static func classKeypaths() -> [String]
