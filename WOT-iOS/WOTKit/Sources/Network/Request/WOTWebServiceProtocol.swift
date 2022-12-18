@@ -41,7 +41,7 @@ public protocol WOTWebServiceProtocol {
 }
 
 @objc
-public protocol WOTModelServiceProtocol: class {
+public protocol WOTModelServiceProtocol: AnyObject {
     @objc
     static func modelClass() -> PrimaryKeypathProtocol.Type?
 

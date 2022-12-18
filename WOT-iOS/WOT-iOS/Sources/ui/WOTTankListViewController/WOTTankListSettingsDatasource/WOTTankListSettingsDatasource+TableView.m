@@ -16,19 +16,15 @@
     switch (section) {
         case 0: {
             return WOTTankListSettingTypeNameSelector;
-            break;
         }
         case 1: {
             return WOTTankListSettingTypeGroupSelector;
-            break;
         }
         case 2:{
             return WOTTankListSettingTypeValueChanger;
-            break;
         }
         default: {
             return WOTTankListSettingTypeUnknown;
-            break;
         }
     }
     

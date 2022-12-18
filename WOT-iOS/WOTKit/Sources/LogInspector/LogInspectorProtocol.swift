@@ -34,7 +34,7 @@ public protocol LogEventProtocol {
 }
 
 @objc
-public protocol LogInspectorProtocol: class {
+public protocol LogInspectorProtocol: AnyObject {
     func logEvent(_ event: LogEventProtocol?, sender: Any?)
 }
 
