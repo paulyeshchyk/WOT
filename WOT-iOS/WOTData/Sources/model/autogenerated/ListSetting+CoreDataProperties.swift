@@ -8,7 +8,6 @@
 //
 
 import CoreData
-import Foundation
 
 extension ListSetting {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ListSetting> {

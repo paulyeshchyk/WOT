@@ -6,15 +6,14 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import WOTKit
 
 public class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     private var requestPredicate: RequestPredicate
     private var foreignSelectKey: String
-    private var parentObjectIDList: [NSManagedObjectID]?
+    private var parentObjectIDList: [AnyObject]?
 
-    public init(requestPredicate: RequestPredicate, foreignSelectKey: String, parentObjectIDList: [NSManagedObjectID]?) {
+    public init(requestPredicate: RequestPredicate, foreignSelectKey: String, parentObjectIDList: [AnyObject]?) {
         self.requestPredicate = requestPredicate
         self.foreignSelectKey = foreignSelectKey
         self.parentObjectIDList = parentObjectIDList

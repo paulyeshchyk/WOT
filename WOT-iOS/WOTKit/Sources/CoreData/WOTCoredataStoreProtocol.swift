@@ -8,17 +8,19 @@
 
 import CoreData
 
+public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
+
 @objc
 public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol {
-    @objc func workingContext() -> NSManagedObjectContext
-    @objc func newPrivateContext() -> NSManagedObjectContext
+    @objc func workingContext() -> ObjectContextProtocol
+    @objc func newPrivateContext() -> ObjectContextProtocol
 
-    @objc func perform(managedObjectContext: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion)
+    @objc func perform(objectContext: ObjectContextProtocol, block: @escaping NSManagedObjectContextCompletion)
 
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>
-    func fetchLocal(managedObjectContext: NSManagedObjectContext, byModelClass clazz: NSManagedObject.Type, requestPredicate: RequestPredicate, completion: @escaping FetchResultErrorCompletion)
-    func stash(managedObjectContext: NSManagedObjectContext, block: @escaping ThrowableCompletion)
+    func fetchLocal(objectContext: ObjectContextProtocol, byModelClass clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping CoreDataFetchResultErrorCompletion)
+    func stash(objectContext: ObjectContextProtocol?, block: @escaping ThrowableCompletion)
 }
 
 extension WOTCoredataStoreProtocol {

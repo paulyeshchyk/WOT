@@ -8,7 +8,6 @@
 //
 
 import CoreData
-import Foundation
 
 extension Module {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Module> {

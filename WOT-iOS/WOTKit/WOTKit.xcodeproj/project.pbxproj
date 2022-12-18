@@ -35,7 +35,7 @@
 		1D60E591245FE7E5007E5CA8 /* WOTCoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E544245FE7E4007E5CA8 /* WOTCoreDataStore.swift */; };
 		1D60E592245FE7E5007E5CA8 /* WOTDataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E545245FE7E4007E5CA8 /* WOTDataStoreProtocol.swift */; };
 		1D60E593245FE7E5007E5CA8 /* WOTCoredataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E546245FE7E4007E5CA8 /* WOTCoredataStoreProtocol.swift */; };
-		1D60E595245FE7E5007E5CA8 /* FetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E549245FE7E4007E5CA8 /* FetchResult.swift */; };
+		1D60E595245FE7E5007E5CA8 /* CoreDataFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E549245FE7E4007E5CA8 /* CoreDataFetchResult.swift */; };
 		1D60E598245FE7E5007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E54D245FE7E4007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift */; };
 		1D60E599245FE7E5007E5CA8 /* NSManagedObject+JSONDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E54E245FE7E4007E5CA8 /* NSManagedObject+JSONDecoding.swift */; };
 		1D60E59A245FE7E5007E5CA8 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E54F245FE7E4007E5CA8 /* JSONAdapter.swift */; };
@@ -134,7 +134,7 @@
 		1D60E544245FE7E4007E5CA8 /* WOTCoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoreDataStore.swift; sourceTree = "<group>"; };
 		1D60E545245FE7E4007E5CA8 /* WOTDataStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataStoreProtocol.swift; sourceTree = "<group>"; };
 		1D60E546245FE7E4007E5CA8 /* WOTCoredataStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCoredataStoreProtocol.swift; sourceTree = "<group>"; };
-		1D60E549245FE7E4007E5CA8 /* FetchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchResult.swift; sourceTree = "<group>"; };
+		1D60E549245FE7E4007E5CA8 /* CoreDataFetchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataFetchResult.swift; sourceTree = "<group>"; };
 		1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
 		1D60E54D245FE7E4007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1D60E54E245FE7E4007E5CA8 /* NSManagedObject+JSONDecoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONDecoding.swift"; sourceTree = "<group>"; };
@@ -546,7 +546,7 @@
 		1DD9D5272467B0AE0064D88C /* RequestParadigm */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E549245FE7E4007E5CA8 /* FetchResult.swift */,
+				1D60E549245FE7E4007E5CA8 /* CoreDataFetchResult.swift */,
 				1D60E53B245FE7E4007E5CA8 /* KeyPathListable.swift */,
 				1D60E540245FE7E4007E5CA8 /* PrimaryKeypathProtocol.swift */,
 				1D60E542245FE7E4007E5CA8 /* RequestParadigm.swift */,
@@ -754,7 +754,7 @@
 				1D60E5B7245FE7E5007E5CA8 /* LogInspector.swift in Sources */,
 				DA046110294F58B3000BFE77 /* OSLogWrapper.swift in Sources */,
 				1D60E532245FE7A7007E5CA8 /* Date+Calculations.swift in Sources */,
-				1D60E595245FE7E5007E5CA8 /* FetchResult.swift in Sources */,
+				1D60E595245FE7E5007E5CA8 /* CoreDataFetchResult.swift in Sources */,
 				1D60E58D245FE7E5007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */,
 				1D60E5A1245FE7E5007E5CA8 /* WOTResponseCoordinatorProtocol.swift in Sources */,
 				1D60E58E245FE7E5007E5CA8 /* PrimaryKeypathProtocol.swift in Sources */,

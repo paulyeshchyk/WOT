@@ -6,14 +6,12 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-
 @objc
 public protocol JSONAdapterLinkerProtocol {
     var linkerPrimaryKeyType: PrimaryKeyType { get }
 
-    init(masterFetchResult: FetchResult?, mappedObjectIdentifier: Any?)
-    func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion)
+    init(masterFetchResult: CoreDataFetchResult?, mappedObjectIdentifier: Any?)
+    func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion)
     func onJSONExtraction(json: JSON) -> JSON
 }
 
@@ -35,10 +33,10 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
 
     // MARK: - Public
 
-    public var masterFetchResult: FetchResult?
+    public var masterFetchResult: CoreDataFetchResult?
     public var mappedObjectIdentifier: Any?
 
-    public required init(masterFetchResult: FetchResult?, mappedObjectIdentifier: Any?) {
+    public required init(masterFetchResult: CoreDataFetchResult?, mappedObjectIdentifier: Any?) {
         self.masterFetchResult = masterFetchResult
         self.mappedObjectIdentifier = mappedObjectIdentifier
     }
@@ -48,7 +46,7 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
         // throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+    open func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
         fatalError("\(type(of: self))::\(#function)")
         // throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }

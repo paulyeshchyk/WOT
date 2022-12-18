@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-
 public class EventCDStashStart: LogEventProtocol {
     public static var type: LogEventType { return .coredata }
     public private(set) var message: String
@@ -17,7 +15,7 @@ public class EventCDStashStart: LogEventProtocol {
         message = ""
     }
 
-    required public init?(context: NSManagedObjectContext) {
+    required public init?(context: ObjectContextProtocol) {
         message = "Context: \(context.name ?? "")"
     }
 
@@ -35,7 +33,7 @@ public class EventCDStashEnded: LogEventProtocol {
         message = ""
     }
 
-    required public init?(context: NSManagedObjectContext, initiatedIn: Date) {
+    required public init?(context: ObjectContextProtocol, initiatedIn: Date) {
         message = "Context: \(context.name ?? ""); elapsed: \(Date().elapsed(from: initiatedIn))"
     }
 

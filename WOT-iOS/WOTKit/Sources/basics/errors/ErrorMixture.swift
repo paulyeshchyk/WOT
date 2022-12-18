@@ -46,12 +46,14 @@ public enum WOTCoreDataStoreError: Error, CustomDebugStringConvertible {
     // MARK: - Definition
 
     case objectNotCreated(AnyClass)
+    case contextNotSaved
 
     // MARK: - Overrides
 
     public var debugDescription: String {
         switch self {
         case .objectNotCreated(let clazz): return "Object is not created:[\(String(describing: clazz))]"
+        case .contextNotSaved: return "Context was not saved"
         }
     }
 }

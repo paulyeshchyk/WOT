@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-
 @objc
 public class WOTMappingCoordinator: NSObject, WOTMappingCoordinatorProtocol {
 
@@ -22,15 +20,9 @@ public class WOTMappingCoordinator: NSObject, WOTMappingCoordinatorProtocol {
 
 extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
     //
-    public func fetchLocalAndDecode(json: JSON, managedObjectContext: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
-        guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
-            let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
-            logInspector.logEvent(EventError(error, details: nil), sender: self)
-            completion(EmptyFetchResult(), error)
-            return
-        }
+    public func fetchLocalAndDecode(json: JSON, objectContext: ObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping CoreDataFetchResultErrorCompletion) {
 
-        coreDataStore.fetchLocal(managedObjectContext: managedObjectContext, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
+        coreDataStore.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { fetchResult, error in
 
             if let error = error {
                 completion(fetchResult, error)
@@ -51,14 +43,9 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
         }
     }
 
-    public func fetchLocalAndDecode(array: [Any], managedObjectContext: NSManagedObjectContext, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
-        guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
-            let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
-            completion(EmptyFetchResult(), error)
-            return
-        }
-        //
-        coreDataStore.fetchLocal(managedObjectContext: managedObjectContext, byModelClass: ManagedObjectClass, requestPredicate: requestPredicate) { fetchResult, error in
+    public func fetchLocalAndDecode(array: [Any], objectContext: ObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping CoreDataFetchResultErrorCompletion) {
+
+        coreDataStore.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { fetchResult, error in
 
             if let error = error {
                 completion(fetchResult, error)
@@ -81,7 +68,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
 }
 
 extension WOTMappingCoordinator: WOTMappingCoordinatorLinkingProtocol {
-    public func linkItems(from itemsList: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
+    public func linkItems(from itemsList: [Any]?, masterFetchResult: CoreDataFetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
 
         guard let itemsList = itemsList else { return }
 
@@ -90,17 +77,20 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorLinkingProtocol {
             return
         }
 
-        let managedObjectContext = masterFetchResult.managedObjectContext
+        guard let objectContext = masterFetchResult.objectContext else {
+            assertionFailure("object context is not defined")
+            return
+        }
 
         let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        self.fetchLocalAndDecode(array: itemsList, managedObjectContext: managedObjectContext, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
+        self.fetchLocalAndDecode(array: itemsList, objectContext: objectContext, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
             if let error = error {
                 self?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
         })
     }
 
-    public func linkItem(from itemJSON: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
+    public func linkItem(from itemJSON: JSON?, masterFetchResult: CoreDataFetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
 
         guard let itemJSON = itemJSON else { return }
 
@@ -109,10 +99,13 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorLinkingProtocol {
             return
         }
 
-        let managedObjectContext = masterFetchResult.managedObjectContext
+        guard let objectContext = masterFetchResult.objectContext else {
+            assertionFailure("object context is not defined")
+            return
+        }
 
         let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
-        self.fetchLocalAndDecode(json: itemJSON, managedObjectContext: managedObjectContext, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
+        self.fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
             if let error = error {
                 self?.logInspector.logEvent(EventError(error, details: nil), sender: nil)
             }
@@ -121,7 +114,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorLinkingProtocol {
 }
 
 extension WOTMappingCoordinator: WOTMappingCoordinatorMappingProtocol {
-    public func mapping(json: JSON, fetchResult: FetchResult, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
+    public func mapping(json: JSON, fetchResult: CoreDataFetchResult, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping CoreDataFetchResultErrorCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 self.logInspector.logEvent(EventError(error, details: nil), sender: nil)
@@ -139,19 +132,25 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorMappingProtocol {
 
         logInspector.logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         //
-        let managedObjectContext = fetchResult.managedObjectContext
-        let object = fetchResult.managedObject()
+        guard let managedObjectContext = fetchResult.objectContext else {
+            assertionFailure("objectContext is not defined")
+            return
+        }
+        guard let object = fetchResult.managedObject() as? JSONMappableProtocol else {
+            assertionFailure("fetch result is not JSONMappableProtocol")
+            return
+        }
         //
         do {
-            try object.mapping(json: json, managedObjectContext: managedObjectContext, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
-            coreDataStore.stash(managedObjectContext: managedObjectContext, block: localCompletion)
+            try object.mapping(json: json, objectContext: managedObjectContext, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
+            coreDataStore.stash(objectContext: managedObjectContext, block: localCompletion)
             logInspector.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         } catch {
             localCompletion(error)
         }
     }
 
-    public func mapping(array: [Any], fetchResult: FetchResult, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
+    public func mapping(array: [Any], fetchResult: CoreDataFetchResult, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping CoreDataFetchResultErrorCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)
@@ -166,13 +165,19 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorMappingProtocol {
 
         logInspector.logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
         //
-        let managedObjectContext = fetchResult.managedObjectContext
-        let object = fetchResult.managedObject()
+        guard let objectContext = fetchResult.objectContext else {
+            assertionFailure("context is not defined")
+            return
+        }
+        guard let object = fetchResult.managedObject() as? JSONMappableProtocol else {
+            assertionFailure("fetch result is not JSONMappableProtocol")
+            return
+        }
         //
         do {
-            try object.mapping(array: array, managedObjectContext: managedObjectContext, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
+            try object.mapping(array: array, objectContext: objectContext, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
             //
-            coreDataStore.stash(managedObjectContext: managedObjectContext, block: localCompletion)
+            coreDataStore.stash(objectContext: objectContext, block: localCompletion)
             //
             logInspector.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
         } catch {

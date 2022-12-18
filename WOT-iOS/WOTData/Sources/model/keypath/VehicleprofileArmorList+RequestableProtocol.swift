@@ -6,9 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-import WOTKit
-
 // MARK: - KeypathProtocol
 
 extension VehicleprofileArmorList {

@@ -27,7 +27,7 @@
 
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
         self.coreDataProvider = appDelegate.appManager.coreDataStore;
-        [self.coreDataProvider performWithManagedObjectContext:self.context block:^(NSManagedObjectContext * _Nonnull context) {
+        [self.coreDataProvider performWithObjectContext:self.context block:^(NSManagedObjectContext * _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:context];
             [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
@@ -44,7 +44,7 @@
 }
 
 - (void)stash:(void (^ _Nonnull)(NSError * _Nullable))block{
-    [self.coreDataProvider stashWithManagedObjectContext:self.context block: block];
+    [self.coreDataProvider stashWithObjectContext:self.context block: block];
 }
 
 - (NSCompoundPredicate *)filterBy {

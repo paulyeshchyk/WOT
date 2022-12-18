@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-
 @objc
 public protocol JSONAdapterProtocol: DataAdapterProtocol {
     var linker: JSONAdapterLinkerProtocol { get set }
