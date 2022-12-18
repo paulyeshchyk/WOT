@@ -9,6 +9,6 @@
 import Foundation
 
 @objc
-public protocol RequestPredicateComposerProtocol: class {
+public protocol RequestPredicateComposerProtocol: AnyObject {
     func build() -> RequestPredicateComposition?
 }

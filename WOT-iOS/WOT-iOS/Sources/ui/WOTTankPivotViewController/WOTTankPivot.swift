@@ -9,7 +9,8 @@
 import WOTPivot
 
 class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
-    override public var collapseToGroups: Bool { return false }
+  #warning("Pivot configuration: collapse")
+    override public var collapseToGroups: Bool { return true }
 
     override public var useEmptyNode: Bool { return false }
 
@@ -52,7 +53,7 @@ class WOTTankPivotFetchRequest: WOTDataFetchControllerDelegateProtocol {
     }
 }
 
-#warning("Pivot Configuration")
+#warning("Pivot Configuration: Columns")
 
 class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     private let permutator = WOTPivotMetadataPermutator()
