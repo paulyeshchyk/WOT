@@ -80,10 +80,10 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
     }
 
     override open func clearRootNodes() {
-        self.rootDataNode.removeChildren(completion: { _ in })
-        self.rootRowsNode.removeChildren(completion: { _ in })
-        self.rootColsNode.removeChildren(completion: { _ in })
-        self.rootFilterNode.removeChildren(completion: { _ in })
+        self.rootDataNode.removeChildren()
+        self.rootRowsNode.removeChildren()
+        self.rootColsNode.removeChildren()
+        self.rootFilterNode.removeChildren()
         super.clearRootNodes()
     }
 
