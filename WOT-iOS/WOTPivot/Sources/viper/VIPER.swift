@@ -13,15 +13,15 @@ public enum VIPERModule: String {
     case Tree
 }
 
-public protocol VIPERViewProtocol: class {
+public protocol VIPERViewProtocol: AnyObject {
     var presenter: VIPERPresenterProtocol? { get set }
 }
 
-public protocol VIPERInteractorProtocol: class {
+public protocol VIPERInteractorProtocol: AnyObject {
     var presenter: VIPERPresenterProtocol { get set }
 }
 
-public protocol VIPERPresenterProtocol: class {
+public protocol VIPERPresenterProtocol: AnyObject {
     var wireFrame: VIPERWireFrameProtocol { get set }
     var interactor: VIPERInteractorProtocol { get set }
     var view: VIPERViewProtocol { get set }

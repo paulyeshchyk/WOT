@@ -35,7 +35,7 @@ public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
 
     func removeChild(_ child: WOTNodeProtocol, completion: @escaping WOTNodeProtocolCompletion)
 
-    func removeChildren(completion: @escaping WOTNodeProtocolCompletion)
+    func removeChildren(completion: WOTNodeProtocolCompletion?)
 
     func addToParent(_ newParent: WOTNodeProtocol)
 
@@ -46,4 +46,12 @@ public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
     func unlinkChild(_ child: WOTNodeProtocol)
 
     func value(key: AnyHashable) -> Any?
+}
+
+extension WOTNodeProtocol {
+  
+  func removeChildren() {
+    removeChildren(completion: nil)
+  }
+
 }

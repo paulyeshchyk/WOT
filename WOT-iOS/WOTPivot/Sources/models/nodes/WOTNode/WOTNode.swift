@@ -82,14 +82,14 @@ open class WOTNode: NSObject, WOTNodeProtocol {
         }
     }
 
-    open func removeChildren(completion: @escaping WOTNodeProtocolCompletion) {
+    open func removeChildren(completion: WOTNodeProtocolCompletion?) {
         self.children.forEach { (child) in
             child.removeChildren(completion: { (node) in
                 node.removeParent()
             })
         }
         self.children.removeAll()
-        completion(self)
+        completion?(self)
     }
 
     open func addToParent(_ newParent: WOTNodeProtocol) {

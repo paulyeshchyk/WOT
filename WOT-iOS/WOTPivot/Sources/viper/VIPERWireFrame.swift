@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol VIPERWireFrameProtocol: class {
+public protocol VIPERWireFrameProtocol: AnyObject {
     var presenter: VIPERPresenterProtocol? { get set }
     init()
 }
