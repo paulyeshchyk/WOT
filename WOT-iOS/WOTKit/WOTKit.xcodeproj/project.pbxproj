@@ -90,6 +90,7 @@
 		1DFCC92124713456005F580E /* WOTMappingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92024713456005F580E /* WOTMappingCoordinator.swift */; };
 		1DFCC92E24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92D24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift */; };
 		1DFCC93024714B45005F580E /* WOTResponseAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* WOTResponseAdapterCreator.swift */; };
+		DA046110294F58B3000BFE77 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04610F294F58B3000BFE77 /* OSLogWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +191,7 @@
 		1DFCC92024713456005F580E /* WOTMappingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMappingCoordinator.swift; sourceTree = "<group>"; };
 		1DFCC92D24714ACB005F580E /* WOTResponseAdapterCreatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTResponseAdapterCreatorProtocol.swift; sourceTree = "<group>"; };
 		1DFCC92F24714B45005F580E /* WOTResponseAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTResponseAdapterCreator.swift; sourceTree = "<group>"; };
+		DA04610F294F58B3000BFE77 /* OSLogWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,6 +425,7 @@
 				1D60E577245FE7E5007E5CA8 /* LogInstances */,
 				1D60E576245FE7E5007E5CA8 /* LogInspector.swift */,
 				1D60E584245FE7E5007E5CA8 /* LogInspectorProtocol.swift */,
+				DA04610F294F58B3000BFE77 /* OSLogWrapper.swift */,
 			);
 			path = LogInspector;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 				1D60E593245FE7E5007E5CA8 /* WOTCoredataStoreProtocol.swift in Sources */,
 				1D60E5AE245FE7E5007E5CA8 /* WOTStartableProtocol.swift in Sources */,
 				1D60E5B7245FE7E5007E5CA8 /* LogInspector.swift in Sources */,
+				DA046110294F58B3000BFE77 /* OSLogWrapper.swift in Sources */,
 				1D60E532245FE7A7007E5CA8 /* Date+Calculations.swift in Sources */,
 				1D60E595245FE7E5007E5CA8 /* FetchResult.swift in Sources */,
 				1D60E58D245FE7E5007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */,

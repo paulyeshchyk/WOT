@@ -16,9 +16,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         //
 
-//        let logPriorities = Set(LogEventType.allValues).subtracting([LogEventType.performance]).compactMap {$0}
-        let logPriorities: [LogEventType] = [.error, .web]
-        let logInspector = LogInspector(priorities: logPriorities)
+        let logPriorities: [LogEventType]? = [.error, .web, .warning, .lifeCycle]
+        let logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
         let hostConfiguration = WOTWebHostConfiguration()
         let sessionManager = WOTWebSessionManager()

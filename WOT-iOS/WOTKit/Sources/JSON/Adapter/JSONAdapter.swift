@@ -51,11 +51,11 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         self.requestManager = requestManager
 
         super.init()
-        logInspector?.logEvent(EventObjectNew(request), sender: self)
+        logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
     deinit {
-        logInspector?.logEvent(EventObjectFree(request), sender: self)
+        logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
     // MARK: JSONAdapterProtocol -
