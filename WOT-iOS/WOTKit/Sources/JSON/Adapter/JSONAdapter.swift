@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-
 public typealias OnParseComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
 
 @objc
@@ -24,7 +22,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: Private -
 
     private var mappingCoordinator: WOTMappingCoordinatorProtocol
-    private var coreDataStore: WOTCoredataStoreProtocol?
+    private var coreDataStore: WOTDataLocalStoreProtocol?
     private var logInspector: LogInspectorProtocol?
     private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
@@ -41,7 +39,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 
-    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
+    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTDataLocalStoreProtocol?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
         self.modelClazz = clazz
         self.request = request
         self.linker = jsonAdapterLinker

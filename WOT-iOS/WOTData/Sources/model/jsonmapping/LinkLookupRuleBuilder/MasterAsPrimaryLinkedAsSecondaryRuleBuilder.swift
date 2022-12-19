@@ -6,16 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import WOTKit
 
 public class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
     private var requestPredicate: RequestPredicate
-    private var currentObjectID: NSManagedObjectID
+    private var currentObjectID: AnyObject
 
-    public init(requestPredicate: RequestPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, currentObjectID: NSManagedObjectID) {
+    public init(requestPredicate: RequestPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject, currentObjectID: AnyObject) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
         self.requestPredicate = requestPredicate

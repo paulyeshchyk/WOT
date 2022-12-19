@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
     public var dataColor: UIColor?

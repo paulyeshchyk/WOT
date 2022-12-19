@@ -6,9 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-
-public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
 public typealias ThrowableCompletion = (Error?) -> Void
 
 @objc

@@ -13,6 +13,11 @@ public typealias FilteredObjectCompletion = (NSPredicate, [AnyObject]?) -> Void
 
 public typealias WOTDataFetchedResultController = NSFetchedResultsController<NSFetchRequestResult>
 
+@objc
+public protocol WOTDataFetchControllerDelegateProtocol {
+    var fetchRequest: NSFetchRequest<NSFetchRequestResult> { get }
+}
+
 open class WOTDataFetchController: NSObject {
     public var fetchResultController: WOTDataFetchedResultController?
 
@@ -21,7 +26,7 @@ open class WOTDataFetchController: NSObject {
             throw WOTCoredataStoreError.contextIsNotDefined
         }
 
-        self.dataProvider?.perform(managedObjectContext: managedObjectContext) { context in
+        self.dataProvider?.perform(objectContext: managedObjectContext) { context in
 
             let request = self.nodeFetchRequestCreator.fetchRequest
             guard let result = self.dataProvider?.fetchResultController(for: request, andContext: context) else {
@@ -34,10 +39,10 @@ open class WOTDataFetchController: NSObject {
 
     public var listener: WOTDataFetchControllerListenerProtocol?
     public var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
-    public var dataProvider: WOTCoredataStoreProtocol?
+    public var dataProvider: WOTDataLocalStoreProtocol?
 
     @objc
-    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTCoredataStoreProtocol?) {
+    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTDataLocalStoreProtocol?) {
         self.nodeFetchRequestCreator = nfrc
         self.dataProvider = dataprovider
     }

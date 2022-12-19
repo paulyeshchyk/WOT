@@ -7,12 +7,11 @@
 //
 
 import WOTKit
-import CoreData
 
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmoPenetration {
-    public override func mapping(array: [Any], managedObjectContext: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    public override func mapping(array: [Any], objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         //
         guard array.count == 3 else {
             throw ErrorVehicleprofileAmmoPenetration.arrayIsNotContainingThreeElements

@@ -125,7 +125,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+        id<WOTDataLocalStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         

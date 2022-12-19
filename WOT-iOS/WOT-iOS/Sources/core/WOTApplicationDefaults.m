@@ -22,9 +22,9 @@
 + (void)registerDefaultSettings {
     
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+    id<WOTDataLocalStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
     NSManagedObjectContext *workingContext = [coreDataProvider workingContext];
-    [coreDataProvider performWithManagedObjectContext:workingContext block:^(NSManagedObjectContext * _Nonnull context) {
+    [coreDataProvider performWithObjectContext:workingContext block:^(NSManagedObjectContext * _Nonnull context) {
 
         NSString *entityName = NSStringFromClass([ListSetting class]);
         NSError *error = nil;

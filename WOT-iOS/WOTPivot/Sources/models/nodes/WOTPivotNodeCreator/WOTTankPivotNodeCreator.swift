@@ -6,7 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import WOTKit
 
 open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
@@ -63,10 +62,8 @@ open class WOTPivotNodeCreator: WOTNodeCreatorProtocol {
     private func nodes(for fetchedObjects: [AnyObject], byPredicate: NSPredicate?) -> [WOTNodeProtocol] {
         var result = [WOTNodeProtocol]()
         fetchedObjects.forEach { (fetchedObject) in
-            if let fetchObj = fetchedObject as? NSFetchRequestResult {
-                let node = self.createNode(fetchedObject: fetchObj, byPredicate: byPredicate)
-                result.append(node)
-            }
+            let node = self.createNode(fetchedObject: fetchedObject, byPredicate: byPredicate)
+            result.append(node)
         }
         return result
     }

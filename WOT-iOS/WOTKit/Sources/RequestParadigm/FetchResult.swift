@@ -6,13 +6,13 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
+import Foundation
 
 public typealias FetchResultCompletion = (FetchResult) -> Void
 public typealias FetchResultErrorCompletion = (FetchResult, Error?) -> Void
 
 @objc
-public enum WOTExecuteConcurency: Int {
+public enum FetchConcurency: Int {
     case mainQueue
     case privateQueue
 }
@@ -27,31 +27,53 @@ public enum FetchStatus: Int {
 }
 
 @objc
-public class FetchResult: NSObject, NSCopying {
-    public var managedObjectContext: NSManagedObjectContext
+public protocol ObjectContextProtocol: AnyObject {
+    var name: String? { get }
+    func object(byID: AnyObject) -> AnyObject?
+    func performBBlock(_ block: (() -> Void)?)
+}
+
+public protocol FetchResultProtocol: AnyObject {
+    var fetchStatus: FetchStatus { get set }
+    var predicate: NSPredicate? { get set }
+    var objectContext: ObjectContextProtocol? { get set }
+    func managedObject() -> ManagedObjectProtocol?
+}
+
+public protocol ManagedObjectProtocol: AnyObject {
+    var entityName: String { get }
+}
+
+@objc
+open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
+    public var objectContext: ObjectContextProtocol?
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
 
-    private var objectID: NSManagedObjectID?
+    private var objectID: AnyObject?
+    private var managedObjectContext: ObjectContextProtocol
 
     override public required init() {
         fatalError("")
     }
 
     override public var description: String {
-        return "Context: \(managedObjectContext.name ?? ""); \(managedObject().entity.name ?? "<unknown>")"
+        let entityName = managedObject()?.entityName ?? ""
+        return "Context: \(managedObjectContext.name ?? ""); \(entityName)"
     }
 
-    public required init(managedObjectContext cntx: NSManagedObjectContext, objectID objID: NSManagedObjectID?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
+    public required init(objectContext cntx: ObjectContextProtocol, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
         managedObjectContext = cntx
         objectID = objID
         predicate = predicat
         fetchStatus = status
+        
+        objectContext = cntx
         super.init()
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = FetchResult(managedObjectContext: managedObjectContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
+        let copy = FetchResult(objectContext: managedObjectContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }
 
@@ -61,22 +83,15 @@ public class FetchResult: NSObject, NSCopying {
         // swiftlint:enable force_cast
     }
 
-    public func managedObject() -> NSManagedObject {
-        return managedObject(inManagedObjectContext: managedObjectContext)
+    public func managedObject() -> ManagedObjectProtocol? {
+        return managedObject(inManagedObjectContext: objectContext)
     }
 
-    public func managedObject(inManagedObjectContext: NSManagedObjectContext) -> NSManagedObject {
+    public func managedObject(inManagedObjectContext context: ObjectContextProtocol?) -> ManagedObjectProtocol? {
         guard let objectID = objectID else {
-            fatalError("objectID is not defined")
+            assertionFailure("objectID is not defined")
+            return nil
         }
-        return inManagedObjectContext.object(with: objectID)
-    }
-}
-
-public class EmptyFetchResult: FetchResult {
-    public required convenience init() {
-        let cntx = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        let objectID = NSManagedObjectID()
-        self.init(managedObjectContext: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)
+        return context?.object(byID: objectID) as? ManagedObjectProtocol
     }
 }

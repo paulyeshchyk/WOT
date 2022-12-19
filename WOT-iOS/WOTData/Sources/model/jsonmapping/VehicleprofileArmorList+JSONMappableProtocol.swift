@@ -6,15 +6,14 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import WOTKit
 
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileArmorList {
-    override public func mapping(json: JSON, managedObjectContext: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         //
-        let masterFetchResult = FetchResult(managedObjectContext: managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - turret
 
@@ -38,8 +37,8 @@ extension VehicleprofileArmorList {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let managedObjectContext = fetchResult.managedObjectContext
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+            let managedObjectContext = fetchResult.objectContext
             guard let armor = fetchResult.managedObject() as? VehicleprofileArmor else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileArmor.self))
                 return
@@ -49,7 +48,7 @@ extension VehicleprofileArmorList {
                 return
             }
             armorList.turret = armor
-            coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
+            coreDataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -60,13 +59,13 @@ extension VehicleprofileArmorList {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let managedObjectContext = fetchResult.managedObjectContext
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+            let managedObjectContext = fetchResult.objectContext
             if let armor = fetchResult.managedObject() as? VehicleprofileArmor {
                 if let armorList = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? VehicleprofileArmorList {
                     armorList.hull = armor
 
-                    coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
+                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }

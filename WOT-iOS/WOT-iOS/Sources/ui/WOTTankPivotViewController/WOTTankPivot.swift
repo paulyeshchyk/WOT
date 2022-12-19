@@ -84,10 +84,10 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 
 class WOTTankPivotModel: WOTPivotDataModel {
     var logInspector: LogInspectorProtocol
-    var coreDataStore: WOTCoredataStoreProtocol
+    var coreDataStore: WOTDataLocalStoreProtocol
     var requestManager: WOTRequestManagerProtocol
 
-    required init(modelListener: WOTDataModelListener, coreDataStore: WOTCoredataStoreProtocol, requestManager: WOTRequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
+    required init(modelListener: WOTDataModelListener, coreDataStore: WOTDataLocalStoreProtocol, requestManager: WOTRequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
         let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: coreDataStore)
         self.coreDataStore = coreDataStore

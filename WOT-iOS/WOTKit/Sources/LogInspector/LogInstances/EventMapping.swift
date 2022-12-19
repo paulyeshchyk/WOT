@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-
 public enum EventMappingType: String {
     case JSON
     case Array

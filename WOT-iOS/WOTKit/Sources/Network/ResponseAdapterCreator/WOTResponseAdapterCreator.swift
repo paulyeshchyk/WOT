@@ -10,11 +10,11 @@ import Foundation
 
 public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
     private let logInspector: LogInspectorProtocol
-    private let coreDataStore: WOTCoredataStoreProtocol
+    private let coreDataStore: WOTDataLocalStoreProtocol
     private let mappingCoordinator: WOTMappingCoordinatorProtocol
     private let requestRegistrator: WOTRequestRegistratorProtocol
 
-    public init(logInspector: LogInspectorProtocol, coreDataStore: WOTCoredataStoreProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
+    public init(logInspector: LogInspectorProtocol, coreDataStore: WOTDataLocalStoreProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
         self.logInspector = logInspector
         self.coreDataStore = coreDataStore
         self.mappingCoordinator = mappingCoordinator

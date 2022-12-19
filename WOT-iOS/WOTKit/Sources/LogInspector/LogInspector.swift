@@ -29,6 +29,8 @@ public class LogInspector: NSObject, LogInspectorProtocol {
             output?.forEach { $0.info(event.message, context: event.name) }
         case .warning:
             output?.forEach { $0.warning(event.message, context: event.name) }
+        case .web:
+            output?.forEach { $0.info(event.message, context: event.name) }
         default:
             output?.forEach { $0.debug(event.message, context: event.name) }
         }

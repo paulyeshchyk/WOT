@@ -11,7 +11,7 @@ import Foundation
 @objc
 public class WOTSaveSessionResponseAdapter: NSObject {
     public var logInspector: LogInspectorProtocol?
-    public var coreDataStore: WOTCoredataStoreProtocol?
+    public var coreDataStore: WOTDataLocalStoreProtocol?
 
     public required init(clazz: PrimaryKeypathProtocol.Type) {}
 }

@@ -6,9 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-import CoreData
-
 @objc
 public protocol WOTDataFetchControllerProtocol {
     func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws
@@ -21,9 +18,4 @@ public protocol WOTDataFetchControllerProtocol {
 public protocol WOTDataFetchControllerListenerProtocol {
     func fetchPerformed(by: WOTDataFetchControllerProtocol)
     func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error)
-}
-
-@objc
-public protocol WOTDataFetchControllerDelegateProtocol {
-    var fetchRequest: NSFetchRequest<NSFetchRequestResult> { get }
 }
