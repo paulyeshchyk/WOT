@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import Foundation
 
 @objc
 open class WOTCoreDataStore: NSObject {
@@ -114,7 +113,9 @@ extension WOTCoreDataStore {
         if toContext.hasChanges {
             do {
                 try toContext.save()
-            } catch {}
+            } catch {
+                self.logInspector.logEvent(EventError(WOTCoreDataStoreError.contextNotSaved, details: self), sender: nil)
+            }
         }
         toContext.processPendingChanges()
     }
@@ -139,16 +140,19 @@ public enum WOTFetcherError: Error, CustomDebugStringConvertible {
 extension WOTCoreDataStore {
     public func stash(block: @escaping ThrowableCompletion) {
         let MAINCONTEXT = self.workingContext()
-        stash(managedObjectContext: MAINCONTEXT, block: block)
+        stash(objectContext: MAINCONTEXT, block: block)
     }
 
     public func fetchLocal(byModelClass modelClass: PrimaryKeypathProtocol.Type, requestPredicate: NSPredicate?, completion: @escaping FetchResultErrorCompletion) {
         let localCallback: FetchResultErrorCompletion = { fetchResult, error in
-            let MAINCONTEXT = self.workingContext()
+            guard let MAINCONTEXT = self.workingContext() as? NSManagedObjectContext else {
+                assertionFailure("MAINCONTEXT is not NSManagedObjectContext")
+                return
+            }
 
             MAINCONTEXT.perform {
                 let fetchResultForContext = fetchResult.dublicate()
-                fetchResultForContext.managedObjectContext = MAINCONTEXT
+                fetchResultForContext.objectContext = MAINCONTEXT
                 completion(fetchResultForContext, error)
             }
         }
@@ -160,16 +164,16 @@ extension WOTCoreDataStore {
         }
 
         let managedObjectContext = newPrivateContext()
-        perform(managedObjectContext: managedObjectContext) { context in
+        perform(objectContext: managedObjectContext) { context in
             do {
-                guard let managedObject = try context.findOrCreateObject(forType: Clazz, predicate: requestPredicate) else {
+                guard let managedObject = try context.findOrCreateObject(forType: Clazz, predicate: requestPredicate) as? NSManagedObject else {
                     self.logInspector.logEvent(EventError(WOTCoreDataStoreError.objectNotCreated(Clazz), details: self), sender: nil)
                     return
                 }
                 let managedObjectID = managedObject.objectID
                 let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .fetched
-                self.stash(managedObjectContext: context) { error in
-                    let fetchResult = FetchResult(managedObjectContext: context, objectID: managedObjectID, predicate: requestPredicate, fetchStatus: fetchStatus)
+                self.stash(objectContext: context) { error in
+                    let fetchResult = FetchResult(objectContext: context, objectID: managedObjectID, predicate: requestPredicate, fetchStatus: fetchStatus)
                     localCallback(fetchResult, error)
                 }
             } catch {
@@ -182,9 +186,15 @@ extension WOTCoreDataStore {
 
 // MARK: - WOTCoredataStoreProtocol
 
-extension WOTCoreDataStore: WOTCoredataStoreProtocol {
+extension WOTCoreDataStore: WOTDataLocalStoreProtocol {
 
-    public func stash(managedObjectContext: NSManagedObjectContext, block: @escaping ThrowableCompletion) {
+    public func stash(objectContext: ObjectContextProtocol?, block: @escaping ThrowableCompletion) {
+        
+        guard let managedObjectContext = objectContext as? NSManagedObjectContext else {
+            assertionFailure("managedObjectContext is not defined")
+            return
+        }
+        
         let initialDate = Date()
 
         logInspector.logEvent(EventCDStashStart(context: managedObjectContext), sender: self)
@@ -198,22 +208,30 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
         logInspector.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
     }
 
-    public func fetchLocal(managedObjectContext: NSManagedObjectContext, byModelClass modelClass: NSManagedObject.Type, requestPredicate: RequestPredicate, completion: @escaping FetchResultErrorCompletion) {
-        logInspector.logEvent(EventLocalFetch("\(String(describing: modelClass)) - \(String(describing: requestPredicate))"), sender: self)
+    public func fetchLocal(objectContext: ObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultErrorCompletion) {
+        guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
+            let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
+            logInspector.logEvent(EventError(error, details: nil), sender: self)
+            completion(EmptyFetchResult(), error)
+            return
+        }
+
+
+        logInspector.logEvent(EventLocalFetch("\(String(describing: ManagedObjectClass)) - \(String(describing: requestPredicate))"), sender: self)
 
         guard let predicate = requestPredicate.compoundPredicate(.and) else {
-            let error = WOTFetcherError.noKeysDefinedForClass(String(describing: modelClass))
-            let fetchResult = FetchResult(managedObjectContext: managedObjectContext, objectID: nil, predicate: nil, fetchStatus: .fetched)
+            let error = WOTFetcherError.noKeysDefinedForClass(String(describing: ManagedObjectClass))
+            let fetchResult = FetchResult(objectContext: objectContext, objectID: nil, predicate: nil, fetchStatus: .fetched)
             completion(fetchResult, error)
             return
         }
 
-        self.perform(managedObjectContext: managedObjectContext) { context in
+        self.perform(objectContext: objectContext) { context in
             do {
-                if let managedObject = try context.findOrCreateObject(forType: modelClass, predicate: predicate) {
+                if let managedObject = try context.findOrCreateObject(forType: ManagedObjectClass, predicate: predicate) {
                     let managedObjectID = managedObject.objectID
                     let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .fetched
-                    let fetchResult = FetchResult(managedObjectContext: context, objectID: managedObjectID, predicate: predicate, fetchStatus: fetchStatus)
+                    let fetchResult = FetchResult(objectContext: context, objectID: managedObjectID, predicate: predicate, fetchStatus: fetchStatus)
                     completion(fetchResult, nil)
                 }
             } catch {
@@ -223,7 +241,7 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
     }
     // MARK: - WOTCoredataStoreProtocol
 
-    @objc public func newPrivateContext() -> NSManagedObjectContext {
+    @objc public func newPrivateContext() -> ObjectContextProtocol {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Private"
         managedObjectContext.parent = mainContext
@@ -231,12 +249,16 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
         return managedObjectContext
     }
 
-    @objc public func workingContext() -> NSManagedObjectContext {
+    @objc public func workingContext() -> ObjectContextProtocol {
         return mainContext
     }
 
     @objc
-    public func perform(managedObjectContext: NSManagedObjectContext, block: @escaping NSManagedObjectContextCompletion) {
+    public func perform(objectContext: ObjectContextProtocol, block: @escaping NSManagedObjectContextCompletion) {
+        guard let managedObjectContext = objectContext as? NSManagedObjectContext else {
+            assertionFailure("context is not NSManagedObjectContext")
+            return
+        }
         perform(inManagedObjectContext: managedObjectContext, block: block)
     }
 

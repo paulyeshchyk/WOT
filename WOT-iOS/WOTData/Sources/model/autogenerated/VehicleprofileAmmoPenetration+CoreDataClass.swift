@@ -7,7 +7,6 @@
 //
 //
 
-import WOTKit
 import CoreData
 
 @objc(VehicleprofileAmmoPenetration)

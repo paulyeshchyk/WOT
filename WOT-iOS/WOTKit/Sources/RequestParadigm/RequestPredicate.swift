@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-
 public enum RequestExpressionType: String {
     case primary
     case secondary
@@ -23,9 +21,9 @@ public class RequestPredicate: NSObject {
 
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
-    public var parentObjectIDList: [NSManagedObjectID] = []
+    public var parentObjectIDList: [AnyObject] = []
 
-    public convenience init(parentObjectIDList idList: [NSManagedObjectID?]?) {
+    public convenience init(parentObjectIDList idList: [AnyObject]?) {
         self.init()
 
         if let compacted = idList?.compactMap({ $0 }) {

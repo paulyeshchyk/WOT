@@ -6,16 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import WOTKit
 
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmoList {
-    override public func mapping(array: [Any], managedObjectContext: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    override public func mapping(array: [Any], objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         //
 
-        let vehicleProfileAmmoListFetchResult = FetchResult(managedObjectContext: managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
         array.compactMap { $0 as? JSON }.forEach { jSON in
 
             let ammoType = jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject
@@ -32,8 +31,8 @@ extension VehicleprofileAmmoList {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let managedObjectContext = fetchResult.managedObjectContext
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+            let managedObjectContext = fetchResult.objectContext
             guard let ammo = fetchResult.managedObject() as? VehicleprofileAmmo else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))
                 return
@@ -43,7 +42,7 @@ extension VehicleprofileAmmoList {
                 return
             }
             ammoList.addToVehicleprofileAmmo(ammo)
-            coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
+            coreDataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }

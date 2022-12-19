@@ -22,7 +22,7 @@ class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
 
 class WOTWebSessionClearResponseAdapter: NSObject, WOTModelServiceProtocol {
     var logInspector: LogInspectorProtocol?
-    var coreDataStore: WOTCoredataStoreProtocol?
+    var coreDataStore: WOTDataLocalStoreProtocol?
 
     @objc static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return nil
@@ -37,21 +37,21 @@ class WOTWebSessionClearResponseAdapter: NSObject, WOTModelServiceProtocol {
 
 class WOTWebSessionSaveResponseAdapter: NSObject {
     var logInspector: LogInspectorProtocol?
-    var coreDataStore: WOTCoredataStoreProtocol?
+    var coreDataStore: WOTDataLocalStoreProtocol?
 
     required init(clazz: PrimaryKeypathProtocol.Type) {}
 }
 
 class WOTWebSessionLoginResponseAdapter: NSObject {
     var logInspector: LogInspectorProtocol?
-    var coreDataStore: WOTCoredataStoreProtocol?
+    var coreDataStore: WOTDataLocalStoreProtocol?
 
     required init(clazz: PrimaryKeypathProtocol.Type) {}
 }
 
 class WOTWebSessionLogoutResponseAdapter: NSObject {
     var logInspector: LogInspectorProtocol?
-    var coreDataStore: WOTCoredataStoreProtocol?
+    var coreDataStore: WOTDataLocalStoreProtocol?
 
     required init(clazz: PrimaryKeypathProtocol.Type) {}
 }

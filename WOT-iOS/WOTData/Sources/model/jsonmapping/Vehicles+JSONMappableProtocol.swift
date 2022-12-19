@@ -6,17 +6,16 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import WOTKit
 
 // MARK: - JSONMappableProtocol
 
 extension Vehicles {
-    override public func mapping(json: JSON, managedObjectContext: NSManagedObjectContext, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         //
         try self.decode(json: json)
         //
-        let masterFetchResult = FetchResult(managedObjectContext: managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - DefaultProfile
 
@@ -28,12 +27,12 @@ extension Vehicles {
         // MARK: - ModulesTree
 
         let modulesTreeJSON = json[#keyPath(Vehicles.modules_tree)] as? JSON
-        self.modulesTreeMapping(managedObjectContext: managedObjectContext, jSON: modulesTreeJSON, requestPredicate: requestPredicate, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
+        self.modulesTreeMapping(objectContext: objectContext, jSON: modulesTreeJSON, requestPredicate: requestPredicate, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
     }
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(managedObjectContext: NSManagedObjectContext, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol) {
+    private func modulesTreeMapping(objectContext: ObjectContextProtocol, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -45,7 +44,7 @@ extension Vehicles {
         var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(self.objectID)
 
-        let vehiclesFetchResult = FetchResult(managedObjectContext: managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let vehiclesFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         let modulesTreePredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
         modulesTreePredicate[.primary] = requestPredicate[.primary]?
@@ -56,17 +55,17 @@ extension Vehicles {
             guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
             guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
 
-            submoduleMapping(managedObjectContext: managedObjectContext, json: moduleTreeJSON, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
+            submoduleMapping(objectContext: objectContext, json: moduleTreeJSON, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
         }
     }
 
-    private func submoduleMapping(managedObjectContext: NSManagedObjectContext, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol) {
+    private func submoduleMapping(objectContext: ObjectContextProtocol, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol) {
         let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let linker = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        mappingCoordinator?.fetchLocalAndDecode(json: json, managedObjectContext: managedObjectContext, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, linker: linker, requestManager: requestManager, completion: { _, _ in })
+        mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, linker: linker, requestManager: requestManager, completion: { _, _ in })
     }
 }
 
@@ -77,16 +76,19 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let managedObjectContext = fetchResult.managedObjectContext
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+            guard let objectContext = fetchResult.objectContext else {
+                assertionFailure("object context is not defined")
+                return
+            }
             let childObject = fetchResult.managedObject()
 
             guard let modulesTree = childObject as? ModulesTree else {
-                let error = UnexpectedClassError(extected: ModulesTree.self, received: Swift.type(of: childObject))
+                let error = UnexpectedClassError(extected: ModulesTree.self, received: childObject)
                 completion(fetchResult, error)
                 return
             }
-            guard let vehicles = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicles else {
+            guard let vehicles = masterFetchResult?.managedObject(inManagedObjectContext: objectContext) as? Vehicles else {
                 let received = masterFetchResult != nil ? Swift.type(of: masterFetchResult!) : nil
                 let error = UnexpectedClassError(extected: Vehicles.self, received: received)
                 completion(fetchResult, error)
@@ -94,7 +96,7 @@ extension Vehicles {
             }
             modulesTree.default_profile = vehicles.default_profile
             vehicles.addToModules_tree(modulesTree)
-            coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
+            coreDataStore?.stash(objectContext: objectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -106,8 +108,11 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let managedObjectContext = fetchResult.managedObjectContext
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+            guard let managedObjectContext = fetchResult.objectContext else {
+                assertionFailure("object context is not defined")
+                return
+            }
             guard let defaultProfile = fetchResult.managedObject() as? Vehicleprofile else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
                 return
@@ -120,7 +125,7 @@ extension Vehicles {
             vehicles.modules_tree?.forEach {
                 ($0 as? ModulesTree)?.default_profile = defaultProfile
             }
-            coreDataStore?.stash(managedObjectContext: managedObjectContext) { error in
+            coreDataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -132,9 +137,8 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let managedObjectContext = fetchResult.managedObjectContext
-            coreDataStore?.stash(managedObjectContext: managedObjectContext, block: { error in
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+            coreDataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
                 completion(fetchResult, error)
             })
         }
@@ -146,9 +150,8 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            let managedObjectContext = fetchResult.managedObjectContext
-            coreDataStore?.stash(managedObjectContext: managedObjectContext, block: { error in
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+            coreDataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
                 completion(fetchResult, error)
             })
         }
