@@ -11,7 +11,7 @@ import CoreData
 public typealias NSManagedObjectContextCompletion = (NSManagedObjectContext) -> Void
 
 @objc
-public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol {
+public protocol WOTDataLocalStoreProtocol: WOTDataStoreProtocol {
     @objc func workingContext() -> ObjectContextProtocol
     @objc func newPrivateContext() -> ObjectContextProtocol
 
@@ -19,11 +19,11 @@ public protocol WOTCoredataStoreProtocol: WOTDataStoreProtocol {
 
     @objc func fetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, andContext: NSManagedObjectContext) -> NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>, sectionNameKeyPath: String?, cacheName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>
-    func fetchLocal(objectContext: ObjectContextProtocol, byModelClass clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping CoreDataFetchResultErrorCompletion)
+    func fetchLocal(objectContext: ObjectContextProtocol, byModelClass clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultErrorCompletion)
     func stash(objectContext: ObjectContextProtocol?, block: @escaping ThrowableCompletion)
 }
 
-extension WOTCoredataStoreProtocol {
+extension WOTDataLocalStoreProtocol {
     func mainContextFetchResultController(for request: NSFetchRequest<NSFetchRequestResult>) -> NSFetchedResultsController<NSFetchRequestResult> {
         return self.mainContextFetchResultController(for: request, sectionNameKeyPath: nil, cacheName: nil)
     }

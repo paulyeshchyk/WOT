@@ -6,7 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import WOTKit
 
 // MARK: - JSONMappableProtocol
@@ -14,21 +13,15 @@ import WOTKit
 extension Module {
     override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         
-        guard let managedObjectContext = objectContext as? NSManagedObjectContext else {
-            assertionFailure("managedObjectContext is not NSManagedObjectContext")
-            return
-        }
         //
         try self.decode(json: json)
-        let parentObjectIDList = requestPredicate.parentObjectIDList.compactMap { $0 as? NSManagedObjectID }
-        if (parentObjectIDList.count == 0) {
-            assertionFailure("found no NSManagedObjectID in list")
-        }
-        let parentsAsManagedObject = parentObjectIDList.compactMap { managedObjectContext.object(with: $0) }
-        let parentsAsVehicles = parentsAsManagedObject.compactMap { $0 as? Vehicles }
+        //
+        
+        let parentsAsVehicles = requestPredicate.parentObjectIDList
+            .compactMap { objectContext.object(byID: $0) as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
-        let masterFetchResult = CoreDataFetchResult(objectContext: managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         guard parents.count <= 1 else {
             print("parents count should be less or equal 1")
@@ -84,7 +77,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileEngine.self))
@@ -112,7 +105,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
@@ -136,7 +129,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
@@ -160,7 +153,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
@@ -184,7 +177,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {

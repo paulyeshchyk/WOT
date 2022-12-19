@@ -14,7 +14,7 @@ extension VehicleprofileAmmoList {
     override public func mapping(array: [Any], objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
         //
 
-        let vehicleProfileAmmoListFetchResult = CoreDataFetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
         array.compactMap { $0 as? JSON }.forEach { jSON in
 
             let ammoType = jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject
@@ -31,7 +31,7 @@ extension VehicleprofileAmmoList {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let ammo = fetchResult.managedObject() as? VehicleprofileAmmo else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))

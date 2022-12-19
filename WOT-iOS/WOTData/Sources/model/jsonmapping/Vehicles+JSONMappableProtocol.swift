@@ -15,7 +15,7 @@ extension Vehicles {
         //
         try self.decode(json: json)
         //
-        let masterFetchResult = CoreDataFetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - DefaultProfile
 
@@ -44,7 +44,7 @@ extension Vehicles {
         var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(self.objectID)
 
-        let vehiclesFetchResult = CoreDataFetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let vehiclesFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         let modulesTreePredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
         modulesTreePredicate[.primary] = requestPredicate[.primary]?
@@ -59,7 +59,7 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(objectContext: ObjectContextProtocol, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: CoreDataFetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol) {
+    private func submoduleMapping(objectContext: ObjectContextProtocol, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol) {
         let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
@@ -76,7 +76,7 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             guard let objectContext = fetchResult.objectContext else {
                 assertionFailure("object context is not defined")
                 return
@@ -84,7 +84,7 @@ extension Vehicles {
             let childObject = fetchResult.managedObject()
 
             guard let modulesTree = childObject as? ModulesTree else {
-                let error = UnexpectedClassError(extected: ModulesTree.self, received: Swift.type(of: childObject))
+                let error = UnexpectedClassError(extected: ModulesTree.self, received: childObject)
                 completion(fetchResult, error)
                 return
             }
@@ -108,7 +108,7 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             guard let managedObjectContext = fetchResult.objectContext else {
                 assertionFailure("object context is not defined")
                 return
@@ -137,7 +137,7 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             coreDataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
                 completion(fetchResult, error)
             })
@@ -150,7 +150,7 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             coreDataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
                 completion(fetchResult, error)
             })

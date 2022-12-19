@@ -16,7 +16,7 @@ extension VehicleprofileModule {
         try self.decode(json: json)
         //
 
-        let masterFetchResult = CoreDataFetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         if let gun_id = self.gun_id {
             let gunJSONAdapter = VehicleprofileModule.GunJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: gun_id)
@@ -66,7 +66,7 @@ extension VehicleprofileModule {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileSuspension.self))
@@ -94,7 +94,7 @@ extension VehicleprofileModule {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileEngine.self))
@@ -122,7 +122,7 @@ extension VehicleprofileModule {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileTurret.self))
@@ -150,7 +150,7 @@ extension VehicleprofileModule {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileRadio.self))
@@ -178,7 +178,7 @@ extension VehicleprofileModule {
             return result
         }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileGun.self))

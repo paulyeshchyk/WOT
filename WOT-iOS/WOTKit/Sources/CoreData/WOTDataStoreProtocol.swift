@@ -11,5 +11,5 @@ public typealias ThrowableCompletion = (Error?) -> Void
 @objc
 public protocol WOTDataStoreProtocol: NSObjectProtocol {
     func stash(block: @escaping ThrowableCompletion)
-    func fetchLocal(byModelClass clazz: PrimaryKeypathProtocol.Type, requestPredicate predicate: NSPredicate?, completion: @escaping CoreDataFetchResultErrorCompletion)
+    func fetchLocal(byModelClass clazz: PrimaryKeypathProtocol.Type, requestPredicate predicate: NSPredicate?, completion: @escaping FetchResultErrorCompletion)
 }

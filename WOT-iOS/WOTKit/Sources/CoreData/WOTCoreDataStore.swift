@@ -143,8 +143,8 @@ extension WOTCoreDataStore {
         stash(objectContext: MAINCONTEXT, block: block)
     }
 
-    public func fetchLocal(byModelClass modelClass: PrimaryKeypathProtocol.Type, requestPredicate: NSPredicate?, completion: @escaping CoreDataFetchResultErrorCompletion) {
-        let localCallback: CoreDataFetchResultErrorCompletion = { fetchResult, error in
+    public func fetchLocal(byModelClass modelClass: PrimaryKeypathProtocol.Type, requestPredicate: NSPredicate?, completion: @escaping FetchResultErrorCompletion) {
+        let localCallback: FetchResultErrorCompletion = { fetchResult, error in
             guard let MAINCONTEXT = self.workingContext() as? NSManagedObjectContext else {
                 assertionFailure("MAINCONTEXT is not NSManagedObjectContext")
                 return
@@ -166,14 +166,14 @@ extension WOTCoreDataStore {
         let managedObjectContext = newPrivateContext()
         perform(objectContext: managedObjectContext) { context in
             do {
-                guard let managedObject = try context.findOrCreateObject(forType: Clazz, predicate: requestPredicate) else {
+                guard let managedObject = try context.findOrCreateObject(forType: Clazz, predicate: requestPredicate) as? NSManagedObject else {
                     self.logInspector.logEvent(EventError(WOTCoreDataStoreError.objectNotCreated(Clazz), details: self), sender: nil)
                     return
                 }
                 let managedObjectID = managedObject.objectID
                 let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .fetched
                 self.stash(objectContext: context) { error in
-                    let fetchResult = CoreDataFetchResult(objectContext: context, objectID: managedObjectID, predicate: requestPredicate, fetchStatus: fetchStatus)
+                    let fetchResult = FetchResult(objectContext: context, objectID: managedObjectID, predicate: requestPredicate, fetchStatus: fetchStatus)
                     localCallback(fetchResult, error)
                 }
             } catch {
@@ -186,7 +186,7 @@ extension WOTCoreDataStore {
 
 // MARK: - WOTCoredataStoreProtocol
 
-extension WOTCoreDataStore: WOTCoredataStoreProtocol {
+extension WOTCoreDataStore: WOTDataLocalStoreProtocol {
 
     public func stash(objectContext: ObjectContextProtocol?, block: @escaping ThrowableCompletion) {
         
@@ -208,7 +208,7 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
         logInspector.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
     }
 
-    public func fetchLocal(objectContext: ObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping CoreDataFetchResultErrorCompletion) {
+    public func fetchLocal(objectContext: ObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultErrorCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
             logInspector.logEvent(EventError(error, details: nil), sender: self)
@@ -221,7 +221,7 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
 
         guard let predicate = requestPredicate.compoundPredicate(.and) else {
             let error = WOTFetcherError.noKeysDefinedForClass(String(describing: ManagedObjectClass))
-            let fetchResult = CoreDataFetchResult(objectContext: objectContext, objectID: nil, predicate: nil, fetchStatus: .fetched)
+            let fetchResult = FetchResult(objectContext: objectContext, objectID: nil, predicate: nil, fetchStatus: .fetched)
             completion(fetchResult, error)
             return
         }
@@ -231,7 +231,7 @@ extension WOTCoreDataStore: WOTCoredataStoreProtocol {
                 if let managedObject = try context.findOrCreateObject(forType: ManagedObjectClass, predicate: predicate) {
                     let managedObjectID = managedObject.objectID
                     let fetchStatus: FetchStatus = managedObject.isInserted ? .inserted : .fetched
-                    let fetchResult = CoreDataFetchResult(objectContext: context, objectID: managedObjectID, predicate: predicate, fetchStatus: fetchStatus)
+                    let fetchResult = FetchResult(objectContext: context, objectID: managedObjectID, predicate: predicate, fetchStatus: fetchStatus)
                     completion(fetchResult, nil)
                 }
             } catch {

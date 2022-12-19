@@ -14,7 +14,7 @@
 @property (nonatomic, strong, readwrite) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, strong) NSPointerArray *listeners;
 
-@property (nonatomic, assign) id<WOTCoredataStoreProtocol> coreDataProvider;
+@property (nonatomic, assign) id<WOTDataLocalStoreProtocol> coreDataProvider;
 
 @end
 
@@ -91,9 +91,9 @@
     
 }
 
-- (NSManagedObjectContext *)context {
+- (id<ObjectContextProtocol>)context {
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<WOTCoredataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+    id<WOTDataLocalStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
     return [coreDataProvider workingContext];
 }
 

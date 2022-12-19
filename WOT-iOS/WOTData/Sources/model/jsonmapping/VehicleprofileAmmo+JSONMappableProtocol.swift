@@ -6,7 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import WOTKit
 
 // MARK: - JSONMappableProtocol
@@ -17,7 +16,7 @@ extension VehicleprofileAmmo {
         try self.decode(json: json)
         //
 
-        let masterFetchResult = CoreDataFetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - Penetration
 
@@ -33,19 +32,6 @@ extension VehicleprofileAmmo {
         let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: requestPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
         mappingCoordinator.linkItems(from: damageArray, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, mapperClazz: damageMapper, lookupRuleBuilder: damageRuleBuilder, requestManager: requestManager)
     }
-
-    convenience init?(json: JSON?, into managedObjectContext: NSManagedObjectContext, parentPrimaryKey: RequestExpression?, forRequest: WOTRequestProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
-        guard let json = json, let entityDescription = managedObjectContext.entityDescription(forType: VehicleprofileAmmo.self) else {
-            fatalError("Entity description not found [\(String(describing: VehicleprofileAmmo.self))]")
-            return nil
-        }
-        self.init(entity: entityDescription, insertInto: managedObjectContext)
-
-        let ammoPredicate = RequestPredicate()
-        ammoPredicate[.primary] = parentPrimaryKey
-        let fetchResult = CoreDataFetchResult(objectContext: managedObjectContext, objectID: self.objectID, predicate: ammoPredicate.compoundPredicate(.and), fetchStatus: .recovered)
-        mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: ammoPredicate, linker: nil, requestManager: requestManager, completion: { _, _ in })
-    }
 }
 
 extension VehicleprofileAmmo {
@@ -55,7 +41,7 @@ extension VehicleprofileAmmo {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             guard let managedObjectContext = fetchResult.objectContext else {
                 assertionFailure("Managed object context is not defined")
                 return
@@ -82,7 +68,7 @@ extension VehicleprofileAmmo {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: CoreDataFetchResult, coreDataStore: WOTCoredataStoreProtocol?, completion: @escaping CoreDataFetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
             let objectContext = fetchResult.objectContext
             if let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage {
                 if let ammo = masterFetchResult?.managedObject(inManagedObjectContext: objectContext) as? VehicleprofileAmmo {

@@ -22,12 +22,12 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: Private -
 
     private var mappingCoordinator: WOTMappingCoordinatorProtocol
-    private var coreDataStore: WOTCoredataStoreProtocol?
+    private var coreDataStore: WOTDataLocalStoreProtocol?
     private var logInspector: LogInspectorProtocol?
     private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: WOTRequestProtocol
     private let requestManager: WOTRequestManagerProtocol
-    private func didFoundObject(_ fetchResult: CoreDataFetchResult, error: Error?) {}
+    private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
 
     // MARK: NSObject -
 
@@ -39,7 +39,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 
-    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTCoredataStoreProtocol?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
+    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTDataLocalStoreProtocol?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
         self.modelClazz = clazz
         self.request = request
         self.linker = jsonAdapterLinker
@@ -100,13 +100,13 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping CoreDataFetchResultErrorCompletion) {
+    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultErrorCompletion) {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             fatalError("thread is not main")
         }
 
-        let localCallback: CoreDataFetchResultErrorCompletion = { fetchResult, error in
+        let localCallback: FetchResultErrorCompletion = { fetchResult, error in
             DispatchQueue.main.async {
                 externalCallback(fetchResult, error)
             }

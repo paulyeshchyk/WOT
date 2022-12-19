@@ -39,10 +39,10 @@ open class WOTDataFetchController: NSObject {
 
     public var listener: WOTDataFetchControllerListenerProtocol?
     public var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
-    public var dataProvider: WOTCoredataStoreProtocol?
+    public var dataProvider: WOTDataLocalStoreProtocol?
 
     @objc
-    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTCoredataStoreProtocol?) {
+    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTDataLocalStoreProtocol?) {
         self.nodeFetchRequestCreator = nfrc
         self.dataProvider = dataprovider
     }

@@ -16,6 +16,6 @@ public protocol WOTAppManagerProtocol {
     @objc var requestListener: WOTRequestListenerProtocol? { get set }
     @objc var sessionManager: WOTWebSessionManagerProtocol? { get set }
     @objc var logInspector: LogInspectorProtocol? { get set }
-    @objc var coreDataStore: WOTCoredataStoreProtocol? { get set }
+    @objc var coreDataStore: WOTDataLocalStoreProtocol? { get set }
     @objc var requestRegistrator: WOTRequestRegistratorProtocol? { get set }
 }
