@@ -6,12 +6,10 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
-
-public typealias WOTRequestIdType = String
+import ContextSDK
 
 @objc
-open class WOTRequest: NSObject, WOTRequestProtocol {
+open class WOTRequest: NSObject, RequestProtocol {
     override public init() {
         super.init()
     }
@@ -32,7 +30,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
 
     open func cancel(with error: Error?) {}
 
-    open func start(withArguments: WOTRequestArgumentsProtocol) throws {
+    open func start(withArguments: RequestArgumentsProtocol) throws {
         throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
@@ -42,17 +40,17 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
 
     public var availableInGroups = [WOTRequestIdType]()
 
-    public var hostConfiguration: WOTHostConfigurationProtocol?
+    public var hostConfiguration: HostConfigurationProtocol?
 
-    public var listeners = [WOTRequestListenerProtocol]()
+    public var listeners = [RequestListenerProtocol]()
 
-    public var paradigm: RequestParadigmProtocol?
+    public var paradigm: MappingParadigmProtocol?
 
     open func addGroup(_ group: WOTRequestIdType) {
         groups.append(group)
     }
 
-    open func addListener(_ listener: WOTRequestListenerProtocol) {
+    open func addListener(_ listener: RequestListenerProtocol) {
         listeners.append(listener)
     }
 
@@ -60,7 +58,7 @@ open class WOTRequest: NSObject, WOTRequestProtocol {
         groups.removeAll(where: { group.compare($0) == .orderedSame })
     }
 
-    open func removeListener(_ listener: WOTRequestListenerProtocol) {
+    open func removeListener(_ listener: RequestListenerProtocol) {
         if let index = listeners.firstIndex(where: { $0.hash == listener.hash }) {
             listeners.remove(at: index)
         }

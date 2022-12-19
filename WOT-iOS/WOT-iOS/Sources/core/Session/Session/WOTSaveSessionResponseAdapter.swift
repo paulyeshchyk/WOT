@@ -6,12 +6,12 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 @objc
 public class WOTSaveSessionResponseAdapter: NSObject {
     public var logInspector: LogInspectorProtocol?
-    public var coreDataStore: WOTDataLocalStoreProtocol?
+    public var coreDataStore: DataStoreProtocol?
 
     public required init(clazz: PrimaryKeypathProtocol.Type) {}
 }

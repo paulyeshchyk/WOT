@@ -7,6 +7,7 @@
 //
 
 import WOTKit
+import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
@@ -31,7 +32,7 @@ extension VehicleprofileAmmoList {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let ammo = fetchResult.managedObject() as? VehicleprofileAmmo else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))
@@ -42,7 +43,7 @@ extension VehicleprofileAmmoList {
                 return
             }
             ammoList.addToVehicleprofileAmmo(ammo)
-            coreDataStore?.stash(objectContext: managedObjectContext) { error in
+            dataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }

@@ -6,10 +6,10 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 @objc
-public class WOTWebHostConfiguration: NSObject, WOTHostConfigurationProtocol {
+public class WOTWebHostConfiguration: NSObject, HostConfigurationProtocol {
     public var applicationID: String {
         return "e3a1e0889ff9c76fa503177f351b853c"
     }
@@ -25,7 +25,7 @@ public class WOTWebHostConfiguration: NSObject, WOTHostConfigurationProtocol {
     private var currentArguments: String = ""
 
     @objc
-    public func urlQuery(with: WOTRequestArgumentsProtocol) -> String {
+    public func urlQuery(with: RequestArgumentsProtocol) -> String {
         let custom = ["application_id": applicationID]
         currentArguments = with.buildQuery(custom)
         return currentArguments

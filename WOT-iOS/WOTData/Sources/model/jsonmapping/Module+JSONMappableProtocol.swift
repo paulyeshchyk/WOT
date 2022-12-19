@@ -7,6 +7,7 @@
 //
 
 import WOTKit
+import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
@@ -39,27 +40,27 @@ extension Module {
         case .vehicleChassis:
             let chassisJSONAdapter = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let chassisRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: module_id)
-            let chassisRequestParadigm = RequestParadigm(clazz: VehicleprofileSuspension.self, adapter: chassisJSONAdapter, requestPredicateComposer: chassisRequestComposer, keypathPrefix: "suspension.")
+            let chassisRequestParadigm = MappingParadigm(clazz: VehicleprofileSuspension.self, adapter: chassisJSONAdapter, requestPredicateComposer: chassisRequestComposer, keypathPrefix: "suspension.")
             requestManager.fetchRemote(paradigm: chassisRequestParadigm)
         case .vehicleGun:
             let gunJSONAdapter = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let gunRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileGun.self, linkedObjectID: module_id)
-            let gunRequestParadigm = RequestParadigm(clazz: VehicleprofileGun.self, adapter: gunJSONAdapter, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.")
+            let gunRequestParadigm = MappingParadigm(clazz: VehicleprofileGun.self, adapter: gunJSONAdapter, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.")
             requestManager.fetchRemote(paradigm: gunRequestParadigm)
         case .vehicleRadio:
             let radioJSONAdapter = Module.RadioMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let radioRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileRadio.self, linkedObjectID: module_id)
-            let radioRequestParadigm = RequestParadigm(clazz: VehicleprofileRadio.self, adapter: radioJSONAdapter, requestPredicateComposer: radioRequestComposer, keypathPrefix: "radio.")
+            let radioRequestParadigm = MappingParadigm(clazz: VehicleprofileRadio.self, adapter: radioJSONAdapter, requestPredicateComposer: radioRequestComposer, keypathPrefix: "radio.")
             requestManager.fetchRemote(paradigm: radioRequestParadigm)
         case .vehicleEngine:
             let engineJSONAdapter = Module.EngineMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let engineRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileEngine.self, linkedObjectID: module_id)
-            let engineRequestParadigm = RequestParadigm(clazz: VehicleprofileEngine.self, adapter: engineJSONAdapter, requestPredicateComposer: engineRequestComposer, keypathPrefix: "engine.")
+            let engineRequestParadigm = MappingParadigm(clazz: VehicleprofileEngine.self, adapter: engineJSONAdapter, requestPredicateComposer: engineRequestComposer, keypathPrefix: "engine.")
             requestManager.fetchRemote(paradigm: engineRequestParadigm)
         case .vehicleTurret:
             let turretJSONAdapter = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let turretRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
-            let turretRequestParadigm = RequestParadigm(clazz: VehicleprofileTurret.self, adapter: turretJSONAdapter, requestPredicateComposer: turretRequestComposer, keypathPrefix: "turret.")
+            let turretRequestParadigm = MappingParadigm(clazz: VehicleprofileTurret.self, adapter: turretJSONAdapter, requestPredicateComposer: turretRequestComposer, keypathPrefix: "turret.")
             requestManager.fetchRemote(paradigm: turretRequestParadigm)
         default: fatalError("unknown module type")
         }
@@ -77,7 +78,7 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileEngine.self))
@@ -89,7 +90,7 @@ extension Module {
             }
             vehicleProfileEngine.engine_id = self.mappedObjectIdentifier as? NSDecimalNumber
             module.engine = vehicleProfileEngine
-            coreDataStore?.stash(objectContext: managedObjectContext) { error in
+            dataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -105,13 +106,13 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileTurret.turret_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.turret = vehicleProfileTurret
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -129,13 +130,13 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileSuspension.suspension_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.suspension = vehicleProfileSuspension
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -153,13 +154,13 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.radio = vehicleProfileRadio
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -177,13 +178,13 @@ extension Module {
             return result
         }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileGun.gun_id = self.mappedObjectIdentifier as? NSDecimalNumber
                     module.gun = vehicleProfileGun
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }

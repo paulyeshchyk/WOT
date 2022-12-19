@@ -6,13 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+import ContextSDK
+
 @objc
 public class WOTWEBRequestFactory: NSObject {
     public static func fetchVehiclePivotData(_ requestManager: WOTRequestManagerProtocol?, listener: WOTRequestManagerListenerProtocol) throws {
         guard let requestManager = requestManager else {
             throw LogicError.objectNotDefined
         }
-        let arguments = WOTRequestArguments()
+        let arguments = RequestArguments()
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
 
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
@@ -23,7 +25,7 @@ public class WOTWEBRequestFactory: NSObject {
 
     @objc
     public static func fetchVehicleTreeData(vehicleId: Int, requestManager: WOTRequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) throws {
-        let arguments = WOTRequestArguments()
+        let arguments = RequestArguments()
         arguments.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
         arguments.setValues(Vehicles.classKeypaths(), forKey: WGWebQueryArgs.fields)
 

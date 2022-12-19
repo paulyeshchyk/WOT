@@ -6,22 +6,22 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
     private let logInspector: LogInspectorProtocol
-    private let coreDataStore: WOTDataLocalStoreProtocol
+    private let coreDataStore: DataStoreProtocol
     private let mappingCoordinator: WOTMappingCoordinatorProtocol
     private let requestRegistrator: WOTRequestRegistratorProtocol
 
-    public init(logInspector: LogInspectorProtocol, coreDataStore: WOTDataLocalStoreProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
+    public init(logInspector: LogInspectorProtocol, coreDataStore: DataStoreProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestRegistrator: WOTRequestRegistratorProtocol) {
         self.logInspector = logInspector
         self.coreDataStore = coreDataStore
         self.mappingCoordinator = mappingCoordinator
         self.requestRegistrator = requestRegistrator
     }
 
-    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: WOTRequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: WOTRequestManagerProtocol) throws -> JSONAdapterProtocol {
+    public func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: RequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: WOTRequestManagerProtocol) throws -> JSONAdapterProtocol {
         guard let modelClass = requestRegistrator.modelClass(forRequestIdType: requestIdType) else {
             throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
         }
@@ -32,7 +32,7 @@ public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
         return dataAdapterClass.init(Clazz: modelClass, request: request, logInspector: logInspector, coreDataStore: coreDataStore, jsonAdapterLinker: jsonAdapterLinker, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
     }
 
-    public func responseAdapterInstances(byRequestIdTypes: [WOTRequestIdType], request: WOTRequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: WOTRequestManagerProtocol) -> [DataAdapterProtocol] {
+    public func responseAdapterInstances(byRequestIdTypes: [WOTRequestIdType], request: RequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: WOTRequestManagerProtocol) -> [DataAdapterProtocol] {
         var adapters: [DataAdapterProtocol] = .init()
         byRequestIdTypes.forEach { requestIdType in
             do {

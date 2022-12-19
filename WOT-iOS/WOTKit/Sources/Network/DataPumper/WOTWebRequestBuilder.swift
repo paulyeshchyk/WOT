@@ -6,11 +6,11 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 class WOTWebRequestBuilder {
 
-    public func build(service: WOTWebServiceProtocol, hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URLRequest {
+    public func build(service: WOTWebServiceProtocol, hostConfiguration: HostConfigurationProtocol, args: RequestArgumentsProtocol, bodyData: Data?) -> URLRequest {
         let url = buildURL(hostConfiguration: hostConfiguration, path: service.path, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
@@ -20,7 +20,7 @@ class WOTWebRequestBuilder {
         return result
     }
 
-    private func buildURL(hostConfiguration: WOTHostConfigurationProtocol, path: String, args: WOTRequestArgumentsProtocol, bodyData: Data?) -> URL {
+    private func buildURL(hostConfiguration: HostConfigurationProtocol, path: String, args: RequestArgumentsProtocol, bodyData: Data?) -> URL {
         let urlQuery: String? = hostConfiguration.urlQuery(with: args)
 
         var components = URLComponents()

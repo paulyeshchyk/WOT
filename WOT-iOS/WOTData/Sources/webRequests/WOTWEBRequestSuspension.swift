@@ -7,6 +7,7 @@
 //
 
 import WOTKit
+import ContextSDK
 
 @objc
 public class WOTWEBRequestSuspension: WOTWEBRequest {

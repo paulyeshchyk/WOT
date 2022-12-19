@@ -19,7 +19,7 @@
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
 @property (nonatomic, strong) id<WOTRequestManagerProtocol> requestManager;
-@property (nonatomic, strong) id<WOTHostConfigurationProtocol> hostConfiguration;
+@property (nonatomic, strong) id<HostConfigurationProtocol> hostConfiguration;
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)
@@ -91,7 +91,7 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WOTRequestListenerProtocol, WOTRequestManagerListenerProtocol, WOTDataModelListener>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RequestListenerProtocol, WOTRequestManagerListenerProtocol, WOTDataModelListener>
 
 @property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
@@ -110,7 +110,7 @@
     self.model = nil;
 }
 
-- (id<WOTHostConfigurationProtocol>) hostConfiguration {
+- (id<HostConfigurationProtocol>) hostConfiguration {
         id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
         return ((id<WOTAppDelegateProtocol>) delegate).appManager.hostConfiguration;
 }
@@ -125,7 +125,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        id<WOTDataLocalStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+        id<DataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
@@ -285,7 +285,7 @@
 
 //WOTRequestListenerProtocol
 
-- (void)requestHasStarted:(id<WOTRequestProtocol>)request pumper: (NSObject *) pumper{
+- (void)requestHasStarted:(id<RequestProtocol>)request pumper: (NSObject *) pumper{
     
 }
 
@@ -293,26 +293,26 @@
     [self reloadModel];
 }
 
-- (void)request:(id<WOTRequestProtocol> _Nonnull)request canceledWith:(NSError * _Nullable)error {
+- (void)request:(id<RequestProtocol> _Nonnull)request canceledWith:(NSError * _Nullable)error {
     
 }
 
 
-- (void)request:(id<WOTRequestProtocol> _Nonnull)request startedWith:(id<WOTHostConfigurationProtocol> _Nonnull)hostConfiguration args:(id<WOTRequestArgumentsProtocol> _Nonnull)args {
+- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(id<HostConfigurationProtocol> _Nonnull)hostConfiguration args:(id<RequestArgumentsProtocol> _Nonnull)args {
     
 }
 
 
-- (void)requestHasCanceled:(id<WOTRequestProtocol>)request {
+- (void)requestHasCanceled:(id<RequestProtocol>)request {
     
 }
 
-- (void)removeRequest:(id<WOTRequestProtocol> _Nonnull)request {
+- (void)removeRequest:(id<RequestProtocol> _Nonnull)request {
     
 }
 
 
-- (void)requestHasStarted:(id<WOTRequestProtocol> _Nonnull)request {
+- (void)requestHasStarted:(id<RequestProtocol> _Nonnull)request {
     
 }
 
@@ -321,14 +321,14 @@
     return [@"WOTTankModuleTreeViewController" hash];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
     if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
         [self reloadModel];
     }
 }
 
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<WOTRequestProtocol> _Nonnull)didStartRequest {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
     //
 }
 

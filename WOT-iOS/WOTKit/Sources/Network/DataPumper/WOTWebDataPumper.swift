@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol {
     enum WOTWebDataPumperError: Error {
@@ -28,7 +28,7 @@ class WOTWebDataPumper: NSObject, WOTWebDataPumperProtocol {
         return request.url?.absoluteString ?? "-"
     }
 
-    convenience init(hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: @escaping DataReceiveCompletion) {
+    convenience init(hostConfiguration: HostConfigurationProtocol, args: RequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol, completion: @escaping DataReceiveCompletion) {
         let requestBuilder = WOTWebRequestBuilder()
         let urlRequest = requestBuilder.build(service: service, hostConfiguration: hostConfiguration, args: args, bodyData: httpBodyData)
         self.init(request: urlRequest, completion: completion)

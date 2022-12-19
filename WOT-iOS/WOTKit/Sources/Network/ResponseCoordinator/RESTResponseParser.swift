@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 public class RESTResponseParser: WOTResponseParserProtocol {
     private struct DataAdaptationPair {
@@ -22,7 +22,7 @@ public class RESTResponseParser: WOTResponseParserProtocol {
 // MARK: - WOTResponseParserProtocol
 
 extension RESTResponseParser {
-    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
         }

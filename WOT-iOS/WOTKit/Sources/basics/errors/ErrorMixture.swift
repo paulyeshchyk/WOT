@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 public enum JSONAdapterLinkerError: Error {
     case wrongParentClass
@@ -72,8 +72,8 @@ public enum WOTMapperError: Error, CustomDebugStringConvertible {
 }
 
 public enum WOTRequestManagerError: Error, CustomDebugStringConvertible {
-    case dataparserNotFound(WOTRequestProtocol)
-    case linkerNotFound(WOTRequestProtocol)
+    case dataparserNotFound(RequestProtocol)
+    case linkerNotFound(RequestProtocol)
     case receivedResponseFromReleasedRequest
     public var debugDescription: String {
         switch self {

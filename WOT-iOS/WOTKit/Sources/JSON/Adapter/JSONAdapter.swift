@@ -6,7 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public typealias OnParseComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
+import ContextSDK
+
+public typealias OnParseComplete = (RequestProtocol?, Any?, Error?) -> Void
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
@@ -22,12 +24,12 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     // MARK: Private -
 
     private var mappingCoordinator: WOTMappingCoordinatorProtocol
-    private var coreDataStore: WOTDataLocalStoreProtocol?
+    private var coreDataStore: DataStoreProtocol?
     private var logInspector: LogInspectorProtocol?
     private let modelClazz: PrimaryKeypathProtocol.Type
-    private let request: WOTRequestProtocol
+    private let request: RequestProtocol
     private let requestManager: WOTRequestManagerProtocol
-    private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
+    private func didFoundObject(_ fetchResult: FetchResultProtocol, error: Error?) {}
 
     // MARK: NSObject -
 
@@ -39,7 +41,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 
-    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTDataLocalStoreProtocol?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
+    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: RequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: DataStoreProtocol?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
         self.modelClazz = clazz
         self.request = request
         self.linker = jsonAdapterLinker
@@ -58,7 +60,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
     // MARK: JSONAdapterProtocol -
 
-    public func didFinishJSONDecoding(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
+    public func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             logInspector?.logEvent(EventError(error, details: request), sender: self)
             onJSONDidParse?(fromRequest, self, error)
@@ -83,7 +85,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
                     return
                 }
 
-                self.linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore) { _, error in
+                self.linker.process(fetchResult: fetchResult, dataStore: self.coreDataStore) { _, error in
                     if let error = error {
                         self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                     }
@@ -100,13 +102,13 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultErrorCompletion) {
+    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             fatalError("thread is not main")
         }
 
-        let localCallback: FetchResultErrorCompletion = { fetchResult, error in
+        let localCallback: FetchResultCompletion = { fetchResult, error in
             DispatchQueue.main.async {
                 externalCallback(fetchResult, error)
             }
@@ -138,7 +140,7 @@ public struct JSONExtraction {
 }
 
 extension JSONAdapterLinkerProtocol {
-    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: WOTRequestProtocol) -> JSONExtraction {
+    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: RequestProtocol) -> JSONExtraction {
         guard let json = from[key] as? JSON else {
             fatalError("invalid json for key")
         }
@@ -173,7 +175,7 @@ extension DataAdapterProtocol {
      because of objC limitation, the function added as an extention to *JSONAdapterProtocol*
      */
 
-    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
+    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol) where T: RESTAPIResponseProtocol {
         guard let data = binary else {
             didFinishJSONDecoding(nil, fromRequest: request, nil)
             return

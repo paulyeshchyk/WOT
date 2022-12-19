@@ -6,16 +6,16 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 @objc
 public protocol WOTAppManagerProtocol {
-    @objc var hostConfiguration: WOTHostConfigurationProtocol? { get set }
+    @objc var hostConfiguration: HostConfigurationProtocol? { get set }
     @objc var responseParser: WOTResponseParserProtocol? { get set }
     @objc var requestManager: WOTRequestManagerProtocol? { get set }
-    @objc var requestListener: WOTRequestListenerProtocol? { get set }
+    @objc var requestListener: RequestListenerProtocol? { get set }
     @objc var sessionManager: WOTWebSessionManagerProtocol? { get set }
     @objc var logInspector: LogInspectorProtocol? { get set }
-    @objc var coreDataStore: WOTDataLocalStoreProtocol? { get set }
+    @objc var coreDataStore: DataStoreProtocol? { get set }
     @objc var requestRegistrator: WOTRequestRegistratorProtocol? { get set }
 }

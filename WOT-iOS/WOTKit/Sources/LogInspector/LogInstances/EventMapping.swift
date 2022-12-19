@@ -6,6 +6,8 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+import ContextSDK
+
 public enum EventMappingType: String {
     case JSON
     case Array
@@ -16,7 +18,7 @@ public class EventMappingStart: LogEventProtocol {
     public private(set) var message: String
     public var name: String { return "MappingStart" }
 
-    public init(fetchResult: FetchResult, requestPredicate: RequestPredicate, mappingType: EventMappingType) {
+    public init(fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, mappingType: EventMappingType) {
         message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: requestPredicate))"
     }
 
@@ -34,7 +36,7 @@ public class EventMappingEnded: LogEventProtocol {
     public private(set) var message: String
     public var name: String { return "MappingEnded" }
 
-    public init(fetchResult: FetchResult, requestPredicate: RequestPredicate, mappingType: EventMappingType) {
+    public init(fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, mappingType: EventMappingType) {
         message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: requestPredicate))"
     }
 

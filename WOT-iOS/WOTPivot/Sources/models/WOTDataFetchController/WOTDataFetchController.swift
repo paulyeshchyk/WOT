@@ -8,6 +8,7 @@
 
 import CoreData
 import WOTKit
+import ContextSDK
 
 public typealias FilteredObjectCompletion = (NSPredicate, [AnyObject]?) -> Void
 
@@ -29,7 +30,7 @@ open class WOTDataFetchController: NSObject {
         self.dataProvider?.perform(objectContext: managedObjectContext) { context in
 
             let request = self.nodeFetchRequestCreator.fetchRequest
-            guard let result = self.dataProvider?.fetchResultController(for: request, andContext: context) else {
+            guard let result = self.dataProvider?.fetchResultController(for: request, andContext: context) as? NSFetchedResultsController<NSFetchRequestResult> else {
                 fatalError("no FetchResultController created")
             }
             result.delegate = self
@@ -39,10 +40,10 @@ open class WOTDataFetchController: NSObject {
 
     public var listener: WOTDataFetchControllerListenerProtocol?
     public var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
-    public var dataProvider: WOTDataLocalStoreProtocol?
+    public var dataProvider: DataStoreProtocol?
 
     @objc
-    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: WOTDataLocalStoreProtocol?) {
+    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: DataStoreProtocol?) {
         self.nodeFetchRequestCreator = nfrc
         self.dataProvider = dataprovider
     }

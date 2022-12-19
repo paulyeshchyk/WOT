@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import ContextSDK
 
 extension NSManagedObject: JSONMappableProtocol {
     public enum FieldKeys: String, CodingKey {

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 public class WOTRequestRegistrator: WOTRequestRegistratorProtocol {
 
@@ -47,7 +47,7 @@ extension WOTRequestRegistrator {
         return registeredRequests[requestId]
     }
 
-    public func modelClass(forRequest request: WOTRequestProtocol) -> PrimaryKeypathProtocol.Type? {
+    public func modelClass(forRequest request: RequestProtocol) -> PrimaryKeypathProtocol.Type? {
         guard let clazz = type(of: request) as? WOTModelServiceProtocol.Type else { return nil }
         return clazz.modelClass()
     }

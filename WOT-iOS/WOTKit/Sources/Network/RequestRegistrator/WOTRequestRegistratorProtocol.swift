@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 @objc
 public protocol WOTRequestRegistratorProtocol {
@@ -16,6 +16,6 @@ public protocol WOTRequestRegistratorProtocol {
     func dataAdapterClass(for requestId: WOTRequestIdType) -> JSONAdapterProtocol.Type?
     func requestId(_ requiestId: WOTRequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type)
     func requestClass(for requestId: WOTRequestIdType) -> WOTModelServiceProtocol.Type?
-    func modelClass(forRequest: WOTRequestProtocol) -> PrimaryKeypathProtocol.Type?
+    func modelClass(forRequest: RequestProtocol) -> PrimaryKeypathProtocol.Type?
     func modelClass(forRequestIdType: WOTRequestIdType) -> PrimaryKeypathProtocol.Type?
 }

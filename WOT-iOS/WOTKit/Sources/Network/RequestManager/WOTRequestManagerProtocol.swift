@@ -6,21 +6,21 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 @objc
 public protocol WOTRequestCoordinatorBridgeProtocol {
-    func createRequest(forRequestId requestId: WOTRequestIdType) throws -> WOTRequestProtocol
+    func createRequest(forRequestId requestId: WOTRequestIdType) throws -> RequestProtocol
 }
 
 @objc
 public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
-    func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: WOTRequestProtocol)
+    func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: RequestProtocol)
     func removeListener(_ listener: WOTRequestManagerListenerProtocol)
-    func startRequest(_ request: WOTRequestProtocol, withArguments arguments: WOTRequestArgumentsProtocol, forGroupId: WOTRequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws
-    func startRequest(by requestId: WOTRequestIdType, paradigm: RequestParadigmProtocol) throws
+    func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: WOTRequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws
+    func startRequest(by requestId: WOTRequestIdType, paradigm: MappingParadigmProtocol) throws
     func cancelRequests(groupId: WOTRequestIdType, with error: Error?)
-    func createRequest(forRequestId: WOTRequestIdType) throws -> WOTRequestProtocol
-    func requestIds(forRequest request: WOTRequestProtocol) -> [WOTRequestIdType]
-    func fetchRemote(paradigm: RequestParadigmProtocol)
+    func createRequest(forRequestId: WOTRequestIdType) throws -> RequestProtocol
+    func requestIds(forRequest request: RequestProtocol) -> [WOTRequestIdType]
+    func fetchRemote(paradigm: MappingParadigmProtocol)
 }

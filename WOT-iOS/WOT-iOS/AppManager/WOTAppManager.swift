@@ -6,15 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 public class WOTPivotAppManager: NSObject, WOTAppManagerProtocol {
-    public var hostConfiguration: WOTHostConfigurationProtocol?
+    public var hostConfiguration: HostConfigurationProtocol?
     public var responseParser: WOTResponseParserProtocol?
     public var requestManager: WOTRequestManagerProtocol?
-    public var requestListener: WOTRequestListenerProtocol?
+    public var requestListener: RequestListenerProtocol?
     public var sessionManager: WOTWebSessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
-    public var coreDataStore: WOTDataLocalStoreProtocol?
+    public var coreDataStore: DataStoreProtocol?
     public var requestRegistrator: WOTRequestRegistratorProtocol?
 }

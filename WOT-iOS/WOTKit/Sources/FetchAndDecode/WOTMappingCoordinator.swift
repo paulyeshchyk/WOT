@@ -6,13 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+import ContextSDK
+
 @objc
 public class WOTMappingCoordinator: NSObject, WOTMappingCoordinatorProtocol {
 
     private let logInspector: LogInspectorProtocol
-    private let coreDataStore: WOTDataLocalStoreProtocol
+    private let coreDataStore: DataStoreProtocol
 
-    public init(logInspector: LogInspectorProtocol, coreDataStore: WOTDataLocalStoreProtocol) {
+    public init(logInspector: LogInspectorProtocol, coreDataStore: DataStoreProtocol) {
         self.logInspector = logInspector
         self.coreDataStore = coreDataStore
     }
@@ -20,7 +22,7 @@ public class WOTMappingCoordinator: NSObject, WOTMappingCoordinatorProtocol {
 
 extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
     //
-    public func fetchLocalAndDecode(json: JSON, objectContext: ObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
+    public func fetchLocalAndDecode(json: JSON, objectContext: ObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultCompletion) {
 
         coreDataStore.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { fetchResult, error in
 
@@ -34,7 +36,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
                     completion(fetchResult, error)
                 } else {
                     if let linker = linker {
-                        linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: completion)
+                        linker.process(fetchResult: fetchResult, dataStore: self.coreDataStore, completion: completion)
                     } else {
                         completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                     }
@@ -43,7 +45,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
         }
     }
 
-    public func fetchLocalAndDecode(array: [Any], objectContext: ObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
+    public func fetchLocalAndDecode(array: [Any], objectContext: ObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultCompletion) {
 
         coreDataStore.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { fetchResult, error in
 
@@ -57,7 +59,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
                     completion(fetchResult, error)
                 } else {
                     if let linker = linker {
-                        linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: completion)
+                        linker.process(fetchResult: fetchResult, dataStore: self.coreDataStore, completion: completion)
                     } else {
                         completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                     }
@@ -68,7 +70,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorFetchingProtocol {
 }
 
 extension WOTMappingCoordinator: WOTMappingCoordinatorLinkingProtocol {
-    public func linkItems(from itemsList: [Any]?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
+    public func linkItems(from itemsList: [Any]?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
 
         guard let itemsList = itemsList else { return }
 
@@ -90,7 +92,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorLinkingProtocol {
         })
     }
 
-    public func linkItem(from itemJSON: JSON?, masterFetchResult: FetchResult, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
+    public func linkItem(from itemJSON: JSON?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: WOTRequestManagerProtocol) {
 
         guard let itemJSON = itemJSON else { return }
 
@@ -114,7 +116,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorLinkingProtocol {
 }
 
 extension WOTMappingCoordinator: WOTMappingCoordinatorMappingProtocol {
-    public func mapping(json: JSON, fetchResult: FetchResult, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
+    public func mapping(json: JSON, fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 self.logInspector.logEvent(EventError(error, details: nil), sender: nil)
@@ -123,7 +125,7 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorMappingProtocol {
                 if let linker = linker {
                     let finalFetchResult = fetchResult.dublicate()
                     finalFetchResult.predicate = requestPredicate.compoundPredicate(.and)
-                    linker.process(fetchResult: finalFetchResult, coreDataStore: self.coreDataStore, completion: completion)
+                    linker.process(fetchResult: finalFetchResult, dataStore: self.coreDataStore, completion: completion)
                 } else {
                     completion(fetchResult, nil)
                 }
@@ -150,13 +152,13 @@ extension WOTMappingCoordinator: WOTMappingCoordinatorMappingProtocol {
         }
     }
 
-    public func mapping(array: [Any], fetchResult: FetchResult, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultErrorCompletion) {
+    public func mapping(array: [Any], fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: WOTRequestManagerProtocol, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)
             } else {
                 if let linker = linker {
-                    linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore, completion: completion)
+                    linker.process(fetchResult: fetchResult, dataStore: self.coreDataStore, completion: completion)
                 } else {
                     completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                 }

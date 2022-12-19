@@ -7,6 +7,7 @@
 //
 
 import WOTKit
+import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
@@ -87,7 +88,7 @@ extension Vehicleprofile {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let radio = fetchResult.managedObject() as? VehicleprofileRadio else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileRadio.self))
@@ -99,7 +100,7 @@ extension Vehicleprofile {
             }
             vehicleProfile.radio = radio
 
-            coreDataStore?.stash(objectContext: managedObjectContext) { error in
+            dataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -110,13 +111,13 @@ extension Vehicleprofile {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let turret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
                     vehicleProfile.turret = turret
 
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -129,13 +130,13 @@ extension Vehicleprofile {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let suspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
                     vehicleProfile.suspension = suspension
 
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -150,13 +151,13 @@ extension Vehicleprofile {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let gun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
                     vehicleProfile.gun = gun
 
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -169,12 +170,12 @@ extension Vehicleprofile {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let modules = fetchResult.managedObject() as? VehicleprofileModule {
                 if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
                     vehicleProfile.modules = modules
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -187,13 +188,13 @@ extension Vehicleprofile {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let engine = fetchResult.managedObject() as? VehicleprofileEngine {
                 if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
                     vehicleProfile.engine = engine
 
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -206,13 +207,13 @@ extension Vehicleprofile {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let armorList = fetchResult.managedObject() as? VehicleprofileArmorList {
                 if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
                     vehicleProfile.armor = armorList
 
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -225,13 +226,13 @@ extension Vehicleprofile {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let ammoList = fetchResult.managedObject() as? VehicleprofileAmmoList {
                 if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
                     vehicleProfile.ammo = ammoList
 
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }

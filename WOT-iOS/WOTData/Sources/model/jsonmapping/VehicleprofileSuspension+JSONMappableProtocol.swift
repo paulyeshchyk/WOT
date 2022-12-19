@@ -6,6 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+import ContextSDK
 import WOTKit
 
 // MARK: - JSONMappableProtocol

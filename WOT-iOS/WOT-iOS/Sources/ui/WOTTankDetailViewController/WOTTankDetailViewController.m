@@ -245,7 +245,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        id<WOTDataLocalStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+        id<DataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
         _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
     }
@@ -463,15 +463,15 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     return [@"WOTTankDetailViewController" hash];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(WOTRequestManagerCompletionResultType)finished {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(WOTRequestManagerCompletionResultType)finished {
     [self updateUINeedReset: YES];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<WOTRequestProtocol> _Nonnull)didStartRequest {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
     //
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<WOTRequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
+- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
     //
 }
 

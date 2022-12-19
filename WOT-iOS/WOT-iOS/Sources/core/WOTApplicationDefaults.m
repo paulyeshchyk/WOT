@@ -22,9 +22,9 @@
 + (void)registerDefaultSettings {
     
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<WOTDataLocalStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
-    NSManagedObjectContext *workingContext = [coreDataProvider workingContext];
-    [coreDataProvider performWithObjectContext:workingContext block:^(NSManagedObjectContext * _Nonnull context) {
+    id<DataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+    id<ObjectContextProtocol> workingContext = [coreDataProvider workingContext];
+    [coreDataProvider performWithObjectContext:workingContext block:^(id<ObjectContextProtocol> _Nonnull context) {
 
         NSString *entityName = NSStringFromClass([ListSetting class]);
         NSError *error = nil;
@@ -44,10 +44,11 @@
             
             [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiKeys.tier value:@"6" callback:NULL];
             
-            if ([context hasChanges]) {
+            if ([context hasTheChanges]) {
                 
-                NSError *error = nil;
-                [context save:&error];
+                [context saveContext];
+//                NSError *error = nil;
+//                [context save:&error];
             }
         }
     }];

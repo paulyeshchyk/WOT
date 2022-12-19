@@ -6,14 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-@objc
-public protocol JSONAdapterLinkerProtocol {
-    var linkerPrimaryKeyType: PrimaryKeyType { get }
-
-    init(masterFetchResult: FetchResult?, mappedObjectIdentifier: Any?)
-    func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion)
-    func onJSONExtraction(json: JSON) -> JSON
-}
+import ContextSDK
 
 public enum BaseJSONAdapterLinkerError: Error, CustomDebugStringConvertible {
     case unexpectedClass(AnyClass)
@@ -33,10 +26,10 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
 
     // MARK: - Public
 
-    public var masterFetchResult: FetchResult?
+    public var masterFetchResult: FetchResultProtocol?
     public var mappedObjectIdentifier: Any?
 
-    public required init(masterFetchResult: FetchResult?, mappedObjectIdentifier: Any?) {
+    public required init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?) {
         self.masterFetchResult = masterFetchResult
         self.mappedObjectIdentifier = mappedObjectIdentifier
     }
@@ -46,7 +39,7 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
         // throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+    open func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
         fatalError("\(type(of: self))::\(#function)")
         // throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }

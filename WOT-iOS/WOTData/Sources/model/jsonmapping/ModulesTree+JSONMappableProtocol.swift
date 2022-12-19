@@ -7,6 +7,7 @@
 //
 
 import WOTKit
+import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
@@ -29,7 +30,7 @@ extension ModulesTree {
         (nextTanks as? [AnyObject])?.forEach {
             // parents was not used for next portion of tanks
             let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
-            let nextTanksRequestParadigm = RequestParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
+            let nextTanksRequestParadigm = MappingParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
             requestManager.fetchRemote(paradigm: nextTanksRequestParadigm)
         }
 
@@ -39,7 +40,7 @@ extension ModulesTree {
         let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
             let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: $0, currentObjectID: self.objectID)
-            let nextModuleRequestParadigm = RequestParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
+            let nextModuleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
             requestManager.fetchRemote(paradigm: nextModuleRequestParadigm)
         }
 
@@ -47,7 +48,7 @@ extension ModulesTree {
 
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
-        let moduleRequestParadigm = RequestParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
+        let moduleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
         requestManager.fetchRemote(paradigm: moduleRequestParadigm)
     }
 }
@@ -58,12 +59,12 @@ extension ModulesTree {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let module = fetchResult.managedObject() as? Module {
                 if let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree {
                     modulesTree.currentModule = module
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }
@@ -76,7 +77,7 @@ extension ModulesTree {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree else {
                 completion(fetchResult, JSONAdapterLinkerError.wrongParentClass)
@@ -87,7 +88,7 @@ extension ModulesTree {
                 return
             }
             modulesTree.addToNext_modules(nextModule)
-            coreDataStore?.stash(objectContext: managedObjectContext) { error in
+            dataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -98,12 +99,12 @@ extension ModulesTree {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             if let tank = fetchResult.managedObject() as? Vehicles {
                 if let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree {
                     modulesTree.addToNext_tanks(tank)
-                    coreDataStore?.stash(objectContext: managedObjectContext) { error in
+                    dataStore?.stash(objectContext: managedObjectContext) { error in
                         completion(fetchResult, error)
                     }
                 }

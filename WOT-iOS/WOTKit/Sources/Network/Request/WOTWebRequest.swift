@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 open class WOTWEBRequest: WOTRequest {
     public var userInfo: JSON?
@@ -39,7 +39,7 @@ open class WOTWEBRequest: WOTRequest {
         }
     }
 
-    override open func start(withArguments: WOTRequestArgumentsProtocol) throws {
+    override open func start(withArguments: RequestArgumentsProtocol) throws {
         guard let hostConfig = hostConfiguration else {
             throw WEBError.hostConfigurationIsNotDefined
         }
