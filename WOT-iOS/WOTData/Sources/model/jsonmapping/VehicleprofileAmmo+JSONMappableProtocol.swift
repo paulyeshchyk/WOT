@@ -7,11 +7,12 @@
 //
 
 import WOTKit
+import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmo {
-    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         //
         try self.decode(json: json)
         //
@@ -41,7 +42,7 @@ extension VehicleprofileAmmo {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             guard let managedObjectContext = fetchResult.objectContext else {
                 assertionFailure("Managed object context is not defined")
                 return
@@ -56,7 +57,7 @@ extension VehicleprofileAmmo {
             }
 
             ammo.penetration = penetration
-            coreDataStore?.stash(objectContext: managedObjectContext) { error in
+            dataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -68,13 +69,13 @@ extension VehicleprofileAmmo {
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let objectContext = fetchResult.objectContext
             if let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage {
                 if let ammo = masterFetchResult?.managedObject(inManagedObjectContext: objectContext) as? VehicleprofileAmmo {
                     ammo.damage = damage
 
-                    coreDataStore?.stash(objectContext: objectContext) { error in
+                    dataStore?.stash(objectContext: objectContext) { error in
                         completion(fetchResult, error)
                     }
                 }

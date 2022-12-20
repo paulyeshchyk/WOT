@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import ContextSDK
 
 extension JSONDecodingProtocol where Self: NSManagedObject {
     public func decode(json: JSON) throws {

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 public class EventWEBStart: LogEventProtocol {
     public static var type: LogEventType { return .web }
@@ -17,7 +17,7 @@ public class EventWEBStart: LogEventProtocol {
         message = ""
     }
 
-    public required init?(_ request: WOTRequestProtocol) {
+    public required init?(_ request: RequestProtocol) {
         message = "\(String(describing: request))"
     }
 }
@@ -31,7 +31,7 @@ public class EventWEBCancel: LogEventProtocol {
         message = ""
     }
 
-    public required init?(_ request: WOTRequestProtocol) {
+    public required init?(_ request: RequestProtocol) {
         message = "\(String(describing: request))"
     }
 }
@@ -45,7 +45,7 @@ public class EventWEBEnd: LogEventProtocol {
         message = ""
     }
 
-    public required init?(_ request: WOTRequestProtocol) {
+    public required init?(_ request: RequestProtocol) {
         message = "\(String(describing: request))"
     }
 }

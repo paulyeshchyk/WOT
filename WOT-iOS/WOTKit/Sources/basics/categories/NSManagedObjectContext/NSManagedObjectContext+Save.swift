@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import ContextSDK
 
 extension NSManagedObjectContext {
     public func saveRecursively(_ block: @escaping ThrowableCompletion) {

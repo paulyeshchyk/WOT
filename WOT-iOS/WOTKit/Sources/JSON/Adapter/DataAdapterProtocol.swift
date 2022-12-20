@@ -6,11 +6,11 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 @objc
 public protocol DataAdapterProtocol {
     var uuid: UUID { get }
     var onJSONDidParse: OnParseComplete? { get set }
-    func didFinishJSONDecoding(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?)
+    func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?)
 }

@@ -6,10 +6,11 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+import ContextSDK
 import WOTKit
 
 @objc
-public class WOTWebProxyRequest: WOTWEBRequest {
+public class WOTWebProxyRequest: HttpRequest {
     public func dataFrom(proxyData: NSData?) -> NSData? {
         guard let proxyData = proxyData else { return nil }
         var result: Data?

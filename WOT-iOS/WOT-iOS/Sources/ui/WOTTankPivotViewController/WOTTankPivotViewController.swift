@@ -171,10 +171,9 @@ class WOTTankPivotViewController: WOTPivotViewController {
         guard let appDelegate = UIApplication.shared.delegate as? WOTAppDelegateProtocol else {
             fatalError("appDelegate is not WOTAppDelegateProtocol")
         }
-        let appManager = appDelegate.appManager
-        guard let coreDataStore = appManager.coreDataStore else {fatalError("CoreDataStore not defined")}
-        guard let requestManager = appManager.requestManager else {fatalError("RequestManager not defined")}
-        guard let logInspector = appManager.logInspector else {fatalError("LogInspector not defined")}
+        guard let coreDataStore = appDelegate.dataStore else {fatalError("CoreDataStore not defined")}
+        guard let requestManager = appDelegate.requestManager else {fatalError("RequestManager not defined")}
+        guard let logInspector = appDelegate.logInspector else {fatalError("LogInspector not defined")}
         return WOTTankPivotModel(modelListener: self, coreDataStore: coreDataStore, requestManager: requestManager, logInspector: logInspector, settingsDatasource: settingsDatasource)
     }
 

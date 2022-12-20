@@ -10,10 +10,10 @@ import UIKit
 
 @objc
 public protocol WOTViewControllerProtocol {
-    var appManager: WOTAppManagerProtocol? { get set }
+    var appManager: WOTAppDelegateProtocol? { get set }
 }
 
 @objc
 open class WOTViewController: UIViewController, WOTViewControllerProtocol {
-    public var appManager: WOTAppManagerProtocol?
+    public var appManager: WOTAppDelegateProtocol?
 }

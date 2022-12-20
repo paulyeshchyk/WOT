@@ -21,11 +21,11 @@
 
 @implementation WOTSessionManager
 
-+ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
++ (void)loginWithRequestManager:(id<RequestManagerProtocol>) requestManager {
     
 }
 
-+ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
++ (void)switchUserWithRequestManager:(id<RequestManagerProtocol>) requestManager {
     
 }
 
@@ -57,12 +57,12 @@
 }
 
 
-+ (void)logoutWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
++ (void)logoutWithRequestManager:(id<RequestManagerProtocol>) requestManager {
 //    id<WOTRequestProtocol> request = [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
 //    [requestManager start:request with:[[WOTRequestArguments alloc] init] forGroupId:WGWebRequestGroups.logout jsonLink: NULL];
 }
 
-//+ (void)loginWithRequestManager:(id<WOTRequestManagerProtocol>) requestManager {
+//+ (void)loginWithRequestManager:(id<RequestManagerProtocol>) requestManager {
 
 //    id<WOTRequestProtocol> request =  [requestManager.requestCoordinator createRequestForRequestId:WOTRequestIdLogout];
 //
@@ -76,7 +76,7 @@
 //    [requestManager start:request with:args forGroupId:WGWebRequestGroups.login jsonLink: NULL];
 //}
 
-//+ (void)switchUserWithRequestManager:(id<WOTRequestManagerProtocol>)requestManager {
+//+ (void)switchUserWithRequestManager:(id<RequestManagerProtocol>)requestManager {
 //    
 //    id access_token = [self currentAccessToken];
 //    if (access_token){

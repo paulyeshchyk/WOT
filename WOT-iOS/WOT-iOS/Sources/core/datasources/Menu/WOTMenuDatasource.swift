@@ -41,10 +41,6 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     override init() {
         super.init()
 
-        VIPERModule.Pivot.wireFrame?.build(configureCallback: { (_) in
-
-        })
-
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankPivotViewController.self, controllerTitle: L10n.wotStringTankdeleyev, icon: UIImage(), userDependence: false))
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankListViewController.self, controllerTitle: L10n.wotStringTankopedia, icon: UIImage(), userDependence: false))
         self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
