@@ -23,12 +23,6 @@ extension NSManagedObjectContext: ObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func performBBlock(_ block: (() -> Void)?) {
-        perform {
-            block?()
-        }
-    }
-
     public func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) -> AnyObject? {
         guard let foundObject = try? lastObject(forType: forType, predicate: predicate, includeSubentities: false) else {
             return self.insertNewObject(forType: forType)

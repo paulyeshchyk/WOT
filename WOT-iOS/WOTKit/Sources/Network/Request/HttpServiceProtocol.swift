@@ -36,7 +36,7 @@ public enum HTTPMethods: Int {
 }
 
 @objc
-public protocol WOTWebServiceProtocol {
+public protocol HttpServiceProtocol {
     var method: HTTPMethods { get }
     var path: String { get }
 }

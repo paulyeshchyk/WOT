@@ -23,7 +23,6 @@
 		1D65F7F62216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EF2216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift */; };
 		1D65F7F72216A60E006A85E4 /* WOTTankConfigurationFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7F02216A60D006A85E4 /* WOTTankConfigurationFlowLayout.swift */; };
 		1D65F7F82216A60E006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7F12216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayer.swift */; };
-		1D65F7F92216A63F006A85E4 /* WOTPivotLayoutCellAttributesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EC2216A60D006A85E4 /* WOTPivotLayoutCellAttributesTest.swift */; };
 		1D65F8242216A7B8006A85E4 /* WOTDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8162216A7B8006A85E4 /* WOTDimension.swift */; };
 		1D65F8252216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F81A2216A7B8006A85E4 /* WOTDimensionDataGroupCalculator.swift */; };
 		1D65F8262216A7B8006A85E4 /* WOTDimensionRowCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F81B2216A7B8006A85E4 /* WOTDimensionRowCalculator.swift */; };
@@ -110,7 +109,6 @@
 		1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D65F7EA2216A60D006A85E4 /* WOTTankPivotLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotLayout.swift; sourceTree = "<group>"; };
 		1D65F7EB2216A60D006A85E4 /* WOTPivotLayoutCellAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotLayoutCellAttributes.swift; sourceTree = "<group>"; };
-		1D65F7EC2216A60D006A85E4 /* WOTPivotLayoutCellAttributesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotLayoutCellAttributesTest.swift; sourceTree = "<group>"; };
 		1D65F7ED2216A60D006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotSeparatorLayoutAttributes.swift; sourceTree = "<group>"; };
 		1D65F7EF2216A60D006A85E4 /* WOTTankModuleTreeNodeConnectorLayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankModuleTreeNodeConnectorLayerProtocol.swift; sourceTree = "<group>"; };
 		1D65F7F02216A60D006A85E4 /* WOTTankConfigurationFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankConfigurationFlowLayout.swift; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 				1D65F8152216A7B8006A85E4 /* WOTDimension */,
 				1D65F7EA2216A60D006A85E4 /* WOTTankPivotLayout.swift */,
 				1D65F7EB2216A60D006A85E4 /* WOTPivotLayoutCellAttributes.swift */,
-				1D65F7EC2216A60D006A85E4 /* WOTPivotLayoutCellAttributesTest.swift */,
 				1D65F7ED2216A60D006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift */,
 			);
 			path = WOTPivotLayout;
@@ -677,7 +674,6 @@
 				1D5D0AFE23CCB02B004B0314 /* WOTPivotMetadataPermutatorTest.swift in Sources */,
 				1DE558EA2124561500576D41 /* WOTNodeTest.swift in Sources */,
 				1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */,
-				1D65F7F92216A63F006A85E4 /* WOTPivotLayoutCellAttributesTest.swift in Sources */,
 				1DE558E92124561000576D41 /* WOTPivotNodeTest.swift in Sources */,
 				1DE5590A2124572D00576D41 /* WOTDataModelTest.swift in Sources */,
 				1DE558E82124561000576D41 /* WOTPivotNodeExtensionTest.swift in Sources */,
@@ -831,7 +827,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -859,7 +855,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -880,6 +876,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WOTPivotTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -898,6 +895,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WOTPivotTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

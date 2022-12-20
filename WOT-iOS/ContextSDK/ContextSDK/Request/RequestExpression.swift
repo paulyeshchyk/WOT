@@ -43,7 +43,7 @@ public class RequestExpression: NSObject {
     public func foreignKey(byInsertingComponent: String) -> RequestExpression? {
         var newComponents = [byInsertingComponent]
         newComponents.append(contentsOf: self.components)
-        return RequestExpression(components: newComponents, value: self.value, nameAlias: self.nameAlias, predicateFormat: predicateFormat)
+        return RequestExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
 }
 
