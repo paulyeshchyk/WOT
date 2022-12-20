@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 public class EventObjectNew: LogEventProtocol {
     public static var type: LogEventType { return .lifeCycle }

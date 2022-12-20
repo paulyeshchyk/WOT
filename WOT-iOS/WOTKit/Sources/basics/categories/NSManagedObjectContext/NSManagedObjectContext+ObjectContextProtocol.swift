@@ -7,9 +7,14 @@
 //
 
 import CoreData
+import ContextSDK
 
 extension NSManagedObjectContext: ObjectContextProtocol {
+    public func hasTheChanges() -> Bool {
+        return hasChanges
+    }
     
+
     public func object(byID: AnyObject) -> AnyObject? {
         guard let objectID = byID as? NSManagedObjectID else {
             assertionFailure("forObjectID is not NSManagedObject")
@@ -24,8 +29,8 @@ extension NSManagedObjectContext: ObjectContextProtocol {
         }
     }
 
-    public func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) throws -> NSManagedObject? {
-        guard let foundObject = try lastObject(forType: forType, predicate: predicate, includeSubentities: false)else {
+    public func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) -> AnyObject? {
+        guard let foundObject = try? lastObject(forType: forType, predicate: predicate, includeSubentities: false) else {
             return self.insertNewObject(forType: forType)
         }
         return foundObject
@@ -45,5 +50,13 @@ extension NSManagedObjectContext: ObjectContextProtocol {
 
     private func entityDescription(forType: AnyObject) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: String(describing: forType), in: self)
+    }
+    
+    public func saveContext() {
+        do {
+            try save()
+        } catch {
+            print(error)
+        }
     }
 }

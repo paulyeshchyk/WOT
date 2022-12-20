@@ -9,7 +9,13 @@
 import Foundation
 
 @objc
-public protocol WOTAppDelegateProtocol {
-    @objc
-    var appManager: WOTAppManagerProtocol { get }
-}
+public protocol WOTAppDelegateProtocol: LogInspectorContainerProtocol,
+                                        DataStoreContainerProtocol,
+                                        HostConfigurationContainerProtocol,
+                                        ResponseParserContainerProtocol,
+                                        RequestManagerContainerProtocol,
+                                        RequestListenerContainerProtocol,
+                                        SessionManagerContainerProtocol,
+                                        RequestRegistratorContainerProtocol,
+                                        MappingCoordinatorContainerProtocol,
+                                        ResponseAdapterCreatorContainerProtocol {}

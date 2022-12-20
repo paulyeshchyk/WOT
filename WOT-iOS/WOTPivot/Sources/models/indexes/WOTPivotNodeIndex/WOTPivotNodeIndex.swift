@@ -6,6 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+import ContextSDK
 import WOTKit
 
 class WOTPivotNodeIndex: WOTPivotNodeIndexProtocol {

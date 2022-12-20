@@ -37,7 +37,7 @@
 //
 //    @objc
 //    func pendingRequestCountChaged(notification: Notification) {
-//        guard let executor = notification.object as? WOTRequestManagerProtocol else {
+//        guard let executor = notification.object as? RequestManagerProtocol else {
 //            return
 //        }
 //

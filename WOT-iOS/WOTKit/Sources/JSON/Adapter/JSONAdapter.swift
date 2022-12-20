@@ -6,7 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public typealias OnParseComplete = (WOTRequestProtocol?, Any?, Error?) -> Void
+import ContextSDK
+
+public typealias OnParseComplete = (RequestProtocol?, Any?, Error?) -> Void
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
@@ -21,13 +23,10 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
     // MARK: Private -
 
-    private var mappingCoordinator: WOTMappingCoordinatorProtocol
-    private var coreDataStore: WOTDataLocalStoreProtocol?
-    private var logInspector: LogInspectorProtocol?
+    private let context: JSONAdapterProtocol.Context
     private let modelClazz: PrimaryKeypathProtocol.Type
-    private let request: WOTRequestProtocol
-    private let requestManager: WOTRequestManagerProtocol
-    private func didFoundObject(_ fetchResult: FetchResult, error: Error?) {}
+    private let request: RequestProtocol
+    private func didFoundObject(_ fetchResult: FetchResultProtocol, error: Error?) {}
 
     // MARK: NSObject -
 
@@ -39,34 +38,31 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         return "JSONAdapter:\(String(describing: type(of: request)))"
     }
 
-    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: WOTRequestProtocol, logInspector: LogInspectorProtocol?, coreDataStore: WOTDataLocalStoreProtocol?, jsonAdapterLinker: JSONAdapterLinkerProtocol, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) {
+    public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, jsonAdapterLinker: JSONAdapterLinkerProtocol) {
         self.modelClazz = clazz
         self.request = request
         self.linker = jsonAdapterLinker
-        self.mappingCoordinator = mappingCoordinator
-        self.logInspector = logInspector
-        self.coreDataStore = coreDataStore
-        self.requestManager = requestManager
+        self.context = context
 
         super.init()
-        logInspector?.logEvent(EventObjectNew(self), sender: self)
+        context.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
     deinit {
-        logInspector?.logEvent(EventObjectFree(self), sender: self)
+        context.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
     // MARK: JSONAdapterProtocol -
 
-    public func didFinishJSONDecoding(_ json: JSON?, fromRequest: WOTRequestProtocol, _ error: Error?) {
+    public func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
-            logInspector?.logEvent(EventError(error, details: request), sender: self)
+            context.logInspector?.logEvent(EventError(error, details: request), sender: self)
             onJSONDidParse?(fromRequest, self, error)
             return
         }
 
         let jsonStartParsingDate = Date()
-        logInspector?.logEvent(EventJSONStart(fromRequest), sender: self)
+        context.logInspector?.logEvent(EventJSONStart(fromRequest), sender: self)
 
         let dispatchGroup = DispatchGroup()
 
@@ -79,13 +75,13 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
             self.findOrCreateObject(json: extraction.json, requestPredicate: extraction.requestPredicate) { fetchResult, error in
 
                 if let error = error {
-                    self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                     return
                 }
 
-                self.linker.process(fetchResult: fetchResult, coreDataStore: self.coreDataStore) { _, error in
+                self.linker.process(fetchResult: fetchResult, dataStore: self.context.dataStore) { _, error in
                     if let error = error {
-                        self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                     }
                     dispatchGroup.leave()
                 }
@@ -93,39 +89,45 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            self.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
+            self.context.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
             self.onJSONDidParse?(fromRequest, self, error)
         }
     }
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultErrorCompletion) {
+    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             fatalError("thread is not main")
         }
 
-        let localCallback: FetchResultErrorCompletion = { fetchResult, error in
+        let localCallback: FetchResultCompletion = { fetchResult, error in
             DispatchQueue.main.async {
                 externalCallback(fetchResult, error)
             }
         }
 
-        coreDataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: requestPredicate[.primary]?.predicate, completion: { fetchResult, error in
+        context.dataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: requestPredicate[.primary]?.predicate, completion: { fetchResult, error in
 
             if let error = error {
                 localCallback(fetchResult, error)
                 return
             }
 
+            guard let requestManager = self.context.requestManager else {
+                #warning("add error")
+                localCallback(fetchResult, nil)
+                return
+            }
+            
             let jsonStartParsingDate = Date()
-            self.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.mappingCoordinator.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: nil, requestManager: self.requestManager) { fetchResult, error in
+            self.context.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
+            self.context.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: nil, requestManager: requestManager) { fetchResult, error in
                 if let error = error {
-                    self.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
-                self.logInspector?.logEvent(EventJSONEnded("\(String(describing: requestPredicate))", initiatedIn: jsonStartParsingDate), sender: self)
+                self.context.logInspector?.logEvent(EventJSONEnded("\(String(describing: requestPredicate))", initiatedIn: jsonStartParsingDate), sender: self)
                 localCallback(fetchResult, nil)
             }
         })
@@ -138,7 +140,7 @@ public struct JSONExtraction {
 }
 
 extension JSONAdapterLinkerProtocol {
-    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: WOTRequestProtocol) -> JSONExtraction {
+    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: RequestProtocol) -> JSONExtraction {
         guard let json = from[key] as? JSON else {
             fatalError("invalid json for key")
         }
@@ -173,7 +175,7 @@ extension DataAdapterProtocol {
      because of objC limitation, the function added as an extention to *JSONAdapterProtocol*
      */
 
-    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: WOTRequestProtocol) where T: RESTAPIResponseProtocol {
+    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol) where T: RESTAPIResponseProtocol {
         guard let data = binary else {
             didFinishJSONDecoding(nil, fromRequest: request, nil)
             return
