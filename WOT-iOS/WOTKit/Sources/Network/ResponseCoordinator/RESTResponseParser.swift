@@ -6,23 +6,27 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 public class RESTResponseParser: WOTResponseParserProtocol {
+    
+    public typealias Context = LogInspectorContainerProtocol
+
+    private let context: Context
     private struct DataAdaptationPair {
         let dataAdapter: DataAdapterProtocol
         let data: Data?
     }
 
-    public required init() {
-        //
+    public required init(context: Context) {
+        self.context = context
     }
 }
 
 // MARK: - WOTResponseParserProtocol
 
 extension RESTResponseParser {
-    public func parseResponse(data parseData: Data?, forRequest request: WOTRequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws {
         guard let data = parseData else {
             throw RequestCoordinatorError.dataIsEmpty
         }

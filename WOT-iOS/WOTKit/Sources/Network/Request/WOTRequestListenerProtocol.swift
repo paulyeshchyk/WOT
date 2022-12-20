@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 @objc
 public enum WOTRequestManagerCompletionResultType: Int {
@@ -18,17 +18,7 @@ public enum WOTRequestManagerCompletionResultType: Int {
 public protocol WOTRequestManagerListenerProtocol {
     var uuidHash: Int { get }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
+    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol)
-}
-
-@objc
-public protocol WOTRequestListenerProtocol {
-    @objc
-    var hash: Int { get }
-
-    @objc func request(_ request: WOTRequestProtocol, finishedLoadData data: Data?, error: Error?)
-    @objc func request(_ request: WOTRequestProtocol, canceledWith error: Error?)
-    @objc func request(_ request: WOTRequestProtocol, startedWith hostConfiguration: WOTHostConfigurationProtocol, args: WOTRequestArgumentsProtocol)
+    func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol)
 }

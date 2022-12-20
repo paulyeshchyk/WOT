@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import ContextSDK
 
 extension NSManagedObject: ManagedObjectProtocol {
     public var entityName: String {

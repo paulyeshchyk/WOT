@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "WOTPivotDefines.h"
-#import "WOTColors.h"
+#import <WOTPivot/WOTPivotDefines.h>
+#import <WOTPivot/WOTColors.h>
 
 //! Project version number for WOTPivot.
 FOUNDATION_EXPORT double WOTPivotVersionNumber;

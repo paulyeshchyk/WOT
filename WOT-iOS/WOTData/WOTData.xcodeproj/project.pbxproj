@@ -11,16 +11,6 @@
 		1D3DAED92133FD5300368AFA /* WOTDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DAED82133FD5300368AFA /* WOTDataTests.swift */; };
 		1D3DAEDB2133FD5300368AFA /* WOTData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D3DAECD2133FD5300368AFA /* WOTData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D3DAEE92133FDDE00368AFA /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DAEE82133FDDE00368AFA /* WOTPivot.framework */; };
-		1D41162124646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162024646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift */; };
-		1D41162524646E3B009070AD /* RootTagRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162424646E3B009070AD /* RootTagRuleBuilder.swift */; };
-		1D4116272464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4116262464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */; };
-		1D41162924652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162824652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */; };
-		1D41162B2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162A2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift */; };
-		1D41162D2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162C2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift */; };
-		1D41162F24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41162E24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift */; };
-		1D41163524654F3C009070AD /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163424654F3C009070AD /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift */; };
-		1D41163724658693009070AD /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163624658693009070AD /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */; };
-		1D41163B24668EE0009070AD /* MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41163A24668EE0009070AD /* MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder.swift */; };
 		1D5D0AF323CCAC05004B0314 /* WOTDataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AF223CCAC05004B0314 /* WOTDataAPI.swift */; };
 		1D60E45D245F59FB007E5CA8 /* VehicleprofileArmorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E439245F59F9007E5CA8 /* VehicleprofileArmorList+CoreDataClass.swift */; };
 		1D60E45E245F59FB007E5CA8 /* VehicleprofileGun+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E43A245F59F9007E5CA8 /* VehicleprofileGun+CoreDataProperties.swift */; };
@@ -112,7 +102,7 @@
 		1D60E74B246050AF007E5CA8 /* Module+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E73B246050AE007E5CA8 /* Module+RequestableProtocol.swift */; };
 		1D7E0682247BAAE3008CB848 /* WOTTankTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E0681247BAAE3008CB848 /* WOTTankTemplates.swift */; };
 		1D8C299021358CA600759C42 /* WOTDataDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8C298F21358C6000759C42 /* WOTDataDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1DE1F916245EC75A002866A3 /* WOTCustomCoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F8DA245EC75A002866A3 /* WOTCustomCoreDataStore.swift */; };
+		1DE1F916245EC75A002866A3 /* WOTDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F8DA245EC75A002866A3 /* WOTDataStore.swift */; };
 		1DE1F917245EC75A002866A3 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F8DC245EC75A002866A3 /* WOT_iOS.xcdatamodeld */; };
 		1DE1F93E245EC75A002866A3 /* WOTWEBRequestSuspension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F907245EC75A002866A3 /* WOTWEBRequestSuspension.swift */; };
 		1DE1F93F245EC75A002866A3 /* WOTWEBRequestTankVehicles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F908245EC75A002866A3 /* WOTWEBRequestTankVehicles.swift */; };
@@ -122,10 +112,8 @@
 		1DE1F943245EC75A002866A3 /* WOTWEBRequestTankEngines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F90C245EC75A002866A3 /* WOTWEBRequestTankEngines.swift */; };
 		1DE1F944245EC75A002866A3 /* WOTWEBRequestLogout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F90D245EC75A002866A3 /* WOTWEBRequestLogout.swift */; };
 		1DE1F945245EC75A002866A3 /* WOTWEBRequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F90E245EC75A002866A3 /* WOTWEBRequestLogin.swift */; };
-		1DE1F946245EC75A002866A3 /* WOTClearSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F90F245EC75A002866A3 /* WOTClearSessionRequest.swift */; };
 		1DE1F947245EC75A002866A3 /* WOTWEBRequestModules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F910245EC75A002866A3 /* WOTWEBRequestModules.swift */; };
 		1DE1F948245EC75A002866A3 /* WOTWEBRequest+Stubs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DE1F911245EC75A002866A3 /* WOTWEBRequest+Stubs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1DE1F949245EC75A002866A3 /* WOTSaveSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F912245EC75A002866A3 /* WOTSaveSessionRequest.swift */; };
 		1DE1F94A245EC75A002866A3 /* WOTWEBRequestTankTurrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F913245EC75A002866A3 /* WOTWEBRequestTankTurrets.swift */; };
 		1DE1F94B245EC75A002866A3 /* WOTWEBRequestTankGuns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1F914245EC75A002866A3 /* WOTWEBRequestTankGuns.swift */; };
 		1DE1FA04245EE2EF002866A3 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA02245EE2EF002866A3 /* NSBundle+LanguageBundle.m */; };
@@ -150,16 +138,6 @@
 		1D3DAED82133FD5300368AFA /* WOTDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTDataTests.swift; sourceTree = "<group>"; };
 		1D3DAEDA2133FD5300368AFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D3DAEE82133FDDE00368AFA /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D41162024646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41162424646E3B009070AD /* RootTagRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTagRuleBuilder.swift; sourceTree = "<group>"; };
-		1D4116262464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41162824652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41162A2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41162C2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41162E24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedLocalAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41163424654F3C009070AD /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41163624658693009070AD /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift; sourceTree = "<group>"; };
-		1D41163A24668EE0009070AD /* MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		1D5D0AF223CCAC05004B0314 /* WOTDataAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataAPI.swift; sourceTree = "<group>"; };
 		1D60E439245F59F9007E5CA8 /* VehicleprofileArmorList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1D60E43A245F59F9007E5CA8 /* VehicleprofileGun+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -251,7 +229,7 @@
 		1D60E73B246050AE007E5CA8 /* Module+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+RequestableProtocol.swift"; sourceTree = "<group>"; };
 		1D7E0681247BAAE3008CB848 /* WOTTankTemplates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankTemplates.swift; sourceTree = "<group>"; };
 		1D8C298F21358C6000759C42 /* WOTDataDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTDataDefines.h; sourceTree = "<group>"; };
-		1DE1F8DA245EC75A002866A3 /* WOTCustomCoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTCustomCoreDataStore.swift; sourceTree = "<group>"; };
+		1DE1F8DA245EC75A002866A3 /* WOTDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataStore.swift; sourceTree = "<group>"; };
 		1DE1F8DD245EC75A002866A3 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
 		1DE1F907245EC75A002866A3 /* WOTWEBRequestSuspension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestSuspension.swift; sourceTree = "<group>"; };
 		1DE1F908245EC75A002866A3 /* WOTWEBRequestTankVehicles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestTankVehicles.swift; sourceTree = "<group>"; };
@@ -261,10 +239,8 @@
 		1DE1F90C245EC75A002866A3 /* WOTWEBRequestTankEngines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestTankEngines.swift; sourceTree = "<group>"; };
 		1DE1F90D245EC75A002866A3 /* WOTWEBRequestLogout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestLogout.swift; sourceTree = "<group>"; };
 		1DE1F90E245EC75A002866A3 /* WOTWEBRequestLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestLogin.swift; sourceTree = "<group>"; };
-		1DE1F90F245EC75A002866A3 /* WOTClearSessionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTClearSessionRequest.swift; sourceTree = "<group>"; };
 		1DE1F910245EC75A002866A3 /* WOTWEBRequestModules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestModules.swift; sourceTree = "<group>"; };
 		1DE1F911245EC75A002866A3 /* WOTWEBRequest+Stubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTWEBRequest+Stubs.h"; sourceTree = "<group>"; };
-		1DE1F912245EC75A002866A3 /* WOTSaveSessionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTSaveSessionRequest.swift; sourceTree = "<group>"; };
 		1DE1F913245EC75A002866A3 /* WOTWEBRequestTankTurrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestTankTurrets.swift; sourceTree = "<group>"; };
 		1DE1F914245EC75A002866A3 /* WOTWEBRequestTankGuns.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWEBRequestTankGuns.swift; sourceTree = "<group>"; };
 		1DE1FA02245EE2EF002866A3 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
@@ -343,27 +319,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1D41161F24646D98009070AD /* LinkLookupRuleBuilder */ = {
-			isa = PBXGroup;
-			children = (
-				1D41162024646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift */,
-				1D41163424654F3C009070AD /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift */,
-				1D41163624658693009070AD /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */,
-				1D41162424646E3B009070AD /* RootTagRuleBuilder.swift */,
-				1D4116262464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */,
-				1D41162824652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */,
-				1D41163A24668EE0009070AD /* MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder.swift */,
-				1D41162A2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift */,
-				1D41162C2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift */,
-				1D41162E24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift */,
-			);
-			path = LinkLookupRuleBuilder;
-			sourceTree = "<group>";
-		};
 		1D60E67C2460505A007E5CA8 /* jsonmapping */ = {
 			isa = PBXGroup;
 			children = (
-				1D41161F24646D98009070AD /* LinkLookupRuleBuilder */,
 				1D60E71B2460509A007E5CA8 /* Module+JSONMappableProtocol.swift */,
 				1D60E71624605099007E5CA8 /* ModulesTree+JSONMappableProtocol.swift */,
 				1D60E7172460509A007E5CA8 /* Vehicleprofile+JSONMappableProtocol.swift */,
@@ -452,7 +410,7 @@
 		1DE1F8D9245EC75A002866A3 /* dataprovider */ = {
 			isa = PBXGroup;
 			children = (
-				1DE1F8DA245EC75A002866A3 /* WOTCustomCoreDataStore.swift */,
+				1DE1F8DA245EC75A002866A3 /* WOTDataStore.swift */,
 			);
 			path = dataprovider;
 			sourceTree = "<group>";
@@ -525,9 +483,7 @@
 				1DE1F90C245EC75A002866A3 /* WOTWEBRequestTankEngines.swift */,
 				1DE1F90D245EC75A002866A3 /* WOTWEBRequestLogout.swift */,
 				1DE1F90E245EC75A002866A3 /* WOTWEBRequestLogin.swift */,
-				1DE1F90F245EC75A002866A3 /* WOTClearSessionRequest.swift */,
 				1DE1F910245EC75A002866A3 /* WOTWEBRequestModules.swift */,
-				1DE1F912245EC75A002866A3 /* WOTSaveSessionRequest.swift */,
 				1DE1F913245EC75A002866A3 /* WOTWEBRequestTankTurrets.swift */,
 				1DE1F914245EC75A002866A3 /* WOTWEBRequestTankGuns.swift */,
 			);
@@ -686,7 +642,6 @@
 				1D60E471245F59FB007E5CA8 /* VehicleprofileAmmo+CoreDataClass.swift in Sources */,
 				1D60E72A2460509A007E5CA8 /* VehicleprofileEngine+JSONMappableProtocol.swift in Sources */,
 				1D60E744246050AF007E5CA8 /* VehicleprofileModule+RequestableProtocol.swift in Sources */,
-				1D41162924652FFF009070AD /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				1D60E466245F59FB007E5CA8 /* VehicleprofileAmmoList+CoreDataClass.swift in Sources */,
 				1D60E6FD24605084007E5CA8 /* VehicleprofileSuspension+JSONDecodingProtocol.swift in Sources */,
 				1D60E743246050AF007E5CA8 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift in Sources */,
@@ -695,7 +650,7 @@
 				1D60E73F246050AF007E5CA8 /* VehicleprofileAmmoDamage+RequestableProtocol.swift in Sources */,
 				1D60E6C42460505B007E5CA8 /* ModulesTree+Customization.swift in Sources */,
 				1D60E747246050AF007E5CA8 /* VehicleprofileEngine+RequestableProtocol.swift in Sources */,
-				1DE1F916245EC75A002866A3 /* WOTCustomCoreDataStore.swift in Sources */,
+				1DE1F916245EC75A002866A3 /* WOTDataStore.swift in Sources */,
 				1D60E45F245F59FB007E5CA8 /* ListSetting+CoreDataProperties.swift in Sources */,
 				1D60E6FE24605084007E5CA8 /* VehicleprofileAmmoList+JSONDecodingProtocol.swift in Sources */,
 				1D60E473245F59FB007E5CA8 /* VehicleprofileRadio+CoreDataProperties.swift in Sources */,
@@ -704,7 +659,6 @@
 				1D60E74A246050AF007E5CA8 /* Vehicles+RequestableProtocol.swift in Sources */,
 				1DE1F93F245EC75A002866A3 /* WOTWEBRequestTankVehicles.swift in Sources */,
 				1D60E70524605084007E5CA8 /* Module+JSONDecodingProtocol.swift in Sources */,
-				1D41163B24668EE0009070AD /* MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder.swift in Sources */,
 				1D60E7262460509A007E5CA8 /* ModulesTree+JSONMappableProtocol.swift in Sources */,
 				1D60E72B2460509A007E5CA8 /* Module+JSONMappableProtocol.swift in Sources */,
 				1D60E6C52460505B007E5CA8 /* Module+Customization.swift in Sources */,
@@ -714,7 +668,6 @@
 				1D60E749246050AF007E5CA8 /* VehicleprofileRadio+RequestableProtocol.swift in Sources */,
 				1D60E70B24605084007E5CA8 /* VehicleprofileGun+JSONDecodingProtocol.swift in Sources */,
 				1D60E46C245F59FB007E5CA8 /* ModulesTree+CoreDataProperties.swift in Sources */,
-				1D41163524654F3C009070AD /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift in Sources */,
 				1D60E7282460509A007E5CA8 /* VehicleprofileAmmo+JSONMappableProtocol.swift in Sources */,
 				1D5D0AF323CCAC05004B0314 /* WOTDataAPI.swift in Sources */,
 				1D60E6FF24605084007E5CA8 /* VehicleprofileRadio+JSONDecodingProtocol.swift in Sources */,
@@ -727,14 +680,11 @@
 				1D60E70824605084007E5CA8 /* ModulesTree+JSONDecodingProtocol.swift in Sources */,
 				1D60E472245F59FB007E5CA8 /* ListSetting+CoreDataClass.swift in Sources */,
 				1DE1F945245EC75A002866A3 /* WOTWEBRequestLogin.swift in Sources */,
-				1D41162B2465346C009070AD /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				1DE1F942245EC75A002866A3 /* WOTWEBRequest+Stubs.m in Sources */,
-				1D41162D2465389E009070AD /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				1D60E464245F59FB007E5CA8 /* VehicleprofileTurret+CoreDataClass.swift in Sources */,
 				1D60E73D246050AF007E5CA8 /* VehicleprofileArmor+RequestableProtocol.swift in Sources */,
 				1DE1FA04245EE2EF002866A3 /* NSBundle+LanguageBundle.m in Sources */,
 				1D60E70224605084007E5CA8 /* Vehicles+JSONDecodingProtocol.swift in Sources */,
-				1D41162F24653A8D009070AD /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */,
 				1D60E476245F59FB007E5CA8 /* UserSession+CoreDataProperties.swift in Sources */,
 				1DE1F943245EC75A002866A3 /* WOTWEBRequestTankEngines.swift in Sources */,
 				1D60E71E2460509A007E5CA8 /* Vehicles+JSONMappableProtocol.swift in Sources */,
@@ -744,9 +694,7 @@
 				1D60E45E245F59FB007E5CA8 /* VehicleprofileGun+CoreDataProperties.swift in Sources */,
 				1D60E71D2460509A007E5CA8 /* VehicleprofileArmorList+JSONMappableProtocol.swift in Sources */,
 				1DE1F940245EC75A002866A3 /* WOTWEBRequestModulesTree.swift in Sources */,
-				1D41162124646E02009070AD /* ForeignAsPrimaryRuleBuilder.swift in Sources */,
 				1D7E0682247BAAE3008CB848 /* WOTTankTemplates.swift in Sources */,
-				1D41163724658693009070AD /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				1D60E46D245F59FB007E5CA8 /* Module+CoreDataClass.swift in Sources */,
 				1D60E475245F59FB007E5CA8 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift in Sources */,
 				1D60E742246050AF007E5CA8 /* VehicleprofileAmmoList+RequestableProtocol.swift in Sources */,
@@ -755,14 +703,12 @@
 				1D60E740246050AF007E5CA8 /* VehicleprofileArmorList+RequestableProtocol.swift in Sources */,
 				1D60E70324605084007E5CA8 /* ListSetting+JSONDecodingProtocol.swift in Sources */,
 				1D60E7222460509A007E5CA8 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift in Sources */,
-				1DE1F949245EC75A002866A3 /* WOTSaveSessionRequest.swift in Sources */,
 				1D60E745246050AF007E5CA8 /* ModulesTree+RequestableProtocol.swift in Sources */,
 				1D60E7252460509A007E5CA8 /* VehicleprofileTurret+JSONMappableProtocol.swift in Sources */,
 				1D60E462245F59FB007E5CA8 /* VehicleprofileArmor+CoreDataProperties.swift in Sources */,
 				1D60E7242460509A007E5CA8 /* VehicleprofileRadio+JSONMappableProtocol.swift in Sources */,
 				1D60E47A245F59FB007E5CA8 /* Module+CoreDataProperties.swift in Sources */,
 				1DE1F944245EC75A002866A3 /* WOTWEBRequestLogout.swift in Sources */,
-				1D41162524646E3B009070AD /* RootTagRuleBuilder.swift in Sources */,
 				1D60E741246050AF007E5CA8 /* VehicleprofileAmmo+RequestableProtocol.swift in Sources */,
 				1D60E470245F59FB007E5CA8 /* UserSession+CoreDataClass.swift in Sources */,
 				1D60E461245F59FB007E5CA8 /* VehicleprofileRadio+CoreDataClass.swift in Sources */,
@@ -770,12 +716,10 @@
 				1D60E480245F59FB007E5CA8 /* VehicleprofileAmmoList+CoreDataProperties.swift in Sources */,
 				1D60E746246050AF007E5CA8 /* VehicleprofileTurret+RequestableProtocol.swift in Sources */,
 				1D60E73E246050AF007E5CA8 /* VehicleprofileSuspension+RequestableProtocol.swift in Sources */,
-				1DE1F946245EC75A002866A3 /* WOTClearSessionRequest.swift in Sources */,
 				1D60E47B245F59FB007E5CA8 /* VehicleprofileArmor+CoreDataClass.swift in Sources */,
 				1D60E71C2460509A007E5CA8 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift in Sources */,
 				1D60E6FA24605084007E5CA8 /* VehicleprofileTurret+JSONDecodingProtocol.swift in Sources */,
 				1D60E7202460509A007E5CA8 /* VehicleprofileModule+JSONMappableProtocol.swift in Sources */,
-				1D4116272464A8A1009070AD /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */,
 				1D60E478245F59FB007E5CA8 /* VehicleprofileSuspension+CoreDataClass.swift in Sources */,
 				1D60E71F2460509A007E5CA8 /* VehicleprofileAmmoList+JSONMappableProtocol.swift in Sources */,
 				1D60E46A245F59FB007E5CA8 /* VehicleprofileAmmoDamage+CoreDataClass.swift in Sources */,

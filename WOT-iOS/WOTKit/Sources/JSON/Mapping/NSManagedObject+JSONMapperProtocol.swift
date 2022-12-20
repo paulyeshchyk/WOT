@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import ContextSDK
 
 extension NSManagedObject: JSONMappableProtocol {
     public enum FieldKeys: String, CodingKey {
@@ -16,12 +17,12 @@ extension NSManagedObject: JSONMappableProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    open func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    open func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
     @objc
-    open func mapping(array: [Any], objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    open func mapping(array: [Any], objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

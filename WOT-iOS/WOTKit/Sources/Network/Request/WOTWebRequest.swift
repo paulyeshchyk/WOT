@@ -6,19 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
-open class WOTWEBRequest: WOTRequest {
-    public var userInfo: JSON?
+open class HttpRequest: Request {
+
     public var httpBodyData: Data?
-
-    deinit {
-        //
-    }
 
     override open var description: String {
         let pumperDescription: String
-        if let pumper = pumper {
+        if let pumper = httpDataReceiver {
             pumperDescription = String(describing: pumper)
         } else {
             pumperDescription = ""
@@ -28,10 +24,8 @@ open class WOTWEBRequest: WOTRequest {
     }
 
     override open var hash: Int {
-        return (pumper as? NSObject)?.hash ?? path.hashValue
+        return (httpDataReceiver as? NSObject)?.hash ?? path.hashValue
     }
-
-    private var pumper: WOTWebDataPumperProtocol?
 
     override open func cancel(with error: Error?) {
         self.listeners.compactMap { $0 }.forEach {
@@ -39,28 +33,32 @@ open class WOTWEBRequest: WOTRequest {
         }
     }
 
-    override open func start(withArguments: WOTRequestArgumentsProtocol) throws {
-        guard let hostConfig = hostConfiguration else {
-            throw WEBError.hostConfigurationIsNotDefined
-        }
-        self.pumper = WOTWebDataPumper(hostConfiguration: hostConfig, args: withArguments, httpBodyData: self.httpBodyData, service: self, completion: requestHasFinishedLoad(data:error:))
-        self.pumper?.start()
+    private var httpDataReceiver: HttpDataReceiverProtocol?
+    override open func start(withArguments: RequestArgumentsProtocol) throws {
+        let httpDataReceiver = HttpDataReceiver(context: context, args: withArguments, httpBodyData: httpBodyData, service: self)
 
-        self.listeners.compactMap { $0 }.forEach {
-            $0.request(self, startedWith: hostConfig, args: withArguments)
+        httpDataReceiver.onStart = { [weak self] _ in
+            guard let self = self else { return }
+            self.listeners.compactMap { $0 }.forEach {
+                $0.request(self, startedWith: self.context.hostConfiguration, args: withArguments)
+            }
         }
+        httpDataReceiver.onComplete = { [weak self] _, data, error in
+            guard let self = self else { return }
+            self.listeners.compactMap { $0 }.forEach {
+                $0.request(self, finishedLoadData: data, error: error)
+            }
+        }
+
+        httpDataReceiver.start()
+        self.httpDataReceiver = httpDataReceiver
+
     }
 }
 
 // MARK: - WOTWebServiceProtocol
 
-extension WOTWEBRequest: WOTWebServiceProtocol {
+extension HttpRequest: WOTWebServiceProtocol {
     open var method: HTTPMethods { return .POST }
     open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
-
-    public func requestHasFinishedLoad(data: Data?, error: Error?) {
-        self.listeners.compactMap { $0 }.forEach {
-            $0.request(self, finishedLoadData: data, error: error)
-        }
-    }
 }

@@ -7,6 +7,7 @@
 //
 
 import WOTPivot
+import ContextSDK
 
 class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
   #warning("Pivot configuration: collapse")
@@ -84,10 +85,10 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 
 class WOTTankPivotModel: WOTPivotDataModel {
     var logInspector: LogInspectorProtocol
-    var coreDataStore: WOTDataLocalStoreProtocol
-    var requestManager: WOTRequestManagerProtocol
+    var coreDataStore: DataStoreProtocol
+    var requestManager: RequestManagerProtocol
 
-    required init(modelListener: WOTDataModelListener, coreDataStore: WOTDataLocalStoreProtocol, requestManager: WOTRequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
+    required init(modelListener: WOTDataModelListener, coreDataStore: DataStoreProtocol, requestManager: RequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
         let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: coreDataStore)
         self.coreDataStore = coreDataStore
@@ -139,7 +140,7 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         return "WOTTankPivotModel".hashValue
     }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: WOTRequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         DispatchQueue.main.async {
             super.loadModel()
             if completionResultType == .finished || completionResultType == .noData {
@@ -148,5 +149,5 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         }
     }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: WOTRequestProtocol) {}
+    func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {}
 }

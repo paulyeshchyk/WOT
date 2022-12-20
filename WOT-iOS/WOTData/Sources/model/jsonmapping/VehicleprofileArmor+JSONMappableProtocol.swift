@@ -7,11 +7,12 @@
 //
 
 import WOTKit
+import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileArmor {
-    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         //
         try self.decode(json: json)
         //

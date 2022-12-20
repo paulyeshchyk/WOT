@@ -14,4 +14,5 @@ public enum WEBError: Error {
     case requestIsNotCreated
     case requestWasNotAddedToGroup
     case hostConfigurationIsNotDefined
+    case urlNotCreated
 }

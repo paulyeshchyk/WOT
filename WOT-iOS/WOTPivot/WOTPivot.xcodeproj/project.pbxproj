@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5021A54E4E001AF67F /* VIPER.swift */; };
-		1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */; };
-		1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5321A54E4E001AF67F /* PivotVIPER.swift */; };
-		1D126A5921A54E4E001AF67F /* PivotWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5421A54E4E001AF67F /* PivotWireFrame.swift */; };
-		1D126A5A21A54E4E001AF67F /* VIPERView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D126A5521A54E4E001AF67F /* VIPERView.swift */; };
 		1D5D021823C7334F004B0314 /* WOTTankPivotNodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */; };
 		1D5D0AFD23CCB012004B0314 /* WOTPivotMetadataPermutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AFB23CCB012004B0314 /* WOTPivotMetadataPermutator.swift */; };
 		1D5D0AFE23CCB02B004B0314 /* WOTPivotMetadataPermutatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0AFA23CCB012004B0314 /* WOTPivotMetadataPermutatorTest.swift */; };
@@ -104,11 +99,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D126A5021A54E4E001AF67F /* VIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPER.swift; sourceTree = "<group>"; };
-		1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERWireFrame.swift; sourceTree = "<group>"; };
-		1D126A5321A54E4E001AF67F /* PivotVIPER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotVIPER.swift; sourceTree = "<group>"; };
-		1D126A5421A54E4E001AF67F /* PivotWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PivotWireFrame.swift; sourceTree = "<group>"; };
-		1D126A5521A54E4E001AF67F /* VIPERView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VIPERView.swift; sourceTree = "<group>"; };
 		1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotNodeCreator.swift; sourceTree = "<group>"; };
 		1D5D0AFA23CCB012004B0314 /* WOTPivotMetadataPermutatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutatorTest.swift; sourceTree = "<group>"; };
 		1D5D0AFB23CCB012004B0314 /* WOTPivotMetadataPermutator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotMetadataPermutator.swift; sourceTree = "<group>"; };
@@ -198,26 +188,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1D126A5221A54E4E001AF67F /* Pivot */ = {
-			isa = PBXGroup;
-			children = (
-				1D126A5321A54E4E001AF67F /* PivotVIPER.swift */,
-				1D126A5421A54E4E001AF67F /* PivotWireFrame.swift */,
-			);
-			path = Pivot;
-			sourceTree = "<group>";
-		};
-		1D256CD9212D4182002FCD78 /* viper */ = {
-			isa = PBXGroup;
-			children = (
-				1D126A5221A54E4E001AF67F /* Pivot */,
-				1D126A5021A54E4E001AF67F /* VIPER.swift */,
-				1D126A5521A54E4E001AF67F /* VIPERView.swift */,
-				1D126A5121A54E4E001AF67F /* VIPERWireFrame.swift */,
-			);
-			path = viper;
-			sourceTree = "<group>";
-		};
 		1D5D021623C73330004B0314 /* WOTPivotNodeCreator */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,7 +341,6 @@
 			isa = PBXGroup;
 			children = (
 				1DE558F72124571000576D41 /* models */,
-				1D256CD9212D4182002FCD78 /* viper */,
 				1DA83C89213558AB0039CB4B /* adapters */,
 				1D5D0B0623CDA129004B0314 /* metrics */,
 				1D79EDA8212439C2005FBA34 /* WOTPivot.h */,
@@ -672,8 +641,6 @@
 				1D5D0B0323CCB086004B0314 /* WOTNodeEnumerator.swift in Sources */,
 				1D60E5DE245FEA6F007E5CA8 /* WOTDataFetchController.swift in Sources */,
 				1D65F7F72216A60E006A85E4 /* WOTTankConfigurationFlowLayout.swift in Sources */,
-				1D126A5921A54E4E001AF67F /* PivotWireFrame.swift in Sources */,
-				1D126A5A21A54E4E001AF67F /* VIPERView.swift in Sources */,
 				1DE559082124571000576D41 /* WOTTreeDataModelProtocol.swift in Sources */,
 				1D65F82A2216A7B8006A85E4 /* WOTDimensionCalculator.swift in Sources */,
 				1D65F82D2216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift in Sources */,
@@ -693,16 +660,13 @@
 				1D5D0AFD23CCB012004B0314 /* WOTPivotMetadataPermutator.swift in Sources */,
 				1DC6D4C9212576EA00A1C9C2 /* WOTPivotDataModel.swift in Sources */,
 				1D65F8262216A7B8006A85E4 /* WOTDimensionRowCalculator.swift in Sources */,
-				1D126A5621A54E4E001AF67F /* VIPER.swift in Sources */,
 				1DE558E32124560500576D41 /* WOTPivotNode.swift in Sources */,
-				1D126A5821A54E4E001AF67F /* PivotVIPER.swift in Sources */,
 				1DE5591E212458E100576D41 /* WOTTreeConnectorNodeIndex.swift in Sources */,
 				1D65F8242216A7B8006A85E4 /* WOTDimension.swift in Sources */,
 				1DE559572125586200576D41 /* WOTPivotNodeIndexProtocol.swift in Sources */,
 				1DBF89A4240D0F08007DF8B2 /* WOTTankMetricOptions.swift in Sources */,
 				1D65F7F52216A60E006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift in Sources */,
 				1DBF89AC240D3137007DF8B2 /* WOTTankIDList.swift in Sources */,
-				1D126A5721A54E4E001AF67F /* VIPERWireFrame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

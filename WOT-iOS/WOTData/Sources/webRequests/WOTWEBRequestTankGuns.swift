@@ -7,9 +7,10 @@
 //
 
 import WOTKit
+import ContextSDK
 
 @objc
-public class WOTWEBRequestTankGuns: WOTWEBRequest {
+public class WOTWEBRequestTankGuns: HttpRequest {
     override public var method: HTTPMethods { return .POST }
 
     override public var path: String {

@@ -7,9 +7,10 @@
 //
 
 import WOTKit
+import ContextSDK
 
 @objc
-public class WOTWEBRequestSuspension: WOTWEBRequest {
+public class WOTWEBRequestSuspension: HttpRequest {
     override public var method: HTTPMethods { return .POST }
 
     override public var path: String {

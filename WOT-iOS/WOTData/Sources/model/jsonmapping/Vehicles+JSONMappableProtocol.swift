@@ -7,11 +7,12 @@
 //
 
 import WOTKit
+import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
 extension Vehicles {
-    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: WOTRequestManagerProtocol) throws {
+    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         //
         try self.decode(json: json)
         //
@@ -32,7 +33,7 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(objectContext: ObjectContextProtocol, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol) {
+    private func modulesTreeMapping(objectContext: ObjectContextProtocol, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol?, requestManager: RequestManagerProtocol) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -59,7 +60,7 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(objectContext: ObjectContextProtocol, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: WOTRequestManagerProtocol) {
+    private func submoduleMapping(objectContext: ObjectContextProtocol, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: MappingCoordinatorProtocol?, requestManager: RequestManagerProtocol) {
         let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
@@ -76,7 +77,7 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             guard let objectContext = fetchResult.objectContext else {
                 assertionFailure("object context is not defined")
                 return
@@ -96,7 +97,7 @@ extension Vehicles {
             }
             modulesTree.default_profile = vehicles.default_profile
             vehicles.addToModules_tree(modulesTree)
-            coreDataStore?.stash(objectContext: objectContext) { error in
+            dataStore?.stash(objectContext: objectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -108,7 +109,7 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             guard let managedObjectContext = fetchResult.objectContext else {
                 assertionFailure("object context is not defined")
                 return
@@ -125,7 +126,7 @@ extension Vehicles {
             vehicles.modules_tree?.forEach {
                 ($0 as? ModulesTree)?.default_profile = defaultProfile
             }
-            coreDataStore?.stash(objectContext: managedObjectContext) { error in
+            dataStore?.stash(objectContext: managedObjectContext) { error in
                 completion(fetchResult, error)
             }
         }
@@ -137,8 +138,8 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            coreDataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
+            dataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
                 completion(fetchResult, error)
             })
         }
@@ -150,8 +151,8 @@ extension Vehicles {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
 
-        override public func process(fetchResult: FetchResult, coreDataStore: WOTDataLocalStoreProtocol?, completion: @escaping FetchResultErrorCompletion) {
-            coreDataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
+        override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
+            dataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
                 completion(fetchResult, error)
             })
         }

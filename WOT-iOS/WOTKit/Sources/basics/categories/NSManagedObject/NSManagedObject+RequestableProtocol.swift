@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import ContextSDK
 
 extension NSManagedObject: RequestableProtocol {
     @objc

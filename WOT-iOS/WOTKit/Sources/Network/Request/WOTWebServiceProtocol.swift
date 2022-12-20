@@ -6,9 +6,11 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
-@objc public enum HTTPMethods: Int {
+
+@objc
+public enum HTTPMethods: Int {
     case GET
     case HEAD
     case POST
@@ -37,7 +39,6 @@ import Foundation
 public protocol WOTWebServiceProtocol {
     var method: HTTPMethods { get }
     var path: String { get }
-    func requestHasFinishedLoad(data: Data?, error: Error?)
 }
 
 @objc

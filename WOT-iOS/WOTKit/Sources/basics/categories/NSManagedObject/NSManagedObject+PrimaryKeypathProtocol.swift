@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import ContextSDK
 
 extension NSManagedObject: PrimaryKeypathProtocol {
     open class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
