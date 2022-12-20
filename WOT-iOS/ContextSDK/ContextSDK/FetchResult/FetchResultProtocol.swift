@@ -28,7 +28,6 @@ public protocol FetchResultProtocol: AnyObject {
 public protocol ObjectContextProtocol: AnyObject {
     var name: String? { get }
     func object(byID: AnyObject) -> AnyObject?
-    func performBBlock(_ block: (() -> Void)?)
     func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) -> AnyObject?
     func hasTheChanges() -> Bool
     func saveContext()

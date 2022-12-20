@@ -10,7 +10,7 @@ import ContextSDK
 
 @objc
 public class WOTWEBRequestFactory: NSObject {
-    public static func fetchVehiclePivotData(_ requestManager: RequestManagerProtocol?, listener: WOTRequestManagerListenerProtocol) throws {
+    public static func fetchVehiclePivotData(_ requestManager: RequestManagerProtocol?, listener: RequestManagerListenerProtocol) throws {
         guard let requestManager = requestManager else {
             throw LogicError.objectNotDefined
         }
@@ -24,7 +24,7 @@ public class WOTWEBRequestFactory: NSObject {
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, requestManager: RequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) throws {
+    public static func fetchVehicleTreeData(vehicleId: Int, requestManager: RequestManagerProtocol, listener: RequestManagerListenerProtocol) throws {
         let arguments = RequestArguments()
         arguments.setValues([vehicleId], forKey: WOTApiKeys.tank_id)
         arguments.setValues(Vehicles.classKeypaths(), forKey: WGWebQueryArgs.fields)
@@ -36,7 +36,7 @@ public class WOTWEBRequestFactory: NSObject {
     }
 
     @objc
-    public static func fetchProfileData(profileTankId: Int, requestManager: RequestManagerProtocol, listener: WOTRequestManagerListenerProtocol) throws {
+    public static func fetchProfileData(profileTankId: Int, requestManager: RequestManagerProtocol, listener: RequestManagerListenerProtocol) throws {
 //        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue)
 //        let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
 //

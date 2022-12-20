@@ -28,6 +28,7 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
         } catch let error {
             self.listener?.fetchFailed(by: self, withError: error)
         }
+        fetchResultController.delegate = nil
     }
 
     public func setFetchListener(_ listener: WOTDataFetchControllerListenerProtocol?) {
@@ -35,13 +36,13 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
     }
 
     public func fetchedObjects() -> [AnyObject]? {
-        return self.fetchResultController?.fetchedObjects
+        return fetchResultController?.fetchedObjects
     }
 
     open func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
-        let filtered = (self.fetchedObjects()?.filter { predicate.evaluate(with: $0) })
+        let filtered = (fetchedObjects()?.filter { predicate.evaluate(with: $0) })
         filteredCompletion(predicate, filtered)
     }
 }

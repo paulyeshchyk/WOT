@@ -23,14 +23,16 @@ open class WOTDataFetchController: NSObject {
     public var fetchResultController: WOTDataFetchedResultController?
 
     public func initFetchController(block: @escaping (WOTDataFetchedResultController) -> Void) throws {
-        guard let managedObjectContext = self.dataProvider?.workingContext() else {
+        guard let managedObjectContext = dataProvider?.workingContext() else {
             throw WOTCoredataStoreError.contextIsNotDefined
         }
 
-        self.dataProvider?.perform(objectContext: managedObjectContext) { context in
+        dataProvider?.perform(objectContext: managedObjectContext) {[weak self] context in
 
-            let request = self.nodeFetchRequestCreator.fetchRequest
-            guard let result = self.dataProvider?.fetchResultController(for: request, andContext: context) as? NSFetchedResultsController<NSFetchRequestResult> else {
+            guard let request = self?.nodeFetchRequestCreator.fetchRequest else {
+                fatalError("no request found")
+            }
+            guard let result = self?.dataProvider?.fetchResultController(for: request, andContext: context) as? NSFetchedResultsController<NSFetchRequestResult> else {
                 fatalError("no FetchResultController created")
             }
             result.delegate = self
