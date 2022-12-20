@@ -10,7 +10,7 @@ public typealias ThrowableCompletion = (Error?) -> Void
 
 @objc
 public protocol DataStoreContainerProtocol {
-    @objc var coreDataStore: DataStoreProtocol? { get set }
+    @objc var dataStore: DataStoreProtocol? { get set }
 }
 
 @objc

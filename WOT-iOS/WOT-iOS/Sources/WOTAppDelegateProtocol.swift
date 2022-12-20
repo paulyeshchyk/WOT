@@ -17,5 +17,5 @@ public protocol WOTAppDelegateProtocol: LogInspectorContainerProtocol,
                                         RequestListenerContainerProtocol,
                                         SessionManagerContainerProtocol,
                                         RequestRegistratorContainerProtocol,
-                                        WOTMappingCoordinatorContainerProtocol,
-                                        WOTResponseAdapterCreatorContainerProtocol {}
+                                        MappingCoordinatorContainerProtocol,
+                                        ResponseAdapterCreatorContainerProtocol {}

@@ -40,6 +40,8 @@
 		DA0E80982950B07C00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808C2950B07B00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */; };
 		DA0E809A2950B07C00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */; };
 		DA0E809B2950B07C00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */; };
+		DA5F18572951C10900191864 /* LogInspectorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5F18562951C10900191864 /* LogInspectorProtocol.swift */; };
+		DA5F185A2951C58200191864 /* BasicErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5F18592951C58200191864 /* BasicErrors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +91,8 @@
 		DA0E808C2950B07B00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift; sourceTree = "<group>"; };
+		DA5F18562951C10900191864 /* LogInspectorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInspectorProtocol.swift; sourceTree = "<group>"; };
+		DA5F18592951C58200191864 /* BasicErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicErrors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,8 @@
 		DA0E804D2950668800B44CC6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				DA5F18582951C55E00191864 /* errors */,
+				DA5F18552951C0DC00191864 /* protocols */,
 				DA0E80512950685200B44CC6 /* extensions */,
 				DA0E804E295066A000B44CC6 /* ContextSDK-Core.swift */,
 				DA0E8054295068F100B44CC6 /* URLEncodedProtocol.swift */,
@@ -262,6 +268,22 @@
 				DA0E80862950B07A00B44CC6 /* RootTagRuleBuilder.swift */,
 			);
 			path = RelationLinkParadigm;
+			sourceTree = "<group>";
+		};
+		DA5F18552951C0DC00191864 /* protocols */ = {
+			isa = PBXGroup;
+			children = (
+				DA5F18562951C10900191864 /* LogInspectorProtocol.swift */,
+			);
+			path = protocols;
+			sourceTree = "<group>";
+		};
+		DA5F18582951C55E00191864 /* errors */ = {
+			isa = PBXGroup;
+			children = (
+				DA5F18592951C58200191864 /* BasicErrors.swift */,
+			);
+			path = errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -372,6 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5F18572951C10900191864 /* LogInspectorProtocol.swift in Sources */,
 				DA0E80982950B07C00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */,
 				DA0E80972950B07C00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				DA0E807729509F4F00B44CC6 /* DataStoreProtocol.swift in Sources */,
@@ -382,6 +405,7 @@
 				DA0E804F295066A000B44CC6 /* ContextSDK-Core.swift in Sources */,
 				DA0E80692950919F00B44CC6 /* RequestExpression.swift in Sources */,
 				DA0E806E295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift in Sources */,
+				DA5F185A2951C58200191864 /* BasicErrors.swift in Sources */,
 				DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */,
 				DA0E80932950B07C00B44CC6 /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,

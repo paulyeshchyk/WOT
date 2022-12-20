@@ -12,7 +12,7 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension Vehicles {
-    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
+    override public func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         //
         try self.decode(json: json)
         //
@@ -33,7 +33,7 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(objectContext: ObjectContextProtocol, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: RequestManagerProtocol) {
+    private func modulesTreeMapping(objectContext: ObjectContextProtocol, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol?, requestManager: RequestManagerProtocol) {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -60,7 +60,7 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(objectContext: ObjectContextProtocol, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: WOTMappingCoordinatorProtocol?, requestManager: RequestManagerProtocol) {
+    private func submoduleMapping(objectContext: ObjectContextProtocol, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: MappingCoordinatorProtocol?, requestManager: RequestManagerProtocol) {
         let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]

@@ -8,7 +8,7 @@
 
 import ContextSDK
 
-public class WOTRequestRegistrator: WOTRequestRegistratorProtocol {
+public class RequestRegistrator: RequestRegistratorProtocol {
     public typealias Context = LogInspectorContainerProtocol
     
     private let context: Context
@@ -23,7 +23,7 @@ public class WOTRequestRegistrator: WOTRequestRegistratorProtocol {
 
 // MARK: - WOTRequestBindingProtocol
 
-extension WOTRequestRegistrator {
+extension RequestRegistrator {
     public func requestIds(forClass: AnyClass) -> [WOTRequestIdType] {
         let result = registeredRequests.keys.filter {
             forClass == registeredRequests[$0]?.modelClass()

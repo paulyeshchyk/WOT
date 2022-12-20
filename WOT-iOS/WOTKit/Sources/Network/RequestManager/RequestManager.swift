@@ -11,7 +11,7 @@ import ContextSDK
 @objc
 public class RequestManager: NSObject, RequestManagerProtocol {
     
-    public typealias Context = ResponseParserContainerProtocol & LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & WOTResponseAdapterCreatorContainerProtocol
+    public typealias Context = ResponseParserContainerProtocol & LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & ResponseAdapterCreatorContainerProtocol
     
     private let context: Context
 
@@ -46,18 +46,22 @@ extension RequestManager {
         }
     }
 
+    #warning("2b refactored")
     public func removeListener(_ listener: WOTRequestManagerListenerProtocol) {
-        grouppedListeners.keys.forEach {
-            if var listeners = grouppedListeners[$0] {
-                listeners.removeAll { $0.uuidHash == listener.uuidHash }
-                grouppedListeners[$0] = listeners
-                if let count = grouppedListeners[$0]?.count, count == 0 {
-                    grouppedListeners[$0] = nil
+        grouppedListeners.keys.forEach { uuid in
+            if var listeners = grouppedListeners[uuid] {
+                listeners.removeAll { innerListener in
+                    innerListener.uuidHash == listener.uuidHash
+                }
+                grouppedListeners[uuid] = listeners
+                if let count = grouppedListeners[uuid]?.count, count == 0 {
+                    grouppedListeners[uuid] = nil
                 }
             }
         }
     }
 
+    #warning("2b refactored")
     private func addRequest(_ request: RequestProtocol, forGroupId groupId: WOTRequestIdType) -> Bool {
         var grouppedRequests: [RequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
@@ -106,12 +110,10 @@ extension RequestManager {
 
     public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> RequestProtocol {
         guard
-            let Clazz = context.requestRegistrator?.requestClass(for: requestId) as? NSObject.Type, Clazz.conforms(to: RequestProtocol.self),
-            let result = Clazz.init() as? RequestProtocol else {
+            let Clazz = context.requestRegistrator?.requestClass(for: requestId) as? RequestProtocol.Type else {
             throw RequestCoordinatorError.requestNotFound
         }
-        result.hostConfiguration = context.hostConfiguration
-        return result
+        return Clazz.init(context: context)
     }
 }
 
@@ -160,7 +162,7 @@ extension RequestManager {
 // MARK: - WOTRequestListenerProtocol
 
 extension RequestManager: RequestListenerProtocol {
-    public func request(_ request: RequestProtocol, startedWith: HostConfigurationProtocol, args: RequestArgumentsProtocol) {
+    public func request(_ request: RequestProtocol, startedWith: HostConfigurationProtocol?, args: RequestArgumentsProtocol) {
         context.logInspector?.logEvent(EventWEBStart(request), sender: self)
     }
 
@@ -193,7 +195,7 @@ extension RequestManager: RequestListenerProtocol {
     }
 
     public func request(_ request: RequestProtocol, canceledWith error: Error?) {
-        context.logInspector?.logEvent(EventWEBCancel(request))
+        context.logInspector?.logEvent(EventWEBCancel(request), sender: self)
         removeRequest(request)
     }
 

@@ -10,7 +10,7 @@ import WOTPivot
 import WOTKit
 
 @objc
-public class WOTCoreDataStore: CoreDataStore {
+public class WOTDataStore: DataStore {
     
     override public var applicationDocumentsDirectoryURL: URL? {
         return FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).last

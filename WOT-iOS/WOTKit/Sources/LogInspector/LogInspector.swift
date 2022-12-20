@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 
 @objc
 public class LogInspector: NSObject, LogInspectorProtocol {

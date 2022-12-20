@@ -16,12 +16,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
     public var responseParser: WOTResponseParserProtocol?
     public var requestManager: RequestManagerProtocol?
     public var requestListener: RequestListenerProtocol?
-    public var sessionManager: WOTWebSessionManagerProtocol?
+    public var sessionManager: SessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
-    public var coreDataStore: DataStoreProtocol?
-    public var requestRegistrator: WOTRequestRegistratorProtocol?
-    public var mappingCoordinator: WOTMappingCoordinatorProtocol?
-    public var responseAdapterCreator: WOTResponseAdapterCreatorProtocol?
+    public var dataStore: DataStoreProtocol?
+    public var requestRegistrator: RequestRegistratorProtocol?
+    public var mappingCoordinator: MappingCoordinatorProtocol?
+    public var responseAdapterCreator: ResponseAdapterCreatorProtocol?
 
     
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -30,12 +30,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         let logPriorities: [LogEventType]? = [.error, .web, .warning, .lifeCycle]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
-        hostConfiguration = WOTWebHostConfiguration()
-        sessionManager = WOTWebSessionManager()
-        coreDataStore = WOTCoreDataStore(context: self)
-        requestRegistrator = WOTRequestRegistrator(context: self)
-        mappingCoordinator = WOTMappingCoordinator(context: self)
-        responseAdapterCreator = WOTResponseAdapterCreator(context: self)
+        hostConfiguration = HostConfiguration()
+        sessionManager = SessionManager()
+        dataStore = WOTDataStore(context: self)
+        requestRegistrator = RequestRegistrator(context: self)
+        mappingCoordinator = MappingCoordinator(context: self)
+        responseAdapterCreator = ResponseAdapterCreator(context: self)
 
         responseParser = RESTResponseParser(context: self)
         requestManager = RequestManager(context: self)
@@ -52,7 +52,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
     }
 }
 
-extension WOTRequestRegistratorProtocol {
+extension RequestRegistratorProtocol {
     public func registerDefaultRequests() {
         requestId(WebRequestType.guns.rawValue, registerRequestClass: WOTWEBRequestTankGuns.self, registerDataAdapterClass: JSONAdapter.self)
         requestId(WebRequestType.login.rawValue, registerRequestClass: WOTWEBRequestLogin.self, registerDataAdapterClass: JSONAdapter.self)
@@ -64,8 +64,6 @@ extension WOTRequestRegistratorProtocol {
         requestId(WebRequestType.vehicles.rawValue, registerRequestClass: WOTWEBRequestTankVehicles.self, registerDataAdapterClass: JSONAdapter.self)
         requestId(WebRequestType.moduleTree.rawValue, registerRequestClass: WOTWEBRequestModulesTree.self, registerDataAdapterClass: JSONAdapter.self)
         requestId(WebRequestType.suspension.rawValue, registerRequestClass: WOTWEBRequestSuspension.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.sessionSave.rawValue, registerRequestClass: WOTSaveSessionRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.sessionClear.rawValue, registerRequestClass: WOTClearSessionRequest.self, registerDataAdapterClass: JSONAdapter.self)
     }
 }
 
@@ -73,8 +71,6 @@ public enum WebRequestType: String {
     case unknown
     case login
     case logout
-    case sessionSave
-    case sessionClear
     case suspension
     case turrets
     case guns

@@ -69,9 +69,9 @@
 		1D5144E8212D8C58006FD577 /* WOTPivotConstructorViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5144E6212D8C58006FD577 /* WOTPivotConstructorViewController~ipad.xib */; };
 		1D519D1E1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D1D1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m */; };
 		1D519D3A1B4FD42000D3A286 /* WOTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D391B4FD42000D3A286 /* WOTProgressView.m */; };
-		1D56692D2424D121008458AF /* WOTWebHostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669262424D121008458AF /* WOTWebHostConfiguration.swift */; };
+		1D56692D2424D121008458AF /* HostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669262424D121008458AF /* HostConfiguration.swift */; };
 		1D56692E2424D121008458AF /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669282424D121008458AF /* WOTSessionManager.m */; };
-		1D56692F2424D121008458AF /* WOTWebSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D56692A2424D121008458AF /* WOTWebSessionManager.swift */; };
+		1D56692F2424D121008458AF /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D56692A2424D121008458AF /* SessionManager.swift */; };
 		1D5669302424D121008458AF /* WOTSaveSessionResponseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D56692C2424D121008458AF /* WOTSaveSessionResponseAdapter.swift */; };
 		1D5669B12424DEF5008458AF /* WOTTankDetailDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669802424DEF5008458AF /* WOTTankDetailDatasource.m */; };
 		1D5669B22424DEF5008458AF /* WOTTankDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669822424DEF5008458AF /* WOTTankDetailSection.m */; };
@@ -381,9 +381,9 @@
 		1D519D381B4FD42000D3A286 /* WOTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProgressView.h; sourceTree = "<group>"; };
 		1D519D391B4FD42000D3A286 /* WOTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProgressView.m; sourceTree = "<group>"; };
 		1D5669252424D121008458AF /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
-		1D5669262424D121008458AF /* WOTWebHostConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebHostConfiguration.swift; sourceTree = "<group>"; };
+		1D5669262424D121008458AF /* HostConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostConfiguration.swift; sourceTree = "<group>"; };
 		1D5669282424D121008458AF /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
-		1D56692A2424D121008458AF /* WOTWebSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebSessionManager.swift; sourceTree = "<group>"; };
+		1D56692A2424D121008458AF /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		1D56692C2424D121008458AF /* WOTSaveSessionResponseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTSaveSessionResponseAdapter.swift; sourceTree = "<group>"; };
 		1D5669382424D9CC008458AF /* WOTRequestIds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTRequestIds.h; sourceTree = "<group>"; };
 		1D56697F2424DEF5008458AF /* WOTTankDetailSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailSection.h; sourceTree = "<group>"; };
@@ -908,8 +908,8 @@
 			children = (
 				1D5669252424D121008458AF /* WOTSessionManager.h */,
 				1D5669282424D121008458AF /* WOTSessionManager.m */,
-				1D56692A2424D121008458AF /* WOTWebSessionManager.swift */,
-				1D5669262424D121008458AF /* WOTWebHostConfiguration.swift */,
+				1D56692A2424D121008458AF /* SessionManager.swift */,
+				1D5669262424D121008458AF /* HostConfiguration.swift */,
 				1D56692B2424D121008458AF /* Session */,
 			);
 			path = Session;
@@ -2227,11 +2227,11 @@
 				1D6FF4F62106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m in Sources */,
 				1DE1FA15245EE4F7002866A3 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
-				1D56692D2424D121008458AF /* WOTWebHostConfiguration.swift in Sources */,
+				1D56692D2424D121008458AF /* HostConfiguration.swift in Sources */,
 				1D1795ED211D9ACA00A0E42E /* WOTTankPivotViewController.swift in Sources */,
 				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,
-				1D56692F2424D121008458AF /* WOTWebSessionManager.swift in Sources */,
+				1D56692F2424D121008458AF /* SessionManager.swift in Sources */,
 				1DD46B3F1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */,

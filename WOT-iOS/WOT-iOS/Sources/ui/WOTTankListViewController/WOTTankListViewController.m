@@ -194,7 +194,7 @@
     [fetchRequest setPredicate:self.filterByPredicate];
     
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<DataStoreProtocol> coreDataProvider = appDelegate.coreDataStore;
+    id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
     self.fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
     self.fetchedResultController.delegate = self;
     

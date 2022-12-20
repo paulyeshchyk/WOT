@@ -8,11 +8,11 @@
 
 @objc
 public protocol SessionManagerContainerProtocol {
-    @objc var sessionManager: WOTWebSessionManagerProtocol? { get set }
+    @objc var sessionManager: SessionManagerProtocol? { get set }
 }
 
 @objc
-public protocol WOTWebSessionManagerProtocol {
+public protocol SessionManagerProtocol {
     func login()
     func logout()
 }

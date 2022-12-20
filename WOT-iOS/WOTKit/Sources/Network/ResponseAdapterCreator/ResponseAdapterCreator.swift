@@ -8,9 +8,9 @@
 
 import ContextSDK
 
-public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
+public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
     
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestRegistratorContainerProtocol & WOTMappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestRegistratorContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
     
     private let context: Context
 
@@ -33,7 +33,7 @@ public class WOTResponseAdapterCreator: WOTResponseAdapterCreatorProtocol {
         var adapters: [DataAdapterProtocol] = .init()
         byRequestIdTypes.forEach { requestIdType in
             do {
-                let adapter = try self.responseAdapterInstance(for: requestIdType, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: requestManager)
+                let adapter = try responseAdapterInstance(for: requestIdType, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: requestManager)
                 adapters.append(adapter)
             } catch {
                 context.logInspector?.logEvent(EventError(error, details: nil), sender: self)

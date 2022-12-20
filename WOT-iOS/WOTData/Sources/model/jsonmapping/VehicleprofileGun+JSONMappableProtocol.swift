@@ -12,7 +12,7 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileGun {
-    public override func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
+    public override func mapping(json: JSON, objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         //
         try self.decode(json: json)
         //

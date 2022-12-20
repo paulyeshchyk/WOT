@@ -66,7 +66,7 @@
 
     NSError *error = nil;
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<DataStoreProtocol> coreDataProvider = appDelegate.coreDataStore;
+    id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
     NSManagedObjectContext *context = [coreDataProvider workingContext];
     NSArray *objects = [context executeFetchRequest:request error:&error];
     NSDictionary *requestValues = [objects lastObject];

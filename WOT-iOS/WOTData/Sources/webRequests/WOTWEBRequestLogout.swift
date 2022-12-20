@@ -10,7 +10,7 @@ import WOTKit
 import ContextSDK
 
 @objc
-public class WOTWEBRequestLogout: WOTWEBRequest {
+public class WOTWEBRequestLogout: HttpRequest {
     override public var method: HTTPMethods { return .POST }
 
     override public var path: String {

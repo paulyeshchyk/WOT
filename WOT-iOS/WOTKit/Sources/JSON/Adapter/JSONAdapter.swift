@@ -79,7 +79,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
                     return
                 }
 
-                self.linker.process(fetchResult: fetchResult, dataStore: self.context.coreDataStore) { _, error in
+                self.linker.process(fetchResult: fetchResult, dataStore: self.context.dataStore) { _, error in
                     if let error = error {
                         self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                     }
@@ -108,7 +108,7 @@ extension JSONAdapter {
             }
         }
 
-        context.coreDataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: requestPredicate[.primary]?.predicate, completion: { fetchResult, error in
+        context.dataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: requestPredicate[.primary]?.predicate, completion: { fetchResult, error in
 
             if let error = error {
                 localCallback(fetchResult, error)

@@ -125,7 +125,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        id<DataStoreProtocol> coreDataProvider = appDelegate.coreDataStore;
+        id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
@@ -298,7 +298,7 @@
 }
 
 
-- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(id<HostConfigurationProtocol> _Nonnull)hostConfiguration args:(id<RequestArgumentsProtocol> _Nonnull)args {
+- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(id<HostConfigurationProtocol> _Nullable)hostConfiguration args:(id<RequestArgumentsProtocol> _Nonnull)args {
     
 }
 

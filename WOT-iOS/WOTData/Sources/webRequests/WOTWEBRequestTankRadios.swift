@@ -10,7 +10,7 @@ import WOTKit
 import ContextSDK
 
 @objc
-public class WOTWEBRequestTankRadios: WOTWEBRequest {
+public class WOTWEBRequestTankRadios: HttpRequest {
     override public var method: HTTPMethods { return .POST }
 
     override public var path: String {

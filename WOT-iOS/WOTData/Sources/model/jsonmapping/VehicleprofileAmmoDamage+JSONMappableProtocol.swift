@@ -12,7 +12,7 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmoDamage {
-     override public func mapping(array: [Any], objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: WOTMappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
+     override public func mapping(array: [Any], objectContext: ObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         //
         guard array.count == 3 else {
             throw ErrorVehicleprofileAmmoDamage.arrayIsNotContainingThreeElements

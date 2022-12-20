@@ -9,9 +9,9 @@
 import ContextSDK
 
 @objc
-class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
+class SessionManager: NSObject, SessionManagerProtocol {
     @objc
-    var appManager: WOTAppDelegateProtocol?
+    var appDelegate: WOTAppDelegateProtocol?
 
     @objc
     func login() {}

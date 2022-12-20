@@ -9,7 +9,7 @@
 import ContextSDK
 
 @objc
-public class WOTWebHostConfiguration: NSObject, HostConfigurationProtocol {
+public class HostConfiguration: NSObject, HostConfigurationProtocol {
     public var applicationID: String {
         return "e3a1e0889ff9c76fa503177f351b853c"
     }

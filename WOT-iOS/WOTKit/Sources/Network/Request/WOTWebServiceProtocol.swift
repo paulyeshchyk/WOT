@@ -38,7 +38,6 @@ import ContextSDK
 public protocol WOTWebServiceProtocol {
     var method: HTTPMethods { get }
     var path: String { get }
-    func requestHasFinishedLoad(data: Data?, error: Error?)
 }
 
 @objc

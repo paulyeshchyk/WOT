@@ -245,7 +245,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        id<DataStoreProtocol> coreDataProvider = appDelegate.coreDataStore;
+        id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
         _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
     }

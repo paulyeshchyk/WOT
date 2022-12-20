@@ -9,12 +9,12 @@
 import ContextSDK
 
 @objc
-public protocol WOTResponseAdapterCreatorContainerProtocol {
-    var responseAdapterCreator: WOTResponseAdapterCreatorProtocol? { get set }
+public protocol ResponseAdapterCreatorContainerProtocol {
+    var responseAdapterCreator: ResponseAdapterCreatorProtocol? { get set }
 }
 
 @objc
-public protocol WOTResponseAdapterCreatorProtocol {
+public protocol ResponseAdapterCreatorProtocol {
     func responseAdapterInstance(for requestIdType: WOTRequestIdType, request: RequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: RequestManagerProtocol) throws -> JSONAdapterProtocol
     func responseAdapterInstances(byRequestIdTypes: [WOTRequestIdType], request: RequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: RequestManagerProtocol) -> [DataAdapterProtocol]
 }

@@ -10,11 +10,11 @@ import ContextSDK
 
 @objc
 public protocol RequestRegistratorContainerProtocol {
-    @objc var requestRegistrator: WOTRequestRegistratorProtocol? { get set }
+    @objc var requestRegistrator: RequestRegistratorProtocol? { get set }
 }
 
 @objc
-public protocol WOTRequestRegistratorProtocol {
+public protocol RequestRegistratorProtocol {
 
     func requestIds(forClass: AnyClass) -> [WOTRequestIdType]
     func unregisterDataAdapter(for requestId: WOTRequestIdType)

@@ -10,7 +10,7 @@ import CoreData
 import ContextSDK
 
 @objc
-open class CoreDataStore: NSObject {
+open class DataStore: NSObject {
     
     public typealias Context = LogInspectorContainerProtocol
 
@@ -78,7 +78,7 @@ open class CoreDataStore: NSObject {
     }
 }
 
-extension CoreDataStore {
+extension DataStore {
     // MARK: - Merge Contexts
 
     private func mergeChanges(notification: Notification, toContext: NSManagedObjectContext) {
@@ -99,7 +99,7 @@ extension CoreDataStore {
     }
 
     private func mergeObjects(_ objects: [NSManagedObject], toContext: NSManagedObjectContext, fromNotification: Notification) {
-        context.logInspector?.logEvent(EventCDMerge())
+        context.logInspector?.logEvent(EventCDMerge(), sender: self)
         var updatedObjectsInCurrentContext = Set<NSManagedObject>()
 
         objects.forEach { updatedObject in
@@ -141,7 +141,7 @@ public enum WOTFetcherError: Error, CustomDebugStringConvertible {
 
 // MARK: - WOTDataStoreProtocol
 
-extension CoreDataStore {
+extension DataStore {
     public func stash(block: @escaping ThrowableCompletion) {
         let MAINCONTEXT = self.workingContext()
         stash(objectContext: MAINCONTEXT, block: block)
@@ -185,7 +185,7 @@ extension CoreDataStore {
 
 // MARK: - WOTCoredataStoreProtocol
 
-extension CoreDataStore: DataStoreProtocol {
+extension DataStore: DataStoreProtocol {
 
     public func stash(objectContext: ObjectContextProtocol?, block: @escaping ThrowableCompletion) {
         
@@ -204,7 +204,7 @@ extension CoreDataStore: DataStoreProtocol {
         }
 
         managedObjectContext.saveRecursively(customBlock)
-        context.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
+        context.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid), sender: self)
     }
 
     public func fetchLocal(objectContext: ObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
