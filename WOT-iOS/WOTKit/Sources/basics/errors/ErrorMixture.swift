@@ -42,7 +42,7 @@ public enum ErrorVehicleprofileAmmoPenetration: Error {
     case arrayIsNotContainingThreeElements
 }
 
-public enum WOTCoreDataStoreError: Error, CustomDebugStringConvertible {
+public enum DataStoreError: Error, CustomDebugStringConvertible {
     // MARK: - Definition
 
     case objectNotCreated(AnyClass)

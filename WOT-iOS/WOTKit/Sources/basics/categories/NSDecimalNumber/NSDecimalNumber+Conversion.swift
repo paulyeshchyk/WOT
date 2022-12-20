@@ -62,11 +62,3 @@ public class NSDecimalNumberArray {
         }
     }
 }
-
-//extension DecimalArray: JSONDecoding {
-//    public func decodeWith(_ decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: Fields.self)
-//        //
-//        self.elements = try container.decodeIfPresent([Int].self, forKey: .elements) ?? []
-//    }
-//}

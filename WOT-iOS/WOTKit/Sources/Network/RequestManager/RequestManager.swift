@@ -15,7 +15,7 @@ public class RequestManager: NSObject, RequestManagerProtocol {
     
     private let context: Context
 
-    private var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
+    private var grouppedListeners = [AnyHashable: [RequestManagerListenerProtocol]]()
     private var grouppedRequests: [WOTRequestIdType: [RequestProtocol]] = [:]
     private var grouppedLinkers: [AnyHashable: JSONAdapterLinkerProtocol] = [:]
 
@@ -32,7 +32,7 @@ public class RequestManager: NSObject, RequestManagerProtocol {
 // MARK: - RequestManagerProtocol
 
 extension RequestManager {
-    public func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: RequestProtocol) {
+    public func addListener(_ listener: RequestManagerListenerProtocol?, forRequest: RequestProtocol) {
         guard let listener = listener else { return }
         let uuid = forRequest.uuid.uuidString
         if var listeners = grouppedListeners[uuid] {
@@ -47,7 +47,7 @@ extension RequestManager {
     }
 
     #warning("2b refactored")
-    public func removeListener(_ listener: WOTRequestManagerListenerProtocol) {
+    public func removeListener(_ listener: RequestManagerListenerProtocol) {
         grouppedListeners.keys.forEach { uuid in
             if var listeners = grouppedListeners[uuid] {
                 listeners.removeAll { innerListener in

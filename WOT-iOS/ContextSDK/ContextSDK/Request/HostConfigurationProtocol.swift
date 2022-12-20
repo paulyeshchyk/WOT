@@ -25,9 +25,3 @@ public protocol HostConfigurationProtocol {
     @objc
     func urlQuery(with: RequestArgumentsProtocol) -> String
 }
-
-@objc
-public protocol WOTHostConfigurationOwner {
-    @objc
-    var hostConfiguration: HostConfigurationProtocol? { get set }
-}

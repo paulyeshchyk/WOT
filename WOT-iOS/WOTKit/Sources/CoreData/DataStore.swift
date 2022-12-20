@@ -118,7 +118,7 @@ extension DataStore {
             do {
                 try toContext.save()
             } catch {
-                context.logInspector?.logEvent(EventError(WOTCoreDataStoreError.contextNotSaved, details: self), sender: nil)
+                context.logInspector?.logEvent(EventError(DataStoreError.contextNotSaved, details: self), sender: nil)
             }
         }
         toContext.processPendingChanges()
@@ -170,7 +170,7 @@ extension DataStore {
         let managedObjectContext = newPrivateContext()
         perform(objectContext: managedObjectContext) { context in
             guard let managedObject = context.findOrCreateObject(forType: Clazz, predicate: requestPredicate) as? NSManagedObject else {
-                self.context.logInspector?.logEvent(EventError(WOTCoreDataStoreError.objectNotCreated(Clazz), details: self), sender: nil)
+                self.context.logInspector?.logEvent(EventError(DataStoreError.objectNotCreated(Clazz), details: self), sender: nil)
                 return
             }
             let managedObjectID = managedObject.objectID
