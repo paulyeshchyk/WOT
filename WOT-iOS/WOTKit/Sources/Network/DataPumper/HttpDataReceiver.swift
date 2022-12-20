@@ -23,7 +23,7 @@ class HttpDataReceiver: NSObject, HttpDataReceiverProtocol {
         return request?.url?.absoluteString ?? "-"
     }
 
-    convenience init(context: HttpDataReceiverProtocol.Context, args: RequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol) {
+    convenience init(context: HttpDataReceiverProtocol.Context, args: RequestArgumentsProtocol, httpBodyData: Data?, service: HttpServiceProtocol) {
         let requestBuilder = HttpRequestBuilder()
         let urlRequest: URLRequest?
         do {

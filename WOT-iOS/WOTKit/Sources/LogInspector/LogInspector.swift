@@ -34,7 +34,6 @@ public class LogInspector: NSObject, LogInspectorProtocol {
         default:
             output?.forEach { $0.debug(event.message, context: event.name) }
         }
-        
     }
 
     private func isLoggable(eventClass: LogEventProtocol.Type) -> Bool {

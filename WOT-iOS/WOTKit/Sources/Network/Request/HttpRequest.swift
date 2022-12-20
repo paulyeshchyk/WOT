@@ -58,7 +58,7 @@ open class HttpRequest: Request {
 
 // MARK: - WOTWebServiceProtocol
 
-extension HttpRequest: WOTWebServiceProtocol {
+extension HttpRequest: HttpServiceProtocol {
     open var method: HTTPMethods { return .POST }
     open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
 }

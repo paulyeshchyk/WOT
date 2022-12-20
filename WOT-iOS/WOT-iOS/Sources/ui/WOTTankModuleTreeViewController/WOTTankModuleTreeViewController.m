@@ -91,7 +91,7 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RequestListenerProtocol, WOTRequestManagerListenerProtocol, WOTDataModelListener>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RequestListenerProtocol, RequestManagerListenerProtocol, WOTDataModelListener>
 
 @property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;

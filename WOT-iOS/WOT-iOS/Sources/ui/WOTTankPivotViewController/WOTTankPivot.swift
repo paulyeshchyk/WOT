@@ -135,7 +135,7 @@ class WOTTankPivotModel: WOTPivotDataModel {
     }
 }
 
-extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
+extension WOTTankPivotModel: RequestManagerListenerProtocol {
     var uuidHash: Int {
         return "WOTTankPivotModel".hashValue
     }
