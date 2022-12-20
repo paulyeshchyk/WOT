@@ -11,6 +11,7 @@ import WOTKit
 
 @objc
 public class WOTCoreDataStore: CoreDataStore {
+    
     override public var applicationDocumentsDirectoryURL: URL? {
         return FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).last
     }

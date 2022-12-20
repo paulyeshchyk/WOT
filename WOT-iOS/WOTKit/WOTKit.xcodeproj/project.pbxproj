@@ -37,8 +37,8 @@
 		1D60E5A4245FE7E5007E5CA8 /* WOTWebRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* WOTWebRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* WOTWebDataPumperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* WOTWebDataPumperProtocol.swift */; };
 		1D60E5A6245FE7E5007E5CA8 /* WOTWebDataPumper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* WOTWebDataPumper.swift */; };
-		1D60E5A7245FE7E5007E5CA8 /* WOTRequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E561245FE7E4007E5CA8 /* WOTRequestManagerProtocol.swift */; };
-		1D60E5A8245FE7E5007E5CA8 /* WOTRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E562245FE7E4007E5CA8 /* WOTRequestManager.swift */; };
+		1D60E5A7245FE7E5007E5CA8 /* RequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E561245FE7E4007E5CA8 /* RequestManagerProtocol.swift */; };
+		1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E562245FE7E4007E5CA8 /* RequestManager.swift */; };
 		1D60E5AB245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E567245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift */; };
 		1D60E5AC245FE7E5007E5CA8 /* URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E568245FE7E5007E5CA8 /* URLEncodedProtocol.swift */; };
 		1D60E5AF245FE7E5007E5CA8 /* WOTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56B245FE7E5007E5CA8 /* WOTRequest.swift */; };
@@ -137,8 +137,8 @@
 		1D60E55D245FE7E4007E5CA8 /* WOTWebRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* WOTWebDataPumperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebDataPumperProtocol.swift; sourceTree = "<group>"; };
 		1D60E55F245FE7E4007E5CA8 /* WOTWebDataPumper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebDataPumper.swift; sourceTree = "<group>"; };
-		1D60E561245FE7E4007E5CA8 /* WOTRequestManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestManagerProtocol.swift; sourceTree = "<group>"; };
-		1D60E562245FE7E4007E5CA8 /* WOTRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequestManager.swift; sourceTree = "<group>"; };
+		1D60E561245FE7E4007E5CA8 /* RequestManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManagerProtocol.swift; sourceTree = "<group>"; };
+		1D60E562245FE7E4007E5CA8 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		1D60E567245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebServiceProtocol.swift; sourceTree = "<group>"; };
 		1D60E568245FE7E5007E5CA8 /* URLEncodedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLEncodedProtocol.swift; sourceTree = "<group>"; };
 		1D60E56B245FE7E5007E5CA8 /* WOTRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTRequest.swift; sourceTree = "<group>"; };
@@ -365,8 +365,8 @@
 		1D60E560245FE7E4007E5CA8 /* RequestManager */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E561245FE7E4007E5CA8 /* WOTRequestManagerProtocol.swift */,
-				1D60E562245FE7E4007E5CA8 /* WOTRequestManager.swift */,
+				1D60E561245FE7E4007E5CA8 /* RequestManagerProtocol.swift */,
+				1D60E562245FE7E4007E5CA8 /* RequestManager.swift */,
 			);
 			path = RequestManager;
 			sourceTree = "<group>";
@@ -707,8 +707,8 @@
 				1D60E5AB245FE7E5007E5CA8 /* WOTWebServiceProtocol.swift in Sources */,
 				1D60E591245FE7E5007E5CA8 /* CoreDataStore.swift in Sources */,
 				1D60E60C24602A8F007E5CA8 /* JSONDecodingProtocol.swift in Sources */,
-				1D60E5A7245FE7E5007E5CA8 /* WOTRequestManagerProtocol.swift in Sources */,
-				1D60E5A8245FE7E5007E5CA8 /* WOTRequestManager.swift in Sources */,
+				1D60E5A7245FE7E5007E5CA8 /* RequestManagerProtocol.swift in Sources */,
+				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				1D41163324653FD4009070AD /* EventRemoteFetch.swift in Sources */,
 				1D60E5BC245FE7E5007E5CA8 /* EventCDFetch.swift in Sources */,
 				1D60E589245FE7E5007E5CA8 /* Coding.swift in Sources */,

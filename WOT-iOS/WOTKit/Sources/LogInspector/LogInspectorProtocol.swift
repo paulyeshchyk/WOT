@@ -34,6 +34,11 @@ public protocol LogEventProtocol {
 }
 
 @objc
+public protocol LogInspectorContainerProtocol {
+    @objc var logInspector: LogInspectorProtocol? { get set }
+}
+
+@objc
 public protocol LogInspectorProtocol: AnyObject {
     func logEvent(_ event: LogEventProtocol?, sender: Any?)
 }

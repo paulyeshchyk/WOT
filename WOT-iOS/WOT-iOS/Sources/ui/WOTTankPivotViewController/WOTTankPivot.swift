@@ -86,9 +86,9 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 class WOTTankPivotModel: WOTPivotDataModel {
     var logInspector: LogInspectorProtocol
     var coreDataStore: DataStoreProtocol
-    var requestManager: WOTRequestManagerProtocol
+    var requestManager: RequestManagerProtocol
 
-    required init(modelListener: WOTDataModelListener, coreDataStore: DataStoreProtocol, requestManager: WOTRequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
+    required init(modelListener: WOTDataModelListener, coreDataStore: DataStoreProtocol, requestManager: RequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
         let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: coreDataStore)
         self.coreDataStore = coreDataStore
@@ -140,7 +140,7 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         return "WOTTankPivotModel".hashValue
     }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         DispatchQueue.main.async {
             super.loadModel()
             if completionResultType == .finished || completionResultType == .noData {
@@ -149,5 +149,5 @@ extension WOTTankPivotModel: WOTRequestManagerListenerProtocol {
         }
     }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: RequestProtocol) {}
+    func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {}
 }

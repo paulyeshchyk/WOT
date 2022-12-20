@@ -9,12 +9,11 @@
 import ContextSDK
 
 @objc
-public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
-    private let responseParser: WOTResponseParserProtocol
-    private let logInspector: LogInspectorProtocol
-    private let hostConfiguration: HostConfigurationProtocol
-    private let requestRegistrator: WOTRequestRegistratorProtocol
-    private let responseAdapterCreator: WOTResponseAdapterCreator
+public class RequestManager: NSObject, RequestManagerProtocol {
+    
+    public typealias Context = ResponseParserContainerProtocol & LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & WOTResponseAdapterCreatorContainerProtocol
+    
+    private let context: Context
 
     private var grouppedListeners = [AnyHashable: [WOTRequestManagerListenerProtocol]]()
     private var grouppedRequests: [WOTRequestIdType: [RequestProtocol]] = [:]
@@ -24,19 +23,15 @@ public class WOTRequestManager: NSObject, WOTRequestManagerProtocol {
         //
     }
 
-    public required init(logInspector: LogInspectorProtocol, hostConfiguration hostConfig: HostConfigurationProtocol, requestRegistrator: WOTRequestRegistratorProtocol, responseParser: WOTResponseParserProtocol, responseAdapterCreator: WOTResponseAdapterCreator) {
-        self.hostConfiguration = hostConfig
-        self.responseParser = responseParser
-        self.logInspector = logInspector
-        self.requestRegistrator = requestRegistrator
-        self.responseAdapterCreator = responseAdapterCreator
+    public required init(context: Context) {
+        self.context = context
         super.init()
     }
 }
 
-// MARK: - WOTRequestManagerProtocol
+// MARK: - RequestManagerProtocol
 
-extension WOTRequestManager {
+extension RequestManager {
     public func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: RequestProtocol) {
         guard let listener = listener else { return }
         let uuid = forRequest.uuid.uuidString
@@ -111,16 +106,16 @@ extension WOTRequestManager {
 
     public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> RequestProtocol {
         guard
-            let Clazz = requestRegistrator.requestClass(for: requestId) as? NSObject.Type, Clazz.conforms(to: RequestProtocol.self),
+            let Clazz = context.requestRegistrator?.requestClass(for: requestId) as? NSObject.Type, Clazz.conforms(to: RequestProtocol.self),
             let result = Clazz.init() as? RequestProtocol else {
             throw RequestCoordinatorError.requestNotFound
         }
-        result.hostConfiguration = hostConfiguration
+        result.hostConfiguration = context.hostConfiguration
         return result
     }
 }
 
-extension WOTRequestManager {
+extension RequestManager {
     private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: MappingParadigmProtocol) throws -> RequestProtocol {
         let request = try createRequest(forRequestId: requestId)
         request.paradigm = paradigm
@@ -128,31 +123,33 @@ extension WOTRequestManager {
     }
 }
 
-extension WOTRequestManager {
+extension RequestManager {
     private func responseAdapters(for request: RequestProtocol) -> [DataAdapterProtocol] {
         guard let jsonAdapterLinker = grouppedLinkers[request.uuid.uuidString] else {
-            logInspector.logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
+            context.logInspector?.logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
             return []
         }
 
         let requestIds = self.requestIds(forRequest: request)
 
         #warning("2b refactored")
-        let adapters = responseAdapterCreator.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: self)
+        guard let adapters = context.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: self) else {
+            return []
+        }
         return adapters
     }
 }
 
 // MARK: - Parser response
-extension WOTRequestManager {
+extension RequestManager {
 
     private func onParseComplete(_ request: RequestProtocol?, _ sender: Any?, error: Error?) {
         guard let request = request else {
-            logInspector.logEvent(EventError(WOTRequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
+            context.logInspector?.logEvent(EventError(WOTRequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
             return
         }
         if let error = error {
-            logInspector.logEvent(EventError(error, details: request), sender: self)
+            context.logInspector?.logEvent(EventError(error, details: request), sender: self)
         }
         grouppedListeners[request.uuid.uuidString]?.forEach { listener in
             listener.requestManager(self, didParseDataForRequest: request, completionResultType: .finished)
@@ -162,19 +159,19 @@ extension WOTRequestManager {
 
 // MARK: - WOTRequestListenerProtocol
 
-extension WOTRequestManager: RequestListenerProtocol {
+extension RequestManager: RequestListenerProtocol {
     public func request(_ request: RequestProtocol, startedWith: HostConfigurationProtocol, args: RequestArgumentsProtocol) {
-        logInspector.logEvent(EventWEBStart(request), sender: self)
+        context.logInspector?.logEvent(EventWEBStart(request), sender: self)
     }
 
     public func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            self.logInspector.logEvent(EventWEBEnd(request), sender: self)
+            context.logInspector?.logEvent(EventWEBEnd(request), sender: self)
             removeRequest(request)
         }
 
         if let error = error {
-            logInspector.logEvent(EventError(error, details: request), sender: self)
+            context.logInspector?.logEvent(EventError(error, details: request), sender: self)
             return
         }
 
@@ -186,17 +183,17 @@ extension WOTRequestManager: RequestListenerProtocol {
         }
 
         do {
-            try responseParser.parseResponse(data: data,
-                                             forRequest: request,
-                                             adapters: adapters,
-                                             onParseComplete: onParseComplete(_:_:error:))
+            try context.responseParser?.parseResponse(data: data,
+                                                      forRequest: request,
+                                                      adapters: adapters,
+                                                      onParseComplete: onParseComplete(_:_:error:))
         } catch {
-            logInspector.logEvent(EventError(error, details: String(describing: request)), sender: self)
+            context.logInspector?.logEvent(EventError(error, details: String(describing: request)), sender: self)
         }
     }
 
     public func request(_ request: RequestProtocol, canceledWith error: Error?) {
-        logInspector.logEvent(EventWEBCancel(request))
+        context.logInspector?.logEvent(EventWEBCancel(request))
         removeRequest(request)
     }
 
@@ -211,55 +208,35 @@ extension WOTRequestManager: RequestListenerProtocol {
     }
 }
 
-extension WOTRequestManager {
+extension RequestManager {
     public func fetchRemote(paradigm: MappingParadigmProtocol) {
-        let requestIDs = requestRegistrator.requestIds(forClass: paradigm.clazz)
-        guard requestIDs.count > 0 else {
-            logInspector.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
+        guard let requestIDs = context.requestRegistrator?.requestIds(forClass: paradigm.clazz), requestIDs.count > 0 else {
+            context.logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
             return
         }
         requestIDs.forEach {
             do {
                 try self.startRequest(by: $0, paradigm: paradigm)
             } catch {
-                self.logInspector.logEvent(EventError(error, details: nil), sender: self)
+                context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
         }
     }
 }
 
-extension WOTRequestManager {
+extension RequestManager {
     public func requestIds(forRequest request: RequestProtocol) -> [WOTRequestIdType] {
-        guard let modelClass = requestRegistrator.modelClass(forRequest: request) else {
+        guard let modelClass = context.requestRegistrator?.modelClass(forRequest: request) else {
             let eventError = EventError(message: "model class not found for request\(type(of: request))")
-            logInspector.logEvent(eventError, sender: self)
+            context.logInspector?.logEvent(eventError, sender: self)
             return []
         }
 
-        let result = requestRegistrator.requestIds(forClass: modelClass)
-        guard result.count > 0 else {
+        guard let result = context.requestRegistrator?.requestIds(forClass: modelClass), result.count > 0 else {
             let eventError = EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))")
-            logInspector.logEvent(eventError, sender: self)
+            context.logInspector?.logEvent(eventError, sender: self)
             return []
         }
         return result
-    }
-}
-
-// MARK: - Extension RequestParadigmProtocol
-
-extension MappingParadigmProtocol {
-    public func buildRequestArguments() -> RequestArguments {
-        let keyPaths = clazz.classKeypaths().compactMap {
-            self.addPreffix(to: $0)
-        }
-
-        let arguments = RequestArguments()
-        #warning("forKey: fields should be refactored")
-        arguments.setValues(keyPaths, forKey: "fields")
-        primaryKeys.forEach {
-            arguments.setValues([$0.value], forKey: $0.nameAlias)
-        }
-        return arguments
     }
 }

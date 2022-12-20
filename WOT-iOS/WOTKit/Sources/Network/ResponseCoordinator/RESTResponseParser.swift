@@ -9,13 +9,17 @@
 import ContextSDK
 
 public class RESTResponseParser: WOTResponseParserProtocol {
+    
+    public typealias Context = LogInspectorContainerProtocol
+
+    private let context: Context
     private struct DataAdaptationPair {
         let dataAdapter: DataAdapterProtocol
         let data: Data?
     }
 
-    public required init() {
-        //
+    public required init(context: Context) {
+        self.context = context
     }
 }
 

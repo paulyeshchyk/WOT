@@ -23,6 +23,11 @@ public protocol RequestProtocol: StartableProtocol {
 }
 
 @objc
+public protocol RequestListenerContainerProtocol {
+    @objc var requestListener: RequestListenerProtocol? { get set }
+}
+
+@objc
 public protocol RequestListenerProtocol {
     @objc
     var hash: Int { get }

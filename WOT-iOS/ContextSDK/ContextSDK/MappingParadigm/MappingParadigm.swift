@@ -15,6 +15,24 @@ public protocol MappingParadigmProtocol {
     func requestPredicate() -> RequestPredicate?
 }
 
+// MARK: - Extension RequestParadigmProtocol
+
+extension MappingParadigmProtocol {
+    public func buildRequestArguments() -> RequestArguments {
+        let keyPaths = clazz.classKeypaths().compactMap {
+            self.addPreffix(to: $0)
+        }
+
+        let arguments = RequestArguments()
+        #warning("forKey: fields should be refactored")
+        arguments.setValues(keyPaths, forKey: "fields")
+        primaryKeys.forEach {
+            arguments.setValues([$0.value], forKey: $0.nameAlias)
+        }
+        return arguments
+    }
+}
+
 public class MappingParadigm: NSObject, MappingParadigmProtocol {
     // MARK: - Public
 

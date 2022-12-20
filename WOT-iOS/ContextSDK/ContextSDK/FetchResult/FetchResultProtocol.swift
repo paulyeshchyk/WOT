@@ -14,12 +14,15 @@ public enum FetchStatus: Int {
     case recovered
 }
 
-//@objc
-//public enum FetchConcurency: Int {
-//    case mainQueue
-//    case privateQueue
-//}
-//
+@objc
+public protocol FetchResultProtocol: AnyObject {
+    var fetchStatus: FetchStatus { get set }
+    var predicate: NSPredicate? { get set }
+    var objectContext: ObjectContextProtocol? { get set }
+    func dublicate() -> FetchResultProtocol
+    func managedObject() -> ManagedObjectProtocol?
+    func managedObject(inManagedObjectContext context: ObjectContextProtocol?) -> ManagedObjectProtocol?
+}
 
 @objc
 public protocol ObjectContextProtocol: AnyObject {
@@ -34,14 +37,4 @@ public protocol ObjectContextProtocol: AnyObject {
 @objc
 public protocol ManagedObjectProtocol: AnyObject {
     var entityName: String { get }
-}
-
-@objc
-public protocol FetchResultProtocol: AnyObject {
-    var fetchStatus: FetchStatus { get set }
-    var predicate: NSPredicate? { get set }
-    var objectContext: ObjectContextProtocol? { get set }
-    func dublicate() -> FetchResultProtocol
-    func managedObject() -> ManagedObjectProtocol?
-    func managedObject(inManagedObjectContext context: ObjectContextProtocol?) -> ManagedObjectProtocol?
 }

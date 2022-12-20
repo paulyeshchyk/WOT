@@ -9,6 +9,11 @@ public typealias ObjectContextCompletion = (ObjectContextProtocol) -> Void
 public typealias ThrowableCompletion = (Error?) -> Void
 
 @objc
+public protocol DataStoreContainerProtocol {
+    @objc var coreDataStore: DataStoreProtocol? { get set }
+}
+
+@objc
 public protocol DataStoreProtocol {
 
     @objc func workingContext() -> ObjectContextProtocol

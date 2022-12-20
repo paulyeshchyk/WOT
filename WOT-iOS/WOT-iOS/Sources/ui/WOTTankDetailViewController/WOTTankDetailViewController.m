@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 @property (nonatomic, strong)WOTTankMetricOptions* metricOptions;
 @property (nonatomic, strong)Vehicles *vehicle;
 @property (nonatomic, strong)NSMutableSet *runningRequestIDs;
-@property (nonatomic, strong) id<WOTRequestManagerProtocol> requestManager;
+@property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
 
 @end
 
@@ -67,9 +67,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 @synthesize appManager;
 
-- (id<WOTRequestManagerProtocol>) requestManager {
+- (id<RequestManagerProtocol>) requestManager {
     id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-    return ((id<WOTAppDelegateProtocol>) delegate).appManager.requestManager;
+    return ((id<WOTAppDelegateProtocol>) delegate).requestManager;
 }
 
 #define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
@@ -245,7 +245,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
 
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        id<DataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+        id<DataStoreProtocol> coreDataProvider = appDelegate.coreDataStore;
         _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
     }
@@ -463,15 +463,15 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     return [@"WOTTankDetailViewController" hash];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(WOTRequestManagerCompletionResultType)finished {
+- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(WOTRequestManagerCompletionResultType)finished {
     [self updateUINeedReset: YES];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
+- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
     //
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
+- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
     //
 }
 

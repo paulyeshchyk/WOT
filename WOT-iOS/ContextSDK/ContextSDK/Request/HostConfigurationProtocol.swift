@@ -7,6 +7,11 @@
 //
 
 @objc
+public protocol HostConfigurationContainerProtocol {
+    @objc var hostConfiguration: HostConfigurationProtocol? { get set }
+}
+
+@objc
 public protocol HostConfigurationProtocol {
     @objc
     var applicationID: String { get }

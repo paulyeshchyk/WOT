@@ -1,5 +1,5 @@
 //
-//  WOTRequestManagerProtocol.swift
+//  RequestManagerProtocol.swift
 //  WOTPivot
 //
 //  Created by Pavel Yeshchyk on 5/3/20.
@@ -9,12 +9,17 @@
 import ContextSDK
 
 @objc
+public protocol RequestManagerContainerProtocol {
+    @objc var requestManager: RequestManagerProtocol? { get set }
+}
+
+@objc
 public protocol WOTRequestCoordinatorBridgeProtocol {
     func createRequest(forRequestId requestId: WOTRequestIdType) throws -> RequestProtocol
 }
 
 @objc
-public protocol WOTRequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
+public protocol RequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
     func addListener(_ listener: WOTRequestManagerListenerProtocol?, forRequest: RequestProtocol)
     func removeListener(_ listener: WOTRequestManagerListenerProtocol)
     func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: WOTRequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws

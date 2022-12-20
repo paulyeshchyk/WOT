@@ -18,7 +18,7 @@ public enum WOTRequestManagerCompletionResultType: Int {
 public protocol WOTRequestManagerListenerProtocol {
     var uuidHash: Int { get }
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
+    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
 
-    func requestManager(_ requestManager: WOTRequestManagerProtocol, didStartRequest: RequestProtocol)
+    func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol)
 }

@@ -6,7 +6,10 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+@objc
+public protocol SessionManagerContainerProtocol {
+    @objc var sessionManager: WOTWebSessionManagerProtocol? { get set }
+}
 
 @objc
 public protocol WOTWebSessionManagerProtocol {

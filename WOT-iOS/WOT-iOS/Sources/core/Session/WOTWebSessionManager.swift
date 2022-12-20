@@ -11,47 +11,11 @@ import ContextSDK
 @objc
 class WOTWebSessionManager: NSObject, WOTWebSessionManagerProtocol {
     @objc
-    var appManager: WOTAppManagerProtocol?
+    var appManager: WOTAppDelegateProtocol?
 
     @objc
     func login() {}
 
     @objc
     func logout() {}
-}
-
-class WOTWebSessionClearResponseAdapter: NSObject, WOTModelServiceProtocol {
-    var logInspector: LogInspectorProtocol?
-    var coreDataStore: DataStoreProtocol?
-
-    @objc static func modelClass() -> PrimaryKeypathProtocol.Type? {
-        return nil
-    }
-
-    @objc func instanceModelClass() -> AnyClass? {
-        return nil
-    }
-
-    required init(clazz: PrimaryKeypathProtocol.Type) {}
-}
-
-class WOTWebSessionSaveResponseAdapter: NSObject {
-    var logInspector: LogInspectorProtocol?
-    var coreDataStore: DataStoreProtocol?
-
-    required init(clazz: PrimaryKeypathProtocol.Type) {}
-}
-
-class WOTWebSessionLoginResponseAdapter: NSObject {
-    var logInspector: LogInspectorProtocol?
-    var coreDataStore: DataStoreProtocol?
-
-    required init(clazz: PrimaryKeypathProtocol.Type) {}
-}
-
-class WOTWebSessionLogoutResponseAdapter: NSObject {
-    var logInspector: LogInspectorProtocol?
-    var coreDataStore: DataStoreProtocol?
-
-    required init(clazz: PrimaryKeypathProtocol.Type) {}
 }

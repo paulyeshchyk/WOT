@@ -26,7 +26,7 @@
     if (self){
 
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        self.coreDataProvider = appDelegate.appManager.coreDataStore;
+        self.coreDataProvider = appDelegate.coreDataStore;
         [self.coreDataProvider performWithObjectContext:self.context block:^(id<ObjectContextProtocol> _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:context];
@@ -93,7 +93,7 @@
 
 - (id<ObjectContextProtocol>)context {
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-    id<DataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+    id<DataStoreProtocol> coreDataProvider = appDelegate.coreDataStore;
     return [coreDataProvider workingContext];
 }
 

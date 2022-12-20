@@ -18,7 +18,7 @@
 #import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
-@property (nonatomic, strong) id<WOTRequestManagerProtocol> requestManager;
+@property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
 @property (nonatomic, strong) id<HostConfigurationProtocol> hostConfiguration;
 @end
 
@@ -112,12 +112,12 @@
 
 - (id<HostConfigurationProtocol>) hostConfiguration {
         id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-        return ((id<WOTAppDelegateProtocol>) delegate).appManager.hostConfiguration;
+        return ((id<WOTAppDelegateProtocol>) delegate).hostConfiguration;
 }
 
-- (id<WOTRequestManagerProtocol>) requestManager {
+- (id<RequestManagerProtocol>) requestManager {
     id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-    return ((id<WOTAppDelegateProtocol>) delegate).appManager.requestManager;
+    return ((id<WOTAppDelegateProtocol>) delegate).requestManager;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -125,7 +125,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
-        id<DataStoreProtocol> coreDataProvider = appDelegate.appManager.coreDataStore;
+        id<DataStoreProtocol> coreDataProvider = appDelegate.coreDataStore;
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
@@ -321,14 +321,14 @@
     return [@"WOTTankModuleTreeViewController" hash];
 }
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
+- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
     if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
         [self reloadModel];
     }
 }
 
 
-- (void)requestManager:(id<WOTRequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
+- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
     //
 }
 

@@ -9,13 +9,14 @@
 import ContextSDK
 
 public class WOTRequestRegistrator: WOTRequestRegistratorProtocol {
-
-    private let logInspector: LogInspectorProtocol
+    public typealias Context = LogInspectorContainerProtocol
+    
+    private let context: Context
     private var registeredRequests: [WOTRequestIdType: WOTModelServiceProtocol.Type] = .init()
     private var registeredDataAdapters: [WOTRequestIdType: JSONAdapterProtocol.Type] = .init()
 
-    required public init(logInspector: LogInspectorProtocol) {
-        self.logInspector = logInspector
+    required public init(context: Context) {
+        self.context = context
     }
 
 }

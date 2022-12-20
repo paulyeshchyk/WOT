@@ -10,13 +10,6 @@ import ContextSDK
 
 @objc
 open class WOTRequest: NSObject, RequestProtocol {
-    override public init() {
-        super.init()
-    }
-
-    deinit {
-        //
-    }
 
     override public var description: String {
         return String(describing: type(of: self))

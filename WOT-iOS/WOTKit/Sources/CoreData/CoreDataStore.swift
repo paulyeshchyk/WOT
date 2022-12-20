@@ -11,6 +11,9 @@ import ContextSDK
 
 @objc
 open class CoreDataStore: NSObject {
+    
+    public typealias Context = LogInspectorContainerProtocol
+
     // MARK: - Open
 
     open var sqliteURL: URL? { fatalError("should be overriden") }
@@ -18,10 +21,10 @@ open class CoreDataStore: NSObject {
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { fatalError("should be overriden") }
 
-    private let logInspector: LogInspectorProtocol
+    private let context: Context
 
-    required public init(logInspector: LogInspectorProtocol) {
-        self.logInspector = logInspector
+    required public init(context: Context) {
+        self.context = context
         super.init()
     }
 
@@ -96,7 +99,7 @@ extension CoreDataStore {
     }
 
     private func mergeObjects(_ objects: [NSManagedObject], toContext: NSManagedObjectContext, fromNotification: Notification) {
-        logInspector.logEvent(EventCDMerge())
+        context.logInspector?.logEvent(EventCDMerge())
         var updatedObjectsInCurrentContext = Set<NSManagedObject>()
 
         objects.forEach { updatedObject in
@@ -115,7 +118,7 @@ extension CoreDataStore {
             do {
                 try toContext.save()
             } catch {
-                self.logInspector.logEvent(EventError(WOTCoreDataStoreError.contextNotSaved, details: self), sender: nil)
+                context.logInspector?.logEvent(EventError(WOTCoreDataStoreError.contextNotSaved, details: self), sender: nil)
             }
         }
         toContext.processPendingChanges()
@@ -167,7 +170,7 @@ extension CoreDataStore {
         let managedObjectContext = newPrivateContext()
         perform(objectContext: managedObjectContext) { context in
             guard let managedObject = context.findOrCreateObject(forType: Clazz, predicate: requestPredicate) as? NSManagedObject else {
-                self.logInspector.logEvent(EventError(WOTCoreDataStoreError.objectNotCreated(Clazz), details: self), sender: nil)
+                self.context.logInspector?.logEvent(EventError(WOTCoreDataStoreError.objectNotCreated(Clazz), details: self), sender: nil)
                 return
             }
             let managedObjectID = managedObject.objectID
@@ -193,26 +196,26 @@ extension CoreDataStore: DataStoreProtocol {
         
         let initialDate = Date()
 
-        logInspector.logEvent(EventCDStashStart(context: managedObjectContext), sender: self)
+        context.logInspector?.logEvent(EventCDStashStart(context: managedObjectContext), sender: self)
         let uuid = UUID()
         let customBlock: ThrowableCompletion = { error in
             block(error)
-            self.logInspector.logEvent(EventCDStashEnded(context: managedObjectContext, initiatedIn: initialDate), sender: self)
+            self.context.logInspector?.logEvent(EventCDStashEnded(context: managedObjectContext, initiatedIn: initialDate), sender: self)
         }
 
         managedObjectContext.saveRecursively(customBlock)
-        logInspector.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
+        context.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid))
     }
 
     public func fetchLocal(objectContext: ObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
-            logInspector.logEvent(EventError(error, details: nil), sender: self)
+            context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             completion(EmptyFetchResult(), error)
             return
         }
 
-        logInspector.logEvent(EventLocalFetch("\(String(describing: ManagedObjectClass)) - \(String(describing: requestPredicate))"), sender: self)
+        context.logInspector?.logEvent(EventLocalFetch("\(String(describing: ManagedObjectClass)) - \(String(describing: requestPredicate))"), sender: self)
 
         guard let predicate = requestPredicate.compoundPredicate(.and) else {
             let error = WOTFetcherError.noKeysDefinedForClass(String(describing: ManagedObjectClass))
