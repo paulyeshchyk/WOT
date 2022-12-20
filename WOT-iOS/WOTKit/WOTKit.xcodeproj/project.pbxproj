@@ -34,7 +34,7 @@
 		1D60E5A1245FE7E5007E5CA8 /* WOTResponseCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E559245FE7E4007E5CA8 /* WOTResponseCoordinatorProtocol.swift */; };
 		1D60E5A2245FE7E5007E5CA8 /* RESTAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55A245FE7E4007E5CA8 /* RESTAPIResponse.swift */; };
 		1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */; };
-		1D60E5A4245FE7E5007E5CA8 /* WOTWebRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* WOTWebRequestBuilder.swift */; };
+		1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */; };
 		1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */; };
 		1D60E5A7245FE7E5007E5CA8 /* RequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E561245FE7E4007E5CA8 /* RequestManagerProtocol.swift */; };
@@ -131,7 +131,7 @@
 		1D60E559245FE7E4007E5CA8 /* WOTResponseCoordinatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTResponseCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		1D60E55A245FE7E4007E5CA8 /* RESTAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTAPIResponse.swift; sourceTree = "<group>"; };
 		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
-		1D60E55D245FE7E4007E5CA8 /* WOTWebRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTWebRequestBuilder.swift; sourceTree = "<group>"; };
+		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiverProtocol.swift; sourceTree = "<group>"; };
 		1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiver.swift; sourceTree = "<group>"; };
 		1D60E561245FE7E4007E5CA8 /* RequestManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManagerProtocol.swift; sourceTree = "<group>"; };
@@ -349,7 +349,7 @@
 		1D60E55C245FE7E4007E5CA8 /* DataPumper */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E55D245FE7E4007E5CA8 /* WOTWebRequestBuilder.swift */,
+				1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */,
 				1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */,
 				1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */,
 			);
@@ -673,7 +673,7 @@
 				1DFCC91F24713389005F580E /* MappingCoordinatorProtocol.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */,
 				1D60E530245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift in Sources */,
-				1D60E5A4245FE7E5007E5CA8 /* WOTWebRequestBuilder.swift in Sources */,
+				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				1DFCC93024714B45005F580E /* ResponseAdapterCreator.swift in Sources */,
 				1D60E5B9245FE7E5007E5CA8 /* EventThread.swift in Sources */,
 				1D60E59A245FE7E5007E5CA8 /* JSONAdapter.swift in Sources */,

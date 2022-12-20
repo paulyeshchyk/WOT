@@ -8,7 +8,7 @@
 
 import ContextSDK
 
-class WOTWebRequestBuilder {
+class HttpRequestBuilder {
 
     public func build(service: WOTWebServiceProtocol, hostConfiguration: HostConfigurationProtocol?, args: RequestArgumentsProtocol, bodyData: Data?) throws -> URLRequest {
         let url = try buildURL(hostConfiguration: hostConfiguration, path: service.path, args: args, bodyData: bodyData)

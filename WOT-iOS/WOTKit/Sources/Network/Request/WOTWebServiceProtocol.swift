@@ -9,7 +9,8 @@
 import ContextSDK
 
 
-@objc public enum HTTPMethods: Int {
+@objc
+public enum HTTPMethods: Int {
     case GET
     case HEAD
     case POST

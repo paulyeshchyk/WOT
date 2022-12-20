@@ -24,7 +24,7 @@ class HttpDataReceiver: NSObject, HttpDataReceiverProtocol {
     }
 
     convenience init(context: HttpDataReceiverProtocol.Context, args: RequestArgumentsProtocol, httpBodyData: Data?, service: WOTWebServiceProtocol) {
-        let requestBuilder = WOTWebRequestBuilder()
+        let requestBuilder = HttpRequestBuilder()
         let urlRequest: URLRequest?
         do {
             urlRequest = try requestBuilder.build(service: service, hostConfiguration: context.hostConfiguration, args: args, bodyData: httpBodyData)
