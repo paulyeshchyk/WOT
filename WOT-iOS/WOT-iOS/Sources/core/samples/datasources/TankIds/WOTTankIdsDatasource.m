@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankIdsDatasource.h"
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTTankIdsDatasource
 

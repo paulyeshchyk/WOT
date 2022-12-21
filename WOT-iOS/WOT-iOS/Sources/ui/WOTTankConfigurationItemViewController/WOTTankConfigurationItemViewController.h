@@ -7,7 +7,7 @@
 //
 
 #import <WOT-Swift.h>
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import "WOTTankConfigurationModuleMapping.h"
 
 @interface WOTTankConfigurationItemViewController : UIViewController<WOTViewControllerProtocol>

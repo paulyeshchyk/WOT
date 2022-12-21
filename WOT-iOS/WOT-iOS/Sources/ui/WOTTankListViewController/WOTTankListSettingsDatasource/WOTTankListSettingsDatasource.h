@@ -32,9 +32,9 @@ typedef void(^WOTTankListSettingsDatasourceCallback)(void);
 @property (nonatomic, readonly) NSManagedObjectContext * _Nullable context;
 @property (nonatomic, readonly) NSFetchedResultsController * _Nullable fetchedResultController;
 
-+ (id _Nonnull )context:(id<ObjectContextProtocol>_Nonnull)context createSortSettingForKey:(NSString *_Nonnull)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
-+ (id _Nonnull )context:(id<ObjectContextProtocol>_Nonnull)context createGroupBySettingForKey:(NSString *_Nullable)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
-+ (id _Nonnull )context:(id<ObjectContextProtocol>_Nonnull)context createFilterBySettingForKey:(NSString *_Nullable)key value:(NSString *_Nullable)value callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
++ (id _Nonnull )context:(id<ManagedObjectContextProtocol>_Nonnull)context createSortSettingForKey:(NSString *_Nonnull)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
++ (id _Nonnull )context:(id<ManagedObjectContextProtocol>_Nonnull)context createGroupBySettingForKey:(NSString *_Nullable)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
++ (id _Nonnull )context:(id<ManagedObjectContextProtocol>_Nonnull)context createFilterBySettingForKey:(NSString *_Nullable)key value:(NSString *_Nullable)value callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
 
 - (void)registerListener:(id <WOTTankListSettingsDatasourceListener> _Nullable )listener;
 - (void)unregisterListener:(id <WOTTankListSettingsDatasourceListener> _Nullable)listener;

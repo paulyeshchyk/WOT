@@ -7,7 +7,7 @@
 //
 
 #import "WOTNode+PivotFactory.h"
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import "UIColor+HSB.h"
 
 @implementation WOTNodeFactory 

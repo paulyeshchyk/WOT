@@ -5,8 +5,6 @@
 //  Created by Paul on 20.12.22.
 //
 
-import Foundation
-
 public enum LogicError: Error {
     case shouldBeOverriden(String)
     case objectNotDefined

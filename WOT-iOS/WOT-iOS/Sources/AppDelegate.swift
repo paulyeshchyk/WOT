@@ -33,14 +33,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         hostConfiguration = HostConfiguration()
         sessionManager = SessionManager()
         dataStore = WOTDataStore(context: self)
-        requestRegistrator = RequestRegistrator(context: self)
+        requestRegistrator = WOTRequestRegistrator(context: self)
         mappingCoordinator = MappingCoordinator(context: self)
         responseAdapterCreator = ResponseAdapterCreator(context: self)
 
         responseParser = RESTResponseParser(context: self)
         requestManager = RequestManager(context: self)
-
-        requestRegistrator?.registerDefaultRequests()
 
         let drawerViewController: WOTDrawerViewController = WOTDrawerViewController.newDrawer()
 
@@ -50,34 +48,4 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
 
         return true
     }
-}
-
-extension RequestRegistratorProtocol {
-    public func registerDefaultRequests() {
-        requestId(WebRequestType.guns.rawValue, registerRequestClass: WOTWEBRequestTankGuns.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.login.rawValue, registerRequestClass: WOTWEBRequestLogin.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.radios.rawValue, registerRequestClass: WOTWEBRequestTankRadios.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.logout.rawValue, registerRequestClass: WOTWEBRequestLogout.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.turrets.rawValue, registerRequestClass: WOTWEBRequestTankTurrets.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.modules.rawValue, registerRequestClass: WOTWEBRequestModules.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.engines.rawValue, registerRequestClass: WOTWEBRequestTankEngines.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.vehicles.rawValue, registerRequestClass: WOTWEBRequestTankVehicles.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.moduleTree.rawValue, registerRequestClass: WOTWEBRequestModulesTree.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.suspension.rawValue, registerRequestClass: WOTWEBRequestSuspension.self, registerDataAdapterClass: JSONAdapter.self)
-    }
-}
-
-public enum WebRequestType: String {
-    case unknown
-    case login
-    case logout
-    case suspension
-    case turrets
-    case guns
-    case radios
-    case engines
-    case vehicles
-    case modules
-    case moduleTree
-    case tankProfile
 }

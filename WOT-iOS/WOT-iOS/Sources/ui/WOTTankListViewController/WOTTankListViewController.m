@@ -11,7 +11,7 @@
 #import "WOTTankListSortViewController.h"
 #import <WOT-Swift.h>
 
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
 #import "WOTTankListSettingsDatasource.h"
@@ -19,6 +19,7 @@
 #import "WOTTankListSearchBar.h"
 #import "UIImage+Resize.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -52,7 +53,7 @@
     _settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
     
     __weak typeof(self)weakSelf = self;
-    self.settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GEAR)] text:nil eventBlock:^(id sender) {
+    self.settingsItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:[NSString localization:WOT_IMAGE_GEAR] ] text:nil eventBlock:^(id sender) {
         
         
         WOTTankListSortViewController *vc = [[WOTTankListSortViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSortViewController class]) bundle:nil];
@@ -154,7 +155,7 @@
     NSString *title = nil;
     if (([self.fetchedResultController.sectionNameKeyPath length] != 0) &&([sectionInfo.name length] != 0)) {
         
-        title = [NSString stringWithFormat:@"%@: %@",WOTString(self.fetchedResultController.sectionNameKeyPath), sectionInfo.name];
+        title = [NSString stringWithFormat:@"%@: %@",[NSString localization:self.fetchedResultController.sectionNameKeyPath], sectionInfo.name];
     } else {
         
         title = sectionInfo.name;
@@ -170,7 +171,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
     __weak typeof(self)weakSelf = self;
-    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_BACK)];
+    UIImage *image = [UIImage imageNamed:[NSString localization:WOT_IMAGE_BACK]];
     UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender){
         
         [weakSelf.navigationController popViewControllerAnimated:YES];
@@ -237,13 +238,13 @@
 #pragma mark - private
 - (UIImage *)searchItemSearchImage {
     
-    return [UIImage imageWithImage:[UIImage imageNamed:WOTString(WOT_IMAGE_SEARCH)] scaledToSize:CGSizeMake(22.0f,22.0f)];
+    return [UIImage imageWithImage:[UIImage imageNamed:[NSString localization:WOT_IMAGE_SEARCH]] scaledToSize:CGSizeMake(22.0f,22.0f)];
 
 }
 
 - (UIImage *)searchItemCancelImage {
     
-    return [UIImage imageWithImage:[UIImage imageNamed:WOTString(WOT_IMAGE_CANCEL)] scaledToSize:CGSizeMake(22.0f,22.0f)];
+    return [UIImage imageWithImage:[UIImage imageNamed:[NSString localization:WOT_IMAGE_CANCEL]] scaledToSize:CGSizeMake(22.0f,22.0f)];
 }
 
 - (void)restoreTitleViewState {

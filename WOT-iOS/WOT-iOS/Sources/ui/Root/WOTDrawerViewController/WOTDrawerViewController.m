@@ -12,6 +12,7 @@
 #import "UIBarButtonItem+EventBlock.h"
 #import "WOTSessionManager.h"
 #import <WOT-Swift.h>
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 
@@ -39,7 +40,7 @@
     [[centerNavigationController navigationBar] setDarkStyle];
     
     
-    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_MENU_ICON)];
+    UIImage *image = [UIImage imageNamed:[NSString localization:WOT_IMAGE_MENU_ICON]];
     UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:eventHandlerBlock];
     [centerViewController.navigationItem setLeftBarButtonItems:@[backButtonItem]];
     return centerNavigationController;
@@ -112,13 +113,13 @@
     BOOL sessionHasBeenExpired = [WOTSessionManager sessionHasBeenExpired];
     if (sessionHasBeenExpired) {
         
-        return WOTString(WOT_STRING_ANONYMOUS_USER);
+        return [NSString localization:WOT_STRING_ANONYMOUS_USER];
     }
     
     NSString *userName = [WOTSessionManager currentUserName];
     if (!userName) {
         
-        return WOTString(WOT_STRING_ANONYMOUS_USER);
+        return [NSString localization: WOT_STRING_ANONYMOUS_USER];
     }
     
     return userName;

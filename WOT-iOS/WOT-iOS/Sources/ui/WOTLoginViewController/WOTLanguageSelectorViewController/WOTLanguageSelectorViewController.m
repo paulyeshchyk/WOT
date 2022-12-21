@@ -11,6 +11,8 @@
 #import "WOTLanguageTableViewCell.h"
 #import "UINavigationBar+WOT.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "NSBundle+LanguageBundle.h"
+
 
 @interface WOTLanguageSelectorViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -24,7 +26,7 @@
     [super viewDidLoad];
     
 
-    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
+    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:[NSString localization:WOT_IMAGE_BACK]] text:nil eventBlock:^(id sender) {
         
         [self.delegate didSelectLanguage:nil appId:nil];
     }];

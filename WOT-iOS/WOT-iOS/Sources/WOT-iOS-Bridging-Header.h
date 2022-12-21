@@ -17,6 +17,7 @@
 #import "WOTNode+PivotFactory.h"
 #import "WOTSessionManager.h"
 #import <WOTPivot/WOTPivot.h>
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import "WOTRequestIds.h"
 #import "WOTDrawerViewController.h"
+#import "NSBundle+LanguageBundle.h"

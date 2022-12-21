@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public typealias WOTRequestIdType = String
+public typealias RequestIdType = String
 
 @objc
 public protocol RequestProtocol: StartableProtocol {
@@ -17,7 +17,7 @@ public protocol RequestProtocol: StartableProtocol {
     var listeners: [RequestListenerProtocol] { get }
     var paradigm: MappingParadigmProtocol? { get set }
 
-    func addGroup(_ group: WOTRequestIdType)
+    func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
     func removeGroup(_ group: String)
     func removeListener(_ listener: RequestListenerProtocol)
@@ -56,7 +56,7 @@ open class Request: NSObject, RequestProtocol {
         return uuid.hashValue
     }
 
-    private var groups = [WOTRequestIdType]()
+    private var groups = [RequestIdType]()
 
     open func cancel(with error: Error?) {}
 
@@ -68,13 +68,13 @@ open class Request: NSObject, RequestProtocol {
 
     public let uuid: UUID = UUID()
 
-    public var availableInGroups = [WOTRequestIdType]()
+    public var availableInGroups = [RequestIdType]()
 
     public var listeners = [RequestListenerProtocol]()
 
     public var paradigm: MappingParadigmProtocol?
 
-    open func addGroup(_ group: WOTRequestIdType) {
+    open func addGroup(_ group: RequestIdType) {
         groups.append(group)
     }
 
@@ -82,7 +82,7 @@ open class Request: NSObject, RequestProtocol {
         listeners.append(listener)
     }
 
-    open func removeGroup(_ group: WOTRequestIdType) {
+    open func removeGroup(_ group: RequestIdType) {
         groups.removeAll(where: { group.compare($0) == .orderedSame })
     }
 

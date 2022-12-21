@@ -9,6 +9,7 @@
 #import "WOTTankListSettingNameChooserViewController.h"
 #import "WOTTankListSettingSortTableViewCell.h"
 #import "WOTTankListSettingField.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankListSettingNameChooserViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -74,7 +75,7 @@
     
     WOTTankListSettingSortTableViewCell *cell = (WOTTankListSettingSortTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingSortTableViewCell class]) forIndexPath:indexPath];
     [cell setHasSorting:self.hasSorting];
-    [cell setText:WOTString(field.key)];
+    [cell setText:[NSString localization:field.key]];
     [cell setKey:field.key];
     [cell setBusy:[self.staticFieldsDatasource isFieldBusy:field]];
     [cell setSortClick:^(BOOL ascending){

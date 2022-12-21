@@ -7,6 +7,8 @@
 //
 
 #import "WOTTankListSettingTableViewCell.h"
+#import "NSBundle+LanguageBundle.h"
+
 @interface WOTTankListSettingTableViewCell()
 
 @property (nonatomic, weak)IBOutlet UILabel *keyLabel;
@@ -34,7 +36,7 @@
 - (void)setSetting:(ListSetting *)setting {
 
     _setting = setting;
-    [self.keyLabel setText:WOTString(setting.key)];
+    [self.keyLabel setText:[NSString localization:setting.key]];
     [self.valueLabel setText:setting.values];
 }
 

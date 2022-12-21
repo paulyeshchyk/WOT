@@ -7,7 +7,7 @@
 //
 
 #import "WOTMetric+Samples.h"
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import "WOTTankDetailFieldExpression+Factory.h"
 #import <WOTPivot/WOTPivot.h>
 

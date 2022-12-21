@@ -7,6 +7,7 @@
 //
 
 #import "WOTTankDetailTextTableViewCell.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankDetailTextTableViewCell ()
 
@@ -47,10 +48,10 @@
         
         if (field.expressionName.length != 0) {
             
-            weak_self.nameLabel.text = [NSString stringWithFormat:@"%@(%@)",field.expressionName, WOTString(name)];
+            weak_self.nameLabel.text = [NSString stringWithFormat:@"%@(%@)",field.expressionName, [NSString localization:name]];
         } else {
             
-            weak_self.nameLabel.text = WOTString(name);
+            weak_self.nameLabel.text = [NSString localization:name];
         }
         
         weak_self.valueLabel.text = [arr componentsJoinedByString:@" / "];

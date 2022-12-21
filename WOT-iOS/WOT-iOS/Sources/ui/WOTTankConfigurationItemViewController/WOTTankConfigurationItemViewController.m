@@ -11,8 +11,9 @@
 #import "WOTTankConfigurationItemCell.h"
 #import "WOTTankConfigurationItemHeaderFooter.h"
 #import <WOTPivot/WOTPivot.h>
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankConfigurationItemViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -82,7 +83,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     WOTTankConfigurationItemCell *result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankConfigurationItemCell class])];
-    result.name = WOTString([self.mapping fieldAtIndexPath:indexPath]);
+    result.name = [NSString localization:[self.mapping fieldAtIndexPath:indexPath]];
     result.value = [self.mapping fieldValueAtIndexPath:indexPath forObject:self.moduleTree];
     return result;
 }

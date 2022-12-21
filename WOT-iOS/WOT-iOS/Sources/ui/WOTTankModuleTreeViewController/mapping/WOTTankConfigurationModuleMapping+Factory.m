@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankConfigurationModuleMapping+Factory.h"
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTTankConfigurationModuleMapping (Factory)
 

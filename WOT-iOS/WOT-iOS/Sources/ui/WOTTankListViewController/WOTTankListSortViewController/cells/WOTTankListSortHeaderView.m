@@ -7,6 +7,7 @@
 //
 
 #import "WOTTankListSortHeaderView.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankListSortHeaderView ()
 
@@ -20,7 +21,7 @@
 - (void)setText:(NSString *)text {
 
     _text = [text copy];
-    [self.label setText:WOTString(text)];
+    [self.label setText:[NSString localization:text]];
 }
 
 @end

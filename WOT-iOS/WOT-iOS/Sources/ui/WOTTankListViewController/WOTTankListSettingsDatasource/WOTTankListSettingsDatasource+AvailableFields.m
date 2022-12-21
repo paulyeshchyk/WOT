@@ -8,16 +8,17 @@
 
 #import "WOTTankListSettingsDatasource+AvailableFields.h"
 #import "WOTTankListSettingField.h"
+#import "NSBundle+LanguageBundle.h"
 
 @implementation WOTTankListSettingsDatasource (AvailableFields)
 
 - (NSArray *)allFields {
     
     return @[
-             [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.nation value:WOTString(WOT_STRING_NATION) ascending:YES],
+             [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.nation value:[NSString localization:WOT_STRING_NATION] ascending:YES],
              [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.is_premium value:@"PREMUIM" ascending:YES],
-             [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.tier value:WOTString(WOT_STRING_LEVEL) ascending:YES],
-             [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.type value:WOTString(WOT_STRING_TYPE) ascending:YES]
+             [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.tier value:[NSString localization:WOT_STRING_LEVEL] ascending:YES],
+             [[WOTTankListSettingField alloc] initWithKey:WOTApiKeys.type value:[NSString localization:WOT_STRING_TYPE] ascending:YES]
             ];
     
     

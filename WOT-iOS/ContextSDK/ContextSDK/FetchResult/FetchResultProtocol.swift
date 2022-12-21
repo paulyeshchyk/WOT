@@ -18,14 +18,14 @@ public enum FetchStatus: Int {
 public protocol FetchResultProtocol: AnyObject {
     var fetchStatus: FetchStatus { get set }
     var predicate: NSPredicate? { get set }
-    var objectContext: ObjectContextProtocol? { get set }
+    var objectContext: ManagedObjectContextProtocol? { get set }
     func dublicate() -> FetchResultProtocol
     func managedObject() -> ManagedObjectProtocol?
-    func managedObject(inManagedObjectContext context: ObjectContextProtocol?) -> ManagedObjectProtocol?
+    func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedObjectProtocol?
 }
 
 @objc
-public protocol ObjectContextProtocol: AnyObject {
+public protocol ManagedObjectContextProtocol: AnyObject {
     var name: String? { get }
     func object(byID: AnyObject) -> AnyObject?
     func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) -> AnyObject?

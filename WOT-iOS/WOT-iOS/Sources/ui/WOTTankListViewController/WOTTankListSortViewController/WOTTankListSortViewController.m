@@ -12,11 +12,12 @@
 #import "WOTTankListSettingNameChooserViewController.h"
 #import "WOTTankListSettingValueChangerViewController.h"
 #import "WOTTankListSortHeaderView.h"
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import "WOTTankListSettingsDatasource+TableView.h"
 #import "WOTTankListSettingsDatasource+AvailableFields.h"
 #import "UINavigationBar+WOT.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankListSortViewController () <UITableViewDataSource, UITableViewDelegate, WOTTankListSettingsDatasourceListener>
 
@@ -44,10 +45,10 @@
 
     _settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
     
-    self.title = WOTString(WOT_STRING_GROUP_AND_SORT);
+    self.title = [NSString localization:WOT_STRING_GROUP_AND_SORT];
     
     __weak typeof(self)weakSelf = self;
-    self.backItem =  [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
+    self.backItem =  [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:[NSString localization:WOT_IMAGE_BACK]] text:nil eventBlock:^(id sender) {
        
         if (weakSelf.cancelBlock){
             
@@ -56,10 +57,10 @@
     }];
     [self.navigationItem setLeftBarButtonItems:@[self.backItem]];
 
-    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_REORDER) eventBlock:^(id sender) {
+    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_REORDER] eventBlock:^(id sender) {
         
         [weakSelf.tableView setEditing:!weakSelf.tableView.editing];
-        [(UIButton *)sender setTitle:!weakSelf.tableView.editing?WOTString(WOT_STRING_REORDER):WOTString(WOT_STRING_PREVIEW) forState:UIControlStateNormal];
+        [(UIButton *)sender setTitle:!weakSelf.tableView.editing?[NSString localization:WOT_STRING_REORDER]:[NSString localization:WOT_STRING_PREVIEW] forState:UIControlStateNormal];
         [(UIButton *)sender sizeToFit];
         [weakSelf.backItem setEnabled:!weakSelf.tableView.editing];
         [weakSelf.tableView reloadData];
@@ -193,20 +194,20 @@
             
             vc = [[WOTTankListSettingNameChooserViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingNameChooserViewController class]) bundle:nil];
             [(WOTTankListSettingNameChooserViewController *)vc setHasSorting:YES];
-            vc.title = [WOTString(WOT_STRING_CHANGE_SORTING) capitalizedString];
+            vc.title = [[NSString localization:WOT_STRING_CHANGE_SORTING] capitalizedString];
             break;
         }
         case WOTTankListSettingTypeGroupSelector :{
             
             vc = [[WOTTankListSettingNameChooserViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingNameChooserViewController class]) bundle:nil];
             [(WOTTankListSettingNameChooserViewController *)vc setHasSorting:NO];
-            vc.title = [WOTString(WOT_STRING_CHANGE_GROUP) capitalizedString];
+            vc.title = [[NSString localization:WOT_STRING_CHANGE_GROUP] capitalizedString];
             break;
         }
         case WOTTankListSettingTypeValueChanger :{
             
             vc = [[WOTTankListSettingValueChangerViewController alloc] initWithNibName:NSStringFromClass([WOTTankListSettingValueChangerViewController class]) bundle:nil];
-            vc.title = [WOTString(WOT_STRING_CHANGE_FILTER) capitalizedString];
+            vc.title = [[NSString localization:WOT_STRING_CHANGE_FILTER] capitalizedString];
             break;
         }
         default: {

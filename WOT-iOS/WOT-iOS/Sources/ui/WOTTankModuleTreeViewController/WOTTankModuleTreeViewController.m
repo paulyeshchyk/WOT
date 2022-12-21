@@ -16,6 +16,7 @@
 #import "UINavigationBar+WOT.h"
 #import "UIImageView+WebCache.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
 @property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
@@ -143,7 +144,7 @@
 
     [super viewDidLoad];
     
-    UIBarButtonItem *doneButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
+    UIBarButtonItem *doneButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_APPLY] eventBlock:^(id sender) {
         
         if (self.doneBlock) {
             
@@ -151,7 +152,7 @@
         }
     }];
     [self.navigationItem setRightBarButtonItems:@[doneButtonItem]];
-    UIBarButtonItem *cancelButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_BACK) eventBlock:^(id sender) {
+    UIBarButtonItem *cancelButtonItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_BACK] eventBlock:^(id sender) {
         
         if (self.cancelBlock) {
             

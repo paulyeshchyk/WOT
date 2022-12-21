@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTTankListSettingTableViewCell : UITableViewCell
 

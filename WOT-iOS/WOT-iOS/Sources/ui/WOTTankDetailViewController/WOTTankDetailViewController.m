@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankDetailViewController.h"
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import <WOTPivot/WOTPivot.h>
 #import <WOTPivot/WOTPivot-Swift.h>
 #import "WOTTankDetailDatasource.h"

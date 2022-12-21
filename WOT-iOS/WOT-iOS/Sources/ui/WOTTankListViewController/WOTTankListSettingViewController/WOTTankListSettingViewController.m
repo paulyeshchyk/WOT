@@ -10,6 +10,7 @@
 #import "WOTTankListSettingsDatasource.h"
 #import "UINavigationBar+WOT.h"
 #import "UIBarButtonItem+EventBlock.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankListSettingViewController () <WOTTankListSettingsDatasourceListener>
 
@@ -42,7 +43,7 @@
     [super viewDidLoad];
 
     __weak typeof(self)weakSelf = self;
-    UIImage *image = [UIImage imageNamed:WOTString(WOT_IMAGE_BACK)];
+    UIImage *image = [UIImage imageNamed:[NSString localization:WOT_IMAGE_BACK]];
     self.backItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:^(id sender) {
 
         if (weakSelf.cancelBlock){
@@ -53,7 +54,7 @@
     }];
     [self.navigationItem setLeftBarButtonItems:@[self.backItem]];
     
-    self.applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
+    self.applyItem = [UIBarButtonItem barButtonItemForImage:nil text:[NSString localization:WOT_STRING_APPLY] eventBlock:^(id sender) {
 
         if (weakSelf.applyBlock){
             

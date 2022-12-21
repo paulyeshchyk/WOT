@@ -13,6 +13,7 @@
 #import "UIImage+Resize.h"
 #import "UIBarButtonItem+EventBlock.h"
 #import "WOTSessionManager.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 
@@ -26,8 +27,8 @@
     
     [super viewDidLoad];
 
-    UIImage *globe = [UIImage imageWithImage:[UIImage imageNamed:WOTString(WOT_IMAGE_GLOBE)] scaledToSize:CGSizeMake(32.0f,32.0f)];
-    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
+    UIImage *globe = [UIImage imageWithImage:[UIImage imageNamed:[NSString localization:WOT_IMAGE_GLOBE]] scaledToSize:CGSizeMake(32.0f,32.0f)];
+    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:[NSString localization:WOT_IMAGE_BACK]] text:nil eventBlock:^(id sender) {
         
         [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
     }];
@@ -36,12 +37,12 @@
         
         WOTLanguageSelectorViewController *vc = [[WOTLanguageSelectorViewController alloc] initWithNibName:@"WOTLanguageSelectorViewController" bundle:nil];
         vc.delegate = self;
-        vc.title = WOTString(WOT_STRING_SELECT_LANGUAGE);
+        vc.title = [NSString localization:WOT_STRING_SELECT_LANGUAGE];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
         [self.navigationController presentViewController:nav animated:YES completion:NULL];
     }];
     
-    [self setTitle:WOTString(WOT_STRING_LOGIN)];
+    [self setTitle:[NSString localization:WOT_STRING_LOGIN]];
     [self.navigationItem setLeftBarButtonItems:@[backItem]];
     [self.navigationItem setRightBarButtonItems:@[languageItem]];
     [self.navigationController.navigationBar setDarkStyle];

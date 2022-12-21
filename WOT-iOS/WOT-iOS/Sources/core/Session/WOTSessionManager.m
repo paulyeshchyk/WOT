@@ -7,8 +7,7 @@
 //
 
 #import "WOTSessionManager.h"
-#import <WOTData/WOTData.h>
-#import <WOTData/WOTData-Swift.h>
+#import <WOTApi/WOTApi.h>
 
 #import "WOTRequestIds.h"
 #import "NSThread+ExecutionOnMain.h"

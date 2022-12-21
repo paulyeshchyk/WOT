@@ -9,7 +9,7 @@
 import CoreData
 import ContextSDK
 
-extension NSManagedObjectContext: ObjectContextProtocol {
+extension NSManagedObjectContext: ManagedObjectContextProtocol {
     public func hasTheChanges() -> Bool {
         return hasChanges
     }

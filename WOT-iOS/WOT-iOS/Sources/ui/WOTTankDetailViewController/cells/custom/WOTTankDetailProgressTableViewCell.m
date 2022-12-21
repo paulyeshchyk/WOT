@@ -8,6 +8,7 @@
 
 #import "WOTTankDetailProgressTableViewCell.h"
 #import "WOTProgressView.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankDetailProgressTableViewCell ()
 
@@ -69,7 +70,7 @@
             weak_self.caption.text = field.expressionName;
         } else {
             
-            weak_self.caption.text = WOTString(name);
+            weak_self.caption.text = [NSString localization:name];
         }
         
         

@@ -7,9 +7,10 @@
 //
 
 #import "WOTTankListSettingValueChangerViewController.h"
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 #import "WOTTankListSettingField.h"
 #import "WOTTankListSettingNameTableViewCell.h"
+#import "NSBundle+LanguageBundle.h"
 
 @interface WOTTankListSettingValueChangerViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
@@ -75,7 +76,7 @@
     WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
     
     WOTTankListSettingNameTableViewCell *cell = (WOTTankListSettingNameTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankListSettingNameTableViewCell class]) forIndexPath:indexPath];
-    [cell setText:WOTString(field.key)];
+    [cell setText:[NSString localization:field.key]];
     [cell setKey:field.key];
     return cell;
 }

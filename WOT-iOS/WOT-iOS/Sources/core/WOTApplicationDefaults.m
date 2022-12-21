@@ -8,8 +8,7 @@
 
 #import "WOTApplicationDefaults.h"
 
-#import <WOTData/WOTData.h>
-#import <WOTData/WOTData-Swift.h>
+#import <WOTApi/WOTApi.h>
 #import <WOTPivot/WOTPivot.h>
 
 #import "WOTTankListSettingsDatasource.h"
@@ -23,8 +22,8 @@
     
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
-    id<ObjectContextProtocol> workingContext = [coreDataProvider workingContext];
-    [coreDataProvider performWithObjectContext:workingContext block:^(id<ObjectContextProtocol> _Nonnull context) {
+    id<ManagedObjectContextProtocol> workingContext = [coreDataProvider workingContext];
+    [coreDataProvider performWithObjectContext:workingContext block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
 
         NSString *entityName = NSStringFromClass([ListSetting class]);
         NSError *error = nil;

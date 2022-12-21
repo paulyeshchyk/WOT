@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankListSettingsDatasource.h"
-#import <WOTData/WOTData.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTTankListSettingsDatasource () <NSFetchedResultsControllerDelegate>
 
@@ -27,7 +27,7 @@
 
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
         self.coreDataProvider = appDelegate.dataStore;
-        [self.coreDataProvider performWithObjectContext:self.context block:^(id<ObjectContextProtocol> _Nonnull context) {
+        [self.coreDataProvider performWithObjectContext:self.context block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:context];
             [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOT_KEY_ORDERBY ascending:YES]]];
@@ -91,7 +91,7 @@
     
 }
 
-- (id<ObjectContextProtocol>)context {
+- (id<ManagedObjectContextProtocol>)context {
     id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
     return [coreDataProvider workingContext];
@@ -203,7 +203,7 @@
 }
 
 #pragma mark - private
-+ (id)context:(id<ObjectContextProtocol>_Nonnull)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
++ (id)context:(id<ManagedObjectContextProtocol>_Nonnull)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
     return nil;
 //    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
@@ -223,7 +223,7 @@
 //    return setting;
 }
 
-+ (id)context:(id<ObjectContextProtocol>_Nonnull)context createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
++ (id)context:(id<ManagedObjectContextProtocol>_Nonnull)context createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
     return nil;
 //    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
@@ -244,7 +244,7 @@
 //    return setting;
 }
 
-+ (id)context:(id<ObjectContextProtocol>_Nonnull)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
++ (id)context:(id<ManagedObjectContextProtocol>_Nonnull)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
     return nil;
 //    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];

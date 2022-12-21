@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WOTData
+import WOTApi
 import WOTPivot
 
 @objc

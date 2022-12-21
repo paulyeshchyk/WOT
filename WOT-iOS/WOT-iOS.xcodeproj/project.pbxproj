@@ -30,8 +30,6 @@
 		1D1795F92121920400A0E42E /* WOTTankPivotDataGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1795F82121920400A0E42E /* WOTTankPivotDataGroupCollectionViewCell.swift */; };
 		1D1795FB2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1795FA2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib */; };
 		1D3005C6241A285400E453B9 /* WOTAppDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3005C5241A285400E453B9 /* WOTAppDelegateProtocol.swift */; };
-		1D3DAEE52133FDC800368AFA /* WOTData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DAEE42133FDC800368AFA /* WOTData.framework */; };
-		1D3DAEE62133FDC800368AFA /* WOTData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DAEE42133FDC800368AFA /* WOTData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D4C92141B25B71000E320B5 /* WOTTankListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92121B25B71000E320B5 /* WOTTankListCollectionViewCell.m */; };
 		1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92131B25B71000E320B5 /* WOTTankListCollectionViewCell.xib */; };
 		1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92181B25B92500E320B5 /* WOTTankListFlowLayout.m */; };
@@ -275,6 +273,12 @@
 		1DEEAC6420FF1ABF0072E099 /* WOTNode+DetailGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEEAC6020FF1ABE0072E099 /* WOTNode+DetailGrid.m */; };
 		1DEEAC6B20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEEAC6A20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m */; };
 		4908876698A87AF77D91EAD5 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */; };
+		DA0BC4E42952E0EF00E01D54 /* WOTApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E32952E0EF00E01D54 /* WOTApi.framework */; };
+		DA0BC4E52952E0EF00E01D54 /* WOTApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E32952E0EF00E01D54 /* WOTApi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA0BC4E72952E0FA00E01D54 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E62952E0FA00E01D54 /* ContextSDK.framework */; };
+		DA0BC4E82952E0FA00E01D54 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E62952E0FA00E01D54 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA0BC4EA2952E10400E01D54 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E92952E10400E01D54 /* WOTKit.framework */; };
+		DA0BC4EB2952E10400E01D54 /* WOTKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E92952E10400E01D54 /* WOTKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA522D281B6637630087D684 /* Search Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D221B6637630087D684 /* Search Gray.png */; };
 		DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D231B6637630087D684 /* Search Gray@2x.png */; };
 		DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D241B6637630087D684 /* Search Gray@3x.png */; };
@@ -286,6 +290,7 @@
 		DA522D371B6649020087D684 /* Cancel Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D341B6649020087D684 /* Cancel Gray.png */; };
 		DA522D381B6649020087D684 /* Cancel Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D351B6649020087D684 /* Cancel Gray@2x.png */; };
 		DA522D391B6649020087D684 /* Cancel Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D361B6649020087D684 /* Cancel Gray@3x.png */; };
+		DA81E4D62952EC7300C60F31 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4D52952EC7300C60F31 /* NSBundle+LanguageBundle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -305,8 +310,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				DA0BC4E52952E0EF00E01D54 /* WOTApi.framework in Embed Frameworks */,
 				1D79EDD821243A97005FBA34 /* WOTPivot.framework in Embed Frameworks */,
-				1D3DAEE62133FDC800368AFA /* WOTData.framework in Embed Frameworks */,
+				DA0BC4EB2952E10400E01D54 /* WOTKit.framework in Embed Frameworks */,
+				DA0BC4E82952E0FA00E01D54 /* ContextSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -669,6 +676,9 @@
 		1DEEAC6920FF1E1F0072E099 /* NSObject+WOTTankGridValueData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+WOTTankGridValueData.h"; sourceTree = "<group>"; };
 		1DEEAC6A20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WOTTankGridValueData.m"; sourceTree = "<group>"; };
 		2A176CC6D9BAC80B33FBEA3A /* Pods-WOT-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		DA0BC4E32952E0EF00E01D54 /* WOTApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA0BC4E62952E0FA00E01D54 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA0BC4E92952E10400E01D54 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA522D221B6637630087D684 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
 		DA522D231B6637630087D684 /* Search Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@2x.png"; sourceTree = "<group>"; };
 		DA522D241B6637630087D684 /* Search Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@3x.png"; sourceTree = "<group>"; };
@@ -681,6 +691,8 @@
 		DA522D341B6649020087D684 /* Cancel Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray.png"; sourceTree = "<group>"; };
 		DA522D351B6649020087D684 /* Cancel Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@2x.png"; sourceTree = "<group>"; };
 		DA522D361B6649020087D684 /* Cancel Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E4D42952EC7300C60F31 /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
+		DA81E4D52952EC7300C60F31 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
 		DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0CAF57B0233E28A614AE83F /* Pods-WOT-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		EB9DC1F0F086677D49391180 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -698,8 +710,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA0BC4EA2952E10400E01D54 /* WOTKit.framework in Frameworks */,
+				DA0BC4E42952E0EF00E01D54 /* WOTApi.framework in Frameworks */,
+				DA0BC4E72952E0FA00E01D54 /* ContextSDK.framework in Frameworks */,
 				1D79EDD721243A97005FBA34 /* WOTPivot.framework in Frameworks */,
-				1D3DAEE52133FDC800368AFA /* WOTData.framework in Frameworks */,
 				4908876698A87AF77D91EAD5 /* Pods_WOT_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1508,6 +1522,7 @@
 		1DD6469C1B1DC42100B0EC76 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E4D32952EC7300C60F31 /* NSBundle */,
 				1DE1FA12245EE4F7002866A3 /* NSThread */,
 				1D010D771B8AF5F400FA6A75 /* UIColor */,
 				1D519D371B4FD40600D3A286 /* UIProgressView */,
@@ -1756,6 +1771,9 @@
 		73D1069022E23097C59EE24A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA0BC4E92952E10400E01D54 /* WOTKit.framework */,
+				DA0BC4E62952E0FA00E01D54 /* ContextSDK.framework */,
+				DA0BC4E32952E0EF00E01D54 /* WOTApi.framework */,
 				EB9DC1F0F086677D49391180 /* Pods.framework */,
 				DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */,
 			);
@@ -1770,6 +1788,15 @@
 				DA522D321B663C290087D684 /* WOTTankListSearchBar.xib */,
 			);
 			path = searchBar;
+			sourceTree = "<group>";
+		};
+		DA81E4D32952EC7300C60F31 /* NSBundle */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E4D42952EC7300C60F31 /* NSBundle+LanguageBundle.h */,
+				DA81E4D52952EC7300C60F31 /* NSBundle+LanguageBundle.m */,
+			);
+			path = NSBundle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2228,6 +2255,7 @@
 				1DE1FA15245EE4F7002866A3 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
 				1D56692D2424D121008458AF /* HostConfiguration.swift in Sources */,
+				DA81E4D62952EC7300C60F31 /* NSBundle+LanguageBundle.m in Sources */,
 				1D1795ED211D9ACA00A0E42E /* WOTTankPivotViewController.swift in Sources */,
 				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,
