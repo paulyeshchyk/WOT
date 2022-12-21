@@ -20,7 +20,7 @@
 #import "NSObject+WOTTankGridValueData.h"
 #import "UIView+StretchingConstraints.h"
 #import "UIToolbar+WOT.h"
-#import "NSThread+ExecutionOnMain.h"
+#import <WOTKit/WOTKit.h>
 
 typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTTankDetailViewModeUnknown = 0,

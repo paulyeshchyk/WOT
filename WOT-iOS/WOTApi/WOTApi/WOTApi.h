@@ -18,5 +18,3 @@ FOUNDATION_EXPORT const unsigned char WOTApiVersionString[];
 
 #import "WOTDataDefines.h"
 
-//#import "WOTWEBRequest+Stubs.h"
-

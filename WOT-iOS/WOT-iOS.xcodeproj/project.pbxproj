@@ -37,20 +37,6 @@
 		1D4C921E1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C921C1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib */; };
 		1D4C922F1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C922D1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m */; };
 		1D4C92301B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C922E1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib */; };
-		1D4C92341B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92311B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png */; };
-		1D4C92351B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92321B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png */; };
-		1D4C92361B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92331B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png */; };
-		1D4C923B1B25EB1000E320B5 /* WOTBackIconGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92381B25EB1000E320B5 /* WOTBackIconGray.png */; };
-		1D4C923C1B25EB1000E320B5 /* WOTBackIconGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92391B25EB1000E320B5 /* WOTBackIconGray@2x.png */; };
-		1D4C923D1B25EB1000E320B5 /* WOTBackIconGray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C923A1B25EB1000E320B5 /* WOTBackIconGray@3x.png */; };
-		1D4C92411B25EBE400E320B5 /* WOTiPadMenuGear.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C923E1B25EBE400E320B5 /* WOTiPadMenuGear.png */; };
-		1D4C92421B25EBE400E320B5 /* WOTiPadMenuGear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C923F1B25EBE400E320B5 /* WOTiPadMenuGear@2x.png */; };
-		1D4C92431B25EBE400E320B5 /* WOTiPadMenuGear@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92401B25EBE400E320B5 /* WOTiPadMenuGear@3x.png */; };
-		1D4C92471B25ED0900E320B5 /* WOTLoggedInUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92441B25ED0900E320B5 /* WOTLoggedInUser.png */; };
-		1D4C92481B25ED0900E320B5 /* WOTLoggedInUser@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92451B25ED0900E320B5 /* WOTLoggedInUser@2x.png */; };
-		1D4C92491B25ED0900E320B5 /* WOTLoggedInUser@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92461B25ED0900E320B5 /* WOTLoggedInUser@3x.png */; };
-		1D4C924C1B25EF2E00E320B5 /* WOTGlobe.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C924A1B25EF2E00E320B5 /* WOTGlobe.png */; };
-		1D4C924D1B25EF2E00E320B5 /* WOTGlobe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C924B1B25EF2E00E320B5 /* WOTGlobe@2x.png */; };
 		1D4C92561B25F27200E320B5 /* WOTLanguageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92511B25F27200E320B5 /* WOTLanguageTableViewCell.m */; };
 		1D4C92571B25F27200E320B5 /* WOTLanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C92521B25F27200E320B5 /* WOTLanguageTableViewCell.xib */; };
 		1D4C92581B25F27200E320B5 /* WOTLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C92541B25F27200E320B5 /* WOTLanguageSelectorViewController.m */; };
@@ -67,10 +53,6 @@
 		1D5144E8212D8C58006FD577 /* WOTPivotConstructorViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5144E6212D8C58006FD577 /* WOTPivotConstructorViewController~ipad.xib */; };
 		1D519D1E1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D1D1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m */; };
 		1D519D3A1B4FD42000D3A286 /* WOTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D519D391B4FD42000D3A286 /* WOTProgressView.m */; };
-		1D56692D2424D121008458AF /* HostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669262424D121008458AF /* HostConfiguration.swift */; };
-		1D56692E2424D121008458AF /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669282424D121008458AF /* WOTSessionManager.m */; };
-		1D56692F2424D121008458AF /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D56692A2424D121008458AF /* SessionManager.swift */; };
-		1D5669302424D121008458AF /* WOTSaveSessionResponseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D56692C2424D121008458AF /* WOTSaveSessionResponseAdapter.swift */; };
 		1D5669B12424DEF5008458AF /* WOTTankDetailDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669802424DEF5008458AF /* WOTTankDetailDatasource.m */; };
 		1D5669B22424DEF5008458AF /* WOTTankDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669822424DEF5008458AF /* WOTTankDetailSection.m */; };
 		1D5669B32424DEF5008458AF /* WOTTankIdsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5669842424DEF5008458AF /* WOTTankIdsDatasource.m */; };
@@ -97,47 +79,6 @@
 		1D60E5FC246024FF007E5CA8 /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */; };
 		1D60E604246025F5007E5CA8 /* WOT_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E603246025F5007E5CA8 /* WOT_iOSTests.swift */; };
 		1D6426FA2123070C003116E4 /* WOTPivotRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6426F92123070C003116E4 /* WOTPivotRefreshControl.swift */; };
-		1D65F8352216AEEA006A85E4 /* vehicleEngine.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D65F8302216AEE9006A85E4 /* vehicleEngine.png */; };
-		1D65F8362216AEEA006A85E4 /* vehicleGun.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D65F8312216AEE9006A85E4 /* vehicleGun.png */; };
-		1D65F8372216AEEA006A85E4 /* vehicleRadio.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D65F8322216AEE9006A85E4 /* vehicleRadio.png */; };
-		1D65F8382216AEEA006A85E4 /* vehicleTurret.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D65F8332216AEE9006A85E4 /* vehicleTurret.png */; };
-		1D65F8392216AEEA006A85E4 /* vehicleChassis.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D65F8342216AEE9006A85E4 /* vehicleChassis.png */; };
-		1D672B261B60C86700617E5C /* Bulletproof Vest Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B201B60C86700617E5C /* Bulletproof Vest Gray.png */; };
-		1D672B271B60C86700617E5C /* Bulletproof Vest Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B211B60C86700617E5C /* Bulletproof Vest Gray@2x.png */; };
-		1D672B281B60C86700617E5C /* Bulletproof Vest Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B221B60C86700617E5C /* Bulletproof Vest Gray@3x.png */; };
-		1D672B291B60C86700617E5C /* Bulletproof Vest Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B231B60C86700617E5C /* Bulletproof Vest Yellow.png */; };
-		1D672B2A1B60C86700617E5C /* Bulletproof Vest Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B241B60C86700617E5C /* Bulletproof Vest Yellow@2x.png */; };
-		1D672B2B1B60C86700617E5C /* Bulletproof Vest Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B251B60C86700617E5C /* Bulletproof Vest Yellow@3x.png */; };
-		1D672B321B60C9A100617E5C /* Opera Glasses Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B2C1B60C9A100617E5C /* Opera Glasses Gray.png */; };
-		1D672B331B60C9A100617E5C /* Opera Glasses Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B2D1B60C9A100617E5C /* Opera Glasses Gray@2x.png */; };
-		1D672B341B60C9A100617E5C /* Opera Glasses Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B2E1B60C9A100617E5C /* Opera Glasses Gray@3x.png */; };
-		1D672B351B60C9A100617E5C /* Opera Glasses Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B2F1B60C9A100617E5C /* Opera Glasses Yellow.png */; };
-		1D672B361B60C9A100617E5C /* Opera Glasses Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B301B60C9A100617E5C /* Opera Glasses Yellow@2x.png */; };
-		1D672B371B60C9A100617E5C /* Opera Glasses Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B311B60C9A100617E5C /* Opera Glasses Yellow@3x.png */; };
-		1D672B3E1B60CB7100617E5C /* Speedometer Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B381B60CB7000617E5C /* Speedometer Gray.png */; };
-		1D672B3F1B60CB7100617E5C /* Speedometer Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B391B60CB7000617E5C /* Speedometer Gray@2x.png */; };
-		1D672B401B60CB7100617E5C /* Speedometer Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B3A1B60CB7100617E5C /* Speedometer Gray@3x.png */; };
-		1D672B411B60CB7100617E5C /* Speedometer Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B3B1B60CB7100617E5C /* Speedometer Yellow.png */; };
-		1D672B421B60CB7100617E5C /* Speedometer Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B3C1B60CB7100617E5C /* Speedometer Yellow@2x.png */; };
-		1D672B431B60CB7100617E5C /* Speedometer Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B3D1B60CB7100617E5C /* Speedometer Yellow@3x.png */; };
-		1D672B4A1B60CC8700617E5C /* Firing Gun Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B441B60CC8700617E5C /* Firing Gun Gray.png */; };
-		1D672B4B1B60CC8700617E5C /* Firing Gun Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B451B60CC8700617E5C /* Firing Gun Gray@2x.png */; };
-		1D672B4C1B60CC8700617E5C /* Firing Gun Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B461B60CC8700617E5C /* Firing Gun Gray@3x.png */; };
-		1D672B4D1B60CC8700617E5C /* Firing Gun Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B471B60CC8700617E5C /* Firing Gun Yellow.png */; };
-		1D672B4E1B60CC8700617E5C /* Firing Gun Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B481B60CC8700617E5C /* Firing Gun Yellow@2x.png */; };
-		1D672B4F1B60CC8700617E5C /* Firing Gun Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B491B60CC8700617E5C /* Firing Gun Yellow@3x.png */; };
-		1D672B5C1B60D15C00617E5C /* Hourglass Sand Bottom Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B501B60D15C00617E5C /* Hourglass Sand Bottom Gray.png */; };
-		1D672B5D1B60D15C00617E5C /* Hourglass Sand Bottom Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B511B60D15C00617E5C /* Hourglass Sand Bottom Gray@2x.png */; };
-		1D672B5E1B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B521B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png */; };
-		1D672B5F1B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B531B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png */; };
-		1D672B601B60D15C00617E5C /* Hourglass Sand Bottom Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B541B60D15C00617E5C /* Hourglass Sand Bottom Yellow@2x.png */; };
-		1D672B611B60D15C00617E5C /* Hourglass Sand Bottom Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B551B60D15C00617E5C /* Hourglass Sand Bottom Yellow@3x.png */; };
-		1D672B621B60D15C00617E5C /* Hourglass Sand Top Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B561B60D15C00617E5C /* Hourglass Sand Top Gray.png */; };
-		1D672B631B60D15C00617E5C /* Hourglass Sand Top Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B571B60D15C00617E5C /* Hourglass Sand Top Gray@2x.png */; };
-		1D672B641B60D15C00617E5C /* Hourglass Sand Top Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B581B60D15C00617E5C /* Hourglass Sand Top Gray@3x.png */; };
-		1D672B651B60D15C00617E5C /* Hourglass Sand Top Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B591B60D15C00617E5C /* Hourglass Sand Top Yellow.png */; };
-		1D672B661B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B5A1B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png */; };
-		1D672B671B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D672B5B1B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png */; };
 		1D6DD6C12124106B00498BEE /* WOTSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6DD6C02124106B00498BEE /* WOTSplitViewController.xib */; };
 		1D6E94E62100CA1200B65FC3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E94E52100CA1200B65FC3 /* .swiftlint.yml */; };
 		1D6FF4F62106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FF4DD2106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m */; };
@@ -173,50 +114,14 @@
 		1DA1D74B1B2B005F00C5C2FB /* WOTTankListSettingField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74A1B2B005F00C5C2FB /* WOTTankListSettingField.m */; };
 		1DA1D74E1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */; };
 		1DB5FB542428AC1100413F41 /* .swiftformat.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1DB5FB532428AC1000413F41 /* .swiftformat.yml */; };
-		1DB67437221BF0B300982EE6 /* chassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67439221BF0B300982EE6 /* chassis.json */; };
-		1DB6743A221BF0B800982EE6 /* tanks.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6743C221BF0B800982EE6 /* tanks.json */; };
-		1DB6743D221BF0C300982EE6 /* vehicles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6743F221BF0C300982EE6 /* vehicles.json */; };
-		1DB67440221BF0C700982EE6 /* tankradios.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67442221BF0C700982EE6 /* tankradios.json */; };
-		1DB67443221BF0CC00982EE6 /* tankguns.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67445221BF0CC00982EE6 /* tankguns.json */; };
-		1DB67446221BF0D000982EE6 /* tankturrets.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67448221BF0D000982EE6 /* tankturrets.json */; };
-		1DB67449221BF0D400982EE6 /* tankchassis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6744B221BF0D400982EE6 /* tankchassis.json */; };
-		1DB6744C221BF0D900982EE6 /* vehicleprofile.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB6744E221BF0D900982EE6 /* vehicleprofile.json */; };
-		1DB6744F221BF0DE00982EE6 /* tankengines.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DB67451221BF0DE00982EE6 /* tankengines.json */; };
-		1DC07BA31B3B003D002FAA72 /* Data-Flow-Chart-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */; };
-		1DC07BA41B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9B1B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png */; };
-		1DC07BA51B3B003D002FAA72 /* Data-Flow-Chart-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9C1B3B003D002FAA72 /* Data-Flow-Chart-icon@3x.png */; };
-		1DC07BA61B3B003D002FAA72 /* Data-List-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9D1B3B003D002FAA72 /* Data-List-icon.png */; };
-		1DC07BA71B3B003D002FAA72 /* Data-List-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9E1B3B003D002FAA72 /* Data-List-icon@2x.png */; };
-		1DC07BA81B3B003D002FAA72 /* Data-List-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07B9F1B3B003D002FAA72 /* Data-List-icon@3x.png */; };
-		1DC07BA91B3B003D002FAA72 /* Messaging-Categorize-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07BA01B3B003D002FAA72 /* Messaging-Categorize-icon.png */; };
-		1DC07BAA1B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07BA11B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png */; };
-		1DC07BAB1B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DC07BA21B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png */; };
 		1DCC7F1D1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC7F1B1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.m */; };
 		1DCC7F1E1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F1C1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.xib */; };
-		1DCC7F251B2ED07F005FF193 /* WOTArrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F1F1B2ED07F005FF193 /* WOTArrowDown.png */; };
-		1DCC7F261B2ED07F005FF193 /* WOTArrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F201B2ED07F005FF193 /* WOTArrowDown@2x.png */; };
-		1DCC7F271B2ED07F005FF193 /* WOTArrowDown@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F211B2ED07F005FF193 /* WOTArrowDown@3x.png */; };
-		1DCC7F281B2ED07F005FF193 /* WOTArrowUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F221B2ED07F005FF193 /* WOTArrowUp.png */; };
-		1DCC7F291B2ED07F005FF193 /* WOTArrowUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F231B2ED07F005FF193 /* WOTArrowUp@2x.png */; };
-		1DCC7F2A1B2ED07F005FF193 /* WOTArrowUp@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC7F241B2ED07F005FF193 /* WOTArrowUp@3x.png */; };
 		1DCC7F4D1B2F0619005FF193 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC7F4C1B2F0619005FF193 /* UIView+StretchingConstraints.m */; };
 		1DCC80DC1B306227005FF193 /* WOTRadarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC80D91B306227005FF193 /* WOTRadarViewController.m */; };
 		1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC80DA1B306227005FF193 /* WOTRadarViewController.xib */; };
 		1DCC81231B32B83B005FF193 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC81221B32B83B005FF193 /* UIImage+Resize.m */; };
 		1DD46B1C1BA6941900D3B3CE /* WOTTankGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B1A1BA6941900D3B3CE /* WOTTankGridViewController.m */; };
 		1DD46B1D1BA6941900D3B3CE /* WOTTankGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B1B1BA6941900D3B3CE /* WOTTankGridViewController.xib */; };
-		1DD46B2A1BA69CC900D3B3CE /* Activity Grid Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B1E1BA69CC900D3B3CE /* Activity Grid Yellow.png */; };
-		1DD46B2B1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B1F1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png */; };
-		1DD46B2C1BA69CC900D3B3CE /* Activity Grid Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B201BA69CC900D3B3CE /* Activity Grid Yellow@3x.png */; };
-		1DD46B2D1BA69CC900D3B3CE /* Activity Grid@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B211BA69CC900D3B3CE /* Activity Grid@3x.png */; };
-		1DD46B2E1BA69CC900D3B3CE /* Activity Grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B221BA69CC900D3B3CE /* Activity Grid@2x.png */; };
-		1DD46B2F1BA69CC900D3B3CE /* Activity Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B231BA69CC900D3B3CE /* Activity Grid.png */; };
-		1DD46B301BA69CC900D3B3CE /* Radar Plot.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B241BA69CC900D3B3CE /* Radar Plot.png */; };
-		1DD46B311BA69CC900D3B3CE /* Radar Plot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B251BA69CC900D3B3CE /* Radar Plot@2x.png */; };
-		1DD46B321BA69CC900D3B3CE /* Radar Plot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B261BA69CC900D3B3CE /* Radar Plot@3x.png */; };
-		1DD46B331BA69CC900D3B3CE /* Radar Plot Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B271BA69CC900D3B3CE /* Radar Plot Yellow@3x.png */; };
-		1DD46B341BA69CC900D3B3CE /* Radar Plot Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B281BA69CC900D3B3CE /* Radar Plot Yellow@2x.png */; };
-		1DD46B351BA69CC900D3B3CE /* Radar Plot Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B291BA69CC900D3B3CE /* Radar Plot Yellow.png */; };
 		1DD46B3A1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B381BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m */; };
 		1DD46B3B1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD46B391BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib */; };
 		1DD46B3F1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD46B3E1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m */; };
@@ -261,14 +166,9 @@
 		1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE3861B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m */; };
 		1DDEE3981B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEE3871B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib */; };
 		1DDEE39C1B8F353200C90D4B /* WOTTankPivotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEE38F1B8F353200C90D4B /* WOTTankPivotViewController.xib */; };
-		1DE1FA15245EE4F7002866A3 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA14245EE4F7002866A3 /* NSThread+ExecutionOnMain.m */; };
 		1DE1FA1F245EE7C8002866A3 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA18245EE7C7002866A3 /* NSString+RomanUtils.m */; };
 		1DE1FA20245EE7C8002866A3 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA1B245EE7C7002866A3 /* RomanNumber.m */; };
 		1DE1FA21245EE7C8002866A3 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1FA1D245EE7C7002866A3 /* Reachability.m */; };
-		1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */; };
-		1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */; };
-		1DE319AE1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */; };
-		1DE319AF1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */; };
 		1DEB8C512122FB130093B564 /* WOTMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB8C502122FB130093B564 /* WOTMenuViewController.swift */; };
 		1DEEAC6420FF1ABF0072E099 /* WOTNode+DetailGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEEAC6020FF1ABE0072E099 /* WOTNode+DetailGrid.m */; };
 		1DEEAC6B20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEEAC6A20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m */; };
@@ -279,18 +179,102 @@
 		DA0BC4E82952E0FA00E01D54 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E62952E0FA00E01D54 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA0BC4EA2952E10400E01D54 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E92952E10400E01D54 /* WOTKit.framework */; };
 		DA0BC4EB2952E10400E01D54 /* WOTKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E92952E10400E01D54 /* WOTKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA522D281B6637630087D684 /* Search Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D221B6637630087D684 /* Search Gray.png */; };
-		DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D231B6637630087D684 /* Search Gray@2x.png */; };
-		DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D241B6637630087D684 /* Search Gray@3x.png */; };
-		DA522D2B1B6637630087D684 /* Search Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D251B6637630087D684 /* Search Yellow.png */; };
-		DA522D2C1B6637630087D684 /* Search Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D261B6637630087D684 /* Search Yellow@2x.png */; };
-		DA522D2D1B6637630087D684 /* Search Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D271B6637630087D684 /* Search Yellow@3x.png */; };
 		DA522D311B663C210087D684 /* WOTTankListSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DA522D301B663C210087D684 /* WOTTankListSearchBar.m */; };
 		DA522D331B663C290087D684 /* WOTTankListSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA522D321B663C290087D684 /* WOTTankListSearchBar.xib */; };
-		DA522D371B6649020087D684 /* Cancel Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D341B6649020087D684 /* Cancel Gray.png */; };
-		DA522D381B6649020087D684 /* Cancel Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D351B6649020087D684 /* Cancel Gray@2x.png */; };
-		DA522D391B6649020087D684 /* Cancel Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA522D361B6649020087D684 /* Cancel Gray@3x.png */; };
 		DA81E4D62952EC7300C60F31 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4D52952EC7300C60F31 /* NSBundle+LanguageBundle.m */; };
+		DA81E754295316E600C60F31 /* Activity Grid Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F5295316E600C60F31 /* Activity Grid Yellow.png */; };
+		DA81E755295316E600C60F31 /* Activity Grid Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F6295316E600C60F31 /* Activity Grid Yellow@2x.png */; };
+		DA81E756295316E600C60F31 /* Activity Grid Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F7295316E600C60F31 /* Activity Grid Yellow@3x.png */; };
+		DA81E757295316E600C60F31 /* Activity Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F8295316E600C60F31 /* Activity Grid.png */; };
+		DA81E758295316E600C60F31 /* Activity Grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F9295316E600C60F31 /* Activity Grid@2x.png */; };
+		DA81E759295316E600C60F31 /* Activity Grid@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6FA295316E600C60F31 /* Activity Grid@3x.png */; };
+		DA81E75A295316E600C60F31 /* Bulletproof Vest Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6FB295316E600C60F31 /* Bulletproof Vest Gray.png */; };
+		DA81E75B295316E600C60F31 /* Bulletproof Vest Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6FC295316E600C60F31 /* Bulletproof Vest Gray@2x.png */; };
+		DA81E75C295316E600C60F31 /* Bulletproof Vest Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6FD295316E600C60F31 /* Bulletproof Vest Gray@3x.png */; };
+		DA81E75D295316E600C60F31 /* Bulletproof Vest Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6FE295316E600C60F31 /* Bulletproof Vest Yellow.png */; };
+		DA81E75E295316E600C60F31 /* Bulletproof Vest Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6FF295316E600C60F31 /* Bulletproof Vest Yellow@2x.png */; };
+		DA81E75F295316E600C60F31 /* Bulletproof Vest Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E700295316E600C60F31 /* Bulletproof Vest Yellow@3x.png */; };
+		DA81E760295316E600C60F31 /* Cancel Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E701295316E600C60F31 /* Cancel Gray.png */; };
+		DA81E761295316E600C60F31 /* Cancel Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E702295316E600C60F31 /* Cancel Gray@2x.png */; };
+		DA81E762295316E600C60F31 /* Cancel Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E703295316E600C60F31 /* Cancel Gray@3x.png */; };
+		DA81E763295316E600C60F31 /* Firing Gun Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E704295316E600C60F31 /* Firing Gun Gray.png */; };
+		DA81E764295316E600C60F31 /* Firing Gun Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E705295316E600C60F31 /* Firing Gun Gray@2x.png */; };
+		DA81E765295316E600C60F31 /* Firing Gun Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E706295316E600C60F31 /* Firing Gun Gray@3x.png */; };
+		DA81E766295316E600C60F31 /* Firing Gun Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E707295316E600C60F31 /* Firing Gun Yellow.png */; };
+		DA81E767295316E600C60F31 /* Firing Gun Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E708295316E600C60F31 /* Firing Gun Yellow@2x.png */; };
+		DA81E768295316E600C60F31 /* Firing Gun Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E709295316E600C60F31 /* Firing Gun Yellow@3x.png */; };
+		DA81E769295316E600C60F31 /* Hourglass Sand Bottom Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E70A295316E600C60F31 /* Hourglass Sand Bottom Gray.png */; };
+		DA81E76A295316E600C60F31 /* Hourglass Sand Bottom Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E70B295316E600C60F31 /* Hourglass Sand Bottom Gray@2x.png */; };
+		DA81E76B295316E600C60F31 /* Hourglass Sand Bottom Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E70C295316E600C60F31 /* Hourglass Sand Bottom Gray@3x.png */; };
+		DA81E76C295316E600C60F31 /* Hourglass Sand Bottom Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E70D295316E600C60F31 /* Hourglass Sand Bottom Yellow.png */; };
+		DA81E76D295316E600C60F31 /* Hourglass Sand Bottom Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E70E295316E600C60F31 /* Hourglass Sand Bottom Yellow@2x.png */; };
+		DA81E76E295316E600C60F31 /* Hourglass Sand Bottom Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E70F295316E600C60F31 /* Hourglass Sand Bottom Yellow@3x.png */; };
+		DA81E76F295316E600C60F31 /* Hourglass Sand Top Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E710295316E600C60F31 /* Hourglass Sand Top Gray.png */; };
+		DA81E770295316E600C60F31 /* Hourglass Sand Top Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E711295316E600C60F31 /* Hourglass Sand Top Gray@2x.png */; };
+		DA81E771295316E600C60F31 /* Hourglass Sand Top Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E712295316E600C60F31 /* Hourglass Sand Top Gray@3x.png */; };
+		DA81E772295316E600C60F31 /* Hourglass Sand Top Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E713295316E600C60F31 /* Hourglass Sand Top Yellow.png */; };
+		DA81E773295316E600C60F31 /* Hourglass Sand Top Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E714295316E600C60F31 /* Hourglass Sand Top Yellow@2x.png */; };
+		DA81E774295316E600C60F31 /* Hourglass Sand Top Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E715295316E600C60F31 /* Hourglass Sand Top Yellow@3x.png */; };
+		DA81E775295316E600C60F31 /* Opera Glasses Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E716295316E600C60F31 /* Opera Glasses Gray.png */; };
+		DA81E776295316E600C60F31 /* Opera Glasses Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E717295316E600C60F31 /* Opera Glasses Gray@2x.png */; };
+		DA81E777295316E600C60F31 /* Opera Glasses Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E718295316E600C60F31 /* Opera Glasses Gray@3x.png */; };
+		DA81E778295316E600C60F31 /* Opera Glasses Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E719295316E600C60F31 /* Opera Glasses Yellow.png */; };
+		DA81E779295316E600C60F31 /* Opera Glasses Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E71A295316E600C60F31 /* Opera Glasses Yellow@2x.png */; };
+		DA81E77A295316E600C60F31 /* Opera Glasses Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E71B295316E600C60F31 /* Opera Glasses Yellow@3x.png */; };
+		DA81E77B295316E600C60F31 /* Radar Plot Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E71C295316E600C60F31 /* Radar Plot Yellow.png */; };
+		DA81E77C295316E600C60F31 /* Radar Plot Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E71D295316E600C60F31 /* Radar Plot Yellow@2x.png */; };
+		DA81E77D295316E600C60F31 /* Radar Plot Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E71E295316E600C60F31 /* Radar Plot Yellow@3x.png */; };
+		DA81E77E295316E600C60F31 /* Radar Plot.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E71F295316E600C60F31 /* Radar Plot.png */; };
+		DA81E77F295316E600C60F31 /* Radar Plot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E720295316E600C60F31 /* Radar Plot@2x.png */; };
+		DA81E780295316E600C60F31 /* Radar Plot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E721295316E600C60F31 /* Radar Plot@3x.png */; };
+		DA81E781295316E600C60F31 /* Search Gray - 32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E722295316E600C60F31 /* Search Gray - 32x32.png */; };
+		DA81E782295316E600C60F31 /* Search Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E723295316E600C60F31 /* Search Gray.png */; };
+		DA81E783295316E600C60F31 /* Search Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E724295316E600C60F31 /* Search Gray@2x.png */; };
+		DA81E784295316E700C60F31 /* Search Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E725295316E600C60F31 /* Search Gray@3x.png */; };
+		DA81E785295316E700C60F31 /* Search Yellow - 32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E726295316E600C60F31 /* Search Yellow - 32x32.png */; };
+		DA81E786295316E700C60F31 /* Search Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E727295316E600C60F31 /* Search Yellow.png */; };
+		DA81E787295316E700C60F31 /* Search Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E728295316E600C60F31 /* Search Yellow@2x.png */; };
+		DA81E788295316E700C60F31 /* Search Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E729295316E600C60F31 /* Search Yellow@3x.png */; };
+		DA81E789295316E700C60F31 /* Speedometer Gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E72A295316E600C60F31 /* Speedometer Gray.png */; };
+		DA81E78A295316E700C60F31 /* Speedometer Gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E72B295316E600C60F31 /* Speedometer Gray@2x.png */; };
+		DA81E78B295316E700C60F31 /* Speedometer Gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E72C295316E600C60F31 /* Speedometer Gray@3x.png */; };
+		DA81E78C295316E700C60F31 /* Speedometer Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E72D295316E600C60F31 /* Speedometer Yellow.png */; };
+		DA81E78D295316E700C60F31 /* Speedometer Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E72E295316E600C60F31 /* Speedometer Yellow@2x.png */; };
+		DA81E78E295316E700C60F31 /* Speedometer Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E72F295316E600C60F31 /* Speedometer Yellow@3x.png */; };
+		DA81E78F295316E700C60F31 /* WOTArrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E731295316E600C60F31 /* WOTArrowDown.png */; };
+		DA81E790295316E700C60F31 /* WOTArrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E732295316E600C60F31 /* WOTArrowDown@2x.png */; };
+		DA81E791295316E700C60F31 /* WOTArrowDown@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E733295316E600C60F31 /* WOTArrowDown@3x.png */; };
+		DA81E792295316E700C60F31 /* WOTArrowUp.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E734295316E600C60F31 /* WOTArrowUp.png */; };
+		DA81E793295316E700C60F31 /* WOTArrowUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E735295316E600C60F31 /* WOTArrowUp@2x.png */; };
+		DA81E794295316E700C60F31 /* WOTArrowUp@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E736295316E600C60F31 /* WOTArrowUp@3x.png */; };
+		DA81E795295316E700C60F31 /* WOTBackIconGray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E737295316E600C60F31 /* WOTBackIconGray.png */; };
+		DA81E796295316E700C60F31 /* WOTBackIconGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E738295316E600C60F31 /* WOTBackIconGray@2x.png */; };
+		DA81E797295316E700C60F31 /* WOTBackIconGray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E739295316E600C60F31 /* WOTBackIconGray@3x.png */; };
+		DA81E798295316E700C60F31 /* WOTGlobe.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E73A295316E600C60F31 /* WOTGlobe.png */; };
+		DA81E799295316E700C60F31 /* WOTGlobe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E73B295316E600C60F31 /* WOTGlobe@2x.png */; };
+		DA81E79A295316E700C60F31 /* WOTLoggedInUser.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E73C295316E600C60F31 /* WOTLoggedInUser.png */; };
+		DA81E79B295316E700C60F31 /* WOTLoggedInUser@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E73D295316E600C60F31 /* WOTLoggedInUser@2x.png */; };
+		DA81E79C295316E700C60F31 /* WOTLoggedInUser@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E73E295316E600C60F31 /* WOTLoggedInUser@3x.png */; };
+		DA81E79D295316E700C60F31 /* WOTSelector-checkmark-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E73F295316E600C60F31 /* WOTSelector-checkmark-dark.png */; };
+		DA81E79E295316E700C60F31 /* WOTSelector-checkmark-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E740295316E600C60F31 /* WOTSelector-checkmark-dark@2x.png */; };
+		DA81E79F295316E700C60F31 /* WOTSelector-checkmark-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E741295316E600C60F31 /* WOTSelector-checkmark-gray.png */; };
+		DA81E7A0295316E700C60F31 /* WOTSelector-checkmark-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E742295316E600C60F31 /* WOTSelector-checkmark-gray@2x.png */; };
+		DA81E7A1295316E700C60F31 /* WOTiPadMenuGear.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E743295316E600C60F31 /* WOTiPadMenuGear.png */; };
+		DA81E7A2295316E700C60F31 /* WOTiPadMenuGear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E744295316E600C60F31 /* WOTiPadMenuGear@2x.png */; };
+		DA81E7A3295316E700C60F31 /* WOTiPadMenuGear@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E745295316E600C60F31 /* WOTiPadMenuGear@3x.png */; };
+		DA81E7A4295316E700C60F31 /* Data-Flow-Chart-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E747295316E600C60F31 /* Data-Flow-Chart-icon.png */; };
+		DA81E7A5295316E700C60F31 /* Data-Flow-Chart-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E748295316E600C60F31 /* Data-Flow-Chart-icon@2x.png */; };
+		DA81E7A6295316E700C60F31 /* Data-Flow-Chart-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E749295316E600C60F31 /* Data-Flow-Chart-icon@3x.png */; };
+		DA81E7A7295316E700C60F31 /* Data-List-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E74A295316E600C60F31 /* Data-List-icon.png */; };
+		DA81E7A8295316E700C60F31 /* Data-List-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E74B295316E600C60F31 /* Data-List-icon@2x.png */; };
+		DA81E7A9295316E700C60F31 /* Data-List-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E74C295316E600C60F31 /* Data-List-icon@3x.png */; };
+		DA81E7AA295316E700C60F31 /* Messaging-Categorize-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E74D295316E600C60F31 /* Messaging-Categorize-icon.png */; };
+		DA81E7AB295316E700C60F31 /* Messaging-Categorize-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E74E295316E600C60F31 /* Messaging-Categorize-icon@2x.png */; };
+		DA81E7AC295316E700C60F31 /* Messaging-Categorize-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E74F295316E600C60F31 /* Messaging-Categorize-icon@3x.png */; };
+		DA81E7AD295316E700C60F31 /* wotShowMenuButtoniPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E751295316E600C60F31 /* wotShowMenuButtoniPhone.png */; };
+		DA81E7AE295316E700C60F31 /* wotShowMenuButtoniPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E752295316E600C60F31 /* wotShowMenuButtoniPhone@2x.png */; };
+		DA81E7AF295316E700C60F31 /* wotShowMenuButtoniPhone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E753295316E600C60F31 /* wotShowMenuButtoniPhone@3x.png */; };
+		DA81E7D22953288700C60F31 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7D02953288600C60F31 /* WOTSessionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -349,20 +333,6 @@
 		1D4C922C1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingNameChooserViewController.h; sourceTree = "<group>"; };
 		1D4C922D1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingNameChooserViewController.m; sourceTree = "<group>"; };
 		1D4C922E1B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingNameChooserViewController.xib; sourceTree = "<group>"; };
-		1D4C92311B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wotShowMenuButtoniPhone.png; sourceTree = "<group>"; };
-		1D4C92321B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wotShowMenuButtoniPhone@2x.png"; sourceTree = "<group>"; };
-		1D4C92331B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wotShowMenuButtoniPhone@3x.png"; sourceTree = "<group>"; };
-		1D4C92381B25EB1000E320B5 /* WOTBackIconGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTBackIconGray.png; sourceTree = "<group>"; };
-		1D4C92391B25EB1000E320B5 /* WOTBackIconGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTBackIconGray@2x.png"; sourceTree = "<group>"; };
-		1D4C923A1B25EB1000E320B5 /* WOTBackIconGray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTBackIconGray@3x.png"; sourceTree = "<group>"; };
-		1D4C923E1B25EBE400E320B5 /* WOTiPadMenuGear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTiPadMenuGear.png; sourceTree = "<group>"; };
-		1D4C923F1B25EBE400E320B5 /* WOTiPadMenuGear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTiPadMenuGear@2x.png"; sourceTree = "<group>"; };
-		1D4C92401B25EBE400E320B5 /* WOTiPadMenuGear@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTiPadMenuGear@3x.png"; sourceTree = "<group>"; };
-		1D4C92441B25ED0900E320B5 /* WOTLoggedInUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTLoggedInUser.png; sourceTree = "<group>"; };
-		1D4C92451B25ED0900E320B5 /* WOTLoggedInUser@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTLoggedInUser@2x.png"; sourceTree = "<group>"; };
-		1D4C92461B25ED0900E320B5 /* WOTLoggedInUser@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTLoggedInUser@3x.png"; sourceTree = "<group>"; };
-		1D4C924A1B25EF2E00E320B5 /* WOTGlobe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTGlobe.png; sourceTree = "<group>"; };
-		1D4C924B1B25EF2E00E320B5 /* WOTGlobe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTGlobe@2x.png"; sourceTree = "<group>"; };
 		1D4C92501B25F27200E320B5 /* WOTLanguageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLanguageTableViewCell.h; sourceTree = "<group>"; };
 		1D4C92511B25F27200E320B5 /* WOTLanguageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageTableViewCell.m; sourceTree = "<group>"; };
 		1D4C92521B25F27200E320B5 /* WOTLanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLanguageTableViewCell.xib; sourceTree = "<group>"; };
@@ -387,12 +357,6 @@
 		1D519D1D1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSExpressionDescription+WOT.m"; sourceTree = "<group>"; };
 		1D519D381B4FD42000D3A286 /* WOTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProgressView.h; sourceTree = "<group>"; };
 		1D519D391B4FD42000D3A286 /* WOTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProgressView.m; sourceTree = "<group>"; };
-		1D5669252424D121008458AF /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
-		1D5669262424D121008458AF /* HostConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostConfiguration.swift; sourceTree = "<group>"; };
-		1D5669282424D121008458AF /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
-		1D56692A2424D121008458AF /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
-		1D56692C2424D121008458AF /* WOTSaveSessionResponseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTSaveSessionResponseAdapter.swift; sourceTree = "<group>"; };
-		1D5669382424D9CC008458AF /* WOTRequestIds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTRequestIds.h; sourceTree = "<group>"; };
 		1D56697F2424DEF5008458AF /* WOTTankDetailSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailSection.h; sourceTree = "<group>"; };
 		1D5669802424DEF5008458AF /* WOTTankDetailDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailDatasource.m; sourceTree = "<group>"; };
 		1D5669812424DEF5008458AF /* WOTTankDetailDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailDatasource.h; sourceTree = "<group>"; };
@@ -443,47 +407,6 @@
 		1D60E603246025F5007E5CA8 /* WOT_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOT_iOSTests.swift; sourceTree = "<group>"; };
 		1D60E605246025F5007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D6426F92123070C003116E4 /* WOTPivotRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotRefreshControl.swift; sourceTree = "<group>"; };
-		1D65F8302216AEE9006A85E4 /* vehicleEngine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vehicleEngine.png; sourceTree = "<group>"; };
-		1D65F8312216AEE9006A85E4 /* vehicleGun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vehicleGun.png; sourceTree = "<group>"; };
-		1D65F8322216AEE9006A85E4 /* vehicleRadio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vehicleRadio.png; sourceTree = "<group>"; };
-		1D65F8332216AEE9006A85E4 /* vehicleTurret.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vehicleTurret.png; sourceTree = "<group>"; };
-		1D65F8342216AEE9006A85E4 /* vehicleChassis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vehicleChassis.png; sourceTree = "<group>"; };
-		1D672B201B60C86700617E5C /* Bulletproof Vest Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray.png"; sourceTree = "<group>"; };
-		1D672B211B60C86700617E5C /* Bulletproof Vest Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray@2x.png"; sourceTree = "<group>"; };
-		1D672B221B60C86700617E5C /* Bulletproof Vest Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray@3x.png"; sourceTree = "<group>"; };
-		1D672B231B60C86700617E5C /* Bulletproof Vest Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Yellow.png"; sourceTree = "<group>"; };
-		1D672B241B60C86700617E5C /* Bulletproof Vest Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Yellow@2x.png"; sourceTree = "<group>"; };
-		1D672B251B60C86700617E5C /* Bulletproof Vest Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Yellow@3x.png"; sourceTree = "<group>"; };
-		1D672B2C1B60C9A100617E5C /* Opera Glasses Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Gray.png"; sourceTree = "<group>"; };
-		1D672B2D1B60C9A100617E5C /* Opera Glasses Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Gray@2x.png"; sourceTree = "<group>"; };
-		1D672B2E1B60C9A100617E5C /* Opera Glasses Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Gray@3x.png"; sourceTree = "<group>"; };
-		1D672B2F1B60C9A100617E5C /* Opera Glasses Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Yellow.png"; sourceTree = "<group>"; };
-		1D672B301B60C9A100617E5C /* Opera Glasses Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Yellow@2x.png"; sourceTree = "<group>"; };
-		1D672B311B60C9A100617E5C /* Opera Glasses Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Yellow@3x.png"; sourceTree = "<group>"; };
-		1D672B381B60CB7000617E5C /* Speedometer Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Gray.png"; sourceTree = "<group>"; };
-		1D672B391B60CB7000617E5C /* Speedometer Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Gray@2x.png"; sourceTree = "<group>"; };
-		1D672B3A1B60CB7100617E5C /* Speedometer Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Gray@3x.png"; sourceTree = "<group>"; };
-		1D672B3B1B60CB7100617E5C /* Speedometer Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Yellow.png"; sourceTree = "<group>"; };
-		1D672B3C1B60CB7100617E5C /* Speedometer Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Yellow@2x.png"; sourceTree = "<group>"; };
-		1D672B3D1B60CB7100617E5C /* Speedometer Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Yellow@3x.png"; sourceTree = "<group>"; };
-		1D672B441B60CC8700617E5C /* Firing Gun Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Gray.png"; sourceTree = "<group>"; };
-		1D672B451B60CC8700617E5C /* Firing Gun Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Gray@2x.png"; sourceTree = "<group>"; };
-		1D672B461B60CC8700617E5C /* Firing Gun Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Gray@3x.png"; sourceTree = "<group>"; };
-		1D672B471B60CC8700617E5C /* Firing Gun Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Yellow.png"; sourceTree = "<group>"; };
-		1D672B481B60CC8700617E5C /* Firing Gun Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Yellow@2x.png"; sourceTree = "<group>"; };
-		1D672B491B60CC8700617E5C /* Firing Gun Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Yellow@3x.png"; sourceTree = "<group>"; };
-		1D672B501B60D15C00617E5C /* Hourglass Sand Bottom Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Gray.png"; sourceTree = "<group>"; };
-		1D672B511B60D15C00617E5C /* Hourglass Sand Bottom Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Gray@2x.png"; sourceTree = "<group>"; };
-		1D672B521B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Gray@3x.png"; sourceTree = "<group>"; };
-		1D672B531B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Yellow.png"; sourceTree = "<group>"; };
-		1D672B541B60D15C00617E5C /* Hourglass Sand Bottom Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Yellow@2x.png"; sourceTree = "<group>"; };
-		1D672B551B60D15C00617E5C /* Hourglass Sand Bottom Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Yellow@3x.png"; sourceTree = "<group>"; };
-		1D672B561B60D15C00617E5C /* Hourglass Sand Top Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Gray.png"; sourceTree = "<group>"; };
-		1D672B571B60D15C00617E5C /* Hourglass Sand Top Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Gray@2x.png"; sourceTree = "<group>"; };
-		1D672B581B60D15C00617E5C /* Hourglass Sand Top Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Gray@3x.png"; sourceTree = "<group>"; };
-		1D672B591B60D15C00617E5C /* Hourglass Sand Top Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow.png"; sourceTree = "<group>"; };
-		1D672B5A1B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow@2x.png"; sourceTree = "<group>"; };
-		1D672B5B1B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow@3x.png"; sourceTree = "<group>"; };
 		1D6DD6C02124106B00498BEE /* WOTSplitViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTSplitViewController.xib; sourceTree = "<group>"; };
 		1D6E94E52100CA1200B65FC3 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		1D6FF4DB2106FD7A006C1328 /* WOTTankConfigurationModuleMapping+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankConfigurationModuleMapping+Factory.h"; sourceTree = "<group>"; };
@@ -536,33 +459,9 @@
 		1DA1D74D1B2B010800C5C2FB /* WOTTankListSettingsDatasource+AvailableFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankListSettingsDatasource+AvailableFields.m"; sourceTree = "<group>"; };
 		1DA1D74F1B2B017C00C5C2FB /* WOTTankListSettingsAvailableFieldsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsAvailableFieldsProtocol.h; sourceTree = "<group>"; };
 		1DB5FB532428AC1000413F41 /* .swiftformat.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftformat.yml; sourceTree = "<group>"; };
-		1DB67438221BF0B300982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/chassis.json; sourceTree = "<group>"; };
-		1DB6743B221BF0B800982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tanks.json; sourceTree = "<group>"; };
-		1DB6743E221BF0C300982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicles.json; sourceTree = "<group>"; };
-		1DB67441221BF0C700982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankradios.json; sourceTree = "<group>"; };
-		1DB67444221BF0CC00982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankguns.json; sourceTree = "<group>"; };
-		1DB67447221BF0D000982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankturrets.json; sourceTree = "<group>"; };
-		1DB6744A221BF0D400982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankchassis.json; sourceTree = "<group>"; };
-		1DB6744D221BF0D900982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicleprofile.json; sourceTree = "<group>"; };
-		1DB67450221BF0DE00982EE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankengines.json; sourceTree = "<group>"; };
-		1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon.png"; sourceTree = "<group>"; };
-		1DC07B9B1B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon@2x.png"; sourceTree = "<group>"; };
-		1DC07B9C1B3B003D002FAA72 /* Data-Flow-Chart-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon@3x.png"; sourceTree = "<group>"; };
-		1DC07B9D1B3B003D002FAA72 /* Data-List-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-List-icon.png"; sourceTree = "<group>"; };
-		1DC07B9E1B3B003D002FAA72 /* Data-List-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-List-icon@2x.png"; sourceTree = "<group>"; };
-		1DC07B9F1B3B003D002FAA72 /* Data-List-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-List-icon@3x.png"; sourceTree = "<group>"; };
-		1DC07BA01B3B003D002FAA72 /* Messaging-Categorize-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon.png"; sourceTree = "<group>"; };
-		1DC07BA11B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon@2x.png"; sourceTree = "<group>"; };
-		1DC07BA21B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon@3x.png"; sourceTree = "<group>"; };
 		1DCC7F1A1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingSortTableViewCell.h; sourceTree = "<group>"; };
 		1DCC7F1B1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingSortTableViewCell.m; sourceTree = "<group>"; };
 		1DCC7F1C1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSettingSortTableViewCell.xib; sourceTree = "<group>"; };
-		1DCC7F1F1B2ED07F005FF193 /* WOTArrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTArrowDown.png; sourceTree = "<group>"; };
-		1DCC7F201B2ED07F005FF193 /* WOTArrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTArrowDown@2x.png"; sourceTree = "<group>"; };
-		1DCC7F211B2ED07F005FF193 /* WOTArrowDown@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTArrowDown@3x.png"; sourceTree = "<group>"; };
-		1DCC7F221B2ED07F005FF193 /* WOTArrowUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTArrowUp.png; sourceTree = "<group>"; };
-		1DCC7F231B2ED07F005FF193 /* WOTArrowUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTArrowUp@2x.png"; sourceTree = "<group>"; };
-		1DCC7F241B2ED07F005FF193 /* WOTArrowUp@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTArrowUp@3x.png"; sourceTree = "<group>"; };
 		1DCC7F4B1B2F0619005FF193 /* UIView+StretchingConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+StretchingConstraints.h"; sourceTree = "<group>"; };
 		1DCC7F4C1B2F0619005FF193 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
 		1DCC80D81B306227005FF193 /* WOTRadarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadarViewController.h; sourceTree = "<group>"; };
@@ -574,18 +473,6 @@
 		1DD46B191BA6941900D3B3CE /* WOTTankGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankGridViewController.h; sourceTree = "<group>"; };
 		1DD46B1A1BA6941900D3B3CE /* WOTTankGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankGridViewController.m; sourceTree = "<group>"; };
 		1DD46B1B1BA6941900D3B3CE /* WOTTankGridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankGridViewController.xib; sourceTree = "<group>"; };
-		1DD46B1E1BA69CC900D3B3CE /* Activity Grid Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow.png"; sourceTree = "<group>"; };
-		1DD46B1F1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@2x.png"; sourceTree = "<group>"; };
-		1DD46B201BA69CC900D3B3CE /* Activity Grid Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@3x.png"; sourceTree = "<group>"; };
-		1DD46B211BA69CC900D3B3CE /* Activity Grid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid@3x.png"; sourceTree = "<group>"; };
-		1DD46B221BA69CC900D3B3CE /* Activity Grid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid@2x.png"; sourceTree = "<group>"; };
-		1DD46B231BA69CC900D3B3CE /* Activity Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid.png"; sourceTree = "<group>"; };
-		1DD46B241BA69CC900D3B3CE /* Radar Plot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot.png"; sourceTree = "<group>"; };
-		1DD46B251BA69CC900D3B3CE /* Radar Plot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot@2x.png"; sourceTree = "<group>"; };
-		1DD46B261BA69CC900D3B3CE /* Radar Plot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot@3x.png"; sourceTree = "<group>"; };
-		1DD46B271BA69CC900D3B3CE /* Radar Plot Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow@3x.png"; sourceTree = "<group>"; };
-		1DD46B281BA69CC900D3B3CE /* Radar Plot Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow@2x.png"; sourceTree = "<group>"; };
-		1DD46B291BA69CC900D3B3CE /* Radar Plot Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow.png"; sourceTree = "<group>"; };
 		1DD46B371BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankGridCollectionViewCell.h; sourceTree = "<group>"; };
 		1DD46B381BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankGridCollectionViewCell.m; sourceTree = "<group>"; };
 		1DD46B391BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankGridCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -657,8 +544,6 @@
 		1DDEE3861B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankPivotFixedCollectionViewCell.m; sourceTree = "<group>"; };
 		1DDEE3871B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotFixedCollectionViewCell.xib; sourceTree = "<group>"; };
 		1DDEE38F1B8F353200C90D4B /* WOTTankPivotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotViewController.xib; sourceTree = "<group>"; };
-		1DE1FA13245EE4F7002866A3 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
-		1DE1FA14245EE4F7002866A3 /* NSThread+ExecutionOnMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+ExecutionOnMain.m"; sourceTree = "<group>"; };
 		1DE1FA18245EE7C7002866A3 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
 		1DE1FA19245EE7C7002866A3 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
 		1DE1FA1A245EE7C7002866A3 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
@@ -666,10 +551,6 @@
 		1DE1FA1D245EE7C7002866A3 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		1DE1FA1E245EE7C7002866A3 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		1DE1FA23245EE936002866A3 /* WOTLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTLogger.h; sourceTree = "<group>"; };
-		1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark.png"; sourceTree = "<group>"; };
-		1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark@2x.png"; sourceTree = "<group>"; };
-		1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray.png"; sourceTree = "<group>"; };
-		1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray@2x.png"; sourceTree = "<group>"; };
 		1DEB8C502122FB130093B564 /* WOTMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMenuViewController.swift; sourceTree = "<group>"; };
 		1DEEAC6020FF1ABE0072E099 /* WOTNode+DetailGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+DetailGrid.m"; sourceTree = "<group>"; };
 		1DEEAC6220FF1ABE0072E099 /* WOTNode+DetailGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+DetailGrid.h"; sourceTree = "<group>"; };
@@ -679,20 +560,105 @@
 		DA0BC4E32952E0EF00E01D54 /* WOTApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0BC4E62952E0FA00E01D54 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0BC4E92952E10400E01D54 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA522D221B6637630087D684 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
-		DA522D231B6637630087D684 /* Search Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@2x.png"; sourceTree = "<group>"; };
-		DA522D241B6637630087D684 /* Search Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@3x.png"; sourceTree = "<group>"; };
-		DA522D251B6637630087D684 /* Search Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow.png"; sourceTree = "<group>"; };
-		DA522D261B6637630087D684 /* Search Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow@2x.png"; sourceTree = "<group>"; };
-		DA522D271B6637630087D684 /* Search Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow@3x.png"; sourceTree = "<group>"; };
 		DA522D2F1B663C210087D684 /* WOTTankListSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSearchBar.h; sourceTree = "<group>"; };
 		DA522D301B663C210087D684 /* WOTTankListSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSearchBar.m; sourceTree = "<group>"; };
 		DA522D321B663C290087D684 /* WOTTankListSearchBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankListSearchBar.xib; sourceTree = "<group>"; };
-		DA522D341B6649020087D684 /* Cancel Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray.png"; sourceTree = "<group>"; };
-		DA522D351B6649020087D684 /* Cancel Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@2x.png"; sourceTree = "<group>"; };
-		DA522D361B6649020087D684 /* Cancel Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@3x.png"; sourceTree = "<group>"; };
 		DA81E4D42952EC7300C60F31 /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
 		DA81E4D52952EC7300C60F31 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
+		DA81E6F5295316E600C60F31 /* Activity Grid Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow.png"; sourceTree = "<group>"; };
+		DA81E6F6295316E600C60F31 /* Activity Grid Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E6F7295316E600C60F31 /* Activity Grid Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E6F8295316E600C60F31 /* Activity Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid.png"; sourceTree = "<group>"; };
+		DA81E6F9295316E600C60F31 /* Activity Grid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid@2x.png"; sourceTree = "<group>"; };
+		DA81E6FA295316E600C60F31 /* Activity Grid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity Grid@3x.png"; sourceTree = "<group>"; };
+		DA81E6FB295316E600C60F31 /* Bulletproof Vest Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray.png"; sourceTree = "<group>"; };
+		DA81E6FC295316E600C60F31 /* Bulletproof Vest Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray@2x.png"; sourceTree = "<group>"; };
+		DA81E6FD295316E600C60F31 /* Bulletproof Vest Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E6FE295316E600C60F31 /* Bulletproof Vest Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Yellow.png"; sourceTree = "<group>"; };
+		DA81E6FF295316E600C60F31 /* Bulletproof Vest Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E700295316E600C60F31 /* Bulletproof Vest Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bulletproof Vest Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E701295316E600C60F31 /* Cancel Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray.png"; sourceTree = "<group>"; };
+		DA81E702295316E600C60F31 /* Cancel Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@2x.png"; sourceTree = "<group>"; };
+		DA81E703295316E600C60F31 /* Cancel Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E704295316E600C60F31 /* Firing Gun Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Gray.png"; sourceTree = "<group>"; };
+		DA81E705295316E600C60F31 /* Firing Gun Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Gray@2x.png"; sourceTree = "<group>"; };
+		DA81E706295316E600C60F31 /* Firing Gun Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E707295316E600C60F31 /* Firing Gun Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Yellow.png"; sourceTree = "<group>"; };
+		DA81E708295316E600C60F31 /* Firing Gun Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E709295316E600C60F31 /* Firing Gun Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Firing Gun Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E70A295316E600C60F31 /* Hourglass Sand Bottom Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Gray.png"; sourceTree = "<group>"; };
+		DA81E70B295316E600C60F31 /* Hourglass Sand Bottom Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Gray@2x.png"; sourceTree = "<group>"; };
+		DA81E70C295316E600C60F31 /* Hourglass Sand Bottom Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E70D295316E600C60F31 /* Hourglass Sand Bottom Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Yellow.png"; sourceTree = "<group>"; };
+		DA81E70E295316E600C60F31 /* Hourglass Sand Bottom Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E70F295316E600C60F31 /* Hourglass Sand Bottom Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Bottom Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E710295316E600C60F31 /* Hourglass Sand Top Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Gray.png"; sourceTree = "<group>"; };
+		DA81E711295316E600C60F31 /* Hourglass Sand Top Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Gray@2x.png"; sourceTree = "<group>"; };
+		DA81E712295316E600C60F31 /* Hourglass Sand Top Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E713295316E600C60F31 /* Hourglass Sand Top Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow.png"; sourceTree = "<group>"; };
+		DA81E714295316E600C60F31 /* Hourglass Sand Top Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E715295316E600C60F31 /* Hourglass Sand Top Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hourglass Sand Top Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E716295316E600C60F31 /* Opera Glasses Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Gray.png"; sourceTree = "<group>"; };
+		DA81E717295316E600C60F31 /* Opera Glasses Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Gray@2x.png"; sourceTree = "<group>"; };
+		DA81E718295316E600C60F31 /* Opera Glasses Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E719295316E600C60F31 /* Opera Glasses Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Yellow.png"; sourceTree = "<group>"; };
+		DA81E71A295316E600C60F31 /* Opera Glasses Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E71B295316E600C60F31 /* Opera Glasses Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Opera Glasses Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E71C295316E600C60F31 /* Radar Plot Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow.png"; sourceTree = "<group>"; };
+		DA81E71D295316E600C60F31 /* Radar Plot Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E71E295316E600C60F31 /* Radar Plot Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E71F295316E600C60F31 /* Radar Plot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot.png"; sourceTree = "<group>"; };
+		DA81E720295316E600C60F31 /* Radar Plot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot@2x.png"; sourceTree = "<group>"; };
+		DA81E721295316E600C60F31 /* Radar Plot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Radar Plot@3x.png"; sourceTree = "<group>"; };
+		DA81E722295316E600C60F31 /* Search Gray - 32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray - 32x32.png"; sourceTree = "<group>"; };
+		DA81E723295316E600C60F31 /* Search Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray.png"; sourceTree = "<group>"; };
+		DA81E724295316E600C60F31 /* Search Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@2x.png"; sourceTree = "<group>"; };
+		DA81E725295316E600C60F31 /* Search Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E726295316E600C60F31 /* Search Yellow - 32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow - 32x32.png"; sourceTree = "<group>"; };
+		DA81E727295316E600C60F31 /* Search Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow.png"; sourceTree = "<group>"; };
+		DA81E728295316E600C60F31 /* Search Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E729295316E600C60F31 /* Search Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E72A295316E600C60F31 /* Speedometer Gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Gray.png"; sourceTree = "<group>"; };
+		DA81E72B295316E600C60F31 /* Speedometer Gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Gray@2x.png"; sourceTree = "<group>"; };
+		DA81E72C295316E600C60F31 /* Speedometer Gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Gray@3x.png"; sourceTree = "<group>"; };
+		DA81E72D295316E600C60F31 /* Speedometer Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Yellow.png"; sourceTree = "<group>"; };
+		DA81E72E295316E600C60F31 /* Speedometer Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Yellow@2x.png"; sourceTree = "<group>"; };
+		DA81E72F295316E600C60F31 /* Speedometer Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speedometer Yellow@3x.png"; sourceTree = "<group>"; };
+		DA81E731295316E600C60F31 /* WOTArrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTArrowDown.png; sourceTree = "<group>"; };
+		DA81E732295316E600C60F31 /* WOTArrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTArrowDown@2x.png"; sourceTree = "<group>"; };
+		DA81E733295316E600C60F31 /* WOTArrowDown@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTArrowDown@3x.png"; sourceTree = "<group>"; };
+		DA81E734295316E600C60F31 /* WOTArrowUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTArrowUp.png; sourceTree = "<group>"; };
+		DA81E735295316E600C60F31 /* WOTArrowUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTArrowUp@2x.png"; sourceTree = "<group>"; };
+		DA81E736295316E600C60F31 /* WOTArrowUp@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTArrowUp@3x.png"; sourceTree = "<group>"; };
+		DA81E737295316E600C60F31 /* WOTBackIconGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTBackIconGray.png; sourceTree = "<group>"; };
+		DA81E738295316E600C60F31 /* WOTBackIconGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTBackIconGray@2x.png"; sourceTree = "<group>"; };
+		DA81E739295316E600C60F31 /* WOTBackIconGray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTBackIconGray@3x.png"; sourceTree = "<group>"; };
+		DA81E73A295316E600C60F31 /* WOTGlobe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTGlobe.png; sourceTree = "<group>"; };
+		DA81E73B295316E600C60F31 /* WOTGlobe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTGlobe@2x.png"; sourceTree = "<group>"; };
+		DA81E73C295316E600C60F31 /* WOTLoggedInUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTLoggedInUser.png; sourceTree = "<group>"; };
+		DA81E73D295316E600C60F31 /* WOTLoggedInUser@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTLoggedInUser@2x.png"; sourceTree = "<group>"; };
+		DA81E73E295316E600C60F31 /* WOTLoggedInUser@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTLoggedInUser@3x.png"; sourceTree = "<group>"; };
+		DA81E73F295316E600C60F31 /* WOTSelector-checkmark-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark.png"; sourceTree = "<group>"; };
+		DA81E740295316E600C60F31 /* WOTSelector-checkmark-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-dark@2x.png"; sourceTree = "<group>"; };
+		DA81E741295316E600C60F31 /* WOTSelector-checkmark-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray.png"; sourceTree = "<group>"; };
+		DA81E742295316E600C60F31 /* WOTSelector-checkmark-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTSelector-checkmark-gray@2x.png"; sourceTree = "<group>"; };
+		DA81E743295316E600C60F31 /* WOTiPadMenuGear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WOTiPadMenuGear.png; sourceTree = "<group>"; };
+		DA81E744295316E600C60F31 /* WOTiPadMenuGear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTiPadMenuGear@2x.png"; sourceTree = "<group>"; };
+		DA81E745295316E600C60F31 /* WOTiPadMenuGear@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WOTiPadMenuGear@3x.png"; sourceTree = "<group>"; };
+		DA81E747295316E600C60F31 /* Data-Flow-Chart-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon.png"; sourceTree = "<group>"; };
+		DA81E748295316E600C60F31 /* Data-Flow-Chart-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon@2x.png"; sourceTree = "<group>"; };
+		DA81E749295316E600C60F31 /* Data-Flow-Chart-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-Flow-Chart-icon@3x.png"; sourceTree = "<group>"; };
+		DA81E74A295316E600C60F31 /* Data-List-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-List-icon.png"; sourceTree = "<group>"; };
+		DA81E74B295316E600C60F31 /* Data-List-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-List-icon@2x.png"; sourceTree = "<group>"; };
+		DA81E74C295316E600C60F31 /* Data-List-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Data-List-icon@3x.png"; sourceTree = "<group>"; };
+		DA81E74D295316E600C60F31 /* Messaging-Categorize-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon.png"; sourceTree = "<group>"; };
+		DA81E74E295316E600C60F31 /* Messaging-Categorize-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon@2x.png"; sourceTree = "<group>"; };
+		DA81E74F295316E600C60F31 /* Messaging-Categorize-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Messaging-Categorize-icon@3x.png"; sourceTree = "<group>"; };
+		DA81E751295316E600C60F31 /* wotShowMenuButtoniPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wotShowMenuButtoniPhone.png; sourceTree = "<group>"; };
+		DA81E752295316E600C60F31 /* wotShowMenuButtoniPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wotShowMenuButtoniPhone@2x.png"; sourceTree = "<group>"; };
+		DA81E753295316E600C60F31 /* wotShowMenuButtoniPhone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wotShowMenuButtoniPhone@3x.png"; sourceTree = "<group>"; };
+		DA81E7D02953288600C60F31 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
+		DA81E7D12953288600C60F31 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0CAF57B0233E28A614AE83F /* Pods-WOT-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		EB9DC1F0F086677D49391180 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -796,34 +762,6 @@
 			path = WOTTankListSettingViewController;
 			sourceTree = "<group>";
 		};
-		1D4C92371B25EB1000E320B5 /* General */ = {
-			isa = PBXGroup;
-			children = (
-				1DCC7F1F1B2ED07F005FF193 /* WOTArrowDown.png */,
-				1DCC7F201B2ED07F005FF193 /* WOTArrowDown@2x.png */,
-				1DCC7F211B2ED07F005FF193 /* WOTArrowDown@3x.png */,
-				1DCC7F221B2ED07F005FF193 /* WOTArrowUp.png */,
-				1DCC7F231B2ED07F005FF193 /* WOTArrowUp@2x.png */,
-				1DCC7F241B2ED07F005FF193 /* WOTArrowUp@3x.png */,
-				1DE319A81B2B067F00690DE7 /* WOTSelector-checkmark-dark.png */,
-				1DE319A91B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png */,
-				1DE319AA1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png */,
-				1DE319AB1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png */,
-				1D4C924A1B25EF2E00E320B5 /* WOTGlobe.png */,
-				1D4C924B1B25EF2E00E320B5 /* WOTGlobe@2x.png */,
-				1D4C92441B25ED0900E320B5 /* WOTLoggedInUser.png */,
-				1D4C92451B25ED0900E320B5 /* WOTLoggedInUser@2x.png */,
-				1D4C92461B25ED0900E320B5 /* WOTLoggedInUser@3x.png */,
-				1D4C923E1B25EBE400E320B5 /* WOTiPadMenuGear.png */,
-				1D4C923F1B25EBE400E320B5 /* WOTiPadMenuGear@2x.png */,
-				1D4C92401B25EBE400E320B5 /* WOTiPadMenuGear@3x.png */,
-				1D4C92381B25EB1000E320B5 /* WOTBackIconGray.png */,
-				1D4C92391B25EB1000E320B5 /* WOTBackIconGray@2x.png */,
-				1D4C923A1B25EB1000E320B5 /* WOTBackIconGray@3x.png */,
-			);
-			path = General;
-			sourceTree = "<group>";
-		};
 		1D4C924E1B25F27200E320B5 /* WOTLanguageSelectorViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,26 +853,6 @@
 				1D519D391B4FD42000D3A286 /* WOTProgressView.m */,
 			);
 			path = UIProgressView;
-			sourceTree = "<group>";
-		};
-		1D5669242424D121008458AF /* Session */ = {
-			isa = PBXGroup;
-			children = (
-				1D5669252424D121008458AF /* WOTSessionManager.h */,
-				1D5669282424D121008458AF /* WOTSessionManager.m */,
-				1D56692A2424D121008458AF /* SessionManager.swift */,
-				1D5669262424D121008458AF /* HostConfiguration.swift */,
-				1D56692B2424D121008458AF /* Session */,
-			);
-			path = Session;
-			sourceTree = "<group>";
-		};
-		1D56692B2424D121008458AF /* Session */ = {
-			isa = PBXGroup;
-			children = (
-				1D56692C2424D121008458AF /* WOTSaveSessionResponseAdapter.swift */,
-			);
-			path = Session;
 			sourceTree = "<group>";
 		};
 		1D56697C2424DEF5008458AF /* samples */ = {
@@ -1087,88 +1005,12 @@
 			path = "WOT-iOSTests";
 			sourceTree = "<group>";
 		};
-		1D65F82F2216AEE9006A85E4 /* TankDetails */ = {
-			isa = PBXGroup;
-			children = (
-				1D65F8302216AEE9006A85E4 /* vehicleEngine.png */,
-				1D65F8312216AEE9006A85E4 /* vehicleGun.png */,
-				1D65F8322216AEE9006A85E4 /* vehicleRadio.png */,
-				1D65F8332216AEE9006A85E4 /* vehicleTurret.png */,
-				1D65F8342216AEE9006A85E4 /* vehicleChassis.png */,
-			);
-			path = TankDetails;
-			sourceTree = "<group>";
-		};
 		1D672AFB1B57A6E800617E5C /* WOTTree */ = {
 			isa = PBXGroup;
 			children = (
 				1DEEAC5F20FF1ABE0072E099 /* WOTTree+GridData */,
 			);
 			path = WOTTree;
-			sourceTree = "<group>";
-		};
-		1D672B0F1B60C6F800617E5C /* 3rdParty */ = {
-			isa = PBXGroup;
-			children = (
-				1DD46B1E1BA69CC900D3B3CE /* Activity Grid Yellow.png */,
-				1DD46B1F1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png */,
-				1DD46B201BA69CC900D3B3CE /* Activity Grid Yellow@3x.png */,
-				1DD46B211BA69CC900D3B3CE /* Activity Grid@3x.png */,
-				1DD46B221BA69CC900D3B3CE /* Activity Grid@2x.png */,
-				1DD46B231BA69CC900D3B3CE /* Activity Grid.png */,
-				1DD46B241BA69CC900D3B3CE /* Radar Plot.png */,
-				1DD46B251BA69CC900D3B3CE /* Radar Plot@2x.png */,
-				1DD46B261BA69CC900D3B3CE /* Radar Plot@3x.png */,
-				1DD46B271BA69CC900D3B3CE /* Radar Plot Yellow@3x.png */,
-				1DD46B281BA69CC900D3B3CE /* Radar Plot Yellow@2x.png */,
-				1DD46B291BA69CC900D3B3CE /* Radar Plot Yellow.png */,
-				DA522D341B6649020087D684 /* Cancel Gray.png */,
-				DA522D351B6649020087D684 /* Cancel Gray@2x.png */,
-				DA522D361B6649020087D684 /* Cancel Gray@3x.png */,
-				DA522D221B6637630087D684 /* Search Gray.png */,
-				DA522D231B6637630087D684 /* Search Gray@2x.png */,
-				DA522D241B6637630087D684 /* Search Gray@3x.png */,
-				DA522D251B6637630087D684 /* Search Yellow.png */,
-				DA522D261B6637630087D684 /* Search Yellow@2x.png */,
-				DA522D271B6637630087D684 /* Search Yellow@3x.png */,
-				1D672B501B60D15C00617E5C /* Hourglass Sand Bottom Gray.png */,
-				1D672B511B60D15C00617E5C /* Hourglass Sand Bottom Gray@2x.png */,
-				1D672B521B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png */,
-				1D672B531B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png */,
-				1D672B541B60D15C00617E5C /* Hourglass Sand Bottom Yellow@2x.png */,
-				1D672B551B60D15C00617E5C /* Hourglass Sand Bottom Yellow@3x.png */,
-				1D672B561B60D15C00617E5C /* Hourglass Sand Top Gray.png */,
-				1D672B571B60D15C00617E5C /* Hourglass Sand Top Gray@2x.png */,
-				1D672B581B60D15C00617E5C /* Hourglass Sand Top Gray@3x.png */,
-				1D672B591B60D15C00617E5C /* Hourglass Sand Top Yellow.png */,
-				1D672B5A1B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png */,
-				1D672B5B1B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png */,
-				1D672B441B60CC8700617E5C /* Firing Gun Gray.png */,
-				1D672B451B60CC8700617E5C /* Firing Gun Gray@2x.png */,
-				1D672B461B60CC8700617E5C /* Firing Gun Gray@3x.png */,
-				1D672B471B60CC8700617E5C /* Firing Gun Yellow.png */,
-				1D672B481B60CC8700617E5C /* Firing Gun Yellow@2x.png */,
-				1D672B491B60CC8700617E5C /* Firing Gun Yellow@3x.png */,
-				1D672B381B60CB7000617E5C /* Speedometer Gray.png */,
-				1D672B391B60CB7000617E5C /* Speedometer Gray@2x.png */,
-				1D672B3A1B60CB7100617E5C /* Speedometer Gray@3x.png */,
-				1D672B3B1B60CB7100617E5C /* Speedometer Yellow.png */,
-				1D672B3C1B60CB7100617E5C /* Speedometer Yellow@2x.png */,
-				1D672B3D1B60CB7100617E5C /* Speedometer Yellow@3x.png */,
-				1D672B2C1B60C9A100617E5C /* Opera Glasses Gray.png */,
-				1D672B2D1B60C9A100617E5C /* Opera Glasses Gray@2x.png */,
-				1D672B2E1B60C9A100617E5C /* Opera Glasses Gray@3x.png */,
-				1D672B2F1B60C9A100617E5C /* Opera Glasses Yellow.png */,
-				1D672B301B60C9A100617E5C /* Opera Glasses Yellow@2x.png */,
-				1D672B311B60C9A100617E5C /* Opera Glasses Yellow@3x.png */,
-				1D672B201B60C86700617E5C /* Bulletproof Vest Gray.png */,
-				1D672B211B60C86700617E5C /* Bulletproof Vest Gray@2x.png */,
-				1D672B221B60C86700617E5C /* Bulletproof Vest Gray@3x.png */,
-				1D672B231B60C86700617E5C /* Bulletproof Vest Yellow.png */,
-				1D672B241B60C86700617E5C /* Bulletproof Vest Yellow@2x.png */,
-				1D672B251B60C86700617E5C /* Bulletproof Vest Yellow@3x.png */,
-			);
-			path = 3rdParty;
 			sourceTree = "<group>";
 		};
 		1D6FF4D92106FD7A006C1328 /* WOTTankModuleTreeViewController */ = {
@@ -1259,46 +1101,6 @@
 				1DCC7F1C1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.xib */,
 			);
 			path = cells;
-			sourceTree = "<group>";
-		};
-		1DB57B1620F771B9003FF3EC /* json */ = {
-			isa = PBXGroup;
-			children = (
-				1DB67424221BF0A400982EE6 /* WOT */,
-			);
-			path = json;
-			sourceTree = "<group>";
-		};
-		1DB67424221BF0A400982EE6 /* WOT */ = {
-			isa = PBXGroup;
-			children = (
-				1DB67439221BF0B300982EE6 /* chassis.json */,
-				1DB6743C221BF0B800982EE6 /* tanks.json */,
-				1DB6743F221BF0C300982EE6 /* vehicles.json */,
-				1DB67442221BF0C700982EE6 /* tankradios.json */,
-				1DB67445221BF0CC00982EE6 /* tankguns.json */,
-				1DB67448221BF0D000982EE6 /* tankturrets.json */,
-				1DB6744B221BF0D400982EE6 /* tankchassis.json */,
-				1DB6744E221BF0D900982EE6 /* vehicleprofile.json */,
-				1DB67451221BF0DE00982EE6 /* tankengines.json */,
-			);
-			path = WOT;
-			sourceTree = "<group>";
-		};
-		1DC07B991B3B003D002FAA72 /* Representation */ = {
-			isa = PBXGroup;
-			children = (
-				1DC07B9A1B3B003D002FAA72 /* Data-Flow-Chart-icon.png */,
-				1DC07B9B1B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png */,
-				1DC07B9C1B3B003D002FAA72 /* Data-Flow-Chart-icon@3x.png */,
-				1DC07B9D1B3B003D002FAA72 /* Data-List-icon.png */,
-				1DC07B9E1B3B003D002FAA72 /* Data-List-icon@2x.png */,
-				1DC07B9F1B3B003D002FAA72 /* Data-List-icon@3x.png */,
-				1DC07BA01B3B003D002FAA72 /* Messaging-Categorize-icon.png */,
-				1DC07BA11B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png */,
-				1DC07BA21B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png */,
-			);
-			path = Representation;
 			sourceTree = "<group>";
 		};
 		1DCC7F4A1B2F0619005FF193 /* UIView */ = {
@@ -1506,15 +1308,14 @@
 		1DD6468C1B1D9A7000B0EC76 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E7CF2953284100C60F31 /* SessionManager */,
 				1DE1FA16245EE7A6002866A3 /* ThirdParty */,
 				1DD6469C1B1DC42100B0EC76 /* Categories */,
-				1D5669242424D121008458AF /* Session */,
 				1D56697C2424DEF5008458AF /* samples */,
 				1D047B581B331D8900B5B696 /* datasources */,
 				1D047B671B331DF000B5B696 /* WOTApplicationDefaults.h */,
 				1D047B681B331DF000B5B696 /* WOTApplicationDefaults.m */,
 				1DE1FA23245EE936002866A3 /* WOTLogger.h */,
-				1D5669382424D9CC008458AF /* WOTRequestIds.h */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -1523,7 +1324,6 @@
 			isa = PBXGroup;
 			children = (
 				DA81E4D32952EC7300C60F31 /* NSBundle */,
-				1DE1FA12245EE4F7002866A3 /* NSThread */,
 				1D010D771B8AF5F400FA6A75 /* UIColor */,
 				1D519D371B4FD40600D3A286 /* UIProgressView */,
 				1D519D1B1B4E9FCF00D3A286 /* NSExpressionDescription */,
@@ -1582,37 +1382,14 @@
 		1DD646CF1B1F4C9D00B0EC76 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E6F3295316E600C60F31 /* images */,
 				1DD646461B1C616A00B0EC76 /* Images.xcassets */,
-				1DB57B1620F771B9003FF3EC /* json */,
-				1DD646D01B1F4C9D00B0EC76 /* images */,
 				1DD647081B20823400B0EC76 /* Strings.h */,
 				1D9CAA352111A09600B6CA5A /* strings.swift */,
 				1DD6471F1B20855400B0EC76 /* Localizable.strings */,
 				1D4C920F1B25B39800E320B5 /* WOTMacro.h */,
 			);
 			path = resources;
-			sourceTree = "<group>";
-		};
-		1DD646D01B1F4C9D00B0EC76 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				1D65F82F2216AEE9006A85E4 /* TankDetails */,
-				1D672B0F1B60C6F800617E5C /* 3rdParty */,
-				1DC07B991B3B003D002FAA72 /* Representation */,
-				1D4C92371B25EB1000E320B5 /* General */,
-				1DD646D11B1F4C9D00B0EC76 /* mmdrawer */,
-			);
-			path = images;
-			sourceTree = "<group>";
-		};
-		1DD646D11B1F4C9D00B0EC76 /* mmdrawer */ = {
-			isa = PBXGroup;
-			children = (
-				1D4C92311B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png */,
-				1D4C92321B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png */,
-				1D4C92331B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png */,
-			);
-			path = mmdrawer;
 			sourceTree = "<group>";
 		};
 		1DD646D81B20532100B0EC76 /* cells */ = {
@@ -1712,15 +1489,6 @@
 			path = cells;
 			sourceTree = "<group>";
 		};
-		1DE1FA12245EE4F7002866A3 /* NSThread */ = {
-			isa = PBXGroup;
-			children = (
-				1DE1FA13245EE4F7002866A3 /* NSThread+ExecutionOnMain.h */,
-				1DE1FA14245EE4F7002866A3 /* NSThread+ExecutionOnMain.m */,
-			);
-			path = NSThread;
-			sourceTree = "<group>";
-		};
 		1DE1FA16245EE7A6002866A3 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
@@ -1797,6 +1565,146 @@
 				DA81E4D52952EC7300C60F31 /* NSBundle+LanguageBundle.m */,
 			);
 			path = NSBundle;
+			sourceTree = "<group>";
+		};
+		DA81E6F3295316E600C60F31 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E6F4295316E600C60F31 /* 3rdParty */,
+				DA81E730295316E600C60F31 /* General */,
+				DA81E746295316E600C60F31 /* Representation */,
+				DA81E750295316E600C60F31 /* mmdrawer */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		DA81E6F4295316E600C60F31 /* 3rdParty */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E6F5295316E600C60F31 /* Activity Grid Yellow.png */,
+				DA81E6F6295316E600C60F31 /* Activity Grid Yellow@2x.png */,
+				DA81E6F7295316E600C60F31 /* Activity Grid Yellow@3x.png */,
+				DA81E6F8295316E600C60F31 /* Activity Grid.png */,
+				DA81E6F9295316E600C60F31 /* Activity Grid@2x.png */,
+				DA81E6FA295316E600C60F31 /* Activity Grid@3x.png */,
+				DA81E6FB295316E600C60F31 /* Bulletproof Vest Gray.png */,
+				DA81E6FC295316E600C60F31 /* Bulletproof Vest Gray@2x.png */,
+				DA81E6FD295316E600C60F31 /* Bulletproof Vest Gray@3x.png */,
+				DA81E6FE295316E600C60F31 /* Bulletproof Vest Yellow.png */,
+				DA81E6FF295316E600C60F31 /* Bulletproof Vest Yellow@2x.png */,
+				DA81E700295316E600C60F31 /* Bulletproof Vest Yellow@3x.png */,
+				DA81E701295316E600C60F31 /* Cancel Gray.png */,
+				DA81E702295316E600C60F31 /* Cancel Gray@2x.png */,
+				DA81E703295316E600C60F31 /* Cancel Gray@3x.png */,
+				DA81E704295316E600C60F31 /* Firing Gun Gray.png */,
+				DA81E705295316E600C60F31 /* Firing Gun Gray@2x.png */,
+				DA81E706295316E600C60F31 /* Firing Gun Gray@3x.png */,
+				DA81E707295316E600C60F31 /* Firing Gun Yellow.png */,
+				DA81E708295316E600C60F31 /* Firing Gun Yellow@2x.png */,
+				DA81E709295316E600C60F31 /* Firing Gun Yellow@3x.png */,
+				DA81E70A295316E600C60F31 /* Hourglass Sand Bottom Gray.png */,
+				DA81E70B295316E600C60F31 /* Hourglass Sand Bottom Gray@2x.png */,
+				DA81E70C295316E600C60F31 /* Hourglass Sand Bottom Gray@3x.png */,
+				DA81E70D295316E600C60F31 /* Hourglass Sand Bottom Yellow.png */,
+				DA81E70E295316E600C60F31 /* Hourglass Sand Bottom Yellow@2x.png */,
+				DA81E70F295316E600C60F31 /* Hourglass Sand Bottom Yellow@3x.png */,
+				DA81E710295316E600C60F31 /* Hourglass Sand Top Gray.png */,
+				DA81E711295316E600C60F31 /* Hourglass Sand Top Gray@2x.png */,
+				DA81E712295316E600C60F31 /* Hourglass Sand Top Gray@3x.png */,
+				DA81E713295316E600C60F31 /* Hourglass Sand Top Yellow.png */,
+				DA81E714295316E600C60F31 /* Hourglass Sand Top Yellow@2x.png */,
+				DA81E715295316E600C60F31 /* Hourglass Sand Top Yellow@3x.png */,
+				DA81E716295316E600C60F31 /* Opera Glasses Gray.png */,
+				DA81E717295316E600C60F31 /* Opera Glasses Gray@2x.png */,
+				DA81E718295316E600C60F31 /* Opera Glasses Gray@3x.png */,
+				DA81E719295316E600C60F31 /* Opera Glasses Yellow.png */,
+				DA81E71A295316E600C60F31 /* Opera Glasses Yellow@2x.png */,
+				DA81E71B295316E600C60F31 /* Opera Glasses Yellow@3x.png */,
+				DA81E71C295316E600C60F31 /* Radar Plot Yellow.png */,
+				DA81E71D295316E600C60F31 /* Radar Plot Yellow@2x.png */,
+				DA81E71E295316E600C60F31 /* Radar Plot Yellow@3x.png */,
+				DA81E71F295316E600C60F31 /* Radar Plot.png */,
+				DA81E720295316E600C60F31 /* Radar Plot@2x.png */,
+				DA81E721295316E600C60F31 /* Radar Plot@3x.png */,
+				DA81E722295316E600C60F31 /* Search Gray - 32x32.png */,
+				DA81E723295316E600C60F31 /* Search Gray.png */,
+				DA81E724295316E600C60F31 /* Search Gray@2x.png */,
+				DA81E725295316E600C60F31 /* Search Gray@3x.png */,
+				DA81E726295316E600C60F31 /* Search Yellow - 32x32.png */,
+				DA81E727295316E600C60F31 /* Search Yellow.png */,
+				DA81E728295316E600C60F31 /* Search Yellow@2x.png */,
+				DA81E729295316E600C60F31 /* Search Yellow@3x.png */,
+				DA81E72A295316E600C60F31 /* Speedometer Gray.png */,
+				DA81E72B295316E600C60F31 /* Speedometer Gray@2x.png */,
+				DA81E72C295316E600C60F31 /* Speedometer Gray@3x.png */,
+				DA81E72D295316E600C60F31 /* Speedometer Yellow.png */,
+				DA81E72E295316E600C60F31 /* Speedometer Yellow@2x.png */,
+				DA81E72F295316E600C60F31 /* Speedometer Yellow@3x.png */,
+			);
+			path = 3rdParty;
+			sourceTree = "<group>";
+		};
+		DA81E730295316E600C60F31 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E731295316E600C60F31 /* WOTArrowDown.png */,
+				DA81E732295316E600C60F31 /* WOTArrowDown@2x.png */,
+				DA81E733295316E600C60F31 /* WOTArrowDown@3x.png */,
+				DA81E734295316E600C60F31 /* WOTArrowUp.png */,
+				DA81E735295316E600C60F31 /* WOTArrowUp@2x.png */,
+				DA81E736295316E600C60F31 /* WOTArrowUp@3x.png */,
+				DA81E737295316E600C60F31 /* WOTBackIconGray.png */,
+				DA81E738295316E600C60F31 /* WOTBackIconGray@2x.png */,
+				DA81E739295316E600C60F31 /* WOTBackIconGray@3x.png */,
+				DA81E73A295316E600C60F31 /* WOTGlobe.png */,
+				DA81E73B295316E600C60F31 /* WOTGlobe@2x.png */,
+				DA81E73C295316E600C60F31 /* WOTLoggedInUser.png */,
+				DA81E73D295316E600C60F31 /* WOTLoggedInUser@2x.png */,
+				DA81E73E295316E600C60F31 /* WOTLoggedInUser@3x.png */,
+				DA81E73F295316E600C60F31 /* WOTSelector-checkmark-dark.png */,
+				DA81E740295316E600C60F31 /* WOTSelector-checkmark-dark@2x.png */,
+				DA81E741295316E600C60F31 /* WOTSelector-checkmark-gray.png */,
+				DA81E742295316E600C60F31 /* WOTSelector-checkmark-gray@2x.png */,
+				DA81E743295316E600C60F31 /* WOTiPadMenuGear.png */,
+				DA81E744295316E600C60F31 /* WOTiPadMenuGear@2x.png */,
+				DA81E745295316E600C60F31 /* WOTiPadMenuGear@3x.png */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		DA81E746295316E600C60F31 /* Representation */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E747295316E600C60F31 /* Data-Flow-Chart-icon.png */,
+				DA81E748295316E600C60F31 /* Data-Flow-Chart-icon@2x.png */,
+				DA81E749295316E600C60F31 /* Data-Flow-Chart-icon@3x.png */,
+				DA81E74A295316E600C60F31 /* Data-List-icon.png */,
+				DA81E74B295316E600C60F31 /* Data-List-icon@2x.png */,
+				DA81E74C295316E600C60F31 /* Data-List-icon@3x.png */,
+				DA81E74D295316E600C60F31 /* Messaging-Categorize-icon.png */,
+				DA81E74E295316E600C60F31 /* Messaging-Categorize-icon@2x.png */,
+				DA81E74F295316E600C60F31 /* Messaging-Categorize-icon@3x.png */,
+			);
+			path = Representation;
+			sourceTree = "<group>";
+		};
+		DA81E750295316E600C60F31 /* mmdrawer */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E751295316E600C60F31 /* wotShowMenuButtoniPhone.png */,
+				DA81E752295316E600C60F31 /* wotShowMenuButtoniPhone@2x.png */,
+				DA81E753295316E600C60F31 /* wotShowMenuButtoniPhone@3x.png */,
+			);
+			path = mmdrawer;
+			sourceTree = "<group>";
+		};
+		DA81E7CF2953284100C60F31 /* SessionManager */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7D12953288600C60F31 /* WOTSessionManager.h */,
+				DA81E7D02953288600C60F31 /* WOTSessionManager.m */,
+			);
+			path = SessionManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1898,159 +1806,147 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D672B4E1B60CC8700617E5C /* Firing Gun Yellow@2x.png in Resources */,
-				1D65F8392216AEEA006A85E4 /* vehicleChassis.png in Resources */,
-				1D4C92421B25EBE400E320B5 /* WOTiPadMenuGear@2x.png in Resources */,
+				DA81E79D295316E700C60F31 /* WOTSelector-checkmark-dark.png in Resources */,
+				DA81E795295316E700C60F31 /* WOTBackIconGray.png in Resources */,
+				DA81E756295316E600C60F31 /* Activity Grid Yellow@3x.png in Resources */,
 				1DA1D7361B29D30500C5C2FB /* WOTTankListSettingAddNewTableViewCell.xib in Resources */,
-				1DB6744C221BF0D900982EE6 /* vehicleprofile.json in Resources */,
 				1DD46B8F1BA6DD6F00D3B3CE /* WOTTankDetailTextTableViewCell.xib in Resources */,
 				1DDEE3921B8F353200C90D4B /* WOTTankPivotDataCollectionViewCell~iphone.xib in Resources */,
+				DA81E79E295316E700C60F31 /* WOTSelector-checkmark-dark@2x.png in Resources */,
+				DA81E76E295316E600C60F31 /* Hourglass Sand Bottom Yellow@3x.png in Resources */,
+				DA81E76A295316E600C60F31 /* Hourglass Sand Bottom Gray@2x.png in Resources */,
 				1D4C92571B25F27200E320B5 /* WOTLanguageTableViewCell.xib in Resources */,
+				DA81E779295316E600C60F31 /* Opera Glasses Yellow@2x.png in Resources */,
 				1D4C926A1B2709E400E320B5 /* WOTTankListSortHeaderView.xib in Resources */,
-				1D672B661B60D15C00617E5C /* Hourglass Sand Top Yellow@2x.png in Resources */,
-				1D672B4D1B60CC8700617E5C /* Firing Gun Yellow.png in Resources */,
 				1D4C92151B25B71000E320B5 /* WOTTankListCollectionViewCell.xib in Resources */,
-				1D672B261B60C86700617E5C /* Bulletproof Vest Gray.png in Resources */,
 				1DD46B3B1BA6A5E900D3B3CE /* WOTTankGridCollectionViewCell.xib in Resources */,
-				DA522D281B6637630087D684 /* Search Gray.png in Resources */,
 				1DCC80DD1B306227005FF193 /* WOTRadarViewController.xib in Resources */,
-				1D4C92361B25EAFF00E320B5 /* wotShowMenuButtoniPhone@3x.png in Resources */,
-				1DC07BA81B3B003D002FAA72 /* Data-List-icon@3x.png in Resources */,
-				1DB67440221BF0C700982EE6 /* tankradios.json in Resources */,
-				1DC07BA71B3B003D002FAA72 /* Data-List-icon@2x.png in Resources */,
 				1DA1D7481B2AFD6500C5C2FB /* WOTTankListSettingNameTableViewCell.xib in Resources */,
-				1D4C92411B25EBE400E320B5 /* WOTiPadMenuGear.png in Resources */,
-				1D672B281B60C86700617E5C /* Bulletproof Vest Gray@3x.png in Resources */,
+				DA81E76B295316E600C60F31 /* Hourglass Sand Bottom Gray@3x.png in Resources */,
+				DA81E787295316E700C60F31 /* Search Yellow@2x.png in Resources */,
 				1D6FF5132106FF85006C1328 /* WOTTankConfigurationItemViewController.xib in Resources */,
-				1DD46B311BA69CC900D3B3CE /* Radar Plot@2x.png in Resources */,
-				1D672B611B60D15C00617E5C /* Hourglass Sand Bottom Yellow@3x.png in Resources */,
-				1DCC7F271B2ED07F005FF193 /* WOTArrowDown@3x.png in Resources */,
 				1DD6471A1B2084FF00B0EC76 /* podfile in Resources */,
-				1D672B361B60C9A100617E5C /* Opera Glasses Yellow@2x.png in Resources */,
-				1D4C923C1B25EB1000E320B5 /* WOTBackIconGray@2x.png in Resources */,
-				1DD46B341BA69CC900D3B3CE /* Radar Plot Yellow@2x.png in Resources */,
-				1D672B5C1B60D15C00617E5C /* Hourglass Sand Bottom Gray.png in Resources */,
 				1D4C92651B27085600E320B5 /* WOTTankListSortViewController.xib in Resources */,
 				1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */,
+				DA81E76D295316E600C60F31 /* Hourglass Sand Bottom Yellow@2x.png in Resources */,
 				1DD46B8D1BA6DD6F00D3B3CE /* WOTTankDetailProgressTableViewCell.xib in Resources */,
-				DA522D391B6649020087D684 /* Cancel Gray@3x.png in Resources */,
-				1D672B341B60C9A100617E5C /* Opera Glasses Gray@3x.png in Resources */,
+				DA81E780295316E600C60F31 /* Radar Plot@3x.png in Resources */,
+				DA81E789295316E700C60F31 /* Speedometer Gray.png in Resources */,
+				DA81E761295316E600C60F31 /* Cancel Gray@2x.png in Resources */,
+				DA81E777295316E600C60F31 /* Opera Glasses Gray@3x.png in Resources */,
+				DA81E790295316E700C60F31 /* WOTArrowDown@2x.png in Resources */,
+				DA81E75F295316E600C60F31 /* Bulletproof Vest Yellow@3x.png in Resources */,
+				DA81E764295316E600C60F31 /* Firing Gun Gray@2x.png in Resources */,
+				DA81E765295316E600C60F31 /* Firing Gun Gray@3x.png in Resources */,
+				DA81E786295316E700C60F31 /* Search Yellow.png in Resources */,
+				DA81E78F295316E700C60F31 /* WOTArrowDown.png in Resources */,
 				1D6E94E62100CA1200B65FC3 /* .swiftlint.yml in Resources */,
+				DA81E791295316E700C60F31 /* WOTArrowDown@3x.png in Resources */,
+				DA81E7A5295316E700C60F31 /* Data-Flow-Chart-icon@2x.png in Resources */,
 				1DDEE3941B8F353200C90D4B /* WOTTankPivotEmptyCollectionViewCell.xib in Resources */,
-				1D672B291B60C86700617E5C /* Bulletproof Vest Yellow.png in Resources */,
 				1DCC7F1E1B2EC541005FF193 /* WOTTankListSettingSortTableViewCell.xib in Resources */,
 				1DDEE3911B8F353200C90D4B /* WOTTankPivotDataCollectionViewCell~ipad.xib in Resources */,
-				1D672B651B60D15C00617E5C /* Hourglass Sand Top Yellow.png in Resources */,
+				DA81E7A4295316E700C60F31 /* Data-Flow-Chart-icon.png in Resources */,
+				DA81E793295316E700C60F31 /* WOTArrowUp@2x.png in Resources */,
+				DA81E778295316E600C60F31 /* Opera Glasses Yellow.png in Resources */,
 				1D4C92631B27085600E320B5 /* WOTTankListSettingTableViewCell.xib in Resources */,
-				1DD46B2A1BA69CC900D3B3CE /* Activity Grid Yellow.png in Resources */,
-				1DC07BAA1B3B003D002FAA72 /* Messaging-Categorize-icon@2x.png in Resources */,
-				1D672B641B60D15C00617E5C /* Hourglass Sand Top Gray@3x.png in Resources */,
+				DA81E78B295316E700C60F31 /* Speedometer Gray@3x.png in Resources */,
+				DA81E773295316E600C60F31 /* Hourglass Sand Top Yellow@2x.png in Resources */,
+				DA81E7AA295316E700C60F31 /* Messaging-Categorize-icon.png in Resources */,
 				1DDEE3981B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.xib in Resources */,
-				1DD46B351BA69CC900D3B3CE /* Radar Plot Yellow.png in Resources */,
+				DA81E772295316E600C60F31 /* Hourglass Sand Top Yellow.png in Resources */,
+				DA81E7A1295316E700C60F31 /* WOTiPadMenuGear.png in Resources */,
 				1DD646E41B205BF500B0EC76 /* WOTProfileViewController.xib in Resources */,
-				1DD46B331BA69CC900D3B3CE /* Radar Plot Yellow@3x.png in Resources */,
+				DA81E78E295316E700C60F31 /* Speedometer Yellow@3x.png in Resources */,
+				DA81E79B295316E700C60F31 /* WOTLoggedInUser@2x.png in Resources */,
+				DA81E76C295316E600C60F31 /* Hourglass Sand Bottom Yellow.png in Resources */,
 				1D9CAA24210F067A00B6CA5A /* WOTTankTreeConnectorCollectionViewCell.xib in Resources */,
+				DA81E77D295316E600C60F31 /* Radar Plot Yellow@3x.png in Resources */,
+				DA81E799295316E700C60F31 /* WOTGlobe@2x.png in Resources */,
 				1D4C92301B25E44400E320B5 /* WOTTankListSettingNameChooserViewController.xib in Resources */,
-				1DCC7F251B2ED07F005FF193 /* WOTArrowDown.png in Resources */,
-				1D672B271B60C86700617E5C /* Bulletproof Vest Gray@2x.png in Resources */,
-				1D4C924D1B25EF2E00E320B5 /* WOTGlobe@2x.png in Resources */,
-				1D672B3E1B60CB7100617E5C /* Speedometer Gray.png in Resources */,
-				1D672B3F1B60CB7100617E5C /* Speedometer Gray@2x.png in Resources */,
-				1DB6743D221BF0C300982EE6 /* vehicles.json in Resources */,
+				DA81E775295316E600C60F31 /* Opera Glasses Gray.png in Resources */,
 				1DA1D7421B2AF7D300C5C2FB /* WOTTankListSettingValueChangerViewController.xib in Resources */,
-				1D672B4F1B60CC8700617E5C /* Firing Gun Yellow@3x.png in Resources */,
-				1DCC7F291B2ED07F005FF193 /* WOTArrowUp@2x.png in Resources */,
-				1D672B421B60CB7100617E5C /* Speedometer Yellow@2x.png in Resources */,
-				1D672B4A1B60CC8700617E5C /* Firing Gun Gray.png in Resources */,
+				DA81E798295316E700C60F31 /* WOTGlobe.png in Resources */,
+				DA81E7AF295316E700C60F31 /* wotShowMenuButtoniPhone@3x.png in Resources */,
+				DA81E768295316E600C60F31 /* Firing Gun Yellow@3x.png in Resources */,
 				1DD647001B20717800B0EC76 /* WOTLoginViewController.xib in Resources */,
-				1DE319AE1B2B067F00690DE7 /* WOTSelector-checkmark-gray.png in Resources */,
+				DA81E763295316E600C60F31 /* Firing Gun Gray.png in Resources */,
+				DA81E77B295316E600C60F31 /* Radar Plot Yellow.png in Resources */,
 				1D6DD6C12124106B00498BEE /* WOTSplitViewController.xib in Resources */,
-				1DC07BA91B3B003D002FAA72 /* Messaging-Categorize-icon.png in Resources */,
-				1D672B411B60CB7100617E5C /* Speedometer Yellow.png in Resources */,
-				1DB67443221BF0CC00982EE6 /* tankguns.json in Resources */,
-				1D672B621B60D15C00617E5C /* Hourglass Sand Top Gray.png in Resources */,
-				1D4C92491B25ED0900E320B5 /* WOTLoggedInUser@3x.png in Resources */,
-				1D672B671B60D15C00617E5C /* Hourglass Sand Top Yellow@3x.png in Resources */,
-				1D4C92351B25EAFF00E320B5 /* wotShowMenuButtoniPhone@2x.png in Resources */,
-				DA522D2B1B6637630087D684 /* Search Yellow.png in Resources */,
 				1D6FF50F2106FF85006C1328 /* WOTTankConfigurationItemCell.xib in Resources */,
-				1D4C92431B25EBE400E320B5 /* WOTiPadMenuGear@3x.png in Resources */,
 				1DD46B931BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewCell.xib in Resources */,
 				1DD46B911BA6DD6F00D3B3CE /* WOTTankDetailCollectionReusableView.xib in Resources */,
+				DA81E757295316E600C60F31 /* Activity Grid.png in Resources */,
+				DA81E77E295316E600C60F31 /* Radar Plot.png in Resources */,
+				DA81E79A295316E700C60F31 /* WOTLoggedInUser.png in Resources */,
+				DA81E796295316E700C60F31 /* WOTBackIconGray@2x.png in Resources */,
+				DA81E774295316E600C60F31 /* Hourglass Sand Top Yellow@3x.png in Resources */,
+				DA81E7AE295316E700C60F31 /* wotShowMenuButtoniPhone@2x.png in Resources */,
+				DA81E75E295316E600C60F31 /* Bulletproof Vest Yellow@2x.png in Resources */,
+				DA81E788295316E700C60F31 /* Search Yellow@3x.png in Resources */,
 				1D5144E7212D8C58006FD577 /* WOTPivotConstructorViewController~iphone.xib in Resources */,
 				1DD646C81B1F371700B0EC76 /* WOTMenuViewController.xib in Resources */,
-				1DD46B321BA69CC900D3B3CE /* Radar Plot@3x.png in Resources */,
+				DA81E7A6295316E700C60F31 /* Data-Flow-Chart-icon@3x.png in Resources */,
 				1D6FF5122106FF85006C1328 /* WOTTankConfigurationItemHeaderFooter.xib in Resources */,
 				1D4C921E1B25CD8200E320B5 /* WOTTankListCollectionViewHeader.xib in Resources */,
-				1D672B601B60D15C00617E5C /* Hourglass Sand Bottom Yellow@2x.png in Resources */,
 				1D6FF5032106FD7A006C1328 /* WOTTankModuleTreeViewController.xib in Resources */,
-				1DB67437221BF0B300982EE6 /* chassis.json in Resources */,
+				DA81E754295316E600C60F31 /* Activity Grid Yellow.png in Resources */,
+				DA81E77F295316E600C60F31 /* Radar Plot@2x.png in Resources */,
+				DA81E770295316E600C60F31 /* Hourglass Sand Top Gray@2x.png in Resources */,
+				DA81E7A3295316E700C60F31 /* WOTiPadMenuGear@3x.png in Resources */,
+				DA81E7AC295316E700C60F31 /* Messaging-Categorize-icon@3x.png in Resources */,
 				DA522D331B663C290087D684 /* WOTTankListSearchBar.xib in Resources */,
-				1DCC7F281B2ED07F005FF193 /* WOTArrowUp.png in Resources */,
+				DA81E762295316E600C60F31 /* Cancel Gray@3x.png in Resources */,
 				1D4C92591B25F27200E320B5 /* WOTLanguageSelectorViewController.xib in Resources */,
-				1D672B2B1B60C86700617E5C /* Bulletproof Vest Yellow@3x.png in Resources */,
 				1DD646EA1B205D9300B0EC76 /* WOTPlayersListViewController.xib in Resources */,
-				1DC07BAB1B3B003D002FAA72 /* Messaging-Categorize-icon@3x.png in Resources */,
-				1DB6743A221BF0B800982EE6 /* tanks.json in Resources */,
-				1D65F8352216AEEA006A85E4 /* vehicleEngine.png in Resources */,
-				1DCC7F261B2ED07F005FF193 /* WOTArrowDown@2x.png in Resources */,
+				DA81E792295316E700C60F31 /* WOTArrowUp.png in Resources */,
 				1DD646CE1B1F378100B0EC76 /* WOTTankListViewController.xib in Resources */,
+				DA81E77A295316E600C60F31 /* Opera Glasses Yellow@3x.png in Resources */,
 				1D1795FB2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib in Resources */,
+				DA81E784295316E700C60F31 /* Search Gray@3x.png in Resources */,
+				DA81E794295316E700C60F31 /* WOTArrowUp@3x.png in Resources */,
+				DA81E766295316E600C60F31 /* Firing Gun Yellow.png in Resources */,
 				1D6FF4F82106FD7A006C1328 /* WOTTankTreeNodeCollectionViewCell.xib in Resources */,
-				1D672B401B60CB7100617E5C /* Speedometer Gray@3x.png in Resources */,
-				1D672B5E1B60D15C00617E5C /* Hourglass Sand Bottom Gray@3x.png in Resources */,
-				1DD46B301BA69CC900D3B3CE /* Radar Plot.png in Resources */,
-				1D65F8372216AEEA006A85E4 /* vehicleRadio.png in Resources */,
 				1DDEE3961B8F353200C90D4B /* WOTTankPivotFilterCollectionViewCell.xib in Resources */,
 				1DD46B1D1BA6941900D3B3CE /* WOTTankGridViewController.xib in Resources */,
-				DA522D2C1B6637630087D684 /* Search Yellow@2x.png in Resources */,
-				1D65F8362216AEEA006A85E4 /* vehicleGun.png in Resources */,
-				1DCC7F2A1B2ED07F005FF193 /* WOTArrowUp@3x.png in Resources */,
+				DA81E760295316E600C60F31 /* Cancel Gray.png in Resources */,
 				1DD46B471BA6C51600D3B3CE /* WOTTankGridCollectionSubitemTableViewCell.xib in Resources */,
-				1DD46B2F1BA69CC900D3B3CE /* Activity Grid.png in Resources */,
-				1D672B5F1B60D15C00617E5C /* Hourglass Sand Bottom Yellow.png in Resources */,
-				DA522D2A1B6637630087D684 /* Search Gray@3x.png in Resources */,
+				DA81E782295316E600C60F31 /* Search Gray.png in Resources */,
 				1DD46B961BA6DD6F00D3B3CE /* WOTTankDetailViewController.xib in Resources */,
+				DA81E77C295316E600C60F31 /* Radar Plot Yellow@2x.png in Resources */,
 				1DB5FB542428AC1100413F41 /* .swiftformat.yml in Resources */,
-				1DC07BA51B3B003D002FAA72 /* Data-Flow-Chart-icon@3x.png in Resources */,
-				DA522D2D1B6637630087D684 /* Search Yellow@3x.png in Resources */,
-				1DC07BA31B3B003D002FAA72 /* Data-Flow-Chart-icon.png in Resources */,
-				1D672B351B60C9A100617E5C /* Opera Glasses Yellow.png in Resources */,
-				1DE319AD1B2B067F00690DE7 /* WOTSelector-checkmark-dark@2x.png in Resources */,
-				1D4C923B1B25EB1000E320B5 /* WOTBackIconGray.png in Resources */,
+				DA81E771295316E600C60F31 /* Hourglass Sand Top Gray@3x.png in Resources */,
+				DA81E759295316E600C60F31 /* Activity Grid@3x.png in Resources */,
+				DA81E75D295316E600C60F31 /* Bulletproof Vest Yellow.png in Resources */,
 				1DDEE39C1B8F353200C90D4B /* WOTTankPivotViewController.xib in Resources */,
-				1DD46B2B1BA69CC900D3B3CE /* Activity Grid Yellow@2x.png in Resources */,
-				1DE319AF1B2B067F00690DE7 /* WOTSelector-checkmark-gray@2x.png in Resources */,
-				DA522D381B6649020087D684 /* Cancel Gray@2x.png in Resources */,
-				1D4C924C1B25EF2E00E320B5 /* WOTGlobe.png in Resources */,
-				1D4C92471B25ED0900E320B5 /* WOTLoggedInUser.png in Resources */,
-				1DC07BA41B3B003D002FAA72 /* Data-Flow-Chart-icon@2x.png in Resources */,
-				1D672B4C1B60CC8700617E5C /* Firing Gun Gray@3x.png in Resources */,
-				1DB6744F221BF0DE00982EE6 /* tankengines.json in Resources */,
-				1D4C92341B25EAFF00E320B5 /* wotShowMenuButtoniPhone.png in Resources */,
-				1D672B2A1B60C86700617E5C /* Bulletproof Vest Yellow@2x.png in Resources */,
-				1DD46B2E1BA69CC900D3B3CE /* Activity Grid@2x.png in Resources */,
+				DA81E78D295316E700C60F31 /* Speedometer Yellow@2x.png in Resources */,
+				DA81E755295316E600C60F31 /* Activity Grid Yellow@2x.png in Resources */,
+				DA81E7AD295316E700C60F31 /* wotShowMenuButtoniPhone.png in Resources */,
+				DA81E75B295316E600C60F31 /* Bulletproof Vest Gray@2x.png in Resources */,
+				DA81E776295316E600C60F31 /* Opera Glasses Gray@2x.png in Resources */,
+				DA81E769295316E600C60F31 /* Hourglass Sand Bottom Gray.png in Resources */,
+				DA81E76F295316E600C60F31 /* Hourglass Sand Top Gray.png in Resources */,
+				DA81E79C295316E700C60F31 /* WOTLoggedInUser@3x.png in Resources */,
+				DA81E758295316E600C60F31 /* Activity Grid@2x.png in Resources */,
+				DA81E785295316E700C60F31 /* Search Yellow - 32x32.png in Resources */,
+				DA81E797295316E700C60F31 /* WOTBackIconGray@3x.png in Resources */,
+				DA81E78C295316E700C60F31 /* Speedometer Yellow.png in Resources */,
 				1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */,
-				1DC07BA61B3B003D002FAA72 /* Data-List-icon.png in Resources */,
-				1DE319AC1B2B067F00690DE7 /* WOTSelector-checkmark-dark.png in Resources */,
-				1D4C923D1B25EB1000E320B5 /* WOTBackIconGray@3x.png in Resources */,
-				1D4C92481B25ED0900E320B5 /* WOTLoggedInUser@2x.png in Resources */,
-				1D672B371B60C9A100617E5C /* Opera Glasses Yellow@3x.png in Resources */,
-				1D672B331B60C9A100617E5C /* Opera Glasses Gray@2x.png in Resources */,
-				DA522D371B6649020087D684 /* Cancel Gray.png in Resources */,
-				1D672B321B60C9A100617E5C /* Opera Glasses Gray.png in Resources */,
-				1D672B431B60CB7100617E5C /* Speedometer Yellow@3x.png in Resources */,
-				1DD46B2D1BA69CC900D3B3CE /* Activity Grid@3x.png in Resources */,
-				1D672B631B60D15C00617E5C /* Hourglass Sand Top Gray@2x.png in Resources */,
-				1DD46B2C1BA69CC900D3B3CE /* Activity Grid Yellow@3x.png in Resources */,
-				1D65F8382216AEEA006A85E4 /* vehicleTurret.png in Resources */,
-				1D672B5D1B60D15C00617E5C /* Hourglass Sand Bottom Gray@2x.png in Resources */,
-				DA522D291B6637630087D684 /* Search Gray@2x.png in Resources */,
+				DA81E7A8295316E700C60F31 /* Data-List-icon@2x.png in Resources */,
 				1D5144E8212D8C58006FD577 /* WOTPivotConstructorViewController~ipad.xib in Resources */,
+				DA81E7A0295316E700C60F31 /* WOTSelector-checkmark-gray@2x.png in Resources */,
+				DA81E767295316E600C60F31 /* Firing Gun Yellow@2x.png in Resources */,
+				DA81E781295316E600C60F31 /* Search Gray - 32x32.png in Resources */,
+				DA81E7A9295316E700C60F31 /* Data-List-icon@3x.png in Resources */,
+				DA81E7AB295316E700C60F31 /* Messaging-Categorize-icon@2x.png in Resources */,
+				DA81E75C295316E600C60F31 /* Bulletproof Vest Gray@3x.png in Resources */,
+				DA81E7A7295316E700C60F31 /* Data-List-icon.png in Resources */,
+				DA81E78A295316E700C60F31 /* Speedometer Gray@2x.png in Resources */,
+				DA81E79F295316E700C60F31 /* WOTSelector-checkmark-gray.png in Resources */,
 				1DD646DD1B20533E00B0EC76 /* WOTMenuTableViewCell.xib in Resources */,
-				1DB67446221BF0D000982EE6 /* tankturrets.json in Resources */,
-				1DB67449221BF0D400982EE6 /* tankchassis.json in Resources */,
-				1D672B4B1B60CC8700617E5C /* Firing Gun Gray@2x.png in Resources */,
+				DA81E75A295316E600C60F31 /* Bulletproof Vest Gray.png in Resources */,
+				DA81E783295316E600C60F31 /* Search Gray@2x.png in Resources */,
+				DA81E7A2295316E700C60F31 /* WOTiPadMenuGear@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2217,7 +2113,6 @@
 				1DD46B941BA6DD6F00D3B3CE /* WOTTankDetailCollectionViewFlowLayout.m in Sources */,
 				1DDEE3971B8F353200C90D4B /* WOTTankPivotFixedCollectionViewCell.m in Sources */,
 				1D5669B12424DEF5008458AF /* WOTTankDetailDatasource.m in Sources */,
-				1D56692E2424D121008458AF /* WOTSessionManager.m in Sources */,
 				1D5669B72424DEF5008458AF /* WOTNode+PivotFactory.m in Sources */,
 				1D9CAA20210F062B00B6CA5A /* WOTTankTreeNodeCollectionViewCell.m in Sources */,
 				1DE1FA20245EE7C8002866A3 /* RomanNumber.m in Sources */,
@@ -2252,14 +2147,11 @@
 				1DA1D73D1B2AF48B00C5C2FB /* WOTTankListSettingViewController.m in Sources */,
 				1D5669C52424DEF5008458AF /* WOTTurretsArmorBoardCompareFieldExpression.m in Sources */,
 				1D6FF4F62106FD7A006C1328 /* WOTTankConfigurationModuleMapping.m in Sources */,
-				1DE1FA15245EE4F7002866A3 /* NSThread+ExecutionOnMain.m in Sources */,
 				1DD646E21B205BE400B0EC76 /* WOTProfileViewController.m in Sources */,
-				1D56692D2424D121008458AF /* HostConfiguration.swift in Sources */,
 				DA81E4D62952EC7300C60F31 /* NSBundle+LanguageBundle.m in Sources */,
 				1D1795ED211D9ACA00A0E42E /* WOTTankPivotViewController.swift in Sources */,
 				1DD647461B21C57900B0EC76 /* UINavigationBar+WOT.m in Sources */,
 				1DA1D7391B2AE9BB00C5C2FB /* WOTTankListSettingsDatasource+TableView.m in Sources */,
-				1D56692F2424D121008458AF /* SessionManager.swift in Sources */,
 				1DD46B3F1BA6A6E900D3B3CE /* WOTTankGridFlowLayout.m in Sources */,
 				1DD646CD1B1F378100B0EC76 /* WOTTankListViewController.m in Sources */,
 				1D4C92191B25B92500E320B5 /* WOTTankListFlowLayout.m in Sources */,
@@ -2274,12 +2166,12 @@
 				DA522D311B663C210087D684 /* WOTTankListSearchBar.m in Sources */,
 				1DD646C31B1F36FB00B0EC76 /* WOTDrawerViewController.m in Sources */,
 				1D010D7A1B8AF60300FA6A75 /* UIColor+HSB.m in Sources */,
+				DA81E7D22953288700C60F31 /* WOTSessionManager.m in Sources */,
 				1DD646E91B205D9300B0EC76 /* WOTPlayersListViewController.m in Sources */,
 				1DDEE3931B8F353200C90D4B /* WOTTankPivotEmptyCollectionViewCell.m in Sources */,
 				1DE1FA1F245EE7C8002866A3 /* NSString+RomanUtils.m in Sources */,
 				1D4C92581B25F27200E320B5 /* WOTLanguageSelectorViewController.m in Sources */,
 				1D519D1E1B4E9FE800D3A286 /* NSExpressionDescription+WOT.m in Sources */,
-				1D5669302424D121008458AF /* WOTSaveSessionResponseAdapter.swift in Sources */,
 				1D5669B22424DEF5008458AF /* WOTTankDetailSection.m in Sources */,
 				1D5669B52424DEF5008458AF /* WOTMetric+Samples.m in Sources */,
 				1D86DD042122F89A00678E71 /* WOTMenuItem.swift in Sources */,
@@ -2300,78 +2192,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1DB67439221BF0B300982EE6 /* chassis.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB67438221BF0B300982EE6 /* en */,
-			);
-			name = chassis.json;
-			sourceTree = "<group>";
-		};
-		1DB6743C221BF0B800982EE6 /* tanks.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB6743B221BF0B800982EE6 /* en */,
-			);
-			name = tanks.json;
-			sourceTree = "<group>";
-		};
-		1DB6743F221BF0C300982EE6 /* vehicles.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB6743E221BF0C300982EE6 /* en */,
-			);
-			name = vehicles.json;
-			sourceTree = "<group>";
-		};
-		1DB67442221BF0C700982EE6 /* tankradios.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB67441221BF0C700982EE6 /* en */,
-			);
-			name = tankradios.json;
-			sourceTree = "<group>";
-		};
-		1DB67445221BF0CC00982EE6 /* tankguns.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB67444221BF0CC00982EE6 /* en */,
-			);
-			name = tankguns.json;
-			sourceTree = "<group>";
-		};
-		1DB67448221BF0D000982EE6 /* tankturrets.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB67447221BF0D000982EE6 /* en */,
-			);
-			name = tankturrets.json;
-			sourceTree = "<group>";
-		};
-		1DB6744B221BF0D400982EE6 /* tankchassis.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB6744A221BF0D400982EE6 /* en */,
-			);
-			name = tankchassis.json;
-			sourceTree = "<group>";
-		};
-		1DB6744E221BF0D900982EE6 /* vehicleprofile.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB6744D221BF0D900982EE6 /* en */,
-			);
-			name = vehicleprofile.json;
-			sourceTree = "<group>";
-		};
-		1DB67451221BF0DE00982EE6 /* tankengines.json */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB67450221BF0DE00982EE6 /* en */,
-			);
-			name = tankengines.json;
-			sourceTree = "<group>";
-		};
 		1DD6471F1B20855400B0EC76 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

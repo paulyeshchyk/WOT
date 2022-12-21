@@ -17,6 +17,7 @@
 #import "WOTTurretsRotationSpeedCompareFieldExpression.h"
 #import "WOTRadiosDistanceCompareFieldExpression.h"
 #import "WOTEnginePowerCompareFieldExpression.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTTankDetailFieldExpression (Factory)
 

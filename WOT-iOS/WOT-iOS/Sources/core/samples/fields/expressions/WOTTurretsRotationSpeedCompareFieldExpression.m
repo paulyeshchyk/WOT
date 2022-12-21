@@ -8,6 +8,7 @@
 
 #import "WOTTurretsRotationSpeedCompareFieldExpression.h"
 #import "WOTTankIdsDatasource.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTTurretsRotationSpeedCompareFieldExpression
 

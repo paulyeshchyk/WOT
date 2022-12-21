@@ -8,6 +8,7 @@
 
 #import "WOTTankListCollectionViewCell.h"
 #import <WOTPivot/WOTPivot.h>
+#import <WOTKit/WOTKit-Swift.h>
 #import "UIImageView+WebCache.h"
 #import "RomanNumber.h"
 
@@ -38,8 +39,7 @@
 - (void)setTankType:(NSString *)tankType {
     
     _tankType = [tankType copy];
-    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",tankType]];
-    self.tankTypeContainer.image = image;
+    self.tankTypeContainer.image = [UIImage imageForTankType:tankType];;
 }
 
 - (void)setImage:(NSString *)image {

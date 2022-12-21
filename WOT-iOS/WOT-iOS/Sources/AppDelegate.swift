@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import WOTKit
 
 @objc
 public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProtocol {
@@ -23,14 +23,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
     public var mappingCoordinator: MappingCoordinatorProtocol?
     public var responseAdapterCreator: ResponseAdapterCreatorProtocol?
 
-    
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        //
 
         let logPriorities: [LogEventType]? = [.error, .web, .warning, .lifeCycle]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
-        hostConfiguration = HostConfiguration()
+        hostConfiguration = WOTHostConfiguration()
         sessionManager = SessionManager()
         dataStore = WOTDataStore(context: self)
         requestRegistrator = WOTRequestRegistrator(context: self)
@@ -40,10 +38,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProt
         responseParser = RESTResponseParser(context: self)
         requestManager = RequestManager(context: self)
 
-        let drawerViewController: WOTDrawerViewController = WOTDrawerViewController.newDrawer()
-
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = drawerViewController
+        window?.rootViewController = WOTDrawerViewController.newDrawer()
         window?.makeKeyAndVisible()
 
         return true

@@ -7,6 +7,7 @@
 //
 
 #import "WOTCoreDataPredicates.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTCoreDataPredicates
 

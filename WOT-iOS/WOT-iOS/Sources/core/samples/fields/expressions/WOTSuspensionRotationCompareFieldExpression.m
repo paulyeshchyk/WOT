@@ -8,6 +8,7 @@
 
 #import "WOTSuspensionRotationCompareFieldExpression.h"
 #import "WOTTankIdsDatasource.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTSuspensionRotationCompareFieldExpression
 

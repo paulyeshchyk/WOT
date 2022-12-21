@@ -7,7 +7,7 @@
 //
 
 #import "WOTLanguageDatasource.h"
-#import "NSThread+ExecutionOnMain.h"
+#import <WOTKit/WOTKit.h>
 
 @interface WOTLanguage : NSObject
 

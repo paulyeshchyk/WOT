@@ -8,6 +8,7 @@
 
 #import "WOTEnginePowerCompareFieldExpression.h"
 #import "WOTTankIdsDatasource.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTEnginePowerCompareFieldExpression
 

@@ -14,6 +14,7 @@
 #import "UIBarButtonItem+EventBlock.h"
 #import "WOTSessionManager.h"
 #import "NSBundle+LanguageBundle.h"
+#import <WOTApi/WOTApi.h>
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
 

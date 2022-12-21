@@ -9,7 +9,7 @@
 #import "WOTTankDetailSection+Factory.h"
 #import "WOTTankDetailFieldKVO.h"
 #import "WOTTankDetailFieldExpression+Factory.h"
-
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTTankDetailSection (Factory)
 

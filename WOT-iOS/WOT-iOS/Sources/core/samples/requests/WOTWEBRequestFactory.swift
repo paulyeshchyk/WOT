@@ -7,6 +7,7 @@
 //
 
 import ContextSDK
+import WOTKit
 
 @objc
 public class WOTWEBRequestFactory: NSObject {

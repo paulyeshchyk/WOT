@@ -8,6 +8,7 @@
 
 #import "WOTGunRateCompareFieldExpression.h"
 #import "WOTTankIdsDatasource.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTGunRateCompareFieldExpression
 

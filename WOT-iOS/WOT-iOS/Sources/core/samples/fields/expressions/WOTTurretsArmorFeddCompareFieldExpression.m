@@ -8,6 +8,7 @@
 
 #import "WOTTurretsArmorFeddCompareFieldExpression.h"
 #import "WOTTankIdsDatasource.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTTurretsArmorFeddCompareFieldExpression
 

@@ -7,6 +7,7 @@
 //
 
 #import "WOTTankListSettingField.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTTankListSettingField
 

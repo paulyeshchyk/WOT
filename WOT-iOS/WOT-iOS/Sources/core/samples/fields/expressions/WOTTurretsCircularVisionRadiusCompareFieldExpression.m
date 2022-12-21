@@ -8,6 +8,7 @@
 
 #import "WOTTurretsCircularVisionRadiusCompareFieldExpression.h"
 #import "WOTTankIdsDatasource.h"
+#import <WOTApi/WOTApi.h>
 
 @implementation WOTTurretsCircularVisionRadiusCompareFieldExpression
 

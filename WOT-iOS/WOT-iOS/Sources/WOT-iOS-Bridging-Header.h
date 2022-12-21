@@ -15,9 +15,8 @@
 #import "WOTProfileViewController.h"
 #import "WOTMenuTableViewCell.h"
 #import "WOTNode+PivotFactory.h"
-#import "WOTSessionManager.h"
 #import <WOTPivot/WOTPivot.h>
 #import <WOTApi/WOTApi.h>
-#import "WOTRequestIds.h"
 #import "WOTDrawerViewController.h"
 #import "NSBundle+LanguageBundle.h"
+#import "WOTSessionManager.h"

@@ -10,77 +10,6 @@
 		DA0BC4CF2952E0A200E01D54 /* WOTApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4C52952E0A100E01D54 /* WOTApi.framework */; };
 		DA0BC4D42952E0A200E01D54 /* WOTApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4D32952E0A200E01D54 /* WOTApiTests.swift */; };
 		DA0BC4D62952E0A200E01D54 /* WOTApi.h in Headers */ = {isa = PBXBuildFile; fileRef = DA0BC4C82952E0A100E01D54 /* WOTApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA0BC5002952E63600E01D54 /* VehicleprofileEngine+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F02952E63500E01D54 /* VehicleprofileEngine+JSONMappableProtocol.swift */; };
-		DA0BC5012952E63600E01D54 /* VehicleprofileSuspension+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F12952E63500E01D54 /* VehicleprofileSuspension+JSONMappableProtocol.swift */; };
-		DA0BC5022952E63600E01D54 /* VehicleprofileAmmoList+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F22952E63500E01D54 /* VehicleprofileAmmoList+JSONMappableProtocol.swift */; };
-		DA0BC5032952E63600E01D54 /* ModulesTree+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F32952E63500E01D54 /* ModulesTree+JSONMappableProtocol.swift */; };
-		DA0BC5042952E63600E01D54 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F42952E63500E01D54 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift */; };
-		DA0BC5052952E63600E01D54 /* Vehicles+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F52952E63500E01D54 /* Vehicles+JSONMappableProtocol.swift */; };
-		DA0BC5062952E63600E01D54 /* VehicleprofileRadio+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F62952E63500E01D54 /* VehicleprofileRadio+JSONMappableProtocol.swift */; };
-		DA0BC5072952E63600E01D54 /* VehicleprofileAmmo+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F72952E63500E01D54 /* VehicleprofileAmmo+JSONMappableProtocol.swift */; };
-		DA0BC5082952E63600E01D54 /* VehicleprofileTurret+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F82952E63500E01D54 /* VehicleprofileTurret+JSONMappableProtocol.swift */; };
-		DA0BC5092952E63600E01D54 /* VehicleprofileGun+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4F92952E63600E01D54 /* VehicleprofileGun+JSONMappableProtocol.swift */; };
-		DA0BC50A2952E63600E01D54 /* VehicleprofileModule+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4FA2952E63600E01D54 /* VehicleprofileModule+JSONMappableProtocol.swift */; };
-		DA0BC50B2952E63600E01D54 /* Module+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4FB2952E63600E01D54 /* Module+JSONMappableProtocol.swift */; };
-		DA0BC50C2952E63600E01D54 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4FC2952E63600E01D54 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift */; };
-		DA0BC50D2952E63600E01D54 /* VehicleprofileArmor+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4FD2952E63600E01D54 /* VehicleprofileArmor+JSONMappableProtocol.swift */; };
-		DA0BC50E2952E63600E01D54 /* VehicleprofileArmorList+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4FE2952E63600E01D54 /* VehicleprofileArmorList+JSONMappableProtocol.swift */; };
-		DA0BC50F2952E63600E01D54 /* Vehicleprofile+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC4FF2952E63600E01D54 /* Vehicleprofile+JSONMappableProtocol.swift */; };
-		DA0BC5212952E6BF00E01D54 /* VehicleprofileAmmo+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5112952E6BD00E01D54 /* VehicleprofileAmmo+RequestableProtocol.swift */; };
-		DA0BC5222952E6BF00E01D54 /* VehicleprofileSuspension+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5122952E6BE00E01D54 /* VehicleprofileSuspension+RequestableProtocol.swift */; };
-		DA0BC5232952E6BF00E01D54 /* VehicleprofileEngine+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5132952E6BE00E01D54 /* VehicleprofileEngine+RequestableProtocol.swift */; };
-		DA0BC5242952E6BF00E01D54 /* VehicleprofileArmorList+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5142952E6BE00E01D54 /* VehicleprofileArmorList+RequestableProtocol.swift */; };
-		DA0BC5252952E6BF00E01D54 /* VehicleprofileTurret+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5152952E6BE00E01D54 /* VehicleprofileTurret+RequestableProtocol.swift */; };
-		DA0BC5262952E6BF00E01D54 /* Vehicles+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5162952E6BE00E01D54 /* Vehicles+RequestableProtocol.swift */; };
-		DA0BC5272952E6BF00E01D54 /* Module+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5172952E6BE00E01D54 /* Module+RequestableProtocol.swift */; };
-		DA0BC5282952E6BF00E01D54 /* ModulesTree+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5182952E6BE00E01D54 /* ModulesTree+RequestableProtocol.swift */; };
-		DA0BC5292952E6BF00E01D54 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5192952E6BE00E01D54 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift */; };
-		DA0BC52A2952E6BF00E01D54 /* VehicleprofileRadio+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC51A2952E6BE00E01D54 /* VehicleprofileRadio+RequestableProtocol.swift */; };
-		DA0BC52B2952E6BF00E01D54 /* VehicleprofileAmmoList+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC51B2952E6BE00E01D54 /* VehicleprofileAmmoList+RequestableProtocol.swift */; };
-		DA0BC52C2952E6BF00E01D54 /* VehicleprofileGun+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC51C2952E6BE00E01D54 /* VehicleprofileGun+RequestableProtocol.swift */; };
-		DA0BC52D2952E6BF00E01D54 /* VehicleprofileArmor+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC51D2952E6BE00E01D54 /* VehicleprofileArmor+RequestableProtocol.swift */; };
-		DA0BC52E2952E6BF00E01D54 /* VehicleprofileAmmoDamage+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC51E2952E6BE00E01D54 /* VehicleprofileAmmoDamage+RequestableProtocol.swift */; };
-		DA0BC52F2952E6BF00E01D54 /* VehicleprofileModule+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC51F2952E6BF00E01D54 /* VehicleprofileModule+RequestableProtocol.swift */; };
-		DA0BC5302952E6BF00E01D54 /* Vehicleprofile+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5202952E6BF00E01D54 /* Vehicleprofile+RequestableProtocol.swift */; };
-		DA0BC5582952E73000E01D54 /* ListSetting+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5322952E73000E01D54 /* ListSetting+CoreDataClass.swift */; };
-		DA0BC5592952E73000E01D54 /* ListSetting+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5332952E73000E01D54 /* ListSetting+CoreDataProperties.swift */; };
-		DA0BC55A2952E73000E01D54 /* Module+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5342952E73000E01D54 /* Module+CoreDataClass.swift */; };
-		DA0BC55B2952E73000E01D54 /* Module+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5352952E73000E01D54 /* Module+CoreDataProperties.swift */; };
-		DA0BC55C2952E73000E01D54 /* ModulesTree+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5362952E73000E01D54 /* ModulesTree+CoreDataClass.swift */; };
-		DA0BC55D2952E73000E01D54 /* ModulesTree+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5372952E73000E01D54 /* ModulesTree+CoreDataProperties.swift */; };
-		DA0BC55E2952E73000E01D54 /* UserSession+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5382952E73000E01D54 /* UserSession+CoreDataClass.swift */; };
-		DA0BC55F2952E73000E01D54 /* UserSession+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5392952E73000E01D54 /* UserSession+CoreDataProperties.swift */; };
-		DA0BC5602952E73000E01D54 /* Vehicleprofile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC53A2952E73000E01D54 /* Vehicleprofile+CoreDataClass.swift */; };
-		DA0BC5612952E73000E01D54 /* Vehicleprofile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC53B2952E73000E01D54 /* Vehicleprofile+CoreDataProperties.swift */; };
-		DA0BC5622952E73000E01D54 /* VehicleprofileAmmo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC53C2952E73000E01D54 /* VehicleprofileAmmo+CoreDataClass.swift */; };
-		DA0BC5632952E73000E01D54 /* VehicleprofileAmmo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC53D2952E73000E01D54 /* VehicleprofileAmmo+CoreDataProperties.swift */; };
-		DA0BC5642952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC53E2952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataClass.swift */; };
-		DA0BC5652952E73000E01D54 /* VehicleprofileAmmoList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC53F2952E73000E01D54 /* VehicleprofileAmmoList+CoreDataClass.swift */; };
-		DA0BC5662952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5402952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataProperties.swift */; };
-		DA0BC5672952E73000E01D54 /* VehicleprofileAmmoList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5412952E73000E01D54 /* VehicleprofileAmmoList+CoreDataProperties.swift */; };
-		DA0BC5682952E73000E01D54 /* VehicleprofileArmor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5422952E73000E01D54 /* VehicleprofileArmor+CoreDataClass.swift */; };
-		DA0BC5692952E73000E01D54 /* VehicleprofileArmor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5432952E73000E01D54 /* VehicleprofileArmor+CoreDataProperties.swift */; };
-		DA0BC56A2952E73000E01D54 /* VehicleprofileArmorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5442952E73000E01D54 /* VehicleprofileArmorList+CoreDataClass.swift */; };
-		DA0BC56B2952E73000E01D54 /* VehicleprofileEngine+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5452952E73000E01D54 /* VehicleprofileEngine+CoreDataClass.swift */; };
-		DA0BC56C2952E73000E01D54 /* VehicleprofileEngine+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5462952E73000E01D54 /* VehicleprofileEngine+CoreDataProperties.swift */; };
-		DA0BC56D2952E73000E01D54 /* VehicleprofileGun+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5472952E73000E01D54 /* VehicleprofileGun+CoreDataClass.swift */; };
-		DA0BC56E2952E73000E01D54 /* VehicleprofileModule+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5482952E73000E01D54 /* VehicleprofileModule+CoreDataClass.swift */; };
-		DA0BC56F2952E73000E01D54 /* VehicleprofileModule+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5492952E73000E01D54 /* VehicleprofileModule+CoreDataProperties.swift */; };
-		DA0BC5702952E73000E01D54 /* VehicleprofileRadio+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC54A2952E73000E01D54 /* VehicleprofileRadio+CoreDataClass.swift */; };
-		DA0BC5712952E73000E01D54 /* VehicleprofileRadio+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC54B2952E73000E01D54 /* VehicleprofileRadio+CoreDataProperties.swift */; };
-		DA0BC5722952E73000E01D54 /* VehicleprofileSuspension+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC54C2952E73000E01D54 /* VehicleprofileSuspension+CoreDataClass.swift */; };
-		DA0BC5732952E73000E01D54 /* VehicleprofileTurret+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC54D2952E73000E01D54 /* VehicleprofileTurret+CoreDataClass.swift */; };
-		DA0BC5742952E73000E01D54 /* VehicleprofileGun+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC54E2952E73000E01D54 /* VehicleprofileGun+CoreDataProperties.swift */; };
-		DA0BC5752952E73000E01D54 /* Vehicles+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC54F2952E73000E01D54 /* Vehicles+CoreDataClass.swift */; };
-		DA0BC5762952E73000E01D54 /* Vehicles+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5502952E73000E01D54 /* Vehicles+CoreDataProperties.swift */; };
-		DA0BC5772952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5512952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataClass.swift */; };
-		DA0BC5782952E73000E01D54 /* VehicleprofileSuspension+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5522952E73000E01D54 /* VehicleprofileSuspension+CoreDataProperties.swift */; };
-		DA0BC5792952E73000E01D54 /* VehicleprofileTurret+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5532952E73000E01D54 /* VehicleprofileTurret+CoreDataProperties.swift */; };
-		DA0BC57A2952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5542952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift */; };
-		DA0BC57B2952E73000E01D54 /* VehicleprofileArmorList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5552952E73000E01D54 /* VehicleprofileArmorList+CoreDataProperties.swift */; };
-		DA0BC57C2952E73000E01D54 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5562952E73000E01D54 /* WOT_iOS.xcdatamodeld */; };
-		DA0BC5802952E75C00E01D54 /* ModulesTree+Customization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC57E2952E75C00E01D54 /* ModulesTree+Customization.swift */; };
-		DA0BC5812952E75C00E01D54 /* Module+Customization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC57F2952E75C00E01D54 /* Module+Customization.swift */; };
 		DA0BC58E2952E7AF00E01D54 /* ModulesHttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5822952E7AE00E01D54 /* ModulesHttpRequest.swift */; };
 		DA0BC58F2952E7AF00E01D54 /* LogoutHttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5832952E7AE00E01D54 /* LogoutHttpRequest.swift */; };
 		DA0BC5912952E7AF00E01D54 /* VehicleprofileRadiosHttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5852952E7AE00E01D54 /* VehicleprofileRadiosHttpRequest.swift */; };
@@ -101,6 +30,111 @@
 		DA81E4D12952EBDF00C60F31 /* WOTPivot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA81E4CF2952EBDF00C60F31 /* WOTPivot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA81E4D92952F4FD00C60F31 /* Test_WOTDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4D82952F4FD00C60F31 /* Test_WOTDataStore.swift */; };
 		DA81E4DB2952FA0D00C60F31 /* WOTRequestRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4DA2952FA0D00C60F31 /* WOTRequestRegistrator.swift */; };
+		DA81E5A9295305CE00C60F31 /* Vehicleprofile+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E54A295305CD00C60F31 /* Vehicleprofile+JSONMappableProtocol.swift */; };
+		DA81E5AA295305CE00C60F31 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E54B295305CD00C60F31 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift */; };
+		DA81E5AB295305CE00C60F31 /* VehicleprofileAmmoList+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E54C295305CD00C60F31 /* VehicleprofileAmmoList+JSONMappableProtocol.swift */; };
+		DA81E5AC295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E54D295305CD00C60F31 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift */; };
+		DA81E5AD295305CE00C60F31 /* VehicleprofileArmorList+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E54E295305CD00C60F31 /* VehicleprofileArmorList+JSONMappableProtocol.swift */; };
+		DA81E5AE295305CE00C60F31 /* VehicleprofileGun+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E54F295305CD00C60F31 /* VehicleprofileGun+JSONMappableProtocol.swift */; };
+		DA81E5AF295305CE00C60F31 /* VehicleprofileRadio+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E550295305CD00C60F31 /* VehicleprofileRadio+JSONMappableProtocol.swift */; };
+		DA81E5B0295305CE00C60F31 /* VehicleprofileSuspension+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E551295305CD00C60F31 /* VehicleprofileSuspension+JSONMappableProtocol.swift */; };
+		DA81E5B1295305CE00C60F31 /* VehicleprofileTurret+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E552295305CD00C60F31 /* VehicleprofileTurret+JSONMappableProtocol.swift */; };
+		DA81E5B2295305CE00C60F31 /* Vehicles+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E553295305CD00C60F31 /* Vehicles+JSONMappableProtocol.swift */; };
+		DA81E5B3295305CE00C60F31 /* ModulesTree+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E554295305CD00C60F31 /* ModulesTree+JSONMappableProtocol.swift */; };
+		DA81E5B4295305CE00C60F31 /* Module+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E555295305CD00C60F31 /* Module+JSONMappableProtocol.swift */; };
+		DA81E5B5295305CE00C60F31 /* VehicleprofileAmmo+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E556295305CD00C60F31 /* VehicleprofileAmmo+JSONMappableProtocol.swift */; };
+		DA81E5B6295305CE00C60F31 /* VehicleprofileArmor+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E557295305CD00C60F31 /* VehicleprofileArmor+JSONMappableProtocol.swift */; };
+		DA81E5B7295305CE00C60F31 /* VehicleprofileEngine+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E558295305CD00C60F31 /* VehicleprofileEngine+JSONMappableProtocol.swift */; };
+		DA81E5B8295305CE00C60F31 /* VehicleprofileModule+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E559295305CD00C60F31 /* VehicleprofileModule+JSONMappableProtocol.swift */; };
+		DA81E5B9295305CE00C60F31 /* WOT_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA81E55B295305CD00C60F31 /* WOT_iOS.xcdatamodeld */; };
+		DA81E5BA295305CE00C60F31 /* ListSetting+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E55E295305CD00C60F31 /* ListSetting+CoreDataClass.swift */; };
+		DA81E5BB295305CE00C60F31 /* ListSetting+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E55F295305CD00C60F31 /* ListSetting+CoreDataProperties.swift */; };
+		DA81E5BC295305CE00C60F31 /* Module+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E560295305CD00C60F31 /* Module+CoreDataClass.swift */; };
+		DA81E5BD295305CE00C60F31 /* Module+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E561295305CD00C60F31 /* Module+CoreDataProperties.swift */; };
+		DA81E5BE295305CE00C60F31 /* ModulesTree+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E562295305CD00C60F31 /* ModulesTree+CoreDataClass.swift */; };
+		DA81E5BF295305CE00C60F31 /* ModulesTree+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E563295305CD00C60F31 /* ModulesTree+CoreDataProperties.swift */; };
+		DA81E5C0295305CE00C60F31 /* UserSession+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E564295305CD00C60F31 /* UserSession+CoreDataClass.swift */; };
+		DA81E5C1295305CE00C60F31 /* UserSession+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E565295305CD00C60F31 /* UserSession+CoreDataProperties.swift */; };
+		DA81E5C2295305CE00C60F31 /* Vehicleprofile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E566295305CD00C60F31 /* Vehicleprofile+CoreDataClass.swift */; };
+		DA81E5C3295305CE00C60F31 /* Vehicleprofile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E567295305CD00C60F31 /* Vehicleprofile+CoreDataProperties.swift */; };
+		DA81E5C4295305CE00C60F31 /* VehicleprofileAmmo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E568295305CD00C60F31 /* VehicleprofileAmmo+CoreDataClass.swift */; };
+		DA81E5C5295305CE00C60F31 /* VehicleprofileAmmo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E569295305CD00C60F31 /* VehicleprofileAmmo+CoreDataProperties.swift */; };
+		DA81E5C6295305CE00C60F31 /* VehicleprofileAmmoDamage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E56A295305CD00C60F31 /* VehicleprofileAmmoDamage+CoreDataClass.swift */; };
+		DA81E5C7295305CE00C60F31 /* VehicleprofileAmmoDamage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E56B295305CD00C60F31 /* VehicleprofileAmmoDamage+CoreDataProperties.swift */; };
+		DA81E5C8295305CE00C60F31 /* VehicleprofileAmmoList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E56C295305CD00C60F31 /* VehicleprofileAmmoList+CoreDataClass.swift */; };
+		DA81E5C9295305CE00C60F31 /* VehicleprofileAmmoList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E56D295305CD00C60F31 /* VehicleprofileAmmoList+CoreDataProperties.swift */; };
+		DA81E5CA295305CE00C60F31 /* VehicleprofileAmmoPenetration+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E56E295305CD00C60F31 /* VehicleprofileAmmoPenetration+CoreDataClass.swift */; };
+		DA81E5CB295305CE00C60F31 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E56F295305CD00C60F31 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift */; };
+		DA81E5CC295305CE00C60F31 /* VehicleprofileArmor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E570295305CD00C60F31 /* VehicleprofileArmor+CoreDataClass.swift */; };
+		DA81E5CD295305CE00C60F31 /* VehicleprofileArmor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E571295305CD00C60F31 /* VehicleprofileArmor+CoreDataProperties.swift */; };
+		DA81E5CE295305CE00C60F31 /* VehicleprofileArmorList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E572295305CD00C60F31 /* VehicleprofileArmorList+CoreDataClass.swift */; };
+		DA81E5CF295305CE00C60F31 /* VehicleprofileArmorList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E573295305CD00C60F31 /* VehicleprofileArmorList+CoreDataProperties.swift */; };
+		DA81E5D0295305CE00C60F31 /* VehicleprofileEngine+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E574295305CD00C60F31 /* VehicleprofileEngine+CoreDataClass.swift */; };
+		DA81E5D1295305CE00C60F31 /* VehicleprofileEngine+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E575295305CD00C60F31 /* VehicleprofileEngine+CoreDataProperties.swift */; };
+		DA81E5D2295305CE00C60F31 /* VehicleprofileGun+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E576295305CD00C60F31 /* VehicleprofileGun+CoreDataClass.swift */; };
+		DA81E5D3295305CE00C60F31 /* VehicleprofileGun+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E577295305CD00C60F31 /* VehicleprofileGun+CoreDataProperties.swift */; };
+		DA81E5D4295305CE00C60F31 /* VehicleprofileModule+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E578295305CD00C60F31 /* VehicleprofileModule+CoreDataClass.swift */; };
+		DA81E5D5295305CE00C60F31 /* VehicleprofileModule+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E579295305CD00C60F31 /* VehicleprofileModule+CoreDataProperties.swift */; };
+		DA81E5D6295305CE00C60F31 /* VehicleprofileRadio+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E57A295305CD00C60F31 /* VehicleprofileRadio+CoreDataClass.swift */; };
+		DA81E5D7295305CE00C60F31 /* VehicleprofileRadio+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E57B295305CD00C60F31 /* VehicleprofileRadio+CoreDataProperties.swift */; };
+		DA81E5D8295305CE00C60F31 /* VehicleprofileSuspension+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E57C295305CD00C60F31 /* VehicleprofileSuspension+CoreDataClass.swift */; };
+		DA81E5D9295305CE00C60F31 /* VehicleprofileSuspension+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E57D295305CD00C60F31 /* VehicleprofileSuspension+CoreDataProperties.swift */; };
+		DA81E5DA295305CE00C60F31 /* VehicleprofileTurret+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E57E295305CD00C60F31 /* VehicleprofileTurret+CoreDataClass.swift */; };
+		DA81E5DB295305CE00C60F31 /* VehicleprofileTurret+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E57F295305CD00C60F31 /* VehicleprofileTurret+CoreDataProperties.swift */; };
+		DA81E5DC295305CE00C60F31 /* Vehicles+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E580295305CD00C60F31 /* Vehicles+CoreDataClass.swift */; };
+		DA81E5DD295305CE00C60F31 /* Vehicles+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E581295305CD00C60F31 /* Vehicles+CoreDataProperties.swift */; };
+		DA81E5DE295305CE00C60F31 /* Module+Customization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E583295305CD00C60F31 /* Module+Customization.swift */; };
+		DA81E5DF295305CE00C60F31 /* ModulesTree+Customization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E584295305CD00C60F31 /* ModulesTree+Customization.swift */; };
+		DA81E5E0295305CE00C60F31 /* Module+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E586295305CD00C60F31 /* Module+RequestableProtocol.swift */; };
+		DA81E5E1295305CE00C60F31 /* ModulesTree+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E587295305CD00C60F31 /* ModulesTree+RequestableProtocol.swift */; };
+		DA81E5E2295305CE00C60F31 /* Vehicleprofile+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E588295305CD00C60F31 /* Vehicleprofile+RequestableProtocol.swift */; };
+		DA81E5E3295305CE00C60F31 /* VehicleprofileAmmo+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E589295305CD00C60F31 /* VehicleprofileAmmo+RequestableProtocol.swift */; };
+		DA81E5E4295305CE00C60F31 /* VehicleprofileAmmoDamage+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E58A295305CD00C60F31 /* VehicleprofileAmmoDamage+RequestableProtocol.swift */; };
+		DA81E5E5295305CE00C60F31 /* VehicleprofileAmmoList+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E58B295305CD00C60F31 /* VehicleprofileAmmoList+RequestableProtocol.swift */; };
+		DA81E5E6295305CE00C60F31 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E58C295305CD00C60F31 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift */; };
+		DA81E5E7295305CE00C60F31 /* VehicleprofileArmor+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E58D295305CD00C60F31 /* VehicleprofileArmor+RequestableProtocol.swift */; };
+		DA81E5E8295305CE00C60F31 /* VehicleprofileArmorList+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E58E295305CD00C60F31 /* VehicleprofileArmorList+RequestableProtocol.swift */; };
+		DA81E5E9295305CE00C60F31 /* VehicleprofileEngine+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E58F295305CD00C60F31 /* VehicleprofileEngine+RequestableProtocol.swift */; };
+		DA81E5EA295305CE00C60F31 /* VehicleprofileGun+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E590295305CD00C60F31 /* VehicleprofileGun+RequestableProtocol.swift */; };
+		DA81E5EB295305CE00C60F31 /* VehicleprofileModule+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E591295305CD00C60F31 /* VehicleprofileModule+RequestableProtocol.swift */; };
+		DA81E5EC295305CE00C60F31 /* VehicleprofileRadio+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E592295305CD00C60F31 /* VehicleprofileRadio+RequestableProtocol.swift */; };
+		DA81E5ED295305CE00C60F31 /* VehicleprofileSuspension+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E593295305CD00C60F31 /* VehicleprofileSuspension+RequestableProtocol.swift */; };
+		DA81E5EE295305CE00C60F31 /* VehicleprofileTurret+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E594295305CD00C60F31 /* VehicleprofileTurret+RequestableProtocol.swift */; };
+		DA81E5EF295305CE00C60F31 /* Vehicles+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E595295305CD00C60F31 /* Vehicles+RequestableProtocol.swift */; };
+		DA81E5F0295305CE00C60F31 /* VehicleprofileAmmoDamage+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E597295305CD00C60F31 /* VehicleprofileAmmoDamage+JSONDecodingProtocol.swift */; };
+		DA81E5F1295305CE00C60F31 /* UserSession+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E598295305CD00C60F31 /* UserSession+JSONDecodingProtocol.swift */; };
+		DA81E5F2295305CE00C60F31 /* VehicleprofileGun+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E599295305CD00C60F31 /* VehicleprofileGun+JSONDecodingProtocol.swift */; };
+		DA81E5F3295305CE00C60F31 /* ListSetting+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E59A295305CD00C60F31 /* ListSetting+JSONDecodingProtocol.swift */; };
+		DA81E5F4295305CE00C60F31 /* Vehicleprofile+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E59B295305CE00C60F31 /* Vehicleprofile+JSONDecodingProtocol.swift */; };
+		DA81E5F5295305CE00C60F31 /* ModulesTree+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E59C295305CE00C60F31 /* ModulesTree+JSONDecodingProtocol.swift */; };
+		DA81E5F6295305CE00C60F31 /* Vehicles+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E59D295305CE00C60F31 /* Vehicles+JSONDecodingProtocol.swift */; };
+		DA81E5F7295305CE00C60F31 /* VehicleprofileSuspension+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E59E295305CE00C60F31 /* VehicleprofileSuspension+JSONDecodingProtocol.swift */; };
+		DA81E5F8295305CE00C60F31 /* Module+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E59F295305CE00C60F31 /* Module+JSONDecodingProtocol.swift */; };
+		DA81E5F9295305CE00C60F31 /* VehicleprofileAmmoList+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A0295305CE00C60F31 /* VehicleprofileAmmoList+JSONDecodingProtocol.swift */; };
+		DA81E5FA295305CE00C60F31 /* VehicleprofileAmmo+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A1295305CE00C60F31 /* VehicleprofileAmmo+JSONDecodingProtocol.swift */; };
+		DA81E5FB295305CE00C60F31 /* VehicleprofileArmor+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A2295305CE00C60F31 /* VehicleprofileArmor+JSONDecodingProtocol.swift */; };
+		DA81E5FC295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A3295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONDecodingProtocol.swift */; };
+		DA81E5FD295305CE00C60F31 /* VehicleprofileRadio+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A4295305CE00C60F31 /* VehicleprofileRadio+JSONDecodingProtocol.swift */; };
+		DA81E5FE295305CE00C60F31 /* VehicleprofileArmorList+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A5295305CE00C60F31 /* VehicleprofileArmorList+JSONDecodingProtocol.swift */; };
+		DA81E5FF295305CE00C60F31 /* VehicleprofileTurret+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A6295305CE00C60F31 /* VehicleprofileTurret+JSONDecodingProtocol.swift */; };
+		DA81E600295305CE00C60F31 /* VehicleprofileModule+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A7295305CE00C60F31 /* VehicleprofileModule+JSONDecodingProtocol.swift */; };
+		DA81E601295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5A8295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift */; };
+		DA81E6042953070C00C60F31 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6032953070C00C60F31 /* Images.xcassets */; };
+		DA81E6D02953078F00C60F31 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6CF2953078F00C60F31 /* Localizable.strings */; };
+		DA81E6E6295307F100C60F31 /* chassis.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6D4295307F100C60F31 /* chassis.json */; };
+		DA81E6E7295307F100C60F31 /* tankchassis.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6D6295307F100C60F31 /* tankchassis.json */; };
+		DA81E6E8295307F100C60F31 /* tankengines.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6D8295307F100C60F31 /* tankengines.json */; };
+		DA81E6E9295307F100C60F31 /* tankguns.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6DA295307F100C60F31 /* tankguns.json */; };
+		DA81E6EA295307F100C60F31 /* tankradios.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6DC295307F100C60F31 /* tankradios.json */; };
+		DA81E6EB295307F100C60F31 /* tanks.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6DE295307F100C60F31 /* tanks.json */; };
+		DA81E6EC295307F100C60F31 /* tankturrets.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6E0295307F100C60F31 /* tankturrets.json */; };
+		DA81E6ED295307F100C60F31 /* vehicleprofile.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6E2295307F100C60F31 /* vehicleprofile.json */; };
+		DA81E6EE295307F100C60F31 /* vehicles.json in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6E4295307F100C60F31 /* vehicles.json */; };
+		DA81E6F129530A3800C60F31 /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E6F029530A3800C60F31 /* strings.swift */; };
+		DA81E7B42953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7B32953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift */; };
+		DA81E7BC2953235D00C60F31 /* WOTHostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7BB2953235C00C60F31 /* WOTHostConfiguration.swift */; };
+		DA81E7C3295323F700C60F31 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7C0295323F700C60F31 /* SessionManager.swift */; };
+		DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7D429532DC600C60F31 /* UIImage+TankType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,77 +168,6 @@
 		DA0BC4CE2952E0A200E01D54 /* WOTApiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTApiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0BC4D32952E0A200E01D54 /* WOTApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTApiTests.swift; sourceTree = "<group>"; };
 		DA0BC4D52952E0A200E01D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA0BC4F02952E63500E01D54 /* VehicleprofileEngine+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F12952E63500E01D54 /* VehicleprofileSuspension+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F22952E63500E01D54 /* VehicleprofileAmmoList+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F32952E63500E01D54 /* ModulesTree+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F42952E63500E01D54 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F52952E63500E01D54 /* Vehicles+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F62952E63500E01D54 /* VehicleprofileRadio+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F72952E63500E01D54 /* VehicleprofileAmmo+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F82952E63500E01D54 /* VehicleprofileTurret+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4F92952E63600E01D54 /* VehicleprofileGun+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4FA2952E63600E01D54 /* VehicleprofileModule+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4FB2952E63600E01D54 /* Module+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4FC2952E63600E01D54 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4FD2952E63600E01D54 /* VehicleprofileArmor+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4FE2952E63600E01D54 /* VehicleprofileArmorList+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC4FF2952E63600E01D54 /* Vehicleprofile+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5112952E6BD00E01D54 /* VehicleprofileAmmo+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5122952E6BE00E01D54 /* VehicleprofileSuspension+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5132952E6BE00E01D54 /* VehicleprofileEngine+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5142952E6BE00E01D54 /* VehicleprofileArmorList+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5152952E6BE00E01D54 /* VehicleprofileTurret+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5162952E6BE00E01D54 /* Vehicles+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5172952E6BE00E01D54 /* Module+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5182952E6BE00E01D54 /* ModulesTree+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5192952E6BE00E01D54 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC51A2952E6BE00E01D54 /* VehicleprofileRadio+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC51B2952E6BE00E01D54 /* VehicleprofileAmmoList+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC51C2952E6BE00E01D54 /* VehicleprofileGun+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC51D2952E6BE00E01D54 /* VehicleprofileArmor+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC51E2952E6BE00E01D54 /* VehicleprofileAmmoDamage+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC51F2952E6BF00E01D54 /* VehicleprofileModule+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5202952E6BF00E01D54 /* Vehicleprofile+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+RequestableProtocol.swift"; sourceTree = "<group>"; };
-		DA0BC5322952E73000E01D54 /* ListSetting+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListSetting+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5332952E73000E01D54 /* ListSetting+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListSetting+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5342952E73000E01D54 /* Module+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5352952E73000E01D54 /* Module+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5362952E73000E01D54 /* ModulesTree+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5372952E73000E01D54 /* ModulesTree+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5382952E73000E01D54 /* UserSession+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserSession+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5392952E73000E01D54 /* UserSession+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserSession+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC53A2952E73000E01D54 /* Vehicleprofile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC53B2952E73000E01D54 /* Vehicleprofile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC53C2952E73000E01D54 /* VehicleprofileAmmo+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC53D2952E73000E01D54 /* VehicleprofileAmmo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC53E2952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC53F2952E73000E01D54 /* VehicleprofileAmmoList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5402952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5412952E73000E01D54 /* VehicleprofileAmmoList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5422952E73000E01D54 /* VehicleprofileArmor+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5432952E73000E01D54 /* VehicleprofileArmor+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5442952E73000E01D54 /* VehicleprofileArmorList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5452952E73000E01D54 /* VehicleprofileEngine+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5462952E73000E01D54 /* VehicleprofileEngine+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5472952E73000E01D54 /* VehicleprofileGun+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5482952E73000E01D54 /* VehicleprofileModule+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5492952E73000E01D54 /* VehicleprofileModule+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC54A2952E73000E01D54 /* VehicleprofileRadio+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC54B2952E73000E01D54 /* VehicleprofileRadio+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC54C2952E73000E01D54 /* VehicleprofileSuspension+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC54D2952E73000E01D54 /* VehicleprofileTurret+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC54E2952E73000E01D54 /* VehicleprofileGun+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC54F2952E73000E01D54 /* Vehicles+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5502952E73000E01D54 /* Vehicles+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5512952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA0BC5522952E73000E01D54 /* VehicleprofileSuspension+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5532952E73000E01D54 /* VehicleprofileTurret+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5542952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5552952E73000E01D54 /* VehicleprofileArmorList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DA0BC5572952E73000E01D54 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
-		DA0BC57E2952E75C00E01D54 /* ModulesTree+Customization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+Customization.swift"; sourceTree = "<group>"; };
-		DA0BC57F2952E75C00E01D54 /* Module+Customization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+Customization.swift"; sourceTree = "<group>"; };
 		DA0BC5822952E7AE00E01D54 /* ModulesHttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModulesHttpRequest.swift; sourceTree = "<group>"; };
 		DA0BC5832952E7AE00E01D54 /* LogoutHttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutHttpRequest.swift; sourceTree = "<group>"; };
 		DA0BC5852952E7AE00E01D54 /* VehicleprofileRadiosHttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleprofileRadiosHttpRequest.swift; sourceTree = "<group>"; };
@@ -224,6 +187,113 @@
 		DA81E4CF2952EBDF00C60F31 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E4D82952F4FD00C60F31 /* Test_WOTDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_WOTDataStore.swift; sourceTree = "<group>"; };
 		DA81E4DA2952FA0D00C60F31 /* WOTRequestRegistrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestRegistrator.swift; sourceTree = "<group>"; };
+		DA81E54A295305CD00C60F31 /* Vehicleprofile+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E54B295305CD00C60F31 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E54C295305CD00C60F31 /* VehicleprofileAmmoList+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E54D295305CD00C60F31 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E54E295305CD00C60F31 /* VehicleprofileArmorList+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E54F295305CD00C60F31 /* VehicleprofileGun+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E550295305CD00C60F31 /* VehicleprofileRadio+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E551295305CD00C60F31 /* VehicleprofileSuspension+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E552295305CD00C60F31 /* VehicleprofileTurret+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E553295305CD00C60F31 /* Vehicles+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E554295305CD00C60F31 /* ModulesTree+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E555295305CD00C60F31 /* Module+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E556295305CD00C60F31 /* VehicleprofileAmmo+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E557295305CD00C60F31 /* VehicleprofileArmor+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E558295305CD00C60F31 /* VehicleprofileEngine+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E559295305CD00C60F31 /* VehicleprofileModule+JSONMappableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E55C295305CD00C60F31 /* WOT_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WOT_iOS.xcdatamodel; sourceTree = "<group>"; };
+		DA81E55E295305CD00C60F31 /* ListSetting+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListSetting+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E55F295305CD00C60F31 /* ListSetting+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListSetting+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E560295305CD00C60F31 /* Module+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E561295305CD00C60F31 /* Module+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E562295305CD00C60F31 /* ModulesTree+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E563295305CD00C60F31 /* ModulesTree+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E564295305CD00C60F31 /* UserSession+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserSession+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E565295305CD00C60F31 /* UserSession+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserSession+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E566295305CD00C60F31 /* Vehicleprofile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E567295305CD00C60F31 /* Vehicleprofile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E568295305CD00C60F31 /* VehicleprofileAmmo+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E569295305CD00C60F31 /* VehicleprofileAmmo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E56A295305CD00C60F31 /* VehicleprofileAmmoDamage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E56B295305CD00C60F31 /* VehicleprofileAmmoDamage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E56C295305CD00C60F31 /* VehicleprofileAmmoList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E56D295305CD00C60F31 /* VehicleprofileAmmoList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E56E295305CD00C60F31 /* VehicleprofileAmmoPenetration+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E56F295305CD00C60F31 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E570295305CD00C60F31 /* VehicleprofileArmor+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E571295305CD00C60F31 /* VehicleprofileArmor+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E572295305CD00C60F31 /* VehicleprofileArmorList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E573295305CD00C60F31 /* VehicleprofileArmorList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E574295305CD00C60F31 /* VehicleprofileEngine+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E575295305CD00C60F31 /* VehicleprofileEngine+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E576295305CD00C60F31 /* VehicleprofileGun+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E577295305CD00C60F31 /* VehicleprofileGun+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E578295305CD00C60F31 /* VehicleprofileModule+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E579295305CD00C60F31 /* VehicleprofileModule+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E57A295305CD00C60F31 /* VehicleprofileRadio+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E57B295305CD00C60F31 /* VehicleprofileRadio+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E57C295305CD00C60F31 /* VehicleprofileSuspension+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E57D295305CD00C60F31 /* VehicleprofileSuspension+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E57E295305CD00C60F31 /* VehicleprofileTurret+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E57F295305CD00C60F31 /* VehicleprofileTurret+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E580295305CD00C60F31 /* Vehicles+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA81E581295305CD00C60F31 /* Vehicles+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA81E583295305CD00C60F31 /* Module+Customization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+Customization.swift"; sourceTree = "<group>"; };
+		DA81E584295305CD00C60F31 /* ModulesTree+Customization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+Customization.swift"; sourceTree = "<group>"; };
+		DA81E586295305CD00C60F31 /* Module+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E587295305CD00C60F31 /* ModulesTree+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E588295305CD00C60F31 /* Vehicleprofile+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E589295305CD00C60F31 /* VehicleprofileAmmo+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E58A295305CD00C60F31 /* VehicleprofileAmmoDamage+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E58B295305CD00C60F31 /* VehicleprofileAmmoList+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E58C295305CD00C60F31 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E58D295305CD00C60F31 /* VehicleprofileArmor+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E58E295305CD00C60F31 /* VehicleprofileArmorList+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E58F295305CD00C60F31 /* VehicleprofileEngine+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E590295305CD00C60F31 /* VehicleprofileGun+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E591295305CD00C60F31 /* VehicleprofileModule+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E592295305CD00C60F31 /* VehicleprofileRadio+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E593295305CD00C60F31 /* VehicleprofileSuspension+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E594295305CD00C60F31 /* VehicleprofileTurret+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E595295305CD00C60F31 /* Vehicles+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA81E597295305CD00C60F31 /* VehicleprofileAmmoDamage+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoDamage+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E598295305CD00C60F31 /* UserSession+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserSession+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E599295305CD00C60F31 /* VehicleprofileGun+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileGun+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E59A295305CD00C60F31 /* ListSetting+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListSetting+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E59B295305CE00C60F31 /* Vehicleprofile+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicleprofile+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E59C295305CE00C60F31 /* ModulesTree+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModulesTree+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E59D295305CE00C60F31 /* Vehicles+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vehicles+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E59E295305CE00C60F31 /* VehicleprofileSuspension+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileSuspension+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E59F295305CE00C60F31 /* Module+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Module+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A0295305CE00C60F31 /* VehicleprofileAmmoList+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoList+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A1295305CE00C60F31 /* VehicleprofileAmmo+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmo+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A2295305CE00C60F31 /* VehicleprofileArmor+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmor+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A3295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileAmmoPenetration+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A4295305CE00C60F31 /* VehicleprofileRadio+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileRadio+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A5295305CE00C60F31 /* VehicleprofileArmorList+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileArmorList+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A6295305CE00C60F31 /* VehicleprofileTurret+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileTurret+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A7295305CE00C60F31 /* VehicleprofileModule+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileModule+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E5A8295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VehicleprofileEngine+JSONDecodingProtocol.swift"; sourceTree = "<group>"; };
+		DA81E6032953070C00C60F31 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DA81E6CF2953078F00C60F31 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		DA81E6D1295307AC00C60F31 /* Strings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Strings.h; sourceTree = "<group>"; };
+		DA81E6D5295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/chassis.json; sourceTree = "<group>"; };
+		DA81E6D7295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankchassis.json; sourceTree = "<group>"; };
+		DA81E6D9295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankengines.json; sourceTree = "<group>"; };
+		DA81E6DB295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankguns.json; sourceTree = "<group>"; };
+		DA81E6DD295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankradios.json; sourceTree = "<group>"; };
+		DA81E6DF295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tanks.json; sourceTree = "<group>"; };
+		DA81E6E1295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/tankturrets.json; sourceTree = "<group>"; };
+		DA81E6E3295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicleprofile.json; sourceTree = "<group>"; };
+		DA81E6E5295307F100C60F31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/vehicles.json; sourceTree = "<group>"; };
+		DA81E6F029530A3800C60F31 /* strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = strings.swift; sourceTree = "<group>"; };
+		DA81E7B32953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModulesTree+WOTTreeModulesTreeProtocol.swift"; sourceTree = "<group>"; };
+		DA81E7BB2953235C00C60F31 /* WOTHostConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTHostConfiguration.swift; sourceTree = "<group>"; };
+		DA81E7C0295323F700C60F31 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		DA81E7C42953246900C60F31 /* WOTApi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WOTApi-Bridging-Header.h"; sourceTree = "<group>"; };
+		DA81E7D429532DC600C60F31 /* UIImage+TankType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TankType.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +324,7 @@
 				DA0BC4C72952E0A100E01D54 /* WOTApi */,
 				DA0BC4D22952E0A200E01D54 /* WOTApiTests */,
 				DA0BC4C62952E0A100E01D54 /* Products */,
+				DA81E602295306F200C60F31 /* resources */,
 				DA0BC5AA2952EA5700E01D54 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -272,11 +343,9 @@
 			children = (
 				DA0BC4EC2952E18200E01D54 /* request */,
 				DA0BC4EF2952E5BD00E01D54 /* response */,
-				DA0BC5102952E67000E01D54 /* keypath */,
-				DA0BC4ED2952E18A00E01D54 /* mapping */,
-				DA0BC4EE2952E19700E01D54 /* managedObjects */,
 				DA0BC59A2952E7DE00E01D54 /* DataStore */,
 				DA0BC59D2952E85900E01D54 /* Filters */,
+				DA81E7B02953173100C60F31 /* extensions */,
 				DA0BC4C82952E0A100E01D54 /* WOTApi.h */,
 				DA0BC4C92952E0A100E01D54 /* Info.plist */,
 			);
@@ -296,134 +365,23 @@
 		DA0BC4EC2952E18200E01D54 /* request */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E7BD295323C500C60F31 /* Session */,
 				DA81E4DA2952FA0D00C60F31 /* WOTRequestRegistrator.swift */,
-				DA0BC58C2952E7AF00E01D54 /* LoginHttpRequest.swift */,
-				DA0BC5832952E7AE00E01D54 /* LogoutHttpRequest.swift */,
-				DA0BC5822952E7AE00E01D54 /* ModulesHttpRequest.swift */,
-				DA0BC58A2952E7AE00E01D54 /* ModulesTreeHttpRequest.swift */,
-				DA0BC5882952E7AE00E01D54 /* VehicleprofileSuspensionHttpRequest.swift */,
-				DA0BC5872952E7AE00E01D54 /* VehicleprofileEnginesHttpRequest.swift */,
-				DA0BC58B2952E7AF00E01D54 /* VehicleprofileGunHttpRequest.swift */,
-				DA0BC5852952E7AE00E01D54 /* VehicleprofileRadiosHttpRequest.swift */,
-				DA0BC5862952E7AE00E01D54 /* VehicleprofileTurretsHttpRequest.swift */,
-				DA0BC5892952E7AE00E01D54 /* VehiclesHttpRequest.swift */,
+				DA81E7BB2953235C00C60F31 /* WOTHostConfiguration.swift */,
+				DA81E7BA2953232A00C60F31 /* model */,
 			);
 			path = request;
-			sourceTree = "<group>";
-		};
-		DA0BC4ED2952E18A00E01D54 /* mapping */ = {
-			isa = PBXGroup;
-			children = (
-				DA0BC4FB2952E63600E01D54 /* Module+JSONMappableProtocol.swift */,
-				DA0BC4F32952E63500E01D54 /* ModulesTree+JSONMappableProtocol.swift */,
-				DA0BC4FF2952E63600E01D54 /* Vehicleprofile+JSONMappableProtocol.swift */,
-				DA0BC4F72952E63500E01D54 /* VehicleprofileAmmo+JSONMappableProtocol.swift */,
-				DA0BC4F42952E63500E01D54 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift */,
-				DA0BC4F22952E63500E01D54 /* VehicleprofileAmmoList+JSONMappableProtocol.swift */,
-				DA0BC4FC2952E63600E01D54 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift */,
-				DA0BC4FD2952E63600E01D54 /* VehicleprofileArmor+JSONMappableProtocol.swift */,
-				DA0BC4FE2952E63600E01D54 /* VehicleprofileArmorList+JSONMappableProtocol.swift */,
-				DA0BC4F02952E63500E01D54 /* VehicleprofileEngine+JSONMappableProtocol.swift */,
-				DA0BC4F92952E63600E01D54 /* VehicleprofileGun+JSONMappableProtocol.swift */,
-				DA0BC4FA2952E63600E01D54 /* VehicleprofileModule+JSONMappableProtocol.swift */,
-				DA0BC4F62952E63500E01D54 /* VehicleprofileRadio+JSONMappableProtocol.swift */,
-				DA0BC4F12952E63500E01D54 /* VehicleprofileSuspension+JSONMappableProtocol.swift */,
-				DA0BC4F82952E63500E01D54 /* VehicleprofileTurret+JSONMappableProtocol.swift */,
-				DA0BC4F52952E63500E01D54 /* Vehicles+JSONMappableProtocol.swift */,
-			);
-			path = mapping;
-			sourceTree = "<group>";
-		};
-		DA0BC4EE2952E19700E01D54 /* managedObjects */ = {
-			isa = PBXGroup;
-			children = (
-				DA0BC57D2952E73A00E01D54 /* extensions */,
-				DA0BC5312952E73000E01D54 /* autogenerated */,
-				DA0BC5562952E73000E01D54 /* WOT_iOS.xcdatamodeld */,
-			);
-			path = managedObjects;
 			sourceTree = "<group>";
 		};
 		DA0BC4EF2952E5BD00E01D54 /* response */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E55A295305CD00C60F31 /* managedObjects */,
+				DA81E596295305CD00C60F31 /* jsondecoding */,
+				DA81E585295305CD00C60F31 /* keypath */,
+				DA81E549295305CD00C60F31 /* mapping */,
 			);
 			path = response;
-			sourceTree = "<group>";
-		};
-		DA0BC5102952E67000E01D54 /* keypath */ = {
-			isa = PBXGroup;
-			children = (
-				DA0BC5172952E6BE00E01D54 /* Module+RequestableProtocol.swift */,
-				DA0BC5182952E6BE00E01D54 /* ModulesTree+RequestableProtocol.swift */,
-				DA0BC5202952E6BF00E01D54 /* Vehicleprofile+RequestableProtocol.swift */,
-				DA0BC5112952E6BD00E01D54 /* VehicleprofileAmmo+RequestableProtocol.swift */,
-				DA0BC51E2952E6BE00E01D54 /* VehicleprofileAmmoDamage+RequestableProtocol.swift */,
-				DA0BC51B2952E6BE00E01D54 /* VehicleprofileAmmoList+RequestableProtocol.swift */,
-				DA0BC5192952E6BE00E01D54 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift */,
-				DA0BC51D2952E6BE00E01D54 /* VehicleprofileArmor+RequestableProtocol.swift */,
-				DA0BC5142952E6BE00E01D54 /* VehicleprofileArmorList+RequestableProtocol.swift */,
-				DA0BC5132952E6BE00E01D54 /* VehicleprofileEngine+RequestableProtocol.swift */,
-				DA0BC51C2952E6BE00E01D54 /* VehicleprofileGun+RequestableProtocol.swift */,
-				DA0BC51F2952E6BF00E01D54 /* VehicleprofileModule+RequestableProtocol.swift */,
-				DA0BC51A2952E6BE00E01D54 /* VehicleprofileRadio+RequestableProtocol.swift */,
-				DA0BC5122952E6BE00E01D54 /* VehicleprofileSuspension+RequestableProtocol.swift */,
-				DA0BC5152952E6BE00E01D54 /* VehicleprofileTurret+RequestableProtocol.swift */,
-				DA0BC5162952E6BE00E01D54 /* Vehicles+RequestableProtocol.swift */,
-			);
-			path = keypath;
-			sourceTree = "<group>";
-		};
-		DA0BC5312952E73000E01D54 /* autogenerated */ = {
-			isa = PBXGroup;
-			children = (
-				DA0BC5322952E73000E01D54 /* ListSetting+CoreDataClass.swift */,
-				DA0BC5332952E73000E01D54 /* ListSetting+CoreDataProperties.swift */,
-				DA0BC5342952E73000E01D54 /* Module+CoreDataClass.swift */,
-				DA0BC5352952E73000E01D54 /* Module+CoreDataProperties.swift */,
-				DA0BC5362952E73000E01D54 /* ModulesTree+CoreDataClass.swift */,
-				DA0BC5372952E73000E01D54 /* ModulesTree+CoreDataProperties.swift */,
-				DA0BC5382952E73000E01D54 /* UserSession+CoreDataClass.swift */,
-				DA0BC5392952E73000E01D54 /* UserSession+CoreDataProperties.swift */,
-				DA0BC53A2952E73000E01D54 /* Vehicleprofile+CoreDataClass.swift */,
-				DA0BC53B2952E73000E01D54 /* Vehicleprofile+CoreDataProperties.swift */,
-				DA0BC53C2952E73000E01D54 /* VehicleprofileAmmo+CoreDataClass.swift */,
-				DA0BC53D2952E73000E01D54 /* VehicleprofileAmmo+CoreDataProperties.swift */,
-				DA0BC53E2952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataClass.swift */,
-				DA0BC53F2952E73000E01D54 /* VehicleprofileAmmoList+CoreDataClass.swift */,
-				DA0BC5402952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataProperties.swift */,
-				DA0BC5412952E73000E01D54 /* VehicleprofileAmmoList+CoreDataProperties.swift */,
-				DA0BC5422952E73000E01D54 /* VehicleprofileArmor+CoreDataClass.swift */,
-				DA0BC5432952E73000E01D54 /* VehicleprofileArmor+CoreDataProperties.swift */,
-				DA0BC5442952E73000E01D54 /* VehicleprofileArmorList+CoreDataClass.swift */,
-				DA0BC5452952E73000E01D54 /* VehicleprofileEngine+CoreDataClass.swift */,
-				DA0BC5462952E73000E01D54 /* VehicleprofileEngine+CoreDataProperties.swift */,
-				DA0BC5472952E73000E01D54 /* VehicleprofileGun+CoreDataClass.swift */,
-				DA0BC5482952E73000E01D54 /* VehicleprofileModule+CoreDataClass.swift */,
-				DA0BC5492952E73000E01D54 /* VehicleprofileModule+CoreDataProperties.swift */,
-				DA0BC54A2952E73000E01D54 /* VehicleprofileRadio+CoreDataClass.swift */,
-				DA0BC54B2952E73000E01D54 /* VehicleprofileRadio+CoreDataProperties.swift */,
-				DA0BC54C2952E73000E01D54 /* VehicleprofileSuspension+CoreDataClass.swift */,
-				DA0BC54D2952E73000E01D54 /* VehicleprofileTurret+CoreDataClass.swift */,
-				DA0BC54E2952E73000E01D54 /* VehicleprofileGun+CoreDataProperties.swift */,
-				DA0BC54F2952E73000E01D54 /* Vehicles+CoreDataClass.swift */,
-				DA0BC5502952E73000E01D54 /* Vehicles+CoreDataProperties.swift */,
-				DA0BC5512952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataClass.swift */,
-				DA0BC5522952E73000E01D54 /* VehicleprofileSuspension+CoreDataProperties.swift */,
-				DA0BC5532952E73000E01D54 /* VehicleprofileTurret+CoreDataProperties.swift */,
-				DA0BC5542952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift */,
-				DA0BC5552952E73000E01D54 /* VehicleprofileArmorList+CoreDataProperties.swift */,
-			);
-			path = autogenerated;
-			sourceTree = "<group>";
-		};
-		DA0BC57D2952E73A00E01D54 /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				DA0BC57F2952E75C00E01D54 /* Module+Customization.swift */,
-				DA0BC57E2952E75C00E01D54 /* ModulesTree+Customization.swift */,
-			);
-			path = extensions;
 			sourceTree = "<group>";
 		};
 		DA0BC59A2952E7DE00E01D54 /* DataStore */ = {
@@ -462,6 +420,226 @@
 			path = DataStore;
 			sourceTree = "<group>";
 		};
+		DA81E549295305CD00C60F31 /* mapping */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E54A295305CD00C60F31 /* Vehicleprofile+JSONMappableProtocol.swift */,
+				DA81E54B295305CD00C60F31 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift */,
+				DA81E54C295305CD00C60F31 /* VehicleprofileAmmoList+JSONMappableProtocol.swift */,
+				DA81E54D295305CD00C60F31 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift */,
+				DA81E54E295305CD00C60F31 /* VehicleprofileArmorList+JSONMappableProtocol.swift */,
+				DA81E54F295305CD00C60F31 /* VehicleprofileGun+JSONMappableProtocol.swift */,
+				DA81E550295305CD00C60F31 /* VehicleprofileRadio+JSONMappableProtocol.swift */,
+				DA81E551295305CD00C60F31 /* VehicleprofileSuspension+JSONMappableProtocol.swift */,
+				DA81E552295305CD00C60F31 /* VehicleprofileTurret+JSONMappableProtocol.swift */,
+				DA81E553295305CD00C60F31 /* Vehicles+JSONMappableProtocol.swift */,
+				DA81E554295305CD00C60F31 /* ModulesTree+JSONMappableProtocol.swift */,
+				DA81E555295305CD00C60F31 /* Module+JSONMappableProtocol.swift */,
+				DA81E556295305CD00C60F31 /* VehicleprofileAmmo+JSONMappableProtocol.swift */,
+				DA81E557295305CD00C60F31 /* VehicleprofileArmor+JSONMappableProtocol.swift */,
+				DA81E558295305CD00C60F31 /* VehicleprofileEngine+JSONMappableProtocol.swift */,
+				DA81E559295305CD00C60F31 /* VehicleprofileModule+JSONMappableProtocol.swift */,
+			);
+			path = mapping;
+			sourceTree = "<group>";
+		};
+		DA81E55A295305CD00C60F31 /* managedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E55B295305CD00C60F31 /* WOT_iOS.xcdatamodeld */,
+				DA81E55D295305CD00C60F31 /* autogenerated */,
+				DA81E582295305CD00C60F31 /* extensions */,
+			);
+			path = managedObjects;
+			sourceTree = "<group>";
+		};
+		DA81E55D295305CD00C60F31 /* autogenerated */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E55E295305CD00C60F31 /* ListSetting+CoreDataClass.swift */,
+				DA81E55F295305CD00C60F31 /* ListSetting+CoreDataProperties.swift */,
+				DA81E560295305CD00C60F31 /* Module+CoreDataClass.swift */,
+				DA81E561295305CD00C60F31 /* Module+CoreDataProperties.swift */,
+				DA81E562295305CD00C60F31 /* ModulesTree+CoreDataClass.swift */,
+				DA81E563295305CD00C60F31 /* ModulesTree+CoreDataProperties.swift */,
+				DA81E564295305CD00C60F31 /* UserSession+CoreDataClass.swift */,
+				DA81E565295305CD00C60F31 /* UserSession+CoreDataProperties.swift */,
+				DA81E566295305CD00C60F31 /* Vehicleprofile+CoreDataClass.swift */,
+				DA81E567295305CD00C60F31 /* Vehicleprofile+CoreDataProperties.swift */,
+				DA81E568295305CD00C60F31 /* VehicleprofileAmmo+CoreDataClass.swift */,
+				DA81E569295305CD00C60F31 /* VehicleprofileAmmo+CoreDataProperties.swift */,
+				DA81E56A295305CD00C60F31 /* VehicleprofileAmmoDamage+CoreDataClass.swift */,
+				DA81E56B295305CD00C60F31 /* VehicleprofileAmmoDamage+CoreDataProperties.swift */,
+				DA81E56C295305CD00C60F31 /* VehicleprofileAmmoList+CoreDataClass.swift */,
+				DA81E56D295305CD00C60F31 /* VehicleprofileAmmoList+CoreDataProperties.swift */,
+				DA81E56E295305CD00C60F31 /* VehicleprofileAmmoPenetration+CoreDataClass.swift */,
+				DA81E56F295305CD00C60F31 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift */,
+				DA81E570295305CD00C60F31 /* VehicleprofileArmor+CoreDataClass.swift */,
+				DA81E571295305CD00C60F31 /* VehicleprofileArmor+CoreDataProperties.swift */,
+				DA81E572295305CD00C60F31 /* VehicleprofileArmorList+CoreDataClass.swift */,
+				DA81E573295305CD00C60F31 /* VehicleprofileArmorList+CoreDataProperties.swift */,
+				DA81E574295305CD00C60F31 /* VehicleprofileEngine+CoreDataClass.swift */,
+				DA81E575295305CD00C60F31 /* VehicleprofileEngine+CoreDataProperties.swift */,
+				DA81E576295305CD00C60F31 /* VehicleprofileGun+CoreDataClass.swift */,
+				DA81E577295305CD00C60F31 /* VehicleprofileGun+CoreDataProperties.swift */,
+				DA81E578295305CD00C60F31 /* VehicleprofileModule+CoreDataClass.swift */,
+				DA81E579295305CD00C60F31 /* VehicleprofileModule+CoreDataProperties.swift */,
+				DA81E57A295305CD00C60F31 /* VehicleprofileRadio+CoreDataClass.swift */,
+				DA81E57B295305CD00C60F31 /* VehicleprofileRadio+CoreDataProperties.swift */,
+				DA81E57C295305CD00C60F31 /* VehicleprofileSuspension+CoreDataClass.swift */,
+				DA81E57D295305CD00C60F31 /* VehicleprofileSuspension+CoreDataProperties.swift */,
+				DA81E57E295305CD00C60F31 /* VehicleprofileTurret+CoreDataClass.swift */,
+				DA81E57F295305CD00C60F31 /* VehicleprofileTurret+CoreDataProperties.swift */,
+				DA81E580295305CD00C60F31 /* Vehicles+CoreDataClass.swift */,
+				DA81E581295305CD00C60F31 /* Vehicles+CoreDataProperties.swift */,
+			);
+			path = autogenerated;
+			sourceTree = "<group>";
+		};
+		DA81E582295305CD00C60F31 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E583295305CD00C60F31 /* Module+Customization.swift */,
+				DA81E584295305CD00C60F31 /* ModulesTree+Customization.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		DA81E585295305CD00C60F31 /* keypath */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E586295305CD00C60F31 /* Module+RequestableProtocol.swift */,
+				DA81E587295305CD00C60F31 /* ModulesTree+RequestableProtocol.swift */,
+				DA81E588295305CD00C60F31 /* Vehicleprofile+RequestableProtocol.swift */,
+				DA81E589295305CD00C60F31 /* VehicleprofileAmmo+RequestableProtocol.swift */,
+				DA81E58A295305CD00C60F31 /* VehicleprofileAmmoDamage+RequestableProtocol.swift */,
+				DA81E58B295305CD00C60F31 /* VehicleprofileAmmoList+RequestableProtocol.swift */,
+				DA81E58C295305CD00C60F31 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift */,
+				DA81E58D295305CD00C60F31 /* VehicleprofileArmor+RequestableProtocol.swift */,
+				DA81E58E295305CD00C60F31 /* VehicleprofileArmorList+RequestableProtocol.swift */,
+				DA81E58F295305CD00C60F31 /* VehicleprofileEngine+RequestableProtocol.swift */,
+				DA81E590295305CD00C60F31 /* VehicleprofileGun+RequestableProtocol.swift */,
+				DA81E591295305CD00C60F31 /* VehicleprofileModule+RequestableProtocol.swift */,
+				DA81E592295305CD00C60F31 /* VehicleprofileRadio+RequestableProtocol.swift */,
+				DA81E593295305CD00C60F31 /* VehicleprofileSuspension+RequestableProtocol.swift */,
+				DA81E594295305CD00C60F31 /* VehicleprofileTurret+RequestableProtocol.swift */,
+				DA81E595295305CD00C60F31 /* Vehicles+RequestableProtocol.swift */,
+			);
+			path = keypath;
+			sourceTree = "<group>";
+		};
+		DA81E596295305CD00C60F31 /* jsondecoding */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E597295305CD00C60F31 /* VehicleprofileAmmoDamage+JSONDecodingProtocol.swift */,
+				DA81E598295305CD00C60F31 /* UserSession+JSONDecodingProtocol.swift */,
+				DA81E599295305CD00C60F31 /* VehicleprofileGun+JSONDecodingProtocol.swift */,
+				DA81E59A295305CD00C60F31 /* ListSetting+JSONDecodingProtocol.swift */,
+				DA81E59B295305CE00C60F31 /* Vehicleprofile+JSONDecodingProtocol.swift */,
+				DA81E59C295305CE00C60F31 /* ModulesTree+JSONDecodingProtocol.swift */,
+				DA81E59D295305CE00C60F31 /* Vehicles+JSONDecodingProtocol.swift */,
+				DA81E59E295305CE00C60F31 /* VehicleprofileSuspension+JSONDecodingProtocol.swift */,
+				DA81E59F295305CE00C60F31 /* Module+JSONDecodingProtocol.swift */,
+				DA81E5A0295305CE00C60F31 /* VehicleprofileAmmoList+JSONDecodingProtocol.swift */,
+				DA81E5A1295305CE00C60F31 /* VehicleprofileAmmo+JSONDecodingProtocol.swift */,
+				DA81E5A2295305CE00C60F31 /* VehicleprofileArmor+JSONDecodingProtocol.swift */,
+				DA81E5A3295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONDecodingProtocol.swift */,
+				DA81E5A4295305CE00C60F31 /* VehicleprofileRadio+JSONDecodingProtocol.swift */,
+				DA81E5A5295305CE00C60F31 /* VehicleprofileArmorList+JSONDecodingProtocol.swift */,
+				DA81E5A6295305CE00C60F31 /* VehicleprofileTurret+JSONDecodingProtocol.swift */,
+				DA81E5A7295305CE00C60F31 /* VehicleprofileModule+JSONDecodingProtocol.swift */,
+				DA81E5A8295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift */,
+			);
+			path = jsondecoding;
+			sourceTree = "<group>";
+		};
+		DA81E602295306F200C60F31 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E6D2295307F100C60F31 /* json */,
+				DA81E6032953070C00C60F31 /* Images.xcassets */,
+				DA81E6CF2953078F00C60F31 /* Localizable.strings */,
+				DA81E6D1295307AC00C60F31 /* Strings.h */,
+				DA81E6F029530A3800C60F31 /* strings.swift */,
+				DA81E7C42953246900C60F31 /* WOTApi-Bridging-Header.h */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		DA81E6D2295307F100C60F31 /* json */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E6D3295307F100C60F31 /* WOT */,
+			);
+			path = json;
+			sourceTree = "<group>";
+		};
+		DA81E6D3295307F100C60F31 /* WOT */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E6D4295307F100C60F31 /* chassis.json */,
+				DA81E6D6295307F100C60F31 /* tankchassis.json */,
+				DA81E6D8295307F100C60F31 /* tankengines.json */,
+				DA81E6DA295307F100C60F31 /* tankguns.json */,
+				DA81E6DC295307F100C60F31 /* tankradios.json */,
+				DA81E6DE295307F100C60F31 /* tanks.json */,
+				DA81E6E0295307F100C60F31 /* tankturrets.json */,
+				DA81E6E2295307F100C60F31 /* vehicleprofile.json */,
+				DA81E6E4295307F100C60F31 /* vehicles.json */,
+			);
+			path = WOT;
+			sourceTree = "<group>";
+		};
+		DA81E7B02953173100C60F31 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7D329532D9B00C60F31 /* uiImage */,
+				DA81E7B12953175000C60F31 /* tree */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		DA81E7B12953175000C60F31 /* tree */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7B32953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift */,
+			);
+			path = tree;
+			sourceTree = "<group>";
+		};
+		DA81E7BA2953232A00C60F31 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				DA0BC58C2952E7AF00E01D54 /* LoginHttpRequest.swift */,
+				DA0BC5832952E7AE00E01D54 /* LogoutHttpRequest.swift */,
+				DA0BC5822952E7AE00E01D54 /* ModulesHttpRequest.swift */,
+				DA0BC58A2952E7AE00E01D54 /* ModulesTreeHttpRequest.swift */,
+				DA0BC5882952E7AE00E01D54 /* VehicleprofileSuspensionHttpRequest.swift */,
+				DA0BC5872952E7AE00E01D54 /* VehicleprofileEnginesHttpRequest.swift */,
+				DA0BC58B2952E7AF00E01D54 /* VehicleprofileGunHttpRequest.swift */,
+				DA0BC5852952E7AE00E01D54 /* VehicleprofileRadiosHttpRequest.swift */,
+				DA0BC5862952E7AE00E01D54 /* VehicleprofileTurretsHttpRequest.swift */,
+				DA0BC5892952E7AE00E01D54 /* VehiclesHttpRequest.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		DA81E7BD295323C500C60F31 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7C0295323F700C60F31 /* SessionManager.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		DA81E7D329532D9B00C60F31 /* uiImage */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7D429532DC600C60F31 /* UIImage+TankType.swift */,
+			);
+			path = uiImage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -486,6 +664,7 @@
 				DA0BC4C22952E0A100E01D54 /* Frameworks */,
 				DA0BC4C32952E0A100E01D54 /* Resources */,
 				DA81E4D22952EBDF00C60F31 /* Embed Frameworks */,
+				DA81E6EF2953086300C60F31 /* SwiftGen */,
 			);
 			buildRules = (
 			);
@@ -556,6 +735,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA81E6ED295307F100C60F31 /* vehicleprofile.json in Resources */,
+				DA81E6E8295307F100C60F31 /* tankengines.json in Resources */,
+				DA81E6D02953078F00C60F31 /* Localizable.strings in Resources */,
+				DA81E6E6295307F100C60F31 /* chassis.json in Resources */,
+				DA81E6042953070C00C60F31 /* Images.xcassets in Resources */,
+				DA81E6EB295307F100C60F31 /* tanks.json in Resources */,
+				DA81E6EC295307F100C60F31 /* tankturrets.json in Resources */,
+				DA81E6E9295307F100C60F31 /* tankguns.json in Resources */,
+				DA81E6EE295307F100C60F31 /* vehicles.json in Resources */,
+				DA81E6EA295307F100C60F31 /* tankradios.json in Resources */,
+				DA81E6E7295307F100C60F31 /* tankchassis.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,96 +758,140 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DA81E6EF2953086300C60F31 /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"/Volumes/SHARED/projects/WOT/WOT-iOS/Pods/SwiftGen/bin/swiftgen\" strings -p \"/Volumes/SHARED/projects/WOT/WOT-iOS/Pods/SwiftGen/templates/strings/flat-swift3.stencil\" --output \"/Volumes/SHARED/projects/WOT/WOT-iOS/WOTApi/resources/strings.swift\" \"/Volumes/SHARED/projects/WOT/WOT-iOS/WOTApi/resources/Localizable.strings\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DA0BC4C12952E0A100E01D54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA0BC5782952E73000E01D54 /* VehicleprofileSuspension+CoreDataProperties.swift in Sources */,
-				DA0BC5702952E73000E01D54 /* VehicleprofileRadio+CoreDataClass.swift in Sources */,
-				DA0BC57C2952E73000E01D54 /* WOT_iOS.xcdatamodeld in Sources */,
-				DA0BC5292952E6BF00E01D54 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift in Sources */,
-				DA0BC5052952E63600E01D54 /* Vehicles+JSONMappableProtocol.swift in Sources */,
-				DA0BC56F2952E73000E01D54 /* VehicleprofileModule+CoreDataProperties.swift in Sources */,
-				DA0BC56B2952E73000E01D54 /* VehicleprofileEngine+CoreDataClass.swift in Sources */,
-				DA0BC56E2952E73000E01D54 /* VehicleprofileModule+CoreDataClass.swift in Sources */,
-				DA0BC5742952E73000E01D54 /* VehicleprofileGun+CoreDataProperties.swift in Sources */,
-				DA0BC5732952E73000E01D54 /* VehicleprofileTurret+CoreDataClass.swift in Sources */,
-				DA0BC5212952E6BF00E01D54 /* VehicleprofileAmmo+RequestableProtocol.swift in Sources */,
-				DA0BC50A2952E63600E01D54 /* VehicleprofileModule+JSONMappableProtocol.swift in Sources */,
-				DA0BC5712952E73000E01D54 /* VehicleprofileRadio+CoreDataProperties.swift in Sources */,
-				DA0BC5282952E6BF00E01D54 /* ModulesTree+RequestableProtocol.swift in Sources */,
+				DA81E5D4295305CE00C60F31 /* VehicleprofileModule+CoreDataClass.swift in Sources */,
+				DA81E5D0295305CE00C60F31 /* VehicleprofileEngine+CoreDataClass.swift in Sources */,
+				DA81E5B8295305CE00C60F31 /* VehicleprofileModule+JSONMappableProtocol.swift in Sources */,
 				DA0BC59C2952E81700E01D54 /* WOTDataStore.swift in Sources */,
-				DA0BC52F2952E6BF00E01D54 /* VehicleprofileModule+RequestableProtocol.swift in Sources */,
+				DA81E5AD295305CE00C60F31 /* VehicleprofileArmorList+JSONMappableProtocol.swift in Sources */,
+				DA81E5B5295305CE00C60F31 /* VehicleprofileAmmo+JSONMappableProtocol.swift in Sources */,
+				DA81E5B1295305CE00C60F31 /* VehicleprofileTurret+JSONMappableProtocol.swift in Sources */,
+				DA81E5E7295305CE00C60F31 /* VehicleprofileArmor+RequestableProtocol.swift in Sources */,
+				DA81E5F9295305CE00C60F31 /* VehicleprofileAmmoList+JSONDecodingProtocol.swift in Sources */,
+				DA81E5FC295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONDecodingProtocol.swift in Sources */,
+				DA81E6F129530A3800C60F31 /* strings.swift in Sources */,
+				DA81E5AA295305CE00C60F31 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift in Sources */,
+				DA81E5D2295305CE00C60F31 /* VehicleprofileGun+CoreDataClass.swift in Sources */,
+				DA81E5EE295305CE00C60F31 /* VehicleprofileTurret+RequestableProtocol.swift in Sources */,
+				DA81E5C4295305CE00C60F31 /* VehicleprofileAmmo+CoreDataClass.swift in Sources */,
+				DA81E5A9295305CE00C60F31 /* Vehicleprofile+JSONMappableProtocol.swift in Sources */,
+				DA81E5CE295305CE00C60F31 /* VehicleprofileArmorList+CoreDataClass.swift in Sources */,
 				DA0BC58E2952E7AF00E01D54 /* ModulesHttpRequest.swift in Sources */,
-				DA0BC56D2952E73000E01D54 /* VehicleprofileGun+CoreDataClass.swift in Sources */,
-				DA0BC52D2952E6BF00E01D54 /* VehicleprofileArmor+RequestableProtocol.swift in Sources */,
-				DA0BC5232952E6BF00E01D54 /* VehicleprofileEngine+RequestableProtocol.swift in Sources */,
+				DA81E5ED295305CE00C60F31 /* VehicleprofileSuspension+RequestableProtocol.swift in Sources */,
+				DA81E5AC295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift in Sources */,
 				DA0BC5962952E7AF00E01D54 /* ModulesTreeHttpRequest.swift in Sources */,
-				DA0BC5592952E73000E01D54 /* ListSetting+CoreDataProperties.swift in Sources */,
-				DA0BC52B2952E6BF00E01D54 /* VehicleprofileAmmoList+RequestableProtocol.swift in Sources */,
-				DA0BC52C2952E6BF00E01D54 /* VehicleprofileGun+RequestableProtocol.swift in Sources */,
-				DA0BC52E2952E6BF00E01D54 /* VehicleprofileAmmoDamage+RequestableProtocol.swift in Sources */,
-				DA0BC5672952E73000E01D54 /* VehicleprofileAmmoList+CoreDataProperties.swift in Sources */,
-				DA0BC5602952E73000E01D54 /* Vehicleprofile+CoreDataClass.swift in Sources */,
-				DA0BC52A2952E6BF00E01D54 /* VehicleprofileRadio+RequestableProtocol.swift in Sources */,
+				DA81E5F7295305CE00C60F31 /* VehicleprofileSuspension+JSONDecodingProtocol.swift in Sources */,
+				DA81E5DF295305CE00C60F31 /* ModulesTree+Customization.swift in Sources */,
+				DA81E5B9295305CE00C60F31 /* WOT_iOS.xcdatamodeld in Sources */,
 				DA0BC5A22952E8C300E01D54 /* WOTDataAPI.swift in Sources */,
-				DA0BC50E2952E63600E01D54 /* VehicleprofileArmorList+JSONMappableProtocol.swift in Sources */,
+				DA81E5FA295305CE00C60F31 /* VehicleprofileAmmo+JSONDecodingProtocol.swift in Sources */,
+				DA81E5BF295305CE00C60F31 /* ModulesTree+CoreDataProperties.swift in Sources */,
+				DA81E5F2295305CE00C60F31 /* VehicleprofileGun+JSONDecodingProtocol.swift in Sources */,
+				DA81E5E9295305CE00C60F31 /* VehicleprofileEngine+RequestableProtocol.swift in Sources */,
+				DA81E5FD295305CE00C60F31 /* VehicleprofileRadio+JSONDecodingProtocol.swift in Sources */,
+				DA81E5E4295305CE00C60F31 /* VehicleprofileAmmoDamage+RequestableProtocol.swift in Sources */,
+				DA81E5CD295305CE00C60F31 /* VehicleprofileArmor+CoreDataProperties.swift in Sources */,
 				DA0BC5952952E7AF00E01D54 /* VehiclesHttpRequest.swift in Sources */,
+				DA81E5F8295305CE00C60F31 /* Module+JSONDecodingProtocol.swift in Sources */,
+				DA81E5BB295305CE00C60F31 /* ListSetting+CoreDataProperties.swift in Sources */,
+				DA81E5E8295305CE00C60F31 /* VehicleprofileArmorList+RequestableProtocol.swift in Sources */,
+				DA81E5AB295305CE00C60F31 /* VehicleprofileAmmoList+JSONMappableProtocol.swift in Sources */,
+				DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */,
+				DA81E601295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift in Sources */,
+				DA81E7C3295323F700C60F31 /* SessionManager.swift in Sources */,
+				DA81E5C1295305CE00C60F31 /* UserSession+CoreDataProperties.swift in Sources */,
 				DA0BC5912952E7AF00E01D54 /* VehicleprofileRadiosHttpRequest.swift in Sources */,
-				DA0BC5022952E63600E01D54 /* VehicleprofileAmmoList+JSONMappableProtocol.swift in Sources */,
-				DA0BC55B2952E73000E01D54 /* Module+CoreDataProperties.swift in Sources */,
-				DA0BC5302952E6BF00E01D54 /* Vehicleprofile+RequestableProtocol.swift in Sources */,
-				DA0BC5082952E63600E01D54 /* VehicleprofileTurret+JSONMappableProtocol.swift in Sources */,
-				DA0BC5272952E6BF00E01D54 /* Module+RequestableProtocol.swift in Sources */,
+				DA81E5C3295305CE00C60F31 /* Vehicleprofile+CoreDataProperties.swift in Sources */,
+				DA81E5CA295305CE00C60F31 /* VehicleprofileAmmoPenetration+CoreDataClass.swift in Sources */,
 				DA0BC58F2952E7AF00E01D54 /* LogoutHttpRequest.swift in Sources */,
-				DA0BC56C2952E73000E01D54 /* VehicleprofileEngine+CoreDataProperties.swift in Sources */,
-				DA0BC5632952E73000E01D54 /* VehicleprofileAmmo+CoreDataProperties.swift in Sources */,
-				DA0BC5042952E63600E01D54 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift in Sources */,
+				DA81E5C6295305CE00C60F31 /* VehicleprofileAmmoDamage+CoreDataClass.swift in Sources */,
+				DA81E5DB295305CE00C60F31 /* VehicleprofileTurret+CoreDataProperties.swift in Sources */,
+				DA81E5CF295305CE00C60F31 /* VehicleprofileArmorList+CoreDataProperties.swift in Sources */,
+				DA81E5EF295305CE00C60F31 /* Vehicles+RequestableProtocol.swift in Sources */,
+				DA81E5E6295305CE00C60F31 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift in Sources */,
+				DA81E5DC295305CE00C60F31 /* Vehicles+CoreDataClass.swift in Sources */,
+				DA81E5BD295305CE00C60F31 /* Module+CoreDataProperties.swift in Sources */,
+				DA81E5FB295305CE00C60F31 /* VehicleprofileArmor+JSONDecodingProtocol.swift in Sources */,
+				DA81E5DA295305CE00C60F31 /* VehicleprofileTurret+CoreDataClass.swift in Sources */,
+				DA81E5C5295305CE00C60F31 /* VehicleprofileAmmo+CoreDataProperties.swift in Sources */,
+				DA81E5C0295305CE00C60F31 /* UserSession+CoreDataClass.swift in Sources */,
+				DA81E5F6295305CE00C60F31 /* Vehicles+JSONDecodingProtocol.swift in Sources */,
 				DA0BC5982952E7AF00E01D54 /* LoginHttpRequest.swift in Sources */,
-				DA0BC5262952E6BF00E01D54 /* Vehicles+RequestableProtocol.swift in Sources */,
-				DA0BC5812952E75C00E01D54 /* Module+Customization.swift in Sources */,
-				DA0BC5682952E73000E01D54 /* VehicleprofileArmor+CoreDataClass.swift in Sources */,
+				DA81E5B0295305CE00C60F31 /* VehicleprofileSuspension+JSONMappableProtocol.swift in Sources */,
+				DA81E5FF295305CE00C60F31 /* VehicleprofileTurret+JSONDecodingProtocol.swift in Sources */,
+				DA81E5EA295305CE00C60F31 /* VehicleprofileGun+RequestableProtocol.swift in Sources */,
+				DA81E5CC295305CE00C60F31 /* VehicleprofileArmor+CoreDataClass.swift in Sources */,
+				DA81E5C9295305CE00C60F31 /* VehicleprofileAmmoList+CoreDataProperties.swift in Sources */,
+				DA81E5E3295305CE00C60F31 /* VehicleprofileAmmo+RequestableProtocol.swift in Sources */,
+				DA81E5E5295305CE00C60F31 /* VehicleprofileAmmoList+RequestableProtocol.swift in Sources */,
 				DA0BC59F2952E88800E01D54 /* WOTTankTemplates.swift in Sources */,
-				DA0BC5642952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataClass.swift in Sources */,
-				DA0BC5002952E63600E01D54 /* VehicleprofileEngine+JSONMappableProtocol.swift in Sources */,
-				DA0BC56A2952E73000E01D54 /* VehicleprofileArmorList+CoreDataClass.swift in Sources */,
-				DA0BC5072952E63600E01D54 /* VehicleprofileAmmo+JSONMappableProtocol.swift in Sources */,
-				DA0BC5692952E73000E01D54 /* VehicleprofileArmor+CoreDataProperties.swift in Sources */,
+				DA81E5C8295305CE00C60F31 /* VehicleprofileAmmoList+CoreDataClass.swift in Sources */,
+				DA81E7BC2953235D00C60F31 /* WOTHostConfiguration.swift in Sources */,
+				DA81E600295305CE00C60F31 /* VehicleprofileModule+JSONDecodingProtocol.swift in Sources */,
+				DA81E5D5295305CE00C60F31 /* VehicleprofileModule+CoreDataProperties.swift in Sources */,
+				DA81E5F0295305CE00C60F31 /* VehicleprofileAmmoDamage+JSONDecodingProtocol.swift in Sources */,
 				DA81E4DB2952FA0D00C60F31 /* WOTRequestRegistrator.swift in Sources */,
 				DA0BC5932952E7AF00E01D54 /* VehicleprofileEnginesHttpRequest.swift in Sources */,
+				DA81E5B2295305CE00C60F31 /* Vehicles+JSONMappableProtocol.swift in Sources */,
+				DA81E5EC295305CE00C60F31 /* VehicleprofileRadio+RequestableProtocol.swift in Sources */,
+				DA81E5B4295305CE00C60F31 /* Module+JSONMappableProtocol.swift in Sources */,
+				DA81E5D3295305CE00C60F31 /* VehicleprofileGun+CoreDataProperties.swift in Sources */,
 				DA0BC5922952E7AF00E01D54 /* VehicleprofileTurretsHttpRequest.swift in Sources */,
-				DA0BC55D2952E73000E01D54 /* ModulesTree+CoreDataProperties.swift in Sources */,
-				DA0BC5622952E73000E01D54 /* VehicleprofileAmmo+CoreDataClass.swift in Sources */,
-				DA0BC5722952E73000E01D54 /* VehicleprofileSuspension+CoreDataClass.swift in Sources */,
-				DA0BC5652952E73000E01D54 /* VehicleprofileAmmoList+CoreDataClass.swift in Sources */,
-				DA0BC55E2952E73000E01D54 /* UserSession+CoreDataClass.swift in Sources */,
-				DA0BC5252952E6BF00E01D54 /* VehicleprofileTurret+RequestableProtocol.swift in Sources */,
-				DA0BC55A2952E73000E01D54 /* Module+CoreDataClass.swift in Sources */,
-				DA0BC5222952E6BF00E01D54 /* VehicleprofileSuspension+RequestableProtocol.swift in Sources */,
-				DA0BC5012952E63600E01D54 /* VehicleprofileSuspension+JSONMappableProtocol.swift in Sources */,
-				DA0BC5612952E73000E01D54 /* Vehicleprofile+CoreDataProperties.swift in Sources */,
-				DA0BC5802952E75C00E01D54 /* ModulesTree+Customization.swift in Sources */,
-				DA0BC5062952E63600E01D54 /* VehicleprofileRadio+JSONMappableProtocol.swift in Sources */,
-				DA0BC50B2952E63600E01D54 /* Module+JSONMappableProtocol.swift in Sources */,
-				DA0BC5792952E73000E01D54 /* VehicleprofileTurret+CoreDataProperties.swift in Sources */,
-				DA0BC5582952E73000E01D54 /* ListSetting+CoreDataClass.swift in Sources */,
+				DA81E5EB295305CE00C60F31 /* VehicleprofileModule+RequestableProtocol.swift in Sources */,
+				DA81E5D8295305CE00C60F31 /* VehicleprofileSuspension+CoreDataClass.swift in Sources */,
+				DA81E5BA295305CE00C60F31 /* ListSetting+CoreDataClass.swift in Sources */,
+				DA81E5BE295305CE00C60F31 /* ModulesTree+CoreDataClass.swift in Sources */,
+				DA81E5FE295305CE00C60F31 /* VehicleprofileArmorList+JSONDecodingProtocol.swift in Sources */,
 				DA0BC5972952E7AF00E01D54 /* VehicleprofileGunHttpRequest.swift in Sources */,
+				DA81E5D7295305CE00C60F31 /* VehicleprofileRadio+CoreDataProperties.swift in Sources */,
+				DA81E5E1295305CE00C60F31 /* ModulesTree+RequestableProtocol.swift in Sources */,
+				DA81E5B3295305CE00C60F31 /* ModulesTree+JSONMappableProtocol.swift in Sources */,
+				DA81E5B6295305CE00C60F31 /* VehicleprofileArmor+JSONMappableProtocol.swift in Sources */,
+				DA81E5C2295305CE00C60F31 /* Vehicleprofile+CoreDataClass.swift in Sources */,
+				DA81E5BC295305CE00C60F31 /* Module+CoreDataClass.swift in Sources */,
 				DA0BC5942952E7AF00E01D54 /* VehicleprofileSuspensionHttpRequest.swift in Sources */,
-				DA0BC5772952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataClass.swift in Sources */,
-				DA0BC5752952E73000E01D54 /* Vehicles+CoreDataClass.swift in Sources */,
-				DA0BC50D2952E63600E01D54 /* VehicleprofileArmor+JSONMappableProtocol.swift in Sources */,
-				DA0BC55C2952E73000E01D54 /* ModulesTree+CoreDataClass.swift in Sources */,
-				DA0BC5032952E63600E01D54 /* ModulesTree+JSONMappableProtocol.swift in Sources */,
-				DA0BC5242952E6BF00E01D54 /* VehicleprofileArmorList+RequestableProtocol.swift in Sources */,
-				DA0BC5092952E63600E01D54 /* VehicleprofileGun+JSONMappableProtocol.swift in Sources */,
-				DA0BC55F2952E73000E01D54 /* UserSession+CoreDataProperties.swift in Sources */,
-				DA0BC57A2952E73000E01D54 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift in Sources */,
-				DA0BC5662952E73000E01D54 /* VehicleprofileAmmoDamage+CoreDataProperties.swift in Sources */,
-				DA0BC57B2952E73000E01D54 /* VehicleprofileArmorList+CoreDataProperties.swift in Sources */,
-				DA0BC50F2952E63600E01D54 /* Vehicleprofile+JSONMappableProtocol.swift in Sources */,
-				DA0BC5762952E73000E01D54 /* Vehicles+CoreDataProperties.swift in Sources */,
-				DA0BC50C2952E63600E01D54 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift in Sources */,
+				DA81E5F3295305CE00C60F31 /* ListSetting+JSONDecodingProtocol.swift in Sources */,
+				DA81E5DD295305CE00C60F31 /* Vehicles+CoreDataProperties.swift in Sources */,
+				DA81E5D9295305CE00C60F31 /* VehicleprofileSuspension+CoreDataProperties.swift in Sources */,
+				DA81E5F1295305CE00C60F31 /* UserSession+JSONDecodingProtocol.swift in Sources */,
+				DA81E5F4295305CE00C60F31 /* Vehicleprofile+JSONDecodingProtocol.swift in Sources */,
+				DA81E5F5295305CE00C60F31 /* ModulesTree+JSONDecodingProtocol.swift in Sources */,
+				DA81E5AF295305CE00C60F31 /* VehicleprofileRadio+JSONMappableProtocol.swift in Sources */,
+				DA81E5E0295305CE00C60F31 /* Module+RequestableProtocol.swift in Sources */,
+				DA81E5D6295305CE00C60F31 /* VehicleprofileRadio+CoreDataClass.swift in Sources */,
+				DA81E5AE295305CE00C60F31 /* VehicleprofileGun+JSONMappableProtocol.swift in Sources */,
+				DA81E5DE295305CE00C60F31 /* Module+Customization.swift in Sources */,
+				DA81E7B42953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift in Sources */,
+				DA81E5C7295305CE00C60F31 /* VehicleprofileAmmoDamage+CoreDataProperties.swift in Sources */,
+				DA81E5B7295305CE00C60F31 /* VehicleprofileEngine+JSONMappableProtocol.swift in Sources */,
+				DA81E5D1295305CE00C60F31 /* VehicleprofileEngine+CoreDataProperties.swift in Sources */,
+				DA81E5E2295305CE00C60F31 /* Vehicleprofile+RequestableProtocol.swift in Sources */,
+				DA81E5CB295305CE00C60F31 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,6 +913,81 @@
 			targetProxy = DA0BC4D02952E0A200E01D54 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DA81E6D4295307F100C60F31 /* chassis.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6D5295307F100C60F31 /* en */,
+			);
+			name = chassis.json;
+			sourceTree = "<group>";
+		};
+		DA81E6D6295307F100C60F31 /* tankchassis.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6D7295307F100C60F31 /* en */,
+			);
+			name = tankchassis.json;
+			sourceTree = "<group>";
+		};
+		DA81E6D8295307F100C60F31 /* tankengines.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6D9295307F100C60F31 /* en */,
+			);
+			name = tankengines.json;
+			sourceTree = "<group>";
+		};
+		DA81E6DA295307F100C60F31 /* tankguns.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6DB295307F100C60F31 /* en */,
+			);
+			name = tankguns.json;
+			sourceTree = "<group>";
+		};
+		DA81E6DC295307F100C60F31 /* tankradios.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6DD295307F100C60F31 /* en */,
+			);
+			name = tankradios.json;
+			sourceTree = "<group>";
+		};
+		DA81E6DE295307F100C60F31 /* tanks.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6DF295307F100C60F31 /* en */,
+			);
+			name = tanks.json;
+			sourceTree = "<group>";
+		};
+		DA81E6E0295307F100C60F31 /* tankturrets.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6E1295307F100C60F31 /* en */,
+			);
+			name = tankturrets.json;
+			sourceTree = "<group>";
+		};
+		DA81E6E2295307F100C60F31 /* vehicleprofile.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6E3295307F100C60F31 /* en */,
+			);
+			name = vehicleprofile.json;
+			sourceTree = "<group>";
+		};
+		DA81E6E4295307F100C60F31 /* vehicles.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA81E6E5295307F100C60F31 /* en */,
+			);
+			name = vehicles.json;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DA0BC4D72952E0A200E01D54 /* Debug */ = {
@@ -820,9 +1129,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				PODS_ROOT = "${PROJECT_DIR}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = PY.WOTApi;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -846,9 +1157,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				PODS_ROOT = "${PROJECT_DIR}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = PY.WOTApi;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -923,12 +1236,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		DA0BC5562952E73000E01D54 /* WOT_iOS.xcdatamodeld */ = {
+		DA81E55B295305CD00C60F31 /* WOT_iOS.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				DA0BC5572952E73000E01D54 /* WOT_iOS.xcdatamodel */,
+				DA81E55C295305CD00C60F31 /* WOT_iOS.xcdatamodel */,
 			);
-			currentVersion = DA0BC5572952E73000E01D54 /* WOT_iOS.xcdatamodel */;
+			currentVersion = DA81E55C295305CD00C60F31 /* WOT_iOS.xcdatamodel */;
 			path = WOT_iOS.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

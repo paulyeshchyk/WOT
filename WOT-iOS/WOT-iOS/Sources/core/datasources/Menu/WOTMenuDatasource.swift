@@ -41,10 +41,10 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
     override init() {
         super.init()
 
-        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankPivotViewController.self, controllerTitle: L10n.wotStringTankdeleyev, icon: UIImage(), userDependence: false))
-        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankListViewController.self, controllerTitle: L10n.wotStringTankopedia, icon: UIImage(), userDependence: false))
-        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
-        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: L10n.wotStringProfile, icon: UIImage(), userDependence: false))
+        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankPivotViewController.self, controllerTitle: WOTApi.L10n.wotStringTankdeleyev, icon: UIImage(), userDependence: false))
+        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankListViewController.self, controllerTitle: WOTApi.L10n.wotStringTankopedia, icon: UIImage(), userDependence: false))
+        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: WOTApi.L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
+        self.availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: WOTApi.L10n.wotStringProfile, icon: UIImage(), userDependence: false))
     }
 
     func object(at index: Int) -> WOTMenuItem? {
