@@ -23,7 +23,6 @@
 		DA0BC59C2952E81700E01D54 /* WOTDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC59B2952E81700E01D54 /* WOTDataStore.swift */; };
 		DA0BC59F2952E88800E01D54 /* WOTTankTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC59E2952E88800E01D54 /* WOTTankTemplates.swift */; };
 		DA0BC5A22952E8C300E01D54 /* WOTDataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5A02952E8C300E01D54 /* WOTDataAPI.swift */; };
-		DA0BC5A32952E8C300E01D54 /* WOTDataDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = DA0BC5A12952E8C300E01D54 /* WOTDataDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA0BC5AC2952EA5700E01D54 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC5AB2952EA5700E01D54 /* ContextSDK.framework */; platformFilter = ios; };
 		DA0BC5B02952EA8600E01D54 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC5AF2952EA8600E01D54 /* WOTKit.framework */; platformFilter = ios; };
 		DA81E4D02952EBDF00C60F31 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA81E4CF2952EBDF00C60F31 /* WOTPivot.framework */; };
@@ -135,6 +134,61 @@
 		DA81E7BC2953235D00C60F31 /* WOTHostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7BB2953235C00C60F31 /* WOTHostConfiguration.swift */; };
 		DA81E7C3295323F700C60F31 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7C0295323F700C60F31 /* SessionManager.swift */; };
 		DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7D429532DC600C60F31 /* UIImage+TankType.swift */; };
+		DA81E7D72953348900C60F31 /* WOTRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7D62953348900C60F31 /* WOTRequestFactory.swift */; };
+		DA81E7DD29533C4F00C60F31 /* WOTLanguageDatasource.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7DB29533C4F00C60F31 /* WOTLanguageDatasource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E7DE29533C4F00C60F31 /* WOTLanguageDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7DC29533C4F00C60F31 /* WOTLanguageDatasource.m */; };
+		DA81E7EA2953409700C60F31 /* WOTApplicationDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7E82953409700C60F31 /* WOTApplicationDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E7EB2953409700C60F31 /* WOTApplicationDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E92953409700C60F31 /* WOTApplicationDefaults.m */; };
+		DA81E7EF2953415200C60F31 /* WOTTankListSettingsDatasource.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7ED2953415200C60F31 /* WOTTankListSettingsDatasource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E7F02953415200C60F31 /* WOTTankListSettingsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7EE2953415200C60F31 /* WOTTankListSettingsDatasource.m */; };
+		DA81E7F2295343C400C60F31 /* WOTTankListSettingsAvailableFieldsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7F1295343C400C60F31 /* WOTTankListSettingsAvailableFieldsProtocol.swift */; };
+		DA81E7F52953458700C60F31 /* WOTTankListSettingField.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7F32953458700C60F31 /* WOTTankListSettingField.m */; };
+		DA81E7F62953458700C60F31 /* WOTTankListSettingField.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7F42953458700C60F31 /* WOTTankListSettingField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E7FF2953519A00C60F31 /* WOTTankIdsDatasource.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7F82953519900C60F31 /* WOTTankIdsDatasource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8002953519A00C60F31 /* WOTTankIdsDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7F92953519900C60F31 /* WOTTankIdsDatasource.m */; };
+		DA81E8012953519A00C60F31 /* WOTTankDetailDatasource.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7FB2953519A00C60F31 /* WOTTankDetailDatasource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8022953519A00C60F31 /* WOTTankDetailDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7FC2953519A00C60F31 /* WOTTankDetailDatasource.m */; };
+		DA81E8032953519A00C60F31 /* WOTTankDetailSection.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7FD2953519A00C60F31 /* WOTTankDetailSection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8042953519A00C60F31 /* WOTTankDetailSection.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7FE2953519A00C60F31 /* WOTTankDetailSection.m */; };
+		DA81E8302953521700C60F31 /* WOTTankDetailSection+Factory.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8062953521700C60F31 /* WOTTankDetailSection+Factory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8312953521700C60F31 /* WOTTankDetailSection+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8072953521700C60F31 /* WOTTankDetailSection+Factory.m */; };
+		DA81E8322953521700C60F31 /* WOTMetric+Samples.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8092953521700C60F31 /* WOTMetric+Samples.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8332953521700C60F31 /* WOTMetric+Samples.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E80A2953521700C60F31 /* WOTMetric+Samples.m */; };
+		DA81E8342953521700C60F31 /* WOTNode+PivotFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E80C2953521700C60F31 /* WOTNode+PivotFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8352953521700C60F31 /* WOTNode+PivotFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E80D2953521700C60F31 /* WOTNode+PivotFactory.m */; };
+		DA81E8372953521700C60F31 /* WOTCoreDataPredicates.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8102953521700C60F31 /* WOTCoreDataPredicates.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8382953521700C60F31 /* WOTCoreDataPredicates.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8112953521700C60F31 /* WOTCoreDataPredicates.m */; };
+		DA81E8392953521700C60F31 /* WOTTankDetailField.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8132953521700C60F31 /* WOTTankDetailField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E83A2953521700C60F31 /* WOTTankDetailField.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8142953521700C60F31 /* WOTTankDetailField.m */; };
+		DA81E83B2953521700C60F31 /* WOTTankDetailFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8152953521700C60F31 /* WOTTankDetailFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E83C2953521700C60F31 /* WOTTankDetailFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8162953521700C60F31 /* WOTTankDetailFieldExpression.m */; };
+		DA81E83D2953521700C60F31 /* WOTTankDetailFieldKVO.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8172953521700C60F31 /* WOTTankDetailFieldKVO.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E83E2953521700C60F31 /* WOTTankDetailFieldKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8182953521700C60F31 /* WOTTankDetailFieldKVO.m */; };
+		DA81E83F2953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E81A2953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8402953521700C60F31 /* WOTEnginePowerCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E81B2953521700C60F31 /* WOTEnginePowerCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8412953521700C60F31 /* WOTGunRateCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E81C2953521700C60F31 /* WOTGunRateCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8422953521700C60F31 /* WOTGunRateCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E81D2953521700C60F31 /* WOTGunRateCompareFieldExpression.m */; };
+		DA81E8432953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E81E2953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8442953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E81F2953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8452953521700C60F31 /* WOTTankDetailFieldExpression+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8202953521700C60F31 /* WOTTankDetailFieldExpression+Factory.m */; };
+		DA81E8462953521700C60F31 /* WOTTankDetailFieldExpression+Factory.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8212953521700C60F31 /* WOTTankDetailFieldExpression+Factory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8472953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8222953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.m */; };
+		DA81E8482953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8232953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8492953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8242953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.m */; };
+		DA81E84A2953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8252953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E84B2953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8262953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.m */; };
+		DA81E84C2953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8272953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E84D2953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8282953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E84E2953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8292953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.m */; };
+		DA81E84F2953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E82A2953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.m */; };
+		DA81E8502953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E82B2953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E8512953521700C60F31 /* WOTEnginePowerCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E82C2953521700C60F31 /* WOTEnginePowerCompareFieldExpression.m */; };
+		DA81E8522953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E82D2953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.m */; };
+		DA81E8532953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E82E2953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m */; };
+		DA81E8542953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E82F2953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.m */; };
+		DA81E8552953524300C60F31 /* WOTNodePivotFactoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E80E2953521700C60F31 /* WOTNodePivotFactoryTest.swift */; };
+		DA81E8592953528400C60F31 /* NSExpressionDescription+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8572953528400C60F31 /* NSExpressionDescription+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E85A2953528400C60F31 /* NSExpressionDescription+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8582953528400C60F31 /* NSExpressionDescription+WOT.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,7 +235,6 @@
 		DA0BC59B2952E81700E01D54 /* WOTDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataStore.swift; sourceTree = "<group>"; };
 		DA0BC59E2952E88800E01D54 /* WOTTankTemplates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankTemplates.swift; sourceTree = "<group>"; };
 		DA0BC5A02952E8C300E01D54 /* WOTDataAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataAPI.swift; sourceTree = "<group>"; };
-		DA0BC5A12952E8C300E01D54 /* WOTDataDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDataDefines.h; sourceTree = "<group>"; };
 		DA0BC5AB2952EA5700E01D54 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0BC5AF2952EA8600E01D54 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E4CF2952EBDF00C60F31 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,6 +347,61 @@
 		DA81E7C0295323F700C60F31 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		DA81E7C42953246900C60F31 /* WOTApi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WOTApi-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA81E7D429532DC600C60F31 /* UIImage+TankType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TankType.swift"; sourceTree = "<group>"; };
+		DA81E7D62953348900C60F31 /* WOTRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestFactory.swift; sourceTree = "<group>"; };
+		DA81E7DB29533C4F00C60F31 /* WOTLanguageDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLanguageDatasource.h; sourceTree = "<group>"; };
+		DA81E7DC29533C4F00C60F31 /* WOTLanguageDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageDatasource.m; sourceTree = "<group>"; };
+		DA81E7E82953409700C60F31 /* WOTApplicationDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTApplicationDefaults.h; sourceTree = "<group>"; };
+		DA81E7E92953409700C60F31 /* WOTApplicationDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTApplicationDefaults.m; sourceTree = "<group>"; };
+		DA81E7ED2953415200C60F31 /* WOTTankListSettingsDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingsDatasource.h; sourceTree = "<group>"; };
+		DA81E7EE2953415200C60F31 /* WOTTankListSettingsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingsDatasource.m; sourceTree = "<group>"; };
+		DA81E7F1295343C400C60F31 /* WOTTankListSettingsAvailableFieldsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankListSettingsAvailableFieldsProtocol.swift; sourceTree = "<group>"; };
+		DA81E7F32953458700C60F31 /* WOTTankListSettingField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankListSettingField.m; sourceTree = "<group>"; };
+		DA81E7F42953458700C60F31 /* WOTTankListSettingField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankListSettingField.h; sourceTree = "<group>"; };
+		DA81E7F82953519900C60F31 /* WOTTankIdsDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankIdsDatasource.h; sourceTree = "<group>"; };
+		DA81E7F92953519900C60F31 /* WOTTankIdsDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankIdsDatasource.m; sourceTree = "<group>"; };
+		DA81E7FB2953519A00C60F31 /* WOTTankDetailDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailDatasource.h; sourceTree = "<group>"; };
+		DA81E7FC2953519A00C60F31 /* WOTTankDetailDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailDatasource.m; sourceTree = "<group>"; };
+		DA81E7FD2953519A00C60F31 /* WOTTankDetailSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailSection.h; sourceTree = "<group>"; };
+		DA81E7FE2953519A00C60F31 /* WOTTankDetailSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailSection.m; sourceTree = "<group>"; };
+		DA81E8062953521700C60F31 /* WOTTankDetailSection+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankDetailSection+Factory.h"; sourceTree = "<group>"; };
+		DA81E8072953521700C60F31 /* WOTTankDetailSection+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankDetailSection+Factory.m"; sourceTree = "<group>"; };
+		DA81E8092953521700C60F31 /* WOTMetric+Samples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTMetric+Samples.h"; sourceTree = "<group>"; };
+		DA81E80A2953521700C60F31 /* WOTMetric+Samples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTMetric+Samples.m"; sourceTree = "<group>"; };
+		DA81E80C2953521700C60F31 /* WOTNode+PivotFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTNode+PivotFactory.h"; sourceTree = "<group>"; };
+		DA81E80D2953521700C60F31 /* WOTNode+PivotFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTNode+PivotFactory.m"; sourceTree = "<group>"; };
+		DA81E80E2953521700C60F31 /* WOTNodePivotFactoryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTNodePivotFactoryTest.swift; sourceTree = "<group>"; };
+		DA81E8102953521700C60F31 /* WOTCoreDataPredicates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTCoreDataPredicates.h; sourceTree = "<group>"; };
+		DA81E8112953521700C60F31 /* WOTCoreDataPredicates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTCoreDataPredicates.m; sourceTree = "<group>"; };
+		DA81E8132953521700C60F31 /* WOTTankDetailField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailField.h; sourceTree = "<group>"; };
+		DA81E8142953521700C60F31 /* WOTTankDetailField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailField.m; sourceTree = "<group>"; };
+		DA81E8152953521700C60F31 /* WOTTankDetailFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailFieldExpression.h; sourceTree = "<group>"; };
+		DA81E8162953521700C60F31 /* WOTTankDetailFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailFieldExpression.m; sourceTree = "<group>"; };
+		DA81E8172953521700C60F31 /* WOTTankDetailFieldKVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankDetailFieldKVO.h; sourceTree = "<group>"; };
+		DA81E8182953521700C60F31 /* WOTTankDetailFieldKVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankDetailFieldKVO.m; sourceTree = "<group>"; };
+		DA81E81A2953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTEngineFireStartingChanceCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E81B2953521700C60F31 /* WOTEnginePowerCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTEnginePowerCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E81C2953521700C60F31 /* WOTGunRateCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTGunRateCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E81D2953521700C60F31 /* WOTGunRateCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTGunRateCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E81E2953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadiosDistanceCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E81F2953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSuspensionRotationCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E8202953521700C60F31 /* WOTTankDetailFieldExpression+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WOTTankDetailFieldExpression+Factory.m"; sourceTree = "<group>"; };
+		DA81E8212953521700C60F31 /* WOTTankDetailFieldExpression+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WOTTankDetailFieldExpression+Factory.h"; sourceTree = "<group>"; };
+		DA81E8222953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTurretsArmorBoardCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E8232953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTurretsArmorBoardCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E8242953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRadiosDistanceCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E8252953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTurretsArmorForeheadCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E8262953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTurretsArmorForeheadCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E8272953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTurretsCircularVisionRadiusCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E8282953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTurretsRotationSpeedCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E8292953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTurretsRotationSpeedCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E82A2953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTurretsArmorFeddCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E82B2953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTurretsArmorFeddCompareFieldExpression.h; sourceTree = "<group>"; };
+		DA81E82C2953521700C60F31 /* WOTEnginePowerCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTEnginePowerCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E82D2953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSuspensionRotationCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E82E2953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTEngineFireStartingChanceCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E82F2953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTurretsCircularVisionRadiusCompareFieldExpression.m; sourceTree = "<group>"; };
+		DA81E8572953528400C60F31 /* NSExpressionDescription+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSExpressionDescription+WOT.h"; sourceTree = "<group>"; };
+		DA81E8582953528400C60F31 /* NSExpressionDescription+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSExpressionDescription+WOT.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,8 +454,14 @@
 				DA0BC59A2952E7DE00E01D54 /* DataStore */,
 				DA0BC59D2952E85900E01D54 /* Filters */,
 				DA81E7B02953173100C60F31 /* extensions */,
-				DA0BC4C82952E0A100E01D54 /* WOTApi.h */,
+				DA81E7D929533C1100C60F31 /* Datasources */,
+				DA81E8122953521700C60F31 /* fields */,
+				DA81E8082953521700C60F31 /* metrics */,
+				DA81E80B2953521700C60F31 /* nodes */,
+				DA81E80F2953521700C60F31 /* predicates */,
+				DA81E8052953521700C60F31 /* sections */,
 				DA0BC4C92952E0A100E01D54 /* Info.plist */,
+				DA0BC4C82952E0A100E01D54 /* WOTApi.h */,
 			);
 			path = WOTApi;
 			sourceTree = "<group>";
@@ -369,6 +483,7 @@
 				DA81E4DA2952FA0D00C60F31 /* WOTRequestRegistrator.swift */,
 				DA81E7BB2953235C00C60F31 /* WOTHostConfiguration.swift */,
 				DA81E7BA2953232A00C60F31 /* model */,
+				DA81E7D62953348900C60F31 /* WOTRequestFactory.swift */,
 			);
 			path = request;
 			sourceTree = "<group>";
@@ -396,7 +511,6 @@
 			isa = PBXGroup;
 			children = (
 				DA0BC5A02952E8C300E01D54 /* WOTDataAPI.swift */,
-				DA0BC5A12952E8C300E01D54 /* WOTDataDefines.h */,
 				DA0BC59E2952E88800E01D54 /* WOTTankTemplates.swift */,
 			);
 			path = Filters;
@@ -593,6 +707,7 @@
 		DA81E7B02953173100C60F31 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E8562953528400C60F31 /* NSExpressionDescription */,
 				DA81E7D329532D9B00C60F31 /* uiImage */,
 				DA81E7B12953175000C60F31 /* tree */,
 			);
@@ -640,6 +755,157 @@
 			path = uiImage;
 			sourceTree = "<group>";
 		};
+		DA81E7D929533C1100C60F31 /* Datasources */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7FA2953519A00C60F31 /* TankDetailDatasource */,
+				DA81E7F72953519900C60F31 /* TankIds */,
+				DA81E7EC2953411400C60F31 /* ListSettingsDatasource */,
+				DA81E7E72953407000C60F31 /* ApplicationDefaults */,
+				DA81E7DA29533C4F00C60F31 /* languages */,
+			);
+			path = Datasources;
+			sourceTree = "<group>";
+		};
+		DA81E7DA29533C4F00C60F31 /* languages */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7DB29533C4F00C60F31 /* WOTLanguageDatasource.h */,
+				DA81E7DC29533C4F00C60F31 /* WOTLanguageDatasource.m */,
+			);
+			path = languages;
+			sourceTree = "<group>";
+		};
+		DA81E7E72953407000C60F31 /* ApplicationDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7E82953409700C60F31 /* WOTApplicationDefaults.h */,
+				DA81E7E92953409700C60F31 /* WOTApplicationDefaults.m */,
+			);
+			path = ApplicationDefaults;
+			sourceTree = "<group>";
+		};
+		DA81E7EC2953411400C60F31 /* ListSettingsDatasource */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7F42953458700C60F31 /* WOTTankListSettingField.h */,
+				DA81E7F32953458700C60F31 /* WOTTankListSettingField.m */,
+				DA81E7F1295343C400C60F31 /* WOTTankListSettingsAvailableFieldsProtocol.swift */,
+				DA81E7ED2953415200C60F31 /* WOTTankListSettingsDatasource.h */,
+				DA81E7EE2953415200C60F31 /* WOTTankListSettingsDatasource.m */,
+			);
+			path = ListSettingsDatasource;
+			sourceTree = "<group>";
+		};
+		DA81E7F72953519900C60F31 /* TankIds */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7F82953519900C60F31 /* WOTTankIdsDatasource.h */,
+				DA81E7F92953519900C60F31 /* WOTTankIdsDatasource.m */,
+			);
+			path = TankIds;
+			sourceTree = "<group>";
+		};
+		DA81E7FA2953519A00C60F31 /* TankDetailDatasource */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7FB2953519A00C60F31 /* WOTTankDetailDatasource.h */,
+				DA81E7FC2953519A00C60F31 /* WOTTankDetailDatasource.m */,
+				DA81E7FD2953519A00C60F31 /* WOTTankDetailSection.h */,
+				DA81E7FE2953519A00C60F31 /* WOTTankDetailSection.m */,
+			);
+			path = TankDetailDatasource;
+			sourceTree = "<group>";
+		};
+		DA81E8052953521700C60F31 /* sections */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E8062953521700C60F31 /* WOTTankDetailSection+Factory.h */,
+				DA81E8072953521700C60F31 /* WOTTankDetailSection+Factory.m */,
+			);
+			path = sections;
+			sourceTree = "<group>";
+		};
+		DA81E8082953521700C60F31 /* metrics */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E8092953521700C60F31 /* WOTMetric+Samples.h */,
+				DA81E80A2953521700C60F31 /* WOTMetric+Samples.m */,
+			);
+			path = metrics;
+			sourceTree = "<group>";
+		};
+		DA81E80B2953521700C60F31 /* nodes */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E80C2953521700C60F31 /* WOTNode+PivotFactory.h */,
+				DA81E80D2953521700C60F31 /* WOTNode+PivotFactory.m */,
+				DA81E80E2953521700C60F31 /* WOTNodePivotFactoryTest.swift */,
+			);
+			path = nodes;
+			sourceTree = "<group>";
+		};
+		DA81E80F2953521700C60F31 /* predicates */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E8102953521700C60F31 /* WOTCoreDataPredicates.h */,
+				DA81E8112953521700C60F31 /* WOTCoreDataPredicates.m */,
+			);
+			path = predicates;
+			sourceTree = "<group>";
+		};
+		DA81E8122953521700C60F31 /* fields */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E8132953521700C60F31 /* WOTTankDetailField.h */,
+				DA81E8142953521700C60F31 /* WOTTankDetailField.m */,
+				DA81E8152953521700C60F31 /* WOTTankDetailFieldExpression.h */,
+				DA81E8162953521700C60F31 /* WOTTankDetailFieldExpression.m */,
+				DA81E8172953521700C60F31 /* WOTTankDetailFieldKVO.h */,
+				DA81E8182953521700C60F31 /* WOTTankDetailFieldKVO.m */,
+				DA81E8192953521700C60F31 /* expressions */,
+			);
+			path = fields;
+			sourceTree = "<group>";
+		};
+		DA81E8192953521700C60F31 /* expressions */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E81A2953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.h */,
+				DA81E81B2953521700C60F31 /* WOTEnginePowerCompareFieldExpression.h */,
+				DA81E81C2953521700C60F31 /* WOTGunRateCompareFieldExpression.h */,
+				DA81E81D2953521700C60F31 /* WOTGunRateCompareFieldExpression.m */,
+				DA81E81E2953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.h */,
+				DA81E81F2953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.h */,
+				DA81E8202953521700C60F31 /* WOTTankDetailFieldExpression+Factory.m */,
+				DA81E8212953521700C60F31 /* WOTTankDetailFieldExpression+Factory.h */,
+				DA81E8222953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.m */,
+				DA81E8232953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.h */,
+				DA81E8242953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.m */,
+				DA81E8252953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.h */,
+				DA81E8262953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.m */,
+				DA81E8272953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.h */,
+				DA81E8282953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.h */,
+				DA81E8292953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.m */,
+				DA81E82A2953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.m */,
+				DA81E82B2953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.h */,
+				DA81E82C2953521700C60F31 /* WOTEnginePowerCompareFieldExpression.m */,
+				DA81E82D2953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.m */,
+				DA81E82E2953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m */,
+				DA81E82F2953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.m */,
+			);
+			path = expressions;
+			sourceTree = "<group>";
+		};
+		DA81E8562953528400C60F31 /* NSExpressionDescription */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E8572953528400C60F31 /* NSExpressionDescription+WOT.h */,
+				DA81E8582953528400C60F31 /* NSExpressionDescription+WOT.m */,
+			);
+			path = NSExpressionDescription;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -647,8 +913,33 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA81E7EA2953409700C60F31 /* WOTApplicationDefaults.h in Headers */,
+				DA81E8342953521700C60F31 /* WOTNode+PivotFactory.h in Headers */,
+				DA81E8412953521700C60F31 /* WOTGunRateCompareFieldExpression.h in Headers */,
+				DA81E84A2953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.h in Headers */,
+				DA81E8402953521700C60F31 /* WOTEnginePowerCompareFieldExpression.h in Headers */,
+				DA81E8432953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.h in Headers */,
+				DA81E8302953521700C60F31 /* WOTTankDetailSection+Factory.h in Headers */,
+				DA81E7FF2953519A00C60F31 /* WOTTankIdsDatasource.h in Headers */,
+				DA81E8392953521700C60F31 /* WOTTankDetailField.h in Headers */,
+				DA81E8482953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.h in Headers */,
+				DA81E8502953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.h in Headers */,
+				DA81E8012953519A00C60F31 /* WOTTankDetailDatasource.h in Headers */,
+				DA81E8322953521700C60F31 /* WOTMetric+Samples.h in Headers */,
+				DA81E83F2953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.h in Headers */,
+				DA81E8032953519A00C60F31 /* WOTTankDetailSection.h in Headers */,
+				DA81E84C2953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.h in Headers */,
+				DA81E8592953528400C60F31 /* NSExpressionDescription+WOT.h in Headers */,
+				DA81E83D2953521700C60F31 /* WOTTankDetailFieldKVO.h in Headers */,
+				DA81E8462953521700C60F31 /* WOTTankDetailFieldExpression+Factory.h in Headers */,
+				DA81E8372953521700C60F31 /* WOTCoreDataPredicates.h in Headers */,
+				DA81E83B2953521700C60F31 /* WOTTankDetailFieldExpression.h in Headers */,
+				DA81E84D2953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.h in Headers */,
+				DA81E8442953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.h in Headers */,
 				DA0BC4D62952E0A200E01D54 /* WOTApi.h in Headers */,
-				DA0BC5A32952E8C300E01D54 /* WOTDataDefines.h in Headers */,
+				DA81E7EF2953415200C60F31 /* WOTTankListSettingsDatasource.h in Headers */,
+				DA81E7F62953458700C60F31 /* WOTTankListSettingField.h in Headers */,
+				DA81E7DD29533C4F00C60F31 /* WOTLanguageDatasource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,6 +1077,7 @@
 			files = (
 				DA81E5D4295305CE00C60F31 /* VehicleprofileModule+CoreDataClass.swift in Sources */,
 				DA81E5D0295305CE00C60F31 /* VehicleprofileEngine+CoreDataClass.swift in Sources */,
+				DA81E85A2953528400C60F31 /* NSExpressionDescription+WOT.m in Sources */,
 				DA81E5B8295305CE00C60F31 /* VehicleprofileModule+JSONMappableProtocol.swift in Sources */,
 				DA0BC59C2952E81700E01D54 /* WOTDataStore.swift in Sources */,
 				DA81E5AD295305CE00C60F31 /* VehicleprofileArmorList+JSONMappableProtocol.swift in Sources */,
@@ -796,6 +1088,7 @@
 				DA81E5FC295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONDecodingProtocol.swift in Sources */,
 				DA81E6F129530A3800C60F31 /* strings.swift in Sources */,
 				DA81E5AA295305CE00C60F31 /* VehicleprofileAmmoDamage+JSONMappableProtocol.swift in Sources */,
+				DA81E8312953521700C60F31 /* WOTTankDetailSection+Factory.m in Sources */,
 				DA81E5D2295305CE00C60F31 /* VehicleprofileGun+CoreDataClass.swift in Sources */,
 				DA81E5EE295305CE00C60F31 /* VehicleprofileTurret+RequestableProtocol.swift in Sources */,
 				DA81E5C4295305CE00C60F31 /* VehicleprofileAmmo+CoreDataClass.swift in Sources */,
@@ -808,38 +1101,54 @@
 				DA81E5F7295305CE00C60F31 /* VehicleprofileSuspension+JSONDecodingProtocol.swift in Sources */,
 				DA81E5DF295305CE00C60F31 /* ModulesTree+Customization.swift in Sources */,
 				DA81E5B9295305CE00C60F31 /* WOT_iOS.xcdatamodeld in Sources */,
+				DA81E8382953521700C60F31 /* WOTCoreDataPredicates.m in Sources */,
+				DA81E8422953521700C60F31 /* WOTGunRateCompareFieldExpression.m in Sources */,
 				DA0BC5A22952E8C300E01D54 /* WOTDataAPI.swift in Sources */,
 				DA81E5FA295305CE00C60F31 /* VehicleprofileAmmo+JSONDecodingProtocol.swift in Sources */,
+				DA81E7F02953415200C60F31 /* WOTTankListSettingsDatasource.m in Sources */,
 				DA81E5BF295305CE00C60F31 /* ModulesTree+CoreDataProperties.swift in Sources */,
 				DA81E5F2295305CE00C60F31 /* VehicleprofileGun+JSONDecodingProtocol.swift in Sources */,
 				DA81E5E9295305CE00C60F31 /* VehicleprofileEngine+RequestableProtocol.swift in Sources */,
 				DA81E5FD295305CE00C60F31 /* VehicleprofileRadio+JSONDecodingProtocol.swift in Sources */,
 				DA81E5E4295305CE00C60F31 /* VehicleprofileAmmoDamage+RequestableProtocol.swift in Sources */,
 				DA81E5CD295305CE00C60F31 /* VehicleprofileArmor+CoreDataProperties.swift in Sources */,
+				DA81E8452953521700C60F31 /* WOTTankDetailFieldExpression+Factory.m in Sources */,
+				DA81E7EB2953409700C60F31 /* WOTApplicationDefaults.m in Sources */,
 				DA0BC5952952E7AF00E01D54 /* VehiclesHttpRequest.swift in Sources */,
 				DA81E5F8295305CE00C60F31 /* Module+JSONDecodingProtocol.swift in Sources */,
 				DA81E5BB295305CE00C60F31 /* ListSetting+CoreDataProperties.swift in Sources */,
 				DA81E5E8295305CE00C60F31 /* VehicleprofileArmorList+RequestableProtocol.swift in Sources */,
+				DA81E8512953521700C60F31 /* WOTEnginePowerCompareFieldExpression.m in Sources */,
+				DA81E83C2953521700C60F31 /* WOTTankDetailFieldExpression.m in Sources */,
 				DA81E5AB295305CE00C60F31 /* VehicleprofileAmmoList+JSONMappableProtocol.swift in Sources */,
+				DA81E8532953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
 				DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */,
 				DA81E601295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift in Sources */,
 				DA81E7C3295323F700C60F31 /* SessionManager.swift in Sources */,
+				DA81E83A2953521700C60F31 /* WOTTankDetailField.m in Sources */,
 				DA81E5C1295305CE00C60F31 /* UserSession+CoreDataProperties.swift in Sources */,
+				DA81E84B2953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.m in Sources */,
 				DA0BC5912952E7AF00E01D54 /* VehicleprofileRadiosHttpRequest.swift in Sources */,
 				DA81E5C3295305CE00C60F31 /* Vehicleprofile+CoreDataProperties.swift in Sources */,
 				DA81E5CA295305CE00C60F31 /* VehicleprofileAmmoPenetration+CoreDataClass.swift in Sources */,
 				DA0BC58F2952E7AF00E01D54 /* LogoutHttpRequest.swift in Sources */,
+				DA81E83E2953521700C60F31 /* WOTTankDetailFieldKVO.m in Sources */,
+				DA81E7DE29533C4F00C60F31 /* WOTLanguageDatasource.m in Sources */,
 				DA81E5C6295305CE00C60F31 /* VehicleprofileAmmoDamage+CoreDataClass.swift in Sources */,
 				DA81E5DB295305CE00C60F31 /* VehicleprofileTurret+CoreDataProperties.swift in Sources */,
 				DA81E5CF295305CE00C60F31 /* VehicleprofileArmorList+CoreDataProperties.swift in Sources */,
+				DA81E84E2953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.m in Sources */,
 				DA81E5EF295305CE00C60F31 /* Vehicles+RequestableProtocol.swift in Sources */,
 				DA81E5E6295305CE00C60F31 /* VehicleprofileAmmoPenetration+RequestableProtocol.swift in Sources */,
+				DA81E8352953521700C60F31 /* WOTNode+PivotFactory.m in Sources */,
 				DA81E5DC295305CE00C60F31 /* Vehicles+CoreDataClass.swift in Sources */,
 				DA81E5BD295305CE00C60F31 /* Module+CoreDataProperties.swift in Sources */,
 				DA81E5FB295305CE00C60F31 /* VehicleprofileArmor+JSONDecodingProtocol.swift in Sources */,
 				DA81E5DA295305CE00C60F31 /* VehicleprofileTurret+CoreDataClass.swift in Sources */,
 				DA81E5C5295305CE00C60F31 /* VehicleprofileAmmo+CoreDataProperties.swift in Sources */,
 				DA81E5C0295305CE00C60F31 /* UserSession+CoreDataClass.swift in Sources */,
+				DA81E8492953521700C60F31 /* WOTRadiosDistanceCompareFieldExpression.m in Sources */,
+				DA81E8002953519A00C60F31 /* WOTTankIdsDatasource.m in Sources */,
 				DA81E5F6295305CE00C60F31 /* Vehicles+JSONDecodingProtocol.swift in Sources */,
 				DA0BC5982952E7AF00E01D54 /* LoginHttpRequest.swift in Sources */,
 				DA81E5B0295305CE00C60F31 /* VehicleprofileSuspension+JSONMappableProtocol.swift in Sources */,
@@ -851,6 +1160,7 @@
 				DA81E5E5295305CE00C60F31 /* VehicleprofileAmmoList+RequestableProtocol.swift in Sources */,
 				DA0BC59F2952E88800E01D54 /* WOTTankTemplates.swift in Sources */,
 				DA81E5C8295305CE00C60F31 /* VehicleprofileAmmoList+CoreDataClass.swift in Sources */,
+				DA81E7D72953348900C60F31 /* WOTRequestFactory.swift in Sources */,
 				DA81E7BC2953235D00C60F31 /* WOTHostConfiguration.swift in Sources */,
 				DA81E600295305CE00C60F31 /* VehicleprofileModule+JSONDecodingProtocol.swift in Sources */,
 				DA81E5D5295305CE00C60F31 /* VehicleprofileModule+CoreDataProperties.swift in Sources */,
@@ -863,9 +1173,15 @@
 				DA81E5D3295305CE00C60F31 /* VehicleprofileGun+CoreDataProperties.swift in Sources */,
 				DA0BC5922952E7AF00E01D54 /* VehicleprofileTurretsHttpRequest.swift in Sources */,
 				DA81E5EB295305CE00C60F31 /* VehicleprofileModule+RequestableProtocol.swift in Sources */,
+				DA81E84F2953521700C60F31 /* WOTTurretsArmorFeddCompareFieldExpression.m in Sources */,
 				DA81E5D8295305CE00C60F31 /* VehicleprofileSuspension+CoreDataClass.swift in Sources */,
+				DA81E8542953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.m in Sources */,
 				DA81E5BA295305CE00C60F31 /* ListSetting+CoreDataClass.swift in Sources */,
+				DA81E8022953519A00C60F31 /* WOTTankDetailDatasource.m in Sources */,
 				DA81E5BE295305CE00C60F31 /* ModulesTree+CoreDataClass.swift in Sources */,
+				DA81E8042953519A00C60F31 /* WOTTankDetailSection.m in Sources */,
+				DA81E7F52953458700C60F31 /* WOTTankListSettingField.m in Sources */,
+				DA81E7F2295343C400C60F31 /* WOTTankListSettingsAvailableFieldsProtocol.swift in Sources */,
 				DA81E5FE295305CE00C60F31 /* VehicleprofileArmorList+JSONDecodingProtocol.swift in Sources */,
 				DA0BC5972952E7AF00E01D54 /* VehicleprofileGunHttpRequest.swift in Sources */,
 				DA81E5D7295305CE00C60F31 /* VehicleprofileRadio+CoreDataProperties.swift in Sources */,
@@ -874,10 +1190,12 @@
 				DA81E5B6295305CE00C60F31 /* VehicleprofileArmor+JSONMappableProtocol.swift in Sources */,
 				DA81E5C2295305CE00C60F31 /* Vehicleprofile+CoreDataClass.swift in Sources */,
 				DA81E5BC295305CE00C60F31 /* Module+CoreDataClass.swift in Sources */,
+				DA81E8332953521700C60F31 /* WOTMetric+Samples.m in Sources */,
 				DA0BC5942952E7AF00E01D54 /* VehicleprofileSuspensionHttpRequest.swift in Sources */,
 				DA81E5F3295305CE00C60F31 /* ListSetting+JSONDecodingProtocol.swift in Sources */,
 				DA81E5DD295305CE00C60F31 /* Vehicles+CoreDataProperties.swift in Sources */,
 				DA81E5D9295305CE00C60F31 /* VehicleprofileSuspension+CoreDataProperties.swift in Sources */,
+				DA81E8522953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */,
 				DA81E5F1295305CE00C60F31 /* UserSession+JSONDecodingProtocol.swift in Sources */,
 				DA81E5F4295305CE00C60F31 /* Vehicleprofile+JSONDecodingProtocol.swift in Sources */,
 				DA81E5F5295305CE00C60F31 /* ModulesTree+JSONDecodingProtocol.swift in Sources */,
@@ -891,6 +1209,7 @@
 				DA81E5B7295305CE00C60F31 /* VehicleprofileEngine+JSONMappableProtocol.swift in Sources */,
 				DA81E5D1295305CE00C60F31 /* VehicleprofileEngine+CoreDataProperties.swift in Sources */,
 				DA81E5E2295305CE00C60F31 /* Vehicleprofile+RequestableProtocol.swift in Sources */,
+				DA81E8472953521700C60F31 /* WOTTurretsArmorBoardCompareFieldExpression.m in Sources */,
 				DA81E5CB295305CE00C60F31 /* VehicleprofileAmmoPenetration+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -900,6 +1219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA0BC4D42952E0A200E01D54 /* WOTApiTests.swift in Sources */,
+				DA81E8552953524300C60F31 /* WOTNodePivotFactoryTest.swift in Sources */,
 				DA81E4D92952F4FD00C60F31 /* Test_WOTDataStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1133,7 +1453,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = PY.WOTApi;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1161,7 +1480,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = PY.WOTApi;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

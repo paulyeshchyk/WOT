@@ -10,13 +10,11 @@
 #import "WOTTankTreeNodeCollectionViewCell.h"
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"
-#import "WOTTankListSettingsDatasource.h"
 #import <WOT-Swift.h>
 #import <WOTPivot/WOTPivot.h>
-#import "UINavigationBar+WOT.h"
+#import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
-#import "UIBarButtonItem+EventBlock.h"
-#import "NSBundle+LanguageBundle.h"
+#import <WOTKit/WOTKit.h>
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
 @property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
@@ -80,14 +78,14 @@
 
 - (NSArray *) sortDescriptors {
     NSMutableArray *result = [[self.settingsDatasource sortBy] mutableCopy];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:WOTApiKeys.tank_id ascending:YES];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:WOTApiFields.tank_id ascending:YES];
     [result addObject:descriptor];
     return result;
 }
 
 - (NSPredicate *) fetchCustomPredicate {
 
-    return [NSPredicate predicateWithFormat:@"%K == %@", WOTApiKeys.tank_id, self.tank_Id ];
+    return [NSPredicate predicateWithFormat:@"%K == %@", WOTApiFields.tank_id, self.tank_Id ];
 }
 
 @end

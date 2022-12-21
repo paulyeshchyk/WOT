@@ -7,7 +7,7 @@
 //
 
 #import "WOTTableViewDatasourceProtocol.h"
-#import "WOTTankListSettingsAvailableFieldsProtocol.h"
+#import <WOTApi/WOTApi.h>
 
 typedef void (^WOTTankListSettingCancelBlock) (void);
 typedef void (^WOTTankListSettingApplyBlock) (void);

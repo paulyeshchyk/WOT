@@ -14,12 +14,9 @@
 #import <WOTApi/WOTApi.h>
 #import "WOTTankListCollectionViewCell.h"
 #import "WOTTankListCollectionViewHeader.h"
-#import "WOTTankListSettingsDatasource.h"
 #import "WOTTankDetailViewController.h"
 #import "WOTTankListSearchBar.h"
-#import "UIImage+Resize.h"
-#import "UIBarButtonItem+EventBlock.h"
-#import "NSBundle+LanguageBundle.h"
+#import <WOTKit/WOTKit.h>
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -216,7 +213,7 @@
     
     if ([self.searchBarText length] != 0) {
 
-        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOTApiKeys.name, self.searchBarText];
+        NSPredicate *searchBarPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS[c] %@",WOTApiFields.name, self.searchBarText];
         [predicates addObject:searchBarPredicate];
     }
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
@@ -225,7 +222,7 @@
 - (NSArray *)sortDescriptors {
     
     NSMutableArray *result = [[NSMutableArray alloc] initWithArray:_settingsDatasource.sortBy];
-    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
+    [result addObject:[NSSortDescriptor sortDescriptorWithKey:WOTApiFields.tank_id ascending:YES]];
 
     return result;
 }

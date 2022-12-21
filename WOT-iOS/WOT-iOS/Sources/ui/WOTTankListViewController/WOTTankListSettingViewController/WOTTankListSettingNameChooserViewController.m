@@ -8,8 +8,8 @@
 
 #import "WOTTankListSettingNameChooserViewController.h"
 #import "WOTTankListSettingSortTableViewCell.h"
-#import "WOTTankListSettingField.h"
-#import "NSBundle+LanguageBundle.h"
+#import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTTankListSettingNameChooserViewController () <UITableViewDataSource, UITableViewDelegate>
 

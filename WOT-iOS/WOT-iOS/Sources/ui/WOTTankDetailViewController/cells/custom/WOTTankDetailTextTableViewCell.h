@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOTTankDetailField.h"
+#import <WOTApi/WOTApi.h>
 #import "WOTTankDetailTableViewCellProtocol.h"
 
 @interface WOTTankDetailTextTableViewCell : UITableViewCell <WOTTankDetailTableViewCellProtocol>

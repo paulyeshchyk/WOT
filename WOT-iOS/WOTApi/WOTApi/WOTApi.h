@@ -16,5 +16,28 @@ FOUNDATION_EXPORT const unsigned char WOTApiVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <WOTApi/PublicHeader.h>
 
 
-#import "WOTDataDefines.h"
-
+#import <WOTApi/WOTLanguageDatasource.h>
+#import <WOTApi/WOTApplicationDefaults.h>
+#import <WOTApi/WOTTankListSettingsDatasource.h>
+#import <WOTApi/WOTTankListSettingField.h>
+#import <WOTApi/WOTNode+PivotFactory.h>
+#import <WOTApi/WOTTankIdsDatasource.h>
+#import <WOTApi/WOTMetric+Samples.h>
+#import <WOTApi/WOTTankDetailField.h>
+#import <WOTApi/NSExpressionDescription+WOT.h>
+#import <WOTApi/WOTCoreDataPredicates.h>
+#import <WOTApi/WOTEngineFireStartingChanceCompareFieldExpression.h>
+#import <WOTApi/WOTEnginePowerCompareFieldExpression.h>
+#import <WOTApi/WOTGunRateCompareFieldExpression.h>
+#import <WOTApi/WOTRadiosDistanceCompareFieldExpression.h>
+#import <WOTApi/WOTSuspensionRotationCompareFieldExpression.h>
+#import <WOTApi/WOTTankDetailDatasource.h>
+#import <WOTApi/WOTTankDetailFieldExpression+Factory.h>
+#import <WOTApi/WOTTankDetailFieldKVO.h>
+#import <WOTApi/WOTTankDetailSection+Factory.h>
+#import <WOTApi/WOTTankDetailSection.h>
+#import <WOTApi/WOTTurretsArmorBoardCompareFieldExpression.h>
+#import <WOTApi/WOTTurretsArmorFeddCompareFieldExpression.h>
+#import <WOTApi/WOTTurretsArmorForeheadCompareFieldExpression.h>
+#import <WOTApi/WOTTurretsCircularVisionRadiusCompareFieldExpression.h>
+#import <WOTApi/WOTTurretsRotationSpeedCompareFieldExpression.h>

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WOTTankDetailField.h"
+#import <WOTApi/WOTApi.h>
 
 @protocol WOTTankDetailTableViewCellProtocol <NSObject>
 

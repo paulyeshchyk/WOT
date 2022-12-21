@@ -10,16 +10,10 @@
 #import <WOTApi/WOTApi.h>
 #import <WOTPivot/WOTPivot.h>
 #import <WOTPivot/WOTPivot-Swift.h>
-#import "WOTTankDetailDatasource.h"
 #import "WOTTankModuleTreeViewController.h"
-#import "WOTTankIdsDatasource.h"
-#import "WOTTankDetailSection+Factory.h"
 #import "WOTTankGridViewController.h"
-#import "WOTMetric+Samples.h"
 #import "WOTRadarViewController.h"
 #import "NSObject+WOTTankGridValueData.h"
-#import "UIView+StretchingConstraints.h"
-#import "UIToolbar+WOT.h"
 #import <WOTKit/WOTKit.h>
 
 typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
@@ -242,7 +236,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",@"tank_id", self.tankId];
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([Vehicles class])];
         fetchRequest.predicate = predicate;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeys.tank_id ascending:YES]];
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiFields.tank_id ascending:YES]];
 
         id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
         id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
@@ -290,7 +284,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
     return;
 //    WOTRequestArguments *arguments = [[WOTRequestArguments alloc] init];
-//    [arguments setValues:@[tankId] forKey:WOTApiKeys.tank_id];
+//    [arguments setValues:@[tankId] forKey:WOTApiFields.tank_id];
 //
 //    id<WOTRequestProtocol> request = [[WOTRequestManager sharedInstance] createRequestForId:WOTRequestIdTankProfile];
 //    BOOL canAdd = [[WOTRequestManager sharedInstance] add:request byGroupId:WGWebRequestGroups.vehicle_profile];
@@ -345,7 +339,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     NSPredicate *predicateClassVehicles = [NSPredicate predicateWithFormat: @"class == %@", [Vehicles class]];
     NSPredicate *predicateClassTanks = [NSPredicate predicateWithFormat: @"class == %@", [Tanks class]];
     NSCompoundPredicate *predicateClass = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicateClassVehicles,predicateClassTanks]];
-    NSPredicate *predicateTankId = [NSPredicate predicateWithFormat: @"%K == %@",WOTApiKeys.tankId, self.tankId];
+    NSPredicate *predicateTankId = [NSPredicate predicateWithFormat: @"%K == %@",WOTApiFields.tankId, self.tankId];
     NSCompoundPredicate *predicate1 = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicateClass, predicateTankId]];
     
     NSPredicate *predicate2 = [NSPredicate predicateWithFormat: @"class == %@", [Tankengines class]];

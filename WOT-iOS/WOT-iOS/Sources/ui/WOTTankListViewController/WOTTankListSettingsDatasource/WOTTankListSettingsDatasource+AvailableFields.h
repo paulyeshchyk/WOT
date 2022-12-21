@@ -6,8 +6,7 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTTankListSettingsDatasource.h"
-#import "WOTTankListSettingsAvailableFieldsProtocol.h"
+#import <WOTApi/WOTApi.h>
 
 @interface WOTTankListSettingsDatasource (AvailableFields) <WOTTankListSettingsAvailableFieldsProtocol>
 

@@ -8,9 +8,8 @@
 
 #import "WOTTankListSettingValueChangerViewController.h"
 #import <WOTApi/WOTApi.h>
-#import "WOTTankListSettingField.h"
 #import "WOTTankListSettingNameTableViewCell.h"
-#import "NSBundle+LanguageBundle.h"
+#import <WOTKit/WOTKit.h>
 
 @interface WOTTankListSettingValueChangerViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 

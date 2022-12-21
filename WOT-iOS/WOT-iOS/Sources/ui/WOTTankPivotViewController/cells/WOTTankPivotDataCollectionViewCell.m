@@ -7,7 +7,7 @@
 //
 
 #import "WOTTankPivotDataCollectionViewCell.h"
-#import "UIColor+HSB.h"
+#import <WOTKit/WOTKit.h>
 
 @interface WOTTankPivotDataCollectionViewCell ()
 

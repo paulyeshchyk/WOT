@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define WOT_KEY_STATUS @"status"
-#define WOT_KEY_ERROR @"error"
-
-
 @class WOTLogin;
 
 typedef void(^WOTLoginCallback)(WOTLogin *wotLogin);

@@ -7,13 +7,9 @@
 //
 
 #import "WOTLoginViewController.h"
-#import "WOTApplicationDefaults.h"
 #import "WOTLanguageSelectorViewController.h"
-#import "UINavigationBar+WOT.h"
-#import "UIImage+Resize.h"
-#import "UIBarButtonItem+EventBlock.h"
 #import "WOTSessionManager.h"
-#import "NSBundle+LanguageBundle.h"
+#import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
 
 @interface WOTLoginViewController () <UIWebViewDelegate, WOTLanguageSelectorViewControllerDelegate>
@@ -70,11 +66,11 @@
     
     NSURLComponents *components = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
     NSArray *queryItems = [components queryItems];
-    NSURLQueryItem *status = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_STATUS]] lastObject];
-    NSURLQueryItem *nickname = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_NICKNAME]] lastObject];
-    NSURLQueryItem *access_token = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTApiKeys.accessToken]] lastObject];
-    NSURLQueryItem *account_id = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_ACCOUNT_ID]] lastObject];
-    NSURLQueryItem *expires_at = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_EXPIRES_AT]] lastObject];
+    NSURLQueryItem *status = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTLoginFields.status]] lastObject];
+    NSURLQueryItem *nickname = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTLoginFields.nickname]] lastObject];
+    NSURLQueryItem *access_token = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTLoginFields.accessToken]] lastObject];
+    NSURLQueryItem *account_id = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTLoginFields.account_id]] lastObject];
+    NSURLQueryItem *expires_at = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTLoginFields.expires_at]] lastObject];
 
     wotLogin.error = nil;
     wotLogin.access_token = access_token.value;
@@ -82,10 +78,10 @@
     wotLogin.userID = nickname.value;
     wotLogin.expires_at = @([expires_at.value integerValue]);
     
-    if ([status.value isEqual:WOT_KEY_ERROR]) {
+    if ([status.value isEqual:WOTLoginFields.error]) {
 
-        NSURLQueryItem *errorMessage = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_MESSAGE]] lastObject];
-        NSURLQueryItem *errorCode = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOT_KEY_CODE]] lastObject];
+        NSURLQueryItem *errorMessage = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTLoginFields.message]] lastObject];
+        NSURLQueryItem *errorCode = [[queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name == %@",WOTLoginFields.code]] lastObject];
         NSDictionary *userInfo = @{@"message":errorMessage,@"code":errorCode.value};
         wotLogin.error = [NSError errorWithDomain:@"WOTLOGIN" code:1 userInfo:userInfo];
     }
@@ -119,11 +115,11 @@
 - (NSDictionary *)asDictionary {
     
     NSMutableDictionary *args =[[NSMutableDictionary alloc] init];
-    if (self.error) args[WOT_KEY_ERROR] = self.error;
-    if (self.userID) args[WOT_KEY_USER_ID] = self.userID;
-    if (self.access_token) args[WOTApiKeys.accessToken] = self.access_token;
-    if (self.account_id) args[WOT_KEY_ACCOUNT_ID] = self.account_id;
-    if (self.expires_at) args[WOT_KEY_EXPIRES_AT] = self.expires_at;
+    if (self.error) args[WOTLoginFields.error] = self.error;
+    if (self.userID) args[WOTLoginFields.userId] = self.userID;
+    if (self.access_token) args[WOTLoginFields.accessToken] = self.access_token;
+    if (self.account_id) args[WOTLoginFields.account_id] = self.account_id;
+    if (self.expires_at) args[WOTLoginFields.expires_at] = self.expires_at;
     return args;
 }
 

@@ -9,6 +9,7 @@
 #import "WOTTankListCollectionViewCell.h"
 #import <WOTPivot/WOTPivot.h>
 #import <WOTKit/WOTKit-Swift.h>
+#import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
 #import "RomanNumber.h"
 

@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-#import "WOTTankListSettingsDatasource.h"
+#import <WOTApi/WOTApi.h>
 
 @protocol WOTViewControllerProtocol;
 #pragma clang diagnostic push

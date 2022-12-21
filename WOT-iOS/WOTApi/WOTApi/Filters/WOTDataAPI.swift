@@ -6,8 +6,6 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-import ContextSDK
-
 @objc
 public protocol WOTAPIProtocol: NSObjectProtocol {}
 
@@ -46,7 +44,27 @@ public class WGJsonFields: NSObject {
 }
 
 @objc
-public class WOTApiKeys: NSObject, WOTAPIProtocol {
+public class WOTLoginFields: NSObject {
+    @objc public static let redirectUri: String = "redirect_uri"
+    @objc public static let nofollow: String = "nofollow"
+    @objc public static let accessToken: String = "access_token"
+    @objc public static let account_id: String = "account_id"
+    @objc public static let expires_at: String = "expires_at"
+    @objc public static let userId: String = "userId"
+    @objc public static let error: String = "error"
+    @objc public static let status: String = "status"
+    @objc public static let nickname: String = "nickname"
+    @objc public static let code: String = "code"
+    @objc public static let hashName: String = "hashName"
+    @objc public static let key: String = "key"
+    @objc public static let location: String = "location"
+    @objc public static let message: String = "message"
+    @objc public static let values: String = "values"
+    @objc public static let default_profile: String = "default_profile"
+}
+
+@objc
+public class WOTApiFields: NSObject, WOTAPIProtocol {
     @objc public static let modules_tree: String = "modules_tree"
     @objc public static let engines: String = "engines"
     @objc public static let suspensions: String = "suspensions"
@@ -58,9 +76,6 @@ public class WOTApiKeys: NSObject, WOTAPIProtocol {
     @objc public static let power: String = "power"
     @objc public static let contour_image: String = "contour_image"
 
-    @objc public static let redirectUri: String = "redirect_uri"
-    @objc public static let nofollow: String = "nofollow"
-    @objc public static let accessToken: String = "access_token"
     @objc public static let name: String = "name"
     @objc public static let short_name: String = "short_name"
     @objc public static let type: String = "type"
@@ -100,4 +115,24 @@ public class WOTApiDefaults: NSObject, WOTAPIDefaultsProtocol {
     @objc public static let applicationScheme: String = "https"
     @objc public static let applicationHost: String = "api.worldoftanks"
     @objc public static let applicationRedirectURI: String = "https://api.worldoftanks.ru/wot/blank/"; // "https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/";
+}
+
+@objc
+public class WOTApiSettingType: NSObject {
+    @objc public static let key_type: String = "WOT_KEY_SETTING_TYPE"
+    @objc public static let key_type_sort: String = "WOT_KEY_SETTING_TYPE_SORT"
+    @objc public static let key_type_filter: String = "WOT_KEY_SETTING_TYPE_FILTER"
+    @objc public static let key_type_group: String = "WOT_KEY_SETTING_TYPE_GROUP"
+}
+
+@objc
+public class WOTApiKeyOrderBy: NSObject {
+    @objc public static let orderBy: String = "orderBy"
+}
+
+@objc
+public class WOTApiLanguage: NSObject {
+    @objc public static let eu: String = "WOT_VALUE_LANGUAGE_EU"
+    @objc public static let ru: String = "WOT_VALUE_LANGUAGE_RU"
+    @objc public static let default_login_language: String = "WOT_USERDEFAULTS_LOGIN_LANGUAGE"
 }

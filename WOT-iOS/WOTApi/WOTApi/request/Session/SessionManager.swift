@@ -9,17 +9,6 @@
 import ContextSDK
 
 @objc
-public protocol SessionManagerContainerProtocol {
-    @objc var sessionManager: SessionManagerProtocol? { get set }
-}
-
-@objc
-public protocol SessionManagerProtocol {
-    func login()
-    func logout()
-}
-
-@objc
 public class SessionManager: NSObject, SessionManagerProtocol {
     @objc
     public var appDelegate: AnyObject?

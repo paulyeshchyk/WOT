@@ -7,12 +7,9 @@
 //
 
 #import "WOTLanguageSelectorViewController.h"
-#import "WOTLanguageDatasource.h"
 #import "WOTLanguageTableViewCell.h"
-#import "UINavigationBar+WOT.h"
-#import "UIBarButtonItem+EventBlock.h"
-#import "NSBundle+LanguageBundle.h"
-
+#import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTLanguageSelectorViewController () <UITableViewDataSource, UITableViewDelegate>
 

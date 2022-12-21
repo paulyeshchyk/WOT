@@ -6,7 +6,7 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTTankListSettingsDatasource.h"
+#import <WOTApi/WOTApi.h>
 #import "WOTTableViewDatasourceProtocol.h"
 
 @interface WOTTankListSettingsDatasource (TableView) <WOTTableViewDatasourceProtocol>

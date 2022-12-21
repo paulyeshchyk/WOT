@@ -9,7 +9,7 @@
 #import "WOTTankDetailCollectionViewCell.h"
 #import "WOTTankDetailTextTableViewCell.h"
 #import "WOTTankDetailProgressTableViewCell.h"
-#import "WOTTankDetailField.h"
+#import <WOTApi/WOTApi.h>
 
 static const NSInteger RowHeight = 44.0f;
 

@@ -7,7 +7,8 @@
 //
 
 #import "WOTTankDetailTextTableViewCell.h"
-#import "NSBundle+LanguageBundle.h"
+#import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTTankDetailTextTableViewCell ()
 

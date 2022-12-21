@@ -38,17 +38,17 @@
     
     if (!updatedSetting) {
         
-        if ([type isEqualToString:WOT_KEY_SETTING_TYPE_SORT]) {
+        if ([type isEqualToString:WOTApiSettingType.key_type_sort]) {
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
             [WOTTankListSettingsDatasource context:self.context createSortSettingForKey:value ascending:ascending orderBy:orderBy callback:callback];
-        } else if([type isEqualToString:WOT_KEY_SETTING_TYPE_GROUP]){
+        } else if([type isEqualToString:WOTApiSettingType.key_type_group]){
             
             NSInteger indexOfType = [self.availableSections indexOfObject:type];
             NSInteger orderBy = [self objectsCountForSection:indexOfType];
             [WOTTankListSettingsDatasource context:self.context createGroupBySettingForKey:value ascending:ascending orderBy:orderBy callback:callback];
-        } else if ([type isEqualToString:WOT_KEY_SETTING_TYPE_FILTER]) {
+        } else if ([type isEqualToString:WOTApiSettingType.key_type_filter]) {
             
             [WOTTankListSettingsDatasource context:self.context createFilterBySettingForKey:value value:filterValue callback:callback];
         } else {
@@ -69,7 +69,7 @@
 
 - (NSArray *)availableSections {
     
-    return @[WOT_KEY_SETTING_TYPE_SORT,WOT_KEY_SETTING_TYPE_GROUP,WOT_KEY_SETTING_TYPE_FILTER];
+    return @[WOTApiSettingType.key_type_sort,WOTApiSettingType.key_type_group,WOTApiSettingType.key_type_filter];
 }
 
 - (id<NSFetchedResultsSectionInfo>)sectionInfoAtIndex:(NSInteger)index {

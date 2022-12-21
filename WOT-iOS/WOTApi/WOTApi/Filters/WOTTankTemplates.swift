@@ -13,8 +13,8 @@ import WOTPivot
 class WOTPivotTemplateVehicleTankID: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: WOTApiKeys.tank_id)
-        result.addChild(pivotNodeClass.init(name: "X", predicate: NSPredicate(format: "%K > 0", WOTApiKeys.tank_id)))
+        let result = pivotNodeClass.init(name: WOTApiFields.tank_id)
+        result.addChild(pivotNodeClass.init(name: "X", predicate: NSPredicate(format: "%K > 0", WOTApiFields.tank_id)))
 
         return result
     }
@@ -23,17 +23,17 @@ class WOTPivotTemplateVehicleTankID: WOTPivotTemplateProtocol {
 class WOTPivotTemplateVehicleTier: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: WOTApiKeys.tier)
-        result.addChild(pivotNodeClass.init(name: "I", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "1")))
-        result.addChild(pivotNodeClass.init(name: "II", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "2")))
-        result.addChild(pivotNodeClass.init(name: "III", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "3")))
-        result.addChild(pivotNodeClass.init(name: "IV", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "4")))
-        result.addChild(pivotNodeClass.init(name: "V", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "5")))
-        result.addChild(pivotNodeClass.init(name: "VI", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "6")))
-        result.addChild(pivotNodeClass.init(name: "VII", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "7")))
-        result.addChild(pivotNodeClass.init(name: "VIII", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "8")))
-        result.addChild(pivotNodeClass.init(name: "IX", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "9")))
-        result.addChild(pivotNodeClass.init(name: "X", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiKeys.tier, "10")))
+        let result = pivotNodeClass.init(name: WOTApiFields.tier)
+        result.addChild(pivotNodeClass.init(name: "I", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "1")))
+        result.addChild(pivotNodeClass.init(name: "II", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "2")))
+        result.addChild(pivotNodeClass.init(name: "III", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "3")))
+        result.addChild(pivotNodeClass.init(name: "IV", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "4")))
+        result.addChild(pivotNodeClass.init(name: "V", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "5")))
+        result.addChild(pivotNodeClass.init(name: "VI", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "6")))
+        result.addChild(pivotNodeClass.init(name: "VII", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "7")))
+        result.addChild(pivotNodeClass.init(name: "VIII", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "8")))
+        result.addChild(pivotNodeClass.init(name: "IX", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "9")))
+        result.addChild(pivotNodeClass.init(name: "X", predicate: NSPredicate(format: "%K == CAST(%@,'NSDecimalNumber')", WOTApiFields.tier, "10")))
 
         return result
     }
@@ -42,9 +42,9 @@ class WOTPivotTemplateVehicleTier: WOTPivotTemplateProtocol {
 class WOTPivotTemplateVehiclePremium: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: WOTApiKeys.is_premium)
-        result.addChild(pivotNodeClass.init(name: "Is Premium",       predicate: NSPredicate(format: "%K == %@", WOTApiKeys.is_premium, NSNumber(value: 1))))
-        result.addChild(pivotNodeClass.init(name: "Is not Premium", predicate: NSPredicate(format: "%K == %@", WOTApiKeys.is_premium, NSNumber(value: 0))))
+        let result = pivotNodeClass.init(name: WOTApiFields.is_premium)
+        result.addChild(pivotNodeClass.init(name: "Is Premium",       predicate: NSPredicate(format: "%K == %@", WOTApiFields.is_premium, NSNumber(value: 1))))
+        result.addChild(pivotNodeClass.init(name: "Is not Premium", predicate: NSPredicate(format: "%K == %@", WOTApiFields.is_premium, NSNumber(value: 0))))
         return result
     }
 }
@@ -52,12 +52,12 @@ class WOTPivotTemplateVehiclePremium: WOTPivotTemplateProtocol {
 class WOTPivotTemplateVehicleType: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: WOTApiKeys.type)
-        result.addChild(pivotNodeClass.init(name: "ATSPG", predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.at_spg)))
-        result.addChild(pivotNodeClass.init(name: "LT",    predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.lightTank)))
-        result.addChild(pivotNodeClass.init(name: "HT",    predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.heavyTank)))
-        result.addChild(pivotNodeClass.init(name: "MT",    predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.mediumTank)))
-        result.addChild(pivotNodeClass.init(name: "SPG",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.type, WOTApiTankType.spg)))
+        let result = pivotNodeClass.init(name: WOTApiFields.type)
+        result.addChild(pivotNodeClass.init(name: "ATSPG", predicate: NSPredicate(format: "%K == %@", WOTApiFields.type, WOTApiTankType.at_spg)))
+        result.addChild(pivotNodeClass.init(name: "LT",    predicate: NSPredicate(format: "%K == %@", WOTApiFields.type, WOTApiTankType.lightTank)))
+        result.addChild(pivotNodeClass.init(name: "HT",    predicate: NSPredicate(format: "%K == %@", WOTApiFields.type, WOTApiTankType.heavyTank)))
+        result.addChild(pivotNodeClass.init(name: "MT",    predicate: NSPredicate(format: "%K == %@", WOTApiFields.type, WOTApiTankType.mediumTank)))
+        result.addChild(pivotNodeClass.init(name: "SPG",   predicate: NSPredicate(format: "%K == %@", WOTApiFields.type, WOTApiTankType.spg)))
         return result
     }
 }
@@ -65,18 +65,18 @@ class WOTPivotTemplateVehicleType: WOTPivotTemplateProtocol {
 class WOTPivotTemplateVehicleNation: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
-        let result = pivotNodeClass.init(name: WOTApiKeys.nation)
-        result.addChild(pivotNodeClass.init(name: "china",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "china")))
-        result.addChild(pivotNodeClass.init(name: "czech",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "czech")))
-        result.addChild(pivotNodeClass.init(name: "france",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "france")))
-        result.addChild(pivotNodeClass.init(name: "germany", predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "germany")))
-        result.addChild(pivotNodeClass.init(name: "italy",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "italy")))
-        result.addChild(pivotNodeClass.init(name: "japan",   predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "japan")))
-        result.addChild(pivotNodeClass.init(name: "poland",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "poland")))
-        result.addChild(pivotNodeClass.init(name: "sweden",  predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "sweden")))
-        result.addChild(pivotNodeClass.init(name: "uk",      predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "uk")))
-        result.addChild(pivotNodeClass.init(name: "usa",     predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "usa")))
-        result.addChild(pivotNodeClass.init(name: "ussr",    predicate: NSPredicate(format: "%K == %@", WOTApiKeys.nation, "ussr")))
+        let result = pivotNodeClass.init(name: WOTApiFields.nation)
+        result.addChild(pivotNodeClass.init(name: "china",   predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "china")))
+        result.addChild(pivotNodeClass.init(name: "czech",   predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "czech")))
+        result.addChild(pivotNodeClass.init(name: "france",  predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "france")))
+        result.addChild(pivotNodeClass.init(name: "germany", predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "germany")))
+        result.addChild(pivotNodeClass.init(name: "italy",   predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "italy")))
+        result.addChild(pivotNodeClass.init(name: "japan",   predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "japan")))
+        result.addChild(pivotNodeClass.init(name: "poland",  predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "poland")))
+        result.addChild(pivotNodeClass.init(name: "sweden",  predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "sweden")))
+        result.addChild(pivotNodeClass.init(name: "uk",      predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "uk")))
+        result.addChild(pivotNodeClass.init(name: "usa",     predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "usa")))
+        result.addChild(pivotNodeClass.init(name: "ussr",    predicate: NSPredicate(format: "%K == %@", WOTApiFields.nation, "ussr")))
         return result
     }
 }

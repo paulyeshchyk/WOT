@@ -75,6 +75,10 @@
 		DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */; };
 		DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51F2952FFDC00C60F31 /* Coding.swift */; };
 		DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */; };
+		DA81E7E029533DAA00C60F31 /* WOTViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7DF29533DAA00C60F31 /* WOTViewControllerProtocol.swift */; };
+		DA81E7E229533E3C00C60F31 /* ResponseParserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E129533E3C00C60F31 /* ResponseParserProtocol.swift */; };
+		DA81E7E429533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */; };
+		DA81E7E629533EE800C60F31 /* SessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +163,10 @@
 		DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		DA81E51F2952FFDC00C60F31 /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Decode.swift"; sourceTree = "<group>"; };
+		DA81E7DF29533DAA00C60F31 /* WOTViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTViewControllerProtocol.swift; sourceTree = "<group>"; };
+		DA81E7E129533E3C00C60F31 /* ResponseParserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseParserProtocol.swift; sourceTree = "<group>"; };
+		DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAdapterCreatorProtocol.swift; sourceTree = "<group>"; };
+		DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +377,10 @@
 				DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */,
 				DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */,
 				DA81E4E32952FC6900C60F31 /* MappingCoordinatorProtocol.swift */,
+				DA81E7DF29533DAA00C60F31 /* WOTViewControllerProtocol.swift */,
+				DA81E7E129533E3C00C60F31 /* ResponseParserProtocol.swift */,
+				DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */,
+				DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */,
 			);
 			path = protocols;
 			sourceTree = "<group>";
@@ -562,10 +574,12 @@
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
 				DA0E807729509F4F00B44CC6 /* DataStoreProtocol.swift in Sources */,
 				DA0E80822950AE1B00B44CC6 /* RequestableProtocol.swift in Sources */,
+				DA81E7E429533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift in Sources */,
 				DA0E806129508C1F00B44CC6 /* RequestArguments.swift in Sources */,
 				DA0E806729508CB900B44CC6 /* HostConfigurationProtocol.swift in Sources */,
 				DA0E80952950B07C00B44CC6 /* ForeignAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5072952FE3500C60F31 /* EventMapping.swift in Sources */,
+				DA81E7E229533E3C00C60F31 /* ResponseParserProtocol.swift in Sources */,
 				DA81E5182952FF7700C60F31 /* JSONError.swift in Sources */,
 				DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */,
 				DA81E5062952FE3500C60F31 /* EventRemoteFetch.swift in Sources */,
@@ -577,6 +591,7 @@
 				DA5F185A2951C58200191864 /* BasicErrors.swift in Sources */,
 				DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */,
 				DA0E80932950B07C00B44CC6 /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift in Sources */,
+				DA81E7E029533DAA00C60F31 /* WOTViewControllerProtocol.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,
 				DA81E50B2952FE3500C60F31 /* EventLocalFetch.swift in Sources */,
 				DA81E5092952FE3500C60F31 /* EventError.swift in Sources */,
@@ -600,6 +615,7 @@
 				DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */,
 				DA81E4DE2952FAA600C60F31 /* HttpServiceProtocol.swift in Sources */,
 				DA0E806429508C4700B44CC6 /* RequestProtocol.swift in Sources */,
+				DA81E7E629533EE800C60F31 /* SessionManagerProtocol.swift in Sources */,
 				DA0E809B2950B07C00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */,
 				DA81E5012952FE3500C60F31 /* EventCDFetch.swift in Sources */,

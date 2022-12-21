@@ -8,6 +8,8 @@
 
 import WOTPivot
 import ContextSDK
+import WOTKit
+import WOTApi
 
 class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
   #warning("Pivot configuration: collapse")
