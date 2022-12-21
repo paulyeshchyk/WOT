@@ -46,7 +46,6 @@
 		1D5144E7212D8C58006FD577 /* WOTPivotConstructorViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5144E5212D8C57006FD577 /* WOTPivotConstructorViewController~iphone.xib */; };
 		1D5144E8212D8C58006FD577 /* WOTPivotConstructorViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5144E6212D8C58006FD577 /* WOTPivotConstructorViewController~ipad.xib */; };
 		1D5D021A23C73376004B0314 /* WOTTankPivot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D021923C73376004B0314 /* WOTTankPivot.swift */; };
-		1D60E5FC246024FF007E5CA8 /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */; };
 		1D60E604246025F5007E5CA8 /* WOT_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E603246025F5007E5CA8 /* WOT_iOSTests.swift */; };
 		1D6426FA2123070C003116E4 /* WOTPivotRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6426F92123070C003116E4 /* WOTPivotRefreshControl.swift */; };
 		1D6DD6C12124106B00498BEE /* WOTSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6DD6C02124106B00498BEE /* WOTSplitViewController.xib */; };
@@ -268,12 +267,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D010DAB1B8DC45100FA6A75 /* TestWOTRequestExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWOTRequestExecutor.m; sourceTree = "<group>"; };
 		1D038A5F245ACE110015101F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D1795EC211D9ACA00A0E42E /* WOTTankPivotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankPivotViewController.swift; sourceTree = "<group>"; };
 		1D1795F82121920400A0E42E /* WOTTankPivotDataGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankPivotDataGroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D1795FA2121921300A0E42E /* WOTTankPivotDataGroupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTTankPivotDataGroupCollectionViewCell.xib; sourceTree = "<group>"; };
-		1D188FE01B9437460056D208 /* PivotTreeTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PivotTreeTestCase.m; sourceTree = "<group>"; };
 		1D3DAEE42133FDC800368AFA /* WOTData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D3DAEEA213400A600368AFA /* WOTTankPivotViewControllerUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankPivotViewControllerUITest.swift; sourceTree = "<group>"; };
 		1D4C920F1B25B39800E320B5 /* WOTMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTMacro.h; sourceTree = "<group>"; };
@@ -333,7 +330,6 @@
 		1D6FF50D2106FF85006C1328 /* WOTTankConfigurationItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankConfigurationItemViewController.h; sourceTree = "<group>"; };
 		1D6FF50E2106FF85006C1328 /* WOTTankConfigurationItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTankConfigurationItemViewController.m; sourceTree = "<group>"; };
 		1D72D8DF212314620005993B /* WOTSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTSplitViewController.swift; sourceTree = "<group>"; };
-		1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
 		1D79EDD621243A97005FBA34 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D86DD012122DB4C00678E71 /* WOTMenuDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMenuDatasource.swift; sourceTree = "<group>"; };
 		1D86DD032122F89A00678E71 /* WOTMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMenuItem.swift; sourceTree = "<group>"; };
@@ -399,7 +395,6 @@
 		1DD646381B1C616A00B0EC76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1DD646461B1C616A00B0EC76 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1DD646541B1C616A00B0EC76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1DD646551B1C616A00B0EC76 /* WOT_iOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOT_iOSTests.m; sourceTree = "<group>"; };
 		1DD6467E1B1C990800B0EC76 /* WOTPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPrefixHeader.pch; sourceTree = "<group>"; };
 		1DD646C01B1F36FB00B0EC76 /* WOTDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTDrawerViewController.h; sourceTree = "<group>"; };
 		1DD646C11B1F36FB00B0EC76 /* WOTDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTDrawerViewController.m; sourceTree = "<group>"; };
@@ -959,10 +954,6 @@
 			isa = PBXGroup;
 			children = (
 				1DD646531B1C616A00B0EC76 /* Supporting Files */,
-				1DD646551B1C616A00B0EC76 /* WOT_iOSTests.m */,
-				1D79C78320F5D40600FFAF02 /* AppDelegateTest.swift */,
-				1D010DAB1B8DC45100FA6A75 /* TestWOTRequestExecutor.m */,
-				1D188FE01B9437460056D208 /* PivotTreeTestCase.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1717,7 +1708,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1795F92121920400A0E42E /* WOTTankPivotDataGroupCollectionViewCell.swift in Sources */,
-				1D60E5FC246024FF007E5CA8 /* AppDelegateTest.swift in Sources */,
 				1DEEAC6B20FF1E1F0072E099 /* NSObject+WOTTankGridValueData.m in Sources */,
 				1D6FF5142106FF85006C1328 /* WOTTankConfigurationItemViewController.m in Sources */,
 				1D72D8E0212314620005993B /* WOTSplitViewController.swift in Sources */,

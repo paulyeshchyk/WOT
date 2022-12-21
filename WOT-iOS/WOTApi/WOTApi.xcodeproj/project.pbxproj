@@ -759,7 +759,7 @@
 			isa = PBXGroup;
 			children = (
 				DA81E7FA2953519A00C60F31 /* TankDetailDatasource */,
-				DA81E7F72953519900C60F31 /* TankIds */,
+				DA81E7F72953519900C60F31 /* TankIdsDatasource */,
 				DA81E7EC2953411400C60F31 /* ListSettingsDatasource */,
 				DA81E7E72953407000C60F31 /* ApplicationDefaults */,
 				DA81E7DA29533C4F00C60F31 /* languages */,
@@ -797,13 +797,13 @@
 			path = ListSettingsDatasource;
 			sourceTree = "<group>";
 		};
-		DA81E7F72953519900C60F31 /* TankIds */ = {
+		DA81E7F72953519900C60F31 /* TankIdsDatasource */ = {
 			isa = PBXGroup;
 			children = (
 				DA81E7F82953519900C60F31 /* WOTTankIdsDatasource.h */,
 				DA81E7F92953519900C60F31 /* WOTTankIdsDatasource.m */,
 			);
-			path = TankIds;
+			path = TankIdsDatasource;
 			sourceTree = "<group>";
 		};
 		DA81E7FA2953519A00C60F31 /* TankDetailDatasource */ = {
