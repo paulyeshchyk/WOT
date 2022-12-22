@@ -22,7 +22,7 @@
 
 @implementation WOTDrawerViewController
 
-@synthesize appManager;
+@synthesize context;
 
 + (UIViewController *)centerViewControllerForClassName:(Class )class title:(NSString *)title image:(UIImage *)image{
 

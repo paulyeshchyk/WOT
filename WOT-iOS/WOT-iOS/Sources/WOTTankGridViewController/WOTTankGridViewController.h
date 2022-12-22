@@ -14,7 +14,7 @@
 
 @end
 
-@interface WOTTankGridViewController : UIViewController<WOTViewControllerProtocol>
+@interface WOTTankGridViewController : UIViewController<ContextControllerProtocol>
 
 @property (nonatomic, assign)id<WOTGridViewControllerDelegate>delegate;
 

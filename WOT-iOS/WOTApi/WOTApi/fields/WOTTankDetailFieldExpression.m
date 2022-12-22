@@ -68,7 +68,7 @@
 
     NSError *error = nil;
     #warning "remove appdelegate"
-    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
     NSManagedObjectContext *context = [coreDataProvider workingContext];
     NSArray *objects = [context executeFetchRequest:request error:&error];

@@ -21,7 +21,7 @@
 
 @implementation WOTTankGridViewController
 
-@synthesize appManager;
+@synthesize context;
 
 - (void)dealloc {
     
