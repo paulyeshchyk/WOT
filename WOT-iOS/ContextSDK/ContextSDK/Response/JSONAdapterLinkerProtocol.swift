@@ -6,7 +6,7 @@
 //
 
 @objc
-public protocol JSONAdapterLinkerProtocol {
+public protocol JSONAdapterLinkerProtocol: MD5Protocol {
     var linkerPrimaryKeyType: PrimaryKeyType { get }
 
     init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?)

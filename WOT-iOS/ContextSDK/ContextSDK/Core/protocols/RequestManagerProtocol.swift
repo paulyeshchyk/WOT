@@ -12,7 +12,7 @@ public protocol RequestManagerProtocol {
     func removeListener(_ listener: RequestManagerListenerProtocol)
     func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
     func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws
-    func requestIds(forRequest request: RequestProtocol) -> [RequestIdType]
+    func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType]
     func fetchRemote(paradigm: MappingParadigmProtocol)
 }
 
