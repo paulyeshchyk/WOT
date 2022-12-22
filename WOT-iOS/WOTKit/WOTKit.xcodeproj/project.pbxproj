@@ -22,7 +22,6 @@
 		1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */; };
 		1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */; };
-		1D60E5A7245FE7E5007E5CA8 /* RequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E561245FE7E4007E5CA8 /* RequestManagerProtocol.swift */; };
 		1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E562245FE7E4007E5CA8 /* RequestManager.swift */; };
 		1D60E5B0245FE7E5007E5CA8 /* RequestListenerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56C245FE7E5007E5CA8 /* RequestListenerProtocol.swift */; };
 		1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */; };
@@ -54,6 +53,12 @@
 		DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */; };
 		DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E870295352FF00C60F31 /* WOTProgressView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E8812953530000C60F31 /* WOTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E871295352FF00C60F31 /* WOTProgressView.m */; };
+		DA81E90D29536FF500C60F31 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E90B29536FF500C60F31 /* Reachability.h */; };
+		DA81E90E29536FF500C60F31 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E90C29536FF500C60F31 /* Reachability.m */; };
+		DA81E914295370BA00C60F31 /* NSString+RomanUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */; };
+		DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E912295370BA00C60F31 /* RomanNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E913295370BA00C60F31 /* RomanNumber.m */; };
 		DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */; };
 		DAAD81FC29503D88001B0ACD /* NSManagedObject+ManagedObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD81FB29503D88001B0ACD /* NSManagedObject+ManagedObjectProtocol.swift */; };
 		DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */; };
@@ -90,7 +95,6 @@
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiverProtocol.swift; sourceTree = "<group>"; };
 		1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiver.swift; sourceTree = "<group>"; };
-		1D60E561245FE7E4007E5CA8 /* RequestManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManagerProtocol.swift; sourceTree = "<group>"; };
 		1D60E562245FE7E4007E5CA8 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		1D60E56C245FE7E5007E5CA8 /* RequestListenerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestListenerProtocol.swift; sourceTree = "<group>"; };
 		1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
@@ -125,6 +129,12 @@
 		DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
 		DA81E870295352FF00C60F31 /* WOTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProgressView.h; sourceTree = "<group>"; };
 		DA81E871295352FF00C60F31 /* WOTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProgressView.m; sourceTree = "<group>"; };
+		DA81E90B29536FF500C60F31 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		DA81E90C29536FF500C60F31 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
+		DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
+		DA81E912295370BA00C60F31 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
+		DA81E913295370BA00C60F31 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
 		DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ObjectContextProtocol.swift"; sourceTree = "<group>"; };
 		DAAD81FB29503D88001B0ACD /* NSManagedObject+ManagedObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+ManagedObjectProtocol.swift"; sourceTree = "<group>"; };
 		DAAD823A29505864001B0ACD /* PYContext.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PYContext.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +209,7 @@
 		1D60E51D245FE7A7007E5CA8 /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E90F295370BA00C60F31 /* RomanNumber */,
 				DA81E85B295352FD00C60F31 /* NSBundle */,
 				DA81E85E295352FE00C60F31 /* UIBar */,
 				DA81E869295352FE00C60F31 /* UIBarButtonItem */,
@@ -263,6 +274,7 @@
 		1D60E557245FE7E4007E5CA8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E90A29536FF500C60F31 /* Reachability */,
 				1DFCC92C24714AAF005F580E /* ResponseAdapterCreator */,
 				1D60E5D8245FE9BE007E5CA8 /* SessionManager */,
 				1D60E558245FE7E4007E5CA8 /* ResponseCoordinator */,
@@ -294,7 +306,6 @@
 		1D60E560245FE7E4007E5CA8 /* RequestManager */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E561245FE7E4007E5CA8 /* RequestManagerProtocol.swift */,
 				1D60E562245FE7E4007E5CA8 /* RequestManager.swift */,
 			);
 			path = RequestManager;
@@ -495,6 +506,26 @@
 			path = UIProgressView;
 			sourceTree = "<group>";
 		};
+		DA81E90A29536FF500C60F31 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E90B29536FF500C60F31 /* Reachability.h */,
+				DA81E90C29536FF500C60F31 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		DA81E90F295370BA00C60F31 /* RomanNumber */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */,
+				DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */,
+				DA81E912295370BA00C60F31 /* RomanNumber.h */,
+				DA81E913295370BA00C60F31 /* RomanNumber.m */,
+			);
+			path = RomanNumber;
+			sourceTree = "<group>";
+		};
 		DAAD823929505864001B0ACD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,7 +549,10 @@
 				DA81E87C2953530000C60F31 /* UIBarButtonItem+EventBlock.h in Headers */,
 				DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */,
 				DA81E87E2953530000C60F31 /* UIView+StretchingConstraints.h in Headers */,
+				DA81E90D29536FF500C60F31 /* Reachability.h in Headers */,
 				DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */,
+				DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */,
+				DA81E914295370BA00C60F31 /* NSString+RomanUtils.h in Headers */,
 				DA81E7CD295326B800C60F31 /* NSThread+ExecutionOnMain.h in Headers */,
 				DA81E87A2953530000C60F31 /* UIImage+Resize.h in Headers */,
 				1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */,
@@ -679,6 +713,7 @@
 				DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */,
 				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */,
+				DA81E90E29536FF500C60F31 /* Reachability.m in Sources */,
 				1DFCC93024714B45005F580E /* ResponseAdapterCreator.swift in Sources */,
 				1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */,
 				1D60E5DA245FE9D5007E5CA8 /* SessionManagerProtocol.swift in Sources */,
@@ -689,7 +724,6 @@
 				DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */,
 				1D60E5B0245FE7E5007E5CA8 /* RequestListenerProtocol.swift in Sources */,
 				1D60E591245FE7E5007E5CA8 /* DataStore.swift in Sources */,
-				1D60E5A7245FE7E5007E5CA8 /* RequestManagerProtocol.swift in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */,
 				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
@@ -698,6 +732,7 @@
 				1D60E58F245FE7E5007E5CA8 /* NSManagedObject+RequestableProtocol.swift in Sources */,
 				1D60E52F245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift in Sources */,
 				DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */,
+				DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
 				DAAD81FC29503D88001B0ACD /* NSManagedObject+ManagedObjectProtocol.swift in Sources */,
@@ -706,6 +741,7 @@
 				1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */,
 				1D20FDEB24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift in Sources */,
 				DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */,
+				DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

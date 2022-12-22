@@ -6,7 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
 import WOTApi
 import WOTPivot
 

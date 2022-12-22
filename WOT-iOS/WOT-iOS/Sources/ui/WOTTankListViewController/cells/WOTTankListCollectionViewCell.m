@@ -8,10 +8,9 @@
 
 #import "WOTTankListCollectionViewCell.h"
 #import <WOTPivot/WOTPivot.h>
-#import <WOTKit/WOTKit-Swift.h>
+#import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
-#import "RomanNumber.h"
 
 @interface WOTTankListCollectionViewCell()
 

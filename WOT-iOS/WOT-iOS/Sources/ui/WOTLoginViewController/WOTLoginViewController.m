@@ -8,7 +8,6 @@
 
 #import "WOTLoginViewController.h"
 #import "WOTLanguageSelectorViewController.h"
-#import "WOTSessionManager.h"
 #import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
 

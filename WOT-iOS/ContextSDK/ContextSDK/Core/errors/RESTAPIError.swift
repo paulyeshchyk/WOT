@@ -7,6 +7,12 @@
 //
 
 public struct RESTAPIError: Error, CustomStringConvertible {
+    enum CodingKeys: String {
+        case code
+        case message
+    }
+    
+    
     public var code: Int
     public var message: String
     public init(code: Int?, message: String?) {
@@ -19,8 +25,8 @@ public struct RESTAPIError: Error, CustomStringConvertible {
     }
 
     public init?(json: JSON?) {
-        let code: Int = json?["code"] as? Int ?? -1
-        let message = json?["message"] as? String ?? "<unknown>"
+        let code: Int = json?[CodingKeys.code] as? Int ?? -1
+        let message = json?[CodingKeys.message] as? String ?? "<unknown>"
 
         self = RESTAPIError(code: code, message: message)
     }

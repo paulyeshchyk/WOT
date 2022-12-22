@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ContextSDK/ContextSDK.h>
 
 typedef NSTimer*(^WOTSessionManagerInvalidateTimeCompletion)(NSTimeInterval interval);
 

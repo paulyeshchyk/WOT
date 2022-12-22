@@ -79,6 +79,7 @@
 		DA81E7E229533E3C00C60F31 /* ResponseParserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E129533E3C00C60F31 /* ResponseParserProtocol.swift */; };
 		DA81E7E429533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */; };
 		DA81E7E629533EE800C60F31 /* SessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */; };
+		DA81E91E295445B100C60F31 /* RequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +168,7 @@
 		DA81E7E129533E3C00C60F31 /* ResponseParserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseParserProtocol.swift; sourceTree = "<group>"; };
 		DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAdapterCreatorProtocol.swift; sourceTree = "<group>"; };
 		DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerProtocol.swift; sourceTree = "<group>"; };
+		DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,6 +383,7 @@
 				DA81E7E129533E3C00C60F31 /* ResponseParserProtocol.swift */,
 				DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */,
 				DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */,
+				DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */,
 			);
 			path = protocols;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				DA81E5122952FF1D00C60F31 /* RESTAPIResponseProtocol.swift in Sources */,
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
+				DA81E91E295445B100C60F31 /* RequestManagerProtocol.swift in Sources */,
 				DA0E807729509F4F00B44CC6 /* DataStoreProtocol.swift in Sources */,
 				DA0E80822950AE1B00B44CC6 /* RequestableProtocol.swift in Sources */,
 				DA81E7E429533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift in Sources */,

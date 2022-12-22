@@ -8,9 +8,9 @@
 
 #import "WOTDrawerViewController.h"
 #import "MMDrawerVisualState.h"
-#import "WOTSessionManager.h"
 #import <WOT-Swift.h>
 #import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 

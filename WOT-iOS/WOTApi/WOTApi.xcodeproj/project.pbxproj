@@ -189,6 +189,8 @@
 		DA81E8552953524300C60F31 /* WOTNodePivotFactoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E80E2953521700C60F31 /* WOTNodePivotFactoryTest.swift */; };
 		DA81E8592953528400C60F31 /* NSExpressionDescription+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E8572953528400C60F31 /* NSExpressionDescription+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E85A2953528400C60F31 /* NSExpressionDescription+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8582953528400C60F31 /* NSExpressionDescription+WOT.m */; };
+		DA81E91B2954455E00C60F31 /* WOTSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E9192954455E00C60F31 /* WOTSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA81E91C2954455E00C60F31 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E91A2954455E00C60F31 /* WOTSessionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -402,6 +404,8 @@
 		DA81E82F2953521700C60F31 /* WOTTurretsCircularVisionRadiusCompareFieldExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTTurretsCircularVisionRadiusCompareFieldExpression.m; sourceTree = "<group>"; };
 		DA81E8572953528400C60F31 /* NSExpressionDescription+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSExpressionDescription+WOT.h"; sourceTree = "<group>"; };
 		DA81E8582953528400C60F31 /* NSExpressionDescription+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSExpressionDescription+WOT.m"; sourceTree = "<group>"; };
+		DA81E9192954455E00C60F31 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
+		DA81E91A2954455E00C60F31 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -449,6 +453,7 @@
 		DA0BC4C72952E0A100E01D54 /* WOTApi */ = {
 			isa = PBXGroup;
 			children = (
+				DA81E9182954451F00C60F31 /* SessionManager */,
 				DA0BC4EC2952E18200E01D54 /* request */,
 				DA0BC4EF2952E5BD00E01D54 /* response */,
 				DA0BC59A2952E7DE00E01D54 /* DataStore */,
@@ -906,6 +911,15 @@
 			path = NSExpressionDescription;
 			sourceTree = "<group>";
 		};
+		DA81E9182954451F00C60F31 /* SessionManager */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E9192954455E00C60F31 /* WOTSessionManager.h */,
+				DA81E91A2954455E00C60F31 /* WOTSessionManager.m */,
+			);
+			path = SessionManager;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -937,6 +951,7 @@
 				DA81E84D2953521700C60F31 /* WOTTurretsRotationSpeedCompareFieldExpression.h in Headers */,
 				DA81E8442953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.h in Headers */,
 				DA0BC4D62952E0A200E01D54 /* WOTApi.h in Headers */,
+				DA81E91B2954455E00C60F31 /* WOTSessionManager.h in Headers */,
 				DA81E7EF2953415200C60F31 /* WOTTankListSettingsDatasource.h in Headers */,
 				DA81E7F62953458700C60F31 /* WOTTankListSettingField.h in Headers */,
 				DA81E7DD29533C4F00C60F31 /* WOTLanguageDatasource.h in Headers */,
@@ -1098,6 +1113,7 @@
 				DA81E5ED295305CE00C60F31 /* VehicleprofileSuspension+RequestableProtocol.swift in Sources */,
 				DA81E5AC295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONMappableProtocol.swift in Sources */,
 				DA0BC5962952E7AF00E01D54 /* ModulesTreeHttpRequest.swift in Sources */,
+				DA81E91C2954455E00C60F31 /* WOTSessionManager.m in Sources */,
 				DA81E5F7295305CE00C60F31 /* VehicleprofileSuspension+JSONDecodingProtocol.swift in Sources */,
 				DA81E5DF295305CE00C60F31 /* ModulesTree+Customization.swift in Sources */,
 				DA81E5B9295305CE00C60F31 /* WOT_iOS.xcdatamodeld in Sources */,
