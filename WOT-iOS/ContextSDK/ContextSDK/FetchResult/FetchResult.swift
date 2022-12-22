@@ -9,12 +9,12 @@ public typealias FetchResultCompletion = (FetchResultProtocol, Error?) -> Void
 
 @objc
 open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
-    public var objectContext: ObjectContextProtocol?
+    public var objectContext: ManagedObjectContextProtocol?
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
 
     private var objectID: AnyObject?
-    private var managedObjectContext: ObjectContextProtocol
+    private var managedObjectContext: ManagedObjectContextProtocol
 
     override public required init() {
         fatalError("")
@@ -25,7 +25,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return "Context: \(managedObjectContext.name ?? ""); \(entityName)"
     }
 
-    public required init(objectContext cntx: ObjectContextProtocol, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
+    public required init(objectContext cntx: ManagedObjectContextProtocol, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
         managedObjectContext = cntx
         objectID = objID
         predicate = predicat
@@ -50,7 +50,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return managedObject(inManagedObjectContext: objectContext)
     }
 
-    public func managedObject(inManagedObjectContext context: ObjectContextProtocol?) -> ManagedObjectProtocol? {
+    public func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedObjectProtocol? {
         guard let objectID = objectID else {
             assertionFailure("objectID is not defined")
             return nil

@@ -8,17 +8,3 @@
 
 import ContextSDK
 
-@objc
-public enum WOTRequestManagerCompletionResultType: Int {
-    case finished
-    case noData
-}
-
-@objc
-public protocol RequestManagerListenerProtocol {
-    var uuidHash: Int { get }
-
-    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
-
-    func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol)
-}
