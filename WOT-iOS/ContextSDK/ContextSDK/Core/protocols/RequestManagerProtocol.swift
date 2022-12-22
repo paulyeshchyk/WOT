@@ -12,9 +12,9 @@ public protocol WOTRequestCoordinatorBridgeProtocol {
 
 @objc
 public protocol RequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
-    func addListener(_ listener: RequestManagerListenerProtocol?, forRequest: RequestProtocol)
+    //func addListener(_ listener: RequestManagerListenerProtocol?, forRequest: RequestProtocol)
     func removeListener(_ listener: RequestManagerListenerProtocol)
-    func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws
+    func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
     func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws
     func cancelRequests(groupId: RequestIdType, with error: Error?)
     func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
@@ -35,7 +35,7 @@ public protocol RequestManagerContainerProtocol {
 
 @objc
 public protocol RequestManagerListenerProtocol {
-    var uuidHash: Int { get }
+    var md5: String? { get }
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
     func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol)
 }

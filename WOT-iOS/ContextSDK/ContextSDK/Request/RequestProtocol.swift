@@ -9,10 +9,9 @@
 public typealias RequestIdType = String
 
 @objc
-public protocol RequestProtocol: StartableProtocol {
+public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
-    var uuid: UUID { get }
     var availableInGroups: [String] { get }
     var listeners: [RequestListenerProtocol] { get }
     var paradigm: MappingParadigmProtocol? { get set }
@@ -32,15 +31,15 @@ public protocol RequestListenerContainerProtocol {
 @objc
 public protocol RequestListenerProtocol {
     @objc
-    var hash: Int { get }
+    var md5: String? { get }
 
     @objc func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?)
     @objc func request(_ request: RequestProtocol, canceledWith error: Error?)
     @objc func request(_ request: RequestProtocol, startedWith hostConfiguration: HostConfigurationProtocol?)
 }
 
-@objc
-open class Request: NSObject, RequestProtocol {
+//@objc
+open class Request: RequestProtocol, DescriptableProtocol {
 
     private enum RequestError: Error {
         case shouldBeOverriden(String)
@@ -52,18 +51,13 @@ open class Request: NSObject, RequestProtocol {
     }
     
     public let context: RequestProtocol.Context
+    public var MD5: String? { uuid.MD5 }
+    public var description: String { String(describing: self) }
     
     public required init(context: RequestProtocol.Context) {
         self.context = context
     }
     
-    override open var description: String {
-        return String(describing: type(of: self))
-    }
-
-    override open var hash: Int {
-        return uuid.hashValue
-    }
 
     private var groups = [RequestIdType]()
 
@@ -96,8 +90,6 @@ open class Request: NSObject, RequestProtocol {
     }
 
     open func removeListener(_ listener: RequestListenerProtocol) {
-        if let index = listeners.firstIndex(where: { $0.hash == listener.hash }) {
-            listeners.remove(at: index)
-        }
+        listeners.removeAll(where: {$0.md5 == listener.md5 })
     }
 }

@@ -27,7 +27,7 @@ public enum LogEventType: Int {
 
 @objc
 public protocol LogEventProtocol {
-    static var type: LogEventType { get }
+    var eventType: LogEventType { get }
     var message: String { get }
     var name: String { get }
 }

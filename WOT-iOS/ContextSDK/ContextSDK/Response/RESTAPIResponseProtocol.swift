@@ -12,7 +12,7 @@ public protocol RESTAPIResponseProtocol: Codable {
     var swiftError: Error? { get }
 }
 
-public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
+public class RESTAPIResponse: RESTAPIResponseProtocol {
 
     public var status: RESTAPIResponseStatus? = .unknown
     public var meta: RESTAPIResponseMeta?
@@ -34,8 +34,7 @@ public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
 
     // MARK: - Decodable
 
-    public required convenience init(from decoder: Decoder) throws {
-        self.init()
+    public required init(from decoder: Decoder) throws {
 
         let container = try decoder.container(keyedBy: Fields.self)
         self.status = try container.decodeIfPresent(RESTAPIResponseStatus.self, forKey: .status)
@@ -119,8 +118,9 @@ public struct RESTAPIError: Error, CustomStringConvertible {
     }
 
     public init?(json: JSON?) {
-        let code: Int = json?[CodingKeys.code.rawValue] as? Int ?? -1
-        let message = json?[CodingKeys.message.rawValue] as? String ?? "<unknown>"
+        guard let json = json else { return nil }
+        let code: Int = json[CodingKeys.code.rawValue] as? Int ?? -1
+        let message = json[CodingKeys.message.rawValue] as? String ?? "<unknown>"
 
         self = RESTAPIError(code: code, message: message)
     }

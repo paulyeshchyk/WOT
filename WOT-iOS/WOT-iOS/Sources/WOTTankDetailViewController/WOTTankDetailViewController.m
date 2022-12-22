@@ -453,8 +453,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 //MARK: WOTRequestManagerListenerProtocol
 
-- (NSInteger)uuidHash {
-    return [@"WOTTankDetailViewController" hash];
+- (NSString *)MD5 {
+    return [MD5 MD5From:@"WOTTankDetailViewController"];
 }
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(WOTRequestManagerCompletionResultType)finished {

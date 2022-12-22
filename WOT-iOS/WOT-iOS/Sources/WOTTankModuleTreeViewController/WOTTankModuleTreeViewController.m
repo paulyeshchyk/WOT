@@ -15,6 +15,7 @@
 #import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
 #import <WOTKit/WOTKit.h>
+#import <ContextSDK/ContextSDK-Swift.h>
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
 @property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
@@ -101,7 +102,6 @@
 @end
 
 @implementation WOTTankModuleTreeViewController
-@synthesize uuidHash;
 @synthesize context;
 
 - (void)dealloc {
@@ -316,8 +316,8 @@
 }
 
 
-- (NSInteger)uuidHash {
-    return [@"WOTTankModuleTreeViewController" hash];
+- (NSString *)md5 {
+    return [MD5 MD5From:@"WOTTankModuleTreeViewController"];
 }
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {

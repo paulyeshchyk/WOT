@@ -7,7 +7,7 @@
 //
 
 public class EventJSONStart: LogEventProtocol {
-    public static var type: LogEventType { return .json }
+    public var eventType: LogEventType { return .json }
     public private(set) var message: String
     public var name: String { return "JSONStart" }
 
@@ -21,7 +21,7 @@ public class EventJSONStart: LogEventProtocol {
 }
 
 public class EventJSONEnded: LogEventProtocol {
-    public static var type: LogEventType { return .json }
+    public var eventType: LogEventType { return .json }
     public private(set) var message: String
     public var name: String { return "JSONEnded" }
 

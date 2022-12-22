@@ -9,7 +9,6 @@
 import WOTKit
 import ContextSDK
 
-@objc
 public class VehicleprofileEnginesHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 

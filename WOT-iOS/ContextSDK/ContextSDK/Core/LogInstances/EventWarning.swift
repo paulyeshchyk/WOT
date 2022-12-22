@@ -7,7 +7,7 @@
 //
 
 public class EventWarning: LogEventProtocol {
-    public static var type: LogEventType { return .error }
+    public var eventType: LogEventType { return .warning }
     public private(set) var message: String
     public var name: String { return "!!Warning!!"}
 

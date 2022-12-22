@@ -12,7 +12,7 @@ public enum EventMappingType: String {
 }
 
 public class EventMappingStart: LogEventProtocol {
-    public static var type: LogEventType { return .mapping }
+    public var eventType: LogEventType { return .mapping }
     public private(set) var message: String
     public var name: String { return "MappingStart" }
 
@@ -30,7 +30,7 @@ public class EventMappingStart: LogEventProtocol {
 }
 
 public class EventMappingEnded: LogEventProtocol {
-    public static var type: LogEventType { return .mapping }
+    public var eventType: LogEventType { return .mapping }
     public private(set) var message: String
     public var name: String { return "MappingEnded" }
 

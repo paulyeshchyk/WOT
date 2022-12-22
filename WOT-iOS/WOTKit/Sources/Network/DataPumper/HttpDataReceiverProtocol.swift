@@ -10,7 +10,7 @@ import ContextSDK
 
 public typealias DataReceiveCompletion = (Data?, Error?) -> Void
 
-public protocol HttpDataReceiverProtocol {
+public protocol HttpDataReceiverProtocol: MD5Protocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
     var delegate: HttpDataReceiverDelegateProtocol? { get set }

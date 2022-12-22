@@ -23,9 +23,8 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
 
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
-        requestManager.addListener(listener, forRequest: request)
         let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
-        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonAdapterLinker: pivotLinker)
+        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonAdapterLinker: pivotLinker, listener: listener)
     }
 
     @objc
@@ -35,9 +34,8 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.classKeypaths(), forKey: WGWebQueryArgs.fields)
 
         let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
-        requestManager.addListener(listener, forRequest: request)
         let treeViewLinker = Vehicles.VehiclesTreeViewLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
-        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonAdapterLinker: treeViewLinker)
+        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonAdapterLinker: treeViewLinker, listener: listener)
     }
 
     @objc

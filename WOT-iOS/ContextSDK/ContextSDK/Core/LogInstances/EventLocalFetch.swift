@@ -7,7 +7,7 @@
 //
 
 public class EventLocalFetch: LogEventProtocol {
-    public static var type: LogEventType { return .localFetch }
+    public var eventType: LogEventType { return .localFetch }
     public private(set) var message: String
     public var name: String { return "LocalFetch"}
 

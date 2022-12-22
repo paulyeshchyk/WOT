@@ -8,25 +8,25 @@
 
 import ContextSDK
 
-class HttpDataReceiver: NSObject, HttpDataReceiverProtocol {
+@objc
+public class HttpDataReceiver: NSObject, HttpDataReceiverProtocol {
     enum WOTWebDataPumperError: Error {
         case urlNotDefined
     }
 
     let request: URLRequest
 
-    override var hash: Int {
-        return request.url?.absoluteString.hashValue ?? 0
-    }
-
-    override var description: String {
+    public var MD5: String? { uuid.MD5 }
+    public var uuid: UUID { UUID()}
+    
+    public override var description: String {
         return request.url?.absoluteString ?? "-"
     }
     
     public weak var delegate: HttpDataReceiverDelegateProtocol?
     
     private let context: HttpDataReceiverProtocol.Context
-    required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
+    required public init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
 

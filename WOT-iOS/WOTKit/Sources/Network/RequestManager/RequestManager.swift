@@ -17,6 +17,8 @@ public class RequestManager: NSObject, RequestManagerProtocol {
         case linkerNotFound(RequestProtocol)
         case receivedResponseFromReleasedRequest
         case adapterNotFound
+        case cantAddListener
+        case invalidRequest
         public var debugDescription: String {
             switch self {
             case .linkerNotFound(let request): return "Linker not found for [\(String(describing: request))]"
@@ -24,12 +26,15 @@ public class RequestManager: NSObject, RequestManagerProtocol {
             case .requestNotFound: return "Request not found"
             case .requestWasNotAddedToGroup: return "Request was not added to group"
             case .adapterNotFound: return "Adapter not found"
+            case .cantAddListener: return "Can't add listener"
+            case .invalidRequest: return "Invalid request"
             }
         }
     }
     
     public typealias Context = ResponseParserContainerProtocol & LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & ResponseAdapterCreatorContainerProtocol
     
+    public let uuid: UUID = UUID()
     private let context: Context
 
     private var grouppedListeners = [AnyHashable: [RequestManagerListenerProtocol]]()
@@ -49,30 +54,31 @@ public class RequestManager: NSObject, RequestManagerProtocol {
 // MARK: - RequestManagerProtocol
 
 extension RequestManager {
-    public func addListener(_ listener: RequestManagerListenerProtocol?, forRequest: RequestProtocol) {
-        guard let listener = listener else { return }
-        let uuid = forRequest.uuid.uuidString
-        if var listeners = grouppedListeners[uuid] {
-            let filtered = listeners.filter { (availableListener) -> Bool in availableListener.uuidHash == listener.uuidHash }
+    private func addListener(_ listener: RequestManagerListenerProtocol, forRequest: RequestProtocol) throws {
+        guard let requestMD5 = forRequest.MD5 else {
+            throw RequestManagerError.invalidRequest
+        }
+        if var listeners = grouppedListeners[requestMD5] {
+            let filtered = listeners.filter { (availableListener) -> Bool in availableListener.md5 == listener.md5 }
             if filtered.count == 0 {
                 listeners.append(listener)
-                grouppedListeners[uuid] = listeners
+                grouppedListeners[requestMD5] = listeners
             }
         } else {
-            grouppedListeners[uuid] = [listener]
+            grouppedListeners[requestMD5] = [listener]
         }
     }
 
     #warning("2b refactored")
     public func removeListener(_ listener: RequestManagerListenerProtocol) {
-        grouppedListeners.keys.forEach { uuid in
-            if var listeners = grouppedListeners[uuid] {
+        for md5 in grouppedListeners.keys {
+            if var listeners = grouppedListeners[md5] {
                 listeners.removeAll { innerListener in
-                    innerListener.uuidHash == listener.uuidHash
+                    innerListener.md5 == listener.md5
                 }
-                grouppedListeners[uuid] = listeners
-                if let count = grouppedListeners[uuid]?.count, count == 0 {
-                    grouppedListeners[uuid] = nil
+                grouppedListeners[md5] = listeners
+                if let count = grouppedListeners[md5]?.count, count == 0 {
+                    grouppedListeners[md5] = nil
                 }
             }
         }
@@ -85,7 +91,7 @@ extension RequestManager {
             grouppedRequests.append(contentsOf: available)
         }
         let filtered = grouppedRequests.filter { (availableRequest) -> Bool in
-            availableRequest.uuid.uuidString == request.uuid.uuidString
+            availableRequest.MD5 == request.MD5
         }
         let result: Bool = (filtered.count == 0)
         if result {
@@ -98,16 +104,26 @@ extension RequestManager {
         return result
     }
 
-    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws {
+    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
         //
         guard addRequest(request, forGroupId: forGroupId) else {
             throw RequestManagerError.requestWasNotAddedToGroup
         }
+        
+        guard let md5 = request.MD5 else {
+            throw RequestManagerError.invalidRequest
+        }
+        
+        if let listener = listener {
+            try addListener(listener, forRequest: request)
+        } else {
+            context.logInspector?.logEvent(EventWarning(message: "request listener is nil"), sender: self)
+        }
 
-        grouppedLinkers[request.uuid.uuidString] = jsonAdapterLinker
+        grouppedLinkers[md5] = jsonAdapterLinker
 
         try request.start(withArguments: withArguments)
-        grouppedListeners[request.uuid.uuidString]?.forEach {
+        grouppedListeners[md5]?.forEach {
             $0.requestManager(self, didStartRequest: request)
         }
     }
@@ -118,7 +134,7 @@ extension RequestManager {
         let arguments = paradigm.buildRequestArguments()
         let jsonAdapterLinker = paradigm.jsonAdapterLinker
         let groupId = "Nested\(String(describing: paradigm.clazz))-\(arguments)"
-        try startRequest(request, withArguments: arguments, forGroupId: groupId, jsonAdapterLinker: jsonAdapterLinker)
+        try startRequest(request, withArguments: arguments, forGroupId: groupId, jsonAdapterLinker: jsonAdapterLinker, listener: nil)
     }
 
     public func cancelRequests(groupId: RequestIdType, with error: Error?) {
@@ -144,7 +160,10 @@ extension RequestManager {
 
 extension RequestManager {
     private func responseAdapters(for request: RequestProtocol) throws -> [DataAdapterProtocol]? {
-        guard let jsonAdapterLinker = grouppedLinkers[request.uuid.uuidString] else {
+        guard let md5 = request.MD5 else {
+            throw RequestManagerError.invalidRequest
+        }
+        guard let jsonAdapterLinker = grouppedLinkers[md5] else {
             throw RequestManagerError.linkerNotFound(request)
         }
 
@@ -158,14 +177,14 @@ extension RequestManager {
 extension RequestManager {
 
     private func onParseComplete(_ request: RequestProtocol?, error: Error?) {
-        guard let request = request else {
+        guard let request = request, let md5 = request.MD5 else {
             context.logInspector?.logEvent(EventError(RequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
             return
         }
         if let error = error {
             context.logInspector?.logEvent(EventError(error, details: request), sender: self)
         }
-        grouppedListeners[request.uuid.uuidString]?.forEach { listener in
+        grouppedListeners[md5]?.forEach { listener in
             listener.requestManager(self, didParseDataForRequest: request, completionResultType: .finished)
         }
     }
@@ -174,6 +193,9 @@ extension RequestManager {
 // MARK: - WOTRequestListenerProtocol
 
 extension RequestManager: RequestListenerProtocol {
+    
+    public var md5: String? { uuid.MD5 }
+    
     public func request(_ request: RequestProtocol, startedWith: HostConfigurationProtocol?) {
         context.logInspector?.logEvent(EventWEBStart(request), sender: self)
     }
@@ -206,17 +228,20 @@ extension RequestManager: RequestListenerProtocol {
     }
 
     private func removeRequest(_ request: RequestProtocol) {
-        request.availableInGroups.forEach { group in
+        
+        for group in request.availableInGroups {
             if var grouppedRequests = self.grouppedRequests[group] {
-                grouppedRequests.removeAll(where: { $0.uuid.uuidString == request.uuid.uuidString })
+                grouppedRequests.removeAll(where: { $0.MD5 == request.MD5 })
                 self.grouppedRequests[group] = grouppedRequests
             }
         }
         request.removeListener(self)
+        //
     }
 }
 
 extension RequestManager {
+    
     public func fetchRemote(paradigm: MappingParadigmProtocol) {
         guard let requestIDs = context.requestRegistrator?.requestIds(forClass: paradigm.clazz), requestIDs.count > 0 else {
             context.logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)

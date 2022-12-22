@@ -12,21 +12,10 @@ open class HttpRequest: Request {
 
     public var httpBodyData: Data?
 
-    override open var description: String {
-        let pumperDescription: String
-        if let pumper = httpDataReceiver {
-            pumperDescription = String(describing: pumper)
-        } else {
-            pumperDescription = ""
-        }
-
-        return "\(String(describing: type(of: self))) \(pumperDescription)"
+    public required init(context: HostConfigurationContainerProtocol & LogInspectorContainerProtocol) {
+        super.init(context: context)
     }
-
-    override open var hash: Int {
-        return (httpDataReceiver as? NSObject)?.hash ?? path.hashValue
-    }
-
+    
     deinit {
         self.httpDataReceiver?.delegate = nil
     }
