@@ -119,8 +119,8 @@ public struct RESTAPIError: Error, CustomStringConvertible {
     }
 
     public init?(json: JSON?) {
-        let code: Int = json?[CodingKeys.code] as? Int ?? -1
-        let message = json?[CodingKeys.message] as? String ?? "<unknown>"
+        let code: Int = json?[CodingKeys.code.rawValue] as? Int ?? -1
+        let message = json?[CodingKeys.message.rawValue] as? String ?? "<unknown>"
 
         self = RESTAPIError(code: code, message: message)
     }
