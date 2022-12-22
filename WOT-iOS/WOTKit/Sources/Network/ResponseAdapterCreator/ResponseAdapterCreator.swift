@@ -12,6 +12,11 @@ public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
     
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestRegistratorContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
     
+    private enum ResponseAdapterCreatorError: Error {
+        case adapterNotFound(requestType: String)
+        case modelClassNotFound(requestType: String)
+    }
+    
     private let context: Context
 
     public init(context: Context) {
@@ -20,10 +25,10 @@ public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
 
     public func responseAdapterInstance(for requestIdType: RequestIdType, request: RequestProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, requestManager: RequestManagerProtocol) throws -> JSONAdapterProtocol {
         guard let modelClass = context.requestRegistrator?.modelClass(forRequestIdType: requestIdType) else {
-            throw RequestCoordinatorError.modelClassNotFound(requestType: requestIdType.description)
+            throw ResponseAdapterCreatorError.modelClassNotFound(requestType: requestIdType.description)
         }
         guard let dataAdapterClass = context.requestRegistrator?.dataAdapterClass(for: requestIdType) else {
-            throw RequestCoordinatorError.adapterNotFound(requestType: requestIdType.description)
+            throw ResponseAdapterCreatorError.adapterNotFound(requestType: requestIdType.description)
         }
 
         return dataAdapterClass.init(Clazz: modelClass, request: request, context: context, jsonAdapterLinker: jsonAdapterLinker)

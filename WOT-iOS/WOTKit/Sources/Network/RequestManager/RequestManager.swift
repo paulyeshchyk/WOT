@@ -11,6 +11,21 @@ import ContextSDK
 @objc
 public class RequestManager: NSObject, RequestManagerProtocol {
     
+    private enum RequestManagerError: Error {
+        case requestWasNotAddedToGroup
+        case requestNotFound
+        case linkerNotFound(RequestProtocol)
+        case receivedResponseFromReleasedRequest
+        public var debugDescription: String {
+            switch self {
+            case .linkerNotFound(let request): return "Linker not found for [\(String(describing: request))]"
+            case .receivedResponseFromReleasedRequest: return "Received response from released request"
+            case .requestNotFound: return "Request not found"
+            case .requestWasNotAddedToGroup: return "Request was not added to group"
+            }
+        }
+    }
+    
     public typealias Context = ResponseParserContainerProtocol & LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & ResponseAdapterCreatorContainerProtocol
     
     private let context: Context
@@ -84,7 +99,7 @@ extension RequestManager {
     public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws {
         //
         guard addRequest(request, forGroupId: forGroupId) else {
-            throw WEBError.requestWasNotAddedToGroup
+            throw RequestManagerError.requestWasNotAddedToGroup
         }
 
         grouppedLinkers[request.uuid.uuidString] = jsonAdapterLinker
@@ -111,7 +126,7 @@ extension RequestManager {
     public func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
         guard
             let Clazz = context.requestRegistrator?.requestClass(for: requestId) as? RequestProtocol.Type else {
-            throw RequestCoordinatorError.requestNotFound
+            throw RequestManagerError.requestNotFound
         }
         return Clazz.init(context: context)
     }
@@ -128,7 +143,7 @@ extension RequestManager {
 extension RequestManager {
     private func responseAdapters(for request: RequestProtocol) -> [DataAdapterProtocol] {
         guard let jsonAdapterLinker = grouppedLinkers[request.uuid.uuidString] else {
-            context.logInspector?.logEvent(EventError(WOTRequestManagerError.linkerNotFound(request), details: self), sender: self)
+            context.logInspector?.logEvent(EventError(RequestManagerError.linkerNotFound(request), details: self), sender: self)
             return []
         }
 
@@ -147,7 +162,7 @@ extension RequestManager {
 
     private func onParseComplete(_ request: RequestProtocol?, _ sender: Any?, error: Error?) {
         guard let request = request else {
-            context.logInspector?.logEvent(EventError(WOTRequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
+            context.logInspector?.logEvent(EventError(RequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
             return
         }
         if let error = error {

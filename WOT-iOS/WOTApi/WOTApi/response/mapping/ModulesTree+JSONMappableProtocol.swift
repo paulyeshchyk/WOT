@@ -73,6 +73,11 @@ extension ModulesTree {
     }
 
     public class NextModulesLinker: BaseJSONAdapterLinker {
+        private enum NextModulesLinkerError: Error {
+            case wrongParentClass
+            case wrongChildClass
+        }
+        
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
         override public func onJSONExtraction(json: JSON) -> JSON { return json }
@@ -80,11 +85,11 @@ extension ModulesTree {
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
             guard let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree else {
-                completion(fetchResult, JSONAdapterLinkerError.wrongParentClass)
+                completion(fetchResult, NextModulesLinkerError.wrongParentClass)
                 return
             }
             guard let nextModule = fetchResult.managedObject() as? Module else {
-                completion(fetchResult, JSONAdapterLinkerError.wrongChildClass)
+                completion(fetchResult, NextModulesLinkerError.wrongChildClass)
                 return
             }
             modulesTree.addToNext_modules(nextModule)

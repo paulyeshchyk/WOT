@@ -26,9 +26,13 @@ public class RESTResponseParser: WOTResponseParserProtocol {
 // MARK: - WOTResponseParserProtocol
 
 extension RESTResponseParser {
+    private enum RESTResponseParserError: Error {
+        case dataIsEmpty
+    }
+    
     public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws {
         guard let data = parseData else {
-            throw RequestCoordinatorError.dataIsEmpty
+            throw RESTResponseParserError.dataIsEmpty
         }
 
         let localCallback: OnParseComplete = { request, data, error in

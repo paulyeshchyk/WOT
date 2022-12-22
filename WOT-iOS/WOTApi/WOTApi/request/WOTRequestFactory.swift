@@ -10,9 +10,14 @@ import WOTKit
 
 @objc
 public class WOTWEBRequestFactory: NSObject {
+    
+    private enum HttpRequestFactoryError: Error {
+        case objectNotDefined
+    }
+    
     public static func fetchVehiclePivotData(_ requestManager: RequestManagerProtocol?, listener: RequestManagerListenerProtocol) throws {
         guard let requestManager = requestManager else {
-            throw LogicError.objectNotDefined
+            throw HttpRequestFactoryError.objectNotDefined
         }
         let arguments = RequestArguments()
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)

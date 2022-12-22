@@ -42,6 +42,15 @@ public protocol RequestListenerProtocol {
 @objc
 open class Request: NSObject, RequestProtocol {
 
+    private enum RequestError: Error {
+        case shouldBeOverriden(String)
+        var debugDescription: String {
+            switch self {
+            case .shouldBeOverriden(let text): return "'\(text)' should be overridden"
+            }
+        }
+    }
+    
     public let context: RequestProtocol.Context
     
     public required init(context: RequestProtocol.Context) {
@@ -61,7 +70,7 @@ open class Request: NSObject, RequestProtocol {
     open func cancel(with error: Error?) {}
 
     open func start(withArguments: RequestArgumentsProtocol) throws {
-        throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
+        throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
     // MARK: - WOTRequestProtocol

@@ -7,6 +7,11 @@
 
 @objc
 public class JSONAdapter: NSObject, JSONAdapterProtocol {
+
+    private enum JSONAdapterError: Error {
+        case requestManagerIsNil
+    }
+
     // MARK: DataAdapterProtocol -
 
     public let uuid: UUID = UUID()
@@ -110,9 +115,8 @@ extension JSONAdapter {
                 return
             }
 
-            guard let requestManager = self.context.requestManager else {
-                #warning("add error")
-                localCallback(fetchResult, nil)
+            guard let requestManager = self.context.requestManager else {                
+                localCallback(fetchResult, JSONAdapterError.requestManagerIsNil)
                 return
             }
             

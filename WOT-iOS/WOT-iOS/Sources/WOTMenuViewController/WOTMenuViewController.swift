@@ -54,7 +54,7 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
 
     var selectedMenuItemClass: AnyClass {
         guard let item = self.menuDatasource?.object(at: self.selectedIndex) else {
-            fatalError("No viewcontroller found")
+            return DefaultMenuViewController.self
         }
         return item.controllerClass
     }
@@ -124,4 +124,8 @@ extension WOTMenuViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
         self.selectedIndex = indexPath.row
     }
+}
+
+class DefaultMenuViewController: UIViewController, ContextControllerProtocol {
+    var context: ContextProtocol?
 }

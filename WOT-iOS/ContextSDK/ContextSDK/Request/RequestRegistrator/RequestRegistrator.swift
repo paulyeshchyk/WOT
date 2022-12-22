@@ -22,6 +22,11 @@ open class RequestRegistrator: RequestRegistratorProtocol {
 // MARK: - WOTRequestBindingProtocol
 
 extension RequestRegistrator {
+    
+    private enum RequestRegistratorError: Error {
+        case requestClassNotFound(requestType: String)
+    }
+    
     public func requestIds(forClass: AnyClass) -> [RequestIdType] {
         let result = registeredRequests.keys.filter {
             forClass == registeredRequests[$0]?.modelClass()
@@ -54,7 +59,7 @@ extension RequestRegistrator {
     public func modelClass(forRequestIdType requestIdType: RequestIdType) -> PrimaryKeypathProtocol.Type? {
         guard let requestClass = registeredRequests[requestIdType] else {
             return nil
-//            throw RequestCoordinatorError.requestClassNotFound(requestType: requestIdType.description)
+//            throw RequestRegistratorError.requestClassNotFound(requestType: requestIdType.description)
         }
 
         return requestClass.modelClass()

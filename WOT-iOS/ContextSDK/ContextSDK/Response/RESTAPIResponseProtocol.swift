@@ -13,6 +13,7 @@ public protocol RESTAPIResponseProtocol: Codable {
 }
 
 public class RESTAPIResponse: NSObject, RESTAPIResponseProtocol {
+
     public var status: RESTAPIResponseStatus? = .unknown
     public var meta: RESTAPIResponseMeta?
     public var data: JSON?
@@ -95,5 +96,32 @@ public enum RESTAPIResponseStatus: String, Codable {
         } else {
             self = .unknown
         }
+    }
+}
+
+
+public struct RESTAPIError: Error, CustomStringConvertible {
+    enum CodingKeys: String {
+        case code
+        case message
+    }
+
+    public var code: Int
+    public var message: String
+
+    public init(code: Int?, message: String?) {
+        self.code = code ?? -1
+        self.message = message ?? "No message"
+    }
+
+    public var description: String {
+        return "RESTAPIError code: \(code); message: \(message)"
+    }
+
+    public init?(json: JSON?) {
+        let code: Int = json?[CodingKeys.code] as? Int ?? -1
+        let message = json?[CodingKeys.message] as? String ?? "<unknown>"
+
+        self = RESTAPIError(code: code, message: message)
     }
 }

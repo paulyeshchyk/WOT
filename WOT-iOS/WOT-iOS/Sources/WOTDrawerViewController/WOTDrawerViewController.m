@@ -24,6 +24,7 @@
 
 @synthesize context;
 
+#warning "Broken logic: UIViewController may not possess UI in NIB"
 + (UIViewController *)centerViewControllerForClassName:(Class )class title:(NSString *)title image:(UIImage *)image{
 
     NSString *nibName = NSStringFromClass(class.self);
@@ -72,6 +73,7 @@
         menuViewController.delegate = self;
         self.menu = menuViewController;
 
+        #warning "Broken logic: selectedMenuItemClass is not instantiated yet"
         self.visibleViewControllerClass = self.menu.selectedMenuItemClass;
         
         [self.menu rebuildMenu];

@@ -13,7 +13,6 @@
 		DA0E8038295064A400B44CC6 /* ContextSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E8037295064A400B44CC6 /* ContextSDKTests.swift */; };
 		DA0E803A295064A400B44CC6 /* ContextSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = DA0E802C295064A300B44CC6 /* ContextSDK.h */; platformFilter = ios; settings = {ATTRIBUTES = (Public, ); }; };
 		DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80522950688500B44CC6 /* NSDictionary+Append.swift */; };
-		DA0E8055295068F100B44CC6 /* URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E8054295068F100B44CC6 /* URLEncodedProtocol.swift */; };
 		DA0E805829506DA500B44CC6 /* Test_URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E805729506DA500B44CC6 /* Test_URLEncodedProtocol.swift */; };
 		DA0E805B295070A600B44CC6 /* NSDictionary+Append_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E805A295070A600B44CC6 /* NSDictionary+Append_Test.swift */; };
 		DA0E805F295082ED00B44CC6 /* Test_WOTRequestArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E805E295082ED00B44CC6 /* Test_WOTRequestArguments.swift */; };
@@ -42,7 +41,7 @@
 		DA0E809A2950B07C00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */; };
 		DA0E809B2950B07C00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */; };
 		DA5F18572951C10900191864 /* LogInspectorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5F18562951C10900191864 /* LogInspectorProtocol.swift */; };
-		DA5F185A2951C58200191864 /* BasicErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5F18592951C58200191864 /* BasicErrors.swift */; };
+		DA66B930295466F90052E4DB /* URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */; };
 		DA81E4DE2952FAA600C60F31 /* HttpServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */; };
 		DA81E4E02952FB9C00C60F31 /* JSONAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */; };
 		DA81E4E22952FBC000C60F31 /* DataAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */; };
@@ -66,11 +65,6 @@
 		DA81E50D2952FE3500C60F31 /* EventCustomLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4FF2952FE3500C60F31 /* EventCustomLogic.swift */; };
 		DA81E5102952FE6700C60F31 /* Date+Elapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E50F2952FE6700C60F31 /* Date+Elapsed.swift */; };
 		DA81E5122952FF1D00C60F31 /* RESTAPIResponseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5112952FF1D00C60F31 /* RESTAPIResponseProtocol.swift */; };
-		DA81E5182952FF7700C60F31 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5132952FF7700C60F31 /* JSONError.swift */; };
-		DA81E5192952FF7700C60F31 /* RESTAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5142952FF7700C60F31 /* RESTAPIError.swift */; };
-		DA81E51A2952FF7700C60F31 /* WEBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5152952FF7700C60F31 /* WEBError.swift */; };
-		DA81E51B2952FF7700C60F31 /* ErrorMixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5162952FF7700C60F31 /* ErrorMixture.swift */; };
-		DA81E51C2952FF7700C60F31 /* DataAdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5172952FF7700C60F31 /* DataAdapterError.swift */; };
 		DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */; };
 		DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51F2952FFDC00C60F31 /* Coding.swift */; };
 		DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */; };
@@ -101,7 +95,6 @@
 		DA0E8037295064A400B44CC6 /* ContextSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextSDKTests.swift; sourceTree = "<group>"; };
 		DA0E8039295064A400B44CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA0E80522950688500B44CC6 /* NSDictionary+Append.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Append.swift"; sourceTree = "<group>"; };
-		DA0E8054295068F100B44CC6 /* URLEncodedProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncodedProtocol.swift; sourceTree = "<group>"; };
 		DA0E805729506DA500B44CC6 /* Test_URLEncodedProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_URLEncodedProtocol.swift; sourceTree = "<group>"; };
 		DA0E805A295070A600B44CC6 /* NSDictionary+Append_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Append_Test.swift"; sourceTree = "<group>"; };
 		DA0E805E295082ED00B44CC6 /* Test_WOTRequestArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_WOTRequestArguments.swift; sourceTree = "<group>"; };
@@ -130,7 +123,7 @@
 		DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA5F18562951C10900191864 /* LogInspectorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInspectorProtocol.swift; sourceTree = "<group>"; };
-		DA5F18592951C58200191864 /* BasicErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicErrors.swift; sourceTree = "<group>"; };
+		DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLEncodedProtocol.swift; path = ContextSDK/Core/protocols/URLEncodedProtocol.swift; sourceTree = SOURCE_ROOT; };
 		DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpServiceProtocol.swift; sourceTree = "<group>"; };
 		DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterProtocol.swift; sourceTree = "<group>"; };
 		DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAdapterProtocol.swift; sourceTree = "<group>"; };
@@ -154,11 +147,6 @@
 		DA81E4FF2952FE3500C60F31 /* EventCustomLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCustomLogic.swift; sourceTree = "<group>"; };
 		DA81E50F2952FE6700C60F31 /* Date+Elapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Elapsed.swift"; sourceTree = "<group>"; };
 		DA81E5112952FF1D00C60F31 /* RESTAPIResponseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTAPIResponseProtocol.swift; sourceTree = "<group>"; };
-		DA81E5132952FF7700C60F31 /* JSONError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
-		DA81E5142952FF7700C60F31 /* RESTAPIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTAPIError.swift; sourceTree = "<group>"; };
-		DA81E5152952FF7700C60F31 /* WEBError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEBError.swift; sourceTree = "<group>"; };
-		DA81E5162952FF7700C60F31 /* ErrorMixture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMixture.swift; sourceTree = "<group>"; };
-		DA81E5172952FF7700C60F31 /* DataAdapterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAdapterError.swift; sourceTree = "<group>"; };
 		DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		DA81E51F2952FFDC00C60F31 /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Decode.swift"; sourceTree = "<group>"; };
@@ -270,10 +258,8 @@
 			children = (
 				DA81E51D2952FFDC00C60F31 /* codable */,
 				DA81E4F12952FE3500C60F31 /* LogInstances */,
-				DA5F18582951C55E00191864 /* errors */,
 				DA5F18552951C0DC00191864 /* protocols */,
 				DA0E80512950685200B44CC6 /* extensions */,
-				DA0E8054295068F100B44CC6 /* URLEncodedProtocol.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -371,31 +357,19 @@
 		DA5F18552951C0DC00191864 /* protocols */ = {
 			isa = PBXGroup;
 			children = (
-				DA5F18562951C10900191864 /* LogInspectorProtocol.swift */,
+				DA81E7DF29533DAA00C60F31 /* ContextControllerProtocol.swift */,
+				DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */,
 				DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */,
 				DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */,
-				DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */,
+				DA5F18562951C10900191864 /* LogInspectorProtocol.swift */,
 				DA81E4E32952FC6900C60F31 /* MappingCoordinatorProtocol.swift */,
-				DA81E7DF29533DAA00C60F31 /* ContextControllerProtocol.swift */,
+				DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */,
 				DA81E7E129533E3C00C60F31 /* ResponseParserProtocol.swift */,
 				DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */,
 				DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */,
-				DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */,
+				DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */,
 			);
 			path = protocols;
-			sourceTree = "<group>";
-		};
-		DA5F18582951C55E00191864 /* errors */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E5172952FF7700C60F31 /* DataAdapterError.swift */,
-				DA81E5162952FF7700C60F31 /* ErrorMixture.swift */,
-				DA81E5132952FF7700C60F31 /* JSONError.swift */,
-				DA81E5142952FF7700C60F31 /* RESTAPIError.swift */,
-				DA81E5152952FF7700C60F31 /* WEBError.swift */,
-				DA5F18592951C58200191864 /* BasicErrors.swift */,
-			);
-			path = errors;
 			sourceTree = "<group>";
 		};
 		DA81E4DC2952FA6600C60F31 /* Registrator */ = {
@@ -561,7 +535,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA81E51A2952FF7700C60F31 /* WEBError.swift in Sources */,
 				DA5F18572951C10900191864 /* LogInspectorProtocol.swift in Sources */,
 				DA0E80982950B07C00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5002952FE3500C60F31 /* EventJSON.swift in Sources */,
@@ -581,35 +554,30 @@
 				DA0E80952950B07C00B44CC6 /* ForeignAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5072952FE3500C60F31 /* EventMapping.swift in Sources */,
 				DA81E7E229533E3C00C60F31 /* ResponseParserProtocol.swift in Sources */,
-				DA81E5182952FF7700C60F31 /* JSONError.swift in Sources */,
 				DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */,
 				DA81E5062952FE3500C60F31 /* EventRemoteFetch.swift in Sources */,
 				DA81E4E42952FC6900C60F31 /* MappingCoordinatorProtocol.swift in Sources */,
 				DA81E5042952FE3500C60F31 /* EventWarning.swift in Sources */,
 				DA0E80692950919F00B44CC6 /* RequestExpression.swift in Sources */,
 				DA0E806E295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift in Sources */,
-				DA5F185A2951C58200191864 /* BasicErrors.swift in Sources */,
 				DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */,
 				DA0E80932950B07C00B44CC6 /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift in Sources */,
 				DA81E7E029533DAA00C60F31 /* ContextControllerProtocol.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,
 				DA81E50B2952FE3500C60F31 /* EventLocalFetch.swift in Sources */,
 				DA81E5092952FE3500C60F31 /* EventError.swift in Sources */,
+				DA66B930295466F90052E4DB /* URLEncodedProtocol.swift in Sources */,
 				DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */,
 				DA81E50C2952FE3500C60F31 /* EventCDStash.swift in Sources */,
 				DA0E80922950B07C00B44CC6 /* RootTagRuleBuilder.swift in Sources */,
-				DA81E5192952FF7700C60F31 /* RESTAPIError.swift in Sources */,
 				DA81E50A2952FE3500C60F31 /* EventCDMerge.swift in Sources */,
 				DA81E5022952FE3500C60F31 /* EventWEB.swift in Sources */,
 				DA81E4E02952FB9C00C60F31 /* JSONAdapterProtocol.swift in Sources */,
 				DA0E80792950A3A100B44CC6 /* RequestPredicate.swift in Sources */,
-				DA81E51C2952FF7700C60F31 /* DataAdapterError.swift in Sources */,
 				DA0E806529508C4700B44CC6 /* StartableProtocol.swift in Sources */,
 				DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */,
 				DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */,
-				DA81E51B2952FF7700C60F31 /* ErrorMixture.swift in Sources */,
 				DA0E80912950B07C00B44CC6 /* MasterAsSecondaryLinkedLocalAsPrimaryRuleBuilder.swift in Sources */,
-				DA0E8055295068F100B44CC6 /* URLEncodedProtocol.swift in Sources */,
 				DA81E50D2952FE3500C60F31 /* EventCustomLogic.swift in Sources */,
 				DA81E5032952FE3500C60F31 /* EventTimeMeasure.swift in Sources */,
 				DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */,
