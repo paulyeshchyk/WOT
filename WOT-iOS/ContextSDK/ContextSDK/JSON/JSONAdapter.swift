@@ -57,7 +57,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     public func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             context.logInspector?.logEvent(EventError(error, details: request), sender: self)
-            onJSONDidParse?(fromRequest, self, error)
+            onJSONDidParse?(fromRequest, error)
             return
         }
 
@@ -90,7 +90,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
             self.context.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
-            self.onJSONDidParse?(fromRequest, self, error)
+            self.onJSONDidParse?(fromRequest, error)
         }
     }
 }
@@ -115,7 +115,7 @@ extension JSONAdapter {
                 return
             }
 
-            guard let requestManager = self.context.requestManager else {                
+            guard let requestManager = self.context.requestManager else {
                 localCallback(fetchResult, JSONAdapterError.requestManagerIsNil)
                 return
             }

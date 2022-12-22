@@ -16,12 +16,14 @@ public class RequestManager: NSObject, RequestManagerProtocol {
         case requestNotFound
         case linkerNotFound(RequestProtocol)
         case receivedResponseFromReleasedRequest
+        case adapterNotFound
         public var debugDescription: String {
             switch self {
             case .linkerNotFound(let request): return "Linker not found for [\(String(describing: request))]"
             case .receivedResponseFromReleasedRequest: return "Received response from released request"
             case .requestNotFound: return "Request not found"
             case .requestWasNotAddedToGroup: return "Request was not added to group"
+            case .adapterNotFound: return "Adapter not found"
             }
         }
     }
@@ -141,26 +143,21 @@ extension RequestManager {
 }
 
 extension RequestManager {
-    private func responseAdapters(for request: RequestProtocol) -> [DataAdapterProtocol] {
+    private func responseAdapters(for request: RequestProtocol) throws -> [DataAdapterProtocol]? {
         guard let jsonAdapterLinker = grouppedLinkers[request.uuid.uuidString] else {
-            context.logInspector?.logEvent(EventError(RequestManagerError.linkerNotFound(request), details: self), sender: self)
-            return []
+            throw RequestManagerError.linkerNotFound(request)
         }
 
         let requestIds = self.requestIds(forRequest: request)
 
-        #warning("2b refactored")
-        guard let adapters = context.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: self) else {
-            return []
-        }
-        return adapters
+        return context.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, jsonAdapterLinker: jsonAdapterLinker, requestManager: self)
     }
 }
 
 // MARK: - Parser response
 extension RequestManager {
 
-    private func onParseComplete(_ request: RequestProtocol?, _ sender: Any?, error: Error?) {
+    private func onParseComplete(_ request: RequestProtocol?, error: Error?) {
         guard let request = request else {
             context.logInspector?.logEvent(EventError(RequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
             return
@@ -192,18 +189,12 @@ extension RequestManager: RequestListenerProtocol {
             return
         }
 
-        let adapters = responseAdapters(for: request)
-
-        if adapters.count == 0 {
-            onParseComplete(request, self, error: nil) // no adapters found
-            return
-        }
-
         do {
+            let adapters = try responseAdapters(for: request)
             try context.responseParser?.parseResponse(data: data,
                                                       forRequest: request,
                                                       adapters: adapters,
-                                                      onParseComplete: onParseComplete(_:_:error:))
+                                                      onParseComplete: onParseComplete(_:error:))
         } catch {
             context.logInspector?.logEvent(EventError(error, details: String(describing: request)), sender: self)
         }

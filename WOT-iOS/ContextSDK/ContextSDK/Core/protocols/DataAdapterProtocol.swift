@@ -5,7 +5,7 @@
 //  Created by Paul on 21.12.22.
 //
 
-public typealias OnParseComplete = (RequestProtocol?, Any?, Error?) -> Void
+public typealias OnParseComplete = (RequestProtocol?, Error?) -> Void
 
 @objc
 public protocol DataAdapterProtocol {
