@@ -36,7 +36,7 @@ public protocol RequestListenerProtocol {
 
     @objc func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?)
     @objc func request(_ request: RequestProtocol, canceledWith error: Error?)
-    @objc func request(_ request: RequestProtocol, startedWith hostConfiguration: HostConfigurationProtocol?, args: RequestArgumentsProtocol)
+    @objc func request(_ request: RequestProtocol, startedWith hostConfiguration: HostConfigurationProtocol?)
 }
 
 @objc

@@ -13,47 +13,37 @@ class HttpDataReceiver: NSObject, HttpDataReceiverProtocol {
         case urlNotDefined
     }
 
-    let request: URLRequest?
+    let request: URLRequest
 
     override var hash: Int {
-        return request?.url?.absoluteString.hashValue ?? 0
+        return request.url?.absoluteString.hashValue ?? 0
     }
 
     override var description: String {
-        return request?.url?.absoluteString ?? "-"
+        return request.url?.absoluteString ?? "-"
     }
-
-    convenience init(context: HttpDataReceiverProtocol.Context, args: RequestArgumentsProtocol, httpBodyData: Data?, service: HttpServiceProtocol) {
-        let requestBuilder = HttpRequestBuilder()
-        let urlRequest: URLRequest?
-        do {
-            urlRequest = try requestBuilder.build(service: service, hostConfiguration: context.hostConfiguration, args: args, bodyData: httpBodyData)
-        } catch {
-            urlRequest = nil
-        }
-        self.init(context: context, request: urlRequest)
-    }
-
+    
+    public weak var delegate: HttpDataReceiverDelegateProtocol?
+    
     private let context: HttpDataReceiverProtocol.Context
-    required init(context: HttpDataReceiverProtocol.Context, request: URLRequest?) {
+    required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
 
         super.init()
     }
 
-    public var onStart: ((HttpDataReceiverProtocol) -> ())?
-    public var onComplete: ((HttpDataReceiverProtocol, Data?, Error?) -> ())?
-    
     public func start() {
-        guard let url = request?.url else {
-            onComplete?(self, nil, WOTWebDataPumperError.urlNotDefined)
+        guard let url = request.url else {
+            delegate?.didEnd(receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
             return
         }
+        
+        delegate?.didStart(receiver: self)
         URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
             DispatchQueue.main.async { 
-                self.onComplete?(self, data, error)
+                self.delegate?.didEnd(receiver: self, data: data, error: error)
             }
 
         }.resume()

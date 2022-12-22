@@ -297,7 +297,7 @@
 }
 
 
-- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(id<HostConfigurationProtocol> _Nullable)hostConfiguration args:(id<RequestArgumentsProtocol> _Nonnull)args {
+- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(id<HostConfigurationProtocol> _Nullable)hostConfiguration {
     
 }
 

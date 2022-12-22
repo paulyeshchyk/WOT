@@ -13,9 +13,13 @@ public typealias DataReceiveCompletion = (Data?, Error?) -> Void
 public protocol HttpDataReceiverProtocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
-    var onStart: ((HttpDataReceiverProtocol) -> ())? { get set }
-    var onComplete: ((HttpDataReceiverProtocol, Data?, Error?) -> ())? { get set }
-
-    init(context: Context, request: URLRequest?)
+    var delegate: HttpDataReceiverDelegateProtocol? { get set }
+    
+    init(context: Context, request: URLRequest)
     func start()
+}
+
+public protocol HttpDataReceiverDelegateProtocol: AnyObject {
+    func didStart(receiver: HttpDataReceiverProtocol)
+    func didEnd(receiver: HttpDataReceiverProtocol, data: Data?, error: Error?)
 }

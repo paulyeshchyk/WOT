@@ -174,7 +174,7 @@ extension RequestManager {
 // MARK: - WOTRequestListenerProtocol
 
 extension RequestManager: RequestListenerProtocol {
-    public func request(_ request: RequestProtocol, startedWith: HostConfigurationProtocol?, args: RequestArgumentsProtocol) {
+    public func request(_ request: RequestProtocol, startedWith: HostConfigurationProtocol?) {
         context.logInspector?.logEvent(EventWEBStart(request), sender: self)
     }
 

@@ -27,38 +27,50 @@ open class HttpRequest: Request {
         return (httpDataReceiver as? NSObject)?.hash ?? path.hashValue
     }
 
+    deinit {
+        self.httpDataReceiver?.delegate = nil
+    }
+    
     override open func cancel(with error: Error?) {
-        self.listeners.compactMap { $0 }.forEach {
-            $0.request(self, canceledWith: error)
+        for listener in listeners {
+            listener.request(self, canceledWith: error)
         }
     }
 
     private var httpDataReceiver: HttpDataReceiverProtocol?
-    override open func start(withArguments: RequestArgumentsProtocol) throws {
-        let httpDataReceiver = HttpDataReceiver(context: context, args: withArguments, httpBodyData: httpBodyData, service: self)
-
-        httpDataReceiver.onStart = { [weak self] _ in
-            guard let self = self else { return }
-            self.listeners.compactMap { $0 }.forEach {
-                $0.request(self, startedWith: self.context.hostConfiguration, args: withArguments)
-            }
-        }
-        httpDataReceiver.onComplete = { [weak self] _, data, error in
-            guard let self = self else { return }
-            self.listeners.compactMap { $0 }.forEach {
-                $0.request(self, finishedLoadData: data, error: error)
-            }
-        }
-
-        httpDataReceiver.start()
-        self.httpDataReceiver = httpDataReceiver
-
+    override open func start(withArguments args: RequestArgumentsProtocol) throws {
+        
+        let urlRequest = try HttpRequestBuilder().build(hostConfiguration: context.hostConfiguration,
+                                                        httpMethod: httpMethod,
+                                                        path: path,
+                                                        args: args,
+                                                        bodyData: httpBodyData)
+        
+        httpDataReceiver = HttpDataReceiver(context: context, request: urlRequest)
+        httpDataReceiver?.delegate = self
+        httpDataReceiver?.start()
     }
 }
+
+extension HttpRequest: HttpDataReceiverDelegateProtocol {
+    public func didStart(receiver: HttpDataReceiverProtocol) {
+        for listener in listeners {
+            listener.request(self, startedWith: self.context.hostConfiguration)
+        }
+    }
+    
+    public func didEnd(receiver: HttpDataReceiverProtocol, data: Data?, error: Error?) {
+        for listener in listeners {
+            listener.request(self, finishedLoadData: data, error: error)
+        }
+        self.httpDataReceiver?.delegate = nil
+    }
+}
+
 
 // MARK: - WOTWebServiceProtocol
 
 extension HttpRequest: HttpServiceProtocol {
-    open var method: HTTPMethods { return .POST }
+    open var httpMethod: ContextSDK.HTTPMethod { return .POST }
     open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
 }

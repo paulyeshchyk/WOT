@@ -15,13 +15,13 @@ class HttpRequestBuilder {
         case urlNotCreated
     }
     
-    public func build(service: HttpServiceProtocol, hostConfiguration: HostConfigurationProtocol?, args: RequestArgumentsProtocol, bodyData: Data?) throws -> URLRequest {
-        let url = try buildURL(hostConfiguration: hostConfiguration, path: service.path, args: args, bodyData: bodyData)
+    public func build(hostConfiguration: HostConfigurationProtocol?, httpMethod: ContextSDK.HTTPMethod, path: String, args: RequestArgumentsProtocol, bodyData: Data?) throws -> URLRequest {
+        let url = try buildURL(hostConfiguration: hostConfiguration, path: path, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
         result.httpBody = bodyData
         result.timeoutInterval = 0
-        result.httpMethod = service.method.stringRepresentation
+        result.httpMethod = httpMethod.stringRepresentation
         return result
     }
 
