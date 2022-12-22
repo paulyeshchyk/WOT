@@ -187,7 +187,7 @@ extension DataStore {
 
 extension DataStore: DataStoreProtocol {
 
-    public func stash(objectContext: ObjectContextProtocol?, block: @escaping ThrowableCompletion) {
+    public func stash(objectContext: ManagedObjectContextProtocol?, block: @escaping ThrowableCompletion) {
         
         guard let managedObjectContext = objectContext as? NSManagedObjectContext else {
             assertionFailure("managedObjectContext is not defined")
@@ -207,7 +207,7 @@ extension DataStore: DataStoreProtocol {
         context.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid), sender: self)
     }
 
-    public func fetchLocal(objectContext: ObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
+    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
             context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
@@ -237,7 +237,7 @@ extension DataStore: DataStoreProtocol {
     }
     // MARK: - WOTCoredataStoreProtocol
 
-    @objc public func newPrivateContext() -> ObjectContextProtocol {
+    @objc public func newPrivateContext() -> ManagedObjectContextProtocol {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Private"
         managedObjectContext.parent = mainContext
@@ -245,12 +245,12 @@ extension DataStore: DataStoreProtocol {
         return managedObjectContext
     }
 
-    @objc public func workingContext() -> ObjectContextProtocol {
+    @objc public func workingContext() -> ManagedObjectContextProtocol {
         return mainContext
     }
 
     @objc
-    public func perform(objectContext: ObjectContextProtocol, block: @escaping ObjectContextCompletion) {
+    public func perform(objectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
         guard let managedObjectContext = objectContext as? NSManagedObjectContext else {
             assertionFailure("context is not NSManagedObjectContext")
             return
@@ -259,7 +259,7 @@ extension DataStore: DataStoreProtocol {
     }
 
     @objc
-    public func fetchResultController(for request: AnyObject, andContext: ObjectContextProtocol) -> AnyObject {
+    public func fetchResultController(for request: AnyObject, andContext: ManagedObjectContextProtocol) -> AnyObject {
         guard let context = andContext as? NSManagedObjectContext else {
             fatalError("context is notNSManagedObjectContext")
         }

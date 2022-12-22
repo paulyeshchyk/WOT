@@ -8,7 +8,8 @@
 
 import UIKit
 import WOTPivot
-import WOTData
+import WOTApi
+import CoreData
 
 class SteelPivotViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView?

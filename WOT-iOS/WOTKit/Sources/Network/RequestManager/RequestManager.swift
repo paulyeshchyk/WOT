@@ -16,7 +16,7 @@ public class RequestManager: NSObject, RequestManagerProtocol {
     private let context: Context
 
     private var grouppedListeners = [AnyHashable: [RequestManagerListenerProtocol]]()
-    private var grouppedRequests: [WOTRequestIdType: [RequestProtocol]] = [:]
+    private var grouppedRequests: [RequestIdType: [RequestProtocol]] = [:]
     private var grouppedLinkers: [AnyHashable: JSONAdapterLinkerProtocol] = [:]
 
     deinit {
@@ -62,7 +62,7 @@ extension RequestManager {
     }
 
     #warning("2b refactored")
-    private func addRequest(_ request: RequestProtocol, forGroupId groupId: WOTRequestIdType) -> Bool {
+    private func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) -> Bool {
         var grouppedRequests: [RequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
             grouppedRequests.append(contentsOf: available)
@@ -81,7 +81,7 @@ extension RequestManager {
         return result
     }
 
-    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: WOTRequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws {
+    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol) throws {
         //
         guard addRequest(request, forGroupId: forGroupId) else {
             throw WEBError.requestWasNotAddedToGroup
@@ -95,7 +95,7 @@ extension RequestManager {
         }
     }
 
-    public func startRequest(by requestId: WOTRequestIdType, paradigm: MappingParadigmProtocol) throws {
+    public func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws {
         let request = try createRequest(forRequestId: requestId, paradigm: paradigm)
 
         let arguments = paradigm.buildRequestArguments()
@@ -104,11 +104,11 @@ extension RequestManager {
         try startRequest(request, withArguments: arguments, forGroupId: groupId, jsonAdapterLinker: jsonAdapterLinker)
     }
 
-    public func cancelRequests(groupId: WOTRequestIdType, with error: Error?) {
+    public func cancelRequests(groupId: RequestIdType, with error: Error?) {
         grouppedRequests[groupId]?.forEach { $0.cancel(with: error) }
     }
 
-    public func createRequest(forRequestId requestId: WOTRequestIdType) throws -> RequestProtocol {
+    public func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
         guard
             let Clazz = context.requestRegistrator?.requestClass(for: requestId) as? RequestProtocol.Type else {
             throw RequestCoordinatorError.requestNotFound
@@ -118,7 +118,7 @@ extension RequestManager {
 }
 
 extension RequestManager {
-    private func createRequest(forRequestId requestId: WOTRequestIdType, paradigm: MappingParadigmProtocol) throws -> RequestProtocol {
+    private func createRequest(forRequestId requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws -> RequestProtocol {
         let request = try createRequest(forRequestId: requestId)
         request.paradigm = paradigm
         return request
@@ -227,7 +227,7 @@ extension RequestManager {
 }
 
 extension RequestManager {
-    public func requestIds(forRequest request: RequestProtocol) -> [WOTRequestIdType] {
+    public func requestIds(forRequest request: RequestProtocol) -> [RequestIdType] {
         guard let modelClass = context.requestRegistrator?.modelClass(forRequest: request) else {
             let eventError = EventError(message: "model class not found for request\(type(of: request))")
             context.logInspector?.logEvent(eventError, sender: self)

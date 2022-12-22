@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,8 +15,7 @@
 		1D60E5D7245FE97C007E5CA8 /* WOTDataFetchController+NodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5D6245FE97C007E5CA8 /* WOTDataFetchController+NodeCreator.swift */; };
 		1D60E5DC245FEA41007E5CA8 /* WOTDataFetchControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5DB245FEA41007E5CA8 /* WOTDataFetchControllerProtocol.swift */; };
 		1D60E5DE245FEA6F007E5CA8 /* WOTDataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E5DD245FEA6F007E5CA8 /* WOTDataFetchController.swift */; };
-		1D60E5F024601BAE007E5CA8 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */; };
-		1D60E5F124601BAE007E5CA8 /* WOTKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1D60E5F024601BAE007E5CA8 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */; platformFilter = ios; };
 		1D65F7F22216A60E006A85E4 /* WOTTankPivotLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EA2216A60D006A85E4 /* WOTTankPivotLayout.swift */; };
 		1D65F7F32216A60E006A85E4 /* WOTPivotLayoutCellAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7EB2216A60D006A85E4 /* WOTPivotLayoutCellAttributes.swift */; };
 		1D65F7F52216A60E006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F7ED2216A60D006A85E4 /* WOTPivotSeparatorLayoutAttributes.swift */; };
@@ -71,6 +70,7 @@
 		1DE559572125586200576D41 /* WOTPivotNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */; };
 		1DE5595921255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595821255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift */; };
 		1DE5595B21255AE400576D41 /* WOTNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */; };
+		DA0BC4B42952DC4F00E01D54 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4B32952DC4F00E01D54 /* ContextSDK.framework */; platformFilter = ios; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,20 +82,6 @@
 			remoteInfo = WOTPivot;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		1D60E5F224601BAE007E5CA8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				1D60E5F124601BAE007E5CA8 /* WOTKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D5D021723C7334F004B0314 /* WOTTankPivotNodeCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotNodeCreator.swift; sourceTree = "<group>"; };
@@ -164,6 +150,7 @@
 		1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeIndexProtocol.swift; sourceTree = "<group>"; };
 		1DE5595821255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeConnectorNodeIndexProtocol.swift; sourceTree = "<group>"; };
 		1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeIndexProtocol.swift; sourceTree = "<group>"; };
+		DA0BC4B32952DC4F00E01D54 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60E5F024601BAE007E5CA8 /* WOTKit.framework in Frameworks */,
+				DA0BC4B42952DC4F00E01D54 /* ContextSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +215,7 @@
 		1D60E511245FE563007E5CA8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA0BC4B32952DC4F00E01D54 /* ContextSDK.framework */,
 				1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */,
 			);
 			name = Frameworks;
@@ -522,7 +511,6 @@
 				1D79EDA1212439C2005FBA34 /* Frameworks */,
 				1D79EDA2212439C2005FBA34 /* Headers */,
 				1D79EDA3212439C2005FBA34 /* Resources */,
-				1D60E5F224601BAE007E5CA8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
