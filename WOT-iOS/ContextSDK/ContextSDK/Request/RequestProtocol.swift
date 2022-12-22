@@ -59,8 +59,6 @@ open class Request: RequestProtocol, DescriptableProtocol {
     }
     
 
-    private var groups = [RequestIdType]()
-
     open func cancel(with error: Error?) {}
 
     open func start(withArguments: RequestArgumentsProtocol) throws {
@@ -78,7 +76,7 @@ open class Request: RequestProtocol, DescriptableProtocol {
     public var paradigm: MappingParadigmProtocol?
 
     open func addGroup(_ group: RequestIdType) {
-        groups.append(group)
+        availableInGroups.append(group)
     }
 
     open func addListener(_ listener: RequestListenerProtocol) {
@@ -86,7 +84,7 @@ open class Request: RequestProtocol, DescriptableProtocol {
     }
 
     open func removeGroup(_ group: RequestIdType) {
-        groups.removeAll(where: { group.compare($0) == .orderedSame })
+        availableInGroups.removeAll(where: { group.compare($0) == .orderedSame })
     }
 
     open func removeListener(_ listener: RequestListenerProtocol) {

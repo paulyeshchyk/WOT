@@ -6,18 +6,12 @@
 //
 
 @objc
-public protocol WOTRequestCoordinatorBridgeProtocol {
-    func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol
-}
-
-@objc
-public protocol RequestManagerProtocol: WOTRequestCoordinatorBridgeProtocol {
-    //func addListener(_ listener: RequestManagerListenerProtocol?, forRequest: RequestProtocol)
+public protocol RequestManagerProtocol {
+    func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
+    func cancelRequests(groupId: RequestIdType, with error: Error?)
     func removeListener(_ listener: RequestManagerListenerProtocol)
     func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
     func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws
-    func cancelRequests(groupId: RequestIdType, with error: Error?)
-    func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
     func requestIds(forRequest request: RequestProtocol) -> [RequestIdType]
     func fetchRemote(paradigm: MappingParadigmProtocol)
 }

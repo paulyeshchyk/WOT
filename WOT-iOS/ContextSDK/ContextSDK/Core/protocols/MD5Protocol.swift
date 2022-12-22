@@ -13,11 +13,6 @@ public protocol MD5Protocol {
     var uuid: UUID { get }
 }
 
-func == (lhs: MD5Protocol, rhs: MD5Protocol) -> Bool {
-    return lhs.MD5 == rhs.MD5
-}
-
-
 @objc
 public protocol DescriptableProtocol {
     @objc
