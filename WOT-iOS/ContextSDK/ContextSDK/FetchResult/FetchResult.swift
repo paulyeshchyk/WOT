@@ -14,7 +14,6 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
     public var predicate: NSPredicate?
 
     private var objectID: AnyObject?
-    private var managedObjectContext: ManagedObjectContextProtocol
 
     override public required init() {
         fatalError("")
@@ -22,11 +21,11 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
 
     override public var description: String {
         let entityName = managedObject()?.entityName ?? ""
-        return "Context: \(managedObjectContext.name ?? ""); \(entityName)"
+        return "Context: \(objectContext?.name ?? ""); \(entityName)"
     }
 
-    public required init(objectContext cntx: ManagedObjectContextProtocol, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
-        managedObjectContext = cntx
+    public required init(objectContext cntx: ManagedObjectContextProtocol?, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
+
         objectID = objID
         predicate = predicat
         fetchStatus = status
@@ -36,7 +35,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = FetchResult(objectContext: managedObjectContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
+        let copy = FetchResult(objectContext: objectContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }
 

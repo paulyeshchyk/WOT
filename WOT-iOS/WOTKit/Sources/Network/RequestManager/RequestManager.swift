@@ -12,22 +12,24 @@ import ContextSDK
 public class RequestManager: NSObject {
     
     private enum RequestManagerError: Error {
+        case adapterNotFound(RequestProtocol)
         case requestWasNotAddedToGroup
         case requestNotFound
-        case linkerNotFound(RequestProtocol)
         case receivedResponseFromReleasedRequest
-        case adapterNotFound
         case cantAddListener
         case invalidRequest
+        case modelClassNotFound(RequestProtocol)
+        case modelClassNotRegistered(AnyObject, RequestProtocol)
         public var debugDescription: String {
             switch self {
-            case .linkerNotFound(let request): return "Linker not found for [\(String(describing: request))]"
+            case .adapterNotFound(let request): return "Linker not found for request: \(String(describing: request))"
             case .receivedResponseFromReleasedRequest: return "Received response from released request"
             case .requestNotFound: return "Request not found"
             case .requestWasNotAddedToGroup: return "Request was not added to group"
-            case .adapterNotFound: return "Adapter not found"
             case .cantAddListener: return "Can't add listener"
             case .invalidRequest: return "Invalid request"
+            case .modelClassNotFound(let request): return "Model class not found for request: \(String(describing: request))"
+            case .modelClassNotRegistered(let model, let request): return "Model class(\((type(of: model))) registered for request: \(String(describing: request))"
             }
         }
     }
@@ -37,9 +39,9 @@ public class RequestManager: NSObject {
     public let uuid: UUID = UUID()
     private let context: Context
 
-    private let grouppedListeners = GrouppedListeners()
-    private let grouppedRequests = GrouppedRequests()
-    private var grouppedLinkers: [AnyHashable: JSONAdapterLinkerProtocol] = [:]
+    private let grouppedListenerList = RequestGrouppedListenerList()
+    private let grouppedRequestList = RequestGrouppedRequestList()
+    private let adapterList = RequestAdaptersList()
 
     deinit {
         //
@@ -63,37 +65,33 @@ extension RequestManager: RequestManagerProtocol {
     }
 
     public func cancelRequests(groupId: RequestIdType, with error: Error?) {
-        grouppedRequests.cancelRequests(groupId: groupId, with: error)
+        grouppedRequestList.cancelRequests(groupId: groupId, with: error)
     }
 
     public func removeListener(_ listener: RequestManagerListenerProtocol) {
-        grouppedListeners.removeListener(listener)
+        grouppedListenerList.removeListener(listener)
     }
 
     public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
         //
-        guard grouppedRequests.addRequest(request, forGroupId: forGroupId) else {
+        guard grouppedRequestList.addRequest(request, forGroupId: forGroupId) else {
             throw RequestManagerError.requestWasNotAddedToGroup
         }
         
-        guard let md5 = request.MD5 else {
-            throw RequestManagerError.invalidRequest
-        }
-
         request.addListener(self)
 
         if let listener = listener {
-            try grouppedListeners.addListener(listener, forRequest: request)
+            try grouppedListenerList.addListener(listener, forRequest: request)
 
         } else {
             context.logInspector?.logEvent(EventWarning(message: "request listener is nil"), sender: self)
         }
 
-        grouppedLinkers[md5] = jsonAdapterLinker
+        try adapterList.addAdapter(jsonAdapterLinker, forRequest: request)
 
         try request.start(withArguments: withArguments)
 
-        grouppedListeners.didStartRequest(request, requestManager: self)
+        grouppedListenerList.didStartRequest(request, requestManager: self)
     }
 
     public func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws {
@@ -105,18 +103,40 @@ extension RequestManager: RequestManagerProtocol {
         let groupId = "Nested\(String(describing: paradigm.clazz))-\(arguments)"
         try startRequest(request, withArguments: arguments, forGroupId: groupId, jsonAdapterLinker: jsonAdapterLinker, listener: nil)
     }
+    
+    public func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType] {
+        guard let modelClass = context.requestRegistrator?.modelClass(forRequest: request) else {
+            throw RequestManagerError.modelClassNotFound(request)
+        }
+
+        guard let result = context.requestRegistrator?.requestIds(forClass: modelClass), result.count > 0 else {
+            throw RequestManagerError.modelClassNotRegistered(modelClass, request)
+        }
+        return result
+    }
+    
+    public func fetchRemote(paradigm: MappingParadigmProtocol) {
+        guard let requestIDs = context.requestRegistrator?.requestIds(forClass: paradigm.clazz), requestIDs.count > 0 else {
+            context.logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
+            return
+        }
+        requestIDs.forEach {
+            do {
+                try self.startRequest(by: $0, paradigm: paradigm)
+            } catch {
+                context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+            }
+        }
+    }
 }
 
 extension RequestManager {
     private func responseAdapters(for request: RequestProtocol) throws -> [DataAdapterProtocol]? {
-        guard let md5 = request.MD5 else {
-            throw RequestManagerError.invalidRequest
-        }
-        guard let grouppedLinker = grouppedLinkers[md5] else {
-            throw RequestManagerError.linkerNotFound(request)
+        guard let grouppedLinker = try adapterList.adapterForRequest(request) else {
+            throw RequestManagerError.adapterNotFound(request)
         }
 
-        let requestIds = self.requestIds(forRequest: request)
+        let requestIds = try requestIds(forRequest: request)
 
         return context.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, jsonAdapterLinker: grouppedLinker, requestManager: self)
     }
@@ -153,11 +173,18 @@ extension RequestManager: RequestListenerProtocol {
                     self.context.logInspector?.logEvent(EventError(RequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
                     return
                 }
+                
+                do {
+                    try self.adapterList.removeAdapterForRequest(request)
+                } catch {
+                    self.context.logInspector?.logEvent(EventError(error, details: request), sender: self)
+                }
+                
                 if let error = error {
                     self.context.logInspector?.logEvent(EventError(error, details: request), sender: self)
                 }
                 do {
-                    try self.grouppedListeners.didParseDataForRequest(request, requestManager: self, completionType: .finished)
+                    try self.grouppedListenerList.didParseDataForRequest(request, requestManager: self, completionType: .finished)
                 } catch {
                     self.context.logInspector?.logEvent(EventError(error, details: request), sender: self)
                 }
@@ -173,48 +200,64 @@ extension RequestManager: RequestListenerProtocol {
     }
 
     private func removeRequest(_ request: RequestProtocol) {
-        grouppedRequests.removeRequest(request)
+        grouppedRequestList.removeRequest(request)
         request.removeListener(self)
     }
 }
 
-extension RequestManager {
+private class RequestAdaptersList {
     
-    public func fetchRemote(paradigm: MappingParadigmProtocol) {
-        guard let requestIDs = context.requestRegistrator?.requestIds(forClass: paradigm.clazz), requestIDs.count > 0 else {
-            context.logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
-            return
-        }
-        requestIDs.forEach {
-            do {
-                try self.startRequest(by: $0, paradigm: paradigm)
-            } catch {
-                context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+    private enum AdapterListError: Error {
+        case adapterNotFound(RequestProtocol)
+        case invalidRequest
+        var debugDescription: String {
+            switch self {
+            case .adapterNotFound(let request): return "Adapter not found for request: \(String(describing: request))"
+            case .invalidRequest: return "Invalid request"
             }
         }
     }
-}
-
-extension RequestManager {
-    public func requestIds(forRequest request: RequestProtocol) -> [RequestIdType] {
-        guard let modelClass = context.requestRegistrator?.modelClass(forRequest: request) else {
-            let eventError = EventError(message: "model class not found for request\(type(of: request))")
-            context.logInspector?.logEvent(eventError, sender: self)
-            return []
+    private var adaptersList: [AnyHashable: JSONAdapterLinkerProtocol] = [:]
+    func addAdapter(_ adapter: JSONAdapterLinkerProtocol, forRequest: RequestProtocol) throws {
+        guard let requestMD5 = forRequest.MD5 else {
+            throw AdapterListError.invalidRequest
         }
-
-        guard let result = context.requestRegistrator?.requestIds(forClass: modelClass), result.count > 0 else {
-            let eventError = EventError(message: "\(type(of: modelClass)) was not registered for request \(type(of: request))")
-            context.logInspector?.logEvent(eventError, sender: self)
-            return []
+        adaptersList[requestMD5] = adapter
+    }
+    
+    func adapterForRequest(_ request: RequestProtocol) throws -> JSONAdapterLinkerProtocol? {
+        guard let requestMD5 = request.MD5 else {
+            throw AdapterListError.invalidRequest
         }
-        return result
+        return adaptersList[requestMD5]
+    }
+    
+    func removeAdapterForRequest(_ request: RequestProtocol) throws {
+        guard let requestMD5 = request.MD5 else {
+            throw AdapterListError.invalidRequest
+        }
+        adaptersList.removeValue(forKey: requestMD5)
+
+    }
+    
+    func removeAdapter(_ linker: JSONAdapterLinkerProtocol) {
+        var foundKey: AnyHashable?
+        
+        for key in adaptersList.keys {
+            if adaptersList[key]?.MD5 == linker.MD5 {
+                foundKey = key
+                break
+            }
+        }
+        if let key = foundKey {
+            adaptersList.removeValue(forKey: key)
+        }
     }
 }
 
-private class GrouppedListeners {
+private class RequestGrouppedListenerList {
     
-    private enum GrouppedListeners: Error {
+    private enum GrouppedListenersError: Error {
         case invalidRequest
     }
     
@@ -231,7 +274,7 @@ private class GrouppedListeners {
     
     func addListener(_ listener: RequestManagerListenerProtocol, forRequest: RequestProtocol) throws {
         guard let requestMD5 = forRequest.MD5 else {
-            throw GrouppedListeners.invalidRequest
+            throw GrouppedListenersError.invalidRequest
         }
         if var listeners = grouppedListeners[requestMD5] {
             let filtered = listeners.filter { $0.md5 == listener.md5 }
@@ -260,7 +303,7 @@ private class GrouppedListeners {
     
     func didParseDataForRequest(_ request: RequestProtocol, requestManager: RequestManagerProtocol, completionType: WOTRequestManagerCompletionResultType) throws {
         guard let md5 = request.MD5 else {
-            throw GrouppedListeners.invalidRequest
+            throw GrouppedListenersError.invalidRequest
         }
         grouppedListeners[md5]?.forEach { listener in
             listener.requestManager(requestManager, didParseDataForRequest: request, completionResultType: completionType)
@@ -268,7 +311,7 @@ private class GrouppedListeners {
     }
 }
 
-private class GrouppedRequests {
+private class RequestGrouppedRequestList {
     
     private var grouppedRequests: [RequestIdType: [RequestProtocol]] = [:]
     
