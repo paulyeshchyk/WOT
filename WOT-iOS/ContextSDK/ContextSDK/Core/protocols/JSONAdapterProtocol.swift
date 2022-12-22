@@ -5,6 +5,8 @@
 //  Created by Paul on 21.12.22.
 //
 
+public typealias JSON = Swift.Dictionary<Swift.AnyHashable, Any>
+
 @objc
 public protocol JSONAdapterProtocol: DataAdapterProtocol {
     

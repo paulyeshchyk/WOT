@@ -12,7 +12,6 @@
 		DA0E8033295064A400B44CC6 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0E8029295064A300B44CC6 /* ContextSDK.framework */; };
 		DA0E8038295064A400B44CC6 /* ContextSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E8037295064A400B44CC6 /* ContextSDKTests.swift */; };
 		DA0E803A295064A400B44CC6 /* ContextSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = DA0E802C295064A300B44CC6 /* ContextSDK.h */; platformFilter = ios; settings = {ATTRIBUTES = (Public, ); }; };
-		DA0E804F295066A000B44CC6 /* ContextSDK-Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E804E295066A000B44CC6 /* ContextSDK-Core.swift */; };
 		DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80522950688500B44CC6 /* NSDictionary+Append.swift */; };
 		DA0E8055295068F100B44CC6 /* URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E8054295068F100B44CC6 /* URLEncodedProtocol.swift */; };
 		DA0E805829506DA500B44CC6 /* Test_URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E805729506DA500B44CC6 /* Test_URLEncodedProtocol.swift */; };
@@ -101,7 +100,6 @@
 		DA0E8032295064A400B44CC6 /* ContextSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContextSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0E8037295064A400B44CC6 /* ContextSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextSDKTests.swift; sourceTree = "<group>"; };
 		DA0E8039295064A400B44CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA0E804E295066A000B44CC6 /* ContextSDK-Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContextSDK-Core.swift"; sourceTree = "<group>"; };
 		DA0E80522950688500B44CC6 /* NSDictionary+Append.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Append.swift"; sourceTree = "<group>"; };
 		DA0E8054295068F100B44CC6 /* URLEncodedProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncodedProtocol.swift; sourceTree = "<group>"; };
 		DA0E805729506DA500B44CC6 /* Test_URLEncodedProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_URLEncodedProtocol.swift; sourceTree = "<group>"; };
@@ -275,7 +273,6 @@
 				DA5F18582951C55E00191864 /* errors */,
 				DA5F18552951C0DC00191864 /* protocols */,
 				DA0E80512950685200B44CC6 /* extensions */,
-				DA0E804E295066A000B44CC6 /* ContextSDK-Core.swift */,
 				DA0E8054295068F100B44CC6 /* URLEncodedProtocol.swift */,
 			);
 			path = Core;
@@ -589,7 +586,6 @@
 				DA81E5062952FE3500C60F31 /* EventRemoteFetch.swift in Sources */,
 				DA81E4E42952FC6900C60F31 /* MappingCoordinatorProtocol.swift in Sources */,
 				DA81E5042952FE3500C60F31 /* EventWarning.swift in Sources */,
-				DA0E804F295066A000B44CC6 /* ContextSDK-Core.swift in Sources */,
 				DA0E80692950919F00B44CC6 /* RequestExpression.swift in Sources */,
 				DA0E806E295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift in Sources */,
 				DA5F185A2951C58200191864 /* BasicErrors.swift in Sources */,

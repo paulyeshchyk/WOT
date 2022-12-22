@@ -9,6 +9,8 @@
 #import "WOTTankListCompoundViewController.h"
 #import "WOTTankListCompoundViewTableViewCell.h"
 #import "WOTTankListSettingViewController.h"
+#import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi.h>
 
 @interface WOTTankListCompoundViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -22,9 +24,9 @@
 
     [super viewDidLoad];
 
-    self.title = WOTString(WOT_STRING_GROUP_AND_SORT);
+    self.title = WOTApiTexts.groupAndSort;//WOTString(WOTApiTexts.groupAndSort);
     
-    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTString(WOT_IMAGE_BACK)] text:nil eventBlock:^(id sender) {
+    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:WOTApiTexts.image_back/*WOTString()*/] text:nil eventBlock:^(id sender) {
         if (self.cancelBlock){
             self.cancelBlock();
         }
@@ -32,7 +34,7 @@
     }];
     [self.navigationItem setLeftBarButtonItems:@[backItem]];
 
-    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTString(WOT_STRING_APPLY) eventBlock:^(id sender) {
+    UIBarButtonItem *applyItem = [UIBarButtonItem barButtonItemForImage:nil text:WOTApiTexts.apply/*WOTString()*/ eventBlock:^(id sender) {
         if (self.applyBlock){
             self.applyBlock();
         }
