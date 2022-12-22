@@ -7,7 +7,7 @@
 //
 
 public class EventCustomLogic: LogEventProtocol {
-    public static var type: LogEventType { return .logic }
+    public var eventType: LogEventType { return .logic }
     public private(set) var message: String
     public var name: String { return "Logic"}
 

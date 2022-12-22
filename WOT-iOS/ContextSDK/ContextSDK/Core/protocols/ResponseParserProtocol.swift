@@ -12,5 +12,5 @@ public protocol ResponseParserContainerProtocol {
 
 @objc
 public protocol WOTResponseParserProtocol {
-    func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws
+    func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, onParseComplete: @escaping OnParseComplete) throws
 }

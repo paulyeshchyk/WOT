@@ -5,11 +5,16 @@
 //  Created by Paul on 21.12.22.
 //
 
-@objc
-public class JSONAdapter: NSObject, JSONAdapterProtocol {
+public class JSONAdapter: JSONAdapterProtocol, DescriptableProtocol {
+
+    private enum JSONAdapterError: Error {
+        case requestManagerIsNil
+    }
+
     // MARK: DataAdapterProtocol -
 
-    public let uuid: UUID = UUID()
+    public var uuid: UUID { UUID() }
+    public var MD5: String? { uuid.MD5 }
 
     // MARK: JSONAdapterProtocol -
 
@@ -25,13 +30,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
     // MARK: NSObject -
 
-    override public var hash: Int {
-        return uuid.uuidString.hashValue
-    }
-
-    override public var description: String {
-        return "JSONAdapter:\(String(describing: type(of: request)))"
-    }
+    public var description: String { String(describing: type(of: request)) }
 
     public required init(Clazz clazz: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, jsonAdapterLinker: JSONAdapterLinkerProtocol) {
         self.modelClazz = clazz
@@ -39,7 +38,6 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
         self.linker = jsonAdapterLinker
         self.context = context
 
-        super.init()
         context.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
@@ -52,7 +50,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
     public func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?) {
         guard error == nil, let json = json else {
             context.logInspector?.logEvent(EventError(error, details: request), sender: self)
-            onJSONDidParse?(fromRequest, self, error)
+            onJSONDidParse?(fromRequest, error)
             return
         }
 
@@ -65,12 +63,16 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
             dispatchGroup.enter()
             //
-            let extraction = self.linker.performJSONExtraction(from: json, byKey: key, forClazz: self.modelClazz, request: fromRequest)
+            let extraction = linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, request: fromRequest)
 
-            self.findOrCreateObject(json: extraction.json, requestPredicate: extraction.requestPredicate) { fetchResult, error in
-
+            self.findOrCreateObject(json: extraction.json, requestPredicate: extraction.requestPredicate) {[weak self] fetchResult, error in
+                guard let self = self else {
+                    dispatchGroup.leave()
+                    return
+                }
                 if let error = error {
                     self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    dispatchGroup.leave()
                     return
                 }
 
@@ -85,7 +87,7 @@ public class JSONAdapter: NSObject, JSONAdapterProtocol {
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
             self.context.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
-            self.onJSONDidParse?(fromRequest, self, error)
+            self.onJSONDidParse?(fromRequest, error)
         }
     }
 }
@@ -111,8 +113,7 @@ extension JSONAdapter {
             }
 
             guard let requestManager = self.context.requestManager else {
-                #warning("add error")
-                localCallback(fetchResult, nil)
+                localCallback(fetchResult, JSONAdapterError.requestManagerIsNil)
                 return
             }
             
@@ -155,12 +156,6 @@ extension JSONAdapterLinkerProtocol {
 
         return JSONExtraction(requestPredicate: requestPredicate, json: extractedJSON)
     }
-}
-
-// MARK: - Hash
-
-func == (lhs: JSONAdapter, rhs: JSONAdapter) -> Bool {
-    return lhs.uuid == rhs.uuid
 }
 
 // MARK: - private

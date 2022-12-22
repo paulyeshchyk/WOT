@@ -7,7 +7,7 @@
 //
 
 public class EventRemoteFetch: LogEventProtocol {
-    public static var type: LogEventType { return .remoteFetch }
+    public var eventType: LogEventType { return .remoteFetch }
     public private(set) var message: String
     public var name: String { return "RemoteFetch" }
 

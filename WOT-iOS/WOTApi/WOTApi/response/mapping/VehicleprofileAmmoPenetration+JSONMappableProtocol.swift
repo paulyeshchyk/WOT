@@ -12,10 +12,13 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmoPenetration {
+    private enum VehicleprofileAmmoPenetrationError: Error {
+        case arrayIsNotContainingThreeElements
+    }
     public override func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
         //
         guard array.count == 3 else {
-            throw ErrorVehicleprofileAmmoPenetration.arrayIsNotContainingThreeElements
+            throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements
         }
         let intArray = NSDecimalNumberArray(array: array)
         self.min_value = intArray.elements[0]

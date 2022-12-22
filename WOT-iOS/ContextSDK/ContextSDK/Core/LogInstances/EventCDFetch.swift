@@ -7,7 +7,7 @@
 //
 
 public class EventCDFetchStart: LogEventProtocol {
-    public static var type: LogEventType { return .coredata }
+    public var eventType: LogEventType { return .coredata }
     public private(set) var message: String
     public var name: String { return "CDFetchStart"}
 
@@ -25,7 +25,7 @@ public class EventCDFetchStart: LogEventProtocol {
 }
 
 public class EventCDFetchEnded: LogEventProtocol {
-    public static var type: LogEventType { return .coredata }
+    public var eventType: LogEventType { return .coredata }
     public private(set) var message: String
     public var name: String { return "CDFetchEnded"}
 

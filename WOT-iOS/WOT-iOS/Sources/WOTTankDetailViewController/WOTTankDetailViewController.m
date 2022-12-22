@@ -59,11 +59,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 @implementation WOTTankDetailViewController
 
-@synthesize appManager;
+@synthesize context;
 
 - (id<RequestManagerProtocol>) requestManager {
     id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-    return ((id<WOTAppDelegateProtocol>) delegate).requestManager;
+    return ((id<ContextProtocol>) delegate).requestManager;
 }
 
 #define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
@@ -238,7 +238,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         fetchRequest.predicate = predicate;
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:WOTApiFields.tank_id ascending:YES]];
 
-        id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+        id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
         id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
         _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
         _fetchedResultController.delegate = self;
@@ -453,8 +453,8 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 //MARK: WOTRequestManagerListenerProtocol
 
-- (NSInteger)uuidHash {
-    return [@"WOTTankDetailViewController" hash];
+- (NSString *)MD5 {
+    return [MD5 MD5From:@"WOTTankDetailViewController"];
 }
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(WOTRequestManagerCompletionResultType)finished {

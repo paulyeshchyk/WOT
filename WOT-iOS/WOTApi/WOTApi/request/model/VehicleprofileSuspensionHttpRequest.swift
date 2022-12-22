@@ -9,9 +9,8 @@
 import WOTKit
 import ContextSDK
 
-@objc
 public class VehicleprofileSuspensionHttpRequest: HttpRequest {
-    override public var method: HTTPMethods { return .POST }
+    override public var httpMethod: HTTPMethod { return .POST }
 
     override public var path: String {
         return "/wot/encyclopedia/vehicleprofile/"

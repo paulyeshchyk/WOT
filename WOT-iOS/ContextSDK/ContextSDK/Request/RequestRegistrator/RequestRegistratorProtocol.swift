@@ -20,5 +20,5 @@ public protocol RequestRegistratorProtocol {
     func requestId(_ requiestId: RequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type)
     func requestClass(for requestId: RequestIdType) -> WOTModelServiceProtocol.Type?
     func modelClass(forRequest: RequestProtocol) -> PrimaryKeypathProtocol.Type?
-    func modelClass(forRequestIdType: RequestIdType) -> PrimaryKeypathProtocol.Type?
+    func modelClass(forRequestIdType: RequestIdType) throws -> PrimaryKeypathProtocol.Type
 }

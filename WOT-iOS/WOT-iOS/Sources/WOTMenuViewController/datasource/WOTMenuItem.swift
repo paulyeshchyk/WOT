@@ -19,12 +19,12 @@ protocol WOTMenuItemProtocol: NSObjectProtocol {
 
 @objc
 class WOTMenuItem: NSObject {
-    @objc private(set) var controllerClass: WOTViewControllerProtocol.Type
+    @objc private(set) var controllerClass: ContextControllerProtocol.Type
     @objc private(set) var controllerTitle: String
     @objc private(set) var icon: UIImage
     @objc private(set) var userDependence: Bool
 
-    init(controllerClass clazz: WOTViewControllerProtocol.Type, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool) {
+    init(controllerClass clazz: ContextControllerProtocol.Type, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool) {
         controllerClass = clazz
         controllerTitle = title
         icon = image

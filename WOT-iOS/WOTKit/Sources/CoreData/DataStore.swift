@@ -12,6 +12,19 @@ import ContextSDK
 @objc
 open class DataStore: NSObject {
     
+    private enum DataStoreError: Error {
+        case clazzIsNotSupportable(String)
+        case contextNotSaved
+        case objectNotCreated(AnyClass)
+        public var debugDescription: String {
+            switch self {
+            case .contextNotSaved: return "Context is not saved"
+            case .objectNotCreated(let clazz): return "Object is not created:[\(String(describing: clazz))]"
+            case .clazzIsNotSupportable(let clazz): return "Class is not supported by mapper:[\(String(describing: clazz))]"
+            }
+        }
+    }
+
     public typealias Context = LogInspectorContainerProtocol
 
     // MARK: - Open
@@ -79,6 +92,7 @@ open class DataStore: NSObject {
 }
 
 extension DataStore {
+
     // MARK: - Merge Contexts
 
     private func mergeChanges(notification: Notification, toContext: NSManagedObjectContext) {
@@ -209,7 +223,7 @@ extension DataStore: DataStoreProtocol {
 
     public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
-            let error = WOTMapperError.clazzIsNotSupportable(String(describing: Clazz))
+            let error = DataStoreError.clazzIsNotSupportable(String(describing: Clazz))
             context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             completion(EmptyFetchResult(), error)
             return

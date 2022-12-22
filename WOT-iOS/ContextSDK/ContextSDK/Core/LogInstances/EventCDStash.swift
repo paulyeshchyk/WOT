@@ -7,7 +7,7 @@
 //
 
 public class EventCDStashStart: LogEventProtocol {
-    public static var type: LogEventType { return .coredata }
+    public var eventType: LogEventType { return .coredata }
     public private(set) var message: String
     public var name: String { return "CDStashStart"}
 
@@ -25,7 +25,7 @@ public class EventCDStashStart: LogEventProtocol {
 }
 
 public class EventCDStashEnded: LogEventProtocol {
-    public static var type: LogEventType { return .coredata }
+    public var eventType: LogEventType { return .coredata }
     public private(set) var message: String
     public var name: String { return "CDStashEnded"}
 

@@ -138,8 +138,8 @@ class WOTTankPivotModel: WOTPivotDataModel {
 }
 
 extension WOTTankPivotModel: RequestManagerListenerProtocol {
-    var uuidHash: Int {
-        return "WOTTankPivotModel".hashValue
+    var md5: String? {
+        return "WOTTankPivotModel".MD5()
     }
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
