@@ -8,9 +8,9 @@
 
 #import <MMDrawerController/MMDrawerController.h>
 
-@protocol WOTViewControllerProtocol;
+@protocol ContextControllerProtocol;
 
-@interface WOTDrawerViewController : MMDrawerController<WOTViewControllerProtocol>
+@interface WOTDrawerViewController : MMDrawerController<ContextControllerProtocol>
 
 - (id _Nonnull)initWithMenu;
 + (WOTDrawerViewController * _Nonnull)newDrawer;

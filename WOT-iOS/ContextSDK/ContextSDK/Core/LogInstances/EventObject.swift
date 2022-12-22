@@ -7,7 +7,7 @@
 //
 
 public class EventObjectNew: LogEventProtocol {
-    public static var type: LogEventType { return .lifeCycle }
+    public var eventType: LogEventType { return .lifeCycle }
     public private(set) var message: String
     public var name: String { return "OBJNew"}
 
@@ -25,7 +25,7 @@ public class EventObjectNew: LogEventProtocol {
 }
 
 public class EventObjectFree: LogEventProtocol {
-    public static var type: LogEventType { return .lifeCycle }
+    public var eventType: LogEventType { return .lifeCycle }
     public private(set) var message: String
     public var name: String { return "OBJFree"}
 

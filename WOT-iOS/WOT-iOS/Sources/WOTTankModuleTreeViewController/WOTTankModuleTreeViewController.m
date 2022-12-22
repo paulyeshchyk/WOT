@@ -15,6 +15,7 @@
 #import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
 #import <WOTKit/WOTKit.h>
+#import <ContextSDK/ContextSDK-Swift.h>
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
 @property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
@@ -101,8 +102,7 @@
 @end
 
 @implementation WOTTankModuleTreeViewController
-@synthesize uuidHash;
-@synthesize appManager;
+@synthesize context;
 
 - (void)dealloc {
     
@@ -111,19 +111,19 @@
 
 - (id<HostConfigurationProtocol>) hostConfiguration {
         id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-        return ((id<WOTAppDelegateProtocol>) delegate).hostConfiguration;
+        return ((id<ContextProtocol>) delegate).hostConfiguration;
 }
 
 - (id<RequestManagerProtocol>) requestManager {
     id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-    return ((id<WOTAppDelegateProtocol>) delegate).requestManager;
+    return ((id<ContextProtocol>) delegate).requestManager;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
-        id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+        id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
         id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
@@ -297,7 +297,7 @@
 }
 
 
-- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(id<HostConfigurationProtocol> _Nullable)hostConfiguration args:(id<RequestArgumentsProtocol> _Nonnull)args {
+- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(id<HostConfigurationProtocol> _Nullable)hostConfiguration {
     
 }
 
@@ -316,8 +316,8 @@
 }
 
 
-- (NSInteger)uuidHash {
-    return [@"WOTTankModuleTreeViewController" hash];
+- (NSString *)md5 {
+    return [MD5 MD5From:@"WOTTankModuleTreeViewController"];
 }
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {

@@ -25,7 +25,7 @@
     self = [super init];
     if (self){
 
-        id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+        id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
         self.coreDataProvider = appDelegate.dataStore;
         [self.coreDataProvider performWithObjectContext:self.context block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -92,7 +92,7 @@
 }
 
 - (id<ManagedObjectContextProtocol>)context {
-    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
     return [coreDataProvider workingContext];
 }

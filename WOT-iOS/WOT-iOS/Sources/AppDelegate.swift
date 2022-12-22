@@ -9,7 +9,7 @@
 import WOTKit
 
 @objc
-public class AppDelegate: UIResponder, UIApplicationDelegate, WOTAppDelegateProtocol {
+public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
 
     public var hostConfiguration: HostConfigurationProtocol?

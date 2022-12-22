@@ -7,7 +7,7 @@
 //
 
 public class EventThreadCustomRun: LogEventProtocol {
-    public static var type: LogEventType { return .threads }
+    public var eventType: LogEventType { return .threads }
     public private(set) var message: String
     public var name: String { return "THREADCustom" }
 
@@ -27,7 +27,7 @@ public class EventThreadCustomRun: LogEventProtocol {
 }
 
 public class EventThreadMainRun: LogEventProtocol {
-    public static var type: LogEventType { return .threads }
+    public var eventType: LogEventType { return .threads }
     public private(set) var message: String
     public var name: String { return "THREAD" }
 

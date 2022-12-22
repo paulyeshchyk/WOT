@@ -26,24 +26,29 @@ public class RESTResponseParser: WOTResponseParserProtocol {
 // MARK: - WOTResponseParserProtocol
 
 extension RESTResponseParser {
-    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol], onParseComplete: @escaping OnParseComplete) throws {
+    private enum RESTResponseParserError: Error {
+        case dataIsEmpty
+        case noAdapterFound
+    }
+    
+    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, onParseComplete: @escaping OnParseComplete) throws {
         guard let data = parseData else {
-            throw RequestCoordinatorError.dataIsEmpty
+            throw RESTResponseParserError.dataIsEmpty
         }
 
-        let localCallback: OnParseComplete = { request, data, error in
-            onParseComplete(request, data, error)
+        guard let adapters = adapters, adapters.count != 0 else {
+            throw RESTResponseParserError.noAdapterFound
+        }
+        
+        let localCallback: OnParseComplete = { request, error in
+            onParseComplete(request, error)
         }
 
-        var dataAdaptationPair: [DataAdaptationPair] = .init()
+        var dataAdaptationPair = [DataAdaptationPair]()
         adapters.forEach { adapter in
             adapter.onJSONDidParse = localCallback
             let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
             dataAdaptationPair.append(pair)
-        }
-
-        if dataAdaptationPair.count == 0 {
-            onParseComplete(request, self, nil)
         }
 
         dataAdaptationPair.forEach { pair in

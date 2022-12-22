@@ -15,15 +15,19 @@ public protocol RequestArgumentsProtocol {
 
 public typealias ArgumentsType = Swift.Dictionary<Swift.AnyHashable, Any>
 
-open class RequestArguments: NSObject, RequestArgumentsProtocol {
+open class RequestArguments: RequestArgumentsProtocol, MD5Protocol, DescriptableProtocol {
 
     private var dictionary = ArgumentsType()
 
-    public override var description: String {
-        dictionary.debugOutput()
-    }
+    public var uuid: UUID { UUID() }
+    public var MD5: String? { uuid.MD5 }
 
-    required convenience public init(_ dictionary: ArgumentsType) {
+    public var description: String { String(describing: self) }
+
+    required public init() {
+        
+    }
+    required public convenience init(_ dictionary: ArgumentsType) {
         self.init()
 
         dictionary.keys.forEach {
@@ -42,14 +46,5 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol {
         var mixture = custom
         mixture.append(with: dictionary)
         return mixture.asURLQueryString()
-    }
-
-    open override var hash: Int {
-        let data = try! JSONSerialization.data(withJSONObject: dictionary, options: [])
-
-        var hasher = Hasher()
-        hasher.combine(data)
-        let result = hasher.finalize()
-        return result
     }
 }

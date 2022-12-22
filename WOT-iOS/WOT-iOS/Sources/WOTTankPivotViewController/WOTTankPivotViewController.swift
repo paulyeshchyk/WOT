@@ -12,7 +12,8 @@ import WOTPivot
 typealias WOTTankPivotCompletionCancelBlock = () -> Void
 typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 
-open class WOTPivotViewController: WOTViewController {
+open class WOTPivotViewController: UIViewController, ContextControllerProtocol {
+    public var context: ContextProtocol?
     @IBOutlet open var collectionView: UICollectionView?
 
     @IBOutlet open var flowLayout: WOTPivotLayout? {
@@ -168,7 +169,7 @@ class WOTTankPivotViewController: WOTPivotViewController {
     var settingsDatasource = WOTTankListSettingsDatasource()
 
     override func pivotModel() -> WOTPivotDataModelProtocol {
-        guard let appDelegate = UIApplication.shared.delegate as? WOTAppDelegateProtocol else {
+        guard let appDelegate = UIApplication.shared.delegate as? ContextProtocol else {
             fatalError("appDelegate is not WOTAppDelegateProtocol")
         }
         guard let coreDataStore = appDelegate.dataStore else {fatalError("CoreDataStore not defined")}

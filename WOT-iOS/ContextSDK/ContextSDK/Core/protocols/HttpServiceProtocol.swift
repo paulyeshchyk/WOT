@@ -6,7 +6,7 @@
 //
 
 @objc
-public enum HTTPMethods: Int {
+public enum HTTPMethod: Int {
     case GET
     case HEAD
     case POST
@@ -34,7 +34,7 @@ public enum HTTPMethods: Int {
 
 @objc
 public protocol HttpServiceProtocol {
-    var method: HTTPMethods { get }
+    var httpMethod: ContextSDK.HTTPMethod { get }
     var path: String { get }
 }
 

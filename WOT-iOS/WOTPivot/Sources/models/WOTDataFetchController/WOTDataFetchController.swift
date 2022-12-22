@@ -21,10 +21,14 @@ public protocol WOTDataFetchControllerDelegateProtocol {
 
 open class WOTDataFetchController: NSObject {
     public var fetchResultController: WOTDataFetchedResultController?
+    
+    private enum DataFetchControllerError: Error {
+        case contextIsNotDefined
+    }
 
     public func initFetchController(block: @escaping (WOTDataFetchedResultController) -> Void) throws {
         guard let managedObjectContext = dataProvider?.workingContext() else {
-            throw WOTCoredataStoreError.contextIsNotDefined
+            throw DataFetchControllerError.contextIsNotDefined
         }
 
         dataProvider?.perform(objectContext: managedObjectContext) {[weak self] context in

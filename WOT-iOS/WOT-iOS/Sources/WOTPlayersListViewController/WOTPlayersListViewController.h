@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol WOTViewControllerProtocol;
+@protocol ContextControllerProtocol;
 #pragma clang diagnostic push
 // To get rid of 'No protocol definition found' warnings which are not accurate
 #pragma clang diagnostic ignored "-Weverything"
 
-@interface WOTPlayersListViewController : UIViewController<WOTViewControllerProtocol>
+@interface WOTPlayersListViewController : UIViewController<ContextControllerProtocol>
 
 @end

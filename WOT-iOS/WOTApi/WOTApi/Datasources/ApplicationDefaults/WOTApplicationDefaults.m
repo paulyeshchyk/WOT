@@ -17,7 +17,7 @@
 
 + (void)registerDefaultSettings {
     
-    id<WOTAppDelegateProtocol> appDelegate = (id<WOTAppDelegateProtocol>)[[UIApplication sharedApplication] delegate];
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
     id<ManagedObjectContextProtocol> workingContext = [coreDataProvider workingContext];
     [coreDataProvider performWithObjectContext:workingContext block:^(id<ManagedObjectContextProtocol> _Nonnull context) {

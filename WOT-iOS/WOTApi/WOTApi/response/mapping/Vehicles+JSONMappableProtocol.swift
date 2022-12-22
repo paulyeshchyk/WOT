@@ -72,6 +72,15 @@ extension Vehicles {
 
 extension Vehicles {
     public class ModulesTreeLinker: BaseJSONAdapterLinker {
+
+        private struct ModuleLinkerUnexpectedClassError: Error {
+            var expected: AnyClass
+            var received: AnyObject?
+            public init(extected exp: AnyClass, received rec: AnyObject?) {
+                self.expected = exp
+                self.received = rec
+            }
+        }
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
@@ -85,13 +94,13 @@ extension Vehicles {
             let childObject = fetchResult.managedObject()
 
             guard let modulesTree = childObject as? ModulesTree else {
-                let error = UnexpectedClassError(extected: ModulesTree.self, received: childObject)
+                let error = ModuleLinkerUnexpectedClassError(extected: ModulesTree.self, received: childObject)
                 completion(fetchResult, error)
                 return
             }
             guard let vehicles = masterFetchResult?.managedObject(inManagedObjectContext: objectContext) as? Vehicles else {
                 let received = masterFetchResult != nil ? Swift.type(of: masterFetchResult!) : nil
-                let error = UnexpectedClassError(extected: Vehicles.self, received: received)
+                let error = ModuleLinkerUnexpectedClassError(extected: Vehicles.self, received: received)
                 completion(fetchResult, error)
                 return
             }

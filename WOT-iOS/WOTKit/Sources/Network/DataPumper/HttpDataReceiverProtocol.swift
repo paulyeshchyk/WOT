@@ -10,12 +10,16 @@ import ContextSDK
 
 public typealias DataReceiveCompletion = (Data?, Error?) -> Void
 
-public protocol HttpDataReceiverProtocol {
+public protocol HttpDataReceiverProtocol: MD5Protocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
-    var onStart: ((HttpDataReceiverProtocol) -> ())? { get set }
-    var onComplete: ((HttpDataReceiverProtocol, Data?, Error?) -> ())? { get set }
-
-    init(context: Context, request: URLRequest?)
+    var delegate: HttpDataReceiverDelegateProtocol? { get set }
+    
+    init(context: Context, request: URLRequest)
     func start()
+}
+
+public protocol HttpDataReceiverDelegateProtocol: AnyObject {
+    func didStart(receiver: HttpDataReceiverProtocol)
+    func didEnd(receiver: HttpDataReceiverProtocol, data: Data?, error: Error?)
 }

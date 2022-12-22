@@ -26,3 +26,4 @@ FOUNDATION_EXPORT const unsigned char WOTKitVersionString[];
 #import <WOTKit/UIImage+Resize.h>
 #import <WOTKit/WOTProgressView.h>
 #import <WOTKit/RomanNumber.h>
+#import <WOTKit/NSString+RomanUtils.h>

@@ -25,8 +25,6 @@ protocol WOTMenuProtocol: NSObjectProtocol {
     func rebuildMenu()
 }
 
-class DefaultMenuViewController: WOTViewController {}
-
 @objc(WOTMenuViewController)
 class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourceDelegate {
     var menuDatasource: WOTMenuDatasourceProtocol?
@@ -55,8 +53,10 @@ class WOTMenuViewController: UIViewController, WOTMenuProtocol, WOTMenuDatasourc
     weak var delegate: WOTMenuDelegate?
 
     var selectedMenuItemClass: AnyClass {
-        let item = self.menuDatasource?.object(at: self.selectedIndex)
-        return item?.controllerClass ?? DefaultMenuViewController.self
+        guard let item = self.menuDatasource?.object(at: self.selectedIndex) else {
+            return DefaultMenuViewController.self
+        }
+        return item.controllerClass
     }
 
     var selectedMenuItemTitle: String {
@@ -124,4 +124,8 @@ extension WOTMenuViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
         self.selectedIndex = indexPath.row
     }
+}
+
+class DefaultMenuViewController: UIViewController, ContextControllerProtocol {
+    var context: ContextProtocol?
 }
