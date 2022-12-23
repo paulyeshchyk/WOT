@@ -46,7 +46,7 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     // MARK: - JSONAdapterProtocol
 
-    private func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?, completion: DataAdapterProtocol.OnComplete?) {
+    private func didFinishDecoding(_ json: JSON?, fromRequest: RequestProtocol, error: Error?, completion: DataAdapterProtocol.OnComplete?) {
         guard error == nil, let json = json else {
             self.context.logInspector?.logEvent(EventError(error, details: fromRequest), sender: self)
             completion?(fromRequest, error)
@@ -95,19 +95,19 @@ extension JSONAdapter {
     
     public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol, completion: DataAdapterProtocol.OnComplete?) where T: RESTAPIResponseProtocol {
         guard let data = binary else {
-            didFinishJSONDecoding(nil, fromRequest: request, nil, completion: completion)
+            didFinishDecoding(nil, fromRequest: request, error: nil, completion: completion)
             return
         }
         let decoder = JSONDecoder()
         do {
             let result = try decoder.decode(T.self, from: data)
             if let swiftError = result.swiftError {
-                didFinishJSONDecoding(nil, fromRequest: request, swiftError, completion: completion)
+                didFinishDecoding(nil, fromRequest: request, error: swiftError, completion: completion)
             } else {
-                didFinishJSONDecoding(result.data, fromRequest: request, nil, completion: completion)
+                didFinishDecoding(result.data, fromRequest: request, error: nil, completion: completion)
             }
         } catch {
-            didFinishJSONDecoding(nil, fromRequest: request, error, completion: completion)
+            didFinishDecoding(nil, fromRequest: request, error: error, completion: completion)
         }
     }
 }

@@ -78,13 +78,13 @@ public class RequestManager: NSObject, RequestListenerProtocol {
 
         do {
          
-            guard let grouppedLinker = adapterLinkerList.adapterForRequest(request) else {
+            guard let adapterLinker = adapterLinkerList.adapterLinkerForRequest(request) else {
                 throw RequestManagerError.adapterNotFound(request)
             }
             guard let requestIds = try context.requestRegistrator?.requestIds(forRequest: request) else {
                 throw RequestManagerError.noRequestIds(request)
             }
-            let adapters = context.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, jsonAdapterLinker: grouppedLinker, requestManager: self)
+            let adapters = context.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, adapterLinker: adapterLinker, requestManager: self)
 
             try context.responseParser?.parseResponse(data: data, forRequest: request, adapters: adapters, completion: {[weak self] request, error in
                 guard let self = self else {
@@ -94,11 +94,6 @@ public class RequestManager: NSObject, RequestListenerProtocol {
                     self.context.logInspector?.logEvent(EventError(error, details: self), sender: self)
                     return
                 }
-                guard let request = request else {
-                    self.context.logInspector?.logEvent(EventError(RequestManagerError.receivedResponseFromReleasedRequest, details: self), sender: self)
-                    return
-                }
-                
                 do {
                     try self.adapterLinkerList.removeAdapterForRequest(request)
                 } catch {
@@ -141,7 +136,7 @@ extension RequestManager: RequestManagerProtocol {
         grouppedListenerList.removeListener(listener)
     }
 
-    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
 
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
         
@@ -154,7 +149,7 @@ extension RequestManager: RequestManagerProtocol {
             context.logInspector?.logEvent(EventWarning(message: "request listener is nil"), sender: self)
         }
 
-        try adapterLinkerList.addAdapterLinker(jsonAdapterLinker, forRequest: request)
+        try adapterLinkerList.addAdapterLinker(adapterLinker, forRequest: request)
 
         try request.start(withArguments: withArguments)
     }
@@ -169,7 +164,7 @@ extension RequestManager: RequestManagerProtocol {
         let jsonAdapterLinker = paradigm.jsonAdapterLinker
         #warning("remove hashValue")
         let groupId: RequestIdType = "Nested\(String(describing: paradigm.clazz))-\(arguments)".hashValue
-        try startRequest(request, withArguments: arguments, forGroupId: groupId, jsonAdapterLinker: jsonAdapterLinker, listener: nil)
+        try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: nil)
     }
     
     public func fetchRemote(paradigm: MappingParadigmProtocol) {
@@ -205,7 +200,7 @@ private class ResponseAdapterLinkerList {
         adaptersLinkerList[forRequest.MD5] = adapter
     }
     
-    func adapterForRequest(_ request: RequestProtocol) -> JSONAdapterLinkerProtocol? {
+    func adapterLinkerForRequest(_ request: RequestProtocol) -> JSONAdapterLinkerProtocol? {
         adaptersLinkerList[request.MD5]
     }
     
