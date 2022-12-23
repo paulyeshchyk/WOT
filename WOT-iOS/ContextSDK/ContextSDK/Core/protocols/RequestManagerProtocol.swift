@@ -7,7 +7,6 @@
 
 @objc
 public protocol RequestManagerProtocol {
-    func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
     func cancelRequests(groupId: RequestIdType, with error: Error?)
     func removeListener(_ listener: RequestManagerListenerProtocol)
     func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws

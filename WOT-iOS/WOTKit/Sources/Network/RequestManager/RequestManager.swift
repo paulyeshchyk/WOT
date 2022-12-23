@@ -133,13 +133,6 @@ public class RequestManager: NSObject, RequestListenerProtocol {
 
 extension RequestManager: RequestManagerProtocol {
 
-    public func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
-        guard let Clazz = context.requestRegistrator?.requestClass(for: requestId) as? RequestProtocol.Type else {
-            throw RequestManagerError.requestNotFound
-        }
-        return Clazz.init(context: context)
-    }
-
     public func cancelRequests(groupId: RequestIdType, with error: Error?) {
         grouppedRequestList.cancelRequests(groupId: groupId, with: error)
     }
@@ -167,12 +160,15 @@ extension RequestManager: RequestManagerProtocol {
     }
 
     public func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws {
-        let request = try createRequest(forRequestId: requestId)
+        guard let request = try context.requestRegistrator?.createRequest(forRequestId: requestId) else {
+            throw RequestManagerError.requestNotFound
+        }
         request.paradigm = paradigm
 
         let arguments = paradigm.buildRequestArguments()
         let jsonAdapterLinker = paradigm.jsonAdapterLinker
-        let groupId = "Nested\(String(describing: paradigm.clazz))-\(arguments)"
+        #warning("remove hashValue")
+        let groupId: RequestIdType = "Nested\(String(describing: paradigm.clazz))-\(arguments)".hashValue
         try startRequest(request, withArguments: arguments, forGroupId: groupId, jsonAdapterLinker: jsonAdapterLinker, listener: nil)
     }
     

@@ -45,26 +45,8 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     }
 
     // MARK: - JSONAdapterProtocol
-    
-    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol, completion: OnParseComplete?) where T: RESTAPIResponseProtocol {
-        guard let data = binary else {
-            didFinishJSONDecoding(nil, fromRequest: request, nil, completion: completion)
-            return
-        }
-        let decoder = JSONDecoder()
-        do {
-            let result = try decoder.decode(T.self, from: data)
-            if let swiftError = result.swiftError {
-                didFinishJSONDecoding(nil, fromRequest: request, swiftError, completion: completion)
-            } else {
-                didFinishJSONDecoding(result.data, fromRequest: request, nil, completion: completion)
-            }
-        } catch {
-            didFinishJSONDecoding(nil, fromRequest: request, error, completion: completion)
-        }
-    }
 
-    private func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?, completion: OnParseComplete?) {
+    private func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?, completion: DataAdapterProtocol.OnComplete?) {
         guard error == nil, let json = json else {
             self.context.logInspector?.logEvent(EventError(error, details: fromRequest), sender: self)
             completion?(fromRequest, error)
@@ -108,6 +90,28 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         }
     }
 }
+
+extension JSONAdapter {
+    
+    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol, completion: DataAdapterProtocol.OnComplete?) where T: RESTAPIResponseProtocol {
+        guard let data = binary else {
+            didFinishJSONDecoding(nil, fromRequest: request, nil, completion: completion)
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            let result = try decoder.decode(T.self, from: data)
+            if let swiftError = result.swiftError {
+                didFinishJSONDecoding(nil, fromRequest: request, swiftError, completion: completion)
+            } else {
+                didFinishJSONDecoding(result.data, fromRequest: request, nil, completion: completion)
+            }
+        } catch {
+            didFinishJSONDecoding(nil, fromRequest: request, error, completion: completion)
+        }
+    }
+}
+
 
 extension JSONAdapter {
     private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {

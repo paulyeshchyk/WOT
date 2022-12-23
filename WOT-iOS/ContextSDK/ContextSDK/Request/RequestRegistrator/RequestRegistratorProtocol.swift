@@ -6,18 +6,21 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+@objc
 public protocol RequestRegistratorContainerProtocol {
     var requestRegistrator: RequestRegistratorProtocol? { get set }
 }
 
+@objc
 public protocol RequestRegistratorProtocol {
 
     func requestIds(forClass: AnyClass) -> [RequestIdType]
     func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType]
     func unregisterDataAdapter(for requestId: RequestIdType)
-    func dataAdapterClass(for requestId: RequestIdType) -> JSONAdapterProtocol.Type?
-    func requestId(_ requiestId: RequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type)
     func requestClass(for requestId: RequestIdType) -> WOTModelServiceProtocol.Type?
+    func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol
     func modelClass(forRequest: RequestProtocol) -> PrimaryKeypathProtocol.Type?
     func modelClass(forRequestIdType: RequestIdType) throws -> PrimaryKeypathProtocol.Type
+    func dataAdapterClass(for requestId: RequestIdType) -> JSONAdapterProtocol.Type?
+    func requestId(_ requiestId: RequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type)
 }

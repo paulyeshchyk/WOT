@@ -6,19 +6,19 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public typealias RequestIdType = String
+public typealias RequestIdType = NSInteger
 
 @objc
 public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
-    var availableInGroups: [String] { get }
+    var availableInGroups: [RequestIdType] { get }
     var listeners: [RequestListenerProtocol] { get }
     var paradigm: MappingParadigmProtocol? { get set }
 
     func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
-    func removeGroup(_ group: String)
+    func removeGroup(_ group: RequestIdType)
     func removeListener(_ listener: RequestListenerProtocol)
     init(context: Context)
 }
@@ -85,7 +85,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     }
 
     open func removeGroup(_ group: RequestIdType) {
-        availableInGroups.removeAll(where: { group.compare($0) == .orderedSame })
+        availableInGroups.removeAll(where: { group == $0 })
     }
 
     open func removeListener(_ listener: RequestListenerProtocol) {

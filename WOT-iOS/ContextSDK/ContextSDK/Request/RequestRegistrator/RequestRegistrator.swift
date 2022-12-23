@@ -7,7 +7,7 @@
 //
 
 open class RequestRegistrator: RequestRegistratorProtocol {
-    public typealias Context = LogInspectorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
     private let context: Context
     private var registeredRequests: [RequestIdType: WOTModelServiceProtocol.Type] = .init()
@@ -24,6 +24,7 @@ open class RequestRegistrator: RequestRegistratorProtocol {
 extension RequestRegistrator {
 
     private enum RequestRegistratorError: Error {
+        case requestNotFound
         case requestClassNotFound(requestType: String)
         case requestClassHasNoModelClass(requestClass: String)
         case modelClassNotFound(RequestProtocol)
@@ -31,6 +32,7 @@ extension RequestRegistrator {
 
         public var debugDescription: String {
             switch self {
+            case .requestNotFound: return "Request not found"
             case .requestClassNotFound(let requestType): return "Request Class not found for request type: \(requestType)"
             case .requestClassHasNoModelClass(let requestClass): return "Request class(\(requestClass)) has no model class"
             case .modelClassNotFound(let request): return "Model class not found for request: \(String(describing: request))"
@@ -73,6 +75,13 @@ extension RequestRegistrator {
 
     public func requestClass(for requestId: RequestIdType) -> WOTModelServiceProtocol.Type? {
         return registeredRequests[requestId]
+    }
+    
+    public func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
+        guard let Clazz = requestClass(for: requestId) as? RequestProtocol.Type else {
+            throw RequestRegistratorError.requestNotFound
+        }
+        return Clazz.init(context: context)
     }
 
     public func modelClass(forRequest request: RequestProtocol) -> PrimaryKeypathProtocol.Type? {

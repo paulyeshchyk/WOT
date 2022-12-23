@@ -5,8 +5,9 @@
 //  Created by Paul on 21.12.22.
 //
 
-public typealias OnParseComplete = (RequestProtocol?, Error?) -> Void
 
+@objc
 public protocol DataAdapterProtocol {
-    func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol, completion: OnParseComplete?) where T: RESTAPIResponseProtocol
+    typealias OnComplete = (RequestProtocol?, Error?) -> Void
+
 }

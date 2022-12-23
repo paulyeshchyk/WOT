@@ -8,7 +8,7 @@
 
 import ContextSDK
 
-public struct RESTResponseParser: ResponseParserProtocol {
+public class RESTResponseParser: ResponseParserProtocol {
     
     public typealias Context = LogInspectorContainerProtocol
 
@@ -31,7 +31,7 @@ extension RESTResponseParser {
         case noAdapterFound
     }
     
-    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping OnParseComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping DataAdapterProtocol.OnComplete) throws {
         guard let data = parseData else {
             throw RESTResponseParserError.dataIsEmpty
         }
@@ -47,7 +47,7 @@ extension RESTResponseParser {
         }
 
         dataAdaptationPair.forEach { pair in
-            pair.dataAdapter.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request, completion: completion)
+            (pair.dataAdapter as? JSONAdapter)?.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request, completion: completion)
         }
     }
 }

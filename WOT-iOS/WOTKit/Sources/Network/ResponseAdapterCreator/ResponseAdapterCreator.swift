@@ -8,13 +8,13 @@
 
 import ContextSDK
 
-public struct ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
+public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
     
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestRegistratorContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
     
     private enum ResponseAdapterCreatorError: Error {
-        case adapterNotFound(requestType: String)
-        case requestRegistratorIsNil(requestType: String)
+        case adapterNotFound(requestType: RequestIdType)
+        case requestRegistratorIsNil(requestType: RequestIdType)
     }
     
     private let context: Context
@@ -29,8 +29,8 @@ public struct ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
         }
         
         let modelClass = try requestRegistrator.modelClass(forRequestIdType: requestIdType)
-        guard let dataAdapterClass = context.requestRegistrator?.dataAdapterClass(for: requestIdType) else {
-            throw ResponseAdapterCreatorError.adapterNotFound(requestType: requestIdType.description)
+        guard  let dataAdapterClass = context.requestRegistrator?.dataAdapterClass(for: requestIdType) else {
+            throw ResponseAdapterCreatorError.adapterNotFound(requestType: requestIdType)
         }
 
         return dataAdapterClass.init(Clazz: modelClass, request: request, context: context, jsonAdapterLinker: jsonAdapterLinker)

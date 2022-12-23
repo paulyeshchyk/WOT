@@ -163,19 +163,17 @@ extension WOTPivotViewController: UICollectionViewDelegate {
 
 @objc(WOTTankPivotViewController)
 class WOTTankPivotViewController: WOTPivotViewController {
+    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & RequestRegistratorContainerProtocol & DataStoreContainerProtocol
     var cancelBlock: WOTTankPivotCompletionCancelBlock?
     var doneBlock: WOTTankPivotCompletionDoneBlock?
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
     var settingsDatasource = WOTTankListSettingsDatasource()
 
     override func pivotModel() -> WOTPivotDataModelProtocol {
-        guard let appDelegate = UIApplication.shared.delegate as? ContextProtocol else {
+        guard let appDelegate = UIApplication.shared.delegate as? Context else {
             fatalError("appDelegate is not WOTAppDelegateProtocol")
         }
-        guard let coreDataStore = appDelegate.dataStore else {fatalError("CoreDataStore not defined")}
-        guard let requestManager = appDelegate.requestManager else {fatalError("RequestManager not defined")}
-        guard let logInspector = appDelegate.logInspector else {fatalError("LogInspector not defined")}
-        return WOTTankPivotModel(modelListener: self, coreDataStore: coreDataStore, requestManager: requestManager, logInspector: logInspector, settingsDatasource: settingsDatasource)
+        return WOTTankPivotModel(modelListener: self, context: appDelegate, settingsDatasource: settingsDatasource)
     }
 
     override func viewDidLoad() {

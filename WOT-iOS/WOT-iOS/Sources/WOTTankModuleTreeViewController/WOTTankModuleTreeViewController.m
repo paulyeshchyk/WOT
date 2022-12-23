@@ -207,10 +207,10 @@
 - (void)setTank_Id:(NSNumber *)value {
 
     _tank_Id = [value copy];
-
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                             requestManager: self.requestManager
+                                                  inContext: appDelegate
                                                    listener: self
                                                       error: &error];
 }
