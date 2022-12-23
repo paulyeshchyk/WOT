@@ -12,7 +12,6 @@ public protocol RequestManagerProtocol {
     func removeListener(_ listener: RequestManagerListenerProtocol)
     func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: RequestIdType, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
     func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws
-    func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType]
     func fetchRemote(paradigm: MappingParadigmProtocol)
 }
 
@@ -28,8 +27,7 @@ public protocol RequestManagerContainerProtocol {
 }
 
 @objc
-public protocol RequestManagerListenerProtocol {
-    var md5: String? { get }
+public protocol RequestManagerListenerProtocol: MD5Protocol {
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
     func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol)
 }

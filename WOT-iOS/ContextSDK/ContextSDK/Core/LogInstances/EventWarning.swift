@@ -9,7 +9,7 @@
 public class EventWarning: LogEventProtocol {
     public var eventType: LogEventType { return .warning }
     public private(set) var message: String
-    public var name: String { return "!!Warning!!"}
+    public var name: String { return "Warning"}
 
     public init() {
         message = ""

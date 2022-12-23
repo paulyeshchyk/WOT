@@ -8,7 +8,7 @@
 
 import ContextSDK
 
-public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
+public struct ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
     
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestRegistratorContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
     

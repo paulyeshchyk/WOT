@@ -22,10 +22,21 @@ open class RequestRegistrator: RequestRegistratorProtocol {
 // MARK: - WOTRequestBindingProtocol
 
 extension RequestRegistrator {
-    
+
     private enum RequestRegistratorError: Error {
         case requestClassNotFound(requestType: String)
         case requestClassHasNoModelClass(requestClass: String)
+        case modelClassNotFound(RequestProtocol)
+        case modelClassNotRegistered(AnyObject, RequestProtocol)
+
+        public var debugDescription: String {
+            switch self {
+            case .requestClassNotFound(let requestType): return "Request Class not found for request type: \(requestType)"
+            case .requestClassHasNoModelClass(let requestClass): return "Request class(\(requestClass)) has no model class"
+            case .modelClassNotFound(let request): return "Model class not found for request: \(String(describing: request))"
+            case .modelClassNotRegistered(let model, let request): return "Model class(\((type(of: model))) registered for request: \(String(describing: request))"
+            }
+        }
     }
     
     public func requestIds(forClass: AnyClass) -> [RequestIdType] {
@@ -38,6 +49,18 @@ extension RequestRegistrator {
     public func requestId(_ requiestId: RequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type) {
         registeredRequests[requiestId] = requestClass
         registeredDataAdapters[requiestId] = dataAdapterClass
+    }
+    
+    public func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType] {
+        guard let modelClass = modelClass(forRequest: request) else {
+            throw RequestRegistratorError.modelClassNotFound(request)
+        }
+
+        let result = requestIds(forClass: modelClass)
+        guard result.count > 0 else {
+            throw RequestRegistratorError.modelClassNotRegistered(modelClass, request)
+        }
+        return result
     }
 
     public func unregisterDataAdapter(for requestId: RequestIdType) {

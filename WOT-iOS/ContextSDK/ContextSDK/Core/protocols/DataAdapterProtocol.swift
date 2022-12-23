@@ -7,8 +7,6 @@
 
 public typealias OnParseComplete = (RequestProtocol?, Error?) -> Void
 
-@objc
 public protocol DataAdapterProtocol {
-    var onJSONDidParse: OnParseComplete? { get set }
-    func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?)
+    func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol, completion: OnParseComplete?) where T: RESTAPIResponseProtocol
 }

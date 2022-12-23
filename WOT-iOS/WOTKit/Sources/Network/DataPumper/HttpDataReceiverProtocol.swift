@@ -20,6 +20,6 @@ public protocol HttpDataReceiverProtocol: MD5Protocol {
 }
 
 public protocol HttpDataReceiverDelegateProtocol: AnyObject {
-    func didStart(receiver: HttpDataReceiverProtocol)
-    func didEnd(receiver: HttpDataReceiverProtocol, data: Data?, error: Error?)
+    func didStart(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol)
+    func didEnd(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, data: Data?, error: Error?)
 }

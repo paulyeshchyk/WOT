@@ -21,8 +21,8 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
     
     // MARK: - Open
 
-    public var uuid: UUID { UUID() }
-    public var MD5: String? { uuid.MD5 }
+    public let uuid: UUID = UUID()
+    public var MD5: String { uuid.MD5 }
 
     open var linkerPrimaryKeyType: PrimaryKeyType {
         fatalError("should be overriden")

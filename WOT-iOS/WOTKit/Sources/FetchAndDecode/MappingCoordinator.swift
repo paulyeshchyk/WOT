@@ -8,8 +8,7 @@
 
 import ContextSDK
 
-@objc
-public class MappingCoordinator: NSObject, MappingCoordinatorProtocol {
+public class MappingCoordinator: MappingCoordinatorProtocol {
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
     
     private let context: Context

@@ -8,7 +8,7 @@
 
 import ContextSDK
 
-public class RESTResponseParser: WOTResponseParserProtocol {
+public struct RESTResponseParser: ResponseParserProtocol {
     
     public typealias Context = LogInspectorContainerProtocol
 
@@ -18,12 +18,12 @@ public class RESTResponseParser: WOTResponseParserProtocol {
         let data: Data?
     }
 
-    public required init(context: Context) {
+    public init(context: Context) {
         self.context = context
     }
 }
 
-// MARK: - WOTResponseParserProtocol
+// MARK: - ResponseParserProtocol
 
 extension RESTResponseParser {
     private enum RESTResponseParserError: Error {
@@ -31,7 +31,7 @@ extension RESTResponseParser {
         case noAdapterFound
     }
     
-    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, onParseComplete: @escaping OnParseComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping OnParseComplete) throws {
         guard let data = parseData else {
             throw RESTResponseParserError.dataIsEmpty
         }
@@ -40,19 +40,14 @@ extension RESTResponseParser {
             throw RESTResponseParserError.noAdapterFound
         }
         
-        let localCallback: OnParseComplete = { request, error in
-            onParseComplete(request, error)
-        }
-
         var dataAdaptationPair = [DataAdaptationPair]()
         adapters.forEach { adapter in
-            adapter.onJSONDidParse = localCallback
             let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
             dataAdaptationPair.append(pair)
         }
 
         dataAdaptationPair.forEach { pair in
-            pair.dataAdapter.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request)
+            pair.dataAdapter.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request, completion: completion)
         }
     }
 }

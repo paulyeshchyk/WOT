@@ -10,11 +10,9 @@ import ContextSDK
 
 open class HttpRequest: Request {
 
-    public var httpBodyData: Data?
+    override open var description: String { "\(type(of: self)): \(httpDataReceiver?.description ?? "?")" }
 
-    public required init(context: HostConfigurationContainerProtocol & LogInspectorContainerProtocol) {
-        super.init(context: context)
-    }
+    private var httpDataReceiver: HttpDataReceiver?
     
     deinit {
         self.httpDataReceiver?.delegate = nil
@@ -26,7 +24,6 @@ open class HttpRequest: Request {
         }
     }
 
-    private var httpDataReceiver: HttpDataReceiverProtocol?
     override open func start(withArguments args: RequestArgumentsProtocol) throws {
         
         let urlRequest = try HttpRequestBuilder().build(hostConfiguration: context.hostConfiguration,
@@ -42,13 +39,13 @@ open class HttpRequest: Request {
 }
 
 extension HttpRequest: HttpDataReceiverDelegateProtocol {
-    public func didStart(receiver: HttpDataReceiverProtocol) {
+    public func didStart(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol) {
         for listener in listeners {
-            listener.request(self, startedWith: self.context.hostConfiguration)
+            listener.request(self, startedWith: urlRequest)
         }
     }
     
-    public func didEnd(receiver: HttpDataReceiverProtocol, data: Data?, error: Error?) {
+    public func didEnd(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, data: Data?, error: Error?) {
         for listener in listeners {
             listener.request(self, finishedLoadData: data, error: error)
         }
@@ -62,4 +59,5 @@ extension HttpRequest: HttpDataReceiverDelegateProtocol {
 extension HttpRequest: HttpServiceProtocol {
     open var httpMethod: ContextSDK.HTTPMethod { return .POST }
     open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
+    open var httpBodyData: Data? { nil }
 }

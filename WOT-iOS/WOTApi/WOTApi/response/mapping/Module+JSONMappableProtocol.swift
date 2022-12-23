@@ -97,6 +97,11 @@ extension Module {
     }
 
     public class TurretMapper: BaseJSONAdapterLinker {
+        
+        override public required init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?) {
+            super.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: mappedObjectIdentifier)
+        }
+        
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
         override public func onJSONExtraction(json: JSON) -> JSON {
@@ -169,6 +174,15 @@ extension Module {
     }
 
     public class GunMapper: BaseJSONAdapterLinker {
+        
+        override public required init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?) {
+            super.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: mappedObjectIdentifier)
+        }
+        
+        deinit {
+            //
+        }
+        
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
         override public func onJSONExtraction(json: JSON) -> JSON {

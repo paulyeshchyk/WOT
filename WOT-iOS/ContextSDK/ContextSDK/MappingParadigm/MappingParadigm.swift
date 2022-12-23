@@ -62,6 +62,10 @@ public class MappingParadigm: NSObject, MappingParadigmProtocol {
         keypathPrefix = kp
     }
 
+    deinit {
+        //
+    }
+    
     public func requestPredicate() -> RequestPredicate? {
         return requestPredicateComposer?.build()?.requestPredicate
     }

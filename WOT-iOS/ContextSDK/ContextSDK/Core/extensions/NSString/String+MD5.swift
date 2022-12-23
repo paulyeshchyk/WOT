@@ -8,9 +8,7 @@
 import CommonCrypto
 
 extension UUID {
-    public var MD5: String? {
-        uuidString.MD5()
-    }
+    public var MD5: String { uuidString.MD5() }
 }
 
 @objc
@@ -22,7 +20,7 @@ public class MD5: NSString {
 }
 
 extension String  {
-    public func MD5() -> String? {
+    public func MD5() -> String {
         let length = Int(CC_MD5_DIGEST_LENGTH)
         var digest = [UInt8](repeating: 0, count: length)
 

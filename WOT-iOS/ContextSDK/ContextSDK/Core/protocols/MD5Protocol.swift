@@ -8,13 +8,8 @@
 @objc
 public protocol MD5Protocol {
     @objc
-    var MD5: String? { get }
+    var MD5: String { get }
 
-    var uuid: UUID { get }
-}
-
-@objc
-public protocol DescriptableProtocol {
     @objc
-    var description: String { get }
+    var uuid: UUID { get }
 }

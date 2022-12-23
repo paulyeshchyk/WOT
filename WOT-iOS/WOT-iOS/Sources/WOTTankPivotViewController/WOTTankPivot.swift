@@ -85,10 +85,13 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     }
 }
 
-class WOTTankPivotModel: WOTPivotDataModel {
+class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     var logInspector: LogInspectorProtocol
     var coreDataStore: DataStoreProtocol
     var requestManager: RequestManagerProtocol
+
+    let uuid: UUID = UUID()
+    var MD5: String { uuid.MD5 }
 
     required init(modelListener: WOTDataModelListener, coreDataStore: DataStoreProtocol, requestManager: RequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
@@ -116,11 +119,11 @@ class WOTTankPivotModel: WOTPivotDataModel {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:) has not been implemented")
     }
 
-    deinit {}
-
-    override var description: String {
-        return String(describing: type(of: self))
+    deinit {
+        requestManager.removeListener(self)
     }
+
+    override var description: String { "\(type(of: self))" }
 
     override func loadModel() {
         super.loadModel()
@@ -135,19 +138,13 @@ class WOTTankPivotModel: WOTPivotDataModel {
     private func performWebRequest() throws {
         try WOTWEBRequestFactory.fetchVehiclePivotData(requestManager, listener: self)
     }
-}
-
-extension WOTTankPivotModel: RequestManagerListenerProtocol {
-    var md5: String? {
-        return "WOTTankPivotModel".MD5()
-    }
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+        if completionResultType == .finished || completionResultType == .noData {
+            requestManager.removeListener(self)
+        }
         DispatchQueue.main.async {
             super.loadModel()
-            if completionResultType == .finished || completionResultType == .noData {
-                requestManager.removeListener(self)
-            }
         }
     }
 

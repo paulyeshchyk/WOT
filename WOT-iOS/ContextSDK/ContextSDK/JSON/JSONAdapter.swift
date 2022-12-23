@@ -5,7 +5,7 @@
 //  Created by Paul on 21.12.22.
 //
 
-public class JSONAdapter: JSONAdapterProtocol, DescriptableProtocol {
+public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     private enum JSONAdapterError: Error {
         case requestManagerIsNil
@@ -13,12 +13,11 @@ public class JSONAdapter: JSONAdapterProtocol, DescriptableProtocol {
 
     // MARK: DataAdapterProtocol -
 
-    public var uuid: UUID { UUID() }
-    public var MD5: String? { uuid.MD5 }
+    public let uuid: UUID = UUID()
+    public var MD5: String { uuid.MD5 }
 
     // MARK: JSONAdapterProtocol -
 
-    public var onJSONDidParse: OnParseComplete?
     public var linker: JSONAdapterLinkerProtocol
 
     // MARK: Private -
@@ -45,12 +44,30 @@ public class JSONAdapter: JSONAdapterProtocol, DescriptableProtocol {
         context.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
-    // MARK: JSONAdapterProtocol -
+    // MARK: - JSONAdapterProtocol
+    
+    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol, completion: OnParseComplete?) where T: RESTAPIResponseProtocol {
+        guard let data = binary else {
+            didFinishJSONDecoding(nil, fromRequest: request, nil, completion: completion)
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            let result = try decoder.decode(T.self, from: data)
+            if let swiftError = result.swiftError {
+                didFinishJSONDecoding(nil, fromRequest: request, swiftError, completion: completion)
+            } else {
+                didFinishJSONDecoding(result.data, fromRequest: request, nil, completion: completion)
+            }
+        } catch {
+            didFinishJSONDecoding(nil, fromRequest: request, error, completion: completion)
+        }
+    }
 
-    public func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?) {
+    private func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?, completion: OnParseComplete?) {
         guard error == nil, let json = json else {
-            context.logInspector?.logEvent(EventError(error, details: request), sender: self)
-            onJSONDidParse?(fromRequest, error)
+            self.context.logInspector?.logEvent(EventError(error, details: fromRequest), sender: self)
+            completion?(fromRequest, error)
             return
         }
 
@@ -87,7 +104,7 @@ public class JSONAdapter: JSONAdapterProtocol, DescriptableProtocol {
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
             self.context.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
-            self.onJSONDidParse?(fromRequest, error)
+            completion?(fromRequest, error)
         }
     }
 }
@@ -155,31 +172,5 @@ extension JSONAdapterLinkerProtocol {
         requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
 
         return JSONExtraction(requestPredicate: requestPredicate, json: extractedJSON)
-    }
-}
-
-// MARK: - private
-
-extension DataAdapterProtocol {
-    /**
-     because of objC limitation, the function added as an extention to *JSONAdapterProtocol*
-     */
-
-    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol) where T: RESTAPIResponseProtocol {
-        guard let data = binary else {
-            didFinishJSONDecoding(nil, fromRequest: request, nil)
-            return
-        }
-        let decoder = JSONDecoder()
-        do {
-            let result = try decoder.decode(T.self, from: data)
-            if let swiftError = result.swiftError {
-                didFinishJSONDecoding(nil, fromRequest: request, swiftError)
-            } else {
-                didFinishJSONDecoding(result.data, fromRequest: request, nil)
-            }
-        } catch {
-            didFinishJSONDecoding(nil, fromRequest: request, error)
-        }
     }
 }

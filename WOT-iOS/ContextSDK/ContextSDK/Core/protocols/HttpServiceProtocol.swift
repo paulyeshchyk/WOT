@@ -36,6 +36,7 @@ public enum HTTPMethod: Int {
 public protocol HttpServiceProtocol {
     var httpMethod: ContextSDK.HTTPMethod { get }
     var path: String { get }
+    var httpBodyData: Data? { get }
 }
 
 @objc
