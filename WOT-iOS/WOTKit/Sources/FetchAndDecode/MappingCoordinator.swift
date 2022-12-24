@@ -20,16 +20,16 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
     //
-    public func fetchLocalAndDecode(json: JSON, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
+    public func fetchLocalAndDecode(json: JSON, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
 
-        context.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { fetchResult, error in
+        context.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, predicate: predicate) { fetchResult, error in
 
             if let error = error {
                 completion(fetchResult, error)
                 return
             }
 
-            self.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: linker, inContext: self.context) { fetchResult, error in
+            self.mapping(json: json, fetchResult: fetchResult, predicate: predicate, linker: linker, inContext: self.context) { fetchResult, error in
                 if let error = error {
                     completion(fetchResult, error)
                 } else {
@@ -43,9 +43,9 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
         }
     }
 
-    public func fetchLocalAndDecode(array: [Any], objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
+    public func fetchLocalAndDecode(array: [Any], objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
 
-        context.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { [weak self] fetchResult, error in
+        context.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, predicate: predicate) { [weak self] fetchResult, error in
 
             guard let self = self else {
                 return
@@ -56,7 +56,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
                 return
             }
 
-            self.mapping(array: array, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: linker, inContext: self.context) { fetchResult, error in
+            self.mapping(array: array, fetchResult: fetchResult, predicate: predicate, linker: linker, inContext: self.context) { fetchResult, error in
                 if let error = error {
                     completion(fetchResult, error)
                 } else {
@@ -87,7 +87,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
         }
 
         let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        fetchLocalAndDecode(array: itemsList, objectContext: objectContext, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
+        fetchLocalAndDecode(array: itemsList, objectContext: objectContext, forClass: linkedClazz, predicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
             if let error = error {
                 self?.context.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
             }
@@ -109,7 +109,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
         }
 
         let linker = mapperClazz.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
-        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, forClass: linkedClazz, requestPredicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
+        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, forClass: linkedClazz, predicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
             if let error = error {
                 self?.context.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
             }
@@ -118,7 +118,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorMappingProtocol {
-    public func mapping(json jSON: JSON, fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
+    public func mapping(json jSON: JSON, fetchResult: FetchResultProtocol, predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 self.context.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
@@ -126,7 +126,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
             } else {
                 if let linker = linker, let dataStore = self.context.dataStore {
                     let finalFetchResult = fetchResult.dublicate()
-                    finalFetchResult.predicate = requestPredicate.compoundPredicate(.and)
+                    finalFetchResult.predicate = predicate.compoundPredicate(.and)
                     linker.process(fetchResult: finalFetchResult, dataStore: dataStore, completion: completion)
                 } else {
                     completion(fetchResult, nil)
@@ -134,7 +134,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
             }
         }
 
-        context.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
+        context.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         //
         guard let managedObjectContext = fetchResult.objectContext else {
             assertionFailure("objectContext is not defined")
@@ -146,15 +146,16 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         }
         //
         do {
-            try object.mapping(json: jSON, objectContext: managedObjectContext, requestPredicate: requestPredicate, inContext: context)
+            let jsonMap = JSONMap(json: jSON, managedObjectContext: managedObjectContext, predicate: predicate)
+            try object.mapping(jsonmap: jsonMap, inContext: context)
             context.dataStore?.stash(objectContext: managedObjectContext, block: localCompletion)
-            context.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
+            context.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         } catch {
             localCompletion(error)
         }
     }
 
-    public func mapping(array: [Any], fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
+    public func mapping(array: [Any], fetchResult: FetchResultProtocol, predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)
@@ -167,7 +168,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
             }
         }
 
-        context.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
+        context.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, predicate: predicate, mappingType: .Array), sender: self)
         //
         guard let objectContext = fetchResult.objectContext else {
             assertionFailure("context is not defined")
@@ -179,11 +180,13 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         }
         //
         do {
-            try object.mapping(array: array, objectContext: objectContext, requestPredicate: requestPredicate, inContext: context)
+            let arrayMap = ArrayMap(array: array, managedObjectContext: objectContext, predicate: predicate)
+            
+            try object.mapping(arraymap: arrayMap, inContext: context)
             //
             context.dataStore?.stash(objectContext: objectContext, block: localCompletion)
             //
-            context.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .Array), sender: self)
+            context.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, predicate: predicate, mappingType: .Array), sender: self)
         } catch {
             localCompletion(error)
         }

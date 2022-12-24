@@ -12,23 +12,23 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension Vehicles {
-    override public func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         //
-        try self.decode(json: json)
+        try self.decode(json: jsonmap.json)
         //
-        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: jsonmap.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - DefaultProfile
 
-        let defaultProfileJSON = json[#keyPath(Vehicles.default_profile)] as? JSON
-        let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
+        let defaultProfileJSON = jsonmap.json[#keyPath(Vehicles.default_profile)] as? JSON
+        let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: jsonmap.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
         let linker = Vehicles.DefaultProfileLinker.self
         inContext.mappingCoordinator?.linkItem(from: defaultProfileJSON, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
 
         // MARK: - ModulesTree
 
-        let modulesTreeJSON = json[#keyPath(Vehicles.modules_tree)] as? JSON
-        self.modulesTreeMapping(objectContext: objectContext, jSON: modulesTreeJSON, requestPredicate: requestPredicate, inContext: inContext)
+        let modulesTreeJSON = jsonmap.json[#keyPath(Vehicles.modules_tree)] as? JSON
+        self.modulesTreeMapping(objectContext: jsonmap.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: jsonmap.predicate, inContext: inContext)
     }
 }
 
@@ -66,7 +66,7 @@ extension Vehicles {
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let linker = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        inContext.mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, linker: linker, requestManager: inContext.requestManager, completion: { _, _ in })
+        inContext.mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, forClass: ModulesTree.self, predicate: submodulesPredicate, linker: linker, requestManager: inContext.requestManager, completion: { _, _ in })
     }
 }
 

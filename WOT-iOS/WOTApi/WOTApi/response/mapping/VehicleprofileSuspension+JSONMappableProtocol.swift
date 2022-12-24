@@ -12,9 +12,9 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileSuspension {
-    override public func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         //
-        try self.decode(json: json)
+        try self.decode(json: jsonmap.json)
         //
     }
 }

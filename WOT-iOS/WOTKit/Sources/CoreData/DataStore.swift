@@ -221,7 +221,7 @@ extension DataStore: DataStoreProtocol {
         context.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid), sender: self)
     }
 
-    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
+    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = DataStoreError.clazzIsNotSupportable(String(describing: Clazz))
             context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
@@ -229,9 +229,9 @@ extension DataStore: DataStoreProtocol {
             return
         }
 
-        context.logInspector?.logEvent(EventLocalFetch("\(String(describing: ManagedObjectClass)) - \(String(describing: requestPredicate))"), sender: self)
+        context.logInspector?.logEvent(EventLocalFetch("\(String(describing: ManagedObjectClass)) - \(String(describing: predicate))"), sender: self)
 
-        guard let predicate = requestPredicate.compoundPredicate(.and) else {
+        guard let predicate = predicate.compoundPredicate(.and) else {
             let error = WOTFetcherError.noKeysDefinedForClass(String(describing: ManagedObjectClass))
             let fetchResult = FetchResult(objectContext: objectContext, objectID: nil, predicate: nil, fetchStatus: .fetched)
             completion(fetchResult, error)

@@ -69,7 +69,7 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
             //
             let extraction = linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, request: fromRequest)
 
-            self.findOrCreateObject(json: extraction.json, requestPredicate: extraction.requestPredicate) {[weak self] fetchResult, error in
+            self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) {[weak self] fetchResult, error in
                 guard let self = self else {
                     dispatchGroup.leave()
                     return
@@ -119,7 +119,7 @@ extension JSONAdapter {
 
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
+    private func findOrCreateObject(json: JSON, predicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             fatalError("thread is not main")
@@ -131,7 +131,7 @@ extension JSONAdapter {
             }
         }
 
-        context.dataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: requestPredicate[.primary]?.predicate, completion: { fetchResult, error in
+        context.dataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: predicate[.primary]?.predicate, completion: { fetchResult, error in
 
             if let error = error {
                 localCallback(fetchResult, error)
@@ -139,12 +139,12 @@ extension JSONAdapter {
             }
 
             let jsonStartParsingDate = Date()
-            self.context.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.context.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: nil, inContext: self.context) { fetchResult, error in
+            self.context.logInspector?.logEvent(EventJSONStart(predicate), sender: self)
+            self.context.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, predicate: predicate, linker: nil, inContext: self.context) { fetchResult, error in
                 if let error = error {
                     self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
-                self.context.logInspector?.logEvent(EventJSONEnded("\(String(describing: requestPredicate))", initiatedIn: jsonStartParsingDate), sender: self)
+                self.context.logInspector?.logEvent(EventJSONEnded("\(String(describing: predicate))", initiatedIn: jsonStartParsingDate), sender: self)
                 localCallback(fetchResult, nil)
             }
         })
@@ -171,7 +171,7 @@ extension JSONAdapterLinkerProtocol {
             ident = key
         }
 
-        let parents = fromRequest.paradigm?.requestPredicate()?.parentObjectIDList
+        let parents = fromRequest.paradigm?.predicate()?.parentObjectIDList
         let requestPredicate = RequestPredicate(parentObjectIDList: parents)
         requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
 

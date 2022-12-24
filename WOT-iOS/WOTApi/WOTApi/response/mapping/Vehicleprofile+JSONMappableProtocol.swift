@@ -12,70 +12,70 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension Vehicleprofile {
-    override public func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         // MARK: - Decode properties
 
-        try decode(json: json)
+        try decode(json: jsonmap.json)
 
         // MARK: - Link items
 
-        var parentObjectIDList = requestPredicate.parentObjectIDList
+        var parentObjectIDList = jsonmap.predicate.parentObjectIDList
         parentObjectIDList.append(self.objectID)
 
-        let vehicleProfileFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let vehicleProfileFetchResult = FetchResult(objectContext: jsonmap.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - AmmoList
 
-        let ammoListArray = json[#keyPath(Vehicleprofile.ammo)] as? [Any]
+        let ammoListArray = jsonmap.json[#keyPath(Vehicleprofile.ammo)] as? [Any]
         let ammoListMapperClazz = Vehicleprofile.AmmoListLinker.self
-        let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: jsonmap.predicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
         inContext.mappingCoordinator?.linkItems(from: ammoListArray, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileAmmoList.self, mapperClazz: ammoListMapperClazz, lookupRuleBuilder: ammoLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Armor
 
-        let armorJSON = json[#keyPath(Vehicleprofile.armor)] as? JSON
+        let armorJSON = jsonmap.json[#keyPath(Vehicleprofile.armor)] as? JSON
         let armorListMapperClazz = Vehicleprofile.ArmorListLinker.self
-        let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: jsonmap.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
         inContext.mappingCoordinator?.linkItem(from: armorJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileArmorList.self, mapperClazz: armorListMapperClazz, lookupRuleBuilder: armorLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Module
 
-        let moduleJSON = json[#keyPath(Vehicleprofile.modules)] as? JSON
+        let moduleJSON = jsonmap.json[#keyPath(Vehicleprofile.modules)] as? JSON
         let moduleMapperClazz = Vehicleprofile.ModuleLinker.self
-        let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: jsonmap.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
         inContext.mappingCoordinator?.linkItem(from: moduleJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileModule.self, mapperClazz: moduleMapperClazz, lookupRuleBuilder: modulesLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Engine
 
-        let engineJSON = json[#keyPath(Vehicleprofile.engine)] as? JSON
+        let engineJSON = jsonmap.json[#keyPath(Vehicleprofile.engine)] as? JSON
         let engineMapperClazz = Vehicleprofile.EngineLinker.self
         let engineLookupBuilder = RootTagRuleBuilder(json: engineJSON, linkedClazz: VehicleprofileEngine.self)
         inContext.mappingCoordinator?.linkItem(from: engineJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileEngine.self, mapperClazz: engineMapperClazz, lookupRuleBuilder: engineLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Gun
 
-        let gunJSON = json[#keyPath(Vehicleprofile.gun)] as? JSON
+        let gunJSON = jsonmap.json[#keyPath(Vehicleprofile.gun)] as? JSON
         let gunMapperClazz = Vehicleprofile.GunLinker.self
         let gunLookupBuilder = RootTagRuleBuilder(json: gunJSON, linkedClazz: VehicleprofileGun.self)
         inContext.mappingCoordinator?.linkItem(from: gunJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileGun.self, mapperClazz: gunMapperClazz, lookupRuleBuilder: gunLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Suspension
 
-        let suspensionJSON = json[#keyPath(Vehicleprofile.suspension)] as? JSON
+        let suspensionJSON = jsonmap.json[#keyPath(Vehicleprofile.suspension)] as? JSON
         let suspensionMapperClazz = Vehicleprofile.SuspensionLinker.self
         let suspensionLookupBuilder = RootTagRuleBuilder(json: suspensionJSON, linkedClazz: VehicleprofileSuspension.self)
         inContext.mappingCoordinator?.linkItem(from: suspensionJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileSuspension.self, mapperClazz: suspensionMapperClazz, lookupRuleBuilder: suspensionLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Turret
 
-        let turretJSON = json[#keyPath(Vehicleprofile.turret)] as? JSON
+        let turretJSON = jsonmap.json[#keyPath(Vehicleprofile.turret)] as? JSON
         let turretMapperClazz = Vehicleprofile.TurretLinker.self
         let turretLookupBuilder = RootTagRuleBuilder(json: turretJSON, linkedClazz: VehicleprofileTurret.self)
         inContext.mappingCoordinator?.linkItem(from: turretJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileTurret.self, mapperClazz: turretMapperClazz, lookupRuleBuilder: turretLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Radio
 
-        let radioJSON = json[#keyPath(Vehicleprofile.radio)] as? JSON
+        let radioJSON = jsonmap.json[#keyPath(Vehicleprofile.radio)] as? JSON
         let radioMapperClazz = Vehicleprofile.RadioLinker.self
         let radioLookupBuilder = RootTagRuleBuilder(json: radioJSON, linkedClazz: VehicleprofileRadio.self)
         inContext.mappingCoordinator?.linkItem(from: radioJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileRadio.self, mapperClazz: radioMapperClazz, lookupRuleBuilder: radioLookupBuilder, requestManager: inContext.requestManager)

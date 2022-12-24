@@ -15,12 +15,12 @@ extension VehicleprofileAmmoPenetration {
     private enum VehicleprofileAmmoPenetrationError: Error {
         case arrayIsNotContainingThreeElements
     }
-    public override func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
+    public override func mapping(arraymap: ArrayMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         //
-        guard array.count == 3 else {
+        guard arraymap.array.count == 3 else {
             throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements
         }
-        let intArray = NSDecimalNumberArray(array: array)
+        let intArray = NSDecimalNumberArray(array: arraymap.array)
         self.min_value = intArray.elements[0]
         self.avg_value = intArray.elements[1]
         self.max_value = intArray.elements[2]

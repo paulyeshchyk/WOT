@@ -8,18 +8,47 @@
 public protocol JSONMappableProtocol {
     typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
     
-    func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws
-    func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws
+    func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws
+    func mapping(arraymap: ArrayMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws
 }
 
-public protocol JSONMapJSONProtocol {
-    var json: JSON { get set }
-    var managedObjectContext: ManagedObjectContextProtocol { get set }
-    var predicate: RequestPredicateProtocol { get set }
+@objc
+public protocol ManagedObjectContextContainer {
+    var managedObjectContext: ManagedObjectContextProtocol { get }
 }
 
-public protocol JSONMapArrayProtocol {
-    var json: [Any] { get set }
-    var managedObjectContext: ManagedObjectContextProtocol { get set }
-    var predicate: RequestPredicateProtocol { get set }
+@objc
+public protocol ManagedObjectMapProtocol: RequestPredicateContainerProtocol, ManagedObjectContextContainer { }
+
+@objc
+public protocol JSONMapManagedObjectMapProtocol: ManagedObjectMapProtocol {
+    var json: JSON { get }
+}
+
+@objc
+public protocol ArrayMapManagedObjectMapProtocol: ManagedObjectMapProtocol {
+    var array: [Any] { get }
+}
+
+public class JSONMap: JSONMapManagedObjectMapProtocol {
+    public let json: JSON
+    public let managedObjectContext: ManagedObjectContextProtocol
+    public let predicate: RequestPredicate
+    public init(json: JSON, managedObjectContext: ManagedObjectContextProtocol, predicate: RequestPredicate) {
+        self.json = json
+        self.managedObjectContext = managedObjectContext
+        self.predicate = predicate
+    }
+}
+
+public class ArrayMap: ArrayMapManagedObjectMapProtocol {
+    public let array: [Any]
+    public let managedObjectContext: ManagedObjectContextProtocol
+    public let predicate: RequestPredicate
+    public init(array: [Any], managedObjectContext: ManagedObjectContextProtocol, predicate: RequestPredicate) {
+        self.array = array
+        self.managedObjectContext = managedObjectContext
+        self.predicate = predicate
+    }
+
 }

@@ -12,9 +12,9 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileTurret {
-    public override func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
+    public override func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         //
-        try self.decode(json: json)
+        try self.decode(json: jsonmap.json)
         //
     }
 }
