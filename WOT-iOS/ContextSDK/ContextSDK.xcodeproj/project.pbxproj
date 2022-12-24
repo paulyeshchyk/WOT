@@ -10,8 +10,6 @@
 		DA08567429548C9C00273762 /* Hash_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08567329548C9C00273762 /* Hash_Test.swift */; };
 		DA08567729548E2000273762 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08567629548E2000273762 /* String+MD5.swift */; };
 		DA0856792954960A00273762 /* MD5Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0856782954960A00273762 /* MD5Protocol.swift */; };
-		DA0BC5A82952EA2800E01D54 /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5A62952EA2800E01D54 /* JSONDecodingProtocol.swift */; };
-		DA0BC5A92952EA2800E01D54 /* NSManagedObject+JSONDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC5A72952EA2800E01D54 /* NSManagedObject+JSONDecoding.swift */; };
 		DA0E8033295064A400B44CC6 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0E8029295064A300B44CC6 /* ContextSDK.framework */; };
 		DA0E8038295064A400B44CC6 /* ContextSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E8037295064A400B44CC6 /* ContextSDKTests.swift */; };
 		DA0E803A295064A400B44CC6 /* ContextSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = DA0E802C295064A300B44CC6 /* ContextSDK.h */; platformFilter = ios; settings = {ATTRIBUTES = (Public, ); }; };
@@ -76,6 +74,8 @@
 		DA81E7E429533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */; };
 		DA81E7E629533EE800C60F31 /* SessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */; };
 		DA81E91E295445B100C60F31 /* RequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */; };
+		DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */; };
+		DA84BF422957330B00BAC71D /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */; };
 		DAD49D7E2956FE6B0088227F /* JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,8 +93,6 @@
 		DA08567329548C9C00273762 /* Hash_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash_Test.swift; sourceTree = "<group>"; };
 		DA08567629548E2000273762 /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		DA0856782954960A00273762 /* MD5Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5Protocol.swift; sourceTree = "<group>"; };
-		DA0BC5A62952EA2800E01D54 /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
-		DA0BC5A72952EA2800E01D54 /* NSManagedObject+JSONDecoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONDecoding.swift"; sourceTree = "<group>"; };
 		DA0E8029295064A300B44CC6 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0E802C295064A300B44CC6 /* ContextSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContextSDK.h; sourceTree = "<group>"; };
 		DA0E802D295064A300B44CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,6 +160,8 @@
 		DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAdapterCreatorProtocol.swift; sourceTree = "<group>"; };
 		DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerProtocol.swift; sourceTree = "<group>"; };
 		DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerProtocol.swift; sourceTree = "<group>"; };
+		DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderContainer.swift; sourceTree = "<group>"; };
+		DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
 		DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMappableProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,19 +203,9 @@
 		DA0BC5A42952E9EC00E01D54 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				DA0BC5A52952EA0300E01D54 /* decode */,
 				DA81E4EF2952FDD800C60F31 /* JSONAdapter.swift */,
 			);
 			path = JSON;
-			sourceTree = "<group>";
-		};
-		DA0BC5A52952EA0300E01D54 /* decode */ = {
-			isa = PBXGroup;
-			children = (
-				DA0BC5A62952EA2800E01D54 /* JSONDecodingProtocol.swift */,
-				DA0BC5A72952EA2800E01D54 /* NSManagedObject+JSONDecoding.swift */,
-			);
-			path = decode;
 			sourceTree = "<group>";
 		};
 		DA0E801F295064A300B44CC6 = {
@@ -396,6 +386,7 @@
 				DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */,
 				DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */,
 				DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */,
+				DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */,
 			);
 			path = protocols;
 			sourceTree = "<group>";
@@ -451,6 +442,7 @@
 				DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */,
 				DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */,
 				DA81E51F2952FFDC00C60F31 /* Coding.swift */,
+				DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */,
 			);
 			path = codable;
 			sourceTree = "<group>";
@@ -569,10 +561,10 @@
 				DA81E5102952FE6700C60F31 /* Date+Elapsed.swift in Sources */,
 				DA0E80972950B07C00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5082952FE3500C60F31 /* EventThread.swift in Sources */,
-				DA0BC5A92952EA2800E01D54 /* NSManagedObject+JSONDecoding.swift in Sources */,
 				DA81E5122952FF1D00C60F31 /* RESTAPIResponseProtocol.swift in Sources */,
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
+				DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */,
 				DA81E91E295445B100C60F31 /* RequestManagerProtocol.swift in Sources */,
 				DA0E807729509F4F00B44CC6 /* DataStoreProtocol.swift in Sources */,
 				DA0E80822950AE1B00B44CC6 /* RequestableProtocol.swift in Sources */,
@@ -593,6 +585,7 @@
 				DA0E80932950B07C00B44CC6 /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift in Sources */,
 				DA81E7E029533DAA00C60F31 /* ContextControllerProtocol.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,
+				DA84BF422957330B00BAC71D /* JSONDecodingProtocol.swift in Sources */,
 				DA81E50B2952FE3500C60F31 /* EventLocalFetch.swift in Sources */,
 				DA81E5092952FE3500C60F31 /* EventError.swift in Sources */,
 				DA66B930295466F90052E4DB /* URLEncodedProtocol.swift in Sources */,
@@ -621,7 +614,6 @@
 				DA0E80902950B07C00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5052952FE3500C60F31 /* EventObject.swift in Sources */,
 				DA0E807C2950A60300B44CC6 /* MappingParadigm.swift in Sources */,
-				DA0BC5A82952EA2800E01D54 /* JSONDecodingProtocol.swift in Sources */,
 				DA0E80942950B07C00B44CC6 /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				DA81E4E22952FBC000C60F31 /* DataAdapterProtocol.swift in Sources */,
 				DA0E80732950934D00B44CC6 /* FetchResultProtocol.swift in Sources */,

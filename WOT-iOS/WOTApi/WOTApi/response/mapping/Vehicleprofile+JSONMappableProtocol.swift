@@ -12,10 +12,10 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension Vehicleprofile {
-    override public func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(jsonmap: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         // MARK: - Decode properties
 
-        try decode(json: jsonmap.json)
+        try decode(decoderContainer: jsonmap.json)
 
         // MARK: - Link items
 

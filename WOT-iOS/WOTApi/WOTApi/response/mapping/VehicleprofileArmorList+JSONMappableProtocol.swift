@@ -12,7 +12,7 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileArmorList {
-    override public func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(jsonmap: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         //
         let masterFetchResult = FetchResult(objectContext: jsonmap.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 

@@ -27,12 +27,12 @@ extension NSManagedObject: JSONMappableProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    open func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    open func mapping(jsonmap: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
     @objc
-    open func mapping(arraymap: ArrayMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    open func mapping(arraymap: ArrayManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

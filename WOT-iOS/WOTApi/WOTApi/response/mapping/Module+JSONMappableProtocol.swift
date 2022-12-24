@@ -12,10 +12,10 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension Module {
-    override public func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(jsonmap: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         
         //
-        try self.decode(json: jsonmap.json)
+        try self.decode(decoderContainer: jsonmap.json)
         //
         
         let parentsAsVehicles = jsonmap.predicate.parentObjectIDList

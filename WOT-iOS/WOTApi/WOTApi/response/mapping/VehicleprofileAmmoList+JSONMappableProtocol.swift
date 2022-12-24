@@ -12,7 +12,7 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmoList {
-    override public func mapping(arraymap: ArrayMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(arraymap: ArrayManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         //
 
         let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: arraymap.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)

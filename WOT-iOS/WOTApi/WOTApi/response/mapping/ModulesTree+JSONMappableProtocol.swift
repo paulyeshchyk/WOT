@@ -12,13 +12,13 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension ModulesTree {
-    override public func mapping(arraymap: ArrayMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(arraymap: ArrayManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         print(arraymap.array)
     }
 
-    override public func mapping(jsonmap: JSONMapManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(jsonmap: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         //
-        try self.decode(json: jsonmap.json)
+        try self.decode(decoderContainer: jsonmap.json)
         //
 
         let masterFetchResult = FetchResult(objectContext: jsonmap.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
