@@ -16,7 +16,7 @@ extension VehicleprofileAmmoDamage {
         case arrayIsNotContainingThreeElements
     }
 
-     override public func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
+     override public func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
         //
         guard array.count == 3 else {
             throw VehicleprofileAmmoDamageError.arrayIsNotContainingThreeElements

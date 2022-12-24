@@ -9,7 +9,7 @@
 import ContextSDK
 
 public class MappingCoordinator: MappingCoordinatorProtocol {
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
     
     private let context: Context
 
@@ -20,7 +20,7 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
     //
-    public func fetchLocalAndDecode(json: JSON, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol, completion: @escaping FetchResultCompletion) {
+    public func fetchLocalAndDecode(json: JSON, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
 
         context.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { fetchResult, error in
 
@@ -43,7 +43,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
         }
     }
 
-    public func fetchLocalAndDecode(array: [Any], objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol, completion: @escaping FetchResultCompletion) {
+    public func fetchLocalAndDecode(array: [Any], objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
 
         context.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { [weak self] fetchResult, error in
 
@@ -68,7 +68,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
-    public func linkItems(from itemsList: [Any]?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: RequestManagerProtocol) {
+    public func linkItems(from itemsList: [Any]?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: RequestManagerProtocol?) {
 
         guard let itemsList = itemsList else { return }
 
@@ -90,7 +90,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
         })
     }
 
-    public func linkItem(from itemJSON: JSON?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: RequestManagerProtocol) {
+    public func linkItem(from itemJSON: JSON?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, mapperClazz: JSONAdapterLinkerProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: RequestManagerProtocol?) {
 
         guard let itemJSON = itemJSON else { return }
 
@@ -114,7 +114,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorMappingProtocol {
-    public func mapping(json: JSON, fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol, completion: @escaping FetchResultCompletion) {
+    public func mapping(json: JSON, fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 self.context.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
@@ -142,7 +142,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         }
         //
         do {
-            try object.mapping(json: json, objectContext: managedObjectContext, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
+            try object.mapping(json: json, objectContext: managedObjectContext, requestPredicate: requestPredicate, inContext: context)
             context.dataStore?.stash(objectContext: managedObjectContext, block: localCompletion)
             context.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         } catch {
@@ -150,7 +150,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         }
     }
 
-    public func mapping(array: [Any], fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol, completion: @escaping FetchResultCompletion) {
+    public func mapping(array: [Any], fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)
@@ -175,7 +175,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         }
         //
         do {
-            try object.mapping(array: array, objectContext: objectContext, requestPredicate: requestPredicate, mappingCoordinator: self, requestManager: requestManager)
+            try object.mapping(array: array, objectContext: objectContext, requestPredicate: requestPredicate, inContext: context)
             //
             context.dataStore?.stash(objectContext: objectContext, block: localCompletion)
             //

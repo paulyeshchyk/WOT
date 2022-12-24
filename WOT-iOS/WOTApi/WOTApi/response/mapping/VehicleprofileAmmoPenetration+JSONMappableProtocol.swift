@@ -15,7 +15,7 @@ extension VehicleprofileAmmoPenetration {
     private enum VehicleprofileAmmoPenetrationError: Error {
         case arrayIsNotContainingThreeElements
     }
-    public override func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
+    public override func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
         //
         guard array.count == 3 else {
             throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements
