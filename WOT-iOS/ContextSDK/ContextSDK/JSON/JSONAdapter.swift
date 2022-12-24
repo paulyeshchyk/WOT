@@ -138,14 +138,9 @@ extension JSONAdapter {
                 return
             }
 
-            guard let requestManager = self.context.requestManager else {
-                localCallback(fetchResult, JSONAdapterError.requestManagerIsNil)
-                return
-            }
-            
             let jsonStartParsingDate = Date()
             self.context.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.context.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: nil, requestManager: requestManager) { fetchResult, error in
+            self.context.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: nil, inContext: self.context) { fetchResult, error in
                 if let error = error {
                     self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }

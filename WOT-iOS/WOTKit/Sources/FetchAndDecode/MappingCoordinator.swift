@@ -29,7 +29,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
                 return
             }
 
-            self.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: linker, requestManager: requestManager) { fetchResult, error in
+            self.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: linker, inContext: self.context) { fetchResult, error in
                 if let error = error {
                     completion(fetchResult, error)
                 } else {
@@ -47,16 +47,20 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 
         context.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, requestPredicate: requestPredicate) { [weak self] fetchResult, error in
 
+            guard let self = self else {
+                return
+            }
+            
             if let error = error {
                 completion(fetchResult, error)
                 return
             }
 
-            self?.mapping(array: array, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: linker, requestManager: requestManager) { fetchResult, error in
+            self.mapping(array: array, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: linker, inContext: self.context) { fetchResult, error in
                 if let error = error {
                     completion(fetchResult, error)
                 } else {
-                    if let linker = linker, let dataStore = self?.context.dataStore {
+                    if let linker = linker, let dataStore = self.context.dataStore {
                         linker.process(fetchResult: fetchResult, dataStore: dataStore, completion: completion)
                     } else {
                         completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
@@ -114,7 +118,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorMappingProtocol {
-    public func mapping(json: JSON, fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
+    public func mapping(json jSON: JSON, fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 self.context.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
@@ -142,7 +146,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         }
         //
         do {
-            try object.mapping(json: json, objectContext: managedObjectContext, requestPredicate: requestPredicate, inContext: context)
+            try object.mapping(json: jSON, objectContext: managedObjectContext, requestPredicate: requestPredicate, inContext: context)
             context.dataStore?.stash(objectContext: managedObjectContext, block: localCompletion)
             context.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, requestPredicate: requestPredicate, mappingType: .JSON), sender: self)
         } catch {
@@ -150,7 +154,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         }
     }
 
-    public func mapping(array: [Any], fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
+    public func mapping(array: [Any], fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)

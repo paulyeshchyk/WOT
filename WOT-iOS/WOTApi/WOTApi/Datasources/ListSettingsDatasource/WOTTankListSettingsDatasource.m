@@ -29,10 +29,10 @@
         self.coreDataProvider = appDelegate.dataStore;
         [self.coreDataProvider performWithObjectContext:self.context block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-            fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:context];
+            fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:(NSManagedObjectContext *)context];
             [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiFields.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOTApiKeyOrderBy.orderBy ascending:YES]]];
             
-            self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:WOTApiFields.type cacheName:nil];
+            self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:(NSManagedObjectContext *)context sectionNameKeyPath:WOTApiFields.type cacheName:nil];
             self.fetchedResultController.delegate = self;
 
             NSError *error = nil;

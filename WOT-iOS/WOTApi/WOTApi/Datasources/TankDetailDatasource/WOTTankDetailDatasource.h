@@ -6,8 +6,8 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTTankDetailField.h"
-#import "WOTTankDetailSection.h"
+#import <WOTApi/WOTTankDetailField.h>
+#import <WOTApi/WOTTankDetailSection.h>
 
 @interface WOTTankDetailDatasource : NSObject
 

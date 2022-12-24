@@ -76,6 +76,7 @@
 		DA81E7E429533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */; };
 		DA81E7E629533EE800C60F31 /* SessionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */; };
 		DA81E91E295445B100C60F31 /* RequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */; };
+		DAD49D7E2956FE6B0088227F /* JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +162,7 @@
 		DA81E7E329533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAdapterCreatorProtocol.swift; sourceTree = "<group>"; };
 		DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerProtocol.swift; sourceTree = "<group>"; };
 		DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerProtocol.swift; sourceTree = "<group>"; };
+		DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMappableProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -386,6 +388,7 @@
 				DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */,
 				DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */,
 				DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */,
+				DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */,
 				DA5F18562951C10900191864 /* LogInspectorProtocol.swift */,
 				DA81E4E32952FC6900C60F31 /* MappingCoordinatorProtocol.swift */,
 				DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */,
@@ -593,6 +596,7 @@
 				DA81E50B2952FE3500C60F31 /* EventLocalFetch.swift in Sources */,
 				DA81E5092952FE3500C60F31 /* EventError.swift in Sources */,
 				DA66B930295466F90052E4DB /* URLEncodedProtocol.swift in Sources */,
+				DAD49D7E2956FE6B0088227F /* JSONMappableProtocol.swift in Sources */,
 				DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */,
 				DA81E50C2952FE3500C60F31 /* EventCDStash.swift in Sources */,
 				DA0E80922950B07C00B44CC6 /* RootTagRuleBuilder.swift in Sources */,

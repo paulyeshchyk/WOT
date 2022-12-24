@@ -6,7 +6,7 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTTankDetailField.h"
+#import <WOTApi/WOTTankDetailField.h>
 
 @interface WOTTankDetailFieldKVO : WOTTankDetailField
 

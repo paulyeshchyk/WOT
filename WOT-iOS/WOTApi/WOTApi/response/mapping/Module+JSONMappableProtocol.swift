@@ -175,7 +175,7 @@ extension Module {
 
     public class GunMapper: BaseJSONAdapterLinker {
         
-        override public required init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?) {
+        public required init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?) {
             super.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: mappedObjectIdentifier)
         }
         

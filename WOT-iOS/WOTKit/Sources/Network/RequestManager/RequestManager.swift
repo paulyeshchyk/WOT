@@ -162,7 +162,7 @@ extension RequestManager: RequestManagerProtocol {
 
         let arguments = paradigm.buildRequestArguments()
         let jsonAdapterLinker = paradigm.jsonAdapterLinker
-        #warning("remove hashValue")
+        #warning ("remove hashValue")
         let groupId: RequestIdType = "Nested\(String(describing: paradigm.clazz))-\(arguments)".hashValue
         try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener)
     }
