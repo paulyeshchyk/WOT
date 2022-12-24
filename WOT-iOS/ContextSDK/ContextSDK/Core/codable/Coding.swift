@@ -45,7 +45,7 @@ public struct StringCodingKey: CodingKey, ExpressibleByStringLiteral {
 
 // any json decoding
 extension JSONDecoder {
-    func decodeAny<T>(_ type: T.Type, from data: Data) throws -> T {
+    public func decodeAny<T>(_ type: T.Type, from data: Data) throws -> T {
         guard let decoded = try decode(AnyCodable.self, from: data) as? T else {
             throw DecodingError.typeMismatch(T.self, DecodingError.Context(codingPath: [StringCodingKey(string: "")], debugDescription: "Decoding of \(T.self) failed"))
         }

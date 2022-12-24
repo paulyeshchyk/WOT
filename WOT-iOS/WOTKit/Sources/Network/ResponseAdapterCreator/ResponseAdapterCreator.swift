@@ -15,6 +15,12 @@ public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
     private enum ResponseAdapterCreatorError: Error {
         case adapterNotFound(requestType: RequestIdType)
         case modelClassNotFound(requestType: RequestIdType)
+        var description: String {
+            switch self {
+            case .adapterNotFound(let requestType): return "\(type(of: self)): adapter not found \(requestType)"
+            case .modelClassNotFound(let requestType): return "\(type(of: self)): model class not found \(requestType)"
+            }
+        }
     }
     
     private let context: Context

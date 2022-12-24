@@ -20,16 +20,16 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         case invalidRequest
         case modelClassNotFound(RequestProtocol)
         case modelClassNotRegistered(AnyObject, RequestProtocol)
-        public var debugDescription: String {
+        public var description: String {
             switch self {
-            case .adapterNotFound(let request): return "Linker not found for request: \(String(describing: request))"
-            case .noRequestIds(let request): return "No request ids for request: \(String(describing: request))"
-            case .receivedResponseFromReleasedRequest: return "Received response from released request"
-            case .requestNotFound: return "Request not found"
-            case .cantAddListener: return "Can't add listener"
-            case .invalidRequest: return "Invalid request"
-            case .modelClassNotFound(let request): return "Model class not found for request: \(String(describing: request))"
-            case .modelClassNotRegistered(let model, let request): return "Model class(\((type(of: model))) registered for request: \(String(describing: request))"
+            case .adapterNotFound(let request): return "\(type(of: self)): Linker not found for request: \(String(describing: request))"
+            case .noRequestIds(let request): return "\(type(of: self)): No request ids for request: \(String(describing: request))"
+            case .receivedResponseFromReleasedRequest: return "\(type(of: self)): Received response from released request"
+            case .requestNotFound: return "\(type(of: self)): Request not found"
+            case .cantAddListener: return "\(type(of: self)): Can't add listener"
+            case .invalidRequest: return "\(type(of: self)): Invalid request"
+            case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
+            case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
             }
         }
     }
@@ -154,7 +154,7 @@ extension RequestManager: RequestManagerProtocol {
         try request.start(withArguments: withArguments)
     }
 
-    public func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol) throws {
+    private func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
         guard let request = try context.requestRegistrator?.createRequest(forRequestId: requestId) else {
             throw RequestManagerError.requestNotFound
         }
@@ -164,7 +164,7 @@ extension RequestManager: RequestManagerProtocol {
         let jsonAdapterLinker = paradigm.jsonAdapterLinker
         #warning("remove hashValue")
         let groupId: RequestIdType = "Nested\(String(describing: paradigm.clazz))-\(arguments)".hashValue
-        try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: nil)
+        try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener)
     }
     
     public func fetchRemote(paradigm: MappingParadigmProtocol) {
@@ -174,7 +174,7 @@ extension RequestManager: RequestManagerProtocol {
         }
         requestIDs.forEach {
             do {
-                try startRequest(by: $0, paradigm: paradigm)
+                try startRequest(by: $0, paradigm: paradigm, listener: nil)
             } catch {
                 context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
@@ -187,7 +187,7 @@ private class ResponseAdapterLinkerList {
     private enum AdapterLinkerListError: Error {
         case notRemoved(RequestProtocol)
         case notFound(JSONAdapterLinkerProtocol)
-        var debugDescription: String {
+        var description: String {
             switch self {
             case .notRemoved(let request): return "Adapter was not removed for request \(String(describing: request))"
             case .notFound(let adapterLinker): return "Adapter was not found for \(String(describing: adapterLinker))"

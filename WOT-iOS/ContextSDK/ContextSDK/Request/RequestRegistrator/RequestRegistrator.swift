@@ -30,13 +30,13 @@ extension RequestRegistrator {
         case modelClassNotFound(RequestProtocol)
         case modelClassNotRegistered(AnyObject, RequestProtocol)
 
-        public var debugDescription: String {
+        public var description: String {
             switch self {
-            case .requestNotFound: return "Request not found"
-            case .requestClassNotFound(let requestType): return "Request Class not found for request type: \(requestType)"
-            case .requestClassHasNoModelClass(let requestClass): return "Request class(\(requestClass)) has no model class"
-            case .modelClassNotFound(let request): return "Model class not found for request: \(String(describing: request))"
-            case .modelClassNotRegistered(let model, let request): return "Model class(\((type(of: model))) registered for request: \(String(describing: request))"
+            case .requestNotFound: return "\(type(of: self)): Request not found"
+            case .requestClassNotFound(let requestType): return "\(type(of: self)): Request Class not found for request type: \(requestType)"
+            case .requestClassHasNoModelClass(let requestClass): return "\(type(of: self)): Request class(\(requestClass)) has no model class"
+            case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
+            case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
             }
         }
     }

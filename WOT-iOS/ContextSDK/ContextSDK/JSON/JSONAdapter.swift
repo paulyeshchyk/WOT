@@ -9,6 +9,11 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     private enum JSONAdapterError: Error {
         case requestManagerIsNil
+        var description: String {
+            switch self {
+            case .requestManagerIsNil: return "\(type(of: self)):  request manager is nil"
+            }
+        }
     }
 
     // MARK: DataAdapterProtocol -

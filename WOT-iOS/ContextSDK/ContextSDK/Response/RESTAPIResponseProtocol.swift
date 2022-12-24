@@ -20,7 +20,12 @@ public class RESTAPIResponse: RESTAPIResponseProtocol {
     public var error: JSON?
     public var swiftError: Error? {
         guard let json = error else { return nil }
-        return RESTAPIError(json: json)
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            return try JSONDecoder().decode(RESTAPIError.self, from: data)
+        } catch {
+            return nil
+        }
     }
 
     //
@@ -99,29 +104,42 @@ public enum RESTAPIResponseStatus: String, Codable {
 }
 
 
-public struct RESTAPIError: Error, CustomStringConvertible {
-    enum CodingKeys: String {
+public class RESTAPIError: Error, CustomStringConvertible, Codable {
+
+    public var code: Int?
+    public var message: String?
+
+    public var description: String {
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(self)
+            return String(decoding: data, as: UTF8.self)
+        } catch {
+            return "Unknown error"
+        }
+    }
+
+    //
+    public typealias Fields = FieldKeys
+    public enum FieldKeys: String, CodingKey {
         case code
         case message
     }
 
-    public var code: Int
-    public var message: String
+    // MARK: - Decodable
 
-    public init(code: Int?, message: String?) {
-        self.code = code ?? -1
-        self.message = message ?? "No message"
+    public required init(from decoder: Decoder) throws {
+
+        let container = try decoder.container(keyedBy: Fields.self)
+        self.code = try container.decodeIfPresent(Int.self, forKey: .code)
+        self.message = try container.decodeIfPresent(String.self, forKey: .message)
     }
 
-    public var description: String {
-        return "RESTAPIError code: \(code); message: \(message)"
-    }
+    // MARK: - Encodable
 
-    public init?(json: JSON?) {
-        guard let json = json else { return nil }
-        let code: Int = json[CodingKeys.code.rawValue] as? Int ?? -1
-        let message = json[CodingKeys.message.rawValue] as? String ?? "<unknown>"
-
-        self = RESTAPIError(code: code, message: message)
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Fields.self)
+        try container.encode(code, forKey: .code)
+        try container.encode(message, forKey: .message)
     }
 }

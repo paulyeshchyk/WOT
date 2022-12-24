@@ -41,9 +41,9 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     private enum RequestError: Error {
         case shouldBeOverriden(String)
-        var debugDescription: String {
+        var description: String {
             switch self {
-            case .shouldBeOverriden(let text): return "'\(text)' should be overridden"
+            case .shouldBeOverriden(let text): return "\(type(of: self)): '\(text)' should be overridden"
             }
         }
     }

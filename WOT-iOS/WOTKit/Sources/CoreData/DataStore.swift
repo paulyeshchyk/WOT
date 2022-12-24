@@ -16,11 +16,11 @@ open class DataStore: NSObject {
         case clazzIsNotSupportable(String)
         case contextNotSaved
         case objectNotCreated(AnyClass)
-        public var debugDescription: String {
+        public var description: String {
             switch self {
-            case .contextNotSaved: return "Context is not saved"
-            case .objectNotCreated(let clazz): return "Object is not created:[\(String(describing: clazz))]"
-            case .clazzIsNotSupportable(let clazz): return "Class is not supported by mapper:[\(String(describing: clazz))]"
+            case .contextNotSaved: return "\(type(of: self)): Context is not saved"
+            case .objectNotCreated(let clazz): return "\(type(of: self)): Object is not created:[\(String(describing: clazz))]"
+            case .clazzIsNotSupportable(let clazz): return "\(type(of: self)): Class is not supported by mapper:[\(String(describing: clazz))]"
             }
         }
     }
