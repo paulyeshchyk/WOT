@@ -13,11 +13,8 @@ import ContextSDK
 
 extension VehicleprofileAmmoList {
     override public func mapping(arraymap: ArrayManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        //
-
         let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: arraymap.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
-        arraymap.array.compactMap { $0 as? JSON }.forEach { jSON in
-
+        for jSON in arraymap.array {
             let ammoType = jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject
             let ruleBuilder = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: arraymap.predicate, ammoType: ammoType, linkedClazz: VehicleprofileAmmo.self, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             let ammoLinkerClass = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker.self
