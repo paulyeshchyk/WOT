@@ -13,9 +13,9 @@ public protocol RequestPredicateComposerProtocol: AnyObject {
 @objc
 public class RequestPredicateComposition: NSObject {
     public let objectIdentifier: Any?
-    public let requestPredicate: RequestPredicate
+    public let requestPredicate: ContextPredicate
 
-    required public init(objectIdentifier: Any?, requestPredicate: RequestPredicate) {
+    required public init(objectIdentifier: Any?, requestPredicate: ContextPredicate) {
         self.objectIdentifier = objectIdentifier
         self.requestPredicate = requestPredicate
         super.init()

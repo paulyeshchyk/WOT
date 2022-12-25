@@ -9,16 +9,16 @@
 public class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
-    private var requestPredicate: RequestPredicate
+    private var requestPredicate: ContextPredicate
 
-    public init(requestPredicate: RequestPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject) {
+    public init(requestPredicate: ContextPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject) {
         self.linkedClazz = linkedClazz
         self.linkedObjectID = linkedObjectID
         self.requestPredicate = requestPredicate
     }
 
     public func build() -> RequestPredicateComposition? {
-        let lookupPredicate = RequestPredicate()
+        let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
         lookupPredicate[.secondary] = requestPredicate[.primary]
 

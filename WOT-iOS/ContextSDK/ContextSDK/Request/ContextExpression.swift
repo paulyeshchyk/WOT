@@ -6,7 +6,7 @@
 //
 
 @objc
-public class RequestExpression: NSObject {
+public class ContextExpression: NSObject {
     public var components: [String]
     public var value: AnyObject
     public var name: String { return components.joined(separator: ".")}
@@ -40,10 +40,10 @@ public class RequestExpression: NSObject {
     }
 
     @objc
-    public func foreignKey(byInsertingComponent: String) -> RequestExpression? {
+    public func foreignKey(byInsertingComponent: String) -> ContextExpression? {
         var newComponents = [byInsertingComponent]
         newComponents.append(contentsOf: self.components)
-        return RequestExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
+        return ContextExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
 }
 

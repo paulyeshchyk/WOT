@@ -7,7 +7,7 @@
 
 @objc
 public protocol MappingCoordinatorMappingProtocol {
-    func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion)
+    func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion)
 }
 
 @objc
@@ -17,7 +17,7 @@ public protocol MappingCoordinatorLinkingProtocol {
 
 @objc
 public protocol MappingCoordinatorFetchingProtocol {
-    func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion)
+    func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion)
 }
 
 @objc
