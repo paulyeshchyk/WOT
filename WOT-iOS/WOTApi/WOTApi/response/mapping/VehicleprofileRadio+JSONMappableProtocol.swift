@@ -12,9 +12,13 @@ import WOTKit
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileRadio {
-    override public func mapping(jsonmap: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+
+        guard let radio = map.mappingData as? JSON else {
+            throw JSONManagedObjectMapError.notAnElement(map)
+        }
         //
-        try self.decode(decoderContainer: jsonmap.json)
+        try self.decode(decoderContainer: radio)
         //
     }
 }

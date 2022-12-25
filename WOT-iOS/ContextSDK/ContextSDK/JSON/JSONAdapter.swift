@@ -7,7 +7,7 @@
 
 public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
-    private enum JSONAdapterError: Error {
+    private enum JSONAdapterError: Error, CustomStringConvertible {
         case requestManagerIsNil
         var description: String {
             switch self {
@@ -63,29 +63,35 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
         let dispatchGroup = DispatchGroup()
 
-        json.keys.forEach { key in
+        for key in json.keys {
 
             dispatchGroup.enter()
             //
-            let extraction = linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, request: fromRequest)
+            do {
 
-            self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) {[weak self] fetchResult, error in
-                guard let self = self else {
-                    dispatchGroup.leave()
-                    return
-                }
-                if let error = error {
-                    self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
-                    dispatchGroup.leave()
-                    return
-                }
+                let extraction = try linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, request: fromRequest)
 
-                self.linker.process(fetchResult: fetchResult, dataStore: self.context.dataStore) { _, error in
+                self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) {[weak self] fetchResult, error in
+                    guard let self = self else {
+                        dispatchGroup.leave()
+                        return
+                    }
                     if let error = error {
                         self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        dispatchGroup.leave()
+                        return
                     }
-                    dispatchGroup.leave()
+
+                    self.linker.process(fetchResult: fetchResult, dataStore: self.context.dataStore) { _, error in
+                        if let error = error {
+                            self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        }
+                        dispatchGroup.leave()
+                    }
                 }
+            } catch {
+                dispatchGroup.leave()
+                context.logInspector?.logEvent(EventError(error, details: nil))
             }
         }
 
@@ -119,12 +125,12 @@ extension JSONAdapter {
 
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, predicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
+    private func findOrCreateObject(json: JSONCollectable?, predicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             fatalError("thread is not main")
         }
-
+        
         let localCallback: FetchResultCompletion = { fetchResult, error in
             DispatchQueue.main.async {
                 externalCallback(fetchResult, error)
@@ -153,13 +159,23 @@ extension JSONAdapter {
 
 public struct JSONExtraction {
     public let requestPredicate: RequestPredicate
-    public let json: JSON
+    public let json: JSONCollectable?
+
+    public enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
+        case invalidJSONForKey(AnyHashable)
+        public var description: String {
+            switch self {
+            case .invalidJSONForKey(let key): return "[\(type(of: self))]: Invalid json for key: \(key)"
+            }
+        }
+    }
 }
 
 extension JSONAdapterLinkerProtocol {
-    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: RequestProtocol) -> JSONExtraction {
+    
+    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: RequestProtocol) throws -> JSONExtraction {
         guard let json = from[key] as? JSON else {
-            fatalError("invalid json for key")
+            throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
 
         let extractedJSON = onJSONExtraction(json: json)
@@ -175,6 +191,7 @@ extension JSONAdapterLinkerProtocol {
         let requestPredicate = RequestPredicate(parentObjectIDList: parents)
         requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
 
-        return JSONExtraction(requestPredicate: requestPredicate, json: extractedJSON)
+        let jsonCollection = try JSONCollection(element: extractedJSON)
+        return JSONExtraction(requestPredicate: requestPredicate, json: jsonCollection)
     }
 }

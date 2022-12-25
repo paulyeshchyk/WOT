@@ -32,4 +32,21 @@ public class EventWarning: LogEventProtocol {
 
         self.init(message: messages.joined(separator: "; details: "))
     }
+    
+    convenience public init?(error: Error?, details: Any?) {
+        var messages: [String] = .init()
+        if let error = error {
+            messages.append(String(describing: error))
+        } else {
+            messages.append("Unknown error")
+        }
+
+        if let details = details {
+            let txt = String(describing: details)
+            messages.append(txt)
+        }
+
+        self.init(message: messages.joined(separator: "; details: "))
+    }
+
 }

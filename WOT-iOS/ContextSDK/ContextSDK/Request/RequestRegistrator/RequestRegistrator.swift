@@ -23,7 +23,7 @@ open class RequestRegistrator: RequestRegistratorProtocol {
 
 extension RequestRegistrator {
 
-    private enum RequestRegistratorError: Error {
+    private enum RequestRegistratorError: Error, CustomStringConvertible {
         case requestNotFound
         case requestClassNotFound(requestType: String)
         case requestClassHasNoModelClass(requestClass: String)

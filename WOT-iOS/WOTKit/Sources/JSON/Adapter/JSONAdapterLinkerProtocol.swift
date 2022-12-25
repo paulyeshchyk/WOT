@@ -8,11 +8,11 @@
 
 import ContextSDK
 
-public enum BaseJSONAdapterLinkerError: Error, CustomDebugStringConvertible {
+public enum BaseJSONAdapterLinkerError: Error, CustomStringConvertible {
     case unexpectedClass(AnyClass)
-    public var debugDescription: String {
+    public var description: String {
         switch self {
-        case .unexpectedClass(let clazz): return "Class is not supported; expected class is:[\(String(describing: clazz))]"
+        case .unexpectedClass(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(String(describing: clazz))]"
         }
     }
 }

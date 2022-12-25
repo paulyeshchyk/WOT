@@ -115,7 +115,7 @@ public class RESTAPIError: Error, CustomStringConvertible, Codable {
             let data = try encoder.encode(self)
             return String(decoding: data, as: UTF8.self)
         } catch {
-            return "Unknown error"
+            return "[\(type(of: self))]: Unknown error"
         }
     }
 

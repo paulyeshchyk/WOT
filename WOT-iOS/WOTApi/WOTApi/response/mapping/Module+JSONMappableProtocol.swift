@@ -12,17 +12,21 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension Module {
-    override public func mapping(jsonmap: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+
+        guard let module = map.mappingData as? JSON else {
+            throw JSONManagedObjectMapError.notAnElement(map)
+        }
+
         //
-        try self.decode(decoderContainer: jsonmap.json)
+        try self.decode(decoderContainer: module)
         //
         
-        let parentsAsVehicles = jsonmap.predicate.parentObjectIDList
-            .compactMap { jsonmap.managedObjectContext.object(byID: $0) as? Vehicles }
+        let parentsAsVehicles = map.predicate.parentObjectIDList
+            .compactMap { map.managedObjectContext.object(byID: $0) as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
-        let masterFetchResult = FetchResult(objectContext: jsonmap.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         guard parents.count <= 1 else {
             print("parents count should be less or equal 1")

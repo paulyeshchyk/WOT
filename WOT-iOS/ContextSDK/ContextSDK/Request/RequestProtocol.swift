@@ -39,7 +39,7 @@ public protocol RequestListenerProtocol: MD5Protocol {
 //@objc
 open class Request: RequestProtocol, CustomStringConvertible {
 
-    private enum RequestError: Error {
+    private enum RequestError: Error, CustomStringConvertible {
         case shouldBeOverriden(String)
         var description: String {
             switch self {

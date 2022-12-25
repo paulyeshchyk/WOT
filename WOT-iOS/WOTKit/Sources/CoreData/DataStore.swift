@@ -12,7 +12,7 @@ import ContextSDK
 @objc
 open class DataStore: NSObject {
     
-    private enum DataStoreError: Error {
+    private enum DataStoreError: Error, CustomStringConvertible {
         case clazzIsNotSupportable(String)
         case contextNotSaved
         case objectNotCreated(AnyClass)
@@ -139,16 +139,16 @@ extension DataStore {
     }
 }
 
-public enum WOTFetcherError: Error, CustomDebugStringConvertible {
+public enum WOTFetcherError: Error, CustomStringConvertible {
     case requestsNotParsed
     case noKeysDefinedForClass(String)
     case notManagedObjectType(PrimaryKeypathProtocol.Type)
 
-    public var debugDescription: String {
+    public var description: String {
         switch self {
-        case .noKeysDefinedForClass(let clazz): return "No keys defined for:[\(String(describing: clazz))]"
-        case .requestsNotParsed: return "request is not parsed"
-        case .notManagedObjectType(let clazz): return "Not ManagedObjectType:[\(String(describing: clazz))]"
+        case .noKeysDefinedForClass(let clazz): return "[\(type(of: self))]: No keys defined for:[\(String(describing: clazz))]"
+        case .requestsNotParsed: return "[\(type(of: self))]: request is not parsed"
+        case .notManagedObjectType(let clazz): return "[\(type(of: self))]: Not ManagedObjectType:[\(String(describing: clazz))]"
         }
     }
 }

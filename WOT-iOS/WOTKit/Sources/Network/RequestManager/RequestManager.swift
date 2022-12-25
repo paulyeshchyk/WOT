@@ -11,7 +11,7 @@ import ContextSDK
 @objc
 public class RequestManager: NSObject, RequestListenerProtocol {
     
-    private enum RequestManagerError: Error {
+    private enum RequestManagerError: Error, CustomStringConvertible {
         case adapterNotFound(RequestProtocol)
         case noRequestIds(RequestProtocol)
         case requestNotFound
@@ -20,6 +20,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         case invalidRequest
         case modelClassNotFound(RequestProtocol)
         case modelClassNotRegistered(AnyObject, RequestProtocol)
+        case requestManagerListenerIsNil
         public var description: String {
             switch self {
             case .adapterNotFound(let request): return "\(type(of: self)): Linker not found for request: \(String(describing: request))"
@@ -30,6 +31,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
             case .invalidRequest: return "\(type(of: self)): Invalid request"
             case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
             case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
+            case .requestManagerListenerIsNil: return "\(type(of: self)): RequestManagerListener is nil"
             }
         }
     }
@@ -146,7 +148,8 @@ extension RequestManager: RequestManagerProtocol {
             try grouppedListenerList.addListener(listener, forRequest: request)
 
         } else {
-            context.logInspector?.logEvent(EventWarning(message: "request listener is nil"), sender: self)
+            let event = EventWarning(error: RequestManagerError.requestManagerListenerIsNil, details: nil)
+            context.logInspector?.logEvent(event, sender: self)
         }
 
         try adapterLinkerList.addAdapterLinker(adapterLinker, forRequest: request)
@@ -184,13 +187,13 @@ extension RequestManager: RequestManagerProtocol {
 
 private class ResponseAdapterLinkerList {
     
-    private enum AdapterLinkerListError: Error {
+    private enum AdapterLinkerListError: Error, CustomStringConvertible {
         case notRemoved(RequestProtocol)
         case notFound(JSONAdapterLinkerProtocol)
         var description: String {
             switch self {
-            case .notRemoved(let request): return "Adapter was not removed for request \(String(describing: request))"
-            case .notFound(let adapterLinker): return "Adapter was not found for \(String(describing: adapterLinker))"
+            case .notRemoved(let request): return "[\(type(of: self))]: Adapter was not removed for request \(String(describing: request))"
+            case .notFound(let adapterLinker): return "[\(type(of: self))]: Adapter was not found for \(String(describing: adapterLinker))"
             }
         }
     }

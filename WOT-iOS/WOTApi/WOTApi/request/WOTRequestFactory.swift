@@ -11,8 +11,13 @@ import WOTKit
 @objc
 public class WOTWEBRequestFactory: NSObject {
     
-    private enum HttpRequestFactoryError: Error {
+    private enum HttpRequestFactoryError: Error, CustomStringConvertible {
         case objectNotDefined
+        public var description: String {
+            switch self {
+            case .objectNotDefined: return "[\(type(of: self))]: Object not defined"
+            }
+        }
     }
     
     public static func fetchVehiclePivotData(inContext context: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {

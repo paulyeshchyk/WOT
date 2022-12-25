@@ -11,74 +11,125 @@ import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
-extension Vehicleprofile {
-    override public func mapping(jsonmap: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        // MARK: - Decode properties
+public enum VehicleProfileMappingError: Error, CustomStringConvertible {
+    case noAmmoList(NSDecimalNumber?)
+    case noArmor(NSDecimalNumber?)
+    case noModule(NSDecimalNumber?)
+    case noEngine(NSDecimalNumber?)
+    case noGun(NSDecimalNumber?)
+    case noSuspension(NSDecimalNumber?)
+    case noTurret(NSDecimalNumber?)
+    case noRadio(NSDecimalNumber?)
+    public var description: String {
+        switch self {
+        case .noAmmoList(let profile): return "[\(type(of: self))]: No ammo list in profile with id: \(profile ?? -1)"
+        case .noArmor(let profile): return "[\(type(of: self))]: No armor in profile with id: \(profile ?? -1)"
+        case .noModule(let profile): return "[\(type(of: self))]: No module in profile with id: \(profile ?? -1)"
+        case .noEngine(let profile): return "[\(type(of: self))]: No engine in profile with id: \(profile ?? -1)"
+        case .noGun(let profile): return "[\(type(of: self))]: No gun in profile with id: \(profile ?? -1)"
+        case .noSuspension(let profile): return "[\(type(of: self))]: No suspension in profile with id: \(profile ?? -1)"
+        case .noTurret(let profile): return "[\(type(of: self))]: No turret in profile with id: \(profile ?? -1)"
+        case .noRadio(let profile): return "[\(type(of: self))]: No radio in profile with id: \(profile ?? -1)"
+        }
+    }
+}
 
-        try decode(decoderContainer: jsonmap.json)
+extension Vehicleprofile {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+
+        guard let profile = map.mappingData as? JSON else {
+            throw JSONManagedObjectMapError.notAnElement(map)
+        }
+        try decode(decoderContainer: profile)
 
         // MARK: - Link items
 
-        var parentObjectIDList = jsonmap.predicate.parentObjectIDList
+        var parentObjectIDList = map.predicate.parentObjectIDList
         parentObjectIDList.append(self.objectID)
 
-        let vehicleProfileFetchResult = FetchResult(objectContext: jsonmap.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let vehicleProfileFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - AmmoList
 
-        let ammoListArray = jsonmap.json[#keyPath(Vehicleprofile.ammo)] as? [Any]
+        guard let ammoListArray = profile[#keyPath(Vehicleprofile.ammo)] as? [JSON] else {
+            throw VehicleProfileMappingError.noAmmoList(self.tank_id)
+        }
         let ammoListMapperClazz = Vehicleprofile.AmmoListLinker.self
-        let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: jsonmap.predicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
-        inContext.mappingCoordinator?.linkItems(from: ammoListArray, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileAmmoList.self, mapperClazz: ammoListMapperClazz, lookupRuleBuilder: ammoLookupBuilder, requestManager: inContext.requestManager)
+        let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        
+        let ammoListCollection = try JSONCollection(array: ammoListArray)
+        inContext.mappingCoordinator?.linkItem(from: ammoListCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileAmmoList.self, mapperClazz: ammoListMapperClazz, lookupRuleBuilder: ammoLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Armor
 
-        let armorJSON = jsonmap.json[#keyPath(Vehicleprofile.armor)] as? JSON
+        guard let armorJSON = profile[#keyPath(Vehicleprofile.armor)] as? JSON else {
+            throw VehicleProfileMappingError.noArmor(self.tank_id)
+        }
+        
         let armorListMapperClazz = Vehicleprofile.ArmorListLinker.self
-        let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: jsonmap.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
-        inContext.mappingCoordinator?.linkItem(from: armorJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileArmorList.self, mapperClazz: armorListMapperClazz, lookupRuleBuilder: armorLookupBuilder, requestManager: inContext.requestManager)
+        let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        let armorCollection = try JSONCollection(element: armorJSON)
+        inContext.mappingCoordinator?.linkItem(from: armorCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileArmorList.self, mapperClazz: armorListMapperClazz, lookupRuleBuilder: armorLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Module
 
-        let moduleJSON = jsonmap.json[#keyPath(Vehicleprofile.modules)] as? JSON
+        guard let moduleJSON = profile[#keyPath(Vehicleprofile.modules)] as? JSON else {
+            throw VehicleProfileMappingError.noModule(self.tank_id)
+        }
         let moduleMapperClazz = Vehicleprofile.ModuleLinker.self
-        let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: jsonmap.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
-        inContext.mappingCoordinator?.linkItem(from: moduleJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileModule.self, mapperClazz: moduleMapperClazz, lookupRuleBuilder: modulesLookupBuilder, requestManager: inContext.requestManager)
+        let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+        let moduleCollection = try JSONCollection(element: moduleJSON)
+        inContext.mappingCoordinator?.linkItem(from: moduleCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileModule.self, mapperClazz: moduleMapperClazz, lookupRuleBuilder: modulesLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Engine
 
-        let engineJSON = jsonmap.json[#keyPath(Vehicleprofile.engine)] as? JSON
+        guard let engineJSON = profile[#keyPath(Vehicleprofile.engine)] as? JSON else {
+            throw VehicleProfileMappingError.noEngine(self.tank_id)
+        }
         let engineMapperClazz = Vehicleprofile.EngineLinker.self
         let engineLookupBuilder = RootTagRuleBuilder(json: engineJSON, linkedClazz: VehicleprofileEngine.self)
-        inContext.mappingCoordinator?.linkItem(from: engineJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileEngine.self, mapperClazz: engineMapperClazz, lookupRuleBuilder: engineLookupBuilder, requestManager: inContext.requestManager)
+        let engineCollection = try JSONCollection(element: engineJSON)
+        inContext.mappingCoordinator?.linkItem(from: engineCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileEngine.self, mapperClazz: engineMapperClazz, lookupRuleBuilder: engineLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Gun
 
-        let gunJSON = jsonmap.json[#keyPath(Vehicleprofile.gun)] as? JSON
+        guard let gunJSON = profile[#keyPath(Vehicleprofile.gun)] as? JSON else {
+            throw VehicleProfileMappingError.noGun(self.tank_id)
+        }
         let gunMapperClazz = Vehicleprofile.GunLinker.self
         let gunLookupBuilder = RootTagRuleBuilder(json: gunJSON, linkedClazz: VehicleprofileGun.self)
-        inContext.mappingCoordinator?.linkItem(from: gunJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileGun.self, mapperClazz: gunMapperClazz, lookupRuleBuilder: gunLookupBuilder, requestManager: inContext.requestManager)
+        let gunCollection = try JSONCollection(element: gunJSON)
+        inContext.mappingCoordinator?.linkItem(from: gunCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileGun.self, mapperClazz: gunMapperClazz, lookupRuleBuilder: gunLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Suspension
 
-        let suspensionJSON = jsonmap.json[#keyPath(Vehicleprofile.suspension)] as? JSON
+        guard let suspensionJSON = profile[#keyPath(Vehicleprofile.suspension)] as? JSON else {
+            throw VehicleProfileMappingError.noSuspension(self.tank_id)
+        }
         let suspensionMapperClazz = Vehicleprofile.SuspensionLinker.self
         let suspensionLookupBuilder = RootTagRuleBuilder(json: suspensionJSON, linkedClazz: VehicleprofileSuspension.self)
-        inContext.mappingCoordinator?.linkItem(from: suspensionJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileSuspension.self, mapperClazz: suspensionMapperClazz, lookupRuleBuilder: suspensionLookupBuilder, requestManager: inContext.requestManager)
+        let suspensionCollection = try JSONCollection(element: suspensionJSON)
+        inContext.mappingCoordinator?.linkItem(from: suspensionCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileSuspension.self, mapperClazz: suspensionMapperClazz, lookupRuleBuilder: suspensionLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Turret
 
-        let turretJSON = jsonmap.json[#keyPath(Vehicleprofile.turret)] as? JSON
+        guard let turretJSON = profile[#keyPath(Vehicleprofile.turret)] as? JSON else {
+            throw VehicleProfileMappingError.noTurret(self.tank_id)
+        }
         let turretMapperClazz = Vehicleprofile.TurretLinker.self
         let turretLookupBuilder = RootTagRuleBuilder(json: turretJSON, linkedClazz: VehicleprofileTurret.self)
-        inContext.mappingCoordinator?.linkItem(from: turretJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileTurret.self, mapperClazz: turretMapperClazz, lookupRuleBuilder: turretLookupBuilder, requestManager: inContext.requestManager)
+        let turretCollection = try JSONCollection(element: turretJSON)
+        inContext.mappingCoordinator?.linkItem(from: turretCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileTurret.self, mapperClazz: turretMapperClazz, lookupRuleBuilder: turretLookupBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Radio
 
-        let radioJSON = jsonmap.json[#keyPath(Vehicleprofile.radio)] as? JSON
+        guard let radioJSON = profile[#keyPath(Vehicleprofile.radio)] as? JSON else {
+            throw VehicleProfileMappingError.noRadio(self.tank_id)
+        }
         let radioMapperClazz = Vehicleprofile.RadioLinker.self
         let radioLookupBuilder = RootTagRuleBuilder(json: radioJSON, linkedClazz: VehicleprofileRadio.self)
-        inContext.mappingCoordinator?.linkItem(from: radioJSON, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileRadio.self, mapperClazz: radioMapperClazz, lookupRuleBuilder: radioLookupBuilder, requestManager: inContext.requestManager)
+        let radioCollection = try JSONCollection(element: radioJSON)
+        inContext.mappingCoordinator?.linkItem(from: radioCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileRadio.self, mapperClazz: radioMapperClazz, lookupRuleBuilder: radioLookupBuilder, requestManager: inContext.requestManager)
     }
 }
 

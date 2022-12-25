@@ -16,12 +16,16 @@ extension VehicleprofileAmmoDamage {
         case arrayIsNotContainingThreeElements
     }
 
-     override public func mapping(arraymap: ArrayManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+
+        guard let ammoDamage = map.mappingData as? [Any] else {
+            throw JSONManagedObjectMapError.notAnArray(map)
+        }
         //
-        guard arraymap.array.count == 3 else {
+        guard ammoDamage.count == 3 else {
             throw VehicleprofileAmmoDamageError.arrayIsNotContainingThreeElements
         }
-        let intArray = NSDecimalNumberArray(array: arraymap.array)
+        let intArray = NSDecimalNumberArray(array: ammoDamage)
         self.min_value = intArray.elements[0]
         self.avg_value = intArray.elements[1]
         self.max_value = intArray.elements[2]

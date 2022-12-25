@@ -12,7 +12,7 @@ public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
     
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestRegistratorContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
     
-    private enum ResponseAdapterCreatorError: Error {
+    private enum ResponseAdapterCreatorError: Error, CustomStringConvertible {
         case adapterNotFound(requestType: RequestIdType)
         case modelClassNotFound(requestType: RequestIdType)
         var description: String {
