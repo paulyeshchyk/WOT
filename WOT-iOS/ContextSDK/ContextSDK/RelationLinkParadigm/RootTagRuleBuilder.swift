@@ -18,17 +18,13 @@ public class RootTagRuleBuilder: RequestPredicateComposerProtocol {
     public func build() -> RequestPredicateComposition? {
         guard let json = self.json else { return nil }
 
-        let itemID: AnyObject?
-        if let idKeyPath = linkedClazz.primaryKeyPath(forType: .internal) {
-            itemID = json[idKeyPath] as AnyObject
-        } else {
-            itemID = nil
-            fatalError("need to debug")
+        guard let idKeyPath = linkedClazz.primaryKeyPath(forType: .internal) else {
+            return nil
         }
-        guard let itemID1 = itemID else { return nil }
+        let itemID = json[idKeyPath] as AnyObject
 
         let lookupPredicate = RequestPredicate()
-        if let primaryID = linkedClazz.primaryKey(for: itemID1, andType: .internal) {
+        if let primaryID = linkedClazz.primaryKey(for: itemID, andType: .internal) {
             lookupPredicate[.primary] = primaryID
         }
 

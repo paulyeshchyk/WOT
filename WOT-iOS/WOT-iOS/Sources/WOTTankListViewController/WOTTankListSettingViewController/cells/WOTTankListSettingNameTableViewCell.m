@@ -8,6 +8,7 @@
 
 #import "WOTTankListSettingNameTableViewCell.h"
 #import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi-Swift.h>
 
 @interface WOTTankListSettingNameTableViewCell ()
 
@@ -26,7 +27,7 @@
     
     [super setSelected:selected animated:animated];
     
-    UIImage *image = selected?[UIImage imageNamed:[NSString localization:WOT_IMAGE_CHECKMARK_GRAY]]:nil;
+    UIImage *image = selected?[UIImage imageNamed:[NSString localization: WOTApiImages.wotImageCheckmarkGray]]:nil;
     [self.markImageView setImage:image];
 }
 

@@ -136,8 +136,7 @@ extension Vehicleprofile {
 extension Vehicleprofile {
     public class RadioLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -159,67 +158,73 @@ extension Vehicleprofile {
 
     public class TurretLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
-            if let turret = fetchResult.managedObject() as? VehicleprofileTurret {
-                if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
-                    vehicleProfile.turret = turret
+            guard let turret = fetchResult.managedObject() as? VehicleprofileTurret else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileTurret.self))
+                return
+            }
+            guard let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
+                return
+            }
 
-                    dataStore?.stash(objectContext: managedObjectContext) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            vehicleProfile.turret = turret
+            dataStore?.stash(objectContext: managedObjectContext) { error in
+                completion(fetchResult, error)
             }
         }
     }
 
     public class SuspensionLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
-            if let suspension = fetchResult.managedObject() as? VehicleprofileSuspension {
-                if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
-                    vehicleProfile.suspension = suspension
+            guard let suspension = fetchResult.managedObject() as? VehicleprofileSuspension else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileSuspension.self))
+                return
+            }
+            guard let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
+                return
+            }
+            vehicleProfile.suspension = suspension
 
-                    dataStore?.stash(objectContext: managedObjectContext) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            dataStore?.stash(objectContext: managedObjectContext) { error in
+                completion(fetchResult, error)
             }
         }
     }
 
     public class GunLinker: BaseJSONAdapterLinker {
-        override public var linkerPrimaryKeyType: PrimaryKeyType {
-            return .external
-        }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
-            if let gun = fetchResult.managedObject() as? VehicleprofileGun {
-                if let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile {
-                    vehicleProfile.gun = gun
+            guard let gun = fetchResult.managedObject() as? VehicleprofileGun else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileGun.self))
+                return
+            }
+            guard let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
+                return
+            }
+            vehicleProfile.gun = gun
 
-                    dataStore?.stash(objectContext: managedObjectContext) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            dataStore?.stash(objectContext: managedObjectContext) { error in
+                completion(fetchResult, error)
             }
         }
     }
 
     public class ModuleLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -236,8 +241,7 @@ extension Vehicleprofile {
 
     public class EngineLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -255,8 +259,7 @@ extension Vehicleprofile {
 
     public class ArmorListLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -274,8 +277,7 @@ extension Vehicleprofile {
 
     public class AmmoListLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext

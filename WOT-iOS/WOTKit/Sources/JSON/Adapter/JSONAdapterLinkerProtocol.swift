@@ -10,9 +10,11 @@ import ContextSDK
 
 public enum BaseJSONAdapterLinkerError: Error, CustomStringConvertible {
     case unexpectedClass(AnyClass)
+    case noManagedObjectFound
     public var description: String {
         switch self {
         case .unexpectedClass(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(String(describing: clazz))]"
+        case .noManagedObjectFound: return "[\(type(of: self))] No managed object found"
         }
     }
 }
@@ -38,10 +40,7 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
         self.mappedObjectIdentifier = mappedObjectIdentifier
     }
 
-    open func onJSONExtraction(json: JSON) -> JSON {
-        fatalError("\(type(of: self))::\(#function)")
-        // throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
-    }
+    open func onJSONExtraction(json: JSON) -> JSON? { return nil }
 
     open func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
         fatalError("\(type(of: self))::\(#function)")

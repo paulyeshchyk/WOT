@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
 
-    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:[NSString localization:WOT_IMAGE_BACK]] text:nil eventBlock:^(id sender) {
+    UIBarButtonItem *backItem = [UIBarButtonItem barButtonItemForImage:[UIImage imageNamed:[NSString localization:WOTApiTexts.image_back]] text:nil eventBlock:^(id sender) {
         
         [self.delegate didSelectLanguage:nil appId:nil];
     }];

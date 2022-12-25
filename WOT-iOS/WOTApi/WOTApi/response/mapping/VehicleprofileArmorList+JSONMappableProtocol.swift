@@ -16,8 +16,8 @@ private enum VehicleProfileArmorListError: Error, CustomStringConvertible {
     case turretNotFound
     var description: String {
         switch self {
-        case .turretNotFound: return "[\(type(of: self))]: Turret to found"
-        case .hullNotFound: return "[\(type(of: self))]: Hull to found"
+        case .turretNotFound: return "[\(type(of: self))]: Turret not found"
+        case .hullNotFound: return "[\(type(of: self))]: Hull not found"
         }
     }
 }
@@ -60,8 +60,7 @@ extension VehicleprofileArmorList {
 extension VehicleprofileArmorList {
     public class TurretLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -82,8 +81,7 @@ extension VehicleprofileArmorList {
 
     public class HullLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext

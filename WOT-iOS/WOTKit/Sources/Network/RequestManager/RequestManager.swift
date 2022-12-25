@@ -170,14 +170,14 @@ extension RequestManager: RequestManagerProtocol {
         try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener)
     }
     
-    public func fetchRemote(paradigm: MappingParadigmProtocol) {
+    public func fetchRemote(paradigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
         guard let requestIDs = context.requestRegistrator?.requestIds(forClass: paradigm.clazz), requestIDs.count > 0 else {
             context.logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
             return
         }
-        requestIDs.forEach {
+        for requestID in requestIDs {
             do {
-                try startRequest(by: $0, paradigm: paradigm, listener: nil)
+                try startRequest(by: requestID, paradigm: paradigm, listener: listener)
             } catch {
                 context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }

@@ -144,3 +144,11 @@ public class WOTApiTexts: NSObject {
     @objc public static let image_back: String = "WOT_IMAGE_BACK"
     
 }
+
+@objc
+public class WOTApiImages: NSObject {
+    @objc public static let wotImageCheckmarkGray: String = "WOT_IMAGE_CHECKMARK_GRAY"
+    @objc public static let wotImageDown: String = "WOT_IMAGE_DOWN"
+    @objc public static let wotImageUp: String = "WOT_IMAGE_UP"
+    @objc public static let wotImageMenuIcon: String = "WOT_IMAGE_MENU_ICON"
+}

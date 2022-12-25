@@ -24,52 +24,60 @@ extension VehicleprofileModule {
         let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         if let gun_id = self.gun_id {
-            let gunJSONAdapter = VehicleprofileModule.GunJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: gun_id)
+            let gunJSONAdapter = VehicleprofileModule.GunLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: gun_id)
             let gunRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileGun.self, linkedObjectID: gun_id)
             let gunRequestParadigm = MappingParadigm(clazz: VehicleprofileGun.self, adapter: gunJSONAdapter, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.")
-            inContext.requestManager?.fetchRemote(paradigm: gunRequestParadigm)
+            try inContext.requestManager?.fetchRemote(paradigm: gunRequestParadigm, listener: self)
         }
 
         if let radio_id = self.radio_id {
-            let radioJSONAdapter = VehicleprofileModule.RadioJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: radio_id)
+            let radioJSONAdapter = VehicleprofileModule.RadioLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: radio_id)
             let radioRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileRadio.self, linkedObjectID: radio_id)
             let radioRequestParadigm = MappingParadigm(clazz: VehicleprofileRadio.self, adapter: radioJSONAdapter, requestPredicateComposer: radioRequestComposer, keypathPrefix: "radio.")
-            inContext.requestManager?.fetchRemote(paradigm: radioRequestParadigm)
+            try inContext.requestManager?.fetchRemote(paradigm: radioRequestParadigm, listener: self)
         }
 
         if let engine_id = self.engine_id {
-            let engineJSONAdapter = VehicleprofileModule.EngineJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: engine_id)
+            let engineJSONAdapter = VehicleprofileModule.EngineLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: engine_id)
             let engineRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileEngine.self, linkedObjectID: engine_id)
             let engineRequstParadigm = MappingParadigm(clazz: VehicleprofileEngine.self, adapter: engineJSONAdapter, requestPredicateComposer: engineRequestComposer, keypathPrefix: "engine.")
-            inContext.requestManager?.fetchRemote(paradigm: engineRequstParadigm)
+            try inContext.requestManager?.fetchRemote(paradigm: engineRequstParadigm, listener: self)
         }
 
         if let suspension_id = self.suspension_id {
-            let suspensionJSONAdapter = VehicleprofileModule.SuspensionJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: suspension_id)
+            let suspensionJSONAdapter = VehicleprofileModule.SuspensionLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: suspension_id)
             let suspensionRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: suspension_id)
             let suspensionRequestParadigm = MappingParadigm(clazz: VehicleprofileSuspension.self, adapter: suspensionJSONAdapter, requestPredicateComposer: suspensionRequestComposer, keypathPrefix: "suspension.")
-            inContext.requestManager?.fetchRemote(paradigm: suspensionRequestParadigm)
+            try inContext.requestManager?.fetchRemote(paradigm: suspensionRequestParadigm, listener: self)
         }
 
         if let turret_id = self.turret_id {
-            let turretJSONAdapter = VehicleprofileModule.TurretJSONAdapterHelper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: turret_id)
+            let turretJSONAdapter = VehicleprofileModule.TurretLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: turret_id)
             let turretRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileTurret.self, linkedObjectID: turret_id)
             let turretRequestParadigm = MappingParadigm(clazz: VehicleprofileTurret.self, adapter: turretJSONAdapter, requestPredicateComposer: turretRequestComposer, keypathPrefix: "turret.")
-            inContext.requestManager?.fetchRemote(paradigm: turretRequestParadigm)
+            try inContext.requestManager?.fetchRemote(paradigm: turretRequestParadigm, listener: self)
         }
     }
 }
 
-extension VehicleprofileModule {
-    public class SuspensionJSONAdapterHelper: BaseJSONAdapterLinker {
-        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+extension VehicleprofileModule: RequestManagerListenerProtocol {
+    public var MD5: String { uuid.MD5 }
+    public var uuid: UUID { UUID() }
 
-        override public func onJSONExtraction(json: JSON) -> JSON {
-            guard let result = json["suspension"] as? JSON else {
-                fatalError("invalid json")
-            }
-            return result
-        }
+    public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+        //
+    }
+    
+    public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
+        //
+    }
+}
+
+extension VehicleprofileModule {
+    
+    private class SuspensionLinker: BaseJSONAdapterLinker {
+        override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.suspension)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -89,15 +97,9 @@ extension VehicleprofileModule {
         }
     }
 
-    public class EngineJSONAdapterHelper: BaseJSONAdapterLinker {
+    private class EngineLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON {
-            guard let result = json["engine"] as? JSON else {
-                fatalError("invalid json")
-            }
-            return result
-        }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.engine)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -117,15 +119,9 @@ extension VehicleprofileModule {
         }
     }
 
-    public class TurretJSONAdapterHelper: BaseJSONAdapterLinker {
+    private class TurretLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON {
-            guard let result = json["turret"] as? JSON else {
-                fatalError("invalid json")
-            }
-            return result
-        }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.turret)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -145,15 +141,9 @@ extension VehicleprofileModule {
         }
     }
 
-    public class RadioJSONAdapterHelper: BaseJSONAdapterLinker {
+    private class RadioLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON {
-            guard let result = json["radio"] as? JSON else {
-                fatalError("invalid json")
-            }
-            return result
-        }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.radio)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -173,15 +163,9 @@ extension VehicleprofileModule {
         }
     }
 
-    public class GunJSONAdapterHelper: BaseJSONAdapterLinker {
+    private class GunLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-
-        override public func onJSONExtraction(json: JSON) -> JSON {
-            guard let result = json["gun"] as? JSON else {
-                fatalError("invalid json")
-            }
-            return result
-        }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.gun)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext

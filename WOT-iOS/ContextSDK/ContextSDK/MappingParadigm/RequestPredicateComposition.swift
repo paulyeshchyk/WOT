@@ -10,6 +10,7 @@ public protocol RequestPredicateComposerProtocol: AnyObject {
     func build() -> RequestPredicateComposition?
 }
 
+@objc
 public class RequestPredicateComposition: NSObject {
     public let objectIdentifier: Any?
     public let requestPredicate: RequestPredicate

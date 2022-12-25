@@ -39,7 +39,7 @@
     [[centerNavigationController navigationBar] setDarkStyle];
     
     
-    UIImage *image = [UIImage imageNamed:[NSString localization:WOT_IMAGE_MENU_ICON]];
+    UIImage *image = [UIImage imageNamed:[NSString localization:WOTApiImages.wotImageMenuIcon]];
     UIBarButtonItem *backButtonItem = [UIBarButtonItem barButtonItemForImage:image text:nil eventBlock:eventHandlerBlock];
     [centerViewController.navigationItem setLeftBarButtonItems:@[backButtonItem]];
     return centerNavigationController;
