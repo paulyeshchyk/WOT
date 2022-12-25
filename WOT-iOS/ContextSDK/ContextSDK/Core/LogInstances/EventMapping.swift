@@ -16,8 +16,8 @@ public class EventMappingStart: LogEventProtocol {
     public private(set) var message: String
     public var name: String { return "MappingStart" }
 
-    public init(fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, mappingType: EventMappingType) {
-        message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: requestPredicate))"
+    public init(fetchResult: FetchResultProtocol, predicate: RequestPredicate, mappingType: EventMappingType) {
+        message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: predicate))"
     }
 
     public required init?(_ text: String) {
@@ -34,8 +34,8 @@ public class EventMappingEnded: LogEventProtocol {
     public private(set) var message: String
     public var name: String { return "MappingEnded" }
 
-    public init(fetchResult: FetchResultProtocol, requestPredicate: RequestPredicate, mappingType: EventMappingType) {
-        message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: requestPredicate))"
+    public init(fetchResult: FetchResultProtocol, predicate: RequestPredicate, mappingType: EventMappingType) {
+        message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: predicate))"
     }
 
     public required init?(_ text: String) {

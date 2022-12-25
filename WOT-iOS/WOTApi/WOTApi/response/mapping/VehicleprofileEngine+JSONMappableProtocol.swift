@@ -12,9 +12,13 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileEngine {
-    override public func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+        
+        guard let engine = map.mappingData as? JSON else {
+            throw JSONManagedObjectMapError.notAnElement(map)
+        }
         //
-        try self.decode(json: json)
+        try self.decode(decoderContainer: engine)
         //
     }
 }

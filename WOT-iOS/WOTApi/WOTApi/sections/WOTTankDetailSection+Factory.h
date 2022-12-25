@@ -6,7 +6,7 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTTankDetailSection.h"
+#import <WOTApi/WOTTankDetailSection.h>
 
 @interface WOTTankDetailSection (Factory)
 

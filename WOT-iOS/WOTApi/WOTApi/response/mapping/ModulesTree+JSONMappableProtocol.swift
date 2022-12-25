@@ -12,44 +12,44 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension ModulesTree {
-    override public func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
-        print(array)
-    }
-
-    override public func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+        
+        guard let moduleTree = map.mappingData as? JSON else {
+            throw JSONManagedObjectMapError.notAnElement(map)
+        }
         //
-        try self.decode(json: json)
+        try self.decode(decoderContainer: moduleTree)
         //
 
-        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - NextTanks
 
         let nextTanksJSONAdapter = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let nextTanks = json[#keyPath(ModulesTree.next_tanks)]
+        let nextTanks = moduleTree[#keyPath(ModulesTree.next_tanks)]
         (nextTanks as? [AnyObject])?.forEach {
             // parents was not used for next portion of tanks
             let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
             let nextTanksRequestParadigm = MappingParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
-            requestManager.fetchRemote(paradigm: nextTanksRequestParadigm)
+            inContext.requestManager?.fetchRemote(paradigm: nextTanksRequestParadigm)
         }
 
         // MARK: - NextModules
 
         let nextModuleJSONAdapter = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let nextModules = json[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
+        let nextModules = moduleTree[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
         nextModules?.forEach {
-            let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: $0, currentObjectID: self.objectID)
+            let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: $0, currentObjectID: self.objectID)
             let nextModuleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
-            requestManager.fetchRemote(paradigm: nextModuleRequestParadigm)
+            inContext.requestManager?.fetchRemote(paradigm: nextModuleRequestParadigm)
         }
 
         // MARK: - CurrentModule
 
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: requestPredicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
+        let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
         let moduleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
-        requestManager.fetchRemote(paradigm: moduleRequestParadigm)
+        inContext.requestManager?.fetchRemote(paradigm: moduleRequestParadigm)
     }
 }
 

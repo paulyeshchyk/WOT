@@ -11,11 +11,11 @@ import ContextSDK
 
 extension NSManagedObject: JSONMappableProtocol {
 
-    private enum NSManagedObjectJSONMappableError: Error {
+    private enum NSManagedObjectJSONMappableError: Error, CustomStringConvertible {
         case shouldBeOverriden(String)
-        var debugDescription: String {
+        var description: String {
             switch self {
-            case .shouldBeOverriden(let text): return "'\(text)' should be overridden"
+            case .shouldBeOverriden(let text): return "\(type(of: self)): '\(text)' should be overridden"
             }
         }
     }
@@ -27,12 +27,7 @@ extension NSManagedObject: JSONMappableProtocol {
     public typealias Fields = FieldKeys
 
     @objc
-    open func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
-        throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
-    }
-
-    @objc
-    open func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
+    open func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

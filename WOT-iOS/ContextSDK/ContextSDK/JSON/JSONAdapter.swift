@@ -5,20 +5,24 @@
 //  Created by Paul on 21.12.22.
 //
 
-public class JSONAdapter: JSONAdapterProtocol, DescriptableProtocol {
+public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
-    private enum JSONAdapterError: Error {
+    private enum JSONAdapterError: Error, CustomStringConvertible {
         case requestManagerIsNil
+        var description: String {
+            switch self {
+            case .requestManagerIsNil: return "\(type(of: self)):  request manager is nil"
+            }
+        }
     }
 
     // MARK: DataAdapterProtocol -
 
-    public var uuid: UUID { UUID() }
-    public var MD5: String? { uuid.MD5 }
+    public let uuid: UUID = UUID()
+    public var MD5: String { uuid.MD5 }
 
     // MARK: JSONAdapterProtocol -
 
-    public var onJSONDidParse: OnParseComplete?
     public var linker: JSONAdapterLinkerProtocol
 
     // MARK: Private -
@@ -45,12 +49,12 @@ public class JSONAdapter: JSONAdapterProtocol, DescriptableProtocol {
         context.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
-    // MARK: JSONAdapterProtocol -
+    // MARK: - JSONAdapterProtocol
 
-    public func didFinishJSONDecoding(_ json: JSON?, fromRequest: RequestProtocol, _ error: Error?) {
+    private func didFinishDecoding(_ json: JSON?, fromRequest: RequestProtocol, error: Error?, completion: DataAdapterProtocol.OnComplete?) {
         guard error == nil, let json = json else {
-            context.logInspector?.logEvent(EventError(error, details: request), sender: self)
-            onJSONDidParse?(fromRequest, error)
+            self.context.logInspector?.logEvent(EventError(error, details: fromRequest), sender: self)
+            completion?(fromRequest, error)
             return
         }
 
@@ -59,71 +63,94 @@ public class JSONAdapter: JSONAdapterProtocol, DescriptableProtocol {
 
         let dispatchGroup = DispatchGroup()
 
-        json.keys.forEach { key in
+        for key in json.keys {
 
             dispatchGroup.enter()
             //
-            let extraction = linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, request: fromRequest)
+            do {
 
-            self.findOrCreateObject(json: extraction.json, requestPredicate: extraction.requestPredicate) {[weak self] fetchResult, error in
-                guard let self = self else {
-                    dispatchGroup.leave()
-                    return
-                }
-                if let error = error {
-                    self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
-                    dispatchGroup.leave()
-                    return
-                }
+                let extraction = try linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, request: fromRequest)
 
-                self.linker.process(fetchResult: fetchResult, dataStore: self.context.dataStore) { _, error in
+                self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) {[weak self] fetchResult, error in
+                    guard let self = self else {
+                        dispatchGroup.leave()
+                        return
+                    }
                     if let error = error {
                         self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        dispatchGroup.leave()
+                        return
                     }
-                    dispatchGroup.leave()
+
+                    self.linker.process(fetchResult: fetchResult, dataStore: self.context.dataStore) { _, error in
+                        if let error = error {
+                            self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        }
+                        dispatchGroup.leave()
+                    }
                 }
+            } catch {
+                dispatchGroup.leave()
+                context.logInspector?.logEvent(EventError(error, details: nil))
             }
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
             self.context.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
-            self.onJSONDidParse?(fromRequest, error)
+            completion?(fromRequest, error)
         }
     }
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSON, requestPredicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
+    
+    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol, completion: DataAdapterProtocol.OnComplete?) where T: RESTAPIResponseProtocol {
+        guard let data = binary else {
+            didFinishDecoding(nil, fromRequest: request, error: nil, completion: completion)
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            let result = try decoder.decode(T.self, from: data)
+            if let swiftError = result.swiftError {
+                didFinishDecoding(nil, fromRequest: request, error: swiftError, completion: completion)
+            } else {
+                didFinishDecoding(result.data, fromRequest: request, error: nil, completion: completion)
+            }
+        } catch {
+            didFinishDecoding(nil, fromRequest: request, error: error, completion: completion)
+        }
+    }
+}
+
+
+extension JSONAdapter {
+    private func findOrCreateObject(json: JSONCollectable?, predicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             fatalError("thread is not main")
         }
-
+        
         let localCallback: FetchResultCompletion = { fetchResult, error in
             DispatchQueue.main.async {
                 externalCallback(fetchResult, error)
             }
         }
 
-        context.dataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: requestPredicate[.primary]?.predicate, completion: { fetchResult, error in
+        context.dataStore?.fetchLocal(byModelClass: modelClazz, requestPredicate: predicate[.primary]?.predicate, completion: { fetchResult, error in
 
             if let error = error {
                 localCallback(fetchResult, error)
                 return
             }
 
-            guard let requestManager = self.context.requestManager else {
-                localCallback(fetchResult, JSONAdapterError.requestManagerIsNil)
-                return
-            }
-            
             let jsonStartParsingDate = Date()
-            self.context.logInspector?.logEvent(EventJSONStart(requestPredicate), sender: self)
-            self.context.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, requestPredicate: requestPredicate, linker: nil, requestManager: requestManager) { fetchResult, error in
+            self.context.logInspector?.logEvent(EventJSONStart(predicate), sender: self)
+            self.context.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, predicate: predicate, linker: nil, inContext: self.context) { fetchResult, error in
                 if let error = error {
                     self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
-                self.context.logInspector?.logEvent(EventJSONEnded("\(String(describing: requestPredicate))", initiatedIn: jsonStartParsingDate), sender: self)
+                self.context.logInspector?.logEvent(EventJSONEnded("\(String(describing: predicate))", initiatedIn: jsonStartParsingDate), sender: self)
                 localCallback(fetchResult, nil)
             }
         })
@@ -132,13 +159,23 @@ extension JSONAdapter {
 
 public struct JSONExtraction {
     public let requestPredicate: RequestPredicate
-    public let json: JSON
+    public let json: JSONCollectable?
+
+    public enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
+        case invalidJSONForKey(AnyHashable)
+        public var description: String {
+            switch self {
+            case .invalidJSONForKey(let key): return "[\(type(of: self))]: Invalid json for key: \(key)"
+            }
+        }
+    }
 }
 
 extension JSONAdapterLinkerProtocol {
-    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: RequestProtocol) -> JSONExtraction {
+    
+    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: RequestProtocol) throws -> JSONExtraction {
         guard let json = from[key] as? JSON else {
-            fatalError("invalid json for key")
+            throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
 
         let extractedJSON = onJSONExtraction(json: json)
@@ -150,36 +187,11 @@ extension JSONAdapterLinkerProtocol {
             ident = key
         }
 
-        let parents = fromRequest.paradigm?.requestPredicate()?.parentObjectIDList
+        let parents = fromRequest.paradigm?.predicate()?.parentObjectIDList
         let requestPredicate = RequestPredicate(parentObjectIDList: parents)
         requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
 
-        return JSONExtraction(requestPredicate: requestPredicate, json: extractedJSON)
-    }
-}
-
-// MARK: - private
-
-extension DataAdapterProtocol {
-    /**
-     because of objC limitation, the function added as an extention to *JSONAdapterProtocol*
-     */
-
-    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol) where T: RESTAPIResponseProtocol {
-        guard let data = binary else {
-            didFinishJSONDecoding(nil, fromRequest: request, nil)
-            return
-        }
-        let decoder = JSONDecoder()
-        do {
-            let result = try decoder.decode(T.self, from: data)
-            if let swiftError = result.swiftError {
-                didFinishJSONDecoding(nil, fromRequest: request, swiftError)
-            } else {
-                didFinishJSONDecoding(result.data, fromRequest: request, nil)
-            }
-        } catch {
-            didFinishJSONDecoding(nil, fromRequest: request, error)
-        }
+        let jsonCollection = try JSONCollection(element: extractedJSON)
+        return JSONExtraction(requestPredicate: requestPredicate, json: jsonCollection)
     }
 }

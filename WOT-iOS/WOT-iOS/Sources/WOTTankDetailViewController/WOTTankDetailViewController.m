@@ -315,9 +315,10 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                             requestManager: self.requestManager
+                                                  inContext: appDelegate
                                                    listener: self
                                                       error: &error];
 }

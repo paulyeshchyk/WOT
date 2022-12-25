@@ -12,15 +12,15 @@ import ContextSDK
 @objc
 open class DataStore: NSObject {
     
-    private enum DataStoreError: Error {
+    private enum DataStoreError: Error, CustomStringConvertible {
         case clazzIsNotSupportable(String)
         case contextNotSaved
         case objectNotCreated(AnyClass)
-        public var debugDescription: String {
+        public var description: String {
             switch self {
-            case .contextNotSaved: return "Context is not saved"
-            case .objectNotCreated(let clazz): return "Object is not created:[\(String(describing: clazz))]"
-            case .clazzIsNotSupportable(let clazz): return "Class is not supported by mapper:[\(String(describing: clazz))]"
+            case .contextNotSaved: return "\(type(of: self)): Context is not saved"
+            case .objectNotCreated(let clazz): return "\(type(of: self)): Object is not created:[\(String(describing: clazz))]"
+            case .clazzIsNotSupportable(let clazz): return "\(type(of: self)): Class is not supported by mapper:[\(String(describing: clazz))]"
             }
         }
     }
@@ -139,16 +139,16 @@ extension DataStore {
     }
 }
 
-public enum WOTFetcherError: Error, CustomDebugStringConvertible {
+public enum WOTFetcherError: Error, CustomStringConvertible {
     case requestsNotParsed
     case noKeysDefinedForClass(String)
     case notManagedObjectType(PrimaryKeypathProtocol.Type)
 
-    public var debugDescription: String {
+    public var description: String {
         switch self {
-        case .noKeysDefinedForClass(let clazz): return "No keys defined for:[\(String(describing: clazz))]"
-        case .requestsNotParsed: return "request is not parsed"
-        case .notManagedObjectType(let clazz): return "Not ManagedObjectType:[\(String(describing: clazz))]"
+        case .noKeysDefinedForClass(let clazz): return "[\(type(of: self))]: No keys defined for:[\(String(describing: clazz))]"
+        case .requestsNotParsed: return "[\(type(of: self))]: request is not parsed"
+        case .notManagedObjectType(let clazz): return "[\(type(of: self))]: Not ManagedObjectType:[\(String(describing: clazz))]"
         }
     }
 }
@@ -221,7 +221,7 @@ extension DataStore: DataStoreProtocol {
         context.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid), sender: self)
     }
 
-    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, requestPredicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
+    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = DataStoreError.clazzIsNotSupportable(String(describing: Clazz))
             context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
@@ -229,9 +229,9 @@ extension DataStore: DataStoreProtocol {
             return
         }
 
-        context.logInspector?.logEvent(EventLocalFetch("\(String(describing: ManagedObjectClass)) - \(String(describing: requestPredicate))"), sender: self)
+        context.logInspector?.logEvent(EventLocalFetch("\(String(describing: ManagedObjectClass)) - \(String(describing: predicate))"), sender: self)
 
-        guard let predicate = requestPredicate.compoundPredicate(.and) else {
+        guard let predicate = predicate.compoundPredicate(.and) else {
             let error = WOTFetcherError.noKeysDefinedForClass(String(describing: ManagedObjectClass))
             let fetchResult = FetchResult(objectContext: objectContext, objectID: nil, predicate: nil, fetchStatus: .fetched)
             completion(fetchResult, error)

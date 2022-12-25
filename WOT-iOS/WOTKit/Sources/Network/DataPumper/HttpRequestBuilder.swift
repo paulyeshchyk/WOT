@@ -8,7 +8,7 @@
 
 import ContextSDK
 
-class HttpRequestBuilder {
+struct HttpRequestBuilder {
 
     private enum HttpRequestBuilderError: Error {
         case hostConfigurationIsNotDefined

@@ -21,7 +21,11 @@ public protocol RequestPredicateProtocol {
     func compoundPredicate(_ byType: PredicateCompoundType) -> NSPredicate?
 }
 
-//@objc
+@objc
+public protocol RequestPredicateContainerProtocol {
+    var predicate: RequestPredicate { get }
+}
+
 public class RequestPredicate: NSObject, RequestPredicateProtocol {
 
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..

@@ -31,7 +31,7 @@
 
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
-    NSManagedObjectContext *context = [coreDataProvider workingContext];
+    NSManagedObjectContext *context = (NSManagedObjectContext *)[coreDataProvider workingContext];
     id result = [context executeFetchRequest:request error:&error];
     
     if ([result count] == 0) {

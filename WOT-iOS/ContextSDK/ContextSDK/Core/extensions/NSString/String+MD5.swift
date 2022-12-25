@@ -8,9 +8,7 @@
 import CommonCrypto
 
 extension UUID {
-    public var MD5: String? {
-        uuidString.MD5()
-    }
+    public var MD5: String { do { return try uuidString.MD5() } catch { return "" } }
 }
 
 @objc
@@ -22,24 +20,33 @@ public class MD5: NSString {
 }
 
 extension String  {
-    public func MD5() -> String? {
-        let length = Int(CC_MD5_DIGEST_LENGTH)
-        var digest = [UInt8](repeating: 0, count: length)
+    enum StringMD5Error: Error {
+        case cantConvertToUTF8
+    }
+    public func MD5() throws -> String {
+        guard let messageData = self.data(using:.utf8) else {
+            throw StringMD5Error.cantConvertToUTF8
+        }
+        var digestData = Data(count: Int(CC_MD5_DIGEST_LENGTH))
 
-        if let d = self.data(using: String.Encoding.utf8) {
-            _ = d.withUnsafeBytes({ body in
-                CC_MD5(body, CC_LONG(d.count), &digest)
+        _ = digestData.withUnsafeMutableBytes { (digestBytes) -> Bool in
+            messageData.withUnsafeBytes({ (messageBytes) -> Bool in
+                _ = CC_MD5(messageBytes.baseAddress, CC_LONG(messageData.count), digestBytes.bindMemory(to: UInt8.self).baseAddress)
+                return true
             })
         }
-
-        return (0..<length).reduce("") {
-            $0 + String(format: "%02x", digest[$1])
-        }
+        return digestData.toHex()
     }
- }
+}
+
+extension Data {
+    public func toHex(format: String = "%02hhx") -> String {
+        map{ String(format: format, $0) }.joined()
+    }
+}
 
 extension NSString {
     public func MD5_1() -> NSString? {
-        (self as String).MD5() as NSString?
+        try? (self as String).MD5() as NSString?
     }
 }
