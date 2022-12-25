@@ -39,24 +39,27 @@ extension Vehicles {
         //
         try self.decode(decoderContainer: vehicleJSON)
         //
-        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        
+        // MARK: - ModulesTree
+
+        if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
+            try self.modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: inContext)
+        } else {
+            //throw VehiclesJSONMappingError.moduleTreeNotFound
+        }
 
         // MARK: - DefaultProfile
 
-        guard let defaultProfileJSON = vehicleJSON[#keyPath(Vehicles.default_profile)] as? JSON else {
-            throw VehiclesJSONMappingError.profileNotFound(self.tank_id)
+        if let defaultProfileJSON = vehicleJSON[#keyPath(Vehicles.default_profile)] as? JSON {
+            let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+            let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
+            let linker = Vehicles.DefaultProfileLinker.self
+            let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
+            inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
+        } else {
+            //throw VehiclesJSONMappingError.profileNotFound(self.tank_id)
         }
-        let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
-        let linker = Vehicles.DefaultProfileLinker.self
-        let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
-        inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
-
-        // MARK: - ModulesTree
-
-        guard let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON else {
-            throw VehiclesJSONMappingError.moduleTreeNotFound
-        }
-        try self.modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: inContext)
+//
     }
 }
 

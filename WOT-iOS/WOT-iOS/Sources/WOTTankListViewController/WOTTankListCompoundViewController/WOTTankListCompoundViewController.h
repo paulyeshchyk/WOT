@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void (^WOTTankListCompoundCancelBlock) ();
-typedef void (^WOTTankListCompoundApplyBlock) ();
+typedef void (^WOTTankListCompoundCancelBlock) (void);
+typedef void (^WOTTankListCompoundApplyBlock) (void);
 
 @interface WOTTankListCompoundViewController : UIViewController
 
