@@ -8,6 +8,7 @@
 
 #import "WOTTankListSettingSortTableViewCell.h"
 #import <WOTKit/WOTKit.h>
+#import <WOTApi/WOTApi-Swift.h>
 
 @interface WOTTankListSettingSortTableViewCell ()
 
@@ -29,7 +30,7 @@
     
     [super setSelected:selected animated:animated];
     
-    UIImage *image = selected?[UIImage imageNamed:[NSString localization:WOT_IMAGE_CHECKMARK_GRAY]]:nil;
+    UIImage *image = selected?[UIImage imageNamed:[NSString localization:WOTApiImages.wotImageCheckmarkGray]]:nil;
     [self.markImageView setImage:image];
     [self.button setHidden:(!selected || !self.hasSorting)];
 }
@@ -43,7 +44,7 @@
 - (void)setAscending:(BOOL)ascending {
     
     _ascending = ascending;
-    UIImage *image = ascending?[UIImage imageNamed:WOT_IMAGE_UP]:[UIImage imageNamed:WOT_IMAGE_DOWN];
+    UIImage *image = ascending?[UIImage imageNamed:WOTApiImages.wotImageUp]:[UIImage imageNamed:WOTApiImages.wotImageDown];
     [self.button setImage:image forState:UIControlStateNormal];
 }
 

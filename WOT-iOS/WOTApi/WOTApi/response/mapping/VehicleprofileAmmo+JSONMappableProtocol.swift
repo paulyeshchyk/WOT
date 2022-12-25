@@ -25,7 +25,7 @@ extension VehicleprofileAmmo {
 
         // MARK: - Penetration
 
-        let penetrationArray = ammo[#keyPath(VehicleprofileAmmo.penetration)]// as? [JSON]
+        let penetrationArray = ammo[#keyPath(VehicleprofileAmmo.penetration)]
         let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
         let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         let penetrationListCollection = JSONCollection(custom: penetrationArray)
@@ -33,7 +33,7 @@ extension VehicleprofileAmmo {
 
         // MARK: - Damage
 
-        let damageArray = ammo[#keyPath(VehicleprofileAmmo.damage)]// as? [JSON]
+        let damageArray = ammo[#keyPath(VehicleprofileAmmo.damage)]
         let damageMapper = VehicleprofileAmmo.DamageLinker.self
         let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
 
@@ -46,8 +46,7 @@ extension VehicleprofileAmmo {
     public class PenetrationLinker: BaseJSONAdapterLinker {
         //
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             guard let managedObjectContext = fetchResult.objectContext else {
@@ -73,19 +72,22 @@ extension VehicleprofileAmmo {
     public class DamageLinker: BaseJSONAdapterLinker {
         //
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let objectContext = fetchResult.objectContext
-            if let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage {
-                if let ammo = masterFetchResult?.managedObject(inManagedObjectContext: objectContext) as? VehicleprofileAmmo {
-                    ammo.damage = damage
+            guard let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmoDamage.self))
+                return
+            }
+            guard let ammo = masterFetchResult?.managedObject(inManagedObjectContext: objectContext) as? VehicleprofileAmmo else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))
+                return
+            }
+            ammo.damage = damage
 
-                    dataStore?.stash(objectContext: objectContext) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            dataStore?.stash(objectContext: objectContext) { error in
+                completion(fetchResult, error)
             }
         }
     }
