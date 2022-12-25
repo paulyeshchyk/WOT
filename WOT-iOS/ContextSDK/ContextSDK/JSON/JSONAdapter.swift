@@ -163,9 +163,11 @@ public struct JSONExtraction {
 
     public enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
         case invalidJSONForKey(AnyHashable)
+        case jsonWasNotExtracted(JSON)
         public var description: String {
             switch self {
             case .invalidJSONForKey(let key): return "[\(type(of: self))]: Invalid json for key: \(key)"
+            case .jsonWasNotExtracted(let json): return "[\(type(of: self))]: json was not extracted from: \(json)"
             }
         }
     }
@@ -178,7 +180,9 @@ extension JSONAdapterLinkerProtocol {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
 
-        let extractedJSON = onJSONExtraction(json: json)
+        guard let extractedJSON = onJSONExtraction(json: json) else {
+            throw JSONExtraction.JSONAdapterLinkerExtractionErrors.jsonWasNotExtracted(json)
+        }
 
         let ident: Any
         if let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType) {

@@ -17,7 +17,7 @@ public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
     case passedInvalidSubModuleJSON
     case passedInvalidModuleId
     case profileNotFound(NSDecimalNumber?)
-    case moduleTreeNotFound
+    case moduleTreeNotFound(NSDecimalNumber?)
     public var description: String {
         switch self {
         case .notAJSON: return "[\(type(of: self))]: Not a JSON"
@@ -25,7 +25,7 @@ public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
         case .passedInvalidSubModuleJSON:  return "[\(type(of: self))]: Passed invalid submodule json"
         case .passedInvalidModuleId: return "[\(type(of: self))]: Passed invalid module id"
         case .profileNotFound(let id): return "[\(type(of: self))]: Profile not found for \(id ?? -1)"
-        case .moduleTreeNotFound: return "[\(type(of: self))]: Module tree not found"
+        case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree not found for \(id ?? -1)"
         }
     }
 }
@@ -45,7 +45,7 @@ extension Vehicles {
         if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
             try self.modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: inContext)
         } else {
-            //throw VehiclesJSONMappingError.moduleTreeNotFound
+            inContext.logInspector?.logEvent(EventWarning(error: VehiclesJSONMappingError.moduleTreeNotFound(self.tank_id), details: nil), sender: self)
         }
 
         // MARK: - DefaultProfile
@@ -57,7 +57,7 @@ extension Vehicles {
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
             inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
         } else {
-            //throw VehiclesJSONMappingError.profileNotFound(self.tank_id)
+            inContext.logInspector?.logEvent(EventWarning(error: VehiclesJSONMappingError.profileNotFound(self.tank_id), details: nil), sender: self)
         }
 //
     }
@@ -122,7 +122,7 @@ extension Vehicles {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             guard let objectContext = fetchResult.objectContext else {
@@ -154,7 +154,7 @@ extension Vehicles {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             guard let managedObjectContext = fetchResult.objectContext else {
@@ -183,7 +183,7 @@ extension Vehicles {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             dataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
@@ -196,7 +196,7 @@ extension Vehicles {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             dataStore?.stash(objectContext: fetchResult.objectContext, block: { error in

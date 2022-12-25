@@ -23,25 +23,35 @@ extension ModulesTree {
 
         let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
-        // MARK: - NextTanks
-
-        let nextTanksJSONAdapter = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let nextTanks = moduleTree[#keyPath(ModulesTree.next_tanks)]
-        (nextTanks as? [AnyObject])?.forEach {
-            // parents was not used for next portion of tanks
-            let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: $0)
-            let nextTanksRequestParadigm = MappingParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
-            inContext.requestManager?.fetchRemote(paradigm: nextTanksRequestParadigm)
-        }
+//        // MARK: - NextTanks
+//
+//        let nextTanksJSONAdapter = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
+//        if let nextTanks = moduleTree[#keyPath(ModulesTree.next_tanks)] as? [AnyObject] {
+//            for nextTank in nextTanks {
+//                // parents was not used for next portion of tanks
+//                let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
+//                let nextTanksRequestParadigm = MappingParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
+//                do {
+//                    try inContext.requestManager?.fetchRemote(paradigm: nextTanksRequestParadigm)
+//                } catch {
+//                    inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+//                }
+//            }
+//        }
 
         // MARK: - NextModules
 
         let nextModuleJSONAdapter = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let nextModules = moduleTree[#keyPath(ModulesTree.next_modules)] as? [AnyObject]
-        nextModules?.forEach {
-            let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: $0, currentObjectID: self.objectID)
-            let nextModuleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
-            inContext.requestManager?.fetchRemote(paradigm: nextModuleRequestParadigm)
+        if let nextModules = moduleTree[#keyPath(ModulesTree.next_modules)] as? [AnyObject] {
+            for nextModule in nextModules {
+                let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
+                let nextModuleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
+                do {
+                    try inContext.requestManager?.fetchRemote(paradigm: nextModuleRequestParadigm, listener: self)
+                } catch {
+                    inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                }
+            }
         }
 
         // MARK: - CurrentModule
@@ -49,25 +59,41 @@ extension ModulesTree {
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
         let moduleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
-        inContext.requestManager?.fetchRemote(paradigm: moduleRequestParadigm)
+        try inContext.requestManager?.fetchRemote(paradigm: moduleRequestParadigm, listener: self)
+    }
+}
+
+extension ModulesTree: RequestManagerListenerProtocol {
+    public var MD5: String { uuid.MD5 }
+    public var uuid: UUID { UUID() }
+
+    public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+        //
+    }
+    
+    public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
+        //
     }
 }
 
 extension ModulesTree {
     public class CurrentModuleLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
-            if let module = fetchResult.managedObject() as? Module {
-                if let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree {
-                    modulesTree.currentModule = module
-                    dataStore?.stash(objectContext: managedObjectContext) { error in
-                        completion(fetchResult, error)
-                    }
-                }
+            guard let module = fetchResult.managedObject() as? Module else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
+                return
+            }
+            guard let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree else {
+                completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(ModulesTree.self))
+                return
+            }
+            modulesTree.currentModule = module
+            dataStore?.stash(objectContext: managedObjectContext) { error in
+                completion(fetchResult, error)
             }
         }
     }
@@ -79,8 +105,7 @@ extension ModulesTree {
         }
         
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext
@@ -101,8 +126,7 @@ extension ModulesTree {
 
     public class NextVehicleLinker: BaseJSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-
-        override public func onJSONExtraction(json: JSON) -> JSON { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.objectContext

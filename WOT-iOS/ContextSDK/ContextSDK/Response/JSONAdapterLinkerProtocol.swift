@@ -11,5 +11,5 @@ public protocol JSONAdapterLinkerProtocol: MD5Protocol {
 
     init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?)
     func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion)
-    func onJSONExtraction(json: JSON) -> JSON
+    func onJSONExtraction(json: JSON) -> JSON?
 }
