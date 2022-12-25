@@ -8,20 +8,17 @@
 
 import ContextSDK
 
-@objc
-public class HttpDataReceiver: NSObject, HttpDataReceiverProtocol {
+public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible {
     enum WOTWebDataPumperError: Error {
         case urlNotDefined
     }
 
     let request: URLRequest
 
-    public var MD5: String? { uuid.MD5 }
-    public var uuid: UUID { UUID()}
+    public let uuid: UUID = UUID()
+    public var MD5: String { uuid.MD5 }
     
-    public override var description: String {
-        return request.url?.absoluteString ?? "-"
-    }
+    public var description: String { "\(type(of: self)): \(String(describing: request))" }
     
     public weak var delegate: HttpDataReceiverDelegateProtocol?
     
@@ -29,21 +26,19 @@ public class HttpDataReceiver: NSObject, HttpDataReceiverProtocol {
     required public init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
-
-        super.init()
     }
 
     public func start() {
         guard let url = request.url else {
-            delegate?.didEnd(receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
+            delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
             return
         }
         
-        delegate?.didStart(receiver: self)
+        delegate?.didStart(urlRequest: request, receiver: self)
         URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
             DispatchQueue.main.async { 
-                self.delegate?.didEnd(receiver: self, data: data, error: error)
+                self.delegate?.didEnd(urlRequest: self.request, receiver: self, data: data, error: error)
             }
 
         }.resume()

@@ -7,7 +7,7 @@
 //
 
 open class RequestRegistrator: RequestRegistratorProtocol {
-    public typealias Context = LogInspectorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
     private let context: Context
     private var registeredRequests: [RequestIdType: WOTModelServiceProtocol.Type] = .init()
@@ -22,10 +22,23 @@ open class RequestRegistrator: RequestRegistratorProtocol {
 // MARK: - WOTRequestBindingProtocol
 
 extension RequestRegistrator {
-    
-    private enum RequestRegistratorError: Error {
+
+    private enum RequestRegistratorError: Error, CustomStringConvertible {
+        case requestNotFound
         case requestClassNotFound(requestType: String)
         case requestClassHasNoModelClass(requestClass: String)
+        case modelClassNotFound(RequestProtocol)
+        case modelClassNotRegistered(AnyObject, RequestProtocol)
+
+        public var description: String {
+            switch self {
+            case .requestNotFound: return "\(type(of: self)): Request not found"
+            case .requestClassNotFound(let requestType): return "\(type(of: self)): Request Class not found for request type: \(requestType)"
+            case .requestClassHasNoModelClass(let requestClass): return "\(type(of: self)): Request class(\(requestClass)) has no model class"
+            case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
+            case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
+            }
+        }
     }
     
     public func requestIds(forClass: AnyClass) -> [RequestIdType] {
@@ -39,6 +52,18 @@ extension RequestRegistrator {
         registeredRequests[requiestId] = requestClass
         registeredDataAdapters[requiestId] = dataAdapterClass
     }
+    
+    public func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType] {
+        guard let modelClass = modelClass(forRequest: request) else {
+            throw RequestRegistratorError.modelClassNotFound(request)
+        }
+
+        let result = requestIds(forClass: modelClass)
+        guard result.count > 0 else {
+            throw RequestRegistratorError.modelClassNotRegistered(modelClass, request)
+        }
+        return result
+    }
 
     public func unregisterDataAdapter(for requestId: RequestIdType) {
         registeredDataAdapters.removeValue(forKey: requestId)
@@ -50,6 +75,13 @@ extension RequestRegistrator {
 
     public func requestClass(for requestId: RequestIdType) -> WOTModelServiceProtocol.Type? {
         return registeredRequests[requestId]
+    }
+    
+    public func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
+        guard let Clazz = requestClass(for: requestId) as? RequestProtocol.Type else {
+            throw RequestRegistratorError.requestNotFound
+        }
+        return Clazz.init(context: context)
     }
 
     public func modelClass(forRequest request: RequestProtocol) -> PrimaryKeypathProtocol.Type? {

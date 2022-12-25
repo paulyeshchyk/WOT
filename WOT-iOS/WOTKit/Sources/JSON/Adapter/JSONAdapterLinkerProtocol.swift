@@ -8,11 +8,11 @@
 
 import ContextSDK
 
-public enum BaseJSONAdapterLinkerError: Error, CustomDebugStringConvertible {
+public enum BaseJSONAdapterLinkerError: Error, CustomStringConvertible {
     case unexpectedClass(AnyClass)
-    public var debugDescription: String {
+    public var description: String {
         switch self {
-        case .unexpectedClass(let clazz): return "Class is not supported; expected class is:[\(String(describing: clazz))]"
+        case .unexpectedClass(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(String(describing: clazz))]"
         }
     }
 }
@@ -21,8 +21,8 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
     
     // MARK: - Open
 
-    public var uuid: UUID { UUID() }
-    public var MD5: String? { uuid.MD5 }
+    public let uuid: UUID = UUID()
+    public var MD5: String { uuid.MD5 }
 
     open var linkerPrimaryKeyType: PrimaryKeyType {
         fatalError("should be overriden")

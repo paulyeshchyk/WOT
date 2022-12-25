@@ -11,35 +11,63 @@ import ContextSDK
 
 // MARK: - JSONMappableProtocol
 
-extension Vehicles {
-    override public func mapping(json: JSON, objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
-        //
-        try self.decode(json: json)
-        //
-        let masterFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
-
-        // MARK: - DefaultProfile
-
-        let defaultProfileJSON = json[#keyPath(Vehicles.default_profile)] as? JSON
-        let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: requestPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
-        let linker = Vehicles.DefaultProfileLinker.self
-        mappingCoordinator.linkItem(from: defaultProfileJSON, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: requestManager)
-
-        // MARK: - ModulesTree
-
-        let modulesTreeJSON = json[#keyPath(Vehicles.modules_tree)] as? JSON
-        self.modulesTreeMapping(objectContext: objectContext, jSON: modulesTreeJSON, requestPredicate: requestPredicate, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
+public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
+    case notAJSON
+    case passedInvalidModuleTreeJSON(NSDecimalNumber?)
+    case passedInvalidSubModuleJSON
+    case passedInvalidModuleId
+    case profileNotFound(NSDecimalNumber?)
+    case moduleTreeNotFound
+    public var description: String {
+        switch self {
+        case .notAJSON: return "[\(type(of: self))]: Not a JSON"
+        case .passedInvalidModuleTreeJSON(let profileID): return "[\(type(of: self))]: Passed invalid module tree json for \(profileID ?? -1)"
+        case .passedInvalidSubModuleJSON:  return "[\(type(of: self))]: Passed invalid submodule json"
+        case .passedInvalidModuleId: return "[\(type(of: self))]: Passed invalid module id"
+        case .profileNotFound(let id): return "[\(type(of: self))]: Profile not found for \(id ?? -1)"
+        case .moduleTreeNotFound: return "[\(type(of: self))]: Module tree not found"
+        }
     }
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol?, requestManager: RequestManagerProtocol) {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+
+        guard let vehicleJSON = map.mappingData as? JSON else {
+            throw JSONManagedObjectMapError.notAnElement(map)
+        }
+        //
+        try self.decode(decoderContainer: vehicleJSON)
+        //
+        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+
+        // MARK: - DefaultProfile
+
+        guard let defaultProfileJSON = vehicleJSON[#keyPath(Vehicles.default_profile)] as? JSON else {
+            throw VehiclesJSONMappingError.profileNotFound(self.tank_id)
+        }
+        let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
+        let linker = Vehicles.DefaultProfileLinker.self
+        let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
+        inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
+
+        // MARK: - ModulesTree
+
+        guard let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON else {
+            throw VehiclesJSONMappingError.moduleTreeNotFound
+        }
+        try self.modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: inContext)
+    }
+}
+
+extension Vehicles {
+    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
 
         guard let moduleTreeJSON = jSON else {
-            return
+            throw VehiclesJSONMappingError.passedInvalidModuleTreeJSON(self.tank_id)
         }
 
         var parentObjectIDList = requestPredicate.parentObjectIDList
@@ -52,21 +80,28 @@ extension Vehicles {
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
 
-        moduleTreeJSON.keys.forEach { key in
-            guard let moduleTreeJSON = moduleTreeJSON[key] as? JSON else { return }
-            guard let module_id = moduleTreeJSON[#keyPath(ModulesTree.module_id)] as? NSNumber else { return }
+        for key in moduleTreeJSON.keys {
+            let json = moduleTreeJSON[key] as? JSON
+            let module_id = json?[#keyPath(ModulesTree.module_id)]
 
-            submoduleMapping(objectContext: objectContext, json: moduleTreeJSON, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, mappingCoordinator: mappingCoordinator, requestManager: requestManager)
+            let jsonCollection = try JSONCollection(element: json)
+            try submoduleMapping(objectContext: objectContext, json: jsonCollection, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, inContext: inContext)
         }
     }
 
-    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, json: JSON, module_id: NSNumber, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, mappingCoordinator: MappingCoordinatorProtocol?, requestManager: RequestManagerProtocol) {
+    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, json: JSONCollectable?, module_id: Any?, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, inContext: JSONMappableProtocol.Context) throws {
+        guard let json = json else {
+            throw VehiclesJSONMappingError.passedInvalidSubModuleJSON
+        }
+        guard let module_id = module_id as? NSNumber else {
+            throw VehiclesJSONMappingError.passedInvalidModuleId
+        }
         let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let linker = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, forClass: ModulesTree.self, requestPredicate: submodulesPredicate, linker: linker, requestManager: requestManager, completion: { _, _ in })
+        inContext.mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, forClass: ModulesTree.self, predicate: submodulesPredicate, linker: linker, requestManager: inContext.requestManager, completion: { _, _ in })
     }
 }
 

@@ -13,12 +13,14 @@ class Test_WOTRequestArguments: XCTestCase {
     func testInit() throws {
         let args = RequestArguments(["alpha":"beta"])
         let description = args.description
-        XCTAssert(description == "{\n  \"alpha\" : [\n    \"beta\"\n  ]\n}")
+        XCTAssert(description == "RequestArguments: [AnyHashable(\"alpha\"): [\"beta\"]]")
     }
     
     func testHash() throws {
         let args = RequestArguments(["alpha":"beta"])
-        XCTAssert(args.hash != 0)
+        let md5_1 = args.MD5
+        let md5_2 = args.MD5
+        XCTAssert( md5_1 == md5_2)
     }
 
     func testDescription() throws {

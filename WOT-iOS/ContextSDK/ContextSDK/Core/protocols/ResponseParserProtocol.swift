@@ -7,10 +7,10 @@
 
 @objc
 public protocol ResponseParserContainerProtocol {
-    @objc var responseParser: WOTResponseParserProtocol? { get set }
+    var responseParser: ResponseParserProtocol? { get set }
 }
 
 @objc
-public protocol WOTResponseParserProtocol {
-    func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, onParseComplete: @escaping OnParseComplete) throws
+public protocol ResponseParserProtocol {
+    func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping DataAdapterProtocol.OnComplete) throws
 }

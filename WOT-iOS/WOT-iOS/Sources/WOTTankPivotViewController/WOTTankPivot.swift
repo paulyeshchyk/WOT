@@ -85,17 +85,18 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     }
 }
 
-class WOTTankPivotModel: WOTPivotDataModel {
-    var logInspector: LogInspectorProtocol
-    var coreDataStore: DataStoreProtocol
-    var requestManager: RequestManagerProtocol
+class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
+    
+    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & RequestRegistratorContainerProtocol
 
-    required init(modelListener: WOTDataModelListener, coreDataStore: DataStoreProtocol, requestManager: RequestManagerProtocol, logInspector: LogInspectorProtocol, settingsDatasource: WOTTankListSettingsDatasource) {
+    private let context: Context
+    let uuid: UUID = UUID()
+    var MD5: String { uuid.MD5 }
+
+    required init(modelListener: WOTDataModelListener, context: Context, settingsDatasource: WOTTankListSettingsDatasource) {
+        self.context = context
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: coreDataStore)
-        self.coreDataStore = coreDataStore
-        self.requestManager = requestManager
-        self.logInspector = logInspector
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: context.dataStore)
 
         let metadatasource = WOTTankPivotMetadatasource()
         let nodeCreator = WOTTankPivotNodeCreator()
@@ -116,11 +117,11 @@ class WOTTankPivotModel: WOTPivotDataModel {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:) has not been implemented")
     }
 
-    deinit {}
-
-    override var description: String {
-        return String(describing: type(of: self))
+    deinit {
+        context.requestManager?.removeListener(self)
     }
+
+    override var description: String { "\(type(of: self))" }
 
     override func loadModel() {
         super.loadModel()
@@ -128,26 +129,20 @@ class WOTTankPivotModel: WOTPivotDataModel {
         do {
             try performWebRequest()
         } catch {
-            logInspector.logEvent(EventError(error, details: nil), sender: nil)
+            context.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
         }
     }
 
     private func performWebRequest() throws {
-        try WOTWEBRequestFactory.fetchVehiclePivotData(requestManager, listener: self)
-    }
-}
-
-extension WOTTankPivotModel: RequestManagerListenerProtocol {
-    var md5: String? {
-        return "WOTTankPivotModel".MD5()
+        try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: context, listener: self)
     }
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+        if completionResultType == .finished || completionResultType == .noData {
+            requestManager.removeListener(self)
+        }
         DispatchQueue.main.async {
             super.loadModel()
-            if completionResultType == .finished || completionResultType == .noData {
-                requestManager.removeListener(self)
-            }
         }
     }
 

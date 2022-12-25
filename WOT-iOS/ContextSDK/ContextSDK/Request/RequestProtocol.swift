@@ -6,19 +6,19 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public typealias RequestIdType = String
+public typealias RequestIdType = NSInteger
 
 @objc
 public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
-    var availableInGroups: [String] { get }
+    var availableInGroups: [RequestIdType] { get }
     var listeners: [RequestListenerProtocol] { get }
     var paradigm: MappingParadigmProtocol? { get set }
 
     func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
-    func removeGroup(_ group: String)
+    func removeGroup(_ group: RequestIdType)
     func removeListener(_ listener: RequestListenerProtocol)
     init(context: Context)
 }
@@ -29,36 +29,37 @@ public protocol RequestListenerContainerProtocol {
 }
 
 @objc
-public protocol RequestListenerProtocol {
-    @objc
-    var md5: String? { get }
+public protocol RequestListenerProtocol: MD5Protocol {
 
     @objc func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?)
     @objc func request(_ request: RequestProtocol, canceledWith error: Error?)
-    @objc func request(_ request: RequestProtocol, startedWith hostConfiguration: HostConfigurationProtocol?)
+    @objc func request(_ request: RequestProtocol, startedWith urlRequest: URLRequest)
 }
 
 //@objc
-open class Request: RequestProtocol, DescriptableProtocol {
+open class Request: RequestProtocol, CustomStringConvertible {
 
-    private enum RequestError: Error {
+    private enum RequestError: Error, CustomStringConvertible {
         case shouldBeOverriden(String)
-        var debugDescription: String {
+        var description: String {
             switch self {
-            case .shouldBeOverriden(let text): return "'\(text)' should be overridden"
+            case .shouldBeOverriden(let text): return "\(type(of: self)): '\(text)' should be overridden"
             }
         }
     }
     
     public let context: RequestProtocol.Context
-    public var MD5: String? { uuid.MD5 }
-    public var description: String { String(describing: self) }
+    public var MD5: String { uuid.MD5 }
+    open var description: String { "\(type(of: self))" }
     
     public required init(context: RequestProtocol.Context) {
         self.context = context
     }
-    
 
+    deinit {
+        paradigm = nil
+    }
+    
     open func cancel(with error: Error?) {}
 
     open func start(withArguments: RequestArgumentsProtocol) throws {
@@ -84,10 +85,10 @@ open class Request: RequestProtocol, DescriptableProtocol {
     }
 
     open func removeGroup(_ group: RequestIdType) {
-        availableInGroups.removeAll(where: { group.compare($0) == .orderedSame })
+        availableInGroups.removeAll(where: { group == $0 })
     }
 
     open func removeListener(_ listener: RequestListenerProtocol) {
-        listeners.removeAll(where: {$0.md5 == listener.md5 })
+        listeners.removeAll(where: {$0.MD5 == listener.MD5 })
     }
 }

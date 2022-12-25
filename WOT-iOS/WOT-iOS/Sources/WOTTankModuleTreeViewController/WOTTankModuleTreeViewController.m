@@ -91,7 +91,7 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RequestListenerProtocol, RequestManagerListenerProtocol, WOTDataModelListener>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RequestListenerProtocol, RequestManagerListenerProtocol, WOTDataModelListener, MD5Protocol>
 
 @property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
@@ -103,9 +103,20 @@
 
 @implementation WOTTankModuleTreeViewController
 @synthesize context;
+@synthesize MD5;
+@synthesize uuid;
+
+- (NSUUID *)uuid {
+    return [NSUUID UUID];
+}
+
+- (NSString *)MD5 {
+    return [MD5 MD5From:@"WOTTankModuleTreeViewController"];
+}
 
 - (void)dealloc {
-    
+    [[self requestManager] removeListener: self];
+
     self.model = nil;
 }
 
@@ -123,6 +134,7 @@
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
+
         id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
         id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
 
@@ -195,10 +207,10 @@
 - (void)setTank_Id:(NSNumber *)value {
 
     _tank_Id = [value copy];
-
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                             requestManager: self.requestManager
+                                                  inContext: appDelegate
                                                    listener: self
                                                       error: &error];
 }
@@ -289,6 +301,7 @@
 }
 
 - (void)request:(id)request finishedLoadData:(NSData *)data error:(NSError *)error {
+    [[self requestManager] removeListener: self];
     [self reloadModel];
 }
 
@@ -297,7 +310,7 @@
 }
 
 
-- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(id<HostConfigurationProtocol> _Nullable)hostConfiguration {
+- (void)request:(id<RequestProtocol> _Nonnull)request startedWith:(NSURLRequest * _Nonnull)urlRequest {
     
 }
 
@@ -313,11 +326,6 @@
 
 - (void)requestHasStarted:(id<RequestProtocol> _Nonnull)request {
     
-}
-
-
-- (NSString *)md5 {
-    return [MD5 MD5From:@"WOTTankModuleTreeViewController"];
 }
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {

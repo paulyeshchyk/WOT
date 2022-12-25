@@ -12,16 +12,20 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmoList {
-    override public func mapping(array: [Any], objectContext: ManagedObjectContextProtocol, requestPredicate: RequestPredicate, mappingCoordinator: MappingCoordinatorProtocol, requestManager: RequestManagerProtocol) throws {
-        //
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+        guard let profiles = map.mappingData as? [JSON] else {
+            throw JSONManagedObjectMapError.notAnArray(map)
+        }
 
-        let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
-        array.compactMap { $0 as? JSON }.forEach { jSON in
-
-            let ammoType = jSON[#keyPath(VehicleprofileAmmo.type)] as AnyObject
-            let ruleBuilder = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: requestPredicate, ammoType: ammoType, linkedClazz: VehicleprofileAmmo.self, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+        let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        
+        for profile in profiles {
+            let ammoType = profile[#keyPath(VehicleprofileAmmo.type)] as AnyObject
+            let ruleBuilder = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, ammoType: ammoType, linkedClazz: VehicleprofileAmmo.self, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             let ammoLinkerClass = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker.self
-            mappingCoordinator.linkItem(from: jSON, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, mapperClazz: ammoLinkerClass, lookupRuleBuilder: ruleBuilder, requestManager: requestManager)
+            
+            let jsonCollection = try JSONCollection(element: profile)
+            inContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, mapperClazz: ammoLinkerClass, lookupRuleBuilder: ruleBuilder, requestManager: inContext.requestManager)
         }
     }
 }

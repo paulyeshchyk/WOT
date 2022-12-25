@@ -13,7 +13,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
 
     public var hostConfiguration: HostConfigurationProtocol?
-    public var responseParser: WOTResponseParserProtocol?
+    public var responseParser: ResponseParserProtocol?
     public var requestManager: RequestManagerProtocol?
     public var requestListener: RequestListenerProtocol?
     public var sessionManager: SessionManagerProtocol?
@@ -25,7 +25,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 
-        let logPriorities: [LogEventType]? = [.error, .web, .warning, .lifeCycle]
+        let logPriorities: [LogEventType]? = [.error, .web, .warning]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
         hostConfiguration = WOTHostConfiguration()
@@ -44,4 +44,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
 
         return true
     }
+}
+
+extension AppDelegate: ResponseParserContainerProtocol, RequestRegistratorContainerProtocol, ResponseAdapterCreatorContainerProtocol {
+    
 }

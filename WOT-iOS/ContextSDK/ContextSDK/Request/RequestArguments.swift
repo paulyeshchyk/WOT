@@ -15,14 +15,14 @@ public protocol RequestArgumentsProtocol {
 
 public typealias ArgumentsType = Swift.Dictionary<Swift.AnyHashable, Any>
 
-open class RequestArguments: RequestArgumentsProtocol, MD5Protocol, DescriptableProtocol {
+open class RequestArguments: RequestArgumentsProtocol, MD5Protocol, CustomStringConvertible {
 
     private var dictionary = ArgumentsType()
 
-    public var uuid: UUID { UUID() }
-    public var MD5: String? { uuid.MD5 }
+    public let uuid: UUID = UUID()
+    public var MD5: String { uuid.MD5 }
 
-    public var description: String { String(describing: self) }
+    public var description: String { "\(type(of: self)): \(String(describing: dictionary))" }
 
     required public init() {
         

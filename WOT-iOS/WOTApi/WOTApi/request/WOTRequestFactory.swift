@@ -11,31 +11,37 @@ import WOTKit
 @objc
 public class WOTWEBRequestFactory: NSObject {
     
-    private enum HttpRequestFactoryError: Error {
+    private enum HttpRequestFactoryError: Error, CustomStringConvertible {
         case objectNotDefined
+        public var description: String {
+            switch self {
+            case .objectNotDefined: return "[\(type(of: self))]: Object not defined"
+            }
+        }
     }
     
-    public static func fetchVehiclePivotData(_ requestManager: RequestManagerProtocol?, listener: RequestManagerListenerProtocol) throws {
-        guard let requestManager = requestManager else {
-            throw HttpRequestFactoryError.objectNotDefined
-        }
+    public static func fetchVehiclePivotData(inContext context: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
         let arguments = RequestArguments()
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
 
-        let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
+        guard let request = try context.requestRegistrator?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
+            throw HttpRequestFactoryError.objectNotDefined
+        }
         let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
-        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonAdapterLinker: pivotLinker, listener: listener)
+        try context.requestManager?.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, adapterLinker: pivotLinker, listener: listener)
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, requestManager: RequestManagerProtocol, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehicleTreeData(vehicleId: Int, inContext context: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
         let arguments = RequestArguments()
         arguments.setValues([vehicleId], forKey: WOTApiFields.tank_id)
         arguments.setValues(Vehicles.classKeypaths(), forKey: WGWebQueryArgs.fields)
 
-        let request = try requestManager.createRequest(forRequestId: WebRequestType.vehicles.rawValue)
+        guard let request = try context.requestRegistrator?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
+            throw HttpRequestFactoryError.objectNotDefined
+        }
         let treeViewLinker = Vehicles.VehiclesTreeViewLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
-        try requestManager.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, jsonAdapterLinker: treeViewLinker, listener: listener)
+        try context.requestManager?.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, adapterLinker: treeViewLinker, listener: listener)
     }
 
     @objc

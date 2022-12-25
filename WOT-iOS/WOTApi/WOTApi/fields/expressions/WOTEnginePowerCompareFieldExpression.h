@@ -6,7 +6,7 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTTankDetailFieldExpression.h"
+#import <WOTApi/WOTTankDetailFieldExpression.h>
 
 @interface WOTEnginePowerCompareFieldExpression : WOTTankDetailFieldExpression
 

@@ -9,7 +9,7 @@
 public class EventError: LogEventProtocol {
     public var eventType: LogEventType { return .error }
     public private(set) var message: String
-    public var name: String { return "!!ERROR!!"}
+    public var name: String { return "Error"}
 
     public init() {
         message = ""

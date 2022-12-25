@@ -26,7 +26,7 @@
         NSError *error = nil;
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
         [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiKeyOrderBy.orderBy ascending:YES]]];
-        NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+        NSFetchedResultsController *fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:(NSManagedObjectContext *)context sectionNameKeyPath:nil cacheName:nil];
         [fetchedResultController performFetch:&error];
         
         #warning will recreate objects if user has deleted everything

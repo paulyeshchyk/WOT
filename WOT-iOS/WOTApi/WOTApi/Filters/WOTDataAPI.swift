@@ -29,10 +29,10 @@ public class WGWebQueryArgs: NSObject {
 
 @objc
 public class WGWebRequestGroups: NSObject {
-    @objc public static let vehicle_profile: String = "vehicle_profile"
-    @objc public static let vehicle_list: String = "vehicle_list"
-    @objc public static let login: String = "login"
-    @objc public static let logout: String = "logout"
+    @objc public static let vehicle_profile: RequestIdType = "vehicle_profile".hashValue
+    @objc public static let vehicle_list: RequestIdType = "vehicle_list".hashValue
+    @objc public static let login: RequestIdType = "login".hashValue
+    @objc public static let logout: RequestIdType = "logout".hashValue
 }
 
 @objc
