@@ -7,12 +7,12 @@
 //
 
 public class ForeignAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposerProtocol {
-    private var requestPredicate: RequestPredicate
+    private var requestPredicate: ContextPredicate
     private var ammoType: AnyObject?
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var foreignSelectKey: String
 
-    public init(requestPredicate: RequestPredicate, ammoType: AnyObject?, linkedClazz: PrimaryKeypathProtocol.Type, foreignSelectKey: String) {
+    public init(requestPredicate: ContextPredicate, ammoType: AnyObject?, linkedClazz: PrimaryKeypathProtocol.Type, foreignSelectKey: String) {
         self.requestPredicate = requestPredicate
         self.linkedClazz = linkedClazz
         self.foreignSelectKey = foreignSelectKey
@@ -20,7 +20,7 @@ public class ForeignAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateCompo
     }
 
     public func build() -> RequestPredicateComposition? {
-        let lookupPredicate = RequestPredicate()
+        let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = requestPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
         lookupPredicate[.secondary] = linkedClazz.primaryKey(for: ammoType, andType: .internal)
 

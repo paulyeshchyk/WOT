@@ -221,7 +221,7 @@ extension DataStore: DataStoreProtocol {
         context.logInspector?.logEvent(EventTimeMeasure("Context save start", uuid: uuid), sender: self)
     }
 
-    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: RequestPredicate, completion: @escaping FetchResultCompletion) {
+    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: ContextPredicate, completion: @escaping FetchResultCompletion) {
         guard let ManagedObjectClass = Clazz as? NSManagedObject.Type else {
             let error = DataStoreError.clazzIsNotSupportable(String(describing: Clazz))
             context.logInspector?.logEvent(EventError(error, details: nil), sender: self)

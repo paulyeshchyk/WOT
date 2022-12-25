@@ -20,7 +20,7 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 
-    public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
+    public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, linker: JSONAdapterLinkerProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
 
         context.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, predicate: predicate) { [weak self] fetchResult, error in
 
@@ -74,7 +74,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorMappingProtocol {
-    public func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: RequestPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
+    public func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, linker: JSONAdapterLinkerProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 //self.context.logInspector?.logEvent(EventError(error, details: self), sender: nil)

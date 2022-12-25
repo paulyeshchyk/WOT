@@ -125,7 +125,7 @@ extension JSONAdapter {
 
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSONCollectable?, predicate: RequestPredicate, callback externalCallback: @escaping FetchResultCompletion) {
+    private func findOrCreateObject(json: JSONCollectable?, predicate: ContextPredicate, callback externalCallback: @escaping FetchResultCompletion) {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             fatalError("thread is not main")
@@ -158,7 +158,7 @@ extension JSONAdapter {
 }
 
 public struct JSONExtraction {
-    public let requestPredicate: RequestPredicate
+    public let requestPredicate: ContextPredicate
     public let json: JSONCollectable?
 
     public enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
@@ -192,7 +192,7 @@ extension JSONAdapterLinkerProtocol {
         }
 
         let parents = fromRequest.paradigm?.predicate()?.parentObjectIDList
-        let requestPredicate = RequestPredicate(parentObjectIDList: parents)
+        let requestPredicate = ContextPredicate(parentObjectIDList: parents)
         requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
 
         let jsonCollection = try JSONCollection(element: extractedJSON)
