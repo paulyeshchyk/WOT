@@ -25,10 +25,10 @@ extension NSManagedObject: PrimaryKeypathProtocol {
         return NSPredicate(format: predicateTemplate, keyName, ident)
     }
 
-    open class func primaryKey(for ident: AnyObject?, andType: PrimaryKeyType) -> RequestExpression? {
+    open class func primaryKey(for ident: AnyObject?, andType: PrimaryKeyType) -> ContextExpression? {
         guard let keyName = primaryKeyPath(forType: andType) else { return nil }
         guard let ident = ident else { return nil }
         let predicateTemplate = predicateFormat(forType: andType)
-        return RequestExpression(name: keyName, value: ident, nameAlias: keyName, predicateFormat: predicateTemplate)
+        return ContextExpression(name: keyName, value: ident, nameAlias: keyName, predicateFormat: predicateTemplate)
     }
 }

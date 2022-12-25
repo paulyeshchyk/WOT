@@ -10,9 +10,9 @@ public protocol MappingParadigmProtocol {
     var clazz: AnyClass { get set }
     var jsonAdapterLinker: JSONAdapterLinkerProtocol { get }
     var keypathPrefix: String? { get }
-    var primaryKeys: [RequestExpression] { get }
+    var primaryKeys: [ContextExpression] { get }
     func addPreffix(to: String) -> String
-    func predicate() -> RequestPredicate?
+    func predicate() -> ContextPredicate?
 }
 
 // MARK: - Extension RequestParadigmProtocol
@@ -44,7 +44,7 @@ public class MappingParadigm: NSObject, MappingParadigmProtocol {
     public var clazz: AnyClass
     public var jsonAdapterLinker: JSONAdapterLinkerProtocol
 
-    public var primaryKeys: [RequestExpression] {
+    public var primaryKeys: [ContextExpression] {
         return predicate()?.expressions(pkType: nil)?.compactMap { $0 } ?? []
     }
 
@@ -66,7 +66,7 @@ public class MappingParadigm: NSObject, MappingParadigmProtocol {
         //
     }
     
-    public func predicate() -> RequestPredicate? {
+    public func predicate() -> ContextPredicate? {
         return requestPredicateComposer?.build()?.requestPredicate
     }
 

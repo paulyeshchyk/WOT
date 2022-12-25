@@ -15,18 +15,18 @@ public enum PredicateCompoundType: Int {
     case and
 }
 
-public protocol RequestPredicateProtocol {
+public protocol ContextPredicateProtocol {
     var parentObjectIDList: [AnyObject] { get set }
-    func expressions(pkType: RequestExpressionType?) -> Set<RequestExpression>?
+    func expressions(pkType: RequestExpressionType?) -> Set<ContextExpression>?
     func compoundPredicate(_ byType: PredicateCompoundType) -> NSPredicate?
 }
 
 @objc
-public protocol RequestPredicateContainerProtocol {
-    var predicate: RequestPredicate { get }
+public protocol ContextPredicateContainerProtocol {
+    var predicate: ContextPredicate { get }
 }
 
-public class RequestPredicate: NSObject, RequestPredicateProtocol {
+public class ContextPredicate: NSObject, ContextPredicateProtocol {
 
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
@@ -51,31 +51,31 @@ public class RequestPredicate: NSObject, RequestPredicateProtocol {
         return result.joined(separator: ";")
     }
 
-    private var _expressions: [RequestExpressionType: Set<RequestExpression>] = .init()
+    private var _expressions: [RequestExpressionType: Set<ContextExpression>] = .init()
 
-    public subscript(pkType: RequestExpressionType) -> RequestExpression? {
+    public subscript(pkType: RequestExpressionType) -> ContextExpression? {
         get {
             return _expressions[pkType]?.first
         }
         set {
-            if let value = newValue {
-                var updatedSet: Set<RequestExpression> = _expressions[pkType] ?? Set<RequestExpression>()
-                updatedSet.insert(value)
-                _expressions[pkType] = updatedSet
-            } else {
-                print("PKCase was not fully initialized")
+            guard let value = newValue else {
+                assertionFailure("PKCase was not fully initialized")
+                return
             }
+            var updatedSet: Set<ContextExpression> = _expressions[pkType] ?? Set<ContextExpression>()
+            updatedSet.insert(value)
+            _expressions[pkType] = updatedSet
         }
     }
 
-    public func expressions(pkType: RequestExpressionType?) -> Set<RequestExpression>? {
+    public func expressions(pkType: RequestExpressionType?) -> Set<ContextExpression>? {
         if let pkType = pkType {
             return _expressions[pkType]
         } else {
-            var updatedSet = Set<RequestExpression>()
+            var updatedSet = Set<ContextExpression>()
             _expressions.keys.forEach {
-                _expressions[$0]?.forEach { key in
-                    updatedSet.insert(key)
+                _expressions[$0]?.forEach { expression in
+                    updatedSet.insert(expression)
                 }
             }
             return updatedSet

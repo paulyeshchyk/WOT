@@ -17,7 +17,7 @@ public protocol ManagedObjectContextContainer {
 }
 
 @objc
-public protocol ManagedObjectMapProtocol: RequestPredicateContainerProtocol, ManagedObjectContextContainer { }
+public protocol ManagedObjectMapProtocol: ContextPredicateContainerProtocol, ManagedObjectContextContainer { }
 
 @objc
 public protocol JSONManagedObjectMapProtocol: ManagedObjectMapProtocol {
@@ -42,9 +42,9 @@ public class JSONMap: JSONManagedObjectMapProtocol {
     }
     
     public let managedObjectContext: ManagedObjectContextProtocol
-    public let predicate: RequestPredicate
+    public let predicate: ContextPredicate
     private let jsonCollectable: JSONCollectable
-    public init(json: JSONCollectable, managedObjectContext: ManagedObjectContextProtocol, predicate: RequestPredicate) {
+    public init(json: JSONCollectable, managedObjectContext: ManagedObjectContextProtocol, predicate: ContextPredicate) {
         self.jsonCollectable = json
         self.managedObjectContext = managedObjectContext
         self.predicate = predicate

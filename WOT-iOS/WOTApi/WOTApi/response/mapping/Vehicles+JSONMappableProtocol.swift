@@ -64,7 +64,7 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: RequestPredicate, inContext: JSONMappableProtocol.Context) throws {
+    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicate, inContext: JSONMappableProtocol.Context) throws {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -78,7 +78,7 @@ extension Vehicles {
 
         let vehiclesFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
-        let modulesTreePredicate = RequestPredicate(parentObjectIDList: parentObjectIDList)
+        let modulesTreePredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
         modulesTreePredicate[.primary] = requestPredicate[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
@@ -92,14 +92,14 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, json: JSONCollectable?, module_id: Any?, requestPredicate: RequestPredicate, masterFetchResult: FetchResult, inContext: JSONMappableProtocol.Context) throws {
+    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, json: JSONCollectable?, module_id: Any?, requestPredicate: ContextPredicate, masterFetchResult: FetchResult, inContext: JSONMappableProtocol.Context) throws {
         guard let json = json else {
             throw VehiclesJSONMappingError.passedInvalidSubModuleJSON
         }
         guard let module_id = module_id as? NSNumber else {
             throw VehiclesJSONMappingError.passedInvalidModuleId
         }
-        let submodulesPredicate = RequestPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
+        let submodulesPredicate = ContextPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
