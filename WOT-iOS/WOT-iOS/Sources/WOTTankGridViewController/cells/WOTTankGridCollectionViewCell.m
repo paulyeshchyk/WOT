@@ -24,7 +24,7 @@
 
 + (CGSize)sizeForSubitemsCount:(NSInteger)subitemsCount columnsCount:(NSInteger)columnsCount{
     
-    UIInterfaceOrientation statusBarOrientation = [UIApplication sharedApplication].delegate.window.windowScene.interfaceOrientation;
+    UIInterfaceOrientation statusBarOrientation = [UIApplication sharedApplication].statusBarOrientation;
     BOOL isPortrait = UIInterfaceOrientationIsPortrait(statusBarOrientation);
     
     CGFloat separatorWidth = 1.0f;
