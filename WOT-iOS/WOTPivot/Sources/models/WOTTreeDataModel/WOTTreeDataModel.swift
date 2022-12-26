@@ -41,6 +41,10 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         super.init()
         fetchController.setFetchListener(self)
     }
+    
+    deinit {
+        fetchController.setFetchListener(nil)
+    }
 
     public required init(enumerator enumer: WOTNodeEnumeratorProtocol) {
         fatalError("init(enumerator:) has not been implemented")

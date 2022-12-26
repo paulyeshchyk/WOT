@@ -11,19 +11,19 @@ import ContextSDK
 
 extension NSManagedObject: RequestableProtocol {
     @objc
-    open class func fieldsKeypaths() -> [String] {
+    open class func dataFieldsKeypaths() -> [String] {
         return []
     }
 
     @objc
-    open class func relationsKeypaths() -> [String] {
+    open class func relationFieldsKeypaths() -> [String] {
         return []
     }
 
     @objc
-    public static func classKeypaths() -> [String] {
-        let fields = fieldsKeypaths()
-        let relations = relationsKeypaths()
+    public static func fieldsKeypaths() -> [String] {
+        let fields = dataFieldsKeypaths()
+        let relations = relationFieldsKeypaths()
         return fields + relations
     }
 }

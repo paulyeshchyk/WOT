@@ -19,7 +19,7 @@ public protocol MappingParadigmProtocol {
 
 extension MappingParadigmProtocol {
     public func buildRequestArguments() -> RequestArguments {
-        let keyPaths = clazz.classKeypaths().compactMap {
+        let keyPaths = clazz.fieldsKeypaths().compactMap {
             self.addPreffix(to: $0)
         }
 

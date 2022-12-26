@@ -7,7 +7,13 @@
 //
 
 @objc
+public protocol RequestCancelReasonProtocol {
+    var reasonDescription: String { get }
+    var error: Error? { get }
+}
+
+@objc
 public protocol StartableProtocol {
-    func cancel(with error: Error?)
+    func cancel(byReason: RequestCancelReasonProtocol) throws
     func start(withArguments: RequestArgumentsProtocol) throws
 }

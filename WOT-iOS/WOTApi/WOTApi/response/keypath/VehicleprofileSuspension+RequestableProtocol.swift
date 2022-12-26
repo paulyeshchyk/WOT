@@ -13,8 +13,8 @@ import ContextSDK
 
 extension VehicleprofileSuspension {
     //
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey, CaseIterable {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case tier
         case traverse_speed
         case name
@@ -25,8 +25,8 @@ extension VehicleprofileSuspension {
     }
 
     @objc
-    override public class func fieldsKeypaths() -> [String] {
-        return FieldKeys.allCases.compactMap { $0.rawValue }
+    override public class func dataFieldsKeypaths() -> [String] {
+        return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {

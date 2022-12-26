@@ -46,3 +46,29 @@ public class EventMappingEnded: LogEventProtocol {
         message = String(describing: error)
     }
 }
+
+public class EventMappingInfo: LogEventProtocol {
+    public var eventType: LogEventType { return .mapping }
+    public private(set) var message: String
+    public var name: String { return "MappingInfo" }
+
+    public init(fetchResult: FetchResultProtocol, predicate: ContextPredicate, mappingType: EventMappingType) {
+        message = "`\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: predicate))"
+    }
+
+    public required init?(_ text: String) {
+        message = text
+    }
+    
+    public required init?(_ error: Error?) {
+        if let error = error {
+            message = String(describing: error)
+        } else {
+            message = "Unknown error"
+        }
+    }
+
+    public init?(error: Error) {
+        message = String(describing: error)
+    }
+}

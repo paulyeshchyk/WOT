@@ -21,26 +21,60 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
     public var description: String { "\(type(of: self)): \(String(describing: request))" }
     
     public weak var delegate: HttpDataReceiverDelegateProtocol?
+    private var urlDataTask: URLSessionDataTask?
     
     private let context: HttpDataReceiverProtocol.Context
     required public init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
     }
+    
+    deinit {
+        urlDataTask?.cancelDataTask()
+        urlDataTask = nil
+    }
 
+    @discardableResult
+    public func cancel() -> Bool {
+        let result = urlDataTask?.cancelDataTask() ?? false
+        urlDataTask = nil
+        if result == true {
+            delegate?.didCancel(urlRequest: request, receiver: self, error: nil)
+        }
+        return result
+    }
+    
     public func start() {
+        urlDataTask?.cancelDataTask()
+        urlDataTask = nil
+
         guard let url = request.url else {
             delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
             return
         }
-        
+        urlDataTask = createDataTask(url: url)
         delegate?.didStart(urlRequest: request, receiver: self)
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+        urlDataTask?.resume()
+    }
+    
+    private func createDataTask(url: URL) -> URLSessionDataTask {
+        return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
-            DispatchQueue.main.async { 
+            DispatchQueue.main.async {
                 self.delegate?.didEnd(urlRequest: self.request, receiver: self, data: data, error: error)
             }
+        }
+    }
+}
 
-        }.resume()
+private extension URLSessionDataTask {
+    
+    @discardableResult
+    func cancelDataTask() -> Bool {
+        guard (state == .running || state == .suspended) else {
+            return false
+        }
+        cancel()
+        return true
     }
 }

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D20FDEB24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FDEA24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift */; };
+		1D20FDEB24642DA1009CFA22 /* BaseJSONAdapterLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FDEA24642DA1009CFA22 /* BaseJSONAdapterLinker.swift */; };
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D60E52F245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E523245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift */; };
 		1D60E530245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E524245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift */; };
@@ -16,7 +16,6 @@
 		1D60E58D245FE7E5007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
 		1D60E58F245FE7E5007E5CA8 /* NSManagedObject+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E541245FE7E4007E5CA8 /* NSManagedObject+RequestableProtocol.swift */; };
 		1D60E591245FE7E5007E5CA8 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E544245FE7E4007E5CA8 /* DataStore.swift */; };
-		1D60E598245FE7E5007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E54D245FE7E4007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift */; };
 		1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */; };
 		1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */; };
@@ -76,7 +75,7 @@
 
 /* Begin PBXFileReference section */
 		0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D20FDEA24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterLinkerProtocol.swift; sourceTree = "<group>"; };
+		1D20FDEA24642DA1009CFA22 /* BaseJSONAdapterLinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseJSONAdapterLinker.swift; sourceTree = "<group>"; };
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -88,7 +87,6 @@
 		1D60E541245FE7E4007E5CA8 /* NSManagedObject+RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+RequestableProtocol.swift"; sourceTree = "<group>"; };
 		1D60E544245FE7E4007E5CA8 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
-		1D60E54D245FE7E4007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONMapperProtocol.swift"; sourceTree = "<group>"; };
 		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiverProtocol.swift; sourceTree = "<group>"; };
@@ -264,7 +262,6 @@
 			isa = PBXGroup;
 			children = (
 				1D60E60D24602AFE007E5CA8 /* Adapter */,
-				1D60E60E24602B17007E5CA8 /* Mapping */,
 			);
 			path = JSON;
 			sourceTree = "<group>";
@@ -362,17 +359,9 @@
 		1D60E60D24602AFE007E5CA8 /* Adapter */ = {
 			isa = PBXGroup;
 			children = (
-				1D20FDEA24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift */,
+				1D20FDEA24642DA1009CFA22 /* BaseJSONAdapterLinker.swift */,
 			);
 			path = Adapter;
-			sourceTree = "<group>";
-		};
-		1D60E60E24602B17007E5CA8 /* Mapping */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E54D245FE7E4007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift */,
-			);
-			path = Mapping;
 			sourceTree = "<group>";
 		};
 		1D7E0693247D045F008CB848 /* WOTKitTests */ = {
@@ -724,7 +713,6 @@
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */,
 				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
-				1D60E598245FE7E5007E5CA8 /* NSManagedObject+JSONMapperProtocol.swift in Sources */,
 				DA81E8812953530000C60F31 /* WOTProgressView.m in Sources */,
 				1D60E58F245FE7E5007E5CA8 /* NSManagedObject+RequestableProtocol.swift in Sources */,
 				1D60E52F245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift in Sources */,
@@ -735,7 +723,7 @@
 				DAAD81FC29503D88001B0ACD /* NSManagedObject+ManagedObjectProtocol.swift in Sources */,
 				1DFCC92124713456005F580E /* MappingCoordinator.swift in Sources */,
 				1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */,
-				1D20FDEB24642DA1009CFA22 /* JSONAdapterLinkerProtocol.swift in Sources */,
+				1D20FDEB24642DA1009CFA22 /* BaseJSONAdapterLinker.swift in Sources */,
 				DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */,
 				DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */,
 			);

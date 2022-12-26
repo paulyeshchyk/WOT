@@ -22,7 +22,7 @@ public class WOTWEBRequestFactory: NSObject {
     
     public static func fetchVehiclePivotData(inContext context: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
         let arguments = RequestArguments()
-        arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
+        arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
 
         guard let request = try context.requestRegistrator?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             throw HttpRequestFactoryError.objectNotDefined
@@ -35,7 +35,7 @@ public class WOTWEBRequestFactory: NSObject {
     public static func fetchVehicleTreeData(vehicleId: Int, inContext context: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
         let arguments = RequestArguments()
         arguments.setValues([vehicleId], forKey: WOTApiFields.tank_id)
-        arguments.setValues(Vehicles.classKeypaths(), forKey: WGWebQueryArgs.fields)
+        arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
 
         guard let request = try context.requestRegistrator?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             throw HttpRequestFactoryError.objectNotDefined

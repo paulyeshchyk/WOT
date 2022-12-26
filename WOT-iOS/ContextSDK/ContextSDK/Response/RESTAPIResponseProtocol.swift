@@ -29,8 +29,8 @@ public class RESTAPIResponse: RESTAPIResponseProtocol {
     }
 
     //
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey {
         case status
         case meta
         case data
@@ -64,8 +64,8 @@ public struct RESTAPIResponseMeta: Codable {
     var limit: Int?
     var page: Int?
 
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey {
         case count
         case page_total
         case total
@@ -120,8 +120,8 @@ public class RESTAPIError: Error, CustomStringConvertible, Codable {
     }
 
     //
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey {
         case code
         case message
     }
