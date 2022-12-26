@@ -6,29 +6,3 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
-import ContextSDK
-
-extension NSManagedObject: PrimaryKeypathProtocol {
-    open class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
-        return nil
-    }
-
-    open class func predicateFormat(forType: PrimaryKeyType) -> String {
-        return "%K == %@"
-    }
-
-    open class func predicate(for ident: AnyObject?, andType: PrimaryKeyType) -> NSPredicate? {
-        guard let ident = ident as? String else { return nil }
-        guard let keyName = primaryKeyPath(forType: .internal) else { return nil }
-        let predicateTemplate = predicateFormat(forType: andType)
-        return NSPredicate(format: predicateTemplate, keyName, ident)
-    }
-
-    open class func primaryKey(for ident: AnyObject?, andType: PrimaryKeyType) -> ContextExpression? {
-        guard let keyName = primaryKeyPath(forType: andType) else { return nil }
-        guard let ident = ident else { return nil }
-        let predicateTemplate = predicateFormat(forType: andType)
-        return ContextExpression(name: keyName, value: ident, nameAlias: keyName, predicateFormat: predicateTemplate)
-    }
-}

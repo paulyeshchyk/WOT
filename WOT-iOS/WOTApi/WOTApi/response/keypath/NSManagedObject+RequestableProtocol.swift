@@ -8,25 +8,22 @@
 import CoreData
 import ContextSDK
 
-extension NSManagedObject: JSONMappableProtocol {
-
-    private enum NSManagedObjectJSONMappableError: Error, CustomStringConvertible {
-        case shouldBeOverriden(String)
-        var description: String {
-            switch self {
-            case .shouldBeOverriden(let text): return "\(type(of: self)): '\(text)' should be overridden"
-            }
-        }
+extension NSManagedObject: RequestableProtocol {
+    @objc
+    open class func dataFieldsKeypaths() -> [String] {
+        return []
     }
-
-    public enum DataFieldsKeys: String, CodingKey {
-        case hasChanges
-    }
-
-    public typealias Fields = DataFieldsKeys
 
     @objc
-    open func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
+    open class func relationFieldsKeypaths() -> [String] {
+        return []
+    }
+
+    @objc
+    public static func fieldsKeypaths() -> [String] {
+        let fields = dataFieldsKeypaths()
+        let relations = relationFieldsKeypaths()
+        return fields + relations
     }
 }
+

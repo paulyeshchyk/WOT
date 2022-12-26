@@ -40,13 +40,4 @@ extension VehicleprofileGun {
         case .internal: return #keyPath(VehicleprofileGun.tag)
         }
     }
-
-    override open class func predicateFormat(forType: PrimaryKeyType) -> String {
-        switch forType {
-        case .external:
-            return "%K == %@"
-        default:
-            return "%K = %@"
-        }
-    }
 }
