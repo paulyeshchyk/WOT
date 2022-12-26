@@ -7,10 +7,10 @@
 
 @objc
 public protocol RequestManagerProtocol {
-    func cancelRequests(groupId: RequestIdType, with error: Error?)
+    func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol)
     func removeListener(_ listener: RequestManagerListenerProtocol)
     func startRequest(_ request: RequestProtocol, withArguments arguments: RequestArgumentsProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
-    func fetchRemote(paradigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws
+    func fetchRemote(mappingParadigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws
 }
 
 @objc

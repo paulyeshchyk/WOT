@@ -13,16 +13,16 @@ import ContextSDK
 
 extension VehicleprofileAmmo {
     //
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey, CaseIterable {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case type
         case stun
         case damage
         case penetration
     }
 
-    override public static func fieldsKeypaths() -> [String] {
-        return FieldKeys.allCases.compactMap { $0.rawValue }
+    override public static func dataFieldsKeypaths() -> [String] {
+        return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {

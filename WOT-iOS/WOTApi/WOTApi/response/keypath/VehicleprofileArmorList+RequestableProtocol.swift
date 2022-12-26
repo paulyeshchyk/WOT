@@ -10,6 +10,5 @@
 
 extension VehicleprofileArmorList {
     //
-    public typealias Fields = FieldKeys
-//    public enum FieldKeys: String, CodingKey, CaseIterable { }
+    public typealias Fields = DataFieldsKeys
 }

@@ -22,6 +22,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTTankDetailViewModeGrid = 2
 };
 
+@interface DeinitRequestCancelReason: NSObject <RequestCancelReasonProtocol> @end
 
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate, RequestManagerListenerProtocol>
 
@@ -69,15 +70,15 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 #define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
 
 - (void)dealloc {
-    
+    DeinitRequestCancelReason* reason = [[DeinitRequestCancelReason alloc] init];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     NSString *requestId = [NSString stringWithFormat:@"%@:%@",WOT_REQUEST_ID_VEHICLE_ITEM, self.tankId];
-    [self.requestManager cancelRequestsWithGroupId:requestId with:NULL];
+    [self.requestManager cancelRequestsWithGroupId:requestId reason: reason];
     
     [self.runningRequestIDs enumerateObjectsUsingBlock:^(id requestID, BOOL *stop) {
         
-        [self.requestManager cancelRequestsWithGroupId:requestID with:NULL];
+        [self.requestManager cancelRequestsWithGroupId:requestID reason: reason];
     }];
     
     [self.runningRequestIDs removeAllObjects];
@@ -470,5 +471,21 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     //
 }
 
+
+@end
+
+
+@implementation DeinitRequestCancelReason
+
+@synthesize error;
+@synthesize reasonDescription;
+
+- (id) init {
+    self = [super init];
+}
+
+- (NSString *)reasonDescription {
+    return  @"deinit";
+}
 
 @end

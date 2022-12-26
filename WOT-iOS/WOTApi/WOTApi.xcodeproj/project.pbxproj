@@ -192,6 +192,7 @@
 		DA81E91B2954455E00C60F31 /* WOTSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E9192954455E00C60F31 /* WOTSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E91C2954455E00C60F31 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E91A2954455E00C60F31 /* WOTSessionManager.m */; };
 		DA81EA5029544D2A00C60F31 /* Strings.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E6D1295307AC00C60F31 /* Strings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA913E3829599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E3729599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -407,6 +408,7 @@
 		DA81E8582953528400C60F31 /* NSExpressionDescription+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSExpressionDescription+WOT.m"; sourceTree = "<group>"; };
 		DA81E9192954455E00C60F31 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		DA81E91A2954455E00C60F31 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
+		DA913E3729599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+RequestableProtocol.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -628,6 +630,7 @@
 		DA81E585295305CD00C60F31 /* keypath */ = {
 			isa = PBXGroup;
 			children = (
+				DA913E3729599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift */,
 				DA81E586295305CD00C60F31 /* Module+RequestableProtocol.swift */,
 				DA81E587295305CD00C60F31 /* ModulesTree+RequestableProtocol.swift */,
 				DA81E588295305CD00C60F31 /* Vehicleprofile+RequestableProtocol.swift */,
@@ -1141,6 +1144,7 @@
 				DA81E5AB295305CE00C60F31 /* VehicleprofileAmmoList+JSONMappableProtocol.swift in Sources */,
 				DA81E8532953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
 				DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */,
+				DA913E3829599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift in Sources */,
 				DA81E601295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift in Sources */,
 				DA81E7C3295323F700C60F31 /* SessionManager.swift in Sources */,
 				DA81E83A2953521700C60F31 /* WOTTankDetailField.m in Sources */,

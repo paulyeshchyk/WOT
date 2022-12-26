@@ -151,11 +151,11 @@ extension WOTPivotViewController: UICollectionViewDelegate {
         }
         let config = WOTTankModuleTreeViewController(nibName: String(describing: WOTTankModuleTreeViewController.self), bundle: nil)
         config.tank_Id = vehicle.tank_id
-        config.cancelBlock = {
-            self.navigationController?.popViewController(animated: true)
+        config.cancelBlock = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
         }
-        config.doneBlock = { (conf) in
-            self.navigationController?.popViewController(animated: true)
+        config.doneBlock = { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
         }
         self.navigationController?.pushViewController(config, animated: true)
     }

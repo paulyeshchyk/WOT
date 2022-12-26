@@ -30,13 +30,11 @@ public protocol RequestListenerContainerProtocol {
 
 @objc
 public protocol RequestListenerProtocol: MD5Protocol {
-
     @objc func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?)
     @objc func request(_ request: RequestProtocol, canceledWith error: Error?)
     @objc func request(_ request: RequestProtocol, startedWith urlRequest: URLRequest)
 }
 
-//@objc
 open class Request: RequestProtocol, CustomStringConvertible {
 
     private enum RequestError: Error, CustomStringConvertible {
@@ -60,7 +58,9 @@ open class Request: RequestProtocol, CustomStringConvertible {
         paradigm = nil
     }
     
-    open func cancel(with error: Error?) {}
+    open func cancel(byReason: RequestCancelReasonProtocol) throws {
+        throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
+    }
 
     open func start(withArguments: RequestArgumentsProtocol) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")

@@ -13,8 +13,8 @@ import ContextSDK
 
 extension Vehicles {
     //
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey, CaseIterable {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case is_gift
         case is_premium
         case is_premium_igr
@@ -41,12 +41,12 @@ extension Vehicles {
     }
 
     @objc
-    override public static func fieldsKeypaths() -> [String] {
-        return FieldKeys.allCases.compactMap { $0.rawValue }
+    override public static func dataFieldsKeypaths() -> [String] {
+        return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
     @objc
-    override public static func relationsKeypaths() -> [String] {
+    override public static func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 

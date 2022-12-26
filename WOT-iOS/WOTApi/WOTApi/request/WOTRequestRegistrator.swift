@@ -7,7 +7,7 @@
 
 import ContextSDK
 
-public enum WebRequestType: RequestIdType, RawRepresentable {
+public enum WebRequestType: RequestIdType {
     public typealias RawValue = NSInteger
     case unknown = 1
     case login = 2

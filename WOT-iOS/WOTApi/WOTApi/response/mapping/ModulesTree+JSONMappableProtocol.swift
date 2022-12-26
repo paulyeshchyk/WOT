@@ -47,7 +47,7 @@ extension ModulesTree {
                 let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
                 let nextModuleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
                 do {
-                    try inContext.requestManager?.fetchRemote(paradigm: nextModuleRequestParadigm, listener: self)
+                    try inContext.requestManager?.fetchRemote(mappingParadigm: nextModuleRequestParadigm, listener: self)
                 } catch {
                     inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -59,7 +59,7 @@ extension ModulesTree {
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
         let moduleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
-        try inContext.requestManager?.fetchRemote(paradigm: moduleRequestParadigm, listener: self)
+        try inContext.requestManager?.fetchRemote(mappingParadigm: moduleRequestParadigm, listener: self)
     }
 }
 

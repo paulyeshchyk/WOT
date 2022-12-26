@@ -44,6 +44,5 @@ open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
 
     open func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
         fatalError("\(type(of: self))::\(#function)")
-        // throw LogicError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

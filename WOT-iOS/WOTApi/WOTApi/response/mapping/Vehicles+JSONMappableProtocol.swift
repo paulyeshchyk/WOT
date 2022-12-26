@@ -24,8 +24,8 @@ public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
         case .passedInvalidModuleTreeJSON(let profileID): return "[\(type(of: self))]: Passed invalid module tree json for \(profileID ?? -1)"
         case .passedInvalidSubModuleJSON:  return "[\(type(of: self))]: Passed invalid submodule json"
         case .passedInvalidModuleId: return "[\(type(of: self))]: Passed invalid module id"
-        case .profileNotFound(let id): return "[\(type(of: self))]: Profile not found for \(id ?? -1)"
-        case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree not found for \(id ?? -1)"
+        case .profileNotFound(let id): return "[\(type(of: self))]: Profile not defined in json for \(id ?? -1)"
+        case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree not defined in json for \(id ?? -1)"
         }
     }
 }
@@ -45,7 +45,7 @@ extension Vehicles {
         if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
             try self.modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: inContext)
         } else {
-            inContext.logInspector?.logEvent(EventWarning(error: VehiclesJSONMappingError.moduleTreeNotFound(self.tank_id), details: nil), sender: self)
+            inContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.moduleTreeNotFound(self.tank_id)), sender: self)
         }
 
         // MARK: - DefaultProfile
@@ -57,7 +57,7 @@ extension Vehicles {
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
             inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
         } else {
-            inContext.logInspector?.logEvent(EventWarning(error: VehiclesJSONMappingError.profileNotFound(self.tank_id), details: nil), sender: self)
+            inContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(self.tank_id)), sender: self)
         }
 //
     }

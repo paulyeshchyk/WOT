@@ -12,15 +12,15 @@ import WOTKit
 
 extension VehicleprofileAmmoPenetration {
     //
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey, CaseIterable {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case min_value
         case avg_value
         case max_valie
     }
 
     @objc
-    override public static func fieldsKeypaths() -> [String] {
-        return FieldKeys.allCases.compactMap { $0.rawValue }
+    override public static func dataFieldsKeypaths() -> [String] {
+        return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 }

@@ -1,9 +1,8 @@
 //
-//  NSManagedObject+JSONMapperProtocol.swift
-//  WOTPivot
+//  NSManagedObject+RequestableProtocol.swift
+//  WOTApi
 //
-//  Created by Pavel Yeshchyk on 4/25/20.
-//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
+//  Created by Paul on 26.12.22.
 //
 
 import CoreData
@@ -20,11 +19,11 @@ extension NSManagedObject: JSONMappableProtocol {
         }
     }
 
-    public enum FieldKeys: String, CodingKey {
+    public enum DataFieldsKeys: String, CodingKey {
         case hasChanges
     }
 
-    public typealias Fields = FieldKeys
+    public typealias Fields = DataFieldsKeys
 
     @objc
     open func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
