@@ -80,7 +80,6 @@
 }
 
 - (NSPredicate *) fetchCustomPredicate {
-
     return [NSPredicate predicateWithFormat:@"%K == %@", WOTApiFields.tank_id, self.tank_Id ];
 }
 

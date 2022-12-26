@@ -192,7 +192,10 @@
 		DA81E91B2954455E00C60F31 /* WOTSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E9192954455E00C60F31 /* WOTSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E91C2954455E00C60F31 /* WOTSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E91A2954455E00C60F31 /* WOTSessionManager.m */; };
 		DA81EA5029544D2A00C60F31 /* Strings.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E6D1295307AC00C60F31 /* Strings.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA913E3829599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E3729599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift */; };
+		DA913E3829599E2F00D39F0E /* NSManagedObject+JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E3729599E2F00D39F0E /* NSManagedObject+JSONMappableProtocol.swift */; };
+		DA913E3A2959A72F00D39F0E /* NSManagedObject+RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E392959A72F00D39F0E /* NSManagedObject+RequestableProtocol.swift */; };
+		DA913E3C2959A7E100D39F0E /* NSManagedObject+ManagedObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E3B2959A7E100D39F0E /* NSManagedObject+ManagedObjectProtocol.swift */; };
+		DA913E3E2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E3D2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -408,7 +411,10 @@
 		DA81E8582953528400C60F31 /* NSExpressionDescription+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSExpressionDescription+WOT.m"; sourceTree = "<group>"; };
 		DA81E9192954455E00C60F31 /* WOTSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSessionManager.h; sourceTree = "<group>"; };
 		DA81E91A2954455E00C60F31 /* WOTSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSessionManager.m; sourceTree = "<group>"; };
-		DA913E3729599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA913E3729599E2F00D39F0E /* NSManagedObject+JSONMappableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+JSONMappableProtocol.swift"; sourceTree = "<group>"; };
+		DA913E392959A72F00D39F0E /* NSManagedObject+RequestableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+RequestableProtocol.swift"; sourceTree = "<group>"; };
+		DA913E3B2959A7E100D39F0E /* NSManagedObject+ManagedObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+ManagedObjectProtocol.swift"; sourceTree = "<group>"; };
+		DA913E3D2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+PrimaryKeypathProtocol.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -630,7 +636,10 @@
 		DA81E585295305CD00C60F31 /* keypath */ = {
 			isa = PBXGroup;
 			children = (
-				DA913E3729599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift */,
+				DA913E3729599E2F00D39F0E /* NSManagedObject+JSONMappableProtocol.swift */,
+				DA913E3D2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift */,
+				DA913E3B2959A7E100D39F0E /* NSManagedObject+ManagedObjectProtocol.swift */,
+				DA913E392959A72F00D39F0E /* NSManagedObject+RequestableProtocol.swift */,
 				DA81E586295305CD00C60F31 /* Module+RequestableProtocol.swift */,
 				DA81E587295305CD00C60F31 /* ModulesTree+RequestableProtocol.swift */,
 				DA81E588295305CD00C60F31 /* Vehicleprofile+RequestableProtocol.swift */,
@@ -1144,7 +1153,7 @@
 				DA81E5AB295305CE00C60F31 /* VehicleprofileAmmoList+JSONMappableProtocol.swift in Sources */,
 				DA81E8532953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
 				DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */,
-				DA913E3829599E2F00D39F0E /* NSManagedObject+RequestableProtocol.swift in Sources */,
+				DA913E3829599E2F00D39F0E /* NSManagedObject+JSONMappableProtocol.swift in Sources */,
 				DA81E601295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift in Sources */,
 				DA81E7C3295323F700C60F31 /* SessionManager.swift in Sources */,
 				DA81E83A2953521700C60F31 /* WOTTankDetailField.m in Sources */,
@@ -1211,12 +1220,14 @@
 				DA81E5B3295305CE00C60F31 /* ModulesTree+JSONMappableProtocol.swift in Sources */,
 				DA81E5B6295305CE00C60F31 /* VehicleprofileArmor+JSONMappableProtocol.swift in Sources */,
 				DA81E5C2295305CE00C60F31 /* Vehicleprofile+CoreDataClass.swift in Sources */,
+				DA913E3E2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */,
 				DA81E5BC295305CE00C60F31 /* Module+CoreDataClass.swift in Sources */,
 				DA81E8332953521700C60F31 /* WOTMetric+Samples.m in Sources */,
 				DA0BC5942952E7AF00E01D54 /* VehicleprofileSuspensionHttpRequest.swift in Sources */,
 				DA81E5F3295305CE00C60F31 /* ListSetting+JSONDecodingProtocol.swift in Sources */,
 				DA81E5DD295305CE00C60F31 /* Vehicles+CoreDataProperties.swift in Sources */,
 				DA81E5D9295305CE00C60F31 /* VehicleprofileSuspension+CoreDataProperties.swift in Sources */,
+				DA913E3A2959A72F00D39F0E /* NSManagedObject+RequestableProtocol.swift in Sources */,
 				DA81E8522953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */,
 				DA81E5F1295305CE00C60F31 /* UserSession+JSONDecodingProtocol.swift in Sources */,
 				DA81E5F4295305CE00C60F31 /* Vehicleprofile+JSONDecodingProtocol.swift in Sources */,
@@ -1226,6 +1237,7 @@
 				DA81E5D6295305CE00C60F31 /* VehicleprofileRadio+CoreDataClass.swift in Sources */,
 				DA81E5AE295305CE00C60F31 /* VehicleprofileGun+JSONMappableProtocol.swift in Sources */,
 				DA81E5DE295305CE00C60F31 /* Module+Customization.swift in Sources */,
+				DA913E3C2959A7E100D39F0E /* NSManagedObject+ManagedObjectProtocol.swift in Sources */,
 				DA81E7B42953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift in Sources */,
 				DA81E5C7295305CE00C60F31 /* VehicleprofileAmmoDamage+CoreDataProperties.swift in Sources */,
 				DA81E5B7295305CE00C60F31 /* VehicleprofileEngine+JSONMappableProtocol.swift in Sources */,

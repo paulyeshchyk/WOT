@@ -1,9 +1,8 @@
 //
 //  NSManagedObject+ManagedObjectProtocol.swift
-//  WOTKit
+//  WOTApi
 //
-//  Created by Paul on 19.12.22.
-//  Copyright © 2022 Pavel Yeshchyk. All rights reserved.
+//  Created by Paul on 26.12.22.
 //
 
 import CoreData

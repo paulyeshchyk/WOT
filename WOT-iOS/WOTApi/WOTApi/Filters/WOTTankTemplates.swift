@@ -43,7 +43,7 @@ class WOTPivotTemplateVehiclePremium: WOTPivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> WOTPivotNodeProtocol {
         let pivotNodeClass = WOTPivotMetaTypeConverter.nodeClass(for: type)
         let result = pivotNodeClass.init(name: WOTApiFields.is_premium)
-        result.addChild(pivotNodeClass.init(name: "Is Premium",       predicate: NSPredicate(format: "%K == %@", WOTApiFields.is_premium, NSNumber(value: 1))))
+        result.addChild(pivotNodeClass.init(name: "Is Premium", predicate: NSPredicate(format: "%K == %@", WOTApiFields.is_premium, NSNumber(value: 1))))
         result.addChild(pivotNodeClass.init(name: "Is not Premium", predicate: NSPredicate(format: "%K == %@", WOTApiFields.is_premium, NSNumber(value: 0))))
         return result
     }
