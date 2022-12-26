@@ -82,7 +82,6 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         }
 
         do {
-         
             guard let adapterLinker = adapterLinkerList.adapterLinkerForRequest(request) else {
                 throw RequestManagerError.adapterNotFound(request)
             }
@@ -120,9 +119,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
     }
 
     public func request(_ request: RequestProtocol, canceledWith: Error?) {
-        context.logInspector?.logEvent(EventWEBCancel(request), sender: self)
-        if let error = canceledWith {
-        }
+        context.logInspector?.logEvent(EventWEBCancel(request, error: canceledWith), sender: self)
         removeRequest(request)
     }
 

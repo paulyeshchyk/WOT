@@ -8,5 +8,4 @@
 @objc
 public protocol DataAdapterProtocol {
     typealias OnComplete = (RequestProtocol, Error?) -> Void
-
 }
