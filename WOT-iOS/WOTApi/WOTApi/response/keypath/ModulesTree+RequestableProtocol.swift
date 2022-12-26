@@ -13,8 +13,8 @@ import ContextSDK
 
 extension ModulesTree {
     //
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey, CaseIterable {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case module_id
         case name
         case price_credit
@@ -30,12 +30,12 @@ extension ModulesTree {
     }
 
     @objc
-    override public static func fieldsKeypaths() -> [String] {
-        return FieldKeys.allCases.compactMap { $0.rawValue }
+    override public static func dataFieldsKeypaths() -> [String] {
+        return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
     @objc
-    override public static func relationsKeypaths() -> [String] {
+    override public static func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 

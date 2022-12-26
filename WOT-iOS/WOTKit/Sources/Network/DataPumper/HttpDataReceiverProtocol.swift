@@ -17,9 +17,13 @@ public protocol HttpDataReceiverProtocol: MD5Protocol {
     
     init(context: Context, request: URLRequest)
     func start()
+    
+    @discardableResult
+    func cancel() -> Bool
 }
 
 public protocol HttpDataReceiverDelegateProtocol: AnyObject {
     func didStart(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol)
     func didEnd(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, data: Data?, error: Error?)
+    func didCancel(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, error: Error?)
 }

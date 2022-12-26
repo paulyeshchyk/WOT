@@ -7,7 +7,7 @@
 
 @objc
 public protocol RequestableProtocol: AnyObject {
+    static func dataFieldsKeypaths() -> [String]
+    static func relationFieldsKeypaths() -> [String]
     static func fieldsKeypaths() -> [String]
-    static func relationsKeypaths() -> [String]
-    static func classKeypaths() -> [String]
 }

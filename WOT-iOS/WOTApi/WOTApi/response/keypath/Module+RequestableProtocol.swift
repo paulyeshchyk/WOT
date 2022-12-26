@@ -13,8 +13,8 @@ import ContextSDK
 
 extension Module {
     //
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey, CaseIterable {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case name
         case nation
         case tier
@@ -30,13 +30,13 @@ extension Module {
     }
 
     @objc
-    override public static func relationsKeypaths() -> [String] {
+    override public static func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
     @objc
-    override public class func fieldsKeypaths() -> [String] {
-        return FieldKeys.allCases.compactMap { $0.rawValue }
+    override public class func dataFieldsKeypaths() -> [String] {
+        return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
     override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {

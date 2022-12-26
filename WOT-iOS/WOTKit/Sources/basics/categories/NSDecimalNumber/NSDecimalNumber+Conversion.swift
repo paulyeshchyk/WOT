@@ -25,8 +25,8 @@ extension Double {
 }
 
 public class NSDecimalNumberArray {
-    public typealias Fields = FieldKeys
-    public enum FieldKeys: String, CodingKey {
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey {
         case elements
     }
 

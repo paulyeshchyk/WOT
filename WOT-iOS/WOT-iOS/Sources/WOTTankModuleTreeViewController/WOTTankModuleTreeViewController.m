@@ -18,13 +18,11 @@
 #import <ContextSDK/ContextSDK-Swift.h>
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
-@property (nonatomic, strong) id<RequestManagerProtocol> requestManager;
-@property (nonatomic, strong) id<HostConfigurationProtocol> hostConfiguration;
+@property (nonatomic, weak) id<RequestManagerProtocol> requestManager;
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)
 @dynamic collapseToGroups;
-@dynamic hostConfiguration;
 @dynamic requestManager;
 @dynamic useEmptyNode;
 
@@ -48,18 +46,15 @@
     return [[WOTNode alloc] initWithName: @""];
 }
 
-
 - (id<WOTNodeProtocol> _Nonnull)createNodeGroupWithName:(NSString * _Nonnull)name fetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
     NSAssert(NO, @"not overriden yet");
     return [[WOTNode alloc] initWithName: @""];
 }
 
-
 - (NSArray<id<WOTNodeProtocol>> * _Nonnull)createNodesWithFetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
     NSAssert(NO, @"not overriden yet");
     return @[[[WOTNode alloc] initWithName: @""]];
 }
-
 
 @end
 
@@ -118,11 +113,6 @@
     [[self requestManager] removeListener: self];
 
     self.model = nil;
-}
-
-- (id<HostConfigurationProtocol>) hostConfiguration {
-        id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-        return ((id<ContextProtocol>) delegate).hostConfiguration;
 }
 
 - (id<RequestManagerProtocol>) requestManager {
@@ -345,10 +335,6 @@
 
         [self addConnectorsLayer];
     });
-}
-
-- (NSArray *)metadataItems {
-    return [[NSArray alloc] init];
 }
 
 //-------

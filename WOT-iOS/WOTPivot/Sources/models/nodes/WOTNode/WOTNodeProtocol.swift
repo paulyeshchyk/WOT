@@ -49,9 +49,7 @@ public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
 }
 
 extension WOTNodeProtocol {
-  
-  func removeChildren() {
-    removeChildren(completion: nil)
-  }
-
+    func removeChildren() {
+        removeChildren(completion: nil)
+    }
 }

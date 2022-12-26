@@ -45,9 +45,9 @@ public class RequestManager: NSObject, RequestListenerProtocol {
 
     private let context: Context
 
-    private let grouppedListenerList = RequestGrouppedListenerList()
-    private let grouppedRequestList = RequestGrouppedRequestList()
-    private let adapterLinkerList = ResponseAdapterLinkerList()
+    private let grouppedListenerList: RequestGrouppedListenerList
+    private let grouppedRequestList: RequestGrouppedRequestList
+    private let adapterLinkerList: ResponseAdapterLinkerList
 
     deinit {
         //
@@ -55,6 +55,9 @@ public class RequestManager: NSObject, RequestListenerProtocol {
 
     public required init(context: Context) {
         self.context = context
+        self.grouppedRequestList  = RequestGrouppedRequestList(context: context)
+        self.grouppedListenerList = RequestGrouppedListenerList()
+        self.adapterLinkerList = ResponseAdapterLinkerList()
         super.init()
     }
 
@@ -116,8 +119,10 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         }
     }
 
-    public func request(_ request: RequestProtocol, canceledWith error: Error?) {
+    public func request(_ request: RequestProtocol, canceledWith: Error?) {
         context.logInspector?.logEvent(EventWEBCancel(request), sender: self)
+        if let error = canceledWith {
+        }
         removeRequest(request)
     }
 
@@ -130,8 +135,8 @@ public class RequestManager: NSObject, RequestListenerProtocol {
 
 extension RequestManager: RequestManagerProtocol {
 
-    public func cancelRequests(groupId: RequestIdType, with error: Error?) {
-        grouppedRequestList.cancelRequests(groupId: groupId, with: error)
+    public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
+        grouppedRequestList.cancelRequests(groupId: groupId, reason: reason)
     }
 
     public func removeListener(_ listener: RequestManagerListenerProtocol) {
@@ -157,27 +162,27 @@ extension RequestManager: RequestManagerProtocol {
         try request.start(withArguments: withArguments)
     }
 
-    private func startRequest(by requestId: RequestIdType, paradigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
+    private func startRequest(by requestId: RequestIdType, mappingParadigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
         guard let request = try context.requestRegistrator?.createRequest(forRequestId: requestId) else {
             throw RequestManagerError.requestNotFound
         }
-        request.paradigm = paradigm
+        request.paradigm = mappingParadigm
 
-        let arguments = paradigm.buildRequestArguments()
-        let jsonAdapterLinker = paradigm.jsonAdapterLinker
+        let arguments = mappingParadigm.buildRequestArguments()
+        let jsonAdapterLinker = mappingParadigm.jsonAdapterLinker
         #warning ("remove hashValue")
-        let groupId: RequestIdType = "Nested\(String(describing: paradigm.clazz))-\(arguments)".hashValue
+        let groupId: RequestIdType = "Nested\(String(describing: mappingParadigm.clazz))-\(arguments)".hashValue
         try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener)
     }
     
-    public func fetchRemote(paradigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
-        guard let requestIDs = context.requestRegistrator?.requestIds(forClass: paradigm.clazz), requestIDs.count > 0 else {
+    public func fetchRemote(mappingParadigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
+        guard let requestIDs = context.requestRegistrator?.requestIds(forClass: mappingParadigm.clazz), requestIDs.count > 0 else {
             context.logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
             return
         }
         for requestID in requestIDs {
             do {
-                try startRequest(by: requestID, paradigm: paradigm, listener: listener)
+                try startRequest(by: requestID, mappingParadigm: mappingParadigm, listener: listener)
             } catch {
                 context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
@@ -277,11 +282,18 @@ private class RequestGrouppedListenerList {
 
 private class RequestGrouppedRequestList {
 
+    typealias Context = LogInspectorContainerProtocol
+    
     private enum GrouppedRequestListenersError: Error {
         case dublicate
     }
     
     private var grouppedRequests: [RequestIdType: [RequestProtocol]] = [:]
+    
+    private let context: Context
+    init (context: Context) {
+        self.context = context
+    }
     
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
         var grouppedRequests: [RequestProtocol] = []
@@ -297,8 +309,17 @@ private class RequestGrouppedRequestList {
         self.grouppedRequests[groupId] = grouppedRequests
     }
     
-    func cancelRequests(groupId: RequestIdType, with error: Error?) {
-        grouppedRequests[groupId]?.forEach { $0.cancel(with: error) }
+    func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
+        guard let requests = grouppedRequests[groupId]?.compactMap({ $0 }), requests.count > 0 else {
+            return
+        }
+        for request in requests {
+            do {
+                try request.cancel(byReason: reason)
+            } catch {
+                
+            }
+        }
     }
     
     func removeRequest(_ request: RequestProtocol) {
