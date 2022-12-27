@@ -19,6 +19,10 @@ public class VehicleprofileTurretsHttpRequest: HttpRequest {
     override public var responseParserClass: ResponseParserProtocol.Type {
         RESTResponseParser.self
     }
+
+    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
+        JSONAdapter.self
+    }
 }
 
 extension VehicleprofileTurretsHttpRequest: ModelServiceProtocol {

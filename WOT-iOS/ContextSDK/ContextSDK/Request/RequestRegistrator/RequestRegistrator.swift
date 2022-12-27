@@ -66,10 +66,6 @@ extension RequestRegistrator {
         return result
     }
 
-    public func unregisterDataAdapter(for requestId: RequestIdType) {
-        registeredDataAdapters.removeValue(forKey: requestId)
-    }
-
     public func dataAdapterClass(for requestId: RequestIdType) -> ResponseAdapterProtocol.Type? {
         return registeredDataAdapters[requestId]
     }

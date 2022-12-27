@@ -16,7 +16,6 @@ public protocol RequestRegistratorProtocol {
 
     func requestIds(forClass: AnyClass) -> [RequestIdType]
     func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType]
-    func unregisterDataAdapter(for requestId: RequestIdType)
     func requestClass(for requestId: RequestIdType) -> ModelServiceProtocol.Type?
     func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol
     func modelClass(forRequest: RequestProtocol) -> PrimaryKeypathProtocol.Type?

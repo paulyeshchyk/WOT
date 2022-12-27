@@ -15,6 +15,10 @@ public class WOTWebProxyRequest: HttpRequest {
         RESTResponseParser.self
     }
 
+    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
+        JSONAdapter.self
+    }
+
     public func dataFrom(proxyData: NSData?) -> NSData? {
         guard let proxyData = proxyData else { return nil }
         var result: Data?
