@@ -15,6 +15,10 @@ public class VehicleprofileSuspensionHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/vehicleprofile/"
     }
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
 }
 
 extension VehicleprofileSuspensionHttpRequest: ModelServiceProtocol {

@@ -13,7 +13,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
 
     public var hostConfiguration: HostConfigurationProtocol?
-    public var responseParser: ResponseParserProtocol?
     public var requestManager: RequestManagerProtocol?
     public var requestListener: RequestListenerProtocol?
     public var sessionManager: SessionManagerProtocol?
@@ -34,8 +33,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         requestRegistrator = WOTRequestRegistrator(context: self)
         mappingCoordinator = MappingCoordinator(context: self)
         responseAdapterCreator = ResponseAdapterCreator(context: self)
-
-        responseParser = RESTResponseParser(context: self)
         requestManager = RequestManager(context: self)
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -46,6 +43,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     }
 }
 
-extension AppDelegate: ResponseParserContainerProtocol, RequestRegistratorContainerProtocol, ResponseAdapterCreatorContainerProtocol {
+extension AppDelegate: RequestRegistratorContainerProtocol, ResponseAdapterCreatorContainerProtocol {
     
 }

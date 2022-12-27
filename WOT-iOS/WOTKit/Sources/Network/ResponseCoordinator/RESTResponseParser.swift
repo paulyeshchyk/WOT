@@ -10,16 +10,14 @@ import ContextSDK
 
 public class RESTResponseParser: ResponseParserProtocol {
     
-    public typealias Context = LogInspectorContainerProtocol
-
-    private let context: Context
+    private let appContext: Context
     private struct DataAdaptationPair {
         let dataAdapter: ResponseAdapterProtocol
         let data: Data?
     }
 
-    public init(context: Context) {
-        self.context = context
+    required public init(appContext: Context) {
+        self.appContext = appContext
     }
 }
 

@@ -15,6 +15,10 @@ public class LogoutHttpRequest: HttpRequest {
     override public var path: String {
         return "wot/auth/logout/"
     }
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
 }
 
 extension LogoutHttpRequest: ModelServiceProtocol {

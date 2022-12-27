@@ -10,6 +10,11 @@ import ContextSDK
 import WOTKit
 
 public class WOTWebProxyRequest: HttpRequest {
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
+
     public func dataFrom(proxyData: NSData?) -> NSData? {
         guard let proxyData = proxyData else { return nil }
         var result: Data?

@@ -15,7 +15,10 @@ public class ModulesTreeHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/vehicles/"
     }
-
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
 }
 
 extension ModulesTreeHttpRequest: ModelServiceProtocol {

@@ -15,6 +15,10 @@ public class VehicleprofileTurretsHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/vehicleprofile/"
     }
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
 }
 
 extension VehicleprofileTurretsHttpRequest: ModelServiceProtocol {

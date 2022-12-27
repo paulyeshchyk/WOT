@@ -38,7 +38,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         }
     }
     
-    public typealias Context = ResponseParserContainerProtocol & LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & ResponseAdapterCreatorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & ResponseAdapterCreatorContainerProtocol
     
     override public var description: String { String(describing: type(of: self)) }
     
@@ -92,7 +92,9 @@ public class RequestManager: NSObject, RequestListenerProtocol {
             }
             let adapters = appContext.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, adapterLinker: adapterLinker, requestManager: self)
 
-            try appContext.responseParser?.parseResponse(data: data, forRequest: request, adapters: adapters, completion: {[weak self] request, error in
+            let responseParser = request.responseParserClass.init(appContext: appContext)
+            
+            try responseParser.parseResponse(data: data, forRequest: request, adapters: adapters, completion: {[weak self] request, error in
                 guard let self = self else {
                     return
                 }

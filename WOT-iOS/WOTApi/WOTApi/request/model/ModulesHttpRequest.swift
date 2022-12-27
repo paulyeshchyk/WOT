@@ -15,6 +15,10 @@ public class ModulesHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/modules/"
     }
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
 }
 
 extension ModulesHttpRequest: ModelServiceProtocol {

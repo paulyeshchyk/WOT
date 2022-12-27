@@ -16,6 +16,7 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     var listeners: [RequestListenerProtocol] { get }
     var contextPredicate: ContextPredicate? { get set }
     var arguments: RequestArgumentsProtocol? { get set }
+    var responseParserClass: ResponseParserProtocol.Type { get }
 
     func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
@@ -78,6 +79,10 @@ open class Request: RequestProtocol, CustomStringConvertible {
     public var contextPredicate: ContextPredicate?
     
     public var arguments: RequestArgumentsProtocol?
+    
+    open var responseParserClass: ResponseParserProtocol.Type {
+        fatalError("should be overriden")
+    }
 
     open func addGroup(_ group: RequestIdType) {
         availableInGroups.append(group)
