@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
 

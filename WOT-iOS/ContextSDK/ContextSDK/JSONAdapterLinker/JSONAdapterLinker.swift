@@ -16,7 +16,7 @@ public enum BaseJSONAdapterLinkerError: Error, CustomStringConvertible {
     }
 }
 
-open class BaseJSONAdapterLinker: JSONAdapterLinkerProtocol {
+open class JSONAdapterLinker: JSONAdapterLinkerProtocol {
     
     // MARK: - Open
 

@@ -109,7 +109,7 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    public class ModulesTreeLinker: BaseJSONAdapterLinker {
+    public class ModulesTreeLinker: JSONAdapterLinker {
 
         private struct ModuleLinkerUnexpectedClassError: Error, CustomStringConvertible {
             var expected: AnyClass
@@ -153,7 +153,7 @@ extension Vehicles {
         }
     }
 
-    public class DefaultProfileLinker: BaseJSONAdapterLinker {
+    public class DefaultProfileLinker: JSONAdapterLinker {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
@@ -182,7 +182,7 @@ extension Vehicles {
         }
     }
 
-    public class VehiclesPivotDataLinker: BaseJSONAdapterLinker {
+    public class VehiclesPivotDataLinker: JSONAdapterLinker {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
@@ -195,7 +195,7 @@ extension Vehicles {
         }
     }
 
-    public class VehiclesTreeViewLinker: BaseJSONAdapterLinker {
+    public class VehiclesTreeViewLinker: JSONAdapterLinker {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }

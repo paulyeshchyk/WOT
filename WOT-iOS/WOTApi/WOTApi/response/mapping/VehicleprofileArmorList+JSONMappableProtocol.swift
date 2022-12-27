@@ -58,7 +58,7 @@ extension VehicleprofileArmorList {
 }
 
 extension VehicleprofileArmorList {
-    public class TurretLinker: BaseJSONAdapterLinker {
+    public class TurretLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -79,7 +79,7 @@ extension VehicleprofileArmorList {
         }
     }
 
-    public class HullLinker: BaseJSONAdapterLinker {
+    public class HullLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 

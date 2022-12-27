@@ -25,37 +25,37 @@ extension VehicleprofileModule {
 
         if let gun_id = self.gun_id {
             let gunJSONAdapter = VehicleprofileModule.GunLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: gun_id)
-            let gunRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileGun.self, linkedObjectID: gun_id)
-            let gunRequestParadigm = RequestParadigm(modelClass: VehicleprofileGun.self, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(requestParadigm: gunRequestParadigm, requestPredicateComposer: gunRequestComposer, jsonAdapterLinker: gunJSONAdapter, listener: self)
+            let gunPredicateComposer = VehicleprofileModule.GunPredicateComposer(requestPredicate: map.predicate, linkedClazz: VehicleprofileGun.self, linkedObjectID: gun_id)
+            let gunRequestParadigm = RequestParadigm(modelClass: VehicleprofileGun.self, requestPredicateComposer: gunPredicateComposer, keypathPrefix: "gun.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: gunRequestParadigm, requestPredicateComposer: gunPredicateComposer, adapterLinker: gunJSONAdapter, listener: self)
         }
 
         if let radio_id = self.radio_id {
             let radioJSONAdapter = VehicleprofileModule.RadioLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: radio_id)
-            let radioRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileRadio.self, linkedObjectID: radio_id)
-            let radioRequestParadigm = RequestParadigm(modelClass: VehicleprofileRadio.self, requestPredicateComposer: radioRequestComposer, keypathPrefix: "radio.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(requestParadigm: radioRequestParadigm, requestPredicateComposer: radioRequestComposer, jsonAdapterLinker: radioJSONAdapter, listener: self)
+            let radioPredicateComposer = VehicleprofileModule.RadioPredicateComposer(requestPredicate: map.predicate, linkedClazz: VehicleprofileRadio.self, linkedObjectID: radio_id)
+            let radioRequestParadigm = RequestParadigm(modelClass: VehicleprofileRadio.self, requestPredicateComposer: radioPredicateComposer, keypathPrefix: "radio.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: radioRequestParadigm, requestPredicateComposer: radioPredicateComposer, adapterLinker: radioJSONAdapter, listener: self)
         }
 
         if let engine_id = self.engine_id {
             let engineJSONAdapter = VehicleprofileModule.EngineLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: engine_id)
-            let engineRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileEngine.self, linkedObjectID: engine_id)
-            let engineRequstParadigm = RequestParadigm(modelClass: VehicleprofileEngine.self, requestPredicateComposer: engineRequestComposer, keypathPrefix: "engine.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(requestParadigm: engineRequstParadigm, requestPredicateComposer: engineRequestComposer, jsonAdapterLinker: engineJSONAdapter, listener: self)
+            let enginePredicateComposer = VehicleprofileModule.EnginePredicateComposer(requestPredicate: map.predicate, linkedClazz: VehicleprofileEngine.self, linkedObjectID: engine_id)
+            let engineRequstParadigm = RequestParadigm(modelClass: VehicleprofileEngine.self, requestPredicateComposer: enginePredicateComposer, keypathPrefix: "engine.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: engineRequstParadigm, requestPredicateComposer: enginePredicateComposer, adapterLinker: engineJSONAdapter, listener: self)
         }
 
         if let suspension_id = self.suspension_id {
             let suspensionJSONAdapter = VehicleprofileModule.SuspensionLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: suspension_id)
-            let suspensionRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: suspension_id)
-            let suspensionRequestParadigm = RequestParadigm(modelClass: VehicleprofileSuspension.self, requestPredicateComposer: suspensionRequestComposer, keypathPrefix: "suspension.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(requestParadigm: suspensionRequestParadigm, requestPredicateComposer: suspensionRequestComposer, jsonAdapterLinker: suspensionJSONAdapter, listener: self)
+            let suspensionPredicateComposer = VehicleprofileModule.SuspensionPredicateComposer(requestPredicate: map.predicate, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: suspension_id)
+            let suspensionRequestParadigm = RequestParadigm(modelClass: VehicleprofileSuspension.self, requestPredicateComposer: suspensionPredicateComposer, keypathPrefix: "suspension.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: suspensionRequestParadigm, requestPredicateComposer: suspensionPredicateComposer, adapterLinker: suspensionJSONAdapter, listener: self)
         }
 
         if let turret_id = self.turret_id {
             let turretJSONAdapter = VehicleprofileModule.TurretLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: turret_id)
-            let turretRequestComposer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: VehicleprofileTurret.self, linkedObjectID: turret_id)
-            let turretRequestParadigm = RequestParadigm(modelClass: VehicleprofileTurret.self, requestPredicateComposer: turretRequestComposer, keypathPrefix: "turret.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(requestParadigm: turretRequestParadigm, requestPredicateComposer: turretRequestComposer, jsonAdapterLinker: turretJSONAdapter, listener: self)
+            let turretPredicateComposer = VehicleprofileModule.TurretPredicateComposer(requestPredicate: map.predicate, linkedClazz: VehicleprofileTurret.self, linkedObjectID: turret_id)
+            let turretRequestParadigm = RequestParadigm(modelClass: VehicleprofileTurret.self, requestPredicateComposer: turretPredicateComposer, keypathPrefix: "turret.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: turretRequestParadigm, requestPredicateComposer: turretPredicateComposer, adapterLinker: turretJSONAdapter, listener: self)
         }
     }
 }
@@ -73,9 +73,13 @@ extension VehicleprofileModule: RequestManagerListenerProtocol {
     }
 }
 
+// MARK: - Suspension
+
 extension VehicleprofileModule {
+
+    private class SuspensionPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
     
-    private class SuspensionLinker: BaseJSONAdapterLinker {
+    private class SuspensionLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.suspension)] as? JSON }
 
@@ -96,8 +100,13 @@ extension VehicleprofileModule {
             }
         }
     }
+}
 
-    private class EngineLinker: BaseJSONAdapterLinker {
+extension VehicleprofileModule {
+
+    private class EnginePredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
+
+    private class EngineLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.engine)] as? JSON }
 
@@ -118,8 +127,13 @@ extension VehicleprofileModule {
             }
         }
     }
+}
 
-    private class TurretLinker: BaseJSONAdapterLinker {
+extension VehicleprofileModule {
+
+    private class TurretPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
+
+    private class TurretLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.turret)] as? JSON }
 
@@ -140,8 +154,13 @@ extension VehicleprofileModule {
             }
         }
     }
+}
 
-    private class RadioLinker: BaseJSONAdapterLinker {
+extension VehicleprofileModule {
+
+    private class RadioPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
+
+    private class RadioLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.radio)] as? JSON }
 
@@ -162,8 +181,13 @@ extension VehicleprofileModule {
             }
         }
     }
+}
 
-    private class GunLinker: BaseJSONAdapterLinker {
+extension VehicleprofileModule {
+
+    private class GunPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
+
+    private class GunLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.gun)] as? JSON }
 

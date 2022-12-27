@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
     private var requestPredicate: ContextPredicate

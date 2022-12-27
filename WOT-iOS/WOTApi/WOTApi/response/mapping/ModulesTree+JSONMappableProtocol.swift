@@ -29,10 +29,10 @@ extension ModulesTree {
         if let nextTanks = moduleTree[#keyPath(ModulesTree.next_tanks)] as? [AnyObject] {
             for nextTank in nextTanks {
                 // parents was not used for next portion of tanks
-                let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
-                let nextTanksRequestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
+                let nextTanksPredicateComposer = ModulesTree.NextVehiclePredicateComposer(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
+                let nextTanksRequestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposer: nextTanksPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try inContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, requestPredicateComposer: nextTanksRequestPredicateComposer, jsonAdapterLinker: nextTanksJSONAdapter, listener: self)
+                    try inContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, requestPredicateComposer: nextTanksPredicateComposer, adapterLinker: nextTanksJSONAdapter, listener: self)
                 } catch {
                     inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -44,10 +44,10 @@ extension ModulesTree {
         let nextModuleJSONAdapter = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         if let nextModules = moduleTree[#keyPath(ModulesTree.next_modules)] as? [AnyObject] {
             for nextModule in nextModules {
-                let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
-                let nextModuleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
+                let nextModulePredicateComposer = ModulesTree.NextModulesPredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
+                let nextModuleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try inContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, requestPredicateComposer: nextModuleRequestPredicateComposer, jsonAdapterLinker: nextModuleJSONAdapter, listener: self)
+                    try inContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, requestPredicateComposer: nextModulePredicateComposer, adapterLinker: nextModuleJSONAdapter, listener: self)
                 } catch {
                     inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -57,9 +57,9 @@ extension ModulesTree {
         // MARK: - CurrentModule
 
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
-        let moduleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
-        try inContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, requestPredicateComposer: moduleRequestPredicateComposer, jsonAdapterLinker: moduleJSONAdapter, listener: self)
+        let modulePredicateComposer = ModulesTree.CurrentModulePredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
+        let moduleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
+        try inContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, requestPredicateComposer: modulePredicateComposer, adapterLinker: moduleJSONAdapter, listener: self)
     }
 }
 
@@ -77,7 +77,10 @@ extension ModulesTree: RequestManagerListenerProtocol {
 }
 
 extension ModulesTree {
-    public class CurrentModuleLinker: BaseJSONAdapterLinker {
+    
+    private class CurrentModulePredicateComposer: LinkedRemoteAsPrimaryRuleBuilder { }
+    
+    private class CurrentModuleLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -97,8 +100,13 @@ extension ModulesTree {
             }
         }
     }
+}
 
-    public class NextModulesLinker: BaseJSONAdapterLinker {
+extension ModulesTree {
+    
+    private class NextModulesPredicateComposer: MasterAsPrimaryLinkedAsSecondaryRuleBuilder { }
+    
+    private class NextModulesLinker: JSONAdapterLinker {
         private enum NextModulesLinkerError: Error, CustomStringConvertible {
             case wrongParentClass
             case wrongChildClass
@@ -129,8 +137,13 @@ extension ModulesTree {
             }
         }
     }
+}
 
-    public class NextVehicleLinker: BaseJSONAdapterLinker {
+extension ModulesTree {
+    
+    private class NextVehiclePredicateComposer: LinkedLocalAsPrimaryRuleBuilder { }
+    
+    private class NextVehicleLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 

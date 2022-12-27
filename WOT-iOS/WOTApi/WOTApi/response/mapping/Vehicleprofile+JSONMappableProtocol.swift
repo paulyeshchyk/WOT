@@ -134,7 +134,7 @@ extension Vehicleprofile {
 }
 
 extension Vehicleprofile {
-    public class RadioLinker: BaseJSONAdapterLinker {
+    public class RadioLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -156,7 +156,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class TurretLinker: BaseJSONAdapterLinker {
+    public class TurretLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -178,7 +178,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class SuspensionLinker: BaseJSONAdapterLinker {
+    public class SuspensionLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -200,7 +200,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class GunLinker: BaseJSONAdapterLinker {
+    public class GunLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -222,7 +222,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class ModuleLinker: BaseJSONAdapterLinker {
+    public class ModuleLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -239,7 +239,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class EngineLinker: BaseJSONAdapterLinker {
+    public class EngineLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -257,7 +257,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class ArmorListLinker: BaseJSONAdapterLinker {
+    public class ArmorListLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -275,7 +275,7 @@ extension Vehicleprofile {
         }
     }
 
-    public class AmmoListLinker: BaseJSONAdapterLinker {
+    public class AmmoListLinker: JSONAdapterLinker {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 

@@ -9,8 +9,8 @@
 public protocol RequestManagerProtocol {
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol)
     func removeListener(_ listener: RequestManagerListenerProtocol)
-    func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
-    func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
+    func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, adapterLinker: AdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
+    func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, adapterLinker: AdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
 }
 
 @objc

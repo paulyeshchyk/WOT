@@ -144,7 +144,7 @@ extension RequestManager: RequestManagerProtocol {
         grouppedListenerList.removeListener(listener)
     }
 
-    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, adapterLinker: AdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
 
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
         
@@ -163,8 +163,8 @@ extension RequestManager: RequestManagerProtocol {
         try request.start()
     }
     
-    public func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
-        guard let requestIDs = appContext.requestRegistrator?.requestIds(forClass: requestParadigm.modelClass), requestIDs.count > 0 else {
+    public func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, adapterLinker: AdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
+        guard let requestIDs = appContext.requestRegistrator?.requestIds(modelServiceClass: requestParadigm.modelClass), requestIDs.count > 0 else {
             throw RequestManagerError.requestsNotRegistered(requestParadigm)
         }
         for requestID in requestIDs {
@@ -177,7 +177,7 @@ extension RequestManager: RequestManagerProtocol {
                 request.arguments = requestParadigm.buildRequestArguments()
                 let groupId: RequestIdType = requestParadigm.MD5.hashValue
 
-                try startRequest(request, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener)
+                try startRequest(request, forGroupId: groupId, adapterLinker: adapterLinker, listener: listener)
             } catch {
                 appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
@@ -189,7 +189,7 @@ private class ResponseAdapterLinkerList {
     
     private enum AdapterLinkerListError: Error, CustomStringConvertible {
         case notRemoved(RequestProtocol)
-        case notFound(JSONAdapterLinkerProtocol)
+        case notFound(AdapterLinkerProtocol)
         var description: String {
             switch self {
             case .notRemoved(let request): return "[\(type(of: self))]: Adapter was not removed for request \(String(describing: request))"
@@ -197,13 +197,13 @@ private class ResponseAdapterLinkerList {
             }
         }
     }
-    private var adaptersLinkerList: [AnyHashable: JSONAdapterLinkerProtocol] = [:]
+    private var adaptersLinkerList: [AnyHashable: AdapterLinkerProtocol] = [:]
     
-    func addAdapterLinker(_ adapter: JSONAdapterLinkerProtocol, forRequest: RequestProtocol) throws {
+    func addAdapterLinker(_ adapter: AdapterLinkerProtocol, forRequest: RequestProtocol) throws {
         adaptersLinkerList[forRequest.MD5] = adapter
     }
     
-    func adapterLinkerForRequest(_ request: RequestProtocol) -> JSONAdapterLinkerProtocol? {
+    func adapterLinkerForRequest(_ request: RequestProtocol) -> AdapterLinkerProtocol? {
         adaptersLinkerList[request.MD5]
     }
     
@@ -214,14 +214,14 @@ private class ResponseAdapterLinkerList {
         }
     }
     
-    func removeAdapter(_ adapterLinker: JSONAdapterLinkerProtocol) throws {
+    func removeAdapter(_ adapterLinker: AdapterLinkerProtocol) throws {
         guard let key = findKey(for: adapterLinker) else {
             throw AdapterLinkerListError.notFound(adapterLinker)
         }
         adaptersLinkerList.removeValue(forKey: key)
     }
     
-    private func findKey(for adapterLinker: JSONAdapterLinkerProtocol) -> AnyHashable? {
+    private func findKey(for adapterLinker: AdapterLinkerProtocol) -> AnyHashable? {
         for key in adaptersLinkerList.keys {
             if adaptersLinkerList[key]?.MD5 == adapterLinker.MD5 {
                 return key
