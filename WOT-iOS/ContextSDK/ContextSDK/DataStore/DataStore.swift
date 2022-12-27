@@ -29,10 +29,10 @@ open class DataStore: NSObject {
 
     public typealias Context = LogInspectorContainerProtocol
 
-    public let context: Context
+    public let appContext: Context
 
     required public init(context: Context) {
-        self.context = context
+        self.appContext = context
         super.init()
     }
     
@@ -84,15 +84,15 @@ extension DataStore: DataStoreProtocol {
         
         let initialDate = Date()
 
-        context.logInspector?.logEvent(EventCDStashStart(context: objectContext), sender: self)
+        appContext.logInspector?.logEvent(EventCDStashStart(context: objectContext), sender: self)
 
         let customBlock: ThrowableCompletion = { [weak self] error in
             block(error)
-            self?.context.logInspector?.logEvent(EventCDStashEnded(context: objectContext, initiatedIn: initialDate), sender: self)
+            self?.appContext.logInspector?.logEvent(EventCDStashEnded(context: objectContext, initiatedIn: initialDate), sender: self)
         }
 
         objectContext.save(completion: customBlock)
-        context.logInspector?.logEvent(EventTimeMeasure("Context save start"), sender: self)
+        appContext.logInspector?.logEvent(EventTimeMeasure("Context save start"), sender: self)
     }
 
     public func fetchLocal(byModelClass modelClass: PrimaryKeypathProtocol.Type, requestPredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
@@ -112,16 +112,16 @@ extension DataStore: DataStoreProtocol {
         }
 
         let managedObjectContext = newPrivateContext()
-        perform(objectContext: managedObjectContext) {[weak self] context in
+        perform(objectContext: managedObjectContext) {[weak self] managedObjectContext in
             guard let self = self else {
                 return
             }
-            guard let managedObject = context.findOrCreateObject(forType: modelClass, predicate: requestPredicate) else {
-                self.context.logInspector?.logEvent(EventError(DataStoreError.objectNotCreated(modelClass), details: self), sender: nil)
+            guard let managedObject = managedObjectContext.findOrCreateObject(forType: modelClass, predicate: requestPredicate) else {
+                self.appContext.logInspector?.logEvent(EventError(DataStoreError.objectNotCreated(modelClass), details: self), sender: nil)
                 return
             }
-            self.stash(objectContext: context) { error in
-                let fetchResult = FetchResult(objectContext: context, objectID: managedObject.managedObjectID, predicate: requestPredicate, fetchStatus: managedObject.fetchStatus)
+            self.stash(objectContext: managedObjectContext) { error in
+                let fetchResult = FetchResult(objectContext: managedObjectContext, objectID: managedObject.managedObjectID, predicate: requestPredicate, fetchStatus: managedObject.fetchStatus)
                 localCallback(fetchResult, error)
             }
         }
@@ -130,13 +130,13 @@ extension DataStore: DataStoreProtocol {
     public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: ContextPredicate, completion: @escaping FetchResultCompletion) {
         guard isClassValid(Clazz) else {
             let error = DataStoreError.clazzIsNotSupportable(String(describing: Clazz))
-            context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             let result = self.emptyFetchResult()
             completion(result, error)
             return
         }
 
-        context.logInspector?.logEvent(EventLocalFetch("\(String(describing: Clazz)) - \(String(describing: predicate))"), sender: self)
+        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: Clazz)) - \(String(describing: predicate))"), sender: self)
 
         guard let predicate = predicate.compoundPredicate(.and) else {
             let error = DataStoreError.noKeysDefinedForClass(String(describing: Clazz))
@@ -145,9 +145,9 @@ extension DataStore: DataStoreProtocol {
             return
         }
 
-        self.perform(objectContext: objectContext) {[weak self] context in
-            if let managedObject = context.findOrCreateObject(forType: Clazz, predicate: predicate) {
-                let fetchResult = FetchResult(objectContext: context, objectID: managedObject.managedObjectID, predicate: predicate, fetchStatus: managedObject.fetchStatus)
+        self.perform(objectContext: objectContext) {[weak self] managedObjectContext in
+            if let managedObject = managedObjectContext.findOrCreateObject(forType: Clazz, predicate: predicate) {
+                let fetchResult = FetchResult(objectContext: managedObjectContext, objectID: managedObject.managedObjectID, predicate: predicate, fetchStatus: managedObject.fetchStatus)
                 completion(fetchResult, nil)
             } else {
                 let result = self?.emptyFetchResult()

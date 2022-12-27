@@ -197,7 +197,7 @@
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                                  inContext: appDelegate
+                                                 appContext: appDelegate
                                                    listener: self
                                                       error: &error];
 }

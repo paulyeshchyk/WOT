@@ -12,5 +12,5 @@ public protocol ResponseParserContainerProtocol {
 
 @objc
 public protocol ResponseParserProtocol {
-    func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping DataAdapterProtocol.OnComplete) throws
+    func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws
 }

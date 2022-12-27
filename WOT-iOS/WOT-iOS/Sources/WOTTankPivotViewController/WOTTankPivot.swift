@@ -90,12 +90,12 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & RequestRegistratorContainerProtocol
 
-    private let context: Context
+    private let appContext: Context
     let uuid: UUID = UUID()
     var MD5: String { uuid.MD5 }
 
     required init(modelListener: WOTDataModelListener, context: Context, settingsDatasource: WOTTankListSettingsDatasource) {
-        self.context = context
+        self.appContext = context
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
         let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, context: context)
 
@@ -120,7 +120,7 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     }
     
     deinit {
-        context.requestManager?.removeListener(self)
+        appContext.requestManager?.removeListener(self)
     }
 
     override var description: String { "\(type(of: self))" }
@@ -131,12 +131,12 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
         do {
             try performWebRequest()
         } catch {
-            context.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
+            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
         }
     }
 
     private func performWebRequest() throws {
-        try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: context, listener: self)
+        try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self)
     }
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {

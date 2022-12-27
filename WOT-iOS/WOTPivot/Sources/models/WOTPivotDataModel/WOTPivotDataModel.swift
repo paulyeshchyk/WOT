@@ -90,7 +90,7 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
     }
 
     public typealias Context = LogInspectorContainerProtocol
-    private let context: Context
+    private let appContext: Context
     
     @objc
     required public init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource, context: Context) {
@@ -99,7 +99,7 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
         self.listener = modelListener
         self.nodeCreator = nodeCreator
         self.metadatasource = metadatasource
-        self.context = context
+        self.appContext = context
 
         super.init()
 
@@ -122,7 +122,7 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
         do {
             try fetchController?.performFetch(nodeCreator: nodeCreator)
         } catch {
-            context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
         }
     }
 

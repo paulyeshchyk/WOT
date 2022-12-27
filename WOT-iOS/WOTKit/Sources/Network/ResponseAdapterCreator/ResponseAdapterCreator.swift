@@ -23,32 +23,32 @@ public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
         }
     }
     
-    private let context: Context
+    private let appContext: Context
 
     public init(context: Context) {
-        self.context = context
+        self.appContext = context
     }
 
-    public func responseAdapterInstance(for requestIdType: RequestIdType, request: RequestProtocol, adapterLinker: JSONAdapterLinkerProtocol, requestManager: RequestManagerProtocol) throws -> JSONAdapterProtocol {
+    public func responseAdapterInstance(for requestIdType: RequestIdType, request: RequestProtocol, adapterLinker: AdapterLinkerProtocol, requestManager: RequestManagerProtocol) throws -> ResponseAdapterProtocol {
         
-        guard let modelClass = try context.requestRegistrator?.modelClass(forRequestIdType: requestIdType) else {
+        guard let modelClass = try appContext.requestRegistrator?.modelClass(forRequestIdType: requestIdType) else {
             throw ResponseAdapterCreatorError.modelClassNotFound(requestType: requestIdType)
         }
-        guard  let dataAdapterClass = context.requestRegistrator?.dataAdapterClass(for: requestIdType) else {
+        guard  let dataAdapterClass = appContext.requestRegistrator?.dataAdapterClass(for: requestIdType) else {
             throw ResponseAdapterCreatorError.adapterNotFound(requestType: requestIdType)
         }
 
-        return dataAdapterClass.init(Clazz: modelClass, request: request, context: context, jsonAdapterLinker: adapterLinker)
+        return dataAdapterClass.init(modelClass: modelClass, request: request, context: appContext, adapterLinker: adapterLinker)
     }
 
-    public func responseAdapterInstances(byRequestIdTypes: [RequestIdType], request: RequestProtocol, adapterLinker: JSONAdapterLinkerProtocol, requestManager: RequestManagerProtocol) -> [DataAdapterProtocol] {
-        var adapters: [DataAdapterProtocol] = .init()
+    public func responseAdapterInstances(byRequestIdTypes: [RequestIdType], request: RequestProtocol, adapterLinker: AdapterLinkerProtocol, requestManager: RequestManagerProtocol) -> [ResponseAdapterProtocol] {
+        var adapters: [ResponseAdapterProtocol] = .init()
         byRequestIdTypes.forEach { requestIdType in
             do {
                 let adapter = try responseAdapterInstance(for: requestIdType, request: request, adapterLinker: adapterLinker, requestManager: requestManager)
                 adapters.append(adapter)
             } catch {
-                context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
         }
 

@@ -14,7 +14,7 @@ public class RESTResponseParser: ResponseParserProtocol {
 
     private let context: Context
     private struct DataAdaptationPair {
-        let dataAdapter: DataAdapterProtocol
+        let dataAdapter: ResponseAdapterProtocol
         let data: Data?
     }
 
@@ -37,7 +37,7 @@ extension RESTResponseParser {
         }
     }
     
-    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping DataAdapterProtocol.OnComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
         guard let data = parseData else {
             throw RESTResponseParserError.dataIsEmpty
         }

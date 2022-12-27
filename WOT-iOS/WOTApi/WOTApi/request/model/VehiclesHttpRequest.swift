@@ -17,13 +17,16 @@ public class VehiclesHttpRequest: HttpRequest {
     }
 }
 
-extension VehiclesHttpRequest: WOTModelServiceProtocol {
-    @objc
+extension VehiclesHttpRequest: ModelServiceProtocol {
+
     public class func modelClass() -> PrimaryKeypathProtocol.Type? {
         return Vehicles.self
     }
 
-    @objc
+    public class func registrationID() -> RequestIdType {
+        WebRequestType.vehicles.rawValue
+    }
+
     public func instanceModelClass() -> AnyClass? {
         return type(of: self).modelClass()
     }

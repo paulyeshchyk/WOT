@@ -30,16 +30,16 @@ public class WOTRequestRegistrator: RequestRegistrator {
     }
     
     private func registerDefaultRequests() {
-        requestId(WebRequestType.guns.rawValue, registerRequestClass: VehicleprofileGunHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.login.rawValue, registerRequestClass: LoginHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.radios.rawValue, registerRequestClass: VehicleprofileRadiosHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.logout.rawValue, registerRequestClass: LogoutHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.turrets.rawValue, registerRequestClass: VehicleprofileTurretsHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.modules.rawValue, registerRequestClass: ModulesHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.engines.rawValue, registerRequestClass: VehicleprofileEnginesHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.vehicles.rawValue, registerRequestClass: VehiclesHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.moduleTree.rawValue, registerRequestClass: ModulesTreeHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
-        requestId(WebRequestType.suspension.rawValue, registerRequestClass: VehicleprofileSuspensionHttpRequest.self, registerDataAdapterClass: JSONAdapter.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: LoginHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: LogoutHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: ModulesHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: VehiclesHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: ModulesTreeHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: VehicleprofileGunHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: VehicleprofileRadiosHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: VehicleprofileTurretsHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: VehicleprofileEnginesHttpRequest.self)
+        register(dataAdapterClass: JSONAdapter.self, modelClass: VehicleprofileSuspensionHttpRequest.self)
     }
 
 }

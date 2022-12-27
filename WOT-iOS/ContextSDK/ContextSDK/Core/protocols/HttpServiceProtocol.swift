@@ -38,12 +38,3 @@ public protocol HttpServiceProtocol {
     var path: String { get }
     var httpBodyData: Data? { get }
 }
-
-@objc
-public protocol WOTModelServiceProtocol: AnyObject {
-    @objc
-    static func modelClass() -> PrimaryKeypathProtocol.Type?
-
-    @objc
-    func instanceModelClass() -> AnyClass?
-}

@@ -32,19 +32,19 @@ open class HttpRequest: Request {
     
     override open func cancel(byReason: RequestCancelReasonProtocol) throws {
         if httpDataReceiver?.cancel() ?? false {
-            context.logInspector?.logEvent(HttpRequestCancelEvent(reason: byReason), sender: self)
+            appContext.logInspector?.logEvent(HttpRequestCancelEvent(reason: byReason), sender: self)
         }
     }
 
     override open func start() throws {
         
-        let urlRequest = try HttpRequestBuilder().build(hostConfiguration: context.hostConfiguration,
+        let urlRequest = try HttpRequestBuilder().build(hostConfiguration: appContext.hostConfiguration,
                                                         httpMethod: httpMethod,
                                                         path: path,
                                                         args: arguments,
                                                         bodyData: httpBodyData)
         
-        httpDataReceiver = HttpDataReceiver(context: context, request: urlRequest)
+        httpDataReceiver = HttpDataReceiver(context: appContext, request: urlRequest)
         httpDataReceiver?.delegate = self
         httpDataReceiver?.start()
     }

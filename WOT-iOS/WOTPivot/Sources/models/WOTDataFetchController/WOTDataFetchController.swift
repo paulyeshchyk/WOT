@@ -58,7 +58,7 @@ open class WOTDataFetchController: NSObject {
     }
     
     private func newFetchResultController(request: NSFetchRequest<NSFetchRequestResult>, managedObjectContext: ManagedObjectContextProtocol) throws -> NSFetchedResultsController<NSFetchRequestResult>? {
-        let result = try context.dataStore?.fetchResultController(for: request, andContext: managedObjectContext) as? NSFetchedResultsController<NSFetchRequestResult>
+        let result = try appContext.dataStore?.fetchResultController(for: request, andContext: managedObjectContext) as? NSFetchedResultsController<NSFetchRequestResult>
         result?.delegate = self
         return result
     }
@@ -66,12 +66,12 @@ open class WOTDataFetchController: NSObject {
     public var listener: WOTDataFetchControllerListenerProtocol?
     public var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
     public var dataStore: DataStoreProtocol?
-    let context: Context
+    let appContext: Context
 
     @objc
     public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, context: Context) {
         self.nodeFetchRequestCreator = nfrc
-        self.context = context
+        self.appContext = context
         self.dataStore = context.dataStore
         
     }

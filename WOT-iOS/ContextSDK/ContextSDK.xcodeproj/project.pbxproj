@@ -47,7 +47,7 @@
 		DA66B930295466F90052E4DB /* URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */; };
 		DA81E4DE2952FAA600C60F31 /* HttpServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */; };
 		DA81E4E02952FB9C00C60F31 /* JSONAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */; };
-		DA81E4E22952FBC000C60F31 /* DataAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */; };
+		DA81E4E22952FBC000C60F31 /* ResponseAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4E12952FBC000C60F31 /* ResponseAdapterProtocol.swift */; };
 		DA81E4E42952FC6900C60F31 /* MappingCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4E32952FC6900C60F31 /* MappingCoordinatorProtocol.swift */; };
 		DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */; };
 		DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */; };
@@ -78,6 +78,7 @@
 		DA81E91E295445B100C60F31 /* RequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */; };
 		DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */; };
 		DA84BF422957330B00BAC71D /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */; };
+		DACA006E295B06DA00E677D3 /* ModelServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACA006D295B06DA00E677D3 /* ModelServiceProtocol.swift */; };
 		DAD49D7E2956FE6B0088227F /* JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */; };
 /* End PBXBuildFile section */
 
@@ -135,7 +136,7 @@
 		DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLEncodedProtocol.swift; path = ContextSDK/Core/protocols/URLEncodedProtocol.swift; sourceTree = SOURCE_ROOT; };
 		DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpServiceProtocol.swift; sourceTree = "<group>"; };
 		DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterProtocol.swift; sourceTree = "<group>"; };
-		DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAdapterProtocol.swift; sourceTree = "<group>"; };
+		DA81E4E12952FBC000C60F31 /* ResponseAdapterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAdapterProtocol.swift; sourceTree = "<group>"; };
 		DA81E4E32952FC6900C60F31 /* MappingCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistratorProtocol.swift; sourceTree = "<group>"; };
 		DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistrator.swift; sourceTree = "<group>"; };
@@ -166,6 +167,7 @@
 		DA81E91D295445B100C60F31 /* RequestManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerProtocol.swift; sourceTree = "<group>"; };
 		DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderContainer.swift; sourceTree = "<group>"; };
 		DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
+		DACA006D295B06DA00E677D3 /* ModelServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelServiceProtocol.swift; sourceTree = "<group>"; };
 		DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMappableProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -395,7 +397,7 @@
 				DA0856782954960A00273762 /* MD5Protocol.swift */,
 				DA81E7DF29533DAA00C60F31 /* ContextControllerProtocol.swift */,
 				DA2C28E92959F03C00D18A6E /* DataStoreProtocol.swift */,
-				DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */,
+				DA81E4E12952FBC000C60F31 /* ResponseAdapterProtocol.swift */,
 				DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */,
 				DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */,
 				DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */,
@@ -409,6 +411,7 @@
 				DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */,
 				DA2C28EB2959F07400D18A6E /* ManagedObjectContextProtocol.swift */,
 				DA2C28ED2959F0A300D18A6E /* FetchResultProtocol.swift */,
+				DACA006D295B06DA00E677D3 /* ModelServiceProtocol.swift */,
 			);
 			path = protocols;
 			sourceTree = "<group>";
@@ -636,11 +639,12 @@
 				DA0E809B2950B07C00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */,
 				DA81E5012952FE3500C60F31 /* EventCDFetch.swift in Sources */,
+				DACA006E295B06DA00E677D3 /* ModelServiceProtocol.swift in Sources */,
 				DA0E80902950B07C00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5052952FE3500C60F31 /* EventObject.swift in Sources */,
 				DA0E807C2950A60300B44CC6 /* RequestParadigm.swift in Sources */,
 				DA0E80942950B07C00B44CC6 /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
-				DA81E4E22952FBC000C60F31 /* DataAdapterProtocol.swift in Sources */,
+				DA81E4E22952FBC000C60F31 /* ResponseAdapterProtocol.swift in Sources */,
 				DA0E809A2950B07C00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

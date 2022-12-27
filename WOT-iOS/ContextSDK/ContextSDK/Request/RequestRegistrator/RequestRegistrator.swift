@@ -10,8 +10,8 @@ open class RequestRegistrator: RequestRegistratorProtocol {
     public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
     
     private let context: Context
-    private var registeredRequests: [RequestIdType: WOTModelServiceProtocol.Type] = .init()
-    private var registeredDataAdapters: [RequestIdType: JSONAdapterProtocol.Type] = .init()
+    private var registeredRequests: [RequestIdType: ModelServiceProtocol.Type] = .init()
+    private var registeredDataAdapters: [RequestIdType: ResponseAdapterProtocol.Type] = .init()
 
     required public init(context: Context) {
         self.context = context
@@ -48,9 +48,10 @@ extension RequestRegistrator {
         return result
     }
 
-    public func requestId(_ requiestId: RequestIdType, registerRequestClass requestClass: WOTModelServiceProtocol.Type, registerDataAdapterClass dataAdapterClass: JSONAdapterProtocol.Type) {
-        registeredRequests[requiestId] = requestClass
-        registeredDataAdapters[requiestId] = dataAdapterClass
+    public func register(dataAdapterClass: ResponseAdapterProtocol.Type, modelClass: ModelServiceProtocol.Type) {
+        let requestId = modelClass.registrationID()
+        registeredRequests[requestId] = modelClass
+        registeredDataAdapters[requestId] = dataAdapterClass
     }
     
     public func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType] {
@@ -69,11 +70,11 @@ extension RequestRegistrator {
         registeredDataAdapters.removeValue(forKey: requestId)
     }
 
-    public func dataAdapterClass(for requestId: RequestIdType) -> JSONAdapterProtocol.Type? {
+    public func dataAdapterClass(for requestId: RequestIdType) -> ResponseAdapterProtocol.Type? {
         return registeredDataAdapters[requestId]
     }
 
-    public func requestClass(for requestId: RequestIdType) -> WOTModelServiceProtocol.Type? {
+    public func requestClass(for requestId: RequestIdType) -> ModelServiceProtocol.Type? {
         return registeredRequests[requestId]
     }
     
@@ -85,7 +86,7 @@ extension RequestRegistrator {
     }
 
     public func modelClass(forRequest request: RequestProtocol) -> PrimaryKeypathProtocol.Type? {
-        guard let clazz = type(of: request) as? WOTModelServiceProtocol.Type else { return nil }
+        guard let clazz = type(of: request) as? ModelServiceProtocol.Type else { return nil }
         return clazz.modelClass()
     }
 

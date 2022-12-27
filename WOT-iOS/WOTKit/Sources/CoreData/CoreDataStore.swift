@@ -120,7 +120,7 @@ extension CoreDataStore {
     }
 }
 
-extension DataStore {
+extension CoreDataStore {
 
     // MARK: - Merge Contexts
 
@@ -142,7 +142,7 @@ extension DataStore {
     }
 
     private func mergeObjects(_ objects: [NSManagedObject], toContext: NSManagedObjectContext, fromNotification: Notification) {
-        context.logInspector?.logEvent(EventCDMerge(), sender: self)
+        appContext.logInspector?.logEvent(EventCDMerge(), sender: self)
         var updatedObjectsInCurrentContext = Set<NSManagedObject>()
 
         objects.forEach { updatedObject in
@@ -161,7 +161,7 @@ extension DataStore {
             do {
                 try toContext.save()
             } catch {
-                context.logInspector?.logEvent(EventError(DataStoreError.contextNotSaved, details: self), sender: nil)
+                appContext.logInspector?.logEvent(EventError(DataStoreError.contextNotSaved, details: self), sender: nil)
             }
         }
         toContext.processPendingChanges()

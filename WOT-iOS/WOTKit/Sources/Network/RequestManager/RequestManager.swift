@@ -45,7 +45,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
     public var MD5: String { uuid.MD5 }
     public let uuid: UUID = UUID()
 
-    private let context: Context
+    private let appContext: Context
 
     private let grouppedListenerList: RequestGrouppedListenerList
     private let grouppedRequestList: RequestGrouppedRequestList
@@ -56,7 +56,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
     }
 
     public required init(context: Context) {
-        self.context = context
+        self.appContext = context
         self.grouppedRequestList  = RequestGrouppedRequestList(context: context)
         self.grouppedListenerList = RequestGrouppedListenerList()
         self.adapterLinkerList = ResponseAdapterLinkerList()
@@ -69,17 +69,17 @@ public class RequestManager: NSObject, RequestListenerProtocol {
 
         grouppedListenerList.didStartRequest(request, requestManager: self)
 
-        context.logInspector?.logEvent(EventWEBStart(request), sender: self)
+        appContext.logInspector?.logEvent(EventWEBStart(request), sender: self)
     }
 
     public func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            context.logInspector?.logEvent(EventWEBEnd(request), sender: self)
+            appContext.logInspector?.logEvent(EventWEBEnd(request), sender: self)
             removeRequest(request)
         }
 
         if let error = error {
-            context.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
             return
         }
 
@@ -87,41 +87,41 @@ public class RequestManager: NSObject, RequestListenerProtocol {
             guard let adapterLinker = adapterLinkerList.adapterLinkerForRequest(request) else {
                 throw RequestManagerError.adapterNotFound(request)
             }
-            guard let requestIds = try context.requestRegistrator?.requestIds(forRequest: request) else {
+            guard let requestIds = try appContext.requestRegistrator?.requestIds(forRequest: request) else {
                 throw RequestManagerError.noRequestIds(request)
             }
-            let adapters = context.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, adapterLinker: adapterLinker, requestManager: self)
+            let adapters = appContext.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, adapterLinker: adapterLinker, requestManager: self)
 
-            try context.responseParser?.parseResponse(data: data, forRequest: request, adapters: adapters, completion: {[weak self] request, error in
+            try appContext.responseParser?.parseResponse(data: data, forRequest: request, adapters: adapters, completion: {[weak self] request, error in
                 guard let self = self else {
                     return
                 }
                 if let error = error {
-                    self.context.logInspector?.logEvent(EventError(error, details: self), sender: self)
+                    self.appContext.logInspector?.logEvent(EventError(error, details: self), sender: self)
                     return
                 }
                 do {
                     try self.adapterLinkerList.removeAdapterForRequest(request)
                 } catch {
-                    self.context.logInspector?.logEvent(EventError(error, details: request), sender: self)
+                    self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
                 }
                 
                 if let error = error {
-                    self.context.logInspector?.logEvent(EventError(error, details: request), sender: self)
+                    self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
                 }
                 do {
                     try self.grouppedListenerList.didParseDataForRequest(request, requestManager: self, completionType: .finished)
                 } catch {
-                    self.context.logInspector?.logEvent(EventError(error, details: request), sender: self)
+                    self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
                 }
             })
         } catch {
-            context.logInspector?.logEvent(EventError(error, details: String(describing: request)), sender: self)
+            appContext.logInspector?.logEvent(EventError(error, details: String(describing: request)), sender: self)
         }
     }
 
     public func request(_ request: RequestProtocol, canceledWith: Error?) {
-        context.logInspector?.logEvent(EventWEBCancel(request, error: canceledWith), sender: self)
+        appContext.logInspector?.logEvent(EventWEBCancel(request, error: canceledWith), sender: self)
         removeRequest(request)
     }
 
@@ -153,7 +153,7 @@ extension RequestManager: RequestManagerProtocol {
 
         } else {
             let event = EventWarning(error: RequestManagerError.requestManagerListenerIsNil, details: nil)
-            context.logInspector?.logEvent(event, sender: self)
+            appContext.logInspector?.logEvent(event, sender: self)
         }
 
         try adapterLinkerList.addAdapterLinker(adapterLinker, forRequest: request)
@@ -162,13 +162,13 @@ extension RequestManager: RequestManagerProtocol {
     }
     
     public func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
-        guard let requestIDs = context.requestRegistrator?.requestIds(forClass: requestParadigm.modelClass), requestIDs.count > 0 else {
+        guard let requestIDs = appContext.requestRegistrator?.requestIds(forClass: requestParadigm.modelClass), requestIDs.count > 0 else {
             throw RequestManagerError.requestsNotRegistered(requestParadigm)
         }
         for requestID in requestIDs {
             do {
                 
-                guard let request = try context.requestRegistrator?.createRequest(forRequestId: requestID) else {
+                guard let request = try appContext.requestRegistrator?.createRequest(forRequestId: requestID) else {
                     throw RequestManagerError.requestNotCreated(requestParadigm)
                 }
                 request.contextPredicate = requestPredicateComposer.build()?.requestPredicate
@@ -177,7 +177,7 @@ extension RequestManager: RequestManagerProtocol {
 
                 try startRequest(request, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener)
             } catch {
-                context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
         }
     }

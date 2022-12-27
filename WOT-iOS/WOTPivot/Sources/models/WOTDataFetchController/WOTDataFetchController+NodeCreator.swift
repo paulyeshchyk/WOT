@@ -17,13 +17,13 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
         } else {
             try initFetchController {[weak self] fetchResultController, error in
                 if let err = error {
-                    self?.context.logInspector?.logEvent(EventError(err, details: nil), sender: self)
+                    self?.appContext.logInspector?.logEvent(EventError(err, details: nil), sender: self)
                 } else {
                     self?.fetchResultController = fetchResultController
                     do {
                         try self?.performFetch(with: fetchResultController, nodeCreator: nodeCreator)
                     } catch {
-                        self?.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        self?.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                     }
                 }
             }

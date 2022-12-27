@@ -47,12 +47,12 @@ open class Request: RequestProtocol, CustomStringConvertible {
         }
     }
     
-    public let context: RequestProtocol.Context
+    public let appContext: RequestProtocol.Context
     public var MD5: String { uuid.MD5 }
     open var description: String { "\(type(of: self))" }
     
     public required init(context: RequestProtocol.Context) {
-        self.context = context
+        self.appContext = context
     }
 
     deinit {

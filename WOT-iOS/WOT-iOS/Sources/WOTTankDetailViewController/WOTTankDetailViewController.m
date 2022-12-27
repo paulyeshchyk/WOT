@@ -321,7 +321,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                                  inContext: appDelegate
+                                                 appContext: appDelegate
                                                    listener: self
                                                       error: &error];
 }

@@ -6,10 +6,14 @@
 //
 
 @objc
-public protocol JSONAdapterLinkerProtocol: MD5Protocol {
+public protocol AdapterLinkerProtocol: MD5Protocol {
     var linkerPrimaryKeyType: PrimaryKeyType { get }
 
     init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?)
     func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion)
     func onJSONExtraction(json: JSON) -> JSON?
+}
+
+@objc
+public protocol JSONAdapterLinkerProtocol: AdapterLinkerProtocol {
 }
