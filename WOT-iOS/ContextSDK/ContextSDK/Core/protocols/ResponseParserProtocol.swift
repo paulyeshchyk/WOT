@@ -6,11 +6,8 @@
 //
 
 @objc
-public protocol ResponseParserContainerProtocol {
-    var responseParser: ResponseParserProtocol? { get set }
-}
-
-@objc
 public protocol ResponseParserProtocol {
-    func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping DataAdapterProtocol.OnComplete) throws
+    typealias Context = LogInspectorContainerProtocol
+    init(appContext: ResponseParserProtocol.Context)
+    func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, dataAdapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws
 }

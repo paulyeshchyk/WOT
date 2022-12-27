@@ -15,15 +15,26 @@ public class ModulesHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/modules/"
     }
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
+
+    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
+        WGResponseJSONAdapter.self
+    }
 }
 
-extension ModulesHttpRequest: WOTModelServiceProtocol {
-    @objc
+extension ModulesHttpRequest: ModelServiceProtocol {
+
     public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return Module.self
     }
 
-    @objc
+    public class func registrationID() -> RequestIdType {
+        WebRequestType.modules.rawValue
+    }
+
     public func instanceModelClass() -> AnyClass? {
         return type(of: self).modelClass()
     }

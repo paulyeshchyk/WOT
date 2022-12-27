@@ -15,15 +15,26 @@ public class LoginHttpRequest: HttpRequest {
     override public var path: String {
         return "wot/auth/login/"
     }
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
+
+    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
+        WGResponseJSONAdapter.self
+    }
 }
 
-extension LoginHttpRequest: WOTModelServiceProtocol {
-    @objc
+extension LoginHttpRequest: ModelServiceProtocol {
+
     public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return nil
     }
 
-    @objc
+    public class func registrationID() -> RequestIdType {
+        WebRequestType.login.rawValue
+    }
+
     public func instanceModelClass() -> AnyClass? {
         return type(of: self).modelClass()
     }

@@ -12,8 +12,13 @@ import ContextSDK
 // MARK: - JSONMappableProtocol
 
 extension VehicleprofileAmmoDamage {
-    private enum VehicleprofileAmmoDamageError: Error {
+    private enum VehicleprofileAmmoDamageError: Error, CustomStringConvertible {
         case arrayIsNotContainingThreeElements
+        var description: String {
+            switch self {
+            case .arrayIsNotContainingThreeElements: return "[\(type(of: self))]: Dublicate"
+            }
+        }
     }
 
      override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {

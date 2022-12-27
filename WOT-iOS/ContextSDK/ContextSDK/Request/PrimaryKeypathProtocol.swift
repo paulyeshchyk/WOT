@@ -27,6 +27,6 @@ public protocol PrimaryKeypathProtocol: AnyObject {
     static func predicateFormat(forType: PrimaryKeyType) -> PredicateFormatProtocol
     static func predicate(for ident: AnyObject?, andType: PrimaryKeyType) -> NSPredicate?
     static func primaryKeyPath(forType: PrimaryKeyType) -> String?
-    static func primaryKey(for ident: AnyObject?, andType: PrimaryKeyType) -> ContextExpression?
+    static func primaryKey(forType: PrimaryKeyType, andObject: AnyObject?) -> ContextExpression?
 }
 

@@ -14,7 +14,10 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     
     var availableInGroups: [RequestIdType] { get }
     var listeners: [RequestListenerProtocol] { get }
-    var paradigm: MappingParadigmProtocol? { get set }
+    var contextPredicate: ContextPredicate? { get set }
+    var arguments: RequestArgumentsProtocol? { get set }
+    var responseParserClass: ResponseParserProtocol.Type { get }
+    var dataAdapterClass: ResponseAdapterProtocol.Type { get }
 
     func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
@@ -46,27 +49,27 @@ open class Request: RequestProtocol, CustomStringConvertible {
         }
     }
     
-    public let context: RequestProtocol.Context
+    public let appContext: RequestProtocol.Context
     public var MD5: String { uuid.MD5 }
     open var description: String { "\(type(of: self))" }
     
     public required init(context: RequestProtocol.Context) {
-        self.context = context
+        self.appContext = context
     }
 
     deinit {
-        paradigm = nil
+        //
     }
     
     open func cancel(byReason: RequestCancelReasonProtocol) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func start(withArguments: RequestArgumentsProtocol) throws {
+    open func start() throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    // MARK: - WOTRequestProtocol
+    // MARK: - RequestProtocol
 
     public let uuid: UUID = UUID()
 
@@ -74,8 +77,18 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public var listeners = [RequestListenerProtocol]()
 
-    public var paradigm: MappingParadigmProtocol?
+    public var contextPredicate: ContextPredicate?
+    
+    public var arguments: RequestArgumentsProtocol?
+    
+    open var responseParserClass: ResponseParserProtocol.Type {
+        fatalError("should be overriden")
+    }
 
+    open var dataAdapterClass: ResponseAdapterProtocol.Type {
+        fatalError("should be overriden")
+    }
+    
     open func addGroup(_ group: RequestIdType) {
         availableInGroups.append(group)
     }

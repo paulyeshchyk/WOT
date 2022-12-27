@@ -15,15 +15,26 @@ public class LogoutHttpRequest: HttpRequest {
     override public var path: String {
         return "wot/auth/logout/"
     }
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
+
+    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
+        WGResponseJSONAdapter.self
+    }
 }
 
-extension LogoutHttpRequest: WOTModelServiceProtocol {
-    @objc
+extension LogoutHttpRequest: ModelServiceProtocol {
+
     public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return nil
     }
 
-    @objc
+    public class func registrationID() -> RequestIdType {
+        WebRequestType.logout.rawValue
+    }
+
     public func instanceModelClass() -> AnyClass? {
         return type(of: self).modelClass()
     }

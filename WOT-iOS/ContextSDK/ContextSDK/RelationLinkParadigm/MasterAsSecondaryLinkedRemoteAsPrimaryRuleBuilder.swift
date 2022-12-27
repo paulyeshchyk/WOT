@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
     private var requestPredicate: ContextPredicate
@@ -19,7 +19,7 @@ public class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicate
 
     public func build() -> RequestPredicateComposition? {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .external)
+        lookupPredicate[.primary] = linkedClazz.primaryKey(forType: .external, andObject: linkedObjectID)
         lookupPredicate[.secondary] = requestPredicate[.primary]
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)

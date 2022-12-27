@@ -5,7 +5,7 @@
 //  Created by Paul on 19.12.22.
 //
 
-public typealias FetchResultCompletion = (FetchResultProtocol, Error?) -> Void
+public typealias FetchResultCompletion = (FetchResultProtocol?, Error?) -> Void
 
 @objc
 open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
@@ -39,7 +39,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return copy
     }
 
-    public func dublicate() -> FetchResultProtocol {
+    public func makeDublicate() -> FetchResultProtocol {
         // swiftlint:disable force_cast
         return copy() as! FetchResult
         // swiftlint:enable force_cast

@@ -55,7 +55,7 @@ extension Vehicles {
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let linker = Vehicles.DefaultProfileLinker.self
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
-            inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
+            inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, adapterLinker: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
         } else {
             inContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(self.tank_id)), sender: self)
         }
@@ -100,7 +100,7 @@ extension Vehicles {
             throw VehiclesJSONMappingError.passedInvalidModuleId
         }
         let submodulesPredicate = ContextPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
-        submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
+        submodulesPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let linker = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
@@ -109,14 +109,17 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    public class ModulesTreeLinker: BaseJSONAdapterLinker {
+    public class ModulesTreeLinker: ManagedObjectCreator {
 
-        private struct ModuleLinkerUnexpectedClassError: Error {
+        private struct ModuleLinkerUnexpectedClassError: Error, CustomStringConvertible {
             var expected: AnyClass
             var received: AnyObject?
             public init(extected exp: AnyClass, received rec: AnyObject?) {
                 self.expected = exp
                 self.received = rec
+            }
+            var description: String {
+                return "[ModuleLinkerUnexpectedClassError]: exprected (\(String(describing: expected))), received (\(String(describing: received ?? NSNull.self)))"
             }
         }
         // MARK: -
@@ -150,7 +153,7 @@ extension Vehicles {
         }
     }
 
-    public class DefaultProfileLinker: BaseJSONAdapterLinker {
+    public class DefaultProfileLinker: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
@@ -179,7 +182,7 @@ extension Vehicles {
         }
     }
 
-    public class VehiclesPivotDataLinker: BaseJSONAdapterLinker {
+    public class VehiclesPivotDataLinker: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
@@ -192,7 +195,7 @@ extension Vehicles {
         }
     }
 
-    public class VehiclesTreeViewLinker: BaseJSONAdapterLinker {
+    public class VehiclesTreeViewLinker: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }

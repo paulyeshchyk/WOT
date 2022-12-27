@@ -20,8 +20,13 @@ public class MD5: NSString {
 }
 
 extension String  {
-    enum StringMD5Error: Error {
+    private enum StringMD5Error: Error, CustomStringConvertible {
         case cantConvertToUTF8
+        var description: String {
+            switch self {
+            case .cantConvertToUTF8: return "[\(type(of: self))]: cant convert to UTF8"
+            }
+        }
     }
     public func MD5() throws -> String {
         guard let messageData = self.data(using:.utf8) else {

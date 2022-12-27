@@ -10,12 +10,18 @@ import ContextSDK
 
 struct HttpRequestBuilder {
 
-    private enum HttpRequestBuilderError: Error {
+    private enum HttpRequestBuilderError: Error, CustomStringConvertible {
         case hostConfigurationIsNotDefined
         case urlNotCreated
+        var description: String {
+            switch self {
+            case .hostConfigurationIsNotDefined: return "[\(type(of: self))]: HostConfiguration is not defined"
+            case .urlNotCreated: return "[\(type(of: self))]: Url is not created"
+            }
+        }
     }
     
-    public func build(hostConfiguration: HostConfigurationProtocol?, httpMethod: ContextSDK.HTTPMethod, path: String, args: RequestArgumentsProtocol, bodyData: Data?) throws -> URLRequest {
+    public func build(hostConfiguration: HostConfigurationProtocol?, httpMethod: ContextSDK.HTTPMethod, path: String, args: RequestArgumentsProtocol?, bodyData: Data?) throws -> URLRequest {
         let url = try buildURL(hostConfiguration: hostConfiguration, path: path, args: args, bodyData: bodyData)
 
         var result = URLRequest(url: url)
@@ -25,7 +31,7 @@ struct HttpRequestBuilder {
         return result
     }
 
-    private func buildURL(hostConfiguration: HostConfigurationProtocol?, path: String, args: RequestArgumentsProtocol, bodyData: Data?) throws -> URL {
+    private func buildURL(hostConfiguration: HostConfigurationProtocol?, path: String, args: RequestArgumentsProtocol?, bodyData: Data?) throws -> URL {
         
         guard  let hostConfiguration = hostConfiguration else {
             throw HttpRequestBuilderError.hostConfigurationIsNotDefined

@@ -12,5 +12,13 @@ extension NSManagedObject: ManagedObjectProtocol {
     public var entityName: String {
         return entity.name ?? "<unknown>"
     }
+    
+    public var managedObjectID: AnyObject {
+        return objectID
+    }
+    
+    public var fetchStatus: FetchStatus {
+        isInserted ? .inserted : .fetched
+    }
 }
 

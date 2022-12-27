@@ -23,31 +23,31 @@ extension ModulesTree {
 
         let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
-//        // MARK: - NextTanks
-//
-//        let nextTanksJSONAdapter = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-//        if let nextTanks = moduleTree[#keyPath(ModulesTree.next_tanks)] as? [AnyObject] {
-//            for nextTank in nextTanks {
-//                // parents was not used for next portion of tanks
-//                let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
-//                let nextTanksRequestParadigm = MappingParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
-//                do {
-//                    try inContext.requestManager?.fetchRemote(paradigm: nextTanksRequestParadigm)
-//                } catch {
-//                    inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
-//                }
-//            }
-//        }
+        // MARK: - NextTanks
+
+        let nextTanksJSONAdapter = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
+        if let nextTanks = moduleTree[#keyPath(ModulesTree.next_tanks)] as? [AnyObject] {
+            for nextTank in nextTanks {
+                // parents was not used for next portion of tanks
+                let nextTanksPredicateComposer = ModulesTree.NextVehiclePredicateComposer(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
+                let nextTanksRequestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposer: nextTanksPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
+                do {
+                    try inContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, requestPredicateComposer: nextTanksPredicateComposer, managedObjectCreator: nextTanksJSONAdapter, listener: self)
+                } catch {
+                    inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                }
+            }
+        }
 
         // MARK: - NextModules
 
         let nextModuleJSONAdapter = ModulesTree.NextModulesLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         if let nextModules = moduleTree[#keyPath(ModulesTree.next_modules)] as? [AnyObject] {
             for nextModule in nextModules {
-                let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
-                let nextModuleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
+                let nextModulePredicateComposer = ModulesTree.NextModulesPredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
+                let nextModuleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try inContext.requestManager?.fetchRemote(mappingParadigm: nextModuleRequestParadigm, listener: self)
+                    try inContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, requestPredicateComposer: nextModulePredicateComposer, managedObjectCreator: nextModuleJSONAdapter, listener: self)
                 } catch {
                     inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -57,9 +57,9 @@ extension ModulesTree {
         // MARK: - CurrentModule
 
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
-        let moduleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
-        try inContext.requestManager?.fetchRemote(mappingParadigm: moduleRequestParadigm, listener: self)
+        let modulePredicateComposer = ModulesTree.CurrentModulePredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
+        let moduleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
+        try inContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, requestPredicateComposer: modulePredicateComposer, managedObjectCreator: moduleJSONAdapter, listener: self)
     }
 }
 
@@ -77,7 +77,10 @@ extension ModulesTree: RequestManagerListenerProtocol {
 }
 
 extension ModulesTree {
-    public class CurrentModuleLinker: BaseJSONAdapterLinker {
+    
+    private class CurrentModulePredicateComposer: LinkedRemoteAsPrimaryRuleBuilder { }
+    
+    private class CurrentModuleLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -97,11 +100,22 @@ extension ModulesTree {
             }
         }
     }
+}
 
-    public class NextModulesLinker: BaseJSONAdapterLinker {
-        private enum NextModulesLinkerError: Error {
+extension ModulesTree {
+    
+    private class NextModulesPredicateComposer: MasterAsPrimaryLinkedAsSecondaryRuleBuilder { }
+    
+    private class NextModulesLinker: ManagedObjectCreator {
+        private enum NextModulesLinkerError: Error, CustomStringConvertible {
             case wrongParentClass
             case wrongChildClass
+            var description: String {
+                switch self {
+                case .wrongChildClass: return "[\(String(describing: self))]: wrong child class"
+                case .wrongParentClass: return "[\(String(describing: self))]: wrong parent class"
+                }
+            }
         }
         
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
@@ -123,8 +137,13 @@ extension ModulesTree {
             }
         }
     }
+}
 
-    public class NextVehicleLinker: BaseJSONAdapterLinker {
+extension ModulesTree {
+    
+    private class NextVehiclePredicateComposer: LinkedLocalAsPrimaryRuleBuilder { }
+    
+    private class NextVehicleLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 

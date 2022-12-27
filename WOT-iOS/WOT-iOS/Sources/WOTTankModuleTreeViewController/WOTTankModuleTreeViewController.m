@@ -90,7 +90,6 @@
 @property (nonatomic, strong) WOTTreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
-@property (nonatomic, strong) WOTTankTreeFetchController *fetchController;
 @property (nonatomic, strong) UIImageView *connectorsImageView;
 
 @end
@@ -125,13 +124,12 @@
     if (self){
 
         id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-        id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
-        self.fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
-                                                                                      dataprovider:coreDataProvider];
-        self.model = [[WOTTreeDataModel alloc] initWithFetchController: self.fetchController
+        WOTTankTreeFetchController* fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
+                                                                                           context:appDelegate];
+        self.model = [[WOTTreeDataModel alloc] initWithFetchController: fetchController
                                                               listener: self
                                                             enumerator: [WOTNodeEnumerator sharedInstance]
                                                            nodeCreator: self];
@@ -199,7 +197,7 @@
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                                  inContext: appDelegate
+                                                 appContext: appDelegate
                                                    listener: self
                                                       error: &error];
 }

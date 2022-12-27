@@ -9,8 +9,13 @@
 import ContextSDK
 
 public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible {
-    enum WOTWebDataPumperError: Error {
+    enum WOTWebDataPumperError: Error, CustomStringConvertible {
         case urlNotDefined
+        var description: String {
+            switch self {
+            case .urlNotDefined: return "[\(type(of: self))]: Url is not defined"
+            }
+        }
     }
 
     let request: URLRequest

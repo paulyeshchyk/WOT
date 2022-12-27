@@ -25,9 +25,9 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
     private var currentArguments: String = ""
 
     @objc
-    public func urlQuery(with: RequestArgumentsProtocol) -> String {
+    public func urlQuery(with: RequestArgumentsProtocol?) -> String {
         let custom = ["application_id": applicationID]
-        currentArguments = with.buildQuery(custom)
+        currentArguments = with?.buildQuery(custom) ?? ""
         return currentArguments
     }
 
