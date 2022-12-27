@@ -51,7 +51,7 @@ extension RESTResponseParser {
         }
 
         dataAdaptationPair.forEach { pair in
-            (pair.dataAdapter as? JSONAdapter)?.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request, completion: completion)
+            pair.dataAdapter.decodeData(pair.data, forType: WGAPIResponse.self, fromRequest: request, completion: completion)
         }
     }
 }

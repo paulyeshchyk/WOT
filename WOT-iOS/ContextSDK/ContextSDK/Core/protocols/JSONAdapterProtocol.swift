@@ -117,7 +117,6 @@ extension JSONCollection: DecoderContainer {
     }
 }
 
-@objc
 public protocol JSONAdapterProtocol: ResponseAdapterProtocol, MD5Protocol {
     
 }

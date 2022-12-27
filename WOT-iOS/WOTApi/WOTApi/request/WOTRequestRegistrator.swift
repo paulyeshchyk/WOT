@@ -30,16 +30,16 @@ public class WOTRequestRegistrator: RequestRegistrator {
     }
     
     private func registerDefaultRequests() {
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: LoginHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: LogoutHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: ModulesHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: VehiclesHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: ModulesTreeHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: VehicleprofileGunHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: VehicleprofileRadiosHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: VehicleprofileTurretsHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: VehicleprofileEnginesHttpRequest.self)
-        register(dataAdapterClass: JSONAdapter.self, modelServiceClass: VehicleprofileSuspensionHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: LoginHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: LogoutHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: ModulesHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehiclesHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: ModulesTreeHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileGunHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileRadiosHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileTurretsHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileEnginesHttpRequest.self)
+        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileSuspensionHttpRequest.self)
     }
 
 }

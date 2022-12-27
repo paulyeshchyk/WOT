@@ -67,7 +67,7 @@
 		DA81E50C2952FE3500C60F31 /* EventCDStash.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4FE2952FE3500C60F31 /* EventCDStash.swift */; };
 		DA81E50D2952FE3500C60F31 /* EventCustomLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4FF2952FE3500C60F31 /* EventCustomLogic.swift */; };
 		DA81E5102952FE6700C60F31 /* Date+Elapsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E50F2952FE6700C60F31 /* Date+Elapsed.swift */; };
-		DA81E5122952FF1D00C60F31 /* RESTAPIResponseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5112952FF1D00C60F31 /* RESTAPIResponseProtocol.swift */; };
+		DA81E5122952FF1D00C60F31 /* WGAPIResponseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5112952FF1D00C60F31 /* WGAPIResponseProtocol.swift */; };
 		DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */; };
 		DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51F2952FFDC00C60F31 /* Coding.swift */; };
 		DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */; };
@@ -156,7 +156,7 @@
 		DA81E4FE2952FE3500C60F31 /* EventCDStash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCDStash.swift; sourceTree = "<group>"; };
 		DA81E4FF2952FE3500C60F31 /* EventCustomLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCustomLogic.swift; sourceTree = "<group>"; };
 		DA81E50F2952FE6700C60F31 /* Date+Elapsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Elapsed.swift"; sourceTree = "<group>"; };
-		DA81E5112952FF1D00C60F31 /* RESTAPIResponseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTAPIResponseProtocol.swift; sourceTree = "<group>"; };
+		DA81E5112952FF1D00C60F31 /* WGAPIResponseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGAPIResponseProtocol.swift; sourceTree = "<group>"; };
 		DA81E51E2952FFDC00C60F31 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		DA81E51F2952FFDC00C60F31 /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Decode.swift"; sourceTree = "<group>"; };
@@ -336,7 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				DA0E806D295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift */,
-				DA81E5112952FF1D00C60F31 /* RESTAPIResponseProtocol.swift */,
+				DA81E5112952FF1D00C60F31 /* WGAPIResponseProtocol.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -586,7 +586,7 @@
 				DA81E5102952FE6700C60F31 /* Date+Elapsed.swift in Sources */,
 				DA0E80972950B07C00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5082952FE3500C60F31 /* EventThread.swift in Sources */,
-				DA81E5122952FF1D00C60F31 /* RESTAPIResponseProtocol.swift in Sources */,
+				DA81E5122952FF1D00C60F31 /* WGAPIResponseProtocol.swift in Sources */,
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
 				DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */,

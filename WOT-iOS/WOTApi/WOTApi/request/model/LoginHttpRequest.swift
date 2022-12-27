@@ -21,7 +21,7 @@ public class LoginHttpRequest: HttpRequest {
     }
 
     override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        JSONAdapter.self
+        WGResponseJSONAdapter.self
     }
 }
 

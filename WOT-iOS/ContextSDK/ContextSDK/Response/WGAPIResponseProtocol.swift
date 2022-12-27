@@ -5,24 +5,24 @@
 //  Created by Paul on 21.12.22.
 //
 
-public protocol RESTAPIResponseProtocol: Codable {
-    var status: RESTAPIResponseStatus? { get set }
+public protocol WGAPIResponseProtocol: Codable {
+    var status: WGAPIResponseStatus? { get set }
     var data: JSON? { get set }
     var error: JSON? { get set }
     var swiftError: Error? { get }
 }
 
-public class RESTAPIResponse: RESTAPIResponseProtocol {
+public class WGAPIResponse: WGAPIResponseProtocol {
 
-    public var status: RESTAPIResponseStatus? = .unknown
-    public var meta: RESTAPIResponseMeta?
+    public var status: WGAPIResponseStatus? = .unknown
+    public var meta: WGAPIResponseMeta?
     public var data: JSON?
     public var error: JSON?
     public var swiftError: Error? {
         guard let json = error else { return nil }
         do {
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            return try JSONDecoder().decode(RESTAPIError.self, from: data)
+            return try JSONDecoder().decode(WGAPIError.self, from: data)
         } catch {
             return nil
         }
@@ -42,8 +42,8 @@ public class RESTAPIResponse: RESTAPIResponseProtocol {
     public required init(from decoder: Decoder) throws {
 
         let container = try decoder.container(keyedBy: Fields.self)
-        self.status = try container.decodeIfPresent(RESTAPIResponseStatus.self, forKey: .status)
-        self.meta = try container.decodeIfPresent(RESTAPIResponseMeta.self, forKey: .meta)
+        self.status = try container.decodeIfPresent(WGAPIResponseStatus.self, forKey: .status)
+        self.meta = try container.decodeIfPresent(WGAPIResponseMeta.self, forKey: .meta)
         self.data = try container.decodeIfPresent([String: Any].self, forKey: .data)
         self.error = try container.decodeIfPresent([String: Any].self, forKey: .error)
     }
@@ -57,7 +57,7 @@ public class RESTAPIResponse: RESTAPIResponseProtocol {
     }
 }
 
-public struct RESTAPIResponseMeta: Codable {
+public struct WGAPIResponseMeta: Codable {
     var count: Int?
     var page_total: Int?
     var total: Int?
@@ -85,7 +85,7 @@ public struct RESTAPIResponseMeta: Codable {
     }
 }
 
-public enum RESTAPIResponseStatus: String, Codable {
+public enum WGAPIResponseStatus: String, Codable {
     public typealias RawValue = String
 
     case ok
@@ -93,9 +93,9 @@ public enum RESTAPIResponseStatus: String, Codable {
     case unknown
 
     init?(value: String) {
-        if value.lowercased().compare(RESTAPIResponseStatus.ok.rawValue) == .orderedSame {
+        if value.lowercased().compare(WGAPIResponseStatus.ok.rawValue) == .orderedSame {
             self = .ok
-        } else if value.lowercased().compare(RESTAPIResponseStatus.error.rawValue) == .orderedSame {
+        } else if value.lowercased().compare(WGAPIResponseStatus.error.rawValue) == .orderedSame {
             self = .error
         } else {
             self = .unknown
@@ -103,8 +103,7 @@ public enum RESTAPIResponseStatus: String, Codable {
     }
 }
 
-
-public class RESTAPIError: Error, CustomStringConvertible, Codable {
+public class WGAPIError: Error, CustomStringConvertible, Codable {
 
     public var code: Int?
     public var message: String?

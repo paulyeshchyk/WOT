@@ -15,6 +15,7 @@ public class WOTWebProxyRequest: HttpRequest {
         RESTResponseParser.self
     }
 
+    #warning("JSONAdapter should be replaced by another class")
     override public var dataAdapterClass: ResponseAdapterProtocol.Type {
         JSONAdapter.self
     }

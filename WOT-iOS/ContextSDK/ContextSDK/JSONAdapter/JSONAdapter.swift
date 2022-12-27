@@ -5,16 +5,14 @@
 //  Created by Paul on 21.12.22.
 //
 
-public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
+open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
-    private enum JSONAdapterError: Error, CustomStringConvertible {
+    enum JSONAdapterError: Error, CustomStringConvertible {
         case notMainThread
-        case requestManagerIsNil
         case fetchResultIsNotPresented
         var description: String {
             switch self {
             case .notMainThread: return "\(type(of: self)): Not main thread"
-            case .requestManagerIsNil: return "\(type(of: self)): request manager is nil"
             case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
             }
         }
@@ -38,13 +36,12 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     public var description: String { String(describing: type(of: request)) }
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, adapterLinker: ManagedObjectCreatorProtocol) {
+    required public init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, adapterLinker: ManagedObjectCreatorProtocol) {
 
         self.modelClazz = modelClass
         self.request = request
         self.adapterLinker = adapterLinker
         self.appContext = context
-
         context.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
@@ -52,10 +49,15 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
-    // MARK: - JSONAdapterProtocol
+    open func decodeData(_ data: Data?, forType: AnyClass, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
+        fatalError("should be overriden")
+    }
+}
 
-    private func didFinishDecoding(_ json: JSON?, fromRequest: RequestProtocol, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
-        guard error == nil, let json = json else {
+extension JSONAdapter {
+    
+    public func didFinish(with: Any?, fromRequest: RequestProtocol, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
+        guard error == nil, let json = with as? JSON else {
             self.appContext.logInspector?.logEvent(EventError(error, details: fromRequest), sender: self)
             completion?(fromRequest, error)
             return
@@ -106,27 +108,6 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         dispatchGroup.notify(queue: DispatchQueue.main) {
             self.appContext.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
             completion?(fromRequest, error)
-        }
-    }
-}
-
-extension JSONAdapter {
-    
-    public func decode<T>(binary: Data?, forType type: T.Type, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) where T: RESTAPIResponseProtocol {
-        guard let data = binary else {
-            didFinishDecoding(nil, fromRequest: request, error: nil, completion: completion)
-            return
-        }
-        let decoder = JSONDecoder()
-        do {
-            let result = try decoder.decode(T.self, from: data)
-            if let swiftError = result.swiftError {
-                didFinishDecoding(nil, fromRequest: request, error: swiftError, completion: completion)
-            } else {
-                didFinishDecoding(result.data, fromRequest: request, error: nil, completion: completion)
-            }
-        } catch {
-            didFinishDecoding(nil, fromRequest: request, error: error, completion: completion)
         }
     }
 }

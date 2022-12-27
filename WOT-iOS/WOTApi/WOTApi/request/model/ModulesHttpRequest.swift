@@ -21,7 +21,7 @@ public class ModulesHttpRequest: HttpRequest {
     }
 
     override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        JSONAdapter.self
+        WGResponseJSONAdapter.self
     }
 }
 
