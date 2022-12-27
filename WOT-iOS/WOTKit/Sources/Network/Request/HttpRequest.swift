@@ -36,7 +36,7 @@ open class HttpRequest: Request {
         }
     }
 
-    override open func start(withArguments args: RequestArgumentsProtocol) throws {
+    override open func start(withArguments args: RequestArgumentsProtocol, mappingParadigm: MappingParadigmProtocol?) throws {
         
         let urlRequest = try HttpRequestBuilder().build(hostConfiguration: context.hostConfiguration,
                                                         httpMethod: httpMethod,

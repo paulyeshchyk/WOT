@@ -15,6 +15,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         case adapterNotFound(RequestProtocol)
         case noRequestIds(RequestProtocol)
         case requestNotFound
+        case requestsNotParsed
         case receivedResponseFromReleasedRequest
         case cantAddListener
         case invalidRequest
@@ -32,6 +33,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
             case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
             case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
             case .requestManagerListenerIsNil: return "\(type(of: self)): RequestManagerListener is nil"
+            case .requestsNotParsed: return "[\(type(of: self))]: request is not parsed"
             }
         }
     }
@@ -140,7 +142,7 @@ extension RequestManager: RequestManagerProtocol {
         grouppedListenerList.removeListener(listener)
     }
 
-    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?, mappingParadigm: MappingParadigmProtocol?) throws {
 
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
         
@@ -156,7 +158,7 @@ extension RequestManager: RequestManagerProtocol {
 
         try adapterLinkerList.addAdapterLinker(adapterLinker, forRequest: request)
 
-        try request.start(withArguments: withArguments)
+        try request.start(withArguments: withArguments, mappingParadigm: mappingParadigm)
     }
 
     private func startRequest(by requestId: RequestIdType, mappingParadigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
@@ -165,17 +167,16 @@ extension RequestManager: RequestManagerProtocol {
         }
         request.paradigm = mappingParadigm
 
-        let arguments = mappingParadigm.buildRequestArguments()
+        let arguments = mappingParadigm.buildRequestArguments(queryItemName: "fields")//WGWebQueryArgs.fields
         let jsonAdapterLinker = mappingParadigm.jsonAdapterLinker
         #warning ("remove hashValue")
         let groupId: RequestIdType = "Nested\(String(describing: mappingParadigm.clazz))-\(arguments)".hashValue
-        try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener)
+        try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener, mappingParadigm: mappingParadigm)
     }
     
     public func fetchRemote(mappingParadigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
         guard let requestIDs = context.requestRegistrator?.requestIds(forClass: mappingParadigm.clazz), requestIDs.count > 0 else {
-            context.logInspector?.logEvent(EventError(WOTFetcherError.requestsNotParsed, details: nil), sender: self)
-            return
+            throw RequestManagerError.requestsNotParsed
         }
         for requestID in requestIDs {
             do {
@@ -235,8 +236,13 @@ private class ResponseAdapterLinkerList {
 
 private class RequestGrouppedListenerList {
     
-    private enum GrouppedListenersError: Error {
+    private enum GrouppedListenersError: Error, CustomStringConvertible {
         case dublicate
+        var description: String {
+            switch self {
+            case .dublicate: return "[\(type(of: self))]: Dublicate"
+            }
+        }
     }
     
     private var grouppedListeners = [AnyHashable: [RequestManagerListenerProtocol]]()
@@ -281,8 +287,13 @@ private class RequestGrouppedRequestList {
 
     typealias Context = LogInspectorContainerProtocol
     
-    private enum GrouppedRequestListenersError: Error {
+    private enum GrouppedRequestListenersError: Error, CustomStringConvertible {
         case dublicate
+        var description: String {
+            switch self {
+            case .dublicate: return "[\(type(of: self))]: Dublicate"
+            }
+        }
     }
     
     private var grouppedRequests: [RequestIdType: [RequestProtocol]] = [:]

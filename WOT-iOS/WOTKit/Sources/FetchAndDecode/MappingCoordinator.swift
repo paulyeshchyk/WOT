@@ -27,7 +27,11 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
             guard let self = self else {
                 return
             }
-            
+            guard let fetchResult = fetchResult else {
+                completion(nil, WOTMappingCoordinatorError.fetchResultNotPresented)
+                return
+            }
+
             if let error = error {
                 completion(fetchResult, error)
                 return
@@ -38,7 +42,11 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
                     completion(fetchResult, error)
                 } else {
                     if let linker = linker, let dataStore = self.context.dataStore {
-                        linker.process(fetchResult: fetchResult, dataStore: dataStore, completion: completion)
+                        if let fetchResult = fetchResult {
+                            linker.process(fetchResult: fetchResult, dataStore: dataStore, completion: completion)
+                        } else {
+                            completion(nil, WOTMappingCoordinatorError.fetchResultNotPresented)
+                        }
                     } else {
                         completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
                     }
@@ -81,7 +89,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
                 completion(fetchResult, error)
             } else {
                 if let linker = linker, let dataStore = self.context.dataStore {
-                    let finalFetchResult = fetchResult.dublicate()
+                    let finalFetchResult = fetchResult.makeDublicate()
                     finalFetchResult.predicate = predicate.compoundPredicate(.and)
                     linker.process(fetchResult: finalFetchResult, dataStore: dataStore, completion: completion)
                 } else {
@@ -118,11 +126,13 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
 public enum WOTMappingCoordinatorError: Error, CustomStringConvertible {
     case lookupRuleNotDefined
     case linkerNotStarted
+    case fetchResultNotPresented
 
     public var description: String {
         switch self {
         case .lookupRuleNotDefined: return "[\(type(of: self))]: rule is not defined"
         case .linkerNotStarted: return "[\(type(of: self))]: linker is not started"
+        case .fetchResultNotPresented: return "[\(type(of: self))]: fetchResult is not presented"
         }
     }
 }

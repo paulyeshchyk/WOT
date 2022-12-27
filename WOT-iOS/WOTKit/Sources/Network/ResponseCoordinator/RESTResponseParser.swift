@@ -26,9 +26,15 @@ public class RESTResponseParser: ResponseParserProtocol {
 // MARK: - ResponseParserProtocol
 
 extension RESTResponseParser {
-    private enum RESTResponseParserError: Error {
+    private enum RESTResponseParserError: Error, CustomStringConvertible {
         case dataIsEmpty
         case noAdapterFound
+        var description: String {
+            switch self {
+            case .dataIsEmpty: return "[\(type(of: self))]: Data is Empty"
+            case .noAdapterFound: return "[\(type(of: self))]: No Adapter found"
+            }
+        }
     }
     
     public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping DataAdapterProtocol.OnComplete) throws {

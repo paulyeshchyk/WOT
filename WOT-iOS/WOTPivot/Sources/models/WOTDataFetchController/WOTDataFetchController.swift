@@ -20,38 +20,60 @@ public protocol WOTDataFetchControllerDelegateProtocol {
 }
 
 open class WOTDataFetchController: NSObject {
+    
+    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
+    
     public var fetchResultController: WOTDataFetchedResultController?
     
-    private enum DataFetchControllerError: Error {
+    enum DataFetchControllerError: Error, CustomStringConvertible {
         case contextIsNotDefined
+        case requestNotFound
+        case noFetchResultControllerCreated
+        var description: String {
+            switch self {
+            case .contextIsNotDefined: return "Context not defined"
+            case .requestNotFound: return "Request not found"
+            case .noFetchResultControllerCreated: return "no FetchResultController created"
+            }
+        }
     }
 
-    public func initFetchController(block: @escaping (WOTDataFetchedResultController) -> Void) throws {
-        guard let managedObjectContext = dataProvider?.workingContext() else {
+    public func initFetchController(block: @escaping (WOTDataFetchedResultController?, Error?) -> Void) throws {
+        guard let managedObjectContext = dataStore?.workingContext() else {
             throw DataFetchControllerError.contextIsNotDefined
         }
 
-        dataProvider?.perform(objectContext: managedObjectContext) {[weak self] context in
-
+        dataStore?.perform(objectContext: managedObjectContext) {[weak self] context in
             guard let request = self?.nodeFetchRequestCreator.fetchRequest else {
-                fatalError("no request found")
+                block(nil, DataFetchControllerError.requestNotFound)
+                return
             }
-            guard let result = self?.dataProvider?.fetchResultController(for: request, andContext: context) as? NSFetchedResultsController<NSFetchRequestResult> else {
-                fatalError("no FetchResultController created")
+            do {
+                let result = try self?.newFetchResultController(request: request, managedObjectContext: context)
+                block(result, nil)
+            } catch {
+                block(nil, error)
             }
-            result.delegate = self
-            block(result)
         }
+    }
+    
+    private func newFetchResultController(request: NSFetchRequest<NSFetchRequestResult>, managedObjectContext: ManagedObjectContextProtocol) throws -> NSFetchedResultsController<NSFetchRequestResult>? {
+        let result = try context.dataStore?.fetchResultController(for: request, andContext: managedObjectContext) as? NSFetchedResultsController<NSFetchRequestResult>
+        result?.delegate = self
+        return result
     }
 
     public var listener: WOTDataFetchControllerListenerProtocol?
     public var nodeFetchRequestCreator: WOTDataFetchControllerDelegateProtocol
-    public var dataProvider: DataStoreProtocol?
+    public var dataStore: DataStoreProtocol?
+    let context: Context
 
     @objc
-    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, dataprovider: DataStoreProtocol?) {
+    public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, context: Context) {
         self.nodeFetchRequestCreator = nfrc
-        self.dataProvider = dataprovider
+        self.context = context
+        self.dataStore = context.dataStore
+        
     }
 
     deinit {

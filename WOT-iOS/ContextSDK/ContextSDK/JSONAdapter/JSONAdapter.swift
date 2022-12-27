@@ -9,9 +9,11 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     private enum JSONAdapterError: Error, CustomStringConvertible {
         case requestManagerIsNil
+        case fetchResultIsNotPresented
         var description: String {
             switch self {
-            case .requestManagerIsNil: return "\(type(of: self)):  request manager is nil"
+            case .requestManagerIsNil: return "\(type(of: self)): request manager is nil"
+            case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
             }
         }
     }
@@ -76,6 +78,11 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
                         dispatchGroup.leave()
                         return
                     }
+                    guard let fetchResult = fetchResult else {
+                        dispatchGroup.leave()
+                        return
+                    }
+                    
                     if let error = error {
                         self.context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                         dispatchGroup.leave()
@@ -143,6 +150,10 @@ extension JSONAdapter {
                 localCallback(fetchResult, error)
                 return
             }
+            guard let fetchResult = fetchResult else {
+                localCallback(nil, JSONAdapterError.fetchResultIsNotPresented)
+                return
+            }
 
             let jsonStartParsingDate = Date()
             self.context.logInspector?.logEvent(EventJSONStart(predicate), sender: self)
@@ -161,7 +172,7 @@ public struct JSONExtraction {
     public let requestPredicate: ContextPredicate
     public let json: JSONCollectable?
 
-    public enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
+    enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
         case invalidJSONForKey(AnyHashable)
         case jsonWasNotExtracted(JSON)
         public var description: String {

@@ -62,7 +62,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func start(withArguments: RequestArgumentsProtocol) throws {
+    open func start(withArguments: RequestArgumentsProtocol, mappingParadigm: MappingParadigmProtocol?) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 

@@ -12,7 +12,8 @@ import WOTKit
 import WOTApi
 
 class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
-  #warning("Pivot configuration: collapse")
+    
+    #warning("Pivot configuration: collapse")
     override public var collapseToGroups: Bool { return true }
 
     override public var useEmptyNode: Bool { return false }
@@ -96,15 +97,16 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     required init(modelListener: WOTDataModelListener, context: Context, settingsDatasource: WOTTankListSettingsDatasource) {
         self.context = context
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, dataprovider: context.dataStore)
+        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, context: context)
 
         let metadatasource = WOTTankPivotMetadatasource()
         let nodeCreator = WOTTankPivotNodeCreator()
 
         super.init(fetchController: fetchController,
-                  modelListener: modelListener,
-                  nodeCreator: nodeCreator,
-                  metadatasource: metadatasource)
+                   modelListener: modelListener,
+                   nodeCreator: nodeCreator,
+                   metadatasource: metadatasource,
+                   context: context)
 
         enumerator = WOTNodeEnumerator.sharedInstance
     }
@@ -113,10 +115,10 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    required init(fetchController fc: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator nc: WOTNodeCreatorProtocol, metadatasource mds: WOTDataModelMetadatasource) {
-        fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:) has not been implemented")
+    required init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource, context: WOTPivotDataModel.Context) {
+        fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:context:) has not been implemented")
     }
-
+    
     deinit {
         context.requestManager?.removeListener(self)
     }

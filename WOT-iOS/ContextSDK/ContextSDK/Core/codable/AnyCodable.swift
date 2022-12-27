@@ -1,7 +1,5 @@
 // swiftlint:disable all
 
-import Foundation
-
 public struct AnyCodable {
     public let value: Any
 

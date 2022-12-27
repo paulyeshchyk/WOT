@@ -40,12 +40,12 @@
             
             [WOTTankListSettingsDatasource context:context createFilterBySettingForKey:WOTApiFields.tier value:@"6" callback:NULL];
             
-            if ([context hasTheChanges]) {
-                
-                [context saveContext];
-//                NSError *error = nil;
-//                [context save:&error];
-            }
+            [context saveWithCompletion:^(NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"%@",error.localizedDescription);
+                }
+
+            }];
         }
     }];
 }

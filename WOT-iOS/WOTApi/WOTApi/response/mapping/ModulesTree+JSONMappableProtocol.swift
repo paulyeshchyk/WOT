@@ -99,9 +99,15 @@ extension ModulesTree {
     }
 
     public class NextModulesLinker: BaseJSONAdapterLinker {
-        private enum NextModulesLinkerError: Error {
+        private enum NextModulesLinkerError: Error, CustomStringConvertible {
             case wrongParentClass
             case wrongChildClass
+            var description: String {
+                switch self {
+                case .wrongChildClass: return "[\(String(describing: self))]: wrong child class"
+                case .wrongParentClass: return "[\(String(describing: self))]: wrong parent class"
+                }
+            }
         }
         
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }

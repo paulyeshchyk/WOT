@@ -25,8 +25,6 @@
 		DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E806A2950920C00B44CC6 /* PrimaryKeypathProtocol.swift */; };
 		DA0E806E295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E806D295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift */; };
 		DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80702950933200B44CC6 /* FetchResult.swift */; };
-		DA0E80732950934D00B44CC6 /* FetchResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80722950934D00B44CC6 /* FetchResultProtocol.swift */; };
-		DA0E807729509F4F00B44CC6 /* DataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807629509F4F00B44CC6 /* DataStoreProtocol.swift */; };
 		DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80782950A3A100B44CC6 /* ContextPredicate.swift */; };
 		DA0E807C2950A60300B44CC6 /* MappingParadigm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807B2950A60300B44CC6 /* MappingParadigm.swift */; };
 		DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */; };
@@ -40,6 +38,11 @@
 		DA0E80982950B07C00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808C2950B07B00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */; };
 		DA0E809A2950B07C00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */; };
 		DA0E809B2950B07C00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */; };
+		DA2C28EA2959F03C00D18A6E /* DataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28E92959F03C00D18A6E /* DataStoreProtocol.swift */; };
+		DA2C28EC2959F07400D18A6E /* ManagedObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28EB2959F07400D18A6E /* ManagedObjectContextProtocol.swift */; };
+		DA2C28EE2959F0A300D18A6E /* FetchResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28ED2959F0A300D18A6E /* FetchResultProtocol.swift */; };
+		DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F02959F0DD00D18A6E /* DataStore.swift */; };
+		DA2C28F42959F55D00D18A6E /* JSONAdapterLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F32959F55D00D18A6E /* JSONAdapterLinker.swift */; };
 		DA5F18572951C10900191864 /* LogInspectorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5F18562951C10900191864 /* LogInspectorProtocol.swift */; };
 		DA66B930295466F90052E4DB /* URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */; };
 		DA81E4DE2952FAA600C60F31 /* HttpServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */; };
@@ -110,8 +113,6 @@
 		DA0E806A2950920C00B44CC6 /* PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryKeypathProtocol.swift; sourceTree = "<group>"; };
 		DA0E806D295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterLinkerProtocol.swift; sourceTree = "<group>"; };
 		DA0E80702950933200B44CC6 /* FetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResult.swift; sourceTree = "<group>"; };
-		DA0E80722950934D00B44CC6 /* FetchResultProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResultProtocol.swift; sourceTree = "<group>"; };
-		DA0E807629509F4F00B44CC6 /* DataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreProtocol.swift; sourceTree = "<group>"; };
 		DA0E80782950A3A100B44CC6 /* ContextPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPredicate.swift; sourceTree = "<group>"; };
 		DA0E807B2950A60300B44CC6 /* MappingParadigm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingParadigm.swift; sourceTree = "<group>"; };
 		DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposition.swift; sourceTree = "<group>"; };
@@ -125,6 +126,11 @@
 		DA0E808C2950B07B00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift; sourceTree = "<group>"; };
+		DA2C28E92959F03C00D18A6E /* DataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreProtocol.swift; sourceTree = "<group>"; };
+		DA2C28EB2959F07400D18A6E /* ManagedObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextProtocol.swift; sourceTree = "<group>"; };
+		DA2C28ED2959F0A300D18A6E /* FetchResultProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResultProtocol.swift; sourceTree = "<group>"; };
+		DA2C28F02959F0DD00D18A6E /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		DA2C28F32959F55D00D18A6E /* JSONAdapterLinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterLinker.swift; sourceTree = "<group>"; };
 		DA5F18562951C10900191864 /* LogInspectorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInspectorProtocol.swift; sourceTree = "<group>"; };
 		DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLEncodedProtocol.swift; path = ContextSDK/Core/protocols/URLEncodedProtocol.swift; sourceTree = SOURCE_ROOT; };
 		DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpServiceProtocol.swift; sourceTree = "<group>"; };
@@ -198,12 +204,12 @@
 			path = NSString;
 			sourceTree = "<group>";
 		};
-		DA0BC5A42952E9EC00E01D54 /* JSON */ = {
+		DA0BC5A42952E9EC00E01D54 /* JSONAdapter */ = {
 			isa = PBXGroup;
 			children = (
 				DA81E4EF2952FDD800C60F31 /* JSONAdapter.swift */,
 			);
-			path = JSON;
+			path = JSONAdapter;
 			sourceTree = "<group>";
 		};
 		DA0E801F295064A300B44CC6 = {
@@ -230,10 +236,12 @@
 				DA0E804D2950668800B44CC6 /* Core */,
 				DA0E80472950652F00B44CC6 /* Request */,
 				DA0E806C2950928900B44CC6 /* Response */,
-				DA0BC5A42952E9EC00E01D54 /* JSON */,
+				DA0BC5A42952E9EC00E01D54 /* JSONAdapter */,
+				DA2C28F22959F55200D18A6E /* JSONAdapterLinker */,
 				DA0E807A2950A5F400B44CC6 /* MappingParadigm */,
 				DA0E80832950B02900B44CC6 /* RelationLinkParadigm */,
 				DA0E806F2950931B00B44CC6 /* FetchResult */,
+				DA2C28EF2959F0CC00D18A6E /* DataStore */,
 				DA0E802C295064A300B44CC6 /* ContextSDK.h */,
 				DA0E802D295064A300B44CC6 /* Info.plist */,
 			);
@@ -335,8 +343,6 @@
 			isa = PBXGroup;
 			children = (
 				DA0E80702950933200B44CC6 /* FetchResult.swift */,
-				DA0E80722950934D00B44CC6 /* FetchResultProtocol.swift */,
-				DA0E807629509F4F00B44CC6 /* DataStoreProtocol.swift */,
 			);
 			path = FetchResult;
 			sourceTree = "<group>";
@@ -367,11 +373,28 @@
 			path = RelationLinkParadigm;
 			sourceTree = "<group>";
 		};
+		DA2C28EF2959F0CC00D18A6E /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				DA2C28F02959F0DD00D18A6E /* DataStore.swift */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
+		DA2C28F22959F55200D18A6E /* JSONAdapterLinker */ = {
+			isa = PBXGroup;
+			children = (
+				DA2C28F32959F55D00D18A6E /* JSONAdapterLinker.swift */,
+			);
+			path = JSONAdapterLinker;
+			sourceTree = "<group>";
+		};
 		DA5F18552951C0DC00191864 /* protocols */ = {
 			isa = PBXGroup;
 			children = (
 				DA0856782954960A00273762 /* MD5Protocol.swift */,
 				DA81E7DF29533DAA00C60F31 /* ContextControllerProtocol.swift */,
+				DA2C28E92959F03C00D18A6E /* DataStoreProtocol.swift */,
 				DA81E4E12952FBC000C60F31 /* DataAdapterProtocol.swift */,
 				DA81E4DD2952FAA600C60F31 /* HttpServiceProtocol.swift */,
 				DA81E4DF2952FB9C00C60F31 /* JSONAdapterProtocol.swift */,
@@ -384,6 +407,8 @@
 				DA81E7E529533EE800C60F31 /* SessionManagerProtocol.swift */,
 				DA66B92F295466F90052E4DB /* URLEncodedProtocol.swift */,
 				DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */,
+				DA2C28EB2959F07400D18A6E /* ManagedObjectContextProtocol.swift */,
+				DA2C28ED2959F0A300D18A6E /* FetchResultProtocol.swift */,
 			);
 			path = protocols;
 			sourceTree = "<group>";
@@ -563,7 +588,7 @@
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
 				DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */,
 				DA81E91E295445B100C60F31 /* RequestManagerProtocol.swift in Sources */,
-				DA0E807729509F4F00B44CC6 /* DataStoreProtocol.swift in Sources */,
+				DA2C28EA2959F03C00D18A6E /* DataStoreProtocol.swift in Sources */,
 				DA0E80822950AE1B00B44CC6 /* RequestableProtocol.swift in Sources */,
 				DA81E7E429533E7600C60F31 /* ResponseAdapterCreatorProtocol.swift in Sources */,
 				DA0E806129508C1F00B44CC6 /* RequestArguments.swift in Sources */,
@@ -576,6 +601,7 @@
 				DA81E4E42952FC6900C60F31 /* MappingCoordinatorProtocol.swift in Sources */,
 				DA81E5042952FE3500C60F31 /* EventWarning.swift in Sources */,
 				DA0E80692950919F00B44CC6 /* ContextExpression.swift in Sources */,
+				DA2C28EC2959F07400D18A6E /* ManagedObjectContextProtocol.swift in Sources */,
 				DA08567729548E2000273762 /* String+MD5.swift in Sources */,
 				DA0E806E295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift in Sources */,
 				DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */,
@@ -596,9 +622,12 @@
 				DA81E4E02952FB9C00C60F31 /* JSONAdapterProtocol.swift in Sources */,
 				DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */,
 				DA0E806529508C4700B44CC6 /* StartableProtocol.swift in Sources */,
+				DA2C28F42959F55D00D18A6E /* JSONAdapterLinker.swift in Sources */,
 				DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */,
 				DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */,
+				DA2C28EE2959F0A300D18A6E /* FetchResultProtocol.swift in Sources */,
 				DA81E50D2952FE3500C60F31 /* EventCustomLogic.swift in Sources */,
+				DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */,
 				DA81E5032952FE3500C60F31 /* EventTimeMeasure.swift in Sources */,
 				DA0E80532950688500B44CC6 /* NSDictionary+Append.swift in Sources */,
 				DA81E4DE2952FAA600C60F31 /* HttpServiceProtocol.swift in Sources */,
@@ -612,7 +641,6 @@
 				DA0E807C2950A60300B44CC6 /* MappingParadigm.swift in Sources */,
 				DA0E80942950B07C00B44CC6 /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				DA81E4E22952FBC000C60F31 /* DataAdapterProtocol.swift in Sources */,
-				DA0E80732950934D00B44CC6 /* FetchResultProtocol.swift in Sources */,
 				DA0E809A2950B07C00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

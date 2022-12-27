@@ -7,14 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D20FDEB24642DA1009CFA22 /* BaseJSONAdapterLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20FDEA24642DA1009CFA22 /* BaseJSONAdapterLinker.swift */; };
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1D60E52F245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E523245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift */; };
-		1D60E530245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E524245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift */; };
 		1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */; };
 		1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */; };
-		1D60E58D245FE7E5007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
-		1D60E591245FE7E5007E5CA8 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E544245FE7E4007E5CA8 /* DataStore.swift */; };
 		1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */; };
 		1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */; };
@@ -53,6 +48,7 @@
 		DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */; };
 		DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E912295370BA00C60F31 /* RomanNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E913295370BA00C60F31 /* RomanNumber.m */; };
+		DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E412959C01A00D39F0E /* CoreDataStore.swift */; };
 		DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */; };
 		DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */; };
 		E5892FAF56F4E5EE8B2FF883 /* Pods_WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */; };
@@ -70,16 +66,11 @@
 
 /* Begin PBXFileReference section */
 		0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D20FDEA24642DA1009CFA22 /* BaseJSONAdapterLinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseJSONAdapterLinker.swift; sourceTree = "<group>"; };
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1D60E523245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+DeleteAll.swift"; sourceTree = "<group>"; };
-		1D60E524245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Save.swift"; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
 		1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Conversion.swift"; sourceTree = "<group>"; };
-		1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+PrimaryKeypathProtocol.swift"; sourceTree = "<group>"; };
-		1D60E544245FE7E4007E5CA8 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
 		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
@@ -122,6 +113,7 @@
 		DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
 		DA81E912295370BA00C60F31 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
 		DA81E913295370BA00C60F31 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
+		DA913E412959C01A00D39F0E /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ObjectContextProtocol.swift"; sourceTree = "<group>"; };
 		DAAD823A29505864001B0ACD /* PYContext.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PYContext.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStoreEmptyFetchResult.swift; sourceTree = "<group>"; };
@@ -174,7 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				1D60E536245FE7E4007E5CA8 /* CoreData */,
-				1D60E54C245FE7E4007E5CA8 /* JSON */,
 				1D60E575245FE7E5007E5CA8 /* LogInspector */,
 				1DFCC91D24713364005F580E /* FetchAndDecode */,
 				1D60E557245FE7E4007E5CA8 /* Network */,
@@ -205,7 +196,6 @@
 				DA81E86C295352FF00C60F31 /* UIView */,
 				DA81E7CA295326B800C60F31 /* NSThread */,
 				DA81E7B729531EBF00C60F31 /* UIImage+Bundle */,
-				1DD9D5282467B0F20064D88C /* NSManagedObject */,
 				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
 				1D60E528245FE7A7007E5CA8 /* CGRect */,
 				1D60E52A245FE7A7007E5CA8 /* NSDecimalNumber */,
@@ -216,8 +206,6 @@
 		1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E523245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift */,
-				1D60E524245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift */,
 				DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */,
 			);
 			path = NSManagedObjectContext;
@@ -243,17 +231,9 @@
 			isa = PBXGroup;
 			children = (
 				DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */,
-				1D60E544245FE7E4007E5CA8 /* DataStore.swift */,
+				DA913E412959C01A00D39F0E /* CoreDataStore.swift */,
 			);
 			path = CoreData;
-			sourceTree = "<group>";
-		};
-		1D60E54C245FE7E4007E5CA8 /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E60D24602AFE007E5CA8 /* Adapter */,
-			);
-			path = JSON;
 			sourceTree = "<group>";
 		};
 		1D60E557245FE7E4007E5CA8 /* Network */ = {
@@ -336,14 +316,6 @@
 			path = FetchController;
 			sourceTree = "<group>";
 		};
-		1D60E60D24602AFE007E5CA8 /* Adapter */ = {
-			isa = PBXGroup;
-			children = (
-				1D20FDEA24642DA1009CFA22 /* BaseJSONAdapterLinker.swift */,
-			);
-			path = Adapter;
-			sourceTree = "<group>";
-		};
 		1D7E0693247D045F008CB848 /* WOTKitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,14 +323,6 @@
 				1D7E0696247D0460008CB848 /* Info.plist */,
 			);
 			path = WOTKitTests;
-			sourceTree = "<group>";
-		};
-		1DD9D5282467B0F20064D88C /* NSManagedObject */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E53F245FE7E4007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift */,
-			);
-			path = NSManagedObject;
 			sourceTree = "<group>";
 		};
 		1DFCC91D24713364005F580E /* FetchAndDecode */ = {
@@ -667,9 +631,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA81E8772953530000C60F31 /* UIToolbar+WOT.m in Sources */,
+				DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */,
 				1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */,
-				1D60E530245FE7A7007E5CA8 /* NSManagedObjectContext+Save.swift in Sources */,
 				DA81E8752953530000C60F31 /* UINavigationBar+WOT.m in Sources */,
 				DA81E87D2953530000C60F31 /* UIBarButtonItem+EventBlock.m in Sources */,
 				DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */,
@@ -680,22 +644,18 @@
 				1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */,
 				1D60E5B7245FE7E5007E5CA8 /* LogInspector.swift in Sources */,
 				DA046110294F58B3000BFE77 /* OSLogWrapper.swift in Sources */,
-				1D60E58D245FE7E5007E5CA8 /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */,
 				DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */,
 				DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */,
-				1D60E591245FE7E5007E5CA8 /* DataStore.swift in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */,
 				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
 				DA81E8812953530000C60F31 /* WOTProgressView.m in Sources */,
-				1D60E52F245FE7A7007E5CA8 /* NSManagedObjectContext+DeleteAll.swift in Sources */,
 				DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */,
 				DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
 				1DFCC92124713456005F580E /* MappingCoordinator.swift in Sources */,
 				1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */,
-				1D20FDEB24642DA1009CFA22 /* BaseJSONAdapterLinker.swift in Sources */,
 				DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */,
 				DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */,
 			);

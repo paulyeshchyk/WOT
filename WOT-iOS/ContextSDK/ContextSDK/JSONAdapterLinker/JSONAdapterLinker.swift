@@ -1,12 +1,9 @@
 //
-//  JSONAdapterLinkerProtocol.swift
-//  WOTKit
+//  JSONAdapterLinker.swift
+//  ContextSDK
 //
-//  Created by Pavel Yeshchyk on 5/7/20.
-//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
+//  Created by Paul on 26.12.22.
 //
-
-import ContextSDK
 
 public enum BaseJSONAdapterLinkerError: Error, CustomStringConvertible {
     case unexpectedClass(AnyClass)

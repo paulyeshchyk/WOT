@@ -28,7 +28,7 @@ public class WOTWEBRequestFactory: NSObject {
             throw HttpRequestFactoryError.objectNotDefined
         }
         let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
-        try context.requestManager?.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, adapterLinker: pivotLinker, listener: listener)
+        try context.requestManager?.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, adapterLinker: pivotLinker, listener: listener, mappingParadigm: nil)
     }
 
     @objc
@@ -41,7 +41,7 @@ public class WOTWEBRequestFactory: NSObject {
             throw HttpRequestFactoryError.objectNotDefined
         }
         let treeViewLinker = Vehicles.VehiclesTreeViewLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
-        try context.requestManager?.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, adapterLinker: treeViewLinker, listener: listener)
+        try context.requestManager?.startRequest(request, withArguments: arguments, forGroupId: WGWebRequestGroups.vehicle_list, adapterLinker: treeViewLinker, listener: listener, mappingParadigm: nil)
     }
 
     @objc

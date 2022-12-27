@@ -15,7 +15,7 @@ public class EventTimeMeasure: LogEventProtocol {
         message = ""
     }
 
-    required public init?(_ context: String, uuid: UUID) {
+    required public init?(_ context: String, uuid: UUID = UUID()) {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "[HH:mm:ss.SSSS]"
         message = " \(formatter.string(from: Date())) - \(context) - \(uuid.uuidString)"

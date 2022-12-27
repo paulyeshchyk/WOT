@@ -111,12 +111,15 @@ extension Vehicles {
 extension Vehicles {
     public class ModulesTreeLinker: BaseJSONAdapterLinker {
 
-        private struct ModuleLinkerUnexpectedClassError: Error {
+        private struct ModuleLinkerUnexpectedClassError: Error, CustomStringConvertible {
             var expected: AnyClass
             var received: AnyObject?
             public init(extected exp: AnyClass, received rec: AnyObject?) {
                 self.expected = exp
                 self.received = rec
+            }
+            var description: String {
+                return "[ModuleLinkerUnexpectedClassError]: exprected (\(String(describing: expected))), received (\(String(describing: received ?? NSNull.self)))"
             }
         }
         // MARK: -
