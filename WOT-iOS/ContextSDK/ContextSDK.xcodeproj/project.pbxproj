@@ -26,7 +26,7 @@
 		DA0E806E295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E806D295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift */; };
 		DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80702950933200B44CC6 /* FetchResult.swift */; };
 		DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80782950A3A100B44CC6 /* ContextPredicate.swift */; };
-		DA0E807C2950A60300B44CC6 /* MappingParadigm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807B2950A60300B44CC6 /* MappingParadigm.swift */; };
+		DA0E807C2950A60300B44CC6 /* RequestParadigm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */; };
 		DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */; };
 		DA0E80822950AE1B00B44CC6 /* RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80812950AE1B00B44CC6 /* RequestableProtocol.swift */; };
 		DA0E80902950B07C00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E80842950B07A00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift */; };
@@ -114,7 +114,7 @@
 		DA0E806D295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapterLinkerProtocol.swift; sourceTree = "<group>"; };
 		DA0E80702950933200B44CC6 /* FetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResult.swift; sourceTree = "<group>"; };
 		DA0E80782950A3A100B44CC6 /* ContextPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextPredicate.swift; sourceTree = "<group>"; };
-		DA0E807B2950A60300B44CC6 /* MappingParadigm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingParadigm.swift; sourceTree = "<group>"; };
+		DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestParadigm.swift; sourceTree = "<group>"; };
 		DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPredicateComposition.swift; sourceTree = "<group>"; };
 		DA0E80812950AE1B00B44CC6 /* RequestableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestableProtocol.swift; sourceTree = "<group>"; };
 		DA0E80842950B07A00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedLocalAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 		DA0E807A2950A5F400B44CC6 /* MappingParadigm */ = {
 			isa = PBXGroup;
 			children = (
-				DA0E807B2950A60300B44CC6 /* MappingParadigm.swift */,
+				DA0E807B2950A60300B44CC6 /* RequestParadigm.swift */,
 				DA0E807D2950A6D200B44CC6 /* RequestPredicateComposition.swift */,
 				DA0E80812950AE1B00B44CC6 /* RequestableProtocol.swift */,
 			);
@@ -638,7 +638,7 @@
 				DA81E5012952FE3500C60F31 /* EventCDFetch.swift in Sources */,
 				DA0E80902950B07C00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5052952FE3500C60F31 /* EventObject.swift in Sources */,
-				DA0E807C2950A60300B44CC6 /* MappingParadigm.swift in Sources */,
+				DA0E807C2950A60300B44CC6 /* RequestParadigm.swift in Sources */,
 				DA0E80942950B07C00B44CC6 /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				DA81E4E22952FBC000C60F31 /* DataAdapterProtocol.swift in Sources */,
 				DA0E809A2950B07C00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,

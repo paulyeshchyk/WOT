@@ -14,7 +14,7 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     
     var availableInGroups: [RequestIdType] { get }
     var listeners: [RequestListenerProtocol] { get }
-    var paradigm: MappingParadigmProtocol? { get set }
+    var paradigm: RequestParadigmProtocol? { get set }
 
     func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
@@ -62,7 +62,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func start(withArguments: RequestArgumentsProtocol, mappingParadigm: MappingParadigmProtocol?) throws {
+    open func start(withArguments: RequestArgumentsProtocol) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
@@ -74,7 +74,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public var listeners = [RequestListenerProtocol]()
 
-    public var paradigm: MappingParadigmProtocol?
+    public var paradigm: RequestParadigmProtocol?
 
     open func addGroup(_ group: RequestIdType) {
         availableInGroups.append(group)

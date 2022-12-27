@@ -142,7 +142,7 @@ extension RequestManager: RequestManagerProtocol {
         grouppedListenerList.removeListener(listener)
     }
 
-    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?, mappingParadigm: MappingParadigmProtocol?) throws {
+    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?, mappingParadigm: RequestParadigmProtocol?) throws {
 
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
         
@@ -158,29 +158,29 @@ extension RequestManager: RequestManagerProtocol {
 
         try adapterLinkerList.addAdapterLinker(adapterLinker, forRequest: request)
 
-        try request.start(withArguments: withArguments, mappingParadigm: mappingParadigm)
+        try request.start(withArguments: withArguments)
     }
 
-    private func startRequest(by requestId: RequestIdType, mappingParadigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
+    private func startRequest(by requestId: RequestIdType, requestArgumentsBuilder: RequestParadigmProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
         guard let request = try context.requestRegistrator?.createRequest(forRequestId: requestId) else {
             throw RequestManagerError.requestNotFound
         }
-        request.paradigm = mappingParadigm
+        request.paradigm = requestArgumentsBuilder
 
-        let arguments = mappingParadigm.buildRequestArguments(queryItemName: "fields")//WGWebQueryArgs.fields
-        let jsonAdapterLinker = mappingParadigm.jsonAdapterLinker
+        let arguments = requestArgumentsBuilder.buildRequestArguments()
+//        let jsonAdapterLinker = requestArgumentsBuilder.jsonAdapterLinker
         #warning ("remove hashValue")
-        let groupId: RequestIdType = "Nested\(String(describing: mappingParadigm.clazz))-\(arguments)".hashValue
-        try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener, mappingParadigm: mappingParadigm)
+        let groupId: RequestIdType = "Nested\(String(describing: requestArgumentsBuilder.clazz))-\(arguments)".hashValue
+        try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener, mappingParadigm: requestArgumentsBuilder)
     }
     
-    public func fetchRemote(mappingParadigm: MappingParadigmProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func fetchRemote(mappingParadigm: RequestParadigmProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
         guard let requestIDs = context.requestRegistrator?.requestIds(forClass: mappingParadigm.clazz), requestIDs.count > 0 else {
             throw RequestManagerError.requestsNotParsed
         }
         for requestID in requestIDs {
             do {
-                try startRequest(by: requestID, mappingParadigm: mappingParadigm, listener: listener)
+                try startRequest(by: requestID, requestArgumentsBuilder: mappingParadigm, jsonAdapterLinker: jsonAdapterLinker, listener: listener)
             } catch {
                 context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }

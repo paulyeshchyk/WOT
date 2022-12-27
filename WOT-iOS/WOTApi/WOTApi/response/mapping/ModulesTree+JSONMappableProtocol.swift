@@ -23,16 +23,16 @@ extension ModulesTree {
 
         let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
-//        // MARK: - NextTanks
-//
+        // MARK: - NextTanks
+
 //        let nextTanksJSONAdapter = ModulesTree.NextVehicleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
 //        if let nextTanks = moduleTree[#keyPath(ModulesTree.next_tanks)] as? [AnyObject] {
 //            for nextTank in nextTanks {
 //                // parents was not used for next portion of tanks
 //                let nextTanksRequestPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
-//                let nextTanksRequestParadigm = MappingParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil)
+//                let nextTanksRequestParadigm = RequestParadigm(clazz: Vehicles.self, adapter: nextTanksJSONAdapter, requestPredicateComposer: nextTanksRequestPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
 //                do {
-//                    try inContext.requestManager?.fetchRemote(paradigm: nextTanksRequestParadigm)
+//                    try inContext.requestManager?.fetchRemote(mappingParadigm: nextTanksRequestParadigm, jsonAdapterLinker: nextTanksJSONAdapter, listener: self)
 //                } catch {
 //                    inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
 //                }
@@ -45,9 +45,9 @@ extension ModulesTree {
         if let nextModules = moduleTree[#keyPath(ModulesTree.next_modules)] as? [AnyObject] {
             for nextModule in nextModules {
                 let nextModuleRequestPredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
-                let nextModuleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: nextModuleJSONAdapter, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil)
+                let nextModuleRequestParadigm = RequestParadigm(clazz: Module.self, requestPredicateComposer: nextModuleRequestPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try inContext.requestManager?.fetchRemote(mappingParadigm: nextModuleRequestParadigm, listener: self)
+                    try inContext.requestManager?.fetchRemote(mappingParadigm: nextModuleRequestParadigm, jsonAdapterLinker: nextModuleJSONAdapter, listener: self)
                 } catch {
                     inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -58,8 +58,8 @@ extension ModulesTree {
 
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let moduleRequestPredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
-        let moduleRequestParadigm = MappingParadigm(clazz: Module.self, adapter: moduleJSONAdapter, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil)
-        try inContext.requestManager?.fetchRemote(mappingParadigm: moduleRequestParadigm, listener: self)
+        let moduleRequestParadigm = RequestParadigm(clazz: Module.self, requestPredicateComposer: moduleRequestPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
+        try inContext.requestManager?.fetchRemote(mappingParadigm: moduleRequestParadigm, jsonAdapterLinker: moduleJSONAdapter, listener: self)
     }
 }
 

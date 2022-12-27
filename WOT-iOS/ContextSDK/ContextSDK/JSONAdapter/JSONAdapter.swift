@@ -202,7 +202,9 @@ extension JSONAdapterLinkerProtocol {
             ident = key
         }
 
+        #warning("2b refactored")
         let parents = fromRequest.paradigm?.predicate()?.parentObjectIDList
+
         let requestPredicate = ContextPredicate(parentObjectIDList: parents)
         requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
 
