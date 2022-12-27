@@ -12,7 +12,5 @@ public protocol ResponseAdapterProtocol {
 
     typealias OnComplete = (RequestProtocol, Error?) -> Void
     
-    var linker: AdapterLinkerProtocol { get set }
-
     init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: Context, adapterLinker: AdapterLinkerProtocol)
 }

@@ -42,16 +42,13 @@ public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
     }
 
     public func responseAdapterInstances(byRequestIdTypes: [RequestIdType], request: RequestProtocol, adapterLinker: AdapterLinkerProtocol, requestManager: RequestManagerProtocol) -> [ResponseAdapterProtocol] {
-        var adapters: [ResponseAdapterProtocol] = .init()
-        byRequestIdTypes.forEach { requestIdType in
+        byRequestIdTypes.compactMap({ requestIdType in
             do {
-                let adapter = try responseAdapterInstance(for: requestIdType, request: request, adapterLinker: adapterLinker, requestManager: requestManager)
-                adapters.append(adapter)
+                return try responseAdapterInstance(for: requestIdType, request: request, adapterLinker: adapterLinker, requestManager: requestManager)
             } catch {
                 appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                return nil
             }
-        }
-
-        return adapters
+        })
     }
 }

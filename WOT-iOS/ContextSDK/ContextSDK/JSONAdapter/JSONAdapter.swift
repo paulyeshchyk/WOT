@@ -25,11 +25,9 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     public let uuid: UUID = UUID()
     public var MD5: String { uuid.MD5 }
 
-    // MARK: JSONAdapterProtocol -
-
-    public var linker: AdapterLinkerProtocol
-
     // MARK: Private -
+
+    private var adapterLinker: AdapterLinkerProtocol
 
     private let appContext: JSONAdapterProtocol.Context
     private let modelClazz: PrimaryKeypathProtocol.Type
@@ -44,7 +42,7 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
         self.modelClazz = modelClass
         self.request = request
-        self.linker = adapterLinker
+        self.adapterLinker = adapterLinker
         self.appContext = context
 
         context.logInspector?.logEvent(EventObjectNew(self), sender: self)
@@ -74,7 +72,7 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
             //
             do {
                 let contextPredicate = fromRequest.contextPredicate
-                let extraction = try linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
+                let extraction = try adapterLinker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
 
                 try self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
                     guard let self = self else {
@@ -92,7 +90,7 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
                         return
                     }
 
-                    self.linker.process(fetchResult: fetchResult, dataStore: self.appContext.dataStore) { _, error in
+                    self.adapterLinker.process(fetchResult: fetchResult, dataStore: self.appContext.dataStore) { _, error in
                         if let error = error {
                             self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                         }
@@ -133,8 +131,8 @@ extension JSONAdapter {
     }
 }
 
-
 extension JSONAdapter {
+
     private func findOrCreateObject(json: JSONCollectable?, predicate: ContextPredicate, callback externalCallback: @escaping FetchResultCompletion) throws {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {

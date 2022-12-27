@@ -14,6 +14,6 @@ public protocol AdapterLinkerProtocol: MD5Protocol {
     func onJSONExtraction(json: JSON) -> JSON?
 }
 
-@objc
+//@objc
 public protocol JSONAdapterLinkerProtocol: AdapterLinkerProtocol {
 }

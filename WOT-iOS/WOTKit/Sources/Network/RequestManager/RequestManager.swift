@@ -132,6 +132,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         request.removeListener(self)
     }
 }
+
 // MARK: - RequestManagerProtocol
 
 extension RequestManager: RequestManagerProtocol {
