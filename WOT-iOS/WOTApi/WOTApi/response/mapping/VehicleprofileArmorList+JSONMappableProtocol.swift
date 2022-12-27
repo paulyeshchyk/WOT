@@ -42,7 +42,7 @@ extension VehicleprofileArmorList {
         
         let turretBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
         let turretMapperClazz = VehicleprofileArmorList.TurretLinker.self
-        inContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, mapperClazz: turretMapperClazz, lookupRuleBuilder: turretBuilder, requestManager: inContext.requestManager)
+        inContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: turretMapperClazz, lookupRuleBuilder: turretBuilder, requestManager: inContext.requestManager)
 
         // MARK: - hull
 
@@ -53,12 +53,12 @@ extension VehicleprofileArmorList {
         
         let hullBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
         let hullMapperClazz = VehicleprofileArmorList.HullLinker.self
-        inContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, mapperClazz: hullMapperClazz, lookupRuleBuilder: hullBuilder, requestManager: inContext.requestManager)
+        inContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: hullMapperClazz, lookupRuleBuilder: hullBuilder, requestManager: inContext.requestManager)
     }
 }
 
 extension VehicleprofileArmorList {
-    public class TurretLinker: JSONAdapterLinker {
+    public class TurretLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -79,7 +79,7 @@ extension VehicleprofileArmorList {
         }
     }
 
-    public class HullLinker: JSONAdapterLinker {
+    public class HullLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 

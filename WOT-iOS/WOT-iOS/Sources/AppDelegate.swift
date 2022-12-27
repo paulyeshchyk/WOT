@@ -20,7 +20,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var dataStore: DataStoreProtocol?
     public var requestRegistrator: RequestRegistratorProtocol?
     public var mappingCoordinator: MappingCoordinatorProtocol?
-    public var responseAdapterCreator: ResponseAdapterCreatorProtocol?
+    public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 
@@ -32,7 +32,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         dataStore = WOTDataStore(context: self)
         requestRegistrator = WOTRequestRegistrator(context: self)
         mappingCoordinator = MappingCoordinator(context: self)
-        responseAdapterCreator = ResponseAdapterCreator(context: self)
+        responseDataAdapterCreator = ResponseDataAdapterCreator(context: self)
         requestManager = RequestManager(context: self)
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -43,6 +43,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     }
 }
 
-extension AppDelegate: RequestRegistratorContainerProtocol, ResponseAdapterCreatorContainerProtocol {
+extension AppDelegate: RequestRegistratorContainerProtocol, ResponseDataAdapterCreatorContainerProtocol {
     
 }

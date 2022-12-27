@@ -8,7 +8,7 @@
 
 import ContextSDK
 
-public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
+public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
     
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestRegistratorContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
     
@@ -29,7 +29,7 @@ public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
         self.appContext = context
     }
 
-    public func responseAdapterInstance(for requestIdType: RequestIdType, request: RequestProtocol, adapterLinker: AdapterLinkerProtocol, requestManager: RequestManagerProtocol) throws -> ResponseAdapterProtocol {
+    public func responseDataAdapterInstance(for requestIdType: RequestIdType, request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol) throws -> ResponseAdapterProtocol {
         
         guard let modelClass = try appContext.requestRegistrator?.modelClass(forRequestIdType: requestIdType) else {
             throw ResponseAdapterCreatorError.modelClassNotFound(requestType: requestIdType)
@@ -38,13 +38,13 @@ public class ResponseAdapterCreator: ResponseAdapterCreatorProtocol {
             throw ResponseAdapterCreatorError.adapterNotFound(requestType: requestIdType)
         }
 
-        return dataAdapterClass.init(modelClass: modelClass, request: request, context: appContext, adapterLinker: adapterLinker)
+        return dataAdapterClass.init(modelClass: modelClass, request: request, context: appContext, adapterLinker: managedObjectCreator)
     }
 
-    public func responseAdapterInstances(byRequestIdTypes: [RequestIdType], request: RequestProtocol, adapterLinker: AdapterLinkerProtocol, requestManager: RequestManagerProtocol) -> [ResponseAdapterProtocol] {
+    public func responseDataAdapterInstances(byRequestIdTypes: [RequestIdType], request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol) -> [ResponseAdapterProtocol] {
         byRequestIdTypes.compactMap({ requestIdType in
             do {
-                return try responseAdapterInstance(for: requestIdType, request: request, adapterLinker: adapterLinker, requestManager: requestManager)
+                return try responseDataAdapterInstance(for: requestIdType, request: request, managedObjectCreator: managedObjectCreator)
             } catch {
                 appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 return nil

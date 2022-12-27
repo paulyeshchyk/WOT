@@ -35,18 +35,18 @@ extension RESTResponseParser {
         }
     }
     
-    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, dataAdapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
         guard let data = parseData else {
             throw RESTResponseParserError.dataIsEmpty
         }
 
-        guard let adapters = adapters, adapters.count != 0 else {
+        guard let dataAdapters = dataAdapters, dataAdapters.count != 0 else {
             throw RESTResponseParserError.noAdapterFound
         }
         
         var dataAdaptationPair = [DataAdaptationPair]()
-        adapters.forEach { adapter in
-            let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
+        dataAdapters.forEach { dataAdapter in
+            let pair = DataAdaptationPair(dataAdapter: dataAdapter, data: data)
             dataAdaptationPair.append(pair)
         }
 

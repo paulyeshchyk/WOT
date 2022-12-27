@@ -32,7 +32,7 @@ extension ModulesTree {
                 let nextTanksPredicateComposer = ModulesTree.NextVehiclePredicateComposer(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
                 let nextTanksRequestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposer: nextTanksPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try inContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, requestPredicateComposer: nextTanksPredicateComposer, adapterLinker: nextTanksJSONAdapter, listener: self)
+                    try inContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, requestPredicateComposer: nextTanksPredicateComposer, managedObjectCreator: nextTanksJSONAdapter, listener: self)
                 } catch {
                     inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -47,7 +47,7 @@ extension ModulesTree {
                 let nextModulePredicateComposer = ModulesTree.NextModulesPredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
                 let nextModuleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try inContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, requestPredicateComposer: nextModulePredicateComposer, adapterLinker: nextModuleJSONAdapter, listener: self)
+                    try inContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, requestPredicateComposer: nextModulePredicateComposer, managedObjectCreator: nextModuleJSONAdapter, listener: self)
                 } catch {
                     inContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -59,7 +59,7 @@ extension ModulesTree {
         let moduleJSONAdapter = ModulesTree.CurrentModuleLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let modulePredicateComposer = ModulesTree.CurrentModulePredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
         let moduleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
-        try inContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, requestPredicateComposer: modulePredicateComposer, adapterLinker: moduleJSONAdapter, listener: self)
+        try inContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, requestPredicateComposer: modulePredicateComposer, managedObjectCreator: moduleJSONAdapter, listener: self)
     }
 }
 
@@ -80,7 +80,7 @@ extension ModulesTree {
     
     private class CurrentModulePredicateComposer: LinkedRemoteAsPrimaryRuleBuilder { }
     
-    private class CurrentModuleLinker: JSONAdapterLinker {
+    private class CurrentModuleLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -106,7 +106,7 @@ extension ModulesTree {
     
     private class NextModulesPredicateComposer: MasterAsPrimaryLinkedAsSecondaryRuleBuilder { }
     
-    private class NextModulesLinker: JSONAdapterLinker {
+    private class NextModulesLinker: ManagedObjectCreator {
         private enum NextModulesLinkerError: Error, CustomStringConvertible {
             case wrongParentClass
             case wrongChildClass
@@ -143,7 +143,7 @@ extension ModulesTree {
     
     private class NextVehiclePredicateComposer: LinkedLocalAsPrimaryRuleBuilder { }
     
-    private class NextVehicleLinker: JSONAdapterLinker {
+    private class NextVehicleLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 

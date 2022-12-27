@@ -38,7 +38,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         }
     }
     
-    public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & ResponseAdapterCreatorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol & RequestRegistratorContainerProtocol & ResponseDataAdapterCreatorContainerProtocol
     
     override public var description: String { String(describing: type(of: self)) }
     
@@ -49,7 +49,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
 
     private let grouppedListenerList: RequestGrouppedListenerList
     private let grouppedRequestList: RequestGrouppedRequestList
-    private let adapterLinkerList: ResponseAdapterLinkerList
+    private let managedObjectCreatorList: ResponseManagedObjectCreatorList
 
     deinit {
         //
@@ -59,7 +59,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         self.appContext = context
         self.grouppedRequestList  = RequestGrouppedRequestList(context: context)
         self.grouppedListenerList = RequestGrouppedListenerList()
-        self.adapterLinkerList = ResponseAdapterLinkerList()
+        self.managedObjectCreatorList = ResponseManagedObjectCreatorList()
         super.init()
     }
 
@@ -84,17 +84,19 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         }
 
         do {
-            guard let adapterLinker = adapterLinkerList.adapterLinkerForRequest(request) else {
+            #warning("move to response parser")
+            guard let managedObjectCreator = managedObjectCreatorList.adapterLinkerForRequest(request) else {
                 throw RequestManagerError.adapterNotFound(request)
             }
             guard let requestIds = try appContext.requestRegistrator?.requestIds(forRequest: request) else {
                 throw RequestManagerError.noRequestIds(request)
             }
-            let adapters = appContext.responseAdapterCreator?.responseAdapterInstances(byRequestIdTypes: requestIds, request: request, adapterLinker: adapterLinker, requestManager: self)
+            #warning("move to response parser")
+            let dataAdapters = appContext.responseDataAdapterCreator?.responseDataAdapterInstances(byRequestIdTypes: requestIds, request: request, managedObjectCreator: managedObjectCreator)
 
             let responseParser = request.responseParserClass.init(appContext: appContext)
             
-            try responseParser.parseResponse(data: data, forRequest: request, adapters: adapters, completion: {[weak self] request, error in
+            try responseParser.parseResponse(data: data, forRequest: request, dataAdapters: dataAdapters, completion: {[weak self] request, error in
                 guard let self = self else {
                     return
                 }
@@ -103,7 +105,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
                     return
                 }
                 do {
-                    try self.adapterLinkerList.removeAdapterForRequest(request)
+                    try self.managedObjectCreatorList.removeAdapterForRequest(request)
                 } catch {
                     self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
                 }
@@ -145,7 +147,7 @@ extension RequestManager: RequestManagerProtocol {
         grouppedListenerList.removeListener(listener)
     }
 
-    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, adapterLinker: AdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
 
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
         
@@ -159,12 +161,12 @@ extension RequestManager: RequestManagerProtocol {
             appContext.logInspector?.logEvent(event, sender: self)
         }
 
-        try adapterLinkerList.addAdapterLinker(adapterLinker, forRequest: request)
+        try managedObjectCreatorList.addAdapterLinker(managedObjectCreator, forRequest: request)
 
         try request.start()
     }
     
-    public func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, adapterLinker: AdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
         guard let requestIDs = appContext.requestRegistrator?.requestIds(modelServiceClass: requestParadigm.modelClass), requestIDs.count > 0 else {
             throw RequestManagerError.requestsNotRegistered(requestParadigm)
         }
@@ -178,7 +180,7 @@ extension RequestManager: RequestManagerProtocol {
                 request.arguments = requestParadigm.buildRequestArguments()
                 let groupId: RequestIdType = requestParadigm.MD5.hashValue
 
-                try startRequest(request, forGroupId: groupId, adapterLinker: adapterLinker, listener: listener)
+                try startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectCreator, listener: listener)
             } catch {
                 appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }
@@ -186,11 +188,11 @@ extension RequestManager: RequestManagerProtocol {
     }
 }
 
-private class ResponseAdapterLinkerList {
+private class ResponseManagedObjectCreatorList {
     
     private enum AdapterLinkerListError: Error, CustomStringConvertible {
         case notRemoved(RequestProtocol)
-        case notFound(AdapterLinkerProtocol)
+        case notFound(ManagedObjectCreatorProtocol)
         var description: String {
             switch self {
             case .notRemoved(let request): return "[\(type(of: self))]: Adapter was not removed for request \(String(describing: request))"
@@ -198,13 +200,13 @@ private class ResponseAdapterLinkerList {
             }
         }
     }
-    private var adaptersLinkerList: [AnyHashable: AdapterLinkerProtocol] = [:]
+    private var adaptersLinkerList: [AnyHashable: ManagedObjectCreatorProtocol] = [:]
     
-    func addAdapterLinker(_ adapter: AdapterLinkerProtocol, forRequest: RequestProtocol) throws {
+    func addAdapterLinker(_ adapter: ManagedObjectCreatorProtocol, forRequest: RequestProtocol) throws {
         adaptersLinkerList[forRequest.MD5] = adapter
     }
     
-    func adapterLinkerForRequest(_ request: RequestProtocol) -> AdapterLinkerProtocol? {
+    func adapterLinkerForRequest(_ request: RequestProtocol) -> ManagedObjectCreatorProtocol? {
         adaptersLinkerList[request.MD5]
     }
     
@@ -215,14 +217,14 @@ private class ResponseAdapterLinkerList {
         }
     }
     
-    func removeAdapter(_ adapterLinker: AdapterLinkerProtocol) throws {
+    func removeAdapter(_ adapterLinker: ManagedObjectCreatorProtocol) throws {
         guard let key = findKey(for: adapterLinker) else {
             throw AdapterLinkerListError.notFound(adapterLinker)
         }
         adaptersLinkerList.removeValue(forKey: key)
     }
     
-    private func findKey(for adapterLinker: AdapterLinkerProtocol) -> AnyHashable? {
+    private func findKey(for adapterLinker: ManagedObjectCreatorProtocol) -> AnyHashable? {
         for key in adaptersLinkerList.keys {
             if adaptersLinkerList[key]?.MD5 == adapterLinker.MD5 {
                 return key

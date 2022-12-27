@@ -29,7 +29,7 @@ extension VehicleprofileAmmo {
         let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
         let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         let penetrationListCollection = JSONCollection(custom: penetrationArray)
-        inContext.mappingCoordinator?.linkItem(from: penetrationListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, mapperClazz: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder, requestManager: inContext.requestManager)
+        inContext.mappingCoordinator?.linkItem(from: penetrationListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, adapterLinker: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder, requestManager: inContext.requestManager)
 
         // MARK: - Damage
 
@@ -38,12 +38,12 @@ extension VehicleprofileAmmo {
         let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
 
         let damageListCollection = JSONCollection(custom: damageArray)
-        inContext.mappingCoordinator?.linkItem(from: damageListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, mapperClazz: damageMapper, lookupRuleBuilder: damageRuleBuilder, requestManager: inContext.requestManager)
+        inContext.mappingCoordinator?.linkItem(from: damageListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, adapterLinker: damageMapper, lookupRuleBuilder: damageRuleBuilder, requestManager: inContext.requestManager)
     }
 }
 
 extension VehicleprofileAmmo {
-    public class PenetrationLinker: JSONAdapterLinker {
+    public class PenetrationLinker: ManagedObjectCreator {
         //
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
@@ -69,7 +69,7 @@ extension VehicleprofileAmmo {
         }
     }
 
-    public class DamageLinker: JSONAdapterLinker {
+    public class DamageLinker: ManagedObjectCreator {
         //
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }

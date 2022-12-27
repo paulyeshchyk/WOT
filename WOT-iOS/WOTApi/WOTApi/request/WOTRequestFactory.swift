@@ -31,7 +31,7 @@ public class WOTWEBRequestFactory: NSObject {
         }
         request.arguments = arguments
         
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, adapterLinker: pivotLinker, listener: listener)
+        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, listener: listener)
     }
 
     @objc
@@ -47,7 +47,7 @@ public class WOTWEBRequestFactory: NSObject {
         }
         request.arguments = arguments
 
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, adapterLinker: treeViewLinker, listener: listener)
+        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: treeViewLinker, listener: listener)
     }
 
     @objc

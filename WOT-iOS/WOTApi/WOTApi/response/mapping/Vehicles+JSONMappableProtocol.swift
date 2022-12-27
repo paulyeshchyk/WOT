@@ -55,7 +55,7 @@ extension Vehicles {
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let linker = Vehicles.DefaultProfileLinker.self
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
-            inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, mapperClazz: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
+            inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, adapterLinker: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
         } else {
             inContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(self.tank_id)), sender: self)
         }
@@ -109,7 +109,7 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    public class ModulesTreeLinker: JSONAdapterLinker {
+    public class ModulesTreeLinker: ManagedObjectCreator {
 
         private struct ModuleLinkerUnexpectedClassError: Error, CustomStringConvertible {
             var expected: AnyClass
@@ -153,7 +153,7 @@ extension Vehicles {
         }
     }
 
-    public class DefaultProfileLinker: JSONAdapterLinker {
+    public class DefaultProfileLinker: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
@@ -182,7 +182,7 @@ extension Vehicles {
         }
     }
 
-    public class VehiclesPivotDataLinker: JSONAdapterLinker {
+    public class VehiclesPivotDataLinker: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
@@ -195,7 +195,7 @@ extension Vehicles {
         }
     }
 
-    public class VehiclesTreeViewLinker: JSONAdapterLinker {
+    public class VehiclesTreeViewLinker: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
