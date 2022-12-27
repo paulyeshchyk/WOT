@@ -36,12 +36,12 @@ open class HttpRequest: Request {
         }
     }
 
-    override open func start(withArguments args: RequestArgumentsProtocol) throws {
+    override open func start() throws {
         
         let urlRequest = try HttpRequestBuilder().build(hostConfiguration: context.hostConfiguration,
                                                         httpMethod: httpMethod,
                                                         path: path,
-                                                        args: args,
+                                                        args: arguments,
                                                         bodyData: httpBodyData)
         
         httpDataReceiver = HttpDataReceiver(context: context, request: urlRequest)

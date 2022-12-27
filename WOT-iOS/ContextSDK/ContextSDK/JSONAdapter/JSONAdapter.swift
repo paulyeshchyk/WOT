@@ -70,8 +70,8 @@ public class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
             dispatchGroup.enter()
             //
             do {
-
-                let extraction = try linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, request: fromRequest)
+                let contextPredicate = fromRequest.contextPredicate
+                let extraction = try linker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
 
                 self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) {[weak self] fetchResult, error in
                     guard let self = self else {
@@ -186,7 +186,7 @@ public struct JSONExtraction {
 
 extension JSONAdapterLinkerProtocol {
     
-    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, request fromRequest: RequestProtocol) throws -> JSONExtraction {
+    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicate?) throws -> JSONExtraction {
         guard let json = from[key] as? JSON else {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
@@ -203,10 +203,10 @@ extension JSONAdapterLinkerProtocol {
         }
 
         #warning("2b refactored")
-        let parents = fromRequest.paradigm?.predicate()?.parentObjectIDList
+        let parents = contextPredicate?.parentObjectIDList
 
         let requestPredicate = ContextPredicate(parentObjectIDList: parents)
-        requestPredicate[.primary] = modelClazz.primaryKey(for: ident as AnyObject, andType: linkerPrimaryKeyType)
+        requestPredicate[.primary] = modelClazz.primaryKey(forType: linkerPrimaryKeyType, andObject: ident as AnyObject)
 
         let jsonCollection = try JSONCollection(element: extractedJSON)
         return JSONExtraction(requestPredicate: requestPredicate, json: jsonCollection)

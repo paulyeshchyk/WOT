@@ -14,7 +14,8 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     
     var availableInGroups: [RequestIdType] { get }
     var listeners: [RequestListenerProtocol] { get }
-    var paradigm: RequestParadigmProtocol? { get set }
+    var contextPredicate: ContextPredicate? { get set }
+    var arguments: RequestArgumentsProtocol? { get set }
 
     func addGroup(_ group: RequestIdType)
     func addListener(_ listener: RequestListenerProtocol)
@@ -55,18 +56,18 @@ open class Request: RequestProtocol, CustomStringConvertible {
     }
 
     deinit {
-        paradigm = nil
+        //
     }
     
     open func cancel(byReason: RequestCancelReasonProtocol) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func start(withArguments: RequestArgumentsProtocol) throws {
+    open func start() throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    // MARK: - WOTRequestProtocol
+    // MARK: - RequestProtocol
 
     public let uuid: UUID = UUID()
 
@@ -74,7 +75,9 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public var listeners = [RequestListenerProtocol]()
 
-    public var paradigm: RequestParadigmProtocol?
+    public var contextPredicate: ContextPredicate?
+    
+    public var arguments: RequestArgumentsProtocol?
 
     open func addGroup(_ group: RequestIdType) {
         availableInGroups.append(group)

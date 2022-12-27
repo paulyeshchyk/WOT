@@ -14,8 +14,8 @@ public class RequestManager: NSObject, RequestListenerProtocol {
     private enum RequestManagerError: Error, CustomStringConvertible {
         case adapterNotFound(RequestProtocol)
         case noRequestIds(RequestProtocol)
-        case requestNotFound
-        case requestsNotParsed
+        case requestNotCreated(RequestParadigmProtocol)
+        case requestsNotRegistered(RequestParadigmProtocol)
         case receivedResponseFromReleasedRequest
         case cantAddListener
         case invalidRequest
@@ -27,13 +27,13 @@ public class RequestManager: NSObject, RequestListenerProtocol {
             case .adapterNotFound(let request): return "\(type(of: self)): Linker not found for request: \(String(describing: request))"
             case .noRequestIds(let request): return "\(type(of: self)): No request ids for request: \(String(describing: request))"
             case .receivedResponseFromReleasedRequest: return "\(type(of: self)): Received response from released request"
-            case .requestNotFound: return "\(type(of: self)): Request not found"
+            case .requestNotCreated(let paradigm): return "\(type(of: self)): Request not created for [\(String(describing: paradigm))]"
             case .cantAddListener: return "\(type(of: self)): Can't add listener"
             case .invalidRequest: return "\(type(of: self)): Invalid request"
             case .modelClassNotFound(let request): return "\(type(of: self)): Model class not found for request: \(String(describing: request))"
             case .modelClassNotRegistered(let model, let request): return "\(type(of: self)): Model class(\((type(of: model))) registered for request: \(String(describing: request))"
             case .requestManagerListenerIsNil: return "\(type(of: self)): RequestManagerListener is nil"
-            case .requestsNotParsed: return "[\(type(of: self))]: request is not parsed"
+            case .requestsNotRegistered(let paradigm): return "[\(type(of: self))]: Request was not registered for [\(String(describing: paradigm))]"
             }
         }
     }
@@ -142,7 +142,7 @@ extension RequestManager: RequestManagerProtocol {
         grouppedListenerList.removeListener(listener)
     }
 
-    public func startRequest(_ request: RequestProtocol, withArguments: RequestArgumentsProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?, mappingParadigm: RequestParadigmProtocol?) throws {
+    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, adapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
 
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
         
@@ -158,29 +158,24 @@ extension RequestManager: RequestManagerProtocol {
 
         try adapterLinkerList.addAdapterLinker(adapterLinker, forRequest: request)
 
-        try request.start(withArguments: withArguments)
-    }
-
-    private func startRequest(by requestId: RequestIdType, requestArgumentsBuilder: RequestParadigmProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
-        guard let request = try context.requestRegistrator?.createRequest(forRequestId: requestId) else {
-            throw RequestManagerError.requestNotFound
-        }
-        request.paradigm = requestArgumentsBuilder
-
-        let arguments = requestArgumentsBuilder.buildRequestArguments()
-//        let jsonAdapterLinker = requestArgumentsBuilder.jsonAdapterLinker
-        #warning ("remove hashValue")
-        let groupId: RequestIdType = "Nested\(String(describing: requestArgumentsBuilder.clazz))-\(arguments)".hashValue
-        try startRequest(request, withArguments: arguments, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener, mappingParadigm: requestArgumentsBuilder)
+        try request.start()
     }
     
-    public func fetchRemote(mappingParadigm: RequestParadigmProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
-        guard let requestIDs = context.requestRegistrator?.requestIds(forClass: mappingParadigm.clazz), requestIDs.count > 0 else {
-            throw RequestManagerError.requestsNotParsed
+    public func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, jsonAdapterLinker: JSONAdapterLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
+        guard let requestIDs = context.requestRegistrator?.requestIds(forClass: requestParadigm.modelClass), requestIDs.count > 0 else {
+            throw RequestManagerError.requestsNotRegistered(requestParadigm)
         }
         for requestID in requestIDs {
             do {
-                try startRequest(by: requestID, requestArgumentsBuilder: mappingParadigm, jsonAdapterLinker: jsonAdapterLinker, listener: listener)
+                
+                guard let request = try context.requestRegistrator?.createRequest(forRequestId: requestID) else {
+                    throw RequestManagerError.requestNotCreated(requestParadigm)
+                }
+                request.contextPredicate = requestPredicateComposer.build()?.requestPredicate
+                request.arguments = requestParadigm.buildRequestArguments()
+                let groupId: RequestIdType = requestParadigm.MD5.hashValue
+
+                try startRequest(request, forGroupId: groupId, adapterLinker: jsonAdapterLinker, listener: listener)
             } catch {
                 context.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }

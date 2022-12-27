@@ -17,7 +17,7 @@ public class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     public func build() -> RequestPredicateComposition? {
         let lookupPredicate = ContextPredicate(parentObjectIDList: nil)
-        lookupPredicate[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .internal)
+        lookupPredicate[.primary] = linkedClazz.primaryKey(forType:.internal, andObject: linkedObjectID)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

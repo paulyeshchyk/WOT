@@ -44,28 +44,28 @@ extension Module {
         case .vehicleChassis:
             let chassisJSONAdapter = Module.SuspensionMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let chassisRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileSuspension.self, linkedObjectID: module_id)
-            let chassisRequestParadigm = RequestParadigm(clazz: VehicleprofileSuspension.self, requestPredicateComposer: chassisRequestComposer, keypathPrefix: "suspension.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(mappingParadigm: chassisRequestParadigm, jsonAdapterLinker: chassisJSONAdapter, listener: self)
+            let chassisRequestParadigm = RequestParadigm(modelClass: VehicleprofileSuspension.self, requestPredicateComposer: chassisRequestComposer, keypathPrefix: "suspension.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: chassisRequestParadigm, requestPredicateComposer: chassisRequestComposer, jsonAdapterLinker: chassisJSONAdapter, listener: self)
         case .vehicleGun:
             let gunJSONAdapter = Module.GunMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let gunRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileGun.self, linkedObjectID: module_id)
-            let gunRequestParadigm = RequestParadigm(clazz: VehicleprofileGun.self, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(mappingParadigm: gunRequestParadigm, jsonAdapterLinker: gunJSONAdapter, listener: self)
+            let gunRequestParadigm = RequestParadigm(modelClass: VehicleprofileGun.self, requestPredicateComposer: gunRequestComposer, keypathPrefix: "gun.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: gunRequestParadigm, requestPredicateComposer: gunRequestComposer, jsonAdapterLinker: gunJSONAdapter, listener: self)
         case .vehicleRadio:
             let radioJSONAdapter = Module.RadioMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let radioRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileRadio.self, linkedObjectID: module_id)
-            let radioRequestParadigm = RequestParadigm(clazz: VehicleprofileRadio.self, requestPredicateComposer: radioRequestComposer, keypathPrefix: "radio.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(mappingParadigm: radioRequestParadigm, jsonAdapterLinker: radioJSONAdapter, listener: self)
+            let radioRequestParadigm = RequestParadigm(modelClass: VehicleprofileRadio.self, requestPredicateComposer: radioRequestComposer, keypathPrefix: "radio.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: radioRequestParadigm, requestPredicateComposer: radioRequestComposer, jsonAdapterLinker: radioJSONAdapter, listener: self)
         case .vehicleEngine:
             let engineJSONAdapter = Module.EngineMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let engineRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileEngine.self, linkedObjectID: module_id)
-            let engineRequestParadigm = RequestParadigm(clazz: VehicleprofileEngine.self, requestPredicateComposer: engineRequestComposer, keypathPrefix: "engine.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(mappingParadigm: engineRequestParadigm, jsonAdapterLinker: engineJSONAdapter, listener: self)
+            let engineRequestParadigm = RequestParadigm(modelClass: VehicleprofileEngine.self, requestPredicateComposer: engineRequestComposer, keypathPrefix: "engine.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: engineRequestParadigm, requestPredicateComposer: engineRequestComposer, jsonAdapterLinker: engineJSONAdapter, listener: self)
         case .vehicleTurret:
             let turretJSONAdapter = Module.TurretMapper(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
             let turretRequestComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
-            let turretRequestParadigm = RequestParadigm(clazz: VehicleprofileTurret.self, requestPredicateComposer: turretRequestComposer, keypathPrefix: "turret.", httpQueryItemName: "fields")
-            try inContext.requestManager?.fetchRemote(mappingParadigm: turretRequestParadigm, jsonAdapterLinker: turretJSONAdapter, listener: self)
+            let turretRequestParadigm = RequestParadigm(modelClass: VehicleprofileTurret.self, requestPredicateComposer: turretRequestComposer, keypathPrefix: "turret.", httpQueryItemName: "fields")
+            try inContext.requestManager?.fetchRemote(requestParadigm: turretRequestParadigm, requestPredicateComposer: turretRequestComposer, jsonAdapterLinker: turretJSONAdapter, listener: self)
         default: fatalError("unknown module type")
         }
     }

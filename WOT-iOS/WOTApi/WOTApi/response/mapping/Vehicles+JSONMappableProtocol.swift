@@ -100,7 +100,7 @@ extension Vehicles {
             throw VehiclesJSONMappingError.passedInvalidModuleId
         }
         let submodulesPredicate = ContextPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
-        submodulesPredicate[.primary] = ModulesTree.primaryKey(for: module_id, andType: .internal)
+        submodulesPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let linker = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)

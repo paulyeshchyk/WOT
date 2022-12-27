@@ -23,7 +23,7 @@ public class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol 
         var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(currentObjectID)
         let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
-        lookupPredicate[.primary] = linkedClazz.primaryKey(for: linkedObjectID as AnyObject, andType: .external)
+        lookupPredicate[.primary] = linkedClazz.primaryKey(forType: .external, andObject: linkedObjectID)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
