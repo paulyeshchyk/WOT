@@ -241,7 +241,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
         id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
         id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
-        _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil];
+        
+        NSError *error = nil;
+        _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil error: &error];
         _fetchedResultController.delegate = self;
     }
     return _fetchedResultController;
@@ -319,7 +321,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                                  inContext: appDelegate
+                                                 appContext: appDelegate
                                                    listener: self
                                                       error: &error];
 }

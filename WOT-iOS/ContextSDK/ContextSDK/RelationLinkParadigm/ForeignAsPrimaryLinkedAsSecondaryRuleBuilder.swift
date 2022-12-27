@@ -22,7 +22,7 @@ public class ForeignAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateCompo
     public func build() -> RequestPredicateComposition? {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = requestPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
-        lookupPredicate[.secondary] = linkedClazz.primaryKey(for: ammoType, andType: .internal)
+        lookupPredicate[.secondary] = linkedClazz.primaryKey(forType: .internal, andObject: ammoType)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

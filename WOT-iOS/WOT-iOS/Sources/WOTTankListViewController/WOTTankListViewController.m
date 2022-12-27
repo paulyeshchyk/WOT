@@ -193,10 +193,11 @@
     
     id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
-    self.fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil];
+
+    NSError *error = nil;
+    self.fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil error: &error];
     self.fetchedResultController.delegate = self;
     
-    NSError *error = nil;
     [self.fetchedResultController performFetch:&error];
     [self.collectionView reloadData];
 

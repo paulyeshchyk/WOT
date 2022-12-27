@@ -15,18 +15,16 @@ public protocol RequestArgumentsProtocol {
 
 public typealias ArgumentsType = Swift.Dictionary<Swift.AnyHashable, Any>
 
-open class RequestArguments: RequestArgumentsProtocol, MD5Protocol, CustomStringConvertible {
+@objc
+open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
 
     private var dictionary = ArgumentsType()
 
     public let uuid: UUID = UUID()
     public var MD5: String { uuid.MD5 }
 
-    public var description: String { "\(type(of: self)): \(String(describing: dictionary))" }
+    override public var description: String { "\(type(of: self)): \(String(describing: dictionary))" }
 
-    required public init() {
-        
-    }
     required public convenience init(_ dictionary: ArgumentsType) {
         self.init()
 

@@ -117,12 +117,6 @@ extension JSONCollection: DecoderContainer {
     }
 }
 
-@objc
-public protocol JSONAdapterProtocol: DataAdapterProtocol, MD5Protocol {
+public protocol JSONAdapterProtocol: ResponseAdapterProtocol, MD5Protocol {
     
-    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & MappingCoordinatorContainerProtocol
-    
-    var linker: JSONAdapterLinkerProtocol { get set }
-
-    init(Clazz clazz: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: Context, jsonAdapterLinker: JSONAdapterLinkerProtocol)
 }

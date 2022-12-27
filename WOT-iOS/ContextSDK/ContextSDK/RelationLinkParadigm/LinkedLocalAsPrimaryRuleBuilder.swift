@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     private var linkedClazz: PrimaryKeypathProtocol.Type
     private var linkedObjectID: AnyObject
 
@@ -17,7 +17,7 @@ public class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
     public func build() -> RequestPredicateComposition? {
         let lookupPredicate = ContextPredicate(parentObjectIDList: nil)
-        lookupPredicate[.primary] = linkedClazz.primaryKey(for: linkedObjectID, andType: .internal)
+        lookupPredicate[.primary] = linkedClazz.primaryKey(forType:.internal, andObject: linkedObjectID)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

@@ -10,6 +10,16 @@ import ContextSDK
 import WOTKit
 
 public class WOTWebProxyRequest: HttpRequest {
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
+
+    #warning("JSONAdapter should be replaced by another class")
+    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
+        JSONAdapter.self
+    }
+
     public func dataFrom(proxyData: NSData?) -> NSData? {
         guard let proxyData = proxyData else { return nil }
         var result: Data?

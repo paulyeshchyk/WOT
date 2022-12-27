@@ -10,44 +10,48 @@ import ContextSDK
 
 public class RESTResponseParser: ResponseParserProtocol {
     
-    public typealias Context = LogInspectorContainerProtocol
-
-    private let context: Context
+    private let appContext: Context
     private struct DataAdaptationPair {
-        let dataAdapter: DataAdapterProtocol
+        let dataAdapter: ResponseAdapterProtocol
         let data: Data?
     }
 
-    public init(context: Context) {
-        self.context = context
+    required public init(appContext: Context) {
+        self.appContext = appContext
     }
 }
 
 // MARK: - ResponseParserProtocol
 
 extension RESTResponseParser {
-    private enum RESTResponseParserError: Error {
+    private enum RESTResponseParserError: Error, CustomStringConvertible {
         case dataIsEmpty
         case noAdapterFound
+        var description: String {
+            switch self {
+            case .dataIsEmpty: return "[\(type(of: self))]: Data is Empty"
+            case .noAdapterFound: return "[\(type(of: self))]: No Adapter found"
+            }
+        }
     }
     
-    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, adapters: [DataAdapterProtocol]?, completion: @escaping DataAdapterProtocol.OnComplete) throws {
+    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, dataAdapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
         guard let data = parseData else {
             throw RESTResponseParserError.dataIsEmpty
         }
 
-        guard let adapters = adapters, adapters.count != 0 else {
+        guard let dataAdapters = dataAdapters, dataAdapters.count != 0 else {
             throw RESTResponseParserError.noAdapterFound
         }
         
         var dataAdaptationPair = [DataAdaptationPair]()
-        adapters.forEach { adapter in
-            let pair = DataAdaptationPair(dataAdapter: adapter, data: data)
+        dataAdapters.forEach { dataAdapter in
+            let pair = DataAdaptationPair(dataAdapter: dataAdapter, data: data)
             dataAdaptationPair.append(pair)
         }
 
         dataAdaptationPair.forEach { pair in
-            (pair.dataAdapter as? JSONAdapter)?.decode(binary: pair.data, forType: RESTAPIResponse.self, fromRequest: request, completion: completion)
+            pair.dataAdapter.decodeData(pair.data, forType: WGAPIResponse.self, fromRequest: request, completion: completion)
         }
     }
 }

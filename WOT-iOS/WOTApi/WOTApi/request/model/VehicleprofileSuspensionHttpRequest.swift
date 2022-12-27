@@ -15,15 +15,26 @@ public class VehicleprofileSuspensionHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/vehicleprofile/"
     }
+    
+    override public var responseParserClass: ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
+
+    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
+        WGResponseJSONAdapter.self
+    }
 }
 
-extension VehicleprofileSuspensionHttpRequest: WOTModelServiceProtocol {
-    @objc
+extension VehicleprofileSuspensionHttpRequest: ModelServiceProtocol {
+
     public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return VehicleprofileSuspension.self
     }
 
-    @objc
+    public class func registrationID() -> RequestIdType {
+        WebRequestType.suspension.rawValue
+    }
+
     public func instanceModelClass() -> AnyClass? {
         return type(of: self).modelClass()
     }

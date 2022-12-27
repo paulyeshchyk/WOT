@@ -6,22 +6,34 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
+import ContextSDK
 import WOTKit
 
 extension WOTDataFetchController: WOTDataFetchControllerProtocol {
+
     public func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
         if let fetch = self.fetchResultController {
             try performFetch(with: fetch, nodeCreator: nodeCreator)
         } else {
-            try initFetchController { fetch in
-                self.fetchResultController = fetch
-                try? self.performFetch(with: fetch, nodeCreator: nodeCreator)
+            try initFetchController {[weak self] fetchResultController, error in
+                if let err = error {
+                    self?.appContext.logInspector?.logEvent(EventError(err, details: nil), sender: self)
+                } else {
+                    self?.fetchResultController = fetchResultController
+                    do {
+                        try self?.performFetch(with: fetchResultController, nodeCreator: nodeCreator)
+                    } catch {
+                        self?.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    }
+                }
             }
         }
     }
-
-    private func performFetch(with fetchResultController: WOTDataFetchedResultController, nodeCreator: WOTNodeCreatorProtocol? ) throws {
+    
+    private func performFetch(with: WOTDataFetchedResultController?, nodeCreator: WOTNodeCreatorProtocol? ) throws {
+        guard let fetchResultController = with else {
+            throw DataFetchControllerError.noFetchResultControllerCreated
+        }
         do {
             try fetchResultController.performFetch()
             self.listener?.fetchPerformed(by: self)

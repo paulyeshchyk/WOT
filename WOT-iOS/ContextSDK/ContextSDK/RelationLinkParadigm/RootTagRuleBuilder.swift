@@ -24,7 +24,7 @@ public class RootTagRuleBuilder: RequestPredicateComposerProtocol {
         let itemID = json[idKeyPath] as AnyObject
 
         let lookupPredicate = ContextPredicate()
-        if let primaryID = linkedClazz.primaryKey(for: itemID, andType: .internal) {
+        if let primaryID = linkedClazz.primaryKey(forType: .internal, andObject: itemID) {
             lookupPredicate[.primary] = primaryID
         }
 

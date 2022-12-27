@@ -25,13 +25,13 @@ extension VehicleprofileAmmoList {
             let ammoLinkerClass = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker.self
             
             let jsonCollection = try JSONCollection(element: profile)
-            inContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, mapperClazz: ammoLinkerClass, lookupRuleBuilder: ruleBuilder, requestManager: inContext.requestManager)
+            inContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, adapterLinker: ammoLinkerClass, lookupRuleBuilder: ruleBuilder, requestManager: inContext.requestManager)
         }
     }
 }
 
 extension VehicleprofileAmmoList {
-    public class VehicleprofileAmmoListAmmoLinker: BaseJSONAdapterLinker {
+    public class VehicleprofileAmmoListAmmoLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
