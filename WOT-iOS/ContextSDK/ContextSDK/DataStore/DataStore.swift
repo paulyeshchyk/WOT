@@ -141,7 +141,7 @@ extension DataStore: DataStoreProtocol {
             return
         }
 
-        self.perform(objectContext: objectContext) {[weak self] managedObjectContext in
+        perform(objectContext: objectContext) {[weak self] managedObjectContext in
             if let managedObject = managedObjectContext.findOrCreateObject(forType: Clazz, predicate: predicate) {
                 let fetchResult = FetchResult(objectContext: managedObjectContext, objectID: managedObject.managedObjectID, predicate: predicate, fetchStatus: managedObject.fetchStatus)
                 completion(fetchResult, nil)

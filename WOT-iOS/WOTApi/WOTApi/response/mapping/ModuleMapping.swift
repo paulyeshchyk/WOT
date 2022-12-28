@@ -23,15 +23,13 @@ extension Module {
 
         let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
 
-        guard parents.count <= 1 else {
-            print("parents count should be less or equal 1")
-            return
+        guard !parents.isEmpty else {
+            throw ModuleMappingError.noParentsFound
         }
         let tank_id = parents.first
 
         guard let module_id = self.module_id else {
-            print("module_id not found")
-            return
+            throw ModuleMappingError.moduleIdNotDefined
         }
 
         let moduleType = VehicleModuleType.fromString(self.type)
@@ -61,7 +59,8 @@ extension Module {
             let turretPredicateComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(masterClazz: Vehicles.self, masterObjectID: tank_id, linkedClazz: VehicleprofileTurret.self, linkedObjectID: module_id)
             let turretRequestParadigm = RequestParadigm(modelClass: VehicleprofileTurret.self, requestPredicateComposer: turretPredicateComposer, keypathPrefix: "turret.", httpQueryItemName: "fields")
             try appContext.requestManager?.fetchRemote(requestParadigm: turretRequestParadigm, requestPredicateComposer: turretPredicateComposer, managedObjectCreator: turretCreator, listener: self)
-        default: fatalError("unknown module type")
+        default:
+            throw ModuleMappingError.unexpectedModuleType(moduleType)
         }
     }
 }
@@ -77,4 +76,10 @@ extension Module: RequestManagerListenerProtocol {
     public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
         //
     }
+}
+
+private enum ModuleMappingError: Error {
+    case noParentsFound
+    case moduleIdNotDefined
+    case unexpectedModuleType(VehicleModuleType)
 }
