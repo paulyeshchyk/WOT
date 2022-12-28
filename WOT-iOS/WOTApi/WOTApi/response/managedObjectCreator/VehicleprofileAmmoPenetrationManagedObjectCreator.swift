@@ -12,18 +12,17 @@ public class VehicleprofileAmmoPenetrationManagedObjectCreator: ManagedObjectCre
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-        let managedObjectContext = fetchResult.managedObjectContext
         guard let penetration = fetchResult.managedObject() as? VehicleprofileAmmoPenetration else {
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmoPenetration.self))
             return
         }
-        guard let ammo = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? VehicleprofileAmmo else {
+        guard let ammo = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? VehicleprofileAmmo else {
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))
             return
         }
 
         ammo.penetration = penetration
-        dataStore?.stash(objectContext: managedObjectContext) { error in
+        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

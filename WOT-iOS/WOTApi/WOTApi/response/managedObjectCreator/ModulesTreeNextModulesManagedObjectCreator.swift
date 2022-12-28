@@ -12,17 +12,16 @@ public class ModulesTreeNextModulesManagedObjectCreator: ManagedObjectCreator {
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-        let managedObjectContext = fetchResult.managedObjectContext
-        guard let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree else {
-            completion(fetchResult, NextModulesLinkerError.wrongParentClass)
+        guard let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ModulesTree else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(ModulesTree.self))
             return
         }
         guard let nextModule = fetchResult.managedObject() as? Module else {
-            completion(fetchResult, NextModulesLinkerError.wrongChildClass)
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
             return
         }
         modulesTree.addToNext_modules(nextModule)
-        dataStore?.stash(objectContext: managedObjectContext) { error in
+        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

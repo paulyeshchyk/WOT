@@ -12,15 +12,18 @@ public class ModuleVehicleprofileSuspensionManagedObjectCreator: ManagedObjectCr
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-        let managedObjectContext = fetchResult.managedObjectContext
-        if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
-            if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
-                vehicleProfileSuspension.suspension_id = self.mappedObjectIdentifier as? NSDecimalNumber
-                module.suspension = vehicleProfileSuspension
-                dataStore?.stash(objectContext: managedObjectContext) { error in
-                    completion(fetchResult, error)
-                }
-            }
+        guard let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileSuspension.self))
+            return
+        }
+        guard let module = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? Module else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
+            return
+        }
+        vehicleProfileSuspension.suspension_id = self.mappedObjectIdentifier as? NSDecimalNumber
+        module.suspension = vehicleProfileSuspension
+        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+            completion(fetchResult, error)
         }
     }
 }

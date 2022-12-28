@@ -12,18 +12,17 @@ public class VehicleprofileAmmoListManagedObjectCreator: ManagedObjectCreator {
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-        let managedObjectContext = fetchResult.managedObjectContext
         guard let ammoList = fetchResult.managedObject() as? VehicleprofileAmmoList else {
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmoList.self))
             return
         }
-        guard let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Vehicleprofile else {
-            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmoList.self))
+        guard let vehicleProfile = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? Vehicleprofile else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
             return
         }
         vehicleProfile.ammo = ammoList
 
-        dataStore?.stash(objectContext: managedObjectContext) { error in
+        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

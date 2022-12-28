@@ -12,15 +12,11 @@ public class ModulesTreeManagedObjectCreator: ManagedObjectCreator {
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-        let objectContext = fetchResult.managedObjectContext
-        let childObject = fetchResult.managedObject()
-
-        guard let modulesTree = childObject as? ModulesTree else {
-            let error = ModuleLinkerUnexpectedClassError(extected: ModulesTree.self, received: childObject)
-            completion(fetchResult, error)
+        guard let modulesTree = fetchResult.managedObject() as? ModulesTree else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(ModulesTree.self))
             return
         }
-        guard let vehicles = masterFetchResult?.managedObject(inManagedObjectContext: objectContext) as? Vehicles else {
+        guard let vehicles = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? Vehicles else {
             let received = masterFetchResult != nil ? Swift.type(of: masterFetchResult!) : nil
             let error = ModuleLinkerUnexpectedClassError(extected: Vehicles.self, received: received)
             completion(fetchResult, error)
@@ -28,7 +24,7 @@ public class ModulesTreeManagedObjectCreator: ManagedObjectCreator {
         }
         modulesTree.default_profile = vehicles.default_profile
         vehicles.addToModules_tree(modulesTree)
-        dataStore?.stash(objectContext: objectContext) { error in
+        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

@@ -17,7 +17,7 @@ public class DefaultProfileManagedObjectCreator: ManagedObjectCreator {
             return
         }
         guard let vehicles = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? Vehicles else {
-            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicles.self))
             return
         }
         vehicles.default_profile = defaultProfile

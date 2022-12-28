@@ -12,15 +12,18 @@ public class ModuleVehicleprofileTurretManagedObjectCreator: ManagedObjectCreato
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-        let managedObjectContext = fetchResult.managedObjectContext
-        if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
-            if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
-                vehicleProfileTurret.turret_id = self.mappedObjectIdentifier as? NSDecimalNumber
-                module.turret = vehicleProfileTurret
-                dataStore?.stash(objectContext: managedObjectContext) { error in
-                    completion(fetchResult, error)
-                }
-            }
+        guard let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileTurret.self))
+            return
+        }
+        guard let module = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? Module else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
+            return
+        }
+        vehicleProfileTurret.turret_id = self.mappedObjectIdentifier as? NSDecimalNumber
+        module.turret = vehicleProfileTurret
+        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+            completion(fetchResult, error)
         }
     }
 }

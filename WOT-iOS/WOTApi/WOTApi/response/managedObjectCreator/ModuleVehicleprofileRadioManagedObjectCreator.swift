@@ -12,15 +12,18 @@ public class ModuleVehicleprofileRadioManagedObjectCreator: ManagedObjectCreator
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-        let managedObjectContext = fetchResult.managedObjectContext
-        if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
-            if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
-                vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
-                module.radio = vehicleProfileRadio
-                dataStore?.stash(objectContext: managedObjectContext) { error in
-                    completion(fetchResult, error)
-                }
-            }
+        guard let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileRadio.self))
+            return
+        }
+        guard let module = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? Module else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
+            return
+        }
+        vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
+        module.radio = vehicleProfileRadio
+        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+            completion(fetchResult, error)
         }
     }
 }

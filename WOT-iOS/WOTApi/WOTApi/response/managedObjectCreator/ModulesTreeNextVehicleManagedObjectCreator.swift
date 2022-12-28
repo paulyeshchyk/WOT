@@ -12,14 +12,17 @@ public class ModulesTreeNextVehicleManagedObjectCreator: ManagedObjectCreator {
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-        let managedObjectContext = fetchResult.managedObjectContext
-        if let tank = fetchResult.managedObject() as? Vehicles {
-            if let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree {
-                modulesTree.addToNext_tanks(tank)
-                dataStore?.stash(objectContext: managedObjectContext) { error in
-                    completion(fetchResult, error)
-                }
-            }
+        guard let tank = fetchResult.managedObject() as? Vehicles else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicles.self))
+            return
+        }
+        guard let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ModulesTree else {
+            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(ModulesTree.self))
+            return
+        }
+        modulesTree.addToNext_tanks(tank)
+        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+            completion(fetchResult, error)
         }
     }
 }
