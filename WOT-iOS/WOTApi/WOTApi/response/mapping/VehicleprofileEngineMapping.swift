@@ -9,12 +9,12 @@
 extension VehicleprofileEngine {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        guard let engine = map.mappingData as? JSON else {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+        guard let engineJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        try self.decode(decoderContainer: engine)
+        try self.decode(decoderContainer: engineJSON)
         //
     }
 }

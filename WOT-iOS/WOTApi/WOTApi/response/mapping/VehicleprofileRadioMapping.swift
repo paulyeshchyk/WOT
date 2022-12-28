@@ -9,12 +9,12 @@
 extension VehicleprofileRadio {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        guard let radio = map.mappingData as? JSON else {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+        guard let radioJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        try self.decode(decoderContainer: radio)
+        try self.decode(decoderContainer: radioJSON)
         //
     }
 }

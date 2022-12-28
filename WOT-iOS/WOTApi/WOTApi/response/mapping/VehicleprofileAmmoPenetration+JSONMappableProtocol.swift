@@ -9,16 +9,16 @@
 extension VehicleprofileAmmoPenetration {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        guard let penetration = map.mappingData as? [Any] else {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+        guard let penetrationJSON = map.mappingData as? [Any] else {
             throw VehicleprofileAmmoPenetrationError.arrayIsExpected(map.mappingData ?? NSNull())
         }
 
         //
-        guard penetration.count == 3 else {
-            throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements(penetration)
+        guard penetrationJSON.count == 3 else {
+            throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements(penetrationJSON)
         }
-        let intArray = NSDecimalNumberArray(array: penetration)
+        let intArray = NSDecimalNumberArray(array: penetrationJSON)
         self.min_value = intArray.elements[0]
         self.avg_value = intArray.elements[1]
         self.max_value = intArray.elements[2]

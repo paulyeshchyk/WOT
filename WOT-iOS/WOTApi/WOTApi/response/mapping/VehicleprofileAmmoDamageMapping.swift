@@ -9,15 +9,15 @@
 extension VehicleprofileAmmoDamage {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        guard let ammoDamage = map.mappingData as? [Any] else {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+        guard let ammoDamageJSON = map.mappingData as? [Any] else {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
         //
-        guard ammoDamage.count == 3 else {
+        guard ammoDamageJSON.count == 3 else {
             throw VehicleprofileAmmoDamageError.arrayIsNotContainingThreeElements
         }
-        let intArray = NSDecimalNumberArray(array: ammoDamage)
+        let intArray = NSDecimalNumberArray(array: ammoDamageJSON)
         self.min_value = intArray.elements[0]
         self.avg_value = intArray.elements[1]
         self.max_value = intArray.elements[2]

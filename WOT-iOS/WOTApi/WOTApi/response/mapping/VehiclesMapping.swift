@@ -9,7 +9,7 @@
 extension Vehicles {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
         guard let vehicleJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -20,9 +20,9 @@ extension Vehicles {
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
-            try self.modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: inContext)
+            try self.modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: appContext)
         } else {
-            inContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.moduleTreeNotFound(self.tank_id)), sender: self)
+            appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.moduleTreeNotFound(self.tank_id)), sender: self)
         }
 
         // MARK: - DefaultProfile
@@ -32,9 +32,9 @@ extension Vehicles {
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let linker = DefaultProfileManagedObjectCreator.self
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
-            inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, managedObjectCreatorClass: linker, lookupRuleBuilder: builder, appContext: inContext)
+            appContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, managedObjectCreatorClass: linker, lookupRuleBuilder: builder, appContext: appContext)
         } else {
-            inContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(self.tank_id)), sender: self)
+            appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(self.tank_id)), sender: self)
         }
 //
     }
@@ -81,7 +81,7 @@ extension Vehicles {
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
         let linker = ModulesTreeManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        inContext.mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, forClass: ModulesTree.self, predicate: submodulesPredicate, managedObjectCreator: linker, appContext: inContext, completion: { _, _ in })
+        inContext.mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, byModelClass: ModulesTree.self, predicate: submodulesPredicate, managedObjectCreator: linker, appContext: inContext, completion: { _, _ in })
     }
 }
 

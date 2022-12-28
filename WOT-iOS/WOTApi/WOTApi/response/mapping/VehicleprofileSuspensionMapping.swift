@@ -9,12 +9,12 @@
 extension VehicleprofileSuspension {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        guard let suspension = map.mappingData as? JSON else {
+    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+        guard let suspensionJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        try self.decode(decoderContainer: suspension)
+        try self.decode(decoderContainer: suspensionJSON)
         //
     }
 }

@@ -8,7 +8,7 @@
 public protocol JSONMappableProtocol {
     typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol & LogInspectorContainerProtocol
 
-    func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws
+    func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws
 }
 
 @objc

@@ -19,8 +19,11 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
-    public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, appContext: MappingCoordinatorContext, completion: @escaping FetchResultCompletion) {
-        appContext.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, predicate: predicate) { [weak self] fetchResult, error in
+    //
+
+    public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, byModelClass: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, appContext: MappingCoordinatorContext, completion: @escaping FetchResultCompletion) {
+        //
+        appContext.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: byModelClass, predicate: predicate) { [weak self] fetchResult, error in
             if let error = error {
                 completion(fetchResult, error)
                 return
@@ -67,7 +70,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 
         let objectContext = masterFetchResult.managedObjectContext
         let managedObjectCreator = managedObjectCreatorClass.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
-        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, forClass: linkedClazz, predicate: lookupRule.requestPredicate, managedObjectCreator: managedObjectCreator, appContext: appContext, completion: { [weak self] _, error in
+        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: linkedClazz, predicate: lookupRule.requestPredicate, managedObjectCreator: managedObjectCreator, appContext: appContext, completion: { [weak self] _, error in
             if let error = error {
                 self?.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
             }
@@ -105,7 +108,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         //
         do {
             let jsonMap = JSONMap(json: json, managedObjectContext: managedObjectContext, predicate: predicate)
-            try managedObject.mapping(with: jsonMap, inContext: appContext)
+            try managedObject.mapping(with: jsonMap, appContext: appContext)
             appContext.dataStore?.stash(objectContext: managedObjectContext, block: localCompletion)
             appContext.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         } catch {

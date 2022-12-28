@@ -25,7 +25,7 @@ extension NSManagedObject: JSONMappableProtocol {
     public typealias Fields = DataFieldsKeys
 
     @objc
-    open func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
+    open func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
         throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }
