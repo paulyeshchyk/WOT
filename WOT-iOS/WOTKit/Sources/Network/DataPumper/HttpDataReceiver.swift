@@ -73,9 +73,13 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
 }
 
 private extension URLSessionDataTask {
+    var isCancelable: Bool {
+        [URLSessionTask.State.running, URLSessionTask.State.suspended].contains(state)
+    }
+
     @discardableResult
     func cancelDataTask() -> Bool {
-        guard (state == .running || state == .suspended) else {
+        guard isCancelable else {
             return false
         }
         cancel()

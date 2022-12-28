@@ -19,8 +19,8 @@ public class WOTWEBRequestFactory: NSObject {
         }
     }
 
-    public static func fetchVehiclePivotData(inContext appContext: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
-        let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
+    public static func fetchVehiclePivotData(inContext appContext: LogInspectorContainerProtocol & RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+        let pivotLinker = VehiclesPivotDataManagedObjectCreator(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
 
         let arguments = RequestArguments()
         arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
@@ -34,8 +34,8 @@ public class WOTWEBRequestFactory: NSObject {
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, appContext: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
-        let treeViewLinker = Vehicles.VehiclesTreeViewLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
+    public static func fetchVehicleTreeData(vehicleId: Int, appContext: LogInspectorContainerProtocol & RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+        let treeViewLinker = VehiclesTreeManagedObjectCreator(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
 
         let arguments = RequestArguments()
         arguments.setValues([vehicleId], forKey: WOTApiFields.tank_id)
@@ -59,6 +59,7 @@ public class WOTWEBRequestFactory: NSObject {
 //        args.setValues([Vehicleprofile.fieldsKeypaths()], forKey: WGWebQueryArgs.fields)
 
 //        fatalError("not implemented")
+//        appContext.logInspector?.logEvent(EventFlowStart(request), sender: self)
 //        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
 //        requestManager.addListener(listener, forRequest: request)
     }

@@ -30,8 +30,8 @@ open class DataStore: NSObject {
 
     public let appContext: Context
 
-    required public init(context: Context) {
-        self.appContext = context
+    required public init(appContext: Context) {
+        self.appContext = appContext
         super.init()
     }
 
@@ -64,8 +64,8 @@ extension DataStore: DataStoreProtocol {
     }
 
     open func perform(objectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
-        objectContext.execute {
-            block(objectContext)
+        objectContext.execute { context in
+            block(context)
         }
     }
 
@@ -94,9 +94,8 @@ extension DataStore: DataStoreProtocol {
 
     public func fetchLocal(byModelClass modelClass: PrimaryKeypathProtocol.Type, requestPredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
         let localCallback: FetchResultCompletion = { fetchResult, error in
-            self.workingContext().execute {
-                let fetchResultForContext = fetchResult?.makeDublicate()
-                fetchResultForContext?.objectContext = self.workingContext()
+            self.workingContext().execute { managedObjectContext in
+                let fetchResultForContext = fetchResult?.makeDublicate(inContext: managedObjectContext)
                 completion(fetchResultForContext, error)
             }
         }
@@ -142,7 +141,7 @@ extension DataStore: DataStoreProtocol {
             return
         }
 
-        self.perform(objectContext: objectContext) {[weak self] managedObjectContext in
+        perform(objectContext: objectContext) {[weak self] managedObjectContext in
             if let managedObject = managedObjectContext.findOrCreateObject(forType: Clazz, predicate: predicate) {
                 let fetchResult = FetchResult(objectContext: managedObjectContext, objectID: managedObject.managedObjectID, predicate: predicate, fetchStatus: managedObject.fetchStatus)
                 completion(fetchResult, nil)

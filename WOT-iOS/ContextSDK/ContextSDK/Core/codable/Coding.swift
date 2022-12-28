@@ -238,8 +238,8 @@ public struct DateDay: Codable, Comparable {
         self.date = date
         let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
         guard let year = dateComponents.year,
-            let month = dateComponents.month,
-            let day = dateComponents.day else {
+              let month = dateComponents.month,
+              let day = dateComponents.day else {
             fatalError("Date does not contain correct components")
         }
         self.year = year

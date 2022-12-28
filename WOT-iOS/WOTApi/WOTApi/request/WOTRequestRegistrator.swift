@@ -24,21 +24,21 @@ public enum WebRequestType: RequestIdType {
 }
 
 public class WOTRequestRegistrator: RequestRegistrator {
-    public required init(context: RequestRegistrator.Context) {
-        super.init(context: context)
+    public required init(appContext: RequestRegistrator.Context) {
+        super.init(appContext: appContext)
         registerDefaultRequests()
     }
 
     private func registerDefaultRequests() {
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: LoginHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: LogoutHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: ModulesHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehiclesHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: ModulesTreeHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileGunHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileRadiosHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileTurretsHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileEnginesHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileSuspensionHttpRequest.self)
+        register(dataAdapterClass: LoginJSONAdapter.self, modelServiceClass: LoginHttpRequest.self)
+        register(dataAdapterClass: LogoutJSONAdapter.self, modelServiceClass: LogoutHttpRequest.self)
+        register(dataAdapterClass: ModulesJSONAdapter.self, modelServiceClass: ModulesHttpRequest.self)
+        register(dataAdapterClass: VehiclesJSONAdapter.self, modelServiceClass: VehiclesHttpRequest.self)
+        register(dataAdapterClass: ModulesTreeJSONAdapter.self, modelServiceClass: ModulesTreeHttpRequest.self)
+        register(dataAdapterClass: VehicleprofileGunJSONAdapter.self, modelServiceClass: VehicleprofileGunHttpRequest.self)
+        register(dataAdapterClass: VehicleprofileRadiosJSONAdapter.self, modelServiceClass: VehicleprofileRadiosHttpRequest.self)
+        register(dataAdapterClass: VehicleprofileTurretsJSONAdapter.self, modelServiceClass: VehicleprofileTurretsHttpRequest.self)
+        register(dataAdapterClass: VehicleprofileEnginesJSONAdapter.self, modelServiceClass: VehicleprofileEnginesHttpRequest.self)
+        register(dataAdapterClass: VehicleprofileSuspensionJSONAdapter.self, modelServiceClass: VehicleprofileSuspensionHttpRequest.self)
     }
 }

@@ -13,8 +13,8 @@ open class RequestRegistrator: RequestRegistratorProtocol {
     private var registeredModelService: [RequestIdType: ModelServiceProtocol.Type] = .init()
     private var registeredDataAdapters: [RequestIdType: ResponseAdapterProtocol.Type] = .init()
 
-    required public init(context: Context) {
-        self.context = context
+    required public init(appContext: Context) {
+        self.context = appContext
     }
 }
 
@@ -58,7 +58,7 @@ extension RequestRegistrator {
         }
 
         let result = requestIds(modelServiceClass: modelClass)
-        guard result.count > 0 else {
+        guard !result.isEmpty else {
             throw RequestRegistratorError.modelClassNotRegistered(modelClass, request)
         }
         return result

@@ -34,7 +34,7 @@ public class WOTRESTResponseDataParser: WOTRequestResponseDataParserProtocol, Lo
             throw RequestCoordinatorError.dataIsEmpty
         }
 
-        guard let requestIds = requestCoordinator.requestIds(forRequest: request), requestIds.count > 0 else {
+        guard let requestIds = requestCoordinator.requestIds(forRequest: request), !requestIds.isEmpty else {
             onRequestComplete(request, self, nil)
             return
         }
@@ -51,7 +51,7 @@ public class WOTRESTResponseDataParser: WOTRequestResponseDataParserProtocol, Lo
             }
         })
 
-        if dataAdaptationPair.count == 0 {
+        if dataAdaptationPair.isEmpty {
             onRequestComplete(request, self, nil)
         }
 

@@ -54,9 +54,9 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         //
     }
 
-    public required init(context: Context) {
-        self.appContext = context
-        self.grouppedRequestList  = RequestGrouppedRequestList(context: context)
+    public required init(appContext: Context) {
+        self.appContext = appContext
+        self.grouppedRequestList  = RequestGrouppedRequestList(appContext: appContext)
         self.grouppedListenerList = RequestGrouppedListenerList()
         self.managedObjectCreatorList = ResponseManagedObjectCreatorList()
         super.init()
@@ -163,7 +163,7 @@ extension RequestManager: RequestManagerProtocol {
     }
 
     public func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
-        guard let requestIDs = appContext.requestRegistrator?.requestIds(modelServiceClass: requestParadigm.modelClass), requestIDs.count > 0 else {
+        guard let requestIDs = appContext.requestRegistrator?.requestIds(modelServiceClass: requestParadigm.modelClass), !requestIDs.isEmpty else {
             throw RequestManagerError.requestsNotRegistered(requestParadigm)
         }
         for requestID in requestIDs {
@@ -211,22 +211,6 @@ private class ResponseManagedObjectCreatorList {
             throw AdapterLinkerListError.notRemoved(request)
         }
     }
-
-    func removeAdapter(_ adapterLinker: ManagedObjectCreatorProtocol) throws {
-        guard let key = findKey(for: adapterLinker) else {
-            throw AdapterLinkerListError.notFound(adapterLinker)
-        }
-        adaptersLinkerList.removeValue(forKey: key)
-    }
-
-    private func findKey(for adapterLinker: ManagedObjectCreatorProtocol) -> AnyHashable? {
-        for key in adaptersLinkerList.keys {
-            if adaptersLinkerList[key]?.MD5 == adapterLinker.MD5 {
-                return key
-            }
-        }
-        return nil
-    }
 }
 
 private class RequestGrouppedListenerList {
@@ -257,7 +241,7 @@ private class RequestGrouppedListenerList {
         let requestMD5 = forRequest.MD5
         if var listeners = grouppedListeners[requestMD5] {
             let filtered = listeners.filter({ $0.MD5 == listener.MD5 })
-            guard filtered.count == 0 else {
+            guard filtered.isEmpty else {
                 throw GrouppedListenersError.dublicate
             }
             listeners.append(listener)
@@ -291,27 +275,31 @@ private class RequestGrouppedRequestList {
 
     private var grouppedRequests: [RequestIdType: [RequestProtocol]] = [:]
 
-    private let context: Context
-    init (context: Context) {
-        self.context = context
+    private let appContext: Context
+    init(appContext: Context) {
+        self.appContext = appContext
     }
 
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
-        var grouppedRequests: [RequestProtocol] = []
-        if let available = self.grouppedRequests[groupId] {
-            grouppedRequests.append(contentsOf: available)
+        if self.grouppedRequests.keys.isEmpty {
+            appContext.logInspector?.logEvent(EventRequestManagerStartedFirstRequest(), sender: self)
         }
-        let filtered = grouppedRequests.filter { $0.MD5 == request.MD5 }
-        guard filtered.count == 0 else {
+
+        var requestsForID: [RequestProtocol] = []
+        if let available = self.grouppedRequests[groupId] {
+            requestsForID.append(contentsOf: available)
+        }
+        let filtered = requestsForID.filter { $0.MD5 == request.MD5 }
+        guard filtered.isEmpty else {
             throw GrouppedRequestListenersError.dublicate
         }
         request.addGroup(groupId)
-        grouppedRequests.append(request)
-        self.grouppedRequests[groupId] = grouppedRequests
+        requestsForID.append(request)
+        self.grouppedRequests[groupId] = requestsForID
     }
 
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
-        guard let requests = grouppedRequests[groupId]?.compactMap({ $0 }), requests.count > 0 else {
+        guard let requests = grouppedRequests[groupId]?.compactMap({ $0 }), !requests.isEmpty else {
             return
         }
         for request in requests {
@@ -327,8 +315,15 @@ private class RequestGrouppedRequestList {
                 let cnt = grouppedRequests.count
                 grouppedRequests.removeAll(where: { $0.MD5 == request.MD5 })
                 assert(grouppedRequests.count != cnt, "not removed")
-                self.grouppedRequests[group] = grouppedRequests
+                if grouppedRequests.isEmpty {
+                    self.grouppedRequests.removeValue(forKey: group)
+                } else {
+                    self.grouppedRequests[group] = grouppedRequests
+                }
             }
+        }
+        if self.grouppedRequests.keys.isEmpty {
+            appContext.logInspector?.logEvent(EventRequestManagerFinishedAllRequests(), sender: self)
         }
     }
 }

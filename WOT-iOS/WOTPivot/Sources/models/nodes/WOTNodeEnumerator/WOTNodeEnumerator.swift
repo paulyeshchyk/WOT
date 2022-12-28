@@ -66,7 +66,7 @@ public class WOTNodeEnumerator: NSObject, WOTNodeEnumeratorProtocol {
             return nil
         }
 
-        guard root.children.count > 0 else {
+        guard !root.children.isEmpty else {
             return [root]
         }
 

@@ -39,7 +39,7 @@ extension RESTResponseParser {
             throw RESTResponseParserError.dataIsEmpty
         }
 
-        guard let dataAdapters = dataAdapters, dataAdapters.count != 0 else {
+        guard let dataAdapters = dataAdapters, !dataAdapters.isEmpty else {
             throw RESTResponseParserError.noAdapterFound
         }
 

@@ -23,16 +23,16 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        let logPriorities: [LogEventType]? = [.error, .web, .warning]
+        let logPriorities: [LogEventType]? = [.error, .requestManager, .warning, .flow]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
         hostConfiguration = WOTHostConfiguration()
         sessionManager = SessionManager()
-        dataStore = WOTDataStore(context: self)
-        requestRegistrator = WOTRequestRegistrator(context: self)
-        mappingCoordinator = MappingCoordinator(context: self)
-        responseDataAdapterCreator = ResponseDataAdapterCreator(context: self)
-        requestManager = RequestManager(context: self)
+        dataStore = WOTDataStore(appContext: self)
+        requestRegistrator = WOTRequestRegistrator(appContext: self)
+        mappingCoordinator = MappingCoordinator(appContext: self)
+        responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
+        requestManager = RequestManager(appContext: self)
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = WOTDrawerViewController.newDrawer()

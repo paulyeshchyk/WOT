@@ -72,7 +72,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
         listofNodes.forEach { ident, value in
 
             let parents = findTheParent(childId: ident, listOfNodes: listofNodes)
-            if  parents.count > 0 {
+            if  !parents.isEmpty {
                 parents.forEach({$0.addChild(value)})
             } else {
                 root.addChild(value)
@@ -110,7 +110,7 @@ class WOTTankTreeFetchController: WOTDataFetchController {
     }
 
     private func transform(modulesTree: ModulesTree, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
-        guard let submodules = modulesTree.next_modules as? Set<ModulesTree>, submodules.count > 0 else {
+        guard let submodules = modulesTree.next_modules as? Set<ModulesTree>, !submodules.isEmpty else {
             return
         }
         submodules.forEach { submodule in

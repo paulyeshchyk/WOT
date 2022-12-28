@@ -134,12 +134,15 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     }
 
     private func performWebRequest() throws {
+        appContext.logInspector?.logEvent(EventFlowStart("Pivot"), sender: self)
+
         try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self)
     }
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         if completionResultType == .finished || completionResultType == .noData {
             requestManager.removeListener(self)
+            appContext.logInspector?.logEvent(EventFlowEnd("Pivot"), sender: self)
         }
         DispatchQueue.main.async {
             super.loadModel()

@@ -19,10 +19,11 @@ public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: RequestPredicateComp
         self.linkedObjectID = linkedObjectID
     }
 
-    public func build() -> RequestPredicateComposition? {
+    public func build() -> RequestPredicateCompositionProtocol? {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = linkedClazz.primaryKey(forType: .external, andObject: linkedObjectID)
         lookupPredicate[.secondary] = masterClazz.primaryKey(forType: .internal, andObject: masterObjectID)
+
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 }

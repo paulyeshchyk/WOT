@@ -15,13 +15,13 @@ private class tempLogInspectorContainer: LogInspectorContainerProtocol {
 
 class Test_DataStore: XCTestCase {
     func test_modelurl() {
-        let dataStore = WOTDataStore(context: tempLogInspectorContainer())
+        let dataStore = WOTDataStore(appContext: tempLogInspectorContainer())
         let modelURL = dataStore.modelURL
         XCTAssert(modelURL != nil)
     }
 
     func test_sqliteurl() {
-        let dataStore = WOTDataStore(context: tempLogInspectorContainer())
+        let dataStore = WOTDataStore(appContext: tempLogInspectorContainer())
         let modelURL = dataStore.sqliteURL
         XCTAssert(modelURL != nil)
     }
