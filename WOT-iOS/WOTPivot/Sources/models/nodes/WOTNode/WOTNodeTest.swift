@@ -67,7 +67,7 @@ class WOTNodeTest: XCTestCase {
                 XCTFail("wait for expectation error:\(String(describing: error))")
             }
 
-            XCTAssert(node.children.count == 0)
+            XCTAssert(node.children.isEmpty)
         }
     }
 
@@ -77,7 +77,7 @@ class WOTNodeTest: XCTestCase {
         parent.addChild(child)
         child.removeParent()
         XCTAssert(child.parent == nil)
-        XCTAssert(parent.children.count == 0)
+        XCTAssert(parent.children.isEmpty)
     }
 
     func testDeleteChild() {

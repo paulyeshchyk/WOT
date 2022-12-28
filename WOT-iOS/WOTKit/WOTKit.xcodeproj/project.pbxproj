@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */; };
-		1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */; };
 		1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */; };
 		1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */; };
@@ -70,7 +69,6 @@
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
-		1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Conversion.swift"; sourceTree = "<group>"; };
 		1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
 		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
@@ -198,7 +196,6 @@
 				DA81E7B729531EBF00C60F31 /* UIImage+Bundle */,
 				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
 				1D60E528245FE7A7007E5CA8 /* CGRect */,
-				1D60E52A245FE7A7007E5CA8 /* NSDecimalNumber */,
 			);
 			path = categories;
 			sourceTree = "<group>";
@@ -217,14 +214,6 @@
 				1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */,
 			);
 			path = CGRect;
-			sourceTree = "<group>";
-		};
-		1D60E52A245FE7A7007E5CA8 /* NSDecimalNumber */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E52B245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift */,
-			);
-			path = NSDecimalNumber;
 			sourceTree = "<group>";
 		};
 		1D60E536245FE7E4007E5CA8 /* CoreData */ = {
@@ -499,6 +488,7 @@
 				1D60E503245FE541007E5CA8 /* Frameworks */,
 				1D60E504245FE541007E5CA8 /* Resources */,
 				1D60E5EA246013C0007E5CA8 /* sourcekitten */,
+				DA8A95A0295C38C200BFB62E /* SwiftFormat */,
 			);
 			buildRules = (
 			);
@@ -623,6 +613,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DA8A95A0295C38C200BFB62E /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"swiftformat\" \"${SRCROOT}\" --config \"../.swiftformat.yml\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -655,7 +663,6 @@
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
 				1DFCC92124713456005F580E /* MappingCoordinator.swift in Sources */,
-				1D60E534245FE7A7007E5CA8 /* NSDecimalNumber+Conversion.swift in Sources */,
 				DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */,
 				DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */,
 			);

@@ -103,9 +103,9 @@ public class OSLogWrapper: LOGOutputProtocol {
     /// log something generally unimportant (lowest priority)
     public func verbose(_ message: Any, _ file: String, _ function: String, line: Int, context: LogContext?) {
         guard self.consoleLevel.rawValue >= LogOutputLevel.verbose.rawValue,
-            let message = message as? String,
-            let category = context?.category,
-            let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let message = message as? String,
+              let category = context?.category,
+              let log = OSLog.log(byCategory: category, bundle: bundle) else {
             return
         }
         os_log("💜 %{public}@", log: log, type: .default, message)
@@ -114,9 +114,9 @@ public class OSLogWrapper: LOGOutputProtocol {
     /// log something which help during debugging (low priority)
     public func debug(_ message: Any, _ file: String, _ function: String, line: Int, context: LogContext?) {
         guard self.consoleLevel.rawValue >= LogOutputLevel.debug.rawValue,
-            let message = message as? String,
-            let category = context?.category,
-            let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let message = message as? String,
+              let category = context?.category,
+              let log = OSLog.log(byCategory: category, bundle: bundle) else {
             return
         }
         os_log("💚 %{public}@", log: log, type: .default, message)
@@ -125,9 +125,9 @@ public class OSLogWrapper: LOGOutputProtocol {
     /// log something which you are really interested but which is not an issue or error (normal priority)
     public func info(_ message: Any, _ file: String, _ function: String, line: Int, context: LogContext?) {
         guard self.consoleLevel.rawValue >= LogOutputLevel.info.rawValue,
-            let message = message as? String,
-            let category = context?.category,
-            let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let message = message as? String,
+              let category = context?.category,
+              let log = OSLog.log(byCategory: category, bundle: bundle) else {
             return
         }
         os_log("💙 %{public}@", log: log, type: .default, message)
@@ -136,8 +136,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     /// log something which may cause big trouble soon (high priority)
     public func warning(_ message: Any, _ file: String, _ function: String, line: Int, context: LogContext?) {
         guard let message = message as? String,
-            let category = context?.category,
-            let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let category = context?.category,
+              let log = OSLog.log(byCategory: category, bundle: bundle) else {
             return
         }
         os_log("💛 %{public}@", log: log, type: .error, message)
@@ -146,8 +146,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     /// log something which will keep you awake at night (highest priority)
     public func error(_ message: Any, _ file: String, _ function: String, line: Int, context: LogContext?) {
         guard let message = message as? String,
-            let category = context?.category,
-            let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let category = context?.category,
+              let log = OSLog.log(byCategory: category, bundle: bundle) else {
             return
         }
         os_log("❤️ %{public}@", log: log, type: .fault, message)
@@ -156,8 +156,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     /// custom logging to manually adjust values, should just be used by other frameworks
     public func custom(_ message: Any, _ file: String, _ function: String, line: Int, context: LogContext?) {
         guard let message = message as? String,
-            let category = context?.category,
-            let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let category = context?.category,
+              let log = OSLog.log(byCategory: category, bundle: bundle) else {
             return
         }
         os_log("🖤 %{public}@", log: log, type: .default, message)

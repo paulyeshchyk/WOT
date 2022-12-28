@@ -8,40 +8,43 @@
 @objc
 public protocol RequestParadigmProtocol: MD5Protocol {
     var modelClass: AnyClass { get }
-    func predicate() -> ContextPredicate?
     func buildRequestArguments() -> RequestArguments
 }
 
 // MARK: - Extension RequestParadigmProtocol
 
 public class RequestParadigm: NSObject, RequestParadigmProtocol {
+    // MARK: - NSObject
+
+    override public var description: String {
+        var result: String = "RequestArguments: \(typeDescription)"
+        primaryKeys.forEach {
+            result += " key:\($0)"
+        }
+        if let prefix = keypathPrefix {
+            result += " prefix:\(prefix)"
+        }
+        return result
+    }
+
+    // MARK: - MD5Protocol
     public var MD5: String { uuid.MD5 }
-
     public let uuid: UUID = UUID()
-
-    // MARK: - Public
-
-    public var requestPredicateComposer: RequestPredicateComposerProtocol?
 
     // MARK: - RequestParadigmProtocol
 
     public let modelClass: AnyClass
+
+    // MARK: -
+
+    private var requestPredicateComposer: RequestPredicateComposerProtocol?
     private let keypathPrefix: String?
     private let httpQueryItemName: String
-
+    private let fieldsKeypaths: [String]
+    private let typeDescription: String
     private var primaryKeys: [ContextExpression] {
         return predicate()?.expressions(pkType: nil)?.compactMap { $0 } ?? []
     }
-
-    public func addPreffix(to: String) -> String {
-        guard let preffix = keypathPrefix else {
-            return to
-        }
-        return String(format: "%@%@", preffix, to)
-    }
-
-    private let fieldsKeypaths: [String]
-    private let typeDescription: String
 
     public init<T: RequestableProtocol>(modelClass: T.Type, requestPredicateComposer: RequestPredicateComposerProtocol?, keypathPrefix: String?, httpQueryItemName: String) {
         self.fieldsKeypaths = T.fieldsKeypaths()
@@ -50,13 +53,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         self.httpQueryItemName = httpQueryItemName
 
         self.modelClass = T.self
-
-        //
         typeDescription = String(describing: T.self)
-    }
-
-    deinit {
-        //
     }
 
     public func buildRequestArguments() -> RequestArguments {
@@ -76,14 +73,12 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         return requestPredicateComposer?.build()?.requestPredicate
     }
 
-    override public var description: String {
-        var result: String = "RequestArguments: \(typeDescription)"
-        primaryKeys.forEach {
-            result += " key:\($0)"
+    //MARK: - private
+
+    private func addPreffix(to: String) -> String {
+        guard let preffix = keypathPrefix else {
+            return to
         }
-        if let prefix = keypathPrefix {
-            result += " prefix:\(prefix)"
-        }
-        return result
+        return String(format: "%@%@", preffix, to)
     }
 }

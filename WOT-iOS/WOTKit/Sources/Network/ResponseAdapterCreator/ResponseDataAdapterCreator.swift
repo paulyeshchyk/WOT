@@ -24,8 +24,8 @@ public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
 
     private let appContext: Context
 
-    public init(context: Context) {
-        self.appContext = context
+    public init(appContext: Context) {
+        self.appContext = appContext
     }
 
     public func responseDataAdapterInstance(for requestIdType: RequestIdType, request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol) throws -> ResponseAdapterProtocol {
@@ -36,7 +36,7 @@ public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
             throw ResponseAdapterCreatorError.adapterNotFound(requestType: requestIdType)
         }
 
-        return dataAdapterClass.init(modelClass: modelClass, request: request, context: appContext, adapterLinker: managedObjectCreator)
+        return dataAdapterClass.init(modelClass: modelClass, request: request, context: appContext, managedObjectCreator: managedObjectCreator)
     }
 
     public func responseDataAdapterInstances(byRequestIdTypes: [RequestIdType], request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol) -> [ResponseAdapterProtocol] {

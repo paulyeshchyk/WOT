@@ -156,4 +156,9 @@
     }
 }
 
+- (void)stash:(void (^ _Nonnull)(NSError * _Nullable))block {
+    NSAssert(false, @"not implemented");
+}
+
+
 @end

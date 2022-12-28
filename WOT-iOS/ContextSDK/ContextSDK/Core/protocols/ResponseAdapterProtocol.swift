@@ -11,7 +11,7 @@ public protocol ResponseAdapterProtocol {
 
     typealias OnComplete = (RequestProtocol, Error?) -> Void
 
-    init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: Context, adapterLinker: ManagedObjectCreatorProtocol)
+    init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: Context, managedObjectCreator: ManagedObjectCreatorProtocol)
 
     func decodeData(_ data: Data?, forType: AnyClass, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?)
 }

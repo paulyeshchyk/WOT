@@ -1,5 +1,5 @@
 //
-//  JSONAdapterLinker.swift
+//  ManagedObjectCreator.swift
 //  ContextSDK
 //
 //  Created by Paul on 26.12.22.
@@ -38,7 +38,7 @@ open class ManagedObjectCreator: ManagedObjectCreatorProtocol {
 
     open func onJSONExtraction(json: JSON) -> JSON? { return nil }
 
-    open func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
+    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
         fatalError("\(type(of: self))::\(#function)")
     }
 }

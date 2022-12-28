@@ -12,9 +12,9 @@ import ContextSDK
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(with block: @escaping () -> Void ) {
+    public func execute(with block: @escaping (ManagedObjectContextProtocol) -> Void ) {
         perform {
-            block()
+            block(self)
         }
     }
 

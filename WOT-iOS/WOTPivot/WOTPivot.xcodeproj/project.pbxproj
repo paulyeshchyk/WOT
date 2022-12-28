@@ -511,6 +511,7 @@
 				1D79EDA1212439C2005FBA34 /* Frameworks */,
 				1D79EDA2212439C2005FBA34 /* Headers */,
 				1D79EDA3212439C2005FBA34 /* Resources */,
+				DA8A95A2295C3A4500BFB62E /* SwiftFormat */,
 			);
 			buildRules = (
 			);
@@ -594,6 +595,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DA8A95A2295C3A4500BFB62E /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"swiftformat\" \"${SRCROOT}\" --config \"../.swiftformat.yml\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D79EDA0212439C2005FBA34 /* Sources */ = {

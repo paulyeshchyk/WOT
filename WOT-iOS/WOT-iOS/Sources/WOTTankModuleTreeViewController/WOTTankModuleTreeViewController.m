@@ -200,6 +200,7 @@
                                                  appContext: appDelegate
                                                    listener: self
                                                       error: &error];
+    [[appDelegate logInspector] logEvent: [[EventFlowStart alloc] init:@"Tree"] sender:self];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -287,9 +288,12 @@
     
 }
 
-- (void)request:(id)request finishedLoadData:(NSData *)data error:(NSError *)error {
+- (void)request:(id<RequestProtocol>)request finishedLoadData:(NSData *)data error:(NSError *)error {
     [[self requestManager] removeListener: self];
     [self reloadModel];
+
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+    [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
 }
 
 - (void)request:(id<RequestProtocol> _Nonnull)request canceledWith:(NSError * _Nullable)error {
@@ -318,6 +322,8 @@
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType {
     if (completionResultType == WOTRequestManagerCompletionResultTypeFinished ) {
         [self reloadModel];
+        id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+        [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
     }
 }
 

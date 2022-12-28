@@ -62,7 +62,7 @@ public struct WOTPivotMetadataPermutator {
             if let result: WOTPivotNodeProtocol = endpoint.copy(with: nil) as? WOTPivotNodeProtocol {
                 resultArray.append(result)
 
-                if mutablePivotNodes.count > 0 {
+                if !mutablePivotNodes.isEmpty {
                     let children = iterateMiddle(templates: mutablePivotNodes, endpoints: nextEndPoints)
                     result.addChildArray(children)
                 } else {

@@ -36,7 +36,7 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
     public func isCompatible(forTankId: NSNumber) -> Bool {
         guard let tanksSet = self.next_tanks as? Set<Vehicles> else { return false }
         let filtered = tanksSet.filter { $0.tank_id?.intValue == forTankId.intValue }
-        return filtered.count > 0
+        return !filtered.isEmpty
     }
 
     public func next_nodesId() -> [Int]? {

@@ -18,7 +18,7 @@ public class EventThreadCustomRun: LogEventProtocol {
     public convenience init?(thread: Thread) {
         self.init()
         if let name = thread.name,
-            name.count > 0 {
+           !name.isEmpty {
             message = name
         } else {
             message = thread.isMainThread ? "Main" : "thread has no name"
@@ -33,7 +33,7 @@ public class EventThreadMainRun: LogEventProtocol {
 
     private static var threadMessage: String {
         let thread = Thread.current
-        if let name = thread.name, name.count > 0 {
+        if let name = thread.name, !name.isEmpty {
             return name
         } else {
             return thread.isMainThread ? "Main" : "thread has no name"

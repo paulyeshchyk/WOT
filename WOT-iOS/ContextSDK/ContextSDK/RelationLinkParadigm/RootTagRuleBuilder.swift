@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class RootTagRuleBuilder: RequestPredicateComposerProtocol {
+open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
     private var json: JSON?
     private var linkedClazz: PrimaryKeypathProtocol.Type
 
@@ -15,7 +15,7 @@ public class RootTagRuleBuilder: RequestPredicateComposerProtocol {
         self.linkedClazz = linkedClazz
     }
 
-    public func build() -> RequestPredicateComposition? {
+    public func build() -> RequestPredicateCompositionProtocol? {
         guard let json = self.json else { return nil }
 
         guard let idKeyPath = linkedClazz.primaryKeyPath(forType: .internal) else {

@@ -25,7 +25,7 @@ public class EventWarning: LogEventProtocol {
         messages.append(message)
 
         if let details = details {
-            if details.debugDescription.count > 0 {
+            if !details.debugDescription.isEmpty {
                 messages.append(details.debugDescription)
             }
         }

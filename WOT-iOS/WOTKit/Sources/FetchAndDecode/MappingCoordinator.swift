@@ -13,16 +13,19 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 
     private let appContext: Context
 
-    public init(context: Context) {
-        self.appContext = context
+    public init(appContext: Context) {
+        self.appContext = appContext
     }
 }
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
-    public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, linker: ManagedObjectCreatorProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
-        appContext.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, predicate: predicate) { [weak self] fetchResult, error in
+    //
 
-            guard let self = self else {
+    public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, byModelClass: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, appContext: MappingCoordinatorContext, completion: @escaping FetchResultCompletion) {
+        //
+        appContext.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: byModelClass, predicate: predicate) { [weak self] fetchResult, error in
+            if let error = error {
+                completion(fetchResult, error)
                 return
             }
             guard let fetchResult = fetchResult else {
@@ -30,46 +33,44 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
                 return
             }
 
-            if let error = error {
-                completion(fetchResult, error)
+            guard let self = self else {
                 return
             }
 
-            self.mapping(json: json, fetchResult: fetchResult, predicate: predicate, linker: linker, inContext: self.appContext) { fetchResult, error in
-                if let error = error {
+            self.mapping(json: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: managedObjectCreator, inContext: self.appContext) { fetchResult, error in
+                if error != nil {
                     completion(fetchResult, error)
-                } else {
-                    if let linker = linker, let dataStore = self.appContext.dataStore {
-                        if let fetchResult = fetchResult {
-                            linker.process(fetchResult: fetchResult, dataStore: dataStore, completion: completion)
-                        } else {
-                            completion(nil, WOTMappingCoordinatorError.fetchResultNotPresented)
-                        }
-                    } else {
-                        completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
-                    }
+                    return
                 }
+
+                guard let managedObjectCreator = managedObjectCreator else {
+                    completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
+                    return
+                }
+                guard let fetchResult = fetchResult else {
+                    completion(nil, WOTMappingCoordinatorError.fetchResultNotPresented)
+                    return
+                }
+
+                // MARK: process
+                managedObjectCreator.process(fetchResult: fetchResult, appContext: self.appContext, completion: completion)
             }
         }
     }
 }
 
 extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
-    public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, adapterLinker: ManagedObjectCreatorProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: RequestManagerProtocol?) {
+    public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, requestPredicateComposer: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext) {
         guard let itemJSON = itemJSON else { return }
 
-        guard let lookupRule = lookupRuleBuilder.build() else {
+        guard let lookupRule = requestPredicateComposer.build() else {
             appContext.logInspector?.logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
 
-        guard let objectContext = masterFetchResult.objectContext else {
-            assertionFailure("object context is not defined")
-            return
-        }
-
-        let linker = adapterLinker.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
-        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, forClass: linkedClazz, predicate: lookupRule.requestPredicate, linker: linker, requestManager: requestManager, completion: { [weak self] _, error in
+        let objectContext = masterFetchResult.managedObjectContext
+        let managedObjectCreator = managedObjectCreatorClass.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
+        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: linkedClazz, predicate: lookupRule.requestPredicate, managedObjectCreator: managedObjectCreator, appContext: appContext, completion: { [weak self] _, error in
             if let error = error {
                 self?.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
             }
@@ -78,16 +79,16 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorMappingProtocol {
-    public func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, linker: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
+    public func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 //self.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
                 completion(fetchResult, error)
             } else {
-                if let linker = linker, let dataStore = self.appContext.dataStore {
-                    let finalFetchResult = fetchResult.makeDublicate()
+                if let linker = managedObjectCreator {
+                    let finalFetchResult = fetchResult.makeDublicate(inContext: fetchResult.managedObjectContext)
                     finalFetchResult.predicate = predicate.compoundPredicate(.and)
-                    linker.process(fetchResult: finalFetchResult, dataStore: dataStore, completion: completion)
+                    linker.process(fetchResult: finalFetchResult, appContext: self.appContext, completion: completion)
                 } else {
                     completion(fetchResult, nil)
                 }
@@ -96,11 +97,8 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
 
         appContext.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         //
-        guard let managedObjectContext = fetchResult.objectContext else {
-            assertionFailure("objectContext is not defined")
-            return
-        }
-        guard let object = fetchResult.managedObject() as? JSONMappableProtocol else {
+        let managedObjectContext = fetchResult.managedObjectContext
+        guard let managedObject = fetchResult.managedObject() as? JSONMappableProtocol else {
             assertionFailure("fetch result is not JSONMappableProtocol")
             return
         }
@@ -110,7 +108,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         //
         do {
             let jsonMap = JSONMap(json: json, managedObjectContext: managedObjectContext, predicate: predicate)
-            try object.mapping(with: jsonMap, inContext: appContext)
+            try managedObject.decode(using: jsonMap, appContext: appContext)
             appContext.dataStore?.stash(objectContext: managedObjectContext, block: localCompletion)
             appContext.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         } catch {

@@ -45,9 +45,9 @@ PODS:
   - SDWebImage (5.7.2):
     - SDWebImage/Core (= 5.7.2)
   - SDWebImage/Core (5.7.2)
-  - SwiftFormat (0.44.7):
-    - SwiftFormat/Core (= 0.44.7)
-  - SwiftFormat/Core (0.44.7)
+  - SwiftFormat (0.50.7):
+    - SwiftFormat/Core (= 0.50.7)
+  - SwiftFormat/Core (0.50.7)
   - SwiftGen (6.1.0)
   - SwiftLint (0.39.2)
   - WYPopoverController (0.1.8)
@@ -58,7 +58,7 @@ DEPENDENCIES:
   - BlocksKit
   - MMDrawerController (= 0.6.0)
   - SDWebImage (= 5.7.2)
-  - SwiftFormat (= 0.44.7)
+  - SwiftFormat
   - SwiftGen (= 6.1.0)
   - SwiftLint (= 0.39.2)
   - WYPopoverController (= 0.1.8)
@@ -81,11 +81,11 @@ SPEC CHECKSUMS:
   BlocksKit: 8639b2848dd51c35c957af4d9fbdc7a769a1fc12
   MMDrawerController: e3a54a5570388463ad3b36975251575b50c4e1a0
   SDWebImage: d9ea4959d99c52276dfada481987018fcaea3d58
-  SwiftFormat: fd97e27b8de5a46c9d1988bf1db1dc92e79f86a3
+  SwiftFormat: 4fcf72ee44c7198255108c22ed7135c38a36ba6b
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
   WYPopoverController: e09cd3a2163e14e712f330ebf799b61ba6b2c361
 
-PODFILE CHECKSUM: 7b4b42775ffd645b7aca8c5964408bdc0b10695f
+PODFILE CHECKSUM: 084540d2a132fd5925dec386d30e22bf2d033655
 
 COCOAPODS: 1.11.3
