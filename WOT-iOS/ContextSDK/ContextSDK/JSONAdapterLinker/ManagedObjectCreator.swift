@@ -38,7 +38,7 @@ open class ManagedObjectCreator: ManagedObjectCreatorProtocol {
 
     open func onJSONExtraction(json: JSON) -> JSON? { return nil }
 
-    open func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
+    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
         fatalError("\(type(of: self))::\(#function)")
     }
 }

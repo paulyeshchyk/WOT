@@ -11,7 +11,7 @@ public class ModulesTreeCurrentModuleManagedObjectCreator: ManagedObjectCreator 
         return json
     }
 
-    override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
+    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
         guard let module = fetchResult.managedObject() as? Module else {
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
             return
@@ -23,7 +23,7 @@ public class ModulesTreeCurrentModuleManagedObjectCreator: ManagedObjectCreator 
         modulesTree.currentModule = module
 
         // MARK: stash
-        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+        appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

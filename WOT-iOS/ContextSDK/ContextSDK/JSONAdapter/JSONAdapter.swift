@@ -93,7 +93,7 @@ extension JSONAdapter {
                         return
                     }
 
-                    self.managedObjectCreator.process(fetchResult: fetchResult, dataStore: self.appContext.dataStore) { _, error in
+                    self.managedObjectCreator.process(fetchResult: fetchResult, appContext: self.appContext) { _, error in
                         if let error = error {
                             self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                         }

@@ -11,7 +11,7 @@ public class VehicleprofileEngineManagedObjectCreator: ManagedObjectCreator {
         return json
     }
 
-    override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
+    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
         guard let engine = fetchResult.managedObject() as? VehicleprofileEngine else {
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileEngine.self))
             return
@@ -23,7 +23,7 @@ public class VehicleprofileEngineManagedObjectCreator: ManagedObjectCreator {
         vehicleProfile.engine = engine
 
         // MARK: stash
-        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+        appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

@@ -11,7 +11,7 @@ public class ModuleVehicleprofileRadioManagedObjectCreator: ManagedObjectCreator
         return json[#keyPath(Vehicleprofile.radio)] as? JSON
     }
 
-    override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
+    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
         guard let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio else {
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileRadio.self))
             return
@@ -24,7 +24,7 @@ public class ModuleVehicleprofileRadioManagedObjectCreator: ManagedObjectCreator
         module.radio = vehicleProfileRadio
 
         // MARK: stash
-        dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+        appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

@@ -21,8 +21,8 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
     public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, appContext: MappingCoordinatorContext, completion: @escaping FetchResultCompletion) {
         appContext.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, predicate: predicate) { [weak self] fetchResult, error in
-
-            guard let self = self else {
+            if let error = error {
+                completion(fetchResult, error)
                 return
             }
             guard let fetchResult = fetchResult else {
@@ -30,25 +30,27 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
                 return
             }
 
-            if let error = error {
-                completion(fetchResult, error)
+            guard let self = self else {
                 return
             }
 
             self.mapping(json: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: managedObjectCreator, inContext: self.appContext) { fetchResult, error in
-                if let error = error {
+                if error != nil {
                     completion(fetchResult, error)
-                } else {
-                    if let linker = managedObjectCreator, let dataStore = self.appContext.dataStore {
-                        if let fetchResult = fetchResult {
-                            linker.process(fetchResult: fetchResult, dataStore: dataStore, completion: completion)
-                        } else {
-                            completion(nil, WOTMappingCoordinatorError.fetchResultNotPresented)
-                        }
-                    } else {
-                        completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
-                    }
+                    return
                 }
+
+                guard let managedObjectCreator = managedObjectCreator else {
+                    completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
+                    return
+                }
+                guard let fetchResult = fetchResult else {
+                    completion(nil, WOTMappingCoordinatorError.fetchResultNotPresented)
+                    return
+                }
+
+                // MARK: process
+                managedObjectCreator.process(fetchResult: fetchResult, appContext: self.appContext, completion: completion)
             }
         }
     }
@@ -80,10 +82,10 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
                 //self.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
                 completion(fetchResult, error)
             } else {
-                if let linker = managedObjectCreator, let dataStore = self.appContext.dataStore {
+                if let linker = managedObjectCreator {
                     let finalFetchResult = fetchResult.makeDublicate(inContext: fetchResult.managedObjectContext)
                     finalFetchResult.predicate = predicate.compoundPredicate(.and)
-                    linker.process(fetchResult: finalFetchResult, dataStore: dataStore, completion: completion)
+                    linker.process(fetchResult: finalFetchResult, appContext: self.appContext, completion: completion)
                 } else {
                     completion(fetchResult, nil)
                 }
