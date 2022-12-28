@@ -73,7 +73,8 @@ open class CoreDataStore: DataStore {
 
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: sqliteURL, options: nil)
+            let options = [NSMigratePersistentStoresAutomaticallyOption:true, NSInferMappingModelAutomaticallyOption: true]
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: sqliteURL, options: options)
         } catch {
             abort()
         }
