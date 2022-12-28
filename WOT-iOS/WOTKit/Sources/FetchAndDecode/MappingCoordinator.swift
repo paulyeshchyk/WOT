@@ -63,11 +63,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
             return
         }
 
-        guard let objectContext = masterFetchResult.managedObjectContext else {
-            assertionFailure("object context is not defined")
-            return
-        }
-
+        let objectContext = masterFetchResult.managedObjectContext
         let managedObjectCreator = managedObjectCreatorClass.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
         fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, forClass: linkedClazz, predicate: lookupRule.requestPredicate, managedObjectCreator: managedObjectCreator, appContext: appContext, completion: { [weak self] _, error in
             if let error = error {
@@ -85,7 +81,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
                 completion(fetchResult, error)
             } else {
                 if let linker = managedObjectCreator, let dataStore = self.appContext.dataStore {
-                    let finalFetchResult = fetchResult.makeDublicate()
+                    let finalFetchResult = fetchResult.makeDublicate(inContext: fetchResult.managedObjectContext)
                     finalFetchResult.predicate = predicate.compoundPredicate(.and)
                     linker.process(fetchResult: finalFetchResult, dataStore: dataStore, completion: completion)
                 } else {
@@ -96,10 +92,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
 
         appContext.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         //
-        guard let managedObjectContext = fetchResult.managedObjectContext else {
-            assertionFailure("objectContext is not defined")
-            return
-        }
+        let managedObjectContext = fetchResult.managedObjectContext
         guard let managedObject = fetchResult.managedObject() as? JSONMappableProtocol else {
             assertionFailure("fetch result is not JSONMappableProtocol")
             return

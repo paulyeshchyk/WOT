@@ -64,8 +64,8 @@ extension DataStore: DataStoreProtocol {
     }
 
     open func perform(objectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
-        objectContext.execute {
-            block(objectContext)
+        objectContext.execute { context in
+            block(context)
         }
     }
 
@@ -94,9 +94,8 @@ extension DataStore: DataStoreProtocol {
 
     public func fetchLocal(byModelClass modelClass: PrimaryKeypathProtocol.Type, requestPredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
         let localCallback: FetchResultCompletion = { fetchResult, error in
-            self.workingContext().execute {
-                let fetchResultForContext = fetchResult?.makeDublicate()
-                fetchResultForContext?.managedObjectContext = self.workingContext()
+            self.workingContext().execute { managedObjectContext in
+                let fetchResultForContext = fetchResult?.makeDublicate(inContext: managedObjectContext)
                 completion(fetchResultForContext, error)
             }
         }

@@ -9,7 +9,7 @@ public typealias FetchResultCompletion = (FetchResultProtocol?, Error?) -> Void
 
 @objc
 open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
-    public var managedObjectContext: ManagedObjectContextProtocol?
+    public let managedObjectContext: ManagedObjectContextProtocol
     public var fetchStatus: FetchStatus = .none
     public var predicate: NSPredicate?
 
@@ -21,15 +21,15 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
 
     override public var description: String {
         let entityName = managedObject()?.entityName ?? ""
-        return "Context: \(managedObjectContext?.name ?? ""); \(entityName)"
+        return "Context: \(managedObjectContext.name ?? ""); \(entityName)"
     }
 
-    public required init(objectContext cntx: ManagedObjectContextProtocol?, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
+    public required init(objectContext cntx: ManagedObjectContextProtocol, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
         objectID = objID
         predicate = predicat
         fetchStatus = status
 
-        managedObjectContext = cntx
+        self.managedObjectContext = cntx
         super.init()
     }
 
@@ -38,10 +38,9 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return copy
     }
 
-    public func makeDublicate() -> FetchResultProtocol {
-        // swiftlint:disable force_cast
-        return copy() as! FetchResult
-        // swiftlint:enable force_cast
+    @available(*, deprecated, message: "make sure you need that")
+    public func makeDublicate(inContext: ManagedObjectContextProtocol) -> FetchResultProtocol {
+        return FetchResult(objectContext: inContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
     }
 
     public func managedObject() -> ManagedObjectProtocol? {

@@ -6,12 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import ContextSDK
-import WOTKit
-
-// MARK: - JSONMappableProtocol
-
 extension VehicleprofileRadio {
+    // MARK: - JSONMappableProtocol
+
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         guard let radio = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)

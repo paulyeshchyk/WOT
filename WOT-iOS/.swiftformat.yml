@@ -31,7 +31,6 @@
 --patternlet hoist
 --ranges spaced
 --self remove
---semicolons never
 --stripunusedargs always
 --swiftversion 4.2
 --trimwhitespace always
