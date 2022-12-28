@@ -9,7 +9,7 @@
 {% set colorAlias %}{{param.colorAliasName|default:"AssetColorTypeAlias"}}{% endset %}
 {% set imageAlias %}{{param.imageAliasName|default:"AssetImageTypeAlias"}}{% endset %}
 {% set forceNamespaces %}{{param.forceProvidesNamespaces|default:"false"}}{% endset %}
-{% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
+{% set accessModifier %}{% if param.publicAccess %}public{% else %}public{% endif %}{% endset %}
 #if os(OSX)
   import AppKit.NSImage
   {{accessModifier}} typealias {{colorAlias}} = NSColor
