@@ -50,6 +50,10 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     open func decodeData(_ data: Data?, forType: AnyClass, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
         fatalError("should be overriden")
     }
+
+    open func performJSONExtraction(from json: JSON, byKey key: AnyHashable)  throws -> JSON {
+        fatalError("should be overriden")
+    }
 }
 
 extension JSONAdapter {
@@ -70,6 +74,7 @@ extension JSONAdapter {
             //
             do {
                 let contextPredicate = fromRequest.contextPredicate
+                _ = try performJSONExtraction(from: json, byKey: key)
                 let extraction = try managedObjectCreator.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
 
                 try self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
@@ -134,7 +139,7 @@ extension JSONAdapter {
 
             let jsonStartParsingDate = Date()
             self.appContext.logInspector?.logEvent(EventJSONStart(predicate), sender: self)
-            self.appContext.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, predicate: predicate, linker: nil, inContext: self.appContext) { fetchResult, error in
+            self.appContext.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, inContext: self.appContext) { fetchResult, error in
                 if let error = error {
                     self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }

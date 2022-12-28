@@ -35,7 +35,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
                 return
             }
 
-            self.mapping(json: json, fetchResult: fetchResult, predicate: predicate, linker: managedObjectCreator, inContext: self.appContext) { fetchResult, error in
+            self.mapping(json: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: managedObjectCreator, inContext: self.appContext) { fetchResult, error in
                 if let error = error {
                     completion(fetchResult, error)
                 } else {
@@ -55,7 +55,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
-    public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, adapterLinker: ManagedObjectCreatorProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext) {
+    public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext) {
         guard let itemJSON = itemJSON else { return }
 
         guard let lookupRule = lookupRuleBuilder.build() else {
@@ -68,8 +68,8 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
             return
         }
 
-        let linker = adapterLinker.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
-        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, forClass: linkedClazz, predicate: lookupRule.requestPredicate, managedObjectCreator: linker, appContext: appContext, completion: { [weak self] _, error in
+        let managedObjectCreator = managedObjectCreatorClass.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
+        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, forClass: linkedClazz, predicate: lookupRule.requestPredicate, managedObjectCreator: managedObjectCreator, appContext: appContext, completion: { [weak self] _, error in
             if let error = error {
                 self?.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
             }
@@ -78,13 +78,13 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorMappingProtocol {
-    public func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, linker: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
+    public func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 //self.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
                 completion(fetchResult, error)
             } else {
-                if let linker = linker, let dataStore = self.appContext.dataStore {
+                if let linker = managedObjectCreator, let dataStore = self.appContext.dataStore {
                     let finalFetchResult = fetchResult.makeDublicate()
                     finalFetchResult.predicate = predicate.compoundPredicate(.and)
                     linker.process(fetchResult: finalFetchResult, dataStore: dataStore, completion: completion)

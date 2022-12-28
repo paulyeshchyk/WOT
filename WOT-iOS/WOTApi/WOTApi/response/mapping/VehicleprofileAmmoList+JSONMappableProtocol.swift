@@ -25,7 +25,7 @@ extension VehicleprofileAmmoList {
             let ammoLinkerClass = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker.self
 
             let jsonCollection = try JSONCollection(element: profile)
-            inContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, adapterLinker: ammoLinkerClass, lookupRuleBuilder: ruleBuilder, appContext: inContext)
+            inContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, managedObjectCreatorClass: ammoLinkerClass, lookupRuleBuilder: ruleBuilder, appContext: inContext)
         }
     }
 }

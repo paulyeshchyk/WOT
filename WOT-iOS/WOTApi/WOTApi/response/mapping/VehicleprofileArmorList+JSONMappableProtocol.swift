@@ -40,7 +40,7 @@ extension VehicleprofileArmorList {
 
         let turretBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
         let turretMapperClazz = VehicleprofileArmorList.TurretLinker.self
-        inContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: turretMapperClazz, lookupRuleBuilder: turretBuilder, appContext: inContext)
+        inContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: turretMapperClazz, lookupRuleBuilder: turretBuilder, appContext: inContext)
 
         // MARK: - hull
 
@@ -51,7 +51,7 @@ extension VehicleprofileArmorList {
 
         let hullBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
         let hullMapperClazz = VehicleprofileArmorList.HullLinker.self
-        inContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: hullMapperClazz, lookupRuleBuilder: hullBuilder, appContext: inContext)
+        inContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: hullMapperClazz, lookupRuleBuilder: hullBuilder, appContext: inContext)
     }
 }
 

@@ -8,11 +8,13 @@
 import ContextSDK
 
 public class WGResponseJSONAdapter: JSONAdapter {
-    enum WGResponseJSONAdapterError: Error, CustomStringConvertible {
+    public enum WGResponseJSONAdapterError: Error, CustomStringConvertible {
+        case jsonByKeyWasNotFound(JSON,AnyHashable)
         case notSupportedType(AnyClass)
-        var description: String {
+        public var description: String {
             switch self {
             case .notSupportedType(let clazz): return "\(type(of: self)): \(type(of: clazz)) can't be adopted"
+            case .jsonByKeyWasNotFound(let json, let key): return "\(type(of: self)): json was not found for key:\(key)); {\(json)}"
             }
         }
     }

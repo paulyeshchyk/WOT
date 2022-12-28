@@ -86,7 +86,9 @@ extension Module: RequestManagerListenerProtocol {
 extension Module {
     private class VehicleprofileEngineCreator: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.engine)] as? JSON }
+        override public func onJSONExtraction(json: JSON) -> JSON? {
+            return json[#keyPath(Vehicleprofile.engine)] as? JSON
+        }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.managedObjectContext
@@ -114,7 +116,9 @@ extension Module {
         }
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.turret)] as? JSON }
+        override public func onJSONExtraction(json: JSON) -> JSON? {
+            return json[#keyPath(Vehicleprofile.turret)] as? JSON
+        }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.managedObjectContext
@@ -134,7 +138,9 @@ extension Module {
 extension Module {
     private class VehicleprofileSuspensionCreator: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.suspension)] as? JSON }
+        override public func onJSONExtraction(json: JSON) -> JSON? {
+            return json[#keyPath(Vehicleprofile.suspension)] as? JSON
+        }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.managedObjectContext
@@ -154,7 +160,9 @@ extension Module {
 extension Module {
     private class VehicleprofileRadioRadio: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.radio)] as? JSON }
+        override public func onJSONExtraction(json: JSON) -> JSON? {
+            return json[#keyPath(Vehicleprofile.radio)] as? JSON
+        }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.managedObjectContext
@@ -174,7 +182,9 @@ extension Module {
 extension Module {
     private class VehicleprofileGunCreator: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-        override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.gun)] as? JSON }
+        override public func onJSONExtraction(json: JSON) -> JSON? {
+            return json[#keyPath(Vehicleprofile.gun)] as? JSON
+        }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let managedObjectContext = fetchResult.managedObjectContext

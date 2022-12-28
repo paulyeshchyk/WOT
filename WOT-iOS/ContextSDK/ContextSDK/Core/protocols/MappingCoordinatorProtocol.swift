@@ -9,12 +9,12 @@ public typealias MappingCoordinatorContext = LogInspectorContainerProtocol & Dat
 
 @objc
 public protocol MappingCoordinatorMappingProtocol {
-    func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, linker: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion)
+    func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion)
 }
 
 @objc
 public protocol MappingCoordinatorLinkingProtocol {
-    func linkItem(from: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, adapterLinker: ManagedObjectCreatorProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext)
+    func linkItem(from: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext)
 }
 
 @objc

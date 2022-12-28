@@ -25,27 +25,29 @@ extension VehicleprofileAmmo {
         // MARK: - Penetration
 
         let penetrationArray = ammo[#keyPath(VehicleprofileAmmo.penetration)]
-        let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
+        let penetrationMapper = VehicleprofileAmmo.VehicleprofileAmmoPenetrationManagedObjectCreator.self
         let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         let penetrationListCollection = JSONCollection(custom: penetrationArray)
-        inContext.mappingCoordinator?.linkItem(from: penetrationListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, adapterLinker: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder, appContext: inContext)
+        inContext.mappingCoordinator?.linkItem(from: penetrationListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, managedObjectCreatorClass: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder, appContext: inContext)
 
         // MARK: - Damage
 
         let damageArray = ammo[#keyPath(VehicleprofileAmmo.damage)]
-        let damageMapper = VehicleprofileAmmo.DamageLinker.self
+        let damageMapper = VehicleprofileAmmo.VehicleprofileAmmoDamageManagedObjectCreator.self
         let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
 
         let damageListCollection = JSONCollection(custom: damageArray)
-        inContext.mappingCoordinator?.linkItem(from: damageListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, adapterLinker: damageMapper, lookupRuleBuilder: damageRuleBuilder, appContext: inContext)
+        inContext.mappingCoordinator?.linkItem(from: damageListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, managedObjectCreatorClass: damageMapper, lookupRuleBuilder: damageRuleBuilder, appContext: inContext)
     }
 }
 
 extension VehicleprofileAmmo {
-    public class PenetrationLinker: ManagedObjectCreator {
+    public class VehicleprofileAmmoPenetrationManagedObjectCreator: ManagedObjectCreator {
         //
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? {
+            return json
+        }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             guard let managedObjectContext = fetchResult.managedObjectContext else {
@@ -68,10 +70,12 @@ extension VehicleprofileAmmo {
         }
     }
 
-    public class DamageLinker: ManagedObjectCreator {
+    public class VehicleprofileAmmoDamageManagedObjectCreator: ManagedObjectCreator {
         //
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-        override public func onJSONExtraction(json: JSON) -> JSON? { return json }
+        override public func onJSONExtraction(json: JSON) -> JSON? {
+            return json
+        }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
             let objectContext = fetchResult.managedObjectContext
