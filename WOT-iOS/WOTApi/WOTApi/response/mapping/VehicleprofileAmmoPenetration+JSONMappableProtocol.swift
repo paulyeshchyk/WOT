@@ -22,8 +22,8 @@ extension VehicleprofileAmmoPenetration {
             }
         }
     }
-    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
 
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         guard let penetration = map.mappingData as? [Any] else {
             throw VehicleprofileAmmoPenetrationError.arrayIsExpected(map.mappingData ?? NSNull())
         }

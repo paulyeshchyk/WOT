@@ -12,9 +12,8 @@ public protocol JSONCollectable {
     func add(element: JSON?) throws
     func add(array: [JSON]?) throws
     func data() -> Any?
-    
+
     subscript(index: Int) -> JSON? { get }
-    
 }
 
 public class JSONCollection: JSONCollectable {
@@ -49,17 +48,17 @@ public class JSONCollection: JSONCollectable {
             }
         }
     }
-    
+
     private var collection = [JSON]()
     private var custom: Any?
     public private(set) var collectionType: JSONCollection.CollectionType
-    
+
     public init?(element object: JSON?) throws {
         self.collectionType = .element
         guard let element = object  else {
             throw JSONCollectionError.nilElement
         }
-        
+
         collection.append(element)
     }
 
@@ -67,17 +66,17 @@ public class JSONCollection: JSONCollectable {
         self.collectionType = .array
         try add(array: array)
     }
-    
+
     public init?(custom: Any?) {
         self.collectionType = .custom
         self.custom = custom
     }
-    
+
     public subscript(index: Int) -> JSON? {
         #warning("add throw for collectiontype==custom")
         return self.collection[index]
     }
-    
+
     public func add(element object: JSON?) throws {
         guard collectionType == .array else {
             throw JSONCollectionError.notAbleToAddElement(collectionType)
@@ -87,7 +86,7 @@ public class JSONCollection: JSONCollectable {
         }
         collection.append(element)
     }
-    
+
     public func add(array: [JSON]?) throws {
         guard collectionType == .array else {
             throw JSONCollectionError.notAbleToAddElement(collectionType)
@@ -99,7 +98,7 @@ public class JSONCollection: JSONCollectable {
             try add(element: object)
         }
     }
-    
+
     public func data() -> Any? {
         switch collectionType {
         case .array: return collection
@@ -117,6 +116,4 @@ extension JSONCollection: DecoderContainer {
     }
 }
 
-public protocol JSONAdapterProtocol: ResponseAdapterProtocol, MD5Protocol {
-    
-}
+public protocol JSONAdapterProtocol: ResponseAdapterProtocol, MD5Protocol {}

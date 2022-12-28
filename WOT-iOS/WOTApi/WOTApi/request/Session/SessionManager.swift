@@ -11,7 +11,7 @@ import ContextSDK
 @objc
 public class SessionManager: NSObject, SessionManagerProtocol {
     @objc
-    public var appDelegate: AnyObject?
+    public var appContext: AnyObject?
 
     @objc
     public func login() {}

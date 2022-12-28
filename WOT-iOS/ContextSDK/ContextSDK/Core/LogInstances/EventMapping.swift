@@ -59,7 +59,7 @@ public class EventMappingInfo: LogEventProtocol {
     public required init?(_ text: String) {
         message = text
     }
-    
+
     public required init?(_ error: Error?) {
         if let error = error {
             message = String(describing: error)

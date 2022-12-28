@@ -10,7 +10,6 @@ import UIKit
 import ContextSDK
 
 open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotNodeHolderProtocol {
-    
     lazy public var dimension: WOTPivotDimensionProtocol = {
         let result = WOTPivotDimension(rootNodeHolder: self)
         result.enumerator = enumerator
@@ -91,7 +90,7 @@ open class WOTPivotDataModel: WOTDataModel, WOTPivotDataModelProtocol, WOTPivotN
 
     public typealias Context = LogInspectorContainerProtocol
     private let appContext: Context
-    
+
     @objc
     required public init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource, context: Context) {
         shouldDisplayEmptyColumns = false

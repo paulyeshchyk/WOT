@@ -10,7 +10,6 @@ import ContextSDK
 import WOTKit
 
 extension WOTDataFetchController: WOTDataFetchControllerProtocol {
-
     public func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
         if let fetch = self.fetchResultController {
             try performFetch(with: fetch, nodeCreator: nodeCreator)
@@ -29,7 +28,7 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
             }
         }
     }
-    
+
     private func performFetch(with: WOTDataFetchedResultController?, nodeCreator: WOTNodeCreatorProtocol? ) throws {
         guard let fetchResultController = with else {
             throw DataFetchControllerError.noFetchResultControllerCreated

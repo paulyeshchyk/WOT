@@ -1533,7 +1533,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#SwiftLint\n#TODO: build SwiftLint from PODS folder, using: make install\n#/usr/local/bin/swiftlint lint\n";
+			shellScript = "#SwiftLint\n#TODO: build SwiftLint from PODS folder, using: make install\n\"${TOOLS_ROOT}/SwiftLint/bin/swiftlint\" lint\n";
 		};
 		1D9CAA3421119BD300B6CA5A /* Swiftgen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1565,7 +1565,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#\"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\"\n";
+			shellScript = "\"${TOOLS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}\" --config \".swiftformat.yml\"\n";
 		};
 		6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

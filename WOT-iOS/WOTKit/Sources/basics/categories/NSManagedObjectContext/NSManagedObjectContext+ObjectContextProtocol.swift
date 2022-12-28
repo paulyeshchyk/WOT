@@ -10,15 +10,14 @@ import CoreData
 import ContextSDK
 
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
-
     // MARK: - ManagedObjectContextLookupProtocol
-    
-    public func execute(with block: @escaping ()->Void ) {
+
+    public func execute(with block: @escaping () -> Void ) {
         perform {
             block()
         }
     }
-    
+
     public func object(byID: AnyObject) -> AnyObject? {
         guard let objectID = byID as? NSManagedObjectID else {
             assertionFailure("forObjectID is not NSManagedObject")
@@ -35,7 +34,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
     }
 
     // MARK: - ManagedObjectContextSaveProtocol
-    
+
     public func hasTheChanges() -> Bool {
         return hasChanges
     }
@@ -66,7 +65,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
     }
 
     // MARK: - ManagedObjectContextDeleteProtocol
-    
+
     func deleteAllObjects() throws {
         if let entitesByName = persistentStoreCoordinator?.managedObjectModel.entitiesByName {
             for (_, entityDescription) in entitesByName {
@@ -93,7 +92,6 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 }
 
 extension NSManagedObjectContext {
-
     private func lastObject(forType: AnyObject, predicate: NSPredicate?, includeSubentities: Bool) throws -> ManagedObjectProtocol? {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: forType))
         request.fetchLimit = 1
@@ -109,5 +107,4 @@ extension NSManagedObjectContext {
     private func entityDescription(forType: AnyObject) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: String(describing: forType), in: self)
     }
-
 }

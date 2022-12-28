@@ -20,11 +20,10 @@ public protocol WOTDataFetchControllerDelegateProtocol {
 }
 
 open class WOTDataFetchController: NSObject {
-    
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
-    
+
     public var fetchResultController: WOTDataFetchedResultController?
-    
+
     enum DataFetchControllerError: Error, CustomStringConvertible {
         case contextIsNotDefined
         case requestNotFound
@@ -56,7 +55,7 @@ open class WOTDataFetchController: NSObject {
             }
         }
     }
-    
+
     private func newFetchResultController(request: NSFetchRequest<NSFetchRequestResult>, managedObjectContext: ManagedObjectContextProtocol) throws -> NSFetchedResultsController<NSFetchRequestResult>? {
         let result = try appContext.dataStore?.fetchResultController(for: request, andContext: managedObjectContext) as? NSFetchedResultsController<NSFetchRequestResult>
         result?.delegate = self
@@ -73,7 +72,6 @@ open class WOTDataFetchController: NSObject {
         self.nodeFetchRequestCreator = nfrc
         self.appContext = context
         self.dataStore = context.dataStore
-        
     }
 
     deinit {

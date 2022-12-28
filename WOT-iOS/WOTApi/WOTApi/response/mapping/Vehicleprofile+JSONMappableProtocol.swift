@@ -36,7 +36,6 @@ public enum VehicleProfileMappingError: Error, CustomStringConvertible {
 
 extension Vehicleprofile {
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-
         guard let profile = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -56,7 +55,7 @@ extension Vehicleprofile {
         }
         let ammoListMapperClazz = Vehicleprofile.AmmoListLinker.self
         let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
-        
+
         let ammoListCollection = try JSONCollection(array: ammoListArray)
         inContext.mappingCoordinator?.linkItem(from: ammoListCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileAmmoList.self, adapterLinker: ammoListMapperClazz, lookupRuleBuilder: ammoLookupBuilder, requestManager: inContext.requestManager)
 
@@ -65,7 +64,7 @@ extension Vehicleprofile {
         guard let armorJSON = profile[#keyPath(Vehicleprofile.armor)] as? JSON else {
             throw VehicleProfileMappingError.noArmor(self.tank_id)
         }
-        
+
         let armorListMapperClazz = Vehicleprofile.ArmorListLinker.self
         let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
         let armorCollection = try JSONCollection(element: armorJSON)

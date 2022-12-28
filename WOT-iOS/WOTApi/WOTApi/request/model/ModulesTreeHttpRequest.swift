@@ -15,7 +15,7 @@ public class ModulesTreeHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/vehicles/"
     }
-    
+
     override public var responseParserClass: ResponseParserProtocol.Type {
         RESTResponseParser.self
     }
@@ -26,7 +26,6 @@ public class ModulesTreeHttpRequest: HttpRequest {
 }
 
 extension ModulesTreeHttpRequest: ModelServiceProtocol {
-
     public class func modelClass() -> PrimaryKeypathProtocol.Type? {
         return ModulesTree.self
     }

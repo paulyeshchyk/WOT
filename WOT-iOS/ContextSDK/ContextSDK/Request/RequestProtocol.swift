@@ -11,7 +11,7 @@ public typealias RequestIdType = NSInteger
 @objc
 public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
-    
+
     var availableInGroups: [RequestIdType] { get }
     var listeners: [RequestListenerProtocol] { get }
     var contextPredicate: ContextPredicate? { get set }
@@ -39,7 +39,6 @@ public protocol RequestListenerProtocol: MD5Protocol {
 }
 
 open class Request: RequestProtocol, CustomStringConvertible {
-
     private enum RequestError: Error, CustomStringConvertible {
         case shouldBeOverriden(String)
         var description: String {
@@ -48,11 +47,11 @@ open class Request: RequestProtocol, CustomStringConvertible {
             }
         }
     }
-    
+
     public let appContext: RequestProtocol.Context
     public var MD5: String { uuid.MD5 }
     open var description: String { "\(type(of: self))" }
-    
+
     public required init(context: RequestProtocol.Context) {
         self.appContext = context
     }
@@ -60,7 +59,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     deinit {
         //
     }
-    
+
     open func cancel(byReason: RequestCancelReasonProtocol) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
@@ -78,9 +77,9 @@ open class Request: RequestProtocol, CustomStringConvertible {
     public var listeners = [RequestListenerProtocol]()
 
     public var contextPredicate: ContextPredicate?
-    
+
     public var arguments: RequestArgumentsProtocol?
-    
+
     open var responseParserClass: ResponseParserProtocol.Type {
         fatalError("should be overriden")
     }
@@ -88,7 +87,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     open var dataAdapterClass: ResponseAdapterProtocol.Type {
         fatalError("should be overriden")
     }
-    
+
     open func addGroup(_ group: RequestIdType) {
         availableInGroups.append(group)
     }

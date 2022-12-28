@@ -142,7 +142,6 @@ public class WOTApiTexts: NSObject {
     @objc public static let groupAndSort: String = "WOT_STRING_GROUP_AND_SORT"
     @objc public static let apply: String = "WOT_STRING_APPLY"
     @objc public static let image_back: String = "WOT_IMAGE_BACK"
-    
 }
 
 @objc

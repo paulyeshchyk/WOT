@@ -9,13 +9,13 @@ import UIKit
 
 @objc
 public protocol ContextProtocol: LogInspectorContainerProtocol,
-                                 DataStoreContainerProtocol,
-                                 HostConfigurationContainerProtocol,
-                                 RequestRegistratorContainerProtocol,
-                                 RequestManagerContainerProtocol,
-                                 RequestListenerContainerProtocol,
-                                 SessionManagerContainerProtocol,
-                                 MappingCoordinatorContainerProtocol {}
+    DataStoreContainerProtocol,
+    HostConfigurationContainerProtocol,
+    RequestRegistratorContainerProtocol,
+    RequestManagerContainerProtocol,
+    RequestListenerContainerProtocol,
+    SessionManagerContainerProtocol,
+    MappingCoordinatorContainerProtocol {}
 
 @objc
 public protocol ContextControllerProtocol {

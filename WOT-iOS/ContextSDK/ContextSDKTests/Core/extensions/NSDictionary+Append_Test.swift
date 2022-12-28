@@ -9,20 +9,19 @@ import XCTest
 @testable import ContextSDK
 
 class NSDictionary_Append_Test: XCTestCase {
-
     func testMerge() throws {
-        let dict: [AnyHashable: Any] = [1:"3", 2: "89"]
-        let dictToMerge: [AnyHashable: Any] = [3:"900"]
+        let dict: [AnyHashable: Any] = [1: "3", 2: "89"]
+        let dictToMerge: [AnyHashable: Any] = [3: "900"]
         let result = dict.merge(with: dictToMerge)
         XCTAssert((result as NSDictionary).isEqual(to: [1: "3", 2: "89", 3: "900"]))
     }
-    
+
     func testAppend() throws {
-        var dict: [AnyHashable: Any] = [1:"3", 2: "89"]
-        dict.append(with: [3:"900"])
+        var dict: [AnyHashable: Any] = [1: "3", 2: "89"]
+        dict.append(with: [3: "900"])
         XCTAssert((dict as NSDictionary).isEqual(to: [1: "3", 2: "89", 3: "900"]))
     }
-    
+
     func testDebugOutput() throws {
         let dict: [AnyHashable: Any] = ["1": "3", "2": "89", "3": "900"]
         let result = dict.debugOutput()
@@ -35,7 +34,7 @@ class NSDictionary_Append_Test: XCTestCase {
         let array = result.split(separator: "&")
         XCTAssert(array.count == 0)
     }
-    
+
     func testEscapedValueForNonExistingKey() {
         let dict: NSDictionary = ["lorem": "ipsum"]
         let result = dict.escapedValue(key: "nonLorem")
@@ -47,15 +46,15 @@ class NSDictionary_Append_Test: XCTestCase {
         let result = dict.escapedValue(key: "lorem")
         XCTAssert(result == nil)
     }
-    
+
     func testEscapedValueForNSDictionary() {
-        let dict: NSDictionary = ["lorem": ["ABC":"DEF"]]
+        let dict: NSDictionary = ["lorem": ["ABC": "DEF"]]
         let result = dict.escapedValue(key: "lorem")
         XCTAssert(result == "ABC=DEF")
     }
-    
+
     func testEscapedValueForDictionary() {
-        let dict: Dictionary<AnyHashable, Any> = ["lorem": ["ABC":"DEF"]]
+        let dict: Dictionary<AnyHashable, Any> = ["lorem": ["ABC": "DEF"]]
         let result = dict.escapedValue(key: "lorem")
         XCTAssert(result == "ABC=DEF")
     }
@@ -75,7 +74,6 @@ class NSDictionary_Append_Test: XCTestCase {
         XCTAssert(array[1] == "array=1,2")
         XCTAssert(array[2] == "dolor=sit")
         XCTAssert(array[3] == "lorem=ipsum")
-
     }
 
     func testMixedAsURLQueryString() {
@@ -87,6 +85,5 @@ class NSDictionary_Append_Test: XCTestCase {
         XCTAssert(array[1] == "array=1,2")
         XCTAssert(array[2] == "dolor=sit")
         XCTAssert(array[3] == "lorem=ipsum")
-
     }
 }

@@ -26,4 +26,3 @@ extension NSManagedObject: RequestableProtocol {
         return fields + relations
     }
 }
-

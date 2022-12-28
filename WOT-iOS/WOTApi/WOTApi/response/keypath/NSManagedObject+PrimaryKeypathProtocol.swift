@@ -22,6 +22,7 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
     init(keyType: PrimaryKeyType) {
         self.keyType = keyType
     }
+
     public var template: String {
         switch keyType {
         case .external: return "%K == %@"
@@ -53,4 +54,3 @@ extension NSManagedObject: PrimaryKeypathProtocol {
         return ContextExpression(name: keyName, value: ident, nameAlias: keyName, predicateFormat: predicateTemplate)
     }
 }
-

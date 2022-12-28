@@ -25,7 +25,6 @@ extension JSON: DecoderContainer {
     }
 }
 
-
 class DecoderWrapper: Decodable {
     let decoder: Decoder
 

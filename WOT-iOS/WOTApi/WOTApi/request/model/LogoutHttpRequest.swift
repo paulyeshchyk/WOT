@@ -15,7 +15,7 @@ public class LogoutHttpRequest: HttpRequest {
     override public var path: String {
         return "wot/auth/logout/"
     }
-    
+
     override public var responseParserClass: ResponseParserProtocol.Type {
         RESTResponseParser.self
     }
@@ -26,7 +26,6 @@ public class LogoutHttpRequest: HttpRequest {
 }
 
 extension LogoutHttpRequest: ModelServiceProtocol {
-
     public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return nil
     }

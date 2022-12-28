@@ -9,7 +9,6 @@ import XCTest
 @testable import ContextSDK
 
 class Test_URLEncodedProtocol: XCTestCase {
-
     func testInt() throws {
         let value: Int = 1
         guard let result = value.urlEncoded() else {

@@ -17,7 +17,7 @@ extension ModulesTree: WOTTreeModulesTreeProtocol {
         guard let imageName = self.type else {
             return nil
         }
-        
+
         return AssetCatalogExtractor.createLocalUrl(forImageNamed: imageName, bundle: Bundle(for: Self.self))
     }
 

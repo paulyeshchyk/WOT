@@ -17,7 +17,6 @@ public enum BaseJSONAdapterLinkerError: Error, CustomStringConvertible {
 }
 
 open class ManagedObjectCreator: ManagedObjectCreatorProtocol {
-    
     // MARK: - Open
 
     public let uuid: UUID = UUID()

@@ -32,14 +32,13 @@ public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
 
 extension Vehicles {
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-
         guard let vehicleJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
         try self.decode(decoderContainer: vehicleJSON)
         //
-        
+
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
@@ -110,7 +109,6 @@ extension Vehicles {
 
 extension Vehicles {
     public class ModulesTreeLinker: ManagedObjectCreator {
-
         private struct ModuleLinkerUnexpectedClassError: Error, CustomStringConvertible {
             var expected: AnyClass
             var received: AnyObject?
@@ -118,10 +116,12 @@ extension Vehicles {
                 self.expected = exp
                 self.received = rec
             }
+
             var description: String {
                 return "[ModuleLinkerUnexpectedClassError]: exprected (\(String(describing: expected))), received (\(String(describing: received ?? NSNull.self)))"
             }
         }
+
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }

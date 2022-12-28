@@ -27,7 +27,6 @@ public protocol ContextPredicateContainerProtocol {
 }
 
 public class ContextPredicate: NSObject, ContextPredicateProtocol {
-
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
     public var parentObjectIDList: [AnyObject] = []

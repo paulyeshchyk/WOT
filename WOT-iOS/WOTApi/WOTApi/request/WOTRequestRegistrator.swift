@@ -28,7 +28,7 @@ public class WOTRequestRegistrator: RequestRegistrator {
         super.init(context: context)
         registerDefaultRequests()
     }
-    
+
     private func registerDefaultRequests() {
         register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: LoginHttpRequest.self)
         register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: LogoutHttpRequest.self)
@@ -41,5 +41,4 @@ public class WOTRequestRegistrator: RequestRegistrator {
         register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileEnginesHttpRequest.self)
         register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileSuspensionHttpRequest.self)
     }
-
 }

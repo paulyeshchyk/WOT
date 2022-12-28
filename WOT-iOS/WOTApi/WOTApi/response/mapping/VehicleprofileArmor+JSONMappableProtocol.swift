@@ -13,7 +13,6 @@ import ContextSDK
 
 extension VehicleprofileArmor {
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        
         guard let armor = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }

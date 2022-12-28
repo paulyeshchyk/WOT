@@ -10,7 +10,7 @@ import ContextSDK
 
 public class MappingCoordinator: MappingCoordinatorProtocol {
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
-    
+
     private let appContext: Context
 
     public init(context: Context) {
@@ -19,9 +19,7 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
-
     public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, forClass Clazz: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, linker: ManagedObjectCreatorProtocol?, requestManager: RequestManagerProtocol?, completion: @escaping FetchResultCompletion) {
-
         appContext.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: Clazz, predicate: predicate) { [weak self] fetchResult, error in
 
             guard let self = self else {
@@ -57,9 +55,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
-
     public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, adapterLinker: ManagedObjectCreatorProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, requestManager: RequestManagerProtocol?) {
-
         guard let itemJSON = itemJSON else { return }
 
         guard let lookupRule = lookupRuleBuilder.build() else {
@@ -82,7 +78,6 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorMappingProtocol {
-    
     public func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, linker: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {

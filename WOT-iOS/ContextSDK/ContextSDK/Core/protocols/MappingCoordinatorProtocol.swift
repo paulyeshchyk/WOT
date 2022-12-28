@@ -26,6 +26,4 @@ public protocol MappingCoordinatorContainerProtocol {
 }
 
 @objc
-public protocol MappingCoordinatorProtocol: MappingCoordinatorMappingProtocol, MappingCoordinatorLinkingProtocol, MappingCoordinatorFetchingProtocol {
-    
-}
+public protocol MappingCoordinatorProtocol: MappingCoordinatorMappingProtocol, MappingCoordinatorLinkingProtocol, MappingCoordinatorFetchingProtocol {}

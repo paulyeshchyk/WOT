@@ -13,7 +13,6 @@ import ContextSDK
 
 extension VehicleprofileModule {
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-
         guard let profileModule = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -67,7 +66,7 @@ extension VehicleprofileModule: RequestManagerListenerProtocol {
     public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         //
     }
-    
+
     public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
         //
     }
@@ -76,9 +75,8 @@ extension VehicleprofileModule: RequestManagerListenerProtocol {
 // MARK: - Suspension
 
 extension VehicleprofileModule {
+    private class SuspensionPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}
 
-    private class SuspensionPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
-    
     private class SuspensionLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.suspension)] as? JSON }
@@ -103,8 +101,7 @@ extension VehicleprofileModule {
 }
 
 extension VehicleprofileModule {
-
-    private class EnginePredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
+    private class EnginePredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}
 
     private class EngineLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
@@ -130,8 +127,7 @@ extension VehicleprofileModule {
 }
 
 extension VehicleprofileModule {
-
-    private class TurretPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
+    private class TurretPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}
 
     private class TurretLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
@@ -157,8 +153,7 @@ extension VehicleprofileModule {
 }
 
 extension VehicleprofileModule {
-
-    private class RadioPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
+    private class RadioPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}
 
     private class RadioLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
@@ -184,8 +179,7 @@ extension VehicleprofileModule {
 }
 
 extension VehicleprofileModule {
-
-    private class GunPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder { }
+    private class GunPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}
 
     private class GunLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }

@@ -13,7 +13,6 @@ public protocol WGAPIResponseProtocol: Codable {
 }
 
 public class WGAPIResponse: WGAPIResponseProtocol {
-
     public var status: WGAPIResponseStatus? = .unknown
     public var meta: WGAPIResponseMeta?
     public var data: JSON?
@@ -40,7 +39,6 @@ public class WGAPIResponse: WGAPIResponseProtocol {
     // MARK: - Decodable
 
     public required init(from decoder: Decoder) throws {
-
         let container = try decoder.container(keyedBy: Fields.self)
         self.status = try container.decodeIfPresent(WGAPIResponseStatus.self, forKey: .status)
         self.meta = try container.decodeIfPresent(WGAPIResponseMeta.self, forKey: .meta)
@@ -104,7 +102,6 @@ public enum WGAPIResponseStatus: String, Codable {
 }
 
 public class WGAPIError: Error, CustomStringConvertible, Codable {
-
     public var code: Int?
     public var message: String?
 
@@ -128,7 +125,6 @@ public class WGAPIError: Error, CustomStringConvertible, Codable {
     // MARK: - Decodable
 
     public required init(from decoder: Decoder) throws {
-
         let container = try decoder.container(keyedBy: Fields.self)
         self.code = try container.decodeIfPresent(Int.self, forKey: .code)
         self.message = try container.decodeIfPresent(String.self, forKey: .message)

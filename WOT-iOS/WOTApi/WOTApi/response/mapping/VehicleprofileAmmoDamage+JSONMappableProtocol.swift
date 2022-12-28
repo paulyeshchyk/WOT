@@ -21,8 +21,7 @@ extension VehicleprofileAmmoDamage {
         }
     }
 
-     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-
+    override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
         guard let ammoDamage = map.mappingData as? [Any] else {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
