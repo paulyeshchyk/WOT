@@ -51,3 +51,23 @@ public class EventWEBEnd: LogEventProtocol {
         message = "\(String(describing: request))"
     }
 }
+
+public class EventRequestManagerStartedFirstRequest: LogEventProtocol {
+    public var eventType: LogEventType { return .requestManager }
+    public private(set) var message: String
+    public var name: String { return "RMStarted" }
+
+    public init() {
+        message = ""
+    }
+}
+
+public class EventRequestManagerFinishedAllRequests: LogEventProtocol {
+    public var eventType: LogEventType { return .requestManager }
+    public private(set) var message: String
+    public var name: String { return "RMCompleted" }
+
+    public init() {
+        message = ""
+    }
+}

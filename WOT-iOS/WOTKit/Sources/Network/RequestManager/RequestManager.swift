@@ -281,6 +281,10 @@ private class RequestGrouppedRequestList {
     }
 
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
+        if self.grouppedRequests.keys.isEmpty {
+            appContext.logInspector?.logEvent(EventRequestManagerStartedFirstRequest(), sender: self)
+        }
+
         var requestsForID: [RequestProtocol] = []
         if let available = self.grouppedRequests[groupId] {
             requestsForID.append(contentsOf: available)
@@ -311,8 +315,15 @@ private class RequestGrouppedRequestList {
                 let cnt = grouppedRequests.count
                 grouppedRequests.removeAll(where: { $0.MD5 == request.MD5 })
                 assert(grouppedRequests.count != cnt, "not removed")
-                self.grouppedRequests[group] = grouppedRequests
+                if grouppedRequests.isEmpty {
+                    self.grouppedRequests.removeValue(forKey: group)
+                } else {
+                    self.grouppedRequests[group] = grouppedRequests
+                }
             }
+        }
+        if self.grouppedRequests.keys.isEmpty {
+            appContext.logInspector?.logEvent(EventRequestManagerFinishedAllRequests(), sender: self)
         }
     }
 }

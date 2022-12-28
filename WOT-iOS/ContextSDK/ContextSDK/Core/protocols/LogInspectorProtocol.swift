@@ -23,7 +23,8 @@ public enum LogEventType: Int {
     case localFetch
     case remoteFetch
     case flow
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.web, .json, .coredata, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch, .flow] }
+    case requestManager
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.web, .json, .coredata, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch, .flow, .requestManager] }
 }
 
 @objc
