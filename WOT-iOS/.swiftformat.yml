@@ -7,6 +7,7 @@
 # format options
 --rules indent, linebreakAtEndOfFile, consecutiveBlankLines, spaceAroundBraces
 --rules blankLinesAtEndOfScope, blankLinesBetweenScopes, blankLinesAtStartOfScope, emptyBraces, trailingSpace
+--rules strongifiedSelf, isEmpty
 --allman false
 --binarygrouping 4,8
 --commas always
@@ -23,7 +24,6 @@
 --ifdef indent
 --indent 4
 --indentcase false
---importgrouping testable-bottom
 --linebreaks lf
 --maxwidth none
 --octalgrouping 4,8
@@ -31,14 +31,13 @@
 --patternlet hoist
 --ranges spaced
 --self remove
---semicolons inline
+--semicolons never
 --stripunusedargs always
 --swiftversion 4.2
 --trimwhitespace always
 --wraparguments preserve
 --wrapcollections preserve
 
-
 # rules
 
---disable isEmpty
+# --disable isEmpty

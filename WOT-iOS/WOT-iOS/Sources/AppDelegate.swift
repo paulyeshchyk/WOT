@@ -28,11 +28,11 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
 
         hostConfiguration = WOTHostConfiguration()
         sessionManager = SessionManager()
-        dataStore = WOTDataStore(context: self)
-        requestRegistrator = WOTRequestRegistrator(context: self)
-        mappingCoordinator = MappingCoordinator(context: self)
-        responseDataAdapterCreator = ResponseDataAdapterCreator(context: self)
-        requestManager = RequestManager(context: self)
+        dataStore = WOTDataStore(appContext: self)
+        requestRegistrator = WOTRequestRegistrator(appContext: self)
+        mappingCoordinator = MappingCoordinator(appContext: self)
+        responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
+        requestManager = RequestManager(appContext: self)
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = WOTDrawerViewController.newDrawer()

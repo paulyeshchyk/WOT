@@ -30,8 +30,8 @@ open class DataStore: NSObject {
 
     public let appContext: Context
 
-    required public init(context: Context) {
-        self.appContext = context
+    required public init(appContext: Context) {
+        self.appContext = appContext
         super.init()
     }
 

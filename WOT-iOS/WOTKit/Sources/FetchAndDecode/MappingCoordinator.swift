@@ -13,8 +13,8 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 
     private let appContext: Context
 
-    public init(context: Context) {
-        self.appContext = context
+    public init(appContext: Context) {
+        self.appContext = appContext
     }
 }
 

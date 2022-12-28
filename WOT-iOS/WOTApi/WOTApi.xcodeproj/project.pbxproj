@@ -999,6 +999,7 @@
 				DA0BC4C32952E0A100E01D54 /* Resources */,
 				DA81E4D22952EBDF00C60F31 /* Embed Frameworks */,
 				DA81E6EF2953086300C60F31 /* SwiftGen */,
+				DA8A959F295C38AA00BFB62E /* SwiftFormat */,
 			);
 			buildRules = (
 			);
@@ -1110,6 +1111,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${SRCROOT}/../Pods/SwiftGen/bin/swiftgen\" strings -p \"/Volumes/SHARED/projects/WOT/WOT-iOS/Pods/SwiftGen/templates/strings/flat-swift3.stencil\" --output \"/Volumes/SHARED/projects/WOT/WOT-iOS/WOTApi/resources/strings.swift\" \"/Volumes/SHARED/projects/WOT/WOT-iOS/WOTApi/resources/Localizable.strings\"\n";
+		};
+		DA8A959F295C38AA00BFB62E /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"swiftformat\" \"${SRCROOT}\" --config \"../.swiftformat.yml\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

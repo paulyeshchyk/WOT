@@ -24,7 +24,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     // MARK: Private -
 
-    private var adapterLinker: ManagedObjectCreatorProtocol
+    private var managedObjectCreator: ManagedObjectCreatorProtocol
 
     private let appContext: JSONAdapterProtocol.Context
     private let modelClazz: PrimaryKeypathProtocol.Type
@@ -35,10 +35,10 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     public var description: String { String(describing: type(of: request)) }
 
-    required public init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, adapterLinker: ManagedObjectCreatorProtocol) {
+    required public init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, managedObjectCreator: ManagedObjectCreatorProtocol) {
         self.modelClazz = modelClass
         self.request = request
-        self.adapterLinker = adapterLinker
+        self.managedObjectCreator = managedObjectCreator
         self.appContext = context
         context.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
@@ -70,7 +70,7 @@ extension JSONAdapter {
             //
             do {
                 let contextPredicate = fromRequest.contextPredicate
-                let extraction = try adapterLinker.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
+                let extraction = try managedObjectCreator.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
 
                 try self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
                     guard let self = self else {
@@ -88,7 +88,7 @@ extension JSONAdapter {
                         return
                     }
 
-                    self.adapterLinker.process(fetchResult: fetchResult, dataStore: self.appContext.dataStore) { _, error in
+                    self.managedObjectCreator.process(fetchResult: fetchResult, dataStore: self.appContext.dataStore) { _, error in
                         if let error = error {
                             self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                         }

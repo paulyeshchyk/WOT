@@ -25,14 +25,14 @@ class NSDictionary_Append_Test: XCTestCase {
     func testDebugOutput() throws {
         let dict: [AnyHashable: Any] = ["1": "3", "2": "89", "3": "900"]
         let result = dict.debugOutput()
-        XCTAssert( result.count > 0 )
+        XCTAssert( !result.isEmpty )
     }
 
     func testDictionaryAsURLQueryString() {
         let dict: Dictionary<AnyHashable, String?> = ["lorem": nil]
         let result = dict.asURLQueryString()
         let array = result.split(separator: "&")
-        XCTAssert(array.count == 0)
+        XCTAssert(array.isEmpty)
     }
 
     func testEscapedValueForNonExistingKey() {

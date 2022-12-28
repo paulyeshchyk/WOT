@@ -22,17 +22,23 @@ public class LogInspector: NSObject, LogInspectorProtocol {
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
         guard  let event = event else { return }
         guard isLoggable(event) else { return }
-        switch event.eventType {
-        case .error: output?.forEach { $0.error(event.message, context: event.name) }
-        case .info: output?.forEach { $0.info(event.message, context: event.name) }
-        case .warning: output?.forEach { $0.warning(event.message, context: event.name) }
-        case .web: output?.forEach { $0.info(event.message, context: event.name) }
-        default: output?.forEach { $0.debug(event.message, context: event.name) }
-        }
+        event.eventType.print(event: event, inOutputs: output)
     }
 
     private func isLoggable(_ event: LogEventProtocol) -> Bool {
         guard let prioritiesToLog = prioritiesToLog else { return true }
         return prioritiesToLog.contains(event.eventType)
+    }
+}
+
+extension LogEventType {
+    func print(event: LogEventProtocol, inOutputs: [LOGOutputProtocol]?) {
+        switch self {
+        case .error: inOutputs?.forEach { $0.error(event.message, context: event.name) }
+        case .info: inOutputs?.forEach { $0.info(event.message, context: event.name) }
+        case .warning: inOutputs?.forEach { $0.warning(event.message, context: event.name) }
+        case .web: inOutputs?.forEach { $0.info(event.message, context: event.name) }
+        default: inOutputs?.forEach { $0.debug(event.message, context: event.name) }
+        }
     }
 }

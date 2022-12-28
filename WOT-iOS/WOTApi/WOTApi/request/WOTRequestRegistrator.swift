@@ -24,8 +24,8 @@ public enum WebRequestType: RequestIdType {
 }
 
 public class WOTRequestRegistrator: RequestRegistrator {
-    public required init(context: RequestRegistrator.Context) {
-        super.init(context: context)
+    public required init(appContext: RequestRegistrator.Context) {
+        super.init(appContext: appContext)
         registerDefaultRequests()
     }
 

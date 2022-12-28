@@ -24,7 +24,7 @@ class Test_WOTRequestArguments: XCTestCase {
 
     func testDescription() throws {
         let args = RequestArguments(["alpha": "beta"])
-        XCTAssert(args.description.count != 0)
+        XCTAssert(!args.description.isEmpty)
     }
 
     func testSetValue() throws {
