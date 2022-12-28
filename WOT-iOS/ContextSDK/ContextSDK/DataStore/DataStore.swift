@@ -7,7 +7,6 @@
 
 @objc
 open class DataStore: NSObject {
-
     public enum DataStoreError: Error, CustomStringConvertible {
         case noKeysDefinedForClass(String)
         case clazzIsNotSupportable(String)
@@ -35,11 +34,11 @@ open class DataStore: NSObject {
         self.appContext = context
         super.init()
     }
-    
+
     open func isClassValid(_ clazz: AnyObject) -> Bool {
         fatalError("should be overriden")
     }
-    
+
     open func emptyFetchResult() -> FetchResultProtocol {
         fatalError("should be overriden")
     }
@@ -48,7 +47,6 @@ open class DataStore: NSObject {
 // MARK: - DataStoreProtocol
 
 extension DataStore: DataStoreProtocol {
-
     open func newPrivateContext() -> ManagedObjectContextProtocol {
         fatalError("should be overriden")
     }
@@ -76,12 +74,11 @@ extension DataStore: DataStoreProtocol {
     }
 
     public func stash(objectContext cntx: ManagedObjectContextProtocol?, block: @escaping ThrowableCompletion) {
-        
         guard let objectContext = cntx else {
             block(DataStoreError.contextNotSaved)
             return
         }
-        
+
         let initialDate = Date()
 
         appContext.logInspector?.logEvent(EventCDStashStart(context: objectContext), sender: self)
@@ -155,5 +152,4 @@ extension DataStore: DataStoreProtocol {
             }
         }
     }
-
 }

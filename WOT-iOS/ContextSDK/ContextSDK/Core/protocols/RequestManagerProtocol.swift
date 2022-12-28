@@ -29,4 +29,3 @@ public protocol RequestManagerListenerProtocol: MD5Protocol {
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
     func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol)
 }
-

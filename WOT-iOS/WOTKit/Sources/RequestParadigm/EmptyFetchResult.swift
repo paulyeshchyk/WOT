@@ -15,4 +15,3 @@ public class EmptyFetchResult: FetchResult {
         self.init(objectContext: cntx, objectID: objectID, predicate: nil, fetchStatus: .none)
     }
 }
-

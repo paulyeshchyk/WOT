@@ -19,7 +19,7 @@ public class MD5: NSString {
     }
 }
 
-extension String  {
+extension String {
     private enum StringMD5Error: Error, CustomStringConvertible {
         case cantConvertToUTF8
         var description: String {
@@ -28,8 +28,9 @@ extension String  {
             }
         }
     }
+
     public func MD5() throws -> String {
-        guard let messageData = self.data(using:.utf8) else {
+        guard let messageData = self.data(using: .utf8) else {
             throw StringMD5Error.cantConvertToUTF8
         }
         var digestData = Data(count: Int(CC_MD5_DIGEST_LENGTH))
@@ -46,7 +47,7 @@ extension String  {
 
 extension Data {
     public func toHex(format: String = "%02hhx") -> String {
-        map{ String(format: format, $0) }.joined()
+        map { String(format: format, $0) }.joined()
     }
 }
 

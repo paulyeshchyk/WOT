@@ -9,7 +9,6 @@
 import ContextSDK
 
 public class RESTResponseParser: ResponseParserProtocol {
-    
     private let appContext: Context
     private struct DataAdaptationPair {
         let dataAdapter: ResponseAdapterProtocol
@@ -34,7 +33,7 @@ extension RESTResponseParser {
             }
         }
     }
-    
+
     public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, dataAdapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
         guard let data = parseData else {
             throw RESTResponseParserError.dataIsEmpty
@@ -43,7 +42,7 @@ extension RESTResponseParser {
         guard let dataAdapters = dataAdapters, dataAdapters.count != 0 else {
             throw RESTResponseParserError.noAdapterFound
         }
-        
+
         var dataAdaptationPair = [DataAdaptationPair]()
         dataAdapters.forEach { dataAdapter in
             let pair = DataAdaptationPair(dataAdapter: dataAdapter, data: data)

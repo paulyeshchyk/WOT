@@ -25,11 +25,10 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
     }
 
     public required init(objectContext cntx: ManagedObjectContextProtocol?, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
-
         objectID = objID
         predicate = predicat
         fetchStatus = status
-        
+
         objectContext = cntx
         super.init()
     }

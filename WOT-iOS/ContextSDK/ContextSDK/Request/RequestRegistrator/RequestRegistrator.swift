@@ -8,7 +8,7 @@
 
 open class RequestRegistrator: RequestRegistratorProtocol {
     public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
-    
+
     private let context: Context
     private var registeredModelService: [RequestIdType: ModelServiceProtocol.Type] = .init()
     private var registeredDataAdapters: [RequestIdType: ResponseAdapterProtocol.Type] = .init()
@@ -16,13 +16,11 @@ open class RequestRegistrator: RequestRegistratorProtocol {
     required public init(context: Context) {
         self.context = context
     }
-
 }
 
 // MARK: - WOTRequestBindingProtocol
 
 extension RequestRegistrator {
-
     private enum RequestRegistratorError: Error, CustomStringConvertible {
         case requestNotFound
         case requestClassNotFound(requestType: String)
@@ -40,7 +38,7 @@ extension RequestRegistrator {
             }
         }
     }
-    
+
     public func requestIds(modelServiceClass: AnyClass) -> [RequestIdType] {
         let result = registeredModelService.keys.filter {
             modelServiceClass == registeredModelService[$0]?.modelClass()
@@ -53,7 +51,7 @@ extension RequestRegistrator {
         registeredModelService[requestId] = modelServiceClass
         registeredDataAdapters[requestId] = dataAdapterClass
     }
-    
+
     public func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType] {
         guard let modelClass = modelClass(forRequest: request) else {
             throw RequestRegistratorError.modelClassNotFound(request)
@@ -73,7 +71,7 @@ extension RequestRegistrator {
     public func requestClass(for requestId: RequestIdType) -> ModelServiceProtocol.Type? {
         return registeredModelService[requestId]
     }
-    
+
     public func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
         guard let Clazz = requestClass(for: requestId) as? RequestProtocol.Type else {
             throw RequestRegistratorError.requestNotFound

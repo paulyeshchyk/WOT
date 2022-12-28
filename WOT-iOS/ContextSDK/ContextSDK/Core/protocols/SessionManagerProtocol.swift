@@ -15,4 +15,3 @@ public protocol SessionManagerProtocol {
     func login()
     func logout()
 }
-

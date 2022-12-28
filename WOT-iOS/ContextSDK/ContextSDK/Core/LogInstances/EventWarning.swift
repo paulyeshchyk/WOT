@@ -32,7 +32,7 @@ public class EventWarning: LogEventProtocol {
 
         self.init(message: messages.joined(separator: "; details: "))
     }
-    
+
     convenience public init?(error: Error?, details: Any?) {
         var messages: [String] = .init()
         if let error = error {
@@ -48,5 +48,4 @@ public class EventWarning: LogEventProtocol {
 
         self.init(message: messages.joined(separator: "; details: "))
     }
-
 }

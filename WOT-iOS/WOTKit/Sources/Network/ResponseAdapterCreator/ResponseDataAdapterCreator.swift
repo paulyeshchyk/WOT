@@ -9,9 +9,8 @@
 import ContextSDK
 
 public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
-    
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestRegistratorContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
-    
+
     private enum ResponseAdapterCreatorError: Error, CustomStringConvertible {
         case adapterNotFound(requestType: RequestIdType)
         case modelClassNotFound(requestType: RequestIdType)
@@ -22,7 +21,7 @@ public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
             }
         }
     }
-    
+
     private let appContext: Context
 
     public init(context: Context) {
@@ -30,7 +29,6 @@ public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
     }
 
     public func responseDataAdapterInstance(for requestIdType: RequestIdType, request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol) throws -> ResponseAdapterProtocol {
-        
         guard let modelClass = try appContext.requestRegistrator?.modelClass(forRequestIdType: requestIdType) else {
             throw ResponseAdapterCreatorError.modelClassNotFound(requestType: requestIdType)
         }

@@ -14,7 +14,6 @@ private class tempLogInspectorContainer: LogInspectorContainerProtocol {
 }
 
 class Test_DataStore: XCTestCase {
-
     func test_modelurl() {
         let dataStore = WOTDataStore(context: tempLogInspectorContainer())
         let modelURL = dataStore.modelURL

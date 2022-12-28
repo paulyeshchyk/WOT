@@ -23,7 +23,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-
         let logPriorities: [LogEventType]? = [.error, .web, .warning]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
@@ -43,6 +42,4 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     }
 }
 
-extension AppDelegate: RequestRegistratorContainerProtocol, ResponseDataAdapterCreatorContainerProtocol {
-    
-}
+extension AppDelegate: RequestRegistratorContainerProtocol, ResponseDataAdapterCreatorContainerProtocol {}

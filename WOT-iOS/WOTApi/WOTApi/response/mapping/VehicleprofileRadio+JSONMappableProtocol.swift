@@ -13,7 +13,6 @@ import WOTKit
 
 extension VehicleprofileRadio {
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-
         guard let radio = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }

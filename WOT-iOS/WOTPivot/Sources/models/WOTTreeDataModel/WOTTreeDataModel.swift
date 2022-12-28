@@ -41,7 +41,7 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         super.init()
         fetchController.setFetchListener(self)
     }
-    
+
     deinit {
         fetchController.setFetchListener(nil)
     }

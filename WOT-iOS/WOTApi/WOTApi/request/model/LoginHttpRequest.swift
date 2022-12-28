@@ -15,7 +15,7 @@ public class LoginHttpRequest: HttpRequest {
     override public var path: String {
         return "wot/auth/login/"
     }
-    
+
     override public var responseParserClass: ResponseParserProtocol.Type {
         RESTResponseParser.self
     }
@@ -26,7 +26,6 @@ public class LoginHttpRequest: HttpRequest {
 }
 
 extension LoginHttpRequest: ModelServiceProtocol {
-
     public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return nil
     }

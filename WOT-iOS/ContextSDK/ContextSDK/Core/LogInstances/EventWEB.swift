@@ -32,7 +32,7 @@ public class EventWEBCancel: LogEventProtocol {
     public required init?(_ request: RequestProtocol, error: Error?) {
         var message: String = "\(String(describing: request))"
         if let err = error {
-            message += "; error:\(String(describing:err))"
+            message += "; error:\(String(describing: err))"
         }
         self.message = message
     }

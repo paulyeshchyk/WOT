@@ -17,7 +17,6 @@ public typealias ArgumentsType = Swift.Dictionary<Swift.AnyHashable, Any>
 
 @objc
 open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
-
     private var dictionary = ArgumentsType()
 
     public let uuid: UUID = UUID()

@@ -13,7 +13,6 @@ import ContextSDK
 
 extension ModulesTree {
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-        
         guard let moduleTree = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -70,16 +69,15 @@ extension ModulesTree: RequestManagerListenerProtocol {
     public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         //
     }
-    
+
     public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
         //
     }
 }
 
 extension ModulesTree {
-    
-    private class CurrentModulePredicateComposer: LinkedRemoteAsPrimaryRuleBuilder { }
-    
+    private class CurrentModulePredicateComposer: LinkedRemoteAsPrimaryRuleBuilder {}
+
     private class CurrentModuleLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
@@ -103,9 +101,8 @@ extension ModulesTree {
 }
 
 extension ModulesTree {
-    
-    private class NextModulesPredicateComposer: MasterAsPrimaryLinkedAsSecondaryRuleBuilder { }
-    
+    private class NextModulesPredicateComposer: MasterAsPrimaryLinkedAsSecondaryRuleBuilder {}
+
     private class NextModulesLinker: ManagedObjectCreator {
         private enum NextModulesLinkerError: Error, CustomStringConvertible {
             case wrongParentClass
@@ -117,7 +114,7 @@ extension ModulesTree {
                 }
             }
         }
-        
+
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
@@ -140,9 +137,8 @@ extension ModulesTree {
 }
 
 extension ModulesTree {
-    
-    private class NextVehiclePredicateComposer: LinkedLocalAsPrimaryRuleBuilder { }
-    
+    private class NextVehiclePredicateComposer: LinkedLocalAsPrimaryRuleBuilder {}
+
     private class NextVehicleLinker: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }

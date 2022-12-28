@@ -6,7 +6,6 @@
 //
 
 open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
-
     enum JSONAdapterError: Error, CustomStringConvertible {
         case notMainThread
         case fetchResultIsNotPresented
@@ -37,7 +36,6 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     public var description: String { String(describing: type(of: request)) }
 
     required public init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, adapterLinker: ManagedObjectCreatorProtocol) {
-
         self.modelClazz = modelClass
         self.request = request
         self.adapterLinker = adapterLinker
@@ -55,7 +53,6 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 }
 
 extension JSONAdapter {
-    
     public func didFinish(with: Any?, fromRequest: RequestProtocol, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
         guard error == nil, let json = with as? JSON else {
             self.appContext.logInspector?.logEvent(EventError(error, details: fromRequest), sender: self)
@@ -69,7 +66,6 @@ extension JSONAdapter {
         let dispatchGroup = DispatchGroup()
 
         for key in json.keys {
-
             dispatchGroup.enter()
             //
             do {
@@ -85,7 +81,7 @@ extension JSONAdapter {
                         dispatchGroup.leave()
                         return
                     }
-                    
+
                     if let error = error {
                         self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                         dispatchGroup.leave()
@@ -113,13 +109,12 @@ extension JSONAdapter {
 }
 
 extension JSONAdapter {
-
     private func findOrCreateObject(json: JSONCollectable?, predicate: ContextPredicate, callback externalCallback: @escaping FetchResultCompletion) throws {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             throw JSONAdapterError.notMainThread
         }
-        
+
         let localCallback: FetchResultCompletion = { fetchResult, error in
             DispatchQueue.main.async {
                 externalCallback(fetchResult, error)
@@ -167,7 +162,6 @@ public struct JSONExtraction {
 }
 
 extension ManagedObjectCreatorProtocol {
-    
     public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicate?) throws -> JSONExtraction {
         guard let json = from[key] as? JSON else {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)

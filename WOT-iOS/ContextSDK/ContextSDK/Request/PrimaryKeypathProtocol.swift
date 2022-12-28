@@ -29,4 +29,3 @@ public protocol PrimaryKeypathProtocol: AnyObject {
     static func primaryKeyPath(forType: PrimaryKeyType) -> String?
     static func primaryKey(forType: PrimaryKeyType, andObject: AnyObject?) -> ContextExpression?
 }
-

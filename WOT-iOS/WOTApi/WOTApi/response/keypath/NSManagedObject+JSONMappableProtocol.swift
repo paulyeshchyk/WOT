@@ -9,7 +9,6 @@ import CoreData
 import ContextSDK
 
 extension NSManagedObject: JSONMappableProtocol {
-
     private enum NSManagedObjectJSONMappableError: Error, CustomStringConvertible {
         case shouldBeOverriden(String)
         var description: String {
@@ -30,4 +29,3 @@ extension NSManagedObject: JSONMappableProtocol {
         throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }
-

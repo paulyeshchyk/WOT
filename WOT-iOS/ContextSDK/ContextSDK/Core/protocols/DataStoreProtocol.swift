@@ -15,7 +15,7 @@ public protocol DataStoreContainerProtocol {
 
 @objc
 public protocol DataStoreProtocol {
-
+    //
     @objc func workingContext() -> ManagedObjectContextProtocol
     @objc func newPrivateContext() -> ManagedObjectContextProtocol
 

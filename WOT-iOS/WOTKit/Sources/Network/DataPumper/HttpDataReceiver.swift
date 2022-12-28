@@ -22,18 +22,18 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
 
     public let uuid: UUID = UUID()
     public var MD5: String { uuid.MD5 }
-    
+
     public var description: String { "\(type(of: self)): \(String(describing: request))" }
-    
+
     public weak var delegate: HttpDataReceiverDelegateProtocol?
     private var urlDataTask: URLSessionDataTask?
-    
+
     private let context: HttpDataReceiverProtocol.Context
     required public init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
     }
-    
+
     deinit {
         urlDataTask?.cancelDataTask()
         urlDataTask = nil
@@ -48,7 +48,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         }
         return result
     }
-    
+
     public func start() {
         urlDataTask?.cancelDataTask()
         urlDataTask = nil
@@ -61,7 +61,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         delegate?.didStart(urlRequest: request, receiver: self)
         urlDataTask?.resume()
     }
-    
+
     private func createDataTask(url: URL) -> URLSessionDataTask {
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
@@ -73,7 +73,6 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
 }
 
 private extension URLSessionDataTask {
-    
     @discardableResult
     func cancelDataTask() -> Bool {
         guard (state == .running || state == .suspended) else {

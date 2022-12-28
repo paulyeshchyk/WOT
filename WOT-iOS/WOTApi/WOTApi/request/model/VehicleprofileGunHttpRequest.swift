@@ -15,7 +15,7 @@ public class VehicleprofileGunHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/vehicleprofile/"
     }
-    
+
     override public var responseParserClass: ResponseParserProtocol.Type {
         RESTResponseParser.self
     }
@@ -26,7 +26,6 @@ public class VehicleprofileGunHttpRequest: HttpRequest {
 }
 
 extension VehicleprofileGunHttpRequest: ModelServiceProtocol {
-
     public class func modelClass() -> PrimaryKeypathProtocol.Type? {
         return VehicleprofileGun.self
     }
