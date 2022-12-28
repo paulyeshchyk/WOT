@@ -19,6 +19,7 @@ public protocol DataStoreProtocol {
     @objc func workingContext() -> ManagedObjectContextProtocol
     @objc func newPrivateContext() -> ManagedObjectContextProtocol
 
+    @objc func perform(block: @escaping ObjectContextCompletion)
     @objc func perform(objectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion)
 
     @objc func fetchResultController(for request: AnyObject, andContext: ManagedObjectContextProtocol) throws -> AnyObject //NSFetchedResultsController<NSFetchRequestResult>

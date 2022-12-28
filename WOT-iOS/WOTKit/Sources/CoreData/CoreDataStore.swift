@@ -9,7 +9,6 @@
 import ContextSDK
 import CoreData
 
-@objc
 open class CoreDataStore: DataStore {
     private enum CoreDataStoreError: Error, CustomStringConvertible {
         case contextIsNotNSManagedObjectContext

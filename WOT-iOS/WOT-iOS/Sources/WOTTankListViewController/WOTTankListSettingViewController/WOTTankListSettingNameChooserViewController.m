@@ -81,7 +81,7 @@
     [cell setSortClick:^(BOOL ascending){
         
         WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
-        [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:ascending callback:^(id context, id setting) {
+        [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:ascending callback:^(id setting) {
 
             [tableView beginUpdates];
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -113,7 +113,7 @@
  
     
     WOTTankListSettingField *field = self.staticFieldsDatasource.allFields[indexPath.row];
-    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:field.ascending callback:^(id context, id setting) {
+    [self.tableViewDatasource updateSetting:self.setting byType:self.sectionName byValue:field.key filterValue:nil ascending:field.ascending callback:^(id setting) {
         
         self.setting = setting;
         [tableView reloadData];

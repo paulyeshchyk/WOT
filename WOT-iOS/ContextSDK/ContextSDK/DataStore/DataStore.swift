@@ -5,8 +5,7 @@
 //  Created by Paul on 26.12.22.
 //
 
-@objc
-open class DataStore: NSObject {
+open class DataStore {
     public enum DataStoreError: Error, CustomStringConvertible {
         case noKeysDefinedForClass(String)
         case clazzIsNotSupportable(String)
@@ -32,7 +31,6 @@ open class DataStore: NSObject {
 
     required public init(appContext: Context) {
         self.appContext = appContext
-        super.init()
     }
 
     open func isClassValid(_ clazz: AnyObject) -> Bool {
@@ -61,6 +59,12 @@ extension DataStore: DataStoreProtocol {
 
     open func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject {
         fatalError("should be overriden")
+    }
+
+    open func perform(block: @escaping ObjectContextCompletion) {
+        self.workingContext().execute { context in
+            block(context)
+        }
     }
 
     open func perform(objectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {

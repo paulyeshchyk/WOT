@@ -20,7 +20,7 @@
 
 @end
 
-typedef void(^WOTTankListSettingsDatasourceCreateCallback)(NSManagedObjectContext * _Nullable context, id _Nullable createdObject);
+typedef void(^WOTTankListSettingsDatasourceCreateCallback)(id _Nullable createdObject);
 
 typedef void(^WOTTankListSettingsDatasourceCallback)(void);
 
@@ -29,12 +29,11 @@ typedef void(^WOTTankListSettingsDatasourceCallback)(void);
 @property (nonatomic, readonly) NSString * _Nullable groupBy;
 @property (nonatomic, readonly) NSArray <NSSortDescriptor *>*  _Nonnull sortBy;
 @property (nonatomic, readonly) NSCompoundPredicate * _Nullable filterBy;
-@property (nonatomic, readonly) NSManagedObjectContext * _Nullable context;
 @property (nonatomic, readonly) NSFetchedResultsController * _Nullable fetchedResultController;
 
-+ (id _Nonnull )context:(id<ManagedObjectContextProtocol>_Nonnull)context createSortSettingForKey:(NSString *_Nonnull)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
-+ (id _Nonnull )context:(id<ManagedObjectContextProtocol>_Nonnull)context createGroupBySettingForKey:(NSString *_Nullable)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
-+ (id _Nonnull )context:(id<ManagedObjectContextProtocol>_Nonnull)context createFilterBySettingForKey:(NSString *_Nullable)key value:(NSString *_Nullable)value callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
++ (void)createSortSettingForKey:(NSString *_Nonnull)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
++ (void)createGroupBySettingForKey:(NSString *_Nullable)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
++ (void)createFilterBySettingForKey:(NSString *_Nullable)key value:(NSString *_Nullable)value callback:(WOTTankListSettingsDatasourceCreateCallback _Nullable )callback;
 
 - (void)registerListener:(id <WOTTankListSettingsDatasourceListener> _Nullable )listener;
 - (void)unregisterListener:(id <WOTTankListSettingsDatasourceListener> _Nullable)listener;

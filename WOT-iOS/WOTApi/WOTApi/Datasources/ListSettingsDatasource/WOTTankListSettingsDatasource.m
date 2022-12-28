@@ -14,20 +14,21 @@
 @property (nonatomic, strong, readwrite) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic, strong) NSPointerArray *listeners;
 
-@property (nonatomic, assign) id<DataStoreProtocol> coreDataProvider;
-
 @end
 
 @implementation WOTTankListSettingsDatasource
+
++ (id<DataStoreProtocol> _Nonnull) dataStore {
+    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+    return  appDelegate.dataStore;
+}
 
 - (id)init {
     
     self = [super init];
     if (self){
 
-        id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-        self.coreDataProvider = appDelegate.dataStore;
-        [self.coreDataProvider performWithObjectContext:self.context block:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+        [[WOTTankListSettingsDatasource dataStore] performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             fetchRequest.entity = [NSEntityDescription entityForName:NSStringFromClass([ListSetting class]) inManagedObjectContext:(NSManagedObjectContext *)context];
             [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:WOTApiFields.type ascending:YES],[NSSortDescriptor sortDescriptorWithKey:WOTApiKeyOrderBy.orderBy ascending:YES]]];
@@ -38,13 +39,8 @@
             NSError *error = nil;
             [self.fetchedResultController performFetch:&error];
         }];
-        
     }
     return self;
-}
-
-- (void)stash:(void (^ _Nonnull)(NSError * _Nullable))block{
-    [self.coreDataProvider stashWithObjectContext:self.context block: block];
 }
 
 - (NSCompoundPredicate *)filterBy {
@@ -88,13 +84,6 @@
         
         return [result componentsJoinedByString:@","];
     }
-    
-}
-
-- (id<ManagedObjectContextProtocol>)context {
-    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
-    id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
-    return [coreDataProvider workingContext];
 }
 
 - (NSArray<NSSortDescriptor *> *  _Nonnull)sortBy {
@@ -203,69 +192,67 @@
 }
 
 #pragma mark - private
-+ (id)context:(id<ManagedObjectContextProtocol>_Nonnull)context createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
++ (void)createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
-    return nil;
-//    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-//    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOT_KEY_SETTING_TYPE_SORT];
-//    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
-//
-//    ListSetting *setting = (ListSetting *)[context findOrCreateObjectForType:ListSetting.class predicate:compoundPredicate];
-//    setting.key = key;
-//    setting.ascending = @(ascending);
-//    setting.type = WOT_KEY_SETTING_TYPE_SORT;
-//    setting.orderBy = @(orderBy);
-//
-//    if (callback) {
-//
-//        callback(context,setting);
-//    }
-//    return setting;
+    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTLoginFields.key,key];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOTApiSettingType.key_type_sort];
+    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
+
+    [[self dataStore] performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+        ListSetting *setting = (ListSetting *)[context findOrCreateObjectForType:ListSetting.class predicate:compoundPredicate];
+        setting.key = key;
+        setting.ascending = @(ascending);
+        setting.type = WOTApiSettingType.key_type_sort;
+        setting.orderBy = @(orderBy);
+
+        [context saveWithCompletion:^(NSError * _Nullable error) {
+            if (callback) {
+                callback(setting);
+            }
+        }];
+    }];
 }
 
-+ (id)context:(id<ManagedObjectContextProtocol>_Nonnull)context createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
++ (void)createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
-    return nil;
-//    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-//    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOT_KEY_SETTING_TYPE_GROUP];
-//    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
-//
-//    ListSetting *setting = (ListSetting *)[context findOrCreateObjectForType:ListSetting.class predicate:compoundPredicate];
-//    setting.key = key;
-//    setting.ascending = @(ascending);
-//    setting.type = WOT_KEY_SETTING_TYPE_GROUP;
-//    setting.orderBy = @(orderBy);
-//
-//
-//    if (callback) {
-//
-//        callback(context,setting);
-//    }
-//    return setting;
+    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTLoginFields.key,key];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOTApiSettingType.key_type_group];
+    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
+
+    [[self dataStore] performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+        ListSetting *setting = (ListSetting *)[context findOrCreateObjectForType:ListSetting.class predicate:compoundPredicate];
+        setting.key = key;
+        setting.ascending = @(ascending);
+        setting.type = WOTApiSettingType.key_type_group;
+        setting.orderBy = @(orderBy);
+
+        [context saveWithCompletion:^(NSError * _Nullable error) {
+            if (callback) {
+                callback(setting);
+            }
+        }];
+    }];
 }
 
-+ (id)context:(id<ManagedObjectContextProtocol>_Nonnull)context createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
-
-    return nil;
-//    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_KEY,key];
-//    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOT_KEY_SETTING_TYPE_FILTER];
-//    NSPredicate *valuesPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOT_KEY_VALUES,value];
-//    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate,valuesPredicate]];
-//
-//    ListSetting *setting = (ListSetting *)[context findOrCreateObjectForType:ListSetting.class predicate:compoundPredicate];
-//    setting.key = key;
-//    setting.ascending = @(NO);
-//    setting.type = WOT_KEY_SETTING_TYPE_FILTER;
-//    setting.orderBy = @(0);
-//    setting.values = value;
-//
-//
-//    if (callback) {
-//
-//        callback(context,setting);
-//    }
-//
-//    return setting;
++ (void)createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
+    
+    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTLoginFields.key,key];
+    NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOTApiSettingType.key_type_filter];
+    NSPredicate *valuesPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTLoginFields.values,value];
+    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate,valuesPredicate]];
+    [[self dataStore] performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
+        ListSetting *setting = (ListSetting *)[context findOrCreateObjectForType:ListSetting.class predicate:compoundPredicate];
+        setting.key = key;
+        setting.ascending = @(NO);
+        setting.type = WOTApiSettingType.key_type_filter;
+        setting.orderBy = @(0);
+        setting.values = value;
+        [context saveWithCompletion:^(NSError * _Nullable error) {
+            if (callback) {
+                callback(setting);
+            }
+        }];
+    }];
 }
 
 - (id)filteredValue:(id)value forKey:(NSString *)key {
