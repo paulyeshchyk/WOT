@@ -28,3 +28,5 @@ public class VehicleprofileEngineManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
+
+public class VehicleprofileEngineRequestPredicateComposer: RootTagRuleBuilder {}

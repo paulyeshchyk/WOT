@@ -28,3 +28,5 @@ public class VehicleprofileArmorListManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
+
+public class VehicleprofileArmorListRequestPredicateComposer: ForeignAsPrimaryRuleBuilder {}

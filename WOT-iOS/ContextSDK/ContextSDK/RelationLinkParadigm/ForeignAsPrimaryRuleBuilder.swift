@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
+open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
     private var requestPredicate: ContextPredicate
     private var foreignSelectKey: String
     private var parentObjectIDList: [AnyObject]?
@@ -17,7 +17,7 @@ public class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
         self.parentObjectIDList = parentObjectIDList
     }
 
-    public func build() -> RequestPredicateComposition? {
+    public func build() -> RequestPredicateCompositionProtocol? {
         let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
         lookupPredicate[.primary] = requestPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
 

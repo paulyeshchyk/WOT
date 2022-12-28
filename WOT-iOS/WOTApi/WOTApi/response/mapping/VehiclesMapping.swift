@@ -29,8 +29,8 @@ extension Vehicles {
 
         if let defaultProfileJSON = vehicleJSON[#keyPath(Vehicles.default_profile)] as? JSON {
             let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
-            let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let linker = DefaultProfileManagedObjectCreator.self
+            let builder = DefaultProfileRequestPredicateComposer(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
             appContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, managedObjectCreatorClass: linker, requestPredicateComposer: builder, appContext: appContext)
         } else {

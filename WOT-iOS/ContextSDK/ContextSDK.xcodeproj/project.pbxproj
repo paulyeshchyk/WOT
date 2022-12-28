@@ -37,7 +37,6 @@
 		DA0E80972950B07C00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808B2950B07B00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */; };
 		DA0E80982950B07C00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808C2950B07B00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */; };
 		DA0E809A2950B07C00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */; };
-		DA0E809B2950B07C00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */; };
 		DA1F5516295C60C3009BC8D9 /* NSDecimalNumber+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1F5515295C60C3009BC8D9 /* NSDecimalNumber+Conversion.swift */; };
 		DA2C28EA2959F03C00D18A6E /* DataStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28E92959F03C00D18A6E /* DataStoreProtocol.swift */; };
 		DA2C28EC2959F07400D18A6E /* ManagedObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28EB2959F07400D18A6E /* ManagedObjectContextProtocol.swift */; };
@@ -127,7 +126,6 @@
 		DA0E808B2950B07B00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E808C2950B07B00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedRemoteAsPrimaryRuleBuilder.swift; sourceTree = "<group>"; };
-		DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift; sourceTree = "<group>"; };
 		DA1F5515295C60C3009BC8D9 /* NSDecimalNumber+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Conversion.swift"; sourceTree = "<group>"; };
 		DA2C28E92959F03C00D18A6E /* DataStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreProtocol.swift; sourceTree = "<group>"; };
 		DA2C28EB2959F07400D18A6E /* ManagedObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextProtocol.swift; sourceTree = "<group>"; };
@@ -366,7 +364,6 @@
 			isa = PBXGroup;
 			children = (
 				DA0E80872950B07A00B44CC6 /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift */,
-				DA0E808F2950B07B00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift */,
 				DA0E80892950B07B00B44CC6 /* ForeignAsPrimaryRuleBuilder.swift */,
 				DA0E80842950B07A00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift */,
 				DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */,
@@ -670,7 +667,6 @@
 				DA81E4DE2952FAA600C60F31 /* HttpServiceProtocol.swift in Sources */,
 				DA0E806429508C4700B44CC6 /* RequestProtocol.swift in Sources */,
 				DA81E7E629533EE800C60F31 /* SessionManagerProtocol.swift in Sources */,
-				DA0E809B2950B07C00B44CC6 /* ForeignAsPrimaryLinkedAsSecondaryRuleBuilder.swift in Sources */,
 				DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */,
 				DA81E5012952FE3500C60F31 /* EventCDFetch.swift in Sources */,
 				DACA006E295B06DA00E677D3 /* ModelServiceProtocol.swift in Sources */,

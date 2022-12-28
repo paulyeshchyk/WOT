@@ -17,7 +17,7 @@ open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateCo
         self.requestPredicate = requestPredicate
     }
 
-    public func build() -> RequestPredicateComposition? {
+    public func build() -> RequestPredicateCompositionProtocol? {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = linkedClazz.primaryKey(forType: .external, andObject: linkedObjectID)
         lookupPredicate[.secondary] = requestPredicate[.primary]
