@@ -46,4 +46,3 @@ public class ContextExpression: NSObject {
         return ContextExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
 }
-

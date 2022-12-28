@@ -18,12 +18,12 @@ extension VehicleprofileAmmoList {
         }
 
         let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
-        
+
         for profile in profiles {
             let ammoType = profile[#keyPath(VehicleprofileAmmo.type)] as AnyObject
             let ruleBuilder = ForeignAsPrimaryLinkedAsSecondaryRuleBuilder(requestPredicate: map.predicate, ammoType: ammoType, linkedClazz: VehicleprofileAmmo.self, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             let ammoLinkerClass = VehicleprofileAmmoList.VehicleprofileAmmoListAmmoLinker.self
-            
+
             let jsonCollection = try JSONCollection(element: profile)
             inContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, adapterLinker: ammoLinkerClass, lookupRuleBuilder: ruleBuilder, requestManager: inContext.requestManager)
         }

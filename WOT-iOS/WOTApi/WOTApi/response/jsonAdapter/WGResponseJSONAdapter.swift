@@ -8,7 +8,6 @@
 import ContextSDK
 
 public final class WGResponseJSONAdapter: JSONAdapter {
-
     enum WGResponseJSONAdapterError: Error, CustomStringConvertible {
         case notSupportedType(AnyClass)
         var description: String {

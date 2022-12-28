@@ -10,7 +10,6 @@ import ContextSDK
 import WOTKit
 
 public class WOTWebProxyRequest: HttpRequest {
-    
     override public var responseParserClass: ResponseParserProtocol.Type {
         RESTResponseParser.self
     }

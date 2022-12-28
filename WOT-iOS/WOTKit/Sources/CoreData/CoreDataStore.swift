@@ -11,7 +11,6 @@ import CoreData
 
 @objc
 open class CoreDataStore: DataStore {
-
     private enum CoreDataStoreError: Error, CustomStringConvertible {
         case contextIsNotNSManagedObjectContext
         case requestIsNotNSFetchRequest
@@ -22,7 +21,7 @@ open class CoreDataStore: DataStore {
             }
         }
     }
-    
+
     open var sqliteURL: URL? { fatalError("should be overriden") }
     open var modelURL: URL? { fatalError("should be overriden") }
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
@@ -43,10 +42,10 @@ open class CoreDataStore: DataStore {
         guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
         }
-        
+
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
     }
-    
+
     override public func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject {
         guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
@@ -57,11 +56,11 @@ open class CoreDataStore: DataStore {
     override public func isClassValid(_ clazz: AnyObject) -> Bool {
         return (clazz is NSManagedObject.Type) ? true : false
     }
-    
+
     override public func emptyFetchResult() -> FetchResultProtocol {
         return EmptyFetchResult()
     }
-    
+
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         guard let sqliteURL = self.sqliteURL else {
             abort()
@@ -73,7 +72,7 @@ open class CoreDataStore: DataStore {
 
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption:true, NSInferMappingModelAutomaticallyOption: true]
+            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: sqliteURL, options: options)
         } catch {
             abort()
@@ -105,6 +104,7 @@ extension CoreDataStore {
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }
+
     static func privateQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Private"
@@ -112,6 +112,7 @@ extension CoreDataStore {
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }
+
     static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
@@ -122,7 +123,6 @@ extension CoreDataStore {
 }
 
 extension CoreDataStore {
-
     // MARK: - Merge Contexts
 
     private func mergeChanges(notification: Notification, toContext: NSManagedObjectContext) {

@@ -10,5 +10,4 @@ public protocol ModelServiceProtocol: AnyObject {
     static func modelClass() -> PrimaryKeypathProtocol.Type?
     static func registrationID() -> RequestIdType
     func instanceModelClass() -> AnyClass?
-    
 }

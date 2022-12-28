@@ -13,7 +13,6 @@ import ContextSDK
 
 extension Module {
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-
         guard let module = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -21,7 +20,7 @@ extension Module {
         //
         try self.decode(decoderContainer: module)
         //
-        
+
         let parentsAsVehicles = map.predicate.parentObjectIDList
             .compactMap { map.managedObjectContext.object(byID: $0) as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
@@ -78,14 +77,13 @@ extension Module: RequestManagerListenerProtocol {
     public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
         //
     }
-    
+
     public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
         //
     }
 }
 
 extension Module {
-    
     private class VehicleprofileEngineCreator: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.engine)] as? JSON }
@@ -110,13 +108,11 @@ extension Module {
 }
 
 extension Module {
-
     private class VehicleprofileTurretCreator: ManagedObjectCreator {
-        
         public required init(masterFetchResult: FetchResultProtocol?, mappedObjectIdentifier: Any?) {
             super.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: mappedObjectIdentifier)
         }
-        
+
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.turret)] as? JSON }
 
@@ -136,7 +132,6 @@ extension Module {
 }
 
 extension Module {
-
     private class VehicleprofileSuspensionCreator: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.suspension)] as? JSON }
@@ -157,7 +152,6 @@ extension Module {
 }
 
 extension Module {
-
     private class VehicleprofileRadioRadio: ManagedObjectCreator {
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.radio)] as? JSON }
@@ -178,9 +172,7 @@ extension Module {
 }
 
 extension Module {
-
     private class VehicleprofileGunCreator: ManagedObjectCreator {
-        
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.gun)] as? JSON }
 

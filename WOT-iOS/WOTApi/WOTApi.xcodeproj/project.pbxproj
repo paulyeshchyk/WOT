@@ -1109,7 +1109,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"/Volumes/SHARED/projects/WOT/WOT-iOS/Pods/SwiftGen/bin/swiftgen\" strings -p \"/Volumes/SHARED/projects/WOT/WOT-iOS/Pods/SwiftGen/templates/strings/flat-swift3.stencil\" --output \"/Volumes/SHARED/projects/WOT/WOT-iOS/WOTApi/resources/strings.swift\" \"/Volumes/SHARED/projects/WOT/WOT-iOS/WOTApi/resources/Localizable.strings\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${SRCROOT}/../Pods/SwiftGen/bin/swiftgen\" strings -p \"/Volumes/SHARED/projects/WOT/WOT-iOS/Pods/SwiftGen/templates/strings/flat-swift3.stencil\" --output \"/Volumes/SHARED/projects/WOT/WOT-iOS/WOTApi/resources/strings.swift\" \"/Volumes/SHARED/projects/WOT/WOT-iOS/WOTApi/resources/Localizable.strings\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -10,10 +10,8 @@ import UIKit
 
 @objc
 public class AssetCatalogExtractor: NSObject {
-
     @objc
     public static func createLocalUrl(forImageNamed name: String, bundle: Bundle) -> URL? {
-
         let fileManager = FileManager.default
         let cacheDirectory = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         let url = cacheDirectory.appendingPathComponent("\(name).png")
@@ -50,6 +48,5 @@ public class AssetCatalogExtractor: NSObject {
         } catch {
             return nil
         }
-        
     }
 }

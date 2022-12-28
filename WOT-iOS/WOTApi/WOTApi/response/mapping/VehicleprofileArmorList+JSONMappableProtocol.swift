@@ -24,7 +24,6 @@ private enum VehicleProfileArmorListError: Error, CustomStringConvertible {
 
 extension VehicleprofileArmorList {
     override public func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws {
-
         guard let armorList = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -36,10 +35,9 @@ extension VehicleprofileArmorList {
         guard let turretJSON = armorList[#keyPath(VehicleprofileArmorList.turret)] as? JSON else {
             throw VehicleProfileArmorListError.turretNotFound
         }
-        
+
         let turretJSONCollection = try JSONCollection(element: turretJSON)
-        
-        
+
         let turretBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
         let turretMapperClazz = VehicleprofileArmorList.TurretLinker.self
         inContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: turretMapperClazz, lookupRuleBuilder: turretBuilder, requestManager: inContext.requestManager)
@@ -50,7 +48,7 @@ extension VehicleprofileArmorList {
             throw VehicleProfileArmorListError.hullNotFound
         }
         let hullJSONCollection = try JSONCollection(element: hullJSON)
-        
+
         let hullBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
         let hullMapperClazz = VehicleprofileArmorList.HullLinker.self
         inContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: hullMapperClazz, lookupRuleBuilder: hullBuilder, requestManager: inContext.requestManager)

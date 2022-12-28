@@ -13,7 +13,6 @@ public protocol RequestRegistratorContainerProtocol {
 
 @objc
 public protocol RequestRegistratorProtocol {
-
     func requestIds(modelServiceClass: AnyClass) -> [RequestIdType]
     func requestIds(forRequest request: RequestProtocol) throws -> [RequestIdType]
     func requestClass(for requestId: RequestIdType) -> ModelServiceProtocol.Type?

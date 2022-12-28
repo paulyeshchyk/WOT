@@ -10,7 +10,6 @@ import WOTKit
 
 @objc
 public class WOTWEBRequestFactory: NSObject {
-    
     private enum HttpRequestFactoryError: Error, CustomStringConvertible {
         case objectNotDefined
         public var description: String {
@@ -19,7 +18,7 @@ public class WOTWEBRequestFactory: NSObject {
             }
         }
     }
-    
+
     public static func fetchVehiclePivotData(inContext appContext: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
         let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
 
@@ -30,7 +29,7 @@ public class WOTWEBRequestFactory: NSObject {
             throw HttpRequestFactoryError.objectNotDefined
         }
         request.arguments = arguments
-        
+
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, listener: listener)
     }
 

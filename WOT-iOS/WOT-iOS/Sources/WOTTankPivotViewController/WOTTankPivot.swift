@@ -12,7 +12,6 @@ import WOTKit
 import WOTApi
 
 class WOTTankPivotNodeCreator: WOTPivotNodeCreator {
-    
     #warning("Pivot configuration: collapse")
     override public var collapseToGroups: Bool { return true }
 
@@ -87,7 +86,6 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
-    
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & RequestRegistratorContainerProtocol
 
     private let appContext: Context
@@ -118,7 +116,7 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     required init(fetchController: WOTDataFetchControllerProtocol, modelListener: WOTDataModelListener, nodeCreator: WOTNodeCreatorProtocol, metadatasource: WOTDataModelMetadatasource, context: WOTPivotDataModel.Context) {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:context:) has not been implemented")
     }
-    
+
     deinit {
         appContext.requestManager?.removeListener(self)
     }

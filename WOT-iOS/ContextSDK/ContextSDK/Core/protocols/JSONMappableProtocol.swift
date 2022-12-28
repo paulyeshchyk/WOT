@@ -7,7 +7,7 @@
 
 public protocol JSONMappableProtocol {
     typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol & LogInspectorContainerProtocol
-    
+
     func mapping(with map: JSONManagedObjectMapProtocol, inContext: JSONMappableProtocol.Context) throws
 }
 
@@ -17,7 +17,7 @@ public protocol ManagedObjectContextContainer {
 }
 
 @objc
-public protocol ManagedObjectMapProtocol: ContextPredicateContainerProtocol, ManagedObjectContextContainer { }
+public protocol ManagedObjectMapProtocol: ContextPredicateContainerProtocol, ManagedObjectContextContainer {}
 
 @objc
 public protocol JSONManagedObjectMapProtocol: ManagedObjectMapProtocol {
@@ -35,12 +35,11 @@ public enum JSONManagedObjectMapError: Error, CustomStringConvertible {
     }
 }
 
-
 public class JSONMap: JSONManagedObjectMapProtocol {
     public var mappingData: Any? {
         jsonCollectable.data()
     }
-    
+
     public let managedObjectContext: ManagedObjectContextProtocol
     public let predicate: ContextPredicate
     private let jsonCollectable: JSONCollectable

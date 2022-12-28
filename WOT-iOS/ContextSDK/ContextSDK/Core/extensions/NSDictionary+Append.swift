@@ -31,10 +31,13 @@ extension Dictionary {
 }
 
 extension Dictionary {
-    
     public func debugOutput() -> String {
-        let jsonData = try! JSONSerialization.data(withJSONObject: self, options:  [.prettyPrinted])
-        return String(data: jsonData, encoding: .utf8)!
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: self, options: [.prettyPrinted])
+            return String(data: jsonData, encoding: .utf8)!
+        } catch {
+            return "Cant make output. Fix the error: \(String(describing: error))"
+        }
     }
 }
 
@@ -71,7 +74,6 @@ extension NSDictionary {
         return urlCodable.urlEncoded()
     }
 }
-
 
 extension Dictionary where Key == AnyHashable {
     public func asURLQueryString() -> String {
