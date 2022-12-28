@@ -83,7 +83,7 @@ extension ModulesTree {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let module = fetchResult.managedObject() as? Module else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
                 return
@@ -119,7 +119,7 @@ extension ModulesTree {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree else {
                 completion(fetchResult, NextModulesLinkerError.wrongParentClass)
                 return
@@ -144,7 +144,7 @@ extension ModulesTree {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             if let tank = fetchResult.managedObject() as? Vehicles {
                 if let modulesTree = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? ModulesTree {
                     modulesTree.addToNext_tanks(tank)

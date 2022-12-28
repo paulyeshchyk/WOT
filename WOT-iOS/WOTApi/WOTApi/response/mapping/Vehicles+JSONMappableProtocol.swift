@@ -52,9 +52,9 @@ extension Vehicles {
         if let defaultProfileJSON = vehicleJSON[#keyPath(Vehicles.default_profile)] as? JSON {
             let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
-            let linker = Vehicles.DefaultProfileLinker.self
+            let linker = Vehicles.DefaultProfileManagedObjectCreator.self
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
-            inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, adapterLinker: linker, lookupRuleBuilder: builder, requestManager: inContext.requestManager)
+            inContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, adapterLinker: linker, lookupRuleBuilder: builder, appContext: inContext)
         } else {
             inContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(self.tank_id)), sender: self)
         }
@@ -102,13 +102,13 @@ extension Vehicles {
         submodulesPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
         submodulesPredicate[.secondary] = requestPredicate[.primary]
 
-        let linker = Vehicles.ModulesTreeLinker(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
-        inContext.mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, forClass: ModulesTree.self, predicate: submodulesPredicate, linker: linker, requestManager: inContext.requestManager, completion: { _, _ in })
+        let linker = Vehicles.ModulesTreeManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
+        inContext.mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, forClass: ModulesTree.self, predicate: submodulesPredicate, managedObjectCreator: linker, appContext: inContext, completion: { _, _ in })
     }
 }
 
 extension Vehicles {
-    public class ModulesTreeLinker: ManagedObjectCreator {
+    public class ModulesTreeManagedObjectCreator: ManagedObjectCreator {
         private struct ModuleLinkerUnexpectedClassError: Error, CustomStringConvertible {
             var expected: AnyClass
             var received: AnyObject?
@@ -128,7 +128,7 @@ extension Vehicles {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            guard let objectContext = fetchResult.objectContext else {
+            guard let objectContext = fetchResult.managedObjectContext else {
                 assertionFailure("object context is not defined")
                 return
             }
@@ -153,14 +153,14 @@ extension Vehicles {
         }
     }
 
-    public class DefaultProfileLinker: ManagedObjectCreator {
+    public class DefaultProfileManagedObjectCreator: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            guard let managedObjectContext = fetchResult.objectContext else {
+            guard let managedObjectContext = fetchResult.managedObjectContext else {
                 assertionFailure("object context is not defined")
                 return
             }
@@ -182,27 +182,27 @@ extension Vehicles {
         }
     }
 
-    public class VehiclesPivotDataLinker: ManagedObjectCreator {
+    public class VehiclesPivotDataManagedObjectCreator: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            dataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
+            dataStore?.stash(objectContext: fetchResult.managedObjectContext, block: { error in
                 completion(fetchResult, error)
             })
         }
     }
 
-    public class VehiclesTreeViewLinker: ManagedObjectCreator {
+    public class VehiclesTreeManagedObjectCreator: ManagedObjectCreator {
         // MARK: -
 
         override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            dataStore?.stash(objectContext: fetchResult.objectContext, block: { error in
+            dataStore?.stash(objectContext: fetchResult.managedObjectContext, block: { error in
                 completion(fetchResult, error)
             })
         }

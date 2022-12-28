@@ -96,7 +96,7 @@ extension DataStore: DataStoreProtocol {
         let localCallback: FetchResultCompletion = { fetchResult, error in
             self.workingContext().execute {
                 let fetchResultForContext = fetchResult?.makeDublicate()
-                fetchResultForContext?.objectContext = self.workingContext()
+                fetchResultForContext?.managedObjectContext = self.workingContext()
                 completion(fetchResultForContext, error)
             }
         }

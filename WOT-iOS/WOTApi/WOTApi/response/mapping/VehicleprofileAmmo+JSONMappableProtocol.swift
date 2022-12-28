@@ -28,7 +28,7 @@ extension VehicleprofileAmmo {
         let penetrationMapper = VehicleprofileAmmo.PenetrationLinker.self
         let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
         let penetrationListCollection = JSONCollection(custom: penetrationArray)
-        inContext.mappingCoordinator?.linkItem(from: penetrationListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, adapterLinker: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder, requestManager: inContext.requestManager)
+        inContext.mappingCoordinator?.linkItem(from: penetrationListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, adapterLinker: penetrationMapper, lookupRuleBuilder: penetrationRuleBuilder, appContext: inContext)
 
         // MARK: - Damage
 
@@ -37,7 +37,7 @@ extension VehicleprofileAmmo {
         let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
 
         let damageListCollection = JSONCollection(custom: damageArray)
-        inContext.mappingCoordinator?.linkItem(from: damageListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, adapterLinker: damageMapper, lookupRuleBuilder: damageRuleBuilder, requestManager: inContext.requestManager)
+        inContext.mappingCoordinator?.linkItem(from: damageListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, adapterLinker: damageMapper, lookupRuleBuilder: damageRuleBuilder, appContext: inContext)
     }
 }
 
@@ -48,7 +48,7 @@ extension VehicleprofileAmmo {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            guard let managedObjectContext = fetchResult.objectContext else {
+            guard let managedObjectContext = fetchResult.managedObjectContext else {
                 assertionFailure("Managed object context is not defined")
                 return
             }
@@ -74,7 +74,7 @@ extension VehicleprofileAmmo {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let objectContext = fetchResult.objectContext
+            let objectContext = fetchResult.managedObjectContext
             guard let damage = fetchResult.managedObject() as? VehicleprofileAmmoDamage else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmoDamage.self))
                 return

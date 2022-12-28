@@ -40,7 +40,7 @@ extension VehicleprofileArmorList {
 
         let turretBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
         let turretMapperClazz = VehicleprofileArmorList.TurretLinker.self
-        inContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: turretMapperClazz, lookupRuleBuilder: turretBuilder, requestManager: inContext.requestManager)
+        inContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: turretMapperClazz, lookupRuleBuilder: turretBuilder, appContext: inContext)
 
         // MARK: - hull
 
@@ -51,7 +51,7 @@ extension VehicleprofileArmorList {
 
         let hullBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
         let hullMapperClazz = VehicleprofileArmorList.HullLinker.self
-        inContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: hullMapperClazz, lookupRuleBuilder: hullBuilder, requestManager: inContext.requestManager)
+        inContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, adapterLinker: hullMapperClazz, lookupRuleBuilder: hullBuilder, appContext: inContext)
     }
 }
 
@@ -61,7 +61,7 @@ extension VehicleprofileArmorList {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let armor = fetchResult.managedObject() as? VehicleprofileArmor else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileArmor.self))
                 return
@@ -82,7 +82,7 @@ extension VehicleprofileArmorList {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             if let armor = fetchResult.managedObject() as? VehicleprofileArmor {
                 if let armorList = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? VehicleprofileArmorList {
                     armorList.hull = armor

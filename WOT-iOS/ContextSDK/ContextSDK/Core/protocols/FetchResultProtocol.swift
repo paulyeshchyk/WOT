@@ -18,7 +18,7 @@ public enum FetchStatus: Int {
 public protocol FetchResultProtocol: AnyObject {
     var fetchStatus: FetchStatus { get set }
     var predicate: NSPredicate? { get set }
-    var objectContext: ManagedObjectContextProtocol? { get set }
+    var managedObjectContext: ManagedObjectContextProtocol? { get set }
     func makeDublicate() -> FetchResultProtocol
     func managedObject() -> ManagedObjectProtocol?
     func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedObjectProtocol?

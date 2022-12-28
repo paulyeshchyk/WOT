@@ -82,7 +82,7 @@ extension VehicleprofileModule {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.suspension)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileSuspension.self))
                 return
@@ -108,7 +108,7 @@ extension VehicleprofileModule {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.engine)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileEngine.self))
                 return
@@ -134,7 +134,7 @@ extension VehicleprofileModule {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.turret)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileTurret.self))
                 return
@@ -160,7 +160,7 @@ extension VehicleprofileModule {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.radio)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileRadio.self))
                 return
@@ -186,7 +186,7 @@ extension VehicleprofileModule {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.gun)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileGun.self))
                 return

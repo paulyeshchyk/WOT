@@ -20,7 +20,7 @@ public class WOTWEBRequestFactory: NSObject {
     }
 
     public static func fetchVehiclePivotData(inContext appContext: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
-        let pivotLinker = Vehicles.VehiclesPivotDataLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
+        let pivotLinker = Vehicles.VehiclesPivotDataManagedObjectCreator(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
 
         let arguments = RequestArguments()
         arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
@@ -35,7 +35,7 @@ public class WOTWEBRequestFactory: NSObject {
 
     @objc
     public static func fetchVehicleTreeData(vehicleId: Int, appContext: RequestRegistratorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
-        let treeViewLinker = Vehicles.VehiclesTreeViewLinker(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
+        let treeViewLinker = Vehicles.VehiclesTreeManagedObjectCreator(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
 
         let arguments = RequestArguments()
         arguments.setValues([vehicleId], forKey: WOTApiFields.tank_id)

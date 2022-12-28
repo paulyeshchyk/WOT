@@ -89,7 +89,7 @@ extension Module {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.engine)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             guard let vehicleProfileEngine = fetchResult.managedObject() as? VehicleprofileEngine else {
                 completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileEngine.self))
                 return
@@ -117,7 +117,7 @@ extension Module {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.turret)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             if let vehicleProfileTurret = fetchResult.managedObject() as? VehicleprofileTurret {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileTurret.turret_id = self.mappedObjectIdentifier as? NSDecimalNumber
@@ -137,7 +137,7 @@ extension Module {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.suspension)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             if let vehicleProfileSuspension = fetchResult.managedObject() as? VehicleprofileSuspension {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileSuspension.suspension_id = self.mappedObjectIdentifier as? NSDecimalNumber
@@ -157,7 +157,7 @@ extension Module {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.radio)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             if let vehicleProfileRadio = fetchResult.managedObject() as? VehicleprofileRadio {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
@@ -177,7 +177,7 @@ extension Module {
         override public func onJSONExtraction(json: JSON) -> JSON? { return json[#keyPath(Vehicleprofile.gun)] as? JSON }
 
         override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
-            let managedObjectContext = fetchResult.objectContext
+            let managedObjectContext = fetchResult.managedObjectContext
             if let vehicleProfileGun = fetchResult.managedObject() as? VehicleprofileGun {
                 if let module = masterFetchResult?.managedObject(inManagedObjectContext: managedObjectContext) as? Module {
                     vehicleProfileGun.gun_id = self.mappedObjectIdentifier as? NSDecimalNumber
