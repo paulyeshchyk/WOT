@@ -9,7 +9,7 @@
 extension VehicleprofileAmmoList {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
         guard let profilesJSON = map.mappingData as? [JSON] else {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
@@ -22,7 +22,7 @@ extension VehicleprofileAmmoList {
             let ammoLinkerClass = VehicleprofileAmmoListAmmoManagedObjectCreator.self
 
             let jsonCollection = try JSONCollection(element: profile)
-            appContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, managedObjectCreatorClass: ammoLinkerClass, lookupRuleBuilder: ruleBuilder, appContext: appContext)
+            appContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, managedObjectCreatorClass: ammoLinkerClass, requestPredicateComposer: ruleBuilder, appContext: appContext)
         }
     }
 }

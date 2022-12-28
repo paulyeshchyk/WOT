@@ -9,7 +9,7 @@
 extension Vehicles {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
         guard let vehicleJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -32,7 +32,7 @@ extension Vehicles {
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let linker = DefaultProfileManagedObjectCreator.self
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
-            appContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, managedObjectCreatorClass: linker, lookupRuleBuilder: builder, appContext: appContext)
+            appContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, managedObjectCreatorClass: linker, requestPredicateComposer: builder, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(self.tank_id)), sender: self)
         }

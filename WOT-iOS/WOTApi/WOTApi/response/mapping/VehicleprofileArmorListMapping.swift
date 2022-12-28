@@ -9,7 +9,7 @@
 extension VehicleprofileArmorList {
     // MARK: - JSONMappableProtocol
 
-    override public func mapping(with map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
         guard let armorListJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -26,7 +26,7 @@ extension VehicleprofileArmorList {
 
         let turretBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
         let turretMapperClazz = VehicleprofileArmorListTurretManagedObjectCreator.self
-        appContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: turretMapperClazz, lookupRuleBuilder: turretBuilder, appContext: appContext)
+        appContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: turretMapperClazz, requestPredicateComposer: turretBuilder, appContext: appContext)
 
         // MARK: - hull
 
@@ -37,7 +37,7 @@ extension VehicleprofileArmorList {
 
         let hullBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
         let hullMapperClazz = VehicleprofileArmorListHullManagedObjectCreator.self
-        appContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: hullMapperClazz, lookupRuleBuilder: hullBuilder, appContext: appContext)
+        appContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: hullMapperClazz, requestPredicateComposer: hullBuilder, appContext: appContext)
     }
 }
 

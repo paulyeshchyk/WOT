@@ -60,10 +60,10 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
-    public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, lookupRuleBuilder: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext) {
+    public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, requestPredicateComposer: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext) {
         guard let itemJSON = itemJSON else { return }
 
-        guard let lookupRule = lookupRuleBuilder.build() else {
+        guard let lookupRule = requestPredicateComposer.build() else {
             appContext.logInspector?.logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
@@ -108,7 +108,7 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         //
         do {
             let jsonMap = JSONMap(json: json, managedObjectContext: managedObjectContext, predicate: predicate)
-            try managedObject.mapping(with: jsonMap, appContext: appContext)
+            try managedObject.decode(using: jsonMap, appContext: appContext)
             appContext.dataStore?.stash(objectContext: managedObjectContext, block: localCompletion)
             appContext.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         } catch {
