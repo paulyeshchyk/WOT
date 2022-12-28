@@ -21,6 +21,8 @@ public class ModulesTreeNextVehicleManagedObjectCreator: ManagedObjectCreator {
             return
         }
         modulesTree.addToNext_tanks(tank)
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

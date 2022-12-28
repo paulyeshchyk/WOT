@@ -20,8 +20,9 @@ public class VehicleprofileTurretManagedObjectCreator: ManagedObjectCreator {
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Vehicleprofile.self))
             return
         }
-
         vehicleProfile.turret = turret
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

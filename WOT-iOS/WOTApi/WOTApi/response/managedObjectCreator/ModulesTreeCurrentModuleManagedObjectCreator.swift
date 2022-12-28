@@ -21,6 +21,8 @@ public class ModulesTreeCurrentModuleManagedObjectCreator: ManagedObjectCreator 
             return
         }
         modulesTree.currentModule = module
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

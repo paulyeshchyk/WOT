@@ -22,6 +22,8 @@ public class ModuleVehicleprofileEngineManagedObjectCreator: ManagedObjectCreato
         }
         vehicleProfileEngine.engine_id = self.mappedObjectIdentifier as? NSDecimalNumber
         module.engine = vehicleProfileEngine
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

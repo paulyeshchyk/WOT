@@ -22,6 +22,7 @@ public class VehicleprofileRadioManagedObjectCreator: ManagedObjectCreator {
         }
         vehicleProfile.radio = radio
 
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

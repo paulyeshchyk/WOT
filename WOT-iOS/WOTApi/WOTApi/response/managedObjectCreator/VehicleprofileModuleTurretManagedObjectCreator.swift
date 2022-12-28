@@ -22,6 +22,8 @@ public class VehicleprofileModuleTurretManagedObjectCreator: ManagedObjectCreato
         }
         vehicleProfileTurret.turret_id = mappedObjectIdentifier as? NSDecimalNumber
         module.vehicleTurret = vehicleProfileTurret
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

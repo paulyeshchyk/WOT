@@ -24,6 +24,8 @@ public class DefaultProfileManagedObjectCreator: ManagedObjectCreator {
         vehicles.modules_tree?.compactMap({ $0 as? ModulesTree }).forEach {
             $0.default_profile = defaultProfile
         }
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

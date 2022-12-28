@@ -12,6 +12,7 @@ public class VehiclesPivotDataManagedObjectCreator: ManagedObjectCreator {
     }
 
     override public func process(fetchResult: FetchResultProtocol, dataStore: DataStoreProtocol?, completion: @escaping FetchResultCompletion) {
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

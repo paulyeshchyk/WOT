@@ -22,6 +22,7 @@ public class VehicleprofileArmorListManagedObjectCreator: ManagedObjectCreator {
         }
         vehicleProfile.armor = armorList
 
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

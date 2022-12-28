@@ -22,6 +22,8 @@ public class VehicleprofileModuleSuspensionManagedObjectCreator: ManagedObjectCr
         }
         vehicleProfileSuspension.suspension_id = mappedObjectIdentifier as? NSDecimalNumber
         module.vehicleChassis = vehicleProfileSuspension
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

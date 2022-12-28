@@ -22,6 +22,8 @@ public class VehicleprofileModuleGunManagedObjectCreator: ManagedObjectCreator {
         }
         vehicleProfileGun.gun_id = mappedObjectIdentifier as? NSDecimalNumber
         module.vehicleGun = vehicleProfileGun
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

@@ -21,6 +21,8 @@ public class VehicleprofileArmorListTurretManagedObjectCreator: ManagedObjectCre
             return
         }
         armorList.turret = armor
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

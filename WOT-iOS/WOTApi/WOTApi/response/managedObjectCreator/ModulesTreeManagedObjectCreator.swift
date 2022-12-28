@@ -24,6 +24,8 @@ public class ModulesTreeManagedObjectCreator: ManagedObjectCreator {
         }
         modulesTree.default_profile = vehicles.default_profile
         vehicles.addToModules_tree(modulesTree)
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

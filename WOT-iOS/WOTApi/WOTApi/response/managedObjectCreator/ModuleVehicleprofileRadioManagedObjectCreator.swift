@@ -22,6 +22,8 @@ public class ModuleVehicleprofileRadioManagedObjectCreator: ManagedObjectCreator
         }
         vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
         module.radio = vehicleProfileRadio
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

@@ -20,8 +20,9 @@ public class VehicleprofileAmmoPenetrationManagedObjectCreator: ManagedObjectCre
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileAmmo.self))
             return
         }
-
         ammo.penetration = penetration
+
+        // MARK: stash
         dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
