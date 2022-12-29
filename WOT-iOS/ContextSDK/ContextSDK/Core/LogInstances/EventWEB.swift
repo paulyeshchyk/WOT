@@ -52,20 +52,28 @@ public class EventWEBEnd: LogEventProtocol {
     }
 }
 
-public class EventRequestManagerStartedFirstRequest: LogEventProtocol {
-    public var eventType: LogEventType { return .requestManager }
+public class EventLongTermStart: LogEventProtocol {
+    public var eventType: LogEventType { return .longTermOperation }
     public private(set) var message: String
-    public var name: String { return "RMStarted" }
+    public var name: String { return "LongTermStart" }
+
+    public required init?(_ text: String) {
+        message = text
+    }
 
     public init() {
         message = ""
     }
 }
 
-public class EventRequestManagerFinishedAllRequests: LogEventProtocol {
-    public var eventType: LogEventType { return .requestManager }
+public class EventLongTermEnd: LogEventProtocol {
+    public var eventType: LogEventType { return .longTermOperation }
     public private(set) var message: String
-    public var name: String { return "RMCompleted" }
+    public var name: String { return "LongTermEnd" }
+
+    public required init?(_ text: String) {
+        message = text
+    }
 
     public init() {
         message = ""

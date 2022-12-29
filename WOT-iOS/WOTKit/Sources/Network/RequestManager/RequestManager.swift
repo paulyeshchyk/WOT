@@ -282,7 +282,7 @@ private class RequestGrouppedRequestList {
 
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
         if self.grouppedRequests.keys.isEmpty {
-            appContext.logInspector?.logEvent(EventRequestManagerStartedFirstRequest(), sender: self)
+            appContext.logInspector?.logEvent(EventLongTermStart("\(type(of: self))"), sender: self)
         }
 
         var requestsForID: [RequestProtocol] = []
@@ -323,7 +323,7 @@ private class RequestGrouppedRequestList {
             }
         }
         if self.grouppedRequests.keys.isEmpty {
-            appContext.logInspector?.logEvent(EventRequestManagerFinishedAllRequests(), sender: self)
+            appContext.logInspector?.logEvent(EventLongTermEnd("\(type(of: self))"), sender: self)
         }
     }
 }
