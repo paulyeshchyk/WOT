@@ -7,7 +7,6 @@
 //
 
 import WOTKit
-import ContextSDK
 
 public class VehicleprofileSuspensionHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
@@ -17,11 +16,11 @@ public class VehicleprofileSuspensionHttpRequest: HttpRequest {
     }
 
     override public var responseParserClass: ResponseParserProtocol.Type {
-        VehicleprofileSuspensionResponseParser.self
+        RESTResponseParser.self
     }
 
     override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        VehicleprofileSuspensionJSONAdapter.self
+        WGResponseJSONAdapter.self
     }
 }
 

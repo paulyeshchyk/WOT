@@ -7,7 +7,6 @@
 //
 
 import WOTKit
-import ContextSDK
 
 public class LoginHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }

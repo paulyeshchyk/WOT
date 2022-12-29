@@ -7,7 +7,6 @@
 //
 
 import WOTKit
-import ContextSDK
 
 public class ModulesTreeHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }

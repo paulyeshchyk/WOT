@@ -49,12 +49,3 @@ public enum ObjCModuleType: Int {
         return result
     }
 }
-
-@objc
-public class ObjCModuleTypeConverter: NSObject {
-    @objc
-    @available(*, deprecated, message: "Use swift ModuleType")
-    public static func fromString(_ string: String) -> ObjCModuleType {
-        return ObjCModuleType.fromString(stringValue: string)
-    }
-}

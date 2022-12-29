@@ -7,7 +7,6 @@
 //
 
 import WOTKit
-import ContextSDK
 
 public class VehicleprofileRadiosHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
