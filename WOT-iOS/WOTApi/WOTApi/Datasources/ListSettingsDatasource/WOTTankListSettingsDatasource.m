@@ -194,7 +194,7 @@
 #pragma mark - private
 + (void)createSortSettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
-    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTLoginFields.key,key];
+    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.key,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOTApiSettingType.key_type_sort];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
@@ -215,7 +215,7 @@
 
 + (void)createGroupBySettingForKey:(NSString *)key ascending:(BOOL)ascending orderBy:(NSInteger)orderBy callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
 
-    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTLoginFields.key,key];
+    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.key,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOTApiSettingType.key_type_group];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate]];
 
@@ -236,9 +236,9 @@
 
 + (void)createFilterBySettingForKey:(NSString *)key value:(NSString *)value callback:(WOTTankListSettingsDatasourceCreateCallback)callback{
     
-    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTLoginFields.key,key];
+    NSPredicate *keyPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.key,key];
     NSPredicate *typePredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.type,WOTApiSettingType.key_type_filter];
-    NSPredicate *valuesPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTLoginFields.values,value];
+    NSPredicate *valuesPredicate = [NSPredicate predicateWithFormat:@"%K == %@",WOTApiFields.values,value];
     NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[keyPredicate,typePredicate,valuesPredicate]];
     [[self dataStore] performWithBlock:^(id<ManagedObjectContextProtocol> _Nonnull context) {
         ListSetting *setting = (ListSetting *)[context findOrCreateObjectForType:ListSetting.class predicate:compoundPredicate];

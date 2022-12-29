@@ -17,11 +17,11 @@ public class VehicleprofileSuspensionHttpRequest: HttpRequest {
     }
 
     override public var responseParserClass: ResponseParserProtocol.Type {
-        RESTResponseParser.self
+        VehicleprofileSuspensionResponseParser.self
     }
 
     override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        WGResponseJSONAdapter.self
+        VehicleprofileSuspensionJSONAdapter.self
     }
 }
 

@@ -20,14 +20,15 @@ public class LogInspector: NSObject, LogInspectorProtocol {
     }
 
     public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
-        guard  let event = event else { return }
         guard isLoggable(event) else { return }
+        guard  let event = event else { return }
         event.eventType.print(event: event, inOutputs: output)
     }
 
-    private func isLoggable(_ event: LogEventProtocol) -> Bool {
+    private func isLoggable(_ event: LogEventProtocol?) -> Bool {
+        guard let eventType = event?.eventType else { return false }
         guard let prioritiesToLog = prioritiesToLog else { return true }
-        return prioritiesToLog.contains(event.eventType)
+        return prioritiesToLog.contains(eventType)
     }
 }
 

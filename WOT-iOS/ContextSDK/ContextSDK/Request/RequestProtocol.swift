@@ -54,10 +54,11 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public required init(context: RequestProtocol.Context) {
         self.appContext = context
+        context.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
     deinit {
-        //
+        appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
     open func cancel(byReason: RequestCancelReasonProtocol) throws {

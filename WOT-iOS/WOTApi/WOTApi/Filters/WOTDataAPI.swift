@@ -56,15 +56,17 @@ public class WOTLoginFields: NSObject {
     @objc public static let nickname: String = "nickname"
     @objc public static let code: String = "code"
     @objc public static let hashName: String = "hashName"
-    @objc public static let key: String = "key"
     @objc public static let location: String = "location"
     @objc public static let message: String = "message"
-    @objc public static let values: String = "values"
     @objc public static let default_profile: String = "default_profile"
 }
 
 @objc
 public class WOTApiFields: NSObject, WOTAPIProtocol {
+    @objc public static let key: String = "key"
+    @objc public static let type: String = "type"
+    @objc public static let values: String = "values"
+
     @objc public static let modules_tree: String = "modules_tree"
     @objc public static let engines: String = "engines"
     @objc public static let suspensions: String = "suspensions"
@@ -78,7 +80,6 @@ public class WOTApiFields: NSObject, WOTAPIProtocol {
 
     @objc public static let name: String = "name"
     @objc public static let short_name: String = "short_name"
-    @objc public static let type: String = "type"
     @objc public static let tier: String = "tier"
     @objc public static let nation: String = "nation"
     @objc public static let next_modules: String = "next_modules"

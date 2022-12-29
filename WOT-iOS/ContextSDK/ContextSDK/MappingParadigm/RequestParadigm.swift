@@ -73,7 +73,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         return requestPredicateComposer?.build()?.requestPredicate
     }
 
-    //MARK: - private
+    // MARK: - private
 
     private func addPreffix(to: String) -> String {
         guard let preffix = keypathPrefix else {

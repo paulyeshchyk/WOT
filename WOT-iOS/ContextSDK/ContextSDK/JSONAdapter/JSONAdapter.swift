@@ -50,10 +50,6 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     open func decodeData(_ data: Data?, forType: AnyClass, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
         fatalError("should be overriden")
     }
-
-    open func performJSONExtraction(from json: JSON, byKey key: AnyHashable)  throws -> JSON {
-        fatalError("should be overriden")
-    }
 }
 
 extension JSONAdapter {
@@ -74,15 +70,12 @@ extension JSONAdapter {
             //
             do {
                 let contextPredicate = fromRequest.contextPredicate
-                _ = try performJSONExtraction(from: json, byKey: key)
+
+                #warning("refactoring initial step")
                 let extraction = try managedObjectCreator.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
 
                 try self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
-                    guard let self = self else {
-                        dispatchGroup.leave()
-                        return
-                    }
-                    guard let fetchResult = fetchResult else {
+                    guard let self = self, let fetchResult = fetchResult else {
                         dispatchGroup.leave()
                         return
                     }
