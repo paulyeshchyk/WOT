@@ -13,7 +13,6 @@ extension VehicleprofileAmmoPenetration {
         guard let penetrationJSON = map.mappingData as? [Any] else {
             throw VehicleprofileAmmoPenetrationError.arrayIsExpected(map.mappingData ?? NSNull())
         }
-
         //
         guard penetrationJSON.count == 3 else {
             throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements(penetrationJSON)

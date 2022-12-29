@@ -50,7 +50,13 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public let appContext: RequestProtocol.Context
     public var MD5: String { uuid.MD5 }
-    open var description: String { "\(type(of: self))" }
+    open var description: String {
+        if let arguments = arguments {
+            return "\(type(of: self)): \(String(describing: arguments))"
+        } else {
+            return "\(type(of: self))"
+        }
+    }
 
     public required init(context: RequestProtocol.Context) {
         self.appContext = context

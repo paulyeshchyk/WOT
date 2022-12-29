@@ -79,6 +79,8 @@
 		DA84BF422957330B00BAC71D /* JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */; };
 		DACA006E295B06DA00E677D3 /* ModelServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACA006D295B06DA00E677D3 /* ModelServiceProtocol.swift */; };
 		DACDB0D0295C9923005BBA72 /* EventFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0CF295C9923005BBA72 /* EventFlow.swift */; };
+		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
+		DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D6295DBB66005BBA72 /* LogInspector.swift */; };
 		DAD49D7E2956FE6B0088227F /* JSONMappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */; };
 /* End PBXBuildFile section */
 
@@ -168,6 +170,8 @@
 		DA84BF412957330B00BAC71D /* JSONDecodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingProtocol.swift; sourceTree = "<group>"; };
 		DACA006D295B06DA00E677D3 /* ModelServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelServiceProtocol.swift; sourceTree = "<group>"; };
 		DACDB0CF295C9923005BBA72 /* EventFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFlow.swift; sourceTree = "<group>"; };
+		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
+		DACDB0D6295DBB66005BBA72 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
 		DAD49D7D2956FE6A0088227F /* JSONMappableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMappableProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -244,6 +248,7 @@
 				DA0E80832950B02900B44CC6 /* RelationLinkParadigm */,
 				DA0E806F2950931B00B44CC6 /* FetchResult */,
 				DA2C28EF2959F0CC00D18A6E /* DataStore */,
+				DACDB0D4295DBB66005BBA72 /* LogInspector */,
 				DA0E802C295064A300B44CC6 /* ContextSDK.h */,
 				DA0E802D295064A300B44CC6 /* Info.plist */,
 			);
@@ -480,6 +485,15 @@
 			path = codable;
 			sourceTree = "<group>";
 		};
+		DACDB0D4295DBB66005BBA72 /* LogInspector */ = {
+			isa = PBXGroup;
+			children = (
+				DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */,
+				DACDB0D6295DBB66005BBA72 /* LogInspector.swift */,
+			);
+			path = LogInspector;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -636,6 +650,8 @@
 				DA0E80692950919F00B44CC6 /* ContextExpression.swift in Sources */,
 				DA2C28EC2959F07400D18A6E /* ManagedObjectContextProtocol.swift in Sources */,
 				DA08567729548E2000273762 /* String+MD5.swift in Sources */,
+				DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */,
+				DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */,
 				DA0E806E295092C400B44CC6 /* JSONAdapterLinkerProtocol.swift in Sources */,
 				DA0E807E2950A6D200B44CC6 /* RequestPredicateComposition.swift in Sources */,
 				DA0E80932950B07C00B44CC6 /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift in Sources */,

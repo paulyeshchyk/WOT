@@ -20,7 +20,9 @@ open class HttpRequest: Request {
         }
     }
 
-    override open var description: String { "\(type(of: self)): \(httpDataReceiver?.description ?? "?")" }
+    override public var description: String {
+        "\(type(of: self)): \(path)"
+    }
 
     private var httpDataReceiver: HttpDataReceiver?
 

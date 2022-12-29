@@ -18,26 +18,27 @@ extension VehicleprofileArmorList {
 
         // MARK: - turret
 
-        guard let turretJSON = armorListJSON[#keyPath(VehicleprofileArmorList.turret)] as? JSON else {
-            throw VehicleProfileArmorListError.turretNotFound
+        if let turretJSON = armorListJSON[#keyPath(VehicleprofileArmorList.turret)] as? JSON {
+            let turretJSONCollection = try JSONCollection(element: turretJSON)
+
+            let turretBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
+            let turretMapperClazz = VehicleprofileArmorListTurretManagedObjectCreator.self
+            appContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: turretMapperClazz, requestPredicateComposer: turretBuilder, appContext: appContext)
+        } else {
+            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.turretNotFound, details: nil), sender: self)
         }
-
-        let turretJSONCollection = try JSONCollection(element: turretJSON)
-
-        let turretBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
-        let turretMapperClazz = VehicleprofileArmorListTurretManagedObjectCreator.self
-        appContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: turretMapperClazz, requestPredicateComposer: turretBuilder, appContext: appContext)
 
         // MARK: - hull
 
-        guard let hullJSON = armorListJSON[#keyPath(VehicleprofileArmorList.hull)] as? JSON else {
-            throw VehicleProfileArmorListError.hullNotFound
-        }
-        let hullJSONCollection = try JSONCollection(element: hullJSON)
+        if let hullJSON = armorListJSON[#keyPath(VehicleprofileArmorList.hull)] as? JSON {
+            let hullJSONCollection = try JSONCollection(element: hullJSON)
 
-        let hullBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
-        let hullMapperClazz = VehicleprofileArmorListHullManagedObjectCreator.self
-        appContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: hullMapperClazz, requestPredicateComposer: hullBuilder, appContext: appContext)
+            let hullBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
+            let hullMapperClazz = VehicleprofileArmorListHullManagedObjectCreator.self
+            appContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: hullMapperClazz, requestPredicateComposer: hullBuilder, appContext: appContext)
+        } else {
+            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.hullNotFound, details: nil), sender: self)
+        }
     }
 }
 
