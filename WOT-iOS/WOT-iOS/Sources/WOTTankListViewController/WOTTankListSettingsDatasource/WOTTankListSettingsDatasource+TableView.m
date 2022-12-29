@@ -119,7 +119,7 @@
             [self setting:setting setOrderIndex:idx];
         }];
 
-        [appDelegate.dataStore stashWithObjectContext:context block:^(NSError * _Nullable error) {
+        [appDelegate.dataStore stashWithObjectContext:context completion:^(NSError * _Nullable error) {
             [NSThread executeOnMainThread:^{
                 
                 if (completionBlock){
@@ -139,7 +139,7 @@
         NSManagedObject *obj = [self objectAtIndexPath:indexPath];
         
         [(NSManagedObjectContext *)context deleteObject:obj];
-        [appDelegate.dataStore stashWithObjectContext:context block:^(NSError * _Nullable error) {
+        [appDelegate.dataStore stashWithObjectContext:context completion:^(NSError * _Nullable error) {
             //
         }];
     }];

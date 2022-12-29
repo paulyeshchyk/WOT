@@ -6,6 +6,8 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+import ContextSDK
+
 public typealias WOTNodeComparator = (_ left: WOTNodeProtocol, _ right: WOTNodeProtocol) -> Bool
 
 @objc
@@ -43,4 +45,5 @@ public protocol WOTDataModelProtocol {
     func node(atIndexPath: NSIndexPath) -> WOTNodeProtocol?
     func indexPath(forNode: WOTNodeProtocol?) -> IndexPath?
     func loadModel()
+    func cancelLoad(reason: RequestCancelReasonProtocol)
 }

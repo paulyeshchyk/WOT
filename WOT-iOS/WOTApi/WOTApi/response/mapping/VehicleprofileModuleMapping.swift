@@ -67,4 +67,8 @@ extension VehicleprofileModule: RequestManagerListenerProtocol {
     public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
         //
     }
+
+    public func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest: RequestProtocol, reason: RequestCancelReasonProtocol) {
+        //
+    }
 }

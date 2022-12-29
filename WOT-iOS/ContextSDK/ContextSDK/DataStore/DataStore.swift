@@ -74,25 +74,24 @@ extension DataStore: DataStoreProtocol {
     }
 
     public func stash(block: @escaping ThrowableCompletion) {
-        stash(objectContext: self.workingContext(), block: block)
+        stash(objectContext: self.workingContext(), completion: block)
     }
 
-    public func stash(objectContext cntx: ManagedObjectContextProtocol?, block: @escaping ThrowableCompletion) {
+    public func stash(objectContext cntx: ManagedObjectContextProtocol?, completion: @escaping ThrowableCompletion) {
         guard let objectContext = cntx else {
-            block(DataStoreError.contextNotSaved)
+            completion(DataStoreError.contextNotSaved)
             return
         }
 
         let initialDate = Date()
 
-        appContext.logInspector?.logEvent(EventCDStashStart(context: objectContext), sender: self)
-
-        let customBlock: ThrowableCompletion = { [weak self] error in
-            block(error)
+        objectContext.save { [weak self] error in
+            completion(error)
             self?.appContext.logInspector?.logEvent(EventCDStashEnded(context: objectContext, initiatedIn: initialDate), sender: self)
+            self?.appContext.logInspector?.logEvent(EventTimeMeasure("Context save end"), sender: self)
         }
 
-        objectContext.save(completion: customBlock)
+        appContext.logInspector?.logEvent(EventCDStashStart(context: objectContext), sender: self)
         appContext.logInspector?.logEvent(EventTimeMeasure("Context save start"), sender: self)
     }
 
@@ -103,6 +102,9 @@ extension DataStore: DataStoreProtocol {
                 completion(fetchResultForContext, error)
             }
         }
+
+        //
+        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: modelClass)) - \(String(describing: requestPredicate))"), sender: self)
 
         guard isClassValid(modelClass) else {
             let error = DataStoreError.notManagedObjectType(modelClass)
@@ -128,6 +130,9 @@ extension DataStore: DataStoreProtocol {
     }
 
     public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: ContextPredicate, completion: @escaping FetchResultCompletion) {
+        //
+        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: Clazz)) - \(String(describing: predicate))"), sender: self)
+
         guard isClassValid(Clazz) else {
             let error = DataStoreError.clazzIsNotSupportable(String(describing: Clazz))
             appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
@@ -135,8 +140,6 @@ extension DataStore: DataStoreProtocol {
             completion(result, error)
             return
         }
-
-        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: Clazz)) - \(String(describing: predicate))"), sender: self)
 
         guard let predicate = predicate.compoundPredicate(.and) else {
             let error = DataStoreError.noKeysDefinedForClass(String(describing: Clazz))

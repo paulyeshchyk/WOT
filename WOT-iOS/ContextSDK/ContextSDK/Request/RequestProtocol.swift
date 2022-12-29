@@ -65,7 +65,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func start() throws {
+    open func start(completion: @escaping (() -> Void)) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 

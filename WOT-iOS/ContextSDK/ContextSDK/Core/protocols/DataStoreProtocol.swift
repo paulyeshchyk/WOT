@@ -28,7 +28,7 @@ public protocol DataStoreProtocol {
     func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass clazz: AnyObject, predicate: ContextPredicate, completion: @escaping FetchResultCompletion)
     func fetchLocal(byModelClass clazz: PrimaryKeypathProtocol.Type, requestPredicate predicate: NSPredicate?, completion: @escaping FetchResultCompletion)
 
-    func stash(objectContext: ManagedObjectContextProtocol?, block: @escaping ThrowableCompletion)
+    func stash(objectContext: ManagedObjectContextProtocol?, completion: @escaping ThrowableCompletion)
     func stash(block: @escaping ThrowableCompletion)
 }
 

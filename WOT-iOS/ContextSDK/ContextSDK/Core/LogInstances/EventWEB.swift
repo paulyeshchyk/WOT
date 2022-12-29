@@ -6,31 +6,32 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class EventWEBStart: LogEventProtocol {
-    public var eventType: LogEventType { return .web }
+public class EventRequestListenerStart: LogEventProtocol {
+    public var eventType: LogEventType { return .http }
     public private(set) var message: String
-    public var name: String { return "WEBStart" }
+    public var name: String { return "HTTPStart" }
 
     public init() {
         message = ""
     }
 
-    public required init?(_ request: RequestProtocol) {
-        message = "\(String(describing: request))"
+    public required init?(_ request: RequestProtocol, listener: RequestListenerProtocol) {
+        message = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
     }
 }
 
-public class EventWEBCancel: LogEventProtocol {
-    public var eventType: LogEventType { return .web }
+public class EventRequestListenerCancel: LogEventProtocol {
+    public var eventType: LogEventType { return .http }
     public private(set) var message: String
-    public var name: String { return "WEBCancel" }
+    public var name: String { return "HTTPCancel" }
 
     public init() {
         message = ""
     }
 
-    public required init?(_ request: RequestProtocol, error: Error?) {
-        var message: String = "\(String(describing: request))"
+    public required init?(_ request: RequestProtocol, listener: RequestListenerProtocol, error: Error?) {
+        var message: String = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
+
         if let err = error {
             message += "; error:\(String(describing: err))"
         }
@@ -38,17 +39,17 @@ public class EventWEBCancel: LogEventProtocol {
     }
 }
 
-public class EventWEBEnd: LogEventProtocol {
-    public var eventType: LogEventType { return .web }
+public class EventRequestListenerEnd: LogEventProtocol {
+    public var eventType: LogEventType { return .http }
     public private(set) var message: String
-    public var name: String { return "WEBEnded" }
+    public var name: String { return "HTTPEnded" }
 
     public init() {
         message = ""
     }
 
-    public required init?(_ request: RequestProtocol) {
-        message = "\(String(describing: request))"
+    public required init?(_ request: RequestProtocol, listener: RequestListenerProtocol) {
+        message = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
     }
 }
 
@@ -77,5 +78,59 @@ public class EventLongTermEnd: LogEventProtocol {
 
     public init() {
         message = ""
+    }
+}
+
+public class EventRequestManagerFetchStart: LogEventProtocol {
+    public var eventType: LogEventType { return .remoteFetch }
+    public private(set) var message: String
+    public var name: String { return "RMStart" }
+
+    public init() {
+        message = ""
+    }
+
+    public required init?(_ text: String) {
+        message = text
+    }
+
+    public init?(error: Error) {
+        message = String(describing: error)
+    }
+}
+
+public class EventRequestManagerFetchCancel: LogEventProtocol {
+    public var eventType: LogEventType { return .remoteFetch }
+    public private(set) var message: String
+    public var name: String { return "RMCancel" }
+
+    public init() {
+        message = ""
+    }
+
+    public required init?(_ text: String) {
+        message = text
+    }
+
+    public init?(error: Error) {
+        message = String(describing: error)
+    }
+}
+
+public class EventRequestManagerFetchEnd: LogEventProtocol {
+    public var eventType: LogEventType { return .remoteFetch }
+    public private(set) var message: String
+    public var name: String { return "RMEnd" }
+
+    public init() {
+        message = ""
+    }
+
+    public required init?(_ text: String) {
+        message = text
+    }
+
+    public init?(error: Error) {
+        message = String(describing: error)
     }
 }

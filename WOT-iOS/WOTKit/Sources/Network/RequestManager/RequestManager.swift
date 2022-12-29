@@ -62,17 +62,17 @@ public class RequestManager: NSObject, RequestListenerProtocol {
         super.init()
     }
 
-    // MARK: - WOTRequestListenerProtocol
+    // MARK: - RequestListenerProtocol
 
     public func request(_ request: RequestProtocol, startedWith urlRequest: URLRequest) {
         grouppedListenerList.didStartRequest(request, requestManager: self)
 
-        appContext.logInspector?.logEvent(EventWEBStart(request), sender: self)
+        appContext.logInspector?.logEvent(EventRequestListenerStart(request, listener: self), sender: self)
     }
 
     public func request(_ request: RequestProtocol, finishedLoadData data: Data?, error: Error?) {
         defer {
-            appContext.logInspector?.logEvent(EventWEBEnd(request), sender: self)
+            appContext.logInspector?.logEvent(EventRequestListenerEnd(request, listener: self), sender: self)
             removeRequest(request)
         }
 
@@ -123,7 +123,7 @@ public class RequestManager: NSObject, RequestListenerProtocol {
     }
 
     public func request(_ request: RequestProtocol, canceledWith: Error?) {
-        appContext.logInspector?.logEvent(EventWEBCancel(request, error: canceledWith), sender: self)
+        appContext.logInspector?.logEvent(EventRequestListenerCancel(request, listener: self, error: canceledWith), sender: self)
         removeRequest(request)
     }
 
@@ -137,14 +137,23 @@ public class RequestManager: NSObject, RequestListenerProtocol {
 
 extension RequestManager: RequestManagerProtocol {
     public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
-        grouppedRequestList.cancelRequests(groupId: groupId, reason: reason)
+        //
+        appContext.logInspector?.logEvent(EventRequestManagerFetchCancel("\(String(describing: reason))"), sender: self)
+        grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) {[weak self] request, reason in
+            guard let self = self else { return }
+            self.grouppedListenerList.didCancelRequest(request, requestManager: self, reason: reason)
+        }
     }
 
     public func removeListener(_ listener: RequestManagerListenerProtocol) {
+        //
         grouppedListenerList.removeListener(listener)
     }
 
     public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
+        //
+        appContext.logInspector?.logEvent(EventRequestManagerFetchStart("\(String(describing: request.arguments))"), sender: self)
+
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
 
         request.addListener(self)
@@ -159,15 +168,19 @@ extension RequestManager: RequestManagerProtocol {
 
         try managedObjectCreatorList.addAdapterLinker(managedObjectCreator, forRequest: request)
 
-        try request.start()
+        try request.start { [weak self] in
+            self?.appContext.logInspector?.logEvent(EventRequestManagerFetchEnd("\(String(describing: request.arguments))"), sender: self)
+        }
     }
 
     public func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
+        //
         guard let requestIDs = appContext.requestRegistrator?.requestIds(modelServiceClass: requestParadigm.modelClass), !requestIDs.isEmpty else {
             throw RequestManagerError.requestsNotRegistered(requestParadigm)
         }
         for requestID in requestIDs {
             do {
+                //
                 guard let request = try appContext.requestRegistrator?.createRequest(forRequestId: requestID) else {
                     throw RequestManagerError.requestNotCreated(requestParadigm)
                 }
@@ -228,6 +241,12 @@ private class RequestGrouppedListenerList {
     func didStartRequest(_ request: RequestProtocol, requestManager: RequestManagerProtocol) {
         grouppedListeners[request.MD5]?.forEach {
             $0.requestManager(requestManager, didStartRequest: request)
+        }
+    }
+
+    func didCancelRequest(_ request: RequestProtocol, requestManager: RequestManagerProtocol, reason: RequestCancelReasonProtocol) {
+        grouppedListeners[request.MD5]?.forEach {
+            $0.requestManager(requestManager, didCancelRequest: request, reason: reason)
         }
     }
 
@@ -298,14 +317,19 @@ private class RequestGrouppedRequestList {
         self.grouppedRequests[groupId] = requestsForID
     }
 
-    func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
+    typealias CancelCompletion = (RequestProtocol, RequestCancelReasonProtocol) -> Void
+
+    func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol, completion: @escaping CancelCompletion ) {
         guard let requests = grouppedRequests[groupId]?.compactMap({ $0 }), !requests.isEmpty else {
             return
         }
         for request in requests {
             do {
                 try request.cancel(byReason: reason)
-            } catch {}
+            } catch {
+                appContext.logInspector?.logEvent(EventWarning(error: error, details: "Request cancelation"), sender: self)
+            }
+            completion(request, reason)
         }
     }
 

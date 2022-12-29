@@ -43,9 +43,22 @@ public class JSONMap: JSONManagedObjectMapProtocol {
     public let managedObjectContext: ManagedObjectContextProtocol
     public let predicate: ContextPredicate
     private let jsonCollectable: JSONCollectable
-    public init(json: JSONCollectable, managedObjectContext: ManagedObjectContextProtocol, predicate: ContextPredicate) {
+    public init(json: JSONCollectable?, managedObjectContext: ManagedObjectContextProtocol, predicate: ContextPredicate) throws {
+        guard let json = json else {
+            throw JSONMapError.jsonIsNil
+        }
         self.jsonCollectable = json
         self.managedObjectContext = managedObjectContext
         self.predicate = predicate
+    }
+}
+
+public enum JSONMapError: Error, CustomStringConvertible {
+    case jsonIsNil
+
+    public var description: String {
+        switch self {
+        case .jsonIsNil: return "[\(type(of: self))]: json is nil"
+        }
     }
 }

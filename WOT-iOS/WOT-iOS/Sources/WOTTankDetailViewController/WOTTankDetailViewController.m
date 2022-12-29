@@ -22,8 +22,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTTankDetailViewModeGrid = 2
 };
 
-@interface DeinitRequestCancelReason: NSObject <RequestCancelReasonProtocol> @end
-
 @interface WOTTankDetailViewController () <NSFetchedResultsControllerDelegate, WOTRadarViewControllerDelegate, WOTGridViewControllerDelegate, RequestManagerListenerProtocol>
 
 @property (nonatomic, weak) IBOutlet UIToolbar *bottomBar;
@@ -318,11 +316,12 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
-    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+    id<ContextProtocol> appContext = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                                 appContext: appDelegate
+                                                 appContext: appContext
                                                    listener: self
+                                                  requestID: 9 //WebRequestType.vehicles.rawValue
                                                       error: &error];
 }
 
@@ -472,22 +471,4 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
     //
 }
-
-
-@end
-
-
-@implementation DeinitRequestCancelReason
-
-@synthesize error;
-@synthesize reasonDescription;
-
-- (id) init {
-    self = [super init];
-}
-
-- (NSString *)reasonDescription {
-    return  @"deinit";
-}
-
 @end

@@ -38,7 +38,7 @@ extension LogEventType {
         case .error: inOutputs?.forEach { $0.error(event.message, context: event.name) }
         case .info: inOutputs?.forEach { $0.info(event.message, context: event.name) }
         case .warning: inOutputs?.forEach { $0.warning(event.message, context: event.name) }
-        case .web: inOutputs?.forEach { $0.info(event.message, context: event.name) }
+        case .http: inOutputs?.forEach { $0.info(event.message, context: event.name) }
         default: inOutputs?.forEach { $0.debug(event.message, context: event.name) }
         }
     }

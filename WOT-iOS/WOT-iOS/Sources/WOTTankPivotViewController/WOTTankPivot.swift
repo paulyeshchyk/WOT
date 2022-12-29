@@ -126,17 +126,18 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     override func loadModel() {
         super.loadModel()
 
+        appContext.logInspector?.logEvent(EventFlowStart("Pivot"), sender: self)
+
         do {
-            try performWebRequest()
+            try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self, groupID: WebRequestType.vehicles.rawValue)
         } catch {
             appContext.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
         }
     }
 
-    private func performWebRequest() throws {
-        appContext.logInspector?.logEvent(EventFlowStart("Pivot"), sender: self)
-
-        try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self)
+    override func cancelLoad(reason: RequestCancelReasonProtocol) {
+        //
+        appContext.requestManager?.cancelRequests(groupId: WebRequestType.vehicles.rawValue, reason: reason)
     }
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
@@ -149,5 +150,11 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
         }
     }
 
-    func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {}
+    func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
+        //
+    }
+
+    func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest: RequestProtocol, reason: RequestCancelReasonProtocol) {
+        //
+    }
 }

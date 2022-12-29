@@ -6,6 +6,7 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+import ContextSDK
 import WOTKit
 
 open class WOTDataModel: NSObject, WOTDataModelProtocol {
@@ -23,6 +24,10 @@ open class WOTDataModel: NSObject, WOTDataModelProtocol {
 
     open func loadModel() {
         self.reindexNodes()
+    }
+
+    open func cancelLoad(reason: RequestCancelReasonProtocol) {
+        assertionFailure("should be overriden")
     }
 
     public func reindexNodes() {

@@ -26,3 +26,6 @@ typedef void(^WOTConfigurationCompletionDoneBlock) (id configuration);
 @property (nonatomic, strong) WOTTankListSettingsDatasource *settingsDatasource;
 
 @end
+
+
+@interface DeinitRequestCancelReason: NSObject <RequestCancelReasonProtocol> @end

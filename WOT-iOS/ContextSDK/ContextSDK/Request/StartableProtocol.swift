@@ -15,5 +15,5 @@ public protocol RequestCancelReasonProtocol {
 @objc
 public protocol StartableProtocol {
     func cancel(byReason: RequestCancelReasonProtocol) throws
-    func start() throws
+    func start(completion: @escaping (() -> Void)) throws
 }

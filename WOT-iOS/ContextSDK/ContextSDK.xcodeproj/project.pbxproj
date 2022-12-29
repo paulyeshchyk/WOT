@@ -58,7 +58,6 @@
 		DA81E5032952FE3500C60F31 /* EventTimeMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4F52952FE3500C60F31 /* EventTimeMeasure.swift */; };
 		DA81E5042952FE3500C60F31 /* EventWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4F62952FE3500C60F31 /* EventWarning.swift */; };
 		DA81E5052952FE3500C60F31 /* EventObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4F72952FE3500C60F31 /* EventObject.swift */; };
-		DA81E5062952FE3500C60F31 /* EventRemoteFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4F82952FE3500C60F31 /* EventRemoteFetch.swift */; };
 		DA81E5072952FE3500C60F31 /* EventMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4F92952FE3500C60F31 /* EventMapping.swift */; };
 		DA81E5082952FE3500C60F31 /* EventThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4FA2952FE3500C60F31 /* EventThread.swift */; };
 		DA81E5092952FE3500C60F31 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4FB2952FE3500C60F31 /* EventError.swift */; };
@@ -148,7 +147,6 @@
 		DA81E4F52952FE3500C60F31 /* EventTimeMeasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTimeMeasure.swift; sourceTree = "<group>"; };
 		DA81E4F62952FE3500C60F31 /* EventWarning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventWarning.swift; sourceTree = "<group>"; };
 		DA81E4F72952FE3500C60F31 /* EventObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventObject.swift; sourceTree = "<group>"; };
-		DA81E4F82952FE3500C60F31 /* EventRemoteFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRemoteFetch.swift; sourceTree = "<group>"; };
 		DA81E4F92952FE3500C60F31 /* EventMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMapping.swift; sourceTree = "<group>"; };
 		DA81E4FA2952FE3500C60F31 /* EventThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventThread.swift; sourceTree = "<group>"; };
 		DA81E4FB2952FE3500C60F31 /* EventError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
@@ -451,7 +449,6 @@
 				DA81E4F52952FE3500C60F31 /* EventTimeMeasure.swift */,
 				DA81E4F62952FE3500C60F31 /* EventWarning.swift */,
 				DA81E4F72952FE3500C60F31 /* EventObject.swift */,
-				DA81E4F82952FE3500C60F31 /* EventRemoteFetch.swift */,
 				DA81E4F92952FE3500C60F31 /* EventMapping.swift */,
 				DA81E4FA2952FE3500C60F31 /* EventThread.swift */,
 				DA81E4FB2952FE3500C60F31 /* EventError.swift */,
@@ -634,7 +631,6 @@
 				DA81E5072952FE3500C60F31 /* EventMapping.swift in Sources */,
 				DA81E7E229533E3C00C60F31 /* ResponseParserProtocol.swift in Sources */,
 				DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */,
-				DA81E5062952FE3500C60F31 /* EventRemoteFetch.swift in Sources */,
 				DA81E4E42952FC6900C60F31 /* MappingCoordinatorProtocol.swift in Sources */,
 				DA81E5042952FE3500C60F31 /* EventWarning.swift in Sources */,
 				DA0E80692950919F00B44CC6 /* ContextExpression.swift in Sources */,

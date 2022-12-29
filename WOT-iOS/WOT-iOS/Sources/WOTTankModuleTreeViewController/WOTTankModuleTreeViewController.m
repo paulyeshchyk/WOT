@@ -194,14 +194,14 @@
 - (void)setTank_Id:(NSNumber *)value {
 
     _tank_Id = [value copy];
-    id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
+    id<ContextProtocol> appContext = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
-                                                 appContext: appDelegate
+                                                 appContext: appContext
                                                    listener: self
+                                                  requestID: 9 //WebRequestType.vehicles.rawValue
                                                       error: &error];
-    [[appDelegate logInspector] logEvent: [[EventFlowStart alloc] init:@"Tree"] sender:self];
-}
+  }
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -296,6 +296,10 @@
     [[appDelegate logInspector] logEvent: [[EventFlowEnd alloc] init:@"Tree"] sender:self];
 }
 
+- (void)requestManager:(id<RequestManagerProtocol>)requestManager didCancelRequest:(id<RequestProtocol>)didCancelRequest reason:(id<RequestCancelReasonProtocol>)reason {
+    
+}
+
 - (void)request:(id<RequestProtocol> _Nonnull)request canceledWith:(NSError * _Nullable)error {
     
 }
@@ -347,6 +351,22 @@
     UIImage *img = [WOTTankModuleTreeNodeConnectorLayer connectorsForModel:self.model byFrame:self.collectionView.frame flowLayout:self.flowLayout];
     self.connectorsImageView = [[UIImageView alloc] initWithImage:img];
     [self.collectionView addSubview: self.connectorsImageView];
+}
+
+@end
+
+
+@implementation DeinitRequestCancelReason
+
+@synthesize error;
+@synthesize reasonDescription;
+
+- (id) init {
+    self = [super init];
+}
+
+- (NSString *)reasonDescription {
+    return  @"deinit";
 }
 
 @end
