@@ -20,7 +20,7 @@ public class VehicleprofileRadiosHttpRequest: HttpRequest {
     }
 
     override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        WGResponseJSONAdapter.self
+        WGAPIResponseJSONAdapter.self
     }
 }
 

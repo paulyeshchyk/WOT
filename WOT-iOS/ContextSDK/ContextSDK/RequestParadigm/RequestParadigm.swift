@@ -5,12 +5,6 @@
 //  Created by Paul on 19.12.22.
 //
 
-@objc
-public protocol RequestParadigmProtocol: MD5Protocol {
-    var modelClass: AnyClass { get }
-    func buildRequestArguments() -> RequestArguments
-}
-
 // MARK: - Extension RequestParadigmProtocol
 
 public class RequestParadigm: NSObject, RequestParadigmProtocol {

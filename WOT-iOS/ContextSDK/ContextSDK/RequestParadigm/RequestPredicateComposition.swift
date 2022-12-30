@@ -6,17 +6,6 @@
 //
 
 @objc
-public protocol RequestPredicateComposerProtocol: AnyObject {
-    func build() -> RequestPredicateCompositionProtocol?
-}
-
-@objc
-public protocol RequestPredicateCompositionProtocol: AnyObject {
-    var objectIdentifier: Any? { get }
-    var requestPredicate: ContextPredicate { get }
-}
-
-@objc
 public class RequestPredicateComposition: NSObject, RequestPredicateCompositionProtocol {
     public let objectIdentifier: Any?
     public let requestPredicate: ContextPredicate

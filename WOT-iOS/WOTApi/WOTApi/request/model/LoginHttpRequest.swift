@@ -20,7 +20,7 @@ public class LoginHttpRequest: HttpRequest {
     }
 
     override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        WGResponseJSONAdapter.self
+        WGAPIResponseJSONAdapter.self
     }
 }
 

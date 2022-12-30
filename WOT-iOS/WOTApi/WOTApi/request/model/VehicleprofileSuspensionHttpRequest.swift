@@ -20,7 +20,7 @@ public class VehicleprofileSuspensionHttpRequest: HttpRequest {
     }
 
     override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        WGResponseJSONAdapter.self
+        WGAPIResponseJSONAdapter.self
     }
 }
 

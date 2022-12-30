@@ -5,7 +5,11 @@
 //  Created by Paul on 21.12.22.
 //
 
-public protocol WGAPIResponseProtocol: Codable {
+import ContextSDK
+
+public protocol APIResponse: Codable {}
+
+public protocol WGAPIResponseProtocol: APIResponse {
     var status: WGAPIResponseStatus? { get set }
     var data: JSON? { get set }
     var error: JSON? { get set }

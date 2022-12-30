@@ -1,27 +1,14 @@
 //
-//  JSONMappableProtocol.swift
+//  JSONDecodableProtocol.swift
 //  ContextSDK
 //
 //  Created by Paul on 24.12.22.
 //
 
-public protocol JSONMappableProtocol {
+public protocol JSONDecodableProtocol {
     typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol & LogInspectorContainerProtocol
 
-    func decode(using: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws
-}
-
-@objc
-public protocol ManagedObjectContextContainer {
-    var managedObjectContext: ManagedObjectContextProtocol { get }
-}
-
-@objc
-public protocol ManagedObjectMapProtocol: ContextPredicateContainerProtocol, ManagedObjectContextContainer {}
-
-@objc
-public protocol JSONManagedObjectMapProtocol: ManagedObjectMapProtocol {
-    var mappingData: Any? { get }
+    func decode(using: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws
 }
 
 public enum JSONManagedObjectMapError: Error, CustomStringConvertible {

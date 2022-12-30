@@ -30,15 +30,15 @@ public class WOTRequestRegistrator: RequestRegistrator {
     }
 
     private func registerDefaultRequests() {
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: LoginHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: LogoutHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: ModulesHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehiclesHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: ModulesTreeHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileGunHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileRadiosHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileTurretsHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileEnginesHttpRequest.self)
-        register(dataAdapterClass: WGResponseJSONAdapter.self, modelServiceClass: VehicleprofileSuspensionHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: LoginHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: LogoutHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: ModulesHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehiclesHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: ModulesTreeHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehicleprofileGunHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehicleprofileRadiosHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehicleprofileTurretsHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehicleprofileEnginesHttpRequest.self)
+        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehicleprofileSuspensionHttpRequest.self)
     }
 }

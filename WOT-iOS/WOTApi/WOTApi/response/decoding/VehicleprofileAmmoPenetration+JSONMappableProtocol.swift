@@ -7,9 +7,9 @@
 //
 
 extension VehicleprofileAmmoPenetration {
-    // MARK: - JSONMappableProtocol
+    // MARK: - JSONDecodableProtocol
 
-    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
         guard let penetrationJSON = map.mappingData as? [Any] else {
             throw VehicleprofileAmmoPenetrationError.arrayIsExpected(map.mappingData ?? NSNull())
         }

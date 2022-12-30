@@ -8,7 +8,7 @@
 import CoreData
 import ContextSDK
 
-extension NSManagedObject: JSONMappableProtocol {
+extension NSManagedObject: JSONDecodableProtocol {
     private enum NSManagedObjectJSONMappableError: Error, CustomStringConvertible {
         case shouldBeOverriden(String)
         var description: String {
@@ -25,7 +25,7 @@ extension NSManagedObject: JSONMappableProtocol {
     public typealias Fields = DataFieldsKeys
 
     @objc
-    open func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+    open func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
         throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

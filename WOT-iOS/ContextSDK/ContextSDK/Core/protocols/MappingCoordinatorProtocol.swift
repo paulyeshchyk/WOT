@@ -8,8 +8,8 @@
 public typealias MappingCoordinatorContext = LogInspectorContainerProtocol & DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
 
 @objc
-public protocol MappingCoordinatorMappingProtocol {
-    func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion)
+public protocol MappingCoordinatorDecodingProtocol {
+    func decode(using: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONDecodableProtocol.Context, completion: @escaping FetchResultCompletion)
 }
 
 @objc
@@ -28,4 +28,4 @@ public protocol MappingCoordinatorContainerProtocol {
 }
 
 @objc
-public protocol MappingCoordinatorProtocol: MappingCoordinatorMappingProtocol, MappingCoordinatorLinkingProtocol, MappingCoordinatorFetchingProtocol {}
+public protocol MappingCoordinatorProtocol: MappingCoordinatorDecodingProtocol, MappingCoordinatorLinkingProtocol, MappingCoordinatorFetchingProtocol {}

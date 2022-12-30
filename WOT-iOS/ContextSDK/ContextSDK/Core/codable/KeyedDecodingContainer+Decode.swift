@@ -22,12 +22,12 @@ struct JSONCodingKeys: CodingKey {
 }
 
 extension KeyedDecodingContainer {
-    func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
+    public func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
         let container = try self.nestedContainer(keyedBy: JSONCodingKeys.self, forKey: key)
         return try container.decode(type)
     }
 
-    func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
+    public func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
         guard contains(key) else {
             return nil
         }
@@ -37,12 +37,12 @@ extension KeyedDecodingContainer {
         return try decode(type, forKey: key)
     }
 
-    func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
+    public func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
         var container = try self.nestedUnkeyedContainer(forKey: key)
         return try container.decode(type)
     }
 
-    func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
+    public func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
         guard contains(key) else {
             return nil
         }
@@ -53,7 +53,7 @@ extension KeyedDecodingContainer {
     }
 
     // swiftlint:disable cyclomatic_complexity
-    func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
+    public func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         var dictionary = Dictionary<String, Any>()
 
         for key in allKeys {
@@ -79,7 +79,7 @@ extension KeyedDecodingContainer {
 
 extension UnkeyedDecodingContainer {
     // swiftlint:disable cyclomatic_complexity
-    mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
+    public mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
         var array: [Any] = []
         while isAtEnd == false {
             // See if the current value in the JSON array is `null` first and prevent infite recursion with nested arrays.
@@ -102,7 +102,7 @@ extension UnkeyedDecodingContainer {
 
     // swiftlint:enable cyclomatic_complexity
 
-    mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
+    public mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         let nestedContainer = try self.nestedContainer(keyedBy: JSONCodingKeys.self)
         return try nestedContainer.decode(type)
     }

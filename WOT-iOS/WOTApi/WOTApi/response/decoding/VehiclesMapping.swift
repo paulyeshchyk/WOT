@@ -7,9 +7,9 @@
 //
 
 extension Vehicles {
-    // MARK: - JSONMappableProtocol
+    // MARK: - JSONDecodableProtocol
 
-    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONMappableProtocol.Context) throws {
+    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
         guard let vehicleJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -41,7 +41,7 @@ extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicate, inContext: JSONMappableProtocol.Context) throws {
+    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicate, inContext: JSONDecodableProtocol.Context) throws {
         if let set = self.modules_tree {
             self.removeFromModules_tree(set)
         }
@@ -69,7 +69,7 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, json: JSONCollectable?, module_id: Any?, requestPredicate: ContextPredicate, masterFetchResult: FetchResult, inContext: JSONMappableProtocol.Context) throws {
+    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, json: JSONCollectable?, module_id: Any?, requestPredicate: ContextPredicate, masterFetchResult: FetchResult, inContext: JSONDecodableProtocol.Context) throws {
         guard let json = json else {
             throw VehiclesJSONMappingError.passedInvalidSubModuleJSON
         }

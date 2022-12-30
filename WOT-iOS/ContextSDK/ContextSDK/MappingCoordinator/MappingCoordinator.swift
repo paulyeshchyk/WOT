@@ -1,12 +1,10 @@
 //
-//  WOTMappingCoordinator.swift
+//  MappingCoordinator.swift
 //  WOTKit
 //
 //  Created by Pavel Yeshchyk on 5/17/20.
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
-
-import ContextSDK
 
 public class MappingCoordinator: MappingCoordinatorProtocol {
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
@@ -28,27 +26,19 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
                 completion(fetchResult, error)
                 return
             }
-            guard let fetchResult = fetchResult else {
-                completion(nil, WOTMappingCoordinatorError.fetchResultNotPresented)
+            guard let self = self, let fetchResult = fetchResult else {
+                completion(nil, MappingCoordinatorError.fetchResultNotPresented)
                 return
             }
 
-            guard let self = self else {
-                return
-            }
-
-            self.mapping(json: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: managedObjectCreator, inContext: self.appContext) { fetchResult, error in
+            self.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: managedObjectCreator, inContext: self.appContext) { fetchResult, error in
                 if error != nil {
                     completion(fetchResult, error)
                     return
                 }
 
-                guard let managedObjectCreator = managedObjectCreator else {
-                    completion(fetchResult, WOTMappingCoordinatorError.linkerNotStarted)
-                    return
-                }
-                guard let fetchResult = fetchResult else {
-                    completion(nil, WOTMappingCoordinatorError.fetchResultNotPresented)
+                guard let fetchResult = fetchResult, let managedObjectCreator = managedObjectCreator else {
+                    completion(nil, MappingCoordinatorError.fetchResultNotPresented)
                     return
                 }
 
@@ -60,11 +50,12 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 }
 
 extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
+    //
     public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, requestPredicateComposer: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext) {
         guard let itemJSON = itemJSON else { return }
 
         guard let lookupRule = requestPredicateComposer.build() else {
-            appContext.logInspector?.logEvent(EventError(WOTMappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
+            appContext.logInspector?.logEvent(EventError(MappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
             return
         }
 
@@ -78,8 +69,9 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
     }
 }
 
-extension MappingCoordinator: MappingCoordinatorMappingProtocol {
-    public func mapping(json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONMappableProtocol.Context, completion: @escaping FetchResultCompletion) {
+extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
+    //
+    public func decode(using json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONDecodableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)
@@ -98,8 +90,8 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
         //
         let managedObjectContext = fetchResult.managedObjectContext
         let fetchResultObject = fetchResult.managedObject()
-        guard let managedObject = fetchResultObject as? JSONMappableProtocol else {
-            localCompletion(WOTMappingCoordinatorError.fetchResultIsNotJSONMappable(fetchResultObject))
+        guard let managedObject = fetchResultObject as? JSONDecodableProtocol else {
+            localCompletion(MappingCoordinatorError.fetchResultIsNotJSONDecodable(fetchResultObject))
             return
         }
         //
@@ -114,18 +106,16 @@ extension MappingCoordinator: MappingCoordinatorMappingProtocol {
     }
 }
 
-public enum WOTMappingCoordinatorError: Error, CustomStringConvertible {
+public enum MappingCoordinatorError: Error, CustomStringConvertible {
     case lookupRuleNotDefined
-    case linkerNotStarted
     case fetchResultNotPresented
-    case fetchResultIsNotJSONMappable(ManagedObjectProtocol?)
+    case fetchResultIsNotJSONDecodable(ManagedObjectProtocol?)
 
     public var description: String {
         switch self {
         case .lookupRuleNotDefined: return "[\(type(of: self))]: rule is not defined"
-        case .linkerNotStarted: return "[\(type(of: self))]: linker is not started"
         case .fetchResultNotPresented: return "[\(type(of: self))]: fetchResult is not presented"
-        case .fetchResultIsNotJSONMappable(let fetchResult): return "[\(type(of: self))]: fetch result(\(type(of: fetchResult)) is not JSONMappableProtocol"
+        case .fetchResultIsNotJSONDecodable(let fetchResult): return "[\(type(of: self))]: fetch result(\(type(of: fetchResult)) is not JSONDecodableProtocol"
         }
     }
 }

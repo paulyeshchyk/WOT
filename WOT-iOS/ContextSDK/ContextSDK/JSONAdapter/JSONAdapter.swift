@@ -6,15 +6,8 @@
 //
 
 open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
-    enum JSONAdapterError: Error, CustomStringConvertible {
-        case notMainThread
-        case fetchResultIsNotPresented
-        var description: String {
-            switch self {
-            case .notMainThread: return "\(type(of: self)): Not main thread"
-            case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
-            }
-        }
+    open var responseClass: AnyClass {
+        fatalError("should be overriden")
     }
 
     // MARK: DataAdapterProtocol -
@@ -47,21 +40,35 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
-    open func decodeData(_ data: Data?, forType: AnyClass, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
+    open func decodeData(_ data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
+        guard let data = data else {
+            didFinish(request: request, data: nil, error: JSONAdapterError.dataIsNil, completion: completion)
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            let result = try decodedObject(jsonDecoder: decoder, from: data)
+            didFinish(request: request, data: result, error: nil, completion: completion)
+        } catch {
+            didFinish(request: request, data: nil, error: error, completion: completion)
+        }
+    }
+
+    open func decodedObject(jsonDecoder: JSONDecoder, from: Data) throws -> JSON? {
         fatalError("should be overriden")
     }
 }
 
 extension JSONAdapter {
-    public func didFinish(with: Any?, fromRequest: RequestProtocol, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
-        guard error == nil, let json = with as? JSON else {
-            self.appContext.logInspector?.logEvent(EventError(error, details: fromRequest), sender: self)
-            completion?(fromRequest, error)
+    public func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
+        guard error == nil, let json = data else {
+            self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            completion?(request, error)
             return
         }
 
         let jsonStartParsingDate = Date()
-        appContext.logInspector?.logEvent(EventJSONStart(fromRequest), sender: self)
+        appContext.logInspector?.logEvent(EventJSONStart(request), sender: self)
 
         let dispatchGroup = DispatchGroup()
 
@@ -69,7 +76,7 @@ extension JSONAdapter {
             dispatchGroup.enter()
             //
             do {
-                let contextPredicate = fromRequest.contextPredicate
+                let contextPredicate = request.contextPredicate
 
                 #warning("refactoring initial step")
                 let extraction = try managedObjectCreator.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
@@ -100,8 +107,8 @@ extension JSONAdapter {
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            self.appContext.logInspector?.logEvent(EventJSONEnded(fromRequest, initiatedIn: jsonStartParsingDate), sender: self)
-            completion?(fromRequest, error)
+            self.appContext.logInspector?.logEvent(EventJSONEnded(request, initiatedIn: jsonStartParsingDate), sender: self)
+            completion?(request, error)
         }
     }
 }
@@ -132,7 +139,7 @@ extension JSONAdapter {
 
             let jsonStartParsingDate = Date()
             self.appContext.logInspector?.logEvent(EventJSONStart(predicate), sender: self)
-            self.appContext.mappingCoordinator?.mapping(json: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, inContext: self.appContext) { fetchResult, error in
+            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, inContext: self.appContext) { fetchResult, error in
                 if let error = error {
                     self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -140,6 +147,23 @@ extension JSONAdapter {
                 localCallback(fetchResult, nil)
             }
         })
+    }
+}
+
+public enum JSONAdapterError: Error, CustomStringConvertible {
+    case dataIsNil
+    case notMainThread
+    case fetchResultIsNotPresented
+    case jsonByKeyWasNotFound(JSON,AnyHashable)
+    case notSupportedType(AnyClass)
+    public var description: String {
+        switch self {
+        case .dataIsNil: return "\(type(of: self)): Data is nil"
+        case .notSupportedType(let clazz): return "\(type(of: self)): \(type(of: clazz)) can't be adopted"
+        case .jsonByKeyWasNotFound(let json, let key): return "\(type(of: self)): json was not found for key:\(key)); {\(json)}"
+        case .notMainThread: return "\(type(of: self)): Not main thread"
+        case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
+        }
     }
 }
 
