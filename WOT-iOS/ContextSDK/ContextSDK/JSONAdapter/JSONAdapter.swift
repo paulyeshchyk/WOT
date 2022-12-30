@@ -40,7 +40,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
-    open func decodeData(_ data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
+    open func decode(data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
         guard let data = data else {
             didFinish(request: request, data: nil, error: JSONAdapterError.dataIsNil, completion: completion)
             return
@@ -79,7 +79,7 @@ extension JSONAdapter {
                 let contextPredicate = request.contextPredicate
 
                 #warning("refactoring initial step")
-                let extraction = try managedObjectCreator.performJSONExtraction(from: json, byKey: key, forClazz: modelClazz, contextPredicate: contextPredicate)
+                let extraction = try managedObjectCreator.extract(json: json, key: key, forClazz: modelClazz, contextPredicate: contextPredicate)
 
                 try self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
                     guard let self = self, let fetchResult = fetchResult else {
@@ -184,8 +184,8 @@ public struct JSONExtraction {
 }
 
 extension ManagedObjectCreatorProtocol {
-    public func performJSONExtraction(from: JSON, byKey key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicate?) throws -> JSONExtraction {
-        guard let json = from[key] as? JSON else {
+    public func extract(json: JSON, key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicate?) throws -> JSONExtraction {
+        guard let json = json[key] as? JSON else {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
 

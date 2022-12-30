@@ -15,7 +15,7 @@ public protocol ResponseAdapterProtocol {
 
     init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: Context, managedObjectCreator: ManagedObjectCreatorProtocol)
 
-    func decodeData(_ data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?)
+    func decode(data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?)
 }
 
 public protocol JSONAdapterProtocol: ResponseAdapterProtocol, MD5Protocol {}

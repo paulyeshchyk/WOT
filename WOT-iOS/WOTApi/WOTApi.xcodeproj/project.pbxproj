@@ -229,6 +229,7 @@
 		DA913E3E2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E3D2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift */; };
 		DACA0071295B69C600E677D3 /* WGAPIResponseJSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACA0070295B69C600E677D3 /* WGAPIResponseJSONAdapter.swift */; };
 		DACDB112295EEAD2005BBA72 /* WGAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB111295EEAD2005BBA72 /* WGAPIResponse.swift */; };
+		DACDB114295EF480005BBA72 /* VehicleJSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB113295EF480005BBA72 /* VehicleJSONAdapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -481,6 +482,7 @@
 		DA913E3D2959A83E00D39F0E /* NSManagedObject+PrimaryKeypathProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+PrimaryKeypathProtocol.swift"; sourceTree = "<group>"; };
 		DACA0070295B69C600E677D3 /* WGAPIResponseJSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGAPIResponseJSONAdapter.swift; sourceTree = "<group>"; };
 		DACDB111295EEAD2005BBA72 /* WGAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGAPIResponse.swift; sourceTree = "<group>"; };
+		DACDB113295EF480005BBA72 /* VehicleJSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleJSONAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1044,6 +1046,7 @@
 			children = (
 				DACDB111295EEAD2005BBA72 /* WGAPIResponse.swift */,
 				DACA0070295B69C600E677D3 /* WGAPIResponseJSONAdapter.swift */,
+				DACDB113295EF480005BBA72 /* VehicleJSONAdapter.swift */,
 			);
 			path = jsonAdapter;
 			sourceTree = "<group>";
@@ -1250,6 +1253,7 @@
 				DA81E5B5295305CE00C60F31 /* VehicleprofileAmmoMapping.swift in Sources */,
 				DA81E5B1295305CE00C60F31 /* VehicleprofileTurretMapping.swift in Sources */,
 				DA81E5E7295305CE00C60F31 /* VehicleprofileArmor+RequestableProtocol.swift in Sources */,
+				DACDB114295EF480005BBA72 /* VehicleJSONAdapter.swift in Sources */,
 				DA81E5F9295305CE00C60F31 /* VehicleprofileAmmoList+JSONDecodingProtocol.swift in Sources */,
 				DA1F54FD295C5C90009BC8D9 /* VehicleprofileTurretManagedObjectCreator.swift in Sources */,
 				DA81E5FC295305CE00C60F31 /* VehicleprofileAmmoPenetration+JSONDecodingProtocol.swift in Sources */,

@@ -33,7 +33,7 @@ public class WOTRequestRegistrator: RequestRegistrator {
         register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: LoginHttpRequest.self)
         register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: LogoutHttpRequest.self)
         register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: ModulesHttpRequest.self)
-        register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehiclesHttpRequest.self)
+        register(dataAdapterClass: VehicleJSONAdapter.self, modelServiceClass: VehiclesHttpRequest.self)
         register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: ModulesTreeHttpRequest.self)
         register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehicleprofileGunHttpRequest.self)
         register(dataAdapterClass: WGAPIResponseJSONAdapter.self, modelServiceClass: VehicleprofileRadiosHttpRequest.self)

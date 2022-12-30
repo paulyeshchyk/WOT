@@ -37,7 +37,7 @@ open class RESTResponseParser: ResponseParserProtocol {
         }
 
         dataAdaptationPair.forEach { pair in
-            pair.dataAdapter.decodeData(pair.data, fromRequest: request, completion: completion)
+            pair.dataAdapter.decode(data: pair.data, fromRequest: request, completion: completion)
         }
     }
 }
