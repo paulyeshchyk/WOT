@@ -86,7 +86,7 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
 }
 
 class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & RequestRegistratorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol
 
     private let appContext: Context
     let uuid: UUID = UUID()
@@ -129,7 +129,7 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
         appContext.logInspector?.logEvent(EventFlowStart("Pivot"), sender: self)
 
         do {
-            try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self, groupID: WebRequestType.vehicles.rawValue)
+            try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self)
         } catch {
             appContext.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
         }

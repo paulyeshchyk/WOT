@@ -14,26 +14,22 @@ public class VehicleprofileGunHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/vehicleprofile/"
     }
-
-    override public var responseParserClass: ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
-
-    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        WGAPIResponseJSONAdapter.self
-    }
 }
 
 extension VehicleprofileGunHttpRequest: ModelServiceProtocol {
+    public class func responseParserClass() -> ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
+
+    public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
+        WGAPIResponseJSONAdapter.self
+    }
+
     public class func modelClass() -> PrimaryKeypathProtocol.Type? {
-        return VehicleprofileGun.self
+        VehicleprofileGun.self
     }
 
     public class func registrationID() -> RequestIdType {
         WebRequestType.guns.rawValue
-    }
-
-    public func instanceModelClass() -> AnyClass? {
-        return type(of: self).modelClass()
     }
 }

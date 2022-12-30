@@ -30,6 +30,7 @@ public class WGWebQueryArgs: NSObject {
 @objc
 public class WGWebRequestGroups: NSObject {
     @objc public static let vehicle_profile: RequestIdType = "vehicle_profile".hashValue
+    @objc public static let vehicle_tree: RequestIdType = "vehicle_tree".hashValue
     @objc public static let vehicle_list: RequestIdType = "vehicle_list".hashValue
     @objc public static let login: RequestIdType = "login".hashValue
     @objc public static let logout: RequestIdType = "logout".hashValue

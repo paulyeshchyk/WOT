@@ -163,7 +163,7 @@ extension WOTPivotViewController: UICollectionViewDelegate {
 
 @objc(WOTTankPivotViewController)
 class WOTTankPivotViewController: WOTPivotViewController {
-    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & RequestRegistratorContainerProtocol & DataStoreContainerProtocol
+    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & DataStoreContainerProtocol
     var cancelBlock: WOTTankPivotCompletionCancelBlock?
     var doneBlock: WOTTankPivotCompletionDoneBlock?
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?

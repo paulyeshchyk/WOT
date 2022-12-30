@@ -10,10 +10,6 @@ import ContextSDK
 
 open class RESTResponseParser: ResponseParserProtocol {
     private let appContext: Context
-    private struct DataAdaptationPair {
-        let dataAdapter: ResponseAdapterProtocol
-        let data: Data?
-    }
 
     required public init(appContext: Context) {
         self.appContext = appContext
@@ -21,24 +17,17 @@ open class RESTResponseParser: ResponseParserProtocol {
 
     // MARK: - ResponseParserProtocol
 
-    open func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, dataAdapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
+    #warning("2b removed")
+    open func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, dataAdapter: ResponseAdapterProtocol?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
         guard let data = parseData else {
             throw RESTResponseParserError.dataIsEmpty
         }
 
-        guard let dataAdapters = dataAdapters, !dataAdapters.isEmpty else {
+        guard let dataAdapter = dataAdapter else {
             throw RESTResponseParserError.noAdapterFound
         }
 
-        var dataAdaptationPair = [DataAdaptationPair]()
-        dataAdapters.forEach { dataAdapter in
-            let pair = DataAdaptationPair(dataAdapter: dataAdapter, data: data)
-            dataAdaptationPair.append(pair)
-        }
-
-        dataAdaptationPair.forEach { pair in
-            pair.dataAdapter.decode(data: pair.data, fromRequest: request, completion: completion)
-        }
+        dataAdapter.decode(data: data, fromRequest: request, completion: completion)
     }
 }
 

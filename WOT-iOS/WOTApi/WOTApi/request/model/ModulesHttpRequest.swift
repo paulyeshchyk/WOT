@@ -14,26 +14,22 @@ public class ModulesHttpRequest: HttpRequest {
     override public var path: String {
         return "/wot/encyclopedia/modules/"
     }
-
-    override public var responseParserClass: ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
-
-    override public var dataAdapterClass: ResponseAdapterProtocol.Type {
-        WGAPIResponseJSONAdapter.self
-    }
 }
 
 extension ModulesHttpRequest: ModelServiceProtocol {
-    public static func modelClass() -> PrimaryKeypathProtocol.Type? {
-        return Module.self
+    public class func responseParserClass() -> ResponseParserProtocol.Type {
+        RESTResponseParser.self
+    }
+
+    public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
+        WGAPIResponseJSONAdapter.self
+    }
+
+    public class func modelClass() -> PrimaryKeypathProtocol.Type? {
+        Module.self
     }
 
     public class func registrationID() -> RequestIdType {
         WebRequestType.modules.rawValue
-    }
-
-    public func instanceModelClass() -> AnyClass? {
-        return type(of: self).modelClass()
     }
 }

@@ -18,7 +18,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var sessionManager: SessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
     public var dataStore: DataStoreProtocol?
-    public var requestRegistrator: RequestRegistratorProtocol?
     public var mappingCoordinator: MappingCoordinatorProtocol?
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
@@ -29,10 +28,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         hostConfiguration = WOTHostConfiguration()
         sessionManager = SessionManager()
         dataStore = WOTDataStore(appContext: self)
-        requestRegistrator = WOTRequestRegistrator(appContext: self)
         mappingCoordinator = MappingCoordinator(appContext: self)
         responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
-        requestManager = RequestManager(appContext: self)
+        requestManager = WOTRequestManager(appContext: self)
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = WOTDrawerViewController.newDrawer()
@@ -42,4 +40,4 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     }
 }
 
-extension AppDelegate: RequestRegistratorContainerProtocol, ResponseDataAdapterCreatorContainerProtocol {}
+extension AppDelegate: ResponseDataAdapterCreatorContainerProtocol {}

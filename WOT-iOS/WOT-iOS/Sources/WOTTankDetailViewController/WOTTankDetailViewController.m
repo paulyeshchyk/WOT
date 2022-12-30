@@ -321,7 +321,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
                                                  appContext: appContext
                                                    listener: self
-                                                  requestID: 9 //WebRequestType.vehicles.rawValue
                                                       error: &error];
 }
 

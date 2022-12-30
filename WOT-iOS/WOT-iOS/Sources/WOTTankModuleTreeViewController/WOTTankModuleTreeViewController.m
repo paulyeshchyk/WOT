@@ -199,7 +199,6 @@
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: [_tank_Id integerValue]
                                                  appContext: appContext
                                                    listener: self
-                                                  requestID: 9 //WebRequestType.vehicles.rawValue
                                                       error: &error];
   }
 

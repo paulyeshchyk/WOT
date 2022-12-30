@@ -230,6 +230,8 @@
 		DACA0071295B69C600E677D3 /* WGAPIResponseJSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACA0070295B69C600E677D3 /* WGAPIResponseJSONAdapter.swift */; };
 		DACDB112295EEAD2005BBA72 /* WGAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB111295EEAD2005BBA72 /* WGAPIResponse.swift */; };
 		DACDB114295EF480005BBA72 /* VehicleJSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB113295EF480005BBA72 /* VehicleJSONAdapter.swift */; };
+		DACDB118295F1375005BBA72 /* WOTRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB117295F1375005BBA72 /* WOTRequestManager.swift */; };
+		DACDB11A295F1714005BBA72 /* WebRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB119295F1714005BBA72 /* WebRequestType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -483,6 +485,8 @@
 		DACA0070295B69C600E677D3 /* WGAPIResponseJSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGAPIResponseJSONAdapter.swift; sourceTree = "<group>"; };
 		DACDB111295EEAD2005BBA72 /* WGAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGAPIResponse.swift; sourceTree = "<group>"; };
 		DACDB113295EF480005BBA72 /* VehicleJSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleJSONAdapter.swift; sourceTree = "<group>"; };
+		DACDB117295F1375005BBA72 /* WOTRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestManager.swift; sourceTree = "<group>"; };
+		DACDB119295F1714005BBA72 /* WebRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRequestType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -566,6 +570,7 @@
 				DA81E7BB2953235C00C60F31 /* WOTHostConfiguration.swift */,
 				DA81E7BA2953232A00C60F31 /* model */,
 				DA81E7D62953348900C60F31 /* WOTRequestFactory.swift */,
+				DACDB117295F1375005BBA72 /* WOTRequestManager.swift */,
 			);
 			path = request;
 			sourceTree = "<group>";
@@ -851,6 +856,7 @@
 		DA81E7BA2953232A00C60F31 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				DACDB119295F1714005BBA72 /* WebRequestType.swift */,
 				DA0BC58C2952E7AF00E01D54 /* LoginHttpRequest.swift */,
 				DA0BC5832952E7AE00E01D54 /* LogoutHttpRequest.swift */,
 				DA0BC5822952E7AE00E01D54 /* ModulesHttpRequest.swift */,
@@ -1305,6 +1311,7 @@
 				DA81E83C2953521700C60F31 /* WOTTankDetailFieldExpression.m in Sources */,
 				DA81E5AB295305CE00C60F31 /* VehicleprofileAmmoListMapping.swift in Sources */,
 				DA81E8532953521700C60F31 /* WOTEngineFireStartingChanceCompareFieldExpression.m in Sources */,
+				DACDB118295F1375005BBA72 /* WOTRequestManager.swift in Sources */,
 				DA1F550D295C5EB4009BC8D9 /* VehiclesPivotDataManagedObjectCreator.swift in Sources */,
 				DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */,
 				DA913E3829599E2F00D39F0E /* NSManagedObject+JSONMappableProtocol.swift in Sources */,
@@ -1398,6 +1405,7 @@
 				DA913E3A2959A72F00D39F0E /* NSManagedObject+RequestableProtocol.swift in Sources */,
 				DA81E8522953521700C60F31 /* WOTSuspensionRotationCompareFieldExpression.m in Sources */,
 				DA81E5F1295305CE00C60F31 /* UserSession+JSONDecodingProtocol.swift in Sources */,
+				DACDB11A295F1714005BBA72 /* WebRequestType.swift in Sources */,
 				DA81E5F4295305CE00C60F31 /* Vehicleprofile+JSONDecodingProtocol.swift in Sources */,
 				DA81E5F5295305CE00C60F31 /* ModulesTree+JSONDecodingProtocol.swift in Sources */,
 				DA1F5534295C6A38009BC8D9 /* VehicleprofileModuleGunManagedObjectCreator.swift in Sources */,

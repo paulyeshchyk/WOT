@@ -11,6 +11,9 @@ public protocol RequestManagerProtocol {
     func removeListener(_ listener: RequestManagerListenerProtocol)
     func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws
     func fetchRemote(requestParadigm: RequestParadigmProtocol, requestPredicateComposer: RequestPredicateComposerProtocol, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws
+    //
+    @available(*, deprecated, message: "fetchRemote should be used instead")
+    func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
 }
 
 @objc

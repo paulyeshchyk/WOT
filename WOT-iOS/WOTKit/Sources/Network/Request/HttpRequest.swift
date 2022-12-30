@@ -9,17 +9,6 @@
 import ContextSDK
 
 open class HttpRequest: Request {
-    private class HttpRequestCancelEvent: LogEventProtocol {
-        var eventType: LogEventType { .info }
-        var message: String { reason.reasonDescription }
-        var name: String { "HttpRequestCancelEvent" }
-
-        private let reason: RequestCancelReasonProtocol
-        init(reason: RequestCancelReasonProtocol) {
-            self.reason = reason
-        }
-    }
-
     override public var description: String {
         "\(type(of: self)): \(path)"
     }
@@ -77,4 +66,15 @@ extension HttpRequest: HttpServiceProtocol {
     open var httpMethod: ContextSDK.HTTPMethod { return .POST }
     open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
     open var httpBodyData: Data? { nil }
+}
+
+private class HttpRequestCancelEvent: LogEventProtocol {
+    var eventType: LogEventType { .info }
+    var message: String { reason.reasonDescription }
+    var name: String { "HttpRequestCancelEvent" }
+
+    private let reason: RequestCancelReasonProtocol
+    init(reason: RequestCancelReasonProtocol) {
+        self.reason = reason
+    }
 }
