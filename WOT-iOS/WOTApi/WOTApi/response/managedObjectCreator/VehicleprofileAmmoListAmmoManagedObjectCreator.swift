@@ -42,7 +42,7 @@ public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicat
         self.ammoType = ammoType
     }
 
-    public func build() -> RequestPredicateCompositionProtocol? {
+    public func build() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = requestPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
         lookupPredicate[.secondary] = linkedClazz.primaryKey(forType: .internal, andObject: ammoType)

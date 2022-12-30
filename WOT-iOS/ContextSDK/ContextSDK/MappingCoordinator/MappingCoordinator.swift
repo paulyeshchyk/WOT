@@ -54,18 +54,18 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
     public func linkItem(from itemJSON: JSONCollectable?, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, requestPredicateComposer: RequestPredicateComposerProtocol, appContext: MappingCoordinatorContext) {
         guard let itemJSON = itemJSON else { return }
 
-        guard let lookupRule = requestPredicateComposer.build() else {
-            appContext.logInspector?.logEvent(EventError(MappingCoordinatorError.lookupRuleNotDefined, details: nil), sender: self)
-            return
+        do {
+            let lookupRule = try requestPredicateComposer.build()
+            let objectContext = masterFetchResult.managedObjectContext
+            let managedObjectCreator = managedObjectCreatorClass.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
+            fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: linkedClazz, predicate: lookupRule.requestPredicate, managedObjectCreator: managedObjectCreator, appContext: appContext, completion: { [weak self] _, error in
+                if let error = error {
+                    self?.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
+                }
+            })
+        } catch {
+            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
         }
-
-        let objectContext = masterFetchResult.managedObjectContext
-        let managedObjectCreator = managedObjectCreatorClass.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: lookupRule.objectIdentifier)
-        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: linkedClazz, predicate: lookupRule.requestPredicate, managedObjectCreator: managedObjectCreator, appContext: appContext, completion: { [weak self] _, error in
-            if let error = error {
-                self?.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
-            }
-        })
     }
 }
 

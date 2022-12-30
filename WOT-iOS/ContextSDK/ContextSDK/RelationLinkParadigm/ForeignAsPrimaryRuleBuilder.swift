@@ -17,7 +17,7 @@ open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
         self.parentObjectIDList = parentObjectIDList
     }
 
-    public func build() -> RequestPredicateCompositionProtocol? {
+    public func build() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
         lookupPredicate[.primary] = requestPredicate[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
 

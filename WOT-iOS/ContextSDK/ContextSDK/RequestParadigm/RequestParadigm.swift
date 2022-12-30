@@ -31,16 +31,21 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
 
     // MARK: -
 
-    private var requestPredicateComposer: RequestPredicateComposerProtocol?
+    private var requestPredicateComposer: RequestPredicateComposerProtocol
     private let keypathPrefix: String?
     private let httpQueryItemName: String
     private let fieldsKeypaths: [String]
     private let typeDescription: String
     private var primaryKeys: [ContextExpression] {
-        return predicate()?.expressions(pkType: nil)?.compactMap { $0 } ?? []
+        do {
+            let result = try buildContextPredicate().expressions(pkType: nil)?.compactMap { $0 }
+            return result ?? []
+        } catch {
+            return []
+        }
     }
 
-    public init<T: RequestableProtocol>(modelClass: T.Type, requestPredicateComposer: RequestPredicateComposerProtocol?, keypathPrefix: String?, httpQueryItemName: String) {
+    public init<T: RequestableProtocol>(modelClass: T.Type, requestPredicateComposer: RequestPredicateComposerProtocol, keypathPrefix: String?, httpQueryItemName: String) {
         self.fieldsKeypaths = T.fieldsKeypaths()
         self.requestPredicateComposer = requestPredicateComposer
         self.keypathPrefix = keypathPrefix
@@ -63,8 +68,8 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         return arguments
     }
 
-    public func predicate() -> ContextPredicate? {
-        return requestPredicateComposer?.build()?.requestPredicate
+    public func buildContextPredicate() throws -> ContextPredicate {
+        return try requestPredicateComposer.build().requestPredicate
     }
 
     // MARK: - private

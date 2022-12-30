@@ -19,7 +19,7 @@ open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposer
         self.currentObjectID = currentObjectID
     }
 
-    public func build() -> RequestPredicateCompositionProtocol? {
+    public func build() throws -> RequestPredicateCompositionProtocol {
         var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(currentObjectID)
 

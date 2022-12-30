@@ -7,19 +7,17 @@
 //
 
 open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
-    private var json: JSON?
+    private let json: JSON
     private var linkedClazz: PrimaryKeypathProtocol.Type
 
-    public init(json: JSON?, linkedClazz: PrimaryKeypathProtocol.Type) {
+    public init(json: JSON, linkedClazz: PrimaryKeypathProtocol.Type) {
         self.json = json
         self.linkedClazz = linkedClazz
     }
 
-    public func build() -> RequestPredicateCompositionProtocol? {
-        guard let json = self.json else { return nil }
-
+    public func build() throws -> RequestPredicateCompositionProtocol {
         guard let idKeyPath = linkedClazz.primaryKeyPath(forType: .internal) else {
-            return nil
+            throw RootTagRuleBuilderError.primaryKeyPathNotFound(linkedClazz)
         }
         let itemID = json[idKeyPath] as AnyObject
 
@@ -29,5 +27,14 @@ open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
         }
 
         return RequestPredicateComposition(objectIdentifier: itemID, requestPredicate: lookupPredicate)
+    }
+}
+
+public enum RootTagRuleBuilderError: Error, CustomStringConvertible {
+    case primaryKeyPathNotFound(PrimaryKeypathProtocol.Type)
+    public var description: String {
+        switch self {
+        case .primaryKeyPathNotFound(let kp): return "[\(type(of: self))]: Primary keypath not found \(String(describing: kp))"
+        }
     }
 }

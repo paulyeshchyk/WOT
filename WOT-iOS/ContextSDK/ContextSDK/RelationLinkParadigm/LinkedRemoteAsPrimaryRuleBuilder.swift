@@ -19,7 +19,7 @@ open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
         self.currentObjectID = currentObjectID
     }
 
-    public func build() -> RequestPredicateCompositionProtocol? {
+    public func build() throws -> RequestPredicateCompositionProtocol {
         var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(currentObjectID)
         let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)

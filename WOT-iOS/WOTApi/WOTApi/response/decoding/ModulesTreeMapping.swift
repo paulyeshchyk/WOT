@@ -28,7 +28,7 @@ extension ModulesTree {
                 let nextTanksPredicateComposer = NextVehiclePredicateComposer(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
                 let nextTanksRequestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposer: nextTanksPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try appContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, requestPredicateComposer: nextTanksPredicateComposer, managedObjectCreator: nextTanksManagedObjectCreator, listener: self)
+                    try appContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, managedObjectCreator: nextTanksManagedObjectCreator, listener: self)
                 } catch {
                     appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -43,7 +43,7 @@ extension ModulesTree {
                 let nextModulePredicateComposer = NextModulesPredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
                 let nextModuleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try appContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, requestPredicateComposer: nextModulePredicateComposer, managedObjectCreator: nextModuleManagedObjectCreator, listener: self)
+                    try appContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, managedObjectCreator: nextModuleManagedObjectCreator, listener: self)
                 } catch {
                     appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -55,7 +55,7 @@ extension ModulesTree {
         let moduleJSONAdapter = ModulesTreeCurrentModuleManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         let modulePredicateComposer = CurrentModulePredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
         let moduleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
-        try appContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, requestPredicateComposer: modulePredicateComposer, managedObjectCreator: moduleJSONAdapter, listener: self)
+        try appContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, managedObjectCreator: moduleJSONAdapter, listener: self)
     }
 }
 

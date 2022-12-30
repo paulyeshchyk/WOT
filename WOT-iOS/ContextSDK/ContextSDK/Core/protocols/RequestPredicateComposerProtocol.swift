@@ -7,7 +7,7 @@
 
 @objc
 public protocol RequestPredicateComposerProtocol: AnyObject {
-    func build() -> RequestPredicateCompositionProtocol?
+    func build() throws -> RequestPredicateCompositionProtocol
 }
 
 @objc
