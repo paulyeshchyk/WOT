@@ -33,7 +33,7 @@ public extension VehicleprofileGun {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         // id was used when quering remote module
         switch forType {
         case .external: return #keyPath(VehicleprofileGun.gun_id)

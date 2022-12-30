@@ -8,7 +8,7 @@
 @objc
 public class ContextExpression: NSObject {
     public var components: [String]
-    public var value: AnyObject
+    public var value: JSONValueType
     public var name: String { return components.joined(separator: ".")}
     public var nameAlias: String
 
@@ -19,16 +19,16 @@ public class ContextExpression: NSObject {
     private var predicateFormat: String = "%K = %@"
 
     @objc
-    public required init(components: [String], value: AnyObject, nameAlias: String, predicateFormat: String) {
+    public required init(components: [String], value: JSONValueType, nameAlias: String, predicateFormat: String) {
         self.components = components
-        self.value = value as AnyObject
+        self.value = value
         self.predicateFormat = predicateFormat
         self.nameAlias = nameAlias
         super.init()
     }
 
     @objc
-    public convenience init(name: String, value: AnyObject, nameAlias: String, predicateFormat: String) {
+    public convenience init(name: String, value: JSONValueType, nameAlias: String, predicateFormat: String) {
         self.init(components: [name], value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
 

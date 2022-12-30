@@ -86,6 +86,8 @@
 		DACDB10C295EDE08005BBA72 /* JSONCollectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10B295EDE08005BBA72 /* JSONCollectable.swift */; };
 		DACDB10E295EDF22005BBA72 /* ManagedObjectMapProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10D295EDF22005BBA72 /* ManagedObjectMapProtocol.swift */; };
 		DACDB110295EE07C005BBA72 /* ManagedObjectCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB10F295EE07C005BBA72 /* ManagedObjectCreatorProtocol.swift */; };
+		DACDB11C295F4F26005BBA72 /* Joint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB11B295F4F26005BBA72 /* Joint.swift */; };
+		DACDB11E295F832B005BBA72 /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB11D295F832B005BBA72 /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +183,8 @@
 		DACDB10B295EDE08005BBA72 /* JSONCollectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCollectable.swift; sourceTree = "<group>"; };
 		DACDB10D295EDF22005BBA72 /* ManagedObjectMapProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectMapProtocol.swift; sourceTree = "<group>"; };
 		DACDB10F295EE07C005BBA72 /* ManagedObjectCreatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectCreatorProtocol.swift; sourceTree = "<group>"; };
+		DACDB11B295F4F26005BBA72 /* Joint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joint.swift; sourceTree = "<group>"; };
+		DACDB11D295F832B005BBA72 /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleprofileAmmoListAmmoRequestPredicateComposer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,12 +373,14 @@
 			children = (
 				DA0E80872950B07A00B44CC6 /* ForeignAsPrimaryAndForeignSecondaryRuleBuilder.swift */,
 				DA0E80892950B07B00B44CC6 /* ForeignAsPrimaryRuleBuilder.swift */,
+				DACDB11D295F832B005BBA72 /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift */,
 				DA0E80842950B07A00B44CC6 /* LinkedLocalAsPrimaryRuleBuilder.swift */,
 				DA0E808E2950B07B00B44CC6 /* LinkedRemoteAsPrimaryRuleBuilder.swift */,
 				DA0E80882950B07A00B44CC6 /* MasterAsPrimaryLinkedAsSecondaryRuleBuilder.swift */,
 				DA0E808B2950B07B00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift */,
 				DA0E808C2950B07B00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift */,
 				DA0E80862950B07A00B44CC6 /* RootTagRuleBuilder.swift */,
+				DACDB11B295F4F26005BBA72 /* Joint.swift */,
 			);
 			path = RelationLinkParadigm;
 			sourceTree = "<group>";
@@ -668,6 +674,7 @@
 				DA0E80952950B07C00B44CC6 /* ForeignAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5072952FE3500C60F31 /* EventMapping.swift in Sources */,
 				DA81E5202952FFDC00C60F31 /* AnyCodable.swift in Sources */,
+				DACDB11E295F832B005BBA72 /* VehicleprofileAmmoListAmmoRequestPredicateComposer.swift in Sources */,
 				DA81E5042952FE3500C60F31 /* EventWarning.swift in Sources */,
 				DA0E80692950919F00B44CC6 /* ContextExpression.swift in Sources */,
 				DA08567729548E2000273762 /* String+MD5.swift in Sources */,
@@ -695,6 +702,7 @@
 				DA81E5022952FE3500C60F31 /* EventWEB.swift in Sources */,
 				DACDB100295EDC96005BBA72 /* ResponseAdapterProtocol.swift in Sources */,
 				DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */,
+				DACDB11C295F4F26005BBA72 /* Joint.swift in Sources */,
 				DA0E806529508C4700B44CC6 /* StartableProtocol.swift in Sources */,
 				DA2C28F42959F55D00D18A6E /* ManagedObjectCreator.swift in Sources */,
 				DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */,

@@ -29,5 +29,3 @@ public class VehicleprofileRadioManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
-
-public class VehicleprofileRadioRequestPredicateComposer: RootTagRuleBuilder {}

@@ -7,26 +7,17 @@
 //
 
 open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
-    private let json: JSON
-    private var linkedClazz: PrimaryKeypathProtocol.Type
+    private let drivenJoint: Joint
 
-    public init(json: JSON, linkedClazz: PrimaryKeypathProtocol.Type) {
-        self.json = json
-        self.linkedClazz = linkedClazz
+    public init(drivenJoint: Joint, linkedClazz _: PrimaryKeypathProtocol.Type, drivenObjectID _: Any?) {
+        self.drivenJoint = drivenJoint
     }
 
     public func build() throws -> RequestPredicateCompositionProtocol {
-        guard let idKeyPath = linkedClazz.primaryKeyPath(forType: .internal) else {
-            throw RootTagRuleBuilderError.primaryKeyPathNotFound(linkedClazz)
-        }
-        let itemID = json[idKeyPath] as AnyObject
-
         let lookupPredicate = ContextPredicate()
-        if let primaryID = linkedClazz.primaryKey(forType: .internal, andObject: itemID) {
-            lookupPredicate[.primary] = primaryID
-        }
+        lookupPredicate[.primary] = drivenJoint.theClass.primaryKey(forType: .internal, andObject: drivenJoint.theID)
 
-        return RequestPredicateComposition(objectIdentifier: itemID, requestPredicate: lookupPredicate)
+        return RequestPredicateComposition(objectIdentifier: drivenJoint.theID, requestPredicate: lookupPredicate)
     }
 }
 

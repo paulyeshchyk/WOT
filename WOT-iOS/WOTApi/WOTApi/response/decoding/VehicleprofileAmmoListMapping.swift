@@ -17,8 +17,9 @@ public extension VehicleprofileAmmoList {
         let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
 
         for profile in profilesJSON {
-            let ammoType = profile[#keyPath(VehicleprofileAmmo.type)] as AnyObject
-            let ruleBuilder = VehicleprofileAmmoListAmmoRequestPredicateComposer(requestPredicate: map.predicate, ammoType: ammoType, linkedClazz: VehicleprofileAmmo.self, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+            let ammoType = profile[#keyPath(VehicleprofileAmmo.type)]
+            let ammoJoint = Joint(theClass: VehicleprofileAmmo.self, theID: ammoType, thePredicate: map.predicate)
+            let ruleBuilder = VehicleprofileAmmoListAmmoRequestPredicateComposer(drivenJoint: ammoJoint, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             let ammoLinkerClass = VehicleprofileAmmoListAmmoManagedObjectCreator.self
             let jsonCollection = try JSONCollection(element: profile)
             let composition = try ruleBuilder.build()

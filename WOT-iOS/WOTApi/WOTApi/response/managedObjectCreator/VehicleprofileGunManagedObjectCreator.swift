@@ -29,5 +29,3 @@ public class VehicleprofileGunManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
-
-public class VehicleprofileGunRequestPredicateComposer: RootTagRuleBuilder {}

@@ -29,5 +29,3 @@ public class VehicleprofileSuspensionManagedObjectCreator: ManagedObjectCreator 
         }
     }
 }
-
-public class VehicleprofileSuspensionRequestPredicateComposer: RootTagRuleBuilder {}

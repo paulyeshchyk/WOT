@@ -40,5 +40,3 @@ private enum NextModulesLinkerError: Error, CustomStringConvertible {
         }
     }
 }
-
-public class NextModulesPredicateComposer: MasterAsPrimaryLinkedAsSecondaryRuleBuilder {}

@@ -29,5 +29,3 @@ public class VehicleprofileAmmoListManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
-
-public class VehicleprofileAmmoListRequestPredicateComposer: ForeignAsPrimaryRuleBuilder {}

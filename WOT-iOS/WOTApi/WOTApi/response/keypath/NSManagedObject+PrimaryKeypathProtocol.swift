@@ -32,8 +32,8 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
 }
 
 extension NSManagedObject: PrimaryKeypathProtocol {
-    open class func primaryKeyPath(forType _: PrimaryKeyType) -> String? {
-        return nil
+    open class func primaryKeyPath(forType _: PrimaryKeyType) -> String {
+        fatalError("should be overriden")
     }
 
     open class func predicateFormat(forType: PrimaryKeyType) -> PredicateFormatProtocol {
@@ -42,14 +42,14 @@ extension NSManagedObject: PrimaryKeypathProtocol {
 
     open class func predicate(for ident: AnyObject?, andType: PrimaryKeyType) -> NSPredicate? {
         guard let ident = ident as? String else { return nil }
-        guard let keyName = primaryKeyPath(forType: .internal) else { return nil }
+        let keyName = primaryKeyPath(forType: .internal)
         let predicateTemplate = predicateFormat(forType: andType).template
         return NSPredicate(format: predicateTemplate, keyName, ident)
     }
 
-    open class func primaryKey(forType: PrimaryKeyType, andObject: AnyObject?) -> ContextExpression? {
-        guard let keyName = primaryKeyPath(forType: forType) else { return nil }
+    open class func primaryKey(forType: PrimaryKeyType, andObject: JSONValueType?) -> ContextExpression? {
         guard let ident = andObject else { return nil }
+        let keyName = primaryKeyPath(forType: forType)
         let predicateTemplate = predicateFormat(forType: forType).template
         return ContextExpression(name: keyName, value: ident, nameAlias: keyName, predicateFormat: predicateTemplate)
     }

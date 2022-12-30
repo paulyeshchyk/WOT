@@ -29,5 +29,3 @@ public class VehicleprofileTurretManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
-
-public class VehicleprofileTurretRequestPredicateComposer: RootTagRuleBuilder {}

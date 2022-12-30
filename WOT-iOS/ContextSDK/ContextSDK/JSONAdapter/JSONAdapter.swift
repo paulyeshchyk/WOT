@@ -193,18 +193,20 @@ public extension ManagedObjectCreatorProtocol {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.jsonWasNotExtracted(json)
         }
 
-        let ident: Any
-        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType) {
-            ident = extractedJSON[primaryKeyPath] ?? key
-        } else {
-            ident = key
-        }
+        let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType)
+        let ident = extractedJSON[primaryKeyPath] ?? key
+//
+//        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType) {
+//            ident = extractedJSON[primaryKeyPath] ?? key
+//        } else {
+//            ident = key
+//        }
 
         #warning("2b refactored")
         let parents = contextPredicate?.parentObjectIDList
 
         let requestPredicate = ContextPredicate(parentObjectIDList: parents)
-        requestPredicate[.primary] = modelClazz.primaryKey(forType: linkerPrimaryKeyType, andObject: ident as AnyObject)
+        requestPredicate[.primary] = modelClazz.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
         let jsonCollection = try JSONCollection(element: extractedJSON)
         return JSONExtraction(requestPredicate: requestPredicate, json: jsonCollection)

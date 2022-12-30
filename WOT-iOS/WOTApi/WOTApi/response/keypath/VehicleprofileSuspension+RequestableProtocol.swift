@@ -29,7 +29,7 @@ public extension VehicleprofileSuspension {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         // id was used when quering remote module
         // tag was used when parsed response vehicleprofile-suspension
 

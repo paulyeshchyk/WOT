@@ -30,5 +30,3 @@ public class VehicleprofileModuleRadioManagedObjectCreator: ManagedObjectCreator
         }
     }
 }
-
-public class VehicleprofileModuleRadioPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}

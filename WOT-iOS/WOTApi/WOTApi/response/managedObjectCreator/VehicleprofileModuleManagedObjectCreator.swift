@@ -29,5 +29,3 @@ public class VehicleprofileModuleManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
-
-public class VehicleprofileModuleRequestPredicateComposer: ForeignAsPrimaryRuleBuilder {}

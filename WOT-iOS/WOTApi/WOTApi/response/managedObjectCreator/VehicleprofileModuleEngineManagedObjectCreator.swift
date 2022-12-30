@@ -30,5 +30,3 @@ public class VehicleprofileModuleEngineManagedObjectCreator: ManagedObjectCreato
         }
     }
 }
-
-public class VehicleprofileModuleEnginePredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}

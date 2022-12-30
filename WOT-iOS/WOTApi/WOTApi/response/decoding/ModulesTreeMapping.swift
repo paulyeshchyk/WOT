@@ -25,7 +25,8 @@ public extension ModulesTree {
         if let nextTanks = moduleTreeJSON[#keyPath(ModulesTree.next_tanks)] as? [AnyObject] {
             for nextTank in nextTanks {
                 // parents was not used for next portion of tanks
-                let nextTanksPredicateComposer = NextVehiclePredicateComposer(linkedClazz: Vehicles.self, linkedObjectID: nextTank)
+                let theLink = Joint(theClass: Vehicles.self, theID: nextTank, thePredicate: nil)
+                let nextTanksPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(drivenJoint: theLink, hostObjectIDList: nil)
                 let nextTanksRequestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposer: nextTanksPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
                     try appContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, managedObjectCreator: nextTanksManagedObjectCreator, listener: self)
@@ -39,8 +40,9 @@ public extension ModulesTree {
 
         let nextModuleManagedObjectCreator = ModulesTreeNextModulesManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         if let nextModules = moduleTreeJSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject] {
-            for nextModule in nextModules {
-                let nextModulePredicateComposer = NextModulesPredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: objectID)
+            for nextModuleID in nextModules {
+                let theLink = Joint(theClass: Module.self, theID: nextModuleID, thePredicate: map.predicate)
+                let nextModulePredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
                 let nextModuleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
                     try appContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, managedObjectCreator: nextModuleManagedObjectCreator, listener: self)
@@ -53,7 +55,8 @@ public extension ModulesTree {
         // MARK: - CurrentModule
 
         let moduleJSONAdapter = ModulesTreeCurrentModuleManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let modulePredicateComposer = CurrentModulePredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: objectID)
+        let theLink = Joint(theClass: Module.self, theID: module_id, thePredicate: map.predicate)
+        let modulePredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
         let moduleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
         try appContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, managedObjectCreator: moduleJSONAdapter, listener: self)
     }

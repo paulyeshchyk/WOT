@@ -29,5 +29,3 @@ public class ModulesTreeNextVehicleManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
-
-public class NextVehiclePredicateComposer: LinkedLocalAsPrimaryRuleBuilder {}

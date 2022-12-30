@@ -30,5 +30,3 @@ public class VehicleprofileModuleGunManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
-
-public class VehicleprofileModuleGunPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}

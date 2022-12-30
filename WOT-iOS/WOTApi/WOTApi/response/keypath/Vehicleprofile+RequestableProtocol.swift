@@ -42,7 +42,10 @@ public extension Vehicleprofile {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override class func primaryKeyPath(forType _: PrimaryKeyType) -> String? {
-        return #keyPath(Vehicleprofile.hashName)
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
+        switch forType {
+        case .external: return #keyPath(Vehicleprofile.hashName)
+        case .internal: return #keyPath(Vehicleprofile.hashName)
+        }
     }
 }

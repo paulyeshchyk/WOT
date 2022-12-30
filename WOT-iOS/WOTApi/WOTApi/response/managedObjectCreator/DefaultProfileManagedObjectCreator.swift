@@ -32,5 +32,3 @@ public class DefaultProfileManagedObjectCreator: ManagedObjectCreator {
         }
     }
 }
-
-public class DefaultProfileRequestPredicateComposer: ForeignAsPrimaryRuleBuilder {}

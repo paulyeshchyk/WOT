@@ -30,5 +30,3 @@ public class VehicleprofileModuleSuspensionManagedObjectCreator: ManagedObjectCr
         }
     }
 }
-
-public class VehicleprofileModuleSuspensionPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}

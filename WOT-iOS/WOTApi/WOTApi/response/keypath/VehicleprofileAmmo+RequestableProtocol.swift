@@ -25,7 +25,7 @@ public extension VehicleprofileAmmo {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         switch forType {
         case .external: return #keyPath(VehicleprofileAmmo.type)
         case .internal: return #keyPath(VehicleprofileAmmo.type)

@@ -39,7 +39,7 @@ public extension ModulesTree {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
         switch forType {
         case .external: return #keyPath(ModulesTree.module_id)
         case .internal: return #keyPath(ModulesTree.module_id)

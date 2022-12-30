@@ -4,8 +4,8 @@
 //
 //  Created by Paul on 30.12.22.
 //
-
-public typealias JSON = [Swift.AnyHashable: Any]
+public typealias JSONValueType = Any
+public typealias JSON = [Swift.AnyHashable: JSONValueType]
 
 @objc
 public protocol JSONCollectable {

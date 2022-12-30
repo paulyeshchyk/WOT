@@ -29,5 +29,3 @@ public class ModulesTreeCurrentModuleManagedObjectCreator: ManagedObjectCreator 
         }
     }
 }
-
-public class CurrentModulePredicateComposer: LinkedRemoteAsPrimaryRuleBuilder {}

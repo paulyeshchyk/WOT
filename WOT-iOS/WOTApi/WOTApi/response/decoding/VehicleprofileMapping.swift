@@ -19,7 +19,8 @@ public extension Vehicleprofile {
 
         // MARK: - Link items
 
-        var parentObjectIDList = map.predicate.parentObjectIDList
+        var parentObjectIDList = [AnyObject]()
+        parentObjectIDList.append(contentsOf: map.predicate.parentObjectIDList)
         parentObjectIDList.append(objectID)
 
         let vehicleProfileFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
@@ -28,7 +29,7 @@ public extension Vehicleprofile {
 
         if let ammoListArray = profileJSON[#keyPath(Vehicleprofile.ammo)] as? [JSON] {
             let ammoListMapperClazz = VehicleprofileAmmoListManagedObjectCreator.self
-            let ammoLookupBuilder = VehicleprofileAmmoListRequestPredicateComposer(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
+            let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
 
             let ammoListCollection = try JSONCollection(array: ammoListArray)
             let composition = try ammoLookupBuilder.build()
@@ -41,7 +42,7 @@ public extension Vehicleprofile {
 
         if let armorJSON = profileJSON[#keyPath(Vehicleprofile.armor)] as? JSON {
             let armorListMapperClazz = VehicleprofileArmorListManagedObjectCreator.self
-            let armorLookupBuilder = VehicleprofileArmorListRequestPredicateComposer(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+            let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
             let armorCollection = try JSONCollection(element: armorJSON)
             let composition = try armorLookupBuilder.build()
             try appContext.mappingCoordinator?.linkItem(from: armorCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileArmorList.self, managedObjectCreatorClass: armorListMapperClazz, requestPredicateComposition: composition, appContext: appContext)
@@ -53,7 +54,7 @@ public extension Vehicleprofile {
 
         if let moduleJSON = profileJSON[#keyPath(Vehicleprofile.modules)] as? JSON {
             let moduleMapperClazz = VehicleprofileModuleManagedObjectCreator.self
-            let modulesLookupBuilder = VehicleprofileModuleRequestPredicateComposer(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
+            let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
             let moduleCollection = try JSONCollection(element: moduleJSON)
             let composition = try modulesLookupBuilder.build()
             try appContext.mappingCoordinator?.linkItem(from: moduleCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileModule.self, managedObjectCreatorClass: moduleMapperClazz, requestPredicateComposition: composition, appContext: appContext)
@@ -64,8 +65,11 @@ public extension Vehicleprofile {
         // MARK: - Engine
 
         if let engineJSON = profileJSON[#keyPath(Vehicleprofile.engine)] as? JSON {
+            let keypath = VehicleprofileEngine.primaryKeyPath(forType: .internal)
+            let drivenObjectID = engineJSON[keypath]
             let engineMapperClazz = VehicleprofileEngineManagedObjectCreator.self
-            let engineLookupBuilder = VehicleprofileEngineRequestPredicateComposer(json: engineJSON, linkedClazz: VehicleprofileEngine.self)
+            let engineJoint = Joint(theClass: VehicleprofileEngine.self, theID: drivenObjectID, thePredicate: nil)
+            let engineLookupBuilder = RootTagRuleBuilder(drivenJoint: engineJoint, linkedClazz: VehicleprofileEngine.self, drivenObjectID: drivenObjectID)
             let engineCollection = try JSONCollection(element: engineJSON)
             let composition = try engineLookupBuilder.build()
             try appContext.mappingCoordinator?.linkItem(from: engineCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileEngine.self, managedObjectCreatorClass: engineMapperClazz, requestPredicateComposition: composition, appContext: appContext)
@@ -76,8 +80,12 @@ public extension Vehicleprofile {
         // MARK: - Gun
 
         if let gunJSON = profileJSON[#keyPath(Vehicleprofile.gun)] as? JSON {
+            let keypath = VehicleprofileGun.primaryKeyPath(forType: .internal)
+            let drivenObjectID = gunJSON[keypath]
+
             let gunMapperClazz = VehicleprofileGunManagedObjectCreator.self
-            let gunLookupBuilder = VehicleprofileGunRequestPredicateComposer(json: gunJSON, linkedClazz: VehicleprofileGun.self)
+            let gunJoint = Joint(theClass: VehicleprofileGun.self, theID: drivenObjectID, thePredicate: nil)
+            let gunLookupBuilder = RootTagRuleBuilder(drivenJoint: gunJoint, linkedClazz: VehicleprofileGun.self, drivenObjectID: drivenObjectID)
             let gunCollection = try JSONCollection(element: gunJSON)
             let composition = try gunLookupBuilder.build()
             try appContext.mappingCoordinator?.linkItem(from: gunCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileGun.self, managedObjectCreatorClass: gunMapperClazz, requestPredicateComposition: composition, appContext: appContext)
@@ -88,8 +96,11 @@ public extension Vehicleprofile {
         // MARK: - Suspension
 
         if let suspensionJSON = profileJSON[#keyPath(Vehicleprofile.suspension)] as? JSON {
+            let keypath = VehicleprofileSuspension.primaryKeyPath(forType: .internal)
+            let drivenObjectID = suspensionJSON[keypath]
             let suspensionMapperClazz = VehicleprofileSuspensionManagedObjectCreator.self
-            let suspensionLookupBuilder = VehicleprofileSuspensionRequestPredicateComposer(json: suspensionJSON, linkedClazz: VehicleprofileSuspension.self)
+            let suspensionJoint = Joint(theClass: VehicleprofileSuspension.self, theID: drivenObjectID, thePredicate: nil)
+            let suspensionLookupBuilder = RootTagRuleBuilder(drivenJoint: suspensionJoint,linkedClazz: VehicleprofileSuspension.self, drivenObjectID: drivenObjectID)
             let suspensionCollection = try JSONCollection(element: suspensionJSON)
             let composition = try suspensionLookupBuilder.build()
             try appContext.mappingCoordinator?.linkItem(from: suspensionCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileSuspension.self, managedObjectCreatorClass: suspensionMapperClazz, requestPredicateComposition: composition, appContext: appContext)
@@ -100,8 +111,11 @@ public extension Vehicleprofile {
         // MARK: - Turret
 
         if let turretJSON = profileJSON[#keyPath(Vehicleprofile.turret)] as? JSON {
+            let keypath = VehicleprofileTurret.primaryKeyPath(forType: .internal)
+            let drivenObjectID = turretJSON[keypath]
             let turretMapperClazz = VehicleprofileTurretManagedObjectCreator.self
-            let turretLookupBuilder = VehicleprofileTurretRequestPredicateComposer(json: turretJSON, linkedClazz: VehicleprofileTurret.self)
+            let turretJoint = Joint(theClass: VehicleprofileSuspension.self, theID: drivenObjectID, thePredicate: nil)
+            let turretLookupBuilder = RootTagRuleBuilder(drivenJoint: turretJoint,linkedClazz: VehicleprofileTurret.self, drivenObjectID: drivenObjectID)
             let turretCollection = try JSONCollection(element: turretJSON)
             let composition = try turretLookupBuilder.build()
             try appContext.mappingCoordinator?.linkItem(from: turretCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileTurret.self, managedObjectCreatorClass: turretMapperClazz, requestPredicateComposition: composition, appContext: appContext)
@@ -111,32 +125,20 @@ public extension Vehicleprofile {
 
         // MARK: - Radio
 
-        try RadioLinker(appContext: appContext).link(json: profileJSON, vehicleProfileFetchResult: vehicleProfileFetchResult)
-    }
-}
-
-class RadioLinker {
-    var keyPath: AnyHashable { #keyPath(Vehicleprofile.radio) }
-    var managedObjectCreator: ManagedObjectCreatorProtocol.Type { return VehicleprofileRadioManagedObjectCreator.self }
-    var linkedClass: ContextSDK.PrimaryKeypathProtocol.Type { VehicleprofileRadio.self }
-
-    private let appContext: JSONDecodableProtocol.Context
-    init(appContext: JSONDecodableProtocol.Context) {
-        self.appContext = appContext
-    }
-
-    func link(json: JSON, vehicleProfileFetchResult masterFetchResult: FetchResult) throws {
-        guard let radioJSON = json[keyPath] as? JSON else {
-            throw VehicleProfileMappingError.noRadio(-1)
+        if let radioJSON = profileJSON[#keyPath(Vehicleprofile.radio)] as? JSON {
+            let keypath = VehicleprofileRadio.primaryKeyPath(forType: .internal)
+            let drivenObjectID = radioJSON[keypath]
+            let radioMapperClazz = VehicleprofileRadioManagedObjectCreator.self
+            let radioJoint = Joint(theClass: VehicleprofileRadio.self, theID: drivenObjectID, thePredicate: nil)
+            let radioLookupBuilder = RootTagRuleBuilder(drivenJoint: radioJoint, linkedClazz: VehicleprofileRadio.self, drivenObjectID: drivenObjectID)
+            let radioCollection = try JSONCollection(element: radioJSON)
+            let composition = try radioLookupBuilder.build()
+            try appContext.mappingCoordinator?.linkItem(from: radioCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileRadio.self, managedObjectCreatorClass: radioMapperClazz, requestPredicateComposition: composition, appContext: appContext)
+        } else {
+            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noTurret(tank_id), details: nil), sender: self)
         }
-        let radioCollection = try JSONCollection(element: radioJSON)
-        let composition = try VehicleprofileRadioRequestPredicateComposer(json: radioJSON, linkedClazz: linkedClass).build()
-        try appContext.mappingCoordinator?.linkItem(from: radioCollection,
-                                                    masterFetchResult: masterFetchResult,
-                                                    linkedClazz: linkedClass,
-                                                    managedObjectCreatorClass: managedObjectCreator,
-                                                    requestPredicateComposition: composition,
-                                                    appContext: appContext)
+
+//        try RadioLinker(appContext: appContext).link(json: profileJSON, vehicleProfileFetchResult: vehicleProfileFetchResult)
     }
 }
 
