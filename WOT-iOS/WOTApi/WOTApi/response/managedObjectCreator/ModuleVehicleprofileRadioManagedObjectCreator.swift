@@ -20,10 +20,11 @@ public class ModuleVehicleprofileRadioManagedObjectCreator: ManagedObjectCreator
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
             return
         }
-        vehicleProfileRadio.radio_id = self.mappedObjectIdentifier as? NSDecimalNumber
+        vehicleProfileRadio.radio_id = mappedObjectIdentifier as? NSDecimalNumber
         module.radio = vehicleProfileRadio
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

@@ -5,8 +5,8 @@
 //  Created by Paul on 26.12.22.
 //
 
-import CoreData
 import ContextSDK
+import CoreData
 
 extension NSManagedObject: JSONDecodableProtocol {
     private enum NSManagedObjectJSONMappableError: Error, CustomStringConvertible {
@@ -25,7 +25,7 @@ extension NSManagedObject: JSONDecodableProtocol {
     public typealias Fields = DataFieldsKeys
 
     @objc
-    open func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    open func decode(using _: JSONManagedObjectMapProtocol, appContext _: JSONDecodableProtocol.Context) throws {
         throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

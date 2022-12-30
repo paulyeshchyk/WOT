@@ -6,15 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-extension VehicleprofileEngine {
+public extension VehicleprofileEngine {
     // MARK: - JSONDecodableProtocol
 
-    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONManagedObjectMapProtocol, appContext _: JSONDecodableProtocol.Context) throws {
         guard let engineJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        try self.decode(decoderContainer: engineJSON)
+        try decode(decoderContainer: engineJSON)
         //
     }
 }

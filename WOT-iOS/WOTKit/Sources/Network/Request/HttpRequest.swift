@@ -40,23 +40,23 @@ open class HttpRequest: Request {
 }
 
 extension HttpRequest: HttpDataReceiverDelegateProtocol {
-    public func didCancel(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, error: Error?) {
+    public func didCancel(urlRequest _: URLRequest, receiver _: HttpDataReceiverProtocol, error: Error?) {
         for listener in listeners {
             listener.request(self, canceledWith: error)
         }
     }
 
-    public func didStart(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol) {
+    public func didStart(urlRequest: URLRequest, receiver _: HttpDataReceiverProtocol) {
         for listener in listeners {
             listener.request(self, startedWith: urlRequest)
         }
     }
 
-    public func didEnd(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol, data: Data?, error: Error?) {
+    public func didEnd(urlRequest _: URLRequest, receiver _: HttpDataReceiverProtocol, data: Data?, error: Error?) {
         for listener in listeners {
             listener.request(self, finishedLoadData: data, error: error)
         }
-        self.httpDataReceiver?.delegate = nil
+        httpDataReceiver?.delegate = nil
     }
 }
 

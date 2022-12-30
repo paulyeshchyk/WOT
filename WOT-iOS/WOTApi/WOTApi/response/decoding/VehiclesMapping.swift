@@ -6,54 +6,54 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-extension Vehicles {
+public extension Vehicles {
     // MARK: - JSONDecodableProtocol
 
-    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
         guard let vehicleJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        try self.decode(decoderContainer: vehicleJSON)
+        try decode(decoderContainer: vehicleJSON)
         //
 
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
-            try self.modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: appContext)
+            try modulesTreeMapping(objectContext: map.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: appContext)
         } else {
-            appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.moduleTreeNotFound(self.tank_id)), sender: self)
+            appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
 
         // MARK: - DefaultProfile
 
         if let defaultProfileJSON = vehicleJSON[#keyPath(Vehicles.default_profile)] as? JSON {
-            let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+            let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
             let linker = DefaultProfileManagedObjectCreator.self
             let builder = DefaultProfileRequestPredicateComposer(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
-            appContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, managedObjectCreatorClass: linker, requestPredicateComposer: builder, appContext: appContext)
+            let composition = try builder.build()
+            try appContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, managedObjectCreatorClass: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
-            appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(self.tank_id)), sender: self)
+            appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
         }
-//
     }
 }
 
 extension Vehicles {
     private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicate, inContext: JSONDecodableProtocol.Context) throws {
-        if let set = self.modules_tree {
-            self.removeFromModules_tree(set)
+        if let set = modules_tree {
+            removeFromModules_tree(set)
         }
 
         guard let moduleTreeJSON = jSON else {
-            throw VehiclesJSONMappingError.passedInvalidModuleTreeJSON(self.tank_id)
+            throw VehiclesJSONMappingError.passedInvalidModuleTreeJSON(tank_id)
         }
 
         var parentObjectIDList = requestPredicate.parentObjectIDList
-        parentObjectIDList.append(self.objectID)
+        parentObjectIDList.append(objectID)
 
-        let vehiclesFetchResult = FetchResult(objectContext: objectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let vehiclesFetchResult = FetchResult(objectContext: objectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
 
         let modulesTreePredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
         modulesTreePredicate[.primary] = requestPredicate[.primary]?
@@ -61,11 +61,14 @@ extension Vehicles {
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
 
         for key in moduleTreeJSON.keys {
-            let json = moduleTreeJSON[key] as? JSON
-            let module_id = json?[#keyPath(ModulesTree.module_id)]
+            if let json = moduleTreeJSON[key] as? JSON {
+                let module_id = json[#keyPath(ModulesTree.module_id)]
 
-            let jsonCollection = try JSONCollection(element: json)
-            try submoduleMapping(objectContext: objectContext, json: jsonCollection, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, inContext: inContext)
+                let jsonCollection = try JSONCollection(element: json)
+                try submoduleMapping(objectContext: objectContext, json: jsonCollection, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, inContext: inContext)
+            } else {
+                inContext.logInspector?.logEvent(EventWarning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id), details: nil), sender: self)
+            }
         }
     }
 
@@ -96,7 +99,7 @@ public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
         switch self {
         case .notAJSON: return "[\(type(of: self))]: Not a JSON"
         case .passedInvalidModuleTreeJSON(let profileID): return "[\(type(of: self))]: Passed invalid module tree json for \(profileID ?? -1)"
-        case .passedInvalidSubModuleJSON:  return "[\(type(of: self))]: Passed invalid submodule json"
+        case .passedInvalidSubModuleJSON: return "[\(type(of: self))]: Passed invalid submodule json"
         case .passedInvalidModuleId: return "[\(type(of: self))]: Passed invalid module id"
         case .profileNotFound(let id): return "[\(type(of: self))]: Profile not defined in json for \(id ?? -1)"
         case .moduleTreeNotFound(let id): return "[\(type(of: self))]: Module tree not defined in json for \(id ?? -1)"

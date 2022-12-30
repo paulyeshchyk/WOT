@@ -34,7 +34,7 @@ public class JSONMap: JSONManagedObjectMapProtocol {
         guard let json = json else {
             throw JSONMapError.jsonIsNil
         }
-        self.jsonCollectable = json
+        jsonCollectable = json
         self.managedObjectContext = managedObjectContext
         self.predicate = predicate
     }

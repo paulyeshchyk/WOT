@@ -6,33 +6,33 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-extension Module {
+public extension Module {
     // MARK: - JSONDecodableProtocol
 
-    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
         guard let moduleJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        try self.decode(decoderContainer: moduleJSON)
+        try decode(decoderContainer: moduleJSON)
         //
 
         let parentsAsVehicles = map.predicate.parentObjectIDList
             .compactMap { map.managedObjectContext.object(byID: $0) as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
-        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
 
         guard !parents.isEmpty else {
             throw ModuleMappingError.noParentsFound
         }
         let tank_id = parents.first
 
-        guard let module_id = self.module_id else {
+        guard let module_id = module_id else {
             throw ModuleMappingError.moduleIdNotDefined
         }
 
-        let moduleType = VehicleModuleType.fromString(self.type)
+        let moduleType = VehicleModuleType.fromString(type)
         switch moduleType {
         case .vehicleChassis:
             let chassisCreator = ModuleVehicleprofileSuspensionManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: module_id)
@@ -69,15 +69,15 @@ extension Module: RequestManagerListenerProtocol {
     public var MD5: String { uuid.MD5 }
     public var uuid: UUID { UUID() }
 
-    public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+    public func requestManager(_: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, completionResultType _: WOTRequestManagerCompletionResultType) {
         //
     }
 
-    public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
+    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
         //
     }
 
-    public func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest: RequestProtocol, reason: RequestCancelReasonProtocol) {
+    public func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
         //
     }
 }

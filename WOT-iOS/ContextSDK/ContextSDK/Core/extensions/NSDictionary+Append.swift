@@ -10,9 +10,9 @@ import Foundation
 /*
  https://medium.com/ios-swift-development-notes/swiftbites-8-merging-dictionaries-in-swift-894c3e235fec
  */
-extension Dictionary {
+public extension Dictionary {
     /// Merge and return a new dictionary
-    public func merge(with: [Key: Value]) -> [Key: Value] {
+    func merge(with: [Key: Value]) -> [Key: Value] {
         var copy = self
         for (k, v) in with {
             // If a key is already present it will be overritten
@@ -22,7 +22,7 @@ extension Dictionary {
     }
 
     /// Merge in-place
-    public mutating func append(with: [Key: Value]) {
+    mutating func append(with: [Key: Value]) {
         for (k, v) in with {
             // If a key is already present it will be overritten
             self[k] = v
@@ -30,8 +30,8 @@ extension Dictionary {
     }
 }
 
-extension Dictionary {
-    public func debugOutput() -> String {
+public extension Dictionary {
+    func debugOutput() -> String {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: self, options: [.prettyPrinted])
             return String(data: jsonData, encoding: .utf8)!
@@ -41,13 +41,13 @@ extension Dictionary {
     }
 }
 
-extension NSDictionary {
+public extension NSDictionary {
     @objc
-    public func asURLQueryString() -> String {
+    func asURLQueryString() -> String {
         var result = [String]()
-        self.keyEnumerator()
+        keyEnumerator()
             .compactMap { $0 as? String }
-            .sorted(by: < )
+            .sorted(by: <)
             .forEach {
                 if let escapedValue = self.escapedValue(key: $0) {
                     result.append(String(format: "%@=%@", $0, escapedValue))
@@ -57,10 +57,10 @@ extension NSDictionary {
     }
 
     @objc
-    public func escapedValue(key: AnyHashable) -> String? {
-        guard let obj = self.object(forKey: key) else { return nil }
+    func escapedValue(key: AnyHashable) -> String? {
+        guard let obj = object(forKey: key) else { return nil }
 
-        if  let array = obj as? Array<URLEncodedProtocol> {
+        if let array = obj as? [URLEncodedProtocol] {
             return array.urlEncoded()
         }
 
@@ -75,10 +75,10 @@ extension NSDictionary {
     }
 }
 
-extension Dictionary where Key == AnyHashable {
-    public func asURLQueryString() -> String {
+public extension Dictionary where Key == AnyHashable {
+    func asURLQueryString() -> String {
         var result = [String]()
-        self.keys.compactMap { $0 as? String }.sorted(by: <).forEach {
+        keys.compactMap { $0 as? String }.sorted(by: <).forEach {
             if let escapedValue = self.escapedValue(key: $0) {
                 result.append(String(format: "%@=%@", $0, escapedValue))
             }
@@ -86,10 +86,10 @@ extension Dictionary where Key == AnyHashable {
         return result.joined(separator: "&")
     }
 
-    public func escapedValue(key: AnyHashable) -> String? {
+    func escapedValue(key: AnyHashable) -> String? {
         guard let obj = self[key] else { return nil }
 
-        if let array = obj as? Array<URLEncodedProtocol> {
+        if let array = obj as? [URLEncodedProtocol] {
             return array.urlEncoded()
         }
 

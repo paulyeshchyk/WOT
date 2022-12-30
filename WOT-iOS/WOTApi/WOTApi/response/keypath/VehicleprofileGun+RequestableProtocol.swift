@@ -6,15 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import ContextSDK
+import WOTKit
 
 // MARK: - KeypathProtocol
 
-extension VehicleprofileGun {
+public extension VehicleprofileGun {
     //
-    public typealias Fields = DataFieldsKeys
-    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
+    typealias Fields = DataFieldsKeys
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case move_down_arc
         case caliber
         case name
@@ -29,12 +29,12 @@ extension VehicleprofileGun {
     }
 
     @objc
-    override public class func dataFieldsKeypaths() -> [String] {
+    override class func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
-        //id was used when quering remote module
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
+        // id was used when quering remote module
         switch forType {
         case .external: return #keyPath(VehicleprofileGun.gun_id)
         case .internal: return #keyPath(VehicleprofileGun.tag)

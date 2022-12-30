@@ -6,10 +6,10 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-extension VehicleprofileAmmoPenetration {
+public extension VehicleprofileAmmoPenetration {
     // MARK: - JSONDecodableProtocol
 
-    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONManagedObjectMapProtocol, appContext _: JSONDecodableProtocol.Context) throws {
         guard let penetrationJSON = map.mappingData as? [Any] else {
             throw VehicleprofileAmmoPenetrationError.arrayIsExpected(map.mappingData ?? NSNull())
         }
@@ -18,9 +18,9 @@ extension VehicleprofileAmmoPenetration {
             throw VehicleprofileAmmoPenetrationError.arrayIsNotContainingThreeElements(penetrationJSON)
         }
         let intArray = NSDecimalNumberArray(array: penetrationJSON)
-        self.min_value = intArray.elements[0]
-        self.avg_value = intArray.elements[1]
-        self.max_value = intArray.elements[2]
+        min_value = intArray.elements[0]
+        avg_value = intArray.elements[1]
+        max_value = intArray.elements[2]
     }
 }
 

@@ -14,7 +14,7 @@ public class WGAPIResponseJSONAdapter: JSONAdapter {
         return WGAPIResponse.self
     }
 
-    public override func decodedObject(jsonDecoder: JSONDecoder, from: Data) throws -> JSON? {
+    override public func decodedObject(jsonDecoder: JSONDecoder, from: Data) throws -> JSON? {
         let result = try jsonDecoder.decode(WGAPIResponse.self, from: from)
         if let swiftError = result.swiftError {
             throw swiftError

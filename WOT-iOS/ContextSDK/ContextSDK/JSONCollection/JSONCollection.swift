@@ -6,7 +6,7 @@
 //
 
 public class JSONCollection: JSONCollectable {
-    public  enum CollectionType: Int, CustomStringConvertible {
+    public enum CollectionType: Int, CustomStringConvertible {
         case element
         case array
         case custom
@@ -42,28 +42,24 @@ public class JSONCollection: JSONCollectable {
     private var custom: Any?
     public private(set) var collectionType: JSONCollection.CollectionType
 
-    public init?(element object: JSON?) throws {
-        self.collectionType = .element
-        guard let element = object  else {
-            throw JSONCollectionError.nilElement
-        }
-
+    public init(element: JSON) throws {
+        collectionType = .element
         collection.append(element)
     }
 
-    public init?(array: [JSON]?) throws {
-        self.collectionType = .array
+    public init(array: [JSON]?) throws {
+        collectionType = .array
         try add(array: array)
     }
 
-    public init?(custom: Any?) {
-        self.collectionType = .custom
+    public init(custom: Any) {
+        collectionType = .custom
         self.custom = custom
     }
 
     public subscript(index: Int) -> JSON? {
         #warning("add throw for collectiontype==custom")
-        return self.collection[index]
+        return collection[index]
     }
 
     public func add(element object: JSON?) throws {

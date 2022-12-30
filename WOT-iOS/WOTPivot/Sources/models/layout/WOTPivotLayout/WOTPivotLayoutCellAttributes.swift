@@ -30,9 +30,9 @@ struct WOTPivotLayoutCellAttributes: WOTPivotLayoutCellAttributesProtocol {
         guard self.rect.intersects(rect) == true else {
             return nil
         }
-        let result = UICollectionViewLayoutAttributes(forCellWith: self.indexPath)
+        let result = UICollectionViewLayoutAttributes(forCellWith: indexPath)
         result.frame = self.rect
-        result.zIndex = self.zIndex
+        result.zIndex = zIndex
         return [result]
     }
 }

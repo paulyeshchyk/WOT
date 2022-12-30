@@ -23,6 +23,7 @@ public class VehicleprofileGunManagedObjectCreator: ManagedObjectCreator {
         vehicleProfile.gun = gun
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

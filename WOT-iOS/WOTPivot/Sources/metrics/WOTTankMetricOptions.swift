@@ -19,7 +19,7 @@ public class WOTTankMetricOptions: NSObject, OptionSet {
     @objc
     public var rawValue: Int
 
-    required public init(rawValue: Int) {
+    public required init(rawValue: Int) {
         self.rawValue = rawValue
         super.init()
     }
@@ -31,7 +31,7 @@ public class WOTTankMetricOptions: NSObject, OptionSet {
 
     @objc
     public func inverted(_ options: WOTTankMetricOptions) -> WOTTankMetricOptions {
-        if self.isInclude(options) {
+        if isInclude(options) {
             let result = (rawValue & ~options.rawValue)
             return WOTTankMetricOptions(rawValue: result)
         } else {

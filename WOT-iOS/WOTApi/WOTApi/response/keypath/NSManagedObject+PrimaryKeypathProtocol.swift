@@ -5,8 +5,8 @@
 //  Created by Paul on 26.12.22.
 //
 
-import CoreData
 import ContextSDK
+import CoreData
 
 extension PrimaryKeyType {
     var nsManagedObjectFormat: PredicateFormat {
@@ -32,7 +32,7 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
 }
 
 extension NSManagedObject: PrimaryKeypathProtocol {
-    open class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
+    open class func primaryKeyPath(forType _: PrimaryKeyType) -> String? {
         return nil
     }
 

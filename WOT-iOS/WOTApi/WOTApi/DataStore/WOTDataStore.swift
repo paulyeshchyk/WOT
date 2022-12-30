@@ -23,7 +23,7 @@ public final class WOTDataStore: CoreDataStore {
     }
 
     override public var sqliteURL: URL? {
-        guard var result = self.applicationDocumentsDirectoryURL else {
+        guard var result = applicationDocumentsDirectoryURL else {
             return nil
         }
         result.appendPathComponent("WOT_iOS.sqlite")

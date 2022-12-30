@@ -44,10 +44,10 @@ public class WGAPIResponse: WGAPIResponseProtocol {
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
-        self.status = try container.decodeIfPresent(WGAPIResponseStatus.self, forKey: .status)
-        self.meta = try container.decodeIfPresent(WGAPIResponseMeta.self, forKey: .meta)
-        self.data = try container.decodeIfPresent([String: Any].self, forKey: .data)
-        self.error = try container.decodeIfPresent([String: Any].self, forKey: .error)
+        status = try container.decodeIfPresent(WGAPIResponseStatus.self, forKey: .status)
+        meta = try container.decodeIfPresent(WGAPIResponseMeta.self, forKey: .meta)
+        data = try container.decodeIfPresent([String: Any].self, forKey: .data)
+        error = try container.decodeIfPresent([String: Any].self, forKey: .error)
     }
 
     // MARK: - Encodable
@@ -79,11 +79,11 @@ public struct WGAPIResponseMeta: Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
-        self.count = try container.decodeIfPresent(Int.self, forKey: .count)
-        self.page_total = try container.decodeIfPresent(Int.self, forKey: .page_total)
-        self.total = try container.decodeIfPresent(Int.self, forKey: .total)
-        self.limit = try container.decodeIfPresent(Int.self, forKey: .limit)
-        self.page = try container.decodeIfPresent(Int.self, forKey: .page)
+        count = try container.decodeIfPresent(Int.self, forKey: .count)
+        page_total = try container.decodeIfPresent(Int.self, forKey: .page_total)
+        total = try container.decodeIfPresent(Int.self, forKey: .total)
+        limit = try container.decodeIfPresent(Int.self, forKey: .limit)
+        page = try container.decodeIfPresent(Int.self, forKey: .page)
     }
 }
 
@@ -130,8 +130,8 @@ public class WGAPIError: Error, CustomStringConvertible, Codable {
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
-        self.code = try container.decodeIfPresent(Int.self, forKey: .code)
-        self.message = try container.decodeIfPresent(String.self, forKey: .message)
+        code = try container.decodeIfPresent(Int.self, forKey: .code)
+        message = try container.decodeIfPresent(String.self, forKey: .message)
     }
 
     // MARK: - Encodable

@@ -5,7 +5,7 @@
 //  Created by Paul on 30.12.22.
 //
 
-public typealias JSON = Swift.Dictionary<Swift.AnyHashable, Any>
+public typealias JSON = [Swift.AnyHashable: Any]
 
 @objc
 public protocol JSONCollectable {
@@ -13,5 +13,5 @@ public protocol JSONCollectable {
     func add(array: [JSON]?) throws
     func data() -> Any?
 
-    subscript(index: Int) -> JSON? { get }
+    subscript(_: Int) -> JSON? { get }
 }

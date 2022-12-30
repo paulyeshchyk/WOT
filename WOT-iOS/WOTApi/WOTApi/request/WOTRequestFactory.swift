@@ -48,7 +48,7 @@ public class WOTWEBRequestFactory: NSObject {
     }
 
     @objc
-    public static func fetchProfileData(profileTankId: Int, requestManager: RequestManagerProtocol, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchProfileData(profileTankId _: Int, requestManager _: RequestManagerProtocol, listener _: RequestManagerListenerProtocol) throws {
 //        let request: WOTRequestProtocol = try requestManager.createRequest(forRequestId: WebRequestType.tankProfile.rawValue)
 //        let groupId = "\(WGWebRequestGroups.vehicle_profile):\(profileTankId)"
 //

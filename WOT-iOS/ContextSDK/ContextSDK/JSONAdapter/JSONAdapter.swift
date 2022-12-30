@@ -22,17 +22,17 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     private let appContext: JSONAdapterProtocol.Context
     private let modelClazz: PrimaryKeypathProtocol.Type
     private let request: RequestProtocol
-    private func didFoundObject(_ fetchResult: FetchResultProtocol, error: Error?) {}
+    private func didFoundObject(_: FetchResultProtocol, error _: Error?) {}
 
     // MARK: NSObject -
 
     public var description: String { String(describing: type(of: request)) }
 
-    required public init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, managedObjectCreator: ManagedObjectCreatorProtocol) {
-        self.modelClazz = modelClass
+    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, managedObjectCreator: ManagedObjectCreatorProtocol) {
+        modelClazz = modelClass
         self.request = request
         self.managedObjectCreator = managedObjectCreator
-        self.appContext = context
+        appContext = context
         context.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
@@ -54,15 +54,15 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         }
     }
 
-    open func decodedObject(jsonDecoder: JSONDecoder, from: Data) throws -> JSON? {
+    open func decodedObject(jsonDecoder _: JSONDecoder, from _: Data) throws -> JSON? {
         fatalError("should be overriden")
     }
 }
 
-extension JSONAdapter {
-    public func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
+public extension JSONAdapter {
+    func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
         guard error == nil, let json = data else {
-            self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
             completion?(request, error)
             return
         }
@@ -81,7 +81,7 @@ extension JSONAdapter {
                 #warning("refactoring initial step")
                 let extraction = try managedObjectCreator.extract(json: json, key: key, forClazz: modelClazz, contextPredicate: contextPredicate)
 
-                try self.findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
+                try findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
                     guard let self = self, let fetchResult = fetchResult else {
                         dispatchGroup.leave()
                         return
@@ -183,8 +183,8 @@ public struct JSONExtraction {
     }
 }
 
-extension ManagedObjectCreatorProtocol {
-    public func extract(json: JSON, key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicate?) throws -> JSONExtraction {
+public extension ManagedObjectCreatorProtocol {
+    func extract(json: JSON, key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicate?) throws -> JSONExtraction {
         guard let json = json[key] as? JSON else {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }

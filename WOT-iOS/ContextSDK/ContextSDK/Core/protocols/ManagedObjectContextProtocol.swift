@@ -19,7 +19,7 @@ public protocol ManagedObjectContextProtocol: ManagedObjectContextLookupProtocol
 public protocol ManagedObjectContextLookupProtocol: AnyObject {
     func object(byID: AnyObject) -> AnyObject?
     func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
-    func execute(with block: @escaping (ManagedObjectContextProtocol) -> Void )
+    func execute(with block: @escaping (ManagedObjectContextProtocol) -> Void)
 }
 
 @objc

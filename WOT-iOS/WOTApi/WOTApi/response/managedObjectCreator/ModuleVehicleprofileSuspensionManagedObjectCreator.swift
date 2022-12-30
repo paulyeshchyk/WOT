@@ -20,10 +20,11 @@ public class ModuleVehicleprofileSuspensionManagedObjectCreator: ManagedObjectCr
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
             return
         }
-        vehicleProfileSuspension.suspension_id = self.mappedObjectIdentifier as? NSDecimalNumber
+        vehicleProfileSuspension.suspension_id = mappedObjectIdentifier as? NSDecimalNumber
         module.suspension = vehicleProfileSuspension
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

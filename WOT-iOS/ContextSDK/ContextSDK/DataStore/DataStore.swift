@@ -29,11 +29,11 @@ open class DataStore {
 
     public let appContext: Context
 
-    required public init(appContext: Context) {
+    public required init(appContext: Context) {
         self.appContext = appContext
     }
 
-    open func isClassValid(_ clazz: AnyObject) -> Bool {
+    open func isClassValid(_: AnyObject) -> Bool {
         fatalError("should be overriden")
     }
 
@@ -53,16 +53,16 @@ extension DataStore: DataStoreProtocol {
         fatalError("should be overriden")
     }
 
-    open func fetchResultController(for request: AnyObject, andContext: ManagedObjectContextProtocol) throws -> AnyObject {
+    open func fetchResultController(for _: AnyObject, andContext _: ManagedObjectContextProtocol) throws -> AnyObject {
         fatalError("should be overriden")
     }
 
-    open func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject {
+    open func mainContextFetchResultController(for _: AnyObject, sectionNameKeyPath _: String?, cacheName _: String?) throws -> AnyObject {
         fatalError("should be overriden")
     }
 
     open func perform(block: @escaping ObjectContextCompletion) {
-        self.workingContext().execute { context in
+        workingContext().execute { context in
             block(context)
         }
     }
@@ -74,7 +74,7 @@ extension DataStore: DataStoreProtocol {
     }
 
     public func stash(block: @escaping ThrowableCompletion) {
-        stash(objectContext: self.workingContext(), completion: block)
+        stash(objectContext: workingContext(), completion: block)
     }
 
     public func stash(objectContext cntx: ManagedObjectContextProtocol?, completion: @escaping ThrowableCompletion) {
@@ -108,7 +108,7 @@ extension DataStore: DataStoreProtocol {
 
         guard isClassValid(modelClass) else {
             let error = DataStoreError.notManagedObjectType(modelClass)
-            let result = self.emptyFetchResult()
+            let result = emptyFetchResult()
             completion(result, error)
             return
         }
@@ -136,7 +136,7 @@ extension DataStore: DataStoreProtocol {
         guard isClassValid(Clazz) else {
             let error = DataStoreError.clazzIsNotSupportable(String(describing: Clazz))
             appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
-            let result = self.emptyFetchResult()
+            let result = emptyFetchResult()
             completion(result, error)
             return
         }

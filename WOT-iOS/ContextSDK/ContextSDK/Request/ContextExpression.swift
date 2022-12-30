@@ -42,7 +42,7 @@ public class ContextExpression: NSObject {
     @objc
     public func foreignKey(byInsertingComponent: String) -> ContextExpression? {
         var newComponents = [byInsertingComponent]
-        newComponents.append(contentsOf: self.components)
+        newComponents.append(contentsOf: components)
         return ContextExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
 }

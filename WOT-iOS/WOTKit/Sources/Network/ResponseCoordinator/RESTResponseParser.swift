@@ -11,7 +11,7 @@ import ContextSDK
 open class RESTResponseParser: ResponseParserProtocol {
     private let appContext: Context
 
-    required public init(appContext: Context) {
+    public required init(appContext: Context) {
         self.appContext = appContext
     }
 

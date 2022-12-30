@@ -23,6 +23,7 @@ public class VehicleprofileAmmoDamageManagedObjectCreator: ManagedObjectCreator 
         ammo.damage = damage
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

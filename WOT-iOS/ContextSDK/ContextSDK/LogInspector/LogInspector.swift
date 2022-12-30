@@ -14,12 +14,12 @@ public class LogInspector: NSObject, LogInspectorProtocol {
     public convenience init(priorities: [LogEventType]?, output: [LOGOutputProtocol]?) {
         self.init()
         self.output = output
-        self.prioritiesToLog = priorities
+        prioritiesToLog = priorities
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
+    public func logEvent(_ event: LogEventProtocol?, sender _: Any?) {
         guard isLoggable(event) else { return }
-        guard  let event = event else { return }
+        guard let event = event else { return }
         event.eventType.print(event: event, inOutputs: output)
     }
 

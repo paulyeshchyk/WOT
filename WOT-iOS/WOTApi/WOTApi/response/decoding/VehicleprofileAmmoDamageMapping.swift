@@ -6,10 +6,10 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-extension VehicleprofileAmmoDamage {
+public extension VehicleprofileAmmoDamage {
     // MARK: - JSONDecodableProtocol
 
-    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONManagedObjectMapProtocol, appContext _: JSONDecodableProtocol.Context) throws {
         guard let ammoDamageJSON = map.mappingData as? [Any] else {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
@@ -18,9 +18,9 @@ extension VehicleprofileAmmoDamage {
             throw VehicleprofileAmmoDamageError.arrayIsNotContainingThreeElements
         }
         let intArray = NSDecimalNumberArray(array: ammoDamageJSON)
-        self.min_value = intArray.elements[0]
-        self.avg_value = intArray.elements[1]
-        self.max_value = intArray.elements[2]
+        min_value = intArray.elements[0]
+        avg_value = intArray.elements[1]
+        max_value = intArray.elements[2]
     }
 }
 

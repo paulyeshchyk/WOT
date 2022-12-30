@@ -40,7 +40,7 @@ public enum ObjCModuleType: Int {
     case tank
 
     var stringValue: String {
-        return ModuleType.value(for: self.rawValue).rawValue
+        return ModuleType.value(for: rawValue).rawValue
     }
 
     static func fromString(stringValue: String) -> ObjCModuleType {

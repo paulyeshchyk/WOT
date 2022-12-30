@@ -16,7 +16,7 @@ public protocol HttpDataReceiverProtocol: MD5Protocol {
     var delegate: HttpDataReceiverDelegateProtocol? { get set }
 
     init(context: Context, request: URLRequest)
-    func start(completion: @escaping (() -> Void) )
+    func start(completion: @escaping (() -> Void))
 
     @discardableResult
     func cancel() -> Bool

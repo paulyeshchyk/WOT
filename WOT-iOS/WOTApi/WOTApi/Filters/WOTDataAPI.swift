@@ -15,7 +15,7 @@ protocol WOTAPIDefaultsProtocol: NSObjectProtocol {}
 @objc
 public class WOTApiForeignKeys: NSObject, WOTAPIProtocol {
     @objc public static let vehicles_default_profile_hp: String = "vehicles.default_profile.hp"
-    @objc public static let vehicles_default_profile_weight: String =  "vehicles.default_profile.weight"
+    @objc public static let vehicles_default_profile_weight: String = "vehicles.default_profile.weight"
     @objc public static let vehicles_default_profile_gun_fire_rate: String = "vehicles.default_profile.gun.fire_rate"
 }
 
@@ -105,10 +105,10 @@ public class WOTApiFields: NSObject, WOTAPIProtocol {
 
 public class WOTApiTankType: NSObject, WOTAPIProtocol {
     @objc public static let at_spg: String = "AT-SPG"
-    @objc public static let spg  = "SPG"
-    @objc public static let lightTank  = "lightTank"
-    @objc public static let mediumTank  = "mediumTank"
-    @objc public static let heavyTank  = "heavyTank"
+    @objc public static let spg = "SPG"
+    @objc public static let lightTank = "lightTank"
+    @objc public static let mediumTank = "mediumTank"
+    @objc public static let heavyTank = "heavyTank"
 }
 
 public class WOTApiDefaults: NSObject, WOTAPIDefaultsProtocol {

@@ -9,14 +9,14 @@
 
 import CoreData
 
-extension ListSetting {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ListSetting> {
+public extension ListSetting {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<ListSetting> {
         return NSFetchRequest<ListSetting>(entityName: "ListSetting")
     }
 
-    @NSManaged public var ascending: NSNumber?
-    @NSManaged public var key: String?
-    @NSManaged public var orderBy: NSNumber?
-    @NSManaged public var type: String?
-    @NSManaged public var values: String?
+    @NSManaged var ascending: NSNumber?
+    @NSManaged var key: String?
+    @NSManaged var orderBy: NSNumber?
+    @NSManaged var type: String?
+    @NSManaged var values: String?
 }

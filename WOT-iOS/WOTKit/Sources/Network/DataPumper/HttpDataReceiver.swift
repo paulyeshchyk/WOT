@@ -29,7 +29,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
     private var urlDataTask: URLSessionDataTask?
 
     private let context: HttpDataReceiverProtocol.Context
-    required public init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
+    public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
     }

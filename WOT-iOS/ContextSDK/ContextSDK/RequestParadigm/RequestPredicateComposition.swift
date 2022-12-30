@@ -10,7 +10,7 @@ public class RequestPredicateComposition: NSObject, RequestPredicateCompositionP
     public let objectIdentifier: Any?
     public let requestPredicate: ContextPredicate
 
-    required public init(objectIdentifier: Any?, requestPredicate: ContextPredicate) {
+    public required init(objectIdentifier: Any?, requestPredicate: ContextPredicate) {
         self.objectIdentifier = objectIdentifier
         self.requestPredicate = requestPredicate
         super.init()

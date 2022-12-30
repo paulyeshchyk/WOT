@@ -38,6 +38,7 @@ public protocol RequestListenerProtocol: MD5Protocol {
 
 open class Request: RequestProtocol, CustomStringConvertible {
     // MARK: - MD5Protocol
+
     public var MD5: String { uuid.MD5 }
     public let uuid: UUID = UUID()
 
@@ -54,7 +55,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     }
 
     public required init(context: RequestProtocol.Context) {
-        self.appContext = context
+        appContext = context
         context.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
@@ -91,11 +92,12 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
 extension Request {
     // MARK: - StartableProtocol
-    open func cancel(byReason: RequestCancelReasonProtocol) throws {
+
+    open func cancel(byReason _: RequestCancelReasonProtocol) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 
-    open func start(completion: @escaping (() -> Void)) throws {
+    open func start(completion _: @escaping (() -> Void)) throws {
         throw RequestError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

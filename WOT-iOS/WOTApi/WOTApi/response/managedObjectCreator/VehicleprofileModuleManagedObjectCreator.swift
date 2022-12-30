@@ -23,6 +23,7 @@ public class VehicleprofileModuleManagedObjectCreator: ManagedObjectCreator {
         vehicleProfile.modules = modules
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

@@ -6,18 +6,18 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-extension ModulesTree {
+public extension ModulesTree {
     // MARK: - JSONDecodableProtocol
 
-    override public func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
         guard let moduleTreeJSON = map.mappingData as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        try self.decode(decoderContainer: moduleTreeJSON)
+        try decode(decoderContainer: moduleTreeJSON)
         //
 
-        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: self.objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - NextTanks
 
@@ -40,7 +40,7 @@ extension ModulesTree {
         let nextModuleManagedObjectCreator = ModulesTreeNextModulesManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
         if let nextModules = moduleTreeJSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject] {
             for nextModule in nextModules {
-                let nextModulePredicateComposer = NextModulesPredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: self.objectID)
+                let nextModulePredicateComposer = NextModulesPredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: nextModule, currentObjectID: objectID)
                 let nextModuleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
                     try appContext.requestManager?.fetchRemote(requestParadigm: nextModuleRequestParadigm, managedObjectCreator: nextModuleManagedObjectCreator, listener: self)
@@ -53,7 +53,7 @@ extension ModulesTree {
         // MARK: - CurrentModule
 
         let moduleJSONAdapter = ModulesTreeCurrentModuleManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        let modulePredicateComposer = CurrentModulePredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: self.objectID)
+        let modulePredicateComposer = CurrentModulePredicateComposer(requestPredicate: map.predicate, linkedClazz: Module.self, linkedObjectID: module_id, currentObjectID: objectID)
         let moduleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
         try appContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, managedObjectCreator: moduleJSONAdapter, listener: self)
     }
@@ -63,15 +63,15 @@ extension ModulesTree: RequestManagerListenerProtocol {
     public var MD5: String { uuid.MD5 }
     public var uuid: UUID { UUID() }
 
-    public func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
+    public func requestManager(_: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, completionResultType _: WOTRequestManagerCompletionResultType) {
         //
     }
 
-    public func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol) {
+    public func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
         //
     }
 
-    public func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest: RequestProtocol, reason: RequestCancelReasonProtocol) {
+    public func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
         //
     }
 }

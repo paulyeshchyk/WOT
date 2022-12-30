@@ -31,22 +31,22 @@ open class RequestManager: NSObject {
 
     public required init(appContext: Context) {
         self.appContext = appContext
-        self.grouppedRequestList  = RequestGrouppedRequestList(appContext: appContext)
-        self.grouppedListenerList = RequestGrouppedListenerList()
-        self.managedObjectCreatorList = ResponseManagedObjectCreatorList()
-        self.requestRegistrator = RequestRegistrator(appContext: appContext)
+        grouppedRequestList = RequestGrouppedRequestList(appContext: appContext)
+        grouppedListenerList = RequestGrouppedListenerList()
+        managedObjectCreatorList = ResponseManagedObjectCreatorList()
+        requestRegistrator = RequestRegistrator(appContext: appContext)
         super.init()
     }
 
     public func registerModelService(_ serviceClass: ModelServiceProtocol.Type) {
-        self.requestRegistrator.registerServiceClass(serviceClass)
+        requestRegistrator.registerServiceClass(serviceClass)
     }
 }
 
 extension RequestManager: RequestListenerProtocol {
     // MARK: - RequestListenerProtocol
 
-    public func request(_ request: RequestProtocol, startedWith urlRequest: URLRequest) {
+    public func request(_ request: RequestProtocol, startedWith _: URLRequest) {
         grouppedListenerList.didStartRequest(request, requestManager: self)
 
         appContext.logInspector?.logEvent(EventRequestListenerStart(request, listener: self), sender: self)
@@ -247,7 +247,7 @@ private class RequestGrouppedListenerList {
     func addListener(_ listener: RequestManagerListenerProtocol, forRequest: RequestProtocol) throws {
         let requestMD5 = forRequest.MD5
         if var listeners = grouppedListeners[requestMD5] {
-            let filtered = listeners.filter({ $0.MD5 == listener.MD5 })
+            let filtered = listeners.filter { $0.MD5 == listener.MD5 }
             guard filtered.isEmpty else {
                 throw GrouppedListenersError.dublicate
             }
@@ -288,12 +288,12 @@ private class RequestGrouppedRequestList {
     }
 
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
-        if self.grouppedRequests.keys.isEmpty {
+        if grouppedRequests.keys.isEmpty {
             appContext.logInspector?.logEvent(EventLongTermStart("\(String(describing: request))"), sender: self)
         }
 
         var requestsForID: [RequestProtocol] = []
-        if let available = self.grouppedRequests[groupId] {
+        if let available = grouppedRequests[groupId] {
             requestsForID.append(contentsOf: available)
         }
         let filtered = requestsForID.filter { $0.MD5 == request.MD5 }
@@ -302,12 +302,12 @@ private class RequestGrouppedRequestList {
         }
         request.addGroup(groupId)
         requestsForID.append(request)
-        self.grouppedRequests[groupId] = requestsForID
+        grouppedRequests[groupId] = requestsForID
     }
 
     typealias CancelCompletion = (RequestProtocol, RequestCancelReasonProtocol) -> Void
 
-    func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol, completion: @escaping CancelCompletion ) {
+    func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol, completion: @escaping CancelCompletion) {
         guard let requests = grouppedRequests[groupId]?.compactMap({ $0 }), !requests.isEmpty else {
             return
         }
@@ -323,7 +323,7 @@ private class RequestGrouppedRequestList {
 
     func removeRequest(_ request: RequestProtocol) {
         for group in request.availableInGroups {
-            if var grouppedRequests = self.grouppedRequests[group] {
+            if var grouppedRequests = grouppedRequests[group] {
                 let cnt = grouppedRequests.count
                 grouppedRequests.removeAll(where: { $0.MD5 == request.MD5 })
                 assert(grouppedRequests.count != cnt, "not removed")
@@ -334,7 +334,7 @@ private class RequestGrouppedRequestList {
                 }
             }
         }
-        if self.grouppedRequests.keys.isEmpty {
+        if grouppedRequests.keys.isEmpty {
             appContext.logInspector?.logEvent(EventLongTermEnd("\(String(describing: request))"), sender: self)
         }
     }

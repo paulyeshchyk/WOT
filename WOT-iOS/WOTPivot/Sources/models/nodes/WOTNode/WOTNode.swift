@@ -13,7 +13,7 @@ open class WOTNode: NSObject, WOTNodeProtocol {
     @objc
     public required init(name nameValue: String) {
         super.init()
-        self.name = nameValue
+        name = nameValue
     }
 
     override open var hash: Int {
@@ -22,10 +22,10 @@ open class WOTNode: NSObject, WOTNodeProtocol {
 
     open subscript(index: Int) -> WOTNodeProtocol {
         get {
-            return self.children[index]
+            return children[index]
         }
         set(newValue) {
-            self.children[index] = newValue
+            children[index] = newValue
             newValue.addToParent(self)
         }
     }
@@ -46,21 +46,21 @@ open class WOTNode: NSObject, WOTNodeProtocol {
         return String(format: "%@.%@", parent.fullName, self.name)
     }
 
-    open func value(key: AnyHashable) -> Any? {
+    open func value(key _: AnyHashable) -> Any? {
         return nil
     }
 
     open var index: Int = 0
 
-    open func copy(with zone: NSZone? = nil) -> Any {
-        let result = type(of: self).init(name: self.name)
-        result.isVisible = self.isVisible
+    open func copy(with _: NSZone? = nil) -> Any {
+        let result = type(of: self).init(name: name)
+        result.isVisible = isVisible
         return result
     }
 
     open func addChild(_ child: WOTNodeProtocol) {
         child.addToParent(self)
-        self.children.append(child)
+        children.append(child)
     }
 
     open func addChildArray(_ childArray: [WOTNodeProtocol]) {
@@ -70,8 +70,8 @@ open class WOTNode: NSObject, WOTNodeProtocol {
         }
     }
 
-    open func removeChild(_ child: WOTNodeProtocol, completion: @escaping WOTNodeProtocolCompletion ) {
-        guard let index = (self.children.firstIndex { $0 === child }) else {
+    open func removeChild(_ child: WOTNodeProtocol, completion: @escaping WOTNodeProtocolCompletion) {
+        guard let index = (children.firstIndex { $0 === child }) else {
             return
         }
         child.removeParent()
@@ -83,22 +83,22 @@ open class WOTNode: NSObject, WOTNodeProtocol {
     }
 
     open func removeChildren(completion: WOTNodeProtocolCompletion?) {
-        self.children.forEach { (child) in
+        children.forEach { (child) in
             child.removeChildren(completion: { (node) in
                 node.removeParent()
             })
         }
-        self.children.removeAll()
+        children.removeAll()
         completion?(self)
     }
 
     open func addToParent(_ newParent: WOTNodeProtocol) {
-        self.unlinkFromParent()
-        self.parent = newParent
+        unlinkFromParent()
+        parent = newParent
     }
 
     open func removeParent() {
-        guard let parent = self.parent else {
+        guard let parent = parent else {
             return
         }
         self.parent = nil
@@ -107,15 +107,15 @@ open class WOTNode: NSObject, WOTNodeProtocol {
     }
 
     open func unlinkChild(_ child: WOTNodeProtocol) {
-        guard let index = (self.children.firstIndex { $0 === child }) else {
+        guard let index = (children.firstIndex { $0 === child }) else {
             return
         }
         child.removeParent()
-        self.children.remove(at: index)
+        children.remove(at: index)
     }
 
     open func unlinkFromParent() {
-        guard let parent = self.parent else {
+        guard let parent = parent else {
             return
         }
         self.parent = nil

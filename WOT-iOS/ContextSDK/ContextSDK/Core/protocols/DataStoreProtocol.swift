@@ -22,7 +22,7 @@ public protocol DataStoreProtocol {
     @objc func perform(block: @escaping ObjectContextCompletion)
     @objc func perform(objectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion)
 
-    @objc func fetchResultController(for request: AnyObject, andContext: ManagedObjectContextProtocol) throws -> AnyObject //NSFetchedResultsController<NSFetchRequestResult>
+    @objc func fetchResultController(for request: AnyObject, andContext: ManagedObjectContextProtocol) throws -> AnyObject // NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject
 
     func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass clazz: AnyObject, predicate: ContextPredicate, completion: @escaping FetchResultCompletion)
@@ -34,6 +34,6 @@ public protocol DataStoreProtocol {
 
 extension DataStoreProtocol {
     func mainContextFetchResultController(for request: AnyObject) throws -> AnyObject {
-        return try self.mainContextFetchResultController(for: request, sectionNameKeyPath: nil, cacheName: nil)
+        return try mainContextFetchResultController(for: request, sectionNameKeyPath: nil, cacheName: nil)
     }
 }

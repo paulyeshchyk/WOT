@@ -21,13 +21,13 @@ struct JSONCodingKeys: CodingKey {
     }
 }
 
-extension KeyedDecodingContainer {
-    public func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
-        let container = try self.nestedContainer(keyedBy: JSONCodingKeys.self, forKey: key)
+public extension KeyedDecodingContainer {
+    func decode(_ type: [String: Any].Type, forKey key: K) throws -> [String: Any] {
+        let container = try nestedContainer(keyedBy: JSONCodingKeys.self, forKey: key)
         return try container.decode(type)
     }
 
-    public func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
+    func decodeIfPresent(_ type: [String: Any].Type, forKey key: K) throws -> [String: Any]? {
         guard contains(key) else {
             return nil
         }
@@ -37,12 +37,12 @@ extension KeyedDecodingContainer {
         return try decode(type, forKey: key)
     }
 
-    public func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
-        var container = try self.nestedUnkeyedContainer(forKey: key)
+    func decode(_ type: [Any].Type, forKey key: K) throws -> [Any] {
+        var container = try nestedUnkeyedContainer(forKey: key)
         return try container.decode(type)
     }
 
-    public func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
+    func decodeIfPresent(_ type: [Any].Type, forKey key: K) throws -> [Any]? {
         guard contains(key) else {
             return nil
         }
@@ -53,8 +53,8 @@ extension KeyedDecodingContainer {
     }
 
     // swiftlint:disable cyclomatic_complexity
-    public func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
-        var dictionary = Dictionary<String, Any>()
+    func decode(_: [String: Any].Type) throws -> [String: Any] {
+        var dictionary = [String: Any]()
 
         for key in allKeys {
             if let boolValue = try? decode(Bool.self, forKey: key) {
@@ -65,9 +65,9 @@ extension KeyedDecodingContainer {
                 dictionary[key.stringValue] = intValue
             } else if let doubleValue = try? decode(Double.self, forKey: key) {
                 dictionary[key.stringValue] = doubleValue
-            } else if let nestedDictionary = try? decode(Dictionary<String, Any>.self, forKey: key) {
+            } else if let nestedDictionary = try? decode([String: Any].self, forKey: key) {
                 dictionary[key.stringValue] = nestedDictionary
-            } else if let nestedArray = try? decode(Array<Any>.self, forKey: key) {
+            } else if let nestedArray = try? decode([Any].self, forKey: key) {
                 dictionary[key.stringValue] = nestedArray
             }
         }
@@ -77,9 +77,9 @@ extension KeyedDecodingContainer {
     // swiftlint:enable cyclomatic_complexity
 }
 
-extension UnkeyedDecodingContainer {
+public extension UnkeyedDecodingContainer {
     // swiftlint:disable cyclomatic_complexity
-    public mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
+    mutating func decode(_: [Any].Type) throws -> [Any] {
         var array: [Any] = []
         while isAtEnd == false {
             // See if the current value in the JSON array is `null` first and prevent infite recursion with nested arrays.
@@ -91,9 +91,9 @@ extension UnkeyedDecodingContainer {
                 array.append(value)
             } else if let value = try? decode(String.self) {
                 array.append(value)
-            } else if let nestedDictionary = try? decode(Dictionary<String, Any>.self) {
+            } else if let nestedDictionary = try? decode([String: Any].self) {
                 array.append(nestedDictionary)
-            } else if let nestedArray = try? decode(Array<Any>.self) {
+            } else if let nestedArray = try? decode([Any].self) {
                 array.append(nestedArray)
             }
         }
@@ -102,7 +102,7 @@ extension UnkeyedDecodingContainer {
 
     // swiftlint:enable cyclomatic_complexity
 
-    public mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
+    mutating func decode(_ type: [String: Any].Type) throws -> [String: Any] {
         let nestedContainer = try self.nestedContainer(keyedBy: JSONCodingKeys.self)
         return try nestedContainer.decode(type)
     }

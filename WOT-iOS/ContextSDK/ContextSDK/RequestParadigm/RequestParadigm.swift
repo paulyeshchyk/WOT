@@ -22,6 +22,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
     }
 
     // MARK: - MD5Protocol
+
     public var MD5: String { uuid.MD5 }
     public let uuid: UUID = UUID()
 
@@ -45,13 +46,13 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         }
     }
 
-    public init<T: RequestableProtocol>(modelClass: T.Type, requestPredicateComposer: RequestPredicateComposerProtocol, keypathPrefix: String?, httpQueryItemName: String) {
-        self.fieldsKeypaths = T.fieldsKeypaths()
+    public init<T: RequestableProtocol>(modelClass _: T.Type, requestPredicateComposer: RequestPredicateComposerProtocol, keypathPrefix: String?, httpQueryItemName: String) {
+        fieldsKeypaths = T.fieldsKeypaths()
         self.requestPredicateComposer = requestPredicateComposer
         self.keypathPrefix = keypathPrefix
         self.httpQueryItemName = httpQueryItemName
 
-        self.modelClass = T.self
+        modelClass = T.self
         typeDescription = String(describing: T.self)
     }
 

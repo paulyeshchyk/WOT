@@ -35,7 +35,7 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         self.init()
 
         if let compacted = idList?.compactMap({ $0 }) {
-            self.parentObjectIDList.append(contentsOf: compacted)
+            parentObjectIDList.append(contentsOf: compacted)
         }
     }
 

@@ -23,6 +23,7 @@ public class ModulesTreeCurrentModuleManagedObjectCreator: ManagedObjectCreator 
         modulesTree.currentModule = module
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

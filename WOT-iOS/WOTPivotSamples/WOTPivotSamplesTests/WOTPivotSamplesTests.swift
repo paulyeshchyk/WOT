@@ -6,8 +6,8 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
-import XCTest
 @testable import WOTPivotSamples
+import XCTest
 
 class WOTPivotSamplesTests: XCTestCase {
     override func setUp() {
@@ -25,7 +25,7 @@ class WOTPivotSamplesTests: XCTestCase {
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }

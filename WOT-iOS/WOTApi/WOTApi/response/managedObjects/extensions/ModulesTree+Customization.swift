@@ -8,14 +8,14 @@
 
 // MARK: - Customization
 
-extension ModulesTree {
+public extension ModulesTree {
     @objc
-    public func moduleType_() -> ObjCVehicleModuleType {
+    func moduleType_() -> ObjCVehicleModuleType {
         return .unknown
     }
 
     @objc
-    public func localImageURL() -> URL? {
+    func localImageURL() -> URL? {
         let type = moduleType_()
         let name = type.stringValue
         return Bundle.main.url(forResource: name, withExtension: "png")
@@ -66,7 +66,7 @@ public enum ObjCVehicleModuleType: Int {
     case tank
 
     var stringValue: String {
-        return VehicleModuleType.value(for: self.rawValue).rawValue
+        return VehicleModuleType.value(for: rawValue).rawValue
     }
 
     static func fromString(stringValue: String) -> ObjCVehicleModuleType {

@@ -36,8 +36,8 @@ public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNod
     }
 }
 
-extension CGContext {
-    public func drawNodeConnector(frame: CGRect, node: WOTNodeProtocol, model: WOTDataModelProtocol, layout: WOTTankConfigurationFlowCellLayoutProtocol) {
+public extension CGContext {
+    func drawNodeConnector(frame: CGRect, node: WOTNodeProtocol, model: WOTDataModelProtocol, layout: WOTTankConfigurationFlowCellLayoutProtocol) {
         let parentCenter = frame.center()
         node.children.forEach { (child) in
             if let childIndexPath = model.indexPath(forNode: child) {

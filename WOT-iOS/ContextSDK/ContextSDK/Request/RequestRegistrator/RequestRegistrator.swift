@@ -13,14 +13,14 @@ open class RequestRegistrator: RequestRegistratorProtocol {
     private var registeredModelService: [RequestIdType: ModelServiceProtocol.Type] = .init()
     private var registeredModelClass: [RequestIdType: PrimaryKeypathProtocol.Type] = .init()
 
-    required public init(appContext: Context) {
-        self.context = appContext
+    public required init(appContext: Context) {
+        context = appContext
     }
 }
 
 // MARK: - WOTRequestBindingProtocol
 
-extension RequestRegistrator {
+public extension RequestRegistrator {
     private enum RequestRegistratorError: Error, CustomStringConvertible {
         case requestNotFound
         case requestClassNotFound(requestType: String)
@@ -39,24 +39,24 @@ extension RequestRegistrator {
         }
     }
 
-    public func requestIds(modelServiceClass: AnyClass) -> [RequestIdType] {
+    func requestIds(modelServiceClass: AnyClass) -> [RequestIdType] {
         registeredModelService.keys.filter {
             modelServiceClass == registeredModelClass[$0]
         }
     }
 
-    public func registerServiceClass(_ modelServiceClass: ModelServiceProtocol.Type) {
+    func registerServiceClass(_ modelServiceClass: ModelServiceProtocol.Type) {
         let modelClass = modelServiceClass.modelClass()
         let registrationID = modelServiceClass.registrationID()
         registeredModelService[registrationID] = modelServiceClass
         registeredModelClass[registrationID] = modelClass
     }
 
-    public func requestClass(for requestId: RequestIdType) -> ModelServiceProtocol.Type? {
+    func requestClass(for requestId: RequestIdType) -> ModelServiceProtocol.Type? {
         return registeredModelService[requestId]
     }
 
-    public func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
+    func createRequest(forRequestId requestId: RequestIdType) throws -> RequestProtocol {
         guard let Clazz = requestClass(for: requestId) as? RequestProtocol.Type else {
             throw RequestRegistratorError.requestNotFound
         }

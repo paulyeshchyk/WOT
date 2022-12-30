@@ -36,9 +36,9 @@ open class ManagedObjectCreator: ManagedObjectCreatorProtocol {
         self.mappedObjectIdentifier = mappedObjectIdentifier
     }
 
-    open func onJSONExtraction(json: JSON) -> JSON? { return nil }
+    open func onJSONExtraction(json _: JSON) -> JSON? { return nil }
 
-    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
+    open func process(fetchResult _: FetchResultProtocol, appContext _: ManagedObjectCreatorContext, completion _: @escaping FetchResultCompletion) {
         fatalError("\(type(of: self))::\(#function)")
     }
 }
