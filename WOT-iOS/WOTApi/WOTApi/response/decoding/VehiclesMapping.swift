@@ -41,7 +41,7 @@ public extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicate, inContext: JSONDecodableProtocol.Context) throws {
+    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicateProtocol, inContext: JSONDecodableProtocol.Context) throws {
         if let set = modules_tree {
             removeFromModules_tree(set)
         }
@@ -72,7 +72,7 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, json: JSONCollectable?, module_id: Any?, requestPredicate: ContextPredicate, masterFetchResult: FetchResult, inContext: JSONDecodableProtocol.Context) throws {
+    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, json: JSONCollectable?, module_id: Any?, requestPredicate: ContextPredicateProtocol, masterFetchResult: FetchResult, inContext: JSONDecodableProtocol.Context) throws {
         guard let json = json else {
             throw VehiclesJSONMappingError.passedInvalidSubModuleJSON
         }

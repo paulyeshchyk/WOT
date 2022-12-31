@@ -8,8 +8,9 @@
 public struct Joint {
     let theClass: PrimaryKeypathProtocol.Type
     let theID: JSONValueType?
-    let thePredicate: ContextPredicate?
-    public init(theClass: PrimaryKeypathProtocol.Type, theID: JSONValueType?, thePredicate: ContextPredicate?) {
+    let thePredicate: ContextPredicateProtocol?
+
+    public init(theClass: PrimaryKeypathProtocol.Type, theID: JSONValueType?, thePredicate: ContextPredicateProtocol?) {
         self.theClass = theClass
         self.theID = theID
         self.thePredicate = thePredicate

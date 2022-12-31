@@ -7,11 +7,11 @@
 //
 
 open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
-    private var requestPredicate: ContextPredicate
+    private var requestPredicate: ContextPredicateProtocol
     private var foreignSelectKey: String
     private var parentObjectIDList: [AnyObject]?
 
-    public init(requestPredicate: ContextPredicate, foreignSelectKey: String, parentObjectIDList: [AnyObject]?) {
+    public init(requestPredicate: ContextPredicateProtocol, foreignSelectKey: String, parentObjectIDList: [AnyObject]?) {
         self.requestPredicate = requestPredicate
         self.foreignSelectKey = foreignSelectKey
         self.parentObjectIDList = parentObjectIDList

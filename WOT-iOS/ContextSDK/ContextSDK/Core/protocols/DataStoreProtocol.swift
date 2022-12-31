@@ -25,7 +25,7 @@ public protocol DataStoreProtocol {
     @objc func fetchResultController(for request: AnyObject, andContext: ManagedObjectContextProtocol) throws -> AnyObject // NSFetchedResultsController<NSFetchRequestResult>
     @objc func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject
 
-    func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass clazz: AnyObject, predicate: ContextPredicate, completion: @escaping FetchResultCompletion)
+    func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass clazz: AnyObject, predicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion)
     func fetchLocal(byModelClass clazz: PrimaryKeypathProtocol.Type, requestPredicate predicate: NSPredicate?, completion: @escaping FetchResultCompletion)
 
     func stash(objectContext: ManagedObjectContextProtocol?, completion: @escaping ThrowableCompletion)

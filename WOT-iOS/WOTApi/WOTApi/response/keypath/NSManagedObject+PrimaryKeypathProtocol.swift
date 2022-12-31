@@ -47,7 +47,7 @@ extension NSManagedObject: PrimaryKeypathProtocol {
         return NSPredicate(format: predicateTemplate, keyName, ident)
     }
 
-    open class func primaryKey(forType: PrimaryKeyType, andObject: JSONValueType?) -> ContextExpression? {
+    open class func primaryKey(forType: PrimaryKeyType, andObject: JSONValueType?) -> ContextExpressionProtocol? {
         guard let ident = andObject else { return nil }
         let keyName = primaryKeyPath(forType: forType)
         let predicateTemplate = predicateFormat(forType: forType).template

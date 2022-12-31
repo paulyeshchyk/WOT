@@ -14,7 +14,7 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
 
     var availableInGroups: [RequestIdType] { get }
     var listeners: [RequestListenerProtocol] { get }
-    var contextPredicate: ContextPredicate? { get set }
+    var contextPredicate: ContextPredicateProtocol? { get set }
     var arguments: RequestArgumentsProtocol? { get set }
 
     func addGroup(_ group: RequestIdType)
@@ -69,7 +69,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public var listeners = [RequestListenerProtocol]()
 
-    public var contextPredicate: ContextPredicate?
+    public var contextPredicate: ContextPredicateProtocol?
 
     public var arguments: RequestArgumentsProtocol?
 

@@ -5,27 +5,6 @@
 //  Created by Paul on 19.12.22.
 //
 
-public enum RequestExpressionType: String {
-    case primary
-    case secondary
-}
-
-public enum PredicateCompoundType: Int {
-    case or
-    case and
-}
-
-public protocol ContextPredicateProtocol {
-    var parentObjectIDList: [AnyObject] { get set }
-    func expressions(pkType: RequestExpressionType?) -> Set<ContextExpression>?
-    func compoundPredicate(_ byType: PredicateCompoundType) -> NSPredicate?
-}
-
-@objc
-public protocol ContextPredicateContainerProtocol {
-    var predicate: ContextPredicate { get }
-}
-
 public class ContextPredicate: NSObject, ContextPredicateProtocol {
     /// used only when Vehicles->VehiclesProfile->ModulesTree->Module performing query for chassis, turrets, radios, engines..
     /// parents identifier has been taken from a list
@@ -40,7 +19,8 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
     }
 
     override public var description: String {
-        guard let objects = expressions(pkType: nil), !objects.isEmpty else {
+        let objects = expressions()
+        guard !objects.isEmpty else {
             return "empty case"
         }
         var result = [String]()
@@ -50,14 +30,14 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         return result.joined(separator: ";")
     }
 
-    private var _expressions: [RequestExpressionType: Set<ContextExpression>] = .init()
+    private var _expressions: [ContextExpressionType: Set<ContextExpression>] = .init()
 
-    public subscript(pkType: RequestExpressionType) -> ContextExpression? {
+    public subscript(pkType: ContextExpressionType) -> ContextExpressionProtocol? {
         get {
             return _expressions[pkType]?.first
         }
         set {
-            guard let value = newValue else {
+            guard let value = newValue as? ContextExpression else {
                 assertionFailure("PKCase was not fully initialized")
                 return
             }
@@ -67,24 +47,26 @@ public class ContextPredicate: NSObject, ContextPredicateProtocol {
         }
     }
 
-    public func expressions(pkType: RequestExpressionType?) -> Set<ContextExpression>? {
-        if let pkType = pkType {
-            return _expressions[pkType]
-        } else {
-            var updatedSet = Set<ContextExpression>()
-            _expressions.keys.forEach {
-                _expressions[$0]?.forEach { expression in
-                    updatedSet.insert(expression)
-                }
+    public func expressions() -> Set<ContextExpression> {
+        var updatedSet = Set<ContextExpression>()
+        _expressions.keys.forEach {
+            _expressions[$0]?.forEach { expression in
+                updatedSet.insert(expression)
             }
-            return updatedSet
         }
+        return updatedSet
     }
 
-    public func compoundPredicate(_ byType: PredicateCompoundType) -> NSPredicate? {
-        let allPredicates = expressions(pkType: nil)?.compactMap { $0.predicate }
-        guard let predicates = allPredicates else { return nil }
-        switch byType {
+    public func expressions(byType: ContextExpressionType) -> Set<ContextExpression>? {
+        return _expressions[byType]
+    }
+
+    public func nspredicate(operator: ContextPredicateOperator) -> NSPredicate? {
+        let predicates = expressions().compactMap { $0.predicate }
+        guard !predicates.isEmpty else {
+            return nil
+        }
+        switch `operator` {
         case .and: return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         case .or: return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         }

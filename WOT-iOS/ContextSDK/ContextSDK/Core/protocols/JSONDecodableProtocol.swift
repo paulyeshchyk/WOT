@@ -28,9 +28,9 @@ public class JSONMap: JSONManagedObjectMapProtocol {
     }
 
     public let managedObjectContext: ManagedObjectContextProtocol
-    public let predicate: ContextPredicate
+    public let predicate: ContextPredicateProtocol
     private let jsonCollectable: JSONCollectable
-    public init(json: JSONCollectable?, managedObjectContext: ManagedObjectContextProtocol, predicate: ContextPredicate) throws {
+    public init(json: JSONCollectable?, managedObjectContext: ManagedObjectContextProtocol, predicate: ContextPredicateProtocol) throws {
         guard let json = json else {
             throw JSONMapError.jsonIsNil
         }

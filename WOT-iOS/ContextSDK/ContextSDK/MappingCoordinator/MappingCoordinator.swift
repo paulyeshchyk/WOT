@@ -19,7 +19,7 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
     //
 
-    public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, byModelClass: PrimaryKeypathProtocol.Type, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, appContext: MappingCoordinatorContext, completion: @escaping FetchResultCompletion) {
+    public func fetchLocalAndDecode(json: JSONCollectable, objectContext: ManagedObjectContextProtocol, byModelClass: PrimaryKeypathProtocol.Type, predicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectCreatorProtocol?, appContext: MappingCoordinatorContext, completion: @escaping FetchResultCompletion) {
         //
         appContext.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: byModelClass, predicate: predicate) { [weak self] fetchResult, error in
             if let error = error {
@@ -65,14 +65,14 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
 
 extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
     //
-    public func decode(using json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicate, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONDecodableProtocol.Context, completion: @escaping FetchResultCompletion) {
+    public func decode(using json: JSONCollectable?, fetchResult: FetchResultProtocol, predicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectCreatorProtocol?, inContext: JSONDecodableProtocol.Context, completion: @escaping FetchResultCompletion) {
         let localCompletion: ThrowableCompletion = { error in
             if let error = error {
                 completion(fetchResult, error)
             } else {
                 if let linker = managedObjectCreator {
                     let finalFetchResult = fetchResult.makeDublicate(inContext: fetchResult.managedObjectContext)
-                    finalFetchResult.predicate = predicate.compoundPredicate(.and)
+                    finalFetchResult.predicate = predicate.nspredicate(operator: .and)
                     linker.process(fetchResult: finalFetchResult, appContext: inContext, completion: completion)
                 } else {
                     completion(fetchResult, nil)

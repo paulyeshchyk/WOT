@@ -114,7 +114,7 @@ public extension JSONAdapter {
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSONCollectable?, predicate: ContextPredicate, callback externalCallback: @escaping FetchResultCompletion) throws {
+    private func findOrCreateObject(json: JSONCollectable?, predicate: ContextPredicateProtocol, callback externalCallback: @escaping FetchResultCompletion) throws {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             throw JSONAdapterError.notMainThread
@@ -168,7 +168,7 @@ public enum JSONAdapterError: Error, CustomStringConvertible {
 }
 
 public struct JSONExtraction {
-    public let requestPredicate: ContextPredicate
+    public let requestPredicate: ContextPredicateProtocol
     public let json: JSONCollectable?
 
     enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
@@ -184,7 +184,7 @@ public struct JSONExtraction {
 }
 
 public extension ManagedObjectCreatorProtocol {
-    func extract(json: JSON, key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicate?) throws -> JSONExtraction {
+    func extract(json: JSON, key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol?) throws -> JSONExtraction {
         guard let json = json[key] as? JSON else {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }

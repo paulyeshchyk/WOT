@@ -129,7 +129,7 @@ extension DataStore: DataStoreProtocol {
         }
     }
 
-    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: ContextPredicate, completion: @escaping FetchResultCompletion) {
+    public func fetchLocal(objectContext: ManagedObjectContextProtocol, byModelClass Clazz: AnyObject, predicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) {
         //
         appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: Clazz)) - \(String(describing: predicate))"), sender: self)
 
@@ -141,7 +141,7 @@ extension DataStore: DataStoreProtocol {
             return
         }
 
-        guard let predicate = predicate.compoundPredicate(.and) else {
+        guard let predicate = predicate.nspredicate(operator: .and) else {
             let error = DataStoreError.noKeysDefinedForClass(String(describing: Clazz))
             let fetchResult = FetchResult(objectContext: objectContext, objectID: nil, predicate: nil, fetchStatus: .fetched)
             completion(fetchResult, error)

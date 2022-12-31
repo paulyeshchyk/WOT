@@ -13,5 +13,5 @@ public protocol RequestPredicateComposerProtocol: AnyObject {
 @objc
 public protocol RequestPredicateCompositionProtocol: AnyObject {
     var objectIdentifier: Any? { get }
-    var requestPredicate: ContextPredicate { get }
+    var requestPredicate: ContextPredicateProtocol { get }
 }

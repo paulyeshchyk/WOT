@@ -37,10 +37,9 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
     private let httpQueryItemName: String
     private let fieldsKeypaths: [String]
     private let typeDescription: String
-    private var primaryKeys: [ContextExpression] {
+    private var primaryKeys: [ContextExpressionProtocol] {
         do {
-            let result = try buildContextPredicate().expressions(pkType: nil)?.compactMap { $0 }
-            return result ?? []
+            return try buildContextPredicate().expressions().compactMap { $0 }
         } catch {
             return []
         }
@@ -69,7 +68,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         return arguments
     }
 
-    public func buildContextPredicate() throws -> ContextPredicate {
+    public func buildContextPredicate() throws -> ContextPredicateProtocol {
         return try requestPredicateComposer.build().requestPredicate
     }
 
