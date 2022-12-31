@@ -26,7 +26,7 @@ public extension ModulesTree {
             for nextTank in nextTanks {
                 // parents was not used for next portion of tanks
                 let theLink = Joint(theClass: Vehicles.self, theID: nextTank, thePredicate: nil)
-                let nextTanksPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(drivenJoint: theLink, hostObjectIDList: nil)
+                let nextTanksPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(drivenJoint: theLink)
                 let nextTanksRequestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposer: nextTanksPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
                     try appContext.requestManager?.fetchRemote(requestParadigm: nextTanksRequestParadigm, managedObjectCreator: nextTanksManagedObjectCreator, listener: self)

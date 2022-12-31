@@ -9,7 +9,7 @@
 open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
     private let drivenJoint: Joint
 
-    public init(drivenJoint: Joint, linkedClazz _: PrimaryKeypathProtocol.Type, drivenObjectID _: Any?) {
+    public init(drivenJoint: Joint) {
         self.drivenJoint = drivenJoint
     }
 
@@ -18,14 +18,5 @@ open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
         lookupPredicate[.primary] = drivenJoint.theClass.primaryKey(forType: .internal, andObject: drivenJoint.theID)
 
         return RequestPredicateComposition(objectIdentifier: drivenJoint.theID, requestPredicate: lookupPredicate)
-    }
-}
-
-public enum RootTagRuleBuilderError: Error, CustomStringConvertible {
-    case primaryKeyPathNotFound(PrimaryKeypathProtocol.Type)
-    public var description: String {
-        switch self {
-        case .primaryKeyPathNotFound(let kp): return "[\(type(of: self))]: Primary keypath not found \(String(describing: kp))"
-        }
     }
 }
