@@ -10,6 +10,7 @@
 #import "WOTTankTreeNodeCollectionViewCell.h"
 #import "WOTTankConfigurationItemViewController.h"
 #import "WOTTankConfigurationModuleMapping+Factory.h"
+#import "UIBarButtonItem+EventBlock.h"
 #import <WOT-Swift.h>
 #import <WOTPivot/WOTPivot.h>
 #import <WOTApi/WOTApi.h>

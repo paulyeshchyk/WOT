@@ -7,27 +7,18 @@ inhibit_all_warnings!
 
 workspace 'WOT-iOS'
 
-def shared_pods
-    pod 'BlocksKit'
-end
-
 target 'WOT-iOS' do
     project 'WOT-iOS'
-    shared_pods
-    pod 'AFNetworking', '4.0.0'
-    pod 'MMDrawerController', '0.6.0'
+    pod 'BlocksKit'
     pod 'SDWebImage', '5.7.2'
     #pod 'Charts', :git => 
+    pod 'AFNetworking', '4.0.0'
+    pod 'MMDrawerController', '0.6.0'
     pod 'ASProgressPopUpView', '0.9'
     pod 'WYPopoverController', '0.1.8'
     pod 'SwiftGen', '6.1.0'
     pod 'SwiftLint', '0.39.2'
     pod 'SwiftFormat'
-end
-
-target 'WOTKit' do
-    project 'WOTKit/WOTKit.xcodeproj'
-    shared_pods
 end
 
 post_install do |pi|

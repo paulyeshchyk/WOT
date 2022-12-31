@@ -17,6 +17,7 @@
 #import "WOTTankDetailViewController.h"
 #import "WOTTankListSearchBar.h"
 #import <WOTKit/WOTKit.h>
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTTankListViewController () <NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 

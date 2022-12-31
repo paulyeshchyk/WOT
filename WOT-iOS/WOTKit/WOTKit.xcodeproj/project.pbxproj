@@ -15,7 +15,6 @@
 		1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */; };
 		1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E562245FE7E4007E5CA8 /* RequestManager.swift */; };
 		1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */; };
-		1D7E0695247D0460008CB848 /* WOTKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E0694247D045F008CB848 /* WOTKitTests.swift */; };
 		1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E506245FE541007E5CA8 /* WOTKit.framework */; };
 		1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */; };
 		DA0E8044295064EC00B44CC6 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0E8043295064EC00B44CC6 /* ContextSDK.framework */; platformFilter = ios; };
@@ -32,8 +31,6 @@
 		DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E865295352FE00C60F31 /* UIColor+HSB.m */; };
 		DA81E87A2953530000C60F31 /* UIImage+Resize.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E867295352FE00C60F31 /* UIImage+Resize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E868295352FE00C60F31 /* UIImage+Resize.m */; };
-		DA81E87C2953530000C60F31 /* UIBarButtonItem+EventBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E86A295352FE00C60F31 /* UIBarButtonItem+EventBlock.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E87D2953530000C60F31 /* UIBarButtonItem+EventBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E86B295352FE00C60F31 /* UIBarButtonItem+EventBlock.m */; };
 		DA81E87E2953530000C60F31 /* UIView+StretchingConstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E86D295352FF00C60F31 /* UIView+StretchingConstraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */; };
 		DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E870295352FF00C60F31 /* WOTProgressView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -45,7 +42,6 @@
 		DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E412959C01A00D39F0E /* CoreDataStore.swift */; };
 		DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */; };
 		DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */; };
-		E5892FAF56F4E5EE8B2FF883 /* Pods_WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +58,6 @@
 		0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
-		1D60E50A245FE541007E5CA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
 		1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
 		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
@@ -72,11 +67,7 @@
 		1D60E562245FE7E4007E5CA8 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		1D7E0692247D045F008CB848 /* WOTKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D7E0694247D045F008CB848 /* WOTKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTKitTests.swift; sourceTree = "<group>"; };
-		1D7E0696247D0460008CB848 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataAdapterCreator.swift; sourceTree = "<group>"; };
-		81FCA397B8AC1996D248ADE5 /* Pods-WOTKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTKit.debug.xcconfig"; path = "Target Support Files/Pods-WOTKit/Pods-WOTKit.debug.xcconfig"; sourceTree = "<group>"; };
-		83D702B700F7C58D88F5D178 /* Pods-WOTKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTKit.release.xcconfig"; path = "Target Support Files/Pods-WOTKit/Pods-WOTKit.release.xcconfig"; sourceTree = "<group>"; };
 		DA0E8043295064EC00B44CC6 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCatalogExtractor.swift; sourceTree = "<group>"; };
 		DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
@@ -91,8 +82,6 @@
 		DA81E865295352FE00C60F31 /* UIColor+HSB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HSB.m"; sourceTree = "<group>"; };
 		DA81E867295352FE00C60F31 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		DA81E868295352FE00C60F31 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		DA81E86A295352FE00C60F31 /* UIBarButtonItem+EventBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+EventBlock.h"; sourceTree = "<group>"; };
-		DA81E86B295352FE00C60F31 /* UIBarButtonItem+EventBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+EventBlock.m"; sourceTree = "<group>"; };
 		DA81E86D295352FF00C60F31 /* UIView+StretchingConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+StretchingConstraints.h"; sourceTree = "<group>"; };
 		DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
 		DA81E870295352FF00C60F31 /* WOTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProgressView.h; sourceTree = "<group>"; };
@@ -104,6 +93,8 @@
 		DA913E412959C01A00D39F0E /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ObjectContextProtocol.swift"; sourceTree = "<group>"; };
 		DAAD823A29505864001B0ACD /* PYContext.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PYContext.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DACDB124296050DD005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DACDB12629605129005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStoreEmptyFetchResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +104,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA0E8044295064EC00B44CC6 /* ContextSDK.framework in Frameworks */,
-				E5892FAF56F4E5EE8B2FF883 /* Pods_WOTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,11 +123,8 @@
 			children = (
 				1D60E508245FE541007E5CA8 /* source */,
 				1D60E5F324601DAB007E5CA8 /* tests */,
-				1D7E0693247D045F008CB848 /* WOTKitTests */,
 				1D60E507245FE541007E5CA8 /* Products */,
-				1D60E50A245FE541007E5CA8 /* Info.plist */,
 				DAAD823929505864001B0ACD /* Frameworks */,
-				521F7FD3D9266E841219BAA7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,6 +144,7 @@
 				1D60E557245FE7E4007E5CA8 /* Network */,
 				1D60E51C245FE7A7007E5CA8 /* basics */,
 				1D60E509245FE541007E5CA8 /* WOTKit.h */,
+				DACDB12629605129005BBA72 /* Info.plist */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -175,7 +163,6 @@
 				DA81E90F295370BA00C60F31 /* RomanNumber */,
 				DA81E85B295352FD00C60F31 /* NSBundle */,
 				DA81E85E295352FE00C60F31 /* UIBar */,
-				DA81E869295352FE00C60F31 /* UIBarButtonItem */,
 				DA81E863295352FE00C60F31 /* UIColor */,
 				DA81E866295352FE00C60F31 /* UIImage */,
 				DA81E86F295352FF00C60F31 /* UIProgressView */,
@@ -262,6 +249,7 @@
 		1D60E5F324601DAB007E5CA8 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				DACDB124296050DD005BBA72 /* Info.plist */,
 				1D60E5F424601DCA007E5CA8 /* CoreData */,
 			);
 			path = tests;
@@ -283,31 +271,12 @@
 			path = FetchController;
 			sourceTree = "<group>";
 		};
-		1D7E0693247D045F008CB848 /* WOTKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				1D7E0694247D045F008CB848 /* WOTKitTests.swift */,
-				1D7E0696247D0460008CB848 /* Info.plist */,
-			);
-			path = WOTKitTests;
-			sourceTree = "<group>";
-		};
 		1DFCC92C24714AAF005F580E /* ResponseAdapterCreator */ = {
 			isa = PBXGroup;
 			children = (
 				1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */,
 			);
 			path = ResponseAdapterCreator;
-			sourceTree = "<group>";
-		};
-		521F7FD3D9266E841219BAA7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				81FCA397B8AC1996D248ADE5 /* Pods-WOTKit.debug.xcconfig */,
-				83D702B700F7C58D88F5D178 /* Pods-WOTKit.release.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
 			sourceTree = "<group>";
 		};
 		DA81E7B729531EBF00C60F31 /* UIImage+Bundle */ = {
@@ -365,15 +334,6 @@
 			path = UIImage;
 			sourceTree = "<group>";
 		};
-		DA81E869295352FE00C60F31 /* UIBarButtonItem */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E86A295352FE00C60F31 /* UIBarButtonItem+EventBlock.h */,
-				DA81E86B295352FE00C60F31 /* UIBarButtonItem+EventBlock.m */,
-			);
-			path = UIBarButtonItem;
-			sourceTree = "<group>";
-		};
 		DA81E86C295352FF00C60F31 /* UIView */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,7 +383,6 @@
 				DA81E8742953530000C60F31 /* UINavigationBar+WOT.h in Headers */,
 				DA81E8762953530000C60F31 /* UIToolbar+WOT.h in Headers */,
 				DA81E8782953530000C60F31 /* UIColor+HSB.h in Headers */,
-				DA81E87C2953530000C60F31 /* UIBarButtonItem+EventBlock.h in Headers */,
 				DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */,
 				DA81E87E2953530000C60F31 /* UIView+StretchingConstraints.h in Headers */,
 				DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */,
@@ -442,7 +401,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D60E50E245FE541007E5CA8 /* Build configuration list for PBXNativeTarget "WOTKit" */;
 			buildPhases = (
-				541259EA4D3C3EA28A01F891 /* [CP] Check Pods Manifest.lock */,
 				1D60E501245FE541007E5CA8 /* Headers */,
 				1D60E502245FE541007E5CA8 /* Sources */,
 				1D60E503245FE541007E5CA8 /* Frameworks */,
@@ -551,28 +509,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# sourcekitten doc --module-name WOTKit -- -project WOTKit.xcodeproj >> WOTKit-sourcekitten.json\n";
 		};
-		541259EA4D3C3EA28A01F891 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WOTKit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		DA8A95A0295C38C200BFB62E /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -603,7 +539,6 @@
 				1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */,
 				DA81E8752953530000C60F31 /* UINavigationBar+WOT.m in Sources */,
-				DA81E87D2953530000C60F31 /* UIBarButtonItem+EventBlock.m in Sources */,
 				DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */,
 				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */,
@@ -628,7 +563,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D7E0695247D0460008CB848 /* WOTKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,7 +701,6 @@
 		};
 		1D60E50F245FE541007E5CA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81FCA397B8AC1996D248ADE5 /* Pods-WOTKit.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -775,7 +708,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -783,7 +716,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKit;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -794,7 +727,6 @@
 		};
 		1D60E510245FE541007E5CA8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83D702B700F7C58D88F5D178 /* Pods-WOTKit.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -802,7 +734,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -810,7 +742,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKit;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -822,14 +754,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = WOTKitTests/Info.plist;
+				INFOPLIST_FILE = tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -840,14 +772,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = WOTKitTests/Info.plist;
+				INFOPLIST_FILE = tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epam.sample.WOTKitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
