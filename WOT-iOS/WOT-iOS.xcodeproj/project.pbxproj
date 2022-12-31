@@ -233,7 +233,6 @@
 		DA81EA4A295449C400C60F31 /* WOTMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA48295449C300C60F31 /* WOTMenuItem.swift */; };
 		DA81EA4B295449C400C60F31 /* WOTMenuDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA49295449C300C60F31 /* WOTMenuDatasource.swift */; };
 		DA81EA4F29544A1F00C60F31 /* WOTNode+DetailGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA4D29544A1F00C60F31 /* WOTNode+DetailGrid.m */; };
-		DA81EA5129544D6000C60F31 /* WOTTankPivotViewControllerUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E9AD2954497D00C60F31 /* WOTTankPivotViewControllerUITest.swift */; };
 		DA81EA5A29544F4900C60F31 /* WOTLanguageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81EA5429544F4900C60F31 /* WOTLanguageSelectorViewController.xib */; };
 		DA81EA5B29544F4900C60F31 /* WOTLanguageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA5729544F4900C60F31 /* WOTLanguageTableViewCell.m */; };
 		DA81EA5C29544F4900C60F31 /* WOTLanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81EA5829544F4900C60F31 /* WOTLanguageTableViewCell.xib */; };
@@ -483,7 +482,6 @@
 		DA81E9AA2954497D00C60F31 /* WOTPivotRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTPivotRefreshControl.swift; sourceTree = "<group>"; };
 		DA81E9AB2954497D00C60F31 /* WOTTankPivot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivot.swift; sourceTree = "<group>"; };
 		DA81E9AC2954497D00C60F31 /* WOTTankPivotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTTankPivotViewController.xib; sourceTree = "<group>"; };
-		DA81E9AD2954497D00C60F31 /* WOTTankPivotViewControllerUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTankPivotViewControllerUITest.swift; sourceTree = "<group>"; };
 		DA81E9AF2954497D00C60F31 /* WOTTankPivotDataCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTTankPivotDataCollectionViewCell.h; sourceTree = "<group>"; };
 		DA81E9B02954497D00C60F31 /* WOTTankPivotDataCollectionViewCell~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "WOTTankPivotDataCollectionViewCell~ipad.xib"; sourceTree = "<group>"; };
 		DA81E9B12954497D00C60F31 /* WOTTankPivotDataCollectionViewCell~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "WOTTankPivotDataCollectionViewCell~iphone.xib"; sourceTree = "<group>"; };
@@ -1104,7 +1102,6 @@
 				DA81E9AA2954497D00C60F31 /* WOTPivotRefreshControl.swift */,
 				DA81E9AB2954497D00C60F31 /* WOTTankPivot.swift */,
 				DA81E9AC2954497D00C60F31 /* WOTTankPivotViewController.xib */,
-				DA81E9AD2954497D00C60F31 /* WOTTankPivotViewControllerUITest.swift */,
 				DA81E9AE2954497D00C60F31 /* cells */,
 				DA81E9BE2954497D00C60F31 /* WOTTankPivotViewController.swift */,
 			);
@@ -1622,7 +1619,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA81EA5129544D6000C60F31 /* WOTTankPivotViewControllerUITest.swift in Sources */,
 				1D60E604246025F5007E5CA8 /* WOT_iOSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1757,7 +1753,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.epam.sample.WOT-iOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1783,7 +1779,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.epam.sample.WOT-iOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -1922,7 +1918,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_MODULE_NAME = WOT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/Sources/WOT-iOS-Bridging-Header.h";
@@ -1949,7 +1945,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "py.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_MODULE_NAME = WOT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WOT-iOS/Sources/WOT-iOS-Bridging-Header.h";

@@ -1663,7 +1663,7 @@
 					"@loader_path/Frameworks",
 				);
 				PODS_ROOT = "${PROJECT_DIR}/Pods";
-				PRODUCT_BUNDLE_IDENTIFIER = PY.WOTApi;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1690,7 +1690,7 @@
 					"@loader_path/Frameworks",
 				);
 				PODS_ROOT = "${PROJECT_DIR}/Pods";
-				PRODUCT_BUNDLE_IDENTIFIER = PY.WOTApi;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1709,7 +1709,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = PY.WOTApiTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1727,7 +1727,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = PY.WOTApiTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
