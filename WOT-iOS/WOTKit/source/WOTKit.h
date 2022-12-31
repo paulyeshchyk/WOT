@@ -20,7 +20,6 @@ FOUNDATION_EXPORT const unsigned char WOTKitVersionString[];
 #import <WOTKit/UIColor+HSB.h>
 #import <WOTKit/UIToolbar+WOT.h>
 #import <WOTKit/UIView+StretchingConstraints.h>
-#import <WOTKit/UIBarButtonItem+EventBlock.h>
 #import <WOTKit/NSBundle+LanguageBundle.h>
 #import <WOTKit/UINavigationBar+WOT.h>
 #import <WOTKit/UIImage+Resize.h>

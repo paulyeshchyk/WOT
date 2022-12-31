@@ -8,6 +8,7 @@
 
 #import "WOTLanguageSelectorViewController.h"
 #import "WOTLanguageTableViewCell.h"
+#import "UIBarButtonItem+EventBlock.h"
 #import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
 

@@ -34,7 +34,6 @@
 		1D65F82D2216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8222216A7B8006A85E4 /* WOTPivotDimensionProtocol.swift */; };
 		1D65F82E2216A7B8006A85E4 /* WOTDimensionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D65F8232216A7B8006A85E4 /* WOTDimensionProtocol.swift */; };
 		1D79EDAF212439C2005FBA34 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79EDA5212439C2005FBA34 /* WOTPivot.framework */; };
-		1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */; };
 		1D79EDB6212439C2005FBA34 /* WOTPivot.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D79EDA8212439C2005FBA34 /* WOTPivot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DBF89A4240D0F08007DF8B2 /* WOTTankMetricOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */; };
 		1DBF89A6240D17C3007DF8B2 /* WOTMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */; };
@@ -113,7 +112,6 @@
 		1D79EDA5212439C2005FBA34 /* WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D79EDA8212439C2005FBA34 /* WOTPivot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTPivot.h; sourceTree = "<group>"; };
 		1D79EDAE212439C2005FBA34 /* WOTPivotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTPivotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotTests.swift; sourceTree = "<group>"; };
 		1D79EDB5212439C2005FBA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DBF89A3240D0F08007DF8B2 /* WOTTankMetricOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTTankMetricOptions.swift; sourceTree = "<group>"; };
 		1DBF89A5240D17C3007DF8B2 /* WOTMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTMetric.swift; sourceTree = "<group>"; };
@@ -149,6 +147,7 @@
 		1DE559562125586200576D41 /* WOTPivotNodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTPivotNodeIndexProtocol.swift; sourceTree = "<group>"; };
 		1DE5595821255AA100576D41 /* WOTTreeConnectorNodeIndexProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTTreeConnectorNodeIndexProtocol.swift; sourceTree = "<group>"; };
 		1DE5595A21255AE400576D41 /* WOTNodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTNodeIndexProtocol.swift; sourceTree = "<group>"; };
+		74A4E349C7806EA788CE5481 /* Pods_WOTPivot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOTPivot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0BC4B32952DC4F00E01D54 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DACDB128296052E1005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +216,7 @@
 			children = (
 				DA0BC4B32952DC4F00E01D54 /* ContextSDK.framework */,
 				1D60E5EF24601BAE007E5CA8 /* WOTKit.framework */,
+				74A4E349C7806EA788CE5481 /* Pods_WOTPivot.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -339,7 +339,6 @@
 		1D79EDB2212439C2005FBA34 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */,
 				1D79EDB5212439C2005FBA34 /* Info.plist */,
 			);
 			path = tests;
@@ -683,7 +682,6 @@
 			files = (
 				1D5D0AFE23CCB02B004B0314 /* WOTPivotMetadataPermutatorTest.swift in Sources */,
 				1DE558EA2124561500576D41 /* WOTNodeTest.swift in Sources */,
-				1D79EDB4212439C2005FBA34 /* WOTPivotTests.swift in Sources */,
 				1DE558E92124561000576D41 /* WOTPivotNodeTest.swift in Sources */,
 				1DE5590A2124572D00576D41 /* WOTDataModelTest.swift in Sources */,
 				1DE558E82124561000576D41 /* WOTPivotNodeExtensionTest.swift in Sources */,

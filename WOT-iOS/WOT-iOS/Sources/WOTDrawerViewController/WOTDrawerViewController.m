@@ -11,6 +11,7 @@
 #import <WOT-Swift.h>
 #import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
+#import "UIBarButtonItem+EventBlock.h"
 
 @interface WOTDrawerViewController ()<WOTMenuDelegate>
 

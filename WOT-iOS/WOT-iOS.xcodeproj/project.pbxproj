@@ -25,7 +25,6 @@
 		1D60E604246025F5007E5CA8 /* WOT_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E603246025F5007E5CA8 /* WOT_iOSTests.swift */; };
 		1D6E94E62100CA1200B65FC3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E94E52100CA1200B65FC3 /* .swiftlint.yml */; };
 		1D79EDD721243A97005FBA34 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79EDD621243A97005FBA34 /* WOTPivot.framework */; };
-		1D79EDD821243A97005FBA34 /* WOTPivot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79EDD621243A97005FBA34 /* WOTPivot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D9CAA362111A09700B6CA5A /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CAA352111A09600B6CA5A /* strings.swift */; };
 		1DB5FB542428AC1100413F41 /* .swiftformat.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1DB5FB532428AC1000413F41 /* .swiftformat.yml */; };
 		1DD646391B1C616A00B0EC76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646381B1C616A00B0EC76 /* main.m */; };
@@ -34,11 +33,8 @@
 		1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6471F1B20855400B0EC76 /* Localizable.strings */; };
 		4908876698A87AF77D91EAD5 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */; };
 		DA0BC4E42952E0EF00E01D54 /* WOTApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E32952E0EF00E01D54 /* WOTApi.framework */; };
-		DA0BC4E52952E0EF00E01D54 /* WOTApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E32952E0EF00E01D54 /* WOTApi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA0BC4E72952E0FA00E01D54 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E62952E0FA00E01D54 /* ContextSDK.framework */; };
-		DA0BC4E82952E0FA00E01D54 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E62952E0FA00E01D54 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA0BC4EA2952E10400E01D54 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E92952E10400E01D54 /* WOTKit.framework */; };
-		DA0BC4EB2952E10400E01D54 /* WOTKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0BC4E92952E10400E01D54 /* WOTKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA81E754295316E600C60F31 /* Activity Grid Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F5295316E600C60F31 /* Activity Grid Yellow.png */; };
 		DA81E755295316E600C60F31 /* Activity Grid Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F6295316E600C60F31 /* Activity Grid Yellow@2x.png */; };
 		DA81E756295316E600C60F31 /* Activity Grid Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA81E6F7295316E600C60F31 /* Activity Grid Yellow@3x.png */; };
@@ -237,6 +233,7 @@
 		DA81EA5B29544F4900C60F31 /* WOTLanguageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA5729544F4900C60F31 /* WOTLanguageTableViewCell.m */; };
 		DA81EA5C29544F4900C60F31 /* WOTLanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA81EA5829544F4900C60F31 /* WOTLanguageTableViewCell.xib */; };
 		DA81EA5D29544F4900C60F31 /* WOTLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81EA5929544F4900C60F31 /* WOTLanguageSelectorViewController.m */; };
+		DACDB12E29606020005BBA72 /* UIBarButtonItem+EventBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = DACDB12D29606020005BBA72 /* UIBarButtonItem+EventBlock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,23 +245,6 @@
 			remoteInfo = "WOT-iOS";
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		1D79EDD121243A61005FBA34 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				DA0BC4E52952E0EF00E01D54 /* WOTApi.framework in Embed Frameworks */,
-				1D79EDD821243A97005FBA34 /* WOTPivot.framework in Embed Frameworks */,
-				DA0BC4EB2952E10400E01D54 /* WOTKit.framework in Embed Frameworks */,
-				DA0BC4E82952E0FA00E01D54 /* ContextSDK.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D038A5F245ACE110015101F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -539,6 +519,8 @@
 		DA81EA5729544F4900C60F31 /* WOTLanguageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageTableViewCell.m; sourceTree = "<group>"; };
 		DA81EA5829544F4900C60F31 /* WOTLanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLanguageTableViewCell.xib; sourceTree = "<group>"; };
 		DA81EA5929544F4900C60F31 /* WOTLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLanguageSelectorViewController.m; sourceTree = "<group>"; };
+		DACDB12C29606020005BBA72 /* UIBarButtonItem+EventBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+EventBlock.h"; sourceTree = "<group>"; };
+		DACDB12D29606020005BBA72 /* UIBarButtonItem+EventBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+EventBlock.m"; sourceTree = "<group>"; };
 		DD7FC7D67026FCFED8C4266D /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0CAF57B0233E28A614AE83F /* Pods-WOT-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		EB9DC1F0F086677D49391180 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -614,6 +596,7 @@
 		1DD646351B1C616A00B0EC76 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DACDB12A29605FEC005BBA72 /* extensions */,
 				DA81EA5229544F4900C60F31 /* WOTLanguageSelectorViewController */,
 				DA81E95B2954497D00C60F31 /* WOTLoginViewController */,
 				DA81E9302954497C00C60F31 /* WOTMasterDetailViewController */,
@@ -1257,6 +1240,23 @@
 			path = cells;
 			sourceTree = "<group>";
 		};
+		DACDB12A29605FEC005BBA72 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DACDB12B2960601F005BBA72 /* UIBarButtonItem */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		DACDB12B2960601F005BBA72 /* UIBarButtonItem */ = {
+			isa = PBXGroup;
+			children = (
+				DACDB12C29606020005BBA72 /* UIBarButtonItem+EventBlock.h */,
+				DACDB12D29606020005BBA72 /* UIBarButtonItem+EventBlock.m */,
+			);
+			path = UIBarButtonItem;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1290,7 +1290,6 @@
 				1DD646301B1C616A00B0EC76 /* Frameworks */,
 				1DD646311B1C616A00B0EC76 /* Resources */,
 				6F239E739BE37D1FC91B0430 /* [CP] Embed Pods Frameworks */,
-				1D79EDD121243A61005FBA34 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1318,7 +1317,7 @@
 					};
 					1DD646321B1C616A00B0EC76 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = SM687X2N9M;
+						DevelopmentTeam = 23XH5386M3;
 						LastSwiftMigration = 1140;
 					};
 				};
@@ -1640,6 +1639,7 @@
 				DA81E9E42954497E00C60F31 /* WOTSplitViewController.swift in Sources */,
 				DA81E9F02954497E00C60F31 /* WOTTankTreeFetchController.swift in Sources */,
 				DA81EA4F29544A1F00C60F31 /* WOTNode+DetailGrid.m in Sources */,
+				DACDB12E29606020005BBA72 /* UIBarButtonItem+EventBlock.m in Sources */,
 				1D038A60245ACE110015101F /* AppDelegate.swift in Sources */,
 				DA81EA052954497E00C60F31 /* WOTTankListSettingNameChooserViewController.m in Sources */,
 				DA81E92F2954495400C60F31 /* WOTMenuViewController.swift in Sources */,
@@ -1911,9 +1911,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = SM687X2N9M;
+				DEVELOPMENT_TEAM = 23XH5386M3;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOT-iOS/Sources/WOTPrefixHeader.pch";
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "WOT-iOS/Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1926,7 +1925,6 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 5.0;
 				TOOLS_ROOT = "${SRCROOT}/Tools";
-				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Debug;
 		};
@@ -1938,9 +1936,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = SM687X2N9M;
+				DEVELOPMENT_TEAM = 23XH5386M3;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WOT-iOS/Sources/WOTPrefixHeader.pch";
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "WOT-iOS/Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1952,7 +1949,6 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 5.0;
 				TOOLS_ROOT = "${SRCROOT}/Tools";
-				USER_HEADER_SEARCH_PATHS = "$(DERIVED_FILE_DIR)";
 			};
 			name = Release;
 		};
