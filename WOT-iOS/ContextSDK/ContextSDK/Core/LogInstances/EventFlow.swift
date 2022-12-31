@@ -11,8 +11,8 @@ public class EventFlowStart: NSObject, LogEventProtocol {
     public private(set) var message: String
     public var name: String { return "FlowStart" }
 
-    public override init() {
-        self.message = "<unknown>"
+    override public init() {
+        message = "<unknown>"
         super.init()
     }
 
@@ -28,7 +28,7 @@ public class EventFlowEnd: NSObject, LogEventProtocol {
     public private(set) var message: String
     public var name: String { return "FlowEnd" }
 
-    public override init() {
+    override public init() {
         message = "<unknown>"
         super.init()
     }

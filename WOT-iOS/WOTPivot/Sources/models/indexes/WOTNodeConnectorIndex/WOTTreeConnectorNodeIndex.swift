@@ -17,15 +17,15 @@ class WOTTreeConnectorNodeIndex: NSObject, WOTTreeConnectorNodeIndexProtocol {
     }
 
     func add(node: WOTNodeProtocol, level: NodeLevelType) {
-        var itemsAtLevel = self.levelIndex[level] ?? [WOTNodeProtocol]()
+        var itemsAtLevel = levelIndex[level] ?? [WOTNodeProtocol]()
         itemsAtLevel.append(node)
-        self.levelIndex[level] = itemsAtLevel
+        levelIndex[level] = itemsAtLevel
 
-        self.add(nodes: node.children, level: level + 1)
+        add(nodes: node.children, level: level + 1)
     }
 
     func addNodeToIndex(_ node: WOTNodeProtocol) {
-        self.add(node: node, level: 0)
+        add(node: node, level: 0)
     }
 
     private lazy var levelIndex: WOTIndexTypeAlias = {
@@ -34,7 +34,7 @@ class WOTTreeConnectorNodeIndex: NSObject, WOTTreeConnectorNodeIndexProtocol {
 
     var width: Int {
         var result: Int = 0
-        self.levelIndex.keys.forEach { key in
+        levelIndex.keys.forEach { key in
             let arraycount = self.levelIndex[key]?.count ?? 0
             result = max(result, arraycount)
         }
@@ -42,31 +42,31 @@ class WOTTreeConnectorNodeIndex: NSObject, WOTTreeConnectorNodeIndexProtocol {
     }
 
     var levels: Int {
-        return self.levelIndex.keys.count
+        return levelIndex.keys.count
     }
 
     func reset() {
-        self.levelIndex.removeAll()
+        levelIndex.removeAll()
     }
 
     func itemsCount(atLevel: Int) -> Int {
-        return self.levelIndex[atLevel]?.count ?? 0
+        return levelIndex[atLevel]?.count ?? 0
     }
 
-    func set(itemsCount: Int, atLevel: NodeLevelType) {}
+    func set(itemsCount _: Int, atLevel _: NodeLevelType) {}
 
     func item(indexPath: NSIndexPath) -> WOTNodeProtocol? {
-        let itemsAtSection = self.levelIndex[indexPath.section]
+        let itemsAtSection = levelIndex[indexPath.section]
         return itemsAtSection?[indexPath.row]
     }
 
     func indexPath(forNode: WOTNodeProtocol) -> IndexPath? {
         var indexPath: [IndexPath] = []
-        self.levelIndex.keys.forEach { key in
+        levelIndex.keys.forEach { key in
             guard let section = self.levelIndex[key] else { return }
 
             section.forEach { node in
-                guard  node === forNode else { return }
+                guard node === forNode else { return }
                 guard let row = section.firstIndex(where: { $0 === forNode }) else { return }
 
                 indexPath.append(IndexPath(row: row, section: key))

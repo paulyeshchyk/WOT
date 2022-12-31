@@ -15,7 +15,7 @@ public class EventCDStashStart: LogEventProtocol {
         message = ""
     }
 
-    required public init?(context: ManagedObjectContextProtocol) {
+    public required init?(context: ManagedObjectContextProtocol) {
         message = "Context: \(context.name ?? "")"
     }
 
@@ -33,7 +33,7 @@ public class EventCDStashEnded: LogEventProtocol {
         message = ""
     }
 
-    required public init?(context: ManagedObjectContextProtocol, initiatedIn: Date) {
+    public required init?(context: ManagedObjectContextProtocol, initiatedIn: Date) {
         message = "Context: \(context.name ?? ""); elapsed: \(Date().elapsed(from: initiatedIn))"
     }
 

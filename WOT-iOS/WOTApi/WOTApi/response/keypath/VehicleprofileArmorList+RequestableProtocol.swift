@@ -8,7 +8,7 @@
 
 // MARK: - KeypathProtocol
 
-extension VehicleprofileArmorList {
+public extension VehicleprofileArmorList {
     //
-    public typealias Fields = DataFieldsKeys
+    typealias Fields = DataFieldsKeys
 }

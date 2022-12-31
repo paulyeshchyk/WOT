@@ -14,11 +14,11 @@ extension VehicleprofileEngine: JSONDecodingProtocol {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
         //
-        self.name = try container.decodeAnyIfPresent(String.self, forKey: .name)
-        self.tier = try container.decodeAnyIfPresent(Int.self, forKey: .tier)?.asDecimal
-        self.tag = try container.decodeAnyIfPresent(String.self, forKey: .tag)
-        self.fire_chance = try container.decodeAnyIfPresent(Double.self, forKey: .fire_chance)?.asDecimal
-        self.power = try container.decodeAnyIfPresent(Int.self, forKey: .power)?.asDecimal
-        self.weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
+        name = try container.decodeAnyIfPresent(String.self, forKey: .name)
+        tier = try container.decodeAnyIfPresent(Int.self, forKey: .tier)?.asDecimal
+        tag = try container.decodeAnyIfPresent(String.self, forKey: .tag)
+        fire_chance = try container.decodeAnyIfPresent(Double.self, forKey: .fire_chance)?.asDecimal
+        power = try container.decodeAnyIfPresent(Int.self, forKey: .power)?.asDecimal
+        weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
     }
 }

@@ -23,45 +23,45 @@ class WOTPivotSeparatorLayoutAttributes: UICollectionViewLayoutAttributes {
     private var topSeparatorFrame: CGRect {
         let customFrame = self.customFrame ?? CGRect.zero
         return CGRect(x: customFrame.minX,
-                      y: customFrame.minY - self.separatorWidth,
+                      y: customFrame.minY - separatorWidth,
                       width: customFrame.width,
-                      height: self.separatorWidth)
+                      height: separatorWidth)
     }
 
     private var leftSeparatorFrame: CGRect {
         let customFrame = self.customFrame ?? CGRect.zero
         return CGRect(x: customFrame.minX,
-                      y: customFrame.minY - self.separatorWidth,
-                      width: self.separatorWidth,
-                      height: customFrame.height + self.separatorWidth)
+                      y: customFrame.minY - separatorWidth,
+                      width: separatorWidth,
+                      height: customFrame.height + separatorWidth)
     }
 
     private var bottomSeparatorFrame: CGRect {
         let customFrame = self.customFrame ?? CGRect.zero
         return CGRect(x: customFrame.minX,
-                      y: customFrame.maxY - self.separatorWidth,
+                      y: customFrame.maxY - separatorWidth,
                       width: customFrame.width,
-                      height: self.separatorWidth)
+                      height: separatorWidth)
     }
 
     private var rightSeparatorFrame: CGRect {
         let customFrame = self.customFrame ?? CGRect.zero
         return CGRect(x: customFrame.maxX,
-                      y: customFrame.minY - self.separatorWidth,
-                      width: self.separatorWidth,
-                      height: customFrame.height + self.separatorWidth)
+                      y: customFrame.minY - separatorWidth,
+                      width: separatorWidth,
+                      height: customFrame.height + separatorWidth)
     }
 
     private func invalidateFrame(kind: WOTPivotSeparatorKind) {
         switch kind {
         case .top:
-            self.frame = self.topSeparatorFrame
+            frame = topSeparatorFrame
         case .left:
-            self.frame = self.leftSeparatorFrame
+            frame = leftSeparatorFrame
         case .bottom:
-            self.frame = self.bottomSeparatorFrame
+            frame = bottomSeparatorFrame
         case .right:
-            self.frame = self.rightSeparatorFrame
+            frame = rightSeparatorFrame
         }
     }
 

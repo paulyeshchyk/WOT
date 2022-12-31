@@ -15,7 +15,7 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
     }
 
     public var host: String {
-        return String(format: "%@.%@", WOTApiDefaults.applicationHost, "ru") //WOTApplicationDefaults.language()
+        return String(format: "%@.%@", WOTApiDefaults.applicationHost, "ru") // WOTApplicationDefaults.language()
     }
 
     public var scheme: String {
@@ -31,7 +31,7 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
         return currentArguments
     }
 
-    public override var description: String {
+    override public var description: String {
         return "\(host):\(currentArguments)"
     }
 }

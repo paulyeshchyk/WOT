@@ -18,21 +18,19 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var sessionManager: SessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
     public var dataStore: DataStoreProtocol?
-    public var requestRegistrator: RequestRegistratorProtocol?
     public var mappingCoordinator: MappingCoordinatorProtocol?
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
-    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        let logPriorities: [LogEventType]? = [.error, .requestManager, .warning, .flow]
+    public func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        let logPriorities: [LogEventType]? = [.error, .warning, .flow, .longTermOperation]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
         hostConfiguration = WOTHostConfiguration()
         sessionManager = SessionManager()
         dataStore = WOTDataStore(appContext: self)
-        requestRegistrator = WOTRequestRegistrator(appContext: self)
         mappingCoordinator = MappingCoordinator(appContext: self)
         responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
-        requestManager = RequestManager(appContext: self)
+        requestManager = WOTRequestManager(appContext: self)
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = WOTDrawerViewController.newDrawer()
@@ -42,4 +40,4 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     }
 }
 
-extension AppDelegate: RequestRegistratorContainerProtocol, ResponseDataAdapterCreatorContainerProtocol {}
+extension AppDelegate: ResponseDataAdapterCreatorContainerProtocol {}

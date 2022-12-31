@@ -23,10 +23,9 @@ public class VehicleprofileSuspensionManagedObjectCreator: ManagedObjectCreator 
         vehicleProfile.suspension = suspension
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class VehicleprofileSuspensionRequestPredicateComposer: RootTagRuleBuilder {}

@@ -23,10 +23,9 @@ public class ModulesTreeNextVehicleManagedObjectCreator: ManagedObjectCreator {
         modulesTree.addToNext_tanks(tank)
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class NextVehiclePredicateComposer: LinkedLocalAsPrimaryRuleBuilder {}

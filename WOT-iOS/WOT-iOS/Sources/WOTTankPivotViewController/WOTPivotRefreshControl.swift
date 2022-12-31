@@ -19,14 +19,14 @@ import Foundation
         self.init()
         let color = UIColor.red
         let attributes = [NSAttributedString.Key.foregroundColor: color]
-        self.addTarget(target, action: action, for: UIControl.Event.valueChanged)
-        self.tintColor = color
-        self.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: attributes)
+        addTarget(target, action: action, for: UIControl.Event.valueChanged)
+        tintColor = color
+        attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: attributes)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.subviews.forEach { (view) in
+        subviews.forEach { (view) in
             let frame = view.frame.offsetBy(dx: -contentOffset.x, dy: 0)
             view.bounds = frame
         }

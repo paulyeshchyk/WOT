@@ -9,12 +9,12 @@
 
 import CoreData
 
-extension VehicleprofileArmorList {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<VehicleprofileArmorList> {
+public extension VehicleprofileArmorList {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<VehicleprofileArmorList> {
         return NSFetchRequest<VehicleprofileArmorList>(entityName: "VehicleprofileArmorList")
     }
 
-    @NSManaged public var hull: VehicleprofileArmor?
-    @NSManaged public var turret: VehicleprofileArmor?
-    @NSManaged public var vehicleprofile: Vehicleprofile?
+    @NSManaged var hull: VehicleprofileArmor?
+    @NSManaged var turret: VehicleprofileArmor?
+    @NSManaged var vehicleprofile: Vehicleprofile?
 }

@@ -5,8 +5,8 @@
 //  Created by Paul on 19.12.22.
 //
 
-import XCTest
 @testable import ContextSDK
+import XCTest
 
 class Test_WOTRequestArguments: XCTestCase {
     func testInit() throws {
@@ -19,7 +19,7 @@ class Test_WOTRequestArguments: XCTestCase {
         let args = RequestArguments(["alpha": "beta"])
         let md5_1 = args.MD5
         let md5_2 = args.MD5
-        XCTAssert( md5_1 == md5_2)
+        XCTAssert(md5_1 == md5_2)
     }
 
     func testDescription() throws {

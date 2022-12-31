@@ -26,6 +26,7 @@ public class ModulesTreeManagedObjectCreator: ManagedObjectCreator {
         vehicles.addToModules_tree(modulesTree)
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
@@ -36,8 +37,8 @@ private struct ModuleLinkerUnexpectedClassError: Error, CustomStringConvertible 
     var expected: AnyClass
     var received: AnyObject?
     public init(extected exp: AnyClass, received rec: AnyObject?) {
-        self.expected = exp
-        self.received = rec
+        expected = exp
+        received = rec
     }
 
     var description: String {

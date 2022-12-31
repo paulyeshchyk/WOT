@@ -20,10 +20,11 @@ public class ModuleVehicleprofileEngineManagedObjectCreator: ManagedObjectCreato
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
             return
         }
-        vehicleProfileEngine.engine_id = self.mappedObjectIdentifier as? NSDecimalNumber
+        vehicleProfileEngine.engine_id = mappedObjectIdentifier as? NSDecimalNumber
         module.engine = vehicleProfileEngine
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

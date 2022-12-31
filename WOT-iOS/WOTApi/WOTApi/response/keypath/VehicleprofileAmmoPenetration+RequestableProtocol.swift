@@ -10,17 +10,17 @@ import WOTKit
 
 // MARK: - KeypathProtocol
 
-extension VehicleprofileAmmoPenetration {
+public extension VehicleprofileAmmoPenetration {
     //
-    public typealias Fields = DataFieldsKeys
-    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
+    typealias Fields = DataFieldsKeys
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case min_value
         case avg_value
         case max_valie
     }
 
     @objc
-    override public static func dataFieldsKeypaths() -> [String] {
+    override static func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 }

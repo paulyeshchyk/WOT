@@ -16,9 +16,8 @@ public class AssetCatalogExtractor: NSObject {
         let cacheDirectory = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         let url = cacheDirectory.appendingPathComponent("\(name).png")
         guard fileManager.fileExists(atPath: url.path) else {
-            guard
-                let image = UIImage(named: name, in: bundle, compatibleWith: nil),
-                let data = image.pngData()
+            guard let image = UIImage(named: name, in: bundle, compatibleWith: nil),
+                  let data = image.pngData()
             else { return nil }
 
             fileManager.createFile(atPath: url.path, contents: data, attributes: nil)
@@ -33,9 +32,8 @@ public class AssetCatalogExtractor: NSObject {
         let cacheDirectory = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         let url = cacheDirectory.appendingPathComponent("\(name).png")
         guard fileManager.fileExists(atPath: url.path) else {
-            guard
-                let image = UIImage(named: name, in: bundle, compatibleWith: nil),
-                let data = image.pngData()
+            guard let image = UIImage(named: name, in: bundle, compatibleWith: nil),
+                  let data = image.pngData()
             else { return nil }
 
             fileManager.createFile(atPath: url.path, contents: data, attributes: nil)

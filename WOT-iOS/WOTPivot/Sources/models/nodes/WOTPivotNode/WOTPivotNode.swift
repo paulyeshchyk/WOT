@@ -15,10 +15,10 @@ public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
     public var cellType: WOTPivotCellType { return .data }
     public var predicate: NSPredicate?
     public var fullPredicate: NSPredicate? {
-        guard let parentPredicate = (self.parent as? WOTPivotNodeProtocol)?.fullPredicate else {
-            return self.predicate
+        guard let parentPredicate = (parent as? WOTPivotNodeProtocol)?.fullPredicate else {
+            return predicate
         }
-        let selfPredicate = self.predicate
+        let selfPredicate = predicate
         let predicates: [NSPredicate] = [selfPredicate, parentPredicate].compactMap { $0 }
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
@@ -40,12 +40,12 @@ public class WOTPivotNode: WOTNode, WOTPivotNodeProtocol {
         super.init(name: nameValue)
     }
 
-    open override func copy(with zone: NSZone? = nil) -> Any {
-        let result = type(of: self).init(name: self.name)
-        result.predicate = self.predicate?.copy(with: zone) as? NSPredicate
-        result.dataColor = self.dataColor?.copy(with: zone) as? UIColor
-        result.isVisible = self.isVisible
-        result.imageURL = self.imageURL?.copy(with: zone) as? NSURL
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        let result = type(of: self).init(name: name)
+        result.predicate = predicate?.copy(with: zone) as? NSPredicate
+        result.dataColor = dataColor?.copy(with: zone) as? UIColor
+        result.isVisible = isVisible
+        result.imageURL = imageURL?.copy(with: zone) as? NSURL
         return result
     }
 }

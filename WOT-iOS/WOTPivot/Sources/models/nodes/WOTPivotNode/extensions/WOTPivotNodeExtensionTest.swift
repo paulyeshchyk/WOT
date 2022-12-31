@@ -6,8 +6,8 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import XCTest
 @testable import WOTPivot
+import XCTest
 
 class WOTPivotFilterNodeTest: XCTestCase {
     override func setUp() {
@@ -28,28 +28,28 @@ class WOTPivotFilterNodeTest: XCTestCase {
         let vertical = UInt8(PivotStickyType.vertical.rawValue)
         let raw = PivotStickyType.RawValue(horizontal | vertical)
 
-        XCTAssert(node.stickyType  == PivotStickyType(rawValue: raw))
+        XCTAssert(node.stickyType == PivotStickyType(rawValue: raw))
     }
 
     func testRow() {
         let node = WOTPivotRowNode(name: "node")
         XCTAssert(node.cellType == WOTPivotCellType.row)
-        XCTAssert(node.stickyType  == PivotStickyType.horizontal)
+        XCTAssert(node.stickyType == PivotStickyType.horizontal)
     }
 
     func testCol() {
         let node = WOTPivotColNode(name: "node")
         XCTAssert(node.cellType == WOTPivotCellType.column)
-        XCTAssert(node.stickyType  == PivotStickyType.vertical)
+        XCTAssert(node.stickyType == PivotStickyType.vertical)
     }
 
     func testDataGroupNode() {
         let node = WOTPivotDataGroupNode(name: "node")
-        XCTAssert(node.cellType  == .dataGroup)
+        XCTAssert(node.cellType == .dataGroup)
     }
 
     func testDataNode() {
         let node = WOTPivotDataNode(name: "node")
-        XCTAssert(node.cellType  == .data)
+        XCTAssert(node.cellType == .data)
     }
 }

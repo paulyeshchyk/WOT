@@ -39,25 +39,25 @@ public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTank
     }
 
     override open func initialLayoutAttributesForAppearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return self.layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
+        return layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
     }
 
     override open func finalLayoutAttributesForDisappearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return self.layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
+        return layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
     }
 
-    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    override open func shouldInvalidateLayout(forBoundsChange _: CGRect) -> Bool {
         return true
     }
 
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return self.layoutAttributes(in: rect)
+        return layoutAttributes(in: rect)
     }
 }
 
-extension WOTTankConfigurationFlowLayout {
-    public func layoutAttributes(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let collectionView = self.collectionView else {
+public extension WOTTankConfigurationFlowLayout {
+    func layoutAttributes(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        guard let collectionView = collectionView else {
             return nil
         }
 
@@ -73,7 +73,7 @@ extension WOTTankConfigurationFlowLayout {
         return result
     }
 
-    public func layoutAttribute(indexPath: IndexPath, rect: CGRect) -> UICollectionViewLayoutAttributes? {
+    func layoutAttribute(indexPath: IndexPath, rect _: CGRect) -> UICollectionViewLayoutAttributes? {
         let cellFrame = self.cellFrame(indexPath: indexPath)
         #warning("check condition")
 //        guard cellFrame.intersects(rect) else { return nil }
@@ -82,7 +82,7 @@ extension WOTTankConfigurationFlowLayout {
         return attrs
     }
 
-    public func cellFrame(indexPath: IndexPath) -> CGRect {
+    func cellFrame(indexPath: IndexPath) -> CGRect {
         let itemSize = self.itemSize
         let siblingChildrenCount = self.siblingChildrenCount(indexPath: indexPath)
         let x = itemSize.width * CGFloat(siblingChildrenCount)
@@ -91,34 +91,34 @@ extension WOTTankConfigurationFlowLayout {
     }
 }
 
-extension WOTTankConfigurationFlowLayout {
-    fileprivate struct Constants {
+private extension WOTTankConfigurationFlowLayout {
+    struct Constants {
         static let itemSize = CGSize(width: 44, height: 88)
     }
 
-    fileprivate func relativeSize() -> CGSize {
+    func relativeSize() -> CGSize {
         let width = CGFloat(self.width())
         let depth = CGFloat(self.depth())
         return CGSize(width: width, height: depth)
     }
 
-    fileprivate func depth() -> Int {
-        guard let block = self.depthCallback else {
+    func depth() -> Int {
+        guard let block = depthCallback else {
             return 0
         }
 
         return block()
     }
 
-    fileprivate func width() -> Int {
-        guard let block = self.widthCallback else {
+    func width() -> Int {
+        guard let block = widthCallback else {
             return 0
         }
         return block()
     }
 
-    fileprivate func siblingChildrenCount(indexPath: IndexPath) -> Int {
-        guard let block = self.layoutPreviousSiblingNodeChildrenCountCallback else {
+    func siblingChildrenCount(indexPath: IndexPath) -> Int {
+        guard let block = layoutPreviousSiblingNodeChildrenCountCallback else {
             return indexPath.row
         }
         return block(indexPath)

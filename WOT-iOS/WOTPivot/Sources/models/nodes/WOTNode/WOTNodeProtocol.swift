@@ -15,7 +15,7 @@ public typealias WOTNodeComparatorType = (_ node1: WOTNodeProtocol, _ node2: WOT
 public protocol WOTNodeProtocol: NSCopying, NSObjectProtocol {
     init(name nameValue: String)
 
-    subscript(index: Int) -> WOTNodeProtocol { get set }
+    subscript(_: Int) -> WOTNodeProtocol { get set }
 
     var name: String { get set }
 

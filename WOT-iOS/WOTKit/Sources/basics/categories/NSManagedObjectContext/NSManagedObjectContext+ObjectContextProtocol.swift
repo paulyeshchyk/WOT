@@ -6,13 +6,13 @@
 //  Copyright © 2022 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import ContextSDK
+import CoreData
 
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(with block: @escaping (ManagedObjectContextProtocol) -> Void ) {
+    public func execute(with block: @escaping (ManagedObjectContextProtocol) -> Void) {
         perform {
             block(self)
         }
@@ -28,7 +28,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 
     public func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
         guard let foundObject = try? lastObject(forType: forType, predicate: predicate, includeSubentities: false) else {
-            return self.insertNewObject(forType: forType)
+            return insertNewObject(forType: forType)
         }
         return foundObject
     }
@@ -97,7 +97,7 @@ extension NSManagedObjectContext {
         request.fetchLimit = 1
         request.predicate = predicate
         request.includesSubentities = includeSubentities
-        return try self.fetch(request).last as? ManagedObjectProtocol
+        return try fetch(request).last as? ManagedObjectProtocol
     }
 
     private func insertNewObject<T>(forType: AnyObject) -> T? {

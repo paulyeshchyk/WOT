@@ -5,9 +5,9 @@
 //  Created by Paul on 21.12.22.
 //
 
-import XCTest
-@testable import WOTApi
 @testable import ContextSDK
+@testable import WOTApi
+import XCTest
 
 private class tempLogInspectorContainer: LogInspectorContainerProtocol {
     var logInspector: LogInspectorProtocol?

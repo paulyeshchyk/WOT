@@ -15,7 +15,7 @@ public class EventCDFetchStart: LogEventProtocol {
         message = ""
     }
 
-    required public init?(_ text: String) {
+    public required init?(_ text: String) {
         message = text
     }
 
@@ -33,7 +33,7 @@ public class EventCDFetchEnded: LogEventProtocol {
         message = ""
     }
 
-    required public init?(_ text: String, initiatedIn: Date) {
+    public required init?(_ text: String, initiatedIn: Date) {
         message = "\(text); elapsed: \(Date().elapsed(from: initiatedIn))"
     }
 

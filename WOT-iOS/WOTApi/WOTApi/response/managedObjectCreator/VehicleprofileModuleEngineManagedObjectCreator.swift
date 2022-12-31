@@ -24,10 +24,9 @@ public class VehicleprofileModuleEngineManagedObjectCreator: ManagedObjectCreato
         module.vehicleEngine = vehicleProfileEngine
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class VehicleprofileModuleEnginePredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}

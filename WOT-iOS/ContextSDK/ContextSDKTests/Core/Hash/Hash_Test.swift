@@ -5,8 +5,8 @@
 //  Created by Paul on 22.12.22.
 //
 
-import XCTest
 @testable import ContextSDK
+import XCTest
 
 class MD5_Test: XCTestCase {
     func test_MD5() {

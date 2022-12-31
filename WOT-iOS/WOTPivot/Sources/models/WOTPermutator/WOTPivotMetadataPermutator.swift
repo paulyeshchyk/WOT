@@ -77,7 +77,7 @@ public struct WOTPivotMetadataPermutator {
 
     private func iterateLast(endpoints: [WOTPivotNodeProtocol]?, predicates: [NSPredicate?]) -> [WOTPivotNodeProtocol] {
         var resultArray = [WOTPivotNodeProtocol]()
-        endpoints?.forEach({ (endpoint) in
+        endpoints?.forEach { (endpoint) in
             var subpredicates = predicates.compactMap { $0 }
             if let predicate = endpoint.predicate {
                 subpredicates.append(predicate)
@@ -89,7 +89,7 @@ public struct WOTPivotMetadataPermutator {
                 result.predicate = predicate
                 resultArray.append(result)
             }
-        })
+        }
         return resultArray
     }
 }

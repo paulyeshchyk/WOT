@@ -9,13 +9,13 @@
 
 import CoreData
 
-extension VehicleprofileAmmoPenetration {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<VehicleprofileAmmoPenetration> {
+public extension VehicleprofileAmmoPenetration {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<VehicleprofileAmmoPenetration> {
         return NSFetchRequest<VehicleprofileAmmoPenetration>(entityName: "VehicleprofileAmmoPenetration")
     }
 
-    @NSManaged public var avg_value: NSDecimalNumber?
-    @NSManaged public var max_value: NSDecimalNumber?
-    @NSManaged public var min_value: NSDecimalNumber?
-    @NSManaged public var vehicleprofileAmmo: VehicleprofileAmmo?
+    @NSManaged var avg_value: NSDecimalNumber?
+    @NSManaged var max_value: NSDecimalNumber?
+    @NSManaged var min_value: NSDecimalNumber?
+    @NSManaged var vehicleprofileAmmo: VehicleprofileAmmo?
 }

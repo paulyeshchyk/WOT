@@ -6,15 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import ContextSDK
+import WOTKit
 
 // MARK: - KeypathProtocol
 
-extension Vehicles {
+public extension Vehicles {
     //
-    public typealias Fields = DataFieldsKeys
-    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
+    typealias Fields = DataFieldsKeys
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case is_gift
         case is_premium
         case is_premium_igr
@@ -30,7 +30,7 @@ extension Vehicles {
         case type
     }
 
-    public enum RelativeKeys: String, CodingKey, CaseIterable {
+    enum RelativeKeys: String, CodingKey, CaseIterable {
         case default_profile
         case engines
         case guns
@@ -41,16 +41,16 @@ extension Vehicles {
     }
 
     @objc
-    override public static func dataFieldsKeypaths() -> [String] {
+    override static func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
     @objc
-    override public static func relationFieldsKeypaths() -> [String] {
+    override static func relationFieldsKeypaths() -> [String] {
         return RelativeKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public static func primaryKeyPath(forType: PrimaryKeyType) -> String {
+    override static func primaryKeyPath(forType: PrimaryKeyType) -> String {
         switch forType {
         case .external: return #keyPath(Vehicles.tank_id)
         case .internal: return #keyPath(Vehicles.tank_id)

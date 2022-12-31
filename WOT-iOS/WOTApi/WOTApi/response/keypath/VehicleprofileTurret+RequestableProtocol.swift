@@ -6,15 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import ContextSDK
+import WOTKit
 
 // MARK: - KeypathProtocol
 
-extension VehicleprofileTurret {
+public extension VehicleprofileTurret {
     //
-    public typealias Fields = DataFieldsKeys
-    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
+    typealias Fields = DataFieldsKeys
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case traverse_left_arc
         case traverse_speed
         case weight
@@ -27,13 +27,13 @@ extension VehicleprofileTurret {
     }
 
     @objc
-    override public static func dataFieldsKeypaths() -> [String] {
+    override static func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
-        //id was used when quering remote module
-        //tag was used when parsed response vehicleprofile-suspension
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
+        // id was used when quering remote module
+        // tag was used when parsed response vehicleprofile-suspension
         switch forType {
         case .external: return #keyPath(VehicleprofileTurret.turret_id)
         case .internal: return #keyPath(VehicleprofileTurret.tag)

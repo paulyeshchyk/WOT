@@ -21,15 +21,14 @@ public class DefaultProfileManagedObjectCreator: ManagedObjectCreator {
             return
         }
         vehicles.default_profile = defaultProfile
-        vehicles.modules_tree?.compactMap({ $0 as? ModulesTree }).forEach {
+        vehicles.modules_tree?.compactMap { $0 as? ModulesTree }.forEach {
             $0.default_profile = defaultProfile
         }
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class DefaultProfileRequestPredicateComposer: ForeignAsPrimaryRuleBuilder {}

@@ -8,49 +8,36 @@
 
 import ContextSDK
 
-public class RESTResponseParser: ResponseParserProtocol {
+open class RESTResponseParser: ResponseParserProtocol {
     private let appContext: Context
-    private struct DataAdaptationPair {
-        let dataAdapter: ResponseAdapterProtocol
-        let data: Data?
-    }
 
-    required public init(appContext: Context) {
+    public required init(appContext: Context) {
         self.appContext = appContext
     }
-}
 
-// MARK: - ResponseParserProtocol
+    // MARK: - ResponseParserProtocol
 
-extension RESTResponseParser {
-    private enum RESTResponseParserError: Error, CustomStringConvertible {
-        case dataIsEmpty
-        case noAdapterFound
-        var description: String {
-            switch self {
-            case .dataIsEmpty: return "[\(type(of: self))]: Data is Empty"
-            case .noAdapterFound: return "[\(type(of: self))]: No Adapter found"
-            }
-        }
-    }
-
-    public func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, dataAdapters: [ResponseAdapterProtocol]?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
+    #warning("2b removed")
+    open func parseResponse(data parseData: Data?, forRequest request: RequestProtocol, dataAdapter: ResponseAdapterProtocol?, completion: @escaping ResponseAdapterProtocol.OnComplete) throws {
         guard let data = parseData else {
             throw RESTResponseParserError.dataIsEmpty
         }
 
-        guard let dataAdapters = dataAdapters, !dataAdapters.isEmpty else {
+        guard let dataAdapter = dataAdapter else {
             throw RESTResponseParserError.noAdapterFound
         }
 
-        var dataAdaptationPair = [DataAdaptationPair]()
-        dataAdapters.forEach { dataAdapter in
-            let pair = DataAdaptationPair(dataAdapter: dataAdapter, data: data)
-            dataAdaptationPair.append(pair)
-        }
+        dataAdapter.decode(data: data, fromRequest: request, completion: completion)
+    }
+}
 
-        dataAdaptationPair.forEach { pair in
-            pair.dataAdapter.decodeData(pair.data, forType: WGAPIResponse.self, fromRequest: request, completion: completion)
+private enum RESTResponseParserError: Error, CustomStringConvertible {
+    case dataIsEmpty
+    case noAdapterFound
+    var description: String {
+        switch self {
+        case .dataIsEmpty: return "[\(type(of: self))]: Data is Empty"
+        case .noAdapterFound: return "[\(type(of: self))]: No Adapter found"
         }
     }
 }

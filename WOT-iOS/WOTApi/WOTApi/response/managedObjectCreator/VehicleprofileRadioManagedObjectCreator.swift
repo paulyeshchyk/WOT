@@ -23,10 +23,9 @@ public class VehicleprofileRadioManagedObjectCreator: ManagedObjectCreator {
         vehicleProfile.radio = radio
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class VehicleprofileRadioRequestPredicateComposer: RootTagRuleBuilder {}

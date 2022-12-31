@@ -11,7 +11,7 @@ import WOTKit
 
 extension WOTDataFetchController: WOTDataFetchControllerProtocol {
     public func performFetch(nodeCreator: WOTNodeCreatorProtocol?) throws {
-        if let fetch = self.fetchResultController {
+        if let fetch = fetchResultController {
             try performFetch(with: fetch, nodeCreator: nodeCreator)
         } else {
             try initFetchController {[weak self] fetchResultController, error in
@@ -29,13 +29,13 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
         }
     }
 
-    private func performFetch(with: WOTDataFetchedResultController?, nodeCreator: WOTNodeCreatorProtocol? ) throws {
+    private func performFetch(with: WOTDataFetchedResultController?, nodeCreator _: WOTNodeCreatorProtocol?) throws {
         guard let fetchResultController = with else {
             throw DataFetchControllerError.noFetchResultControllerCreated
         }
         do {
             try fetchResultController.performFetch()
-            self.listener?.fetchPerformed(by: self)
+            listener?.fetchPerformed(by: self)
         } catch let error {
             self.listener?.fetchFailed(by: self, withError: error)
         }
@@ -50,7 +50,7 @@ extension WOTDataFetchController: WOTDataFetchControllerProtocol {
         return fetchResultController?.fetchedObjects
     }
 
-    open func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
+    open func fetchedNodes(byPredicates: [NSPredicate], nodeCreator _: WOTNodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
         let filtered = (fetchedObjects()?.filter { predicate.evaluate(with: $0) })

@@ -23,6 +23,7 @@ public class VehicleprofileAmmoPenetrationManagedObjectCreator: ManagedObjectCre
         ammo.penetration = penetration
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

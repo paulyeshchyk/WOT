@@ -9,7 +9,6 @@
 import ContextSDK
 import CoreData
 
-@objc
 open class CoreDataStore: DataStore {
     private enum CoreDataStoreError: Error, CustomStringConvertible {
         case contextIsNotNSManagedObjectContext
@@ -46,7 +45,7 @@ open class CoreDataStore: DataStore {
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
     }
 
-    override public func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject {
+    override public func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath _: String?, cacheName _: String?) throws -> AnyObject {
         guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
         }

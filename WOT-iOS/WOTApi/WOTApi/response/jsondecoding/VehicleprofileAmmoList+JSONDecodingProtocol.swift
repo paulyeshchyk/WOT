@@ -11,5 +11,5 @@ import ContextSDK
 // MARK: - JSONDecodingProtocol
 
 extension VehicleprofileAmmoList: JSONDecodingProtocol {
-    public func decodeWith(_ decoder: Decoder) throws {}
+    public func decodeWith(_: Decoder) throws {}
 }

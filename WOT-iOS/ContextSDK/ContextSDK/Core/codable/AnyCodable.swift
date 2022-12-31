@@ -79,7 +79,7 @@ extension AnyCodable: Codable {
             try object.encode(to: encoder)
         default:
             let context = EncodingError.Context(codingPath: container.codingPath, debugDescription: "AnyCodable value cannot be encoded")
-            throw EncodingError.invalidValue(self.value, context)
+            throw EncodingError.invalidValue(value, context)
         }
     }
 }
@@ -152,7 +152,7 @@ extension AnyCodable: CustomDebugStringConvertible {
 }
 
 extension AnyCodable: ExpressibleByNilLiteral, ExpressibleByBooleanLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral, ExpressibleByStringLiteral, ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral {
-    public init(nilLiteral: ()) {
+    public init(nilLiteral _: ()) {
         self.init(nil as Any?)
     }
 
@@ -181,7 +181,7 @@ extension AnyCodable: ExpressibleByNilLiteral, ExpressibleByBooleanLiteral, Expr
     }
 
     public init(dictionaryLiteral elements: (AnyHashable, Any)...) {
-        self.init(Dictionary<AnyHashable, Any>(elements, uniquingKeysWith: { first, _ in first }))
+        self.init([AnyHashable: Any](elements, uniquingKeysWith: { first, _ in first }))
     }
 }
 
