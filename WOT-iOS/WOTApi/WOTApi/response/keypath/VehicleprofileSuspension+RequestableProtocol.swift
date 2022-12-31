@@ -6,15 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import WOTKit
 import ContextSDK
+import WOTKit
 
 // MARK: - KeypathProtocol
 
-extension VehicleprofileSuspension {
+public extension VehicleprofileSuspension {
     //
-    public typealias Fields = DataFieldsKeys
-    public enum DataFieldsKeys: String, CodingKey, CaseIterable {
+    typealias Fields = DataFieldsKeys
+    enum DataFieldsKeys: String, CodingKey, CaseIterable {
         case tier
         case traverse_speed
         case name
@@ -25,13 +25,13 @@ extension VehicleprofileSuspension {
     }
 
     @objc
-    override public class func dataFieldsKeypaths() -> [String] {
+    override class func dataFieldsKeypaths() -> [String] {
         return DataFieldsKeys.allCases.compactMap { $0.rawValue }
     }
 
-    override public class func primaryKeyPath(forType: PrimaryKeyType) -> String? {
-        //id was used when quering remote module
-        //tag was used when parsed response vehicleprofile-suspension
+    override class func primaryKeyPath(forType: PrimaryKeyType) -> String {
+        // id was used when quering remote module
+        // tag was used when parsed response vehicleprofile-suspension
 
         switch forType {
         case .external: return #keyPath(VehicleprofileSuspension.suspension_id)

@@ -24,10 +24,9 @@ public class VehicleprofileModuleSuspensionManagedObjectCreator: ManagedObjectCr
         module.vehicleChassis = vehicleProfileSuspension
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class VehicleprofileModuleSuspensionPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}

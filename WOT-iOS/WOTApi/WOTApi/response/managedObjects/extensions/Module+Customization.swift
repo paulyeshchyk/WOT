@@ -40,21 +40,12 @@ public enum ObjCModuleType: Int {
     case tank
 
     var stringValue: String {
-        return ModuleType.value(for: self.rawValue).rawValue
+        return ModuleType.value(for: rawValue).rawValue
     }
 
     static func fromString(stringValue: String) -> ObjCModuleType {
         guard let index = ModuleType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)")}
         guard let result = ObjCModuleType(rawValue: index) else { fatalError("unknown moduleType")}
         return result
-    }
-}
-
-@objc
-public class ObjCModuleTypeConverter: NSObject {
-    @objc
-    @available(*, deprecated, message: "Use swift ModuleType")
-    public static func fromString(_ string: String) -> ObjCModuleType {
-        return ObjCModuleType.fromString(stringValue: string)
     }
 }

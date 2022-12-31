@@ -29,11 +29,11 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         predicate = predicat
         fetchStatus = status
 
-        self.managedObjectContext = cntx
+        managedObjectContext = cntx
         super.init()
     }
 
-    public func copy(with zone: NSZone? = nil) -> Any {
+    public func copy(with _: NSZone? = nil) -> Any {
         let copy = FetchResult(objectContext: managedObjectContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }

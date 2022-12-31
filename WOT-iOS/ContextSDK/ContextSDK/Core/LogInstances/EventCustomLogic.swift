@@ -15,7 +15,7 @@ public class EventCustomLogic: LogEventProtocol {
         message = ""
     }
 
-    required public init?(_ text: String) {
+    public required init?(_ text: String) {
         message = text
     }
 

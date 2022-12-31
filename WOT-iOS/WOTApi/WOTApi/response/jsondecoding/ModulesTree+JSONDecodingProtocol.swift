@@ -14,11 +14,11 @@ extension ModulesTree: JSONDecodingProtocol {
     public func decodeWith(_ decoder: Decoder) throws {
         let fieldsContainer = try decoder.container(keyedBy: Fields.self)
         //
-        self.name = try fieldsContainer.decodeIfPresent(String.self, forKey: .name)
-        self.type = try fieldsContainer.decodeIfPresent(String.self, forKey: .type)
-        self.module_id = try fieldsContainer.decodeIfPresent(Int.self, forKey: .module_id)?.asDecimal
-        self.price_credit = try fieldsContainer.decodeIfPresent(Int.self, forKey: .price_credit)?.asDecimal
-        self.price_xp = try fieldsContainer.decodeIfPresent(Int.self, forKey: .price_xp)?.asDecimal
-        self.is_default = try fieldsContainer.decodeIfPresent(Bool.self, forKey: .is_default)?.asDecimal
+        name = try fieldsContainer.decodeIfPresent(String.self, forKey: .name)
+        type = try fieldsContainer.decodeIfPresent(String.self, forKey: .type)
+        module_id = try fieldsContainer.decodeIfPresent(Int.self, forKey: .module_id)?.asDecimal
+        price_credit = try fieldsContainer.decodeIfPresent(Int.self, forKey: .price_credit)?.asDecimal
+        price_xp = try fieldsContainer.decodeIfPresent(Int.self, forKey: .price_xp)?.asDecimal
+        is_default = try fieldsContainer.decodeIfPresent(Bool.self, forKey: .is_default)?.asDecimal
     }
 }

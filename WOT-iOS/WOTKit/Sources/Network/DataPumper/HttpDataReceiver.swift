@@ -29,7 +29,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
     private var urlDataTask: URLSessionDataTask?
 
     private let context: HttpDataReceiverProtocol.Context
-    required public init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
+    public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
     }
@@ -49,7 +49,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         return result
     }
 
-    public func start() {
+    public func start(completion: @escaping (() -> Void)) {
         urlDataTask?.cancelDataTask()
         urlDataTask = nil
 
@@ -57,13 +57,16 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
             delegate?.didEnd(urlRequest: request, receiver: self, data: nil, error: WOTWebDataPumperError.urlNotDefined)
             return
         }
-        urlDataTask = createDataTask(url: url)
+        urlDataTask = createDataTask(url: url, completion: completion)
         delegate?.didStart(urlRequest: request, receiver: self)
         urlDataTask?.resume()
     }
 
-    private func createDataTask(url: URL) -> URLSessionDataTask {
+    private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            //
+            completion()
+            //
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.delegate?.didEnd(urlRequest: self.request, receiver: self, data: data, error: error)

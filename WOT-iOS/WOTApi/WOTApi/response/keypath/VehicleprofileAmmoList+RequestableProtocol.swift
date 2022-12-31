@@ -10,7 +10,7 @@ import WOTKit
 
 // MARK: - KeypathProtocol
 
-extension VehicleprofileAmmoList {
+public extension VehicleprofileAmmoList {
     //
-    public typealias Fields = DataFieldsKeys
+    typealias Fields = DataFieldsKeys
 }

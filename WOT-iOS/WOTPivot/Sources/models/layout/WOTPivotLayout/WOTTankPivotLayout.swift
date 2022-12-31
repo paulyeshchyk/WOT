@@ -17,7 +17,7 @@ public protocol WOTTankPivotLayoutProtocol {
 
 public class WOTColoredLayout: UICollectionViewFlowLayout {
     func layoutAttributesForDecorationView(ofKind elementKind: WOTPivotSeparatorKind, at indexPath: IndexPath, pivotAttributes: WOTPivotLayoutCellAttributesProtocol) -> WOTPivotSeparatorLayoutAttributes? {
-        guard let layoutAttributes = self.layoutAttributesForDecorationView(ofKind: elementKind.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes else {
+        guard let layoutAttributes = layoutAttributesForDecorationView(ofKind: elementKind.rawValue, at: indexPath) as? WOTPivotSeparatorLayoutAttributes else {
             return nil
         }
         layoutAttributes.kind = elementKind
@@ -66,20 +66,20 @@ public class WOTPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     }
 
     override open func initialLayoutAttributesForAppearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return self.layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
+        return layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
     }
 
     override open func finalLayoutAttributesForDisappearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return self.layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
+        return layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
     }
 
-    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    override open func shouldInvalidateLayout(forBoundsChange _: CGRect) -> Bool {
         return true
     }
 
     func sepatorAttributes(for collectionView: UICollectionView, at indexPath: IndexPath, in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
         let contentOffset = collectionView.contentOffset
-        let pivotAttributes = self.pivotLayoutCellAttributes(indexPath: indexPath, contentOffset: contentOffset)
+        let pivotAttributes = pivotLayoutCellAttributes(indexPath: indexPath, contentOffset: contentOffset)
         guard let cellAttributes = pivotAttributes.collectionViewLayoutAttributes(forRect: rect) else {
             return []
         }
@@ -96,14 +96,14 @@ public class WOTPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
 
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var result = [UICollectionViewLayoutAttributes]()
-        guard let collectionView = self.collectionView else {
+        guard let collectionView = collectionView else {
             return result
         }
 
         for section in 0 ..< collectionView.numberOfSections {
             for row in 0 ..< collectionView.numberOfItems(inSection: section) {
                 let indexPath = IndexPath(row: row, section: section)
-                let separatorAttributes = self.sepatorAttributes(for: collectionView, at: indexPath, in: rect)
+                let separatorAttributes = sepatorAttributes(for: collectionView, at: indexPath, in: rect)
                 result.append(contentsOf: separatorAttributes)
             }
         }
@@ -111,35 +111,35 @@ public class WOTPivotLayout: WOTColoredLayout, WOTTankPivotLayoutProtocol {
     }
 }
 
-extension WOTPivotLayout {
-    fileprivate struct Constants {
+private extension WOTPivotLayout {
+    struct Constants {
         static let ipadCellSize = CGSize(width: 88.0, height: 66.0)
         static let iphoneCellSize = CGSize(width: 66.0, height: 44.0)
         static let itemSize = (UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad) ? ipadCellSize : iphoneCellSize
     }
 
     private func relativeRect(indexPath: IndexPath) -> CGRect {
-        guard let block = self.itemRelativeRectCallback else {
+        guard let block = itemRelativeRectCallback else {
             return CGRect.zero
         }
         return block(indexPath)
     }
 
     private func stickyType(indexPath: IndexPath) -> PivotStickyType {
-        guard let block = self.itemLayoutStickyType else {
+        guard let block = itemLayoutStickyType else {
             return .float
         }
         return block(indexPath)
     }
 
-    fileprivate func relativeSize() -> CGSize {
-        guard let block = self.relativeContentSizeBlock else {
+    func relativeSize() -> CGSize {
+        guard let block = relativeContentSizeBlock else {
             return .zero
         }
         return block()
     }
 
-    fileprivate func pivotLayoutCellAttributes(indexPath: IndexPath, contentOffset: CGPoint) -> WOTPivotLayoutCellAttributesProtocol {
+    func pivotLayoutCellAttributes(indexPath: IndexPath, contentOffset: CGPoint) -> WOTPivotLayoutCellAttributesProtocol {
         let relativeRect = self.relativeRect(indexPath: indexPath)
         let stickyType = self.stickyType(indexPath: indexPath)
         let itemSize = self.itemSize

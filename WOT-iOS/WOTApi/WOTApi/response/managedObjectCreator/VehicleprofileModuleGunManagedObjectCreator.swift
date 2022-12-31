@@ -24,10 +24,9 @@ public class VehicleprofileModuleGunManagedObjectCreator: ManagedObjectCreator {
         module.vehicleGun = vehicleProfileGun
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class VehicleprofileModuleGunPredicateComposer: MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder {}

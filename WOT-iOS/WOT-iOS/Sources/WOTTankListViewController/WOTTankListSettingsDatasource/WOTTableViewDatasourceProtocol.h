@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, WOTTankListSettingType) {
     WOTTankListSettingTypeValueChanger
 };
 
-typedef void(^WOTTankListSettingUpateCallback)(id _Nullable context, id _Nonnull setting);
+typedef void(^WOTTankListSettingUpateCallback)(id _Nonnull setting);
 typedef void(^WOTTankListSettingMoveCompletionCallback)(void);
 
 
@@ -34,8 +34,5 @@ typedef void(^WOTTankListSettingMoveCompletionCallback)(void);
 - (WOTTankListSettingType)settingTypeForSectionAtIndex:(NSInteger)section;
 - (void)updateSetting:(id _Nonnull)setting byType:(id _Nonnull)type byValue:(id _Nonnull)value filterValue:(id _Nullable)filterValue ascending:(BOOL)ascending callback:(WOTTankListSettingUpateCallback _Nonnull)callback;
 - (id _Nonnull)keyForSetting:(id _Nonnull)setting;
-
-- (void)stash:(void (^ _Nonnull)(NSError * _Nullable))block;
-- (void)rollback;
 
 @end

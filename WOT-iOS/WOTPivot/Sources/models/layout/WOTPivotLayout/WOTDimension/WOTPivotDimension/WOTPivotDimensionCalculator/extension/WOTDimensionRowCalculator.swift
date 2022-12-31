@@ -9,7 +9,7 @@
 import Foundation
 
 public class WOTDimensionRowCalculator: WOTDimensionCalculator {
-    override class func x(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func x(forNode: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return WOTNodeEnumerator.sharedInstance.visibleParentsCount(node: forNode)
     }
 
@@ -19,11 +19,11 @@ public class WOTDimensionRowCalculator: WOTDimensionCalculator {
         return result
     }
 
-    override class func width(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func width(forNode _: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return 1
     }
 
-    override class func height(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func height(forNode: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return WOTNodeEnumerator.sharedInstance.endpoints(node: forNode)?.count ?? 0
     }
 }

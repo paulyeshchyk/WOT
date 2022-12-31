@@ -14,14 +14,14 @@ extension VehicleprofileTurret: JSONDecodingProtocol {
     public func decodeWith(_ decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
         //
-        self.name = try container.decodeAnyIfPresent(String.self, forKey: .name)
-        self.tag = try container.decodeAnyIfPresent(String.self, forKey: .tag)
-        self.tier = try container.decodeAnyIfPresent(Int.self, forKey: .tier)?.asDecimal
-        self.view_range = try container.decodeAnyIfPresent(Int.self, forKey: .view_range)?.asDecimal
-        self.weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
-        self.traverse_left_arc = try container.decodeAnyIfPresent(Int.self, forKey: .traverse_left_arc)?.asDecimal
-        self.traverse_right_arc = try container.decodeAnyIfPresent(Int.self, forKey: .traverse_right_arc)?.asDecimal
-        self.traverse_speed = try container.decodeAnyIfPresent(Int.self, forKey: .traverse_speed)?.asDecimal
-        self.hp = try container.decodeAnyIfPresent(Int.self, forKey: .hp)?.asDecimal
+        name = try container.decodeAnyIfPresent(String.self, forKey: .name)
+        tag = try container.decodeAnyIfPresent(String.self, forKey: .tag)
+        tier = try container.decodeAnyIfPresent(Int.self, forKey: .tier)?.asDecimal
+        view_range = try container.decodeAnyIfPresent(Int.self, forKey: .view_range)?.asDecimal
+        weight = try container.decodeAnyIfPresent(Int.self, forKey: .weight)?.asDecimal
+        traverse_left_arc = try container.decodeAnyIfPresent(Int.self, forKey: .traverse_left_arc)?.asDecimal
+        traverse_right_arc = try container.decodeAnyIfPresent(Int.self, forKey: .traverse_right_arc)?.asDecimal
+        traverse_speed = try container.decodeAnyIfPresent(Int.self, forKey: .traverse_speed)?.asDecimal
+        hp = try container.decodeAnyIfPresent(Int.self, forKey: .hp)?.asDecimal
     }
 }

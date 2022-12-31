@@ -15,7 +15,7 @@ public class WOTDimensionColumnCalculator: WOTDimensionCalculator {
         return result
     }
 
-    override class func y(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func y(forNode: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return WOTNodeEnumerator.sharedInstance.visibleParentsCount(node: forNode)
     }
 
@@ -33,7 +33,7 @@ public class WOTDimensionColumnCalculator: WOTDimensionCalculator {
         return result
     }
 
-    override class func height(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func height(forNode _: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return 1
     }
 }

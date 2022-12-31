@@ -15,7 +15,7 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
     public var fetchController: WOTDataFetchControllerProtocol?
     public var enumerator: WOTNodeEnumeratorProtocol?
 
-    lazy private var sizes: TNodesSizesType = {
+    private lazy var sizes: TNodesSizesType = {
         return TNodesSizesType()
     }()
 
@@ -79,12 +79,12 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
         var result: Int = 0
         for idx in 0 ..< indexOfNode {
             let child = parent.children[idx]
-            let endpoints = self.enumerator?.endpoints(node: child)
+            let endpoints = enumerator?.endpoints(node: child)
             endpoints?.forEach { (endpoint) in
                 result += self.maxWidth(endpoint, orValue: orValue)
             }
         }
-        result += self.childrenMaxWidth(parent, orValue: orValue)
+        result += childrenMaxWidth(parent, orValue: orValue)
         return result
     }
 
@@ -96,7 +96,7 @@ public class WOTDimension: NSObject, WOTDimensionProtocol {
         return .zero
     }
 
-    public func reload(forIndex externalIndex: Int, nodeCreator: WOTNodeCreatorProtocol?) {
+    public func reload(forIndex _: Int, nodeCreator _: WOTNodeCreatorProtocol?) {
         preconditionFailure("This method must be overridden")
     }
 }

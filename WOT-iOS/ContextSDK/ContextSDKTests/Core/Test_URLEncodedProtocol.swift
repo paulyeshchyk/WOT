@@ -5,8 +5,8 @@
 //  Created by Paul on 19.12.22.
 //
 
-import XCTest
 @testable import ContextSDK
+import XCTest
 
 class Test_URLEncodedProtocol: XCTestCase {
     func testInt() throws {

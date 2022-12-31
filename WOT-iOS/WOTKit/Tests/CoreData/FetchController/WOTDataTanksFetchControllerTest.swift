@@ -6,16 +6,16 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-//import XCTest
-//@testable import WOTPivot
+// import XCTest
+// @testable import WOTPivot
 
-//class WOTDataTanksFetchControllerTest: XCTestCase {
+// class WOTDataTanksFetchControllerTest: XCTestCase {
 //    override func setUp() {
 //        super.setUp()
 //    }
-//}
+// }
 //
-//class WOTRequestCountListener {
+// class WOTRequestCountListener {
 //    var asyncExpectation: XCTestExpectation?
 //
 //    static let notificationName = NSNotification.Name(rawValue: WOTRequestManager.pendingRequestNotificationName())
@@ -60,9 +60,9 @@
 //        }
 //        self.triggered = true
 //    }
-//}
+// }
 //
-//class TESTWOTDataTanksFetchControllerListener: WOTDataFetchControllerListenerProtocol {
+// class TESTWOTDataTanksFetchControllerListener: WOTDataFetchControllerListenerProtocol {
 //    var asyncExpectation: XCTestExpectation?
 //    var result: [WOTNodeProtocol]?
 //    var error: Error?
@@ -94,4 +94,4 @@
 //        self.error = withError
 //        expectation.fulfill()
 //    }
-//}
+// }

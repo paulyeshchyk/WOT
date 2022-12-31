@@ -7,22 +7,18 @@
 //
 
 public class MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
-    private var linkedClazz: PrimaryKeypathProtocol.Type
-    private var masterClazz: PrimaryKeypathProtocol.Type
-    private var masterObjectID: AnyObject?
-    private var linkedObjectID: AnyObject
+    private let drivenJoint: Joint
+    private let hostJoint: Joint
 
-    public init(masterClazz: PrimaryKeypathProtocol.Type, masterObjectID: AnyObject?, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject) {
-        self.masterClazz = masterClazz
-        self.linkedClazz = linkedClazz
-        self.masterObjectID = masterObjectID
-        self.linkedObjectID = linkedObjectID
+    public init(drivenJoint: Joint, hostJoint: Joint) {
+        self.drivenJoint = drivenJoint
+        self.hostJoint = hostJoint
     }
 
-    public func build() -> RequestPredicateCompositionProtocol? {
+    public func build() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
-        lookupPredicate[.primary] = linkedClazz.primaryKey(forType: .external, andObject: linkedObjectID)
-        lookupPredicate[.secondary] = masterClazz.primaryKey(forType: .internal, andObject: masterObjectID)
+        lookupPredicate[.primary] = drivenJoint.theClass.primaryKey(forType: .external, andObject: drivenJoint.theID)
+        lookupPredicate[.secondary] = hostJoint.theClass.primaryKey(forType: .internal, andObject: hostJoint.theID)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

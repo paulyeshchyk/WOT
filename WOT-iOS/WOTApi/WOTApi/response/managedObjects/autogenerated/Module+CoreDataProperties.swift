@@ -9,24 +9,24 @@
 
 import CoreData
 
-extension Module {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Module> {
+public extension Module {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Module> {
         return NSFetchRequest<Module>(entityName: "Module")
     }
 
-    @NSManaged public var image: String?
-    @NSManaged public var module_id: NSDecimalNumber?
-    @NSManaged public var name: String?
-    @NSManaged public var nation: String?
-    @NSManaged public var price_credit: NSDecimalNumber?
-    @NSManaged public var tier: NSDecimalNumber?
-    @NSManaged public var type: String?
-    @NSManaged public var weight: NSDecimalNumber?
-    @NSManaged public var engine: VehicleprofileEngine?
-    @NSManaged public var gun: VehicleprofileGun?
-    @NSManaged public var modulesTree: ModulesTree?
-    @NSManaged public var radio: VehicleprofileRadio?
-    @NSManaged public var suspension: VehicleprofileSuspension?
-    @NSManaged public var turret: VehicleprofileTurret?
-    @NSManaged public var treeLink: ModulesTree?
+    @NSManaged var image: String?
+    @NSManaged var module_id: NSDecimalNumber?
+    @NSManaged var name: String?
+    @NSManaged var nation: String?
+    @NSManaged var price_credit: NSDecimalNumber?
+    @NSManaged var tier: NSDecimalNumber?
+    @NSManaged var type: String?
+    @NSManaged var weight: NSDecimalNumber?
+    @NSManaged var engine: VehicleprofileEngine?
+    @NSManaged var gun: VehicleprofileGun?
+    @NSManaged var modulesTree: ModulesTree?
+    @NSManaged var radio: VehicleprofileRadio?
+    @NSManaged var suspension: VehicleprofileSuspension?
+    @NSManaged var turret: VehicleprofileTurret?
+    @NSManaged var treeLink: ModulesTree?
 }

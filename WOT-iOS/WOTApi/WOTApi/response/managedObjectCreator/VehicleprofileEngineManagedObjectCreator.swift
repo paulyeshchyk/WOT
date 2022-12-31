@@ -23,10 +23,9 @@ public class VehicleprofileEngineManagedObjectCreator: ManagedObjectCreator {
         vehicleProfile.engine = engine
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class VehicleprofileEngineRequestPredicateComposer: RootTagRuleBuilder {}

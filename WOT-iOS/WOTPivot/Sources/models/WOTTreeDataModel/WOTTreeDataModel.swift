@@ -11,7 +11,7 @@ import Foundation
 public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
     lazy var nodeConnectorIndex: WOTTreeConnectorNodeIndexProtocol = { return WOTTreeConnectorNodeIndex() }()
     public var levels: Int {
-        return self.nodeConnectorIndex.levels
+        return nodeConnectorIndex.levels
     }
 
     public var width: Int {
@@ -21,10 +21,10 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
     override public func loadModel() {
         super.loadModel()
 
-        self.reindexNodeConnectors()
+        reindexNodeConnectors()
 
         do {
-            try self.fetchController.performFetch(nodeCreator: nodeCreator)
+            try fetchController.performFetch(nodeCreator: nodeCreator)
         } catch let error {
             fetchFailed(by: self.fetchController, withError: error)
         }
@@ -34,7 +34,7 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
     var listener: WOTDataModelListener
     var nodeCreator: WOTNodeCreatorProtocol
 
-    required public init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener, enumerator: WOTNodeEnumeratorProtocol, nodeCreator nc: WOTNodeCreatorProtocol) {
+    public required init(fetchController fetch: WOTDataFetchControllerProtocol, listener list: WOTDataModelListener, enumerator _: WOTNodeEnumeratorProtocol, nodeCreator nc: WOTNodeCreatorProtocol) {
         fetchController = fetch
         listener = list
         nodeCreator = nc
@@ -46,23 +46,23 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
         fetchController.setFetchListener(nil)
     }
 
-    public required init(enumerator enumer: WOTNodeEnumeratorProtocol) {
+    public required init(enumerator _: WOTNodeEnumeratorProtocol) {
         fatalError("init(enumerator:) has not been implemented")
     }
 
     override public func nodesCount(section: Int) -> Int {
-        return self.nodeConnectorIndex.itemsCount(atLevel: section)
+        return nodeConnectorIndex.itemsCount(atLevel: section)
     }
 
     override public func node(atIndexPath indexPath: NSIndexPath) -> WOTNodeProtocol? {
-        return self.nodeConnectorIndex.item(indexPath: indexPath)
+        return nodeConnectorIndex.item(indexPath: indexPath)
     }
 
     override public func indexPath(forNode: WOTNodeProtocol?) -> IndexPath? {
         guard let node = forNode else {
             return nil
         }
-        return self.nodeConnectorIndex.indexPath(forNode: node)
+        return nodeConnectorIndex.indexPath(forNode: node)
     }
 
     override public func add(rootNode: WOTNodeProtocol) {
@@ -100,19 +100,19 @@ public class WOTTreeDataModel: WOTDataModel, WOTTreeDataModelProtocol {
 
 extension WOTTreeDataModel {
     func reindexNodeConnectors() {
-        self.nodeConnectorIndex.reset()
+        nodeConnectorIndex.reset()
 
-        let nodes = self.rootNodes(sortComparator: nil)
-        self.nodeConnectorIndex.add(nodes: nodes, level: NodeLevelTypeZero)
+        let nodes = rootNodes(sortComparator: nil)
+        nodeConnectorIndex.add(nodes: nodes, level: NodeLevelTypeZero)
     }
 }
 
 extension WOTTreeDataModel: WOTDataFetchControllerListenerProtocol {
     public func fetchPerformed(by fetchController: WOTDataFetchControllerProtocol) {
-        self.makeTree(fetchController, nodeCreator: nodeCreator)
+        makeTree(fetchController, nodeCreator: nodeCreator)
     }
 
-    public func fetchFailed(by: WOTDataFetchControllerProtocol, withError: Error) {
-        self.failPivot(withError)
+    public func fetchFailed(by _: WOTDataFetchControllerProtocol, withError: Error) {
+        failPivot(withError)
     }
 }

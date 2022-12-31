@@ -49,11 +49,11 @@ public class WOTDimensionDataCalculator: WOTDimensionCalculator {
         return result
     }
 
-    override class func width(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func width(forNode _: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return 1
     }
 
-    override class func height(forNode: WOTNodeProtocol, dimension: WOTPivotDimensionProtocol) -> Int {
+    override class func height(forNode _: WOTNodeProtocol, dimension _: WOTPivotDimensionProtocol) -> Int {
         return 1
     }
 }

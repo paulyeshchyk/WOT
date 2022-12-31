@@ -6,9 +6,9 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+import ContextSDK
 import CoreData
 import WOTKit
-import ContextSDK
 
 public typealias FilteredObjectCompletion = (NSPredicate, [AnyObject]?) -> Void
 
@@ -69,9 +69,9 @@ open class WOTDataFetchController: NSObject {
 
     @objc
     public required init(nodeFetchRequestCreator nfrc: WOTDataFetchControllerDelegateProtocol, context: Context) {
-        self.nodeFetchRequestCreator = nfrc
-        self.appContext = context
-        self.dataStore = context.dataStore
+        nodeFetchRequestCreator = nfrc
+        appContext = context
+        dataStore = context.dataStore
     }
 
     deinit {
@@ -80,13 +80,13 @@ open class WOTDataFetchController: NSObject {
 }
 
 extension WOTDataFetchController: NSFetchedResultsControllerDelegate {
-    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {}
+    public func controller(_: NSFetchedResultsController<NSFetchRequestResult>, didChange _: Any, at _: IndexPath?, for _: NSFetchedResultsChangeType, newIndexPath _: IndexPath?) {}
 
-    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {}
+    public func controller(_: NSFetchedResultsController<NSFetchRequestResult>, didChange _: NSFetchedResultsSectionInfo, atSectionIndex _: Int, for _: NSFetchedResultsChangeType) {}
 
-    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {}
+    public func controllerDidChangeContent(_: NSFetchedResultsController<NSFetchRequestResult>) {}
 
-    public func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {}
+    public func controllerWillChangeContent(_: NSFetchedResultsController<NSFetchRequestResult>) {}
 
-    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? { return nil }
+    public func controller(_: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName _: String) -> String? { return nil }
 }

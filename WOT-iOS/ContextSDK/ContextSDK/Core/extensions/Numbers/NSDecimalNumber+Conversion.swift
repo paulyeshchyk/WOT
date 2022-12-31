@@ -7,20 +7,20 @@
 
 import Foundation
 
-extension Int {
-    public var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+public extension Int {
+    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
 }
 
-extension Bool {
-    public var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+public extension Bool {
+    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
 }
 
-extension Float {
-    public var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+public extension Float {
+    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
 }
 
-extension Double {
-    public var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+public extension Double {
+    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
 }
 
 public class NSDecimalNumberArray {
@@ -32,7 +32,7 @@ public class NSDecimalNumberArray {
     public var elements: [NSDecimalNumber]
 
     public init(array: [Any]) {
-        self.elements = NSDecimalNumberArray.conversion(from: array)
+        elements = NSDecimalNumberArray.conversion(from: array)
     }
 
     private static func conversion(from: Any?) -> NSDecimalNumber? {
@@ -54,10 +54,10 @@ public class NSDecimalNumberArray {
 
     public subscript(index: Int) -> NSDecimalNumber {
         get {
-            return self.elements[index]
+            return elements[index]
         }
         set(newValue) {
-            self.elements[index] = newValue
+            elements[index] = newValue
         }
     }
 }

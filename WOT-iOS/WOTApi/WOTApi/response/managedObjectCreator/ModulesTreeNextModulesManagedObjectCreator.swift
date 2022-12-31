@@ -23,6 +23,7 @@ public class ModulesTreeNextModulesManagedObjectCreator: ManagedObjectCreator {
         modulesTree.addToNext_modules(nextModule)
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
@@ -39,5 +40,3 @@ private enum NextModulesLinkerError: Error, CustomStringConvertible {
         }
     }
 }
-
-public class NextModulesPredicateComposer: MasterAsPrimaryLinkedAsSecondaryRuleBuilder {}

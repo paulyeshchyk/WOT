@@ -6,8 +6,8 @@
 //  Copyright © 2022 Pavel Yeshchyk. All rights reserved.
 //
 
-import CoreData
 import ContextSDK
+import CoreData
 
 public class EmptyFetchResult: FetchResult {
     public required convenience init() {

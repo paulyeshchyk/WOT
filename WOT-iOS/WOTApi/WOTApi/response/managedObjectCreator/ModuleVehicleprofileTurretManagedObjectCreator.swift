@@ -20,10 +20,11 @@ public class ModuleVehicleprofileTurretManagedObjectCreator: ManagedObjectCreato
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
             return
         }
-        vehicleProfileTurret.turret_id = self.mappedObjectIdentifier as? NSDecimalNumber
+        vehicleProfileTurret.turret_id = mappedObjectIdentifier as? NSDecimalNumber
         module.turret = vehicleProfileTurret
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

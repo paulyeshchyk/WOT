@@ -5,8 +5,8 @@
 //  Created by Paul on 21.12.22.
 //
 
-import XCTest
 @testable import WOTApi
+import XCTest
 
 class WOTApiTests: XCTestCase {
     override func setUpWithError() throws {
@@ -24,7 +24,7 @@ class WOTApiTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }

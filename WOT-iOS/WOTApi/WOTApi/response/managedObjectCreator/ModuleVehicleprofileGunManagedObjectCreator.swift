@@ -20,10 +20,11 @@ public class ModuleVehicleprofileGunManagedObjectCreator: ManagedObjectCreator {
             completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(Module.self))
             return
         }
-        vehicleProfileGun.gun_id = self.mappedObjectIdentifier as? NSDecimalNumber
+        vehicleProfileGun.gun_id = mappedObjectIdentifier as? NSDecimalNumber
         module.gun = vehicleProfileGun
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }

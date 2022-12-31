@@ -7,23 +7,23 @@
 //
 
 open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
-    private var linkedClazz: PrimaryKeypathProtocol.Type
-    private var linkedObjectID: AnyObject?
-    private var requestPredicate: ContextPredicate
-    private var currentObjectID: AnyObject
+    private let drivenJoint: Joint
+    private let hostObjectID: AnyObject
 
-    public init(requestPredicate: ContextPredicate, linkedClazz: PrimaryKeypathProtocol.Type, linkedObjectID: AnyObject?, currentObjectID: AnyObject) {
-        self.linkedClazz = linkedClazz
-        self.linkedObjectID = linkedObjectID
-        self.requestPredicate = requestPredicate
-        self.currentObjectID = currentObjectID
+    public init(drivenJoint: Joint, hostObjectID: AnyObject) {
+        self.drivenJoint = drivenJoint
+        self.hostObjectID = hostObjectID
     }
 
-    public func build() -> RequestPredicateCompositionProtocol? {
-        var parentObjectIDList = requestPredicate.parentObjectIDList
-        parentObjectIDList.append(currentObjectID)
+    public func build() throws -> RequestPredicateCompositionProtocol {
+        var parentObjectIDList = [AnyObject]()
+        if let parents = drivenJoint.thePredicate?.parentObjectIDList {
+            parentObjectIDList.append(contentsOf: parents)
+        }
+        parentObjectIDList.append(hostObjectID)
+
         let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
-        lookupPredicate[.primary] = linkedClazz.primaryKey(forType: .external, andObject: linkedObjectID)
+        lookupPredicate[.primary] = drivenJoint.theClass.primaryKey(forType: .external, andObject: drivenJoint.theID)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }

@@ -23,10 +23,9 @@ public class VehicleprofileTurretManagedObjectCreator: ManagedObjectCreator {
         vehicleProfile.turret = turret
 
         // MARK: stash
+
         appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }
 }
-
-public class VehicleprofileTurretRequestPredicateComposer: RootTagRuleBuilder {}

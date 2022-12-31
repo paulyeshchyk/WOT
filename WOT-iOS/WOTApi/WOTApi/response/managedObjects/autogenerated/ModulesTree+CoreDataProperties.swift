@@ -9,49 +9,51 @@
 
 import CoreData
 
-extension ModulesTree {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ModulesTree> {
+public extension ModulesTree {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<ModulesTree> {
         return NSFetchRequest<ModulesTree>(entityName: "ModulesTree")
     }
 
-    @NSManaged public var is_default: NSNumber?
-    @NSManaged public var module_id: NSDecimalNumber?
-    @NSManaged public var name: String?
-    @NSManaged public var price_credit: NSDecimalNumber?
-    @NSManaged public var price_xp: NSDecimalNumber?
-    @NSManaged public var type: String?
-    @NSManaged public var default_profile: Vehicleprofile?
-    @NSManaged public var next_modules: NSSet?
-    @NSManaged public var next_tanks: NSSet?
-    @NSManaged public var currentModule: Module?
+    @NSManaged var is_default: NSNumber?
+    @NSManaged var module_id: NSDecimalNumber?
+    @NSManaged var name: String?
+    @NSManaged var price_credit: NSDecimalNumber?
+    @NSManaged var price_xp: NSDecimalNumber?
+    @NSManaged var type: String?
+    @NSManaged var default_profile: Vehicleprofile?
+    @NSManaged var next_modules: NSSet?
+    @NSManaged var next_tanks: NSSet?
+    @NSManaged var currentModule: Module?
 }
 
 // MARK: Generated accessors for next_modules
-extension ModulesTree {
+
+public extension ModulesTree {
     @objc(addNext_modulesObject:)
-    @NSManaged public func addToNext_modules(_ value: Module)
+    @NSManaged func addToNext_modules(_ value: Module)
 
     @objc(removeNext_modulesObject:)
-    @NSManaged public func removeFromNext_modules(_ value: Module)
+    @NSManaged func removeFromNext_modules(_ value: Module)
 
     @objc(addNext_modules:)
-    @NSManaged public func addToNext_modules(_ values: NSSet)
+    @NSManaged func addToNext_modules(_ values: NSSet)
 
     @objc(removeNext_modules:)
-    @NSManaged public func removeFromNext_modules(_ values: NSSet)
+    @NSManaged func removeFromNext_modules(_ values: NSSet)
 }
 
 // MARK: Generated accessors for next_tanks
-extension ModulesTree {
+
+public extension ModulesTree {
     @objc(addNext_tanksObject:)
-    @NSManaged public func addToNext_tanks(_ value: Vehicles)
+    @NSManaged func addToNext_tanks(_ value: Vehicles)
 
     @objc(removeNext_tanksObject:)
-    @NSManaged public func removeFromNext_tanks(_ value: Vehicles)
+    @NSManaged func removeFromNext_tanks(_ value: Vehicles)
 
     @objc(addNext_tanks:)
-    @NSManaged public func addToNext_tanks(_ values: NSSet)
+    @NSManaged func addToNext_tanks(_ values: NSSet)
 
     @objc(removeNext_tanks:)
-    @NSManaged public func removeFromNext_tanks(_ values: NSSet)
+    @NSManaged func removeFromNext_tanks(_ values: NSSet)
 }
