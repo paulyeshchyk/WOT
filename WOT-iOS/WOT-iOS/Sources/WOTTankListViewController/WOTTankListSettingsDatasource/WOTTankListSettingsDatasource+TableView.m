@@ -92,15 +92,13 @@
     return [sectionInfo numberOfObjects];
 }
 
-- (id)objectAtIndexPath:(NSIndexPath *)indexPath {
+- (id _Nullable)objectAtIndexPath:(NSIndexPath *)indexPath {
     
     id <NSFetchedResultsSectionInfo> sectionInfo = [self sectionInfoAtIndex:indexPath.section];
     NSArray *objects = [sectionInfo objects];
     if (indexPath.row < [objects count]) {
-
         return objects[indexPath.row];
     } else {
-        
         return nil;
     }
 }

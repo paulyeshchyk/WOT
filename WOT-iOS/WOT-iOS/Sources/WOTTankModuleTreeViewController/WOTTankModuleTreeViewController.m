@@ -360,10 +360,6 @@
 @synthesize error;
 @synthesize reasonDescription;
 
-- (id) init {
-    self = [super init];
-}
-
 - (NSString *)reasonDescription {
     return  @"deinit";
 }

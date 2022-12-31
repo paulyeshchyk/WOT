@@ -306,8 +306,8 @@
 		1D79ED9B212439C2005FBA34 = {
 			isa = PBXGroup;
 			children = (
-				1D79EDA7212439C2005FBA34 /* Sources */,
-				1D79EDB2212439C2005FBA34 /* Tests */,
+				1D79EDA7212439C2005FBA34 /* source */,
+				1D79EDB2212439C2005FBA34 /* tests */,
 				1D60E511245FE563007E5CA8 /* Frameworks */,
 				1D79EDA6212439C2005FBA34 /* Products */,
 				1D79EDA9212439C2005FBA34 /* Info.plist */,
@@ -323,7 +323,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1D79EDA7212439C2005FBA34 /* Sources */ = {
+		1D79EDA7212439C2005FBA34 /* source */ = {
 			isa = PBXGroup;
 			children = (
 				1DE558F72124571000576D41 /* models */,
@@ -333,16 +333,16 @@
 				1DE1FA26245EEA62002866A3 /* WOTColors.h */,
 				1DE1FA24245EE9E4002866A3 /* WOTPivotDefines.h */,
 			);
-			path = Sources;
+			path = source;
 			sourceTree = "<group>";
 		};
-		1D79EDB2212439C2005FBA34 /* Tests */ = {
+		1D79EDB2212439C2005FBA34 /* tests */ = {
 			isa = PBXGroup;
 			children = (
 				1D79EDB3212439C2005FBA34 /* WOTPivotTests.swift */,
 				1D79EDB5212439C2005FBA34 /* Info.plist */,
 			);
-			path = Tests;
+			path = tests;
 			sourceTree = "<group>";
 		};
 		1DA83C89213558AB0039CB4B /* adapters */ = {

@@ -27,7 +27,7 @@ typedef void(^WOTTankListSettingMoveCompletionCallback)(void);
 
 - (NSString * _Nonnull)sectionNameAtIndex:(NSInteger)index;
 - (NSInteger)objectsCountForSection:(NSInteger)section;
-- (id _Nonnull)objectAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (id _Nullable)objectAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
 - (void)moveRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath toIndexPath:(NSIndexPath * _Nonnull)newIndexPath completionBlock:(WOTTankListSettingMoveCompletionCallback _Nonnull)completionBlock;
 - (void)removeObjectAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
 
