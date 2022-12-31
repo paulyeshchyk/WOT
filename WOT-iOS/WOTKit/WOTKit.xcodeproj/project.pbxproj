@@ -38,8 +38,6 @@
 		DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */; };
 		DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E870295352FF00C60F31 /* WOTProgressView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E8812953530000C60F31 /* WOTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E871295352FF00C60F31 /* WOTProgressView.m */; };
-		DA81E90D29536FF500C60F31 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E90B29536FF500C60F31 /* Reachability.h */; };
-		DA81E90E29536FF500C60F31 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E90C29536FF500C60F31 /* Reachability.m */; };
 		DA81E914295370BA00C60F31 /* NSString+RomanUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */; };
 		DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E912295370BA00C60F31 /* RomanNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -99,8 +97,6 @@
 		DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
 		DA81E870295352FF00C60F31 /* WOTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProgressView.h; sourceTree = "<group>"; };
 		DA81E871295352FF00C60F31 /* WOTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProgressView.m; sourceTree = "<group>"; };
-		DA81E90B29536FF500C60F31 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		DA81E90C29536FF500C60F31 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
 		DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
 		DA81E912295370BA00C60F31 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
@@ -135,8 +131,8 @@
 		1D60E4FC245FE541007E5CA8 = {
 			isa = PBXGroup;
 			children = (
-				1D60E508245FE541007E5CA8 /* Sources */,
-				1D60E5F324601DAB007E5CA8 /* Tests */,
+				1D60E508245FE541007E5CA8 /* source */,
+				1D60E5F324601DAB007E5CA8 /* tests */,
 				1D7E0693247D045F008CB848 /* WOTKitTests */,
 				1D60E507245FE541007E5CA8 /* Products */,
 				1D60E50A245FE541007E5CA8 /* Info.plist */,
@@ -154,7 +150,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1D60E508245FE541007E5CA8 /* Sources */ = {
+		1D60E508245FE541007E5CA8 /* source */ = {
 			isa = PBXGroup;
 			children = (
 				1D60E536245FE7E4007E5CA8 /* CoreData */,
@@ -162,7 +158,7 @@
 				1D60E51C245FE7A7007E5CA8 /* basics */,
 				1D60E509245FE541007E5CA8 /* WOTKit.h */,
 			);
-			path = Sources;
+			path = source;
 			sourceTree = "<group>";
 		};
 		1D60E51C245FE7A7007E5CA8 /* basics */ = {
@@ -220,7 +216,6 @@
 		1D60E557245FE7E4007E5CA8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				DA81E90A29536FF500C60F31 /* Reachability */,
 				1DFCC92C24714AAF005F580E /* ResponseAdapterCreator */,
 				1D60E558245FE7E4007E5CA8 /* ResponseCoordinator */,
 				1D60E55C245FE7E4007E5CA8 /* DataPumper */,
@@ -264,12 +259,12 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
-		1D60E5F324601DAB007E5CA8 /* Tests */ = {
+		1D60E5F324601DAB007E5CA8 /* tests */ = {
 			isa = PBXGroup;
 			children = (
 				1D60E5F424601DCA007E5CA8 /* CoreData */,
 			);
-			path = Tests;
+			path = tests;
 			sourceTree = "<group>";
 		};
 		1D60E5F424601DCA007E5CA8 /* CoreData */ = {
@@ -397,15 +392,6 @@
 			path = UIProgressView;
 			sourceTree = "<group>";
 		};
-		DA81E90A29536FF500C60F31 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E90B29536FF500C60F31 /* Reachability.h */,
-				DA81E90C29536FF500C60F31 /* Reachability.m */,
-			);
-			path = Reachability;
-			sourceTree = "<group>";
-		};
 		DA81E90F295370BA00C60F31 /* RomanNumber */ = {
 			isa = PBXGroup;
 			children = (
@@ -440,7 +426,6 @@
 				DA81E87C2953530000C60F31 /* UIBarButtonItem+EventBlock.h in Headers */,
 				DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */,
 				DA81E87E2953530000C60F31 /* UIView+StretchingConstraints.h in Headers */,
-				DA81E90D29536FF500C60F31 /* Reachability.h in Headers */,
 				DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */,
 				DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */,
 				DA81E914295370BA00C60F31 /* NSString+RomanUtils.h in Headers */,
@@ -622,7 +607,6 @@
 				DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */,
 				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */,
-				DA81E90E29536FF500C60F31 /* Reachability.m in Sources */,
 				1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */,
 				1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */,
 				DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */,
