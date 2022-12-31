@@ -9,8 +9,8 @@
 public extension VehicleprofileModule {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
-        guard let profileModuleJSON = map.mappingData as? JSON else {
+    override func decode(using map: JSONCollectionContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+        guard let profileModuleJSON = map.jsonCollection.data() as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //

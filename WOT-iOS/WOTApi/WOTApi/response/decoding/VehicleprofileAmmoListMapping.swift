@@ -9,8 +9,8 @@
 public extension VehicleprofileAmmoList {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONManagedObjectMapProtocol, appContext: JSONDecodableProtocol.Context) throws {
-        guard let profilesJSON = map.mappingData as? [JSON] else {
+    override func decode(using map: JSONCollectionContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+        guard let profilesJSON = map.jsonCollection.data() as? [JSON] else {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
 

@@ -9,8 +9,8 @@
 public extension VehicleprofileSuspension {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONManagedObjectMapProtocol, appContext _: JSONDecodableProtocol.Context) throws {
-        guard let suspensionJSON = map.mappingData as? JSON else {
+    override func decode(using map: JSONCollectionContainerProtocol, appContext _: JSONDecodableProtocol.Context) throws {
+        guard let suspensionJSON = map.jsonCollection.data() as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //

@@ -114,7 +114,7 @@ public extension JSONAdapter {
 }
 
 extension JSONAdapter {
-    private func findOrCreateObject(json: JSONCollectable?, predicate: ContextPredicateProtocol, callback externalCallback: @escaping FetchResultCompletion) throws {
+    private func findOrCreateObject(json: JSONCollectionProtocol?, predicate: ContextPredicateProtocol, callback externalCallback: @escaping FetchResultCompletion) throws {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
             throw JSONAdapterError.notMainThread
@@ -169,7 +169,7 @@ public enum JSONAdapterError: Error, CustomStringConvertible {
 
 public struct JSONExtraction {
     public let requestPredicate: ContextPredicateProtocol
-    public let json: JSONCollectable?
+    public let json: JSONCollectionProtocol?
 
     enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
         case invalidJSONForKey(AnyHashable)
@@ -195,12 +195,6 @@ public extension ManagedObjectCreatorProtocol {
 
         let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType)
         let ident = extractedJSON[primaryKeyPath] ?? key
-//
-//        if let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType) {
-//            ident = extractedJSON[primaryKeyPath] ?? key
-//        } else {
-//            ident = key
-//        }
 
         #warning("2b refactored")
         let parents = contextPredicate?.parentObjectIDList
