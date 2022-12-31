@@ -56,8 +56,7 @@
 		DA1F5532295C69B9009BC8D9 /* VehicleprofileModuleRadioManagedObjectCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1F5531295C69B9009BC8D9 /* VehicleprofileModuleRadioManagedObjectCreator.swift */; };
 		DA1F5534295C6A38009BC8D9 /* VehicleprofileModuleGunManagedObjectCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1F5533295C6A38009BC8D9 /* VehicleprofileModuleGunManagedObjectCreator.swift */; };
 		DA2C28F62959F6E300D18A6E /* NSManagedObject+JSONDecodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F52959F6E300D18A6E /* NSManagedObject+JSONDecodingProtocol.swift */; };
-		DA81E4D02952EBDF00C60F31 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA81E4CF2952EBDF00C60F31 /* WOTPivot.framework */; };
-		DA81E4D12952EBDF00C60F31 /* WOTPivot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA81E4CF2952EBDF00C60F31 /* WOTPivot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA81E4D02952EBDF00C60F31 /* WOTPivot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA81E4CF2952EBDF00C60F31 /* WOTPivot.framework */; platformFilter = ios; };
 		DA81E4D92952F4FD00C60F31 /* Test_WOTDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4D82952F4FD00C60F31 /* Test_WOTDataStore.swift */; };
 		DA81E4DB2952FA0D00C60F31 /* WOTRequestRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4DA2952FA0D00C60F31 /* WOTRequestRegistrator.swift */; };
 		DA81E5A9295305CE00C60F31 /* VehicleprofileMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E54A295305CD00C60F31 /* VehicleprofileMapping.swift */; };
@@ -244,21 +243,8 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		DA81E4D22952EBDF00C60F31 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				DA81E4D12952EBDF00C60F31 /* WOTPivot.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		7CB5C2B82C6C2A964A5A0C5A /* Pods_WOTApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOTApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0BC4C52952E0A100E01D54 /* WOTApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0BC4C82952E0A100E01D54 /* WOTApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTApi.h; sourceTree = "<group>"; };
 		DA0BC4C92952E0A100E01D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -611,6 +597,7 @@
 				DA81E4CF2952EBDF00C60F31 /* WOTPivot.framework */,
 				DA0BC5AF2952EA8600E01D54 /* WOTKit.framework */,
 				DA0BC5AB2952EA5700E01D54 /* ContextSDK.framework */,
+				7CB5C2B82C6C2A964A5A0C5A /* Pods_WOTApi.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1107,7 +1094,6 @@
 				DA0BC4C12952E0A100E01D54 /* Sources */,
 				DA0BC4C22952E0A100E01D54 /* Frameworks */,
 				DA0BC4C32952E0A100E01D54 /* Resources */,
-				DA81E4D22952EBDF00C60F31 /* Embed Frameworks */,
 				DA81E6EF2953086300C60F31 /* SwiftGen */,
 				DA8A959F295C38AA00BFB62E /* SwiftFormat */,
 			);
@@ -1662,7 +1648,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PODS_ROOT = "${PROJECT_DIR}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1689,7 +1674,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PODS_ROOT = "${PROJECT_DIR}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
