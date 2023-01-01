@@ -1,5 +1,5 @@
 //
-//  WOTRequestRegistrator.swift
+//  RequestRegistrator.swift
 //  WOTKit
 //
 //  Created by Pavel Yeshchyk on 5/17/20.

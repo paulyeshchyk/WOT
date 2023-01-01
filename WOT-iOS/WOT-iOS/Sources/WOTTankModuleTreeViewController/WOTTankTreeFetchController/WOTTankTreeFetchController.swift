@@ -11,11 +11,11 @@ import WOTApi
 import WOTPivot
 
 @objc
-class WOTTankTreeFetchController: PivotFetchController {
-    override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
+class WOTTankTreeFetchController: NodeFetchController {
+    override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: NodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
-        var result = [WOTNodeProtocol]()
+        var result = [NodeProtocol]()
 
         let filtered = fetchedObjects()?.filter { predicate.evaluate(with: $0) }
 
@@ -40,7 +40,7 @@ class WOTTankTreeFetchController: PivotFetchController {
         return vehicles.modules_tree as? Set<ModulesTree>
     }
 
-    private func transform(tank: AnyObject, nodeCreator: WOTNodeCreatorProtocol?) -> [WOTNodeProtocol] {
+    private func transform(tank: AnyObject, nodeCreator: NodeCreatorProtocol?) -> [NodeProtocol] {
         guard let tankId = tankId(tank) else {
             return []
         }
@@ -53,7 +53,7 @@ class WOTTankTreeFetchController: PivotFetchController {
             return [root]
         }
 
-        var temporaryList = [Int: WOTNodeProtocol]()
+        var temporaryList = [Int: NodeProtocol]()
         let nodeCreation: NodeCreateClosure = { (id: Int, module: ModulesTree) in
             if let node = nodeCreator?.createNode(fetchedObject: module, byPredicate: nil) {
                 temporaryList[id] = node
@@ -68,7 +68,7 @@ class WOTTankTreeFetchController: PivotFetchController {
         return [root]
     }
 
-    private func append(listofNodes: [Int: WOTNodeProtocol], into root: WOTNodeProtocol) {
+    private func append(listofNodes: [Int: NodeProtocol], into root: NodeProtocol) {
         listofNodes.forEach { ident, value in
 
             let parents = findTheParent(childId: ident, listOfNodes: listofNodes)
@@ -80,8 +80,8 @@ class WOTTankTreeFetchController: PivotFetchController {
         }
     }
 
-    private func findTheParent(childId: Int, listOfNodes: [Int: WOTNodeProtocol]) -> [WOTNodeProtocol] {
-        var foundParents: [WOTNodeProtocol] = []
+    private func findTheParent(childId: Int, listOfNodes: [Int: NodeProtocol]) -> [NodeProtocol] {
+        var foundParents: [NodeProtocol] = []
 
         listOfNodes.forEach { (element) in
             if let next_nodesId = (element.value as? WOTTreeModuleNodeProtocol)?.modulesTree.next_nodesId() {

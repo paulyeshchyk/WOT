@@ -449,11 +449,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 #pragma mark - WOTGridViewControllerDelegate
 
-- (WOTPivotDataModel *)gridData {
+- (PivotDataModel *)gridData {
 
     WOTTankMetricsList *sample = [[WOTTankMetricsList alloc] init];
     [sample addWithTankId:[[WOTTanksIDList alloc] initWithTankID: [self.tankId stringValue]]];
-    [sample addWithMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
+//    [sample addWithMetrics:[WOTMetric metricsForOptions:self.metricOptions]];
     return [NSObject gridData:sample];
 }
 

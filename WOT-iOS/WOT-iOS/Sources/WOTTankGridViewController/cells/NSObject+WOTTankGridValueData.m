@@ -15,7 +15,7 @@
     return @"";
 }
 
-+ (WOTPivotDataModel * _Nullable)gridData:(WOTTankMetricsList *)metrics {
++ (PivotDataModel * _Nullable)gridData:(WOTTankMetricsList *)metrics {
     return nil;
 }
 
