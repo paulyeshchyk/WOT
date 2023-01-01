@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
-
 #warning("use WOTMetricProtocol instead of WOTMetric")
 
 public protocol WOTTankMetricsListProtocol {

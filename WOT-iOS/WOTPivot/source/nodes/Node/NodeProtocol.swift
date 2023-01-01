@@ -8,6 +8,7 @@
 
 public typealias WOTNodeProtocolCompletion = (NodeProtocol) -> Void
 public typealias NodeComparatorType = (_ node1: NodeProtocol, _ node2: NodeProtocol, _ level: Int) -> ComparisonResult
+public typealias NodeIndexType = Int
 
 @objc
 public protocol NodeProtocol: NSCopying, NSObjectProtocol {
@@ -25,7 +26,7 @@ public protocol NodeProtocol: NSCopying, NSObjectProtocol {
 
     var fullName: String { get }
 
-    var index: Int { get set }
+    var index: NodeIndexType { get set }
 
     func addChild(_ child: NodeProtocol)
 

@@ -98,7 +98,7 @@ open class CoreDataStore: DataStore {
 extension CoreDataStore {
     static func mainQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        managedObjectContext.name = "Main"
+        managedObjectContext.name = "Main: \(UUID().MD5)"
         managedObjectContext.parent = parent
         managedObjectContext.undoManager = nil
         return managedObjectContext
@@ -106,7 +106,7 @@ extension CoreDataStore {
 
     static func privateQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        managedObjectContext.name = "Private"
+        managedObjectContext.name = "Private: \(UUID().MD5)"
         managedObjectContext.parent = parent
         managedObjectContext.undoManager = nil
         return managedObjectContext
@@ -115,7 +115,7 @@ extension CoreDataStore {
     static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
-        managedObjectContext.name = "Master"
+        managedObjectContext.name = "Master: \(UUID().MD5)"
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }

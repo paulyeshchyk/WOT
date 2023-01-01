@@ -17,6 +17,7 @@
 		1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */; };
 		1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E506245FE541007E5CA8 /* WOTKit.framework */; };
 		1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */; };
+		DA12D07029621B3C0077F664 /* RequestManagerLogEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */; };
 		DA39E28D29609BC70099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; };
 		DA39E28E29609BC70099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */; };
@@ -69,6 +70,7 @@
 		1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		1D7E0692247D045F008CB848 /* WOTKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataAdapterCreator.swift; sourceTree = "<group>"; };
+		DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerLogEvents.swift; sourceTree = "<group>"; };
 		DA39E28C29609BC70099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCatalogExtractor.swift; sourceTree = "<group>"; };
 		DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				1D60E562245FE7E4007E5CA8 /* RequestManager.swift */,
+				DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */,
 			);
 			path = RequestManager;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */,
 				DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */,
+				DA12D07029621B3C0077F664 /* RequestManagerLogEvents.swift in Sources */,
 				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */,
 				1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */,

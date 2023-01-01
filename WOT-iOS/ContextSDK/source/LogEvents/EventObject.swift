@@ -6,9 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class EventObjectNew: LogEventProtocol {
+final public class EventObjectNew: LogEventProtocol {
     public var eventType: LogEventType { return .lifeCycle }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "OBJNew"}
 
     public init() {
@@ -24,9 +24,9 @@ public class EventObjectNew: LogEventProtocol {
     }
 }
 
-public class EventObjectFree: LogEventProtocol {
+final public class EventObjectFree: LogEventProtocol {
     public var eventType: LogEventType { return .lifeCycle }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "OBJFree"}
 
     public init() {

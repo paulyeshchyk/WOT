@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 @objc
 public protocol NodeEnumeratorProtocol: NSObjectProtocol {
     func endpoints(node: NodeProtocol?) -> [NodeProtocol]?

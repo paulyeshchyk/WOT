@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
-
 @objc
 public class WOTTankMetricOptions: NSObject, OptionSet {
     @objc public static let none = WOTTankMetricOptions(rawValue: 1 << 0)

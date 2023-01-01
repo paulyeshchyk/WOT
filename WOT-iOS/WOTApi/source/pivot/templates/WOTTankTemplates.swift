@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import ContextSDK
-import WOTKit
 import WOTPivot
 
 class WOTPivotTemplateVehicleTankID: PivotTemplateProtocol {

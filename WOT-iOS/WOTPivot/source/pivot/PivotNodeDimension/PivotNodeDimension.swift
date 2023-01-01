@@ -51,7 +51,7 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
         return CGSize(width: width, height: height) // 156:11
     }
 
-    private var index: Int = 0
+    private var index: NodeIndexType = 0
 
     #warning(" !!! TO BE refactored: too slow !!! ")
     override public func reload(forIndex externalIndex: Int, nodeCreator: NodeCreatorProtocol?) {

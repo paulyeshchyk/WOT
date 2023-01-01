@@ -30,6 +30,7 @@
 		1DD646471B1C616A00B0EC76 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DD646461B1C616A00B0EC76 /* Images.xcassets */; };
 		1DD6471A1B2084FF00B0EC76 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1DD647191B2084FF00B0EC76 /* podfile */; };
 		1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6471F1B20855400B0EC76 /* Localizable.strings */; };
+		8AD6F43E3E07FF8D8FFEB9C1 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78862B5E77DF034FEC5D9B2A /* Pods_WOT_iOS.framework */; };
 		DA39E25B296075140099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E257296075140099D877 /* ContextSDK.framework */; };
 		DA39E25C296075140099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E257296075140099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA39E25D296075140099D877 /* WOTApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E258296075140099D877 /* WOTApi.framework */; };
@@ -292,6 +293,7 @@
 		1DD647191B2084FF00B0EC76 /* podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		1DD6471E1B20855400B0EC76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A176CC6D9BAC80B33FBEA3A /* Pods-WOT-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		78862B5E77DF034FEC5D9B2A /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E257296075140099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E258296075140099D877 /* WOTApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E259296075140099D877 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -579,6 +581,7 @@
 				DA39E25D296075140099D877 /* WOTApi.framework in Frameworks */,
 				DA39E261296075140099D877 /* WOTPivot.framework in Frameworks */,
 				DA39E25B296075140099D877 /* ContextSDK.framework in Frameworks */,
+				8AD6F43E3E07FF8D8FFEB9C1 /* Pods_WOT_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +695,7 @@
 				DA39E258296075140099D877 /* WOTApi.framework */,
 				DA39E259296075140099D877 /* WOTKit.framework */,
 				DA39E25A296075140099D877 /* WOTPivot.framework */,
+				78862B5E77DF034FEC5D9B2A /* Pods_WOT_iOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

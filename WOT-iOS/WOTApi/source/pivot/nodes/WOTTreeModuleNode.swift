@@ -8,7 +8,7 @@
 
 @objc
 public class WOTTreeModuleNode: Node, WOTTreeModuleNodeProtocol {
-    public private(set) var modulesTree: WOTTreeModulesTreeProtocol
+    private(set) public var modulesTree: WOTTreeModulesTreeProtocol
     public var imageURL: URL? {
         return modulesTree.moduleLocalImageURL()
     }
