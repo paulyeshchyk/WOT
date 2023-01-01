@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public class DataGroupPivotNode: PivotNode {
     @objc
     public var fetchedObjects: [AnyObject]?

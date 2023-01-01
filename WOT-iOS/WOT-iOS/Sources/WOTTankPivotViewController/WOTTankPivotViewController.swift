@@ -10,7 +10,7 @@ import WOTKit
 import WOTPivot
 
 open class PivotViewController: UIViewController, ContextControllerProtocol {
-    public var context: ContextProtocol?
+    public var appContext: ContextProtocol?
     @IBOutlet open var collectionView: UICollectionView?
 
     @IBOutlet open var flowLayout: WGPivotColoredFlowLayout? {
@@ -42,18 +42,7 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
         return pivotModel()
     }()
 
-    static var openedPopoverKey: UInt8 = 0
-    var hasOpenedPopover: Bool {
-        get {
-            guard let result = objc_getAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey) as? Bool else {
-                return false
-            }
-            return result
-        }
-        set {
-            objc_setAssociatedObject(self, &WOTTankPivotViewController.openedPopoverKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
-        }
-    }
+    var hasOpenedPopover: Bool = false
 
     func closePopover() {
         hasOpenedPopover = false

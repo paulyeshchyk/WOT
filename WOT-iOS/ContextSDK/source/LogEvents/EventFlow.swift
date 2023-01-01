@@ -8,7 +8,7 @@
 @objc
 public class EventFlowStart: NSObject, LogEventProtocol {
     public var eventType: LogEventType { return .flow }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "FlowStart" }
 
     override public init() {
@@ -25,7 +25,7 @@ public class EventFlowStart: NSObject, LogEventProtocol {
 @objc
 public class EventFlowEnd: NSObject, LogEventProtocol {
     public var eventType: LogEventType { return .flow }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "FlowEnd" }
 
     override public init() {

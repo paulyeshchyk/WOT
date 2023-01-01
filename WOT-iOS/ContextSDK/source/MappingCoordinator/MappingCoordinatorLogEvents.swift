@@ -1,9 +1,8 @@
 //
-//  EventMapping.swift
-//  WOTPivot
+//  MappingCoordinatorLogEvents.swift
+//  ContextSDK
 //
-//  Created by Pavel Yeshchyk on 4/29/20.
-//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
+//  Created by Paul on 1.01.23.
 //
 
 public enum EventMappingType: String {
@@ -11,9 +10,9 @@ public enum EventMappingType: String {
     case Array
 }
 
-public class EventMappingStart: LogEventProtocol {
+final class EventMappingStart: LogEventProtocol {
     public var eventType: LogEventType { return .mapping }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "MappingStart" }
 
     public init(fetchResult: FetchResultProtocol, predicate: ContextPredicateProtocol, mappingType: EventMappingType) {
@@ -29,9 +28,9 @@ public class EventMappingStart: LogEventProtocol {
     }
 }
 
-public class EventMappingEnded: LogEventProtocol {
+final class EventMappingEnded: LogEventProtocol {
     public var eventType: LogEventType { return .mapping }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "MappingEnded" }
 
     public init(fetchResult: FetchResultProtocol, predicate: ContextPredicateProtocol, mappingType: EventMappingType) {
@@ -47,9 +46,9 @@ public class EventMappingEnded: LogEventProtocol {
     }
 }
 
-public class EventMappingInfo: LogEventProtocol {
+final public class EventMappingInfo: LogEventProtocol {
     public var eventType: LogEventType { return .mapping }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "MappingInfo" }
 
     public init(fetchResult: FetchResultProtocol, predicate: ContextPredicateProtocol, mappingType: EventMappingType) {

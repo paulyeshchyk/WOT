@@ -1,21 +1,20 @@
 //
-//  JSONNodeIndex.swift
+//  NodeIndex.swift
 //  WOT-iOS
 //
 //  Created on 7/12/18.
 //  Copyright © 2018. All rights reserved.
 //
 
-import ContextSDK
-import WOTKit
-
-@objc
-public class JSONNodeIndex: NSObject, NodeIndexProtocol {
+public class NodeIndex: NSObject, NodeIndexProtocol {
     // contains node.index: node
     // where node.index - global autoincremented value
     // used to get item by indexpath while iterating in  WOTPivotLayout::layoutAttributesForElementsInRect
 
-    private var index = JSON()
+    private var index = [AnyHashable: NodeProtocol]()
+    public static let Comparator: NodeComparatorType = { (_, _, _) in
+        return .orderedSame
+    }
 
     public func reset() {
         index.removeAll()
@@ -39,21 +38,23 @@ public class JSONNodeIndex: NSObject, NodeIndexProtocol {
     }
 
     public func item(indexPath: NSIndexPath) -> NodeProtocol? {
-        return index[indexPath.row] as? NodeProtocol
+        return index[indexPath.row]
     }
 
-    static let NodeEmptyComparator: NodeComparatorType = { (_, _, _) in
-        return .orderedSame
-    }
-
-    public func doAutoincrementIndex(forNodes: [NodeProtocol]) -> Int {
+    public func doAutoincrementIndex(forNodes nodes: [NodeProtocol]) -> Int {
         var result: Int = 0
-        forNodes.forEach { (node) in
-            NodeEnumerator.sharedInstance.enumerateAll(node: node, comparator: JSONNodeIndex.NodeEmptyComparator) { (node) in
+        nodes.forEach { (node) in
+            NodeEnumerator.sharedInstance.enumerateAll(node: node, comparator: NodeIndex.Comparator) { (node) in
                 node.index = result
                 result += 1
             }
         }
         return result
     }
+}
+
+@objc
+public class ObjCNodeIndex: NSObject {
+    @objc
+    public static let defaultIndex: NodeIndexProtocol = NodeIndex()
 }

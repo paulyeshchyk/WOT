@@ -1,14 +1,13 @@
 //
-//  EventJSON.swift
-//  WOTPivot
+//  JSONAdapterLogEvents.swift
+//  ContextSDK
 //
-//  Created by Pavel Yeshchyk on 4/21/20.
-//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
+//  Created by Paul on 1.01.23.
 //
 
-public class EventJSONStart: LogEventProtocol {
+final class EventJSONStart: LogEventProtocol {
     public var eventType: LogEventType { return .json }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "JSONStart" }
 
     public init() {
@@ -20,9 +19,9 @@ public class EventJSONStart: LogEventProtocol {
     }
 }
 
-public class EventJSONEnded: LogEventProtocol {
+final class EventJSONEnded: LogEventProtocol {
     public var eventType: LogEventType { return .json }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "JSONEnded" }
 
     public init() {

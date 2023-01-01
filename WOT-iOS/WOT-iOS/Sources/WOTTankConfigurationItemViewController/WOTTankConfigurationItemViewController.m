@@ -25,7 +25,7 @@
 
 @implementation WOTTankConfigurationItemViewController
 
-@synthesize context;
+@synthesize appContext;
 
 - (void)viewDidLoad {
     

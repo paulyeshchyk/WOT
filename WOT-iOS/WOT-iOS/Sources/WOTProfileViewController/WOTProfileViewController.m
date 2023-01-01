@@ -11,7 +11,7 @@
 
 @implementation WOTProfileViewController
 
-@synthesize context;
+@synthesize appContext;
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

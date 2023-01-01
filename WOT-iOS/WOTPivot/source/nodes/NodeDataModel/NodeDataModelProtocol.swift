@@ -6,8 +6,6 @@
 //  Copyright © 2023 Pavel Yeshchyk. All rights reserved.
 //
 
-import ContextSDK
-
 @objc
 public protocol NodeDataModelProtocol {
     var rootNodes: [NodeProtocol] { get }
@@ -21,7 +19,6 @@ public protocol NodeDataModelProtocol {
     func node(atIndexPath: NSIndexPath) -> NodeProtocol?
     func indexPath(forNode: NodeProtocol?) -> IndexPath?
     func loadModel()
-    func cancelLoad(reason: RequestCancelReasonProtocol)
 }
 
 @objc

@@ -18,5 +18,5 @@ public protocol ContextProtocol: LogInspectorContainerProtocol,
 
 @objc
 public protocol ContextControllerProtocol {
-    var context: ContextProtocol? { get set }
+    var appContext: ContextProtocol? { get set }
 }

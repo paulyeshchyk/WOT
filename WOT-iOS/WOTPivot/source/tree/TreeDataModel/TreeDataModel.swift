@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
     lazy var nodeConnectorIndex: TreeConnectorNodeIndexProtocol = { return TreeConnectorNodeIndex() }()
     public var levels: Int {

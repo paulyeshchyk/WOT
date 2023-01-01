@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public class FilterPivotDimensionCalculator: PivotDimensionCalculator {
     override class func x(forNode _: NodeProtocol, dimension _: PivotNodeDimensionProtocol) -> Int {
         return 0

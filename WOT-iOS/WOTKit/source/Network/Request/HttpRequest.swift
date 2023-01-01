@@ -68,7 +68,7 @@ extension HttpRequest: HttpServiceProtocol {
     open var httpBodyData: Data? { nil }
 }
 
-private class HttpRequestCancelEvent: LogEventProtocol {
+final private class HttpRequestCancelEvent: LogEventProtocol {
     var eventType: LogEventType { .info }
     var message: String { reason.reasonDescription }
     var name: String { "HttpRequestCancelEvent" }

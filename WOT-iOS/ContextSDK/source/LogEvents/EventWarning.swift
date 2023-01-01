@@ -6,9 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class EventWarning: LogEventProtocol {
+final public class EventWarning: LogEventProtocol {
     public var eventType: LogEventType { return .warning }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "Warning"}
 
     public init() {

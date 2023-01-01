@@ -5,8 +5,6 @@
 //  Created on 7/18/18.
 //
 
-import Foundation
-
 class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
     private typealias TreeLevelIndexTypeAlias = [Int: [NodeProtocol]]
 

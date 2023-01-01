@@ -104,7 +104,7 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
                    modelListener: modelListener,
                    nodeCreator: nodeCreator,
                    metadatasource: metadatasource,
-                   nodeIndex: JSONNodeIndex(),
+                   nodeIndex: ObjCNodeIndex.defaultIndex,
                    context: context)
 
         enumerator = NodeEnumerator.sharedInstance
@@ -142,11 +142,6 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         } catch {
             appContext.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
         }
-    }
-
-    override func cancelLoad(reason: RequestCancelReasonProtocol) {
-        //
-        appContext.requestManager?.cancelRequests(groupId: WebRequestType.vehicles.rawValue, reason: reason)
     }
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {

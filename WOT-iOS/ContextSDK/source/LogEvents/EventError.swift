@@ -6,9 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-public class EventError: LogEventProtocol {
+final public class EventError: LogEventProtocol {
     public var eventType: LogEventType { return .error }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "Error"}
 
     public init() {

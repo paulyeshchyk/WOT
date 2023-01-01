@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public class RowPivotNode: PivotNode {
     override public var stickyType: PivotStickyType {
         return PivotStickyType.horizontal
