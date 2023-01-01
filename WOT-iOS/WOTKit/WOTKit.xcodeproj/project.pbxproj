@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,28 +17,17 @@
 		1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */; };
 		1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E506245FE541007E5CA8 /* WOTKit.framework */; };
 		1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */; };
-		DA0E8044295064EC00B44CC6 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0E8043295064EC00B44CC6 /* ContextSDK.framework */; platformFilter = ios; };
+		DA39E28D29609BC70099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; };
+		DA39E28E29609BC70099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */; };
 		DA81E7CD295326B800C60F31 /* NSThread+ExecutionOnMain.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7CC295326B800C60F31 /* NSThread+ExecutionOnMain.m */; };
 		DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E85C295352FD00C60F31 /* NSBundle+LanguageBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E85D295352FE00C60F31 /* NSBundle+LanguageBundle.m */; };
-		DA81E8742953530000C60F31 /* UINavigationBar+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E85F295352FE00C60F31 /* UINavigationBar+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E8752953530000C60F31 /* UINavigationBar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E860295352FE00C60F31 /* UINavigationBar+WOT.m */; };
-		DA81E8762953530000C60F31 /* UIToolbar+WOT.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E861295352FE00C60F31 /* UIToolbar+WOT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E8772953530000C60F31 /* UIToolbar+WOT.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E862295352FE00C60F31 /* UIToolbar+WOT.m */; };
 		DA81E8782953530000C60F31 /* UIColor+HSB.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E864295352FE00C60F31 /* UIColor+HSB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E865295352FE00C60F31 /* UIColor+HSB.m */; };
 		DA81E87A2953530000C60F31 /* UIImage+Resize.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E867295352FE00C60F31 /* UIImage+Resize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E868295352FE00C60F31 /* UIImage+Resize.m */; };
-		DA81E87E2953530000C60F31 /* UIView+StretchingConstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E86D295352FF00C60F31 /* UIView+StretchingConstraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */; };
-		DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E870295352FF00C60F31 /* WOTProgressView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E8812953530000C60F31 /* WOTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E871295352FF00C60F31 /* WOTProgressView.m */; };
-		DA81E914295370BA00C60F31 /* NSString+RomanUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */; };
-		DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E912295370BA00C60F31 /* RomanNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E913295370BA00C60F31 /* RomanNumber.m */; };
 		DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA913E412959C01A00D39F0E /* CoreDataStore.swift */; };
 		DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */; };
 		DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */; };
@@ -54,8 +43,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		DA39E28F29609BC70099D877 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DA39E28E29609BC70099D877 /* ContextSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
@@ -68,31 +70,18 @@
 		1D60E56E245FE7E5007E5CA8 /* HttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		1D7E0692247D045F008CB848 /* WOTKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataAdapterCreator.swift; sourceTree = "<group>"; };
-		DA0E8043295064EC00B44CC6 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA39E28C29609BC70099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCatalogExtractor.swift; sourceTree = "<group>"; };
 		DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
 		DA81E7CC295326B800C60F31 /* NSThread+ExecutionOnMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+ExecutionOnMain.m"; sourceTree = "<group>"; };
 		DA81E85C295352FD00C60F31 /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
 		DA81E85D295352FE00C60F31 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
-		DA81E85F295352FE00C60F31 /* UINavigationBar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+WOT.h"; sourceTree = "<group>"; };
-		DA81E860295352FE00C60F31 /* UINavigationBar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+WOT.m"; sourceTree = "<group>"; };
-		DA81E861295352FE00C60F31 /* UIToolbar+WOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+WOT.h"; sourceTree = "<group>"; };
-		DA81E862295352FE00C60F31 /* UIToolbar+WOT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+WOT.m"; sourceTree = "<group>"; };
 		DA81E864295352FE00C60F31 /* UIColor+HSB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HSB.h"; sourceTree = "<group>"; };
 		DA81E865295352FE00C60F31 /* UIColor+HSB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HSB.m"; sourceTree = "<group>"; };
 		DA81E867295352FE00C60F31 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		DA81E868295352FE00C60F31 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		DA81E86D295352FF00C60F31 /* UIView+StretchingConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+StretchingConstraints.h"; sourceTree = "<group>"; };
-		DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StretchingConstraints.m"; sourceTree = "<group>"; };
-		DA81E870295352FF00C60F31 /* WOTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTProgressView.h; sourceTree = "<group>"; };
-		DA81E871295352FF00C60F31 /* WOTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTProgressView.m; sourceTree = "<group>"; };
-		DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RomanUtils.h"; sourceTree = "<group>"; };
-		DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RomanUtils.m"; sourceTree = "<group>"; };
-		DA81E912295370BA00C60F31 /* RomanNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomanNumber.h; sourceTree = "<group>"; };
-		DA81E913295370BA00C60F31 /* RomanNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomanNumber.m; sourceTree = "<group>"; };
 		DA913E412959C01A00D39F0E /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		DAAD81F829503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ObjectContextProtocol.swift"; sourceTree = "<group>"; };
-		DAAD823A29505864001B0ACD /* PYContext.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PYContext.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DACDB124296050DD005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DACDB12629605129005BBA72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStoreEmptyFetchResult.swift; sourceTree = "<group>"; };
@@ -103,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA0E8044295064EC00B44CC6 /* ContextSDK.framework in Frameworks */,
+				DA39E28D29609BC70099D877 /* ContextSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,7 +113,7 @@
 				1D60E508245FE541007E5CA8 /* source */,
 				1D60E5F324601DAB007E5CA8 /* tests */,
 				1D60E507245FE541007E5CA8 /* Products */,
-				DAAD823929505864001B0ACD /* Frameworks */,
+				DA39E28B29609BC70099D877 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,13 +149,9 @@
 		1D60E51D245FE7A7007E5CA8 /* categories */ = {
 			isa = PBXGroup;
 			children = (
-				DA81E90F295370BA00C60F31 /* RomanNumber */,
 				DA81E85B295352FD00C60F31 /* NSBundle */,
-				DA81E85E295352FE00C60F31 /* UIBar */,
 				DA81E863295352FE00C60F31 /* UIColor */,
 				DA81E866295352FE00C60F31 /* UIImage */,
-				DA81E86F295352FF00C60F31 /* UIProgressView */,
-				DA81E86C295352FF00C60F31 /* UIView */,
 				DA81E7CA295326B800C60F31 /* NSThread */,
 				DA81E7B729531EBF00C60F31 /* UIImage+Bundle */,
 				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
@@ -279,6 +264,14 @@
 			path = ResponseAdapterCreator;
 			sourceTree = "<group>";
 		};
+		DA39E28B29609BC70099D877 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA39E28C29609BC70099D877 /* ContextSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DA81E7B729531EBF00C60F31 /* UIImage+Bundle */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,17 +298,6 @@
 			path = NSBundle;
 			sourceTree = "<group>";
 		};
-		DA81E85E295352FE00C60F31 /* UIBar */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E85F295352FE00C60F31 /* UINavigationBar+WOT.h */,
-				DA81E860295352FE00C60F31 /* UINavigationBar+WOT.m */,
-				DA81E861295352FE00C60F31 /* UIToolbar+WOT.h */,
-				DA81E862295352FE00C60F31 /* UIToolbar+WOT.m */,
-			);
-			path = UIBar;
-			sourceTree = "<group>";
-		};
 		DA81E863295352FE00C60F31 /* UIColor */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,45 +316,6 @@
 			path = UIImage;
 			sourceTree = "<group>";
 		};
-		DA81E86C295352FF00C60F31 /* UIView */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E86D295352FF00C60F31 /* UIView+StretchingConstraints.h */,
-				DA81E86E295352FF00C60F31 /* UIView+StretchingConstraints.m */,
-			);
-			path = UIView;
-			sourceTree = "<group>";
-		};
-		DA81E86F295352FF00C60F31 /* UIProgressView */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E870295352FF00C60F31 /* WOTProgressView.h */,
-				DA81E871295352FF00C60F31 /* WOTProgressView.m */,
-			);
-			path = UIProgressView;
-			sourceTree = "<group>";
-		};
-		DA81E90F295370BA00C60F31 /* RomanNumber */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E910295370BA00C60F31 /* NSString+RomanUtils.h */,
-				DA81E911295370BA00C60F31 /* NSString+RomanUtils.m */,
-				DA81E912295370BA00C60F31 /* RomanNumber.h */,
-				DA81E913295370BA00C60F31 /* RomanNumber.m */,
-			);
-			path = RomanNumber;
-			sourceTree = "<group>";
-		};
-		DAAD823929505864001B0ACD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DA0E8043295064EC00B44CC6 /* ContextSDK.framework */,
-				DAAD823A29505864001B0ACD /* PYContext.framework */,
-				0BBDA62C4859376667143F03 /* Pods_WOTKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -380,14 +323,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA81E8742953530000C60F31 /* UINavigationBar+WOT.h in Headers */,
-				DA81E8762953530000C60F31 /* UIToolbar+WOT.h in Headers */,
 				DA81E8782953530000C60F31 /* UIColor+HSB.h in Headers */,
-				DA81E8802953530000C60F31 /* WOTProgressView.h in Headers */,
-				DA81E87E2953530000C60F31 /* UIView+StretchingConstraints.h in Headers */,
 				DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */,
-				DA81E916295370BA00C60F31 /* RomanNumber.h in Headers */,
-				DA81E914295370BA00C60F31 /* NSString+RomanUtils.h in Headers */,
 				DA81E7CD295326B800C60F31 /* NSThread+ExecutionOnMain.h in Headers */,
 				DA81E87A2953530000C60F31 /* UIImage+Resize.h in Headers */,
 				1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */,
@@ -407,6 +344,7 @@
 				1D60E504245FE541007E5CA8 /* Resources */,
 				1D60E5EA246013C0007E5CA8 /* sourcekitten */,
 				DA8A95A0295C38C200BFB62E /* SwiftFormat */,
+				DA39E28F29609BC70099D877 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -534,28 +472,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA81E8772953530000C60F31 /* UIToolbar+WOT.m in Sources */,
 				DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */,
 				1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */,
-				DA81E8752953530000C60F31 /* UINavigationBar+WOT.m in Sources */,
 				DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */,
 				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */,
 				1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */,
 				1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */,
-				DA81E87F2953530000C60F31 /* UIView+StretchingConstraints.m in Sources */,
 				DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */,
 				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
-				DA81E8812953530000C60F31 /* WOTProgressView.m in Sources */,
 				DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */,
-				DA81E917295370BA00C60F31 /* RomanNumber.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
 				DAF68F382950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift in Sources */,
-				DA81E915295370BA00C60F31 /* NSString+RomanUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

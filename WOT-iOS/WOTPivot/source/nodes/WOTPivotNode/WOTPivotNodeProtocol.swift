@@ -9,15 +9,6 @@
 import UIKit
 
 @objc
-public enum WOTPivotCellType: Int {
-    case filter
-    case column
-    case row
-    case data
-    case dataGroup
-}
-
-@objc
 public protocol WOTPivotNodeProtocol: WOTNodeProtocol {
     var imageURL: NSURL? { get set }
     var dataColor: UIColor? { get set }
@@ -30,4 +21,21 @@ public protocol WOTPivotNodeProtocol: WOTNodeProtocol {
     var indexInsideStepParentColumn: Int { get set }
     var stepParentColumn: WOTNodeProtocol? { get set }
     var stepParentRow: WOTNodeProtocol? { get set }
+}
+
+@objc
+public enum WOTPivotCellType: Int {
+    case filter
+    case column
+    case row
+    case data
+    case dataGroup
+}
+
+@objc
+public enum PivotMetadataType: Int {
+    case filter
+    case column
+    case row
+    case data
 }

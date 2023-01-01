@@ -11,7 +11,7 @@ import WOTApi
 import WOTPivot
 
 @objc
-class WOTTankTreeFetchController: WOTDataFetchController {
+class WOTTankTreeFetchController: PivotFetchController {
     override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: WOTNodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
