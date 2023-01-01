@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public class DataPivotNode: PivotNode {
     override public var cellType: PivotCellType {
         return .data

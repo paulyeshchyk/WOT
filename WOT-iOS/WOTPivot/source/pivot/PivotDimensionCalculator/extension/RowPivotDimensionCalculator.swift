@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public class RowPivotDimensionCalculator: PivotDimensionCalculator {
     override class func x(forNode: NodeProtocol, dimension _: PivotNodeDimensionProtocol) -> Int {
         return NodeEnumerator.sharedInstance.visibleParentsCount(node: forNode)

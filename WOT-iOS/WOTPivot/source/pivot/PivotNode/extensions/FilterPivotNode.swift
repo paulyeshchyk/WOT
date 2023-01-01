@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public class FilterPivotNode: PivotNode {
     override public var stickyType: PivotStickyType {
         let horizontal = UInt8(PivotStickyType.horizontal.rawValue)

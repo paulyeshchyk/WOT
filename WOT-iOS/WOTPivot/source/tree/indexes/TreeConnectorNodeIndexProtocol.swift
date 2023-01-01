@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public protocol TreeConnectorNodeIndexProtocol: NodeIndexProtocol {
     var width: Int { get }
     var levels: Int { get }

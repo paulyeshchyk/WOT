@@ -6,10 +6,8 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public typealias NodeLevelType = Int
-let NodeLevelTypeZero: Int = 0
+public let NodeLevelTypeZero: Int = 0
 
 @objc
 public protocol NodeIndexProtocol {

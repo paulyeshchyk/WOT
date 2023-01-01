@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 public class DataPivotDimensionCalculator: PivotDimensionCalculator {
     override class func x(forNode: NodeProtocol, dimension: PivotNodeDimensionProtocol) -> Int {
         guard let node = forNode as? PivotNodeProtocol else {

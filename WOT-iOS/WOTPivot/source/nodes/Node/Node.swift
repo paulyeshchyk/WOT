@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import ObjectiveC
-
 open class Node: NSObject, NodeProtocol {
     @objc
     public required init(name nameValue: String) {
@@ -49,7 +47,7 @@ open class Node: NSObject, NodeProtocol {
         return nil
     }
 
-    open var index: Int = 0
+    open var index: NodeIndexType = 0
 
     open func copy(with _: NSZone? = nil) -> Any {
         let result = type(of: self).init(name: name)

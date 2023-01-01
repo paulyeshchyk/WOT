@@ -6,9 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import ContextSDK
-import WOTKit
-
 @objc
 open class NodeDataModel: NSObject, NodeDataModelProtocol {
     public var nodeIndex: NodeIndexProtocol
@@ -30,10 +27,6 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
 
     open func loadModel() {
         reindexNodes()
-    }
-
-    open func cancelLoad(reason _: RequestCancelReasonProtocol) {
-        assertionFailure("should be overriden")
     }
 
     public func reindexNodes() {

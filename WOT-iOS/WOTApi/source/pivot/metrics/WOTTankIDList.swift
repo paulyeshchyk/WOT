@@ -6,8 +6,6 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
-import Foundation
-
 @objc
 public protocol WOTTanksIDListProtocol: NSObjectProtocol {
     var label: String { get }

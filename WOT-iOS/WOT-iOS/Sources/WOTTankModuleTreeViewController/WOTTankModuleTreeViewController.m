@@ -130,7 +130,6 @@
         id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
-        JSONNodeIndex *nodeIndex = [[JSONNodeIndex alloc] init];
         
         WOTTankTreeFetchController* fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
                                                                                                                appContext:appDelegate];
@@ -138,7 +137,7 @@
                                                               listener: self
                                                             enumerator: [NodeEnumerator sharedInstance]
                                                            nodeCreator: self
-                                                             nodeIndex: nodeIndex ];
+                                                             nodeIndex: ObjCNodeIndex.defaultIndex ];
     }
     return self;
 }

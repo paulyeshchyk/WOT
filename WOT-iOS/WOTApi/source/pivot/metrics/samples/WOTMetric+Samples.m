@@ -7,7 +7,6 @@
 //
 
 #import "WOTMetric+Samples.h"
-#import <WOTApi/WOTApi.h>
 #import "WOTTankDetailFieldExpression+Factory.h"
 
 //@interface StandardCompareMetricEvaluator: NSObject<WOTTankMetricEvaluatorProtocol>

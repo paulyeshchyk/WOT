@@ -6,8 +6,6 @@
 //  Copyright © 2018. All rights reserved.
 //
 
-import Foundation
-
 @objc
 public class NodeEnumerator: NSObject, NodeEnumeratorProtocol {
     @objc

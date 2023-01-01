@@ -8,7 +8,6 @@
 
 import ContextSDK
 import CoreData
-import WOTKit
 
 public typealias FilteredObjectCompletion = (NSPredicate, [AnyObject]?) -> Void
 
