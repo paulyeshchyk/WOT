@@ -1,0 +1,35 @@
+//
+//  PivotDataModelProtocol.swift
+//  WOT-iOS
+//
+//  Created on 7/20/18.
+//  Copyright © 2018. All rights reserved.
+//
+
+import UIKit
+
+public protocol PivotDataModelProtocol: NodeDataModelProtocol {
+    var contentSize: CGSize { get }
+    var shouldDisplayEmptyColumns: Bool { get set }
+    func itemRect(atIndexPath: NSIndexPath) -> CGRect
+    func item(atIndexPath: NSIndexPath) -> PivotNodeProtocol?
+    func itemsCount(section: Int) -> Int
+    func clearMetadataItems()
+    func add(metadataItems: [NodeProtocol])
+
+    var dimension: PivotNodeDimensionProtocol { get }
+}
+
+public protocol PivotNodeDatasourceProtocol: NSObjectProtocol {
+    var rootFilterNode: NodeProtocol { get }
+    var rootColsNode: NodeProtocol { get }
+    var rootRowsNode: NodeProtocol { get }
+    var rootDataNode: NodeProtocol { get }
+    func add(dataNode: NodeProtocol)
+}
+
+@objc
+public protocol PivotMetaDatasourceProtocol {
+    func metadataItems() -> [NodeProtocol]
+    func filters() -> [NodeProtocol]
+}

@@ -61,7 +61,6 @@
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
-		1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTDataTanksFetchControllerTest.swift; sourceTree = "<group>"; };
 		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiverProtocol.swift; sourceTree = "<group>"; };
@@ -129,35 +128,13 @@
 		1D60E508245FE541007E5CA8 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				DA39E2A429615B2D0099D877 /* extensions */,
 				1D60E536245FE7E4007E5CA8 /* CoreData */,
 				1D60E557245FE7E4007E5CA8 /* Network */,
-				1D60E51C245FE7A7007E5CA8 /* basics */,
 				1D60E509245FE541007E5CA8 /* WOTKit.h */,
 				DACDB12629605129005BBA72 /* Info.plist */,
 			);
 			path = source;
-			sourceTree = "<group>";
-		};
-		1D60E51C245FE7A7007E5CA8 /* basics */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E51D245FE7A7007E5CA8 /* categories */,
-			);
-			path = basics;
-			sourceTree = "<group>";
-		};
-		1D60E51D245FE7A7007E5CA8 /* categories */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E85B295352FD00C60F31 /* NSBundle */,
-				DA81E863295352FE00C60F31 /* UIColor */,
-				DA81E866295352FE00C60F31 /* UIImage */,
-				DA81E7CA295326B800C60F31 /* NSThread */,
-				DA81E7B729531EBF00C60F31 /* UIImage+Bundle */,
-				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
-				1D60E528245FE7A7007E5CA8 /* CGRect */,
-			);
-			path = categories;
 			sourceTree = "<group>";
 		};
 		1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */ = {
@@ -179,6 +156,7 @@
 		1D60E536245FE7E4007E5CA8 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				DA39E31B296190CF0099D877 /* extensions */,
 				DAF68F372950B5A6009CC124 /* CoreDataStoreEmptyFetchResult.swift */,
 				DA913E412959C01A00D39F0E /* CoreDataStore.swift */,
 			);
@@ -235,25 +213,8 @@
 			isa = PBXGroup;
 			children = (
 				DACDB124296050DD005BBA72 /* Info.plist */,
-				1D60E5F424601DCA007E5CA8 /* CoreData */,
 			);
 			path = tests;
-			sourceTree = "<group>";
-		};
-		1D60E5F424601DCA007E5CA8 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E5F524601DD8007E5CA8 /* FetchController */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
-		1D60E5F524601DD8007E5CA8 /* FetchController */ = {
-			isa = PBXGroup;
-			children = (
-				1D60E54B245FE7E4007E5CA8 /* WOTDataTanksFetchControllerTest.swift */,
-			);
-			path = FetchController;
 			sourceTree = "<group>";
 		};
 		1DFCC92C24714AAF005F580E /* ResponseAdapterCreator */ = {
@@ -270,6 +231,27 @@
 				DA39E28C29609BC70099D877 /* ContextSDK.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA39E2A429615B2D0099D877 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DA81E7CA295326B800C60F31 /* NSThread */,
+				DA81E866295352FE00C60F31 /* UIImage */,
+				DA81E863295352FE00C60F31 /* UIColor */,
+				DA81E85B295352FD00C60F31 /* NSBundle */,
+				DA81E7B729531EBF00C60F31 /* UIImage+Bundle */,
+				1D60E528245FE7A7007E5CA8 /* CGRect */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		DA39E31B296190CF0099D877 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1D60E522245FE7A7007E5CA8 /* NSManagedObjectContext */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		DA81E7B729531EBF00C60F31 /* UIImage+Bundle */ = {

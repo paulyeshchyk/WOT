@@ -21,7 +21,7 @@
 #import "UINavigationBar+WOT.h"
 
 
-@interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
+@interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<NodeCreatorProtocol>
 @property (nonatomic, weak) id<RequestManagerProtocol> requestManager;
 @end
 
@@ -30,10 +30,10 @@
 @dynamic requestManager;
 @dynamic useEmptyNode;
 
-- (id<WOTNodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
+- (id<NodeProtocol> _Nonnull)createNodeWithFetchedObject:(id<NSFetchRequestResult> _Nullable)fetchedObject byPredicate:(NSPredicate * _Nullable)byPredicate {
     if ([fetchedObject isKindOfClass: [Vehicles class]]) {
 #warning("add WOTTankNode")
-        return [[WOTNode alloc] initWithName:((Vehicles *)fetchedObject).name];
+        return [[Node alloc] initWithName:((Vehicles *)fetchedObject).name];
     } else if ([fetchedObject isKindOfClass: [ModulesTree class]]) {
         return [[WOTTreeModuleNode alloc] initWithModuleTree:(ModulesTree *)fetchedObject];
     } else  {
@@ -41,28 +41,28 @@
     }
 }
 
-- (id<WOTNodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
-   return [[WOTNode alloc] initWithName: name];
+- (id<NodeProtocol> _Nonnull)createNodeWithName:(NSString * _Nonnull)name {
+   return [[Node alloc] initWithName: name];
 }
 
-- (id<WOTNodeProtocol> _Nonnull)createEmptyNode {
+- (id<NodeProtocol> _Nonnull)createEmptyNode {
     NSAssert(NO, @"not overriden yet");
-    return [[WOTNode alloc] initWithName: @""];
+    return [[Node alloc] initWithName: @""];
 }
 
-- (id<WOTNodeProtocol> _Nonnull)createNodeGroupWithName:(NSString * _Nonnull)name fetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
+- (id<NodeProtocol> _Nonnull)createNodeGroupWithName:(NSString * _Nonnull)name fetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
     NSAssert(NO, @"not overriden yet");
-    return [[WOTNode alloc] initWithName: @""];
+    return [[Node alloc] initWithName: @""];
 }
 
-- (NSArray<id<WOTNodeProtocol>> * _Nonnull)createNodesWithFetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
+- (NSArray<id<NodeProtocol>> * _Nonnull)createNodesWithFetchedObjects:(NSArray * _Nonnull)fetchedObjects byPredicate:(NSPredicate * _Nullable)byPredicate {
     NSAssert(NO, @"not overriden yet");
-    return @[[[WOTNode alloc] initWithName: @""]];
+    return @[[[Node alloc] initWithName: @""]];
 }
 
 @end
 
-@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<WOTDataFetchControllerDelegateProtocol>
+@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<PivotFetchControllerDelegateProtocol>
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)
@@ -89,9 +89,9 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RequestListenerProtocol, RequestManagerListenerProtocol, WOTDataModelListener, MD5Protocol>
+@interface WOTTankModuleTreeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, RequestListenerProtocol, RequestManagerListenerProtocol, NodeDataModelListener, MD5Protocol>
 
-@property (nonatomic, strong) WOTTreeDataModel *model;
+@property (nonatomic, strong) TreeDataModel *model;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet WOTTankConfigurationFlowLayout *flowLayout;
 @property (nonatomic, strong) UIImageView *connectorsImageView;
@@ -130,13 +130,15 @@
         id<ContextProtocol> appDelegate = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
+        JSONNodeIndex *nodeIndex = [[JSONNodeIndex alloc] init];
         
         WOTTankTreeFetchController* fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
                                                                                                                appContext:appDelegate];
-        self.model = [[WOTTreeDataModel alloc] initWithFetchController: fetchController
+        self.model = [[TreeDataModel alloc] initWithFetchController: fetchController
                                                               listener: self
-                                                            enumerator: [WOTNodeEnumerator sharedInstance]
-                                                           nodeCreator: self];
+                                                            enumerator: [NodeEnumerator sharedInstance]
+                                                           nodeCreator: self
+                                                             nodeIndex: nodeIndex ];
     }
     return self;
 }
@@ -163,20 +165,18 @@
     [self.navigationItem setLeftBarButtonItems:@[cancelButtonItem]];
     [self.navigationController.navigationBar setDarkStyle];
     
-    [self.flowLayout setDepthCallback:^(){
-        
+    [self.flowLayout setDepthCallback:^NSInteger {
         return self.model.levels;
     }];
-
-    [self.flowLayout setWidthCallback:^(){
-        
+    
+    [self.flowLayout setWidthCallback:^NSInteger{
         return self.model.endpointsCount;
     }];
 
-    [self.flowLayout setLayoutPreviousSiblingNodeChildrenCountCallback:^(NSIndexPath *indexPath){
-
-        id<WOTNodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
-        NSInteger result = [WOTNodeEnumerator.sharedInstance childrenCountWithSiblingNode:node];
+    [self.flowLayout setLayoutPreviousSiblingNodeChildrenCountCallback:^NSInteger(NSIndexPath * _Nonnull indexPath) {
+        
+        id<NodeProtocol> node = [self.model nodeAtIndexPath: indexPath];
+        NSInteger result = [NodeEnumerator.sharedInstance childrenCountWithSiblingNode:node];
         return result;
     }];
 
@@ -219,7 +219,7 @@
 #pragma mark - UICollectionViewDelegate
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    id<WOTNodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
+    id<NodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
     WOTTankTreeNodeCollectionViewCell *result = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WOTTankTreeNodeCollectionViewCell class]) forIndexPath:indexPath];
     result.indexPath = indexPath;
     result.label.text = node.name;
@@ -231,7 +231,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    id<WOTNodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
+    id<NodeProtocol> node = [self.model nodeAtIndexPath:indexPath];
 
     if ([node conformsToProtocol:@protocol(WOTTreeModuleNodeProtocol)]) {
         id<WOTTreeModuleNodeProtocol> treeNode = (id<WOTTreeModuleNodeProtocol>) node;

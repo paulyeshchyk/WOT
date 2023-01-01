@@ -81,7 +81,7 @@
     WOTTankGridCollectionSubitemTableViewCell *result = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOTTankGridCollectionSubitemTableViewCell class]) forIndexPath:indexPath];
 
 
-    id<WOTNodeProtocol> node = self.subitems[indexPath.row];
+    id<NodeProtocol> node = self.subitems[indexPath.row];
     NSString *valueText = [NSObject gridValueData: node];
 
     result.captionText = node.name;
