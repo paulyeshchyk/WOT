@@ -13,8 +13,8 @@ import WOTPivot
 
 class SteelPivotViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView?
-    lazy var model: WOTPivotDataModel = {
-        return WOTPivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, metadatasource: self.metadatasource)
+    lazy var model: PivotDataModel = {
+        return PivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, metadatasource: self.metadatasource)
     }()
 
     lazy var fetchController: WOTDataFetchControllerProtocol = {
@@ -31,10 +31,10 @@ class SteelPivotViewController: UIViewController {
 }
 
 class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
-    private let permutator = WOTPivotMetadataPermutator()
+    private let permutator = PivotMetadataPermutator()
 
-    func metadataItems() -> [WOTNodeProtocol] {
-        var result = [WOTNodeProtocol]()
+    func metadataItems() -> [NodeProtocol] {
+        var result = [NodeProtocol]()
 
         var templates = WOTPivotTemplates()
 //        let levelPrem = templates.vehiclePremium
@@ -52,21 +52,21 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
         return result
     }
 
-    func filters() -> [WOTNodeProtocol] {
-        return [WOTPivotFilterNode(name: "Filter")]
+    func filters() -> [NodeProtocol] {
+        return [FilterPivotNode(name: "Filter")]
     }
 }
 
 class SteelPivotFetchController: WOTDataFetchControllerProtocol {
-    func fetchedNodes(byPredicates _: [NSPredicate], nodeCreator _: WOTNodeCreatorProtocol?, filteredCompletion _: (NSPredicate, [AnyObject]?) -> Void) {}
+    func fetchedNodes(byPredicates _: [NSPredicate], nodeCreator _: NodeCreatorProtocol?, filteredCompletion _: (NSPredicate, [AnyObject]?) -> Void) {}
 
     var listener: WOTDataFetchControllerListenerProtocol?
 
-    func performFetch(nodeCreator _: WOTNodeCreatorProtocol?) throws {
+    func performFetch(nodeCreator _: NodeCreatorProtocol?) throws {
         listener?.fetchPerformed(by: self)
     }
 
-    func fetchedNodes(byPredicates: [NSPredicate]) -> [WOTNodeProtocol] {
+    func fetchedNodes(byPredicates: [NSPredicate]) -> [NodeProtocol] {
         print(byPredicates)
         return []
     }
@@ -80,31 +80,31 @@ class SteelPivotFetchController: WOTDataFetchControllerProtocol {
     }
 }
 
-extension SteelPivotViewController: WOTDataModelListener {
+extension SteelPivotViewController: DataModelListener {
     func didFinishLoadModel(error _: Error?) {
         collectionView?.reloadData()
     }
 
-    func metadataItems() -> [WOTNodeProtocol] {
+    func metadataItems() -> [NodeProtocol] {
         return []
     }
 }
 
-extension SteelPivotViewController: WOTDataFetchControllerDelegateProtocol {
+extension SteelPivotViewController: PivotFetchControllerDelegateProtocol {
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
         return NSFetchRequest(entityName: "test")
     }
 }
 
-extension SteelPivotViewController: WOTNodeCreatorProtocol {
-    func createNodeGroup(name: String, fetchedObjects: [AnyObject], byPredicate _: NSPredicate?) -> WOTNodeProtocol {
-        let result = WOTPivotDataGroupNode(name: name)
+extension SteelPivotViewController: NodeCreatorProtocol {
+    func createNodeGroup(name: String, fetchedObjects: [AnyObject], byPredicate _: NSPredicate?) -> NodeProtocol {
+        let result = DataGroupPivotNode(name: name)
         result.fetchedObjects = fetchedObjects
         return result
     }
 
-    func createNode(fetchedObject _: AnyObject?, byPredicate _: NSPredicate?) -> WOTNodeProtocol {
-        return WOTPivotDataNode(name: "noname")
+    func createNode(fetchedObject _: AnyObject?, byPredicate _: NSPredicate?) -> NodeProtocol {
+        return DataPivotNode(name: "noname")
     }
 
     var collapseToGroups: Bool {
@@ -115,24 +115,24 @@ extension SteelPivotViewController: WOTNodeCreatorProtocol {
         return true
     }
 
-    func createEmptyNode() -> WOTNodeProtocol {
-        return WOTNode(name: "Test")
+    func createEmptyNode() -> NodeProtocol {
+        return Node(name: "Test")
     }
 
-    func createNode(name: String) -> WOTNodeProtocol {
-        return WOTNode(name: name)
+    func createNode(name: String) -> NodeProtocol {
+        return Node(name: name)
     }
 
-    func createNode(fetchedObject _: NSManagedObject?, byPredicate _: NSPredicate?) -> WOTNodeProtocol {
-        return WOTNode(name: "Test")
+    func createNode(fetchedObject _: NSManagedObject?, byPredicate _: NSPredicate?) -> NodeProtocol {
+        return Node(name: "Test")
     }
 
-    func createNodes(fetchedObjects _: [AnyObject], byPredicate _: NSPredicate?) -> [WOTNodeProtocol] {
-        return [WOTNode(name: "Test")]
+    func createNodes(fetchedObjects _: [AnyObject], byPredicate _: NSPredicate?) -> [NodeProtocol] {
+        return [Node(name: "Test")]
     }
 
-    func createNodeGroup(fetchedObjects _: [AnyObject], byPredicate _: NSPredicate?) -> WOTNodeProtocol {
-        return WOTNode(name: "Test")
+    func createNodeGroup(fetchedObjects _: [AnyObject], byPredicate _: NSPredicate?) -> NodeProtocol {
+        return Node(name: "Test")
     }
 }
 
