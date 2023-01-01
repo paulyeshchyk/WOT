@@ -62,12 +62,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 @implementation WOTTankDetailViewController
 
-@synthesize context;
-
-- (id<RequestManagerProtocol>) requestManager {
-    id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
-    return ((id<ContextProtocol>) delegate).requestManager;
-}
+@synthesize appContext;
 
 #define WOT_REQUEST_ID_VEHICLE_ITEM @"WOT_REQUEST_ID_VEHICLE_ITEM"
 
@@ -90,6 +85,14 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     self.radarViewController.delegate = nil;
     self.radarViewController = nil;
 //    self.nestedRequestsEvaluator = nil;
+}
+
+- (id)initWithContext:(id<ContextProtocol>)context {
+    self = [super initWithNibName:NSStringFromClass([WOTTankDetailViewController class]) bundle:nil];
+    if (self) {
+        self.appContext = context;
+    }
+    return self;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -271,7 +274,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
          * Default Profile
          */
         [WOTWEBRequestFactory fetchProfileDataWithProfileTankId: [tankId integerValue]
-                                                 requestManager: self.requestManager
+                                                 requestManager: self.appContext.requestManager
                                                        listener: self
                                                           error: &error];
     }
@@ -320,10 +323,9 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (void)refetchTankID:(NSInteger)tankID groupId:(id)groupId{
 
-    id<ContextProtocol> appContext = (id<ContextProtocol>)[[UIApplication sharedApplication] delegate];
     NSError *error = nil;
     [WOTWEBRequestFactory fetchVehicleTreeDataWithVehicleId: tankID
-                                                 appContext: appContext
+                                                 appContext: self.appContext
                                                    listener: self
                                                       error: &error];
 }

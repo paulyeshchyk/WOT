@@ -26,7 +26,7 @@
 
 @implementation WOTDrawerViewController
 
-@synthesize context;
+@synthesize appContext;
 
 #warning "Broken logic: UIViewController may not possess UI in NIB"
 + (UIViewController *)centerViewControllerForClassName:(Class )class title:(NSString *)title image:(UIImage *)image{

@@ -17,7 +17,7 @@ public protocol WOTTanksIDListProtocol: NSObjectProtocol {
 
 @objc
 public class WOTTanksIDList: NSObject {
-    public private(set) var allObjects = [String]()
+    private(set) public var allObjects = [String]()
 
     public var label: String {
         return allObjects.joined(separator: "-")

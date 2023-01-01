@@ -12,9 +12,13 @@ import CoreData
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
     // MARK: - ManagedObjectContextLookupProtocol
 
-    public func execute(with block: @escaping (ManagedObjectContextProtocol) -> Void) {
+    public func execute(appContext: ManagedObjectContextLookupProtocol.Context, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
+        let uuid = UUID()
+        let initiationDate = Date()
+        appContext.logInspector?.logEvent(EvenDatastoreWillExecute(uuid: uuid), sender: self)
         perform {
             block(self)
+            appContext.logInspector?.logEvent(EvenDatastoreDidExecute(uuid: uuid, initiatedIn: initiationDate), sender: self)
         }
     }
 
@@ -39,7 +43,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return hasChanges
     }
 
-    public func save(completion block: @escaping ThrowableCompletion) {
+    public func save(appContext: ManagedObjectContextSaveProtocol.Context, completion block: @escaping ThrowableCompletion) {
         let privateCompletion: ThrowableCompletion = { error in
             self.perform {
                 block(error)
@@ -50,15 +54,21 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             return
         }
 
+        let uuid = UUID()
+        let initiationDate = Date()
+        appContext.logInspector?.logEvent(EvenDatastoreWillSave(uuid: uuid, description: name ?? "?"), sender: self)
         performAndWait {
             do {
                 try self.save()
+                appContext.logInspector?.logEvent(EvenDatastoreDidSave(uuid: uuid, initiatedIn: initiationDate, description: name ?? "?"), sender: self)
+
                 if let parent = self.parent {
-                    parent.save(completion: privateCompletion)
+                    parent.save(appContext: appContext, completion: privateCompletion)
                 } else {
                     privateCompletion(nil)
                 }
             } catch {
+                appContext.logInspector?.logEvent(EvenDatastoreSaveFailed(uuid: uuid, initiatedIn: initiationDate, description: name ?? "?"), sender: self)
                 privateCompletion(error)
             }
         }

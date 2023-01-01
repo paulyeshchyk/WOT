@@ -1,14 +1,16 @@
 //
-//  EventWEB.swift
-//  WOTPivot
+//  RequestManagerLogEvents.swift
+//  WOTKit
 //
-//  Created by Pavel Yeshchyk on 4/21/20.
-//  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
+//  Created by Paul on 1.01.23.
+//  Copyright © 2023 Pavel Yeshchyk. All rights reserved.
 //
 
-public class EventRequestListenerStart: LogEventProtocol {
+import ContextSDK
+
+final class EventRequestListenerStart: LogEventProtocol {
     public var eventType: LogEventType { return .http }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "HTTPStart" }
 
     public init() {
@@ -20,9 +22,9 @@ public class EventRequestListenerStart: LogEventProtocol {
     }
 }
 
-public class EventRequestListenerCancel: LogEventProtocol {
+final class EventRequestListenerCancel: LogEventProtocol {
     public var eventType: LogEventType { return .http }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "HTTPCancel" }
 
     public init() {
@@ -39,9 +41,9 @@ public class EventRequestListenerCancel: LogEventProtocol {
     }
 }
 
-public class EventRequestListenerEnd: LogEventProtocol {
+final class EventRequestListenerEnd: LogEventProtocol {
     public var eventType: LogEventType { return .http }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "HTTPEnded" }
 
     public init() {
@@ -53,9 +55,9 @@ public class EventRequestListenerEnd: LogEventProtocol {
     }
 }
 
-public class EventLongTermStart: LogEventProtocol {
+final class EventLongTermStart: LogEventProtocol {
     public var eventType: LogEventType { return .longTermOperation }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "LongTermStart" }
 
     public required init?(_ text: String) {
@@ -67,9 +69,9 @@ public class EventLongTermStart: LogEventProtocol {
     }
 }
 
-public class EventLongTermEnd: LogEventProtocol {
+final class EventLongTermEnd: LogEventProtocol {
     public var eventType: LogEventType { return .longTermOperation }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "LongTermEnd" }
 
     public required init?(_ text: String) {
@@ -81,9 +83,9 @@ public class EventLongTermEnd: LogEventProtocol {
     }
 }
 
-public class EventRequestManagerFetchStart: LogEventProtocol {
+final class EventRequestManagerFetchStart: LogEventProtocol {
     public var eventType: LogEventType { return .remoteFetch }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "RMStart" }
 
     public init() {
@@ -99,9 +101,9 @@ public class EventRequestManagerFetchStart: LogEventProtocol {
     }
 }
 
-public class EventRequestManagerFetchCancel: LogEventProtocol {
+final class EventRequestManagerFetchCancel: LogEventProtocol {
     public var eventType: LogEventType { return .remoteFetch }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "RMCancel" }
 
     public init() {
@@ -117,9 +119,9 @@ public class EventRequestManagerFetchCancel: LogEventProtocol {
     }
 }
 
-public class EventRequestManagerFetchEnd: LogEventProtocol {
+final class EventRequestManagerFetchEnd: LogEventProtocol {
     public var eventType: LogEventType { return .remoteFetch }
-    public private(set) var message: String
+    private(set) public var message: String
     public var name: String { return "RMEnd" }
 
     public init() {

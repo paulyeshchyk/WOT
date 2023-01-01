@@ -99,7 +99,7 @@
 @end
 
 @implementation WOTTankModuleTreeViewController
-@synthesize context;
+@synthesize appContext;
 @synthesize MD5;
 @synthesize uuid;
 

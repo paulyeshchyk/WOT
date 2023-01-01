@@ -15,6 +15,6 @@
 
 @implementation WOTPlayersListViewController
 
-@synthesize context;
+@synthesize appContext;
 
 @end

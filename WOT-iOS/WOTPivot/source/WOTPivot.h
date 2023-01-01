@@ -15,7 +15,3 @@ FOUNDATION_EXPORT double WOTPivotVersionNumber;
 FOUNDATION_EXPORT const unsigned char WOTPivotVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WOTPivot/PublicHeader.h>
-
-
-
-#import <WOTPivot/PivotStickyType.h>

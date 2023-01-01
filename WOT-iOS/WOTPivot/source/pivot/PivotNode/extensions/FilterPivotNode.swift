@@ -8,10 +8,9 @@
 
 public class FilterPivotNode: PivotNode {
     override public var stickyType: PivotStickyType {
-        let horizontal = UInt8(PivotStickyType.horizontal.rawValue)
-        let vertical = UInt8(PivotStickyType.vertical.rawValue)
-        let raw = PivotStickyType.RawValue(horizontal | vertical)
-        return PivotStickyType(rawValue: raw)!
+        let vertical = PivotStickyType.vertical.rawValue
+        let horizontal = PivotStickyType.horizontal.rawValue
+        return PivotStickyType(rawValue: vertical | horizontal)
     }
 
     override public var cellType: PivotCellType {

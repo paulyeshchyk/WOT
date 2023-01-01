@@ -38,7 +38,7 @@
 		1DE5591E212458E100576D41 /* TreeConnectorNodeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5591C212458E100576D41 /* TreeConnectorNodeIndex.swift */; };
 		1DE5595921255AA100576D41 /* TreeConnectorNodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595821255AA100576D41 /* TreeConnectorNodeIndexProtocol.swift */; };
 		1DE5595B21255AE400576D41 /* NodeIndexProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5595A21255AE400576D41 /* NodeIndexProtocol.swift */; };
-		DA39E28A296097F20099D877 /* PivotStickyType.h in Headers */ = {isa = PBXBuildFile; fileRef = DA39E288296096520099D877 /* PivotStickyType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA12D0682961D00F0077F664 /* PivotStickyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA12D0672961D00F0077F664 /* PivotStickyType.swift */; };
 		DA39E29229609BE50099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E29129609BE50099D877 /* ContextSDK.framework */; };
 		DA39E29329609BE50099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E29129609BE50099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA39E2CA296173CA0099D877 /* NodeDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39E2C9296173CA0099D877 /* NodeDataModelProtocol.swift */; };
@@ -113,7 +113,7 @@
 		1DE5591C212458E100576D41 /* TreeConnectorNodeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeConnectorNodeIndex.swift; sourceTree = "<group>"; };
 		1DE5595821255AA100576D41 /* TreeConnectorNodeIndexProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeConnectorNodeIndexProtocol.swift; sourceTree = "<group>"; };
 		1DE5595A21255AE400576D41 /* NodeIndexProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeIndexProtocol.swift; sourceTree = "<group>"; };
-		DA39E288296096520099D877 /* PivotStickyType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PivotStickyType.h; sourceTree = "<group>"; };
+		DA12D0672961D00F0077F664 /* PivotStickyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PivotStickyType.swift; sourceTree = "<group>"; };
 		DA39E29129609BE50099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E29529609BF10099D877 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E2C9296173CA0099D877 /* NodeDataModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDataModelProtocol.swift; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 				1DE558CE2124560500576D41 /* extensions */,
 				1DE558D62124560500576D41 /* PivotNode.swift */,
 				1DE558D72124560500576D41 /* PivotNodeProtocol.swift */,
-				DA39E288296096520099D877 /* PivotStickyType.h */,
+				DA12D0672961D00F0077F664 /* PivotStickyType.swift */,
 			);
 			path = PivotNode;
 			sourceTree = "<group>";
@@ -431,8 +431,8 @@
 		DA39E317296189730099D877 /* PivotDimensionCalculator */ = {
 			isa = PBXGroup;
 			children = (
-				DA39E304296185EB0099D877 /* PivotDimensionCalculator.swift */,
 				DA39E2FE296185EB0099D877 /* extension */,
+				DA39E304296185EB0099D877 /* PivotDimensionCalculator.swift */,
 			);
 			path = PivotDimensionCalculator;
 			sourceTree = "<group>";
@@ -453,7 +453,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA39E28A296097F20099D877 /* PivotStickyType.h in Headers */,
 				1D79EDB6212439C2005FBA34 /* WOTPivot.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,6 +582,7 @@
 			files = (
 				DA39E310296185EB0099D877 /* PivotNodeDimension.swift in Sources */,
 				1DC6D4CA212576EA00A1C9C2 /* PivotDataModelProtocol.swift in Sources */,
+				DA12D0682961D00F0077F664 /* PivotStickyType.swift in Sources */,
 				DA39E30E296185EB0099D877 /* PivotDimensionCalculator.swift in Sources */,
 				1DE558DF2124560500576D41 /* ColPivotNode.swift in Sources */,
 				1DE559042124571000576D41 /* NodeDataModel.swift in Sources */,

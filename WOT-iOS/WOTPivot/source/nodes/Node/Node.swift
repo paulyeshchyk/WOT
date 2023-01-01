@@ -32,7 +32,7 @@ open class Node: NSObject, NodeProtocol {
 
     open var children: [NodeProtocol] = [NodeProtocol]()
 
-    open private(set) var parent: NodeProtocol?
+    private(set) open var parent: NodeProtocol?
 
     open var isVisible: Bool = true
 

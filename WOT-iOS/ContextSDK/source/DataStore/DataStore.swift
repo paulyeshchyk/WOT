@@ -62,13 +62,13 @@ extension DataStore: DataStoreProtocol {
     }
 
     open func perform(block: @escaping ObjectContextCompletion) {
-        workingContext().execute { context in
+        workingContext().execute(appContext: appContext) { context in
             block(context)
         }
     }
 
     open func perform(objectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
-        objectContext.execute { context in
+        objectContext.execute(appContext: appContext) { context in
             block(context)
         }
     }
@@ -83,21 +83,14 @@ extension DataStore: DataStoreProtocol {
             return
         }
 
-        let initialDate = Date()
-
-        objectContext.save { [weak self] error in
+        objectContext.save(appContext: appContext) { error in
             completion(error)
-            self?.appContext.logInspector?.logEvent(EventCDStashEnded(context: objectContext, initiatedIn: initialDate), sender: self)
-            self?.appContext.logInspector?.logEvent(EventTimeMeasure("Context save end"), sender: self)
         }
-
-        appContext.logInspector?.logEvent(EventCDStashStart(context: objectContext), sender: self)
-        appContext.logInspector?.logEvent(EventTimeMeasure("Context save start"), sender: self)
     }
 
     public func fetchLocal(byModelClass modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
         let localCallback: FetchResultCompletion = { fetchResult, error in
-            self.workingContext().execute { managedObjectContext in
+            self.workingContext().execute(appContext: self.appContext) { managedObjectContext in
                 let fetchResultForContext = fetchResult?.makeDublicate(inContext: managedObjectContext)
                 completion(fetchResultForContext, error)
             }
