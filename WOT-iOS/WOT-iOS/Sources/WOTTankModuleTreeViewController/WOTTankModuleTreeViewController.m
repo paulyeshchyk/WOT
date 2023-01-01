@@ -17,6 +17,9 @@
 #import "UIImageView+WebCache.h"
 #import <WOTKit/WOTKit.h>
 #import <ContextSDK/ContextSDK-Swift.h>
+#import "UIToolbar+WOT.h"
+#import "UINavigationBar+WOT.h"
+
 
 @interface WOTTankModuleTreeViewController(WOTNodeCreatorProtocol)<WOTNodeCreatorProtocol>
 @property (nonatomic, weak) id<RequestManagerProtocol> requestManager;
@@ -129,7 +132,7 @@
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
         WOTTankTreeFetchController* fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
-                                                                                           context:appDelegate];
+                                                                                                               appContext:appDelegate];
         self.model = [[WOTTreeDataModel alloc] initWithFetchController: fetchController
                                                               listener: self
                                                             enumerator: [WOTNodeEnumerator sharedInstance]

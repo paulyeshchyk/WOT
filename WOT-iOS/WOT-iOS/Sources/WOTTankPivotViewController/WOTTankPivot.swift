@@ -95,7 +95,7 @@ class WOTTankPivotModel: WOTPivotDataModel, RequestManagerListenerProtocol {
     required init(modelListener: WOTDataModelListener, context: Context, settingsDatasource: WOTTankListSettingsDatasource) {
         appContext = context
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = WOTDataFetchController(nodeFetchRequestCreator: fetchRequest, context: context)
+        let fetchController = PivotFetchController(nodeFetchRequestCreator: fetchRequest, appContext: context)
 
         let metadatasource = WOTTankPivotMetadatasource()
         let nodeCreator = WOTTankPivotNodeCreator()
