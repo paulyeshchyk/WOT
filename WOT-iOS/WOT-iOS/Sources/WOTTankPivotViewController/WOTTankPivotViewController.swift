@@ -20,11 +20,11 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
                 return size ?? CGSize.zero
             }
             flowLayout?.itemRelativeRectCallback = { [weak self] (indexPath) in
-                let itemRect = self?.model.itemRect(atIndexPath: indexPath as NSIndexPath)
+                let itemRect = self?.model.itemRect(atIndexPath: indexPath)
                 return itemRect ?? CGRect.zero
             }
             flowLayout?.itemLayoutStickyType = { [weak self] (indexPath) in
-                let node = self?.model.item(atIndexPath: indexPath as NSIndexPath)
+                let node = self?.model.item(atIndexPath: indexPath)
                 return node?.stickyType ?? .float
             }
         }
@@ -102,7 +102,7 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
 
 extension PivotViewController: UICollectionViewDataSource {
     public func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let node = model.item(atIndexPath: indexPath as NSIndexPath) else {
+        guard let node = model.item(atIndexPath: indexPath) else {
             return UICollectionViewCell()
         }
         return cell(forNode: node, at: indexPath)
@@ -115,7 +115,7 @@ extension PivotViewController: UICollectionViewDataSource {
 
 extension PivotViewController: UICollectionViewDelegate {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let pivotNode = model.item(atIndexPath: indexPath as NSIndexPath) else {
+        guard let pivotNode = model.item(atIndexPath: indexPath) else {
             return
         }
 

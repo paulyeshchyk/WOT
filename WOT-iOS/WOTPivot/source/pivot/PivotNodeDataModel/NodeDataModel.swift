@@ -64,8 +64,8 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
         return 0
     }
 
-    public func node(atIndexPath indexPath: NSIndexPath) -> NodeProtocol? {
-        return nodeIndex.item(indexPath: indexPath)
+    public func node(atIndexPath: IndexPath) -> NodeProtocol? {
+        return nodeIndex.item(indexPath: atIndexPath)
     }
 
     public func indexPath(forNode _: NodeProtocol?) -> IndexPath? {

@@ -61,7 +61,7 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
 
     func set(itemsCount _: Int, atLevel _: NodeLevelType) {}
 
-    func item(indexPath: NSIndexPath) -> NodeProtocol? {
+    func item(indexPath: IndexPath) -> NodeProtocol? {
         let itemsAtSection = levelIndex[indexPath.section]
         return itemsAtSection?[indexPath.row]
     }

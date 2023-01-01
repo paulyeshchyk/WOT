@@ -56,8 +56,8 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         return nodeConnectorIndex.itemsCount(atLevel: section)
     }
 
-    override public func node(atIndexPath indexPath: NSIndexPath) -> NodeProtocol? {
-        return nodeConnectorIndex.item(indexPath: indexPath)
+    override public func node(atIndexPath: IndexPath) -> NodeProtocol? {
+        return nodeConnectorIndex.item(indexPath: atIndexPath)
     }
 
     override public func indexPath(forNode: NodeProtocol?) -> IndexPath? {

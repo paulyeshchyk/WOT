@@ -23,7 +23,7 @@ public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNod
             for j in 0 ..< forModel.nodesCount(section: i) {
                 let indexPath = IndexPath(row: j, section: i)
                 let frame = flowLayout.cellFrame(indexPath: indexPath)
-                if let node = forModel.node(atIndexPath: indexPath as NSIndexPath) {
+                if let node = forModel.node(atIndexPath: indexPath) {
                     uiGraphicsContext.drawNodeConnector(frame: frame, node: node, model: forModel, layout: flowLayout)
                 }
             }

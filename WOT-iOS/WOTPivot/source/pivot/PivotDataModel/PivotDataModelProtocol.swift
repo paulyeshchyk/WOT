@@ -11,8 +11,8 @@ import UIKit
 public protocol PivotDataModelProtocol: NodeDataModelProtocol {
     var contentSize: CGSize { get }
     var shouldDisplayEmptyColumns: Bool { get set }
-    func itemRect(atIndexPath: NSIndexPath) -> CGRect
-    func item(atIndexPath: NSIndexPath) -> PivotNodeProtocol?
+    func itemRect(atIndexPath: IndexPath) -> CGRect
+    func item(atIndexPath: IndexPath) -> PivotNodeProtocol?
     func itemsCount(section: Int) -> Int
     func clearMetadataItems()
     func add(metadataItems: [NodeProtocol])

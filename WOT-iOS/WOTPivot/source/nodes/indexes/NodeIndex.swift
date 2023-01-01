@@ -37,7 +37,7 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
         return index.keys.count
     }
 
-    public func item(indexPath: NSIndexPath) -> NodeProtocol? {
+    public func item(indexPath: IndexPath) -> NodeProtocol? {
         return index[indexPath.row]
     }
 

@@ -16,7 +16,7 @@ public protocol NodeDataModelProtocol {
     func clearRootNodes()
     func rootNodes(sortComparator: NodeComparator?) -> [NodeProtocol]
     func nodesCount(section: Int) -> Int
-    func node(atIndexPath: NSIndexPath) -> NodeProtocol?
+    func node(atIndexPath: IndexPath) -> NodeProtocol?
     func indexPath(forNode: NodeProtocol?) -> IndexPath?
     func loadModel()
 }

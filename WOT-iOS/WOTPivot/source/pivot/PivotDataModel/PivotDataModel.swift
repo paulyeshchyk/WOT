@@ -129,11 +129,11 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         }
     }
 
-    public func item(atIndexPath: NSIndexPath) -> PivotNodeProtocol? {
+    public func item(atIndexPath: IndexPath) -> PivotNodeProtocol? {
         return (nodeIndex.item(indexPath: atIndexPath) as? PivotNodeProtocol)
     }
 
-    public func itemRect(atIndexPath: NSIndexPath) -> CGRect {
+    public func itemRect(atIndexPath: IndexPath) -> CGRect {
         guard let node = item(atIndexPath: atIndexPath) else {
             return .zero
         }
