@@ -12,6 +12,9 @@
 #import <WOTApi/WOTApi.h>
 #import "UIImageView+WebCache.h"
 
+#import "RomanNumber.h"
+#import "NSString+RomanUtils.h"
+
 @interface WOTTankListCollectionViewCell()
 
 @property (nonatomic, weak)IBOutlet UILabel *tankNameLabel;

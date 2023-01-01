@@ -10,6 +10,7 @@
 #import "WOTTankDetailTextTableViewCell.h"
 #import "WOTTankDetailProgressTableViewCell.h"
 #import <WOTApi/WOTApi.h>
+#import "WOTColors.h"
 
 static const NSInteger RowHeight = 44.0f;
 

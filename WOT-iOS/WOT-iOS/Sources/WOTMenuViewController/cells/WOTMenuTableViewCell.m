@@ -7,6 +7,7 @@
 //
 
 #import "WOTMenuTableViewCell.h"
+#import "WOTColors.h"
 
 @interface WOTMenuTableViewCell ()
 

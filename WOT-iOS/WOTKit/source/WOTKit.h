@@ -18,11 +18,5 @@ FOUNDATION_EXPORT const unsigned char WOTKitVersionString[];
 
 #import <WOTKit/NSThread+ExecutionOnMain.h>
 #import <WOTKit/UIColor+HSB.h>
-#import <WOTKit/UIToolbar+WOT.h>
-#import <WOTKit/UIView+StretchingConstraints.h>
 #import <WOTKit/NSBundle+LanguageBundle.h>
-#import <WOTKit/UINavigationBar+WOT.h>
 #import <WOTKit/UIImage+Resize.h>
-#import <WOTKit/WOTProgressView.h>
-#import <WOTKit/RomanNumber.h>
-#import <WOTKit/NSString+RomanUtils.h>

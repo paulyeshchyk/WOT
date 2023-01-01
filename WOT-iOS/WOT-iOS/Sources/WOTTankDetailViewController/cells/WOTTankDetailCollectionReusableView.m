@@ -8,6 +8,7 @@
 
 #import "WOTTankDetailCollectionReusableView.h"
 #import <WOTPivot/WOTPivot.h>
+#import "WOTColors.h"
 
 @interface WOTTankDetailCollectionReusableView ()
 
