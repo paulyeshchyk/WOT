@@ -14,11 +14,11 @@ public protocol JSONDecodingProtocol {
 public protocol JSONDecodableProtocol {
     typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol & LogInspectorContainerProtocol
 
-    func decode(using: JSONCollectionContainerProtocol, appContext: JSONDecodableProtocol.Context) throws
+    func decode(using: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws
 }
 
 @objc
-public protocol JSONCollectionContainerProtocol: ContextPredicateContainerProtocol, ManagedObjectContextContainerProtocol {
+public protocol JSONCollectionContainerProtocol: ContextPredicateContainerProtocol {
     var jsonCollection: JSONCollectionProtocol { get }
 }
 

@@ -9,12 +9,12 @@
 public extension VehicleprofileArmorList {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
         guard let armorListJSON = map.jsonCollection.data() as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - turret
 

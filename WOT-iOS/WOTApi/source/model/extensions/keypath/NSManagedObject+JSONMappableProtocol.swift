@@ -25,7 +25,7 @@ extension NSManagedObject: JSONDecodableProtocol {
     public typealias Fields = DataFieldsKeys
 
     @objc
-    open func decode(using _: JSONCollectionContainerProtocol, appContext _: JSONDecodableProtocol.Context) throws {
+    open func decode(using _: JSONCollectionContainerProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context) throws {
         throw NSManagedObjectJSONMappableError.shouldBeOverriden("\(type(of: self))::\(#function)")
     }
 }

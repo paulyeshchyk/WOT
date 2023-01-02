@@ -90,8 +90,8 @@ extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
         }
         //
         do {
-            let jsonMap = try JSONMap(json: json, managedObjectContext: managedObjectContext, predicate: predicate)
-            try managedObject.decode(using: jsonMap, appContext: inContext)
+            let jsonMap = try JSONMap(json: json, predicate: predicate)
+            try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: inContext)
             inContext.dataStore?.stash(objectContext: managedObjectContext, completion: localCompletion)
             inContext.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         } catch {

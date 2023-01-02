@@ -9,7 +9,7 @@
 public extension Module {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
         guard let moduleJSON = map.jsonCollection.data() as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -18,10 +18,10 @@ public extension Module {
         //
 
         let parentsAsVehicles = map.predicate.parentObjectIDList
-            .compactMap { map.managedObjectContext.object(byID: $0) as? Vehicles }
+            .compactMap { managedObjectContextContainer.managedObjectContext.object(byID: $0) as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
-        let masterFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
 
         guard !parents.isEmpty else {
             throw ModuleMappingError.noParentsFound

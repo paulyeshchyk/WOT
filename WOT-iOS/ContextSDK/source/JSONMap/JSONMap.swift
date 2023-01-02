@@ -6,16 +6,14 @@
 //
 
 public class JSONMap: JSONCollectionContainerProtocol {
-    public let managedObjectContext: ManagedObjectContextProtocol
     public let predicate: ContextPredicateProtocol
     public let jsonCollection: JSONCollectionProtocol
 
-    public init(json: JSONCollectionProtocol?, managedObjectContext: ManagedObjectContextProtocol, predicate: ContextPredicateProtocol) throws {
-        guard let json = json else {
+    public init(json jsonCollection: JSONCollectionProtocol?, predicate: ContextPredicateProtocol) throws {
+        guard let jsonCollection = jsonCollection else {
             throw JSONMapError.jsonIsNil
         }
-        jsonCollection = json
-        self.managedObjectContext = managedObjectContext
+        self.jsonCollection = jsonCollection
         self.predicate = predicate
     }
 }
