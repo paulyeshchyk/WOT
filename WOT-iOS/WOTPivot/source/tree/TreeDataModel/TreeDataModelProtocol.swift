@@ -6,9 +6,11 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+import ContextSDK
+
 @objc
 public protocol TreeDataModelProtocol: NodeDataModelProtocol {
     var levels: Int { get }
     var width: Int { get }
-    init(fetchController: NodeFetchControllerProtocol, listener: NodeDataModelListener, enumerator: NodeEnumeratorProtocol, nodeCreator: NodeCreatorProtocol, nodeIndex: NodeIndexProtocol)
+    init(fetchController: NodeFetchControllerProtocol, listener: NodeDataModelListener, enumerator: NodeEnumeratorProtocol, nodeCreator: NodeCreatorProtocol, nodeIndex: NodeIndexProtocol, appContext: NodeFetchControllerProtocol.Context)
 }

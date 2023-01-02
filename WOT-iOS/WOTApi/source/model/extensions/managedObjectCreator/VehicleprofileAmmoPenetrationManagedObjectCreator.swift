@@ -24,7 +24,7 @@ public class VehicleprofileAmmoPenetrationManagedObjectCreator: ManagedObjectCre
 
         // MARK: stash
 
-        appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+        appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

@@ -7,7 +7,7 @@
 
 open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     open var responseClass: AnyClass {
-        fatalError("should be overriden")
+        fatalError("has not been implemented")
     }
 
     // MARK: DataAdapterProtocol -
@@ -28,12 +28,12 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     public var description: String { String(describing: type(of: request)) }
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, managedObjectCreator: ManagedObjectCreatorProtocol) {
+    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol, appContext: JSONAdapterProtocol.Context) {
         modelClazz = modelClass
         self.request = request
         self.managedObjectCreator = managedObjectCreator
-        appContext = context
-        context.logInspector?.logEvent(EventObjectNew(self), sender: self)
+        self.appContext = appContext
+        appContext.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
     deinit {
@@ -55,7 +55,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     }
 
     open func decodedObject(jsonDecoder _: JSONDecoder, from _: Data) throws -> JSON? {
-        fatalError("should be overriden")
+        fatalError("has not been implemented")
     }
 }
 

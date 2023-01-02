@@ -29,7 +29,7 @@ class WOTTankPivotNodeCreator: PivotNodeCreator {
     }
 }
 
-class WOTTankPivotFetchRequest: PivotFetchControllerDelegateProtocol {
+class WOTTankPivotFetchRequest: FetchRequestContainerProtocol {
     var settingsDatasource: WOTTankListSettingsDatasource
     init(datasource: WOTTankListSettingsDatasource) {
         settingsDatasource = datasource
@@ -86,16 +86,12 @@ class WOTTankPivotMetadatasource: PivotMetaDatasourceProtocol {
 }
 
 class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol
-
-    private let appContext: Context
     let uuid: UUID = UUID()
     var MD5: String { uuid.MD5 }
 
-    required init(modelListener: NodeDataModelListener, context: Context, settingsDatasource: WOTTankListSettingsDatasource) {
-        appContext = context
+    required init(modelListener: NodeDataModelListener, settingsDatasource: WOTTankListSettingsDatasource, appContext: Context) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = NodeFetchController(nodeFetchRequestCreator: fetchRequest, appContext: context)
+        let fetchController = NodeFetchController(fetchRequestContainer: fetchRequest, appContext: appContext)
 
         let metadatasource = WOTTankPivotMetadatasource()
         let nodeCreator = WOTTankPivotNodeCreator()
@@ -105,7 +101,7 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
                    nodeCreator: nodeCreator,
                    metadatasource: metadatasource,
                    nodeIndex: ObjCNodeIndex.defaultIndex,
-                   context: context)
+                   appContext: appContext)
 
         enumerator = NodeEnumerator.sharedInstance
     }
@@ -118,11 +114,11 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:context:) has not been implemented")
     }
 
-    @objc required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, nodeIndex _: NodeIndexProtocol, context _: PivotDataModel.Context) {
+    @objc required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, nodeIndex _: NodeIndexProtocol, appContext _: NodeFetchControllerProtocol.Context) {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:nodeIndex:context:) has not been implemented")
     }
 
-    required init(nodeIndex _: NodeIndexProtocol) {
+    required init(nodeIndex _: NodeIndexProtocol, appContext _: NodeFetchControllerProtocol.Context) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 

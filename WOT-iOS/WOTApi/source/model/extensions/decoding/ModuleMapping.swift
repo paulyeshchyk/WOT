@@ -21,7 +21,7 @@ public extension Module {
             .compactMap { managedObjectContextContainer.managedObjectContext.object(byID: $0) as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
-        let masterFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
 
         guard !parents.isEmpty else {
             throw ModuleMappingError.noParentsFound

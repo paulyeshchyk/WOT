@@ -20,7 +20,7 @@ public class WOTWEBRequestFactory: NSObject {
         }
     }
 
-    public static func fetchVehiclePivotData(inContext appContext: LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehiclePivotData(inContext appContext: DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
         guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
@@ -28,12 +28,12 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
 
-        let pivotLinker = VehiclesPivotDataManagedObjectCreator()
+        let pivotLinker = try VehiclesPivotDataManagedObjectCreator(appContext: appContext)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, listener: listener)
     }
 
     @objc
-    public static func fetchVehicleTreeData(vehicleId: Int, appContext: LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehicleTreeData(vehicleId: Int, appContext: DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
         guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
@@ -42,7 +42,7 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
 
-        let treeViewLinker = VehiclesTreeManagedObjectCreator()
+        let treeViewLinker = try VehiclesTreeManagedObjectCreator(appContext: appContext)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: treeViewLinker, listener: listener)
     }
 

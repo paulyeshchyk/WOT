@@ -23,7 +23,7 @@ open class ManagedObjectCreator: ManagedObjectCreatorProtocol {
     public var MD5: String { uuid.MD5 }
 
     open var linkerPrimaryKeyType: PrimaryKeyType {
-        fatalError("should be overriden")
+        fatalError("has not been implemented")
     }
 
     // MARK: - Public

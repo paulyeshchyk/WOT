@@ -24,23 +24,23 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return "Context: \(managedObjectContext.name ?? ""); \(entityName)"
     }
 
-    public required init(objectContext cntx: ManagedObjectContextProtocol, objectID objID: AnyObject?, predicate predicat: NSPredicate?, fetchStatus status: FetchStatus) {
-        objectID = objID
-        predicate = predicat
-        fetchStatus = status
+    public required init(objectID: AnyObject?, inContext managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
+        self.objectID = objectID
+        self.predicate = predicate
+        self.fetchStatus = fetchStatus
+        self.managedObjectContext = managedObjectContext
 
-        managedObjectContext = cntx
         super.init()
     }
 
     public func copy(with _: NSZone? = nil) -> Any {
-        let copy = FetchResult(objectContext: managedObjectContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
+        let copy = FetchResult(objectID: objectID, inContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
         return copy
     }
 
     @available(*, deprecated, message: "make sure you need that")
     public func makeDublicate(inContext: ManagedObjectContextProtocol) -> FetchResultProtocol {
-        return FetchResult(objectContext: inContext, objectID: objectID, predicate: predicate, fetchStatus: fetchStatus)
+        return FetchResult(objectID: objectID, inContext: inContext, predicate: predicate, fetchStatus: fetchStatus)
     }
 
     public func managedObject() -> ManagedObjectProtocol? {

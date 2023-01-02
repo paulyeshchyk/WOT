@@ -14,7 +14,7 @@ public extension VehicleprofileArmorList {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        let masterFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - turret
 

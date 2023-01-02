@@ -21,7 +21,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 
     public func fetchLocalAndDecode(json: JSONCollectionProtocol, objectContext: ManagedObjectContextProtocol, byModelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectCreatorProtocol?, appContext: MappingCoordinatorContext, completion: @escaping FetchResultCompletion) {
         //
-        appContext.dataStore?.fetchLocal(objectContext: objectContext, byModelClass: byModelClass, contextPredicate: contextPredicate) { [weak self] fetchResult, error in
+        appContext.dataStore?.fetchLocal(managedObjectContext: objectContext, byModelClass: byModelClass, contextPredicate: contextPredicate) { [weak self] fetchResult, error in
             if let error = error {
                 completion(fetchResult, error)
                 return
@@ -92,7 +92,7 @@ extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
         do {
             let jsonMap = try JSONMap(json: json, predicate: predicate)
             try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: inContext)
-            inContext.dataStore?.stash(objectContext: managedObjectContext, completion: localCompletion)
+            inContext.dataStore?.stash(managedObjectContext: managedObjectContext, completion: localCompletion)
             inContext.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         } catch {
             localCompletion(error)

@@ -17,7 +17,7 @@ public extension VehicleprofileAmmo {
         try decode(decoderContainer: ammoJSON)
         //
 
-        let masterFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - Penetration
 

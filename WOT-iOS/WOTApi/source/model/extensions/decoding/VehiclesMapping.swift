@@ -28,7 +28,7 @@ public extension Vehicles {
         // MARK: - DefaultProfile
 
         if let defaultProfileJSON = vehicleJSON[#keyPath(Vehicles.default_profile)] as? JSON {
-            let masterFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+            let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
             let linker = DefaultProfileManagedObjectCreator.self
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
@@ -53,7 +53,7 @@ extension Vehicles {
         var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(objectID)
 
-        let vehiclesFetchResult = FetchResult(objectContext: objectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let vehiclesFetchResult = FetchResult(objectID: objectID, inContext: objectContext, predicate: nil, fetchStatus: .recovered)
 
         let modulesTreePredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
         modulesTreePredicate[.primary] = requestPredicate[.primary]?

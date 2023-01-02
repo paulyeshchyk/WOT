@@ -6,8 +6,11 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+import ContextSDK
+
 @objc
 open class NodeDataModel: NSObject, NodeDataModelProtocol {
+    public let appContext: NodeFetchControllerProtocol.Context
     public var nodeIndex: NodeIndexProtocol
     public lazy var rootNodes: [NodeProtocol] = { return [] }()
     private var comparator: NodeComparator = { (_, _) in return true }
@@ -20,7 +23,8 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
 
     public var enumerator: NodeEnumeratorProtocol?
 
-    public required init(nodeIndex: NodeIndexProtocol) {
+    public required init(nodeIndex: NodeIndexProtocol, appContext: NodeFetchControllerProtocol.Context) {
+        self.appContext = appContext
         self.nodeIndex = nodeIndex
         super.init()
     }

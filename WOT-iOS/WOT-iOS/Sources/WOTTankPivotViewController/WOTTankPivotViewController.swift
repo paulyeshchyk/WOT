@@ -163,7 +163,7 @@ class WOTTankPivotViewController: PivotViewController {
         guard let appDelegate = UIApplication.shared.delegate as? Context else {
             fatalError("appDelegate is not WOTAppDelegateProtocol")
         }
-        return WOTTankPivotModel(modelListener: self, context: appDelegate, settingsDatasource: settingsDatasource)
+        return WOTTankPivotModel(modelListener: self, settingsDatasource: settingsDatasource, appContext: appDelegate)
     }
 
     override func viewDidLoad() {

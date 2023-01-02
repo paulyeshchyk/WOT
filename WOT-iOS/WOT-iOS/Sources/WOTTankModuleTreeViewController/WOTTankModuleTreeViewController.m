@@ -62,7 +62,7 @@
 
 @end
 
-@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<PivotFetchControllerDelegateProtocol>
+@interface WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)<FetchRequestContainerProtocol>
 @end
 
 @implementation WOTTankModuleTreeViewController(WOTDataFetchControllerDelegateProtocol)
@@ -131,13 +131,14 @@
 
         self.settingsDatasource = [[WOTTankListSettingsDatasource alloc] init];
         
-        WOTTankTreeFetchController* fetchController = [[WOTTankTreeFetchController alloc] initWithNodeFetchRequestCreator:self
-                                                                                                               appContext:appDelegate];
+        WOTTankTreeFetchController* fetchController = [[WOTTankTreeFetchController alloc] initWithObjCFetchRequestContainer:self
+                                                                                                                 appContext:appDelegate];
         self.model = [[TreeDataModel alloc] initWithFetchController: fetchController
-                                                              listener: self
-                                                            enumerator: [NodeEnumerator sharedInstance]
-                                                           nodeCreator: self
-                                                             nodeIndex: ObjCNodeIndex.defaultIndex ];
+                                                           listener: self
+                                                         enumerator: [NodeEnumerator sharedInstance]
+                                                        nodeCreator: self
+                                                          nodeIndex: ObjCNodeIndex.defaultIndex
+                                                         appContext: appDelegate];
     }
     return self;
 }

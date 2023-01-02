@@ -35,7 +35,7 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
 
 extension NSManagedObject: PrimaryKeypathProtocol {
     open class func primaryKeyPath(forType _: PrimaryKeyType) -> String {
-        fatalError("should be overriden")
+        fatalError("has not been implemented")
     }
 
     open class func predicateFormat(forType: PrimaryKeyType) -> PredicateFormatProtocol {

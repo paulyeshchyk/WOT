@@ -14,22 +14,25 @@ public typealias FilteredObjectCompletion = (NSPredicate, [AnyObject]?) -> Void
 public typealias NodeFetchedResultController = NSFetchedResultsController<NSFetchRequestResult>
 
 @objc
-public protocol PivotFetchControllerDelegateProtocol {
+public protocol FetchRequestContainerProtocol {
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> { get }
 }
 
-@objc
-open class NodeFetchController: NSObject {
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
-
-    public var listener: NodeFetchControllerListenerProtocol?
-    public var nodeFetchRequestCreator: PivotFetchControllerDelegateProtocol
-    private var fetchResultController: NodeFetchedResultController?
-    private let appContext: Context
-
+public extension NodeFetchController {
     @objc
-    public required init(nodeFetchRequestCreator: PivotFetchControllerDelegateProtocol, appContext: Context) {
-        self.nodeFetchRequestCreator = nodeFetchRequestCreator
+    convenience init(objCFetchRequestContainer: FetchRequestContainerProtocol, appContext: Context) {
+        self.init(fetchRequestContainer: objCFetchRequestContainer, appContext: appContext)
+    }
+}
+
+open class NodeFetchController: NSObject {
+    public var listener: NodeFetchControllerListenerProtocol?
+    public var fetchRequestContainer: FetchRequestContainerProtocol
+    private var fetchResultController: NodeFetchedResultController?
+    private let appContext: NodeFetchControllerProtocol.Context
+
+    public required init(fetchRequestContainer: FetchRequestContainerProtocol, appContext: NodeFetchControllerProtocol.Context) {
+        self.fetchRequestContainer = fetchRequestContainer
         self.appContext = appContext
     }
 
@@ -37,29 +40,23 @@ open class NodeFetchController: NSObject {
         self.fetchResultController?.delegate = nil
     }
 
-    public func initFetchController(block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
+    public func initFetchController(appContext: NodeFetchControllerProtocol.Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
         guard let managedObjectContext = appContext.dataStore?.workingContext() else {
             throw NodeFetchControllerError.contextIsNotDefined
         }
 
-        appContext.dataStore?.perform(objectContext: managedObjectContext) {[weak self] context in
-            guard let request = self?.nodeFetchRequestCreator.fetchRequest else {
+        appContext.dataStore?.perform(managedObjectContext: managedObjectContext) {[weak self] _ in
+            guard let fetchRequest = self?.fetchRequestContainer.fetchRequest else {
                 block(nil, NodeFetchControllerError.requestNotFound)
                 return
             }
             do {
-                let result = try self?.newFetchResultController(request: request, managedObjectContext: context)
+                let result = try appContext.dataStore?.fetchResultController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext) as? NodeFetchedResultController
                 block(result, nil)
             } catch {
                 block(nil, error)
             }
         }
-    }
-
-    private func newFetchResultController(request: NSFetchRequest<NSFetchRequestResult>, managedObjectContext: ManagedObjectContextProtocol) throws -> NodeFetchedResultController? {
-        let result = try appContext.dataStore?.fetchResultController(for: request, andContext: managedObjectContext) as? NodeFetchedResultController
-        result?.delegate = self
-        return result
     }
 }
 
@@ -89,15 +86,19 @@ extension NodeFetchController: NSFetchedResultsControllerDelegate {
 }
 
 extension NodeFetchController: NodeFetchControllerProtocol {
-    open func performFetch(nodeCreator: NodeCreatorProtocol?) throws {
+    open func performFetch(nodeCreator: NodeCreatorProtocol?, appContext: NodeFetchControllerProtocol.Context) throws {
         if let fetch = fetchResultController {
             try performFetch(with: fetch, nodeCreator: nodeCreator)
         } else {
-            try initFetchController {[weak self] fetchResultController, error in
+            try initFetchController(appContext: appContext) {[weak self] fetchResultController, error in
+
+                self?.fetchResultController?.delegate = nil
+                self?.fetchResultController = fetchResultController
+                self?.fetchResultController?.delegate = self
+
                 if let err = error {
                     self?.appContext.logInspector?.logEvent(EventError(err, details: nil), sender: self)
                 } else {
-                    self?.fetchResultController = fetchResultController
                     do {
                         try self?.performFetch(with: fetchResultController, nodeCreator: nodeCreator)
                     } catch {

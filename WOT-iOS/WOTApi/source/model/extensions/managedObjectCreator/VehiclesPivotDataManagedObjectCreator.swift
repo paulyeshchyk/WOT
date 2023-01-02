@@ -8,8 +8,12 @@
 import WOTKit
 
 public class VehiclesPivotDataManagedObjectCreator: ManagedObjectCreator {
-    public convenience init() {
-        self.init(masterFetchResult: EmptyFetchResult(), mappedObjectIdentifier: nil)
+    public typealias Context = DataStoreContainerProtocol
+
+    public convenience init(appContext: Context) throws {
+        let inManagedObjectContext = appContext.dataStore?.workingContext()
+        let emptyFetchResult = try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
+        self.init(masterFetchResult: emptyFetchResult, mappedObjectIdentifier: nil)
     }
 
     override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
@@ -20,7 +24,7 @@ public class VehiclesPivotDataManagedObjectCreator: ManagedObjectCreator {
     override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
         // MARK: stash
 
-        appContext.dataStore?.stash(objectContext: fetchResult.managedObjectContext) { error in
+        appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { error in
             completion(fetchResult, error)
         }
     }

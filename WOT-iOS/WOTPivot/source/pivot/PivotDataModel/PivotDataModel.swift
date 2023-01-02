@@ -88,19 +88,17 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         super.clearRootNodes()
     }
 
-    public typealias Context = LogInspectorContainerProtocol
-    private let appContext: Context
+    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol
 
     @objc
-    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol, context: Context) {
+    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol, appContext: NodeFetchControllerProtocol.Context) {
         shouldDisplayEmptyColumns = false
         self.fetchController = fetchController
         listener = modelListener
         self.nodeCreator = nodeCreator
         self.metadatasource = metadatasource
-        appContext = context
 
-        super.init(nodeIndex: ni)
+        super.init(nodeIndex: ni, appContext: appContext)
 
         fetchController.setFetchListener(self)
 
@@ -115,7 +113,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    public required init(nodeIndex _: NodeIndexProtocol) {
+    public required init(nodeIndex _: NodeIndexProtocol, appContext _: NodeFetchControllerProtocol.Context) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 
@@ -123,7 +121,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         super.loadModel()
 
         do {
-            try fetchController?.performFetch(nodeCreator: nodeCreator)
+            try fetchController?.performFetch(nodeCreator: nodeCreator, appContext: appContext)
         } catch {
             appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
         }

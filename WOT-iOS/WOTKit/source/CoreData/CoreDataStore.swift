@@ -21,10 +21,10 @@ open class CoreDataStore: DataStore {
         }
     }
 
-    open var sqliteURL: URL? { fatalError("should be overriden") }
-    open var modelURL: URL? { fatalError("should be overriden") }
+    open var sqliteURL: URL? { fatalError("has not been implemented") }
+    open var modelURL: URL? { fatalError("has not been implemented") }
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
-    open var applicationDocumentsDirectoryURL: URL? { fatalError("should be overriden") }
+    open var applicationDocumentsDirectoryURL: URL? { fatalError("has not been implemented") }
 
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
         CoreDataStore.privateQueueConcurrencyContext(parent: mainContext)
@@ -34,18 +34,18 @@ open class CoreDataStore: DataStore {
         return mainContext
     }
 
-    override public func fetchResultController(for request: AnyObject, andContext: ManagedObjectContextProtocol) throws -> AnyObject {
-        guard let context = andContext as? NSManagedObjectContext else {
+    override public func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject {
+        guard let context = managedObjectContext as? NSManagedObjectContext else {
             throw CoreDataStoreError.contextIsNotNSManagedObjectContext
         }
-        guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
+        guard let request = fetchRequest as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
         }
 
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
     }
 
-    override public func mainContextFetchResultController(for request: AnyObject, sectionNameKeyPath _: String?, cacheName _: String?) throws -> AnyObject {
+    override public func mainContextFetchResultController(fetchRequest request: AnyObject, sectionNameKeyPath _: String?, cacheName _: String?) throws -> AnyObject {
         guard let request = request as? NSFetchRequest<NSFetchRequestResult> else {
             throw CoreDataStoreError.requestIsNotNSFetchRequest
         }
@@ -56,8 +56,9 @@ open class CoreDataStore: DataStore {
         return (clazz is NSManagedObject.Type) ? true : false
     }
 
-    override public func emptyFetchResult() -> FetchResultProtocol {
-        return EmptyFetchResult()
+    override public func emptyFetchResult(appContext: DataStore.Context) throws -> FetchResultProtocol {
+        let inManagedObjectContext = appContext.dataStore?.workingContext()
+        return try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
     }
 
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
@@ -98,7 +99,7 @@ open class CoreDataStore: DataStore {
 extension CoreDataStore {
     static func mainQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        managedObjectContext.name = "Main: \(UUID().MD5)"
+        managedObjectContext.name = "Main <\(UUID().MD5)>"
         managedObjectContext.parent = parent
         managedObjectContext.undoManager = nil
         return managedObjectContext
@@ -106,7 +107,7 @@ extension CoreDataStore {
 
     static func privateQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        managedObjectContext.name = "Private: \(UUID().MD5)"
+        managedObjectContext.name = "Private <\(UUID().MD5)>"
         managedObjectContext.parent = parent
         managedObjectContext.undoManager = nil
         return managedObjectContext
@@ -115,7 +116,7 @@ extension CoreDataStore {
     static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
-        managedObjectContext.name = "Master: \(UUID().MD5)"
+        managedObjectContext.name = "Master <\(UUID().MD5)>"
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }

@@ -75,7 +75,7 @@ extension RequestManager: RequestListenerProtocol {
             guard let modelClass = type(of: modelService).modelClass() else {
                 throw RequestManagerError.modelNotFound(request)
             }
-            let dataAdapters = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, context: appContext, managedObjectCreator: managedObjectCreator)
+            let dataAdapters = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectCreator: managedObjectCreator, appContext: appContext)
             let responseParser = type(of: modelService).responseParserClass().init(appContext: appContext)
 
             try responseParser.parseResponse(data: data, forRequest: request, dataAdapter: dataAdapters, completion: {[weak self] request, error in

@@ -22,7 +22,7 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         reindexNodeConnectors()
 
         do {
-            try fetchController.performFetch(nodeCreator: nodeCreator)
+            try fetchController.performFetch(nodeCreator: nodeCreator, appContext: appContext)
         } catch let error {
             fetchFailed(by: self.fetchController, withError: error)
         }
@@ -32,11 +32,11 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
     var listener: NodeDataModelListener
     var nodeCreator: NodeCreatorProtocol
 
-    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, enumerator _: NodeEnumeratorProtocol, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol) {
+    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, enumerator _: NodeEnumeratorProtocol, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol, appContext: NodeFetchControllerProtocol.Context) {
         fetchController = fetch
         listener = list
         nodeCreator = nc
-        super.init(nodeIndex: ni)
+        super.init(nodeIndex: ni, appContext: appContext)
         fetchController.setFetchListener(self)
     }
 
@@ -48,7 +48,7 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         fatalError("init(enumerator:) has not been implemented")
     }
 
-    public required init(nodeIndex _: NodeIndexProtocol) {
+    public required init(nodeIndex _: NodeIndexProtocol, appContext _: NodeFetchControllerProtocol.Context) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 

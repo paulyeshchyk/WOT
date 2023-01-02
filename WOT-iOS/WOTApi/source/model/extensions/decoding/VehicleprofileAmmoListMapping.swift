@@ -14,7 +14,7 @@ public extension VehicleprofileAmmoList {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
 
-        let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let vehicleProfileAmmoListFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
 
         for profile in profilesJSON {
             let ammoType = profile[#keyPath(VehicleprofileAmmo.type)]

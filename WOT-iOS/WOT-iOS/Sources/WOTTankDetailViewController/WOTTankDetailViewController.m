@@ -248,7 +248,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
         id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
         
         NSError *error = nil;
-        _fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:nil cacheName:nil error: &error];
+        _fetchedResultController = [coreDataProvider mainContextFetchResultControllerWithFetchRequest:fetchRequest sectionNameKeyPath:nil cacheName:nil error: &error];
         _fetchedResultController.delegate = self;
     }
     return _fetchedResultController;

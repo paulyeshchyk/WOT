@@ -17,7 +17,7 @@ public extension VehicleprofileModule {
         try decode(decoderContainer: profileModuleJSON)
         //
 
-        let masterFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
 
         if let gun_id = gun_id {
             let gunJSONAdapter = VehicleprofileModuleGunManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: gun_id)

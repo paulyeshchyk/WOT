@@ -90,7 +90,7 @@ extension SteelPivotViewController: DataModelListener {
     }
 }
 
-extension SteelPivotViewController: PivotFetchControllerDelegateProtocol {
+extension SteelPivotViewController: FetchRequestContainerProtocol {
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
         return NSFetchRequest(entityName: "test")
     }

@@ -11,7 +11,7 @@ final public class EvenDatastoreWillSave: LogEventProtocol {
     public var name: String { return "CDStashStart"}
 
     public init(uuid: UUID, description: String) {
-        message = "\(description): \(uuid.MD5)"
+        message = "\(description), operation <\(uuid.MD5)>"
     }
 }
 
@@ -23,7 +23,7 @@ final public class EvenDatastoreDidSave: LogEventProtocol {
     public init(uuid: UUID, initiatedIn: Date, description: String) {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "[HH:mm:ss.SSSS]"
-        message = "\(description): \(uuid.MD5) - elapsed [\(Date().elapsed(from: initiatedIn))]"
+        message = "\(description), operation <\(uuid.MD5)>: elapsed [\(Date().elapsed(from: initiatedIn))]"
     }
 }
 
@@ -35,7 +35,7 @@ final public class EvenDatastoreSaveFailed: LogEventProtocol {
     public init(uuid: UUID, initiatedIn: Date, description: String) {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "[HH:mm:ss.SSSS]"
-        message = "\(description): \(uuid.MD5) - elapsed [\(Date().elapsed(from: initiatedIn))]"
+        message = "\(description), operation <\(uuid.MD5)>: elapsed [\(Date().elapsed(from: initiatedIn))]"
     }
 }
 
@@ -45,7 +45,7 @@ final public class EvenDatastoreWillExecute: LogEventProtocol {
     public var name: String { return "CDFetchStart"}
 
     public init(uuid: UUID) {
-        message = "\(uuid.MD5)"
+        message = "operation <\(uuid.MD5)>"
     }
 }
 
@@ -57,7 +57,7 @@ final public class EvenDatastoreDidExecute: LogEventProtocol {
     public init(uuid: UUID, initiatedIn: Date) {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "[HH:mm:ss.SSSS]"
-        message = "\(uuid.MD5) - elapsed: \(Date().elapsed(from: initiatedIn))"
+        message = "operation <\(uuid.MD5)>: elapsed [\(Date().elapsed(from: initiatedIn))]"
     }
 }
 

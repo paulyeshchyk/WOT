@@ -23,7 +23,7 @@ public extension Vehicleprofile {
         parentObjectIDList.append(contentsOf: map.predicate.parentObjectIDList)
         parentObjectIDList.append(objectID)
 
-        let vehicleProfileFetchResult = FetchResult(objectContext: managedObjectContextContainer.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let vehicleProfileFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
 
         // MARK: - AmmoList
 
