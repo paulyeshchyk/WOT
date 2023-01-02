@@ -32,7 +32,7 @@ public extension Vehicleprofile {
             let ammoLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileAmmoList.vehicleprofile), parentObjectIDList: parentObjectIDList)
 
             let ammoListCollection = try JSONCollection(array: ammoListArray)
-            let composition = try ammoLookupBuilder.build()
+            let composition = try ammoLookupBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: ammoListCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileAmmoList.self, managedObjectCreatorClass: ammoListMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noAmmoList(tank_id), details: nil), sender: self)
@@ -44,7 +44,7 @@ public extension Vehicleprofile {
             let armorListMapperClazz = VehicleprofileArmorListManagedObjectCreator.self
             let armorLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
             let armorCollection = try JSONCollection(element: armorJSON)
-            let composition = try armorLookupBuilder.build()
+            let composition = try armorLookupBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: armorCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileArmorList.self, managedObjectCreatorClass: armorListMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noArmor(tank_id), details: nil), sender: self)
@@ -56,7 +56,7 @@ public extension Vehicleprofile {
             let moduleMapperClazz = VehicleprofileModuleManagedObjectCreator.self
             let modulesLookupBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileModule.vehicleprofile), parentObjectIDList: parentObjectIDList)
             let moduleCollection = try JSONCollection(element: moduleJSON)
-            let composition = try modulesLookupBuilder.build()
+            let composition = try modulesLookupBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: moduleCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileModule.self, managedObjectCreatorClass: moduleMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noModule(tank_id), details: nil), sender: self)
@@ -71,7 +71,7 @@ public extension Vehicleprofile {
             let engineJoint = Joint(theClass: VehicleprofileEngine.self, theID: drivenObjectID, thePredicate: nil)
             let engineLookupBuilder = RootTagRuleBuilder(drivenJoint: engineJoint)
             let engineCollection = try JSONCollection(element: engineJSON)
-            let composition = try engineLookupBuilder.build()
+            let composition = try engineLookupBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: engineCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileEngine.self, managedObjectCreatorClass: engineMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noEngine(tank_id), details: nil), sender: self)
@@ -87,7 +87,7 @@ public extension Vehicleprofile {
             let gunJoint = Joint(theClass: VehicleprofileGun.self, theID: drivenObjectID, thePredicate: nil)
             let gunLookupBuilder = RootTagRuleBuilder(drivenJoint: gunJoint)
             let gunCollection = try JSONCollection(element: gunJSON)
-            let composition = try gunLookupBuilder.build()
+            let composition = try gunLookupBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: gunCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileGun.self, managedObjectCreatorClass: gunMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noGun(tank_id), details: nil), sender: self)
@@ -102,7 +102,7 @@ public extension Vehicleprofile {
             let suspensionJoint = Joint(theClass: VehicleprofileSuspension.self, theID: drivenObjectID, thePredicate: nil)
             let suspensionLookupBuilder = RootTagRuleBuilder(drivenJoint: suspensionJoint)
             let suspensionCollection = try JSONCollection(element: suspensionJSON)
-            let composition = try suspensionLookupBuilder.build()
+            let composition = try suspensionLookupBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: suspensionCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileSuspension.self, managedObjectCreatorClass: suspensionMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noSuspension(tank_id), details: nil), sender: self)
@@ -117,7 +117,7 @@ public extension Vehicleprofile {
             let turretJoint = Joint(theClass: VehicleprofileSuspension.self, theID: drivenObjectID, thePredicate: nil)
             let turretLookupBuilder = RootTagRuleBuilder(drivenJoint: turretJoint)
             let turretCollection = try JSONCollection(element: turretJSON)
-            let composition = try turretLookupBuilder.build()
+            let composition = try turretLookupBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: turretCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileTurret.self, managedObjectCreatorClass: turretMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noTurret(tank_id), details: nil), sender: self)
@@ -132,7 +132,7 @@ public extension Vehicleprofile {
             let radioJoint = Joint(theClass: VehicleprofileRadio.self, theID: drivenObjectID, thePredicate: nil)
             let radioLookupBuilder = RootTagRuleBuilder(drivenJoint: radioJoint)
             let radioCollection = try JSONCollection(element: radioJSON)
-            let composition = try radioLookupBuilder.build()
+            let composition = try radioLookupBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: radioCollection, masterFetchResult: vehicleProfileFetchResult, linkedClazz: VehicleprofileRadio.self, managedObjectCreatorClass: radioMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noTurret(tank_id), details: nil), sender: self)

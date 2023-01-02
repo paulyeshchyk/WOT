@@ -13,7 +13,7 @@ open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
         self.drivenJoint = drivenJoint
     }
 
-    public func build() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate(parentObjectIDList: nil)
         lookupPredicate[.primary] = drivenJoint.theClass.primaryKey(forType: .internal, andObject: drivenJoint.theID)
 

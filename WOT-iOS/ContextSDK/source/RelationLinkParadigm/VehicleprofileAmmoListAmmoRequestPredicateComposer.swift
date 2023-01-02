@@ -15,7 +15,7 @@ public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicat
         self.foreignSelectKey = foreignSelectKey
     }
 
-    public func build() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = drivenJoint.thePredicate?[.primary]?.foreignKey(byInsertingComponent: foreignSelectKey)
         lookupPredicate[.secondary] = drivenJoint.theClass.primaryKey(forType: .internal, andObject: drivenJoint.theID)

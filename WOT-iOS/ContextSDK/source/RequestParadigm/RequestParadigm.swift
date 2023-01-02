@@ -67,7 +67,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
     }
 
     public func buildContextPredicate() throws -> ContextPredicateProtocol {
-        return try requestPredicateComposer.build().contextPredicate
+        return try requestPredicateComposer.buildRequestPredicateComposition().contextPredicate
     }
 
     // MARK: - private

@@ -32,7 +32,7 @@ public extension Vehicles {
             let linker = DefaultProfileManagedObjectCreator.self
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let defaultProfileJSONCollection = try JSONCollection(element: defaultProfileJSON)
-            let composition = try builder.build()
+            let composition = try builder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: Vehicleprofile.self, managedObjectCreatorClass: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)

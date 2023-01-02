@@ -23,7 +23,7 @@ public extension VehicleprofileArmorList {
 
             let turretBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
             let turretMapperClazz = VehicleprofileArmorListTurretManagedObjectCreator.self
-            let turretComposition = try turretBuilder.build()
+            let turretComposition = try turretBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: turretJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: turretMapperClazz, requestPredicateComposition: turretComposition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.turretNotFound, details: nil), sender: self)
@@ -36,7 +36,7 @@ public extension VehicleprofileArmorList {
 
             let hullBuilder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
             let hullMapperClazz = VehicleprofileArmorListHullManagedObjectCreator.self
-            let composition = try hullBuilder.build()
+            let composition = try hullBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: hullJSONCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileArmor.self, managedObjectCreatorClass: hullMapperClazz, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.hullNotFound, details: nil), sender: self)

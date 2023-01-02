@@ -15,7 +15,7 @@ open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposer
         self.hostObjectID = hostObjectID
     }
 
-    public func build() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         var parentObjectIDList = [AnyObject]()
         if let parents = drivenJoint.thePredicate?.parentObjectIDList {
             parentObjectIDList.append(contentsOf: parents)

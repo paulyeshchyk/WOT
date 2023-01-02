@@ -22,7 +22,7 @@ public extension VehicleprofileAmmoList {
             let ruleBuilder = VehicleprofileAmmoListAmmoRequestPredicateComposer(drivenJoint: ammoJoint, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             let ammoLinkerClass = VehicleprofileAmmoListAmmoManagedObjectCreator.self
             let jsonCollection = try JSONCollection(element: profile)
-            let composition = try ruleBuilder.build()
+            let composition = try ruleBuilder.buildRequestPredicateComposition()
             try appContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, managedObjectCreatorClass: ammoLinkerClass, requestPredicateComposition: composition, appContext: appContext)
         }
     }

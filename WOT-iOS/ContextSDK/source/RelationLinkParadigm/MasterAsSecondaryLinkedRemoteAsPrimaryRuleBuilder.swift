@@ -13,7 +13,7 @@ open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateCo
         self.drivenJoint = drivenJoint
     }
 
-    public func build() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = drivenJoint.theClass.primaryKey(forType: .external, andObject: drivenJoint.theID)
         lookupPredicate[.secondary] = drivenJoint.thePredicate?[.primary]
