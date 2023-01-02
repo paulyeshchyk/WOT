@@ -14,16 +14,17 @@ public extension VehicleprofileAmmoList {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
 
-        let vehicleProfileAmmoListFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
+        let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
 
-        for profile in profilesJSON {
-            let ammoType = profile[#keyPath(VehicleprofileAmmo.type)]
-            let ammoJoint = Joint(theClass: VehicleprofileAmmo.self, theID: ammoType, thePredicate: map.predicate)
-            let ruleBuilder = VehicleprofileAmmoListAmmoRequestPredicateComposer(drivenJoint: ammoJoint, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
-            let ammoLinkerClass = VehicleprofileAmmoListAmmoManagedObjectCreator.self
-            let jsonCollection = try JSONCollection(element: profile)
-            let composition = try ruleBuilder.buildRequestPredicateComposition()
-            try appContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, managedObjectCreatorClass: ammoLinkerClass, requestPredicateComposition: composition, appContext: appContext)
+        for jsonElement in profilesJSON {
+            let ammoType = jsonElement[#keyPath(VehicleprofileAmmo.type)]
+            let modelClass = VehicleprofileAmmo.self
+            let joint = Joint(theClass: modelClass, theID: ammoType, thePredicate: map.predicate)
+            let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(drivenJoint: joint, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+            let collection = try JSONCollection(element: jsonElement)
+            let composition = try composer.buildRequestPredicateComposition()
+            let linker = VehicleprofileAmmoListAmmoManagedObjectCreator.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         }
     }
 }

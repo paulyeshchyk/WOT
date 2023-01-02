@@ -21,24 +21,26 @@ public extension VehicleprofileAmmo {
 
         // MARK: - Penetration
 
-        if let penetrationArray = ammoJSON[#keyPath(VehicleprofileAmmo.penetration)] {
-            let penetrationMapper = VehicleprofileAmmoPenetrationManagedObjectCreator.self
-            let penetrationRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
-            let penetrationListCollection = JSONCollection(custom: penetrationArray)
-            let composition = try penetrationRuleBuilder.buildRequestPredicateComposition()
-            try appContext.mappingCoordinator?.linkItem(from: penetrationListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoPenetration.self, managedObjectCreatorClass: penetrationMapper, requestPredicateComposition: composition, appContext: appContext)
+        if let jsonCustom = ammoJSON[#keyPath(VehicleprofileAmmo.penetration)] {
+            let modelClass = VehicleprofileAmmoPenetration.self
+            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
+            let collection = JSONCollection(custom: jsonCustom)
+            let composition = try composer.buildRequestPredicateComposition()
+            let linker = VehicleprofileAmmoPenetrationManagedObjectCreator.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noPenetration, details: nil), sender: self)
         }
 
         // MARK: - Damage
 
-        if let damageArray = ammoJSON[#keyPath(VehicleprofileAmmo.damage)] {
-            let damageMapper = VehicleprofileAmmoDamageManagedObjectCreator.self
-            let damageRuleBuilder = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
-            let damageListCollection = JSONCollection(custom: damageArray)
-            let composition = try damageRuleBuilder.buildRequestPredicateComposition()
-            try appContext.mappingCoordinator?.linkItem(from: damageListCollection, masterFetchResult: masterFetchResult, linkedClazz: VehicleprofileAmmoDamage.self, managedObjectCreatorClass: damageMapper, requestPredicateComposition: composition, appContext: appContext)
+        if let jsonCustom = ammoJSON[#keyPath(VehicleprofileAmmo.damage)] {
+            let modelClass = VehicleprofileAmmoDamage.self
+            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
+            let collection = JSONCollection(custom: jsonCustom)
+            let composition = try composer.buildRequestPredicateComposition()
+            let linker = VehicleprofileAmmoDamageManagedObjectCreator.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noDamage, details: nil), sender: self)
         }

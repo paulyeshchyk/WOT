@@ -14,7 +14,7 @@ public protocol MappingCoordinatorDecodingProtocol {
 
 @objc
 public protocol MappingCoordinatorLinkingProtocol {
-    func linkItem(from itemJSON: JSONCollectionProtocol, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, requestPredicateComposition: RequestPredicateCompositionProtocol, appContext: MappingCoordinatorContext) throws
+    func linkItem(from itemJSON: JSONCollectionProtocol, masterFetchResult: FetchResultProtocol, byModelClass: PrimaryKeypathProtocol.Type, linker: ManagedObjectCreatorProtocol, requestPredicateComposition: RequestPredicateCompositionProtocol, appContext: MappingCoordinatorContext) throws
 }
 
 @objc

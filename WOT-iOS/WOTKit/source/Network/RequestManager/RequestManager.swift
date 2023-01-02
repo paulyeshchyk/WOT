@@ -167,7 +167,7 @@ extension RequestManager: RequestManagerProtocol {
         }
     }
 
-    public func fetchRemote(requestParadigm: RequestParadigmProtocol, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func fetchRemote(requestParadigm: RequestParadigmProtocol, linker: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
         //
         let requestIDs = requestRegistrator.requestIds(modelServiceClass: requestParadigm.modelClass)
         guard !requestIDs.isEmpty else {
@@ -181,7 +181,7 @@ extension RequestManager: RequestManagerProtocol {
                 request.arguments = requestParadigm.buildRequestArguments()
                 let groupId: RequestIdType = requestParadigm.MD5.hashValue
 
-                try startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectCreator, listener: listener)
+                try startRequest(request, forGroupId: groupId, managedObjectCreator: linker, listener: listener)
             } catch {
                 appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
             }

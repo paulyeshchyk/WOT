@@ -52,10 +52,9 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 
 extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
     //
-    public func linkItem(from itemJSON: JSONCollectionProtocol, masterFetchResult: FetchResultProtocol, linkedClazz: PrimaryKeypathProtocol.Type, managedObjectCreatorClass: ManagedObjectCreatorProtocol.Type, requestPredicateComposition: RequestPredicateCompositionProtocol, appContext: MappingCoordinatorContext) throws {
+    public func linkItem(from itemJSON: JSONCollectionProtocol, masterFetchResult: FetchResultProtocol, byModelClass: PrimaryKeypathProtocol.Type, linker: ManagedObjectCreatorProtocol, requestPredicateComposition: RequestPredicateCompositionProtocol, appContext: MappingCoordinatorContext) throws {
         let objectContext = masterFetchResult.managedObjectContext
-        let managedObjectCreator = managedObjectCreatorClass.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: requestPredicateComposition.objectIdentifier)
-        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: linkedClazz, contextPredicate: requestPredicateComposition.contextPredicate, managedObjectCreator: managedObjectCreator, appContext: appContext, completion: { [weak self] _, error in
+        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: byModelClass, contextPredicate: requestPredicateComposition.contextPredicate, managedObjectCreator: linker, appContext: appContext, completion: { [weak self] _, error in
             if let error = error {
                 self?.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
             }
