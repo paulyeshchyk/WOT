@@ -85,10 +85,6 @@ public class WOTWebProxyRequest: HttpRequest {
 }
 
 extension WOTWebProxyRequest: ModelServiceProtocol {
-    public class func responseParserClass() -> ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
-
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         JSONAdapter.self
     }

@@ -7,7 +7,7 @@
 
 import WOTKit
 
-public class WOTRequestManager: RequestManager {
+final public class WOTRequestManager: RequestManager {
     public required init(appContext: RequestManager.Context) {
         super.init(appContext: appContext)
         registerModelService(ModulesHttpRequest.self)

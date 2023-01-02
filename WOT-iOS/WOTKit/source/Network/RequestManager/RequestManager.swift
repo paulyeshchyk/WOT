@@ -64,45 +64,50 @@ extension RequestManager: RequestListenerProtocol {
         }
 
         do {
-            guard let managedObjectCreator = managedObjectCreatorList.adapterLinkerForRequest(request) else {
-                throw RequestManagerError.adapterNotFound(request)
-            }
-
-            guard let modelService = request as? ModelServiceProtocol else {
-                throw RequestManagerError.modelNotFound(request)
-            }
-
-            guard let modelClass = type(of: modelService).modelClass() else {
-                throw RequestManagerError.modelNotFound(request)
-            }
-            let dataAdapters = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectCreator: managedObjectCreator, appContext: appContext)
-            let responseParser = type(of: modelService).responseParserClass().init(appContext: appContext)
-
-            try responseParser.parseResponse(data: data, forRequest: request, dataAdapter: dataAdapters, completion: {[weak self] request, error in
-                guard let self = self else {
-                    return
-                }
-                if let error = error {
-                    self.appContext.logInspector?.logEvent(EventError(error, details: self), sender: self)
-                    return
-                }
-                do {
-                    try self.managedObjectCreatorList.removeAdapterForRequest(request)
-                } catch {
-                    self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
-                }
-
-                if let error = error {
-                    self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
-                }
-                do {
-                    try self.grouppedListenerList.didParseDataForRequest(request, requestManager: self, completionType: .finished)
-                } catch {
-                    self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
-                }
-            })
+            try parseResponse(request: request, data: data)
         } catch {
             appContext.logInspector?.logEvent(EventError(error, details: String(describing: request)), sender: self)
+        }
+    }
+
+    private func parseResponse(request: RequestProtocol, data: Data?) throws {
+        guard let managedObjectCreator = managedObjectCreatorList.adapterLinkerForRequest(request) else {
+            throw RequestManagerError.adapterNotFound(request)
+        }
+
+        guard let modelService = request as? ModelServiceProtocol else {
+            throw RequestManagerError.modelNotFound(request)
+        }
+
+        guard let modelClass = type(of: modelService).modelClass() else {
+            throw RequestManagerError.modelNotFound(request)
+        }
+
+        let dataAdapter = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectCreator: managedObjectCreator, appContext: appContext)
+
+        dataAdapter.decode(data: data, fromRequest: request) { [weak self] request, error in
+            self?.finalizeParseResponse(request: request, error: error)
+        }
+    }
+
+    private func finalizeParseResponse(request: RequestProtocol, error: Error?) {
+        if let error = error {
+            appContext.logInspector?.logEvent(EventError(error, details: self), sender: self)
+            return
+        }
+        do {
+            try managedObjectCreatorList.removeAdapterForRequest(request)
+        } catch {
+            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+        }
+
+        if let error = error {
+            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+        }
+        do {
+            try grouppedListenerList.didParseDataForRequest(request, requestManager: self, completionType: .finished)
+        } catch {
+            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
         }
     }
 

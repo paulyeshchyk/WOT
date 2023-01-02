@@ -176,7 +176,6 @@
 		DA81E6F129530A3800C60F31 /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E6F029530A3800C60F31 /* strings.swift */; };
 		DA81E7B42953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7B32953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift */; };
 		DA81E7BC2953235D00C60F31 /* WOTHostConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7BB2953235C00C60F31 /* WOTHostConfiguration.swift */; };
-		DA81E7C3295323F700C60F31 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7C0295323F700C60F31 /* SessionManager.swift */; };
 		DA81E7D529532DC600C60F31 /* UIImage+TankType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7D429532DC600C60F31 /* UIImage+TankType.swift */; };
 		DA81E7D72953348900C60F31 /* WOTRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7D62953348900C60F31 /* WOTRequestFactory.swift */; };
 		DA81E7DD29533C4F00C60F31 /* WOTLanguageDatasource.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7DB29533C4F00C60F31 /* WOTLanguageDatasource.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -443,7 +442,6 @@
 		DA81E6F029530A3800C60F31 /* strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = strings.swift; sourceTree = "<group>"; };
 		DA81E7B32953179A00C60F31 /* ModulesTree+WOTTreeModulesTreeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModulesTree+WOTTreeModulesTreeProtocol.swift"; sourceTree = "<group>"; };
 		DA81E7BB2953235C00C60F31 /* WOTHostConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WOTHostConfiguration.swift; sourceTree = "<group>"; };
-		DA81E7C0295323F700C60F31 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		DA81E7C42953246900C60F31 /* WOTApi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WOTApi-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA81E7D429532DC600C60F31 /* UIImage+TankType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TankType.swift"; sourceTree = "<group>"; };
 		DA81E7D62953348900C60F31 /* WOTRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WOTRequestFactory.swift; sourceTree = "<group>"; };
@@ -1123,7 +1121,6 @@
 		DA81E9182954451F00C60F31 /* SessionManager */ = {
 			isa = PBXGroup;
 			children = (
-				DA81E7C0295323F700C60F31 /* SessionManager.swift */,
 				DA81E9192954455E00C60F31 /* WOTSessionManager.h */,
 				DA81E91A2954455E00C60F31 /* WOTSessionManager.m */,
 			);
@@ -1410,7 +1407,6 @@
 				DA81E601295305CE00C60F31 /* VehicleprofileEngine+JSONDecodingProtocol.swift in Sources */,
 				DA1F5501295C5CE6009BC8D9 /* VehicleprofileGunManagedObjectCreator.swift in Sources */,
 				DA1F5509295C5D47009BC8D9 /* VehicleprofileAmmoListManagedObjectCreator.swift in Sources */,
-				DA81E7C3295323F700C60F31 /* SessionManager.swift in Sources */,
 				DA81E83A2953521700C60F31 /* WOTTankDetailField.m in Sources */,
 				DA81E5C1295305CE00C60F31 /* UserSession+CoreDataProperties.swift in Sources */,
 				DA81E84B2953521700C60F31 /* WOTTurretsArmorForeheadCompareFieldExpression.m in Sources */,

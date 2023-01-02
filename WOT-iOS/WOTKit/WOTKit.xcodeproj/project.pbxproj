@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */; };
-		1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */; };
 		1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */; };
 		1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */; };
@@ -62,7 +61,6 @@
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
-		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiverProtocol.swift; sourceTree = "<group>"; };
 		1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiver.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 		1D60E558245FE7E4007E5CA8 /* ResponseCoordinator */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */,
 			);
 			path = ResponseCoordinator;
 			sourceTree = "<group>";
@@ -469,7 +466,6 @@
 				DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */,
-				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
 				DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,

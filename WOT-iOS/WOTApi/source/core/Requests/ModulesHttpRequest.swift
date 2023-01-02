@@ -17,10 +17,6 @@ public class ModulesHttpRequest: HttpRequest {
 }
 
 extension ModulesHttpRequest: ModelServiceProtocol {
-    public class func responseParserClass() -> ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
-
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

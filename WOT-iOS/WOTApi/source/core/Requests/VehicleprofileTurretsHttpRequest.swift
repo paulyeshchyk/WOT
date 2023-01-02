@@ -17,10 +17,6 @@ public class VehicleprofileTurretsHttpRequest: HttpRequest {
 }
 
 extension VehicleprofileTurretsHttpRequest: ModelServiceProtocol {
-    public class func responseParserClass() -> ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
-
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }
