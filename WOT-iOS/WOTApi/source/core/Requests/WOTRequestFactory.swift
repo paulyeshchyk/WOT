@@ -28,7 +28,7 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
 
-        let pivotLinker = try VehiclesPivotDataManagedObjectCreator(appContext: appContext)
+        let pivotLinker = try VehiclesPivotDataManagedObjectCreator(modelClass: Vehicles.self ,appContext: appContext)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, listener: listener)
     }
 
@@ -42,7 +42,7 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
 
-        let treeViewLinker = try VehiclesTreeManagedObjectCreator(appContext: appContext)
+        let treeViewLinker = try VehiclesTreeManagedObjectCreator(modelClass: Vehicles.self, appContext: appContext)
         try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: treeViewLinker, listener: listener)
     }
 

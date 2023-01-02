@@ -5,27 +5,9 @@
 //  Created by Paul on 28.12.22.
 //
 
-public class VehicleprofileArmorListHullManagedObjectCreator: ManagedObjectCreator {
+public class VehicleprofileArmorListHullManagedObjectCreator: ManagedObjectLinker {
     override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
     override public func onJSONExtraction(json: JSON) -> JSON? {
         return json
-    }
-
-    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
-        guard let armor = fetchResult.managedObject() as? VehicleprofileArmor else {
-            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileArmor.self))
-            return
-        }
-        guard let armorList = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? VehicleprofileArmorList else {
-            completion(fetchResult, BaseJSONAdapterLinkerError.unexpectedClass(VehicleprofileArmorList.self))
-            return
-        }
-        armorList.hull = armor
-
-        // MARK: stash
-
-        appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { error in
-            completion(fetchResult, error)
-        }
     }
 }

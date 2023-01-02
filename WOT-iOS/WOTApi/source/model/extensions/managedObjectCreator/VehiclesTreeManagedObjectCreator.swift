@@ -7,13 +7,14 @@
 
 import WOTKit
 
-public class VehiclesTreeManagedObjectCreator: ManagedObjectCreator {
+public class VehiclesTreeManagedObjectCreator: ManagedObjectLinker {
     public typealias Context = DataStoreContainerProtocol
 
-    public convenience init(appContext: Context) throws {
+    public convenience init(modelClass: PrimaryKeypathProtocol.Type, appContext: Context) throws {
         let inManagedObjectContext = appContext.dataStore?.workingContext()
         let emptyFetchResult = try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
-        self.init(masterFetchResult: emptyFetchResult, mappedObjectIdentifier: nil)
+        let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
+        self.init(modelClass: modelClass, masterFetchResult: emptyFetchResult, anchor: anchor)
     }
 
     override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
@@ -21,7 +22,7 @@ public class VehiclesTreeManagedObjectCreator: ManagedObjectCreator {
         return json
     }
 
-    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectCreatorContext, completion: @escaping FetchResultCompletion) {
+    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion) {
         // MARK: stash
 
         appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { error in

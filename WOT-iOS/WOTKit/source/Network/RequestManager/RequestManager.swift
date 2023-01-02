@@ -144,7 +144,7 @@ extension RequestManager: RequestManagerProtocol {
         try requestRegistrator.createRequest(forRequestId: forRequestId)
     }
 
-    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
         //
         appContext.logInspector?.logEvent(EventRequestManagerFetchStart("\(String(describing: request.arguments))"), sender: self)
 
@@ -167,7 +167,7 @@ extension RequestManager: RequestManagerProtocol {
         }
     }
 
-    public func fetchRemote(requestParadigm: RequestParadigmProtocol, linker: ManagedObjectCreatorProtocol, listener: RequestManagerListenerProtocol?) throws {
+    public func fetchRemote(requestParadigm: RequestParadigmProtocol, linker: ManagedObjectLinkerProtocol, listener: RequestManagerListenerProtocol?) throws {
         //
         let requestIDs = requestRegistrator.requestIds(modelServiceClass: requestParadigm.modelClass)
         guard !requestIDs.isEmpty else {
@@ -192,7 +192,7 @@ extension RequestManager: RequestManagerProtocol {
 private class ResponseManagedObjectCreatorList {
     private enum AdapterLinkerListError: Error, CustomStringConvertible {
         case notRemoved(RequestProtocol)
-        case notFound(ManagedObjectCreatorProtocol)
+        case notFound(ManagedObjectLinkerProtocol)
         var description: String {
             switch self {
             case .notRemoved(let request): return "[\(type(of: self))]: Adapter was not removed for request \(String(describing: request))"
@@ -201,13 +201,13 @@ private class ResponseManagedObjectCreatorList {
         }
     }
 
-    private var adaptersLinkerList: [AnyHashable: ManagedObjectCreatorProtocol] = [:]
+    private var adaptersLinkerList: [AnyHashable: ManagedObjectLinkerProtocol] = [:]
 
-    func addAdapterLinker(_ adapter: ManagedObjectCreatorProtocol, forRequest: RequestProtocol) throws {
+    func addAdapterLinker(_ adapter: ManagedObjectLinkerProtocol, forRequest: RequestProtocol) throws {
         adaptersLinkerList[forRequest.MD5] = adapter
     }
 
-    func adapterLinkerForRequest(_ request: RequestProtocol) -> ManagedObjectCreatorProtocol? {
+    func adapterLinkerForRequest(_ request: RequestProtocol) -> ManagedObjectLinkerProtocol? {
         adaptersLinkerList[request.MD5]
     }
 

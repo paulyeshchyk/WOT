@@ -13,7 +13,7 @@ public protocol ResponseAdapterProtocol {
 
     var responseClass: AnyClass { get }
 
-    init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol, appContext: Context)
+    init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectCreator: ManagedObjectLinkerProtocol, appContext: Context)
 
     func decode(data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?)
 }

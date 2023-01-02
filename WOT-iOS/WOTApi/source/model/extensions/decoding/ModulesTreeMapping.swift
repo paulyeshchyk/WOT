@@ -21,8 +21,10 @@ public extension ModulesTree {
 
         // MARK: - NextTanks
 
-        let nextTanksManagedObjectCreator = ModulesTreeNextVehicleManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        if let nextTanks = moduleTreeJSON[#keyPath(ModulesTree.next_tanks)] as? [AnyObject] {
+        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
+        if let nextTanks = moduleTreeJSON[nextTanksKeypath] as? [AnyObject] {
+            let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nextTanksKeypath)
+            let nextTanksManagedObjectCreator = ModulesTreeNextVehicleManagedObjectCreator(modelClass: Vehicles.self, masterFetchResult: masterFetchResult, anchor: anchor)
             for nextTank in nextTanks {
                 // parents was not used for next portion of tanks
                 let theLink = Joint(theClass: Vehicles.self, theID: nextTank, thePredicate: nil)
@@ -38,12 +40,15 @@ public extension ModulesTree {
 
         // MARK: - NextModules
 
-        let nextModuleManagedObjectCreator = ModulesTreeNextModulesManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
-        if let nextModules = moduleTreeJSON[#keyPath(ModulesTree.next_modules)] as? [AnyObject] {
+        let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
+        if let nextModules = moduleTreeJSON[nextModulesKeypath] as? [AnyObject] {
+            let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nextModulesKeypath)
+            let nextModuleManagedObjectCreator = ModulesTreeNextModulesManagedObjectCreator(modelClass: ModulesTree.self, masterFetchResult: masterFetchResult, anchor: anchor)
             for nextModuleID in nextModules {
-                let theLink = Joint(theClass: Module.self, theID: nextModuleID, thePredicate: map.predicate)
+                let modelClass = Module.self
+                let theLink = Joint(theClass: modelClass, theID: nextModuleID, thePredicate: map.predicate)
                 let nextModulePredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
-                let requestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
+                let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
                     try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, linker: nextModuleManagedObjectCreator, listener: self)
                 } catch {
@@ -54,10 +59,13 @@ public extension ModulesTree {
 
         // MARK: - CurrentModule
 
-        let moduleJSONAdapter = ModulesTreeCurrentModuleManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: nil)
+        let keypath = #keyPath(ModulesTree.currentModule)
+        let modelClass = Module.self
+        let currentModuleAnchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: keypath)
+        let moduleJSONAdapter = ModulesTreeCurrentModuleManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: currentModuleAnchor)
         let theLink = Joint(theClass: Module.self, theID: module_id, thePredicate: map.predicate)
         let modulePredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
-        let moduleRequestParadigm = RequestParadigm(modelClass: Module.self, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
+        let moduleRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
         try appContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, linker: moduleJSONAdapter, listener: self)
     }
 }

@@ -16,14 +16,16 @@ public extension VehicleprofileAmmoList {
 
         let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
 
+        let keypath = #keyPath(VehicleprofileAmmo.type)
         for jsonElement in profilesJSON {
-            let ammoType = jsonElement[#keyPath(VehicleprofileAmmo.type)]
+            let ammoType = jsonElement[keypath]
             let modelClass = VehicleprofileAmmo.self
             let joint = Joint(theClass: modelClass, theID: ammoType, thePredicate: map.predicate)
             let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(drivenJoint: joint, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
-            let linker = VehicleprofileAmmoListAmmoManagedObjectCreator.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier)
+            let linker = VehicleprofileAmmoListAmmoManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         }
     }

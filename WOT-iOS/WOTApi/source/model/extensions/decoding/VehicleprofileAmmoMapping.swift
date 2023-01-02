@@ -21,12 +21,14 @@ public extension VehicleprofileAmmo {
 
         // MARK: - Penetration
 
-        if let jsonCustom = ammoJSON[#keyPath(VehicleprofileAmmo.penetration)] {
+        let keypathPenetration = #keyPath(VehicleprofileAmmo.penetration)
+        if let jsonCustom = ammoJSON[keypathPenetration] {
             let modelClass = VehicleprofileAmmoPenetration.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
             let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
-            let linker = VehicleprofileAmmoPenetrationManagedObjectCreator.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathPenetration)
+            let linker = VehicleprofileAmmoPenetrationManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noPenetration, details: nil), sender: self)
@@ -34,12 +36,14 @@ public extension VehicleprofileAmmo {
 
         // MARK: - Damage
 
-        if let jsonCustom = ammoJSON[#keyPath(VehicleprofileAmmo.damage)] {
+        let keypathDamage = #keyPath(VehicleprofileAmmo.damage)
+        if let jsonCustom = ammoJSON[keypathDamage] {
             let modelClass = VehicleprofileAmmoDamage.self
             let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
             let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
-            let linker = VehicleprofileAmmoDamageManagedObjectCreator.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathDamage)
+            let linker = VehicleprofileAmmoDamageManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noDamage, details: nil), sender: self)

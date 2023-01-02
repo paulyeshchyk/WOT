@@ -17,7 +17,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     // MARK: Private -
 
-    private var managedObjectCreator: ManagedObjectCreatorProtocol
+    private var managedObjectCreator: ManagedObjectLinkerProtocol
 
     private let appContext: JSONAdapterProtocol.Context
     private let modelClazz: PrimaryKeypathProtocol.Type
@@ -28,7 +28,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 
     public var description: String { String(describing: type(of: request)) }
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectCreator: ManagedObjectCreatorProtocol, appContext: JSONAdapterProtocol.Context) {
+    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectCreator: ManagedObjectLinkerProtocol, appContext: JSONAdapterProtocol.Context) {
         modelClazz = modelClass
         self.request = request
         self.managedObjectCreator = managedObjectCreator
@@ -183,7 +183,7 @@ public struct JSONExtraction {
     }
 }
 
-public extension ManagedObjectCreatorProtocol {
+public extension ManagedObjectLinkerProtocol {
     func extract(json: JSON, key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol?) throws -> JSONExtraction {
         guard let json = json[key] as? JSON else {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)

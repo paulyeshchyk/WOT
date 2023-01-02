@@ -18,12 +18,14 @@ public extension VehicleprofileArmorList {
 
         // MARK: - turret
 
-        if let jsonElement = armorListJSON[#keyPath(VehicleprofileArmorList.turret)] as? JSON {
+        let keypathturret = #keyPath(VehicleprofileArmorList.turret)
+        if let jsonElement = armorListJSON[keypathturret] as? JSON {
             let modelClass = VehicleprofileArmor.self
             let collection = try JSONCollection(element: jsonElement)
             let composer = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
             let composition = try composer.buildRequestPredicateComposition()
-            let linker = VehicleprofileArmorListTurretManagedObjectCreator.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathturret)
+            let linker = VehicleprofileArmorListTurretManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.turretNotFound, details: nil), sender: self)
@@ -31,12 +33,14 @@ public extension VehicleprofileArmorList {
 
         // MARK: - hull
 
-        if let jsonElement = armorListJSON[#keyPath(VehicleprofileArmorList.hull)] as? JSON {
+        let keypathhull = #keyPath(VehicleprofileArmorList.hull)
+        if let jsonElement = armorListJSON[keypathhull] as? JSON {
             let modelClass = VehicleprofileArmor.self
             let collection = try JSONCollection(element: jsonElement)
             let composer = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
             let composition = try composer.buildRequestPredicateComposition()
-            let linker = VehicleprofileArmorListHullManagedObjectCreator.init(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathhull)
+            let linker = VehicleprofileArmorListHullManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.hullNotFound, details: nil), sender: self)
