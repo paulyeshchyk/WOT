@@ -31,10 +31,10 @@ public extension Vehicles {
             let modelClass = Vehicleprofile.self
             let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
-            let defaultProfileJSONCollection = try JSONCollection(element: jsonElement)
             let composition = try builder.buildRequestPredicateComposition()
-            let linker = VehicleprofileAmmoListAmmoManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
-            try appContext.mappingCoordinator?.linkItem(from: defaultProfileJSONCollection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
+            let collection = try JSONCollection(element: jsonElement)
+            let linker = DefaultProfileManagedObjectCreator(masterFetchResult: masterFetchResult, mappedObjectIdentifier: composition.objectIdentifier)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
         }
