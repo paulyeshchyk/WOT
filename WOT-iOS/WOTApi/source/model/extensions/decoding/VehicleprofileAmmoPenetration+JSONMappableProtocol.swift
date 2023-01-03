@@ -9,7 +9,7 @@
 public extension VehicleprofileAmmoPenetration {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, appContext _: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context) throws {
         guard let penetrationJSON = map.jsonCollection.data() as? [Any] else {
             throw VehicleprofileAmmoPenetrationError.arrayIsExpected(map.jsonCollection)
         }
@@ -24,9 +24,12 @@ public extension VehicleprofileAmmoPenetration {
     }
 }
 
+// MARK: - VehicleprofileAmmoPenetrationError
+
 private enum VehicleprofileAmmoPenetrationError: Error, CustomStringConvertible {
     case arrayIsExpected(Any)
     case arrayIsNotContainingThreeElements([Any])
+
     var description: String {
         switch self {
         case .arrayIsExpected(let object): return "[\(type(of: self))]: Array is expected, but \(type(of: object))"

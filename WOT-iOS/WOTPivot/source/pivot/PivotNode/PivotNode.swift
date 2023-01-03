@@ -9,25 +9,6 @@
 import UIKit
 
 public class PivotNode: Node, PivotNodeProtocol {
-    public var dataColor: UIColor?
-    public var data1: AnyObject?
-    public var stickyType: PivotStickyType { return .float }
-    public var cellType: PivotCellType { return .data }
-    public var predicate: NSPredicate?
-    public var fullPredicate: NSPredicate? {
-        guard let parentPredicate = (parent as? PivotNodeProtocol)?.fullPredicate else {
-            return predicate
-        }
-        let selfPredicate = predicate
-        let predicates: [NSPredicate] = [selfPredicate, parentPredicate].compactMap { $0 }
-        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-    }
-
-    public var indexInsideStepParentColumn: Int = 0
-    public var stepParentColumn: NodeProtocol?
-    public var stepParentRow: NodeProtocol?
-    public var imageURL: NSURL?
-    public var relativeRect: NSValue?
 
     @objc
     public required init(name nameValue: String, predicate predicateValue: NSPredicate) {
@@ -47,5 +28,25 @@ public class PivotNode: Node, PivotNodeProtocol {
         result.isVisible = isVisible
         result.imageURL = imageURL?.copy(with: zone) as? NSURL
         return result
+    }
+
+    public var dataColor: UIColor?
+    public var data1: AnyObject?
+    public var predicate: NSPredicate?
+    public var indexInsideStepParentColumn: Int = 0
+    public var stepParentColumn: NodeProtocol?
+    public var stepParentRow: NodeProtocol?
+    public var imageURL: NSURL?
+    public var relativeRect: NSValue?
+
+    public var stickyType: PivotStickyType { return .float }
+    public var cellType: PivotCellType { return .data }
+    public var fullPredicate: NSPredicate? {
+        guard let parentPredicate = (parent as? PivotNodeProtocol)?.fullPredicate else {
+            return predicate
+        }
+        let selfPredicate = predicate
+        let predicates: [NSPredicate] = [selfPredicate, parentPredicate].compactMap { $0 }
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
 }

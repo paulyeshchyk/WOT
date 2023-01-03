@@ -8,12 +8,9 @@
 
 import ContextSDK
 
-open class HttpRequest: Request {
-    override public var description: String {
-        "\(type(of: self)): \(path)"
-    }
+// MARK: - HttpRequest
 
-    private var httpDataReceiver: HttpDataReceiver?
+open class HttpRequest: Request {
 
     deinit {
         httpDataReceiver?.delegate = nil
@@ -37,7 +34,15 @@ open class HttpRequest: Request {
         httpDataReceiver?.delegate = self
         httpDataReceiver?.start(completion: completion)
     }
+
+    override public var description: String {
+        "\(type(of: self)): \(path)"
+    }
+
+    private var httpDataReceiver: HttpDataReceiver?
 }
+
+// MARK: - HttpRequest + HttpDataReceiverDelegateProtocol
 
 extension HttpRequest: HttpDataReceiverDelegateProtocol {
     public func didCancel(urlRequest _: URLRequest, receiver _: HttpDataReceiverProtocol, error: Error?) {
@@ -60,7 +65,7 @@ extension HttpRequest: HttpDataReceiverDelegateProtocol {
     }
 }
 
-// MARK: - WOTWebServiceProtocol
+// MARK: - HttpRequest + HttpServiceProtocol
 
 extension HttpRequest: HttpServiceProtocol {
     open var httpMethod: ContextSDK.HTTPMethod { return .POST }
@@ -68,13 +73,17 @@ extension HttpRequest: HttpServiceProtocol {
     open var httpBodyData: Data? { nil }
 }
 
+// MARK: - HttpRequestCancelEvent
+
 final private class HttpRequestCancelEvent: LogEventProtocol {
+
+    init(reason: RequestCancelReasonProtocol) {
+        self.reason = reason
+    }
+
     var eventType: LogEventType { .info }
     var message: String { reason.reasonDescription }
     var name: String { "HttpRequestCancelEvent" }
 
     private let reason: RequestCancelReasonProtocol
-    init(reason: RequestCancelReasonProtocol) {
-        self.reason = reason
-    }
 }

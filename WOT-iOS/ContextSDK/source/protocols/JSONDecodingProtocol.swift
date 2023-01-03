@@ -7,20 +7,28 @@
 public typealias JSONValueType = Any
 public typealias JSON = [Swift.AnyHashable: JSONValueType]
 
+// MARK: - JSONDecodingProtocol
+
 public protocol JSONDecodingProtocol {
     func decodeWith(_ decoder: Decoder) throws
 }
 
+// MARK: - JSONDecodableProtocol
+
 public protocol JSONDecodableProtocol {
     typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol & LogInspectorContainerProtocol
 
-    func decode(using: JSONCollectionContainerProtocol, appContext: JSONDecodableProtocol.Context) throws
+    func decode(using: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws
 }
 
+// MARK: - JSONCollectionContainerProtocol
+
 @objc
-public protocol JSONCollectionContainerProtocol: ContextPredicateContainerProtocol, ManagedObjectContextContainerProtocol {
+public protocol JSONCollectionContainerProtocol: ContextPredicateContainerProtocol {
     var jsonCollection: JSONCollectionProtocol { get }
 }
+
+// MARK: - JSONCollectionProtocol
 
 @objc
 public protocol JSONCollectionProtocol {
@@ -30,11 +38,14 @@ public protocol JSONCollectionProtocol {
     func data() -> Any?
 }
 
+// MARK: - JSONCollectionType
+
 @objc
 public enum JSONCollectionType: Int, CustomStringConvertible {
     case element
     case array
     case custom
+
     public var description: String {
         switch self {
         case .element: return "element"

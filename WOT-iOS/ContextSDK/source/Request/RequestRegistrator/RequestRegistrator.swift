@@ -6,16 +6,19 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - RequestRegistrator
+
 open class RequestRegistrator: RequestRegistratorProtocol {
+
+    public required init(appContext: Context) {
+        context = appContext
+    }
+
     public typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
 
     private let context: Context
     private var registeredModelService: [RequestIdType: ModelServiceProtocol.Type] = .init()
     private var registeredModelClass: [RequestIdType: PrimaryKeypathProtocol.Type] = .init()
-
-    public required init(appContext: Context) {
-        context = appContext
-    }
 }
 
 // MARK: - WOTRequestBindingProtocol

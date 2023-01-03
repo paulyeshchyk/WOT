@@ -7,9 +7,6 @@
 //
 
 final public class EventError: LogEventProtocol {
-    public var eventType: LogEventType { return .error }
-    private(set) public var message: String
-    public var name: String { return "Error"}
 
     public init() {
         message = ""
@@ -34,4 +31,9 @@ final public class EventError: LogEventProtocol {
 
         self.init(message: messages.joined(separator: "; details: "))
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .error }
+    public var name: String { return "Error" }
 }

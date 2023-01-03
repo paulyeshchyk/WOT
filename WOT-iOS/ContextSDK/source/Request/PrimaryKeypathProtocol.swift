@@ -5,6 +5,8 @@
 //  Created by Paul on 19.12.22.
 //
 
+// MARK: - PrimaryKeyType
+
 @objc
 public enum PrimaryKeyType: Int {
     case `internal`
@@ -12,16 +14,22 @@ public enum PrimaryKeyType: Int {
     case `unknown`
 }
 
+// MARK: - PredicateFormatProtocol
+
 @objc
 public protocol PredicateFormatProtocol {
     var template: String { get }
 }
+
+// MARK: - PredicateFormat
 
 @objc
 public enum PredicateFormat: Int {
     case `external`
     case `internal`
 }
+
+// MARK: - PrimaryKeypathProtocol
 
 @objc
 public protocol PrimaryKeypathProtocol: AnyObject {

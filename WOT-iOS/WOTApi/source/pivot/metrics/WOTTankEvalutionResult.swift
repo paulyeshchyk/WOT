@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - WOTTankEvaluationResultProtocol
+
 @objc
 public protocol WOTTankEvaluationResultProtocol {
     var thisValue: CGFloat { get set }
@@ -15,16 +17,10 @@ public protocol WOTTankEvaluationResultProtocol {
     var averageValue: CGFloat { get set }
 }
 
+// MARK: - WOTTankEvalutionResult
+
 @objc
 public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol {
-    @objc
-    public var thisValue: CGFloat
-
-    @objc
-    public var maxValue: CGFloat
-
-    @objc
-    public var averageValue: CGFloat
 
     @objc
     public required
@@ -34,4 +30,13 @@ public class WOTTankEvalutionResult: NSObject, WOTTankEvaluationResultProtocol {
         self.averageValue = averageValue
         super.init()
     }
+
+    @objc
+    public var thisValue: CGFloat
+
+    @objc
+    public var maxValue: CGFloat
+
+    @objc
+    public var averageValue: CGFloat
 }

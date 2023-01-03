@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - VehicleprofileEnginesHttpRequest
+
 public class VehicleprofileEnginesHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 
@@ -16,11 +18,9 @@ public class VehicleprofileEnginesHttpRequest: HttpRequest {
     }
 }
 
-extension VehicleprofileEnginesHttpRequest: ModelServiceProtocol {
-    public class func responseParserClass() -> ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
+// MARK: - VehicleprofileEnginesHttpRequest + ModelServiceProtocol
 
+extension VehicleprofileEnginesHttpRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

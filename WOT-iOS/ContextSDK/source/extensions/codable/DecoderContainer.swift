@@ -5,9 +5,13 @@
 //  Created by Paul on 24.12.22.
 //
 
+// MARK: - DecoderContainer
+
 public protocol DecoderContainer {
     func decoder() throws -> Decoder
 }
+
+// MARK: - Array + DecoderContainer
 
 extension Array: DecoderContainer {
     public func decoder() throws -> Decoder {
@@ -17,6 +21,8 @@ extension Array: DecoderContainer {
     }
 }
 
+// MARK: - JSON + DecoderContainer
+
 extension JSON: DecoderContainer {
     public func decoder() throws -> Decoder {
         let data = try JSONSerialization.data(withJSONObject: self, options: [])
@@ -25,10 +31,13 @@ extension JSON: DecoderContainer {
     }
 }
 
+// MARK: - DecoderWrapper
+
 class DecoderWrapper: Decodable {
-    let decoder: Decoder
 
     required init(from decoder: Decoder) throws {
         self.decoder = decoder
     }
+
+    let decoder: Decoder
 }

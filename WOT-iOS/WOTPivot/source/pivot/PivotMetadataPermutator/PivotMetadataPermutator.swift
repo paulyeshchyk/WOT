@@ -6,7 +6,10 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+// MARK: - PivotMetadataPermutator
+
 public struct PivotMetadataPermutator {
+
     public init() {}
 
     public func permutate(templates: [PivotTemplateProtocol], as type: PivotMetadataType) -> [PivotNodeProtocol] {
@@ -69,9 +72,13 @@ public struct PivotMetadataPermutator {
     }
 }
 
+// MARK: - PivotTemplateProtocol
+
 public protocol PivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> PivotNodeProtocol
 }
+
+// MARK: - PivotMetaTypeConverter
 
 @objc
 public class PivotMetaTypeConverter: NSObject {

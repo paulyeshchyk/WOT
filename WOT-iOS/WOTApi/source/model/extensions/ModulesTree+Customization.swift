@@ -22,6 +22,8 @@ public extension ModulesTree {
     }
 }
 
+// MARK: - VehicleModuleType
+
 public enum VehicleModuleType: String {
     case unknown
     case vehicleChassis
@@ -41,8 +43,6 @@ public enum VehicleModuleType: String {
         return result
     }
 
-    private static var allTypes: [VehicleModuleType] = [.unknown, .vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun, .tank]
-
     var index: Int {
         if let result = VehicleModuleType.allTypes.firstIndex(of: self) {
             return result
@@ -53,7 +53,11 @@ public enum VehicleModuleType: String {
     static func value(for intValue: Int) -> VehicleModuleType {
         return VehicleModuleType.allTypes[intValue]
     }
+
+    private static var allTypes: [VehicleModuleType] = [.unknown, .vehicleChassis, .vehicleEngine, .vehicleRadio, .vehicleTurret, .vehicleGun, .tank]
 }
+
+// MARK: - ObjCVehicleModuleType
 
 @objc
 public enum ObjCVehicleModuleType: Int {
@@ -70,11 +74,13 @@ public enum ObjCVehicleModuleType: Int {
     }
 
     static func fromString(stringValue: String) -> ObjCVehicleModuleType {
-        guard let index = VehicleModuleType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)")}
-        guard let result = ObjCVehicleModuleType(rawValue: index) else { fatalError("unknown moduleType")}
+        guard let index = VehicleModuleType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)") }
+        guard let result = ObjCVehicleModuleType(rawValue: index) else { fatalError("unknown moduleType") }
         return result
     }
 }
+
+// MARK: - ObjCVehicleModuleTypeConverter
 
 @objc
 @available(*, deprecated, message: "Use swift VehicleModuleType")

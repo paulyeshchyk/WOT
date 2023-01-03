@@ -9,6 +9,8 @@
 import ContextSDK
 import WOTKit
 
+// MARK: - WOTWebProxyRequest
+
 public class WOTWebProxyRequest: HttpRequest {
     public func dataFrom(proxyData: NSData?) -> NSData? {
         guard let proxyData = proxyData else { return nil }
@@ -26,7 +28,6 @@ public class WOTWebProxyRequest: HttpRequest {
                     result = success.data(using: String.Encoding.utf8)
                 }
             }
-
         } catch {
             fatalError("unable to parse json")
         }
@@ -84,11 +85,9 @@ public class WOTWebProxyRequest: HttpRequest {
      */
 }
 
-extension WOTWebProxyRequest: ModelServiceProtocol {
-    public class func responseParserClass() -> ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
+// MARK: - WOTWebProxyRequest + ModelServiceProtocol
 
+extension WOTWebProxyRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         JSONAdapter.self
     }

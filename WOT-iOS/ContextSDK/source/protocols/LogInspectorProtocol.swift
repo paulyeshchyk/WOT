@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - LogEventType
+
 @objc
 public enum LogEventType: Int {
     case error
@@ -23,9 +25,13 @@ public enum LogEventType: Int {
     case remoteFetch
     case datastore
     case flow
+    case pivot
     case longTermOperation
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads,.http, .json, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch, .flow, .longTermOperation, .datastore] }
+
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads, .http, .json, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch, .flow, .longTermOperation, .datastore, .pivot] }
 }
+
+// MARK: - LogEventProtocol
 
 @objc
 public protocol LogEventProtocol {
@@ -34,10 +40,14 @@ public protocol LogEventProtocol {
     var name: String { get }
 }
 
+// MARK: - LogInspectorContainerProtocol
+
 @objc
 public protocol LogInspectorContainerProtocol {
     @objc var logInspector: LogInspectorProtocol? { get set }
 }
+
+// MARK: - LogInspectorProtocol
 
 @objc
 public protocol LogInspectorProtocol: AnyObject {
@@ -45,5 +55,5 @@ public protocol LogInspectorProtocol: AnyObject {
 }
 
 extension LogInspectorProtocol {
-    func logEvent(_ event: LogEventProtocol?) { logEvent(event, sender: nil)}
+    func logEvent(_ event: LogEventProtocol?) { logEvent(event, sender: nil) }
 }

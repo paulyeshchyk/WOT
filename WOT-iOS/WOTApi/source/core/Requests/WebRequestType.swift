@@ -6,7 +6,6 @@
 //
 
 public enum WebRequestType: RequestIdType {
-    public typealias RawValue = NSInteger
     case unknown = 1
     case login = 2
     case logout = 3
@@ -19,4 +18,6 @@ public enum WebRequestType: RequestIdType {
     case modules = 10
     case moduleTree = 11
     case tankProfile = 12
+
+    public typealias RawValue = NSInteger
 }

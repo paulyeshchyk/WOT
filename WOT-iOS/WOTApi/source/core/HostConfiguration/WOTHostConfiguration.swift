@@ -10,6 +10,7 @@ import ContextSDK
 
 @objc
 public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
+
     public var applicationID: String {
         return "e3a1e0889ff9c76fa503177f351b853c"
     }
@@ -22,7 +23,9 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
         return WOTApiDefaults.applicationScheme
     }
 
-    private var currentArguments: String = ""
+    override public var description: String {
+        return "\(host):\(currentArguments)"
+    }
 
     @objc
     public func urlQuery(with: RequestArgumentsProtocol?) -> String {
@@ -31,7 +34,5 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
         return currentArguments
     }
 
-    override public var description: String {
-        return "\(host):\(currentArguments)"
-    }
+    private var currentArguments: String = ""
 }

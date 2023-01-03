@@ -8,9 +8,15 @@
 
 import UIKit
 
+// MARK: - TankPivotViewController
+
 class TankPivotViewController: UIViewController {}
 
+// MARK: - TankPivotViewController + UICollectionViewDelegate
+
 extension TankPivotViewController: UICollectionViewDelegate {}
+
+// MARK: - TankPivotViewController + UICollectionViewDataSource
 
 extension TankPivotViewController: UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {

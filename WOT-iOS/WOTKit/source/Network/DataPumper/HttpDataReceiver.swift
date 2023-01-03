@@ -8,27 +8,10 @@
 
 import ContextSDK
 
+// MARK: - HttpDataReceiver
+
 public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible {
-    enum WOTWebDataPumperError: Error, CustomStringConvertible {
-        case urlNotDefined
-        var description: String {
-            switch self {
-            case .urlNotDefined: return "[\(type(of: self))]: Url is not defined"
-            }
-        }
-    }
 
-    let request: URLRequest
-
-    public let uuid: UUID = UUID()
-    public var MD5: String { uuid.MD5 }
-
-    public var description: String { "\(type(of: self)): \(String(describing: request))" }
-
-    public weak var delegate: HttpDataReceiverDelegateProtocol?
-    private var urlDataTask: URLSessionDataTask?
-
-    private let context: HttpDataReceiverProtocol.Context
     public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
         self.context = context
@@ -38,6 +21,12 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         urlDataTask?.cancelDataTask()
         urlDataTask = nil
     }
+
+    public weak var delegate: HttpDataReceiverDelegateProtocol?
+
+    public var MD5: String { uuid.MD5 }
+
+    public var description: String { "\(type(of: self)): \(String(describing: request))" }
 
     @discardableResult
     public func cancel() -> Bool {
@@ -61,6 +50,23 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
         delegate?.didStart(urlRequest: request, receiver: self)
         urlDataTask?.resume()
     }
+
+    enum WOTWebDataPumperError: Error, CustomStringConvertible {
+        case urlNotDefined
+
+        var description: String {
+            switch self {
+            case .urlNotDefined: return "[\(type(of: self))]: Url is not defined"
+            }
+        }
+    }
+
+    let request: URLRequest
+
+    private let uuid: UUID = UUID()
+    private var urlDataTask: URLSessionDataTask?
+
+    private let context: HttpDataReceiverProtocol.Context
 
     private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in

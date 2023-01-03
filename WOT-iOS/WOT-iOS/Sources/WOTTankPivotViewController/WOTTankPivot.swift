@@ -11,6 +11,8 @@ import WOTApi
 import WOTKit
 import WOTPivot
 
+// MARK: - WOTTankPivotNodeCreator
+
 class WOTTankPivotNodeCreator: PivotNodeCreator {
     #warning("Pivot configuration: collapse")
     override public var collapseToGroups: Bool { return true }
@@ -29,11 +31,15 @@ class WOTTankPivotNodeCreator: PivotNodeCreator {
     }
 }
 
-class WOTTankPivotFetchRequest: PivotFetchControllerDelegateProtocol {
-    var settingsDatasource: WOTTankListSettingsDatasource
+// MARK: - WOTTankPivotFetchRequest
+
+class WOTTankPivotFetchRequest: FetchRequestContainerProtocol {
+
     init(datasource: WOTTankListSettingsDatasource) {
         settingsDatasource = datasource
     }
+
+    var settingsDatasource: WOTTankListSettingsDatasource
 
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
         let result = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicles")
@@ -58,8 +64,9 @@ class WOTTankPivotFetchRequest: PivotFetchControllerDelegateProtocol {
 
 #warning("Pivot Configuration: Columns")
 
+// MARK: - WOTTankPivotMetadatasource
+
 class WOTTankPivotMetadatasource: PivotMetaDatasourceProtocol {
-    private let permutator = PivotMetadataPermutator()
 
     func metadataItems() -> [NodeProtocol] {
         var result = [NodeProtocol]()
@@ -83,19 +90,17 @@ class WOTTankPivotMetadatasource: PivotMetaDatasourceProtocol {
     func filters() -> [NodeProtocol] {
         return [FilterPivotNode(name: "Filter")]
     }
+
+    private let permutator = PivotMetadataPermutator()
 }
 
+// MARK: - WOTTankPivotModel
+
 class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol
 
-    private let appContext: Context
-    let uuid: UUID = UUID()
-    var MD5: String { uuid.MD5 }
-
-    required init(modelListener: NodeDataModelListener, context: Context, settingsDatasource: WOTTankListSettingsDatasource) {
-        appContext = context
+    required init(modelListener: NodeDataModelListener, settingsDatasource: WOTTankListSettingsDatasource, appContext: Context) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
-        let fetchController = NodeFetchController(nodeFetchRequestCreator: fetchRequest, appContext: context)
+        let fetchController = NodeFetchController(fetchRequestContainer: fetchRequest, appContext: appContext)
 
         let metadatasource = WOTTankPivotMetadatasource()
         let nodeCreator = WOTTankPivotNodeCreator()
@@ -104,8 +109,8 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
                    modelListener: modelListener,
                    nodeCreator: nodeCreator,
                    metadatasource: metadatasource,
-                   nodeIndex: ObjCNodeIndex.defaultIndex,
-                   context: context)
+                   nodeIndex: NodeIndex.self,
+                   appContext: appContext)
 
         enumerator = NodeEnumerator.sharedInstance
     }
@@ -118,17 +123,19 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:context:) has not been implemented")
     }
 
-    @objc required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, nodeIndex _: NodeIndexProtocol, context _: PivotDataModel.Context) {
+    @objc required init(fetchController _: NodeFetchControllerProtocol, modelListener _: NodeDataModelListener, nodeCreator _: NodeCreatorProtocol, metadatasource _: PivotMetaDatasourceProtocol, nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
         fatalError("init(fetchController:modelListener:nodeCreator:metadatasource:nodeIndex:context:) has not been implemented")
     }
 
-    required init(nodeIndex _: NodeIndexProtocol) {
+    required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
         fatalError("init(nodeIndex:) has not been implemented")
     }
 
     deinit {
         appContext.requestManager?.removeListener(self)
     }
+
+    var MD5: String { uuid.MD5 }
 
     override var description: String { "\(type(of: self))" }
 
@@ -144,11 +151,12 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         }
     }
 
-    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType) {
-        if completionResultType == .finished || completionResultType == .noData {
-            requestManager.removeListener(self)
-            appContext.logInspector?.logEvent(EventFlowEnd("Pivot"), sender: self)
+    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error: Error?) {
+        if error != nil {
+            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
         }
+        requestManager.removeListener(self)
+        appContext.logInspector?.logEvent(EventFlowEnd("Pivot"), sender: self)
         DispatchQueue.main.async {
             super.loadModel()
         }
@@ -161,4 +169,6 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
     func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
         //
     }
+
+    private let uuid = UUID()
 }

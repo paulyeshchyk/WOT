@@ -3,10 +3,10 @@
 
 import Foundation
 
+// MARK: - L10n
+
 // swiftlint:disable superfluous_disable_command
 // swiftlint:disable file_length
-
-// MARK: - Strings
 
 // swiftlint:disable function_parameter_count identifier_name line_length type_body_length
 internal enum L10n {
@@ -198,12 +198,14 @@ internal enum L10n {
 
 // MARK: - Implementation Details
 
-private extension L10n {
-    static func tr(_ table: String, _ key: String, _ args: CVarArg...) -> String {
+extension L10n {
+    fileprivate static func tr(_ table: String, _ key: String, _ args: CVarArg...) -> String {
         // swiftlint:disable:next nslocalizedstring_key
         let format = NSLocalizedString(key, tableName: table, bundle: Bundle(for: BundleToken.self), comment: "")
         return String(format: format, locale: Locale.current, arguments: args)
     }
 }
+
+// MARK: - BundleToken
 
 final private class BundleToken {}

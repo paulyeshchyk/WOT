@@ -10,6 +10,8 @@ public typealias WOTNodeProtocolCompletion = (NodeProtocol) -> Void
 public typealias NodeComparatorType = (_ node1: NodeProtocol, _ node2: NodeProtocol, _ level: Int) -> ComparisonResult
 public typealias NodeIndexType = Int
 
+// MARK: - NodeProtocol
+
 @objc
 public protocol NodeProtocol: NSCopying, NSObjectProtocol {
     init(name nameValue: String)

@@ -10,6 +10,14 @@
 import XCTest
 
 class WOTNodeTest: XCTestCase {
+    static let WOTNodeEmptyComparator: NodeComparatorType = { (_, _, _) in
+        return .orderedSame
+    }
+
+    static let WOTNodeNameComparator: NodeComparatorType = { (node1, node2, _) in
+        return node1.name.compare(node2.name)
+    }
+
     var asyncExpectation: XCTestExpectation?
 
     func testName() {
@@ -155,14 +163,6 @@ class WOTNodeTest: XCTestCase {
         node[0] = child2
         XCTAssert(node[0].name.compare("child2") == .orderedSame)
         XCTAssert(node[0].parent === node)
-    }
-
-    static let WOTNodeEmptyComparator: NodeComparatorType = { (_, _, _) in
-        return .orderedSame
-    }
-
-    static let WOTNodeNameComparator: NodeComparatorType = { (node1, node2, _) in
-        return node1.name.compare(node2.name)
     }
 
     func testComparators() {

@@ -8,11 +8,16 @@
 
 import UIKit
 
+// MARK: - PivotDimensionCalculatorProtocol
+
 public protocol PivotDimensionCalculatorProtocol {
     static func rectangle(forNode: NodeProtocol, dimension: PivotNodeDimensionProtocol) -> CGRect
 }
 
+// MARK: - PivotDimensionCalculator
+
 public class PivotDimensionCalculator: PivotDimensionCalculatorProtocol {
+
     public static func rectangle(forNode node: NodeProtocol, dimension: PivotNodeDimensionProtocol) -> CGRect {
         return CGRect(x: x(forNode: node, dimension: dimension),
                       y: y(forNode: node, dimension: dimension),

@@ -8,6 +8,8 @@
 
 import OSLog
 
+// MARK: - LogOutputLevel
+
 public enum LogOutputLevel: Int {
     case verbose = 4
     case debug = 3
@@ -16,13 +18,19 @@ public enum LogOutputLevel: Int {
     case error = 0
 }
 
+// MARK: - LogContext
+
 public protocol LogContext {
     var category: String { get }
 }
 
+// MARK: - String + LogContext
+
 extension String: LogContext {
     public var category: String { self }
 }
+
+// MARK: - LOGOutputProtocol
 
 public protocol LOGOutputProtocol {
     init(consoleLevel: LogOutputLevel, bundle: Bundle)
@@ -91,21 +99,25 @@ extension OSLog {
     }
 }
 
+// MARK: - OSLogWrapper
+
 public class OSLogWrapper: LOGOutputProtocol {
-    public var consoleLevel: LogOutputLevel
-    public var bundle: Bundle
 
     public required init(consoleLevel: LogOutputLevel, bundle: Bundle) {
         self.consoleLevel = consoleLevel
         self.bundle = bundle
     }
 
+    public var consoleLevel: LogOutputLevel
+    public var bundle: Bundle
+
     /// log something generally unimportant (lowest priority)
     public func verbose(_ message: Any, _: String, _: String, line _: Int, context: LogContext?) {
         guard consoleLevel.rawValue >= LogOutputLevel.verbose.rawValue,
               let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("💜 %{public}@", log: log, type: .default, message)
@@ -116,7 +128,8 @@ public class OSLogWrapper: LOGOutputProtocol {
         guard consoleLevel.rawValue >= LogOutputLevel.debug.rawValue,
               let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("💚 %{public}@", log: log, type: .default, message)
@@ -127,7 +140,8 @@ public class OSLogWrapper: LOGOutputProtocol {
         guard consoleLevel.rawValue >= LogOutputLevel.info.rawValue,
               let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("💙 %{public}@", log: log, type: .default, message)
@@ -137,7 +151,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     public func warning(_ message: Any, _: String, _: String, line _: Int, context: LogContext?) {
         guard let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("💛 %{public}@", log: log, type: .error, message)
@@ -147,7 +162,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     public func error(_ message: Any, _: String, _: String, line _: Int, context: LogContext?) {
         guard let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("❤️ %{public}@", log: log, type: .fault, message)
@@ -157,7 +173,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     public func custom(_ message: Any, _: String, _: String, line _: Int, context: LogContext?) {
         guard let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("🖤 %{public}@", log: log, type: .default, message)

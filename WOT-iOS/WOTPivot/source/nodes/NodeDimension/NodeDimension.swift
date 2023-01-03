@@ -11,25 +11,19 @@ import UIKit
 typealias TNodeSize = [String: Int]
 typealias TNodesSizesType = [AnyHashable: TNodeSize]
 
+// MARK: - NodeDimension
+
 public class NodeDimension: NSObject, NodeDimensionProtocol {
+
     public var fetchController: NodeFetchControllerProtocol?
     public var enumerator: NodeEnumeratorProtocol?
 
-    private lazy var sizes: TNodesSizesType = {
-        return TNodesSizesType()
-    }()
-
-    private func sizeMap(node: NodeProtocol) -> TNodeSize? {
-        if let obj = node as? AnyHashable {
-            return sizes[obj]
-        }
-        return nil
+    public var shouldDisplayEmptyColumns: Bool {
+        return false
     }
 
-    private func set(sizeMap: TNodeSize, node: NodeProtocol) {
-        if let obj = node as? AnyHashable {
-            sizes[obj] = sizeMap
-        }
+    public var contentSize: CGSize {
+        return .zero
     }
 
     public func setMaxWidth(_ maxWidth: Int, forNode: NodeProtocol, byKey: String) {
@@ -88,15 +82,22 @@ public class NodeDimension: NSObject, NodeDimensionProtocol {
         return result
     }
 
-    public var shouldDisplayEmptyColumns: Bool {
-        return false
-    }
-
-    public var contentSize: CGSize {
-        return .zero
-    }
-
     public func reload(forIndex _: Int, nodeCreator _: NodeCreatorProtocol?) {
         preconditionFailure("This method must be overridden")
+    }
+
+    private lazy var sizes: TNodesSizesType = TNodesSizesType()
+
+    private func sizeMap(node: NodeProtocol) -> TNodeSize? {
+        if let obj = node as? AnyHashable {
+            return sizes[obj]
+        }
+        return nil
+    }
+
+    private func set(sizeMap: TNodeSize, node: NodeProtocol) {
+        if let obj = node as? AnyHashable {
+            sizes[obj] = sizeMap
+        }
     }
 }

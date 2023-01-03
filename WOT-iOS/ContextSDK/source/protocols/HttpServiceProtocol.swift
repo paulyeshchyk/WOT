@@ -5,6 +5,8 @@
 //  Created by Paul on 21.12.22.
 //
 
+// MARK: - HTTPMethod
+
 @objc
 public enum HTTPMethod: Int {
     case GET
@@ -31,6 +33,8 @@ public enum HTTPMethod: Int {
         }
     }
 }
+
+// MARK: - HttpServiceProtocol
 
 @objc
 public protocol HttpServiceProtocol {

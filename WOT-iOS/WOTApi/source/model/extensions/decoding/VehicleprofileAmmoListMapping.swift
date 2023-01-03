@@ -9,21 +9,25 @@
 public extension VehicleprofileAmmoList {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
         guard let profilesJSON = map.jsonCollection.data() as? [JSON] else {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
 
-        let vehicleProfileAmmoListFetchResult = FetchResult(objectContext: map.managedObjectContext, objectID: objectID, predicate: nil, fetchStatus: .recovered)
+        let vehicleprofileAmmoListFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
 
-        for profile in profilesJSON {
-            let ammoType = profile[#keyPath(VehicleprofileAmmo.type)]
-            let ammoJoint = Joint(theClass: VehicleprofileAmmo.self, theID: ammoType, thePredicate: map.predicate)
-            let ruleBuilder = VehicleprofileAmmoListAmmoRequestPredicateComposer(drivenJoint: ammoJoint, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
-            let ammoLinkerClass = VehicleprofileAmmoListAmmoManagedObjectCreator.self
-            let jsonCollection = try JSONCollection(element: profile)
-            let composition = try ruleBuilder.build()
-            try appContext.mappingCoordinator?.linkItem(from: jsonCollection, masterFetchResult: vehicleProfileAmmoListFetchResult, linkedClazz: VehicleprofileAmmo.self, managedObjectCreatorClass: ammoLinkerClass, requestPredicateComposition: composition, appContext: appContext)
+        let keypath = #keyPath(VehicleprofileAmmo.type)
+        for jsonElement in profilesJSON {
+            let ammoType = jsonElement[keypath]
+            let modelClass = VehicleprofileAmmo.self
+            let joint = Joint(modelClass: modelClass, theID: ammoType, thePredicate: map.predicate)
+            let composer = VehicleprofileAmmoListAmmoRequestPredicateComposer(drivenJoint: joint, foreignSelectKey: #keyPath(VehicleprofileAmmo.vehicleprofileAmmoList))
+            let collection = try JSONCollection(element: jsonElement)
+            let composition = try composer.buildRequestPredicateComposition()
+            let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoListFetchResult, anchor: anchor)
+            let extractor = VehicleprofileAmmoListAmmoManagedObjectCreator()
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoListFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         }
     }
 }
