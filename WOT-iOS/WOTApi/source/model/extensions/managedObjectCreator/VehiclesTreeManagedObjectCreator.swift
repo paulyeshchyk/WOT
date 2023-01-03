@@ -7,6 +7,13 @@
 
 import WOTKit
 
+public class VehiclesTreeManagedObjectExtractor: ManagedObjectExtractable {
+    public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
+    public func extractJSON(from: JSON) -> JSON? {
+        return from
+    }
+}
+
 public class VehiclesTreeManagedObjectCreator: ManagedObjectLinker {
     public typealias Context = DataStoreContainerProtocol
 
@@ -18,8 +25,8 @@ public class VehiclesTreeManagedObjectCreator: ManagedObjectLinker {
     }
 
     override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
-    override public func onJSONExtraction(json: JSON) -> JSON? {
-        return json
+    override public func extractJSON(from: JSON) -> JSON? {
+        return from
     }
 
     override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion) {

@@ -40,10 +40,6 @@ public class ManagedObjectLinkerAnchor: NSObject, ManagedObjectLinkerAnchorProto
 
 @objc
 public protocol ManagedObjectLinkerProtocol: MD5Protocol {
-    var modelClass: PrimaryKeypathProtocol.Type { get }
-    var linkerPrimaryKeyType: PrimaryKeyType { get }
-
     init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol)
     func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion)
-    func onJSONExtraction(json: JSON) -> JSON?
 }

@@ -27,9 +27,9 @@ public class WOTWEBRequestFactory: NSObject {
         let arguments = RequestArguments()
         arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
-
+        let extractor = VehiclesPivotManagedObjectExtractor()
         let pivotLinker = try VehiclesPivotDataManagedObjectCreator(modelClass: Vehicles.self ,appContext: appContext)
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, listener: listener)
+        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
@@ -41,9 +41,9 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues([vehicleId], forKey: WOTApiFields.tank_id)
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
-
+        let extractor = VehiclesTreeManagedObjectExtractor()
         let treeViewLinker = try VehiclesTreeManagedObjectCreator(modelClass: Vehicles.self, appContext: appContext)
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: treeViewLinker, listener: listener)
+        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: treeViewLinker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc

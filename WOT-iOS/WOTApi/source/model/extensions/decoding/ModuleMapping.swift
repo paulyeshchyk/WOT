@@ -32,50 +32,55 @@ public extension Module {
             throw ModuleMappingError.moduleIdNotDefined
         }
 
-        let hostJoint = Joint(theClass: Vehicles.self, theID: tank_id, thePredicate: nil)
+        let hostJoint = Joint(modelClass: Vehicles.self, theID: tank_id, thePredicate: nil)
 
         let moduleType = VehicleModuleType.fromString(type)
         switch moduleType {
         case .vehicleGun:
             let modelClass = VehicleprofileGun.self
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.gun))
-            let linker = ModuleVehicleprofileGunManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
-            let joint = Joint(theClass: modelClass, theID: module_id, thePredicate: nil)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let extractor = ModuleVehicleprofileGunManagedObjectCreator()
+            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
             let gunPredicateComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let gunRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: gunPredicateComposer, keypathPrefix: "gun.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: gunRequestParadigm, linker: linker, listener: self)
+            try appContext.requestManager?.fetchRemote(requestParadigm: gunRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleRadio:
             let modelClass = VehicleprofileRadio.self
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.radio))
-            let linker = ModuleVehicleprofileRadioManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
-            let joint = Joint(theClass: modelClass, theID: module_id, thePredicate: nil)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let extractor = ModuleVehicleprofileRadioManagedObjectCreator()
+            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
             let radioPredicateComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let radioRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: radioPredicateComposer, keypathPrefix: "radio.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: radioRequestParadigm, linker: linker, listener: self)
+            try appContext.requestManager?.fetchRemote(requestParadigm: radioRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleEngine:
             let modelClass = VehicleprofileEngine.self
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.engine))
-            let linker = ModuleVehicleprofileEngineManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
-            let joint = Joint(theClass: modelClass, theID: module_id, thePredicate: nil)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
             let enginePredicateComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let engineRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: enginePredicateComposer, keypathPrefix: "engine.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: engineRequestParadigm, linker: linker, listener: self)
+            let extractor = ModuleVehicleprofileEngineManagedObjectExtractor()
+            try appContext.requestManager?.fetchRemote(requestParadigm: engineRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleChassis:
             let modelClass = VehicleprofileSuspension.self
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.suspension))
-            let linker = ModuleVehicleprofileSuspensionManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
-            let joint = Joint(theClass: modelClass, theID: module_id, thePredicate: nil)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let extractor = ModuleVehicleprofileSuspensionManagedObjectCreator()
+            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
             let chassisPredicateComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let chassisRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: chassisPredicateComposer, keypathPrefix: "suspension.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: chassisRequestParadigm, linker: linker, listener: self)
+            try appContext.requestManager?.fetchRemote(requestParadigm: chassisRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         case .vehicleTurret:
             let modelClass = VehicleprofileTurret.self
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.turret))
-            let linker = ModuleVehicleprofileTurretManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
-            let joint = Joint(theClass: modelClass, theID: module_id, thePredicate: nil)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let extractor = ModuleVehicleprofileTurretManagedObjectCreator()
+            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
             let turretPredicateComposer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let turretRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: turretPredicateComposer, keypathPrefix: "turret.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: turretRequestParadigm, linker: linker, listener: self)
+            try appContext.requestManager?.fetchRemote(requestParadigm: turretRequestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         default:
             throw ModuleMappingError.unexpectedModuleType(moduleType)
         }

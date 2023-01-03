@@ -5,7 +5,7 @@
 //  Created by Paul on 26.12.22.
 //
 
-open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
+open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtractable {
     // MARK: - Open
 
     public let uuid: UUID = UUID()
@@ -28,7 +28,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol {
         self.anchor = anchor
     }
 
-    open func onJSONExtraction(json _: JSON) -> JSON? { return nil }
+    open func extractJSON(from _: JSON) -> JSON? { return nil }
 
     open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion) {
         guard let link = fetchResult.managedObject() as? ManagedObjectLinkable else {

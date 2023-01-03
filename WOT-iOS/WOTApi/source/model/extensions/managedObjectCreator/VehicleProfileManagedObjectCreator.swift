@@ -5,9 +5,12 @@
 //  Created by Paul on 28.12.22.
 //
 
-public class VehicleProfileManagedObjectCreator: ManagedObjectLinker {
-    override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-    override public func onJSONExtraction(json: JSON) -> JSON? {
-        return json
+public class VehicleProfileManagedObjectCreator: ManagedObjectExtractable {
+    public var linkerPrimaryKeyType: PrimaryKeyType {
+        return .external
+    }
+
+    public func extractJSON(from: JSON) -> JSON? {
+        return from
     }
 }

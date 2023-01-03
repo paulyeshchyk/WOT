@@ -5,9 +5,9 @@
 //  Created by Paul on 28.12.22.
 //
 
-public class VehicleprofileModuleSuspensionManagedObjectCreator: ManagedObjectLinker {
-    override public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
-    override public func onJSONExtraction(json: JSON) -> JSON? {
-        return json[#keyPath(Vehicleprofile.suspension)] as? JSON
+public class VehicleprofileModuleSuspensionManagedObjectCreator: ManagedObjectExtractable {
+    public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+    public func extractJSON(from: JSON) -> JSON? {
+        return from[#keyPath(Vehicleprofile.suspension)] as? JSON
     }
 }

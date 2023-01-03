@@ -9,8 +9,8 @@
 public protocol RequestManagerProtocol {
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol)
     func removeListener(_ listener: RequestManagerListenerProtocol)
-    func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
-    func fetchRemote(requestParadigm: RequestParadigmProtocol, linker: ManagedObjectLinkerProtocol, listener: RequestManagerListenerProtocol?) throws
+    func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
+    func fetchRemote(requestParadigm: RequestParadigmProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws
     //
     @available(*, deprecated, message: "fetchRemote should be used instead")
     func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol

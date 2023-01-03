@@ -24,14 +24,15 @@ public extension ModulesTree {
         let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
         if let nextTanks = moduleTreeJSON[nextTanksKeypath] as? [AnyObject] {
             let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nextTanksKeypath)
-            let nextTanksManagedObjectCreator = ModulesTreeNextVehicleManagedObjectCreator(modelClass: Vehicles.self, masterFetchResult: masterFetchResult, anchor: anchor)
+            let linker = ManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: masterFetchResult, anchor: anchor)
+            let extractor = ModulesTreeNextVehicleManagedObjectExtractor()
             for nextTank in nextTanks {
                 // parents was not used for next portion of tanks
-                let theLink = Joint(theClass: Vehicles.self, theID: nextTank, thePredicate: nil)
+                let theLink = Joint(modelClass: Vehicles.self, theID: nextTank, thePredicate: nil)
                 let nextTanksPredicateComposer = LinkedLocalAsPrimaryRuleBuilder(drivenJoint: theLink)
                 let requestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposer: nextTanksPredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, linker: nextTanksManagedObjectCreator, listener: self)
+                    try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
                 } catch {
                     appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -43,14 +44,15 @@ public extension ModulesTree {
         let nextModulesKeypath = #keyPath(ModulesTree.next_modules)
         if let nextModules = moduleTreeJSON[nextModulesKeypath] as? [AnyObject] {
             let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nextModulesKeypath)
-            let nextModuleManagedObjectCreator = ModulesTreeNextModulesManagedObjectCreator(modelClass: ModulesTree.self, masterFetchResult: masterFetchResult, anchor: anchor)
+            let extractor = ModulesTreeNextModulesManagedObjectCreator()
+            let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, masterFetchResult: masterFetchResult, anchor: anchor)
             for nextModuleID in nextModules {
                 let modelClass = Module.self
-                let theLink = Joint(theClass: modelClass, theID: nextModuleID, thePredicate: map.predicate)
+                let theLink = Joint(modelClass: modelClass, theID: nextModuleID, thePredicate: map.predicate)
                 let nextModulePredicateComposer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
                 let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: nextModulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
                 do {
-                    try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, linker: nextModuleManagedObjectCreator, listener: self)
+                    try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: self)
                 } catch {
                     appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
@@ -62,11 +64,12 @@ public extension ModulesTree {
         let keypath = #keyPath(ModulesTree.currentModule)
         let modelClass = Module.self
         let currentModuleAnchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: keypath)
-        let moduleJSONAdapter = ModulesTreeCurrentModuleManagedObjectCreator(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: currentModuleAnchor)
-        let theLink = Joint(theClass: Module.self, theID: module_id, thePredicate: map.predicate)
+        let extractor = ModulesTreeCurrentModuleManagedObjectCreator()
+        let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: currentModuleAnchor)
+        let theLink = Joint(modelClass: Module.self, theID: module_id, thePredicate: map.predicate)
         let modulePredicateComposer = LinkedRemoteAsPrimaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
         let moduleRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposer: modulePredicateComposer, keypathPrefix: nil, httpQueryItemName: "fields")
-        try appContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, linker: moduleJSONAdapter, listener: self)
+        try appContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: self)
     }
 }
 
