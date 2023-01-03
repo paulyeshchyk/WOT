@@ -5,7 +5,11 @@
 //  Created by Paul on 2.01.23.
 //
 
+// MARK: - Module + ManagedObjectLinkable
+
 extension Module: ManagedObjectLinkable {}
+
+// MARK: - Module + ManagedObjectLinkHostable
 
 extension Module: ManagedObjectLinkHostable {
     public func doLinking(_ element: ManagedObjectLinkable, anchor: ManagedObjectLinkerAnchorProtocol) {

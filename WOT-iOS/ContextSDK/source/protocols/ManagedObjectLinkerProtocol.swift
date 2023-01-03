@@ -8,6 +8,8 @@
 public typealias ManagedObjectLinkerContext = DataStoreContainerProtocol
 public typealias KeypathType = AnyHashable
 
+// MARK: - ManagedObjectLinkerAnchorProtocol
+
 @objc
 public protocol ManagedObjectLinkerAnchorProtocol {
     var identifier: Any? { get }
@@ -15,9 +17,9 @@ public protocol ManagedObjectLinkerAnchorProtocol {
     init(identifier: Any?, keypath: KeypathType?)
 }
 
+// MARK: - ManagedObjectLinkerAnchor
+
 public class ManagedObjectLinkerAnchor: NSObject, ManagedObjectLinkerAnchorProtocol {
-    public var identifier: Any?
-    public var keypath: KeypathType?
 
     public required init(identifier: Any?, keypath: KeypathType?) {
         self.identifier = identifier
@@ -36,7 +38,12 @@ public class ManagedObjectLinkerAnchor: NSObject, ManagedObjectLinkerAnchorProto
     public convenience init(keypath: KeypathType) {
         self.init(identifier: nil, keypath: keypath)
     }
+
+    public var identifier: Any?
+    public var keypath: KeypathType?
 }
+
+// MARK: - ManagedObjectLinkerProtocol
 
 @objc
 public protocol ManagedObjectLinkerProtocol: MD5Protocol {

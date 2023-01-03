@@ -6,14 +6,29 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+// MARK: - NodeIndex
+
 public class NodeIndex: NSObject, NodeIndexProtocol {
+
     // contains node.index: node
     // where node.index - global autoincremented value
     // used to get item by indexpath while iterating in  WOTPivotLayout::layoutAttributesForElementsInRect
 
-    private var index = [AnyHashable: NodeProtocol]()
+    override public required init() {
+        //
+        super.init()
+    }
+
+    deinit {
+        //
+    }
+
     public static let Comparator: NodeComparatorType = { (_, _, _) in
         return .orderedSame
+    }
+
+    public var count: Int {
+        return index.keys.count
     }
 
     public func reset() {
@@ -33,10 +48,6 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
         }
     }
 
-    public var count: Int {
-        return index.keys.count
-    }
-
     public func item(indexPath: IndexPath) -> NodeProtocol? {
         return index[indexPath.row]
     }
@@ -51,7 +62,11 @@ public class NodeIndex: NSObject, NodeIndexProtocol {
         }
         return result
     }
+
+    private var index = [AnyHashable: NodeProtocol]()
 }
+
+// MARK: - ObjCNodeIndex
 
 @objc
 public class ObjCNodeIndex: NSObject {

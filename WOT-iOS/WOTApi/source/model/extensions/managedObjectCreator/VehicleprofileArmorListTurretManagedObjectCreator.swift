@@ -7,6 +7,7 @@
 
 public class VehicleprofileArmorListTurretManagedObjectCreator: ManagedObjectExtractable {
     public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+
     public func extractJSON(from: JSON) -> JSON? {
         return from
     }

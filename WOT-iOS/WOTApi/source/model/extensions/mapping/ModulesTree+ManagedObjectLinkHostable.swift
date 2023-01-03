@@ -7,7 +7,11 @@
 
 import ContextSDK
 
+// MARK: - ModulesTree + ManagedObjectLinkable
+
 extension ModulesTree: ManagedObjectLinkable {}
+
+// MARK: - ModulesTree + ManagedObjectLinkHostable
 
 extension ModulesTree: ManagedObjectLinkHostable {
     public func doLinking(_ element: ManagedObjectLinkable, anchor: ManagedObjectLinkerAnchorProtocol) {

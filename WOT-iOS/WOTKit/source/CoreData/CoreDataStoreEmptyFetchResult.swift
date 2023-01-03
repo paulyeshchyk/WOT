@@ -10,6 +10,7 @@ import ContextSDK
 import CoreData
 
 public class EmptyFetchResult: FetchResult {
+
     public init(inManagedObjectContext: ManagedObjectContextProtocol?) throws {
         guard let cntx = inManagedObjectContext as? NSManagedObjectContext else {
             throw EmptyFetchResultError.contextIsNotManagedObjectContext

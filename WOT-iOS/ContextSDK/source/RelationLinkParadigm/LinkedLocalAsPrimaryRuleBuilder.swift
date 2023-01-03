@@ -7,7 +7,6 @@
 //
 
 open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
-    private let drivenJoint: Joint
 
     public init(drivenJoint: Joint) {
         self.drivenJoint = drivenJoint
@@ -19,4 +18,6 @@ open class LinkedLocalAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
+
+    private let drivenJoint: Joint
 }

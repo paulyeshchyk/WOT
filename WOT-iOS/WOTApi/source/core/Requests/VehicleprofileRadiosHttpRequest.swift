@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - VehicleprofileRadiosHttpRequest
+
 public class VehicleprofileRadiosHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 
@@ -15,6 +17,8 @@ public class VehicleprofileRadiosHttpRequest: HttpRequest {
         return "/wot/encyclopedia/vehicleprofile/"
     }
 }
+
+// MARK: - VehicleprofileRadiosHttpRequest + ModelServiceProtocol
 
 extension VehicleprofileRadiosHttpRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {

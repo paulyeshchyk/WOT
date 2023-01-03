@@ -117,7 +117,7 @@
             [self setting:setting setOrderIndex:idx];
         }];
 
-        [appDelegate.dataStore stashWithManagedObjectContext:context completion:^(NSError * _Nullable error) {
+        [appDelegate.dataStore stashWithManagedObjectContext:context completion:^(id<ManagedObjectContextProtocol> _Nullable context, NSError * _Nullable error) {
             [NSThread executeOnMainThread:^{
                 
                 if (completionBlock){
@@ -125,6 +125,7 @@
                     completionBlock();
                 }
             }];
+
         }];
     }];
 }
@@ -137,7 +138,7 @@
         NSManagedObject *obj = [self objectAtIndexPath:indexPath];
         
         [(NSManagedObjectContext *)context deleteObject:obj];
-        [appDelegate.dataStore stashWithManagedObjectContext:context completion:^(NSError * _Nullable error) {
+        [appDelegate.dataStore stashWithManagedObjectContext:context completion:^(id<ManagedObjectContextProtocol> _Nullable context, NSError * _Nullable error) {
             //
         }];
     }];

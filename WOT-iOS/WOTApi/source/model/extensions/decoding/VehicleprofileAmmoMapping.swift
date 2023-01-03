@@ -17,7 +17,7 @@ public extension VehicleprofileAmmo {
         try decode(decoderContainer: ammoJSON)
         //
 
-        let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
+        let vehicleprofileAmmoFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
 
         // MARK: - Penetration
 
@@ -28,9 +28,9 @@ public extension VehicleprofileAmmo {
             let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathPenetration)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoPenetrationManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noPenetration, details: nil), sender: self)
         }
@@ -44,18 +44,21 @@ public extension VehicleprofileAmmo {
             let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathDamage)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoDamageManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noDamage, details: nil), sender: self)
         }
     }
 }
 
+// MARK: - VehicleprofileAmmoError
+
 public enum VehicleprofileAmmoError: Error, CustomStringConvertible {
     case noPenetration
     case noDamage
+
     public var description: String {
         switch self {
         case .noPenetration: return "[\(type(of: self))]: No penetration"

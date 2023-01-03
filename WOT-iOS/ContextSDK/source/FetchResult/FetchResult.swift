@@ -7,21 +7,20 @@
 
 public typealias FetchResultCompletion = (FetchResultProtocol?, Error?) -> Void
 
+// MARK: - FetchResultContainerProtocol
+
+@objc
+public protocol FetchResultContainerProtocol {
+    func fetchResult(objectID: AnyObject?, context: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol
+}
+
+// MARK: - FetchResult
+
 @objc
 open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
-    public let managedObjectContext: ManagedObjectContextProtocol
-    public var fetchStatus: FetchStatus = .none
-    public var predicate: NSPredicate?
-
-    private var objectID: AnyObject?
 
     override public required init() {
         fatalError("")
-    }
-
-    override public var description: String {
-        let entityName = managedObject()?.entityName ?? ""
-        return "Context: \(managedObjectContext.name ?? ""); \(entityName)"
     }
 
     public required init(objectID: AnyObject?, inContext managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) {
@@ -31,6 +30,15 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         self.managedObjectContext = managedObjectContext
 
         super.init()
+    }
+
+    public let managedObjectContext: ManagedObjectContextProtocol
+    public var fetchStatus: FetchStatus = .none
+    public var predicate: NSPredicate?
+
+    override public var description: String {
+        let entityName = managedObject()?.entityName ?? ""
+        return "Context: \(managedObjectContext.name ?? ""); \(entityName)"
     }
 
     public func copy(with _: NSZone? = nil) -> Any {
@@ -54,4 +62,6 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         }
         return context?.object(byID: objectID) as? ManagedObjectProtocol
     }
+
+    private var objectID: AnyObject?
 }

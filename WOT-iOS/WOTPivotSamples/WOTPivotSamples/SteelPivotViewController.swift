@@ -11,6 +11,8 @@ import UIKit
 import WOTApi
 import WOTPivot
 
+// MARK: - SteelPivotViewController
+
 class SteelPivotViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView?
     lazy var model: PivotDataModel = {
@@ -23,6 +25,7 @@ class SteelPivotViewController: UIViewController {
     }()
 
     let metadatasource = WOTTankPivotMetadatasource()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,8 +33,9 @@ class SteelPivotViewController: UIViewController {
     }
 }
 
+// MARK: - WOTTankPivotMetadatasource
+
 class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
-    private let permutator = PivotMetadataPermutator()
 
     func metadataItems() -> [NodeProtocol] {
         var result = [NodeProtocol]()
@@ -55,12 +59,16 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
     func filters() -> [NodeProtocol] {
         return [FilterPivotNode(name: "Filter")]
     }
+
+    private let permutator = PivotMetadataPermutator()
 }
 
-class SteelPivotFetchController: WOTDataFetchControllerProtocol {
-    func fetchedNodes(byPredicates _: [NSPredicate], nodeCreator _: NodeCreatorProtocol?, filteredCompletion _: (NSPredicate, [AnyObject]?) -> Void) {}
+// MARK: - SteelPivotFetchController
 
+class SteelPivotFetchController: WOTDataFetchControllerProtocol {
     var listener: WOTDataFetchControllerListenerProtocol?
+
+    func fetchedNodes(byPredicates _: [NSPredicate], nodeCreator _: NodeCreatorProtocol?, filteredCompletion _: (NSPredicate, [AnyObject]?) -> Void) {}
 
     func performFetch(nodeCreator _: NodeCreatorProtocol?) throws {
         listener?.fetchPerformed(by: self)
@@ -80,6 +88,8 @@ class SteelPivotFetchController: WOTDataFetchControllerProtocol {
     }
 }
 
+// MARK: - SteelPivotViewController + DataModelListener
+
 extension SteelPivotViewController: DataModelListener {
     func didFinishLoadModel(error _: Error?) {
         collectionView?.reloadData()
@@ -90,11 +100,15 @@ extension SteelPivotViewController: DataModelListener {
     }
 }
 
+// MARK: - SteelPivotViewController + FetchRequestContainerProtocol
+
 extension SteelPivotViewController: FetchRequestContainerProtocol {
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
         return NSFetchRequest(entityName: "test")
     }
 }
+
+// MARK: - SteelPivotViewController + NodeCreatorProtocol
 
 extension SteelPivotViewController: NodeCreatorProtocol {
     func createNodeGroup(name: String, fetchedObjects: [AnyObject], byPredicate _: NSPredicate?) -> NodeProtocol {
@@ -136,7 +150,11 @@ extension SteelPivotViewController: NodeCreatorProtocol {
     }
 }
 
+// MARK: - SteelPivotViewController + UICollectionViewDelegate
+
 extension SteelPivotViewController: UICollectionViewDelegate {}
+
+// MARK: - SteelPivotViewController + UICollectionViewDataSource
 
 extension SteelPivotViewController: UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {

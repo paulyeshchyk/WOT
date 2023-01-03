@@ -5,9 +5,9 @@
 //  Created by Paul on 31.12.22.
 //
 
+// MARK: - JSONMap
+
 public class JSONMap: JSONCollectionContainerProtocol {
-    public let predicate: ContextPredicateProtocol
-    public let jsonCollection: JSONCollectionProtocol
 
     public init(json jsonCollection: JSONCollectionProtocol?, predicate: ContextPredicateProtocol) throws {
         guard let jsonCollection = jsonCollection else {
@@ -16,7 +16,12 @@ public class JSONMap: JSONCollectionContainerProtocol {
         self.jsonCollection = jsonCollection
         self.predicate = predicate
     }
+
+    public let predicate: ContextPredicateProtocol
+    public let jsonCollection: JSONCollectionProtocol
 }
+
+// MARK: - JSONMapError
 
 private enum JSONMapError: Error, CustomStringConvertible {
     case jsonIsNil
@@ -28,9 +33,12 @@ private enum JSONMapError: Error, CustomStringConvertible {
     }
 }
 
+// MARK: - JSONManagedObjectMapError
+
 public enum JSONManagedObjectMapError: Error, CustomStringConvertible {
     case notAnElement(JSONCollectionContainerProtocol)
     case notAnArray(JSONCollectionContainerProtocol)
+
     public var description: String {
         switch self {
         case .notAnArray(let map): return "[\(type(of: self))]: Not an array: \(String(describing: map))"

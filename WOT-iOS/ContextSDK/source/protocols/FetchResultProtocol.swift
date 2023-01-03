@@ -5,6 +5,8 @@
 //  Created by Paul on 26.12.22.
 //
 
+// MARK: - FetchStatus
+
 @objc
 public enum FetchStatus: Int {
     case none
@@ -13,6 +15,8 @@ public enum FetchStatus: Int {
     case updated
     case recovered
 }
+
+// MARK: - FetchResultProtocol
 
 @objc
 public protocol FetchResultProtocol: ManagedObjectContextContainerProtocol {

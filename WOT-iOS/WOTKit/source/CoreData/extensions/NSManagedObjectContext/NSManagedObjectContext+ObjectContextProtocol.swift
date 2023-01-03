@@ -9,6 +9,8 @@
 import ContextSDK
 import CoreData
 
+// MARK: - NSManagedObjectContext + ManagedObjectContextProtocol
+
 extension NSManagedObjectContext: ManagedObjectContextProtocol {
     // MARK: - ManagedObjectContextLookupProtocol
 
@@ -30,9 +32,9 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func findOrCreateObject(forType: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
-        guard let foundObject = try? lastObject(forType: forType, predicate: predicate, includeSubentities: false) else {
-            return insertNewObject(forType: forType)
+    public func findOrCreateObject(modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+        guard let foundObject = try? lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
+            return insertNewObject(forType: modelClass)
         }
         return foundObject
     }
@@ -102,8 +104,8 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 }
 
 extension NSManagedObjectContext {
-    private func lastObject(forType: AnyObject, predicate: NSPredicate?, includeSubentities: Bool) throws -> ManagedObjectProtocol? {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: forType))
+    private func lastObject(modelClass: AnyObject, predicate: NSPredicate?, includeSubentities: Bool) throws -> ManagedObjectProtocol? {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: modelClass))
         request.fetchLimit = 1
         request.predicate = predicate
         request.includesSubentities = includeSubentities

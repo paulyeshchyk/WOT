@@ -10,27 +10,30 @@ import ContextSDK
 
 @objc
 open class NodeDataModel: NSObject, NodeDataModelProtocol {
-    public let appContext: NodeFetchControllerProtocol.Context
-    public var nodeIndex: NodeIndexProtocol
-    public lazy var rootNodes: [NodeProtocol] = { return [] }()
-    private var comparator: NodeComparator = { (_, _) in return true }
 
-    public var endpointsCount: Int {
-        return self.enumerator?.endpoints(array: rootNodes).count ?? 0
+    public required init(nodeIndex: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
+        self.appContext = appContext
+        self.nodeIndex = nodeIndex.init()
+        super.init()
     }
 
     open var nodes: [NodeProtocol] { return [] }
 
-    public var enumerator: NodeEnumeratorProtocol?
-
-    public required init(nodeIndex: NodeIndexProtocol, appContext: NodeFetchControllerProtocol.Context) {
-        self.appContext = appContext
-        self.nodeIndex = nodeIndex
-        super.init()
-    }
-
     open func loadModel() {
         reindexNodes()
+    }
+
+    open func clearRootNodes() {
+        rootNodes.removeAll()
+    }
+
+    public let appContext: NodeFetchControllerProtocol.Context
+    public var nodeIndex: NodeIndexProtocol
+    public lazy var rootNodes: [NodeProtocol] = { return [] }()
+    public var enumerator: NodeEnumeratorProtocol?
+
+    public var endpointsCount: Int {
+        return enumerator?.endpoints(array: rootNodes).count ?? 0
     }
 
     public func reindexNodes() {
@@ -55,10 +58,6 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
         rootNodes.remove(at: index)
     }
 
-    open func clearRootNodes() {
-        rootNodes.removeAll()
-    }
-
     public func rootNodes(sortComparator: NodeComparator?) -> [NodeProtocol] {
         let comparator = sortComparator ?? self.comparator
         return Array(rootNodes).sorted(by: comparator)
@@ -75,4 +74,6 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
     public func indexPath(forNode _: NodeProtocol?) -> IndexPath? {
         return nil
     }
+
+    private var comparator: NodeComparator = { (_, _) in return true }
 }

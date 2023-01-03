@@ -7,9 +7,7 @@
 
 import CommonCrypto
 
-public extension UUID {
-    var MD5: String { do { return try uuidString.MD5() } catch { return "" } }
-}
+// MARK: - MD5
 
 @objc
 public class MD5: NSString {
@@ -22,6 +20,7 @@ public class MD5: NSString {
 extension String {
     private enum StringMD5Error: Error, CustomStringConvertible {
         case cantConvertToUTF8
+
         var description: String {
             switch self {
             case .cantConvertToUTF8: return "[\(type(of: self))]: cant convert to UTF8"
@@ -55,4 +54,8 @@ public extension NSString {
     func MD5_1() -> NSString? {
         try? (self as String).MD5() as NSString?
     }
+}
+
+public extension UUID {
+    var MD5: String { do { return try uuidString.MD5() } catch { return "" } }
 }

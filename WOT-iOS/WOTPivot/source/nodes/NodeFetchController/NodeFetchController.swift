@@ -13,6 +13,8 @@ public typealias FilteredObjectCompletion = (NSPredicate, [AnyObject]?) -> Void
 
 public typealias NodeFetchedResultController = NSFetchedResultsController<NSFetchRequestResult>
 
+// MARK: - FetchRequestContainerProtocol
+
 @objc
 public protocol FetchRequestContainerProtocol {
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> { get }
@@ -25,11 +27,9 @@ public extension NodeFetchController {
     }
 }
 
+// MARK: - NodeFetchController
+
 open class NodeFetchController: NSObject {
-    public var listener: NodeFetchControllerListenerProtocol?
-    public var fetchRequestContainer: FetchRequestContainerProtocol
-    private var fetchResultController: NodeFetchedResultController?
-    private let appContext: NodeFetchControllerProtocol.Context
 
     public required init(fetchRequestContainer: FetchRequestContainerProtocol, appContext: NodeFetchControllerProtocol.Context) {
         self.fetchRequestContainer = fetchRequestContainer
@@ -40,12 +40,15 @@ open class NodeFetchController: NSObject {
         self.fetchResultController?.delegate = nil
     }
 
+    public var listener: NodeFetchControllerListenerProtocol?
+    public var fetchRequestContainer: FetchRequestContainerProtocol
+
     public func initFetchController(appContext: NodeFetchControllerProtocol.Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
         guard let managedObjectContext = appContext.dataStore?.workingContext() else {
             throw NodeFetchControllerError.contextIsNotDefined
         }
 
-        appContext.dataStore?.perform(managedObjectContext: managedObjectContext) {[weak self] _ in
+        appContext.dataStore?.perform(managedObjectContext: managedObjectContext) { [weak self] _ in
             guard let fetchRequest = self?.fetchRequestContainer.fetchRequest else {
                 block(nil, NodeFetchControllerError.requestNotFound)
                 return
@@ -58,12 +61,18 @@ open class NodeFetchController: NSObject {
             }
         }
     }
+
+    private var fetchResultController: NodeFetchedResultController?
+    private let appContext: NodeFetchControllerProtocol.Context
 }
+
+// MARK: - NodeFetchControllerError
 
 enum NodeFetchControllerError: Error, CustomStringConvertible {
     case contextIsNotDefined
     case requestNotFound
     case noFetchResultControllerCreated
+
     var description: String {
         switch self {
         case .contextIsNotDefined: return "Context not defined"
@@ -72,6 +81,8 @@ enum NodeFetchControllerError: Error, CustomStringConvertible {
         }
     }
 }
+
+// MARK: - NodeFetchController + NSFetchedResultsControllerDelegate
 
 extension NodeFetchController: NSFetchedResultsControllerDelegate {
     public func controller(_: NSFetchedResultsController<NSFetchRequestResult>, didChange _: Any, at _: IndexPath?, for _: NSFetchedResultsChangeType, newIndexPath _: IndexPath?) {}
@@ -85,12 +96,14 @@ extension NodeFetchController: NSFetchedResultsControllerDelegate {
     public func controller(_: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName _: String) -> String? { return nil }
 }
 
+// MARK: - NodeFetchController + NodeFetchControllerProtocol
+
 extension NodeFetchController: NodeFetchControllerProtocol {
     open func performFetch(nodeCreator: NodeCreatorProtocol?, appContext: NodeFetchControllerProtocol.Context) throws {
         if let fetch = fetchResultController {
             try performFetch(with: fetch, nodeCreator: nodeCreator)
         } else {
-            try initFetchController(appContext: appContext) {[weak self] fetchResultController, error in
+            try initFetchController(appContext: appContext) { [weak self] fetchResultController, error in
 
                 self?.fetchResultController?.delegate = nil
                 self?.fetchResultController = fetchResultController

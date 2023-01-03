@@ -5,66 +5,85 @@
 //  Created by Paul on 1.01.23.
 //
 
+// MARK: - EvenDatastoreWillSave
+
 final public class EvenDatastoreWillSave: LogEventProtocol {
-    public var eventType: LogEventType { return .datastore }
-    private(set) public var message: String
-    public var name: String { return "CDStashStart"}
 
     public init(uuid: UUID, description: String) {
         message = "\(description), operation <\(uuid.MD5)>"
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .datastore }
+    public var name: String { return "CDStashStart" }
 }
+
+// MARK: - EvenDatastoreDidSave
 
 final public class EvenDatastoreDidSave: LogEventProtocol {
-    public var eventType: LogEventType { return .datastore }
-    private(set) public var message: String
-    public var name: String { return "CDStashEnded"}
 
     public init(uuid: UUID, initiatedIn: Date, description: String) {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "[HH:mm:ss.SSSS]"
         message = "\(description), operation <\(uuid.MD5)>: elapsed [\(Date().elapsed(from: initiatedIn))]"
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .datastore }
+    public var name: String { return "CDStashEnded" }
 }
+
+// MARK: - EvenDatastoreSaveFailed
 
 final public class EvenDatastoreSaveFailed: LogEventProtocol {
-    public var eventType: LogEventType { return .datastore }
-    private(set) public var message: String
-    public var name: String { return "CDStashFail"}
 
     public init(uuid: UUID, initiatedIn: Date, description: String) {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "[HH:mm:ss.SSSS]"
         message = "\(description), operation <\(uuid.MD5)>: elapsed [\(Date().elapsed(from: initiatedIn))]"
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .datastore }
+    public var name: String { return "CDStashFail" }
 }
 
+// MARK: - EvenDatastoreWillExecute
+
 final public class EvenDatastoreWillExecute: LogEventProtocol {
-    public var eventType: LogEventType { return .datastore }
-    private(set) public var message: String
-    public var name: String { return "CDFetchStart"}
 
     public init(uuid: UUID) {
         message = "operation <\(uuid.MD5)>"
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .datastore }
+    public var name: String { return "CDFetchStart" }
 }
 
+// MARK: - EvenDatastoreDidExecute
+
 final public class EvenDatastoreDidExecute: LogEventProtocol {
-    public var eventType: LogEventType { return .datastore }
-    private(set) public var message: String
-    public var name: String { return "CDFetchEnd"}
 
     public init(uuid: UUID, initiatedIn: Date) {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "[HH:mm:ss.SSSS]"
         message = "operation <\(uuid.MD5)>: elapsed [\(Date().elapsed(from: initiatedIn))]"
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .datastore }
+    public var name: String { return "CDFetchEnd" }
 }
+
+// MARK: - EventCDMerge
 
 final public class EventCDMerge: LogEventProtocol {
-    public var eventType: LogEventType { return .datastore }
-    private(set) public var message: String
-    public var name: String { return "CDMerge"}
 
     public init() {
         message = ""
@@ -77,12 +96,16 @@ final public class EventCDMerge: LogEventProtocol {
     public init?(error: Error) {
         message = String(describing: error)
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .datastore }
+    public var name: String { return "CDMerge" }
 }
 
+// MARK: - EventLocalFetch
+
 final class EventLocalFetch: LogEventProtocol {
-    public var eventType: LogEventType { return .localFetch }
-    private(set) public var message: String
-    public var name: String { return "LocalFetch"}
 
     public init() {
         message = ""
@@ -95,4 +118,9 @@ final class EventLocalFetch: LogEventProtocol {
     public init?(error: Error) {
         message = String(describing: error)
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .localFetch }
+    public var name: String { return "LocalFetch" }
 }

@@ -7,13 +7,14 @@
 //
 
 open class PivotNodeCreator: NodeCreatorProtocol {
-    open var collapseToGroups: Bool { return false }
-
-    open var useEmptyNode: Bool { return false }
 
     public init() {
         //
     }
+
+    open var collapseToGroups: Bool { return false }
+
+    open var useEmptyNode: Bool { return false }
 
     open func createEmptyNode() -> NodeProtocol {
         return DataPivotNode(name: "")

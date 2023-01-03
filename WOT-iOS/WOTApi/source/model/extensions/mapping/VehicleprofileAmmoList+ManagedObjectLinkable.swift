@@ -5,7 +5,11 @@
 //  Created by Paul on 2.01.23.
 //
 
+// MARK: - VehicleprofileAmmoList + ManagedObjectLinkable
+
 extension VehicleprofileAmmoList: ManagedObjectLinkable {}
+
+// MARK: - VehicleprofileAmmoList + ManagedObjectLinkHostable
 
 extension VehicleprofileAmmoList: ManagedObjectLinkHostable {
     public func doLinking(_ element: ManagedObjectLinkable, anchor _: ManagedObjectLinkerAnchorProtocol) {

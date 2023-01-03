@@ -5,9 +5,13 @@
 //  Created by Paul on 19.12.22.
 //
 
+// MARK: - URLEncodedProtocol
+
 public protocol URLEncodedProtocol {
     func urlEncoded() -> String?
 }
+
+// MARK: - Int + URLEncodedProtocol
 
 extension Int: URLEncodedProtocol {
     public func urlEncoded() -> String? {
@@ -15,11 +19,15 @@ extension Int: URLEncodedProtocol {
     }
 }
 
+// MARK: - NSNumber + URLEncodedProtocol
+
 extension NSNumber: URLEncodedProtocol {
     public func urlEncoded() -> String? {
         return "\(self)".urlEncoded()
     }
 }
+
+// MARK: - NSString + URLEncodedProtocol
 
 extension NSString: URLEncodedProtocol {
     @objc
@@ -28,12 +36,16 @@ extension NSString: URLEncodedProtocol {
     }
 }
 
+// MARK: - String + URLEncodedProtocol
+
 extension String: URLEncodedProtocol {
     public func urlEncoded() -> String? {
         let customAllowedSet = NSCharacterSet(charactersIn: "%;/?¿:@&=$+,[]#!'()*<> \"\n").inverted
         return addingPercentEncoding(withAllowedCharacters: customAllowedSet)
     }
 }
+
+// MARK: - Array + URLEncodedProtocol
 
 extension Array: URLEncodedProtocol {
     public func urlEncoded() -> String? {

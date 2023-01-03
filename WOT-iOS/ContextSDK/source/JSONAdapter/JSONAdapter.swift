@@ -5,29 +5,9 @@
 //  Created by Paul on 21.12.22.
 //
 
+// MARK: - JSONAdapter
+
 open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
-    open var responseClass: AnyClass {
-        fatalError("has not been implemented")
-    }
-
-    // MARK: DataAdapterProtocol -
-
-    public let uuid: UUID = UUID()
-    public var MD5: String { uuid.MD5 }
-
-    // MARK: Private -
-
-    private var managedObjectLinker: ManagedObjectLinkerProtocol
-    private var jsonExtractor: ManagedObjectExtractable
-
-    private let appContext: JSONAdapterProtocol.Context
-    private let modelClass: PrimaryKeypathProtocol.Type
-    private let request: RequestProtocol
-    private func didFoundObject(_: FetchResultProtocol, error _: Error?) {}
-
-    // MARK: NSObject -
-
-    public var description: String { String(describing: type(of: request)) }
 
     public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, jsonExtractor: ManagedObjectExtractable, appContext: JSONAdapterProtocol.Context) {
         self.modelClass = modelClass
@@ -41,6 +21,20 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
     deinit {
         appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
+
+    open var responseClass: AnyClass {
+        fatalError("has not been implemented")
+    }
+
+    open func decodedObject(jsonDecoder _: JSONDecoder, from _: Data) throws -> JSON? {
+        fatalError("has not been implemented")
+    }
+
+    public var MD5: String { uuid.MD5 }
+
+    // MARK: NSObject -
+
+    public var description: String { String(describing: type(of: request)) }
 
     public func decode(data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
         guard let data = data else {
@@ -56,9 +50,17 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         }
     }
 
-    open func decodedObject(jsonDecoder _: JSONDecoder, from _: Data) throws -> JSON? {
-        fatalError("has not been implemented")
-    }
+    // MARK: DataAdapterProtocol -
+
+    private let uuid = UUID()
+    private var managedObjectLinker: ManagedObjectLinkerProtocol
+    private var jsonExtractor: ManagedObjectExtractable
+
+    private let appContext: JSONAdapterProtocol.Context
+    private let modelClass: PrimaryKeypathProtocol.Type
+    private let request: RequestProtocol
+
+    private func didFoundObject(_: FetchResultProtocol, error _: Error?) {}
 }
 
 public extension JSONAdapter {
@@ -129,7 +131,7 @@ extension JSONAdapter {
         }
 
         let nspredicate = predicate[.primary]?.predicate
-        appContext.dataStore?.fetchLocal(byModelClass: modelClass, nspredicate: nspredicate, completion: { [weak self] fetchResult, error in
+        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, completion: { [weak self] fetchResult, error in
             guard let self = self else {
                 return
             }
@@ -155,12 +157,15 @@ extension JSONAdapter {
     }
 }
 
+// MARK: - JSONAdapterError
+
 private enum JSONAdapterError: Error, CustomStringConvertible {
     case dataIsNil
     case notMainThread
     case fetchResultIsNotPresented
-    case jsonByKeyWasNotFound(JSON,AnyHashable)
+    case jsonByKeyWasNotFound(JSON, AnyHashable)
     case notSupportedType(AnyClass)
+
     public var description: String {
         switch self {
         case .dataIsNil: return "\(type(of: self)): Data is nil"

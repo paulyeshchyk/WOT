@@ -6,6 +6,8 @@
 //  Copyright © 2023 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - NodeDataModelProtocol
+
 @objc
 public protocol NodeDataModelProtocol {
     var rootNodes: [NodeProtocol] { get }
@@ -20,6 +22,8 @@ public protocol NodeDataModelProtocol {
     func indexPath(forNode: NodeProtocol?) -> IndexPath?
     func loadModel()
 }
+
+// MARK: - NodeDataModelListener
 
 @objc
 public protocol NodeDataModelListener {

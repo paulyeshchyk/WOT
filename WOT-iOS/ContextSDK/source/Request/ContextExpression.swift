@@ -5,6 +5,8 @@
 //  Created by Paul on 19.12.22.
 //
 
+// MARK: - ContextExpressionProtocol
+
 @objc
 public protocol ContextExpressionProtocol {
     var components: [String] { get }
@@ -19,18 +21,10 @@ public protocol ContextExpressionProtocol {
     func foreignKey(byInsertingComponent: String) -> ContextExpressionProtocol?
 }
 
+// MARK: - ContextExpression
+
 @objc
 public class ContextExpression: NSObject, ContextExpressionProtocol {
-    public let components: [String]
-    public let value: JSONValueType
-    public var name: String { return components.joined(separator: ".")}
-    public let nameAlias: String
-
-    override public var description: String {
-        return "\(predicate.description)"
-    }
-
-    private var predicateFormat: String = "%K = %@"
 
     @objc
     public required init(components: [String], value: JSONValueType, nameAlias: String, predicateFormat: String) {
@@ -46,6 +40,15 @@ public class ContextExpression: NSObject, ContextExpressionProtocol {
         self.init(components: [name], value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
 
+    public let components: [String]
+    public let value: JSONValueType
+    public let nameAlias: String
+
+    public var name: String { return components.joined(separator: ".") }
+    override public var description: String {
+        return "\(predicate.description)"
+    }
+
     @objc
     public var predicate: NSPredicate {
         // swiftlint:disable force_cast
@@ -59,4 +62,6 @@ public class ContextExpression: NSObject, ContextExpressionProtocol {
         newComponents.append(contentsOf: components)
         return ContextExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
+
+    private var predicateFormat: String = "%K = %@"
 }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - NodeDimensionProtocol
+
 @objc
 public protocol NodeDimensionProtocol: NSObjectProtocol {
     var fetchController: NodeFetchControllerProtocol? { get set }
@@ -26,6 +28,8 @@ public protocol NodeDimensionProtocol: NSObjectProtocol {
 
     func reload(forIndex: Int, nodeCreator: NodeCreatorProtocol?)
 }
+
+// MARK: - DimensionLoadListenerProtocol
 
 public protocol DimensionLoadListenerProtocol {
     func didLoad(dimension: NodeDimensionProtocol)

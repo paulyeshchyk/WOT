@@ -6,11 +6,17 @@
 //  Copyright © 2019 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - WOTAPIProtocol
+
 @objc
 public protocol WOTAPIProtocol: NSObjectProtocol {}
 
+// MARK: - WOTAPIDefaultsProtocol
+
 @objc
 protocol WOTAPIDefaultsProtocol: NSObjectProtocol {}
+
+// MARK: - WOTApiForeignKeys
 
 @objc
 public class WOTApiForeignKeys: NSObject, WOTAPIProtocol {
@@ -19,6 +25,8 @@ public class WOTApiForeignKeys: NSObject, WOTAPIProtocol {
     @objc public static let vehicles_default_profile_gun_fire_rate: String = "vehicles.default_profile.gun.fire_rate"
 }
 
+// MARK: - WGWebQueryArgs
+
 @objc
 public class WGWebQueryArgs: NSObject {
     @objc public static let fields: String = "fields"
@@ -26,6 +34,8 @@ public class WGWebQueryArgs: NSObject {
     @objc public static let module_id: String = "module_id"
     @objc public static let tank_id: String = "tank_id"
 }
+
+// MARK: - WGWebRequestGroups
 
 @objc
 public class WGWebRequestGroups: NSObject {
@@ -36,6 +46,8 @@ public class WGWebRequestGroups: NSObject {
     @objc public static let logout: RequestIdType = "logout".hashValue
 }
 
+// MARK: - WGJsonFields
+
 @objc
 public class WGJsonFields: NSObject {
     @objc public static let tag: String = "tag"
@@ -43,6 +55,8 @@ public class WGJsonFields: NSObject {
     @objc public static let module_id: String = "module_id"
     @objc public static let default_profile: String = "default_profile"
 }
+
+// MARK: - WOTLoginFields
 
 @objc
 public class WOTLoginFields: NSObject {
@@ -61,6 +75,8 @@ public class WOTLoginFields: NSObject {
     @objc public static let message: String = "message"
     @objc public static let default_profile: String = "default_profile"
 }
+
+// MARK: - WOTApiFields
 
 @objc
 public class WOTApiFields: NSObject, WOTAPIProtocol {
@@ -103,6 +119,8 @@ public class WOTApiFields: NSObject, WOTAPIProtocol {
     @objc public static let circular_vision_radius: String = "circular_vision_radius"
 }
 
+// MARK: - WOTApiTankType
+
 public class WOTApiTankType: NSObject, WOTAPIProtocol {
     @objc public static let at_spg: String = "AT-SPG"
     @objc public static let spg = "SPG"
@@ -110,6 +128,8 @@ public class WOTApiTankType: NSObject, WOTAPIProtocol {
     @objc public static let mediumTank = "mediumTank"
     @objc public static let heavyTank = "heavyTank"
 }
+
+// MARK: - WOTApiDefaults
 
 public class WOTApiDefaults: NSObject, WOTAPIDefaultsProtocol {
     @objc public static let languageRU: String = "ru"
@@ -119,6 +139,8 @@ public class WOTApiDefaults: NSObject, WOTAPIDefaultsProtocol {
     @objc public static let applicationRedirectURI: String = "https://api.worldoftanks.ru/wot/blank/"; // "https://ru.wargaming.net/developers/api_explorer/wot/auth/login/complete/";
 }
 
+// MARK: - WOTApiSettingType
+
 @objc
 public class WOTApiSettingType: NSObject {
     @objc public static let key_type: String = "WOT_KEY_SETTING_TYPE"
@@ -127,10 +149,14 @@ public class WOTApiSettingType: NSObject {
     @objc public static let key_type_group: String = "WOT_KEY_SETTING_TYPE_GROUP"
 }
 
+// MARK: - WOTApiKeyOrderBy
+
 @objc
 public class WOTApiKeyOrderBy: NSObject {
     @objc public static let orderBy: String = "orderBy"
 }
+
+// MARK: - WOTApiLanguage
 
 @objc
 public class WOTApiLanguage: NSObject {
@@ -139,12 +165,16 @@ public class WOTApiLanguage: NSObject {
     @objc public static let default_login_language: String = "WOT_USERDEFAULTS_LOGIN_LANGUAGE"
 }
 
+// MARK: - WOTApiTexts
+
 @objc
 public class WOTApiTexts: NSObject {
     @objc public static let groupAndSort: String = "WOT_STRING_GROUP_AND_SORT"
     @objc public static let apply: String = "WOT_STRING_APPLY"
     @objc public static let image_back: String = "WOT_IMAGE_BACK"
 }
+
+// MARK: - WOTApiImages
 
 @objc
 public class WOTApiImages: NSObject {

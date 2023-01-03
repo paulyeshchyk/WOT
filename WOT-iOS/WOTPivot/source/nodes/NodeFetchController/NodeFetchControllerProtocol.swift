@@ -8,6 +8,8 @@
 
 import ContextSDK
 
+// MARK: - NodeFetchControllerProtocol
+
 @objc
 public protocol NodeFetchControllerProtocol {
     typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol
@@ -17,6 +19,8 @@ public protocol NodeFetchControllerProtocol {
     func fetchedObjects() -> [AnyObject]?
     func setFetchListener(_ listener: NodeFetchControllerListenerProtocol?)
 }
+
+// MARK: - NodeFetchControllerListenerProtocol
 
 @objc
 public protocol NodeFetchControllerListenerProtocol {

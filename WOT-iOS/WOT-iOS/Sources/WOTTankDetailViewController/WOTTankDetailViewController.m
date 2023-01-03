@@ -465,15 +465,11 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     return [MD5 MD5From:@"WOTTankDetailViewController"];
 }
 
-- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(WOTRequestManagerCompletionResultType)finished {
+- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest error:(NSError * _Nullable)error {
     [self updateUINeedReset: YES];
 }
 
 - (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didStartRequest:(id<RequestProtocol> _Nonnull)didStartRequest {
-    //
-}
-
-- (void)requestManager:(id<RequestManagerProtocol> _Nonnull)requestManager didParseDataForRequest:(id<RequestProtocol> _Nonnull)didParseDataForRequest completionResultType:(enum WOTRequestManagerCompletionResultType)completionResultType error:(NSError * _Nullable)error {
     //
 }
 @end

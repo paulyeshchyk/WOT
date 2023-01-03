@@ -7,8 +7,6 @@
 //
 
 public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicateComposerProtocol {
-    private let drivenJoint: Joint
-    private var foreignSelectKey: String
 
     public init(drivenJoint: Joint, foreignSelectKey: String) {
         self.drivenJoint = drivenJoint
@@ -22,4 +20,7 @@ public class VehicleprofileAmmoListAmmoRequestPredicateComposer: RequestPredicat
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
+
+    private let drivenJoint: Joint
+    private var foreignSelectKey: String
 }

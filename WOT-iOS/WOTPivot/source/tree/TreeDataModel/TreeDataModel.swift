@@ -6,8 +6,35 @@
 //  Copyright © 2018. All rights reserved.
 //
 
+// MARK: - TreeDataModel
+
 public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
-    lazy var nodeConnectorIndex: TreeConnectorNodeIndexProtocol = { return TreeConnectorNodeIndex() }()
+
+    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, enumerator _: NodeEnumeratorProtocol, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
+        fetchController = fetch
+        listener = list
+        nodeCreator = nc
+        super.init(nodeIndex: ni, appContext: appContext)
+        fetchController.setFetchListener(self)
+    }
+
+    deinit {
+        fetchController.setFetchListener(nil)
+    }
+
+    public required init(enumerator _: NodeEnumeratorProtocol) {
+        fatalError("init(enumerator:) has not been implemented")
+    }
+
+    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
+        fatalError("init(nodeIndex:) has not been implemented")
+    }
+
+    override open func clearRootNodes() {
+        super.clearRootNodes()
+        reindexNodeConnectors()
+    }
+
     public var levels: Int {
         return nodeConnectorIndex.levels
     }
@@ -26,30 +53,6 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         } catch let error {
             fetchFailed(by: self.fetchController, withError: error)
         }
-    }
-
-    var fetchController: NodeFetchControllerProtocol
-    var listener: NodeDataModelListener
-    var nodeCreator: NodeCreatorProtocol
-
-    public required init(fetchController fetch: NodeFetchControllerProtocol, listener list: NodeDataModelListener, enumerator _: NodeEnumeratorProtocol, nodeCreator nc: NodeCreatorProtocol, nodeIndex ni: NodeIndexProtocol, appContext: NodeFetchControllerProtocol.Context) {
-        fetchController = fetch
-        listener = list
-        nodeCreator = nc
-        super.init(nodeIndex: ni, appContext: appContext)
-        fetchController.setFetchListener(self)
-    }
-
-    deinit {
-        fetchController.setFetchListener(nil)
-    }
-
-    public required init(enumerator _: NodeEnumeratorProtocol) {
-        fatalError("init(enumerator:) has not been implemented")
-    }
-
-    public required init(nodeIndex _: NodeIndexProtocol, appContext _: NodeFetchControllerProtocol.Context) {
-        fatalError("init(nodeIndex:) has not been implemented")
     }
 
     override public func nodesCount(section: Int) -> Int {
@@ -82,10 +85,10 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         reindexNodeConnectors()
     }
 
-    override open func clearRootNodes() {
-        super.clearRootNodes()
-        reindexNodeConnectors()
-    }
+    lazy var nodeConnectorIndex: TreeConnectorNodeIndexProtocol = { return TreeConnectorNodeIndex() }()
+    var fetchController: NodeFetchControllerProtocol
+    var listener: NodeDataModelListener
+    var nodeCreator: NodeCreatorProtocol
 
     fileprivate func failPivot(_ error: Error) {
         listener.didFinishLoadModel(error: error)
@@ -108,6 +111,8 @@ extension TreeDataModel {
         nodeConnectorIndex.add(nodes: nodes, level: NodeLevelTypeZero)
     }
 }
+
+// MARK: - TreeDataModel + NodeFetchControllerListenerProtocol
 
 extension TreeDataModel: NodeFetchControllerListenerProtocol {
     public func fetchPerformed(by fetchController: NodeFetchControllerProtocol) {

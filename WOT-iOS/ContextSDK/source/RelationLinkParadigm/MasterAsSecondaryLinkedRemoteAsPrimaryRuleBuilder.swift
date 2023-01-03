@@ -7,7 +7,6 @@
 //
 
 open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
-    private let drivenJoint: Joint
 
     public init(drivenJoint: Joint) {
         self.drivenJoint = drivenJoint
@@ -20,4 +19,6 @@ open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateCo
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
+
+    private let drivenJoint: Joint
 }

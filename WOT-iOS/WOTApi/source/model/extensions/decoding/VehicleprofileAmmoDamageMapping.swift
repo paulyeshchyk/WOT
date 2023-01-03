@@ -24,8 +24,11 @@ public extension VehicleprofileAmmoDamage {
     }
 }
 
+// MARK: - VehicleprofileAmmoDamageError
+
 private enum VehicleprofileAmmoDamageError: Error, CustomStringConvertible {
     case arrayIsNotContainingThreeElements
+
     var description: String {
         switch self {
         case .arrayIsNotContainingThreeElements: return "[\(type(of: self))]: Dublicate"

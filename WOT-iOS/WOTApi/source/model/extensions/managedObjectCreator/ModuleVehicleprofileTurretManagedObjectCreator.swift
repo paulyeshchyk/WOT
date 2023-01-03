@@ -7,6 +7,7 @@
 
 public class ModuleVehicleprofileTurretManagedObjectCreator: ManagedObjectExtractable {
     public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
+
     public func extractJSON(from: JSON) -> JSON? {
         return from[#keyPath(Vehicleprofile.turret)] as? JSON
     }

@@ -11,6 +11,7 @@ import CoreData
 extension NSManagedObject: JSONDecodableProtocol {
     private enum NSManagedObjectJSONMappableError: Error, CustomStringConvertible {
         case shouldBeOverriden(String)
+
         var description: String {
             switch self {
             case .shouldBeOverriden(let text): return "\(type(of: self)): '\(text)' should be overridden"

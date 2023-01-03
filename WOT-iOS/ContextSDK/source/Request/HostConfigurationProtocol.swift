@@ -6,10 +6,14 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - HostConfigurationContainerProtocol
+
 @objc
 public protocol HostConfigurationContainerProtocol {
     @objc var hostConfiguration: HostConfigurationProtocol? { get set }
 }
+
+// MARK: - HostConfigurationProtocol
 
 @objc
 public protocol HostConfigurationProtocol {

@@ -9,10 +9,14 @@
 import WOTApi
 import WOTPivot
 
+// MARK: - WOTMenuDatasourceDelegate
+
 @objc
 protocol WOTMenuDatasourceDelegate: NSObjectProtocol {
     func hasUpdatedData(_ datasource: WOTMenuDatasourceProtocol)
 }
+
+// MARK: - WOTMenuDatasourceProtocol
 
 @objc
 protocol WOTMenuDatasourceProtocol: NSObjectProtocol {
@@ -22,20 +26,10 @@ protocol WOTMenuDatasourceProtocol: NSObjectProtocol {
     func rebuild()
 }
 
+// MARK: - WOTMenuDatasource
+
 @objc
 class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
-    // MARK: - Properties
-
-    weak var delegate: WOTMenuDatasourceDelegate?
-
-    var availableViewControllers: [WOTMenuItem] = []
-    var visibleViewControllers: [WOTMenuItem]? {
-        didSet {
-            delegate?.hasUpdatedData(self)
-        }
-    }
-
-    var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
 
     override init() {
         super.init()
@@ -44,6 +38,19 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
         availableViewControllers.append(WOTMenuItem(controllerClass: WOTTankListViewController.self, controllerTitle: WOTApi.L10n.wotStringTankopedia, icon: UIImage(), userDependence: false))
         availableViewControllers.append(WOTMenuItem(controllerClass: WOTPlayersListViewController.self, controllerTitle: WOTApi.L10n.wotStringPlayers, icon: UIImage(), userDependence: false))
         availableViewControllers.append(WOTMenuItem(controllerClass: WOTProfileViewController.self, controllerTitle: WOTApi.L10n.wotStringProfile, icon: UIImage(), userDependence: false))
+    }
+
+    // MARK: - Properties
+
+    weak var delegate: WOTMenuDatasourceDelegate?
+
+    var availableViewControllers: [WOTMenuItem] = []
+    var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
+
+    var visibleViewControllers: [WOTMenuItem]? {
+        didSet {
+            delegate?.hasUpdatedData(self)
+        }
     }
 
     func object(at index: Int) -> WOTMenuItem? {
@@ -65,6 +72,8 @@ class WOTMenuDatasource: NSObject, WOTMenuDatasourceProtocol {
         }
     }
 }
+
+// MARK: - WOTMenuDatasource + NSFetchedResultsControllerDelegate
 
 extension WOTMenuDatasource: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_: NSFetchedResultsController<NSFetchRequestResult>) {

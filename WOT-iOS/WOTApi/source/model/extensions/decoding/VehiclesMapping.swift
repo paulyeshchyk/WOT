@@ -30,14 +30,14 @@ public extension Vehicles {
         let defaultProfileKeypath = #keyPath(Vehicles.default_profile)
         if let jsonElement = vehicleJSON[defaultProfileKeypath] as? JSON {
             let modelClass = Vehicleprofile.self
-            let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
+            let vehiclesFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
             let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let composition = try builder.buildRequestPredicateComposition()
             let collection = try JSONCollection(element: jsonElement)
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, anchor: anchor)
             let extractor = VehicleProfileManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehiclesFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
         }
@@ -57,7 +57,7 @@ extension Vehicles {
         var parentObjectIDList = requestPredicate.parentObjectIDList
         parentObjectIDList.append(objectID)
 
-        let vehiclesFetchResult = FetchResult(objectID: objectID, inContext: objectContext, predicate: nil, fetchStatus: .recovered)
+        let vehiclesFetchResult = fetchResult(context: objectContext)
 
         let modulesTreePredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
         modulesTreePredicate[.primary] = requestPredicate[.primary]?
@@ -76,7 +76,7 @@ extension Vehicles {
         }
     }
 
-    private func submoduleMapping(keypath _: KeypathType, objectContext: ManagedObjectContextProtocol, json: JSONCollectionProtocol?, module_id: Any?, requestPredicate: ContextPredicateProtocol, masterFetchResult: FetchResult, inContext: JSONDecodableProtocol.Context) throws {
+    private func submoduleMapping(keypath _: KeypathType, objectContext: ManagedObjectContextProtocol, json: JSONCollectionProtocol?, module_id: Any?, requestPredicate: ContextPredicateProtocol, masterFetchResult: FetchResultProtocol, inContext: JSONDecodableProtocol.Context) throws {
         guard let json = json else {
             throw VehiclesJSONMappingError.passedInvalidSubModuleJSON
         }
@@ -94,6 +94,8 @@ extension Vehicles {
     }
 }
 
+// MARK: - VehiclesJSONMappingError
+
 public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
     case notAJSON
     case passedInvalidModuleTreeJSON(NSDecimalNumber?)
@@ -101,6 +103,7 @@ public enum VehiclesJSONMappingError: Error, CustomStringConvertible {
     case passedInvalidModuleId
     case profileNotFound(NSDecimalNumber?)
     case moduleTreeNotFound(NSDecimalNumber?)
+
     public var description: String {
         switch self {
         case .notAJSON: return "[\(type(of: self))]: Not a JSON"

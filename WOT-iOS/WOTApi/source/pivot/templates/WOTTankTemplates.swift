@@ -8,6 +8,8 @@
 
 import WOTPivot
 
+// MARK: - WOTPivotTemplateVehicleTankID
+
 class WOTPivotTemplateVehicleTankID: PivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> PivotNodeProtocol {
         let pivotNodeClass = PivotMetaTypeConverter.nodeClass(for: type)
@@ -17,6 +19,8 @@ class WOTPivotTemplateVehicleTankID: PivotTemplateProtocol {
         return result
     }
 }
+
+// MARK: - WOTPivotTemplateVehicleTier
 
 class WOTPivotTemplateVehicleTier: PivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> PivotNodeProtocol {
@@ -37,6 +41,8 @@ class WOTPivotTemplateVehicleTier: PivotTemplateProtocol {
     }
 }
 
+// MARK: - WOTPivotTemplateVehiclePremium
+
 class WOTPivotTemplateVehiclePremium: PivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> PivotNodeProtocol {
         let pivotNodeClass = PivotMetaTypeConverter.nodeClass(for: type)
@@ -46,6 +52,8 @@ class WOTPivotTemplateVehiclePremium: PivotTemplateProtocol {
         return result
     }
 }
+
+// MARK: - WOTPivotTemplateVehicleType
 
 class WOTPivotTemplateVehicleType: PivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> PivotNodeProtocol {
@@ -59,6 +67,8 @@ class WOTPivotTemplateVehicleType: PivotTemplateProtocol {
         return result
     }
 }
+
+// MARK: - WOTPivotTemplateVehicleNation
 
 class WOTPivotTemplateVehicleNation: PivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> PivotNodeProtocol {
@@ -78,6 +88,8 @@ class WOTPivotTemplateVehicleNation: PivotTemplateProtocol {
         return result
     }
 }
+
+// MARK: - WOTPivotTemplateVehicleDPM
 
 class WOTPivotTemplateVehicleDPM: PivotTemplateProtocol {
     func asType(_ type: PivotMetadataType) -> PivotNodeProtocol {
@@ -101,7 +113,10 @@ class WOTPivotTemplateVehicleDPM: PivotTemplateProtocol {
     }
 }
 
+// MARK: - WOTPivotTemplates
+
 public struct WOTPivotTemplates {
+
     public init() {}
 
     public lazy var tankID: PivotTemplateProtocol = {

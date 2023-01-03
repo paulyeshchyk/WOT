@@ -14,7 +14,7 @@ public extension VehicleprofileArmorList {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
         //
-        let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
+        let vehicleprofileArmorListFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
 
         // MARK: - turret
 
@@ -25,9 +25,9 @@ public extension VehicleprofileArmorList {
             let composer = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListTurret), parentObjectIDList: nil)
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathturret)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileArmorListFetchResult, anchor: anchor)
             let extractor = VehicleprofileArmorListTurretManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileArmorListFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.turretNotFound, details: nil), sender: self)
         }
@@ -41,18 +41,21 @@ public extension VehicleprofileArmorList {
             let composer = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(VehicleprofileArmor.vehicleprofileArmorListHull), parentObjectIDList: nil)
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathhull)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileArmorListFetchResult, anchor: anchor)
             let extractor = VehicleprofileArmorListHullManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileArmorListFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.hullNotFound, details: nil), sender: self)
         }
     }
 }
 
+// MARK: - VehicleProfileArmorListError
+
 private enum VehicleProfileArmorListError: Error, CustomStringConvertible {
     case hullNotFound
     case turretNotFound
+
     var description: String {
         switch self {
         case .turretNotFound: return "[\(type(of: self))]: Turret not found"

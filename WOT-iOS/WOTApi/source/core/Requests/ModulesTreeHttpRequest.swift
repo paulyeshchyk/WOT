@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - ModulesTreeHttpRequest
+
 public class ModulesTreeHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 
@@ -15,6 +17,8 @@ public class ModulesTreeHttpRequest: HttpRequest {
         return "/wot/encyclopedia/vehicles/"
     }
 }
+
+// MARK: - ModulesTreeHttpRequest + ModelServiceProtocol
 
 extension ModulesTreeHttpRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {

@@ -17,6 +17,7 @@
 		1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E506245FE541007E5CA8 /* WOTKit.framework */; };
 		1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */; };
 		DA12D07029621B3C0077F664 /* RequestManagerLogEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */; };
+		DA32CEB729645D51007726AD /* RequestManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CEB629645D51007726AD /* RequestManagerTest.swift */; };
 		DA39E28D29609BC70099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; };
 		DA39E28E29609BC70099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */; };
@@ -69,6 +70,7 @@
 		1D7E0692247D045F008CB848 /* WOTKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataAdapterCreator.swift; sourceTree = "<group>"; };
 		DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerLogEvents.swift; sourceTree = "<group>"; };
+		DA32CEB629645D51007726AD /* RequestManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerTest.swift; sourceTree = "<group>"; };
 		DA39E28C29609BC70099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCatalogExtractor.swift; sourceTree = "<group>"; };
 		DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				DACDB124296050DD005BBA72 /* Info.plist */,
+				DA32CEB629645D51007726AD /* RequestManagerTest.swift */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 					};
 					1D7E0691247D045F008CB848 = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -477,6 +481,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA32CEB729645D51007726AD /* RequestManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +672,7 @@
 		1D7E069A247D0460008CB848 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -677,6 +683,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -685,6 +692,7 @@
 		1D7E069B247D0460008CB848 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

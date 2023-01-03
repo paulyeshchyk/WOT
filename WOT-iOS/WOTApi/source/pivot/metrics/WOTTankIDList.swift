@@ -6,6 +6,8 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - WOTTanksIDListProtocol
+
 @objc
 public protocol WOTTanksIDListProtocol: NSObjectProtocol {
     var label: String { get }
@@ -15,18 +17,21 @@ public protocol WOTTanksIDListProtocol: NSObjectProtocol {
     func addObjects(_ objects: [String])
 }
 
+// MARK: - WOTTanksIDList
+
 @objc
 public class WOTTanksIDList: NSObject {
-    private(set) public var allObjects = [String]()
-
-    public var label: String {
-        return allObjects.joined(separator: "-")
-    }
 
     @objc
     public required init(tankID: String) {
         super.init()
         addObject(tankID)
+    }
+
+    private(set) public var allObjects = [String]()
+
+    public var label: String {
+        return allObjects.joined(separator: "-")
     }
 
     func addObject(_ object: String) {

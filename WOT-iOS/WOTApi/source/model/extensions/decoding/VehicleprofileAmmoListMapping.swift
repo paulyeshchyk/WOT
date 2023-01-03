@@ -14,7 +14,7 @@ public extension VehicleprofileAmmoList {
             throw JSONManagedObjectMapError.notAnArray(map)
         }
 
-        let masterFetchResult = FetchResult(objectID: objectID, inContext: managedObjectContextContainer.managedObjectContext, predicate: nil, fetchStatus: .recovered)
+        let vehicleprofileAmmoListFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
 
         let keypath = #keyPath(VehicleprofileAmmo.type)
         for jsonElement in profilesJSON {
@@ -25,9 +25,9 @@ public extension VehicleprofileAmmoList {
             let collection = try JSONCollection(element: jsonElement)
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
+            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoListFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoListAmmoManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: masterFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoListFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         }
     }
 }

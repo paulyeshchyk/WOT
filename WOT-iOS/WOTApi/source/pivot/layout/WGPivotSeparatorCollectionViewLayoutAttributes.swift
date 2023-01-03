@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - WOTPivotSeparatorKind
+
 enum WOTPivotSeparatorKind: String {
     case top
     case bottom
@@ -15,7 +17,30 @@ enum WOTPivotSeparatorKind: String {
     case right
 }
 
+// MARK: - WGPivotSeparatorCollectionViewLayoutAttributes
+
 class WGPivotSeparatorCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+
+    var color: UIColor = UIColor.clear
+
+    var kind: WOTPivotSeparatorKind? {
+        didSet {
+            guard let kindValue = kind else {
+                return
+            }
+            invalidateFrame(kind: kindValue)
+        }
+    }
+
+    var customFrame: CGRect? {
+        didSet {
+            guard let kindValue = kind else {
+                return
+            }
+            invalidateFrame(kind: kindValue)
+        }
+    }
+
     private var separatorWidth: CGFloat {
         return 1.0
     }
@@ -64,26 +89,9 @@ class WGPivotSeparatorCollectionViewLayoutAttributes: UICollectionViewLayoutAttr
             frame = rightSeparatorFrame
         }
     }
-
-    var color: UIColor = UIColor.clear
-    var kind: WOTPivotSeparatorKind? {
-        didSet {
-            guard let kindValue = kind else {
-                return
-            }
-            invalidateFrame(kind: kindValue)
-        }
-    }
-
-    var customFrame: CGRect? {
-        didSet {
-            guard let kindValue = kind else {
-                return
-            }
-            invalidateFrame(kind: kindValue)
-        }
-    }
 }
+
+// MARK: - WGPivotSeparatorCollectionReusableView
 
 class WGPivotSeparatorCollectionReusableView: UICollectionReusableView {
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {

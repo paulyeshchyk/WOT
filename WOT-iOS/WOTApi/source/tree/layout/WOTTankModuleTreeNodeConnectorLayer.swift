@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - WOTTankModuleTreeNodeConnectorLayer
+
 @objc
 public class WOTTankModuleTreeNodeConnectorLayer: NSObject, WOTTankModuleTreeNodeConnectorLayerProtocol {
     @objc

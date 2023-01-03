@@ -18,8 +18,10 @@ extension PrimaryKeyType {
     }
 }
 
+// MARK: - NSManagedObjectPredicateFormat
+
 private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
-    private let keyType: PrimaryKeyType
+
     init(keyType: PrimaryKeyType) {
         self.keyType = keyType
     }
@@ -31,7 +33,11 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
         default: fatalError("unknown type should never be used")
         }
     }
+
+    private let keyType: PrimaryKeyType
 }
+
+// MARK: - NSManagedObject + PrimaryKeypathProtocol
 
 extension NSManagedObject: PrimaryKeypathProtocol {
     open class func primaryKeyPath(forType _: PrimaryKeyType) -> String {

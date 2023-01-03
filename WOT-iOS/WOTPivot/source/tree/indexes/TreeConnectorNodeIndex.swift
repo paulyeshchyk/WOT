@@ -6,10 +6,26 @@
 //
 
 class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
-    private typealias TreeLevelIndexTypeAlias = [Int: [NodeProtocol]]
+
+    override required init() {
+        super.init()
+    }
 
     var count: Int {
         fatalError("incorrect usage")
+    }
+
+    var width: Int {
+        var result: Int = 0
+        levelIndex.keys.forEach { key in
+            let arraycount = self.levelIndex[key]?.count ?? 0
+            result = max(result, arraycount)
+        }
+        return result
+    }
+
+    var levels: Int {
+        return levelIndex.keys.count
     }
 
     func doAutoincrementIndex(forNodes _: [NodeProtocol]) -> Int {
@@ -32,23 +48,6 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
 
     func addNodeToIndex(_ node: NodeProtocol) {
         add(node: node, level: 0)
-    }
-
-    private lazy var levelIndex: TreeLevelIndexTypeAlias = {
-        TreeLevelIndexTypeAlias()
-    }()
-
-    var width: Int {
-        var result: Int = 0
-        levelIndex.keys.forEach { key in
-            let arraycount = self.levelIndex[key]?.count ?? 0
-            result = max(result, arraycount)
-        }
-        return result
-    }
-
-    var levels: Int {
-        return levelIndex.keys.count
     }
 
     func reset() {
@@ -80,4 +79,10 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
         }
         return indexPath.first
     }
+
+    private typealias TreeLevelIndexTypeAlias = [Int: [NodeProtocol]]
+
+    private lazy var levelIndex: TreeLevelIndexTypeAlias = {
+        TreeLevelIndexTypeAlias()
+    }()
 }

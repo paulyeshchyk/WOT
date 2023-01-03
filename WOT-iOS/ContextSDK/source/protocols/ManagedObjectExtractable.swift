@@ -5,6 +5,8 @@
 //  Created by Paul on 3.01.23.
 //
 
+// MARK: - ManagedObjectExtractable
+
 @objc
 public protocol ManagedObjectExtractable {
     var linkerPrimaryKeyType: PrimaryKeyType { get }
@@ -35,13 +37,17 @@ public extension ManagedObjectExtractable {
     }
 }
 
+// MARK: - JSONExtraction
+
 public struct JSONExtraction {
+
     public let requestPredicate: ContextPredicateProtocol
     public let json: JSONCollectionProtocol?
 
     enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
         case invalidJSONForKey(AnyHashable)
         case jsonWasNotExtracted(JSON)
+
         public var description: String {
             switch self {
             case .invalidJSONForKey(let key): return "[\(type(of: self))]: Invalid json for key: \(key)"

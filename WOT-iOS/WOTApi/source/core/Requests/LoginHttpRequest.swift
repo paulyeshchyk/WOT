@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - LoginHttpRequest
+
 public class LoginHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 
@@ -16,6 +18,8 @@ public class LoginHttpRequest: HttpRequest {
     }
 }
 
+// MARK: - LoginHttpRequest + ModelServiceProtocol
+
 extension LoginHttpRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
@@ -23,6 +27,10 @@ extension LoginHttpRequest: ModelServiceProtocol {
 
     public static func modelClass() -> PrimaryKeypathProtocol.Type? {
         return nil
+    }
+
+    private class func registration1D() -> RequestIdType {
+        WebRequestType.login.rawValue
     }
 
     public class func registrationID() -> RequestIdType {

@@ -8,24 +8,11 @@
 
 import ContextSDK
 
+// MARK: - RequestManager
+
 @objc
 open class RequestManager: NSObject {
-    public typealias Context =
-        LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & MappingCoordinatorContainerProtocol & HostConfigurationContainerProtocol & ResponseDataAdapterCreatorContainerProtocol
 
-    override public var description: String { String(describing: type(of: self)) }
-
-    public var MD5: String { uuid.MD5 }
-    public let uuid: UUID = UUID()
-
-    private let appContext: Context
-
-    private let grouppedListenerList: RequestGrouppedListenerList
-    private let grouppedRequestList: RequestGrouppedRequestList
-    private let managedObjectCreatorList: ResponseManagedObjectCreatorList
-    private let managedObjectExractableList: ResponseManagedObjectExtractableList
-
-    private let requestRegistrator: RequestRegistratorProtocol
     deinit {
         //
     }
@@ -40,13 +27,31 @@ open class RequestManager: NSObject {
         super.init()
     }
 
+    public typealias Context =
+        LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & MappingCoordinatorContainerProtocol & HostConfigurationContainerProtocol & ResponseDataAdapterCreatorContainerProtocol
+
+    override public var description: String { String(describing: type(of: self)) }
+
+    public var MD5: String { uuid.MD5 }
+
     public func registerModelService(_ serviceClass: ModelServiceProtocol.Type) {
         requestRegistrator.registerServiceClass(serviceClass)
     }
+
+    private let uuid = UUID()
+    private let appContext: Context
+
+    private let grouppedListenerList: RequestGrouppedListenerList
+    private let grouppedRequestList: RequestGrouppedRequestList
+    private let managedObjectCreatorList: ResponseManagedObjectCreatorList
+    private let managedObjectExractableList: ResponseManagedObjectExtractableList
+
+    private let requestRegistrator: RequestRegistratorProtocol
 }
 
+// MARK: - RequestManager + RequestListenerProtocol
+
 extension RequestManager: RequestListenerProtocol {
-    // MARK: - RequestListenerProtocol
 
     public func request(_ request: RequestProtocol, startedWith _: URLRequest) {
         grouppedListenerList.didStartRequest(request, requestManager: self)
@@ -68,6 +73,7 @@ extension RequestManager: RequestListenerProtocol {
         do {
             try parseResponse(request: request, data: data)
         } catch {
+            grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
             appContext.logInspector?.logEvent(EventError(error, details: String(describing: request)), sender: self)
         }
     }
@@ -92,11 +98,17 @@ extension RequestManager: RequestListenerProtocol {
         let dataAdapter = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectLinker: managedObjectCreator, jsonExtractor: managedObjectExtractor, appContext: appContext)
 
         dataAdapter.decode(data: data, fromRequest: request) { [weak self] request, error in
-            self?.finalizeParseResponse(request: request, error: error)
+            guard let self = self else {
+                return
+            }
+            self.grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
+            self.finalizeParseResponse(request: request, error: error)
         }
     }
 
     private func finalizeParseResponse(request: RequestProtocol, error: Error?) {
+        //
+
         if let error = error {
             appContext.logInspector?.logEvent(EventError(error, details: self), sender: self)
             return
@@ -109,15 +121,6 @@ extension RequestManager: RequestListenerProtocol {
 
         do {
             try managedObjectCreatorList.removeAdapterForRequest(request)
-        } catch {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
-        }
-
-        if let error = error {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
-        }
-        do {
-            try grouppedListenerList.didParseDataForRequest(request, requestManager: self, completionType: .finished)
         } catch {
             appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
         }
@@ -134,13 +137,13 @@ extension RequestManager: RequestListenerProtocol {
     }
 }
 
-// MARK: - RequestManagerProtocol
+// MARK: - RequestManager + RequestManagerProtocol
 
 extension RequestManager: RequestManagerProtocol {
     public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
         //
         appContext.logInspector?.logEvent(EventRequestManagerFetchCancel("\(String(describing: reason))"), sender: self)
-        grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) {[weak self] request, reason in
+        grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) { [weak self] request, reason in
             guard let self = self else { return }
             self.grouppedListenerList.didCancelRequest(request, requestManager: self, reason: reason)
         }
@@ -166,7 +169,6 @@ extension RequestManager: RequestManagerProtocol {
 
         if let listener = listener {
             try grouppedListenerList.addListener(listener, forRequest: request)
-
         } else {
             let event = EventWarning(error: RequestManagerError.requestManagerListenerIsNil, details: nil)
             appContext.logInspector?.logEvent(event, sender: self)
@@ -203,19 +205,9 @@ extension RequestManager: RequestManagerProtocol {
     }
 }
 
-private class ResponseManagedObjectCreatorList {
-    private enum AdapterLinkerListError: Error, CustomStringConvertible {
-        case notRemoved(RequestProtocol)
-        case notFound(ManagedObjectLinkerProtocol)
-        var description: String {
-            switch self {
-            case .notRemoved(let request): return "[\(type(of: self))]: Adapter was not removed for request \(String(describing: request))"
-            case .notFound(let adapterLinker): return "[\(type(of: self))]: Adapter was not found for \(String(describing: adapterLinker))"
-            }
-        }
-    }
+// MARK: - ResponseManagedObjectCreatorList
 
-    private var adaptersLinkerList: [AnyHashable: ManagedObjectLinkerProtocol] = [:]
+private class ResponseManagedObjectCreatorList {
 
     func addAdapterLinker(_ adapter: ManagedObjectLinkerProtocol, forRequest: RequestProtocol) throws {
         adaptersLinkerList[forRequest.MD5] = adapter
@@ -231,21 +223,25 @@ private class ResponseManagedObjectCreatorList {
             throw AdapterLinkerListError.notRemoved(request)
         }
     }
-}
 
-private class ResponseManagedObjectExtractableList {
-    private enum ExtractorLinkerListError: Error, CustomStringConvertible {
+    private enum AdapterLinkerListError: Error, CustomStringConvertible {
         case notRemoved(RequestProtocol)
         case notFound(ManagedObjectLinkerProtocol)
+
         var description: String {
             switch self {
-            case .notRemoved(let request): return "[\(type(of: self))]: Extractor was not removed for request \(String(describing: request))"
-            case .notFound(let adapterLinker): return "[\(type(of: self))]: Extractor was not found for \(String(describing: adapterLinker))"
+            case .notRemoved(let request): return "[\(type(of: self))]: Adapter was not removed for request \(String(describing: request))"
+            case .notFound(let adapterLinker): return "[\(type(of: self))]: Adapter was not found for \(String(describing: adapterLinker))"
             }
         }
     }
 
-    private var extractorList: [AnyHashable: ManagedObjectExtractable] = [:]
+    private var adaptersLinkerList: [AnyHashable: ManagedObjectLinkerProtocol] = [:]
+}
+
+// MARK: - ResponseManagedObjectExtractableList
+
+private class ResponseManagedObjectExtractableList {
 
     func addExtractor(_ adapter: ManagedObjectExtractable, forRequest: RequestProtocol) throws {
         extractorList[forRequest.MD5] = adapter
@@ -261,19 +257,25 @@ private class ResponseManagedObjectExtractableList {
             throw ExtractorLinkerListError.notRemoved(request)
         }
     }
-}
 
-private class RequestGrouppedListenerList {
-    private enum GrouppedListenersError: Error, CustomStringConvertible {
-        case dublicate
+    private enum ExtractorLinkerListError: Error, CustomStringConvertible {
+        case notRemoved(RequestProtocol)
+        case notFound(ManagedObjectLinkerProtocol)
+
         var description: String {
             switch self {
-            case .dublicate: return "[\(type(of: self))]: Dublicate"
+            case .notRemoved(let request): return "[\(type(of: self))]: Extractor was not removed for request \(String(describing: request))"
+            case .notFound(let adapterLinker): return "[\(type(of: self))]: Extractor was not found for \(String(describing: adapterLinker))"
             }
         }
     }
 
-    private var grouppedListeners = [AnyHashable: [RequestManagerListenerProtocol]]()
+    private var extractorList: [AnyHashable: ManagedObjectExtractable] = [:]
+}
+
+// MARK: - RequestGrouppedListenerList
+
+private class RequestGrouppedListenerList {
 
     func didStartRequest(_ request: RequestProtocol, requestManager: RequestManagerProtocol) {
         grouppedListeners[request.MD5]?.forEach {
@@ -287,9 +289,9 @@ private class RequestGrouppedListenerList {
         }
     }
 
-    func didParseDataForRequest(_ request: RequestProtocol, requestManager: RequestManagerProtocol, completionType: WOTRequestManagerCompletionResultType) throws {
+    func didParseDataForRequest(_ request: RequestProtocol, requestManager: RequestManagerProtocol, error: Error?) {
         grouppedListeners[request.MD5]?.forEach { listener in
-            listener.requestManager(requestManager, didParseDataForRequest: request, completionResultType: completionType)
+            listener.requestManager(requestManager, didParseDataForRequest: request, error: error)
         }
     }
 
@@ -315,13 +317,10 @@ private class RequestGrouppedListenerList {
             }
         }
     }
-}
 
-private class RequestGrouppedRequestList {
-    typealias Context = LogInspectorContainerProtocol
-
-    private enum GrouppedRequestListenersError: Error, CustomStringConvertible {
+    private enum GrouppedListenersError: Error, CustomStringConvertible {
         case dublicate
+
         var description: String {
             switch self {
             case .dublicate: return "[\(type(of: self))]: Dublicate"
@@ -329,12 +328,20 @@ private class RequestGrouppedRequestList {
         }
     }
 
-    private var grouppedRequests: [RequestIdType: [RequestProtocol]] = [:]
+    private var grouppedListeners = [AnyHashable: [RequestManagerListenerProtocol]]()
+}
 
-    private let appContext: Context
+// MARK: - RequestGrouppedRequestList
+
+private class RequestGrouppedRequestList {
+
     init(appContext: Context) {
         self.appContext = appContext
     }
+
+    typealias Context = LogInspectorContainerProtocol
+
+    typealias CancelCompletion = (RequestProtocol, RequestCancelReasonProtocol) -> Void
 
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
         if grouppedRequests.keys.isEmpty {
@@ -353,8 +360,6 @@ private class RequestGrouppedRequestList {
         requestsForID.append(request)
         grouppedRequests[groupId] = requestsForID
     }
-
-    typealias CancelCompletion = (RequestProtocol, RequestCancelReasonProtocol) -> Void
 
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol, completion: @escaping CancelCompletion) {
         guard let requests = grouppedRequests[groupId]?.compactMap({ $0 }), !requests.isEmpty else {
@@ -387,7 +392,23 @@ private class RequestGrouppedRequestList {
             appContext.logInspector?.logEvent(EventLongTermEnd("\(String(describing: request))"), sender: self)
         }
     }
+
+    private enum GrouppedRequestListenersError: Error, CustomStringConvertible {
+        case dublicate
+
+        var description: String {
+            switch self {
+            case .dublicate: return "[\(type(of: self))]: Dublicate"
+            }
+        }
+    }
+
+    private var grouppedRequests: [RequestIdType: [RequestProtocol]] = [:]
+
+    private let appContext: Context
 }
+
+// MARK: - RequestManagerError
 
 private enum RequestManagerError: Error, CustomStringConvertible {
     case extractorNotFound(RequestProtocol)
@@ -403,6 +424,7 @@ private enum RequestManagerError: Error, CustomStringConvertible {
     case modelClassNotFound(RequestProtocol)
     case modelClassNotRegistered(AnyObject, RequestProtocol)
     case requestManagerListenerIsNil
+
     public var description: String {
         switch self {
         case .extractorNotFound(let request): return "\(type(of: self)): Extractor not found for request: \(String(describing: request))"

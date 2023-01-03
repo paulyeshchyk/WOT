@@ -12,6 +12,9 @@ import WOTPivot
 
 @objc
 class WOTTankTreeFetchController: NodeFetchController {
+
+    typealias NodeCreateClosure = (Int, ModulesTree) -> Void
+
     override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: NodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
@@ -73,7 +76,7 @@ class WOTTankTreeFetchController: NodeFetchController {
 
             let parents = findTheParent(childId: ident, listOfNodes: listofNodes)
             if !parents.isEmpty {
-                parents.forEach {$0.addChild(value)}
+                parents.forEach { $0.addChild(value) }
             } else {
                 root.addChild(value)
             }
@@ -93,8 +96,6 @@ class WOTTankTreeFetchController: NodeFetchController {
 
         return foundParents
     }
-
-    typealias NodeCreateClosure = (Int, ModulesTree) -> Void
 
     private func transform(modulesSet: Set<ModulesTree>, withId tankId: NSNumber, nodeCreation: NodeCreateClosure) {
         modulesSet.forEach { submodule in

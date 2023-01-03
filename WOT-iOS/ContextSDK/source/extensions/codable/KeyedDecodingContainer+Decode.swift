@@ -6,19 +6,22 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - JSONCodingKeys
+
 struct JSONCodingKeys: CodingKey {
-    var stringValue: String
 
     init?(stringValue: String) {
         self.stringValue = stringValue
     }
 
-    var intValue: Int?
-
     init?(intValue: Int) {
         self.init(stringValue: "\(intValue)")
         self.intValue = intValue
     }
+
+    var stringValue: String
+
+    var intValue: Int?
 }
 
 public extension KeyedDecodingContainer {

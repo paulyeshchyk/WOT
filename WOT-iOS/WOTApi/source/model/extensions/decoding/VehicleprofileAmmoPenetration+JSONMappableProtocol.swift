@@ -24,9 +24,12 @@ public extension VehicleprofileAmmoPenetration {
     }
 }
 
+// MARK: - VehicleprofileAmmoPenetrationError
+
 private enum VehicleprofileAmmoPenetrationError: Error, CustomStringConvertible {
     case arrayIsExpected(Any)
     case arrayIsNotContainingThreeElements([Any])
+
     var description: String {
         switch self {
         case .arrayIsExpected(let object): return "[\(type(of: self))]: Array is expected, but \(type(of: object))"

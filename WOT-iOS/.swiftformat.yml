@@ -5,23 +5,29 @@
 --exclude Tests/XCTestManifests.swift,Snapshots, Pods, Generated
 
 # format options
+--rules spaceAroundOperators
+--operatorfunc spaced
+
+--rules spaceInsideBraces
+
 --rules indent, linebreakAtEndOfFile, consecutiveBlankLines
 --rules spaceAroundBraces, spaceInsideBrackets, spaceInsideComments, spaceInsideGenerics, spaceInsideParens
 --rules strongOutlets, trailingClosures
 --rules typeSugar, unusedArguments, void
 --rules blankLineAfterImports, blankLinesAroundMark, blankLinesAtEndOfScope, blankLinesBetweenImports, blankLinesBetweenScopes, duplicateImports
+
 --rules elseOnSameLine
---rules extensionAccessControl, initCoderUnavailable, leadingDelimiters
+--allman false
+
+--rules blankLinesAtStartOfScope
+--typeblanklines preserve
+# --rules extensionAccessControl
+--rules leadingDelimiters
 --rules wrapEnumCases, wrapSwitchCases
---rules blankLinesAtEndOfScope, blankLinesBetweenScopes, blankLinesAtStartOfScope, emptyBraces, trailingSpace
+--rules blankLinesAtEndOfScope, blankLinesBetweenScopes, emptyBraces, trailingSpace
 --rules consecutiveSpaces
 --rules strongifiedSelf, isEmpty
---rules modifierOrder
---rules wrapArguments
---rules organizeDeclarations
---rules sortedImports
---rules redundantSelf, redundantOptionalBinding, redundantNilInit, redundantGet, redundantFileprivate, redundantExtensionACL, redundantBreak
---allman false
+--rules redundantOptionalBinding, redundantNilInit, redundantGet, redundantFileprivate, redundantExtensionACL, redundantBreak
 --binarygrouping 4,8
 --commas always
 --comments indent
@@ -40,24 +46,50 @@
 --linebreaks lf
 --maxwidth none
 --octalgrouping 4,8
---operatorfunc spaced
 --patternlet hoist
 --ranges spaced
---self remove
 --stripunusedargs always
 --swiftversion 4.2
 --trimwhitespace always
---wrapparameters after-first
 
+
+--rules markTypes
+--groupedextension "MARK: - %t + %c"
+--typemark "MARK: - %t"
+--extensionmark "MARK: - %t + %c"
+--markextensions always
+
+--rules organizeDeclarations
+--markcategories false
+
+#--organizetypes class,actor,struct,enum
+#--classthreshold 1
+#--beforemarks struct, enum, typealias
+#--structthreshold 1
+#--lifecycle
+#--markcategories true
+#--organizetypes
+
+--rules redundantSelf
+--self remove
+
+--rules redundantOptionalBinding, redundantNilInit
+--lifecycle
+
+--rules modifierOrder
+--modifierorder final, open, public, private, required, convenience
+
+#invisible for me
+--rules sortDeclarations
+--rules sortedImports
+--rules initCoderUnavailable
+
+--rules wrapArguments
 --wrapparameters after-first
 --wraparguments  after-first
 --wrapcollections after-first
 --wrapconditions after-first
 --wraptypealiases after-first
-
---lifecycle
---organizetypes
---modifierorder final, open, public, private, required, convenience
 
 
 # rules

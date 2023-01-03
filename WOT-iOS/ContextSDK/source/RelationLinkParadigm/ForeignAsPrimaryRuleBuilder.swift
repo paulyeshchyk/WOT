@@ -7,9 +7,6 @@
 //
 
 open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
-    private var requestPredicate: ContextPredicateProtocol
-    private var foreignSelectKey: String
-    private var parentObjectIDList: [AnyObject]?
 
     public init(requestPredicate: ContextPredicateProtocol, foreignSelectKey: String, parentObjectIDList: [AnyObject]?) {
         self.requestPredicate = requestPredicate
@@ -23,4 +20,8 @@ open class ForeignAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
+
+    private var requestPredicate: ContextPredicateProtocol
+    private var foreignSelectKey: String
+    private var parentObjectIDList: [AnyObject]?
 }

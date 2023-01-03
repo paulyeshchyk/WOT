@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - WOTTreeModulesTreeProtocol
+
 @objc
 public protocol WOTTreeModulesTreeProtocol: NSObjectProtocol {
     func moduleIdInt() -> Int
@@ -17,6 +19,8 @@ public protocol WOTTreeModulesTreeProtocol: NSObjectProtocol {
     func moduleValue(forKey: String) -> Any?
     func next_nodesId() -> [Int]?
 }
+
+// MARK: - WOTTreeModuleNodeProtocol
 
 @objc
 public protocol WOTTreeModuleNodeProtocol: NodeProtocol {

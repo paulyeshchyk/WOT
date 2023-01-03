@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - VehicleprofileSuspensionHttpRequest
+
 public class VehicleprofileSuspensionHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 
@@ -15,6 +17,8 @@ public class VehicleprofileSuspensionHttpRequest: HttpRequest {
         return "/wot/encyclopedia/vehicleprofile/"
     }
 }
+
+// MARK: - VehicleprofileSuspensionHttpRequest + ModelServiceProtocol
 
 extension VehicleprofileSuspensionHttpRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {

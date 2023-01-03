@@ -6,26 +6,15 @@
 //
 
 open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtractable {
-    // MARK: - Open
-
-    public let uuid: UUID = UUID()
-    public var MD5: String { uuid.MD5 }
-
-    public let modelClass: PrimaryKeypathProtocol.Type
-
-    open var linkerPrimaryKeyType: PrimaryKeyType {
-        fatalError("has not been implemented")
-    }
-
-    // MARK: - Public
-
-    public var masterFetchResult: FetchResultProtocol?
-    public var anchor: ManagedObjectLinkerAnchorProtocol
 
     public required init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol) {
         self.masterFetchResult = masterFetchResult
         self.modelClass = modelClass
         self.anchor = anchor
+    }
+
+    open var linkerPrimaryKeyType: PrimaryKeyType {
+        fatalError("has not been implemented")
     }
 
     open func extractJSON(from _: JSON) -> JSON? { return nil }
@@ -43,7 +32,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtrac
 
         // MARK: stash
 
-        appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { error in
+        appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
             completion(fetchResult, error)
         }
     }
@@ -52,6 +41,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtrac
         case unexpectedString(String)
         case unexpectedClass(AnyClass)
         case noManagedObjectFound
+
         public var description: String {
             switch self {
             case .unexpectedString(let clazz): return "[\(type(of: self))]: Class is not supported; expected class is:[\(clazz)]"
@@ -60,4 +50,13 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtrac
             }
         }
     }
+
+    public let modelClass: PrimaryKeypathProtocol.Type
+
+    public var masterFetchResult: FetchResultProtocol?
+    public var anchor: ManagedObjectLinkerAnchorProtocol
+
+    public var MD5: String { uuid.MD5 }
+
+    private let uuid = UUID()
 }

@@ -5,6 +5,8 @@
 //  Created by Paul on 22.12.22.
 //
 
+// MARK: - RequestManagerProtocol
+
 @objc
 public protocol RequestManagerProtocol {
     func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol)
@@ -16,20 +18,18 @@ public protocol RequestManagerProtocol {
     func createRequest(forRequestId: RequestIdType) throws -> RequestProtocol
 }
 
-@objc
-public enum WOTRequestManagerCompletionResultType: Int {
-    case finished
-    case noData
-}
+// MARK: - RequestManagerContainerProtocol
 
 @objc
 public protocol RequestManagerContainerProtocol {
     @objc var requestManager: RequestManagerProtocol? { get set }
 }
 
+// MARK: - RequestManagerListenerProtocol
+
 @objc
 public protocol RequestManagerListenerProtocol: MD5Protocol {
-    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, completionResultType: WOTRequestManagerCompletionResultType)
+    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest: RequestProtocol, error: Error?)
     func requestManager(_ requestManager: RequestManagerProtocol, didStartRequest: RequestProtocol)
     func requestManager(_ requestManager: RequestManagerProtocol, didCancelRequest: RequestProtocol, reason: RequestCancelReasonProtocol)
 }

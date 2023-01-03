@@ -43,6 +43,7 @@
 		DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F02959F0DD00D18A6E /* DataStore.swift */; };
 		DA2C28F42959F55D00D18A6E /* ManagedObjectLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F32959F55D00D18A6E /* ManagedObjectLinker.swift */; };
 		DA32CEB129641C48007726AD /* ManagedObjectExtractable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */; };
+		DA32CEB52964558B007726AD /* EventPivot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CEB42964558B007726AD /* EventPivot.swift */; };
 		DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */; };
 		DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */; };
 		DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EF2952FDD800C60F31 /* JSONAdapter.swift */; };
@@ -134,6 +135,7 @@
 		DA2C28F02959F0DD00D18A6E /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DA2C28F32959F55D00D18A6E /* ManagedObjectLinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinker.swift; sourceTree = "<group>"; };
 		DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectExtractable.swift; sourceTree = "<group>"; };
+		DA32CEB42964558B007726AD /* EventPivot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPivot.swift; sourceTree = "<group>"; };
 		DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistratorProtocol.swift; sourceTree = "<group>"; };
 		DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistrator.swift; sourceTree = "<group>"; };
 		DA81E4EF2952FDD800C60F31 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				DA81E4F72952FE3500C60F31 /* EventObject.swift */,
 				DA81E4FB2952FE3500C60F31 /* EventError.swift */,
 				DACDB0CF295C9923005BBA72 /* EventFlow.swift */,
+				DA32CEB42964558B007726AD /* EventPivot.swift */,
 			);
 			path = LogEvents;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				DACDB0F4295EDC96005BBA72 /* ResponseDataAdapterCreatorProtocol.swift in Sources */,
 				DA0E80922950B07C00B44CC6 /* RootTagRuleBuilder.swift in Sources */,
 				DACDB105295EDCB9005BBA72 /* RequestParadigmProtocol.swift in Sources */,
+				DA32CEB52964558B007726AD /* EventPivot.swift in Sources */,
 				DACDB100295EDC96005BBA72 /* ResponseAdapterProtocol.swift in Sources */,
 				DA0E80792950A3A100B44CC6 /* ContextPredicate.swift in Sources */,
 				DACDB11C295F4F26005BBA72 /* Joint.swift in Sources */,

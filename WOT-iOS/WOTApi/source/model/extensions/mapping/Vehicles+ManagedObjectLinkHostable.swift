@@ -5,7 +5,11 @@
 //  Created by Paul on 2.01.23.
 //
 
+// MARK: - Vehicles + ManagedObjectLinkable
+
 extension Vehicles: ManagedObjectLinkable {}
+
+// MARK: - Vehicles + ManagedObjectLinkHostable
 
 extension Vehicles: ManagedObjectLinkHostable {
     public func doLinking(_ element: ManagedObjectLinkable, anchor: ManagedObjectLinkerAnchorProtocol) {

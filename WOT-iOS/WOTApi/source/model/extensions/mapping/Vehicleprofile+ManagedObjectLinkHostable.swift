@@ -7,7 +7,11 @@
 
 import ContextSDK
 
+// MARK: - Vehicleprofile + ManagedObjectLinkable
+
 extension Vehicleprofile: ManagedObjectLinkable {}
+
+// MARK: - Vehicleprofile + ManagedObjectLinkHostable
 
 extension Vehicleprofile: ManagedObjectLinkHostable {
     public func doLinking(_ element: ManagedObjectLinkable, anchor _: ManagedObjectLinkerAnchorProtocol) {

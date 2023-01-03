@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - AppDelegate
+
 @objc
 public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var window: UIWindow?
@@ -22,7 +24,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     public func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        let logPriorities: [LogEventType]? = [.error, .warning, .flow, .longTermOperation]
+        let logPriorities: [LogEventType]? = [.error, .warning, .flow, .longTermOperation, .pivot]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
         hostConfiguration = WOTHostConfiguration()
@@ -39,5 +41,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         return true
     }
 }
+
+// MARK: - AppDelegate + ResponseDataAdapterCreatorContainerProtocol
 
 extension AppDelegate: ResponseDataAdapterCreatorContainerProtocol {}

@@ -39,10 +39,11 @@
             
             [WOTTankListSettingsDatasource createFilterBySettingForKey:WOTApiFields.tier value:@"6" callback:NULL];
             
-            [coreDataProvider stashWithManagedObjectContext:context completion:^(NSError * _Nullable error) {
+            [coreDataProvider stashWithManagedObjectContext:context completion:^(id<ManagedObjectContextProtocol> _Nullable context, NSError * _Nullable error) {
                 if (error != nil) {
                     NSLog(@"%@",error.localizedDescription);
                 }
+
             }];
         }
     }];

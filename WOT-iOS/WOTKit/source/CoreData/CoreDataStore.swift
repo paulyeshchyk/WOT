@@ -9,17 +9,9 @@
 import ContextSDK
 import CoreData
 
+// MARK: - CoreDataStore
+
 open class CoreDataStore: DataStore {
-    private enum CoreDataStoreError: Error, CustomStringConvertible {
-        case contextIsNotNSManagedObjectContext
-        case requestIsNotNSFetchRequest
-        var description: String {
-            switch self {
-            case .contextIsNotNSManagedObjectContext: return "context is notNSManagedObjectContext"
-            case .requestIsNotNSFetchRequest: return "request is not NSFetchRequest"
-            }
-        }
-    }
 
     open var sqliteURL: URL? { fatalError("has not been implemented") }
     open var modelURL: URL? { fatalError("has not been implemented") }
@@ -59,6 +51,18 @@ open class CoreDataStore: DataStore {
     override public func emptyFetchResult(appContext: DataStore.Context) throws -> FetchResultProtocol {
         let inManagedObjectContext = appContext.dataStore?.workingContext()
         return try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
+    }
+
+    private enum CoreDataStoreError: Error, CustomStringConvertible {
+        case contextIsNotNSManagedObjectContext
+        case requestIsNotNSFetchRequest
+
+        var description: String {
+            switch self {
+            case .contextIsNotNSManagedObjectContext: return "context is notNSManagedObjectContext"
+            case .requestIsNotNSFetchRequest: return "request is not NSFetchRequest"
+            }
+        }
     }
 
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
