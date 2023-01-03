@@ -9,11 +9,6 @@
 import Foundation
 
 @objc class WOTPivotRefreshControl: UIRefreshControl {
-    var contentOffset: CGPoint = CGPoint(x: 0, y: 0) {
-        didSet {
-            self.setNeedsLayout()
-        }
-    }
 
     convenience init(target: Any, action: Selector) {
         self.init()
@@ -22,6 +17,12 @@ import Foundation
         addTarget(target, action: action, for: UIControl.Event.valueChanged)
         tintColor = color
         attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: attributes)
+    }
+
+    var contentOffset: CGPoint = CGPoint(x: 0, y: 0) {
+        didSet {
+            self.setNeedsLayout()
+        }
     }
 
     override func layoutSubviews() {

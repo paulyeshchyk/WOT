@@ -8,6 +8,8 @@
 
 public typealias RequestIdType = NSInteger
 
+// MARK: - RequestProtocol
+
 @objc
 public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
@@ -24,10 +26,14 @@ public protocol RequestProtocol: StartableProtocol, MD5Protocol {
     init(context: Context)
 }
 
+// MARK: - RequestListenerContainerProtocol
+
 @objc
 public protocol RequestListenerContainerProtocol {
     @objc var requestListener: RequestListenerProtocol? { get set }
 }
+
+// MARK: - RequestListenerProtocol
 
 @objc
 public protocol RequestListenerProtocol: MD5Protocol {
@@ -36,23 +42,9 @@ public protocol RequestListenerProtocol: MD5Protocol {
     @objc func request(_ request: RequestProtocol, startedWith urlRequest: URLRequest)
 }
 
+// MARK: - Request
+
 open class Request: RequestProtocol, CustomStringConvertible {
-    // MARK: - MD5Protocol
-
-    public var MD5: String { uuid.MD5 }
-    public let uuid: UUID = UUID()
-
-    // MARK: - Public
-
-    public let appContext: RequestProtocol.Context
-
-    open var description: String {
-        if let arguments = arguments {
-            return "\(type(of: self)): \(String(describing: arguments))"
-        } else {
-            return "\(type(of: self))"
-        }
-    }
 
     public required init(context: RequestProtocol.Context) {
         appContext = context
@@ -63,15 +55,13 @@ open class Request: RequestProtocol, CustomStringConvertible {
         appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
-    // MARK: - RequestProtocol
-
-    public var availableInGroups = [RequestIdType]()
-
-    public var listeners = [RequestListenerProtocol]()
-
-    public var contextPredicate: ContextPredicateProtocol?
-
-    public var arguments: RequestArgumentsProtocol?
+    open var description: String {
+        if let arguments = arguments {
+            return "\(type(of: self)): \(String(describing: arguments))"
+        } else {
+            return "\(type(of: self))"
+        }
+    }
 
     open func addGroup(_ group: RequestIdType) {
         availableInGroups.append(group)
@@ -86,8 +76,26 @@ open class Request: RequestProtocol, CustomStringConvertible {
     }
 
     open func removeListener(_ listener: RequestListenerProtocol) {
-        listeners.removeAll(where: {$0.MD5 == listener.MD5 })
+        listeners.removeAll(where: { $0.MD5 == listener.MD5 })
     }
+
+    public let appContext: RequestProtocol.Context
+
+    // MARK: - RequestProtocol
+
+    public var availableInGroups = [RequestIdType]()
+
+    public var listeners = [RequestListenerProtocol]()
+
+    public var contextPredicate: ContextPredicateProtocol?
+
+    public var arguments: RequestArgumentsProtocol?
+
+    public var MD5: String { uuid.MD5 }
+
+    // MARK: - MD5Protocol
+
+    private let uuid = UUID()
 }
 
 extension Request {
@@ -102,8 +110,11 @@ extension Request {
     }
 }
 
+// MARK: - RequestError
+
 private enum RequestError: Error, CustomStringConvertible {
     case shouldBeOverriden(String)
+
     var description: String {
         switch self {
         case .shouldBeOverriden(let text): return "\(type(of: self)): '\(text)' should be overridden"

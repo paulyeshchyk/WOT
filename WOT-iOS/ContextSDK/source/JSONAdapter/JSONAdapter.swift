@@ -5,42 +5,38 @@
 //  Created by Paul on 21.12.22.
 //
 
+// MARK: - JSONAdapter
+
 open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
-    open var responseClass: AnyClass {
-        fatalError("should be overriden")
-    }
 
-    // MARK: DataAdapterProtocol -
-
-    public let uuid: UUID = UUID()
-    public var MD5: String { uuid.MD5 }
-
-    // MARK: Private -
-
-    private var managedObjectCreator: ManagedObjectCreatorProtocol
-
-    private let appContext: JSONAdapterProtocol.Context
-    private let modelClazz: PrimaryKeypathProtocol.Type
-    private let request: RequestProtocol
-    private func didFoundObject(_: FetchResultProtocol, error _: Error?) {}
-
-    // MARK: NSObject -
-
-    public var description: String { String(describing: type(of: request)) }
-
-    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, context: JSONAdapterProtocol.Context, managedObjectCreator: ManagedObjectCreatorProtocol) {
-        modelClazz = modelClass
+    public required init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, jsonExtractor: ManagedObjectExtractable, appContext: JSONAdapterProtocol.Context) {
+        self.modelClass = modelClass
         self.request = request
-        self.managedObjectCreator = managedObjectCreator
-        appContext = context
-        context.logInspector?.logEvent(EventObjectNew(self), sender: self)
+        self.managedObjectLinker = managedObjectLinker
+        self.jsonExtractor = jsonExtractor
+        self.appContext = appContext
+        appContext.logInspector?.logEvent(EventObjectNew(self), sender: self)
     }
 
     deinit {
         appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
     }
 
-    open func decode(data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
+    open var responseClass: AnyClass {
+        fatalError("has not been implemented")
+    }
+
+    open func decodedObject(jsonDecoder _: JSONDecoder, from _: Data) throws -> JSON? {
+        fatalError("has not been implemented")
+    }
+
+    public var MD5: String { uuid.MD5 }
+
+    // MARK: NSObject -
+
+    public var description: String { String(describing: type(of: request)) }
+
+    public func decode(data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
         guard let data = data else {
             didFinish(request: request, data: nil, error: JSONAdapterError.dataIsNil, completion: completion)
             return
@@ -54,9 +50,17 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         }
     }
 
-    open func decodedObject(jsonDecoder _: JSONDecoder, from _: Data) throws -> JSON? {
-        fatalError("should be overriden")
-    }
+    // MARK: DataAdapterProtocol -
+
+    private let uuid = UUID()
+    private var managedObjectLinker: ManagedObjectLinkerProtocol
+    private var jsonExtractor: ManagedObjectExtractable
+
+    private let appContext: JSONAdapterProtocol.Context
+    private let modelClass: PrimaryKeypathProtocol.Type
+    private let request: RequestProtocol
+
+    private func didFoundObject(_: FetchResultProtocol, error _: Error?) {}
 }
 
 public extension JSONAdapter {
@@ -79,7 +83,7 @@ public extension JSONAdapter {
                 let contextPredicate = request.contextPredicate
 
                 #warning("refactoring initial step")
-                let extraction = try managedObjectCreator.extract(json: json, key: key, forClazz: modelClazz, contextPredicate: contextPredicate)
+                let extraction = try jsonExtractor.extract(json: json, key: key, forClazz: modelClass, contextPredicate: contextPredicate)
 
                 try findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
                     guard let self = self, let fetchResult = fetchResult else {
@@ -93,7 +97,7 @@ public extension JSONAdapter {
                         return
                     }
 
-                    self.managedObjectCreator.process(fetchResult: fetchResult, appContext: self.appContext) { _, error in
+                    self.managedObjectLinker.process(fetchResult: fetchResult, appContext: self.appContext) { _, error in
                         if let error = error {
                             self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                         }
@@ -111,9 +115,7 @@ public extension JSONAdapter {
             completion?(request, error)
         }
     }
-}
 
-extension JSONAdapter {
     private func findOrCreateObject(json: JSONCollectionProtocol?, predicate: ContextPredicateProtocol, callback externalCallback: @escaping FetchResultCompletion) throws {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {
@@ -126,8 +128,11 @@ extension JSONAdapter {
             }
         }
 
-        appContext.dataStore?.fetchLocal(byModelClass: modelClazz, nspredicate: predicate[.primary]?.predicate, completion: { fetchResult, error in
-
+        let nspredicate = predicate[.primary]?.predicate
+        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, completion: { [weak self] fetchResult, error in
+            guard let self = self else {
+                return
+            }
             if let error = error {
                 localCallback(fetchResult, error)
                 return
@@ -139,23 +144,26 @@ extension JSONAdapter {
 
             let jsonStartParsingDate = Date()
             self.appContext.logInspector?.logEvent(EventJSONStart(predicate), sender: self)
-            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, inContext: self.appContext) { fetchResult, error in
+            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, inContext: self.appContext) { fetchResult, error in
                 if let error = error {
                     self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
                 }
                 self.appContext.logInspector?.logEvent(EventJSONEnded("\(String(describing: predicate))", initiatedIn: jsonStartParsingDate), sender: self)
-                localCallback(fetchResult, nil)
+                localCallback(fetchResult, error)
             }
         })
     }
 }
 
-public enum JSONAdapterError: Error, CustomStringConvertible {
+// MARK: - JSONAdapterError
+
+private enum JSONAdapterError: Error, CustomStringConvertible {
     case dataIsNil
     case notMainThread
     case fetchResultIsNotPresented
-    case jsonByKeyWasNotFound(JSON,AnyHashable)
+    case jsonByKeyWasNotFound(JSON, AnyHashable)
     case notSupportedType(AnyClass)
+
     public var description: String {
         switch self {
         case .dataIsNil: return "\(type(of: self)): Data is nil"
@@ -164,45 +172,5 @@ public enum JSONAdapterError: Error, CustomStringConvertible {
         case .notMainThread: return "\(type(of: self)): Not main thread"
         case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
         }
-    }
-}
-
-public struct JSONExtraction {
-    public let requestPredicate: ContextPredicateProtocol
-    public let json: JSONCollectionProtocol?
-
-    enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
-        case invalidJSONForKey(AnyHashable)
-        case jsonWasNotExtracted(JSON)
-        public var description: String {
-            switch self {
-            case .invalidJSONForKey(let key): return "[\(type(of: self))]: Invalid json for key: \(key)"
-            case .jsonWasNotExtracted(let json): return "[\(type(of: self))]: json was not extracted from: \(json)"
-            }
-        }
-    }
-}
-
-public extension ManagedObjectCreatorProtocol {
-    func extract(json: JSON, key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol?) throws -> JSONExtraction {
-        guard let json = json[key] as? JSON else {
-            throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
-        }
-
-        guard let extractedJSON = onJSONExtraction(json: json) else {
-            throw JSONExtraction.JSONAdapterLinkerExtractionErrors.jsonWasNotExtracted(json)
-        }
-
-        let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType)
-        let ident = extractedJSON[primaryKeyPath] ?? key
-
-        #warning("2b refactored")
-        let parents = contextPredicate?.parentObjectIDList
-
-        let requestPredicate = ContextPredicate(parentObjectIDList: parents)
-        requestPredicate[.primary] = modelClazz.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
-
-        let jsonCollection = try JSONCollection(element: extractedJSON)
-        return JSONExtraction(requestPredicate: requestPredicate, json: jsonCollection)
     }
 }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - WOTTankConfigurationFlowLayoutProtocol
+
 @objc
 public protocol WOTTankConfigurationFlowLayoutProtocol: NSObjectProtocol {
     var depthCallback: (() -> Int)? { get set }
@@ -15,10 +17,9 @@ public protocol WOTTankConfigurationFlowLayoutProtocol: NSObjectProtocol {
     var layoutPreviousSiblingNodeChildrenCountCallback: ((IndexPath) -> (Int))? { get set }
 }
 
+// MARK: - WOTTankConfigurationFlowLayout
+
 public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTankConfigurationFlowLayoutProtocol, WOTTankConfigurationFlowCellLayoutProtocol {
-    public var depthCallback: (() -> Int)?
-    public var widthCallback: (() -> Int)?
-    public var layoutPreviousSiblingNodeChildrenCountCallback: ((IndexPath) -> (Int))?
 
     override open var itemSize: CGSize {
         get {
@@ -53,6 +54,10 @@ public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTank
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return layoutAttributes(in: rect)
     }
+
+    public var depthCallback: (() -> Int)?
+    public var widthCallback: (() -> Int)?
+    public var layoutPreviousSiblingNodeChildrenCountCallback: ((IndexPath) -> (Int))?
 }
 
 public extension WOTTankConfigurationFlowLayout {

@@ -5,10 +5,14 @@
 //  Created by Paul on 30.12.22.
 //
 
+// MARK: - RequestPredicateComposerProtocol
+
 @objc
 public protocol RequestPredicateComposerProtocol: AnyObject {
-    func build() throws -> RequestPredicateCompositionProtocol
+    func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol
 }
+
+// MARK: - RequestPredicateCompositionProtocol
 
 @objc
 public protocol RequestPredicateCompositionProtocol: AnyObject {

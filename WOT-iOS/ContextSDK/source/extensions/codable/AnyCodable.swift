@@ -1,12 +1,17 @@
 // swiftlint:disable all
 
+// MARK: - AnyCodable
+
 public struct AnyCodable {
-    public let value: Any
 
     public init<T>(_ value: T?) {
         self.value = value ?? ()
     }
+
+    public let value: Any
 }
+
+// MARK: - AnyCodable + Codable
 
 extension AnyCodable: Codable {
     public init(from decoder: Decoder) throws {
@@ -84,6 +89,8 @@ extension AnyCodable: Codable {
     }
 }
 
+// MARK: - AnyCodable + Equatable
+
 extension AnyCodable: Equatable {
     public static func == (lhs: AnyCodable, rhs: AnyCodable) -> Bool {
         switch (lhs.value, rhs.value) {
@@ -127,6 +134,8 @@ extension AnyCodable: Equatable {
     }
 }
 
+// MARK: - AnyCodable + CustomStringConvertible
+
 extension AnyCodable: CustomStringConvertible {
     public var description: String {
         switch value {
@@ -140,6 +149,8 @@ extension AnyCodable: CustomStringConvertible {
     }
 }
 
+// MARK: - AnyCodable + CustomDebugStringConvertible
+
 extension AnyCodable: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch value {
@@ -150,6 +161,8 @@ extension AnyCodable: CustomDebugStringConvertible {
         }
     }
 }
+
+// MARK: - AnyCodable + ExpressibleByNilLiteral, ExpressibleByBooleanLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral, ExpressibleByStringLiteral, ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral
 
 extension AnyCodable: ExpressibleByNilLiteral, ExpressibleByBooleanLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral, ExpressibleByStringLiteral, ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral {
     public init(nilLiteral _: ()) {

@@ -10,6 +10,8 @@ import ContextSDK
 
 public typealias DataReceiveCompletion = (Data?, Error?) -> Void
 
+// MARK: - HttpDataReceiverProtocol
+
 public protocol HttpDataReceiverProtocol: MD5Protocol {
     typealias Context = LogInspectorContainerProtocol & HostConfigurationContainerProtocol
 
@@ -21,6 +23,8 @@ public protocol HttpDataReceiverProtocol: MD5Protocol {
     @discardableResult
     func cancel() -> Bool
 }
+
+// MARK: - HttpDataReceiverDelegateProtocol
 
 public protocol HttpDataReceiverDelegateProtocol: AnyObject {
     func didStart(urlRequest: URLRequest, receiver: HttpDataReceiverProtocol)

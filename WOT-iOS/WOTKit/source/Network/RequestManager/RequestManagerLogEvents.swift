@@ -8,10 +8,9 @@
 
 import ContextSDK
 
+// MARK: - EventRequestListenerStart
+
 final class EventRequestListenerStart: LogEventProtocol {
-    public var eventType: LogEventType { return .http }
-    private(set) public var message: String
-    public var name: String { return "HTTPStart" }
 
     public init() {
         message = ""
@@ -20,12 +19,16 @@ final class EventRequestListenerStart: LogEventProtocol {
     public required init?(_ request: RequestProtocol, listener: RequestListenerProtocol) {
         message = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .http }
+    public var name: String { return "HTTPStart" }
 }
 
+// MARK: - EventRequestListenerCancel
+
 final class EventRequestListenerCancel: LogEventProtocol {
-    public var eventType: LogEventType { return .http }
-    private(set) public var message: String
-    public var name: String { return "HTTPCancel" }
 
     public init() {
         message = ""
@@ -39,12 +42,16 @@ final class EventRequestListenerCancel: LogEventProtocol {
         }
         self.message = message
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .http }
+    public var name: String { return "HTTPCancel" }
 }
 
+// MARK: - EventRequestListenerEnd
+
 final class EventRequestListenerEnd: LogEventProtocol {
-    public var eventType: LogEventType { return .http }
-    private(set) public var message: String
-    public var name: String { return "HTTPEnded" }
 
     public init() {
         message = ""
@@ -53,12 +60,16 @@ final class EventRequestListenerEnd: LogEventProtocol {
     public required init?(_ request: RequestProtocol, listener: RequestListenerProtocol) {
         message = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .http }
+    public var name: String { return "HTTPEnded" }
 }
+
+// MARK: - EventLongTermStart
 
 final class EventLongTermStart: LogEventProtocol {
-    public var eventType: LogEventType { return .longTermOperation }
-    private(set) public var message: String
-    public var name: String { return "LongTermStart" }
 
     public required init?(_ text: String) {
         message = text
@@ -67,12 +78,16 @@ final class EventLongTermStart: LogEventProtocol {
     public init() {
         message = ""
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .longTermOperation }
+    public var name: String { return "LongTermStart" }
 }
+
+// MARK: - EventLongTermEnd
 
 final class EventLongTermEnd: LogEventProtocol {
-    public var eventType: LogEventType { return .longTermOperation }
-    private(set) public var message: String
-    public var name: String { return "LongTermEnd" }
 
     public required init?(_ text: String) {
         message = text
@@ -81,12 +96,16 @@ final class EventLongTermEnd: LogEventProtocol {
     public init() {
         message = ""
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .longTermOperation }
+    public var name: String { return "LongTermEnd" }
 }
+
+// MARK: - EventRequestManagerFetchStart
 
 final class EventRequestManagerFetchStart: LogEventProtocol {
-    public var eventType: LogEventType { return .remoteFetch }
-    private(set) public var message: String
-    public var name: String { return "RMStart" }
 
     public init() {
         message = ""
@@ -99,12 +118,16 @@ final class EventRequestManagerFetchStart: LogEventProtocol {
     public init?(error: Error) {
         message = String(describing: error)
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .remoteFetch }
+    public var name: String { return "RMStart" }
 }
+
+// MARK: - EventRequestManagerFetchCancel
 
 final class EventRequestManagerFetchCancel: LogEventProtocol {
-    public var eventType: LogEventType { return .remoteFetch }
-    private(set) public var message: String
-    public var name: String { return "RMCancel" }
 
     public init() {
         message = ""
@@ -117,12 +140,16 @@ final class EventRequestManagerFetchCancel: LogEventProtocol {
     public init?(error: Error) {
         message = String(describing: error)
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .remoteFetch }
+    public var name: String { return "RMCancel" }
 }
 
+// MARK: - EventRequestManagerFetchEnd
+
 final class EventRequestManagerFetchEnd: LogEventProtocol {
-    public var eventType: LogEventType { return .remoteFetch }
-    private(set) public var message: String
-    public var name: String { return "RMEnd" }
 
     public init() {
         message = ""
@@ -135,4 +162,9 @@ final class EventRequestManagerFetchEnd: LogEventProtocol {
     public init?(error: Error) {
         message = String(describing: error)
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .remoteFetch }
+    public var name: String { return "RMEnd" }
 }

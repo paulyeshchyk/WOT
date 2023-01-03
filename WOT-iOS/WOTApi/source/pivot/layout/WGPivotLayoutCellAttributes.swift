@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - WGPivotLayoutCellAttributesProtocol
+
 protocol WGPivotLayoutCellAttributesProtocol {
     var rect: CGRect { get }
     var zIndex: Int { get }
@@ -15,16 +17,19 @@ protocol WGPivotLayoutCellAttributesProtocol {
     func collectionViewLayoutAttributes(forRect rect: CGRect) -> [UICollectionViewLayoutAttributes]?
 }
 
+// MARK: - WGPivotLayoutCellAttributes
+
 struct WGPivotLayoutCellAttributes: WGPivotLayoutCellAttributesProtocol {
-    var rect: CGRect
-    var zIndex: Int
-    var indexPath: IndexPath
 
     init(cellRect: CGRect, cellZIndex: Int, cellIndexPath: IndexPath) {
         rect = cellRect
         zIndex = cellZIndex
         indexPath = cellIndexPath
     }
+
+    var rect: CGRect
+    var zIndex: Int
+    var indexPath: IndexPath
 
     func collectionViewLayoutAttributes(forRect rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard self.rect.intersects(rect) == true else {

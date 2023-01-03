@@ -8,6 +8,8 @@
 
 import WOTKit
 
+// MARK: - LogoutHttpRequest
+
 public class LogoutHttpRequest: HttpRequest {
     override public var httpMethod: HTTPMethod { return .POST }
 
@@ -16,11 +18,9 @@ public class LogoutHttpRequest: HttpRequest {
     }
 }
 
-extension LogoutHttpRequest: ModelServiceProtocol {
-    public class func responseParserClass() -> ResponseParserProtocol.Type {
-        RESTResponseParser.self
-    }
+// MARK: - LogoutHttpRequest + ModelServiceProtocol
 
+extension LogoutHttpRequest: ModelServiceProtocol {
     public class func dataAdapterClass() -> ResponseAdapterProtocol.Type {
         WGAPIResponseJSONAdapter.self
     }

@@ -5,6 +5,8 @@
 //  Created by Paul on 26.12.22.
 //
 
+// MARK: - FetchStatus
+
 @objc
 public enum FetchStatus: Int {
     case none
@@ -14,12 +16,15 @@ public enum FetchStatus: Int {
     case recovered
 }
 
+// MARK: - FetchResultProtocol
+
 @objc
-public protocol FetchResultProtocol: AnyObject {
-    var fetchStatus: FetchStatus { get set }
+public protocol FetchResultProtocol: ManagedObjectContextContainerProtocol {
+    var fetchStatus: FetchStatus { get }
     var predicate: NSPredicate? { get set }
-    var managedObjectContext: ManagedObjectContextProtocol { get }
-    func makeDublicate(inContext: ManagedObjectContextProtocol) -> FetchResultProtocol
     func managedObject() -> ManagedObjectProtocol?
-    func managedObject(inManagedObjectContext context: ManagedObjectContextProtocol?) -> ManagedObjectProtocol?
+    func managedObject(inManagedObjectContext: ManagedObjectContextProtocol?) -> ManagedObjectProtocol?
+
+    @available(*, deprecated, message: "make sure you need that")
+    func makeDublicate(inContext: ManagedObjectContextProtocol) -> FetchResultProtocol
 }

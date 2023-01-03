@@ -6,6 +6,8 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - WOTTankMetricsListProtocol
+
 #warning("use WOTMetricProtocol instead of WOTMetric")
 
 public protocol WOTTankMetricsListProtocol {
@@ -17,16 +19,16 @@ public protocol WOTTankMetricsListProtocol {
     func remove(metric: WOTMetric)
 }
 
+// MARK: - WOTTankMetricsList
+
 public class WOTTankMetricsList: NSObject {
+
     public var sortedMetrics: [WOTMetric] {
         return metrics.sorted { (obj1, obj2) -> Bool in
             guard let name1 = obj1.metricName, let name2 = obj2.metricName else { return false }
             return name1.compare(name2) == .orderedAscending
         }
     }
-
-    private var metrics = Set<WOTMetric>()
-    private var tankIDLists = Set<WOTTanksIDList>()
 
     @objc
     public func add(tankId: WOTTanksIDList) {
@@ -54,7 +56,12 @@ public class WOTTankMetricsList: NSObject {
     public func remove(metric: WOTMetric) {
         metrics.remove(metric)
     }
+
+    private var metrics = Set<WOTMetric>()
+    private var tankIDLists = Set<WOTTanksIDList>()
 }
+
+// MARK: - ChartDataProtocol
 
 @objc
 public protocol ChartDataProtocol {
@@ -62,6 +69,8 @@ public protocol ChartDataProtocol {
     var xVals: [Any] { get }
     var chartData: Any { get }
 }
+
+// MARK: - WOTTankMetricsList + ChartDataProtocol
 
 extension WOTTankMetricsList: ChartDataProtocol {
     public var datasets: [Any] {

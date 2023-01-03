@@ -205,7 +205,7 @@
     id<DataStoreProtocol> coreDataProvider = appDelegate.dataStore;
 
     NSError *error = nil;
-    self.fetchedResultController = [coreDataProvider mainContextFetchResultControllerFor:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil error: &error];
+    self.fetchedResultController = [coreDataProvider mainContextFetchResultControllerWithFetchRequest:fetchRequest sectionNameKeyPath:self.groupByField cacheName:nil error: &error];
     self.fetchedResultController.delegate = self;
     
     [self.fetchedResultController performFetch:&error];

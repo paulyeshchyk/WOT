@@ -7,9 +7,6 @@
 //
 
 final public class EventWarning: LogEventProtocol {
-    public var eventType: LogEventType { return .warning }
-    private(set) public var message: String
-    public var name: String { return "Warning"}
 
     public init() {
         message = ""
@@ -48,4 +45,9 @@ final public class EventWarning: LogEventProtocol {
 
         self.init(message: messages.joined(separator: "; details: "))
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .warning }
+    public var name: String { return "Warning" }
 }

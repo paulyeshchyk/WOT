@@ -9,11 +9,17 @@
 import ContextSDK
 
 public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
+
+    public init(appContext: Context) {
+        self.appContext = appContext
+    }
+
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
 
     private enum ResponseAdapterCreatorError: Error, CustomStringConvertible {
         case adapterNotFound(requestType: RequestIdType)
         case modelClassNotFound(requestType: RequestIdType)
+
         var description: String {
             switch self {
             case .adapterNotFound(let requestType): return "\(type(of: self)): adapter not found \(requestType)"
@@ -23,8 +29,4 @@ public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
     }
 
     private let appContext: Context
-
-    public init(appContext: Context) {
-        self.appContext = appContext
-    }
 }

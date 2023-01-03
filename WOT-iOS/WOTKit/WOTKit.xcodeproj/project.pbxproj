@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D60E509245FE541007E5CA8 /* WOTKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */; };
-		1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */; };
 		1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */; };
 		1D60E5A5245FE7E5007E5CA8 /* HttpDataReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */; };
 		1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */; };
@@ -18,11 +17,10 @@
 		1D7E0697247D0460008CB848 /* WOTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D60E506245FE541007E5CA8 /* WOTKit.framework */; };
 		1DFCC93024714B45005F580E /* ResponseDataAdapterCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */; };
 		DA12D07029621B3C0077F664 /* RequestManagerLogEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */; };
+		DA32CEB729645D51007726AD /* RequestManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CEB629645D51007726AD /* RequestManagerTest.swift */; };
 		DA39E28D29609BC70099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; };
 		DA39E28E29609BC70099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E28C29609BC70099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */; };
-		DA81E7CD295326B800C60F31 /* NSThread+ExecutionOnMain.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E7CC295326B800C60F31 /* NSThread+ExecutionOnMain.m */; };
 		DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E85C295352FD00C60F31 /* NSBundle+LanguageBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = DA81E85D295352FE00C60F31 /* NSBundle+LanguageBundle.m */; };
 		DA81E8782953530000C60F31 /* UIColor+HSB.h in Headers */ = {isa = PBXBuildFile; fileRef = DA81E864295352FE00C60F31 /* UIColor+HSB.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,7 +60,6 @@
 		1D60E506245FE541007E5CA8 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D60E509245FE541007E5CA8 /* WOTKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTKit.h; sourceTree = "<group>"; };
 		1D60E529245FE7A7007E5CA8 /* CGRect_Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect_Center.swift; sourceTree = "<group>"; };
-		1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTResponseParser.swift; sourceTree = "<group>"; };
 		1D60E55D245FE7E4007E5CA8 /* HttpRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestBuilder.swift; sourceTree = "<group>"; };
 		1D60E55E245FE7E4007E5CA8 /* HttpDataReceiverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiverProtocol.swift; sourceTree = "<group>"; };
 		1D60E55F245FE7E4007E5CA8 /* HttpDataReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDataReceiver.swift; sourceTree = "<group>"; };
@@ -71,10 +68,9 @@
 		1D7E0692247D045F008CB848 /* WOTKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WOTKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DFCC92F24714B45005F580E /* ResponseDataAdapterCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataAdapterCreator.swift; sourceTree = "<group>"; };
 		DA12D06F29621B3C0077F664 /* RequestManagerLogEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerLogEvents.swift; sourceTree = "<group>"; };
+		DA32CEB629645D51007726AD /* RequestManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManagerTest.swift; sourceTree = "<group>"; };
 		DA39E28C29609BC70099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCatalogExtractor.swift; sourceTree = "<group>"; };
-		DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+ExecutionOnMain.h"; sourceTree = "<group>"; };
-		DA81E7CC295326B800C60F31 /* NSThread+ExecutionOnMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+ExecutionOnMain.m"; sourceTree = "<group>"; };
 		DA81E85C295352FD00C60F31 /* NSBundle+LanguageBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+LanguageBundle.h"; sourceTree = "<group>"; };
 		DA81E85D295352FE00C60F31 /* NSBundle+LanguageBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+LanguageBundle.m"; sourceTree = "<group>"; };
 		DA81E864295352FE00C60F31 /* UIColor+HSB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HSB.h"; sourceTree = "<group>"; };
@@ -180,7 +176,6 @@
 		1D60E558245FE7E4007E5CA8 /* ResponseCoordinator */ = {
 			isa = PBXGroup;
 			children = (
-				1D60E55B245FE7E4007E5CA8 /* RESTResponseParser.swift */,
 			);
 			path = ResponseCoordinator;
 			sourceTree = "<group>";
@@ -216,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				DACDB124296050DD005BBA72 /* Info.plist */,
+				DA32CEB629645D51007726AD /* RequestManagerTest.swift */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -239,7 +235,6 @@
 		DA39E2A429615B2D0099D877 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DA81E7CA295326B800C60F31 /* NSThread */,
 				DA81E866295352FE00C60F31 /* UIImage */,
 				DA81E863295352FE00C60F31 /* UIColor */,
 				DA81E85B295352FD00C60F31 /* NSBundle */,
@@ -263,15 +258,6 @@
 				DA81E7B829531EDB00C60F31 /* AssetCatalogExtractor.swift */,
 			);
 			path = "UIImage+Bundle";
-			sourceTree = "<group>";
-		};
-		DA81E7CA295326B800C60F31 /* NSThread */ = {
-			isa = PBXGroup;
-			children = (
-				DA81E7CB295326B800C60F31 /* NSThread+ExecutionOnMain.h */,
-				DA81E7CC295326B800C60F31 /* NSThread+ExecutionOnMain.m */,
-			);
-			path = NSThread;
 			sourceTree = "<group>";
 		};
 		DA81E85B295352FD00C60F31 /* NSBundle */ = {
@@ -310,7 +296,6 @@
 			files = (
 				DA81E8782953530000C60F31 /* UIColor+HSB.h in Headers */,
 				DA81E872295352FF00C60F31 /* NSBundle+LanguageBundle.h in Headers */,
-				DA81E7CD295326B800C60F31 /* NSThread+ExecutionOnMain.h in Headers */,
 				DA81E87A2953530000C60F31 /* UIImage+Resize.h in Headers */,
 				1D60E50B245FE541007E5CA8 /* WOTKit.h in Headers */,
 			);
@@ -374,6 +359,7 @@
 					};
 					1D7E0691247D045F008CB848 = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -460,7 +446,6 @@
 				DA913E422959C01A00D39F0E /* CoreDataStore.swift in Sources */,
 				1D60E5B2245FE7E5007E5CA8 /* HttpRequest.swift in Sources */,
 				1D60E5A6245FE7E5007E5CA8 /* HttpDataReceiver.swift in Sources */,
-				DA81E7CE295326B800C60F31 /* NSThread+ExecutionOnMain.m in Sources */,
 				DA12D07029621B3C0077F664 /* RequestManagerLogEvents.swift in Sources */,
 				1D60E5A4245FE7E5007E5CA8 /* HttpRequestBuilder.swift in Sources */,
 				DA81E7B929531EDB00C60F31 /* AssetCatalogExtractor.swift in Sources */,
@@ -469,7 +454,6 @@
 				DA81E87B2953530000C60F31 /* UIImage+Resize.m in Sources */,
 				1D60E5A8245FE7E5007E5CA8 /* RequestManager.swift in Sources */,
 				DAAD81F929503D14001B0ACD /* NSManagedObjectContext+ObjectContextProtocol.swift in Sources */,
-				1D60E5A3245FE7E5007E5CA8 /* RESTResponseParser.swift in Sources */,
 				DA81E873295352FF00C60F31 /* NSBundle+LanguageBundle.m in Sources */,
 				DA81E8792953530000C60F31 /* UIColor+HSB.m in Sources */,
 				1D60E533245FE7A7007E5CA8 /* CGRect_Center.swift in Sources */,
@@ -481,6 +465,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA32CEB729645D51007726AD /* RequestManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +656,7 @@
 		1D7E069A247D0460008CB848 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -681,6 +667,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "PY.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -689,6 +676,7 @@
 		1D7E069B247D0460008CB848 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

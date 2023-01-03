@@ -6,10 +6,10 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - LogInspector
+
 @objc
 public class LogInspector: NSObject, LogInspectorProtocol {
-    private var prioritiesToLog: [LogEventType]?
-    private var output: [LOGOutputProtocol]?
 
     public convenience init(priorities: [LogEventType]?, output: [LOGOutputProtocol]?) {
         self.init()
@@ -22,6 +22,9 @@ public class LogInspector: NSObject, LogInspectorProtocol {
         guard let event = event else { return }
         event.eventType.print(event: event, inOutputs: output)
     }
+
+    private var prioritiesToLog: [LogEventType]?
+    private var output: [LOGOutputProtocol]?
 
     private func isLoggable(_ event: LogEventProtocol?) -> Bool {
         guard let eventType = event?.eventType else { return false }

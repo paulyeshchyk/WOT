@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - ModuleType
+
 public enum ModuleType: String {
     case unknown
     case suspension
@@ -17,17 +19,19 @@ public enum ModuleType: String {
     case guns
     case tank
 
-    private static var allTypes: [ModuleType] = [.unknown, .suspension, .engine, .radios, .turrets, .guns, .tank]
-
     var index: Int {
-        guard let result = ModuleType.allTypes.firstIndex(of: self) else { fatalError("ModuleType.alltypes has no value:\(self)")}
+        guard let result = ModuleType.allTypes.firstIndex(of: self) else { fatalError("ModuleType.alltypes has no value:\(self)") }
         return result
     }
 
     static func value(for intValue: Int) -> ModuleType {
         return ModuleType.allTypes[intValue]
     }
+
+    private static var allTypes: [ModuleType] = [.unknown, .suspension, .engine, .radios, .turrets, .guns, .tank]
 }
+
+// MARK: - ObjCModuleType
 
 @objc
 public enum ObjCModuleType: Int {
@@ -44,8 +48,8 @@ public enum ObjCModuleType: Int {
     }
 
     static func fromString(stringValue: String) -> ObjCModuleType {
-        guard let index = ModuleType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)")}
-        guard let result = ObjCModuleType(rawValue: index) else { fatalError("unknown moduleType")}
+        guard let index = ModuleType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)") }
+        guard let result = ObjCModuleType(rawValue: index) else { fatalError("unknown moduleType") }
         return result
     }
 }

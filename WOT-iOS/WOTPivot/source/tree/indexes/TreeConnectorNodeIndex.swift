@@ -6,10 +6,26 @@
 //
 
 class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
-    private typealias TreeLevelIndexTypeAlias = [Int: [NodeProtocol]]
+
+    override required init() {
+        super.init()
+    }
 
     var count: Int {
         fatalError("incorrect usage")
+    }
+
+    var width: Int {
+        var result: Int = 0
+        levelIndex.keys.forEach { key in
+            let arraycount = self.levelIndex[key]?.count ?? 0
+            result = max(result, arraycount)
+        }
+        return result
+    }
+
+    var levels: Int {
+        return levelIndex.keys.count
     }
 
     func doAutoincrementIndex(forNodes _: [NodeProtocol]) -> Int {
@@ -34,23 +50,6 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
         add(node: node, level: 0)
     }
 
-    private lazy var levelIndex: TreeLevelIndexTypeAlias = {
-        TreeLevelIndexTypeAlias()
-    }()
-
-    var width: Int {
-        var result: Int = 0
-        levelIndex.keys.forEach { key in
-            let arraycount = self.levelIndex[key]?.count ?? 0
-            result = max(result, arraycount)
-        }
-        return result
-    }
-
-    var levels: Int {
-        return levelIndex.keys.count
-    }
-
     func reset() {
         levelIndex.removeAll()
     }
@@ -61,7 +60,7 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
 
     func set(itemsCount _: Int, atLevel _: NodeLevelType) {}
 
-    func item(indexPath: NSIndexPath) -> NodeProtocol? {
+    func item(indexPath: IndexPath) -> NodeProtocol? {
         let itemsAtSection = levelIndex[indexPath.section]
         return itemsAtSection?[indexPath.row]
     }
@@ -80,4 +79,8 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
         }
         return indexPath.first
     }
+
+    private typealias TreeLevelIndexTypeAlias = [Int: [NodeProtocol]]
+
+    private lazy var levelIndex: TreeLevelIndexTypeAlias = TreeLevelIndexTypeAlias()
 }

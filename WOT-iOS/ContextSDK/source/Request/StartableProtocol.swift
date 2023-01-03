@@ -6,11 +6,15 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - RequestCancelReasonProtocol
+
 @objc
 public protocol RequestCancelReasonProtocol {
     var reasonDescription: String { get }
     var error: Error? { get }
 }
+
+// MARK: - StartableProtocol
 
 @objc
 public protocol StartableProtocol {

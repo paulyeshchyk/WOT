@@ -8,6 +8,6 @@
 @objc
 public protocol RequestParadigmProtocol: MD5Protocol {
     var modelClass: RequestableProtocol.Type { get }
-    func buildContextPredicate() throws -> ContextPredicateProtocol
+    func buildContextPredicate() -> ContextPredicateProtocol
     func buildRequestArguments() -> RequestArguments
 }

@@ -7,9 +7,6 @@
 //
 
 public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: RequestPredicateComposerProtocol {
-    private var requestPredicate: ContextPredicateProtocol
-    private var foreignPrimarySelectKey: String
-    private var foreignSecondarySelectKey: String
 
     public init(requestPredicate: ContextPredicateProtocol, foreignPrimarySelectKey: String, foreignSecondarySelectKey: String) {
         self.requestPredicate = requestPredicate
@@ -17,11 +14,15 @@ public class ForeignAsPrimaryAndForeignSecondaryRuleBuilder: RequestPredicateCom
         self.foreignSecondarySelectKey = foreignSecondarySelectKey
     }
 
-    public func build() throws -> RequestPredicateCompositionProtocol {
+    public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
         lookupPredicate[.primary] = requestPredicate[.primary]?.foreignKey(byInsertingComponent: foreignPrimarySelectKey)
         lookupPredicate[.secondary] = requestPredicate[.secondary]?.foreignKey(byInsertingComponent: foreignSecondarySelectKey)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
+
+    private var requestPredicate: ContextPredicateProtocol
+    private var foreignPrimarySelectKey: String
+    private var foreignSecondarySelectKey: String
 }

@@ -8,22 +8,29 @@
 import Foundation
 
 public extension Int {
-    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self) }
 }
 
 public extension Bool {
-    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self) }
 }
 
 public extension Float {
-    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self) }
 }
 
 public extension Double {
-    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self)}
+    var asDecimal: NSDecimalNumber { return NSDecimalNumber(value: self) }
 }
 
+// MARK: - NSDecimalNumberArray
+
 public class NSDecimalNumberArray {
+
+    public init(array: [Any]) {
+        elements = NSDecimalNumberArray.conversion(from: array)
+    }
+
     public typealias Fields = DataFieldsKeys
     public enum DataFieldsKeys: String, CodingKey {
         case elements
@@ -31,8 +38,13 @@ public class NSDecimalNumberArray {
 
     public var elements: [NSDecimalNumber]
 
-    public init(array: [Any]) {
-        elements = NSDecimalNumberArray.conversion(from: array)
+    public subscript(index: Int) -> NSDecimalNumber {
+        get {
+            return elements[index]
+        }
+        set(newValue) {
+            elements[index] = newValue
+        }
     }
 
     private static func conversion(from: Any?) -> NSDecimalNumber? {
@@ -44,20 +56,11 @@ public class NSDecimalNumberArray {
 
     private static func conversion(from: [Any?]) -> [NSDecimalNumber] {
         var result: [NSDecimalNumber] = .init()
-        let elems = from.compactMap {($0)}
+        let elems = from.compactMap { ($0) }
         elems.forEach { element in
             if let double = element as? Double { result.append(NSDecimalNumber(value: double)) }
             if let int = element as? Int { result.append(NSDecimalNumber(value: int)) }
         }
         return result
-    }
-
-    public subscript(index: Int) -> NSDecimalNumber {
-        get {
-            return elements[index]
-        }
-        set(newValue) {
-            elements[index] = newValue
-        }
     }
 }

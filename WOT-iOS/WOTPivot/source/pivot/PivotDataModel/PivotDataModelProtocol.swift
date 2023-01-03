@@ -8,17 +8,21 @@
 
 import UIKit
 
+// MARK: - PivotDataModelProtocol
+
 public protocol PivotDataModelProtocol: NodeDataModelProtocol {
     var contentSize: CGSize { get }
     var shouldDisplayEmptyColumns: Bool { get set }
-    func itemRect(atIndexPath: NSIndexPath) -> CGRect
-    func item(atIndexPath: NSIndexPath) -> PivotNodeProtocol?
+    func itemRect(atIndexPath: IndexPath) -> CGRect
+//    func item(atIndexPath: IndexPath) -> PivotNodeProtocol?
     func itemsCount(section: Int) -> Int
     func clearMetadataItems()
     func add(metadataItems: [NodeProtocol])
 
     var dimension: PivotNodeDimensionProtocol { get }
 }
+
+// MARK: - PivotNodeDatasourceProtocol
 
 public protocol PivotNodeDatasourceProtocol: NSObjectProtocol {
     var rootFilterNode: NodeProtocol { get }
@@ -27,6 +31,8 @@ public protocol PivotNodeDatasourceProtocol: NSObjectProtocol {
     var rootDataNode: NodeProtocol { get }
     func add(dataNode: NodeProtocol)
 }
+
+// MARK: - PivotMetaDatasourceProtocol
 
 @objc
 public protocol PivotMetaDatasourceProtocol {

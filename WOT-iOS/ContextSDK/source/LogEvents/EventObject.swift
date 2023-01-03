@@ -6,10 +6,9 @@
 //  Copyright © 2020 Pavel Yeshchyk. All rights reserved.
 //
 
+// MARK: - EventObjectNew
+
 final public class EventObjectNew: LogEventProtocol {
-    public var eventType: LogEventType { return .lifeCycle }
-    private(set) public var message: String
-    public var name: String { return "OBJNew"}
 
     public init() {
         message = ""
@@ -22,12 +21,16 @@ final public class EventObjectNew: LogEventProtocol {
     public init?(error: Error) {
         message = String(describing: error)
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .lifeCycle }
+    public var name: String { return "OBJNew" }
 }
 
+// MARK: - EventObjectFree
+
 final public class EventObjectFree: LogEventProtocol {
-    public var eventType: LogEventType { return .lifeCycle }
-    private(set) public var message: String
-    public var name: String { return "OBJFree"}
 
     public init() {
         message = ""
@@ -36,4 +39,9 @@ final public class EventObjectFree: LogEventProtocol {
     public required init?(_ debugDescriptable: Any) {
         message = String(describing: debugDescriptable)
     }
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .lifeCycle }
+    public var name: String { return "OBJFree" }
 }
