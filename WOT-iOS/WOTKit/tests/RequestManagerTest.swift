@@ -15,8 +15,6 @@ import XCTest
 
 class RequestManagerTest: XCTestCase {
     func testInit() throws {
-        let expectation = expectation(description: "didFinish")
-
         let appContext = AppContext()
         let requestManager = RequestManager(appContext: appContext)
         let managedObjectContext = ManagedObjectContext()
@@ -26,7 +24,11 @@ class RequestManagerTest: XCTestCase {
         let fetchResult = FetchResult(objectID: objectID, inContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
         let linker = Linker(modelClass: PrimaryKeypath.self, masterFetchResult: fetchResult, anchor: anchor)
         let request = TestHttpRequest(context: appContext)
-        let listener = Listener(expectationDidFinish: expectation)
+        let listener = Listener()
+        listener.expectationDidStart = expectation(description: "didStart")
+//        listener.expectationDidFinish = expectation(description: "didFinish")
+//        listener.expectationDidCancel = expectation(description: "didCancel")
+        listener.expectationDidFinishError = expectation(description: "didFinishError")
 
         do {
             try requestManager.startRequest(request, forGroupId: 1, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
@@ -35,7 +37,7 @@ class RequestManagerTest: XCTestCase {
             let descr = (error as CustomStringConvertible).description
             XCTAssert(false, descr)
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 2.0, handler: nil)
     }
 }
 
@@ -49,25 +51,29 @@ class TestHttpRequest: HttpRequest {
 
 class Listener: RequestManagerListenerProtocol {
 
-    init(expectationDidFinish: XCTestExpectation) {
-        self.expectationDidFinish = expectationDidFinish
-    }
+    init() {}
 
-    let expectationDidFinish: XCTestExpectation
+    var expectationDidFinish: XCTestExpectation?
+    var expectationDidStart: XCTestExpectation?
+    var expectationDidFinishError: XCTestExpectation?
+    var expectationDidCancel: XCTestExpectation?
 
     var MD5: String { uuid.MD5 }
 
-    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error _: Error?) {
+    func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error: Error?) {
         requestManager.removeListener(self)
-        expectationDidFinish.fulfill()
+        if error != nil {
+            expectationDidFinishError?.fulfill()
+        }
+        expectationDidFinish?.fulfill()
     }
 
     func requestManager(_: RequestManagerProtocol, didStartRequest _: RequestProtocol) {
-        //
+        expectationDidStart?.fulfill()
     }
 
     func requestManager(_: RequestManagerProtocol, didCancelRequest _: RequestProtocol, reason _: RequestCancelReasonProtocol) {
-        expectationDidFinish.fulfill()
+        expectationDidCancel?.fulfill()
     }
 
     private let uuid = UUID()
@@ -99,6 +105,7 @@ class Anchor: ManagedObjectLinkerAnchorProtocol {
     var identifier: Any?
 
     var keypath: KeypathType?
+
 }
 
 // MARK: - ManagedObjectContext

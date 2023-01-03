@@ -116,7 +116,8 @@ public class OSLogWrapper: LOGOutputProtocol {
         guard consoleLevel.rawValue >= LogOutputLevel.verbose.rawValue,
               let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("💜 %{public}@", log: log, type: .default, message)
@@ -127,7 +128,8 @@ public class OSLogWrapper: LOGOutputProtocol {
         guard consoleLevel.rawValue >= LogOutputLevel.debug.rawValue,
               let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("💚 %{public}@", log: log, type: .default, message)
@@ -138,7 +140,8 @@ public class OSLogWrapper: LOGOutputProtocol {
         guard consoleLevel.rawValue >= LogOutputLevel.info.rawValue,
               let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("💙 %{public}@", log: log, type: .default, message)
@@ -148,7 +151,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     public func warning(_ message: Any, _: String, _: String, line _: Int, context: LogContext?) {
         guard let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("💛 %{public}@", log: log, type: .error, message)
@@ -158,7 +162,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     public func error(_ message: Any, _: String, _: String, line _: Int, context: LogContext?) {
         guard let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("❤️ %{public}@", log: log, type: .fault, message)
@@ -168,7 +173,8 @@ public class OSLogWrapper: LOGOutputProtocol {
     public func custom(_ message: Any, _: String, _: String, line _: Int, context: LogContext?) {
         guard let message = message as? String,
               let category = context?.category,
-              let log = OSLog.log(byCategory: category, bundle: bundle) else {
+              let log = OSLog.log(byCategory: category, bundle: bundle)
+        else {
             return
         }
         os_log("🖤 %{public}@", log: log, type: .default, message)

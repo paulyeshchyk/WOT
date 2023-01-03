@@ -41,6 +41,22 @@ public class ManagedObjectLinkerAnchor: NSObject, ManagedObjectLinkerAnchorProto
 
     public var identifier: Any?
     public var keypath: KeypathType?
+
+    override public var description: String {
+        let kp: String
+        if let kpath = (keypath as? String) {
+            kp = kpath
+        } else {
+            kp = "<NULL>"
+        }
+        let id: String
+        if let identifier = identifier {
+            id = String(describing: identifier)
+        } else {
+            id = "<NULL>"
+        }
+        return "\(type(of: self)): keypath [\(kp)]; identifier [\(id)]"
+    }
 }
 
 // MARK: - ManagedObjectLinkerProtocol

@@ -115,9 +115,7 @@ public extension JSONAdapter {
             completion?(request, error)
         }
     }
-}
 
-extension JSONAdapter {
     private func findOrCreateObject(json: JSONCollectionProtocol?, predicate: ContextPredicateProtocol, callback externalCallback: @escaping FetchResultCompletion) throws {
         let currentThread = Thread.current
         guard currentThread.isMainThread else {

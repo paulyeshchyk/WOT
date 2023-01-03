@@ -86,9 +86,7 @@ public class NodeDimension: NSObject, NodeDimensionProtocol {
         preconditionFailure("This method must be overridden")
     }
 
-    private lazy var sizes: TNodesSizesType = {
-        return TNodesSizesType()
-    }()
+    private lazy var sizes: TNodesSizesType = TNodesSizesType()
 
     private func sizeMap(node: NodeProtocol) -> TNodeSize? {
         if let obj = node as? AnyHashable {

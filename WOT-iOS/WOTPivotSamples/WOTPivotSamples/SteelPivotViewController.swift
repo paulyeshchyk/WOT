@@ -15,9 +15,7 @@ import WOTPivot
 
 class SteelPivotViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView?
-    lazy var model: PivotDataModel = {
-        return PivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, metadatasource: self.metadatasource)
-    }()
+    lazy var model: PivotDataModel = PivotDataModel(fetchController: self.fetchController, modelListener: self, nodeCreator: self, metadatasource: self.metadatasource)
 
     lazy var fetchController: WOTDataFetchControllerProtocol = {
         // return SteelPivotFetchController(nodeFetchRequestCreator: self, nodeCreator: self)

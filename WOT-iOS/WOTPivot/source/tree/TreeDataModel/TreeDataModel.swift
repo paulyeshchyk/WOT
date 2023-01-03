@@ -85,7 +85,7 @@ public class TreeDataModel: NodeDataModel, TreeDataModelProtocol {
         reindexNodeConnectors()
     }
 
-    lazy var nodeConnectorIndex: TreeConnectorNodeIndexProtocol = { return TreeConnectorNodeIndex() }()
+    lazy var nodeConnectorIndex: TreeConnectorNodeIndexProtocol = TreeConnectorNodeIndex()
     var fetchController: NodeFetchControllerProtocol
     var listener: NodeDataModelListener
     var nodeCreator: NodeCreatorProtocol

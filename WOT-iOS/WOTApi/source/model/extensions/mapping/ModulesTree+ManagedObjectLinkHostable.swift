@@ -19,16 +19,16 @@ extension ModulesTree: ManagedObjectLinkHostable {
             self.default_profile = default_profile
         }
         if let module = element as? Module {
-            if (anchor as? String) == #keyPath(ModulesTree.currentModule) {
+            if (anchor.keypath as? String) == #keyPath(ModulesTree.currentModule) {
                 self.currentModule = module
             }
-            if (anchor as? String) == #keyPath(ModulesTree.next_modules) {
+            if (anchor.keypath as? String) == #keyPath(ModulesTree.next_modules) {
                 addToNext_modules(module)
             }
         }
 
         if let vehicle = element as? Vehicles {
-            if (anchor as? String) == #keyPath(ModulesTree.next_tanks) {
+            if (anchor.keypath as? String) == #keyPath(ModulesTree.next_tanks) {
                 addToNext_tanks(vehicle)
             }
         }

@@ -11,8 +11,6 @@
 #import "WOTPlayersListViewController.h"
 #import "WOTProfileViewController.h"
 #import "WOTMenuTableViewCell.h"
-//#import <WOTPivot/WOTPivot.h>
-//#import <WOTApi/WOTApi.h>
 #import "WOTDrawerViewController.h"
 #import "UIToolbar+WOT.h"
 #import "UINavigationBar+WOT.h"

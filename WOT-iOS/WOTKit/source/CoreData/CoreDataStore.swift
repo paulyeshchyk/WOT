@@ -84,13 +84,9 @@ open class CoreDataStore: DataStore {
         return coordinator
     }()
 
-    private lazy var mainContext: NSManagedObjectContext = {
-        CoreDataStore.mainQueueConcurrencyContext(parent: self.masterContext)
-    }()
+    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(parent: self.masterContext)
 
-    private lazy var masterContext: NSManagedObjectContext = {
-        CoreDataStore.masterContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
-    }()
+    private lazy var masterContext: NSManagedObjectContext = CoreDataStore.masterContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
 
     private lazy var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {

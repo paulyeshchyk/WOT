@@ -119,27 +119,15 @@ public struct WOTPivotTemplates {
 
     public init() {}
 
-    public lazy var tankID: PivotTemplateProtocol = {
-        return WOTPivotTemplateVehicleTankID()
-    }()
+    public lazy var tankID: PivotTemplateProtocol = WOTPivotTemplateVehicleTankID()
 
-    public lazy var vehiclePremium: PivotTemplateProtocol = {
-        return WOTPivotTemplateVehiclePremium()
-    }()
+    public lazy var vehiclePremium: PivotTemplateProtocol = WOTPivotTemplateVehiclePremium()
 
-    public lazy var vehicleType: PivotTemplateProtocol = {
-        return WOTPivotTemplateVehicleType()
-    }()
+    public lazy var vehicleType: PivotTemplateProtocol = WOTPivotTemplateVehicleType()
 
-    public lazy var vehicleTier: PivotTemplateProtocol = {
-        return WOTPivotTemplateVehicleTier()
-    }()
+    public lazy var vehicleTier: PivotTemplateProtocol = WOTPivotTemplateVehicleTier()
 
-    public lazy var vehicleNation: PivotTemplateProtocol = {
-        return WOTPivotTemplateVehicleNation()
-    }()
+    public lazy var vehicleNation: PivotTemplateProtocol = WOTPivotTemplateVehicleNation()
 
-    public lazy var vehicleDPM: PivotTemplateProtocol = {
-        return WOTPivotTemplateVehicleDPM()
-    }()
+    public lazy var vehicleDPM: PivotTemplateProtocol = WOTPivotTemplateVehicleDPM()
 }

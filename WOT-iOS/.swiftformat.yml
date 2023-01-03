@@ -8,31 +8,37 @@
 --rules spaceAroundOperators
 --operatorfunc spaced
 
---rules spaceInsideBraces
-
 --rules indent, linebreakAtEndOfFile, consecutiveBlankLines
---rules spaceAroundBraces, spaceInsideBrackets, spaceInsideComments, spaceInsideGenerics, spaceInsideParens
+--rules spaceInsideBraces, spaceAroundBrackets, spaceAroundBraces, spaceInsideBrackets, spaceInsideComments, spaceInsideGenerics, spaceInsideParens
 --rules strongOutlets, trailingClosures
 --rules typeSugar, unusedArguments, void
 --rules blankLineAfterImports, blankLinesAroundMark, blankLinesAtEndOfScope, blankLinesBetweenImports, blankLinesBetweenScopes, duplicateImports
 
 --rules elseOnSameLine
+--elseposition same-line
+--guardelse next-line
+
 --allman false
 
 --rules blankLinesAtStartOfScope
 --typeblanklines preserve
+
 # --rules extensionAccessControl
 --rules leadingDelimiters
 --rules wrapEnumCases, wrapSwitchCases
 --rules blankLinesAtEndOfScope, blankLinesBetweenScopes, emptyBraces, trailingSpace
 --rules consecutiveSpaces
+
 --rules strongifiedSelf, isEmpty
---rules redundantOptionalBinding, redundantNilInit, redundantGet, redundantFileprivate, redundantExtensionACL, redundantBreak
+
+--rules redundantSelf, redundantObjc, redundantOptionalBinding, redundantNilInit, redundantGet
+--rules redundantFileprivate, redundantExtensionACL, redundantBreak, redundantClosure,
+--rules redundantRawValues
+
 --binarygrouping 4,8
 --commas always
 --comments indent
 --decimalgrouping 3,6
---elseposition same-line
 --empty void
 --exponentcase lowercase
 --exponentgrouping disabled
@@ -70,10 +76,8 @@
 #--markcategories true
 #--organizetypes
 
---rules redundantSelf
 --self remove
 
---rules redundantOptionalBinding, redundantNilInit
 --lifecycle
 
 --rules modifierOrder

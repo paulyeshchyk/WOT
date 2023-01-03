@@ -85,13 +85,9 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
 
     public var appContext: ContextProtocol?
 
-    lazy var refreshControl: WOTPivotRefreshControl = {
-        return WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
-    }()
+    lazy var refreshControl: WOTPivotRefreshControl = WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
 
-    lazy var model: PivotDataModelProtocol = {
-        return pivotModel()
-    }()
+    lazy var model: PivotDataModelProtocol = pivotModel()
 
     var hasOpenedPopover: Bool = false
 

@@ -6,19 +6,19 @@
 //  Copyright (c) 2015. All rights reserved.
 //
 
-#import "WOTTankDetailViewController.h"
-#import <WOTApi/WOTApi.h>
-#import <WOTPivot/WOTPivot.h>
-#import <WOTPivot/WOTPivot-Swift.h>
-#import "WOTTankModuleTreeViewController.h"
-#import "WOTTankGridViewController.h"
-#import "WOTRadarViewController.h"
 #import "NSObject+WOTTankGridValueData.h"
-#import <WOTKit/WOTKit.h>
-#import "UIView+StretchingConstraints.h"
-#import "UIToolbar+WOT.h"
 #import "UINavigationBar+WOT.h"
-
+#import "UIToolbar+WOT.h"
+#import "UIView+StretchingConstraints.h"
+#import "WOTRadarViewController.h"
+#import "WOTTankDetailViewController.h"
+#import "WOTTankGridViewController.h"
+#import "WOTTankModuleTreeViewController.h"
+#import <ContextSDK/ContextSDK-Swift.h>
+#import <WOTApi/WOTApi.h>
+#import <WOTKit/WOTKit.h>
+#import <WOTPivot/WOTPivot-Swift.h>
+#import <WOTPivot/WOTPivot.h>
 
 typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
     WOTTankDetailViewModeUnknown = 0,
@@ -182,8 +182,7 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
 
 - (void)updateUINeedReset:(BOOL)needReset {
     
-    [NSThread executeOnMainThread:^{
-        
+    [NSThread executeOnMainWithCompletion:^{
         if ([self.viewContainerConstraints count] != 0) {
             
             [self.viewContainer removeConstraints:self.viewContainerConstraints];
@@ -231,7 +230,6 @@ typedef NS_ENUM(NSUInteger, WOTTankDetailViewMode) {
             [self.viewContainer addSubview:viewToAdd];
             self.viewContainerConstraints = [[viewToAdd addStretchingConstraints] copy];
         }
-        
     }];
 }
 

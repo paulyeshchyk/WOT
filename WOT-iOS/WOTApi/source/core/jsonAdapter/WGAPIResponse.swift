@@ -120,9 +120,7 @@ public enum WGAPIResponseStatus: String, Codable {
 
 // MARK: - WGAPIError
 
-public class WGAPIError: Error, CustomStringConvertible, Codable {
-
-    // MARK: - Decodable
+public class WGAPIError: Error {
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
@@ -130,15 +128,20 @@ public class WGAPIError: Error, CustomStringConvertible, Codable {
         message = try container.decodeIfPresent(String.self, forKey: .message)
     }
 
-    //
+    public var code: Int?
+    public var message: String?
+
+}
+
+// MARK: - WGAPIError + CustomStringConvertible, Codable
+
+extension WGAPIError: CustomStringConvertible, Codable {
+
     public typealias Fields = DataFieldsKeys
     public enum DataFieldsKeys: String, CodingKey {
         case code
         case message
     }
-
-    public var code: Int?
-    public var message: String?
 
     public var description: String {
         let encoder = JSONEncoder()

@@ -7,6 +7,7 @@
 //
 
 #import "WOTTankListSettingsDatasource+TableView.h"
+#import <ContextSDK/ContextSDK-Swift.h>
 #import <WOTKit/WOTKit.h>
 #import <WOTApi/WOTApi.h>
 
@@ -118,14 +119,12 @@
         }];
 
         [appDelegate.dataStore stashWithManagedObjectContext:context completion:^(id<ManagedObjectContextProtocol> _Nullable context, NSError * _Nullable error) {
-            [NSThread executeOnMainThread:^{
-                
+            [NSThread executeOnMainWithCompletion:^{
                 if (completionBlock){
                     
                     completionBlock();
                 }
             }];
-
         }];
     }];
 }

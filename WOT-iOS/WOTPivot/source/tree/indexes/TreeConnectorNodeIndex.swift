@@ -82,7 +82,5 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
 
     private typealias TreeLevelIndexTypeAlias = [Int: [NodeProtocol]]
 
-    private lazy var levelIndex: TreeLevelIndexTypeAlias = {
-        TreeLevelIndexTypeAlias()
-    }()
+    private lazy var levelIndex: TreeLevelIndexTypeAlias = TreeLevelIndexTypeAlias()
 }
