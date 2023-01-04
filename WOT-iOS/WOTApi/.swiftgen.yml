@@ -1,0 +1,7 @@
+strings:
+  inputs: resources
+  outputs:
+    templateName: flat-swift3
+    output: resources/strings.swift
+    params:
+        publicAccess: true

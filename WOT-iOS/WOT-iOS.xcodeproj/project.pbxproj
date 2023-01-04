@@ -1634,7 +1634,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${TOOLS_ROOT}/SwiftGen/bin/swiftgen.app/Contents/MacOS/swiftgen\" strings -p \"${TOOLS_ROOT}/SwiftGen/bin/templates/strings/flat-swift3.stencil\" --output \"${SRCROOT}/WOT-iOS/resources/strings.swift\" \"${SRCROOT}/WOT-iOS/resources/en.lproj/Localizable.strings\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftGen/bin/swiftgen\" config run --config \".swiftgen.yml\"\n";
 		};
 		1DB5FB4E2428A2B400413F41 /* Swiftformat */ = {
 			isa = PBXShellScriptBuildPhase;
