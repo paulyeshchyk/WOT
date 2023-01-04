@@ -162,7 +162,7 @@ extension CoreDataStore {
             do {
                 try toContext.save()
             } catch {
-                appContext.logInspector?.logEvent(EventError(DataStoreError.contextNotSaved, details: self), sender: nil)
+                appContext.logInspector?.log(.error(DataStoreError.contextNotSaved))
             }
         }
         toContext.processPendingChanges()

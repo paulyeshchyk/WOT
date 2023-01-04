@@ -67,42 +67,6 @@ final class EventRequestListenerEnd: LogEventProtocol {
     public var name: String { return "HTTPEnded" }
 }
 
-// MARK: - EventLongTermStart
-
-final class EventLongTermStart: LogEventProtocol {
-
-    public required init?(_ text: String) {
-        message = text
-    }
-
-    public init() {
-        message = ""
-    }
-
-    private(set) public var message: String
-
-    public var eventType: LogEventType { return .longTermOperation }
-    public var name: String { return "LongTermStart" }
-}
-
-// MARK: - EventLongTermEnd
-
-final class EventLongTermEnd: LogEventProtocol {
-
-    public required init?(_ text: String) {
-        message = text
-    }
-
-    public init() {
-        message = ""
-    }
-
-    private(set) public var message: String
-
-    public var eventType: LogEventType { return .longTermOperation }
-    public var name: String { return "LongTermEnd" }
-}
-
 // MARK: - EventRequestManagerFetchStart
 
 final class EventRequestManagerFetchStart: LogEventProtocol {

@@ -61,7 +61,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
         let objectContext = masterFetchResult.managedObjectContext
         fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: byModelClass, contextPredicate: requestPredicateComposition.contextPredicate, managedObjectCreator: linker, managedObjectExtractor: extractor, appContext: appContext, completion: { [weak self] _, error in
             if let error = error {
-                self?.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
+                self?.appContext.logInspector?.log(.error(error))
             }
         })
     }
@@ -86,7 +86,7 @@ extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
             }
         }
 
-//        appContext.logInspector?.logEvent(EventWarning(message: "extractor not used: \(type(of: managedObjectExtractor))"))
+        // appContext.logInspector?.log(.warning("extractor not used: \(type(of: managedObjectExtractor))"))
 
         inContext.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         //

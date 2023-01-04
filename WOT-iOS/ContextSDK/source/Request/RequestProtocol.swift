@@ -48,11 +48,11 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public required init(context: RequestProtocol.Context) {
         appContext = context
-        context.logInspector?.logEvent(EventObjectNew(self), sender: self)
+        appContext.logInspector?.log(.initialization(type(of: self)))
     }
 
     deinit {
-        appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
+        appContext.logInspector?.log(.destruction(type(of: self)))
     }
 
     open var description: String {
@@ -62,8 +62,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
         } else {
             result["\(type(of: self))"] = ""
         }
-        let str = result.debugOutput()
-        return str as String
+        return result.debugOutput()
     }
 
     open func addGroup(_ group: RequestIdType) {

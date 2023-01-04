@@ -24,7 +24,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     public func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        let logPriorities: [LogEventType]? = [.error, .warning, .flow, .longTermOperation, .pivot]
+        let logPriorities: [LogEventType]? = [.error, .warning, .flow, .longTermOperation, .pivot, .custom, .lifeCycle]
         logInspector = LogInspector(priorities: logPriorities, output: [OSLogWrapper(consoleLevel: .verbose, bundle: Bundle.main)])
 
         hostConfiguration = WOTHostConfiguration()

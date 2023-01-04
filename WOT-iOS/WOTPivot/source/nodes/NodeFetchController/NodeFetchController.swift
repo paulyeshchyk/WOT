@@ -110,12 +110,12 @@ extension NodeFetchController: NodeFetchControllerProtocol {
                 self?.fetchResultController?.delegate = self
 
                 if let err = error {
-                    self?.appContext.logInspector?.logEvent(EventError(err, details: nil), sender: self)
+                    self?.appContext.logInspector?.log(.error(err))
                 } else {
                     do {
                         try self?.performFetch(with: fetchResultController, nodeCreator: nodeCreator)
                     } catch {
-                        self?.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        self?.appContext.logInspector?.log(.error(error))
                     }
                 }
             }

@@ -37,7 +37,7 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
 
     override public var description: String {
         let result: [AnyHashable: Any] = ["\(type(of: self))": dictionary.debugOutput()]
-        return result.debugOutput() as String
+        return result.debugOutput()
     }
 
     public func setValues(_ values: Any, forKey: AnyHashable) {

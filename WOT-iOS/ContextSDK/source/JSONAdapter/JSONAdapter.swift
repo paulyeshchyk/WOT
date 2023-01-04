@@ -15,11 +15,11 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         self.managedObjectLinker = managedObjectLinker
         self.jsonExtractor = jsonExtractor
         self.appContext = appContext
-        appContext.logInspector?.logEvent(EventObjectNew(self), sender: self)
+        appContext.logInspector?.log(.initialization(type(of: self)))
     }
 
     deinit {
-        appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
+        appContext.logInspector?.log(.destruction(type(of: self)))
     }
 
     open var responseClass: AnyClass {
@@ -67,7 +67,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 public extension JSONAdapter {
     func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
         guard error == nil, let json = data else {
-            appContext.logInspector?.logEvent(EventError(error), sender: self)
+            appContext.logInspector?.log(.error(error!))
             completion?(request, error)
             return
         }
@@ -93,21 +93,21 @@ public extension JSONAdapter {
                     }
 
                     if let error = error {
-                        self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                        self.appContext.logInspector?.log(.error(error))
                         dispatchGroup.leave()
                         return
                     }
 
                     self.managedObjectLinker.process(fetchResult: fetchResult, appContext: self.appContext) { _, error in
                         if let error = error {
-                            self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                            self.appContext.logInspector?.log(.error(error))
                         }
                         dispatchGroup.leave()
                     }
                 }
             } catch {
                 dispatchGroup.leave()
-                appContext.logInspector?.logEvent(EventError(error, details: nil))
+                appContext.logInspector?.log(.error(error))
             }
         }
 
@@ -147,7 +147,7 @@ public extension JSONAdapter {
             self.appContext.logInspector?.logEvent(EventJSONStart(predicate), sender: self)
             self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, inContext: self.appContext) { fetchResult, error in
                 if let error = error {
-                    self.appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    self.appContext.logInspector?.log(.error(error))
                 }
                 self.appContext.logInspector?.logEvent(EventJSONEnded("\(String(describing: predicate))", initiatedIn: jsonStartParsingDate), sender: self)
                 localCallback(fetchResult, error)

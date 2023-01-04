@@ -29,7 +29,7 @@ public extension VehicleprofileArmorList {
             let extractor = VehicleprofileArmorListTurretManagedObjectCreator()
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileArmorListFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.turretNotFound, details: nil), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileArmorListError.turretNotFound))
         }
 
         // MARK: - hull
@@ -45,7 +45,7 @@ public extension VehicleprofileArmorList {
             let extractor = VehicleprofileArmorListHullManagedObjectCreator()
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileArmorListFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileArmorListError.hullNotFound, details: nil), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleProfileArmorListError.hullNotFound))
         }
     }
 }

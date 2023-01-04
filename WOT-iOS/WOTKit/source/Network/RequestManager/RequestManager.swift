@@ -66,7 +66,7 @@ extension RequestManager: RequestListenerProtocol {
         }
 
         if let error = error {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            appContext.logInspector?.log(.error(error))
             return
         }
 
@@ -74,7 +74,7 @@ extension RequestManager: RequestListenerProtocol {
             try parseResponse(request: request, data: data)
         } catch {
             grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
-            appContext.logInspector?.logEvent(EventError(error, details: String(describing: request)), sender: self)
+            appContext.logInspector?.log(.error(error))
         }
     }
 
@@ -106,13 +106,13 @@ extension RequestManager: RequestListenerProtocol {
             do {
                 try self.managedObjectExractableList.removeExtractorForRequest(request)
             } catch {
-                self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+                self.appContext.logInspector?.log(.error(error))
             }
 
             do {
                 try self.managedObjectCreatorList.removeAdapterForRequest(request)
             } catch {
-                self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+                self.appContext.logInspector?.log(.error(error))
             }
         }
     }
@@ -163,8 +163,7 @@ extension RequestManager: RequestManagerProtocol {
         if let listener = listener {
             try grouppedListenerList.addListener(listener, forRequest: request)
         } else {
-            let event = EventWarning(error: RequestManagerError.requestManagerListenerIsNil, details: nil)
-            appContext.logInspector?.logEvent(event, sender: self)
+            appContext.logInspector?.log(.warning(error: RequestManagerError.requestManagerListenerIsNil))
         }
 
         try managedObjectExractableList.addExtractor(managedObjectExtractor, forRequest: request)
@@ -192,7 +191,7 @@ extension RequestManager: RequestManagerProtocol {
 
                 try startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
             } catch {
-                appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                appContext.logInspector?.log(.error(error))
             }
         }
     }
@@ -338,7 +337,7 @@ private class RequestGrouppedRequestList {
 
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
         if grouppedRequests.keys.isEmpty {
-            appContext.logInspector?.logEvent(EventLongTermStart("\(String(describing: request))"), sender: self)
+            appContext.logInspector?.log(.flow(name: "group", message: "Start: <\(String(describing: request))>"))
         }
 
         var requestsForID: [RequestProtocol] = []
@@ -362,7 +361,7 @@ private class RequestGrouppedRequestList {
             do {
                 try request.cancel(byReason: reason)
             } catch {
-                appContext.logInspector?.logEvent(EventWarning(error: error, details: "Request cancelation"), sender: self)
+                appContext.logInspector?.log(.warning(error: error))
             }
             completion(request, reason)
         }
@@ -382,7 +381,7 @@ private class RequestGrouppedRequestList {
             }
         }
         if grouppedRequests.keys.isEmpty {
-            appContext.logInspector?.logEvent(EventLongTermEnd("\(String(describing: request))"), sender: self)
+            appContext.logInspector?.log(.flow(name: "group", message: "End: <\(String(describing: request))>"))
         }
     }
 

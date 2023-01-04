@@ -20,7 +20,7 @@ public extension Vehicles {
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
-            try modulesTreeMapping(objectContext: managedObjectContextContainer.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, inContext: appContext)
+            try modulesTreeMapping(objectContext: managedObjectContextContainer.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, appContext: appContext)
         } else {
             appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
@@ -45,7 +45,7 @@ public extension Vehicles {
 }
 
 extension Vehicles {
-    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicateProtocol, inContext: JSONDecodableProtocol.Context) throws {
+    private func modulesTreeMapping(objectContext: ManagedObjectContextProtocol, jSON: JSON?, requestPredicate: ContextPredicateProtocol, appContext: JSONDecodableProtocol.Context) throws {
         if let set = modules_tree {
             removeFromModules_tree(set)
         }
@@ -69,9 +69,9 @@ extension Vehicles {
                 let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
 
                 let jsonCollection = try JSONCollection(element: jsonElement)
-                try submoduleMapping(keypath: "<unknown3>", objectContext: objectContext, json: jsonCollection, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, inContext: inContext)
+                try submoduleMapping(keypath: "<unknown3>", objectContext: objectContext, json: jsonCollection, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, inContext: appContext)
             } else {
-                inContext.logInspector?.logEvent(EventWarning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id), details: nil), sender: self)
+                appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)))
             }
         }
     }
