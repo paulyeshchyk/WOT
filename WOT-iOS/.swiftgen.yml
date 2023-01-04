@@ -1,0 +1,7 @@
+strings:
+  inputs: WOT-iOS/resources/en.lproj/Localizable.strings
+  outputs:
+    templateName: flat-swift3
+    output: WOT-iOS/resources/strings.swift
+    params:
+        publicAccess: true

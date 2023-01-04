@@ -193,7 +193,7 @@ extension RequestManager: RequestManagerProtocol {
             do {
                 //
                 let request = try requestRegistrator.createRequest(forRequestId: requestID)
-                request.contextPredicate = try requestParadigm.buildContextPredicate()
+                request.contextPredicate = requestParadigm.buildContextPredicate()
                 request.arguments = requestParadigm.buildRequestArguments()
                 let groupId: RequestIdType = requestParadigm.MD5.hashValue
 
