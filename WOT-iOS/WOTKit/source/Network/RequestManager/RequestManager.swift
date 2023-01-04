@@ -102,29 +102,22 @@ extension RequestManager: RequestListenerProtocol {
                 return
             }
             self.grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
-            self.finalizeParseResponse(request: request, error: error)
+
+            do {
+                try self.managedObjectExractableList.removeExtractorForRequest(request)
+            } catch {
+                self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            }
+
+            do {
+                try self.managedObjectCreatorList.removeAdapterForRequest(request)
+            } catch {
+                self.appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            }
         }
     }
 
-    private func finalizeParseResponse(request: RequestProtocol, error: Error?) {
-        //
-
-        if let error = error {
-            appContext.logInspector?.logEvent(EventError(error, details: self), sender: self)
-            return
-        }
-        do {
-            try managedObjectExractableList.removeExtractorForRequest(request)
-        } catch {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
-        }
-
-        do {
-            try managedObjectCreatorList.removeAdapterForRequest(request)
-        } catch {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
-        }
-    }
+    private func finalizeParseResponse(request _: RequestProtocol) {}
 
     public func request(_ request: RequestProtocol, canceledWith: Error?) {
         appContext.logInspector?.logEvent(EventRequestListenerCancel(request, listener: self, error: canceledWith), sender: self)

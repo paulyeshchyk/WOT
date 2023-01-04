@@ -10,7 +10,7 @@ import ContextSDK
 
 // MARK: - HttpDataReceiver
 
-public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible {
+public class HttpDataReceiver: HttpDataReceiverProtocol {
 
     public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
@@ -25,8 +25,6 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
     public weak var delegate: HttpDataReceiverDelegateProtocol?
 
     public var MD5: String { uuid.MD5 }
-
-    public var description: String { "\(type(of: self)): \(String(describing: request))" }
 
     @discardableResult
     public func cancel() -> Bool {
@@ -79,6 +77,16 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
             }
         }
     }
+}
+
+// MARK: - HttpDataReceiver + CustomStringConvertible
+
+extension HttpDataReceiver: CustomStringConvertible {
+
+    private var requestDescription: String { request.url?.absoluteString ?? String(describing: request) }
+
+    public var description: String { "\(type(of: self)): \(requestDescription)" }
+
 }
 
 private extension URLSessionDataTask {

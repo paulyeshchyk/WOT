@@ -56,11 +56,14 @@ open class Request: RequestProtocol, CustomStringConvertible {
     }
 
     open var description: String {
+        var result = [AnyHashable: Any]()
         if let arguments = arguments {
-            return "\(type(of: self)): \(String(describing: arguments))"
+            result["\(type(of: self))"] = String(describing: arguments)
         } else {
-            return "\(type(of: self))"
+            result["\(type(of: self))"] = ""
         }
+        let str = result.debugOutput()
+        return str as String
     }
 
     open func addGroup(_ group: RequestIdType) {
@@ -96,6 +99,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     // MARK: - MD5Protocol
 
     private let uuid = UUID()
+
 }
 
 extension Request {

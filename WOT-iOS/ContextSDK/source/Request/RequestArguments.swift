@@ -35,7 +35,10 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
 
     public var MD5: String { uuid.MD5 }
 
-    override public var description: String { "\(type(of: self)): \(String(describing: dictionary))" }
+    override public var description: String {
+        let result: [AnyHashable: Any] = ["\(type(of: self))": dictionary.debugOutput()]
+        return result.debugOutput() as String
+    }
 
     public func setValues(_ values: Any, forKey: AnyHashable) {
         dictionary[forKey] = values
@@ -50,4 +53,5 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
     private var dictionary = ArgumentsType()
 
     private let uuid = UUID()
+
 }

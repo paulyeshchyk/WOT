@@ -17,6 +17,14 @@ open class HttpRequest: Request {
         httpDataReceiver?.cancel()
     }
 
+    override open var description: String {
+        var result = super.description
+        if let httpDataReceiver = httpDataReceiver {
+            result += "; \(httpDataReceiver.description)"
+        }
+        return result
+    }
+
     override open func cancel(byReason: RequestCancelReasonProtocol) throws {
         if httpDataReceiver?.cancel() ?? false {
             appContext.logInspector?.logEvent(HttpRequestCancelEvent(reason: byReason), sender: self)
@@ -33,10 +41,6 @@ open class HttpRequest: Request {
         httpDataReceiver = HttpDataReceiver(context: appContext, request: urlRequest)
         httpDataReceiver?.delegate = self
         httpDataReceiver?.start(completion: completion)
-    }
-
-    override public var description: String {
-        "\(type(of: self)): \(path)"
     }
 
     private var httpDataReceiver: HttpDataReceiver?
