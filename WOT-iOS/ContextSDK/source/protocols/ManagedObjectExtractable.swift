@@ -41,9 +41,6 @@ public extension ManagedObjectExtractable {
 
 public struct JSONExtraction {
 
-    public let requestPredicate: ContextPredicateProtocol
-    public let json: JSONCollectionProtocol?
-
     enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
         case invalidJSONForKey(AnyHashable)
         case jsonWasNotExtracted(JSON)
@@ -55,4 +52,8 @@ public struct JSONExtraction {
             }
         }
     }
+
+    public let requestPredicate: ContextPredicateProtocol
+    public let json: JSONCollectionProtocol?
+
 }

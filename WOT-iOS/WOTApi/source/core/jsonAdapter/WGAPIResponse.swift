@@ -71,6 +71,15 @@ public class WGAPIResponse: WGAPIResponseProtocol {
 
 public struct WGAPIResponseMeta: Codable {
 
+    public typealias Fields = DataFieldsKeys
+    public enum DataFieldsKeys: String, CodingKey {
+        case count
+        case page_total
+        case total
+        case limit
+        case page
+    }
+
     // MARK: - Decodable
 
     public init(from decoder: Decoder) throws {
@@ -80,15 +89,6 @@ public struct WGAPIResponseMeta: Codable {
         total = try container.decodeIfPresent(Int.self, forKey: .total)
         limit = try container.decodeIfPresent(Int.self, forKey: .limit)
         page = try container.decodeIfPresent(Int.self, forKey: .page)
-    }
-
-    public typealias Fields = DataFieldsKeys
-    public enum DataFieldsKeys: String, CodingKey {
-        case count
-        case page_total
-        case total
-        case limit
-        case page
     }
 
     var count: Int?
@@ -105,6 +105,8 @@ public enum WGAPIResponseStatus: String, Codable {
     case error
     case unknown
 
+    public typealias RawValue = String
+
     init?(value: String) {
         if value.lowercased().compare(WGAPIResponseStatus.ok.rawValue) == .orderedSame {
             self = .ok
@@ -115,7 +117,6 @@ public enum WGAPIResponseStatus: String, Codable {
         }
     }
 
-    public typealias RawValue = String
 }
 
 // MARK: - WGAPIError

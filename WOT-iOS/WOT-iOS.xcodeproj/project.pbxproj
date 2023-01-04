@@ -31,6 +31,7 @@
 		1DD6471A1B2084FF00B0EC76 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1DD647191B2084FF00B0EC76 /* podfile */; };
 		1DD6471D1B20855400B0EC76 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD6471F1B20855400B0EC76 /* Localizable.strings */; };
 		8AD6F43E3E07FF8D8FFEB9C1 /* Pods_WOT_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78862B5E77DF034FEC5D9B2A /* Pods_WOT_iOS.framework */; };
+		DA288F712965C2EA00973561 /* WOTLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA288F702965C2EA00973561 /* WOTLaunchScreen.storyboard */; };
 		DA39E25B296075140099D877 /* ContextSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E257296075140099D877 /* ContextSDK.framework */; };
 		DA39E25C296075140099D877 /* ContextSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E257296075140099D877 /* ContextSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA39E25D296075140099D877 /* WOTApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA39E258296075140099D877 /* WOTApi.framework */; };
@@ -294,6 +295,7 @@
 		1DD6471E1B20855400B0EC76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A176CC6D9BAC80B33FBEA3A /* Pods-WOT-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOT-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOT-iOS/Pods-WOT-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		78862B5E77DF034FEC5D9B2A /* Pods_WOT_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WOT_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA288F702965C2EA00973561 /* WOTLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WOTLaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA39E257296075140099D877 /* ContextSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ContextSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E258296075140099D877 /* WOTApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA39E259296075140099D877 /* WOTKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WOTKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -633,6 +635,7 @@
 		1DD646351B1C616A00B0EC76 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DA288F6B2965C0D000973561 /* WOTLaunchViewController */,
 				DACDB12A29605FEC005BBA72 /* extensions */,
 				DA39E264296088E50099D877 /* WOTWebProxyRequest */,
 				DA81EA5229544F4900C60F31 /* WOTLanguageSelectorViewController */,
@@ -686,6 +689,14 @@
 				E0CAF57B0233E28A614AE83F /* Pods-WOT-iOS.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		DA288F6B2965C0D000973561 /* WOTLaunchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DA288F702965C2EA00973561 /* WOTLaunchScreen.storyboard */,
+			);
+			path = WOTLaunchViewController;
 			sourceTree = "<group>";
 		};
 		DA39E256296075140099D877 /* Frameworks */ = {
@@ -1168,11 +1179,11 @@
 			isa = PBXGroup;
 			children = (
 				DA81E9A62954497D00C60F31 /* WOTPivotConstructor */,
+				DA81E9AE2954497D00C60F31 /* cells */,
 				DA81E9AA2954497D00C60F31 /* WOTPivotRefreshControl.swift */,
+				DA81E9BE2954497D00C60F31 /* WOTTankPivotViewController.swift */,
 				DA81E9AB2954497D00C60F31 /* WOTTankPivot.swift */,
 				DA81E9AC2954497D00C60F31 /* WOTTankPivotViewController.xib */,
-				DA81E9AE2954497D00C60F31 /* cells */,
-				DA81E9BE2954497D00C60F31 /* WOTTankPivotViewController.swift */,
 			);
 			path = WOTTankPivotViewController;
 			sourceTree = "<group>";
@@ -1507,6 +1518,7 @@
 				DA81E798295316E700C60F31 /* WOTGlobe.png in Resources */,
 				DA81E7AF295316E700C60F31 /* wotShowMenuButtoniPhone@3x.png in Resources */,
 				DA81E768295316E600C60F31 /* Firing Gun Yellow@3x.png in Resources */,
+				DA288F712965C2EA00973561 /* WOTLaunchScreen.storyboard in Resources */,
 				DA81E763295316E600C60F31 /* Firing Gun Gray.png in Resources */,
 				DA81EA0A2954497E00C60F31 /* WOTTankListSettingSortTableViewCell.xib in Resources */,
 				DA81E9E52954497E00C60F31 /* WOTSplitViewController.xib in Resources */,
