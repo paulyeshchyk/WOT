@@ -17,19 +17,16 @@ public enum LogEventType: Int, CustomStringConvertible {
         case .warning: return "warning"
         case .info: return "info"
         case .custom: return "custom"
-        case .longTermOperation: return "longTermOperation"
         case .performance: return "performance"
         case .sqlite: return "sqlite"
         // ---
         case .lifeCycle: return "lifeCycle"
-        case .threads: return "threads"
         case .http: return "http"
         case .json: return "json"
         case .logic: return "logic"
         case .mapping: return "mapping"
-        case .remoteFetch: return "remoteFetch"
+        case .remoteFetch: return "web"
         case .flow: return "flow"
-        case .pivot: return "pivot"
         }
     }
 
@@ -39,19 +36,16 @@ public enum LogEventType: Int, CustomStringConvertible {
     case custom
     case sqlite
     case performance
-    case longTermOperation
     // ---
     case lifeCycle
-    case threads
     case http
     case json
     case logic
     case mapping
     case remoteFetch
     case flow
-    case pivot
 
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .longTermOperation, .pivot, .custom] }
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .custom] }
 }
 
 // MARK: - LogEventProtocol

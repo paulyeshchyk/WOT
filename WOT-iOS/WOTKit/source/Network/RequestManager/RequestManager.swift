@@ -135,7 +135,6 @@ extension RequestManager: RequestListenerProtocol {
 extension RequestManager: RequestManagerProtocol {
     public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
         //
-        appContext.logInspector?.logEvent(EventRequestManagerFetchCancel("\(String(describing: reason))"), sender: self)
         grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) { [weak self] request, reason in
             guard let self = self else { return }
             self.grouppedListenerList.didCancelRequest(request, requestManager: self, reason: reason)
@@ -154,8 +153,6 @@ extension RequestManager: RequestManagerProtocol {
 
     public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
         //
-        appContext.logInspector?.logEvent(EventRequestManagerFetchStart("\(String(describing: request.arguments))"), sender: self)
-
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
 
         request.addListener(self)
@@ -171,7 +168,8 @@ extension RequestManager: RequestManagerProtocol {
         try managedObjectCreatorList.addAdapterLinker(managedObjectCreator, forRequest: request)
 
         try request.start { [weak self] in
-            self?.appContext.logInspector?.logEvent(EventRequestManagerFetchEnd("\(String(describing: request.arguments))"), sender: self)
+
+            self?.appContext.logInspector?.log(.custom("Start"))
         }
     }
 

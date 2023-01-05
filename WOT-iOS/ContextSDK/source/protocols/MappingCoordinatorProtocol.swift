@@ -11,7 +11,7 @@ public typealias MappingCoordinatorContext = LogInspectorContainerProtocol & Dat
 
 @objc
 public protocol MappingCoordinatorDecodingProtocol {
-    func decode(using: JSONCollectionProtocol?, fetchResult: FetchResultProtocol, predicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable?, inContext: JSONDecodableProtocol.Context, completion: @escaping FetchResultCompletion)
+    func decode(using: JSONCollectionProtocol?, fetchResult: FetchResultProtocol, predicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable?, appContext: JSONDecodableProtocol.Context, completion: @escaping FetchResultCompletion)
 }
 
 // MARK: - MappingCoordinatorLinkingProtocol

@@ -22,7 +22,7 @@ public extension Vehicles {
         if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
             try modulesTreeMapping(objectContext: managedObjectContextContainer.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, appContext: appContext)
         } else {
-            appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)))
         }
 
         // MARK: - DefaultProfile
@@ -39,7 +39,7 @@ public extension Vehicles {
             let extractor = VehicleProfileManagedObjectCreator()
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehiclesFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
-            appContext.logInspector?.logEvent(EventMappingInfo(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
+            appContext.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)))
         }
     }
 }

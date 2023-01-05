@@ -12,9 +12,9 @@ import ContextSDK
 
 public class HttpDataReceiver: HttpDataReceiverProtocol {
 
-    public required init(context: HttpDataReceiverProtocol.Context, request: URLRequest) {
+    public required init(context appContext: HttpDataReceiverProtocol.Context, request: URLRequest) {
         self.request = request
-        self.context = context
+        self.appContext = appContext
     }
 
     deinit {
@@ -28,6 +28,8 @@ public class HttpDataReceiver: HttpDataReceiverProtocol {
 
     @discardableResult
     public func cancel() -> Bool {
+        appContext.logInspector?.log(.remoteFetch(message: "Cancel URL: \(String(describing: request.url))"))
+
         let result = urlDataTask?.cancelDataTask() ?? false
         urlDataTask = nil
         if result == true {
@@ -45,6 +47,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol {
             return
         }
         urlDataTask = createDataTask(url: url, completion: completion)
+        appContext.logInspector?.log(.remoteFetch(message: "Start URL: \(String(describing: request.url))"))
         delegate?.didStart(urlRequest: request, receiver: self)
         urlDataTask?.resume()
     }
@@ -64,7 +67,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol {
     private let uuid: UUID = UUID()
     private var urlDataTask: URLSessionDataTask?
 
-    private let context: HttpDataReceiverProtocol.Context
+    private let appContext: HttpDataReceiverProtocol.Context
 
     private func createDataTask(url: URL, completion: @escaping () -> Void) -> URLSessionDataTask {
         return URLSession.shared.dataTask(with: url) { [weak self] data, _, error in

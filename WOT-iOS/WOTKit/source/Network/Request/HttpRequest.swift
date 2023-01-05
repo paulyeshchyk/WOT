@@ -25,10 +25,8 @@ open class HttpRequest: Request {
         return result
     }
 
-    override open func cancel(byReason: RequestCancelReasonProtocol) throws {
-        if httpDataReceiver?.cancel() ?? false {
-            appContext.logInspector?.logEvent(HttpRequestCancelEvent(reason: byReason), sender: self)
-        }
+    override open func cancel(byReason _: RequestCancelReasonProtocol) throws {
+        httpDataReceiver?.cancel()
     }
 
     override open func start(completion: @escaping (() -> Void)) throws {
@@ -75,19 +73,4 @@ extension HttpRequest: HttpServiceProtocol {
     open var httpMethod: ContextSDK.HTTPMethod { return .POST }
     open var path: String { fatalError("WOTWEBRequest:path need to be overriden") }
     open var httpBodyData: Data? { nil }
-}
-
-// MARK: - HttpRequestCancelEvent
-
-final private class HttpRequestCancelEvent: LogEventProtocol {
-
-    init(reason: RequestCancelReasonProtocol) {
-        self.reason = reason
-    }
-
-    var eventType: LogEventType { .info }
-    var message: String { reason.reasonDescription }
-    var name: String { "HttpRequestCancelEvent" }
-
-    private let reason: RequestCancelReasonProtocol
 }

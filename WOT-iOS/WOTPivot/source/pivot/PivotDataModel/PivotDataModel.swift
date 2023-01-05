@@ -50,7 +50,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     }
 
     override open func clearRootNodes() {
-        appContext.logInspector?.log(.flow(name: "pivot", message: "clearRootNodes"))
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Clear root nodes"))
 
         rootDataNode.removeChildren()
         rootRowsNode.removeChildren()
@@ -61,12 +61,12 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
 
     override open func reindexNodes() {
         super.reindexNodes()
-        appContext.logInspector?.log(.flow(name: "pivot", message: "reindexNodes"))
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Reindex nodes"))
     }
 
     override open func loadModel() {
         // super.loadModel()
-        appContext.logInspector?.log(.flow(name: "pivot", message: "start"))
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Start"))
 
         do {
             try fetchController?.performFetch(nodeCreator: nodeCreator, appContext: appContext)
@@ -160,7 +160,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     }
 
     public func clearMetadataItems() {
-        appContext.logInspector?.log(.flow(name: "pivot", message: "clearMetadataItems"))
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Clear metadata items"))
 
         nodeIndex.reset()
         clearRootNodes()
@@ -201,7 +201,7 @@ extension PivotDataModel: DimensionLoadListenerProtocol {
     public func didLoad(dimension _: NodeDimensionProtocol) {
         reindexNodes()
         listener?.didFinishLoadModel(error: nil)
-        appContext.logInspector?.log(.flow(name: "pivot", message: "end"))
+        appContext.logInspector?.log(.flow(name: "pivot", message: "End"))
     }
 }
 

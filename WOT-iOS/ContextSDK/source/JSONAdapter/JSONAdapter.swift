@@ -73,7 +73,6 @@ public extension JSONAdapter {
         }
 
         let jsonStartParsingDate = Date()
-        appContext.logInspector?.logEvent(EventJSONStart(request), sender: self)
 
         let dispatchGroup = DispatchGroup()
 
@@ -112,7 +111,6 @@ public extension JSONAdapter {
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            self.appContext.logInspector?.logEvent(EventJSONEnded(request, initiatedIn: jsonStartParsingDate), sender: self)
             completion?(request, error)
         }
     }
@@ -144,12 +142,10 @@ public extension JSONAdapter {
             }
 
             let jsonStartParsingDate = Date()
-            self.appContext.logInspector?.logEvent(EventJSONStart(predicate), sender: self)
-            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, inContext: self.appContext) { fetchResult, error in
+            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, appContext: self.appContext) { fetchResult, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.error(error))
                 }
-                self.appContext.logInspector?.logEvent(EventJSONEnded("\(String(describing: predicate))", initiatedIn: jsonStartParsingDate), sender: self)
                 localCallback(fetchResult, error)
             }
         })
