@@ -12,7 +12,7 @@ import CoreData
 public class EmptyFetchResult: FetchResult {
 
     public init(inManagedObjectContext: ManagedObjectContextProtocol?) throws {
-        guard let cntx = inManagedObjectContext as? NSManagedObjectContext else {
+        guard let cntx = inManagedObjectContext as? KitNSManagedObjectContext else {
             throw EmptyFetchResultError.contextIsNotManagedObjectContext
         }
         let objectID = NSManagedObjectID()

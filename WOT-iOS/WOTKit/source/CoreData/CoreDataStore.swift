@@ -19,7 +19,9 @@ open class CoreDataStore: DataStore {
     open var applicationDocumentsDirectoryURL: URL? { fatalError("has not been implemented") }
 
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
-        CoreDataStore.privateQueueConcurrencyContext(parent: mainContext)
+        let result = CoreDataStore.privateQueueConcurrencyContext(parent: mainContext)
+        result.appContext = appContext
+        return result
     }
 
     override public func workingContext() -> ManagedObjectContextProtocol {
@@ -84,9 +86,17 @@ open class CoreDataStore: DataStore {
         return coordinator
     }()
 
-    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(parent: self.masterContext)
+    private lazy var mainContext: KitNSManagedObjectContext = {
+        let result = CoreDataStore.mainQueueConcurrencyContext(parent: self.masterContext)
+        result.appContext = self.appContext
+        return result
+    }()
 
-    private lazy var masterContext: NSManagedObjectContext = CoreDataStore.masterContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
+    private lazy var masterContext: KitNSManagedObjectContext = {
+        let result = CoreDataStore.masterContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
+        result.appContext = self.appContext
+        return result
+    }()
 
     private lazy var managedObjectModel: NSManagedObjectModel? = {
         guard let modelURL = self.modelURL else {
@@ -96,25 +106,31 @@ open class CoreDataStore: DataStore {
     }()
 }
 
+// MARK: - KitNSManagedObjectContext
+
+public class KitNSManagedObjectContext: NSManagedObjectContext {
+    public weak var appContext: ManagedObjectContextLookupProtocol.Context?
+}
+
 extension CoreDataStore {
-    static func mainQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    static func mainQueueConcurrencyContext(parent: NSManagedObjectContext) -> KitNSManagedObjectContext {
+        let managedObjectContext = KitNSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.name = "Main <\(UUID().MD5)>"
         managedObjectContext.parent = parent
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }
 
-    static func privateQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+    static func privateQueueConcurrencyContext(parent: NSManagedObjectContext) -> KitNSManagedObjectContext {
+        let managedObjectContext = KitNSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Private <\(UUID().MD5)>"
         managedObjectContext.parent = parent
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }
 
-    static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+    static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> KitNSManagedObjectContext {
+        let managedObjectContext = KitNSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
         managedObjectContext.name = "Master <\(UUID().MD5)>"
         managedObjectContext.undoManager = nil

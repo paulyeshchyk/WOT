@@ -9,6 +9,10 @@
 
 open class DataStore {
 
+    public typealias Context = ManagedObjectContextLookupProtocol.Context
+
+    open var appContext: Context
+
     public required init(appContext: Context) {
         self.appContext = appContext
         appContext.logInspector?.log(.initialization(type(of: self)))
@@ -41,10 +45,6 @@ open class DataStore {
             }
         }
     }
-
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol
-
-    public let appContext: Context
 }
 
 // MARK: - DataStore + DataStoreProtocol
@@ -67,13 +67,13 @@ extension DataStore: DataStoreProtocol {
     }
 
     open func perform(block: @escaping ObjectContextCompletion) {
-        workingContext().execute(appContext: appContext) { context in
+        workingContext().execute { context in
             block(context)
         }
     }
 
     open func perform(managedObjectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
-        managedObjectContext.execute(appContext: appContext) { context in
+        managedObjectContext.execute { context in
             block(context)
         }
     }
@@ -88,16 +88,20 @@ extension DataStore: DataStoreProtocol {
             return
         }
 
-        objectContext.save(appContext: appContext) { error in
+        objectContext.stash { error in
             completion(objectContext, error)
         }
     }
 
     public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
         let localCallback: FetchResultCompletion = { fetchResult, error in
-            self.workingContext().execute(appContext: self.appContext) { managedObjectContext in
-                let fetchResultForContext = fetchResult?.makeDublicate(inContext: managedObjectContext)
-                completion(fetchResultForContext, error)
+            if let error = error {
+                completion(nil, error)
+            } else {
+                self.workingContext().execute { managedObjectContext in
+                    let fetchResultForContext = fetchResult?.makeDublicate(inContext: managedObjectContext)
+                    completion(fetchResultForContext, error)
+                }
             }
         }
 
@@ -118,7 +122,7 @@ extension DataStore: DataStoreProtocol {
                 return
             }
 
-            guard let managedObject = managedObjectContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: nspredicate) else {
+            guard let managedObject = managedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: nspredicate) else {
                 self.appContext.logInspector?.log(.error(DataStoreError.objectNotCreated(modelClass)))
                 return
             }
@@ -159,7 +163,7 @@ extension DataStore: DataStoreProtocol {
                 completion(nil, nil)
                 return
             }
-            if let managedObject = managedObjectContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: predicate) {
+            if let managedObject = managedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: predicate) {
                 let fetchResult = managedObject.fetchResult(context: managedObjectContext)// FetchResult(objectID: managedObject.managedObjectID, inContext: managedObjectContext, predicate: predicate, fetchStatus: managedObject.fetchStatus)
                 completion(fetchResult, nil)
             } else {

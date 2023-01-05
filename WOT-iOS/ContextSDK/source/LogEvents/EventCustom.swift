@@ -108,6 +108,10 @@ extension Loggable {
         Loggable(type: .sqlite, name: name, message: message)
     }
 
+    public static func sqlite(message: String) -> Loggable {
+        Loggable(type: .sqlite, message: message)
+    }
+
     public static func remoteFetch(message: String) -> Loggable {
         Loggable(type: .remoteFetch, message: message)
     }
