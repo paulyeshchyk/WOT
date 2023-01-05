@@ -52,7 +52,9 @@ extension LoggableType {
     static let warning = LoggableType(type: .warning)
     static let custom = LoggableType(type: .custom)
     static let flow = LoggableType(type: .flow)
-    static let performance = LoggableType(type: .longTermOperation)
+    static let performance = LoggableType(type: .performance)
+    static let sqlite = LoggableType(type: .sqlite)
+    static let remoteFetch = LoggableType(type: .remoteFetch)
 }
 
 extension Loggable {
@@ -100,6 +102,14 @@ extension Loggable {
 
     public static func performance(name: String, message: String) -> Loggable {
         Loggable(type: .performance, name: name, message: message)
+    }
+
+    public static func sqlite(name: String, message: String) -> Loggable {
+        Loggable(type: .sqlite, name: name, message: message)
+    }
+
+    public static func remoteFetch(name: String, message: String) -> Loggable {
+        Loggable(type: .remoteFetch, name: name, message: message)
     }
 
 }

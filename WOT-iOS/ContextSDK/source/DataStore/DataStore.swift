@@ -101,9 +101,6 @@ extension DataStore: DataStoreProtocol {
             }
         }
 
-        //
-        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: modelClass)) - \(String(describing: nspredicate))"), sender: self)
-
         guard isClassValid(modelClass) else {
             do {
                 let error = DataStoreError.notManagedObjectType(modelClass)
@@ -120,7 +117,8 @@ extension DataStore: DataStoreProtocol {
             guard let self = self else {
                 return
             }
-            guard let managedObject = managedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: nspredicate) else {
+
+            guard let managedObject = managedObjectContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: nspredicate) else {
                 self.appContext.logInspector?.log(.error(DataStoreError.objectNotCreated(modelClass)))
                 return
             }
@@ -137,9 +135,6 @@ extension DataStore: DataStoreProtocol {
     }
 
     public func fetch(modelClass: AnyObject, contextPredicate: ContextPredicateProtocol, managedObjectContext: ManagedObjectContextProtocol, completion: @escaping FetchResultCompletion) {
-        //
-        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: modelClass)) - \(String(describing: contextPredicate))"), sender: self)
-
         guard isClassValid(modelClass) else {
             do {
                 let error = DataStoreError.clazzIsNotSupportable(String(describing: modelClass))
@@ -164,7 +159,7 @@ extension DataStore: DataStoreProtocol {
                 completion(nil, nil)
                 return
             }
-            if let managedObject = managedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: predicate) {
+            if let managedObject = managedObjectContext.findOrCreateObject(appContext: self.appContext, modelClass: modelClass, predicate: predicate) {
                 let fetchResult = managedObject.fetchResult(context: managedObjectContext)// FetchResult(objectID: managedObject.managedObjectID, inContext: managedObjectContext, predicate: predicate, fetchStatus: managedObject.fetchStatus)
                 completion(fetchResult, nil)
             } else {

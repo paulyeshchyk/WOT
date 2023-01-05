@@ -16,11 +16,11 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 
     public func execute(appContext: ManagedObjectContextLookupProtocol.Context, with block: @escaping (ManagedObjectContextProtocol) -> Void) {
         let uuid = UUID()
-        let initiationDate = Date()
-        appContext.logInspector?.logEvent(EvenDatastoreWillExecute(uuid: uuid), sender: self)
+        let executionStartTime = Date()
+        appContext.logInspector?.log(.performance(name: "execStart", message: "operation: \(uuid.MD5), context: \(name ?? "")"))
         perform {
             block(self)
-            appContext.logInspector?.logEvent(EvenDatastoreDidExecute(uuid: uuid, initiatedIn: initiationDate), sender: self)
+            appContext.logInspector?.log(.performance(name: "execEnd", message: "(\(Date().elapsed(from: executionStartTime))s) operation: \(uuid.MD5), context: \(self.name ?? "")"))
         }
     }
 
@@ -32,11 +32,18 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         return object(with: objectID)
     }
 
-    public func findOrCreateObject(modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
-        guard let foundObject = try? lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) else {
+    public func findOrCreateObject(appContext: ManagedObjectContextLookupProtocol.Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol? {
+        //
+        let predicateDescr: String
+        if let predicate = predicate { predicateDescr = String(describing: predicate) } else { predicateDescr = "?" }
+        appContext.logInspector?.log(.sqlite(name: "sql-select", message: "\(String(describing: modelClass)) - \(predicateDescr)"))
+
+        if let foundObject = try? lastObject(modelClass: modelClass, predicate: predicate, includeSubentities: false) {
+            return foundObject
+        } else {
+            appContext.logInspector?.log(.sqlite(name: "sql-insert", message: "\(String(describing: modelClass)) - \(predicateDescr)"))
             return insertNewObject(forType: modelClass)
         }
-        return foundObject
     }
 
     // MARK: - ManagedObjectContextSaveProtocol
@@ -57,12 +64,13 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         }
 
         let uuid = UUID()
-        let initiationDate = Date()
-        appContext.logInspector?.logEvent(EvenDatastoreWillSave(uuid: uuid, description: name ?? "?"), sender: self)
+        let executionStartTime = Date()
+        appContext.logInspector?.log(.performance(name: "saveStart", message: "operation: \(uuid.MD5), context: \(name ?? "")"))
         performAndWait {
             do {
+                appContext.logInspector?.log(.sqlite(name: "sql-save", message: "operation: \(uuid.MD5), context: \(name ?? "")"))
                 try self.save()
-                appContext.logInspector?.logEvent(EvenDatastoreDidSave(uuid: uuid, initiatedIn: initiationDate, description: name ?? "?"), sender: self)
+                appContext.logInspector?.log(.performance(name: "saveEnd", message: "(\(Date().elapsed(from: executionStartTime))s) operation:\(uuid.MD5), context: \(name ?? "")"))
 
                 if let parent = self.parent {
                     parent.save(appContext: appContext, completion: privateCompletion)
@@ -70,7 +78,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
                     privateCompletion(nil)
                 }
             } catch {
-                appContext.logInspector?.logEvent(EvenDatastoreSaveFailed(uuid: uuid, initiatedIn: initiationDate, description: name ?? "?"), sender: self)
+                appContext.logInspector?.log(.error(error))
                 privateCompletion(error)
             }
         }
@@ -78,16 +86,16 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
 
     // MARK: - ManagedObjectContextDeleteProtocol
 
-    func deleteAllObjects() throws {
+    func deleteAllObjects(appContext: ManagedObjectContextSaveProtocol.Context) throws {
         if let entitesByName = persistentStoreCoordinator?.managedObjectModel.entitiesByName {
             for (_, entityDescription) in entitesByName {
-                try deleteAllObjectsForEntity(entity: entityDescription)
+                try deleteAllObjectsForEntity(appContext: appContext, entity: entityDescription)
             }
         }
     }
 
-    func deleteAllObjectsForEntity(entity anyAntity: AnyObject) throws {
-        guard let entity = anyAntity as? NSEntityDescription else {
+    func deleteAllObjectsForEntity(appContext: ManagedObjectContextSaveProtocol.Context, entity: AnyObject) throws {
+        guard let entity = entity as? NSEntityDescription else {
             return
         }
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
@@ -97,6 +105,7 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
         let fetchResults = try fetch(fetchRequest)
         if let managedObjects = fetchResults as? [NSManagedObject] {
             for object in managedObjects {
+                appContext.logInspector?.log(.sqlite(name: "sql-delete", message: "object: \(String(describing: object)), context: \(name ?? "")"))
                 delete(object)
             }
         }

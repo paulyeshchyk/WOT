@@ -25,7 +25,7 @@ public protocol ManagedObjectContextProtocol: ManagedObjectContextLookupProtocol
 public protocol ManagedObjectContextLookupProtocol: AnyObject {
     typealias Context = LogInspectorContainerProtocol
     func object(byID: AnyObject) -> AnyObject?
-    func findOrCreateObject(modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
+    func findOrCreateObject(appContext: Context, modelClass: AnyObject, predicate: NSPredicate?) -> ManagedObjectProtocol?
     func execute(appContext: Context, with: @escaping (ManagedObjectContextProtocol) -> Void)
 }
 
@@ -42,8 +42,8 @@ public protocol ManagedObjectContextSaveProtocol: AnyObject {
 
 @objc
 public protocol ManagedObjectContextDeleteProtocol: AnyObject {
-    func deleteAllObjects() throws
-    func deleteAllObjectsForEntity(entity: AnyObject) throws
+    func deleteAllObjects(appContext: ManagedObjectContextSaveProtocol.Context) throws
+    func deleteAllObjectsForEntity(appContext: ManagedObjectContextSaveProtocol.Context, entity: AnyObject) throws
 }
 
 // MARK: - ManagedObjectProtocol

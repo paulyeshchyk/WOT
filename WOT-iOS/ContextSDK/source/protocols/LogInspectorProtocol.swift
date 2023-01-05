@@ -18,17 +18,16 @@ public enum LogEventType: Int, CustomStringConvertible {
         case .info: return "info"
         case .custom: return "custom"
         case .longTermOperation: return "longTermOperation"
+        case .performance: return "performance"
+        case .sqlite: return "sqlite"
         // ---
         case .lifeCycle: return "lifeCycle"
         case .threads: return "threads"
         case .http: return "http"
         case .json: return "json"
-        case .performance: return "performance"
         case .logic: return "logic"
         case .mapping: return "mapping"
-        case .localFetch: return "localFetch"
         case .remoteFetch: return "remoteFetch"
-        case .datastore: return "datastore"
         case .flow: return "flow"
         case .pivot: return "pivot"
         }
@@ -38,22 +37,21 @@ public enum LogEventType: Int, CustomStringConvertible {
     case warning
     case info
     case custom
+    case sqlite
+    case performance
     case longTermOperation
     // ---
     case lifeCycle
     case threads
     case http
     case json
-    case performance
     case logic
     case mapping
-    case localFetch
     case remoteFetch
-    case datastore
     case flow
     case pivot
 
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads, .http, .json, .info, .performance, .logic, .mapping, .localFetch, .remoteFetch, .flow, .longTermOperation, .datastore, .pivot, .custom] }
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .threads, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .longTermOperation, .pivot, .custom] }
 }
 
 // MARK: - LogEventProtocol
@@ -80,7 +78,7 @@ public class Loggable {
     var message: String
     public init(type: LoggableType, name: String, message: String) {
         self.type = type
-        self.name = name
+        self.name = name.rightJustified(width: 10, truncate: true, spacer: " ")
         self.message = message
     }
 
