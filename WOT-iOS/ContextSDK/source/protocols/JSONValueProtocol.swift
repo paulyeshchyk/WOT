@@ -8,6 +8,7 @@
 // MARK: - JSONValue
 
 public enum JSONValue {
+
     case string(String)
     case int(Int)
     case double(Double)
@@ -16,6 +17,7 @@ public enum JSONValue {
     case array([JSONValue])
 
     public typealias KeyType = String
+
 }
 
 // MARK: - JSONValue + Encodable
@@ -35,7 +37,7 @@ extension JSONValue: Encodable {
 }
 
 extension JSONValue {
-    public init?(any: Any) {
+    public init?(any: Any?) {
         if let value = any as? String {
             self = .string(value)
         } else if let value = any as? Int {
@@ -49,8 +51,8 @@ extension JSONValue {
             self = .array(array)
         } else if let json = any as? [JSONValue.KeyType: Any] {
             var dict: [JSONValue.KeyType: JSONValue] = [:]
-            for (key, value) in json {
-                dict[key] = JSONValue(any: value)
+            for key in json.keys.sorted() {
+                dict[key] = JSONValue(any: json[key])
             }
             self = .json(dict)
         } else {
