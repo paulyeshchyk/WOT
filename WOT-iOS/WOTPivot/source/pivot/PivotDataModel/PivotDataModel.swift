@@ -50,7 +50,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     }
 
     override open func clearRootNodes() {
-        appContext.logInspector?.logEvent(EventPivot("clearRootNodes"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Clear root nodes"), sender: self)
 
         rootDataNode.removeChildren()
         rootRowsNode.removeChildren()
@@ -61,17 +61,17 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
 
     override open func reindexNodes() {
         super.reindexNodes()
-        appContext.logInspector?.logEvent(EventPivot("reindexNodes"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Reindex nodes"), sender: self)
     }
 
     override open func loadModel() {
         // super.loadModel()
-        appContext.logInspector?.logEvent(EventPivot("loadmodel"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Start"), sender: self)
 
         do {
             try fetchController?.performFetch(nodeCreator: nodeCreator, appContext: appContext)
         } catch {
-            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
@@ -160,7 +160,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
     }
 
     public func clearMetadataItems() {
-        appContext.logInspector?.logEvent(EventPivot("clearMetadataItems"), sender: self)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Clear metadata items"), sender: self)
 
         nodeIndex.reset()
         clearRootNodes()
@@ -201,6 +201,7 @@ extension PivotDataModel: DimensionLoadListenerProtocol {
     public func didLoad(dimension _: NodeDimensionProtocol) {
         reindexNodes()
         listener?.didFinishLoadModel(error: nil)
+        appContext.logInspector?.log(.flow(name: "pivot", message: "End"), sender: self)
     }
 }
 

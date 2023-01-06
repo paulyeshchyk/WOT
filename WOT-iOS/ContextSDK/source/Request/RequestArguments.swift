@@ -50,4 +50,5 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
     private var dictionary = ArgumentsType()
 
     private let uuid = UUID()
+
 }

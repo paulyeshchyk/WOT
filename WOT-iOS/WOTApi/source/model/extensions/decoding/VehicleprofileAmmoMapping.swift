@@ -32,7 +32,7 @@ public extension VehicleprofileAmmo {
             let extractor = VehicleprofileAmmoPenetrationManagedObjectCreator()
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noPenetration, details: nil), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
         }
 
         // MARK: - Damage
@@ -48,7 +48,7 @@ public extension VehicleprofileAmmo {
             let extractor = VehicleprofileAmmoDamageManagedObjectCreator()
             try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noDamage, details: nil), sender: self)
+            appContext.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }
     }
 }

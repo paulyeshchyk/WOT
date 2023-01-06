@@ -19,6 +19,13 @@ public class MappingCoordinator: MappingCoordinatorProtocol {
     private let appContext: Context
 }
 
+// MARK: - EventMappingType
+
+public enum EventMappingType: String {
+    case JSON
+    case Array
+}
+
 // MARK: - MappingCoordinator + MappingCoordinatorFetchingProtocol
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
@@ -61,7 +68,7 @@ extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
         let objectContext = masterFetchResult.managedObjectContext
         fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: byModelClass, contextPredicate: requestPredicateComposition.contextPredicate, managedObjectCreator: linker, managedObjectExtractor: extractor, appContext: appContext, completion: { [weak self] _, error in
             if let error = error {
-                self?.appContext.logInspector?.logEvent(EventError(error, details: self), sender: nil)
+                self?.appContext.logInspector?.log(.error(error), sender: self)
             }
         })
     }
@@ -86,13 +93,14 @@ extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
             }
         }
 
-//        appContext.logInspector?.logEvent(EventWarning(message: "extractor not used: \(type(of: managedObjectExtractor))"))
+        inContext.logInspector?.log(.mapping(name: "Start", fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
 
-        inContext.logInspector?.logEvent(EventMappingStart(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
-        //
+        // appContext.logInspector?.log(.warning("extractor not used: \(type(of: managedObjectExtractor))"))
+
         let managedObjectContext = fetchResult.managedObjectContext
         let fetchResultObject = fetchResult.managedObject()
         guard let managedObject = fetchResultObject as? JSONDecodableProtocol else {
+            inContext.logInspector?.log(.mapping(name: "Cancel", fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
             localCompletion(managedObjectContext, MappingCoordinatorError.fetchResultIsNotJSONDecodable(fetchResultObject))
             return
         }
@@ -101,8 +109,9 @@ extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
             let jsonMap = try JSONMap(json: json, predicate: predicate)
             try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: inContext)
             inContext.dataStore?.stash(managedObjectContext: managedObjectContext, completion: localCompletion)
-            inContext.logInspector?.logEvent(EventMappingEnded(fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
+            inContext.logInspector?.log(.mapping(name: "End", fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
         } catch {
+            inContext.logInspector?.log(.mapping(name: "Fail", fetchResult: fetchResult, predicate: predicate, mappingType: .JSON), sender: self)
             localCompletion(managedObjectContext, error)
         }
     }

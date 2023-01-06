@@ -30,6 +30,8 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
 
     @discardableResult
     public func cancel() -> Bool {
+        context.logInspector?.log(.remoteFetch(message: "Cancel URL: \(String(describing: request.url))"), sender: self)
+
         let result = urlDataTask?.cancelDataTask() ?? false
         urlDataTask = nil
         if result == true {
@@ -47,6 +49,7 @@ public class HttpDataReceiver: HttpDataReceiverProtocol, CustomStringConvertible
             return
         }
         urlDataTask = createDataTask(url: url, completion: completion)
+        context.logInspector?.log(.remoteFetch(message: "Start URL: \(String(describing: request.url))"), sender: self)
         delegate?.didStart(urlRequest: request, receiver: self)
         urlDataTask?.resume()
     }

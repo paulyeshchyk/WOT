@@ -35,7 +35,7 @@ public extension ModulesTree {
                     let requestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: "fields")
                     try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
                 } catch {
-                    appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    appContext.logInspector?.log(.error(error), sender: self)
                 }
             }
         }
@@ -56,7 +56,7 @@ public extension ModulesTree {
                     let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: "fields")
                     try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: self)
                 } catch {
-                    appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                    appContext.logInspector?.log(.error(error), sender: self)
                 }
             }
         }
