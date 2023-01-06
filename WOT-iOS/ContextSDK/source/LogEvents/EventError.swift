@@ -16,7 +16,7 @@ final public class EventError: LogEventProtocol {
         message = text
     }
 
-    public convenience init?(_ error: Error?, details: Any?) {
+    public convenience init?(_ error: Error?, details: Any? = nil) {
         var messages: [String] = .init()
         if let error = error {
             messages.append(String(describing: error))
