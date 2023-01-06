@@ -4,130 +4,90 @@
 
 --exclude Tests/XCTestManifests.swift,Snapshots, Pods, Generated
 
-# -
---rules blankLineAfterImports
---rules blankLinesAroundMark
---rules blankLinesAtEndOfScope
---rules blankLinesBetweenImports
---rules blankLinesBetweenScopes
---rules consecutiveBlankLines
---rules consecutiveSpaces
---rules duplicateImports
---rules emptyBraces
---rules initCoderUnavailable
---rules isEmpty
---rules leadingDelimiters
---rules linebreakAtEndOfFile
---rules redundantBreak
---rules redundantClosure,
---rules redundantExtensionACL
---rules redundantFileprivate
---rules redundantGet
---rules redundantNilInit
---rules redundantObjc
---rules redundantOptionalBinding
---rules redundantRawValues
---rules sortedImports
---rules spaceAroundBraces
---rules spaceAroundBrackets
---rules spaceInsideBraces
---rules spaceInsideBrackets
---rules spaceInsideComments
---rules spaceInsideGenerics
---rules spaceInsideParens
---rules strongifiedSelf
---rules strongOutlets
---rules trailingClosures
---rules typeSugar
---rules void
---rules wrapEnumCases
---rules wrapSwitchCases
-
-# -
+# format options
 --rules spaceAroundOperators
 --operatorfunc spaced
---ranges spaced
 
-# -
+--rules indent, linebreakAtEndOfFile, consecutiveBlankLines
+--rules spaceInsideBraces, spaceAroundBrackets, spaceAroundBraces, spaceInsideBrackets, spaceInsideComments, spaceInsideGenerics, spaceInsideParens
+--rules strongOutlets, trailingClosures
+--rules typeSugar, unusedArguments, void
+--rules blankLineAfterImports, blankLinesAroundMark, blankLinesAtEndOfScope, blankLinesBetweenImports, blankLinesBetweenScopes, duplicateImports
+
 --rules elseOnSameLine
 --elseposition same-line
 --guardelse next-line
 
-# -
---rules braces
 --allman false
 
-# -
 --rules blankLinesAtStartOfScope
 --typeblanklines preserve
 
-# -
---rules numberFormatting
+# --rules extensionAccessControl
+--rules leadingDelimiters
+--rules wrapEnumCases, wrapSwitchCases
+--rules blankLinesAtEndOfScope, blankLinesBetweenScopes, emptyBraces, trailingSpace
+--rules consecutiveSpaces
+
+--rules strongifiedSelf, isEmpty
+
+--rules redundantSelf, redundantObjc, redundantOptionalBinding, redundantNilInit, redundantGet
+--rules redundantFileprivate, redundantExtensionACL, redundantBreak, redundantClosure,
+--rules redundantRawValues
+
 --binarygrouping 4,8
+--commas always
+--comments indent
 --decimalgrouping 3,6
+--empty void
 --exponentcase lowercase
 --exponentgrouping disabled
 --fractiongrouping disabled
---hexliteralcase uppercase
+--header ignore
 --hexgrouping 4,8
---octalgrouping 4,8
-
-# -
---rules trailingCommas
---commas always
-
-# -
---rules indent
+--hexliteralcase uppercase
 --ifdef indent
 --indent 4
 --indentcase false
-
-# -
---rules fileHeader
---header ignore
-
-# -
---rules linebreaks
 --linebreaks lf
-
-# -
---rules wrap
 --maxwidth none
-
-# -
---rules hoistPatternLet
---patternlet inline
-
-# -
---rules unusedArguments
+--octalgrouping 4,8
+--patternlet hoist
+--ranges spaced
 --stripunusedargs always
-
-# -
---rules trailingSpace
+--swiftversion 4.2
 --trimwhitespace always
 
-# -
+
 --rules markTypes
 --groupedextension "MARK: - %t + %c"
 --typemark "MARK: - %t"
 --extensionmark "MARK: - %t + %c"
 --markextensions always
 
-# -
 --rules organizeDeclarations
 --markcategories false
---beforemarks
---organizetypes
 
-# -
---rules redundantSelf
+#--organizetypes class,actor,struct,enum
+#--classthreshold 1
+#--beforemarks struct, enum, typealias
+#--structthreshold 1
+#--lifecycle
+#--markcategories true
+#--organizetypes
+
 --self remove
 
-# -
+--lifecycle
+
 --rules modifierOrder
 --modifierorder final, open, public, private, required, convenience
 
-# - invisible for me
+#invisible for me
+--rules sortDeclarations
+--rules sortedImports
+--rules initCoderUnavailable
+
 --rules wrapArguments
 --wrapparameters after-first
 --wraparguments  after-first
@@ -135,7 +95,7 @@
 --wrapconditions after-first
 --wraptypealiases after-first
 
-# - unknown
---comments indent
---empty void
---swiftversion 4.2
+
+# rules
+
+# --disable isEmpty

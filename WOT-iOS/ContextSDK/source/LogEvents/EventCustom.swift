@@ -16,23 +16,21 @@ extension LogInspectorProtocol {
 
 public class EventCustom: LogEventProtocol {
 
-    public var message: String
-    public var eventType: LogEventType
-    public var name: String
-
     public required init(_ loggable: Loggable) {
         message = loggable.message
         eventType = loggable.type.type
         name = loggable.name
     }
+
+    public var message: String
+    public var eventType: LogEventType
+    public var name: String
+
 }
 
 // MARK: - LoggableType
 
 public class LoggableType: CustomStringConvertible {
-    public var name: String
-    public var type: LogEventType
-    public var description: String { return name }
     init(name: String, type: LogEventType) {
         self.name = name
         self.type = type
@@ -42,6 +40,11 @@ public class LoggableType: CustomStringConvertible {
         let convertedName = String(describing: type)
         self.init(name: convertedName, type: type)
     }
+
+    public var name: String
+    public var type: LogEventType
+
+    public var description: String { return name }
 }
 
 // MARK: - LogsDefault
@@ -61,6 +64,7 @@ extension Loggable {
 
     private enum LoggableError: Error, CustomStringConvertible {
         case notAnError
+
         var description: String {
             switch self {
             case .notAnError: return "Error is nil, but was logged"

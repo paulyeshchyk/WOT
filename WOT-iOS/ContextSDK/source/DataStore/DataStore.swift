@@ -9,14 +9,12 @@
 
 open class DataStore {
 
-    public typealias Context = ManagedObjectContextLookupProtocol.Context
-
-    open var appContext: Context
-
     public required init(appContext: Context) {
         self.appContext = appContext
         appContext.logInspector?.log(.initialization(type(of: self)))
     }
+
+    open var appContext: Context
 
     open func isClassValid(_: AnyObject) -> Bool {
         fatalError("has not been implemented")
@@ -25,6 +23,8 @@ open class DataStore {
     open func emptyFetchResult(appContext _: DataStore.Context) throws -> FetchResultProtocol {
         fatalError("has not been implemented")
     }
+
+    public typealias Context = ManagedObjectContextLookupProtocol.Context
 
     public enum DataStoreError: Error, CustomStringConvertible {
         case noKeysDefinedForClass(String)

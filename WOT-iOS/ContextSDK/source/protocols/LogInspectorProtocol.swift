@@ -11,6 +11,23 @@ import Foundation
 
 @objc
 public enum LogEventType: Int, CustomStringConvertible {
+    case error
+    case warning
+    case info
+    case custom
+    case sqlite
+    case performance
+    // ---
+    case lifeCycle
+    case http
+    case json
+    case logic
+    case mapping
+    case remoteFetch
+    case flow
+
+    public static var allValues: [LogEventType] { [.error, .lifeCycle, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .custom] }
+
     public var description: String {
         switch self {
         case .error: return "error"
@@ -30,22 +47,6 @@ public enum LogEventType: Int, CustomStringConvertible {
         }
     }
 
-    case error
-    case warning
-    case info
-    case custom
-    case sqlite
-    case performance
-    // ---
-    case lifeCycle
-    case http
-    case json
-    case logic
-    case mapping
-    case remoteFetch
-    case flow
-
-    public static var allValues: [LogEventType] { [.error, .lifeCycle, .http, .json, .info, .performance, .logic, .mapping, .sqlite, .remoteFetch, .flow, .custom] }
 }
 
 // MARK: - LogEventProtocol
@@ -67,9 +68,6 @@ public protocol LogInspectorContainerProtocol {
 // MARK: - Loggable
 
 public class Loggable {
-    var name: String
-    var type: LoggableType
-    var message: String
     public init(type: LoggableType, name: String, message: String) {
         self.type = type
         self.name = name.rightJustified(width: 10, truncate: true, spacer: " ")
@@ -80,6 +78,10 @@ public class Loggable {
         let convertedName = String(describing: type)
         self.init(type: type, name: convertedName, message: message)
     }
+
+    var name: String
+    var type: LoggableType
+    var message: String
 }
 
 // MARK: - LogInspectorProtocol

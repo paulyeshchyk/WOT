@@ -9,14 +9,15 @@
 
 public enum JSONValue {
 
-    public typealias KeyType = String
-
     case string(String)
     case int(Int)
     case double(Double)
     case bool(Bool)
     case json([KeyType: JSONValue])
     case array([JSONValue])
+
+    public typealias KeyType = String
+
 }
 
 // MARK: - JSONValue + Encodable
