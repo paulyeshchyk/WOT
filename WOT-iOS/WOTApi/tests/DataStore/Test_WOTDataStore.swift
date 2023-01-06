@@ -11,8 +11,9 @@ import XCTest
 
 // MARK: - tempLogInspectorContainer
 
-private class tempLogInspectorContainer: LogInspectorContainerProtocol {
+private class tempLogInspectorContainer: LogInspectorContainerProtocol, DataStoreContainerProtocol {
     var logInspector: LogInspectorProtocol?
+    var dataStore: DataStoreProtocol?
 }
 
 // MARK: - Test_DataStore

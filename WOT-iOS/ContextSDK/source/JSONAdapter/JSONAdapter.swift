@@ -72,8 +72,6 @@ public extension JSONAdapter {
             return
         }
 
-        let jsonStartParsingDate = Date()
-
         let dispatchGroup = DispatchGroup()
 
         for key in json.keys {
@@ -119,39 +117,28 @@ public extension JSONAdapter {
         }
     }
 
-    private func findOrCreateObject(json: JSONCollectionProtocol?, predicate: ContextPredicateProtocol, callback externalCallback: @escaping FetchResultCompletion) throws {
-        let currentThread = Thread.current
-        guard currentThread.isMainThread else {
-            throw JSONAdapterError.notMainThread
-        }
-
-        let localCallback: FetchResultCompletion = { fetchResult, error in
-            DispatchQueue.main.async {
-                externalCallback(fetchResult, error)
-            }
-        }
-
+    private func findOrCreateObject(json: JSONCollectionProtocol?, predicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) throws {
         let nspredicate = predicate[.primary]?.predicate
-        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, completion: { [weak self] fetchResult, error in
-            guard let self = self else {
-                localCallback(fetchResult, JSONAdapterError.adapterIsNil)
-                return
-            }
+        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, completion: { fetchResult, error in
+            #warning("!!!make it weak!!!")
+//            guard let self = self else {
+//                completion(fetchResult, JSONAdapterError.adapterIsNil)
+//                return
+//            }
             if let error = error {
-                localCallback(fetchResult, error)
+                completion(fetchResult, error)
                 return
             }
             guard let fetchResult = fetchResult else {
-                localCallback(nil, JSONAdapterError.fetchResultIsNotPresented)
+                completion(nil, JSONAdapterError.fetchResultIsNotPresented)
                 return
             }
 
-            let jsonStartParsingDate = Date()
             self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, inContext: self.appContext) { fetchResult, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.error(error), sender: self)
                 }
-                localCallback(fetchResult, error)
+                completion(fetchResult, JSONAdapterError.fetchResultIsNotPresented)
             }
         })
     }
