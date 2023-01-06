@@ -46,7 +46,8 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
             let result = try decodedObject(jsonDecoder: decoder, from: data)
             didFinish(request: request, data: result, error: nil, completion: completion)
         } catch {
-            didFinish(request: request, data: nil, error: error, completion: completion)
+            let exception = JSONAdapterError.responseError(request, error)
+            didFinish(request: request, data: nil, error: exception, completion: completion)
         }
     }
 
@@ -66,7 +67,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 public extension JSONAdapter {
     func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
         guard error == nil, let json = data else {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            appContext.logInspector?.logEvent(EventError(error), sender: self)
             completion?(request, error)
             return
         }
@@ -163,6 +164,7 @@ private enum JSONAdapterError: Error, CustomStringConvertible {
     case fetchResultIsNotPresented
     case jsonByKeyWasNotFound(JSON, AnyHashable)
     case notSupportedType(AnyClass)
+    case responseError(RequestProtocol, Error)
 
     public var description: String {
         switch self {
@@ -171,6 +173,7 @@ private enum JSONAdapterError: Error, CustomStringConvertible {
         case .jsonByKeyWasNotFound(let json, let key): return "\(type(of: self)): json was not found for key:\(key)); {\(json)}"
         case .notMainThread: return "\(type(of: self)): Not main thread"
         case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
+        case .responseError(let request, let error): return "\(String(describing: error)); \n \(String(describing: request))"
         }
     }
 }

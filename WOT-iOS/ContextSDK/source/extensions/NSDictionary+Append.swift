@@ -30,13 +30,15 @@ public extension Dictionary {
     }
 }
 
-public extension Dictionary {
-    func debugOutput() -> String {
+extension Dictionary where Key == AnyHashable, Value == Any {
+    public func debugOutput() -> String {
+        guard let jsonValue = JSONValue(any: self) else {
+            return "Invalid json"
+        }
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: self, options: [.prettyPrinted])
-            return String(data: jsonData, encoding: .utf8)!
+            return try jsonValue.encode()?.unescaped ?? "Encoding error: <unknown>"
         } catch {
-            return "Cant make output. Fix the error: \(String(describing: error))"
+            return "Encoding error: \(error)"
         }
     }
 }

@@ -12,8 +12,9 @@ import WOTPivot
 // MARK: - PivotViewController
 
 open class PivotViewController: UIViewController, ContextControllerProtocol {
-
     @IBOutlet open var collectionView: UICollectionView?
+
+    override open var prefersStatusBarHidden: Bool { false }
 
     @IBOutlet open var flowLayout: WGPivotColoredFlowLayout? {
         didSet {
