@@ -11,6 +11,7 @@ open class DataStore {
 
     public required init(appContext: Context) {
         self.appContext = appContext
+        appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 
     open func isClassValid(_: AnyObject) -> Bool {
@@ -100,9 +101,6 @@ extension DataStore: DataStoreProtocol {
             }
         }
 
-        //
-        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: modelClass)) - \(String(describing: nspredicate))"), sender: self)
-
         guard isClassValid(modelClass) else {
             do {
                 let error = DataStoreError.notManagedObjectType(modelClass)
@@ -119,8 +117,9 @@ extension DataStore: DataStoreProtocol {
             guard let self = self else {
                 return
             }
+
             guard let managedObject = managedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: nspredicate) else {
-                self.appContext.logInspector?.logEvent(EventError(DataStoreError.objectNotCreated(modelClass), details: self), sender: nil)
+                self.appContext.logInspector?.log(.error(DataStoreError.objectNotCreated(modelClass)), sender: self)
                 return
             }
             self.stash(managedObjectContext: managedObjectContext) { context, error in
@@ -136,13 +135,10 @@ extension DataStore: DataStoreProtocol {
     }
 
     public func fetch(modelClass: AnyObject, contextPredicate: ContextPredicateProtocol, managedObjectContext: ManagedObjectContextProtocol, completion: @escaping FetchResultCompletion) {
-        //
-        appContext.logInspector?.logEvent(EventLocalFetch("\(String(describing: modelClass)) - \(String(describing: contextPredicate))"), sender: self)
-
         guard isClassValid(modelClass) else {
             do {
                 let error = DataStoreError.clazzIsNotSupportable(String(describing: modelClass))
-                appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                appContext.logInspector?.log(.error(error), sender: self)
                 let result = try emptyFetchResult(appContext: appContext)
                 completion(result, error)
             } catch {

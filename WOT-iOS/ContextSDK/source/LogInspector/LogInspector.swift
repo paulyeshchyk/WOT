@@ -17,9 +17,13 @@ public class LogInspector: NSObject, LogInspectorProtocol {
         prioritiesToLog = priorities
     }
 
+    public func log(_: Loggable, sander _: Any?) {
+        //
+    }
+
     public func logEvent(_ event: LogEventProtocol?, sender _: Any?) {
-        guard isLoggable(event) else { return }
         guard let event = event else { return }
+        guard isLoggable(event) else { return }
         event.eventType.print(event: event, inOutputs: output)
     }
 
@@ -39,7 +43,6 @@ extension LogEventType {
         case .error: inOutputs?.forEach { $0.error(event.message, context: event.name) }
         case .info: inOutputs?.forEach { $0.info(event.message, context: event.name) }
         case .warning: inOutputs?.forEach { $0.warning(event.message, context: event.name) }
-        case .http: inOutputs?.forEach { $0.info(event.message, context: event.name) }
         default: inOutputs?.forEach { $0.debug(event.message, context: event.name) }
         }
     }
