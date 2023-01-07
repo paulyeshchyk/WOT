@@ -32,17 +32,17 @@ class Syndicate {
         let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
         mappingCoordinatorDecodeHelper.jsonExtraction = jsonExtraction
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
-            managedObjectLinkerHelper.link(fetchResult, error: error)
+            managedObjectLinkerHelper.run(fetchResult, error: error)
         }
 
         let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
         datastoreFetchHelper.modelClass = modelClass
         datastoreFetchHelper.jsonExtraction = jsonExtraction
         datastoreFetchHelper.completion = { fetchResult, error in
-            mappingCoordinatorDecodeHelper.decode(fetchResult, error: error)
+            mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
         }
 
-        datastoreFetchHelper.fetch()
+        datastoreFetchHelper.run()
     }
 
     private enum SyndicateError: Error, CustomStringConvertible {
@@ -71,7 +71,7 @@ private class ManagedObjectLinkerHelper {
     let appContext: Context
     var managedObjectLinker: ManagedObjectLinkerProtocol?
 
-    func link(_ fetchResult: FetchResultProtocol?, error: Error?) {
+    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
         guard let fetchResult = fetchResult, error == nil else {
             completion?(fetchResult, error ?? ManagedObjectLinkerHelperError.fetchResultIsNotPresented)
             return
@@ -114,7 +114,7 @@ private class MappingCoordinatorDecodeHelper {
     var managedObjectCreator: ManagedObjectLinkerProtocol?
     var managedObjectExtractor: ManagedObjectExtractable?
 
-    func decode(_ fetchResult: FetchResultProtocol?, error: Error?) {
+    func run(_ fetchResult: FetchResultProtocol?, error: Error?) {
         guard let fetchResult = fetchResult, error == nil else {
             completion?(fetchResult, error ?? MappingCoordinatorDecodeHelperError.fetchResultIsNotPresented)
             return
@@ -167,7 +167,7 @@ private class DatastoreFetchHelper {
         jsonExtraction?.requestPredicate
     }
 
-    func fetch() {
+    func run() {
         guard let jsonExtraction = jsonExtraction else {
             completion?(nil, DatastoreFetchHelperError.jsonExtractionIsNotDefined)
             return
