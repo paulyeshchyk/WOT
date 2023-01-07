@@ -19,7 +19,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtrac
 
     open func extractJSON(from _: JSON) -> JSON? { return nil }
 
-    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion) {
+    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping ManagedObjectLinkerCompletion) {
         guard let link = fetchResult.managedObject() as? ManagedObjectLinkable else {
             completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectLinkHostable.self)))
             return

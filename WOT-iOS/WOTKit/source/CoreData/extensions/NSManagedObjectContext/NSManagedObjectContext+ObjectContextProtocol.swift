@@ -56,8 +56,6 @@ extension NSManagedObjectContext: ManagedObjectContextProtocol {
             return
         }
 
-        let uuid = UUID()
-        let initiationDate = Date()
         appContext.logInspector?.log(.sqlite(message: "save-start"), sender: self)
         performAndWait {
             do {

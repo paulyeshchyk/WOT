@@ -8,7 +8,7 @@
 
 public extension VehicleprofileAmmoDamage {
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer _: ManagedObjectContextContainerProtocol, appContext _: JSONDecodableProtocol.Context?) throws {
         guard let ammoDamageJSON = map.jsonCollection.data() as? [Any] else {
             throw JSONManagedObjectMapError.notAnArray(map)
         }

@@ -13,6 +13,8 @@ import ContextSDK
 @objc
 open class RequestManager: NSObject {
 
+    // MARK: Requestor -> Adaptator -> Storer -> Mapper -> Linker
+
     deinit {
         //
     }

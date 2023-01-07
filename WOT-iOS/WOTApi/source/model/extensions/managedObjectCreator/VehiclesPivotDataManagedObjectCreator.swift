@@ -36,7 +36,7 @@ public class VehiclesPivotDataManagedObjectCreator: ManagedObjectLinker {
         return from
     }
 
-    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion) {
+    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping ManagedObjectLinkerCompletion) {
         // MARK: stash
 
         appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
