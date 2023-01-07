@@ -65,9 +65,9 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 }
 
 public extension JSONAdapter {
-    func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion fc: ResponseAdapterProtocol.OnComplete?) {
+    func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
         guard error == nil, let json = data else {
-            fc?(request, error ?? JSONAdapterError.jsonIsNil)
+            completion?(request, error ?? JSONAdapterError.jsonIsNil)
             return
         }
 
@@ -80,178 +80,27 @@ public extension JSONAdapter {
                 let contextPredicate = request.contextPredicate
                 let extraction = try jsonExtractor.extract(json: json, key: key, forClazz: modelClass, contextPredicate: contextPredicate)
 
-                let syndicate = Syndicate(appContext: appContext, modelClass: modelClass, jsonExtraction: extraction)
+                let syndicate = Syndicate(appContext: appContext)
+                syndicate.modelClass = modelClass
+                syndicate.jsonExtraction = extraction
                 syndicate.managedStoreLinker = managedObjectLinker
                 syndicate.completion = { _, error in
                     if let error = error {
-                        fc?(request, error)
+                        completion?(request, error)
                     }
                     dispatchGroup.leave()
                 }
                 syndicate.run()
 
             } catch {
-                fc?(request, error)
+                completion?(request, error)
                 dispatchGroup.leave()
                 appContext.logInspector?.log(.error(error), sender: self)
             }
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            fc?(request, nil)
-        }
-    }
-}
-
-// MARK: - Syndicate
-
-private class Syndicate {
-    init(appContext: Syndicate.Context, modelClass: PrimaryKeypathProtocol.Type, jsonExtraction: JSONExtraction) {
-        self.appContext = appContext
-        self.jsonExtraction = jsonExtraction
-        self.modelClass = modelClass
-    }
-
-    typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol
-
-    var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var managedStoreLinker: ManagedObjectLinkerProtocol?
-    let appContext: Syndicate.Context
-    let jsonExtraction: JSONExtraction
-    let modelClass: PrimaryKeypathProtocol.Type
-
-    func run() {
-        guard let managedObjectLinker = managedStoreLinker else {
-            completion?(nil, nil)
-            return
-        }
-        do {
-            let jsonElementLinker = JSONElementLinker(appContext: appContext, managedObjectLinker: managedObjectLinker)
-            jsonElementLinker.completion = completion
-
-            let jsonElementDecoder = JSONElementDecoder(appContext: appContext, jSON: jsonExtraction.json)
-            jsonElementDecoder.completion = { fetchResult, error in
-                jsonElementLinker.link(fetchResult, error: error)
-            }
-
-            let jsonElementParser = JSONElementParser(appContext: appContext, jsonExtractiion: jsonExtraction, modelClass: modelClass)
-            jsonElementParser.completion = { fetchResult, error in
-                jsonElementDecoder.predicate = jsonElementParser.predicate
-                jsonElementDecoder.decode(fetchResult, error: error)
-            }
-
-            try jsonElementParser.parse()
-        } catch {
-            completion?(nil, error)
-        }
-    }
-}
-
-// MARK: - JSONElementLinker
-
-private class JSONElementLinker {
-    init(appContext: DataStoreContainerProtocol, managedObjectLinker: ManagedObjectLinkerProtocol) {
-        self.appContext = appContext
-        self.managedObjectLinker = managedObjectLinker
-    }
-
-    var completion: ((FetchResultProtocol?, Error?) -> Void)?
-
-    let appContext: DataStoreContainerProtocol
-    let managedObjectLinker: ManagedObjectLinkerProtocol
-
-    func link(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        guard let fetchResult = fetchResult, error == nil else {
-            completion?(fetchResult, error ?? JSONElementLinkerError.fetchResultIsNotPresented)
-            return
-        }
-        managedObjectLinker.process(fetchResult: fetchResult, appContext: appContext) { fetchResult, error in
-            self.completion?(fetchResult, error)
-        }
-    }
-
-    private enum JSONElementLinkerError: Error, CustomStringConvertible {
-        case fetchResultIsNotPresented
-
-        public var description: String {
-            switch self {
-            case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
-            }
-        }
-    }
-}
-
-// MARK: - JSONElementDecoder
-
-private class JSONElementDecoder {
-    init(appContext: (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol), jSON: JSONCollectionProtocol?) {
-        self.appContext = appContext
-        self.jSON = jSON
-    }
-
-    let appContext: (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol)
-    var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    let jSON: JSONCollectionProtocol?
-    var predicate: ContextPredicateProtocol?
-    var managedObjectCreator: ManagedObjectLinkerProtocol?
-    var managedObjectExtractor: ManagedObjectExtractable?
-
-    func decode(_ fetchResult: FetchResultProtocol?, error: Error?) {
-        guard let fetchResult = fetchResult, error == nil else {
-            completion?(fetchResult, error ?? JSONElementDecoderError.fetchResultIsNotPresented)
-            return
-        }
-        appContext.mappingCoordinator?.decode(using: jSON, fetchResult: fetchResult, predicate: predicate!, managedObjectCreator: managedObjectCreator, managedObjectExtractor: managedObjectExtractor, completion: { fetchResult, error in
-            self.completion?(fetchResult, error)
-        })
-    }
-
-    private enum JSONElementDecoderError: Error, CustomStringConvertible {
-        case fetchResultIsNotPresented
-
-        public var description: String {
-            switch self {
-            case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
-            }
-        }
-    }
-}
-
-// MARK: - JSONElementParser
-
-private class JSONElementParser {
-    //
-    init(appContext: (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol), jsonExtractiion: JSONExtraction, modelClass: PrimaryKeypathProtocol.Type) {
-        self.jsonExtractiion = jsonExtractiion
-        self.modelClass = modelClass
-        self.appContext = appContext
-    }
-
-    let appContext: (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol)
-    let jsonExtractiion: JSONExtraction
-    let modelClass: PrimaryKeypathProtocol.Type
-
-    var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var linkingBlock: ((FetchResultProtocol) -> Void)?
-
-    var predicate: ContextPredicateProtocol {
-        jsonExtractiion.requestPredicate
-    }
-
-    func parse() throws {
-        let nspredicate = predicate[.primary]?.predicate
-        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, managedObjectContext: nil, completion: { fetchResult, error in
-            self.completion?(fetchResult, error)
-        })
-    }
-
-    private enum JSONElementParserError: Error, CustomStringConvertible {
-        case fetchResultIsNotPresented
-
-        public var description: String {
-            switch self {
-            case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
-            }
+            completion?(request, nil)
         }
     }
 }

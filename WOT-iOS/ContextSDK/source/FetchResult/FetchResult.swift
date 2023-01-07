@@ -6,6 +6,7 @@
 //
 
 public typealias FetchResultCompletion = (FetchResultProtocol?, Error?) -> Void
+public typealias FetchResultThrowingCompletion = (FetchResultProtocol?, Error?) throws -> Void
 
 // MARK: - FetchResultContainerProtocol
 
