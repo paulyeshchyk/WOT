@@ -5,17 +5,6 @@
 //  Created by Paul on 26.12.22.
 //
 
-// MARK: - FetchStatus
-
-@objc
-public enum FetchStatus: Int {
-    case none
-    case fetched
-    case inserted
-    case updated
-    case recovered
-}
-
 // MARK: - FetchResultProtocol
 
 @objc

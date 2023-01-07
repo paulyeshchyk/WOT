@@ -53,6 +53,7 @@
 		DA81E5212952FFDC00C60F31 /* Coding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E51F2952FFDC00C60F31 /* Coding.swift */; };
 		DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */; };
 		DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */; };
+		DAA3A5432969994800430492 /* ManagedObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */; };
 		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
 		DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D6295DBB66005BBA72 /* LogInspector.swift */; };
 		DACDB0DB295ED7A1005BBA72 /* MappingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0DA295ED7A1005BBA72 /* MappingCoordinator.swift */; };
@@ -142,6 +143,7 @@
 		DA81E51F2952FFDC00C60F31 /* Coding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coding.swift; sourceTree = "<group>"; };
 		DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Decode.swift"; sourceTree = "<group>"; };
 		DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderContainer.swift; sourceTree = "<group>"; };
+		DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectProtocol.swift; sourceTree = "<group>"; };
 		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
 		DACDB0D6295DBB66005BBA72 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
 		DACDB0DA295ED7A1005BBA72 /* MappingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingCoordinator.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				DACDB10B295EDE08005BBA72 /* JSONDecodingProtocol.swift */,
 				DACDB0F0295EDC95005BBA72 /* LogInspectorProtocol.swift */,
 				DACDB0EF295EDC95005BBA72 /* ManagedObjectContextProtocol.swift */,
+				DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */,
 				DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */,
 				DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */,
 				DA0432A429633B400092C891 /* ManagedObjectLinkable.swift */,
@@ -682,6 +685,7 @@
 				DACDB0FA295EDC96005BBA72 /* URLEncodedProtocol.swift in Sources */,
 				DA0E80712950933200B44CC6 /* FetchResult.swift in Sources */,
 				DACDB10C295EDE08005BBA72 /* JSONDecodingProtocol.swift in Sources */,
+				DAA3A5432969994800430492 /* ManagedObjectProtocol.swift in Sources */,
 				DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */,
 				DACDB0FB295EDC96005BBA72 /* MD5Protocol.swift in Sources */,
 				DACDB102295EDC96005BBA72 /* ManagedObjectContextProtocol.swift in Sources */,
