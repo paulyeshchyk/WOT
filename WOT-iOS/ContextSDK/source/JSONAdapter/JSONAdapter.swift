@@ -67,7 +67,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 public extension JSONAdapter {
     func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
         guard error == nil, let json = data else {
-            completion?(request, error)
+            completion?(request, error ?? JSONAdapterError.jsonIsNil)
             return
         }
 
@@ -76,76 +76,30 @@ public extension JSONAdapter {
         for key in json.keys {
             dispatchGroup.enter()
             //
-            do {
-                let contextPredicate = request.contextPredicate
-
-                #warning("refactoring initial step")
-                let extraction = try jsonExtractor.extract(json: json, key: key, forClazz: modelClass, contextPredicate: contextPredicate)
-
-                try findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
-                    guard let self = self, let fetchResult = fetchResult else {
-                        dispatchGroup.leave()
-                        completion?(request, error)
-                        return
-                    }
-
-                    if let error = error {
-                        self.appContext.logInspector?.log(.error(error), sender: self)
-                        dispatchGroup.leave()
-                        completion?(request, error)
-                        return
-                    }
-
-                    self.managedObjectLinker.process(fetchResult: fetchResult, appContext: self.appContext) { _, error in
-                        if let error = error {
-                            self.appContext.logInspector?.log(.error(error), sender: self)
-                        }
-                        completion?(request, error)
-                        dispatchGroup.leave()
-                    }
+            let syndicate = Syndicate(appContext: appContext, json: json, key: key)
+            syndicate.contextPredicate = request.contextPredicate
+            syndicate.modelClass = modelClass
+            syndicate.managedStoreLinker = managedObjectLinker
+            syndicate.jsonExtractor = jsonExtractor
+            syndicate.completion = { _, error in
+                if let error = error {
+                    completion?(request, error)
                 }
-            } catch {
                 dispatchGroup.leave()
-                completion?(request, error)
-                appContext.logInspector?.log(.error(error), sender: self)
             }
+            syndicate.run()
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            completion?(request, error)
+            completion?(request, nil)
         }
-    }
-
-    private func findOrCreateObject(json: JSONCollectionProtocol?, predicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) throws {
-        let nspredicate = predicate[.primary]?.predicate
-        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, managedObjectContext: nil, completion: { fetchResult, error in
-            #warning("!!!make it weak!!!")
-//            guard let self = self else {
-//                completion(fetchResult, JSONAdapterError.adapterIsNil)
-//                return
-//            }
-            if let error = error {
-                completion(fetchResult, error)
-                return
-            }
-            guard let fetchResult = fetchResult else {
-                completion(nil, JSONAdapterError.fetchResultIsNotPresented)
-                return
-            }
-
-            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, appContext: self.appContext) { fetchResult, error in
-                if let error = error {
-                    self.appContext.logInspector?.log(.error(error), sender: self)
-                }
-                completion(fetchResult, error)
-            }
-        })
     }
 }
 
 // MARK: - JSONAdapterError
 
 private enum JSONAdapterError: Error, CustomStringConvertible {
+    case jsonIsNil
     case dataIsNil
     case adapterIsNil
     case notMainThread
@@ -157,6 +111,7 @@ private enum JSONAdapterError: Error, CustomStringConvertible {
     public var description: String {
         switch self {
         case .adapterIsNil: return "\(type(of: self)): Adapter is nil"
+        case .jsonIsNil: return "\(type(of: self)): JSON is nil"
         case .dataIsNil: return "\(type(of: self)): Data is nil"
         case .notSupportedType(let clazz): return "\(type(of: self)): \(type(of: clazz)) can't be adapted"
         case .jsonByKeyWasNotFound(let json, let key): return "\(type(of: self)): json was not found for key:\(key)); {\(json)}"
