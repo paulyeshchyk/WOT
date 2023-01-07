@@ -66,5 +66,5 @@ public typealias ManagedObjectLinkerCompletion = (FetchResultProtocol, Error?) -
 @objc
 public protocol ManagedObjectLinkerProtocol: MD5Protocol {
     init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol)
-    func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping ManagedObjectLinkerCompletion)
+    func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion)
 }

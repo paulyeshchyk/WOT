@@ -8,6 +8,8 @@
 public typealias ObjectContextCompletion = (ManagedObjectContextProtocol) -> Void
 public typealias ThrowableCompletion = (Error?) -> Void
 public typealias ThrowableContextCompletion = (ManagedObjectContextProtocol?, Error?) -> Void
+public typealias DatastoreManagedObjectCompletion = (ManagedObjectProtocol, Error?) -> Void
+public typealias DatastoreFetchResultCompletion = (FetchResultProtocol, Error?) -> Void
 
 // MARK: - DataStoreContainerProtocol
 
@@ -30,11 +32,17 @@ public protocol DataStoreProtocol {
     @objc func fetchResultController(fetchRequest: AnyObject, managedObjectContext: ManagedObjectContextProtocol) throws -> AnyObject
     @objc func mainContextFetchResultController(fetchRequest: AnyObject, sectionNameKeyPath: String?, cacheName name: String?) throws -> AnyObject
 
-    func fetch(modelClass: AnyObject, contextPredicate: ContextPredicateProtocol, managedObjectContext: ManagedObjectContextProtocol, completion: @escaping FetchResultCompletion)
+    func fetch(modelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol, managedObjectContext: ManagedObjectContextProtocol, completion: @escaping FetchResultCompletion)
     func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion)
 
-    func stash(managedObjectContext: ManagedObjectContextProtocol?, completion: @escaping ThrowableContextCompletion)
+    func stash(managedObject: ManagedObjectProtocol, completion: @escaping DatastoreManagedObjectCompletion)
+    func stash(fetchResult: FetchResultProtocol, completion: @escaping DatastoreFetchResultCompletion)
+    func stash(managedObjectContext: ManagedObjectContextProtocol, completion: @escaping ThrowableContextCompletion)
     func stash(block: @escaping ThrowableContextCompletion)
+
+    //
+    func isClassValid(_: AnyObject) -> Bool
+    func emptyFetchResult() throws -> FetchResultProtocol
 }
 
 extension DataStoreProtocol {

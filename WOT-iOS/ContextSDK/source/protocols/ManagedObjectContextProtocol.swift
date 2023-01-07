@@ -45,18 +45,3 @@ public protocol ManagedObjectContextDeleteProtocol: AnyObject {
     func deleteAllObjects() throws
     func deleteAllObjectsForEntity(entity: AnyObject) throws
 }
-
-// MARK: - ManagedObjectProtocol
-
-@objc
-public protocol ManagedObjectProtocol: FetchResultContainerProtocol {
-    var entityName: String { get }
-    var fetchStatus: FetchStatus { get }
-    var managedObjectID: AnyObject { get }
-}
-
-extension ManagedObjectProtocol {
-    public func fetchResult(context: ManagedObjectContextProtocol, predicate: NSPredicate? = nil, fetchStatus: FetchStatus? = nil) -> FetchResultProtocol {
-        return FetchResult(objectID: managedObjectID, inContext: context, predicate: predicate, fetchStatus: fetchStatus ?? self.fetchStatus)
-    }
-}

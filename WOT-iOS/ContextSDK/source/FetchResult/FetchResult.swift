@@ -38,7 +38,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
 
     override public var description: String {
         let entityName = managedObject()?.entityName ?? ""
-        return "Context: \(managedObjectContext.name ?? ""); \(entityName)"
+        return "<\(type(of: self)): context-name \(managedObjectContext.name ?? ""), entity-name \(entityName)>"
     }
 
     public func copy(with _: NSZone? = nil) -> Any {

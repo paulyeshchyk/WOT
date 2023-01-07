@@ -14,14 +14,6 @@ open class DataStore {
         appContext.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 
-    open func isClassValid(_: AnyObject) -> Bool {
-        fatalError("has not been implemented")
-    }
-
-    open func emptyFetchResult() throws -> FetchResultProtocol {
-        fatalError("has not been implemented")
-    }
-
     public enum DataStoreError: Error, CustomStringConvertible {
         case noKeysDefinedForClass(String)
         case clazzIsNotSupportable(String)
@@ -51,6 +43,14 @@ open class DataStore {
 
 extension DataStore: DataStoreProtocol {
 
+    open func isClassValid(_: AnyObject) -> Bool {
+        fatalError("has not been implemented")
+    }
+
+    open func emptyFetchResult() throws -> FetchResultProtocol {
+        fatalError("has not been implemented")
+    }
+
     open func newPrivateContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")
     }
@@ -79,18 +79,29 @@ extension DataStore: DataStoreProtocol {
         }
     }
 
+    public func stash(managedObject: ManagedObjectProtocol, completion: @escaping DatastoreManagedObjectCompletion) {
+        guard let managedObjectContext = managedObject.context else {
+            completion(managedObject, DataStoreStashError.contextNotFound(managedObject))
+            return
+        }
+        managedObjectContext.save(appContext: appContext, completion: { error in
+            completion(managedObject, error)
+        })
+    }
+
+    public func stash(fetchResult: FetchResultProtocol, completion: @escaping DatastoreFetchResultCompletion) {
+        fetchResult.managedObjectContext.save(appContext: appContext) { error in
+            completion(fetchResult, error)
+        }
+    }
+
     public func stash(block: @escaping ThrowableContextCompletion) {
         stash(managedObjectContext: workingContext(), completion: block)
     }
 
-    public func stash(managedObjectContext: ManagedObjectContextProtocol?, completion: @escaping ThrowableContextCompletion) {
-        guard let objectContext = managedObjectContext else {
-            completion(nil, DataStoreError.contextNotDefined)
-            return
-        }
-
-        objectContext.save(appContext: appContext) { error in
-            completion(objectContext, error)
+    public func stash(managedObjectContext: ManagedObjectContextProtocol, completion: @escaping ThrowableContextCompletion) {
+        managedObjectContext.save(appContext: appContext) { error in
+            completion(managedObjectContext, error)
         }
     }
 
@@ -135,7 +146,7 @@ extension DataStore: DataStoreProtocol {
         }
     }
 
-    public func fetch(modelClass: AnyObject, contextPredicate: ContextPredicateProtocol, managedObjectContext: ManagedObjectContextProtocol, completion: @escaping FetchResultCompletion) {
+    public func fetch(modelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol, managedObjectContext: ManagedObjectContextProtocol, completion: @escaping FetchResultCompletion) {
         guard isClassValid(modelClass) else {
             do {
                 let error = DataStoreError.clazzIsNotSupportable(String(describing: modelClass))
@@ -171,6 +182,18 @@ extension DataStore: DataStoreProtocol {
                     completion(nil, error)
                 }
             }
+        }
+    }
+}
+
+// MARK: - DataStoreStashError
+
+private enum DataStoreStashError: Error, CustomStringConvertible {
+    case contextNotFound(ManagedObjectProtocol)
+
+    var description: String {
+        switch self {
+        case .contextNotFound(let managedObject): return "\(type(of: self)) Context not found for \(String(describing: managedObject))"
         }
     }
 }

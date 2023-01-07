@@ -36,10 +36,10 @@ public class VehiclesTreeManagedObjectCreator: ManagedObjectLinker {
         return from
     }
 
-    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping ManagedObjectLinkerCompletion) {
+    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
         // MARK: stash
 
-        appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
+        appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
             completion(fetchResult, error)
         }
     }
