@@ -67,7 +67,6 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 public extension JSONAdapter {
     func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
         guard error == nil, let json = data else {
-            appContext.logInspector?.log(.error(error!), sender: self)
             completion?(request, error)
             return
         }
@@ -119,7 +118,7 @@ public extension JSONAdapter {
 
     private func findOrCreateObject(json: JSONCollectionProtocol?, predicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) throws {
         let nspredicate = predicate[.primary]?.predicate
-        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, completion: { fetchResult, error in
+        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, managedObjectContext: nil, completion: { fetchResult, error in
             #warning("!!!make it weak!!!")
 //            guard let self = self else {
 //                completion(fetchResult, JSONAdapterError.adapterIsNil)
@@ -134,11 +133,11 @@ public extension JSONAdapter {
                 return
             }
 
-            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, inContext: self.appContext) { fetchResult, error in
+            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, appContext: self.appContext) { fetchResult, error in
                 if let error = error {
                     self.appContext.logInspector?.log(.error(error), sender: self)
                 }
-                completion(fetchResult, JSONAdapterError.fetchResultIsNotPresented)
+                completion(fetchResult, error)
             }
         })
     }
@@ -159,11 +158,11 @@ private enum JSONAdapterError: Error, CustomStringConvertible {
         switch self {
         case .adapterIsNil: return "\(type(of: self)): Adapter is nil"
         case .dataIsNil: return "\(type(of: self)): Data is nil"
-        case .notSupportedType(let clazz): return "\(type(of: self)): \(type(of: clazz)) can't be adopted"
+        case .notSupportedType(let clazz): return "\(type(of: self)): \(type(of: clazz)) can't be adapted"
         case .jsonByKeyWasNotFound(let json, let key): return "\(type(of: self)): json was not found for key:\(key)); {\(json)}"
         case .notMainThread: return "\(type(of: self)): Not main thread"
         case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
-        case .responseError(let request, let error): return "\(String(describing: error)); \n \(String(describing: request))"
+        case .responseError(let request, let error): return "[\(String(describing: request))]: \(String(describing: error))"
         }
     }
 }

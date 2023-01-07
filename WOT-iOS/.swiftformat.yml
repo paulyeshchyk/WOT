@@ -85,7 +85,12 @@
 
 #invisible for me
 --rules sortDeclarations
+
 --rules sortedImports
+--importgrouping alpha
+
+--rules duplicateImports
+
 --rules initCoderUnavailable
 
 --rules wrapArguments

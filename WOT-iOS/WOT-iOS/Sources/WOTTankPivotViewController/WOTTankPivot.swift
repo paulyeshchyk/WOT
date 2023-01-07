@@ -143,7 +143,7 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         super.loadModel()
 
         do {
-            try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self)
+            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext, listener: self)
         } catch {
             appContext.logInspector?.log(.error(error), sender: self)
         }

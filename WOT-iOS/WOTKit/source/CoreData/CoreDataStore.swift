@@ -18,10 +18,12 @@ open class CoreDataStore: DataStore {
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { fatalError("has not been implemented") }
 
+    @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
         CoreDataStore.privateQueueConcurrencyContext(parent: mainContext)
     }
 
+    @objc
     override public func workingContext() -> ManagedObjectContextProtocol {
         return mainContext
     }
@@ -49,7 +51,7 @@ open class CoreDataStore: DataStore {
     }
 
     override public func emptyFetchResult() throws -> FetchResultProtocol {
-        let inManagedObjectContext = appContext.dataStore?.workingContext()
+        let inManagedObjectContext = workingContext()
         return try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
     }
 

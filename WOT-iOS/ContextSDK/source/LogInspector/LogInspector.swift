@@ -21,10 +21,10 @@ public class LogInspector: NSObject, LogInspectorProtocol {
         //
     }
 
-    public func logEvent(_ event: LogEventProtocol?, sender _: Any?) {
+    public func logEvent(_ event: LogEventProtocol?, sender: Any?) {
         guard let event = event else { return }
         guard isLoggable(event) else { return }
-        event.eventType.print(event: event, inOutputs: output)
+        event.eventType.print(event: event, sender: sender, inOutputs: output)
     }
 
     private var prioritiesToLog: [LogEventType]?
@@ -38,12 +38,19 @@ public class LogInspector: NSObject, LogInspectorProtocol {
 }
 
 extension LogEventType {
-    func print(event: LogEventProtocol, inOutputs: [LOGOutputProtocol]?) {
+    func print(event: LogEventProtocol, sender: Any?, inOutputs: [LOGOutputProtocol]?) {
+        let name = event.name
+        let message: String
+        if let sender = sender {
+            message = "\(event.message); sender: <\(type(of: sender))>"
+        } else {
+            message = "\(event.message); sender: <unknown>"
+        }
         switch self {
-        case .error: inOutputs?.forEach { $0.error(event.message, context: event.name) }
-        case .info: inOutputs?.forEach { $0.info(event.message, context: event.name) }
-        case .warning: inOutputs?.forEach { $0.warning(event.message, context: event.name) }
-        default: inOutputs?.forEach { $0.debug(event.message, context: event.name) }
+        case .error: inOutputs?.forEach { $0.error(message, context: name) }
+        case .info: inOutputs?.forEach { $0.info(message, context: name) }
+        case .warning: inOutputs?.forEach { $0.warning(message, context: name) }
+        default: inOutputs?.forEach { $0.debug(message, context: name) }
         }
     }
 }

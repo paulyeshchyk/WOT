@@ -14,7 +14,7 @@ extension NSManagedObject: ManagedObjectProtocol {
     public var fetchStatus: FetchStatus { isInserted ? .inserted : .fetched }
     public var context: ManagedObjectContextProtocol? { managedObjectContext }
 
-    public func fetchResult(objectID: AnyObject?, context: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol {
-        return FetchResult(objectID: objectID, inContext: context, predicate: predicate, fetchStatus: fetchStatus)
+    public func fetchResult(objectID: AnyObject?, managedObjectContext: ManagedObjectContextProtocol, predicate: NSPredicate?, fetchStatus: FetchStatus) -> FetchResultProtocol {
+        return FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
     }
 }
