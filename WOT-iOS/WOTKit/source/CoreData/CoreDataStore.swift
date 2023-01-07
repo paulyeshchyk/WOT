@@ -48,7 +48,7 @@ open class CoreDataStore: DataStore {
         return (clazz is NSManagedObject.Type) ? true : false
     }
 
-    override public func emptyFetchResult(appContext: DataStore.Context) throws -> FetchResultProtocol {
+    override public func emptyFetchResult() throws -> FetchResultProtocol {
         let inManagedObjectContext = appContext.dataStore?.workingContext()
         return try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
     }

@@ -29,7 +29,7 @@ public enum EventMappingType: String {
 // MARK: - MappingCoordinator + MappingCoordinatorFetchingProtocol
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
-    public func fetchLocalAndDecode(json: JSONCollectionProtocol, objectContext: ManagedObjectContextProtocol, byModelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, appContext: MappingCoordinatorContext, completion: @escaping FetchResultCompletion) {
+    public func fetchLocalAndDecode(json: JSONCollectionProtocol, objectContext: ManagedObjectContextProtocol, byModelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, completion: @escaping FetchResultCompletion) {
         //
         appContext.dataStore?.fetch(modelClass: byModelClass, contextPredicate: contextPredicate, managedObjectContext: objectContext) { [weak self] fetchResult, error in
             if let error = error {
@@ -64,9 +64,9 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 
 extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
     //
-    public func linkItem(from itemJSON: JSONCollectionProtocol, masterFetchResult: FetchResultProtocol, byModelClass: PrimaryKeypathProtocol.Type, linker: ManagedObjectLinkerProtocol, extractor: ManagedObjectExtractable, requestPredicateComposition: RequestPredicateCompositionProtocol, appContext: MappingCoordinatorContext) throws {
+    public func linkItem(from itemJSON: JSONCollectionProtocol, masterFetchResult: FetchResultProtocol, byModelClass: PrimaryKeypathProtocol.Type, linker: ManagedObjectLinkerProtocol, extractor: ManagedObjectExtractable, requestPredicateComposition: RequestPredicateCompositionProtocol) throws {
         let objectContext = masterFetchResult.managedObjectContext
-        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: byModelClass, contextPredicate: requestPredicateComposition.contextPredicate, managedObjectCreator: linker, managedObjectExtractor: extractor, appContext: appContext, completion: { [weak self] _, error in
+        fetchLocalAndDecode(json: itemJSON, objectContext: objectContext, byModelClass: byModelClass, contextPredicate: requestPredicateComposition.contextPredicate, managedObjectCreator: linker, managedObjectExtractor: extractor, completion: { [weak self] _, error in
             if let error = error {
                 self?.appContext.logInspector?.log(.error(error), sender: self)
             }

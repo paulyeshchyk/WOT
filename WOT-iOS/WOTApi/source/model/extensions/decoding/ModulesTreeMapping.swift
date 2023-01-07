@@ -9,7 +9,7 @@
 public extension ModulesTree {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         guard let moduleTreeJSON = map.jsonCollection.data() as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -33,9 +33,9 @@ public extension ModulesTree {
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
                     let requestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: "fields")
-                    try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+                    try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
                 } catch {
-                    appContext.logInspector?.log(.error(error), sender: self)
+                    appContext?.logInspector?.log(.error(error), sender: self)
                 }
             }
         }
@@ -54,9 +54,9 @@ public extension ModulesTree {
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
                     let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: "fields")
-                    try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: self)
+                    try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: nextModuleManagedObjectCreator, managedObjectExtractor: extractor, listener: self)
                 } catch {
-                    appContext.logInspector?.log(.error(error), sender: self)
+                    appContext?.logInspector?.log(.error(error), sender: self)
                 }
             }
         }
@@ -72,7 +72,7 @@ public extension ModulesTree {
         let composer = LinkedRemoteAsPrimaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
         let composition = try composer.buildRequestPredicateComposition()
         let moduleRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: "fields")
-        try appContext.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: self)
+        try appContext?.requestManager?.fetchRemote(requestParadigm: moduleRequestParadigm, managedObjectLinker: moduleJSONAdapter, managedObjectExtractor: extractor, listener: self)
     }
 }
 

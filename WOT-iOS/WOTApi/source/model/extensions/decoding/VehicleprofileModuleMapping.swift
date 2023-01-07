@@ -9,7 +9,7 @@
 public extension VehicleprofileModule {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         guard let profileModuleJSON = map.jsonCollection.data() as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -28,7 +28,7 @@ public extension VehicleprofileModule {
             let composition = try composer.buildRequestPredicateComposition()
             let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "gun.", httpQueryItemName: "fields")
             let extractor = VehicleprofileModuleGunManagedObjectExtractor()
-            try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
         if let radio_id = radio_id {
@@ -40,7 +40,7 @@ public extension VehicleprofileModule {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
             let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "radio.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
         if let engine_id = engine_id {
@@ -52,7 +52,7 @@ public extension VehicleprofileModule {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
             let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "engine.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
         if let suspension_id = suspension_id {
@@ -64,7 +64,7 @@ public extension VehicleprofileModule {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
             let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "suspension.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
 
         if let turret_id = turret_id {
@@ -76,7 +76,7 @@ public extension VehicleprofileModule {
             let composer = MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder(drivenJoint: joint)
             let composition = try composer.buildRequestPredicateComposition()
             let requestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "turret.", httpQueryItemName: "fields")
-            try appContext.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+            try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
         }
     }
 }

@@ -164,7 +164,7 @@ class Linker: ManagedObjectLinkerProtocol {
 
     var MD5: String { uuid.MD5 }
 
-    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion) {
+    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerContext, completion: @escaping ManagedObjectLinkerCompletion) {
         completion(fetchResult, nil)
     }
 

@@ -18,7 +18,7 @@ open class DataStore {
         fatalError("has not been implemented")
     }
 
-    open func emptyFetchResult(appContext _: DataStore.Context) throws -> FetchResultProtocol {
+    open func emptyFetchResult() throws -> FetchResultProtocol {
         fatalError("has not been implemented")
     }
 
@@ -50,6 +50,7 @@ open class DataStore {
 // MARK: - DataStore + DataStoreProtocol
 
 extension DataStore: DataStoreProtocol {
+
     open func newPrivateContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")
     }
@@ -104,7 +105,7 @@ extension DataStore: DataStoreProtocol {
         guard isClassValid(modelClass) else {
             do {
                 let error = DataStoreError.notManagedObjectType(modelClass)
-                let result = try emptyFetchResult(appContext: appContext)
+                let result = try emptyFetchResult()
                 completion(result, error)
             } catch {
                 completion(nil, error)
@@ -139,7 +140,7 @@ extension DataStore: DataStoreProtocol {
             do {
                 let error = DataStoreError.clazzIsNotSupportable(String(describing: modelClass))
                 appContext.logInspector?.log(.error(error), sender: self)
-                let result = try emptyFetchResult(appContext: appContext)
+                let result = try emptyFetchResult()
                 completion(result, error)
             } catch {
                 completion(nil, error)
@@ -164,7 +165,7 @@ extension DataStore: DataStoreProtocol {
                 completion(fetchResult, nil)
             } else {
                 do {
-                    let result = try self.emptyFetchResult(appContext: self.appContext)
+                    let result = try self.emptyFetchResult()
                     completion(result, nil)
                 } catch {
                     completion(nil, error)
