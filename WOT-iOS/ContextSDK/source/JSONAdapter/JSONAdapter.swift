@@ -65,9 +65,9 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 }
 
 public extension JSONAdapter {
-    func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
+    func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion fc: ResponseAdapterProtocol.OnComplete?) {
         guard error == nil, let json = data else {
-            completion?(request, error)
+            fc?(request, error ?? JSONAdapterError.jsonIsNil)
             return
         }
 
@@ -78,74 +78,127 @@ public extension JSONAdapter {
             //
             do {
                 let contextPredicate = request.contextPredicate
-
-                #warning("refactoring initial step")
                 let extraction = try jsonExtractor.extract(json: json, key: key, forClazz: modelClass, contextPredicate: contextPredicate)
 
-                try findOrCreateObject(json: extraction.json, predicate: extraction.requestPredicate) { [weak self] fetchResult, error in
-                    guard let self = self, let fetchResult = fetchResult else {
-                        dispatchGroup.leave()
-                        completion?(request, error)
-                        return
-                    }
-
+                let jsonElementLinker = JSONElementLinker(appContext: appContext, managedObjectLinker: managedObjectLinker)
+                jsonElementLinker.completion = { _, error in
                     if let error = error {
-                        self.appContext.logInspector?.log(.error(error), sender: self)
-                        dispatchGroup.leave()
-                        completion?(request, error)
-                        return
+                        fc?(request, error)
                     }
-
-                    self.managedObjectLinker.process(fetchResult: fetchResult, appContext: self.appContext) { _, error in
-                        if let error = error {
-                            self.appContext.logInspector?.log(.error(error), sender: self)
-                        }
-                        completion?(request, error)
-                        dispatchGroup.leave()
-                    }
+                    dispatchGroup.leave()
                 }
+
+                let jsonElementDecoder = JSONElementDecoder(appContext: appContext, jSON: extraction.json)
+                jsonElementDecoder.completion = { fetchResult, error in
+                    jsonElementLinker.link(fetchResult, error: error)
+                }
+
+                let jsonElementParser = JSONElementParser(appContext: appContext, jsonExtractiion: extraction, modelClass: modelClass)
+                jsonElementParser.completion = { fetchResult, error in
+                    jsonElementDecoder.predicate = jsonElementParser.predicate
+                    jsonElementDecoder.decode(fetchResult, error: error)
+                }
+
+                try jsonElementParser.parse()
+
             } catch {
+                fc?(request, error)
                 dispatchGroup.leave()
-                completion?(request, error)
                 appContext.logInspector?.log(.error(error), sender: self)
             }
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            completion?(request, error)
+            fc?(request, nil)
         }
     }
+}
 
-    private func findOrCreateObject(json: JSONCollectionProtocol?, predicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) throws {
-        let nspredicate = predicate[.primary]?.predicate
-        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, managedObjectContext: nil, completion: { fetchResult, error in
-            #warning("!!!make it weak!!!")
-//            guard let self = self else {
-//                completion(fetchResult, JSONAdapterError.adapterIsNil)
-//                return
-//            }
-            if let error = error {
-                completion(fetchResult, error)
-                return
-            }
-            guard let fetchResult = fetchResult else {
-                completion(nil, JSONAdapterError.fetchResultIsNotPresented)
-                return
-            }
+// MARK: - JSONElementLinker
 
-            self.appContext.mappingCoordinator?.decode(using: json, fetchResult: fetchResult, predicate: predicate, managedObjectCreator: nil, managedObjectExtractor: nil, appContext: self.appContext) { fetchResult, error in
-                if let error = error {
-                    self.appContext.logInspector?.log(.error(error), sender: self)
-                }
-                completion(fetchResult, error)
-            }
+private class JSONElementLinker {
+    init(appContext: DataStoreContainerProtocol, managedObjectLinker: ManagedObjectLinkerProtocol) {
+        self.appContext = appContext
+        self.managedObjectLinker = managedObjectLinker
+    }
+
+    var completion: ((FetchResultProtocol?, Error?) -> Void)?
+
+    let appContext: DataStoreContainerProtocol
+    let managedObjectLinker: ManagedObjectLinkerProtocol
+
+    func link(_ fetchResult: FetchResultProtocol?, error: Error?) {
+        guard let fetchResult = fetchResult, error == nil else {
+            completion?(fetchResult, error)
+            return
+        }
+        managedObjectLinker.process(fetchResult: fetchResult, appContext: appContext) { fetchResult, error in
+            self.completion?(fetchResult, error)
+        }
+    }
+}
+
+// MARK: - JSONElementDecoder
+
+private class JSONElementDecoder {
+    init(appContext: (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol), jSON: JSONCollectionProtocol?) {
+        self.appContext = appContext
+        self.jSON = jSON
+    }
+
+    let appContext: (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol)
+    var completion: ((FetchResultProtocol?, Error?) -> Void)?
+    let jSON: JSONCollectionProtocol?
+    var predicate: ContextPredicateProtocol?
+    var managedObjectCreator: ManagedObjectLinkerProtocol?
+    var managedObjectExtractor: ManagedObjectExtractable?
+
+    func decode(_ fetchResult: FetchResultProtocol?, error: Error?) {
+        guard let fetchResult = fetchResult, error == nil else {
+            completion?(fetchResult, error)
+            return
+        }
+        appContext.mappingCoordinator?.decode(using: jSON, fetchResult: fetchResult, predicate: predicate!, managedObjectCreator: managedObjectCreator, managedObjectExtractor: managedObjectExtractor, completion: { fetchResult, error in
+            self.completion?(fetchResult, error)
         })
     }
+}
+
+// MARK: - JSONElementParser
+
+private class JSONElementParser {
+    //
+    init(appContext: (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol), jsonExtractiion: JSONExtraction, modelClass: PrimaryKeypathProtocol.Type) {
+        self.jsonExtractiion = jsonExtractiion
+        self.modelClass = modelClass
+        self.appContext = appContext
+    }
+
+    let appContext: (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol)
+    let jsonExtractiion: JSONExtraction
+    let modelClass: PrimaryKeypathProtocol.Type
+
+    var completion: ((FetchResultProtocol?, Error?) -> Void)?
+    var linkingBlock: ((FetchResultProtocol) -> Void)?
+
+    var predicate: ContextPredicateProtocol {
+        jsonExtractiion.requestPredicate
+    }
+
+    func parse() throws {
+        let nspredicate = predicate[.primary]?.predicate
+        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, managedObjectContext: nil, completion: { fetchResult, error in
+            self.completion?(fetchResult, error)
+        })
+    }
+
+    private func findOrCreateObject(json _: JSONCollectionProtocol?, predicate _: ContextPredicateProtocol, completion _: @escaping FetchResultCompletion) throws {}
 }
 
 // MARK: - JSONAdapterError
 
 private enum JSONAdapterError: Error, CustomStringConvertible {
+    case jsonIsNil
     case dataIsNil
     case adapterIsNil
     case notMainThread
@@ -157,6 +210,7 @@ private enum JSONAdapterError: Error, CustomStringConvertible {
     public var description: String {
         switch self {
         case .adapterIsNil: return "\(type(of: self)): Adapter is nil"
+        case .jsonIsNil: return "\(type(of: self)): JSON is nil"
         case .dataIsNil: return "\(type(of: self)): Data is nil"
         case .notSupportedType(let clazz): return "\(type(of: self)): \(type(of: clazz)) can't be adapted"
         case .jsonByKeyWasNotFound(let json, let key): return "\(type(of: self)): json was not found for key:\(key)); {\(json)}"
