@@ -76,27 +76,18 @@ public extension JSONAdapter {
         for key in json.keys {
             dispatchGroup.enter()
             //
-            do {
-                let contextPredicate = request.contextPredicate
-                let extraction = try jsonExtractor.extract(json: json, key: key, forClazz: modelClass, contextPredicate: contextPredicate)
-
-                let syndicate = Syndicate(appContext: appContext)
-                syndicate.modelClass = modelClass
-                syndicate.jsonExtraction = extraction
-                syndicate.managedStoreLinker = managedObjectLinker
-                syndicate.completion = { _, error in
-                    if let error = error {
-                        completion?(request, error)
-                    }
-                    dispatchGroup.leave()
+            let syndicate = Syndicate(appContext: appContext, json: json, key: key)
+            syndicate.contextPredicate = request.contextPredicate
+            syndicate.modelClass = modelClass
+            syndicate.managedStoreLinker = managedObjectLinker
+            syndicate.jsonExtractor = jsonExtractor
+            syndicate.completion = { _, error in
+                if let error = error {
+                    completion?(request, error)
                 }
-                syndicate.run()
-
-            } catch {
-                completion?(request, error)
                 dispatchGroup.leave()
-                appContext.logInspector?.log(.error(error), sender: self)
             }
+            syndicate.run()
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {

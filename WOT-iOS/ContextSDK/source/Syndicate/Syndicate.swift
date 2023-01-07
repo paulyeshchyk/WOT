@@ -8,8 +8,10 @@
 // MARK: - Syndicate
 
 class Syndicate {
-    init(appContext: Syndicate.Context) {
+    init(appContext: Syndicate.Context, json: JSON, key: AnyHashable) {
         self.appContext = appContext
+        self.json = json
+        self.key = key
     }
 
     typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol
@@ -17,14 +19,36 @@ class Syndicate {
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var managedStoreLinker: ManagedObjectLinkerProtocol?
     let appContext: Syndicate.Context
-    var jsonExtraction: JSONExtraction?
     var modelClass: PrimaryKeypathProtocol.Type?
+    var contextPredicate: ContextPredicateProtocol?
+    let json: JSON
+    let key: AnyHashable
+    var jsonExtractor: ManagedObjectExtractable?
 
     func run() {
+        guard let modelClass = modelClass else {
+            completion?(nil, SyndicateError.modelClassIsNotDefined)
+            return
+        }
         guard let managedObjectLinker = managedStoreLinker else {
             completion?(nil, SyndicateError.managedObjectLinkerIsNotPresented)
             return
         }
+        guard let jsonExtractor = jsonExtractor else {
+            completion?(nil, SyndicateError.jsonExtractorIsNotPresented)
+            return
+        }
+
+        do {
+            jsonExtraction = try jsonExtractor.extract(json: json,
+                                                       key: key,
+                                                       modelClass: modelClass,
+                                                       contextPredicate: contextPredicate)
+        } catch {
+            completion?(nil, error)
+            return
+        }
+
         let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
         managedObjectLinkerHelper.managedObjectLinker = managedObjectLinker
         managedObjectLinkerHelper.completion = completion
@@ -47,20 +71,26 @@ class Syndicate {
 
     private enum SyndicateError: Error, CustomStringConvertible {
         case managedObjectLinkerIsNotPresented
+        case modelClassIsNotDefined
+        case jsonExtractorIsNotPresented
 
         public var description: String {
             switch self {
+            case .jsonExtractorIsNotPresented: return "\(type(of: self)): json extrator is not presented"
             case .managedObjectLinkerIsNotPresented: return "\(type(of: self)): managed object linker is not presented"
+            case .modelClassIsNotDefined: return "\(type(of: self)): modelClass is not defined"
             }
         }
     }
+
+    private var jsonExtraction: JSONExtraction?
 }
 
 // MARK: - ManagedObjectLinkerHelper
 
 private class ManagedObjectLinkerHelper {
 
-    init(appContext: Context) {
+    init(appContext: ManagedObjectLinkerHelper.Context) {
         self.appContext = appContext
     }
 
@@ -80,9 +110,11 @@ private class ManagedObjectLinkerHelper {
             completion?(fetchResult, ManagedObjectLinkerHelperError.managedObjectLinkerIsNotPresented)
             return
         }
-        managedObjectLinker.process(fetchResult: fetchResult, appContext: appContext) { fetchResult, error in
-            self.completion?(fetchResult, error)
-        }
+        managedObjectLinker.process(fetchResult: fetchResult,
+                                    appContext: appContext,
+                                    completion: { fetchResult, error in
+                                        self.completion?(fetchResult, error)
+                                    })
     }
 
     private enum ManagedObjectLinkerHelperError: Error, CustomStringConvertible {
@@ -102,7 +134,7 @@ private class ManagedObjectLinkerHelper {
 
 private class MappingCoordinatorDecodeHelper {
 
-    init(appContext: Context) {
+    init(appContext: MappingCoordinatorDecodeHelper.Context) {
         self.appContext = appContext
     }
 
@@ -151,7 +183,7 @@ private class MappingCoordinatorDecodeHelper {
 
 private class DatastoreFetchHelper {
     //
-    init(appContext: Context) {
+    init(appContext: DatastoreFetchHelper.Context) {
         self.appContext = appContext
     }
 
@@ -160,12 +192,7 @@ private class DatastoreFetchHelper {
     let appContext: Context
     var jsonExtraction: JSONExtraction?
     var modelClass: PrimaryKeypathProtocol.Type?
-
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
-
-    var predicate: ContextPredicateProtocol? {
-        jsonExtraction?.requestPredicate
-    }
 
     func run() {
         guard let jsonExtraction = jsonExtraction else {
@@ -178,9 +205,12 @@ private class DatastoreFetchHelper {
         }
 
         let nspredicate = jsonExtraction.requestPredicate[.primary]?.predicate
-        appContext.dataStore?.fetch(modelClass: modelClass, nspredicate: nspredicate, managedObjectContext: nil, completion: { fetchResult, error in
-            self.completion?(fetchResult, error)
-        })
+        appContext.dataStore?.fetch(modelClass: modelClass,
+                                    nspredicate: nspredicate,
+                                    managedObjectContext: nil,
+                                    completion: { fetchResult, error in
+                                        self.completion?(fetchResult, error)
+                                    })
     }
 
     private enum DatastoreFetchHelperError: Error, CustomStringConvertible {
