@@ -21,24 +21,24 @@ public extension ModulesTree {
 
         // MARK: - NextTanks
 
-        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
-        if let nextTanks = moduleTreeJSON[nextTanksKeypath] as? [AnyObject] {
-            let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nextTanksKeypath)
-            let linker = ManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: modulesTreeFetchResult, anchor: anchor)
-            let extractor = ModulesTreeNextVehicleManagedObjectExtractor()
-            for nextTank in nextTanks {
-                // parents was not used for next portion of tanks
-                let theLink = Joint(modelClass: Vehicles.self, theID: nextTank, thePredicate: nil)
-                let composer = LinkedLocalAsPrimaryRuleBuilder(drivenJoint: theLink)
-                do {
-                    let composition = try composer.buildRequestPredicateComposition()
-                    let requestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: "fields")
-                    try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
-                } catch {
-                    appContext?.logInspector?.log(.error(error), sender: self)
-                }
-            }
-        }
+//        let nextTanksKeypath = #keyPath(ModulesTree.next_tanks)
+//        if let nextTanks = moduleTreeJSON[nextTanksKeypath] as? [AnyObject] {
+//            let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nextTanksKeypath)
+//            let linker = ManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: modulesTreeFetchResult, anchor: anchor)
+//            let extractor = ModulesTreeNextVehicleManagedObjectExtractor()
+//            for nextTank in nextTanks {
+//                // parents was not used for next portion of tanks
+//                let theLink = Joint(modelClass: Vehicles.self, theID: nextTank, thePredicate: nil)
+//                let composer = LinkedLocalAsPrimaryRuleBuilder(drivenJoint: theLink)
+//                do {
+//                    let composition = try composer.buildRequestPredicateComposition()
+//                    let requestParadigm = RequestParadigm(modelClass: Vehicles.self, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: "fields")
+//                    try appContext?.requestManager?.fetchRemote(requestParadigm: requestParadigm, managedObjectLinker: linker, managedObjectExtractor: extractor, listener: self)
+//                } catch {
+//                    appContext?.logInspector?.log(.error(error), sender: self)
+//                }
+//            }
+//        }
 
         // MARK: - NextModules
 

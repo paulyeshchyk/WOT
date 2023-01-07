@@ -13,7 +13,5 @@ public protocol FetchResultProtocol: ManagedObjectContextContainerProtocol {
     var predicate: NSPredicate? { get set }
     func managedObject() -> ManagedObjectProtocol?
     func managedObject(inManagedObjectContext: ManagedObjectContextProtocol?) -> ManagedObjectProtocol?
-
-    @available(*, deprecated, message: "make sure you need that")
-    func makeDublicate(inContext: ManagedObjectContextProtocol) -> FetchResultProtocol
+    func makeDublicate(managedObjectContext: ManagedObjectContextProtocol) -> FetchResultProtocol
 }

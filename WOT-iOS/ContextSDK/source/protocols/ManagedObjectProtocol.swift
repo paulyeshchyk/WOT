@@ -28,6 +28,6 @@ public enum FetchStatus: Int {
 
 extension ManagedObjectProtocol {
     public func fetchResult(context: ManagedObjectContextProtocol, predicate: NSPredicate? = nil, fetchStatus: FetchStatus? = nil) -> FetchResultProtocol {
-        return FetchResult(objectID: managedObjectID, inContext: context, predicate: predicate, fetchStatus: fetchStatus ?? self.fetchStatus)
+        return FetchResult(objectID: managedObjectID, managedObjectContext: context, predicate: predicate, fetchStatus: fetchStatus ?? self.fetchStatus)
     }
 }

@@ -32,9 +32,7 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtrac
 
         // MARK: stash
 
-        appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
-            completion(fetchResult, error)
-        }
+        appContext?.dataStore?.stash(fetchResult: fetchResult, completion: completion)
     }
 
     public enum ManagedObjectLinkerError: Error, CustomStringConvertible {

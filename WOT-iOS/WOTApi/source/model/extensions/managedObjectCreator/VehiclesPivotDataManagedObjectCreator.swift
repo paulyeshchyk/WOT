@@ -22,8 +22,7 @@ public class VehiclesPivotManagedObjectExtractor: ManagedObjectExtractable {
 public class VehiclesPivotDataManagedObjectCreator: ManagedObjectLinker {
 
     public convenience init(modelClass: PrimaryKeypathProtocol.Type, appContext: Context) throws {
-        let inManagedObjectContext = appContext.dataStore?.workingContext()
-        let emptyFetchResult = try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
+        let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
         let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
         self.init(modelClass: modelClass, masterFetchResult: emptyFetchResult, anchor: anchor)
     }

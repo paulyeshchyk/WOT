@@ -51,10 +51,12 @@ extension DataStore: DataStoreProtocol {
         fatalError("has not been implemented")
     }
 
+    @objc
     open func newPrivateContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")
     }
 
+    @objc
     open func workingContext() -> ManagedObjectContextProtocol {
         fatalError("has not been implemented")
     }
@@ -68,15 +70,11 @@ extension DataStore: DataStoreProtocol {
     }
 
     open func perform(block: @escaping ObjectContextCompletion) {
-        workingContext().execute(appContext: appContext) { context in
-            block(context)
-        }
+        perform(managedObjectContext: workingContext(), block: block)
     }
 
-    open func perform(managedObjectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
-        managedObjectContext.execute(appContext: appContext) { context in
-            block(context)
-        }
+    private func perform(managedObjectContext: ManagedObjectContextProtocol, block: @escaping ObjectContextCompletion) {
+        managedObjectContext.execute(appContext: appContext, with: block)
     }
 
     public func stash(managedObject: ManagedObjectProtocol, completion: @escaping DatastoreManagedObjectCompletion) {
@@ -105,81 +103,35 @@ extension DataStore: DataStoreProtocol {
         }
     }
 
-    public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, completion: @escaping FetchResultCompletion) {
-        let localCallback: FetchResultCompletion = { fetchResult, error in
-            self.workingContext().execute(appContext: self.appContext) { managedObjectContext in
-                let fetchResultForContext = fetchResult?.makeDublicate(inContext: managedObjectContext)
-                completion(fetchResultForContext, error)
-            }
-        }
-
+    public func fetch(modelClass: PrimaryKeypathProtocol.Type, nspredicate: NSPredicate?, managedObjectContext: ManagedObjectContextProtocol?, completion: @escaping FetchResultCompletion) {
+        //
         guard isClassValid(modelClass) else {
-            do {
-                let error = DataStoreError.notManagedObjectType(modelClass)
-                let result = try emptyFetchResult()
-                completion(result, error)
-            } catch {
-                completion(nil, error)
-            }
+            completion(nil, DataStoreError.notManagedObjectType(modelClass))
             return
         }
 
-        let managedObjectContext = newPrivateContext()
-        perform(managedObjectContext: managedObjectContext) { [weak self] managedObjectContext in
+        let privateManagedObjectContext = newPrivateContext()
+        privateManagedObjectContext.execute(appContext: appContext) { [weak self] privateManagedObjectContext in
             guard let self = self else {
+                completion(nil, DataStoreStashError.datastoreIsNil)
                 return
             }
 
-            guard let managedObject = managedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: nspredicate) else {
-                self.appContext.logInspector?.log(.error(DataStoreError.objectNotCreated(modelClass)), sender: self)
+            guard let managedObject = privateManagedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: nspredicate) else {
+                completion(nil, DataStoreError.objectNotCreated(modelClass))
                 return
             }
-            self.stash(managedObjectContext: managedObjectContext) { context, error in
-                guard let context = context else {
-                    localCallback(nil, error)
+            self.stash(managedObjectContext: privateManagedObjectContext) { context, error in
+                guard error == nil else {
+                    completion(nil, error)
                     return
                 }
+                let originalFetchResult = managedObject.fetchResult(context: context)
 
-                let fetchResult = managedObject.fetchResult(context: context)
-                localCallback(fetchResult, error)
-            }
-        }
-    }
-
-    public func fetch(modelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol, managedObjectContext: ManagedObjectContextProtocol, completion: @escaping FetchResultCompletion) {
-        guard isClassValid(modelClass) else {
-            do {
-                let error = DataStoreError.clazzIsNotSupportable(String(describing: modelClass))
-                appContext.logInspector?.log(.error(error), sender: self)
-                let result = try emptyFetchResult()
-                completion(result, error)
-            } catch {
-                completion(nil, error)
-            }
-            return
-        }
-
-        guard let predicate = contextPredicate.nspredicate(operator: .and) else {
-            let error = DataStoreError.noKeysDefinedForClass(String(describing: modelClass))
-            let fetchResult = FetchResult(objectID: nil, inContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
-            completion(fetchResult, error)
-            return
-        }
-
-        perform(managedObjectContext: managedObjectContext) { [weak self] managedObjectContext in
-            guard let self = self else {
-                completion(nil, nil)
-                return
-            }
-            if let managedObject = managedObjectContext.findOrCreateObject(modelClass: modelClass, predicate: predicate) {
-                let fetchResult = managedObject.fetchResult(context: managedObjectContext)// FetchResult(objectID: managedObject.managedObjectID, inContext: managedObjectContext, predicate: predicate, fetchStatus: managedObject.fetchStatus)
-                completion(fetchResult, nil)
-            } else {
-                do {
-                    let result = try self.emptyFetchResult()
-                    completion(result, nil)
-                } catch {
-                    completion(nil, error)
+                let finalManagedObjectContext = managedObjectContext ?? self.workingContext()
+                finalManagedObjectContext.execute(appContext: self.appContext) { context in
+                    let fetchResult = originalFetchResult.makeDublicate(managedObjectContext: context)
+                    completion(fetchResult, nil)
                 }
             }
         }
@@ -190,10 +142,12 @@ extension DataStore: DataStoreProtocol {
 
 private enum DataStoreStashError: Error, CustomStringConvertible {
     case contextNotFound(ManagedObjectProtocol)
+    case datastoreIsNil
 
     var description: String {
         switch self {
         case .contextNotFound(let managedObject): return "\(type(of: self)) Context not found for \(String(describing: managedObject))"
+        case .datastoreIsNil: return "\(type(of: self)) Datastore is nil"
         }
     }
 }

@@ -44,11 +44,8 @@ open class NodeFetchController: NSObject {
     public var fetchRequestContainer: FetchRequestContainerProtocol
 
     public func initFetchController(appContext: NodeFetchControllerProtocol.Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
-        guard let managedObjectContext = appContext.dataStore?.workingContext() else {
-            throw NodeFetchControllerError.contextIsNotDefined
-        }
-
-        appContext.dataStore?.perform(managedObjectContext: managedObjectContext) { [weak self] _ in
+        //
+        appContext.dataStore?.perform { [weak self] managedObjectContext in
             guard let fetchRequest = self?.fetchRequestContainer.fetchRequest else {
                 block(nil, NodeFetchControllerError.requestNotFound)
                 return
