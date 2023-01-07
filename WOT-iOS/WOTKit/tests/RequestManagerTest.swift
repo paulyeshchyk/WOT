@@ -21,7 +21,7 @@ class RequestManagerTest: XCTestCase {
         let anchor = Anchor(identifier: "AnchorID", keypath: #keyPath(Anchor.keypath))
         let objectID = ObjectID()
         let extractor = Extractor()
-        let fetchResult = FetchResult(objectID: objectID, inContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
+        let fetchResult = FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: nil, fetchStatus: .fetched)
         let linker = Linker(modelClass: PrimaryKeypath.self, masterFetchResult: fetchResult, anchor: anchor)
         let request = TestHttpRequest(context: appContext)
         let listener = Listener()
@@ -164,7 +164,7 @@ class Linker: ManagedObjectLinkerProtocol {
 
     var MD5: String { uuid.MD5 }
 
-    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion) {
+    func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerContext, completion: @escaping ManagedObjectLinkerCompletion) {
         completion(fetchResult, nil)
     }
 

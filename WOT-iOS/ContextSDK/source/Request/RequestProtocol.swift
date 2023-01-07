@@ -48,11 +48,11 @@ open class Request: RequestProtocol, CustomStringConvertible {
 
     public required init(context: RequestProtocol.Context) {
         appContext = context
-        context.logInspector?.logEvent(EventObjectNew(self), sender: self)
+        context.logInspector?.log(.initialization(type(of: self)), sender: self)
     }
 
     deinit {
-        appContext.logInspector?.logEvent(EventObjectFree(self), sender: self)
+        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
     }
 
     open var description: String {
@@ -96,6 +96,7 @@ open class Request: RequestProtocol, CustomStringConvertible {
     // MARK: - MD5Protocol
 
     private let uuid = UUID()
+
 }
 
 extension Request {

@@ -116,6 +116,7 @@ public enum WGAPIResponseStatus: String, Codable {
     }
 
     public typealias RawValue = String
+
 }
 
 // MARK: - WGAPIError

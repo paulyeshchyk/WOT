@@ -8,7 +8,7 @@ disabled_rules:
 - line_length
 - trailing_newline
 - todo
-- unused_optional_binding
+#- unused_optional_binding
 - redundant_string_enum_value
 - nesting
 - identifier_name

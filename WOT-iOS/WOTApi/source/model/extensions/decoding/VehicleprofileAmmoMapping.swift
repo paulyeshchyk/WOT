@@ -9,7 +9,7 @@
 public extension VehicleprofileAmmo {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         guard let ammoJSON = map.jsonCollection.data() as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -30,9 +30,9 @@ public extension VehicleprofileAmmo {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoPenetrationManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noPenetration, details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
         }
 
         // MARK: - Damage
@@ -46,9 +46,9 @@ public extension VehicleprofileAmmo {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathDamage)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoDamageManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleprofileAmmoError.noDamage, details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }
     }
 }

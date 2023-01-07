@@ -12,8 +12,9 @@ import WOTPivot
 // MARK: - PivotViewController
 
 open class PivotViewController: UIViewController, ContextControllerProtocol {
-
     @IBOutlet open var collectionView: UICollectionView?
+
+    override open var prefersStatusBarHidden: Bool { false }
 
     @IBOutlet open var flowLayout: WGPivotColoredFlowLayout? {
         didSet {
@@ -120,7 +121,7 @@ extension PivotViewController: UICollectionViewDataSource {
 extension PivotViewController: UICollectionViewDelegate {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let pivotNode = model.node(atIndexPath: indexPath) as? PivotNodeProtocol else {
-            appContext?.logInspector?.logEvent(EventPivot("cant find pivot node"), sender: self)
+            appContext?.logInspector?.log(.warning("cant find pivot node"), sender: self)
             return
         }
 

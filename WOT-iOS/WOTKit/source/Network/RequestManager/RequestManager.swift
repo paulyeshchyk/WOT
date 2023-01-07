@@ -13,6 +13,8 @@ import ContextSDK
 @objc
 open class RequestManager: NSObject {
 
+    // MARK: Requestor -> Adaptator -> Storer -> Mapper -> Linker
+
     deinit {
         //
     }
@@ -66,7 +68,7 @@ extension RequestManager: RequestListenerProtocol {
         }
 
         if let error = error {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
             return
         }
 
@@ -74,7 +76,7 @@ extension RequestManager: RequestListenerProtocol {
             try parseResponse(request: request, data: data)
         } catch {
             grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
-            appContext.logInspector?.logEvent(EventError(error, details: String(describing: request)), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
@@ -110,19 +112,19 @@ extension RequestManager: RequestListenerProtocol {
         //
 
         if let error = error {
-            appContext.logInspector?.logEvent(EventError(error, details: self), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
             return
         }
         do {
             try managedObjectExractableList.removeExtractorForRequest(request)
         } catch {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
 
         do {
             try managedObjectCreatorList.removeAdapterForRequest(request)
         } catch {
-            appContext.logInspector?.logEvent(EventError(error, details: request), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
@@ -142,7 +144,6 @@ extension RequestManager: RequestListenerProtocol {
 extension RequestManager: RequestManagerProtocol {
     public func cancelRequests(groupId: RequestIdType, reason: RequestCancelReasonProtocol) {
         //
-        appContext.logInspector?.logEvent(EventRequestManagerFetchCancel("\(String(describing: reason))"), sender: self)
         grouppedRequestList.cancelRequests(groupId: groupId, reason: reason) { [weak self] request, reason in
             guard let self = self else { return }
             self.grouppedListenerList.didCancelRequest(request, requestManager: self, reason: reason)
@@ -161,8 +162,6 @@ extension RequestManager: RequestManagerProtocol {
 
     public func startRequest(_ request: RequestProtocol, forGroupId: RequestIdType, managedObjectCreator: ManagedObjectLinkerProtocol, managedObjectExtractor: ManagedObjectExtractable, listener: RequestManagerListenerProtocol?) throws {
         //
-        appContext.logInspector?.logEvent(EventRequestManagerFetchStart("\(String(describing: request.arguments))"), sender: self)
-
         try grouppedRequestList.addRequest(request, forGroupId: forGroupId)
 
         request.addListener(self)
@@ -170,8 +169,7 @@ extension RequestManager: RequestManagerProtocol {
         if let listener = listener {
             try grouppedListenerList.addListener(listener, forRequest: request)
         } else {
-            let event = EventWarning(error: RequestManagerError.requestManagerListenerIsNil, details: nil)
-            appContext.logInspector?.logEvent(event, sender: self)
+            appContext.logInspector?.log(.warning(error: RequestManagerError.requestManagerListenerIsNil), sender: self)
         }
 
         try managedObjectExractableList.addExtractor(managedObjectExtractor, forRequest: request)
@@ -179,7 +177,8 @@ extension RequestManager: RequestManagerProtocol {
         try managedObjectCreatorList.addAdapterLinker(managedObjectCreator, forRequest: request)
 
         try request.start { [weak self] in
-            self?.appContext.logInspector?.logEvent(EventRequestManagerFetchEnd("\(String(describing: request.arguments))"), sender: self)
+
+            self?.appContext.logInspector?.log(.custom("Start"), sender: self)
         }
     }
 
@@ -199,7 +198,7 @@ extension RequestManager: RequestManagerProtocol {
 
                 try startRequest(request, forGroupId: groupId, managedObjectCreator: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, listener: listener)
             } catch {
-                appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+                appContext.logInspector?.log(.error(error), sender: self)
             }
         }
     }
@@ -345,7 +344,7 @@ private class RequestGrouppedRequestList {
 
     func addRequest(_ request: RequestProtocol, forGroupId groupId: RequestIdType) throws {
         if grouppedRequests.keys.isEmpty {
-            appContext.logInspector?.logEvent(EventLongTermStart("\(String(describing: request))"), sender: self)
+            appContext.logInspector?.log(.flow(name: "group", message: "Start: <\(String(describing: request))>"), sender: self)
         }
 
         var requestsForID: [RequestProtocol] = []
@@ -369,7 +368,7 @@ private class RequestGrouppedRequestList {
             do {
                 try request.cancel(byReason: reason)
             } catch {
-                appContext.logInspector?.logEvent(EventWarning(error: error, details: "Request cancelation"), sender: self)
+                appContext.logInspector?.log(.warning(error: error), sender: self)
             }
             completion(request, reason)
         }
@@ -389,7 +388,7 @@ private class RequestGrouppedRequestList {
             }
         }
         if grouppedRequests.keys.isEmpty {
-            appContext.logInspector?.logEvent(EventLongTermEnd("\(String(describing: request))"), sender: self)
+            appContext.logInspector?.log(.flow(name: "group", message: "End: <\(String(describing: request))>"), sender: self)
         }
     }
 

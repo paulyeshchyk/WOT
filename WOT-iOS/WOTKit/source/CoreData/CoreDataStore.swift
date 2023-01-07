@@ -18,10 +18,12 @@ open class CoreDataStore: DataStore {
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { fatalError("has not been implemented") }
 
+    @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
         CoreDataStore.privateQueueConcurrencyContext(parent: mainContext)
     }
 
+    @objc
     override public func workingContext() -> ManagedObjectContextProtocol {
         return mainContext
     }
@@ -48,8 +50,8 @@ open class CoreDataStore: DataStore {
         return (clazz is NSManagedObject.Type) ? true : false
     }
 
-    override public func emptyFetchResult(appContext: DataStore.Context) throws -> FetchResultProtocol {
-        let inManagedObjectContext = appContext.dataStore?.workingContext()
+    override public func emptyFetchResult() throws -> FetchResultProtocol {
+        let inManagedObjectContext = workingContext()
         return try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
     }
 
@@ -143,7 +145,6 @@ extension CoreDataStore {
     }
 
     private func mergeObjects(_ objects: [NSManagedObject], toContext: NSManagedObjectContext, fromNotification: Notification) {
-        appContext.logInspector?.logEvent(EventCDMerge(), sender: self)
         var updatedObjectsInCurrentContext = Set<NSManagedObject>()
 
         objects.forEach { updatedObject in
@@ -158,11 +159,16 @@ extension CoreDataStore {
             toContext.refresh(obj, mergeChanges: true)
         }
 
+        let uuid = UUID()
+        let executionStartTime = Date()
+        appContext.logInspector?.log(.performance(name: "mergeStart", message: "operation: \(uuid.MD5), context: \(toContext.name ?? "")"), sender: self)
+
         if toContext.hasChanges {
             do {
                 try toContext.save()
+                appContext.logInspector?.log(.performance(name: "mergeEnd", message: "(\(Date().elapsed(from: executionStartTime))s) operation:\(uuid.MD5), context: \(toContext.name ?? "")"), sender: self)
             } catch {
-                appContext.logInspector?.logEvent(EventError(DataStoreError.contextNotSaved, details: self), sender: nil)
+                appContext.logInspector?.log(.error(DataStoreError.contextNotSaved), sender: self)
             }
         }
         toContext.processPendingChanges()

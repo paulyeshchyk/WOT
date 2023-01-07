@@ -9,7 +9,7 @@
 public extension Vehicleprofile {
     // MARK: - JSONDecodableProtocol
 
-    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context) throws {
+    override func decode(using map: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         guard let profileJSON = map.jsonCollection.data() as? JSON else {
             throw JSONManagedObjectMapError.notAnElement(map)
         }
@@ -36,9 +36,9 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoListManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noAmmoList(tank_id), details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(tank_id)), sender: self)
         }
 
         // MARK: - Armor
@@ -52,9 +52,9 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: armorKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extactor = VehicleprofileArmorListManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extactor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extactor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noArmor(tank_id), details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(tank_id)), sender: self)
         }
 
         // MARK: - Module
@@ -68,9 +68,9 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileModuleManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noModule(tank_id), details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(tank_id)), sender: self)
         }
 
         // MARK: - Engine
@@ -87,9 +87,9 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: engineKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileEngineManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noEngine(tank_id), details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(tank_id)), sender: self)
         }
 
         // MARK: - Gun
@@ -106,9 +106,9 @@ public extension Vehicleprofile {
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileGunManagedObjectCreator()
             let collection = try JSONCollection(element: jsonElement)
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noGun(tank_id), details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(tank_id)), sender: self)
         }
 
         // MARK: - Suspension
@@ -125,9 +125,9 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileSuspensionManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noSuspension(tank_id), details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(tank_id)), sender: self)
         }
 
         // MARK: - Turret
@@ -144,9 +144,9 @@ public extension Vehicleprofile {
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileTurretManagedObjectCreator()
             let collection = try JSONCollection(element: jsonElement)
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noTurret(tank_id), details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
 
         // MARK: - Radio
@@ -163,9 +163,9 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: radioKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileRadioManagedObjectCreator()
-            try appContext.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition, appContext: appContext)
+            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
-            appContext.logInspector?.logEvent(EventWarning(error: VehicleProfileMappingError.noTurret(tank_id), details: nil), sender: self)
+            appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
     }
 }

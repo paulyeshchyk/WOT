@@ -14,7 +14,7 @@ public protocol ManagedObjectExtractable {
 }
 
 public extension ManagedObjectExtractable {
-    func extract(json: JSON, key: AnyHashable, forClazz modelClazz: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol?) throws -> JSONExtraction {
+    func extract(json: JSON, key: AnyHashable, modelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol?) throws -> JSONExtraction {
         guard let json = json[key] as? JSON else {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
@@ -23,14 +23,14 @@ public extension ManagedObjectExtractable {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.jsonWasNotExtracted(json)
         }
 
-        let primaryKeyPath = modelClazz.primaryKeyPath(forType: linkerPrimaryKeyType)
+        let primaryKeyPath = modelClass.primaryKeyPath(forType: linkerPrimaryKeyType)
         let ident = extractedJSON[primaryKeyPath] ?? key
 
         #warning("2b refactored")
         let parents = contextPredicate?.parentObjectIDList
 
         let requestPredicate = ContextPredicate(parentObjectIDList: parents)
-        requestPredicate[.primary] = modelClazz.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
+        requestPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
         let jsonCollection = try JSONCollection(element: extractedJSON)
         return JSONExtraction(requestPredicate: requestPredicate, json: jsonCollection)
@@ -55,4 +55,5 @@ public struct JSONExtraction {
             }
         }
     }
+
 }

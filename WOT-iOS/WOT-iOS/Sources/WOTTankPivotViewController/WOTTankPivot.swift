@@ -142,21 +142,19 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
     override func loadModel() {
         super.loadModel()
 
-        appContext.logInspector?.logEvent(EventFlowStart("Pivot"), sender: self)
-
         do {
-            try WOTWEBRequestFactory.fetchVehiclePivotData(inContext: appContext, listener: self)
+            try WOTWEBRequestFactory.fetchVehiclePivotData(appContext: appContext, listener: self)
         } catch {
-            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: nil)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
     }
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error: Error?) {
         if error != nil {
-            appContext.logInspector?.logEvent(EventError(error, details: nil), sender: self)
+            appContext.logInspector?.log(.error(error), sender: self)
         }
         requestManager.removeListener(self)
-        appContext.logInspector?.logEvent(EventFlowEnd("Pivot"), sender: self)
+
         DispatchQueue.main.async {
             super.loadModel()
         }

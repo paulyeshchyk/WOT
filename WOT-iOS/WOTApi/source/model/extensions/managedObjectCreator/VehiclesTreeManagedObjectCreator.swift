@@ -22,8 +22,7 @@ public class VehiclesTreeManagedObjectExtractor: ManagedObjectExtractable {
 public class VehiclesTreeManagedObjectCreator: ManagedObjectLinker {
 
     public convenience init(modelClass: PrimaryKeypathProtocol.Type, appContext: Context) throws {
-        let inManagedObjectContext = appContext.dataStore?.workingContext()
-        let emptyFetchResult = try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
+        let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
         let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
         self.init(modelClass: modelClass, masterFetchResult: emptyFetchResult, anchor: anchor)
     }
@@ -36,10 +35,10 @@ public class VehiclesTreeManagedObjectCreator: ManagedObjectLinker {
         return from
     }
 
-    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext, completion: @escaping FetchResultCompletion) {
+    override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
         // MARK: stash
 
-        appContext.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
+        appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
             completion(fetchResult, error)
         }
     }

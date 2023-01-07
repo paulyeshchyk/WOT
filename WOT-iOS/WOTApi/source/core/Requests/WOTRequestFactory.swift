@@ -11,8 +11,10 @@ import ContextSDK
 
 @objc
 public class WOTWEBRequestFactory: NSObject {
+    //
+    public typealias Context = DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol
 
-    public static func fetchVehiclePivotData(inContext appContext: DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol, listener: RequestManagerListenerProtocol) throws {
+    public static func fetchVehiclePivotData(appContext: WOTWEBRequestFactory.Context, listener: RequestManagerListenerProtocol) throws {
         guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             throw HttpRequestFactoryError.objectNotDefined
         }
