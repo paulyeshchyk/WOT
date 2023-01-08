@@ -35,10 +35,11 @@ public extension Vehicles {
             let composition = try builder.buildRequestPredicateComposition()
             let collection = try JSONCollection(element: jsonElement)
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
-            let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, anchor: anchor)
-            let extractor = VehicleProfileManagedObjectCreator()
-            let objectContext = vehiclesFetchResult.managedObjectContext
-            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            let managedObjectLinker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, anchor: anchor)
+            let managedObjectExtractor = VehicleProfileManagedObjectCreator()
+            let managedObjectContext = vehiclesFetchResult.managedObjectContext
+
+            ModuleSyndicate.fetchLocalAndDecode(appContext: appContext, jsonCollection: collection, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -74,20 +75,14 @@ extension Vehicles {
                 let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
 
                 let jsonCollection = try JSONCollection(element: jsonElement)
-                try submoduleMapping(keypath: "<unknown3>", objectContext: objectContext, json: jsonCollection, module_id: module_id, requestPredicate: contextPredicate, masterFetchResult: vehiclesFetchResult, appContext: appContext)
+                try submoduleMapping(objectContext: objectContext, jsonCollection: jsonCollection, module_id: module_id, requestPredicate: contextPredicate, masterFetchResult: vehiclesFetchResult, appContext: appContext)
             } else {
                 appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
             }
         }
     }
 
-    private func submoduleMapping(keypath _: KeypathType, objectContext: ManagedObjectContextProtocol, json: JSONCollectionProtocol?, module_id: Any?, requestPredicate: ContextPredicateProtocol, masterFetchResult: FetchResultProtocol, appContext: JSONDecodableProtocol.Context?) throws {
-        guard let json = json else {
-            throw VehiclesJSONMappingError.passedInvalidSubModuleJSON
-        }
-        guard let module_id = module_id as? NSNumber else {
-            throw VehiclesJSONMappingError.passedInvalidModuleId
-        }
+    private func submoduleMapping(objectContext: ManagedObjectContextProtocol, jsonCollection: JSONCollectionProtocol, module_id: Any?, requestPredicate: ContextPredicateProtocol, masterFetchResult: FetchResultProtocol, appContext: JSONDecodableProtocol.Context?) throws {
         let contextPredicate = ContextPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
         contextPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
         contextPredicate[.secondary] = requestPredicate[.primary]
@@ -95,7 +90,7 @@ extension Vehicles {
         let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
         let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
         let extractor = ModulesTreeManagedObjectCreator()
-        appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: json, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: contextPredicate, completion: { _, _ in })
+        ModuleSyndicate.fetchLocalAndDecode(appContext: appContext, jsonCollection: jsonCollection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: contextPredicate, completion: { _, _ in })
     }
 }
 

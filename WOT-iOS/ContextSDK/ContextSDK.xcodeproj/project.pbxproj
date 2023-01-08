@@ -60,12 +60,10 @@
 		DAA3A54E296A16D800430492 /* OperationQueueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */; };
 		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
 		DACDB0D8295DBB66005BBA72 /* LogInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D6295DBB66005BBA72 /* LogInspector.swift */; };
-		DACDB0DB295ED7A1005BBA72 /* MappingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0DA295ED7A1005BBA72 /* MappingCoordinator.swift */; };
 		DACDB0F1295EDC96005BBA72 /* FetchResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0DE295EDC94005BBA72 /* FetchResultProtocol.swift */; };
 		DACDB0F2295EDC96005BBA72 /* ModelServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0DF295EDC94005BBA72 /* ModelServiceProtocol.swift */; };
 		DACDB0F3295EDC96005BBA72 /* RequestManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0E0295EDC94005BBA72 /* RequestManagerProtocol.swift */; };
 		DACDB0F4295EDC96005BBA72 /* ResponseDataAdapterCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0E1295EDC94005BBA72 /* ResponseDataAdapterCreatorProtocol.swift */; };
-		DACDB0F5295EDC96005BBA72 /* MappingCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0E2295EDC94005BBA72 /* MappingCoordinatorProtocol.swift */; };
 		DACDB0F7295EDC96005BBA72 /* RequestableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0E4295EDC94005BBA72 /* RequestableProtocol.swift */; };
 		DACDB0F9295EDC96005BBA72 /* HttpServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0E6295EDC95005BBA72 /* HttpServiceProtocol.swift */; };
 		DACDB0FA295EDC96005BBA72 /* URLEncodedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0E7295EDC95005BBA72 /* URLEncodedProtocol.swift */; };
@@ -154,12 +152,10 @@
 		DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationQueueObserver.swift; sourceTree = "<group>"; };
 		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
 		DACDB0D6295DBB66005BBA72 /* LogInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInspector.swift; sourceTree = "<group>"; };
-		DACDB0DA295ED7A1005BBA72 /* MappingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingCoordinator.swift; sourceTree = "<group>"; };
 		DACDB0DE295EDC94005BBA72 /* FetchResultProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchResultProtocol.swift; sourceTree = "<group>"; };
 		DACDB0DF295EDC94005BBA72 /* ModelServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelServiceProtocol.swift; sourceTree = "<group>"; };
 		DACDB0E0295EDC94005BBA72 /* RequestManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManagerProtocol.swift; sourceTree = "<group>"; };
 		DACDB0E1295EDC94005BBA72 /* ResponseDataAdapterCreatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseDataAdapterCreatorProtocol.swift; sourceTree = "<group>"; };
-		DACDB0E2295EDC94005BBA72 /* MappingCoordinatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappingCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		DACDB0E4295EDC94005BBA72 /* RequestableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestableProtocol.swift; sourceTree = "<group>"; };
 		DACDB0E6295EDC95005BBA72 /* HttpServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpServiceProtocol.swift; sourceTree = "<group>"; };
 		DACDB0E7295EDC95005BBA72 /* URLEncodedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLEncodedProtocol.swift; sourceTree = "<group>"; };
@@ -258,7 +254,6 @@
 				DACDB0D4295DBB66005BBA72 /* LogInspector */,
 				DA81E4F12952FE3500C60F31 /* LogEvents */,
 				DA2C28F22959F55200D18A6E /* ManagedObjectCreator */,
-				DACDB0D9295ED768005BBA72 /* MappingCoordinator */,
 				DA0E80832950B02900B44CC6 /* RelationLinkParadigm */,
 				DA0E80472950652F00B44CC6 /* Request */,
 				DA0E807A2950A5F400B44CC6 /* RequestParadigm */,
@@ -434,7 +429,6 @@
 				DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */,
 				DACDB10F295EE07C005BBA72 /* ManagedObjectLinkerProtocol.swift */,
 				DA0432A429633B400092C891 /* ManagedObjectLinkable.swift */,
-				DACDB0E2295EDC94005BBA72 /* MappingCoordinatorProtocol.swift */,
 				DACDB0E8295EDC95005BBA72 /* MD5Protocol.swift */,
 				DACDB0DF295EDC94005BBA72 /* ModelServiceProtocol.swift */,
 				DACDB0E4295EDC94005BBA72 /* RequestableProtocol.swift */,
@@ -517,14 +511,6 @@
 				DACDB0D6295DBB66005BBA72 /* LogInspector.swift */,
 			);
 			path = LogInspector;
-			sourceTree = "<group>";
-		};
-		DACDB0D9295ED768005BBA72 /* MappingCoordinator */ = {
-			isa = PBXGroup;
-			children = (
-				DACDB0DA295ED7A1005BBA72 /* MappingCoordinator.swift */,
-			);
-			path = MappingCoordinator;
 			sourceTree = "<group>";
 		};
 		DACDB108295EDDC1005BBA72 /* JSONCollection */ = {
@@ -677,8 +663,6 @@
 				DA288E782964C72000973561 /* NSThread+Execution.swift in Sources */,
 				DA0E80982950B07C00B44CC6 /* MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder.swift in Sources */,
 				DA288F752965D8FB00973561 /* EventCustom.swift in Sources */,
-				DACDB0DB295ED7A1005BBA72 /* MappingCoordinator.swift in Sources */,
-				DACDB0F5295EDC96005BBA72 /* MappingCoordinatorProtocol.swift in Sources */,
 				DACDB0FC295EDC96005BBA72 /* SessionManagerProtocol.swift in Sources */,
 				DACDB12029601537005BBA72 /* ContextPredicateProtocol.swift in Sources */,
 				DACDB10A295EDDD9005BBA72 /* JSONCollection.swift in Sources */,

@@ -173,7 +173,7 @@ class Linker: ManagedObjectLinkerProtocol {
 
 // MARK: - AppContext
 
-class AppContext: ResponseDataAdapterCreatorContainerProtocol, RequestManagerContainerProtocol, MappingCoordinatorContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol, LogInspectorContainerProtocol {
+class AppContext: ResponseDataAdapterCreatorContainerProtocol, RequestManagerContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol, LogInspectorContainerProtocol {
 
     init() {
         hostConfiguration = HostConfiguration()
@@ -182,7 +182,6 @@ class AppContext: ResponseDataAdapterCreatorContainerProtocol, RequestManagerCon
     var dataStore: DataStoreProtocol?
     var hostConfiguration: HostConfigurationProtocol?
     var logInspector: LogInspectorProtocol?
-    var mappingCoordinator: MappingCoordinatorProtocol?
     var requestManager: RequestManagerProtocol?
     var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 }

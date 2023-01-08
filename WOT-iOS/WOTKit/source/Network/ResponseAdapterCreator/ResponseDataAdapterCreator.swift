@@ -14,7 +14,9 @@ public class ResponseDataAdapterCreator: ResponseDataAdapterCreatorProtocol {
         self.appContext = appContext
     }
 
-    public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & RequestManagerContainerProtocol
 
     private enum ResponseAdapterCreatorError: Error, CustomStringConvertible {
         case adapterNotFound(requestType: RequestIdType)

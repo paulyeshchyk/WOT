@@ -29,8 +29,11 @@ open class RequestManager: NSObject {
         super.init()
     }
 
-    public typealias Context =
-        LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & MappingCoordinatorContainerProtocol & HostConfigurationContainerProtocol & ResponseDataAdapterCreatorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & RequestManagerContainerProtocol
+        & HostConfigurationContainerProtocol
+        & ResponseDataAdapterCreatorContainerProtocol
 
     override public var description: String { String(describing: type(of: self)) }
 

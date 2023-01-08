@@ -15,8 +15,7 @@ public protocol ContextProtocol: LogInspectorContainerProtocol,
     HostConfigurationContainerProtocol,
     RequestManagerContainerProtocol,
     RequestListenerContainerProtocol,
-    SessionManagerContainerProtocol,
-    MappingCoordinatorContainerProtocol {}
+    SessionManagerContainerProtocol {}
 
 // MARK: - ContextControllerProtocol
 

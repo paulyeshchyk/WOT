@@ -14,7 +14,9 @@ class VehicleSyndicate {
         self.key = key
     }
 
-    typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol
+    typealias Context = DataStoreContainerProtocol
+        & LogInspectorContainerProtocol
+        & RequestManagerContainerProtocol
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
@@ -140,7 +142,9 @@ class MappingCoordinatorDecodeHelper {
         self.appContext = appContext
     }
 
-    typealias Context = (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol)
+    typealias Context = (DataStoreContainerProtocol
+        & LogInspectorContainerProtocol
+        & RequestManagerContainerProtocol)
 
     let appContext: Context
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
@@ -159,20 +163,31 @@ class MappingCoordinatorDecodeHelper {
             return
         }
 
-        appContext.mappingCoordinator?.decode(jsonCollection: jsonCollection,
-                                              fetchResult: fetchResult,
-                                              contextPredicate: contextPredicate,
-                                              completion: { fetchResult, error in
-                                                  self.completion?(fetchResult, error)
-                                              })
+        guard let managedObject = fetchResult.managedObject() as? JSONDecodableProtocol else {
+            completion?(fetchResult, MappingCoordinatorDecodeHelperError.fetchResultIsNotJSONDecodable(fetchResult))
+            return
+        }
+        //
+        do {
+            let jsonMap = try JSONMap(jsonCollection: jsonCollection, predicate: contextPredicate)
+            try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: appContext)
+
+            appContext.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
+                self.completion?(fetchResult, error)
+            }
+        } catch {
+            completion?(fetchResult, error)
+        }
     }
 
     private enum MappingCoordinatorDecodeHelperError: Error, CustomStringConvertible {
         case fetchResultIsNotPresented
         case contextPredicateIsNotDefined
+        case fetchResultIsNotJSONDecodable(FetchResultProtocol?)
 
         public var description: String {
             switch self {
+            case .fetchResultIsNotJSONDecodable(let fetchResult): return "[\(type(of: self))]: fetch result(\(type(of: fetchResult)) is not JSONDecodableProtocol"
             case .contextPredicateIsNotDefined: return "\(type(of: self)): Context predicate is not defined"
             case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
             }
@@ -188,7 +203,7 @@ class DatastoreFetchHelper {
         self.appContext = appContext
     }
 
-    typealias Context = (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol)
+    typealias Context = DataStoreContainerProtocol
 
     let appContext: Context
     var nspredicate: NSPredicate?

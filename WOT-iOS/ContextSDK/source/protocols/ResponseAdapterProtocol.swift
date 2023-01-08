@@ -9,7 +9,9 @@
 
 @objc
 public protocol ResponseAdapterProtocol {
-    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & MappingCoordinatorContainerProtocol
+    typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & RequestManagerContainerProtocol
 
     typealias OnComplete = (RequestProtocol, Error?) -> Void
 
