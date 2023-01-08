@@ -12,7 +12,7 @@ public typealias MappingCoordinatorContext = LogInspectorContainerProtocol & Dat
 @objc
 public protocol MappingCoordinatorDecodingProtocol {
     typealias MappingCoordinatorDecodeCompletion = (FetchResultProtocol, Error?) -> Void
-    func decode(jsonCollection: JSONCollectionProtocol?, fetchResult: FetchResultProtocol, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable?, completion: @escaping MappingCoordinatorDecodeCompletion)
+    func decode(jsonCollection: JSONCollectionProtocol?, fetchResult: FetchResultProtocol, contextPredicate: ContextPredicateProtocol, completion: @escaping MappingCoordinatorDecodeCompletion)
 }
 
 // MARK: - MappingCoordinatorFetchingProtocol

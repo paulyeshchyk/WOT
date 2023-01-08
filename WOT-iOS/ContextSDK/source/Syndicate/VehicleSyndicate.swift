@@ -162,8 +162,6 @@ class MappingCoordinatorDecodeHelper {
         appContext.mappingCoordinator?.decode(jsonCollection: jsonCollection,
                                               fetchResult: fetchResult,
                                               contextPredicate: contextPredicate,
-                                              managedObjectCreator: managedObjectCreator,
-                                              managedObjectExtractor: managedObjectExtractor,
                                               completion: { fetchResult, error in
                                                   self.completion?(fetchResult, error)
                                               })

@@ -36,29 +36,19 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
             return
         }
 
-        let managedObjectLinkerHelper = ManagedObjectLinkerHelper(appContext: appContext)
-        managedObjectLinkerHelper.managedObjectLinker = managedObjectCreator
-        managedObjectLinkerHelper.completion = { fetchResult, error in
+        let moduleSyndicate = ModuleSyndicate(appContext: appContext)
+        moduleSyndicate.managedObjectLinker = managedObjectCreator
+        moduleSyndicate.managedObjectExtractor = managedObjectExtractor
+        moduleSyndicate.contextPredicate = contextPredicate
+        moduleSyndicate.jsonCollection = jsonCollection
+        moduleSyndicate.nspredicate = nspredicate
+        moduleSyndicate.modelClass = modelClass
+        moduleSyndicate.managedObjectContext = objectContext
+
+        moduleSyndicate.completion = { fetchResult, error in
             completion(fetchResult, error)
         }
-
-        let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
-        mappingCoordinatorDecodeHelper.jsonCollection = jsonCollection
-        mappingCoordinatorDecodeHelper.contextPredicate = contextPredicate
-        mappingCoordinatorDecodeHelper.managedObjectCreator = managedObjectCreator
-        mappingCoordinatorDecodeHelper.managedObjectExtractor = managedObjectExtractor
-        mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
-            managedObjectLinkerHelper.run(fetchResult, error: error)
-        }
-
-        let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
-        datastoreFetchHelper.modelClass = modelClass
-        datastoreFetchHelper.nspredicate = nspredicate
-        datastoreFetchHelper.managedObjectContext = objectContext
-        datastoreFetchHelper.completion = { fetchResult, error in
-            mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
-        }
-        datastoreFetchHelper.run()
+        moduleSyndicate.run()
     }
 }
 
@@ -66,7 +56,7 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
 
 extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
     //
-    public func decode(jsonCollection: JSONCollectionProtocol?, fetchResult: FetchResultProtocol, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor _: ManagedObjectExtractable?, completion: @escaping MappingCoordinatorDecodeCompletion) {
+    public func decode(jsonCollection: JSONCollectionProtocol?, fetchResult: FetchResultProtocol, contextPredicate: ContextPredicateProtocol, completion: @escaping MappingCoordinatorDecodeCompletion) {
         appContext.logInspector?.log(.mapping(name: "decode-start", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
 
         guard let managedObject = fetchResult.managedObject() as? JSONDecodableProtocol else {
@@ -78,18 +68,9 @@ extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
         do {
             let jsonMap = try JSONMap(jsonCollection: jsonCollection, predicate: contextPredicate)
             try managedObject.decode(using: jsonMap, managedObjectContextContainer: fetchResult, appContext: appContext)
+
             appContext.dataStore?.stash(fetchResult: fetchResult) { fetchResult, error in
-                guard error == nil else {
-                    completion(fetchResult, error)
-                    return
-                }
-                guard let linker = managedObjectCreator else {
-                    completion(fetchResult, MappingCoordinatorError.linkerNotFound)
-                    return
-                }
-                let finalFetchResult = fetchResult.makeDublicate(managedObjectContext: fetchResult.managedObjectContext)
-                finalFetchResult.predicate = contextPredicate.nspredicate(operator: .and)
-                linker.process(fetchResult: finalFetchResult, appContext: self.appContext, completion: completion)
+                completion(fetchResult, error)
             }
             appContext.logInspector?.log(.mapping(name: "decode-end", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
         } catch {
