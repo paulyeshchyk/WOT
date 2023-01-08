@@ -15,13 +15,13 @@ open class MasterAsPrimaryLinkedAsSecondaryRuleBuilder: RequestPredicateComposer
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         var parentObjectIDList = [AnyObject]()
-        if let parents = drivenJoint.thePredicate?.parentObjectIDList {
+        if let parents = drivenJoint.contextPredicate?.parentObjectIDList {
             parentObjectIDList.append(contentsOf: parents)
         }
         parentObjectIDList.append(hostObjectID)
 
         let lookupPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
-        lookupPredicate[.primary] = drivenJoint.thePredicate?[.primary]
+        lookupPredicate[.primary] = drivenJoint.contextPredicate?[.primary]
         lookupPredicate[.secondary] = drivenJoint.modelClass.primaryKey(forType: .external, andObject: drivenJoint.theID)
 
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)

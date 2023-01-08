@@ -29,8 +29,11 @@ open class RequestManager: NSObject {
         super.init()
     }
 
-    public typealias Context =
-        LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & MappingCoordinatorContainerProtocol & HostConfigurationContainerProtocol & ResponseDataAdapterCreatorContainerProtocol
+    public typealias Context = LogInspectorContainerProtocol
+        & DataStoreContainerProtocol
+        & RequestManagerContainerProtocol
+        & HostConfigurationContainerProtocol
+        & ResponseDataAdapterCreatorContainerProtocol
 
     override public var description: String { String(describing: type(of: self)) }
 
@@ -98,17 +101,15 @@ extension RequestManager: RequestListenerProtocol {
         }
 
         let dataAdapter = type(of: modelService).dataAdapterClass().init(modelClass: modelClass, request: request, managedObjectLinker: managedObjectCreator, jsonExtractor: managedObjectExtractor, appContext: appContext)
-
-        dataAdapter.decode(data: data, fromRequest: request) { [weak self] request, error in
-            guard let self = self else {
-                return
-            }
-            self.grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
+        dataAdapter.completion = { request, error in
             self.finalizeParseResponse(request: request, error: error)
         }
+        dataAdapter.decode(data: data, fromRequest: request)
     }
 
     private func finalizeParseResponse(request: RequestProtocol, error: Error?) {
+        //
+        grouppedListenerList.didParseDataForRequest(request, requestManager: self, error: error)
         //
 
         if let error = error {

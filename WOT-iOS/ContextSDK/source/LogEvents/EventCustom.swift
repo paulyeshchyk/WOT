@@ -120,8 +120,8 @@ extension Loggable {
         Loggable(type: .remoteFetch, message: message)
     }
 
-    public static func mapping(name: String, fetchResult: FetchResultProtocol, predicate: ContextPredicateProtocol, mappingType: EventMappingType) -> Loggable {
-        let message = "\(name) `\(mappingType)` Mapping \(String(describing: fetchResult)) \(String(describing: predicate))"
+    public static func mapping(name: String, fetchResult: FetchResultProtocol, predicate: ContextPredicateProtocol) -> Loggable {
+        let message = "\(name) Mapping \(String(describing: fetchResult)) \(String(describing: predicate))"
         return Loggable(type: .flow, message: message)
     }
 
