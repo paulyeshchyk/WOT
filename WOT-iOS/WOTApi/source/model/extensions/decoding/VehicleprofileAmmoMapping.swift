@@ -31,7 +31,7 @@ public extension VehicleprofileAmmo {
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoPenetrationManagedObjectCreator()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
-            ModuleSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -52,7 +52,7 @@ public extension VehicleprofileAmmo {
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoDamageManagedObjectCreator()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
-            ModuleSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }

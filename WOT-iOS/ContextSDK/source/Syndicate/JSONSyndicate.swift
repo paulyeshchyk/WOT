@@ -1,20 +1,20 @@
 //
-//  VehicleSyndicate.swift
+//  JSONSyndicate.swift
 //  ContextSDK
 //
 //  Created by Paul on 7.01.23.
 //
 
-// MARK: - VehicleSyndicate
+// MARK: - JSONSyndicate
 
-class VehicleSyndicate {
+class JSONSyndicate {
     typealias Context = DataStoreContainerProtocol
-        & LogInspectorContainerProtocol
         & RequestManagerContainerProtocol
+        & LogInspectorContainerProtocol
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var managedObjectLinker: ManagedObjectLinkerProtocol?
-    let appContext: VehicleSyndicate.Context
+    let appContext: JSONSyndicate.Context
     var modelClass: PrimaryKeypathProtocol.Type?
     var contextPredicate: ContextPredicateProtocol?
     let json: JSON
@@ -25,7 +25,7 @@ class VehicleSyndicate {
 
     // MARK: Lifecycle
 
-    init(appContext: VehicleSyndicate.Context, json: JSON, key: AnyHashable) {
+    init(appContext: JSONSyndicate.Context, json: JSON, key: AnyHashable) {
         self.appContext = appContext
         self.json = json
         self.key = key
@@ -35,15 +35,15 @@ class VehicleSyndicate {
 
     func run() {
         guard let modelClass = modelClass else {
-            completion?(nil, SyndicateError.modelClassIsNotDefined)
+            completion?(nil, JSONSyndicateError.modelClassIsNotDefined)
             return
         }
         guard let managedObjectLinker = managedObjectLinker else {
-            completion?(nil, SyndicateError.managedObjectLinkerIsNotPresented)
+            completion?(nil, JSONSyndicateError.managedObjectLinkerIsNotPresented)
             return
         }
         guard let jsonExtractor = jsonExtractor else {
-            completion?(nil, SyndicateError.jsonExtractorIsNotPresented)
+            completion?(nil, JSONSyndicateError.jsonExtractorIsNotPresented)
             return
         }
 
@@ -121,11 +121,9 @@ class ManagedObjectLinkerHelper {
             completion?(fetchResult, ManagedObjectLinkerHelperError.managedObjectLinkerIsNotPresented)
             return
         }
-        managedObjectLinker.process(fetchResult: fetchResult,
-                                    appContext: appContext,
-                                    completion: { fetchResult, error in
-                                        self.completion?(fetchResult, error)
-                                    })
+        managedObjectLinker.process(fetchResult: fetchResult, appContext: appContext) { fetchResult, error in
+            self.completion?(fetchResult, error)
+        }
     }
 
 }
@@ -242,9 +240,9 @@ class DatastoreFetchHelper {
 
 }
 
-// MARK: - SyndicateError
+// MARK: - JSONSyndicateError
 
-private enum SyndicateError: Error, CustomStringConvertible {
+private enum JSONSyndicateError: Error, CustomStringConvertible {
     case managedObjectLinkerIsNotPresented
     case modelClassIsNotDefined
     case jsonExtractorIsNotPresented

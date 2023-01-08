@@ -45,7 +45,7 @@
 		DA2C28F12959F0DD00D18A6E /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F02959F0DD00D18A6E /* DataStore.swift */; };
 		DA2C28F42959F55D00D18A6E /* ManagedObjectLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C28F32959F55D00D18A6E /* ManagedObjectLinker.swift */; };
 		DA32CEB129641C48007726AD /* ManagedObjectExtractable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */; };
-		DA56E2AB296B22FA001D9DD4 /* ModuleSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56E2AA296B22FA001D9DD4 /* ModuleSyndicate.swift */; };
+		DA56E2AB296B22FA001D9DD4 /* MOSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56E2AA296B22FA001D9DD4 /* MOSyndicate.swift */; };
 		DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */; };
 		DA81E4EE2952FCEE00C60F31 /* RequestRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */; };
 		DA81E4F02952FDD800C60F31 /* JSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E4EF2952FDD800C60F31 /* JSONAdapter.swift */; };
@@ -55,7 +55,7 @@
 		DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */; };
 		DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */; };
 		DAA3A5432969994800430492 /* ManagedObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */; };
-		DAA3A5462969F54C00430492 /* VehicleSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5452969F54C00430492 /* VehicleSyndicate.swift */; };
+		DAA3A5462969F54C00430492 /* JSONSyndicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A5452969F54C00430492 /* JSONSyndicate.swift */; };
 		DAA3A54C296A168D00430492 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54B296A168D00430492 /* ConcurrentOperation.swift */; };
 		DAA3A54E296A16D800430492 /* OperationQueueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */; };
 		DACDB0D7295DBB66005BBA72 /* OSLogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */; };
@@ -137,7 +137,7 @@
 		DA2C28F02959F0DD00D18A6E /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DA2C28F32959F55D00D18A6E /* ManagedObjectLinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectLinker.swift; sourceTree = "<group>"; };
 		DA32CEB029641C48007726AD /* ManagedObjectExtractable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectExtractable.swift; sourceTree = "<group>"; };
-		DA56E2AA296B22FA001D9DD4 /* ModuleSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSyndicate.swift; sourceTree = "<group>"; };
+		DA56E2AA296B22FA001D9DD4 /* MOSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOSyndicate.swift; sourceTree = "<group>"; };
 		DA81E4EB2952FCEE00C60F31 /* RequestRegistratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistratorProtocol.swift; sourceTree = "<group>"; };
 		DA81E4EC2952FCEE00C60F31 /* RequestRegistrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestRegistrator.swift; sourceTree = "<group>"; };
 		DA81E4EF2952FDD800C60F31 /* JSONAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAdapter.swift; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 		DA81E5222953005E00C60F31 /* KeyedDecodingContainer+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Decode.swift"; sourceTree = "<group>"; };
 		DA84BF3F2957327F00BAC71D /* DecoderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderContainer.swift; sourceTree = "<group>"; };
 		DAA3A5422969994800430492 /* ManagedObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectProtocol.swift; sourceTree = "<group>"; };
-		DAA3A5452969F54C00430492 /* VehicleSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleSyndicate.swift; sourceTree = "<group>"; };
+		DAA3A5452969F54C00430492 /* JSONSyndicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSyndicate.swift; sourceTree = "<group>"; };
 		DAA3A54B296A168D00430492 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
 		DAA3A54D296A16D800430492 /* OperationQueueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationQueueObserver.swift; sourceTree = "<group>"; };
 		DACDB0D5295DBB66005BBA72 /* OSLogWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogWrapper.swift; sourceTree = "<group>"; };
@@ -489,8 +489,8 @@
 		DAA3A5442969F53900430492 /* Syndicate */ = {
 			isa = PBXGroup;
 			children = (
-				DAA3A5452969F54C00430492 /* VehicleSyndicate.swift */,
-				DA56E2AA296B22FA001D9DD4 /* ModuleSyndicate.swift */,
+				DAA3A5452969F54C00430492 /* JSONSyndicate.swift */,
+				DA56E2AA296B22FA001D9DD4 /* MOSyndicate.swift */,
 			);
 			path = Syndicate;
 			sourceTree = "<group>";
@@ -671,7 +671,7 @@
 				DA0E80972950B07C00B44CC6 /* MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder.swift in Sources */,
 				DA81E5232953005E00C60F31 /* KeyedDecodingContainer+Decode.swift in Sources */,
 				DA81E4ED2952FCEE00C60F31 /* RequestRegistratorProtocol.swift in Sources */,
-				DA56E2AB296B22FA001D9DD4 /* ModuleSyndicate.swift in Sources */,
+				DA56E2AB296B22FA001D9DD4 /* MOSyndicate.swift in Sources */,
 				DA84BF402957327F00BAC71D /* DecoderContainer.swift in Sources */,
 				DACDB0F3295EDC96005BBA72 /* RequestManagerProtocol.swift in Sources */,
 				DACDB0F9295EDC96005BBA72 /* HttpServiceProtocol.swift in Sources */,
@@ -701,7 +701,7 @@
 				DAA3A54C296A168D00430492 /* ConcurrentOperation.swift in Sources */,
 				DAA3A5432969994800430492 /* ManagedObjectProtocol.swift in Sources */,
 				DA0E806B2950920C00B44CC6 /* PrimaryKeypathProtocol.swift in Sources */,
-				DAA3A5462969F54C00430492 /* VehicleSyndicate.swift in Sources */,
+				DAA3A5462969F54C00430492 /* JSONSyndicate.swift in Sources */,
 				DACDB0FB295EDC96005BBA72 /* MD5Protocol.swift in Sources */,
 				DACDB102295EDC96005BBA72 /* ManagedObjectContextProtocol.swift in Sources */,
 				DACDB0F4295EDC96005BBA72 /* ResponseDataAdapterCreatorProtocol.swift in Sources */,
