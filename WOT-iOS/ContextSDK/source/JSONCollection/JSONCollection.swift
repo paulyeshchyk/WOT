@@ -9,6 +9,13 @@
 
 public class JSONCollection: JSONCollectionProtocol {
 
+    public var collectionType: JSONCollectionType
+
+    private var collection = [JSON]()
+    private var custom: Any?
+
+    // MARK: Lifecycle
+
     public init(element: JSON) throws {
         collectionType = .element
         collection.append(element)
@@ -24,7 +31,7 @@ public class JSONCollection: JSONCollectionProtocol {
         self.custom = custom
     }
 
-    public var collectionType: JSONCollectionType
+    // MARK: Public
 
     public func add(element object: JSON?) throws {
         guard collectionType == .array else {
@@ -56,8 +63,6 @@ public class JSONCollection: JSONCollectionProtocol {
         }
     }
 
-    private var collection = [JSON]()
-    private var custom: Any?
 }
 
 // MARK: - JSONCollection + DecoderContainer

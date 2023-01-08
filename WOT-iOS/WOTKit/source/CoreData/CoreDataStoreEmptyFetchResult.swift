@@ -11,6 +11,12 @@ import CoreData
 
 public class EmptyFetchResult: FetchResult {
 
+    private enum EmptyFetchResultError: Error {
+        case contextIsNotManagedObjectContext
+    }
+
+    // MARK: Lifecycle
+
     public init(inManagedObjectContext: ManagedObjectContextProtocol?) throws {
         guard let cntx = inManagedObjectContext as? NSManagedObjectContext else {
             throw EmptyFetchResultError.contextIsNotManagedObjectContext
@@ -27,7 +33,4 @@ public class EmptyFetchResult: FetchResult {
         fatalError("init(objectID:managedObjectContext:predicate:fetchStatus:) has not been implemented")
     }
 
-    private enum EmptyFetchResultError: Error {
-        case contextIsNotManagedObjectContext
-    }
 }

@@ -21,6 +21,15 @@ public struct CodingAPI {
 
 public struct StringCodingKey: CodingKey, ExpressibleByStringLiteral {
 
+    public var stringValue: String { return string }
+
+    public var intValue: Int? { return int }
+
+    private let string: String
+    private let int: Int?
+
+    // MARK: Lifecycle
+
     init(string: String) {
         self.string = string
         int = nil
@@ -41,12 +50,6 @@ public struct StringCodingKey: CodingKey, ExpressibleByStringLiteral {
         int = nil
     }
 
-    public var stringValue: String { return string }
-
-    public var intValue: Int? { return int }
-
-    private let string: String
-    private let int: Int?
 }
 
 // any json decoding
@@ -165,6 +168,30 @@ public extension KeyedEncodingContainer {
 
 public struct DateTime: Codable, Comparable {
 
+    /// The date formatters used for decoding. They will be tried in order
+    public static var dateDecodingFormatters: [DateFormatter] = {
+        return ["yyyy-MM-dd'T'HH:mm:ssZZZZZ",
+                "yyyy-MM-dd'T'HH:mm:ss.ZZZZZ",
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ",
+                "yyyy-MM-dd'T'HH:mm:ss'Z'",
+                "yyyy-MM-dd"].map { (format: String) -> DateFormatter in
+            let formatter = DateFormatter()
+            formatter.dateFormat = format
+            return formatter
+        }
+    }()
+
+    /// The date formatter used for encoding
+    public static let dateEncodingFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.Z"
+        return formatter
+    }()
+
+    public var date: Date
+
+    // MARK: Lifecycle
+
     public init(date: Date = Date()) {
         self.date = date
     }
@@ -190,27 +217,7 @@ public struct DateTime: Codable, Comparable {
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "Date not in correct format")
     }
 
-    /// The date formatters used for decoding. They will be tried in order
-    public static var dateDecodingFormatters: [DateFormatter] = {
-        return ["yyyy-MM-dd'T'HH:mm:ssZZZZZ",
-                "yyyy-MM-dd'T'HH:mm:ss.ZZZZZ",
-                "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ",
-                "yyyy-MM-dd'T'HH:mm:ss'Z'",
-                "yyyy-MM-dd"].map { (format: String) -> DateFormatter in
-            let formatter = DateFormatter()
-            formatter.dateFormat = format
-            return formatter
-        }
-    }()
-
-    /// The date formatter used for encoding
-    public static let dateEncodingFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.Z"
-        return formatter
-    }()
-
-    public var date: Date
+    // MARK: Public
 
     public static func == (lhs: DateTime, rhs: DateTime) -> Bool {
         return lhs.date == rhs.date
@@ -230,6 +237,21 @@ public struct DateTime: Codable, Comparable {
 // MARK: - DateDay
 
 public struct DateDay: Codable, Comparable {
+
+    /// The date formatter used for encoding and decoding
+    public static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYY-MM-dd"
+        formatter.calendar = .current
+        return formatter
+    }()
+
+    public let date: Date
+    public let year: Int
+    public let month: Int
+    public let day: Int
+
+    // MARK: Lifecycle
 
     public init(date: Date = Date()) {
         self.date = date
@@ -265,18 +287,7 @@ public struct DateDay: Codable, Comparable {
         self.init(date: date)
     }
 
-    /// The date formatter used for encoding and decoding
-    public static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYY-MM-dd"
-        formatter.calendar = .current
-        return formatter
-    }()
-
-    public let date: Date
-    public let year: Int
-    public let month: Int
-    public let day: Int
+    // MARK: Public
 
     public static func == (lhs: DateDay, rhs: DateDay) -> Bool {
         return lhs.year == rhs.year &&

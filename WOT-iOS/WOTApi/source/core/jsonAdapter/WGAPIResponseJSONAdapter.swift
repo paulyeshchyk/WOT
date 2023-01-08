@@ -13,6 +13,8 @@ public class WGAPIResponseJSONAdapter: JSONAdapter {
         return WGAPIResponse.self
     }
 
+    // MARK: Public
+
     override public func decodedObject(jsonDecoder: JSONDecoder, from: Data) throws -> JSON? {
         let result = try jsonDecoder.decode(WGAPIResponse.self, from: from)
         if let swiftError = result.swiftError {

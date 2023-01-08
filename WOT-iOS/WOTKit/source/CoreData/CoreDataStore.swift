@@ -15,8 +15,41 @@ open class CoreDataStore: DataStore {
 
     open var sqliteURL: URL? { fatalError("has not been implemented") }
     open var modelURL: URL? { fatalError("has not been implemented") }
+
     /// The directory the application uses to store the Core Data store file. This code uses a directory named "py.WOT_iOS" in the application's documents directory.
     open var applicationDocumentsDirectoryURL: URL? { fatalError("has not been implemented") }
+
+    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+        guard let sqliteURL = self.sqliteURL else {
+            abort()
+        }
+
+        guard let model = self.managedObjectModel else {
+            abort()
+        }
+
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
+        do {
+            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: sqliteURL, options: options)
+        } catch {
+            abort()
+        }
+        return coordinator
+    }()
+
+    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(parent: self.masterContext)
+
+    private lazy var masterContext: NSManagedObjectContext = CoreDataStore.masterContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
+
+    private lazy var managedObjectModel: NSManagedObjectModel? = {
+        guard let modelURL = self.modelURL else {
+            return nil
+        }
+        return NSManagedObjectModel(contentsOf: modelURL)
+    }()
+
+    // MARK: Public
 
     @objc
     override public func newPrivateContext() -> ManagedObjectContextProtocol {
@@ -55,51 +88,10 @@ open class CoreDataStore: DataStore {
         return try EmptyFetchResult(inManagedObjectContext: inManagedObjectContext)
     }
 
-    private enum CoreDataStoreError: Error, CustomStringConvertible {
-        case contextIsNotNSManagedObjectContext
-        case requestIsNotNSFetchRequest
-
-        var description: String {
-            switch self {
-            case .contextIsNotNSManagedObjectContext: return "context is notNSManagedObjectContext"
-            case .requestIsNotNSFetchRequest: return "request is not NSFetchRequest"
-            }
-        }
-    }
-
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        guard let sqliteURL = self.sqliteURL else {
-            abort()
-        }
-
-        guard let model = self.managedObjectModel else {
-            abort()
-        }
-
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
-        do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: sqliteURL, options: options)
-        } catch {
-            abort()
-        }
-        return coordinator
-    }()
-
-    private lazy var mainContext: NSManagedObjectContext = CoreDataStore.mainQueueConcurrencyContext(parent: self.masterContext)
-
-    private lazy var masterContext: NSManagedObjectContext = CoreDataStore.masterContext(persistentStoreCoordinator: self.persistentStoreCoordinator)
-
-    private lazy var managedObjectModel: NSManagedObjectModel? = {
-        guard let modelURL = self.modelURL else {
-            return nil
-        }
-        return NSManagedObjectModel(contentsOf: modelURL)
-    }()
 }
 
 extension CoreDataStore {
-    static func mainQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
+    private static func mainQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.name = "Main <\(UUID().MD5)>"
         managedObjectContext.parent = parent
@@ -107,7 +99,7 @@ extension CoreDataStore {
         return managedObjectContext
     }
 
-    static func privateQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
+    private static func privateQueueConcurrencyContext(parent: NSManagedObjectContext) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.name = "Private <\(UUID().MD5)>"
         managedObjectContext.parent = parent
@@ -115,7 +107,7 @@ extension CoreDataStore {
         return managedObjectContext
     }
 
-    static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
+    private static func masterContext(persistentStoreCoordinator: NSPersistentStoreCoordinator) -> NSManagedObjectContext {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
         managedObjectContext.name = "Master <\(UUID().MD5)>"
@@ -124,8 +116,9 @@ extension CoreDataStore {
     }
 }
 
+// MARK: - Merge Contexts
+
 extension CoreDataStore {
-    // MARK: - Merge Contexts
 
     private func mergeChanges(notification: Notification, toContext: NSManagedObjectContext) {
         if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? [NSManagedObject] {
@@ -168,9 +161,25 @@ extension CoreDataStore {
                 try toContext.save()
                 appContext.logInspector?.log(.performance(name: "mergeEnd", message: "(\(Date().elapsed(from: executionStartTime))s) operation:\(uuid.MD5), context: \(toContext.name ?? "")"), sender: self)
             } catch {
-                appContext.logInspector?.log(.error(DataStoreError.contextNotSaved), sender: self)
+                appContext.logInspector?.log(.error(CoreDataStoreError.contextNotSaved), sender: self)
             }
         }
         toContext.processPendingChanges()
+    }
+}
+
+// MARK: - CoreDataStoreError
+
+private enum CoreDataStoreError: Error, CustomStringConvertible {
+    case contextNotSaved
+    case contextIsNotNSManagedObjectContext
+    case requestIsNotNSFetchRequest
+
+    var description: String {
+        switch self {
+        case .contextNotSaved: return "\(type(of: self)): Context is not saved"
+        case .contextIsNotNSManagedObjectContext: return "context is notNSManagedObjectContext"
+        case .requestIsNotNSFetchRequest: return "request is not NSFetchRequest"
+        }
     }
 }

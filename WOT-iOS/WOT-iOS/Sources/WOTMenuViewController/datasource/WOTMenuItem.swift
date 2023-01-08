@@ -24,6 +24,13 @@ protocol WOTMenuItemProtocol: NSObjectProtocol {
 @objc
 class WOTMenuItem: NSObject {
 
+    @objc private(set) var controllerClass: ContextControllerProtocol.Type
+    @objc private(set) var controllerTitle: String
+    @objc private(set) var icon: UIImage
+    @objc private(set) var userDependence: Bool
+
+    // MARK: Lifecycle
+
     init(controllerClass clazz: ContextControllerProtocol.Type, controllerTitle title: String, icon image: UIImage, userDependence dependence: Bool) {
         controllerClass = clazz
         controllerTitle = title
@@ -31,8 +38,4 @@ class WOTMenuItem: NSObject {
         userDependence = dependence
     }
 
-    @objc private(set) var controllerClass: ContextControllerProtocol.Type
-    @objc private(set) var controllerTitle: String
-    @objc private(set) var icon: UIImage
-    @objc private(set) var userDependence: Bool
 }

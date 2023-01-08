@@ -11,11 +11,18 @@
 @objc
 public class LogInspector: NSObject, LogInspectorProtocol {
 
+    private var prioritiesToLog: [LogEventType]?
+    private var output: [LOGOutputProtocol]?
+
+    // MARK: Lifecycle
+
     public convenience init(priorities: [LogEventType]?, output: [LOGOutputProtocol]?) {
         self.init()
         self.output = output
         prioritiesToLog = priorities
     }
+
+    // MARK: Public
 
     public func log(_: Loggable, sander _: Any?) {
         //
@@ -27,8 +34,7 @@ public class LogInspector: NSObject, LogInspectorProtocol {
         event.eventType.print(event: event, sender: sender, inOutputs: output)
     }
 
-    private var prioritiesToLog: [LogEventType]?
-    private var output: [LOGOutputProtocol]?
+    // MARK: Private
 
     private func isLoggable(_ event: LogEventProtocol?) -> Bool {
         guard let eventType = event?.eventType else { return false }

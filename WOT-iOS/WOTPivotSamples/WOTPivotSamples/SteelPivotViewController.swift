@@ -24,6 +24,8 @@ class SteelPivotViewController: UIViewController {
 
     let metadatasource = WOTTankPivotMetadatasource()
 
+    // MARK: Internal
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,6 +36,10 @@ class SteelPivotViewController: UIViewController {
 // MARK: - WOTTankPivotMetadatasource
 
 class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
+
+    private let permutator = PivotMetadataPermutator()
+
+    // MARK: Internal
 
     func metadataItems() -> [NodeProtocol] {
         var result = [NodeProtocol]()
@@ -58,13 +64,14 @@ class WOTTankPivotMetadatasource: WOTDataModelMetadatasource {
         return [FilterPivotNode(name: "Filter")]
     }
 
-    private let permutator = PivotMetadataPermutator()
 }
 
 // MARK: - SteelPivotFetchController
 
 class SteelPivotFetchController: WOTDataFetchControllerProtocol {
     var listener: WOTDataFetchControllerListenerProtocol?
+
+    // MARK: Internal
 
     func fetchedNodes(byPredicates _: [NSPredicate], nodeCreator _: NodeCreatorProtocol?, filteredCompletion _: (NSPredicate, [AnyObject]?) -> Void) {}
 

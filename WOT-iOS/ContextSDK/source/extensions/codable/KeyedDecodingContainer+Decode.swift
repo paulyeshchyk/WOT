@@ -10,6 +10,12 @@
 
 struct JSONCodingKeys: CodingKey {
 
+    var stringValue: String
+
+    var intValue: Int?
+
+    // MARK: Lifecycle
+
     init?(stringValue: String) {
         self.stringValue = stringValue
     }
@@ -19,9 +25,6 @@ struct JSONCodingKeys: CodingKey {
         self.intValue = intValue
     }
 
-    var stringValue: String
-
-    var intValue: Int?
 }
 
 public extension KeyedDecodingContainer {

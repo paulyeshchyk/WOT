@@ -27,16 +27,20 @@ public extension Double {
 
 public class NSDecimalNumberArray {
 
-    public init(array: [Any]) {
-        elements = NSDecimalNumberArray.conversion(from: array)
-    }
-
     public typealias Fields = DataFieldsKeys
     public enum DataFieldsKeys: String, CodingKey {
         case elements
     }
 
     public var elements: [NSDecimalNumber]
+
+    // MARK: Lifecycle
+
+    public init(array: [Any]) {
+        elements = NSDecimalNumberArray.conversion(from: array)
+    }
+
+    // MARK: Public
 
     public subscript(index: Int) -> NSDecimalNumber {
         get {
@@ -46,6 +50,8 @@ public class NSDecimalNumberArray {
             elements[index] = newValue
         }
     }
+
+    // MARK: Private
 
     private static func conversion(from: Any?) -> NSDecimalNumber? {
         guard let nonNil = from else { return nil }

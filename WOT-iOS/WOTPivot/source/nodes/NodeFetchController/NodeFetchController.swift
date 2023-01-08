@@ -31,6 +31,14 @@ public extension NodeFetchController {
 
 open class NodeFetchController: NSObject {
 
+    public var listener: NodeFetchControllerListenerProtocol?
+    public var fetchRequestContainer: FetchRequestContainerProtocol
+
+    private var fetchResultController: NodeFetchedResultController?
+    private let appContext: NodeFetchControllerProtocol.Context
+
+    // MARK: Lifecycle
+
     public required init(fetchRequestContainer: FetchRequestContainerProtocol, appContext: NodeFetchControllerProtocol.Context) {
         self.fetchRequestContainer = fetchRequestContainer
         self.appContext = appContext
@@ -40,8 +48,7 @@ open class NodeFetchController: NSObject {
         self.fetchResultController?.delegate = nil
     }
 
-    public var listener: NodeFetchControllerListenerProtocol?
-    public var fetchRequestContainer: FetchRequestContainerProtocol
+    // MARK: Public
 
     public func initFetchController(appContext: NodeFetchControllerProtocol.Context, block: @escaping (NodeFetchedResultController?, Error?) -> Void) throws {
         //
@@ -59,8 +66,6 @@ open class NodeFetchController: NSObject {
         }
     }
 
-    private var fetchResultController: NodeFetchedResultController?
-    private let appContext: NodeFetchControllerProtocol.Context
 }
 
 // MARK: - NodeFetchControllerError

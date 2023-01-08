@@ -20,6 +20,19 @@ public protocol FetchResultContainerProtocol {
 @objc
 open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
 
+    public let managedObjectContext: ManagedObjectContextProtocol
+    public var fetchStatus: FetchStatus = .none
+    public var predicate: NSPredicate?
+
+    override public var description: String {
+        let entityName = managedObject()?.entityName ?? ""
+        return "<\(type(of: self)): context-name \(managedObjectContext.name ?? ""), entity-name \(entityName)>"
+    }
+
+    private var objectID: AnyObject?
+
+    // MARK: Lifecycle
+
     override public required init() {
         fatalError("")
     }
@@ -33,14 +46,7 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         super.init()
     }
 
-    public let managedObjectContext: ManagedObjectContextProtocol
-    public var fetchStatus: FetchStatus = .none
-    public var predicate: NSPredicate?
-
-    override public var description: String {
-        let entityName = managedObject()?.entityName ?? ""
-        return "<\(type(of: self)): context-name \(managedObjectContext.name ?? ""), entity-name \(entityName)>"
-    }
+    // MARK: Public
 
     public func copy(with _: NSZone? = nil) -> Any {
         let copy = FetchResult(objectID: objectID, managedObjectContext: managedObjectContext, predicate: predicate, fetchStatus: fetchStatus)
@@ -64,5 +70,4 @@ open class FetchResult: NSObject, NSCopying, FetchResultProtocol {
         return context?.object(byID: objectID) as? ManagedObjectProtocol
     }
 
-    private var objectID: AnyObject?
 }

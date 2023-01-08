@@ -1,106 +1,145 @@
 # reference: https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md
-#
-# file options
 
 --exclude Tests/XCTestManifests.swift,Snapshots, Pods, Generated
 
-# format options
---rules spaceAroundOperators
---operatorfunc spaced
+--rules blankLineAfterImports
+--rules blankLinesAroundMark
+--rules blankLinesAtEndOfScope
 
---rules indent, linebreakAtEndOfFile, consecutiveBlankLines
---rules spaceInsideBraces, spaceAroundBrackets, spaceAroundBraces, spaceInsideBrackets, spaceInsideComments, spaceInsideGenerics, spaceInsideParens
---rules strongOutlets, trailingClosures
---rules typeSugar, unusedArguments, void
---rules blankLineAfterImports, blankLinesAroundMark, blankLinesAtEndOfScope, blankLinesBetweenImports, blankLinesBetweenScopes, duplicateImports
+--rules blankLinesAtStartOfScope
+--typeblanklines preserve
+
+--rules blankLinesBetweenImports
+--rules blankLinesBetweenScopes
+
+--rules braces
+--allman false
+
+--rules consecutiveBlankLines
+--rules consecutiveSpaces
+--rules duplicateImports
+
+--rules emptyBraces
 
 --rules elseOnSameLine
 --elseposition same-line
 --guardelse next-line
 
---allman false
+--rules genericExtensions
+--generictypes
 
---rules blankLinesAtStartOfScope
---typeblanklines preserve
-
-# --rules extensionAccessControl
---rules leadingDelimiters
---rules wrapEnumCases, wrapSwitchCases
---rules blankLinesAtEndOfScope, blankLinesBetweenScopes, emptyBraces, trailingSpace
---rules consecutiveSpaces
-
---rules strongifiedSelf, isEmpty
-
---rules redundantSelf, redundantObjc, redundantOptionalBinding, redundantNilInit, redundantGet
---rules redundantFileprivate, redundantExtensionACL, redundantBreak, redundantClosure,
---rules redundantRawValues
-
---binarygrouping 4,8
---commas always
---comments indent
---decimalgrouping 3,6
---empty void
---exponentcase lowercase
---exponentgrouping disabled
---fractiongrouping disabled
+--rules fileheader
 --header ignore
---hexgrouping 4,8
---hexliteralcase uppercase
+
+#do not touch
+#--rules hoistPatternLet
+#--patternlet hoist
+
+--rules indent
 --ifdef indent
 --indent 4
 --indentcase false
---linebreaks lf
---maxwidth none
---octalgrouping 4,8
---patternlet hoist
---ranges spaced
---stripunusedargs always
---swiftversion 4.2
---trimwhitespace always
 
+--rules initCoderUnavailable
+--rules isEmpty
+--rules leadingDelimiters
+--rules linebreakAtEndOfFile
+
+--rules linebreaks
+--linebreaks lf
 
 --rules markTypes
 --groupedextension "MARK: - %t + %c"
---typemark "MARK: - %t"
 --extensionmark "MARK: - %t + %c"
 --markextensions always
-
---rules organizeDeclarations
---markcategories false
-
-#--organizetypes class,actor,struct,enum
-#--classthreshold 1
-#--beforemarks struct, enum, typealias
-#--structthreshold 1
-#--lifecycle
-#--markcategories true
-#--organizetypes
-
---self remove
-
---lifecycle
+--typemark "MARK: - %t"
 
 --rules modifierOrder
---modifierorder final, open, public, private, required, convenience
+--modifierorder override, final, open, public, private, required, convenience
 
-#invisible for me
+--rules numberFormatting
+--binarygrouping 4,8
+--decimalgrouping 3,6
+--exponentcase lowercase
+--exponentgrouping disabled
+--fractiongrouping disabled
+--hexgrouping 4,8
+--hexliteralcase uppercase
+--octalgrouping 4,8
+
+
+--rules organizeDeclarations
+--beforemarks typealias, let, var, actor, class, enum, struct
+--markcategories true
+--organizetypes typealias, let, var, actor, enum, struct
+
+--rules redundantBreak
+--rules redundantClosure,
+--rules redundantExtensionACL
+--rules redundantFileprivate
+--rules redundantGet
+--rules redundantNilInit
+--rules redundantObjc
+--rules redundantOptionalBinding
+--rules redundantRawValues
+
+--rules redundantSelf
+--self remove
+
+
 --rules sortDeclarations
 
 --rules sortedImports
 --importgrouping alpha
 
---rules duplicateImports
+--rules sortedSwitchCases
 
---rules initCoderUnavailable
+--rules spaceAroundBraces
+--rules spaceAroundBrackets
+
+--rules spaceAroundOperators
+--operatorfunc spaced
+--ranges spaced
+
+--rules spaceInsideBraces
+--rules spaceInsideBrackets
+--rules spaceInsideComments
+--rules spaceInsideGenerics
+--rules spaceInsideParens
+--rules strongifiedSelf
+--rules strongOutlets
+
+--rules trailingCommas
+--commas always
+
+--rules trailingClosures
+
+--rules trailingSpace
+--trimwhitespace always
+
+--rules typeSugar
+
+--rules unusedArguments
+--stripunusedargs always
+
+--rules void
+
+--rules wrap
+--maxwidth none
+
 
 --rules wrapArguments
---wrapparameters after-first
 --wraparguments  after-first
 --wrapcollections after-first
 --wrapconditions after-first
+--wrapparameters after-first
 --wraptypealiases after-first
 
+--rules wrapEnumCases
+--rules wrapSwitchCases
 
-# rules
 
-# --disable isEmpty
+#??
+#--comments indent
+#--empty void
+#--swiftversion 4.2

@@ -24,11 +24,14 @@ public enum ModuleType: String {
         return result
     }
 
+    private static var allTypes: [ModuleType] = [.unknown, .suspension, .engine, .radios, .turrets, .guns, .tank]
+
+    // MARK: Internal
+
     static func value(for intValue: Int) -> ModuleType {
         return ModuleType.allTypes[intValue]
     }
 
-    private static var allTypes: [ModuleType] = [.unknown, .suspension, .engine, .radios, .turrets, .guns, .tank]
 }
 
 // MARK: - ObjCModuleType
@@ -46,6 +49,8 @@ public enum ObjCModuleType: Int {
     var stringValue: String {
         return ModuleType.value(for: rawValue).rawValue
     }
+
+    // MARK: Internal
 
     static func fromString(stringValue: String) -> ObjCModuleType {
         guard let index = ModuleType(rawValue: stringValue)?.index else { fatalError("wrong string value: \(stringValue)") }

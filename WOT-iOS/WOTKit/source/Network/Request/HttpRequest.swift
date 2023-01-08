@@ -12,10 +12,20 @@ import ContextSDK
 
 open class HttpRequest: Request {
 
+    override public var description: String {
+        "\(type(of: self)): \(path)"
+    }
+
+    private var httpDataReceiver: HttpDataReceiver?
+
+    // MARK: Lifecycle
+
     deinit {
         httpDataReceiver?.delegate = nil
         httpDataReceiver?.cancel()
     }
+
+    // MARK: Open
 
     override open func cancel(byReason: RequestCancelReasonProtocol) throws {
         if httpDataReceiver?.cancel() ?? false {
@@ -35,11 +45,6 @@ open class HttpRequest: Request {
         httpDataReceiver?.start(completion: completion)
     }
 
-    override public var description: String {
-        "\(type(of: self)): \(path)"
-    }
-
-    private var httpDataReceiver: HttpDataReceiver?
 }
 
 // MARK: - HttpRequest + HttpDataReceiverDelegateProtocol
@@ -77,13 +82,16 @@ extension HttpRequest: HttpServiceProtocol {
 
 final private class HttpRequestCancelEvent: LogEventProtocol {
 
-    init(reason: RequestCancelReasonProtocol) {
-        self.reason = reason
-    }
-
     var eventType: LogEventType { .info }
     var message: String { reason.reasonDescription }
     var name: String { "HttpRequestCancelEvent" }
 
     private let reason: RequestCancelReasonProtocol
+
+    // MARK: Lifecycle
+
+    init(reason: RequestCancelReasonProtocol) {
+        self.reason = reason
+    }
+
 }

@@ -11,6 +11,8 @@ public class NodeEnumerator: NSObject, NodeEnumeratorProtocol {
     @objc
     public static let sharedInstance = NodeEnumerator()
 
+    // MARK: Public
+
     public func enumerateAll(node: NodeProtocol, comparator: (_ node1: NodeProtocol, _ node2: NodeProtocol, _ level: Int) -> ComparisonResult, childCompletion: @escaping WOTNodeProtocolCompletion) {
         enumerateAll(children: node.children, comparator: comparator, childCompletion: childCompletion)
     }

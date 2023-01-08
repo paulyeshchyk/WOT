@@ -8,12 +8,6 @@
 
 open class Node: NSObject, NodeProtocol {
 
-    @objc
-    public required init(name nameValue: String) {
-        super.init()
-        name = nameValue
-    }
-
     open var name: String = ""
     open var children: [NodeProtocol] = [NodeProtocol]()
 
@@ -28,11 +22,23 @@ open class Node: NSObject, NodeProtocol {
     }
 
     open var fullName: String {
-        guard let parent = self.parent else {
-            return self.name
+        guard let parent = parent else {
+            return name
         }
-        return String(format: "%@.%@", parent.fullName, self.name)
+        return String(format: "%@.%@", parent.fullName, name)
     }
+
+    fileprivate var hiddenParent: NodeProtocol?
+
+    // MARK: Lifecycle
+
+    @objc
+    public required init(name nameValue: String) {
+        super.init()
+        name = nameValue
+    }
+
+    // MARK: Open
 
     open subscript(index: Int) -> NodeProtocol {
         get {
@@ -118,5 +124,4 @@ open class Node: NSObject, NodeProtocol {
         parent.unlinkChild(self)
     }
 
-    fileprivate var hiddenParent: NodeProtocol?
 }

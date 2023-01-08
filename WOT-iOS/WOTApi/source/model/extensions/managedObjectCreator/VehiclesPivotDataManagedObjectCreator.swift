@@ -12,6 +12,8 @@ import WOTKit
 public class VehiclesPivotManagedObjectExtractor: ManagedObjectExtractable {
     public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
+    // MARK: Public
+
     public func extractJSON(from: JSON) -> JSON? {
         return from
     }
@@ -21,15 +23,19 @@ public class VehiclesPivotManagedObjectExtractor: ManagedObjectExtractable {
 
 public class VehiclesPivotDataManagedObjectCreator: ManagedObjectLinker {
 
+    public typealias Context = DataStoreContainerProtocol
+
+    override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
+
+    // MARK: Lifecycle
+
     public convenience init(modelClass: PrimaryKeypathProtocol.Type, appContext: Context) throws {
         let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
         let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
         self.init(modelClass: modelClass, masterFetchResult: emptyFetchResult, anchor: anchor)
     }
 
-    public typealias Context = DataStoreContainerProtocol
-
-    override public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
+    // MARK: Public
 
     override public func extractJSON(from: JSON) -> JSON? {
         return from
