@@ -8,9 +8,15 @@
 
 open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
 
+    private let drivenJoint: Joint
+
+    // MARK: Lifecycle
+
     public init(drivenJoint: Joint) {
         self.drivenJoint = drivenJoint
     }
+
+    // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
@@ -19,5 +25,4 @@ open class RootTagRuleBuilder: RequestPredicateComposerProtocol {
         return RequestPredicateComposition(objectIdentifier: drivenJoint.theID, requestPredicate: lookupPredicate)
     }
 
-    private let drivenJoint: Joint
 }

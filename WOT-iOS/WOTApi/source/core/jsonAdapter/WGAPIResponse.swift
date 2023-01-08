@@ -24,16 +24,6 @@ public protocol WGAPIResponseProtocol: APIResponse {
 
 public class WGAPIResponse: WGAPIResponseProtocol {
 
-    // MARK: - Decodable
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Fields.self)
-        status = try container.decodeIfPresent(WGAPIResponseStatus.self, forKey: .status)
-        meta = try container.decodeIfPresent(WGAPIResponseMeta.self, forKey: .meta)
-        data = try container.decodeIfPresent([String: Any].self, forKey: .data)
-        error = try container.decodeIfPresent([String: Any].self, forKey: .error)
-    }
-
     //
     public typealias Fields = DataFieldsKeys
     public enum DataFieldsKeys: String, CodingKey {
@@ -58,6 +48,20 @@ public class WGAPIResponse: WGAPIResponseProtocol {
         }
     }
 
+    // MARK: Lifecycle
+
+    // MARK: - Decodable
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Fields.self)
+        status = try container.decodeIfPresent(WGAPIResponseStatus.self, forKey: .status)
+        meta = try container.decodeIfPresent(WGAPIResponseMeta.self, forKey: .meta)
+        data = try container.decodeIfPresent([String: Any].self, forKey: .data)
+        error = try container.decodeIfPresent([String: Any].self, forKey: .error)
+    }
+
+    // MARK: Public
+
     // MARK: - Encodable
 
     public func encode(to encoder: Encoder) throws {
@@ -70,17 +74,6 @@ public class WGAPIResponse: WGAPIResponseProtocol {
 // MARK: - WGAPIResponseMeta
 
 public struct WGAPIResponseMeta: Codable {
-
-    // MARK: - Decodable
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Fields.self)
-        count = try container.decodeIfPresent(Int.self, forKey: .count)
-        page_total = try container.decodeIfPresent(Int.self, forKey: .page_total)
-        total = try container.decodeIfPresent(Int.self, forKey: .total)
-        limit = try container.decodeIfPresent(Int.self, forKey: .limit)
-        page = try container.decodeIfPresent(Int.self, forKey: .page)
-    }
 
     public typealias Fields = DataFieldsKeys
     public enum DataFieldsKeys: String, CodingKey {
@@ -96,6 +89,20 @@ public struct WGAPIResponseMeta: Codable {
     var total: Int?
     var limit: Int?
     var page: Int?
+
+    // MARK: Lifecycle
+
+    // MARK: - Decodable
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Fields.self)
+        count = try container.decodeIfPresent(Int.self, forKey: .count)
+        page_total = try container.decodeIfPresent(Int.self, forKey: .page_total)
+        total = try container.decodeIfPresent(Int.self, forKey: .total)
+        limit = try container.decodeIfPresent(Int.self, forKey: .limit)
+        page = try container.decodeIfPresent(Int.self, forKey: .page)
+    }
+
 }
 
 // MARK: - WGAPIResponseStatus
@@ -104,6 +111,10 @@ public enum WGAPIResponseStatus: String, Codable {
     case ok
     case error
     case unknown
+
+    public typealias RawValue = String
+
+    // MARK: Lifecycle
 
     init?(value: String) {
         if value.lowercased().compare(WGAPIResponseStatus.ok.rawValue) == .orderedSame {
@@ -115,22 +126,22 @@ public enum WGAPIResponseStatus: String, Codable {
         }
     }
 
-    public typealias RawValue = String
-
 }
 
 // MARK: - WGAPIError
 
 public class WGAPIError: Error {
 
+    public var code: Int?
+    public var message: String?
+
+    // MARK: Lifecycle
+
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fields.self)
         code = try container.decodeIfPresent(Int.self, forKey: .code)
         message = try container.decodeIfPresent(String.self, forKey: .message)
     }
-
-    public var code: Int?
-    public var message: String?
 
 }
 

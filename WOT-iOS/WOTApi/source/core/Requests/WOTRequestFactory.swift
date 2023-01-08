@@ -14,6 +14,18 @@ public class WOTWEBRequestFactory: NSObject {
     //
     public typealias Context = DataStoreContainerProtocol & LogInspectorContainerProtocol & RequestManagerContainerProtocol
 
+    private enum HttpRequestFactoryError: Error, CustomStringConvertible {
+        case objectNotDefined
+
+        public var description: String {
+            switch self {
+            case .objectNotDefined: return "[\(type(of: self))]: Object not defined"
+            }
+        }
+    }
+
+    // MARK: Public
+
     public static func fetchVehiclePivotData(appContext: WOTWEBRequestFactory.Context, listener: RequestManagerListenerProtocol) throws {
         guard let request = try appContext.requestManager?.createRequest(forRequestId: WebRequestType.vehicles.rawValue) else {
             throw HttpRequestFactoryError.objectNotDefined
@@ -55,13 +67,4 @@ public class WOTWEBRequestFactory: NSObject {
 //        requestManager.addListener(listener, forRequest: request)
     }
 
-    private enum HttpRequestFactoryError: Error, CustomStringConvertible {
-        case objectNotDefined
-
-        public var description: String {
-            switch self {
-            case .objectNotDefined: return "[\(type(of: self))]: Object not defined"
-            }
-        }
-    }
 }

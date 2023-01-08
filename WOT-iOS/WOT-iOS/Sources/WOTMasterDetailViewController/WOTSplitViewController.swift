@@ -32,15 +32,18 @@ protocol WOTDetailControllerProtocol: NSObjectProtocol {
 
 struct WOTMasterDetailBehaviour {
 
+    var masterController: AnyClass
+    var detailController: AnyClass
+    var behaviourType: WOTSplitBehaviour
+
+    // MARK: Lifecycle
+
     init(master: AnyClass, detail: AnyClass, behaviour: WOTSplitBehaviour) {
         masterController = master
         detailController = detail
         behaviourType = behaviour
     }
 
-    var masterController: AnyClass
-    var detailController: AnyClass
-    var behaviourType: WOTSplitBehaviour
 }
 
 extension WOTMasterDetailBehaviour {

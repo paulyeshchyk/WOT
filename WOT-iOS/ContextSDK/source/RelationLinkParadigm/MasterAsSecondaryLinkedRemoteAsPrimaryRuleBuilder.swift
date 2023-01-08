@@ -8,9 +8,15 @@
 
 open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
+    private let drivenJoint: Joint
+
+    // MARK: Lifecycle
+
     public init(drivenJoint: Joint) {
         self.drivenJoint = drivenJoint
     }
+
+    // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         let lookupPredicate = ContextPredicate()
@@ -20,5 +26,4 @@ open class MasterAsSecondaryLinkedRemoteAsPrimaryRuleBuilder: RequestPredicateCo
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 
-    private let drivenJoint: Joint
 }

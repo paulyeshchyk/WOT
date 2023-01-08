@@ -8,16 +8,20 @@
 
 public class PivotStickyType: NSObject, OptionSet {
 
-    public required init(rawValue: Int) {
-        self.rawValue = rawValue
-        super.init()
-    }
-
     public static let float = PivotStickyType.init(rawValue: 1 << 0)
     public static let horizontal = PivotStickyType.init(rawValue: 1 << 1)
     public static let vertical = PivotStickyType.init(rawValue: 1 << 2)
 
     public var rawValue: Int
+
+    // MARK: Lifecycle
+
+    public required init(rawValue: Int) {
+        self.rawValue = rawValue
+        super.init()
+    }
+
+    // MARK: Public
 
     public func isInclude(_ options: PivotStickyType) -> Bool {
         return (rawValue & options.rawValue == options.rawValue)

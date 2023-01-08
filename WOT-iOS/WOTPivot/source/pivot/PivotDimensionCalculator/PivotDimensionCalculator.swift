@@ -18,12 +18,16 @@ public protocol PivotDimensionCalculatorProtocol {
 
 public class PivotDimensionCalculator: PivotDimensionCalculatorProtocol {
 
+    // MARK: Public
+
     public static func rectangle(forNode node: NodeProtocol, dimension: PivotNodeDimensionProtocol) -> CGRect {
         return CGRect(x: x(forNode: node, dimension: dimension),
                       y: y(forNode: node, dimension: dimension),
                       width: width(forNode: node, dimension: dimension),
                       height: height(forNode: node, dimension: dimension))
     }
+
+    // MARK: Internal
 
     class func x(forNode _: NodeProtocol, dimension _: PivotNodeDimensionProtocol) -> Int { return 0 }
     class func y(forNode _: NodeProtocol, dimension _: PivotNodeDimensionProtocol) -> Int { return 0 }

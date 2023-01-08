@@ -8,10 +8,17 @@
 
 open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
 
+    private let drivenJoint: Joint
+    private let hostObjectID: AnyObject
+
+    // MARK: Lifecycle
+
     public init(drivenJoint: Joint, hostObjectID: AnyObject) {
         self.drivenJoint = drivenJoint
         self.hostObjectID = hostObjectID
     }
+
+    // MARK: Public
 
     public func buildRequestPredicateComposition() throws -> RequestPredicateCompositionProtocol {
         var parentObjectIDList = [AnyObject]()
@@ -26,6 +33,4 @@ open class LinkedRemoteAsPrimaryRuleBuilder: RequestPredicateComposerProtocol {
         return RequestPredicateComposition(objectIdentifier: nil, requestPredicate: lookupPredicate)
     }
 
-    private let drivenJoint: Joint
-    private let hostObjectID: AnyObject
 }

@@ -33,6 +33,16 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
         }
     }
 
+    public var appContext: ContextProtocol?
+
+    lazy var refreshControl: WOTPivotRefreshControl = WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
+
+    lazy var model: PivotDataModelProtocol = pivotModel()
+
+    var hasOpenedPopover: Bool = false
+
+    // MARK: Open
+
     open func pivotModel() -> PivotDataModelProtocol {
         return PivotDataModel(enumerator: NodeEnumerator.sharedInstance)
     }
@@ -84,13 +94,7 @@ open class PivotViewController: UIViewController, ContextControllerProtocol {
 
     open func registerCells() {}
 
-    public var appContext: ContextProtocol?
-
-    lazy var refreshControl: WOTPivotRefreshControl = WOTPivotRefreshControl(target: self, action: #selector(WOTTankPivotViewController.refresh(_:)))
-
-    lazy var model: PivotDataModelProtocol = pivotModel()
-
-    var hasOpenedPopover: Bool = false
+    // MARK: Internal
 
     func closePopover() {
         hasOpenedPopover = false
@@ -162,6 +166,23 @@ typealias WOTTankPivotCompletionDoneBlock = (_ configuration: Any) -> Void
 @objc(WOTTankPivotViewController)
 class WOTTankPivotViewController: PivotViewController {
 
+    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & DataStoreContainerProtocol
+
+    static var registeredCells: [UICollectionViewCell.Type] = {
+        return [WOTTankPivotDataCollectionViewCell.self,
+                WOTTankPivotFilterCollectionViewCell.self,
+                WOTTankPivotFixedCollectionViewCell.self,
+                WOTTankPivotEmptyCollectionViewCell.self,
+                WOTTankPivotDataGroupCollectionViewCell.self]
+    }()
+
+    var cancelBlock: WOTTankPivotCompletionCancelBlock?
+    var doneBlock: WOTTankPivotCompletionDoneBlock?
+    var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
+    var settingsDatasource = WOTTankListSettingsDatasource()
+
+    // MARK: Public
+
     @objc
     override public func registerCells() {
         WOTTankPivotViewController.registeredCells.forEach { (type) in
@@ -188,20 +209,7 @@ class WOTTankPivotViewController: PivotViewController {
         return result
     }
 
-    typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol & DataStoreContainerProtocol
-
-    static var registeredCells: [UICollectionViewCell.Type] = {
-        return [WOTTankPivotDataCollectionViewCell.self,
-                WOTTankPivotFilterCollectionViewCell.self,
-                WOTTankPivotFixedCollectionViewCell.self,
-                WOTTankPivotEmptyCollectionViewCell.self,
-                WOTTankPivotDataGroupCollectionViewCell.self]
-    }()
-
-    var cancelBlock: WOTTankPivotCompletionCancelBlock?
-    var doneBlock: WOTTankPivotCompletionDoneBlock?
-    var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>?
-    var settingsDatasource = WOTTankListSettingsDatasource()
+    // MARK: Internal
 
     override func pivotModel() -> PivotDataModelProtocol {
         guard let appDelegate = UIApplication.shared.delegate as? Context else {

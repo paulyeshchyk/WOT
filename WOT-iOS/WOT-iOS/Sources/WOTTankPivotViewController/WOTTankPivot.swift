@@ -19,6 +19,8 @@ class WOTTankPivotNodeCreator: PivotNodeCreator {
 
     override public var useEmptyNode: Bool { return false }
 
+    // MARK: Public
+
     override public func createNode(fetchedObject: AnyObject?, byPredicate: NSPredicate?) -> NodeProtocol {
         let name = (fetchedObject as? Vehicles)?.name ?? ""
         let type = (fetchedObject as? Vehicles)?.type ?? ""
@@ -35,10 +37,6 @@ class WOTTankPivotNodeCreator: PivotNodeCreator {
 
 class WOTTankPivotFetchRequest: FetchRequestContainerProtocol {
 
-    init(datasource: WOTTankListSettingsDatasource) {
-        settingsDatasource = datasource
-    }
-
     var settingsDatasource: WOTTankListSettingsDatasource
 
     var fetchRequest: NSFetchRequest<NSFetchRequestResult> {
@@ -47,6 +45,14 @@ class WOTTankPivotFetchRequest: FetchRequestContainerProtocol {
         result.predicate = fetchCustomPredicate()
         return result
     }
+
+    // MARK: Lifecycle
+
+    init(datasource: WOTTankListSettingsDatasource) {
+        settingsDatasource = datasource
+    }
+
+    // MARK: Private
 
     private func sortDescriptors() -> [NSSortDescriptor] {
         let tankIdDescriptor = NSSortDescriptor(key: "tank_id", ascending: true)
@@ -67,6 +73,10 @@ class WOTTankPivotFetchRequest: FetchRequestContainerProtocol {
 // MARK: - WOTTankPivotMetadatasource
 
 class WOTTankPivotMetadatasource: PivotMetaDatasourceProtocol {
+
+    private let permutator = PivotMetadataPermutator()
+
+    // MARK: Internal
 
     func metadataItems() -> [NodeProtocol] {
         var result = [NodeProtocol]()
@@ -91,12 +101,19 @@ class WOTTankPivotMetadatasource: PivotMetaDatasourceProtocol {
         return [FilterPivotNode(name: "Filter")]
     }
 
-    private let permutator = PivotMetadataPermutator()
 }
 
 // MARK: - WOTTankPivotModel
 
 class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
+
+    var MD5: String { uuid.MD5 }
+
+    override var description: String { "\(type(of: self))" }
+
+    private let uuid = UUID()
+
+    // MARK: Lifecycle
 
     required init(modelListener: NodeDataModelListener, settingsDatasource: WOTTankListSettingsDatasource, appContext: Context) {
         let fetchRequest = WOTTankPivotFetchRequest(datasource: settingsDatasource)
@@ -135,9 +152,7 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         appContext.requestManager?.removeListener(self)
     }
 
-    var MD5: String { uuid.MD5 }
-
-    override var description: String { "\(type(of: self))" }
+    // MARK: Internal
 
     override func loadModel() {
         super.loadModel()
@@ -168,5 +183,4 @@ class WOTTankPivotModel: PivotDataModel, RequestManagerListenerProtocol {
         //
     }
 
-    private let uuid = UUID()
 }

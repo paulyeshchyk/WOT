@@ -77,6 +77,8 @@ class WGPivotSeparatorCollectionViewLayoutAttributes: UICollectionViewLayoutAttr
                       height: customFrame.height + separatorWidth)
     }
 
+    // MARK: Private
+
     private func invalidateFrame(kind: WOTPivotSeparatorKind) {
         switch kind {
         case .top:

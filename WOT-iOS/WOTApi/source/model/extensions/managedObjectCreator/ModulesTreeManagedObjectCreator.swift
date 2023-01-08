@@ -8,6 +8,8 @@
 public class ModulesTreeManagedObjectCreator: ManagedObjectExtractable {
     public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
 
+    // MARK: Public
+
     public func extractJSON(from: JSON) -> JSON? {
         return from
     }

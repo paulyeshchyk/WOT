@@ -22,6 +22,16 @@ public typealias ArgumentsType = [Swift.AnyHashable: Any]
 @objc
 open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
 
+    public var MD5: String { uuid.MD5 }
+
+    override public var description: String { "\(type(of: self)): \(String(describing: dictionary))" }
+
+    private var dictionary = ArgumentsType()
+
+    private let uuid = UUID()
+
+    // MARK: Lifecycle
+
     public required convenience init(_ dictionary: ArgumentsType) {
         self.init()
 
@@ -33,9 +43,7 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
         }
     }
 
-    public var MD5: String { uuid.MD5 }
-
-    override public var description: String { "\(type(of: self)): \(String(describing: dictionary))" }
+    // MARK: Public
 
     public func setValues(_ values: Any, forKey: AnyHashable) {
         dictionary[forKey] = values
@@ -46,9 +54,5 @@ open class RequestArguments: NSObject, RequestArgumentsProtocol, MD5Protocol {
         mixture.append(with: dictionary)
         return mixture.asURLQueryString()
     }
-
-    private var dictionary = ArgumentsType()
-
-    private let uuid = UUID()
 
 }

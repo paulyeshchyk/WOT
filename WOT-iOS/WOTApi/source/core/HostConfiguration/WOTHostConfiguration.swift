@@ -27,6 +27,10 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
         return "\(host):\(currentArguments)"
     }
 
+    private var currentArguments: String = ""
+
+    // MARK: Public
+
     @objc
     public func urlQuery(with: RequestArgumentsProtocol?) -> String {
         let custom = ["application_id": applicationID]
@@ -34,5 +38,4 @@ public class WOTHostConfiguration: NSObject, HostConfigurationProtocol {
         return currentArguments
     }
 
-    private var currentArguments: String = ""
 }

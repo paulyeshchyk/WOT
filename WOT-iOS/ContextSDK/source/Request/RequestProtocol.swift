@@ -46,37 +46,12 @@ public protocol RequestListenerProtocol: MD5Protocol {
 
 open class Request: RequestProtocol, CustomStringConvertible {
 
-    public required init(context: RequestProtocol.Context) {
-        appContext = context
-        context.logInspector?.log(.initialization(type(of: self)), sender: self)
-    }
-
-    deinit {
-        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
-    }
-
     open var description: String {
         if let arguments = arguments {
             return "\(type(of: self)): \(String(describing: arguments))"
         } else {
             return "\(type(of: self))"
         }
-    }
-
-    open func addGroup(_ group: RequestIdType) {
-        availableInGroups.append(group)
-    }
-
-    open func addListener(_ listener: RequestListenerProtocol) {
-        listeners.append(listener)
-    }
-
-    open func removeGroup(_ group: RequestIdType) {
-        availableInGroups.removeAll(where: { group == $0 })
-    }
-
-    open func removeListener(_ listener: RequestListenerProtocol) {
-        listeners.removeAll(where: { $0.MD5 == listener.MD5 })
     }
 
     public let appContext: RequestProtocol.Context
@@ -96,6 +71,35 @@ open class Request: RequestProtocol, CustomStringConvertible {
     // MARK: - MD5Protocol
 
     private let uuid = UUID()
+
+    // MARK: Lifecycle
+
+    public required init(context: RequestProtocol.Context) {
+        appContext = context
+        context.logInspector?.log(.initialization(type(of: self)), sender: self)
+    }
+
+    deinit {
+        appContext.logInspector?.log(.destruction(type(of: self)), sender: self)
+    }
+
+    // MARK: Open
+
+    open func addGroup(_ group: RequestIdType) {
+        availableInGroups.append(group)
+    }
+
+    open func addListener(_ listener: RequestListenerProtocol) {
+        listeners.append(listener)
+    }
+
+    open func removeGroup(_ group: RequestIdType) {
+        availableInGroups.removeAll(where: { group == $0 })
+    }
+
+    open func removeListener(_ listener: RequestListenerProtocol) {
+        listeners.removeAll(where: { $0.MD5 == listener.MD5 })
+    }
 
 }
 

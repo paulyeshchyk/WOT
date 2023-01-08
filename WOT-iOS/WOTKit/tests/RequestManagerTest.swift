@@ -51,14 +51,20 @@ class TestHttpRequest: HttpRequest {
 
 class Listener: RequestManagerListenerProtocol {
 
-    init() {}
-
     var expectationDidFinish: XCTestExpectation?
     var expectationDidStart: XCTestExpectation?
     var expectationDidFinishError: XCTestExpectation?
     var expectationDidCancel: XCTestExpectation?
 
     var MD5: String { uuid.MD5 }
+
+    private let uuid = UUID()
+
+    // MARK: Lifecycle
+
+    init() {}
+
+    // MARK: Internal
 
     func requestManager(_ requestManager: RequestManagerProtocol, didParseDataForRequest _: RequestProtocol, error: Error?) {
         requestManager.removeListener(self)
@@ -76,13 +82,14 @@ class Listener: RequestManagerListenerProtocol {
         expectationDidCancel?.fulfill()
     }
 
-    private let uuid = UUID()
 }
 
 // MARK: - Extractor
 
 class Extractor: ManagedObjectExtractable {
     var linkerPrimaryKeyType: PrimaryKeyType = .internal
+
+    // MARK: Internal
 
     func extractJSON(from _: JSON) -> JSON? {
         nil
@@ -97,14 +104,16 @@ class ObjectID {}
 
 class Anchor: ManagedObjectLinkerAnchorProtocol {
 
+    var identifier: Any?
+
+    var keypath: KeypathType?
+
+    // MARK: Lifecycle
+
     required init(identifier: Any?, keypath: KeypathType?) {
         self.identifier = identifier
         self.keypath = keypath
     }
-
-    var identifier: Any?
-
-    var keypath: KeypathType?
 
 }
 
@@ -112,6 +121,8 @@ class Anchor: ManagedObjectLinkerAnchorProtocol {
 
 class ManagedObjectContext: ManagedObjectContextProtocol {
     var name: String? { "TestableManagedObjectContext" }
+
+    // MARK: Internal
 
     func object(byID _: AnyObject) -> AnyObject? {
         nil
@@ -158,41 +169,45 @@ class PrimaryKeypath: PrimaryKeypathProtocol {
 
 class Linker: ManagedObjectLinkerProtocol {
 
+    var MD5: String { uuid.MD5 }
+
+    private let uuid = UUID()
+
+    // MARK: Lifecycle
+
     required init(modelClass _: PrimaryKeypathProtocol.Type, masterFetchResult _: FetchResultProtocol?, anchor _: ManagedObjectLinkerAnchorProtocol) {
         //
     }
 
-    var MD5: String { uuid.MD5 }
+    // MARK: Internal
 
     func process(fetchResult: FetchResultProtocol, appContext _: ManagedObjectLinkerContext, completion: @escaping ManagedObjectLinkerCompletion) {
         completion(fetchResult, nil)
     }
 
-    private let uuid = UUID()
 }
 
 // MARK: - AppContext
 
 class AppContext: ResponseDataAdapterCreatorContainerProtocol, RequestManagerContainerProtocol, DataStoreContainerProtocol, HostConfigurationContainerProtocol, LogInspectorContainerProtocol {
 
-    init() {
-        hostConfiguration = HostConfiguration()
-    }
-
     var dataStore: DataStoreProtocol?
     var hostConfiguration: HostConfigurationProtocol?
     var logInspector: LogInspectorProtocol?
     var requestManager: RequestManagerProtocol?
     var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
+
+    // MARK: Lifecycle
+
+    init() {
+        hostConfiguration = HostConfiguration()
+    }
+
 }
 
 // MARK: - NSManagedObjectPredicateFormat
 
 private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
-
-    init(keyType: PrimaryKeyType) {
-        self.keyType = keyType
-    }
 
     public var template: String {
         switch keyType {
@@ -203,6 +218,13 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
     }
 
     private let keyType: PrimaryKeyType
+
+    // MARK: Lifecycle
+
+    init(keyType: PrimaryKeyType) {
+        self.keyType = keyType
+    }
+
 }
 
 // MARK: - HostConfiguration
@@ -225,6 +247,10 @@ public class HostConfiguration: NSObject, HostConfigurationProtocol {
         return "\(host):\(currentArguments)"
     }
 
+    private var currentArguments: String = ""
+
+    // MARK: Public
+
     @objc
     public func urlQuery(with: RequestArgumentsProtocol?) -> String {
         let custom = ["application_id": applicationID]
@@ -232,5 +258,4 @@ public class HostConfiguration: NSObject, HostConfigurationProtocol {
         return currentArguments
     }
 
-    private var currentArguments: String = ""
 }

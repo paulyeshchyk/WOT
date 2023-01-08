@@ -8,6 +8,8 @@
 public class VehicleprofileModuleGunManagedObjectExtractor: ManagedObjectExtractable {
     public var linkerPrimaryKeyType: PrimaryKeyType { return .internal }
 
+    // MARK: Public
+
     public func extractJSON(from: JSON) -> JSON? {
         return from[#keyPath(Vehicleprofile.gun)] as? JSON
     }

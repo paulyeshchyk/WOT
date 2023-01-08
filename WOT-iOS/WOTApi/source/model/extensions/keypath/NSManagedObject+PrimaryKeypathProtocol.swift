@@ -22,10 +22,6 @@ extension PrimaryKeyType {
 
 private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
 
-    init(keyType: PrimaryKeyType) {
-        self.keyType = keyType
-    }
-
     public var template: String {
         switch keyType {
         case .external: return "%K == %@"
@@ -35,6 +31,13 @@ private class NSManagedObjectPredicateFormat: PredicateFormatProtocol {
     }
 
     private let keyType: PrimaryKeyType
+
+    // MARK: Lifecycle
+
+    init(keyType: PrimaryKeyType) {
+        self.keyType = keyType
+    }
+
 }
 
 // MARK: - NSManagedObject + PrimaryKeypathProtocol

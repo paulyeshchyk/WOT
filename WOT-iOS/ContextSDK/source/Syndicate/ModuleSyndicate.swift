@@ -9,10 +9,6 @@
 
 public class ModuleSyndicate {
 
-    public init(appContext: Context) {
-        self.appContext = appContext
-    }
-
     public typealias Context = LogInspectorContainerProtocol
         & DataStoreContainerProtocol
         & RequestManagerContainerProtocol
@@ -26,6 +22,16 @@ public class ModuleSyndicate {
     public var managedObjectContext: ManagedObjectContextProtocol?
 
     public var completion: ((FetchResultProtocol?, Error?) -> Void)?
+
+    let appContext: Context
+
+    // MARK: Lifecycle
+
+    public init(appContext: Context) {
+        self.appContext = appContext
+    }
+
+    // MARK: Public
 
     //
     public func run() {
@@ -54,7 +60,6 @@ public class ModuleSyndicate {
         datastoreFetchHelper.run()
     }
 
-    let appContext: Context
 }
 
 extension ModuleSyndicate {

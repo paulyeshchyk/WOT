@@ -13,66 +13,8 @@ import UIKit
 
 open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatasourceProtocol {
 
-    @objc
-    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
-        shouldDisplayEmptyColumns = false
-        self.fetchController = fetchController
-        listener = modelListener
-        self.nodeCreator = nodeCreator
-        self.metadatasource = metadatasource
-
-        super.init(nodeIndex: ni, appContext: appContext)
-
-        fetchController.setFetchListener(self)
-
-        dimension.registerCalculatorClass(ColPivotDimensionCalculator.self, forNodeClass: ColPivotNode.self)
-        dimension.registerCalculatorClass(RowPivotDimensionCalculator.self, forNodeClass: RowPivotNode.self)
-        dimension.registerCalculatorClass(FilterPivotDimensionCalculator.self, forNodeClass: FilterPivotNode.self)
-        dimension.registerCalculatorClass(DataPivotDimensionCalculator.self, forNodeClass: DataPivotNode.self)
-        dimension.registerCalculatorClass(GroupDataPivotDimensionCalculator.self, forNodeClass: DataGroupPivotNode.self)
-    }
-
-    public required init(enumerator _: NodeEnumeratorProtocol) {
-        fatalError("init(enumerator:) has not been implemented")
-    }
-
-    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
-        fatalError("init(nodeIndex:) has not been implemented")
-    }
-
-    deinit {
-        clearMetadataItems()
-        fetchController?.setFetchListener(nil)
-    }
-
     override open var nodes: [NodeProtocol] {
-        return [self.rootFilterNode, self.rootColsNode, self.rootRowsNode, self.rootDataNode]
-    }
-
-    override open func clearRootNodes() {
-        appContext.logInspector?.log(.flow(name: "pivot", message: "Clear root nodes"), sender: self)
-
-        rootDataNode.removeChildren()
-        rootRowsNode.removeChildren()
-        rootColsNode.removeChildren()
-        rootFilterNode.removeChildren()
-        super.clearRootNodes()
-    }
-
-    override open func reindexNodes() {
-        super.reindexNodes()
-        appContext.logInspector?.log(.flow(name: "pivot", message: "Reindex nodes"), sender: self)
-    }
-
-    override open func loadModel() {
-        // super.loadModel()
-        appContext.logInspector?.log(.flow(name: "pivot", message: "Start"), sender: self)
-
-        do {
-            try fetchController?.performFetch(nodeCreator: nodeCreator, appContext: appContext)
-        } catch {
-            appContext.logInspector?.log(.error(error), sender: self)
-        }
+        return [rootFilterNode, rootColsNode, rootRowsNode, rootDataNode]
     }
 
     public typealias Context = LogInspectorContainerProtocol & DataStoreContainerProtocol & RequestManagerContainerProtocol
@@ -132,6 +74,73 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         return dimension.contentSize
     }
 
+    private var listener: NodeDataModelListener?
+    private var metadatasource: PivotMetaDatasourceProtocol
+
+    // MARK: Lifecycle
+
+    @objc
+    public required init(fetchController: NodeFetchControllerProtocol, modelListener: NodeDataModelListener, nodeCreator: NodeCreatorProtocol, metadatasource: PivotMetaDatasourceProtocol, nodeIndex ni: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
+        shouldDisplayEmptyColumns = false
+        self.fetchController = fetchController
+        listener = modelListener
+        self.nodeCreator = nodeCreator
+        self.metadatasource = metadatasource
+
+        super.init(nodeIndex: ni, appContext: appContext)
+
+        fetchController.setFetchListener(self)
+
+        dimension.registerCalculatorClass(ColPivotDimensionCalculator.self, forNodeClass: ColPivotNode.self)
+        dimension.registerCalculatorClass(RowPivotDimensionCalculator.self, forNodeClass: RowPivotNode.self)
+        dimension.registerCalculatorClass(FilterPivotDimensionCalculator.self, forNodeClass: FilterPivotNode.self)
+        dimension.registerCalculatorClass(DataPivotDimensionCalculator.self, forNodeClass: DataPivotNode.self)
+        dimension.registerCalculatorClass(GroupDataPivotDimensionCalculator.self, forNodeClass: DataGroupPivotNode.self)
+    }
+
+    public required init(enumerator _: NodeEnumeratorProtocol) {
+        fatalError("init(enumerator:) has not been implemented")
+    }
+
+    public required init(nodeIndex _: NodeIndexProtocol.Type, appContext _: NodeFetchControllerProtocol.Context) {
+        fatalError("init(nodeIndex:) has not been implemented")
+    }
+
+    deinit {
+        clearMetadataItems()
+        fetchController?.setFetchListener(nil)
+    }
+
+    // MARK: Open
+
+    override open func clearRootNodes() {
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Clear root nodes"), sender: self)
+
+        rootDataNode.removeChildren()
+        rootRowsNode.removeChildren()
+        rootColsNode.removeChildren()
+        rootFilterNode.removeChildren()
+        super.clearRootNodes()
+    }
+
+    override open func reindexNodes() {
+        super.reindexNodes()
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Reindex nodes"), sender: self)
+    }
+
+    override open func loadModel() {
+        // super.loadModel()
+        appContext.logInspector?.log(.flow(name: "pivot", message: "Start"), sender: self)
+
+        do {
+            try fetchController?.performFetch(nodeCreator: nodeCreator, appContext: appContext)
+        } catch {
+            appContext.logInspector?.log(.error(error), sender: self)
+        }
+    }
+
+    // MARK: Public
+
     public func add(dataNode: NodeProtocol) {
         rootDataNode.addChild(dataNode)
     }
@@ -177,8 +186,7 @@ open class PivotDataModel: NodeDataModel, PivotDataModelProtocol, PivotNodeDatas
         rootFilterNode.addChildArray(filters)
     }
 
-    private var listener: NodeDataModelListener?
-    private var metadatasource: PivotMetaDatasourceProtocol
+    // MARK: Private
 
     private func makePivot() {
         clearMetadataItems()

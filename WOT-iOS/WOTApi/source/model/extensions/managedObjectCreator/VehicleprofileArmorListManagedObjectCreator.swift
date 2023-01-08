@@ -10,6 +10,8 @@ public class VehicleprofileArmorListManagedObjectCreator: ManagedObjectExtractab
         return .external
     }
 
+    // MARK: Public
+
     public func extractJSON(from: JSON) -> JSON? {
         return from
     }

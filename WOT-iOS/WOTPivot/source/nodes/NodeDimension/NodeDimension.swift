@@ -26,6 +26,10 @@ public class NodeDimension: NSObject, NodeDimensionProtocol {
         return .zero
     }
 
+    private lazy var sizes: TNodesSizesType = TNodesSizesType()
+
+    // MARK: Public
+
     public func setMaxWidth(_ maxWidth: Int, forNode: NodeProtocol, byKey: String) {
         guard maxWidth != 0 else {
             return
@@ -86,7 +90,7 @@ public class NodeDimension: NSObject, NodeDimensionProtocol {
         preconditionFailure("This method must be overridden")
     }
 
-    private lazy var sizes: TNodesSizesType = TNodesSizesType()
+    // MARK: Private
 
     private func sizeMap(node: NodeProtocol) -> TNodeSize? {
         if let obj = node as? AnyHashable {

@@ -4,11 +4,14 @@
 
 public struct AnyCodable {
 
+    public let value: Any
+
+    // MARK: Lifecycle
+
     public init<T>(_ value: T?) {
         self.value = value ?? ()
     }
 
-    public let value: Any
 }
 
 // MARK: - AnyCodable + Codable

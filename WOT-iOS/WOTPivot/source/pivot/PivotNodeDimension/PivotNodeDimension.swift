@@ -10,15 +10,6 @@ import UIKit
 
 public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
 
-    public required init(rootNodeHolder: PivotNodeDatasourceProtocol) {
-        self.rootNodeHolder = rootNodeHolder
-        super.init()
-    }
-
-    public required init(enumerator _: NodeEnumeratorProtocol) {
-        fatalError("init(enumerator:) has not been implemented")
-    }
-
     public var listener: DimensionLoadListenerProtocol?
 
     public var rootNodeWidth: Int {
@@ -28,7 +19,7 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
     }
 
     public var rootNodeHeight: Int {
-        let cols = self.rootNodeHolder.rootColsNode
+        let cols = rootNodeHolder.rootColsNode
         let level = cols.isVisible ? 1 : 0
         return enumerator?.depth(forChildren: cols.children, initialLevel: level) ?? 0
     }
@@ -38,6 +29,25 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
         let width = getWidth()
         return CGSize(width: width, height: height) // 156:11
     }
+
+    private var rootNodeHolder: PivotNodeDatasourceProtocol
+    private var registeredCalculators = [AnyHashable: AnyClass]()
+    private var index: NodeIndexType = 0
+
+    #warning(" !!! TO BE refactored: too slow !!! ")
+
+    // MARK: Lifecycle
+
+    public required init(rootNodeHolder: PivotNodeDatasourceProtocol) {
+        self.rootNodeHolder = rootNodeHolder
+        super.init()
+    }
+
+    public required init(enumerator _: NodeEnumeratorProtocol) {
+        fatalError("init(enumerator:) has not been implemented")
+    }
+
+    // MARK: Public
 
     public func registerCalculatorClass(_ calculatorClass: PivotDimensionCalculator.Type, forNodeClass: AnyClass) {
         let hash = hashValue(type: forNodeClass)
@@ -95,11 +105,7 @@ public class PivotNodeDimension: NodeDimension, PivotNodeDimensionProtocol {
         return result
     }
 
-    private var rootNodeHolder: PivotNodeDatasourceProtocol
-    private var registeredCalculators = [AnyHashable: AnyClass]()
-    private var index: NodeIndexType = 0
-
-    #warning(" !!! TO BE refactored: too slow !!! ")
+    // MARK: Private
 
     private func updateDimensions(dataNodes: [NodeProtocol], colNode: NodeProtocol, rowNode: NodeProtocol, filterNode _: NodeProtocol) {
         var result = index

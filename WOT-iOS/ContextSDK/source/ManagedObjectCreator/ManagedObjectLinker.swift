@@ -7,32 +7,8 @@
 
 open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtractable {
 
-    public required init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol) {
-        self.masterFetchResult = masterFetchResult
-        self.modelClass = modelClass
-        self.anchor = anchor
-    }
-
     open var linkerPrimaryKeyType: PrimaryKeyType {
         fatalError("has not been implemented")
-    }
-
-    open func extractJSON(from _: JSON) -> JSON? { return nil }
-
-    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
-        guard let link = fetchResult.managedObject() as? ManagedObjectLinkable else {
-            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectLinkHostable.self)))
-            return
-        }
-        guard let host = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectLinkHostable else {
-            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectLinkable.self)))
-            return
-        }
-        host.doLinking(link, anchor: anchor)
-
-        // MARK: stash
-
-        appContext?.dataStore?.stash(fetchResult: fetchResult, completion: completion)
     }
 
     public enum ManagedObjectLinkerError: Error, CustomStringConvertible {
@@ -57,4 +33,33 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtrac
     public var MD5: String { uuid.MD5 }
 
     private let uuid = UUID()
+
+    // MARK: Lifecycle
+
+    public required init(modelClass: PrimaryKeypathProtocol.Type, masterFetchResult: FetchResultProtocol?, anchor: ManagedObjectLinkerAnchorProtocol) {
+        self.masterFetchResult = masterFetchResult
+        self.modelClass = modelClass
+        self.anchor = anchor
+    }
+
+    // MARK: Open
+
+    open func extractJSON(from _: JSON) -> JSON? { return nil }
+
+    open func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+        guard let link = fetchResult.managedObject() as? ManagedObjectLinkable else {
+            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectLinkHostable.self)))
+            return
+        }
+        guard let host = masterFetchResult?.managedObject(inManagedObjectContext: fetchResult.managedObjectContext) as? ManagedObjectLinkHostable else {
+            completion(fetchResult, ManagedObjectLinkerError.unexpectedString(String(describing: ManagedObjectLinkable.self)))
+            return
+        }
+        host.doLinking(link, anchor: anchor)
+
+        // MARK: stash
+
+        appContext?.dataStore?.stash(fetchResult: fetchResult, completion: completion)
+    }
+
 }
