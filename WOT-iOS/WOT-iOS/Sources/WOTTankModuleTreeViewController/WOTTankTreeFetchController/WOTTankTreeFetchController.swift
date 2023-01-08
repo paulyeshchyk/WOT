@@ -15,6 +15,8 @@ class WOTTankTreeFetchController: NodeFetchController {
 
     typealias NodeCreateClosure = (Int, ModulesTree) -> Void
 
+    // MARK: Internal
+
     override func fetchedNodes(byPredicates: [NSPredicate], nodeCreator: NodeCreatorProtocol?, filteredCompletion: FilteredObjectCompletion) {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: byPredicates)
 
@@ -28,6 +30,8 @@ class WOTTankTreeFetchController: NodeFetchController {
         }
         filteredCompletion(predicate, result)
     }
+
+    // MARK: Private
 
     private func tankId(_ tank: AnyObject) -> NSNumber? {
         guard let tanks = tank as? Vehicles else {

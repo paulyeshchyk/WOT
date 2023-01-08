@@ -12,6 +12,13 @@ import ContextSDK
 
 final class EventRequestListenerStart: LogEventProtocol {
 
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .http }
+    public var name: String { return "HTTPStart" }
+
+    // MARK: Lifecycle
+
     public init() {
         message = ""
     }
@@ -20,15 +27,18 @@ final class EventRequestListenerStart: LogEventProtocol {
         message = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
     }
 
-    private(set) public var message: String
-
-    public var eventType: LogEventType { return .http }
-    public var name: String { return "HTTPStart" }
 }
 
 // MARK: - EventRequestListenerCancel
 
 final class EventRequestListenerCancel: LogEventProtocol {
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .http }
+    public var name: String { return "HTTPCancel" }
+
+    // MARK: Lifecycle
 
     public init() {
         message = ""
@@ -43,15 +53,18 @@ final class EventRequestListenerCancel: LogEventProtocol {
         self.message = message
     }
 
-    private(set) public var message: String
-
-    public var eventType: LogEventType { return .http }
-    public var name: String { return "HTTPCancel" }
 }
 
 // MARK: - EventRequestListenerEnd
 
 final class EventRequestListenerEnd: LogEventProtocol {
+
+    private(set) public var message: String
+
+    public var eventType: LogEventType { return .http }
+    public var name: String { return "HTTPEnded" }
+
+    // MARK: Lifecycle
 
     public init() {
         message = ""
@@ -61,8 +74,4 @@ final class EventRequestListenerEnd: LogEventProtocol {
         message = "Listener: \(String(describing: listener)); reacts on request: \(String(describing: request))"
     }
 
-    private(set) public var message: String
-
-    public var eventType: LogEventType { return .http }
-    public var name: String { return "HTTPEnded" }
 }

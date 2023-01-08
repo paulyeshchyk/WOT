@@ -30,6 +30,11 @@ public class WOTTankMetricsList: NSObject {
         }
     }
 
+    private var metrics = Set<WOTMetric>()
+    private var tankIDLists = Set<WOTTanksIDList>()
+
+    // MARK: Public
+
     @objc
     public func add(tankId: WOTTanksIDList) {
         tankIDLists.insert(tankId)
@@ -57,8 +62,6 @@ public class WOTTankMetricsList: NSObject {
         metrics.remove(metric)
     }
 
-    private var metrics = Set<WOTMetric>()
-    private var tankIDLists = Set<WOTTanksIDList>()
 }
 
 // MARK: - ChartDataProtocol

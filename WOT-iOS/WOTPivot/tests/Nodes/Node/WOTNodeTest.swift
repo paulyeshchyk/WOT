@@ -20,6 +20,8 @@ class WOTNodeTest: XCTestCase {
 
     var asyncExpectation: XCTestExpectation?
 
+    // MARK: Internal
+
     func testName() {
         let node = Node(name: "test")
         XCTAssert(node.isVisible == true)

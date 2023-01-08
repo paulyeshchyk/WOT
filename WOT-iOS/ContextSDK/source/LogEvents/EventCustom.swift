@@ -16,21 +16,30 @@ extension LogInspectorProtocol {
 
 public class EventCustom: LogEventProtocol {
 
+    public var message: String
+    public var eventType: LogEventType
+    public var name: String
+
+    // MARK: Lifecycle
+
     public required init(_ loggable: Loggable) {
         message = loggable.message
         eventType = loggable.type.type
         name = loggable.name
     }
 
-    public var message: String
-    public var eventType: LogEventType
-    public var name: String
-
 }
 
 // MARK: - LoggableType
 
 public class LoggableType: CustomStringConvertible {
+    public var name: String
+    public var type: LogEventType
+
+    public var description: String { return name }
+
+    // MARK: Lifecycle
+
     init(name: String, type: LogEventType) {
         self.name = name
         self.type = type
@@ -41,10 +50,6 @@ public class LoggableType: CustomStringConvertible {
         self.init(name: convertedName, type: type)
     }
 
-    public var name: String
-    public var type: LogEventType
-
-    public var description: String { return name }
 }
 
 // MARK: - LogsDefault

@@ -9,15 +9,6 @@
 
 public class RequestParadigm: NSObject, RequestParadigmProtocol {
 
-    public init<T: RequestableProtocol>(modelClass _: T.Type, requestPredicateComposition: RequestPredicateCompositionProtocol, keypathPrefix: String?, httpQueryItemName: String) {
-        fieldsKeypaths = T.fieldsKeypaths()
-        self.requestPredicateComposition = requestPredicateComposition
-        self.keypathPrefix = keypathPrefix
-        self.httpQueryItemName = httpQueryItemName
-
-        modelClass = T.self
-    }
-
     // MARK: - RequestParadigmProtocol
 
     public let modelClass: RequestableProtocol.Type
@@ -37,6 +28,35 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
 
     public var MD5: String { uuid.MD5 }
 
+    // MARK: - MD5Protocol
+
+    private let uuid = UUID()
+
+    // MARK: -
+
+    private var requestPredicateComposition: RequestPredicateCompositionProtocol
+//    private var requestPredicateComposer: RequestPredicateComposerProtocol
+    private let keypathPrefix: String?
+    private let httpQueryItemName: String
+    private let fieldsKeypaths: [String]
+
+    private var primaryKeys: [ContextExpressionProtocol] {
+        buildContextPredicate().expressions().compactMap { $0 }
+    }
+
+    // MARK: Lifecycle
+
+    public init<T: RequestableProtocol>(modelClass _: T.Type, requestPredicateComposition: RequestPredicateCompositionProtocol, keypathPrefix: String?, httpQueryItemName: String) {
+        fieldsKeypaths = T.fieldsKeypaths()
+        self.requestPredicateComposition = requestPredicateComposition
+        self.keypathPrefix = keypathPrefix
+        self.httpQueryItemName = httpQueryItemName
+
+        modelClass = T.self
+    }
+
+    // MARK: Public
+
     public func buildRequestArguments() -> RequestArguments {
         let keyPaths = fieldsKeypaths.compactMap {
             self.addPreffix(to: $0)
@@ -54,21 +74,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
         return requestPredicateComposition.contextPredicate
     }
 
-    // MARK: - MD5Protocol
-
-    private let uuid = UUID()
-
-    // MARK: -
-
-    private var requestPredicateComposition: RequestPredicateCompositionProtocol
-//    private var requestPredicateComposer: RequestPredicateComposerProtocol
-    private let keypathPrefix: String?
-    private let httpQueryItemName: String
-    private let fieldsKeypaths: [String]
-
-    private var primaryKeys: [ContextExpressionProtocol] {
-        buildContextPredicate().expressions().compactMap { $0 }
-    }
+    // MARK: Private
 
     private func addPreffix(to: String) -> String {
         guard let preffix = keypathPrefix else {

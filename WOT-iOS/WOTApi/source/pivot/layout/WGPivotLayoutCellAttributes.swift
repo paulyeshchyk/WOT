@@ -21,15 +21,19 @@ protocol WGPivotLayoutCellAttributesProtocol {
 
 struct WGPivotLayoutCellAttributes: WGPivotLayoutCellAttributesProtocol {
 
+    var rect: CGRect
+    var zIndex: Int
+    var indexPath: IndexPath
+
+    // MARK: Lifecycle
+
     init(cellRect: CGRect, cellZIndex: Int, cellIndexPath: IndexPath) {
         rect = cellRect
         zIndex = cellZIndex
         indexPath = cellIndexPath
     }
 
-    var rect: CGRect
-    var zIndex: Int
-    var indexPath: IndexPath
+    // MARK: Internal
 
     func collectionViewLayoutAttributes(forRect rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard self.rect.intersects(rect) == true else {

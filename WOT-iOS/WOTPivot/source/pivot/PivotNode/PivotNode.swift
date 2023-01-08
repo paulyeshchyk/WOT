@@ -10,26 +10,6 @@ import UIKit
 
 public class PivotNode: Node, PivotNodeProtocol {
 
-    @objc
-    public required init(name nameValue: String, predicate predicateValue: NSPredicate) {
-        predicate = predicateValue
-        super.init(name: nameValue)
-    }
-
-    @objc
-    public required init(name nameValue: String) {
-        super.init(name: nameValue)
-    }
-
-    override open func copy(with zone: NSZone? = nil) -> Any {
-        let result = type(of: self).init(name: name)
-        result.predicate = predicate?.copy(with: zone) as? NSPredicate
-        result.dataColor = dataColor?.copy(with: zone) as? UIColor
-        result.isVisible = isVisible
-        result.imageURL = imageURL?.copy(with: zone) as? NSURL
-        return result
-    }
-
     public var dataColor: UIColor?
     public var data1: AnyObject?
     public var predicate: NSPredicate?
@@ -49,4 +29,29 @@ public class PivotNode: Node, PivotNodeProtocol {
         let predicates: [NSPredicate] = [selfPredicate, parentPredicate].compactMap { $0 }
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
+
+    // MARK: Lifecycle
+
+    @objc
+    public required init(name nameValue: String, predicate predicateValue: NSPredicate) {
+        predicate = predicateValue
+        super.init(name: nameValue)
+    }
+
+    @objc
+    public required init(name nameValue: String) {
+        super.init(name: nameValue)
+    }
+
+    // MARK: Open
+
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        let result = type(of: self).init(name: name)
+        result.predicate = predicate?.copy(with: zone) as? NSPredicate
+        result.dataColor = dataColor?.copy(with: zone) as? UIColor
+        result.isVisible = isVisible
+        result.imageURL = imageURL?.copy(with: zone) as? NSURL
+        return result
+    }
+
 }

@@ -7,10 +7,6 @@
 
 class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
 
-    override required init() {
-        super.init()
-    }
-
     var count: Int {
         fatalError("incorrect usage")
     }
@@ -27,6 +23,18 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
     var levels: Int {
         return levelIndex.keys.count
     }
+
+    private typealias TreeLevelIndexTypeAlias = [Int: [NodeProtocol]]
+
+    private lazy var levelIndex: TreeLevelIndexTypeAlias = TreeLevelIndexTypeAlias()
+
+    // MARK: Lifecycle
+
+    override required init() {
+        super.init()
+    }
+
+    // MARK: Internal
 
     func doAutoincrementIndex(forNodes _: [NodeProtocol]) -> Int {
         fatalError("incorrect usage")
@@ -80,7 +88,4 @@ class TreeConnectorNodeIndex: NSObject, TreeConnectorNodeIndexProtocol {
         return indexPath.first
     }
 
-    private typealias TreeLevelIndexTypeAlias = [Int: [NodeProtocol]]
-
-    private lazy var levelIndex: TreeLevelIndexTypeAlias = TreeLevelIndexTypeAlias()
 }

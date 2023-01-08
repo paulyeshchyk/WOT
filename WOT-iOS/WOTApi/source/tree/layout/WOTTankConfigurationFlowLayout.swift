@@ -39,6 +39,12 @@ public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTank
         set {}
     }
 
+    public var depthCallback: (() -> Int)?
+    public var widthCallback: (() -> Int)?
+    public var layoutPreviousSiblingNodeChildrenCountCallback: ((IndexPath) -> (Int))?
+
+    // MARK: Open
+
     override open func initialLayoutAttributesForAppearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
     }
@@ -55,9 +61,6 @@ public class WOTTankConfigurationFlowLayout: UICollectionViewFlowLayout, WOTTank
         return layoutAttributes(in: rect)
     }
 
-    public var depthCallback: (() -> Int)?
-    public var widthCallback: (() -> Int)?
-    public var layoutPreviousSiblingNodeChildrenCountCallback: ((IndexPath) -> (Int))?
 }
 
 public extension WOTTankConfigurationFlowLayout {

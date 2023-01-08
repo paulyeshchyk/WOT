@@ -9,6 +9,11 @@
 
 public class JSONMap: JSONCollectionContainerProtocol {
 
+    public let contextPredicate: ContextPredicateProtocol
+    public let jsonCollection: JSONCollectionProtocol
+
+    // MARK: Lifecycle
+
     public init(jsonCollection: JSONCollectionProtocol?, predicate contextPredicate: ContextPredicateProtocol) throws {
         guard let jsonCollection = jsonCollection else {
             throw JSONMapError.jsonIsNil
@@ -17,8 +22,6 @@ public class JSONMap: JSONCollectionContainerProtocol {
         self.contextPredicate = contextPredicate
     }
 
-    public let contextPredicate: ContextPredicateProtocol
-    public let jsonCollection: JSONCollectionProtocol
 }
 
 // MARK: - JSONMapError

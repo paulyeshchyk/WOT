@@ -26,20 +26,6 @@ public protocol ContextExpressionProtocol {
 @objc
 public class ContextExpression: NSObject, ContextExpressionProtocol {
 
-    @objc
-    public required init(components: [String], value: JSONValueType, nameAlias: String, predicateFormat: String) {
-        self.components = components
-        self.value = value
-        self.predicateFormat = predicateFormat
-        self.nameAlias = nameAlias
-        super.init()
-    }
-
-    @objc
-    public required convenience init(name: String, value: JSONValueType, nameAlias: String, predicateFormat: String) {
-        self.init(components: [name], value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
-    }
-
     public let components: [String]
     public let value: JSONValueType
     public let nameAlias: String
@@ -56,6 +42,26 @@ public class ContextExpression: NSObject, ContextExpressionProtocol {
         // swiftlint:enable force_cast
     }
 
+    private var predicateFormat: String = "%K = %@"
+
+    // MARK: Lifecycle
+
+    @objc
+    public required init(components: [String], value: JSONValueType, nameAlias: String, predicateFormat: String) {
+        self.components = components
+        self.value = value
+        self.predicateFormat = predicateFormat
+        self.nameAlias = nameAlias
+        super.init()
+    }
+
+    @objc
+    public required convenience init(name: String, value: JSONValueType, nameAlias: String, predicateFormat: String) {
+        self.init(components: [name], value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
+    }
+
+    // MARK: Public
+
     @objc
     public func foreignKey(byInsertingComponent: String) -> ContextExpressionProtocol? {
         var newComponents = [byInsertingComponent]
@@ -63,5 +69,4 @@ public class ContextExpression: NSObject, ContextExpressionProtocol {
         return ContextExpression(components: newComponents, value: value, nameAlias: nameAlias, predicateFormat: predicateFormat)
     }
 
-    private var predicateFormat: String = "%K = %@"
 }

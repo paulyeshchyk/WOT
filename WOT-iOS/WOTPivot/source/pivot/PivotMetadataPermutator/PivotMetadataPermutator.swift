@@ -10,7 +10,11 @@
 
 public struct PivotMetadataPermutator {
 
+    // MARK: Lifecycle
+
     public init() {}
+
+    // MARK: Public
 
     public func permutate(templates: [PivotTemplateProtocol], as type: PivotMetadataType) -> [PivotNodeProtocol] {
         var mutableTemplates = [PivotNodeProtocol]()
@@ -26,6 +30,8 @@ public struct PivotMetadataPermutator {
 
         return iterateMiddle(templates: mutableTemplates, endpoints: endpoints)
     }
+
+    // MARK: Private
 
     private func iterateMiddle(templates: [PivotNodeProtocol], endpoints: [PivotNodeProtocol]?) -> [PivotNodeProtocol] {
         var resultArray = [PivotNodeProtocol]()

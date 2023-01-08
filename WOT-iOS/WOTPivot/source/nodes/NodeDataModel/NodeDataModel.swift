@@ -11,21 +11,7 @@ import ContextSDK
 @objc
 open class NodeDataModel: NSObject, NodeDataModelProtocol {
 
-    public required init(nodeIndex: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
-        self.appContext = appContext
-        self.nodeIndex = nodeIndex.init()
-        super.init()
-    }
-
     open var nodes: [NodeProtocol] { return [] }
-
-    open func loadModel() {
-        reindexNodes()
-    }
-
-    open func clearRootNodes() {
-        rootNodes.removeAll()
-    }
 
     public let appContext: NodeFetchControllerProtocol.Context
     public var nodeIndex: NodeIndexProtocol
@@ -35,6 +21,28 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
     public var endpointsCount: Int {
         return enumerator?.endpoints(array: rootNodes).count ?? 0
     }
+
+    private var comparator: NodeComparator = { (_, _) in return true }
+
+    // MARK: Lifecycle
+
+    public required init(nodeIndex: NodeIndexProtocol.Type, appContext: NodeFetchControllerProtocol.Context) {
+        self.appContext = appContext
+        self.nodeIndex = nodeIndex.init()
+        super.init()
+    }
+
+    // MARK: Open
+
+    open func loadModel() {
+        reindexNodes()
+    }
+
+    open func clearRootNodes() {
+        rootNodes.removeAll()
+    }
+
+    // MARK: Public
 
     public func reindexNodes() {
         nodeIndex.reset()
@@ -75,5 +83,4 @@ open class NodeDataModel: NSObject, NodeDataModelProtocol {
         return nil
     }
 
-    private var comparator: NodeComparator = { (_, _) in return true }
 }
