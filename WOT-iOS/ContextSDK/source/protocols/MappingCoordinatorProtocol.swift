@@ -15,18 +15,11 @@ public protocol MappingCoordinatorDecodingProtocol {
     func decode(jsonCollection: JSONCollectionProtocol?, fetchResult: FetchResultProtocol, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable?, completion: @escaping MappingCoordinatorDecodeCompletion)
 }
 
-// MARK: - MappingCoordinatorLinkingProtocol
-
-@objc
-public protocol MappingCoordinatorLinkingProtocol {
-    func linkItem(jsonCollection: JSONCollectionProtocol, masterFetchResult: FetchResultProtocol, modelClass: PrimaryKeypathProtocol.Type, linker: ManagedObjectLinkerProtocol, extractor: ManagedObjectExtractable, requestPredicateComposition: RequestPredicateCompositionProtocol) throws
-}
-
 // MARK: - MappingCoordinatorFetchingProtocol
 
 @objc
 public protocol MappingCoordinatorFetchingProtocol {
-    func fetchLocalAndDecode(jsonCollection: JSONCollectionProtocol, objectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, completion: @escaping FetchResultCompletion)
+    func fetchLocalAndDecode(jsonCollection: JSONCollectionProtocol, objectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, contextPredicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion)
 }
 
 // MARK: - MappingCoordinatorContainerProtocol
@@ -39,4 +32,4 @@ public protocol MappingCoordinatorContainerProtocol {
 // MARK: - MappingCoordinatorProtocol
 
 @objc
-public protocol MappingCoordinatorProtocol: MappingCoordinatorDecodingProtocol, MappingCoordinatorLinkingProtocol, MappingCoordinatorFetchingProtocol {}
+public protocol MappingCoordinatorProtocol: MappingCoordinatorDecodingProtocol, MappingCoordinatorFetchingProtocol {}

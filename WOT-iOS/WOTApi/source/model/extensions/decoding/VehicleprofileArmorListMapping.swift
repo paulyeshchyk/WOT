@@ -27,7 +27,12 @@ public extension VehicleprofileArmorList {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathturret)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileArmorListFetchResult, anchor: anchor)
             let extractor = VehicleprofileArmorListTurretManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileArmorListFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileArmorListFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileArmorListError.turretNotFound), sender: self)
         }
@@ -43,7 +48,12 @@ public extension VehicleprofileArmorList {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathhull)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileArmorListFetchResult, anchor: anchor)
             let extractor = VehicleprofileArmorListHullManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileArmorListFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileArmorListFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileArmorListError.hullNotFound), sender: self)
         }

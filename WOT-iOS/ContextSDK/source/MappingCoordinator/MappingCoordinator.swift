@@ -29,7 +29,7 @@ public enum EventMappingType: String {
 // MARK: - MappingCoordinator + MappingCoordinatorFetchingProtocol
 
 extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
-    public func fetchLocalAndDecode(jsonCollection: JSONCollectionProtocol, objectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, completion: @escaping FetchResultCompletion) {
+    public func fetchLocalAndDecode(jsonCollection: JSONCollectionProtocol, objectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, contextPredicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) {
         //
         guard let nspredicate = contextPredicate.nspredicate(operator: .and) else {
             completion(nil, MappingCoordinatorError.noKeysDefinedForClass(String(describing: modelClass)))
@@ -62,29 +62,15 @@ extension MappingCoordinator: MappingCoordinatorFetchingProtocol {
     }
 }
 
-// MARK: - MappingCoordinator + MappingCoordinatorLinkingProtocol
-
-extension MappingCoordinator: MappingCoordinatorLinkingProtocol {
-    //
-    public func linkItem(jsonCollection: JSONCollectionProtocol, masterFetchResult: FetchResultProtocol, modelClass: PrimaryKeypathProtocol.Type, linker: ManagedObjectLinkerProtocol, extractor: ManagedObjectExtractable, requestPredicateComposition: RequestPredicateCompositionProtocol) throws {
-        let objectContext = masterFetchResult.managedObjectContext
-        fetchLocalAndDecode(jsonCollection: jsonCollection, objectContext: objectContext, modelClass: modelClass, contextPredicate: requestPredicateComposition.contextPredicate, managedObjectCreator: linker, managedObjectExtractor: extractor, completion: { [weak self] _, error in
-            if let error = error {
-                self?.appContext.logInspector?.log(.error(error), sender: self)
-            }
-        })
-    }
-}
-
 // MARK: - MappingCoordinator + MappingCoordinatorDecodingProtocol
 
 extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
     //
     public func decode(jsonCollection: JSONCollectionProtocol?, fetchResult: FetchResultProtocol, contextPredicate: ContextPredicateProtocol, managedObjectCreator: ManagedObjectLinkerProtocol?, managedObjectExtractor _: ManagedObjectExtractable?, completion: @escaping MappingCoordinatorDecodeCompletion) {
-        appContext.logInspector?.log(.mapping(name: "Start", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
+        appContext.logInspector?.log(.mapping(name: "decode-start", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
 
         guard let managedObject = fetchResult.managedObject() as? JSONDecodableProtocol else {
-            appContext.logInspector?.log(.mapping(name: "Cancel", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
+            appContext.logInspector?.log(.mapping(name: "decode-cancel", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
             completion(fetchResult, MappingCoordinatorError.fetchResultIsNotJSONDecodable(fetchResult))
             return
         }
@@ -105,9 +91,9 @@ extension MappingCoordinator: MappingCoordinatorDecodingProtocol {
                 finalFetchResult.predicate = contextPredicate.nspredicate(operator: .and)
                 linker.process(fetchResult: finalFetchResult, appContext: self.appContext, completion: completion)
             }
-            appContext.logInspector?.log(.mapping(name: "End", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
+            appContext.logInspector?.log(.mapping(name: "decode-end", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
         } catch {
-            appContext.logInspector?.log(.mapping(name: "Fail", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
+            appContext.logInspector?.log(.mapping(name: "decode-fail", fetchResult: fetchResult, predicate: contextPredicate, mappingType: .JSON), sender: self)
             completion(fetchResult, error)
         }
     }

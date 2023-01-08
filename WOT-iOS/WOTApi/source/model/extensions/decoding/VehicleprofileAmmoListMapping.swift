@@ -27,7 +27,12 @@ public extension VehicleprofileAmmoList {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoListFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoListAmmoManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileAmmoListFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileAmmoListFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         }
     }
 }

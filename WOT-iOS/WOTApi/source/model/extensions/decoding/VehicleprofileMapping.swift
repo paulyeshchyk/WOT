@@ -36,7 +36,12 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoListManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noAmmoList(tank_id)), sender: self)
         }
@@ -52,7 +57,12 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: armorKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extactor = VehicleprofileArmorListManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileFetchResult, modelClass: modelClass, linker: linker, extractor: extactor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extactor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noArmor(tank_id)), sender: self)
         }
@@ -68,7 +78,12 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileModuleManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noModule(tank_id)), sender: self)
         }
@@ -87,7 +102,12 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: engineKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileEngineManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noEngine(tank_id)), sender: self)
         }
@@ -106,7 +126,12 @@ public extension Vehicleprofile {
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileGunManagedObjectCreator()
             let collection = try JSONCollection(element: jsonElement)
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noGun(tank_id)), sender: self)
         }
@@ -125,7 +150,12 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileSuspensionManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noSuspension(tank_id)), sender: self)
         }
@@ -144,7 +174,12 @@ public extension Vehicleprofile {
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileTurretManagedObjectCreator()
             let collection = try JSONCollection(element: jsonElement)
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
@@ -163,7 +198,12 @@ public extension Vehicleprofile {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: radioKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
             let extractor = VehicleprofileRadioManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }

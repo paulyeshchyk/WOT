@@ -30,7 +30,12 @@ public extension VehicleprofileAmmo {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoPenetrationManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileAmmoFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
         }
@@ -46,7 +51,12 @@ public extension VehicleprofileAmmo {
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathDamage)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoDamageManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileAmmoFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
+            appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: collection, objectContext: objectContext, modelClass: modelClass, managedObjectCreator: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+                if let error = error {
+                    appContext?.logInspector?.log(.warning(error: error), sender: self)
+                }
+            })
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }
