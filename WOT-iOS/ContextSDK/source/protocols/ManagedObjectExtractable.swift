@@ -33,7 +33,7 @@ public extension ManagedObjectExtractable {
         requestPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
         let jsonCollection = try JSONCollection(element: extractedJSON)
-        return JSONExtraction(requestPredicate: requestPredicate, json: jsonCollection)
+        return JSONExtraction(requestPredicate: requestPredicate, jsonCollection: jsonCollection)
     }
 }
 
@@ -42,7 +42,7 @@ public extension ManagedObjectExtractable {
 public struct JSONExtraction {
 
     public let requestPredicate: ContextPredicateProtocol
-    public let json: JSONCollectionProtocol?
+    public let jsonCollection: JSONCollectionProtocol?
 
     enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
         case invalidJSONForKey(AnyHashable)

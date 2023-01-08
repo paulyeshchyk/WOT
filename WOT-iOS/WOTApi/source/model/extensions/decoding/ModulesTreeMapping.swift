@@ -49,7 +49,7 @@ public extension ModulesTree {
             let nextModuleManagedObjectCreator = ManagedObjectLinker(modelClass: ModulesTree.self, masterFetchResult: modulesTreeFetchResult, anchor: anchor)
             for nextModuleID in nextModules {
                 let modelClass = Module.self
-                let theLink = Joint(modelClass: modelClass, theID: nextModuleID, thePredicate: map.predicate)
+                let theLink = Joint(modelClass: modelClass, theID: nextModuleID, contextPredicate: map.contextPredicate)
                 let composer = MasterAsPrimaryLinkedAsSecondaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
                 do {
                     let composition = try composer.buildRequestPredicateComposition()
@@ -68,7 +68,7 @@ public extension ModulesTree {
         let currentModuleAnchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: keypath)
         let extractor = ModulesTreeCurrentModuleManagedObjectCreator()
         let moduleJSONAdapter = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: modulesTreeFetchResult, anchor: currentModuleAnchor)
-        let theLink = Joint(modelClass: Module.self, theID: module_id, thePredicate: map.predicate)
+        let theLink = Joint(modelClass: Module.self, theID: module_id, contextPredicate: map.contextPredicate)
         let composer = LinkedRemoteAsPrimaryRuleBuilder(drivenJoint: theLink, hostObjectID: objectID)
         let composition = try composer.buildRequestPredicateComposition()
         let moduleRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: nil, httpQueryItemName: "fields")

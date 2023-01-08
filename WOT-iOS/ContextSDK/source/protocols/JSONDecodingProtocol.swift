@@ -16,7 +16,9 @@ public protocol JSONDecodingProtocol {
 // MARK: - JSONDecodableProtocol
 
 public protocol JSONDecodableProtocol {
-    typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol & RequestManagerContainerProtocol & LogInspectorContainerProtocol
+    typealias Context = DataStoreContainerProtocol
+        & RequestManagerContainerProtocol
+        & LogInspectorContainerProtocol
 
     func decode(using: JSONCollectionContainerProtocol, managedObjectContextContainer: ManagedObjectContextContainerProtocol, appContext: JSONDecodableProtocol.Context?) throws
 }

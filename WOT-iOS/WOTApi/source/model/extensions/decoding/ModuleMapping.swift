@@ -17,7 +17,7 @@ public extension Module {
         try decode(decoderContainer: moduleJSON)
         //
 
-        let parentsAsVehicles = map.predicate.parentObjectIDList
+        let parentsAsVehicles = map.contextPredicate.parentObjectIDList
             .compactMap { managedObjectContextContainer.managedObjectContext.object(byID: $0) as? Vehicles }
         let parents = parentsAsVehicles.compactMap { $0.tank_id }
 
@@ -32,7 +32,7 @@ public extension Module {
             throw ModuleMappingError.moduleIdNotDefined
         }
 
-        let hostJoint = Joint(modelClass: Vehicles.self, theID: tank_id, thePredicate: nil)
+        let hostJoint = Joint(modelClass: Vehicles.self, theID: tank_id, contextPredicate: nil)
 
         let moduleType = VehicleModuleType.fromString(type)
         switch moduleType {
@@ -42,7 +42,7 @@ public extension Module {
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: keypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
             let extractor = ModuleVehicleprofileGunManagedObjectCreator()
-            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
+            let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let composition = try composer.buildRequestPredicateComposition()
             let gunRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "gun.", httpQueryItemName: "fields")
@@ -52,7 +52,7 @@ public extension Module {
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.radio))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
             let extractor = ModuleVehicleprofileRadioManagedObjectCreator()
-            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
+            let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let composition = try composer.buildRequestPredicateComposition()
             let radioRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "radio.", httpQueryItemName: "fields")
@@ -61,7 +61,7 @@ public extension Module {
             let modelClass = VehicleprofileEngine.self
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.engine))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
-            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
+            let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let composition = try composer.buildRequestPredicateComposition()
             let engineRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "engine.", httpQueryItemName: "fields")
@@ -72,7 +72,7 @@ public extension Module {
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.suspension))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
             let extractor = ModuleVehicleprofileSuspensionManagedObjectCreator()
-            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
+            let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let composition = try composer.buildRequestPredicateComposition()
             let chassisRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "suspension.", httpQueryItemName: "fields")
@@ -82,7 +82,7 @@ public extension Module {
             let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(Module.turret))
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: moduleFetchResult, anchor: anchor)
             let extractor = ModuleVehicleprofileTurretManagedObjectCreator()
-            let joint = Joint(modelClass: modelClass, theID: module_id, thePredicate: nil)
+            let joint = Joint(modelClass: modelClass, theID: module_id, contextPredicate: nil)
             let composer = MasterIDAsSecondaryLinkedAsPrimaryRuleBuilder(drivenJoint: joint, hostJoint: hostJoint)
             let composition = try composer.buildRequestPredicateComposition()
             let turretRequestParadigm = RequestParadigm(modelClass: modelClass, requestPredicateComposition: composition, keypathPrefix: "turret.", httpQueryItemName: "fields")

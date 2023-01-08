@@ -20,7 +20,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
     public var sessionManager: SessionManagerProtocol?
     public var logInspector: LogInspectorProtocol?
     public var dataStore: DataStoreProtocol?
-    public var mappingCoordinator: MappingCoordinatorProtocol?
     public var responseDataAdapterCreator: ResponseDataAdapterCreatorProtocol?
 
     public func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -30,7 +29,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, ContextProtocol {
         hostConfiguration = WOTHostConfiguration()
         sessionManager = SessionManager()
         dataStore = WOTDataStore(appContext: self)
-        mappingCoordinator = MappingCoordinator(appContext: self)
         responseDataAdapterCreator = ResponseDataAdapterCreator(appContext: self)
         requestManager = WOTRequestManager(appContext: self)
 
