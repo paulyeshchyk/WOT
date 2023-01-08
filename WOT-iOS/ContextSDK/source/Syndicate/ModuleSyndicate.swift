@@ -59,7 +59,7 @@ public class ModuleSyndicate {
 
 extension ModuleSyndicate {
 
-    public static func fetchLocalAndDecode(appContext: ModuleSyndicate.Context?, jsonCollection: JSONCollectionProtocol, managedObjectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, contextPredicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) {
+    public static func decodeAndLink(appContext: ModuleSyndicate.Context?, jsonCollection: JSONCollectionProtocol, managedObjectContext: ManagedObjectContextProtocol, modelClass: PrimaryKeypathProtocol.Type, managedObjectLinker: ManagedObjectLinkerProtocol?, managedObjectExtractor: ManagedObjectExtractable, contextPredicate: ContextPredicateProtocol, completion: @escaping FetchResultCompletion) {
         //
         guard let nspredicate = contextPredicate.nspredicate(operator: .and) else {
             completion(nil, MappingCoordinatorError.noKeysDefinedForClass(String(describing: modelClass)))
@@ -67,7 +67,7 @@ extension ModuleSyndicate {
         }
 
         guard let appContext = appContext else {
-            completion(nil, MappingCoordinatorError.AppContextNotDefined)
+            completion(nil, MappingCoordinatorError.appContextNotDefined)
             return
         }
 
@@ -90,23 +90,13 @@ extension ModuleSyndicate {
 // MARK: - MappingCoordinatorError
 
 private enum MappingCoordinatorError: Error, CustomStringConvertible {
-    case lookupRuleNotDefined
-    case linkerNotFound
-    case managedObjectCreatorNotFound
-    case fetchResultNotPresented
-    case fetchResultIsNotJSONDecodable(FetchResultProtocol?)
+    case appContextNotDefined
     case noKeysDefinedForClass(String)
-    case AppContextNotDefined
 
     public var description: String {
         switch self {
-        case .AppContextNotDefined: return "[\(type(of: self))]: appContext not found"
-        case .managedObjectCreatorNotFound: return "[\(type(of: self))]: managedObjectCreatorNotFound not found"
-        case .linkerNotFound: return "[\(type(of: self))]: linker not found"
+        case .appContextNotDefined: return "[\(type(of: self))]: appContext not found"
         case .noKeysDefinedForClass(let clazz): return "[\(type(of: self))]: No keys defined for:[\(String(describing: clazz))]"
-        case .lookupRuleNotDefined: return "[\(type(of: self))]: rule is not defined"
-        case .fetchResultNotPresented: return "[\(type(of: self))]: fetchResult is not presented"
-        case .fetchResultIsNotJSONDecodable(let fetchResult): return "[\(type(of: self))]: fetch result(\(type(of: fetchResult)) is not JSONDecodableProtocol"
         }
     }
 }

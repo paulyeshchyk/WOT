@@ -39,7 +39,7 @@ public extension Vehicles {
             let managedObjectExtractor = VehicleProfileManagedObjectCreator()
             let managedObjectContext = vehiclesFetchResult.managedObjectContext
 
-            ModuleSyndicate.fetchLocalAndDecode(appContext: appContext, jsonCollection: collection, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, contextPredicate: composition.contextPredicate, completion: { _, error in
+            ModuleSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: managedObjectContext, modelClass: modelClass, managedObjectLinker: managedObjectLinker, managedObjectExtractor: managedObjectExtractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
                     appContext?.logInspector?.log(.warning(error: error), sender: self)
                 }
@@ -90,7 +90,7 @@ extension Vehicles {
         let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
         let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
         let extractor = ModulesTreeManagedObjectCreator()
-        ModuleSyndicate.fetchLocalAndDecode(appContext: appContext, jsonCollection: jsonCollection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: contextPredicate, completion: { _, _ in })
+        ModuleSyndicate.decodeAndLink(appContext: appContext, jsonCollection: jsonCollection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: contextPredicate, completion: { _, _ in })
     }
 }
 
