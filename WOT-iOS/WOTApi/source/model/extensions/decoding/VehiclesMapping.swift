@@ -20,7 +20,7 @@ public extension Vehicles {
         // MARK: - ModulesTree
 
         if let modulesTreeJSON = vehicleJSON[#keyPath(Vehicles.modules_tree)] as? JSON {
-            try modulesTreeMapping(objectContext: managedObjectContextContainer.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.predicate, appContext: appContext)
+            try modulesTreeMapping(objectContext: managedObjectContextContainer.managedObjectContext, jSON: modulesTreeJSON, requestPredicate: map.contextPredicate, appContext: appContext)
         } else {
             appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
         }
@@ -31,13 +31,13 @@ public extension Vehicles {
         if let jsonElement = vehicleJSON[defaultProfileKeypath] as? JSON {
             let modelClass = Vehicleprofile.self
             let vehiclesFetchResult = fetchResult(context: managedObjectContextContainer.managedObjectContext)
-            let builder = ForeignAsPrimaryRuleBuilder(requestPredicate: map.predicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
+            let builder = ForeignAsPrimaryRuleBuilder(contextPredicate: map.contextPredicate, foreignSelectKey: #keyPath(Vehicleprofile.vehicles), parentObjectIDList: nil)
             let composition = try builder.buildRequestPredicateComposition()
             let collection = try JSONCollection(element: jsonElement)
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: defaultProfileKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehiclesFetchResult, anchor: anchor)
             let extractor = VehicleProfileManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehiclesFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehiclesFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
             appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.profileNotFound(tank_id)), sender: self)
         }
@@ -59,8 +59,8 @@ extension Vehicles {
 
         let vehiclesFetchResult = fetchResult(context: objectContext)
 
-        let modulesTreePredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
-        modulesTreePredicate[.primary] = requestPredicate[.primary]?
+        let contextPredicate = ContextPredicate(parentObjectIDList: parentObjectIDList)
+        contextPredicate[.primary] = requestPredicate[.primary]?
             .foreignKey(byInsertingComponent: #keyPath(Vehicleprofile.vehicles))?
             .foreignKey(byInsertingComponent: #keyPath(ModulesTree.default_profile))
 
@@ -69,7 +69,7 @@ extension Vehicles {
                 let module_id = jsonElement[#keyPath(ModulesTree.module_id)]
 
                 let jsonCollection = try JSONCollection(element: jsonElement)
-                try submoduleMapping(keypath: "<unknown3>", objectContext: objectContext, json: jsonCollection, module_id: module_id, requestPredicate: modulesTreePredicate, masterFetchResult: vehiclesFetchResult, appContext: appContext)
+                try submoduleMapping(keypath: "<unknown3>", objectContext: objectContext, json: jsonCollection, module_id: module_id, requestPredicate: contextPredicate, masterFetchResult: vehiclesFetchResult, appContext: appContext)
             } else {
                 appContext?.logInspector?.log(.warning(error: VehiclesJSONMappingError.moduleTreeNotFound(tank_id)), sender: self)
             }
@@ -83,14 +83,14 @@ extension Vehicles {
         guard let module_id = module_id as? NSNumber else {
             throw VehiclesJSONMappingError.passedInvalidModuleId
         }
-        let submodulesPredicate = ContextPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
-        submodulesPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
-        submodulesPredicate[.secondary] = requestPredicate[.primary]
+        let contextPredicate = ContextPredicate(parentObjectIDList: requestPredicate.parentObjectIDList)
+        contextPredicate[.primary] = ModulesTree.primaryKey(forType: .internal, andObject: module_id)
+        contextPredicate[.secondary] = requestPredicate[.primary]
         let modelClass = ModulesTree.self
         let anchor = ManagedObjectLinkerAnchor(identifier: module_id, keypath: #keyPath(ModulesTree.next_modules))
         let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: masterFetchResult, anchor: anchor)
         let extractor = ModulesTreeManagedObjectCreator()
-        appContext?.mappingCoordinator?.fetchLocalAndDecode(json: json, objectContext: objectContext, byModelClass: modelClass, contextPredicate: submodulesPredicate, managedObjectCreator: linker, managedObjectExtractor: extractor, completion: { _, _ in })
+        appContext?.mappingCoordinator?.fetchLocalAndDecode(jsonCollection: json, objectContext: objectContext, modelClass: modelClass, contextPredicate: contextPredicate, managedObjectCreator: linker, managedObjectExtractor: extractor, completion: { _, _ in })
     }
 }
 

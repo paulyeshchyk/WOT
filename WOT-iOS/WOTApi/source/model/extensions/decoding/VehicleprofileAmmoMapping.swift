@@ -24,13 +24,13 @@ public extension VehicleprofileAmmo {
         let keypathPenetration = #keyPath(VehicleprofileAmmo.penetration)
         if let jsonCustom = ammoJSON[keypathPenetration] {
             let modelClass = VehicleprofileAmmoPenetration.self
-            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
+            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoPenetration.vehicleprofileAmmo))
             let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoPenetrationManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileAmmoFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noPenetration), sender: self)
         }
@@ -40,13 +40,13 @@ public extension VehicleprofileAmmo {
         let keypathDamage = #keyPath(VehicleprofileAmmo.damage)
         if let jsonCustom = ammoJSON[keypathDamage] {
             let modelClass = VehicleprofileAmmoDamage.self
-            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(requestPredicate: map.predicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
+            let composer = ForeignAsPrimaryAndForeignSecondaryRuleBuilder(contextPredicate: map.contextPredicate, foreignPrimarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo), foreignSecondarySelectKey: #keyPath(VehicleprofileAmmoDamage.vehicleprofileAmmo))
             let collection = JSONCollection(custom: jsonCustom)
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathDamage)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
             let extractor = VehicleprofileAmmoDamageManagedObjectCreator()
-            try appContext?.mappingCoordinator?.linkItem(from: collection, masterFetchResult: vehicleprofileAmmoFetchResult, byModelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
+            try appContext?.mappingCoordinator?.linkItem(jsonCollection: collection, masterFetchResult: vehicleprofileAmmoFetchResult, modelClass: modelClass, linker: linker, extractor: extractor, requestPredicateComposition: composition)
         } else {
             appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }

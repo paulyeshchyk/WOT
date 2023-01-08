@@ -14,10 +14,11 @@ public protocol ResponseAdapterProtocol {
     typealias OnComplete = (RequestProtocol, Error?) -> Void
 
     var responseClass: AnyClass { get }
+    var completion: ResponseAdapterProtocol.OnComplete? { get set }
 
     init(modelClass: PrimaryKeypathProtocol.Type, request: RequestProtocol, managedObjectLinker: ManagedObjectLinkerProtocol, jsonExtractor: ManagedObjectExtractable, appContext: Context)
 
-    func decode(data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?)
+    func decode(data: Data?, fromRequest request: RequestProtocol)
 }
 
 // MARK: - JSONAdapterProtocol

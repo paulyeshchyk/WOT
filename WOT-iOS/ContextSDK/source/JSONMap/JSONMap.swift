@@ -9,15 +9,15 @@
 
 public class JSONMap: JSONCollectionContainerProtocol {
 
-    public init(json jsonCollection: JSONCollectionProtocol?, predicate: ContextPredicateProtocol) throws {
+    public init(jsonCollection: JSONCollectionProtocol?, predicate contextPredicate: ContextPredicateProtocol) throws {
         guard let jsonCollection = jsonCollection else {
             throw JSONMapError.jsonIsNil
         }
         self.jsonCollection = jsonCollection
-        self.predicate = predicate
+        self.contextPredicate = contextPredicate
     }
 
-    public let predicate: ContextPredicateProtocol
+    public let contextPredicate: ContextPredicateProtocol
     public let jsonCollection: JSONCollectionProtocol
 }
 

@@ -1,14 +1,14 @@
 //
-//  Syndicate.swift
+//  VehicleSyndicate.swift
 //  ContextSDK
 //
 //  Created by Paul on 7.01.23.
 //
 
-// MARK: - Syndicate
+// MARK: - VehicleSyndicate
 
-class Syndicate {
-    init(appContext: Syndicate.Context, json: JSON, key: AnyHashable) {
+class VehicleSyndicate {
+    init(appContext: VehicleSyndicate.Context, json: JSON, key: AnyHashable) {
         self.appContext = appContext
         self.json = json
         self.key = key
@@ -17,8 +17,8 @@ class Syndicate {
     typealias Context = DataStoreContainerProtocol & MappingCoordinatorContainerProtocol
 
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var managedStoreLinker: ManagedObjectLinkerProtocol?
-    let appContext: Syndicate.Context
+    var managedObjectLinker: ManagedObjectLinkerProtocol?
+    let appContext: VehicleSyndicate.Context
     var modelClass: PrimaryKeypathProtocol.Type?
     var contextPredicate: ContextPredicateProtocol?
     let json: JSON
@@ -30,7 +30,7 @@ class Syndicate {
             completion?(nil, SyndicateError.modelClassIsNotDefined)
             return
         }
-        guard let managedObjectLinker = managedStoreLinker else {
+        guard let managedObjectLinker = managedObjectLinker else {
             completion?(nil, SyndicateError.managedObjectLinkerIsNotPresented)
             return
         }
@@ -54,14 +54,16 @@ class Syndicate {
         managedObjectLinkerHelper.completion = completion
 
         let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
-        mappingCoordinatorDecodeHelper.jsonExtraction = jsonExtraction
+        mappingCoordinatorDecodeHelper.jsonCollection = jsonExtraction?.jsonCollection
+        mappingCoordinatorDecodeHelper.contextPredicate = jsonExtraction?.requestPredicate
+        mappingCoordinatorDecodeHelper.managedObjectCreator = managedObjectLinker
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
             managedObjectLinkerHelper.run(fetchResult, error: error)
         }
 
         let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
         datastoreFetchHelper.modelClass = modelClass
-        datastoreFetchHelper.jsonExtraction = jsonExtraction
+        datastoreFetchHelper.nspredicate = jsonExtraction?.requestPredicate[.primary]?.predicate
         datastoreFetchHelper.completion = { fetchResult, error in
             mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
         }
@@ -88,7 +90,7 @@ class Syndicate {
 
 // MARK: - ManagedObjectLinkerHelper
 
-private class ManagedObjectLinkerHelper {
+class ManagedObjectLinkerHelper {
 
     init(appContext: ManagedObjectLinkerHelper.Context) {
         self.appContext = appContext
@@ -132,7 +134,7 @@ private class ManagedObjectLinkerHelper {
 
 // MARK: - MappingCoordinatorDecodeHelper
 
-private class MappingCoordinatorDecodeHelper {
+class MappingCoordinatorDecodeHelper {
 
     init(appContext: MappingCoordinatorDecodeHelper.Context) {
         self.appContext = appContext
@@ -142,7 +144,8 @@ private class MappingCoordinatorDecodeHelper {
 
     let appContext: Context
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
-    var jsonExtraction: JSONExtraction?
+    var jsonCollection: JSONCollectionProtocol?
+    var contextPredicate: ContextPredicateProtocol?
     var managedObjectCreator: ManagedObjectLinkerProtocol?
     var managedObjectExtractor: ManagedObjectExtractable?
 
@@ -151,14 +154,14 @@ private class MappingCoordinatorDecodeHelper {
             completion?(fetchResult, error ?? MappingCoordinatorDecodeHelperError.fetchResultIsNotPresented)
             return
         }
-        guard let jsonExtraction = jsonExtraction else {
-            completion?(fetchResult, MappingCoordinatorDecodeHelperError.jsonExtractionIsNotDefined)
+        guard let contextPredicate = contextPredicate else {
+            completion?(fetchResult, MappingCoordinatorDecodeHelperError.contextPredicateIsNotDefined)
             return
         }
 
-        appContext.mappingCoordinator?.decode(using: jsonExtraction.json,
+        appContext.mappingCoordinator?.decode(jsonCollection: jsonCollection,
                                               fetchResult: fetchResult,
-                                              predicate: jsonExtraction.requestPredicate,
+                                              contextPredicate: contextPredicate,
                                               managedObjectCreator: managedObjectCreator,
                                               managedObjectExtractor: managedObjectExtractor,
                                               completion: { fetchResult, error in
@@ -168,11 +171,11 @@ private class MappingCoordinatorDecodeHelper {
 
     private enum MappingCoordinatorDecodeHelperError: Error, CustomStringConvertible {
         case fetchResultIsNotPresented
-        case jsonExtractionIsNotDefined
+        case contextPredicateIsNotDefined
 
         public var description: String {
             switch self {
-            case .jsonExtractionIsNotDefined: return "\(type(of: self)): jsonExtraction is not defined"
+            case .contextPredicateIsNotDefined: return "\(type(of: self)): Context predicate is not defined"
             case .fetchResultIsNotPresented: return "\(type(of: self)): fetch result is not presented"
             }
         }
@@ -181,7 +184,7 @@ private class MappingCoordinatorDecodeHelper {
 
 // MARK: - DatastoreFetchHelper
 
-private class DatastoreFetchHelper {
+class DatastoreFetchHelper {
     //
     init(appContext: DatastoreFetchHelper.Context) {
         self.appContext = appContext
@@ -190,36 +193,30 @@ private class DatastoreFetchHelper {
     typealias Context = (DataStoreContainerProtocol & MappingCoordinatorContainerProtocol)
 
     let appContext: Context
-    var jsonExtraction: JSONExtraction?
+    var nspredicate: NSPredicate?
     var modelClass: PrimaryKeypathProtocol.Type?
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
+    var managedObjectContext: ManagedObjectContextProtocol?
 
     func run() {
-        guard let jsonExtraction = jsonExtraction else {
-            completion?(nil, DatastoreFetchHelperError.jsonExtractionIsNotDefined)
-            return
-        }
         guard let modelClass = modelClass else {
             completion?(nil, DatastoreFetchHelperError.modelClassIsNotDefined)
             return
         }
 
-        let nspredicate = jsonExtraction.requestPredicate[.primary]?.predicate
         appContext.dataStore?.fetch(modelClass: modelClass,
                                     nspredicate: nspredicate,
-                                    managedObjectContext: nil,
+                                    managedObjectContext: managedObjectContext,
                                     completion: { fetchResult, error in
                                         self.completion?(fetchResult, error)
                                     })
     }
 
     private enum DatastoreFetchHelperError: Error, CustomStringConvertible {
-        case jsonExtractionIsNotDefined
         case modelClassIsNotDefined
 
         public var description: String {
             switch self {
-            case .jsonExtractionIsNotDefined: return "\(type(of: self)): jsonExtraction is not defined"
             case .modelClassIsNotDefined: return "\(type(of: self)): modelClass is not defined"
             }
         }

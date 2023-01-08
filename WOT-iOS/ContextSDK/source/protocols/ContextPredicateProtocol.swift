@@ -20,7 +20,7 @@ public protocol ContextPredicateProtocol {
 
 @objc
 public protocol ContextPredicateContainerProtocol {
-    var predicate: ContextPredicateProtocol { get }
+    var contextPredicate: ContextPredicateProtocol { get }
 }
 
 // MARK: - ContextExpressionType

@@ -30,24 +30,26 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
         fatalError("has not been implemented")
     }
 
+    public var completion: ResponseAdapterProtocol.OnComplete?
+
     public var MD5: String { uuid.MD5 }
 
     // MARK: NSObject -
 
     public var description: String { String(describing: type(of: request)) }
 
-    public func decode(data: Data?, fromRequest request: RequestProtocol, completion: ResponseAdapterProtocol.OnComplete?) {
+    public func decode(data: Data?, fromRequest request: RequestProtocol) {
         guard let data = data else {
-            didFinish(request: request, data: nil, error: JSONAdapterError.dataIsNil, completion: completion)
+            didFinish(request: request, data: nil, error: JSONAdapterError.dataIsNil)
             return
         }
         let decoder = JSONDecoder()
         do {
             let result = try decodedObject(jsonDecoder: decoder, from: data)
-            didFinish(request: request, data: result, error: nil, completion: completion)
+            didFinish(request: request, data: result, error: nil)
         } catch {
             let exception = JSONAdapterError.responseError(request, error)
-            didFinish(request: request, data: nil, error: exception, completion: completion)
+            didFinish(request: request, data: nil, error: exception)
         }
     }
 
@@ -65,7 +67,7 @@ open class JSONAdapter: JSONAdapterProtocol, CustomStringConvertible {
 }
 
 public extension JSONAdapter {
-    func didFinish(request: RequestProtocol, data: JSON?, error: Error?, completion: ResponseAdapterProtocol.OnComplete?) {
+    func didFinish(request: RequestProtocol, data: JSON?, error: Error?) {
         guard error == nil, let json = data else {
             completion?(request, error ?? JSONAdapterError.jsonIsNil)
             return
@@ -75,15 +77,16 @@ public extension JSONAdapter {
 
         for key in json.keys {
             dispatchGroup.enter()
+
             //
-            let syndicate = Syndicate(appContext: appContext, json: json, key: key)
+            let syndicate = VehicleSyndicate(appContext: appContext, json: json, key: key)
             syndicate.contextPredicate = request.contextPredicate
             syndicate.modelClass = modelClass
-            syndicate.managedStoreLinker = managedObjectLinker
+            syndicate.managedObjectLinker = managedObjectLinker
             syndicate.jsonExtractor = jsonExtractor
             syndicate.completion = { _, error in
                 if let error = error {
-                    completion?(request, error)
+                    self.completion?(request, error)
                 }
                 dispatchGroup.leave()
             }
@@ -91,7 +94,7 @@ public extension JSONAdapter {
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
-            completion?(request, nil)
+            self.completion?(request, nil)
         }
     }
 }
