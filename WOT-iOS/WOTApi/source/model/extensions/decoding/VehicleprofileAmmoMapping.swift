@@ -29,7 +29,7 @@ public extension VehicleprofileAmmo {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathPenetration)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
-            let extractor = VehicleprofileAmmoPenetrationManagedObjectCreator()
+            let extractor = PenetrationExtractor()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
@@ -50,7 +50,7 @@ public extension VehicleprofileAmmo {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: keypathDamage)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileAmmoFetchResult, anchor: anchor)
-            let extractor = VehicleprofileAmmoDamageManagedObjectCreator()
+            let extractor = DamageExtractor()
             let objectContext = vehicleprofileAmmoFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
@@ -61,6 +61,20 @@ public extension VehicleprofileAmmo {
             appContext?.logInspector?.log(.warning(error: VehicleprofileAmmoError.noDamage), sender: self)
         }
     }
+}
+
+extension VehicleprofileAmmo {
+
+    private class DamageExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    private class PenetrationExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
 }
 
 // MARK: - VehicleprofileAmmoError

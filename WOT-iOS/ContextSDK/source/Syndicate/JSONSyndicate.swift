@@ -63,15 +63,15 @@ class JSONSyndicate {
 
         let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
         mappingCoordinatorDecodeHelper.jsonCollection = jsonExtraction?.jsonCollection
-        mappingCoordinatorDecodeHelper.contextPredicate = jsonExtraction?.requestPredicate
-        mappingCoordinatorDecodeHelper.managedObjectCreator = managedObjectLinker
+        mappingCoordinatorDecodeHelper.contextPredicate = jsonExtraction?.contextPredicate
+        mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
             managedObjectLinkerHelper.run(fetchResult, error: error)
         }
 
         let datastoreFetchHelper = DatastoreFetchHelper(appContext: appContext)
         datastoreFetchHelper.modelClass = modelClass
-        datastoreFetchHelper.nspredicate = jsonExtraction?.requestPredicate[.primary]?.predicate
+        datastoreFetchHelper.nspredicate = jsonExtraction?.contextPredicate[.primary]?.predicate
         datastoreFetchHelper.completion = { fetchResult, error in
             mappingCoordinatorDecodeHelper.run(fetchResult, error: error)
         }
@@ -140,7 +140,7 @@ class MappingCoordinatorDecodeHelper {
     var completion: ((FetchResultProtocol?, Error?) -> Void)?
     var jsonCollection: JSONCollectionProtocol?
     var contextPredicate: ContextPredicateProtocol?
-    var managedObjectCreator: ManagedObjectLinkerProtocol?
+    var managedObjectLinker: ManagedObjectLinkerProtocol?
     var managedObjectExtractor: ManagedObjectExtractable?
 
     private enum MappingCoordinatorDecodeHelperError: Error, CustomStringConvertible {

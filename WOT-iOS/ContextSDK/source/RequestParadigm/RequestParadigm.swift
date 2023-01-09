@@ -45,7 +45,7 @@ public class RequestParadigm: NSObject, RequestParadigmProtocol {
 
     // MARK: Lifecycle
 
-    public init<T: RequestableProtocol>(modelClass _: T.Type, requestPredicateComposition: RequestPredicateCompositionProtocol, keypathPrefix: String?, httpQueryItemName: String) {
+    public init(modelClass T: RequestableProtocol.Type, requestPredicateComposition: RequestPredicateCompositionProtocol, keypathPrefix: String?, httpQueryItemName: String) {
         fieldsKeypaths = T.fieldsKeypaths()
         self.requestPredicateComposition = requestPredicateComposition
         self.keypathPrefix = keypathPrefix

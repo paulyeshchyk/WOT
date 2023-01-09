@@ -35,7 +35,7 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: ammoKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
-            let extractor = VehicleprofileAmmoListManagedObjectCreator()
+            let extractor = AmmoListExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
@@ -56,7 +56,7 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: armorKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
-            let extactor = VehicleprofileArmorListManagedObjectCreator()
+            let extactor = ArmorListExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extactor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
@@ -77,7 +77,7 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: modulesKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
-            let extractor = VehicleprofileModuleManagedObjectCreator()
+            let extractor = ModuleExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
@@ -101,7 +101,7 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: engineKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
-            let extractor = VehicleprofileEngineManagedObjectCreator()
+            let extractor = EngineExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
@@ -124,7 +124,7 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: gunKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
-            let extractor = VehicleprofileGunManagedObjectCreator()
+            let extractor = GunExtractor()
             let collection = try JSONCollection(element: jsonElement)
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
@@ -149,7 +149,7 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: suspensionKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
-            let extractor = VehicleprofileSuspensionManagedObjectCreator()
+            let extractor = SuspensionExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
@@ -172,7 +172,7 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: turretKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
-            let extractor = VehicleprofileTurretManagedObjectCreator()
+            let extractor = TurretManagedObjectCreator()
             let collection = try JSONCollection(element: jsonElement)
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
@@ -197,7 +197,7 @@ public extension Vehicleprofile {
             let composition = try composer.buildRequestPredicateComposition()
             let anchor = ManagedObjectLinkerAnchor(identifier: composition.objectIdentifier, keypath: radioKeypath)
             let linker = ManagedObjectLinker(modelClass: modelClass, masterFetchResult: vehicleprofileFetchResult, anchor: anchor)
-            let extractor = VehicleprofileRadioManagedObjectCreator()
+            let extractor = RadioExtractor()
             let objectContext = vehicleprofileFetchResult.managedObjectContext
             MOSyndicate.decodeAndLink(appContext: appContext, jsonCollection: collection, managedObjectContext: objectContext, modelClass: modelClass, managedObjectLinker: linker, managedObjectExtractor: extractor, contextPredicate: composition.contextPredicate, completion: { _, error in
                 if let error = error {
@@ -208,6 +208,50 @@ public extension Vehicleprofile {
             appContext?.logInspector?.log(.warning(error: VehicleProfileMappingError.noTurret(tank_id)), sender: self)
         }
     }
+}
+
+extension Vehicleprofile {
+
+    private class ArmorListExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    private class EngineExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    private class GunExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    public class RadioExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    private class TurretManagedObjectCreator: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    private class AmmoListExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    private class SuspensionExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
+    private class ModuleExtractor: ManagedObjectExtractable {
+        public var linkerPrimaryKeyType: PrimaryKeyType { return .external }
+        public var jsonKeyPath: KeypathType? { nil }
+    }
+
 }
 
 // MARK: - VehicleProfileMappingError

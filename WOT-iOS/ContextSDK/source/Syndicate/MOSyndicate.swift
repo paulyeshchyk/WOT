@@ -42,7 +42,7 @@ public class MOSyndicate {
         let mappingCoordinatorDecodeHelper = MappingCoordinatorDecodeHelper(appContext: appContext)
         mappingCoordinatorDecodeHelper.jsonCollection = jsonCollection
         mappingCoordinatorDecodeHelper.contextPredicate = contextPredicate
-        mappingCoordinatorDecodeHelper.managedObjectCreator = managedObjectLinker
+        mappingCoordinatorDecodeHelper.managedObjectLinker = managedObjectLinker
         mappingCoordinatorDecodeHelper.managedObjectExtractor = managedObjectExtractor
         mappingCoordinatorDecodeHelper.completion = { fetchResult, error in
             managedObjectLinkerHelper.run(fetchResult, error: error)

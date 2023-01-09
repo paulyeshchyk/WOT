@@ -7,6 +7,8 @@
 
 import ContextSDK
 
+// MARK: - WOTWEBRequestFactory
+
 // import WOTKit
 
 @objc
@@ -34,8 +36,10 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.dataFieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
         let extractor = VehiclesPivotManagedObjectExtractor()
-        let pivotLinker = try VehiclesPivotDataManagedObjectCreator(modelClass: Vehicles.self, appContext: appContext)
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: pivotLinker, managedObjectExtractor: extractor, listener: listener)
+        let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
+        let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
+        let linker = VehiclesPivotManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: emptyFetchResult, anchor: anchor)
+        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_list, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
@@ -48,8 +52,10 @@ public class WOTWEBRequestFactory: NSObject {
         arguments.setValues(Vehicles.fieldsKeypaths(), forKey: WGWebQueryArgs.fields)
         request.arguments = arguments
         let extractor = VehiclesTreeManagedObjectExtractor()
-        let treeViewLinker = try VehiclesTreeManagedObjectCreator(modelClass: Vehicles.self, appContext: appContext)
-        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: treeViewLinker, managedObjectExtractor: extractor, listener: listener)
+        let emptyFetchResult = try appContext.dataStore?.emptyFetchResult()
+        let anchor = ManagedObjectLinkerAnchor(identifier: nil, keypath: nil)
+        let linker = VehiclesTreeManagedObjectLinker(modelClass: Vehicles.self, masterFetchResult: emptyFetchResult, anchor: anchor)
+        try appContext.requestManager?.startRequest(request, forGroupId: WGWebRequestGroups.vehicle_tree, managedObjectCreator: linker, managedObjectExtractor: extractor, listener: listener)
     }
 
     @objc
@@ -65,6 +71,64 @@ public class WOTWEBRequestFactory: NSObject {
 //        appContext.logInspector?.logEvent(EventFlowStart(request), sender: self)
 //        try requestManager.startRequest(request, withArguments: args, forGroupId: groupId, linker: nil)
 //        requestManager.addListener(listener, forRequest: request)
+    }
+}
+
+extension WOTWEBRequestFactory {
+
+    private class VehiclesTreeManagedObjectLinker: ManagedObjectLinker {
+
+        public typealias Context = DataStoreContainerProtocol
+
+        // MARK: Public
+
+        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+            // MARK: stash
+
+            appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
+                completion(fetchResult, error)
+            }
+        }
+    }
+
+    private class VehiclesPivotManagedObjectLinker: ManagedObjectLinker {
+
+        public typealias Context = DataStoreContainerProtocol
+
+        // MARK: Public
+
+        override public func process(fetchResult: FetchResultProtocol, appContext: ManagedObjectLinkerContext?, completion: @escaping ManagedObjectLinkerCompletion) {
+            // MARK: stash
+
+            appContext?.dataStore?.stash(managedObjectContext: fetchResult.managedObjectContext) { _, error in
+                completion(fetchResult, error)
+            }
+        }
+    }
+}
+
+extension WOTWEBRequestFactory {
+
+    private class VehiclesPivotManagedObjectExtractor: ManagedObjectExtractable {
+
+        public var linkerPrimaryKeyType: PrimaryKeyType {
+            return .internal
+        }
+
+        public var jsonKeyPath: KeypathType? {
+            nil
+        }
+    }
+
+    private class VehiclesTreeManagedObjectExtractor: ManagedObjectExtractable {
+
+        public var linkerPrimaryKeyType: PrimaryKeyType {
+            return .internal
+        }
+
+        public var jsonKeyPath: KeypathType? {
+            nil
+        }
     }
 
 }

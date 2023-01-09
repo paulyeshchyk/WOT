@@ -38,11 +38,11 @@ public extension ManagedObjectExtractable {
         #warning("2b refactored")
         let parents = contextPredicate?.parentObjectIDList
 
-        let requestPredicate = ContextPredicate(parentObjectIDList: parents)
-        requestPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
+        let requestContextPredicate = ContextPredicate(parentObjectIDList: parents)
+        requestContextPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
         let jsonCollection = try JSONCollection(element: managedObjectJSON)
-        return JSONExtraction(requestPredicate: requestPredicate, jsonCollection: jsonCollection)
+        return JSONExtraction(contextPredicate: requestContextPredicate, jsonCollection: jsonCollection)
     }
 }
 
@@ -50,7 +50,7 @@ public extension ManagedObjectExtractable {
 
 public struct JSONExtraction {
 
-    public let requestPredicate: ContextPredicateProtocol
+    public let contextPredicate: ContextPredicateProtocol
     public let jsonCollection: JSONCollectionProtocol?
 
     enum JSONAdapterLinkerExtractionErrors: Error, CustomStringConvertible {
