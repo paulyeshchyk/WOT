@@ -6,7 +6,6 @@
 //
 
 public typealias ManagedObjectLinkerContext = DataStoreContainerProtocol
-public typealias KeypathType = AnyHashable
 
 // MARK: - ManagedObjectLinkerAnchorProtocol
 

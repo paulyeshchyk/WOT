@@ -10,21 +10,30 @@
 @objc
 public protocol ManagedObjectExtractable {
     var linkerPrimaryKeyType: PrimaryKeyType { get }
-    func extractJSON(from: JSON) -> JSON?
+    var jsonKeyPath: KeypathType? { get }
 }
 
 public extension ManagedObjectExtractable {
+
     func extract(json: JSON, key: AnyHashable, modelClass: PrimaryKeypathProtocol.Type, contextPredicate: ContextPredicateProtocol?) throws -> JSONExtraction {
-        guard let json = json[key] as? JSON else {
+        guard let jsonElement = json[key] as? JSON else {
             throw JSONExtraction.JSONAdapterLinkerExtractionErrors.invalidJSONForKey(key)
         }
 
-        guard let extractedJSON = extractJSON(from: json) else {
-            throw JSONExtraction.JSONAdapterLinkerExtractionErrors.jsonWasNotExtracted(json)
+        let managedObjectJSON: JSON?
+        
+        if let keyPath = jsonKeyPath {
+            managedObjectJSON = jsonElement[keyPath] as? JSON
+        } else {
+            managedObjectJSON = jsonElement
+        }
+
+        guard let managedObjectJSON = managedObjectJSON else {
+            throw JSONExtraction.JSONAdapterLinkerExtractionErrors.jsonWasNotExtracted(jsonElement)
         }
 
         let primaryKeyPath = modelClass.primaryKeyPath(forType: linkerPrimaryKeyType)
-        let ident = extractedJSON[primaryKeyPath] ?? key
+        let ident = managedObjectJSON[primaryKeyPath] ?? key
 
         #warning("2b refactored")
         let parents = contextPredicate?.parentObjectIDList
@@ -32,7 +41,7 @@ public extension ManagedObjectExtractable {
         let requestPredicate = ContextPredicate(parentObjectIDList: parents)
         requestPredicate[.primary] = modelClass.primaryKey(forType: linkerPrimaryKeyType, andObject: ident)
 
-        let jsonCollection = try JSONCollection(element: extractedJSON)
+        let jsonCollection = try JSONCollection(element: managedObjectJSON)
         return JSONExtraction(requestPredicate: requestPredicate, jsonCollection: jsonCollection)
     }
 }

@@ -11,9 +11,7 @@ public class VehicleprofileModuleRadioManagedObjectCreator: ManagedObjectExtract
         return .external
     }
 
-    // MARK: Public
-
-    public func extractJSON(from: JSON) -> JSON? {
-        return from[#keyPath(Vehicleprofile.radio)] as? JSON
+    public var jsonKeyPath: KeypathType? {
+        #keyPath(Vehicleprofile.radio)
     }
 }

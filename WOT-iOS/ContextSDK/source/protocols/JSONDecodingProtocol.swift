@@ -5,7 +5,8 @@
 //  Created by Paul on 30.12.22.
 //
 public typealias JSONValueType = Any
-public typealias JSON = [Swift.AnyHashable: JSONValueType]
+public typealias KeypathType = Swift.AnyHashable
+public typealias JSON = [KeypathType: JSONValueType]
 
 // MARK: - JSONDecodingProtocol
 

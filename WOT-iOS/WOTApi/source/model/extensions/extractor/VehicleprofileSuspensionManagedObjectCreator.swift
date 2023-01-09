@@ -11,9 +11,7 @@ public class VehicleprofileSuspensionManagedObjectCreator: ManagedObjectExtracta
         return .external
     }
 
-    // MARK: Public
-
-    public func extractJSON(from: JSON) -> JSON? {
-        return from
+    public var jsonKeyPath: KeypathType? {
+        nil
     }
 }

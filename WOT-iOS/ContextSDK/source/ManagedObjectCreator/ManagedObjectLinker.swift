@@ -11,6 +11,10 @@ open class ManagedObjectLinker: ManagedObjectLinkerProtocol, ManagedObjectExtrac
         fatalError("has not been implemented")
     }
 
+    open var jsonKeyPath: KeypathType? {
+        fatalError("has not been implemented")
+    }
+
     public enum ManagedObjectLinkerError: Error, CustomStringConvertible {
         case unexpectedString(String)
         case unexpectedClass(AnyClass)

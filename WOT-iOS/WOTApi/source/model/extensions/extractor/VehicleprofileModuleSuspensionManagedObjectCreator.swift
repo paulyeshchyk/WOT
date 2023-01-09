@@ -11,9 +11,7 @@ public class VehicleprofileModuleSuspensionManagedObjectCreator: ManagedObjectEx
         return .external
     }
 
-    // MARK: Public
-
-    public func extractJSON(from: JSON) -> JSON? {
-        return from[#keyPath(Vehicleprofile.suspension)] as? JSON
+    public var jsonKeyPath: KeypathType? {
+        #keyPath(Vehicleprofile.suspension)
     }
 }

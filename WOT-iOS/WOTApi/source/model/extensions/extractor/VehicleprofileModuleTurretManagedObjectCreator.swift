@@ -11,9 +11,7 @@ public class VehicleprofileModuleTurretManagedObjectCreator: ManagedObjectExtrac
         return .external
     }
 
-    // MARK: Public
-
-    public func extractJSON(from: JSON) -> JSON? {
-        return from[#keyPath(Vehicleprofile.turret)] as? JSON
+    public var jsonKeyPath: KeypathType? {
+        #keyPath(Vehicleprofile.turret)
     }
 }

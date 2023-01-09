@@ -11,9 +11,7 @@ public class ModuleVehicleprofileEngineManagedObjectExtractor: ManagedObjectExtr
         return .internal
     }
 
-    // MARK: Public
-
-    public func extractJSON(from: JSON) -> JSON? {
-        return from[#keyPath(Vehicleprofile.engine)] as? JSON
+    public var jsonKeyPath: KeypathType? {
+        #keyPath(Vehicleprofile.engine)
     }
 }
